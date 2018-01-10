@@ -1,0 +1,4 @@
+C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\CorruptCore\bin\Release\CorruptCore.dll
+C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\CorruptCore\bin\Release\CorruptCore.pdb
+C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\CorruptCore\obj\Release\CorruptCore.dll
+C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\CorruptCore\obj\Release\CorruptCore.pdb

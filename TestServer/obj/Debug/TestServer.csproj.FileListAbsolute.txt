@@ -1,0 +1,14 @@
+C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\TestServer\bin\Debug\TestServer.exe
+C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\TestServer\bin\Debug\TestServer.pdb
+C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\TestServer\bin\Debug\NetCore.dll
+C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\TestServer\bin\Debug\NetCore.pdb
+C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\TestServer\obj\Debug\TestServer.csprojResolveAssemblyReference.cache
+C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\TestServer\obj\Debug\TestServer.exe
+C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\TestServer\obj\Debug\TestServer.pdb
+C:\Users\philt\Documents\PROJECTS\RTCV\TestServer\bin\Debug\TestServer.exe
+C:\Users\philt\Documents\PROJECTS\RTCV\TestServer\bin\Debug\TestServer.pdb
+C:\Users\philt\Documents\PROJECTS\RTCV\TestServer\bin\Debug\NetCore.dll
+C:\Users\philt\Documents\PROJECTS\RTCV\TestServer\bin\Debug\NetCore.pdb
+C:\Users\philt\Documents\PROJECTS\RTCV\TestServer\obj\Debug\TestServer.csprojResolveAssemblyReference.cache
+C:\Users\philt\Documents\PROJECTS\RTCV\TestServer\obj\Debug\TestServer.exe
+C:\Users\philt\Documents\PROJECTS\RTCV\TestServer\obj\Debug\TestServer.pdb

@@ -1,0 +1,5 @@
+C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\NetCore\bin\Release\NetCore.dll
+C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\NetCore\bin\Release\NetCore.pdb
+C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\NetCore\obj\Release\NetCore.dll
+C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\NetCore\obj\Release\NetCore.pdb
+C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\NetCore\obj\Release\NetCore.csprojResolveAssemblyReference.cache

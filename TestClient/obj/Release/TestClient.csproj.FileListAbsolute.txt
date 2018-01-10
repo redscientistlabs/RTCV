@@ -1,0 +1,7 @@
+C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\TestClient\bin\Release\TestClient.exe
+C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\TestClient\bin\Release\TestClient.pdb
+C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\TestClient\bin\Release\NetCore.dll
+C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\TestClient\bin\Release\NetCore.pdb
+C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\TestClient\obj\Release\TestClient.csprojResolveAssemblyReference.cache
+C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\TestClient\obj\Release\TestClient.exe
+C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\TestClient\obj\Release\TestClient.pdb
