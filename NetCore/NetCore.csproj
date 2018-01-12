@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Connector.cs" />
+    <Compile Include="LocalRouter.cs" />
     <Compile Include="MessageHub.cs" />
     <Compile Include="NetCoreObjects.cs" />
     <Compile Include="ReturnWatch.cs" />

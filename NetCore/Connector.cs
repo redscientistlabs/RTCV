@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RTCV.NetCore
 {   
-    public class NetCoreConnector
+    public class NetCoreConnector : IRoutable
     {
         public NetCoreSpec spec = null;
 
@@ -53,16 +53,41 @@ namespace RTCV.NetCore
             }
         }
 
+        public object OnMessageReceived(object sender, NetCoreEventArgs e)
+        {
 
+            if((e.message as NetCoreAdvancedMessage)?.requestGuid != null)
+                return SendMessage(e.message,true);
+            else
+            {
+                SendMessage(e.message);
+                return null;
+            }
+
+        }
 
         public void SendMessage(string message) => SendMessage(new NetCoreSimpleMessage(message));
         public void SendMessage(string message, object value) => SendMessage(new NetCoreAdvancedMessage(message) { objectValue = value });
         public object SendSyncedMessage(string message) { return SendMessage(new NetCoreAdvancedMessage(message), true); }
         public object SendSyncedMessage(string message, object value) { return SendMessage(new NetCoreAdvancedMessage(message) { objectValue = value }, true); }
 
-        private object SendMessage(NetCoreMessage message, bool synced = false)
+        private object SendMessage(NetCoreMessage _message, bool synced = false)
         {
-            return hub?.SendMessage(message, synced);
+            
+            if (_message.Type.Contains('|') && LocalNetCoreRouter.HasEndpoints)
+            {
+                string[] splitType = _message.Type.Split('|');
+                string target = splitType[0];
+                _message.Type = splitType[1];
+
+                if (synced)
+                    (_message as NetCoreAdvancedMessage).requestGuid = Guid.NewGuid();
+                    
+                return LocalNetCoreRouter.Route(target, null, new NetCoreEventArgs() { message = _message });
+            }
+            
+
+            return hub?.SendMessage(_message, synced);
         }
 
         public void Stop()

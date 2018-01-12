@@ -1,5 +1,0 @@
-C:\Users\philt\Documents\PROJECTS\RTCV\RTC_Connector\bin\Debug\RTC_Connector.dll
-C:\Users\philt\Documents\PROJECTS\RTCV\RTC_Connector\bin\Debug\RTC_Connector.pdb
-C:\Users\philt\Documents\PROJECTS\RTCV\RTC_Connector\obj\Debug\Vanguard.csprojResolveAssemblyReference.cache
-C:\Users\philt\Documents\PROJECTS\RTCV\RTC_Connector\obj\Debug\RTC_Connector.dll
-C:\Users\philt\Documents\PROJECTS\RTCV\RTC_Connector\obj\Debug\RTC_Connector.pdb

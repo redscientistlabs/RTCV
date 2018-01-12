@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RTC_Connector")]
+[assembly: AssemblyTitle("TestVanguardClient")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("RTC_Connector")]
+[assembly: AssemblyProduct("TestVanguardClient")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("364c705e-b7ab-4a94-a59b-88899ce65958")]
+[assembly: Guid("fb43497d-6d44-490e-9618-1fbf22b7fcb2")]
 
 // Version information for an assembly consists of the following four values:
 //

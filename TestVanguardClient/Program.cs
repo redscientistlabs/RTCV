@@ -2,16 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using RTCV.NetCore;
 using System.Threading;
 
-namespace RTCV.TestClient
+namespace RTCV.TestVanguardClient
 {
     class Program
     {
         static void Main(string[] args)
         {
-            
+
             TestClient.StartClient();
 
             while (true)
@@ -19,23 +18,16 @@ namespace RTCV.TestClient
 
                 /*
                 
-                //This is how you send a Simple message (Goes through UDP Link)
-                TestClient.connector.SendMessage("Some command");
+                This implements NetCore through Vanguard. Pretty much the same code is here except that it goes through Vanguard
+                When Vanguard is initialized, it sets up an additionnal Routing for messages inside the same process.
 
-                //This is how you send an Advanced message with an object parameter (Goes through TCP Link)
-                TestClient.connector.SendMessage("Some command", someObject);
+                Routing works by adding a routing command, a pipe and then the original command
+                ROUTING|COMMAND
 
-                //This is how you send a synced Advanced Message, it will block the thread until it finishes on the other side.
-                You can also use it to query a value. the object parameter is facultative
-                var someValue = TestClient.connector.SendMessage("Some command", someObject);
+                As the command is processed, the routing command is removed and the message is received on the other side.
 
-                ---------------------------------------------------------
-                Test console:
-
-                SOMEMESSAGE     -> Goes through UDP Link
-                #SOMEMESSAGE    -> Goes through TCP Link
-                #!SOMEMESSAGE   -> Goes through TCP Link in Synced Mode
-                .               -> Sends massive flood with an incrementing counter as the message
+                Local communication across projects within the same process should go through the Route function directly
+                var someVar = NetCore.LocalNetCoreRouter.Route("ENDPOINT", this, NetCoreEventArgs)
 
                 */
 
@@ -43,6 +35,7 @@ namespace RTCV.TestClient
                 string message = Console.ReadLine();
 
                 
+
                 if (message.Length > 0 && message[0] == '#')
                 {
                     if (message.Length > 1 && message[1] == '!')
@@ -52,7 +45,7 @@ namespace RTCV.TestClient
                 }
                 else
                     TestClient.connector.SendMessage(message);
-                
+
 
             }
         }
@@ -63,17 +56,16 @@ namespace RTCV.TestClient
 
     public static class TestClient
     {
-        public static NetCoreConnector connector = null;
+        public static Vanguard.VanguardConnector connector = null;
 
         public static void StartClient()
         {
             Thread.Sleep(500); //When starting in Multiple Startup Project, the first try will be uncessful since
                                //the server takes a bit more time to start then the client.
 
-            var spec = new NetCoreSpec();
-            spec.Side = NetworkSide.CLIENT;
+            var spec = new Vanguard.TargetSpec();
             spec.MessageReceived += OnMessageReceived;
-            connector = new NetCoreConnector(spec);
+            connector = new Vanguard.VanguardConnector(spec);
         }
 
         public static void RestartClient()
@@ -83,14 +75,14 @@ namespace RTCV.TestClient
             StartClient();
         }
 
-        private static void OnMessageReceived(object sender, NetCoreEventArgs e)
+        private static void OnMessageReceived(object sender, NetCore.NetCoreEventArgs e)
         {
             // This is where you implement interaction.
             // Warning: Any error thrown in here will be caught by NetCore and handled by being displayed in the console.
 
             var message = e.message;
-            var simpleMessage = message as NetCoreSimpleMessage;
-            var advancedMessage = message as NetCoreAdvancedMessage;
+            var simpleMessage = message as NetCore.NetCoreSimpleMessage;
+            var advancedMessage = message as NetCore.NetCoreAdvancedMessage;
 
             switch (message.Type) //Handle received messages here
             {
@@ -108,17 +100,17 @@ namespace RTCV.TestClient
                     break;
 
                 case "#!WAIT":
-                    ConsoleEx.WriteLine("Simulating 20 sec of workload");
+                    NetCore.ConsoleEx.WriteLine("Simulating 20 sec of workload");
                     Thread.Sleep(20000);
                     break;
 
                 case "#!HANG":
-                    ConsoleEx.WriteLine("Hanging forever");
+                    NetCore.ConsoleEx.WriteLine("Hanging forever");
                     Thread.Sleep(int.MaxValue);
                     break;
 
                 default:
-                    ConsoleEx.WriteLine($"Received unassigned {(message is NetCoreAdvancedMessage ? "advanced " : "")}message \"{message.Type}\"");
+                    NetCore.ConsoleEx.WriteLine($"Received unassigned {(message is NetCore.NetCoreAdvancedMessage ? "advanced " : "")}message \"{message.Type}\"");
                     break;
             }
 
