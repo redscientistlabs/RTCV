@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestClient", "TestClient\Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Vanguard", "RTC_Connector\Vanguard.csproj", "{364C705E-B7AB-4A94-A59B-88899CE65958}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestVanguardClient", "TestVanguardClient\TestVanguardClient.csproj", "{FB43497D-6D44-490E-9618-1FBF22B7FCB2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{364C705E-B7AB-4A94-A59B-88899CE65958}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{364C705E-B7AB-4A94-A59B-88899CE65958}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{364C705E-B7AB-4A94-A59B-88899CE65958}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB43497D-6D44-490E-9618-1FBF22B7FCB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB43497D-6D44-490E-9618-1FBF22B7FCB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB43497D-6D44-490E-9618-1FBF22B7FCB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB43497D-6D44-490E-9618-1FBF22B7FCB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
