@@ -92,8 +92,6 @@ namespace RTCV.TestClient
             StartClient();
         }
 
-        public static void ReturnValue(object value) => connector?.ReturnValue(value);
-
         private static void OnMessageReceived(object sender, NetCoreEventArgs e)
         {
             // This is where you implement interaction.
@@ -115,7 +113,7 @@ namespace RTCV.TestClient
                     break;
 
                 case "#!RETURNTEST": //ADVANCED MESSAGE (SYNCED) WANTS A RETURN VALUE
-                    ReturnValue(new Random(666));
+                    e.setReturnValue(new Random(666));
                     break;
 
                 case "#!WAIT":

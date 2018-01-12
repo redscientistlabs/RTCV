@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{603CE184-B72E-447C-8D02-65CE86F732EF}</ProjectGuid>
+    <ProjectGuid>{364C705E-B7AB-4A94-A59B-88899CE65958}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CorruptCore</RootNamespace>
-    <AssemblyName>CorruptCore</AssemblyName>
+    <RootNamespace>RTC_Connector</RootNamespace>
+    <AssemblyName>RTC_Connector</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,16 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BlastCore.cs" />
-    <Compile Include="ExternalPlugin.cs" />
-    <Compile Include="KillSwitch.cs" />
-    <Compile Include="Parameters.cs" />
-    <Compile Include="BlastUnits.cs" />
-    <Compile Include="Encapsulation.cs" />
+    <Compile Include="Connector.cs" />
+    <Compile Include="Objects.cs" />
+    <Compile Include="MemoryInterfaces.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Engines\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

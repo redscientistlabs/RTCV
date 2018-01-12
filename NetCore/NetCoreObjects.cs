@@ -110,14 +110,6 @@ namespace RTCV.NetCore
 
     }
 
-    public class NetCorePromise
-    {
-        bool HasSavestates = false;
-        string SavestateFolder = "";
-
-
-    }
-
     public class ConsoleEx
     {
         public static ConsoleEx singularity
