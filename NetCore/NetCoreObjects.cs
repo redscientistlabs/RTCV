@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
@@ -67,6 +68,8 @@ namespace RTCV.NetCore
         public int Port = 42069;
 
         public int messageReadTimerDelay = 10; //represents how often the messages are read (ms) (15ms = ~66fps)
+
+        public ISynchronizeInvoke syncObject = null;
 
         #region Events
 

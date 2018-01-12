@@ -7,6 +7,7 @@ namespace RTCV.Vanguard
 {
     public class TargetSpec
     {
+
         bool HasSavestates = false;
         string SavestateFolder = "";
 

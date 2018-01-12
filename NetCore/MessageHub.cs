@@ -16,12 +16,11 @@ namespace RTCV.NetCore
         private LinkedList<NetCoreMessage> MessagePool = new LinkedList<NetCoreMessage>();
         
 
-        private volatile NetCoreAdvancedMessage returnAdvancedMessage = null;
-
         internal MessageHub(NetCoreSpec _spec)
         {
             spec = _spec;
             hubTimer = new Timer();
+            hubTimer.SynchronizingObject = spec.syncObject;
             hubTimer.Interval = spec.messageReadTimerDelay;
             hubTimer.Elapsed += CheckMessages;
             hubTimer.Start();
