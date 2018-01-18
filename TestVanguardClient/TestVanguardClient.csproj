@@ -49,7 +49,7 @@
       <Project>{7e106aec-5614-4206-9e4d-25759c90e8ae}</Project>
       <Name>NetCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RTC_Connector\Vanguard.csproj">
+    <ProjectReference Include="..\Vanguard\Vanguard.csproj">
       <Project>{364c705e-b7ab-4a94-a59b-88899ce65958}</Project>
       <Name>Vanguard</Name>
     </ProjectReference>

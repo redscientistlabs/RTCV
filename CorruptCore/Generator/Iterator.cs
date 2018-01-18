@@ -5,5 +5,5 @@ using System.Text;
 
 namespace RTCV.CorruptCore
 {
-    //Manages the generator parameters, specs and inter-process param syncs
+    //Contains hooks to internal emulator timers or external timers for running auto-corrupt
 }

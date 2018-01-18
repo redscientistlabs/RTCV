@@ -5,5 +5,5 @@ using System.Text;
 
 namespace RTCV.CorruptCore
 {
-
+    //Contains tools for generating packages such as Stockpiles
 }

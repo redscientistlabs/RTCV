@@ -5,5 +5,5 @@ using System.Text;
 
 namespace RTCV.CorruptCore
 {
-    //Manages the generator parameters, specs and inter-process param syncs
+    //Contains various algorithms to analyze data and generate VMDs out of it, such as active tables
 }

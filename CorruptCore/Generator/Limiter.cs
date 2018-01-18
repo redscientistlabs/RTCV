@@ -5,5 +5,5 @@ using System.Text;
 
 namespace RTCV.CorruptCore
 {
-    //Manages the generator parameters, specs and inter-process param syncs
+    //Contains everything necessary to analyze data before corrupting it and determine if it should be corrupted or not
 }

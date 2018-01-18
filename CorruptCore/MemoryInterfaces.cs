@@ -5,7 +5,5 @@ using System.Text;
 
 namespace RTCV.CorruptCore
 {
-    class ExternalPlugin
-    {
-    }
+    //Contains implementations of targeted memory domains and VMDs
 }

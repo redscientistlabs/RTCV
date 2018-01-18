@@ -5,5 +5,5 @@ using System.Text;
 
 namespace RTCV.CorruptCore
 {
-    //Manages the generator parameters, specs and inter-process param syncs
+    //Should contain everything to manage the workflow of the generator
 }

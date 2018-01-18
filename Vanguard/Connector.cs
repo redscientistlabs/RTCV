@@ -1,14 +1,20 @@
-﻿using System;
+﻿using RTCV.NetCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using RTCV.NetCore;
 
-namespace RTCV.CorruptCore
+namespace RTCV.Vanguard
 {
-    public class CorruptCoreConnector : IRoutable
+    public class VanguardConnector
     {
-        public IRoutable vanguard;
+        TargetSpec spec;
+
+        public VanguardConnector(TargetSpec _spec)
+        {
+            spec = _spec;
+
+        }
 
         public object OnMessageReceived(object sender, NetCoreEventArgs e)
         {
