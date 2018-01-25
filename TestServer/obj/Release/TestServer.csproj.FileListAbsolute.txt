@@ -1,7 +1,0 @@
-C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\TestServer\bin\Release\TestServer.exe
-C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\TestServer\bin\Release\TestServer.pdb
-C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\TestServer\bin\Release\NetCore.dll
-C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\TestServer\bin\Release\NetCore.pdb
-C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\TestServer\obj\Release\TestServer.csprojResolveAssemblyReference.cache
-C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\TestServer\obj\Release\TestServer.exe
-C:\Users\philt\Documents\Visual Studio 2015\Projects\RTCV\TestServer\obj\Release\TestServer.pdb
