@@ -44,6 +44,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CorruptCore\CorruptCore.csproj">
+      <Project>{603ce184-b72e-447c-8d02-65ce86f732ef}</Project>
+      <Name>CorruptCore</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NetCore\NetCore.csproj">
       <Project>{7e106aec-5614-4206-9e4d-25759c90e8ae}</Project>
       <Name>NetCore</Name>

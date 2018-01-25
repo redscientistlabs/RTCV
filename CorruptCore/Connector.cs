@@ -8,15 +8,23 @@ namespace RTCV.CorruptCore
 {
     public class CorruptCoreConnector : IRoutable
     {
-        public IRoutable vanguard;
+
 
         public object OnMessageReceived(object sender, NetCoreEventArgs e)
         {
+            //Use setReturnValue to handle returns
 
+            switch (e.message.Type)
+            {
+                //HANDLE MESSAGES HERE
+                default:
+                    new object();
+                    break;
+            }
 
-
-            return null;
+            return e.returnMessage;
         }
+
 
         public void Kill()
         {

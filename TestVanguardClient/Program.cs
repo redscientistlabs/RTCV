@@ -39,9 +39,9 @@ namespace RTCV.TestVanguardClient
                 if (message.Length > 0 && message[0] == '#')
                 {
                     if (message.Length > 1 && message[1] == '!')
-                        TestClient.connector.SendSyncedMessage(message);
+                        TestClient.connector.SendSyncedMessage(message.Substring(2));
                     else
-                        TestClient.connector.SendMessage(message, new object());
+                        TestClient.connector.SendMessage(message.Substring(1), new object());
                 }
                 else
                     TestClient.connector.SendMessage(message);

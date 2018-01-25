@@ -57,9 +57,9 @@ namespace RTCV.TestServer
                 if (message.Length > 0 && message[0] == '#')
                 {
                     if (message.Length > 1 && message[1] == '!')
-                        TestServer.connector.SendSyncedMessage(message);
+                        TestServer.connector.SendSyncedMessage(message.Substring(2));
                     else
-                        TestServer.connector.SendMessage(message, new object());
+                        TestServer.connector.SendMessage(message.Substring(1), new object());
                 }
                 else
                     TestServer.connector.SendMessage(message);
