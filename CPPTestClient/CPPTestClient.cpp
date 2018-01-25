@@ -47,14 +47,14 @@ public:
 
 	void LoadState(String^ filename);
 	void NetcoreClient::SaveState(String^ filename, bool wait);
-	void NetcoreClient::PokeByte(long address, Byte ^ value, MemoryDomain ^ domain);
-	Byte NetcoreClient::PeekByte(long address, MemoryDomain ^ domain);
-	void NetcoreClient::PokeBytes(long address, array<Byte>^ value, int range, MemoryDomain ^ domain);
-	array<Byte>^ NetcoreClient::PeekBytes(long address, int range, MemoryDomain ^ domain);
-	array<Byte>^ NetcoreClient::PeekAddresses(array<long>^ addresses);
-	void NetcoreClient::PokeAddresses(array<long>^ addresses, array<Byte>^ values);
+	void NetcoreClient::PokeByte(long long address, Byte ^ value, MemoryDomain ^ domain);
+	Byte NetcoreClient::PeekByte(long long address, MemoryDomain ^ domain);
+	void NetcoreClient::PokeBytes(long long address, array<Byte>^ value, int range, MemoryDomain ^ domain);
+	array<Byte>^ NetcoreClient::PeekBytes(long long address, int range, MemoryDomain ^ domain);
+	array<Byte>^ NetcoreClient::PeekAddresses(array<long long>^ addresses);
+	void NetcoreClient::PokeAddresses(array<long long>^ addresses, array<Byte>^ values);
 
-	MemoryDomain^ NetcoreClient::GetDomain(long address, int range, MemoryDomain ^ domain);
+	MemoryDomain^ NetcoreClient::GetDomain(long long address, int range, MemoryDomain ^ domain);
 
 
 	System::Random^ rand = gcnew Random();
@@ -78,6 +78,7 @@ void NetcoreClient::StartClient()
 	NetcoreClient::connector = gcnew RTCV::NetCore::NetCoreConnector(spec);
 	
 }
+
 void NetcoreClient::RestartClient() 
 {
 	NetcoreClient::connector->Kill();
@@ -89,32 +90,35 @@ void NetcoreClient::RestartClient()
 /* IMPLEMENT YOUR COMMANDS HERE */
 void NetcoreClient::LoadState(String^ filename) 
 {
+	//Assuming your emulator uses std::string, you need to convert from System.String. This does that for you.
 	std::string converted_filename = msclr::interop::marshal_as< std::string >(filename);
 }
 
 void NetcoreClient::SaveState(String^ filename, bool wait) 
-{
+{	
+	//Assuming your emulator uses std::string, you need to convert from System.String. This does that for you.
 	std::string converted_filename = msclr::interop::marshal_as< std::string >(filename);
 }
 
-void NetcoreClient::PokeByte(long address, Byte ^ value, MemoryDomain ^ domain) 
+void NetcoreClient::PokeByte(long long address, Byte ^ value, MemoryDomain ^ domain) 
 {
-
+	//IMPLEMENT YOUR POKE BYTE FUNCTION HERE
 }
 
-Byte NetcoreClient::PeekByte(long address, MemoryDomain ^ domain) 
+Byte NetcoreClient::PeekByte(long long address, MemoryDomain ^ domain) 
 {
+	//IMPLEMENT YOUR PEEK BYTE FUNCTION HERE
 	return -1;
 }
 
-void NetcoreClient::PokeBytes(long address, array<Byte>^ value, int range, MemoryDomain ^ domain) 
+void NetcoreClient::PokeBytes(long long address, array<Byte>^ value, int range, MemoryDomain ^ domain) 
 {
 	for (int i = 0; i < range; i++)
 		PokeByte(address + i, value[i], domain);
 }
 
 
-array<Byte>^ NetcoreClient::PeekBytes(long address, int range, MemoryDomain ^ domain) 
+array<Byte>^ NetcoreClient::PeekBytes(long long address, int range, MemoryDomain ^ domain) 
 {
 	array<Byte>^ byte = gcnew array<Byte>(range);
 	for (int i = 0; i < range; i++)
@@ -123,7 +127,7 @@ array<Byte>^ NetcoreClient::PeekBytes(long address, int range, MemoryDomain ^ do
 	return byte;
 }
 
-array<Byte>^ NetcoreClient::PeekAddresses(array<long>^ addresses) 
+array<Byte>^ NetcoreClient::PeekAddresses(array<long long>^ addresses) 
 {
 	MemoryDomain ^ domain = gcnew MemoryDomain;
 	array<Byte>^ bytes = gcnew array<Byte>(sizeof(addresses));
@@ -136,7 +140,7 @@ array<Byte>^ NetcoreClient::PeekAddresses(array<long>^ addresses)
 	return bytes;
 }
 
-void NetcoreClient::PokeAddresses(array<long>^ addresses, array<Byte>^ values) 
+void NetcoreClient::PokeAddresses(array<long long>^ addresses, array<Byte>^ values) 
 {
 
 	MemoryDomain ^ domain = gcnew MemoryDomain;
@@ -146,7 +150,7 @@ void NetcoreClient::PokeAddresses(array<long>^ addresses, array<Byte>^ values)
 	}
 }
 
-MemoryDomain^ NetcoreClient::GetDomain(long address, int range, MemoryDomain ^ domain)
+MemoryDomain^ NetcoreClient::GetDomain(long long address, int range, MemoryDomain ^ domain)
 {
 	return domain;
 }
@@ -206,7 +210,7 @@ void NetcoreClient::OnMessageReceived(Object^ sender, NetCoreEventArgs^ e)
 		case POKEBYTE: 
 		{
 
-			long address = Convert::ToInt64(((array<Object^>^)advancedMessage->objectValue)[0]);
+			long long address = Convert::ToInt64(((array<Object^>^)advancedMessage->objectValue)[0]);
 			Byte value = Convert::ToByte(((array<Object^>^)advancedMessage->objectValue)[1]);
 
 			MemoryDomain ^ domain = gcnew MemoryDomain;
@@ -218,7 +222,7 @@ void NetcoreClient::OnMessageReceived(Object^ sender, NetCoreEventArgs^ e)
 
 		case PEEKBYTE:
 		{
-			long address = Convert::ToInt64(advancedMessage->objectValue);
+			long long address = Convert::ToInt64(advancedMessage->objectValue);
 			MemoryDomain ^ domain = gcnew MemoryDomain;
 
 			domain = GetDomain(address, 1, domain);
@@ -227,7 +231,7 @@ void NetcoreClient::OnMessageReceived(Object^ sender, NetCoreEventArgs^ e)
 		}
 		case POKEBYTES: 
 		{
-			long address = Convert::ToInt64(((array<Object^>^)advancedMessage->objectValue)[0]);
+			long long address = Convert::ToInt64(((array<Object^>^)advancedMessage->objectValue)[0]);
 			int range = Convert::ToInt32(((array<Object^>^)advancedMessage->objectValue)[1]);
 			array<Byte>^ value = (array<Byte>^)((array<Object^>^)advancedMessage->objectValue)[2];
 
@@ -240,7 +244,7 @@ void NetcoreClient::OnMessageReceived(Object^ sender, NetCoreEventArgs^ e)
 
 		case PEEKBYTES:
 		{
-			long address = Convert::ToInt64(((array<Object^>^)advancedMessage->objectValue)[0]);
+			long long address = Convert::ToInt64(((array<Object^>^)advancedMessage->objectValue)[0]);
 			int range = Convert::ToByte(((array<Object^>^)advancedMessage->objectValue)[1]);
 
 			MemoryDomain ^ domain = gcnew MemoryDomain;
@@ -252,7 +256,7 @@ void NetcoreClient::OnMessageReceived(Object^ sender, NetCoreEventArgs^ e)
 
 		case POKEADDRESSES: 
 		{
-			array<long>^ addresses = (array<long>^)((array<Object^>^)advancedMessage->objectValue)[0];
+			array<long long>^ addresses = (array<long long>^)((array<Object^>^)advancedMessage->objectValue)[0];
 			array<Byte>^ values = (array<Byte>^)((array<Object^>^)advancedMessage->objectValue)[1];
 			PokeAddresses(addresses, values);
 			break;
@@ -261,7 +265,7 @@ void NetcoreClient::OnMessageReceived(Object^ sender, NetCoreEventArgs^ e)
 
 		case PEEKADDRESSES:
 		{
-			array<long>^ addresses = (array<long>^)((array<Object^>^)advancedMessage->objectValue)[0];
+			array<long long>^ addresses = (array<long long>^)((array<Object^>^)advancedMessage->objectValue)[0];
 			e->setReturnValue(PeekAddresses(addresses));
 			break;
 		}
