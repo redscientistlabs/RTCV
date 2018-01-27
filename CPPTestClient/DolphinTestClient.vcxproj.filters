@@ -28,9 +28,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AssemblyInfo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CPPTestClient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
