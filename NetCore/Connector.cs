@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace RTCV.NetCore
 {   
@@ -92,7 +93,6 @@ namespace RTCV.NetCore
 
         public void Stop()
         {
-            //We just stop TCP gracefully because it's kind of useless to stop UDP.
             tcp?.StopNetworking();
         }
 
@@ -100,18 +100,16 @@ namespace RTCV.NetCore
         {
             Stop();
 
-            //Schedule the shutdown timer for a force kill in 1 sec
-            shutdownTimer = new System.Timers.Timer();
-            shutdownTimer.Interval = 1000;
-            shutdownTimer.Elapsed += (o,e) => {
-                udp?.Kill();
-                tcp?.Kill();
-                hub?.Kill();
-                watch?.Kill();
-                shutdownTimer.Stop();
-                shutdownTimer = null;
-            };
-            shutdownTimer.Start();
+            DateTime startDT = DateTime.Now;
+
+            while(tcp?.client != null && ((startDT - DateTime.Now).TotalMilliseconds) < 1000) // wait timeout
+                Thread.Sleep(50);
+
+            udp?.Kill();
+            tcp?.Kill();
+            hub?.Kill();
+            watch?.Kill();
+
         }
 
     }

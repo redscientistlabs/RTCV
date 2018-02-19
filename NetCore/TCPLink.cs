@@ -35,7 +35,7 @@ namespace RTCV.NetCore
         private string IP { get { return spec.IP; } }
         private int Port { get { return spec.Port; } }
 
-        private volatile TcpClient client;
+        internal volatile TcpClient client;
         private volatile NetworkStream clientStream;
 
         private object PeerMessageQueueLock = new object();
@@ -300,7 +300,7 @@ namespace RTCV.NetCore
                 lock (PeerMessageQueueLock)
                 {
                     PeerMessageQueue.Clear();
-                    spec.Connector.hub.SendMessage(new NetCoreAdvancedMessage("{BYE}"), true);
+                    spec.Connector.hub.SendMessage(new NetCoreAdvancedMessage("{BYE}"));
                     //When the {BYE} command gets sent, a {SAYBYE} command will be queued in own side's Message Hub.
                     //Both sides will then call StopNetworking with the stopGracefully flag set to false.
                 }

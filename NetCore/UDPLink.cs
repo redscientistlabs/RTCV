@@ -35,16 +35,15 @@ namespace RTCV.NetCore
             ReaderThread.Start();
         }
 
-        internal void Stop()
-        {
-            Running = false;
-        }
 
         internal void Kill()
         {
-            Stop();
+            Running = false;
 
             try { ReaderThread.Abort(); } catch { }
+            while (ReaderThread != null && ReaderThread.IsAlive) { } //Lets wait for the thread to die
+            ReaderThread = null;
+
             try { Sender.Close(); } catch { }
         }
 
@@ -61,7 +60,7 @@ namespace RTCV.NetCore
         private void ListenToReader()
         {
             int port = (spec.Side == NetworkSide.SERVER ? PortClient : PortServer);
-            int UdpReceiveTimeout = 2000;
+            int UdpReceiveTimeout = 1000;
 
             UdpClient Listener = null;
             IPEndPoint groupEP = new IPEndPoint((IP == "127.0.0.1" ? IPAddress.Loopback : IPAddress.Parse(IP)), port);
@@ -123,6 +122,5 @@ namespace RTCV.NetCore
             }
 
         }
-
     }
 }
