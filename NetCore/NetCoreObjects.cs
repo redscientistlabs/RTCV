@@ -129,6 +129,11 @@ namespace RTCV.NetCore
         public event EventHandler<NetCoreEventArgs> ConsoleWritten;
         public virtual void OnConsoleWritten(NetCoreEventArgs e) => ConsoleWritten?.Invoke(this, e);
 
+        public bool HasConsoleEventHandler()
+        {
+            return ConsoleWritten != null;
+        }
+
         public static void WriteLine(string message)
         {
 

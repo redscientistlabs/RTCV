@@ -91,24 +91,25 @@ namespace RTCV.NetCore
             return hub?.SendMessage(_message, synced);
         }
 
-        public void Stop()
+        public void Stop(bool force = false)
         {
             tcp?.StopNetworking();
-        }
-
-        public void Kill()
-        {
-            Stop();
 
             DateTime startDT = DateTime.Now;
 
-            while(tcp?.client != null && ((startDT - DateTime.Now).TotalMilliseconds) < 1000) // wait timeout
+            while (tcp?.client != null && ((startDT - DateTime.Now).TotalMilliseconds) < 1000) // wait timeout
                 Thread.Sleep(50);
 
             udp?.Kill();
             tcp?.Kill();
             hub?.Kill();
             watch?.Kill();
+
+        }
+
+        public void Kill()
+        {
+            Stop(true);
 
         }
 
