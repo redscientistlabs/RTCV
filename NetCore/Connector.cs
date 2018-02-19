@@ -93,12 +93,17 @@ namespace RTCV.NetCore
 
         public void Stop(bool force = false)
         {
-            tcp?.StopNetworking();
+            tcp?.StopNetworking(!force);
 
-            DateTime startDT = DateTime.Now;
+            if (!force)
+            {
+                
 
-            while (tcp?.client != null && ((startDT - DateTime.Now).TotalMilliseconds) < 1000) // wait timeout
-                Thread.Sleep(50);
+                DateTime startDT = DateTime.Now;
+
+                while (tcp?.client != null && ((startDT - DateTime.Now).TotalMilliseconds) < 1000) // wait timeout
+                    Thread.Sleep(50);
+            }
 
             udp?.Kill();
             tcp?.Kill();
