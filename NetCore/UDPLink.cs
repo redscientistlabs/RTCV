@@ -60,53 +60,68 @@ namespace RTCV.NetCore
 
         private void ListenToReader()
         {
-            do
+            int port = (spec.Side == NetworkSide.SERVER ? PortClient : PortServer);
+            int UdpReceiveTimeout = 2000;
+
+            UdpClient Listener = null;
+            IPEndPoint groupEP = new IPEndPoint((IP == "127.0.0.1" ? IPAddress.Loopback : IPAddress.Parse(IP)), port);
+
+            try
             {
+                Running = true;
+                ConsoleEx.WriteLine($"UDP Server listening on Port {port}");
 
-                bool done = false;
-                int port = (spec.Side == NetworkSide.SERVER ? PortClient : PortServer);
-
-                UdpClient Listener;
-                IPEndPoint groupEP;
-
-                try
+                while (Running)
                 {
-                    Listener = new UdpClient(port);
-                    groupEP = new IPEndPoint((IP == "127.0.0.1" ? IPAddress.Loopback : IPAddress.Parse(IP)), port);
-                }
-                catch (Exception ex)
-                {
-                    ConsoleEx.WriteLine(ex.ToString());
-                    return;
-                }
 
-                try
-                {
-                    Running = true;
-                    ConsoleEx.WriteLine($"UDP Server listening on Port {port}");
-
-                    while (!done)
+                    try
                     {
-                        if (!Running)
-                            break;
-
-                        byte[] bytes = Listener.Receive(ref groupEP);
-
-                        spec.Connector.hub.QueueMessage(new NetCoreSimpleMessage(Encoding.ASCII.GetString(bytes, 0, bytes.Length)));
+                        if (Listener == null)
+                        {
+                            Listener = new UdpClient(port);
+                            Listener.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, UdpReceiveTimeout);
+                        }
+                    }
+                    catch (Exception ex2)
+                    {
+                        ConsoleEx.WriteLine(ex2.ToString());
+                        return;
                     }
 
-                }
-                catch (Exception e)
-                {
-                    ConsoleEx.WriteLine(e.ToString());
-                }
-                finally
-                {
-                    Listener.Close();
+                    byte[] bytes = null;
+
+                    try
+                    {
+                        bytes = Listener.Receive(ref groupEP);
+                    }
+                    catch (SocketException ex)
+                    {
+                        if (ex.SocketErrorCode == SocketError.TimedOut)
+                        {
+                            Listener?.Client?.Close();
+                            Listener?.Close();
+                            Listener = null;
+                            continue;
+                        }
+                        else
+                            throw ex;
+                    }
+
+                    spec.Connector.hub.QueueMessage(new NetCoreSimpleMessage(Encoding.ASCII.GetString(bytes, 0, bytes.Length)));
+
                 }
 
             }
-            while (Running); //Reopens the UDP Link if closed unexpectedly
+            catch (Exception e)
+            {
+                ConsoleEx.WriteLine(e.ToString());
+            }
+            finally
+            {
+                Listener?.Client?.Close();
+                Listener?.Close();
+            }
+
         }
 
     }
