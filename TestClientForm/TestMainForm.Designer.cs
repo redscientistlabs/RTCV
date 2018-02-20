@@ -87,7 +87,7 @@
             // 
             this.tbPort.Location = new System.Drawing.Point(53, 89);
             this.tbPort.Name = "tbPort";
-            this.tbPort.Size = new System.Drawing.Size(164, 20);
+            this.tbPort.Size = new System.Drawing.Size(48, 20);
             this.tbPort.TabIndex = 2;
             this.tbPort.Text = "42069";
             // 
@@ -95,11 +95,11 @@
             // 
             this.lbNetCoreStatus.AutoSize = true;
             this.lbNetCoreStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbNetCoreStatus.Location = new System.Drawing.Point(229, 9);
+            this.lbNetCoreStatus.Location = new System.Drawing.Point(229, 15);
             this.lbNetCoreStatus.Name = "lbNetCoreStatus";
-            this.lbNetCoreStatus.Size = new System.Drawing.Size(153, 20);
+            this.lbNetCoreStatus.Size = new System.Drawing.Size(184, 20);
             this.lbNetCoreStatus.TabIndex = 4;
-            this.lbNetCoreStatus.Text = "Status : Uninitialized";
+            this.lbNetCoreStatus.Text = "Status : UNINITIALIZED";
             // 
             // groupBox1
             // 

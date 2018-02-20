@@ -26,7 +26,7 @@ namespace RTCV.NetCore
             set
             {
 
-                spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{EVENT_NETWORKSTATUS}", status.ToString()));
+                spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{EVENT_NETWORKSTATUS}", value.ToString()));
 
                 if (value != _status)
                     ConsoleEx.WriteLine($"TCPLink status {value}");
@@ -177,7 +177,7 @@ namespace RTCV.NetCore
                         if (pendingMessage.Type == "{BYE}")
                         {
                             //There's no requirement to receive another {BYE}, sending one will queue a {SAIDBYE} in own queue (They execute the same code)
-                            spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{SAIDBYE}"));
+                            //spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{SAIDBYE}"));
 
                             lock (PeerMessageQueueLock)
                                 PeerMessageQueue.Clear();

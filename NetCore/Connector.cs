@@ -102,7 +102,7 @@ namespace RTCV.NetCore
                 tcp?.StopNetworking(!force);
                 DateTime startDT = DateTime.Now;
 
-                while (tcp?.client != null && ((DateTime.Now - startDT).TotalMilliseconds) < 1000) // wait timeout
+                while (tcp?.client != null && ((DateTime.Now - startDT).TotalMilliseconds) < 1500) // wait timeout
                     Thread.Sleep(50);
             }
 
