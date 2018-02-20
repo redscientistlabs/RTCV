@@ -161,5 +161,10 @@ namespace RTCV.TestForm
         {
             tbNetCoreOutput.Clear();
         }
+
+        private void cbShowDebug_CheckedChanged(object sender, EventArgs e)
+        {
+            ConsoleEx.ShowDebug = cbShowDebug.Checked;
+        }
     }
 }

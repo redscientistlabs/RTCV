@@ -123,6 +123,8 @@ namespace RTCV.NetCore
 
     public class ConsoleEx
     {
+        public static volatile bool ShowDebug = false; // for debugging purposes, put this to true in order to see BOOP and EVENT commands in the console
+
         public static ConsoleEx singularity
         {
             get
@@ -176,7 +178,6 @@ namespace RTCV.NetCore
         public static void WriteLine(string message)
         {
 
-            bool ShowDebug = false; // for debugging purposes, put this to true in order to see BOOP commands in the console
             if (!ShowDebug && (message.Contains("{BOOP}") || message.StartsWith("{EVENT_")))
                 return;
 

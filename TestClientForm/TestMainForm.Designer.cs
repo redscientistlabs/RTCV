@@ -43,6 +43,7 @@
             this.tbNetCoreOutput = new System.Windows.Forms.TextBox();
             this.btnClearConsole = new System.Windows.Forms.Button();
             this.cbDisplayConsole = new System.Windows.Forms.CheckBox();
+            this.cbShowDebug = new System.Windows.Forms.CheckBox();
             this.pnNetCoreCreate.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -213,16 +214,28 @@
             this.cbDisplayConsole.Text = "Display Output";
             this.cbDisplayConsole.UseVisualStyleBackColor = true;
             // 
-            // ClientForm
+            // cbShowDebug
+            // 
+            this.cbShowDebug.AutoSize = true;
+            this.cbShowDebug.Location = new System.Drawing.Point(254, 149);
+            this.cbShowDebug.Name = "cbShowDebug";
+            this.cbShowDebug.Size = new System.Drawing.Size(119, 17);
+            this.cbShowDebug.TabIndex = 8;
+            this.cbShowDebug.Text = "Show all debug info";
+            this.cbShowDebug.UseVisualStyleBackColor = true;
+            this.cbShowDebug.CheckedChanged += new System.EventHandler(this.cbShowDebug_CheckedChanged);
+            // 
+            // TestMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(469, 446);
+            this.Controls.Add(this.cbShowDebug);
             this.Controls.Add(this.cbDisplayConsole);
             this.Controls.Add(this.btnClearConsole);
             this.Controls.Add(this.tbNetCoreOutput);
             this.Controls.Add(this.pnNetCoreCreate);
-            this.Name = "ClientForm";
+            this.Name = "TestMainForm";
             this.Text = "NetCore TestForm";
             this.pnNetCoreCreate.ResumeLayout(false);
             this.pnNetCoreCreate.PerformLayout();
@@ -250,6 +263,7 @@
         private System.Windows.Forms.TextBox tbNetCoreOutput;
         private System.Windows.Forms.Button btnClearConsole;
         private System.Windows.Forms.CheckBox cbDisplayConsole;
+        private System.Windows.Forms.CheckBox cbShowDebug;
     }
 }
 

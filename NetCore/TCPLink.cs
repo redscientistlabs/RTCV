@@ -533,7 +533,7 @@ namespace RTCV.NetCore
             else
                 message = new NetCoreAdvancedMessage(_message.Type); // promote message to Advanced if simple ({BOOP} command goes through UDP Link)
 
-            if(!message.Type.StartsWith("{EVENT_"))
+            if(!message.Type.StartsWith("{EVENT_") || ConsoleEx.ShowDebug)
                 ConsoleEx.WriteLine(spec.Side.ToString() + ":Process advanced message -> " + message.Type.ToString());
 
             switch (message.Type)
