@@ -120,6 +120,14 @@ namespace RTCV.NetCore
 
     public class NetCoreEventArgs : EventArgs
     {
+        public NetCoreEventArgs()
+        { }
+
+        public NetCoreEventArgs(string type)
+        {
+            message = new NetCoreSimpleMessage(type);
+        }
+
         public NetCoreMessage message { get; set; } = null;
         public NetCoreMessage returnMessage {get { return _returnMessage; }}
         internal NetCoreMessage _returnMessage = null;

@@ -56,6 +56,5 @@
 
         #endregion
         private System.Windows.Forms.Panel pnScale;
-        private System.Windows.Forms.Label label2;
     }
 }

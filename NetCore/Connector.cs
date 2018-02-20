@@ -15,8 +15,6 @@ namespace RTCV.NetCore
         internal MessageHub hub = null;
         internal ReturnWatch watch = null;
 
-        private System.Timers.Timer shutdownTimer = null;
-
         public NetworkStatus status
         {
             get
@@ -27,9 +25,13 @@ namespace RTCV.NetCore
 
         public NetCoreConnector(NetCoreSpec _spec)
         {
+            ConsoleEx.WriteLine($"NetCore Initialization");
+
             spec = _spec;
             spec.Connector = this;
             Initialize();
+
+            ConsoleEx.WriteLine($"NetCore Started");
         }
 
         private void Initialize()
@@ -93,23 +95,23 @@ namespace RTCV.NetCore
 
         public void Stop(bool force = false)
         {
-            tcp?.StopNetworking(!force);
-
+ 
             if (!force)
             {
-                
 
+                tcp?.StopNetworking(!force);
                 DateTime startDT = DateTime.Now;
 
-                while (tcp?.client != null && ((startDT - DateTime.Now).TotalMilliseconds) < 1000) // wait timeout
+                while (tcp?.client != null && ((DateTime.Now - startDT).TotalMilliseconds) < 1000) // wait timeout
                     Thread.Sleep(50);
             }
 
-            udp?.Kill();
             tcp?.Kill();
+            udp?.Kill();
             hub?.Kill();
             watch?.Kill();
 
+            ConsoleEx.WriteLine($"NetCore {(force ? "Killed" : "Stopped")}");
         }
 
         public void Kill()

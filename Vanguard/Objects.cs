@@ -11,8 +11,8 @@ namespace RTCV.Vanguard
         public event EventHandler<NetCoreEventArgs> MessageReceived;
         public virtual void OnMessageReceived(NetCoreEventArgs e) => MessageReceived?.Invoke(this, e);
 
-        bool HasSavestates = false;
-        string SavestateFolder = "";
+        //bool HasSavestates = false;
+        //string SavestateFolder = "";
 
     }
 

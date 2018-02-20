@@ -25,6 +25,9 @@ namespace RTCV.NetCore
             }
             set
             {
+
+                spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{EVENT_NETWORKSTATUS}", status.ToString()));
+
                 if (value != _status)
                     ConsoleEx.WriteLine($"TCPLink status {value}");
 
@@ -82,6 +85,7 @@ namespace RTCV.NetCore
                         socket = listener.EndAcceptSocket(ar);
                         clientConnected.Set();
                     }
+                    catch (ObjectDisposedException) { }
                     catch (Exception ex) { DiscardException(ex); }
 
                 }, null);
@@ -210,6 +214,10 @@ namespace RTCV.NetCore
                 {
                     ConsoleEx.WriteLine("Ongoing TCPLink Closed during Serialization operation");
                 }
+                else if (ex is ObjectDisposedException)
+                {
+                    ConsoleEx.WriteLine("Ongoing TCPLink Closed during Socket acceptance");
+                }
                 else
                 {
                     DiscardException(ex);
@@ -266,12 +274,17 @@ namespace RTCV.NetCore
             StopNetworking(false);
         }
 
-        private void KillConnections()
+        private void KillConnections(TcpClient clientRef)
         {
+
+
             try
             {
                 streamReadingThread?.Abort();
-                while (streamReadingThread != null && streamReadingThread.IsAlive) { } //Lets wait for the thread to die
+                while (streamReadingThread != null && streamReadingThread.IsAlive) {
+                    System.Windows.Forms.Application.DoEvents();
+                    Thread.Sleep(10);
+                } //Lets wait for the thread to die
                 streamReadingThread = null;
             }
             catch { }
@@ -285,8 +298,11 @@ namespace RTCV.NetCore
 
             try
             {
-                client?.Close();
-                client = null;
+                if (Object.ReferenceEquals(clientRef, client))
+                {
+                    client?.Close();
+                    client = null;
+                }
             }
             catch { }
 
@@ -294,6 +310,7 @@ namespace RTCV.NetCore
 
         internal void StopNetworking(bool stopGracefully = true, bool stayConnected = false)
         {
+            TcpClient clientRef = client;
 
             if (stopGracefully)
             {   //If this is a graceful stop, try to say {BYE} before leaving
@@ -353,7 +370,7 @@ namespace RTCV.NetCore
                 PeerMessageQueue.Clear();
 
             
-            KillConnections();
+            KillConnections(clientRef);
 
             spec.Connector.watch.Kill(); //Kills the ReturnWatch if waiting for a value
 
@@ -361,12 +378,11 @@ namespace RTCV.NetCore
 
         private bool StartClient()
         {
-
+            client = new TcpClient();
+            TcpClient clientRef = client;
 
             try
             {
-                client = new TcpClient();
-
                 IAsyncResult result = null;
                 bool success = false;
 
@@ -404,8 +420,12 @@ namespace RTCV.NetCore
 
                 try
                 {
-                    client?.Close();
-                    client = null;
+                    if (Object.ReferenceEquals(clientRef, client))
+                    {
+                        client?.Close();
+                        client = null;
+                    }
+                    
                 }
                 catch { }
 
@@ -513,7 +533,8 @@ namespace RTCV.NetCore
             else
                 message = new NetCoreAdvancedMessage(_message.Type); // promote message to Advanced if simple ({BOOP} command goes through UDP Link)
 
-            ConsoleEx.WriteLine(spec.Side.ToString() + ":Process advanced message -> " + message.Type.ToString());
+            if(!message.Type.StartsWith("{EVENT_"))
+                ConsoleEx.WriteLine(spec.Side.ToString() + ":Process advanced message -> " + message.Type.ToString());
 
             switch (message.Type)
             {

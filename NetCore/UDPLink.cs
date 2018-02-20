@@ -41,7 +41,10 @@ namespace RTCV.NetCore
             Running = false;
 
             try { ReaderThread.Abort(); } catch { }
-            while (ReaderThread != null && ReaderThread.IsAlive) { } //Lets wait for the thread to die
+            while (ReaderThread != null && ReaderThread.IsAlive) {
+                System.Windows.Forms.Application.DoEvents();
+                Thread.Sleep(10);
+            } //Lets wait for the thread to die
             ReaderThread = null;
 
             try { Sender.Close(); } catch { }
@@ -110,6 +113,10 @@ namespace RTCV.NetCore
 
                 }
 
+            }
+            catch (ThreadAbortException)
+            {
+                ConsoleEx.WriteLine("Ongoing UDPLink Thread Killed");
             }
             catch (Exception e)
             {

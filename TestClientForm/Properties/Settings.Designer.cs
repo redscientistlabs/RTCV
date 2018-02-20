@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RTCV.TestClientForm.Properties
+namespace RTCV.TestForm.Properties
 {
 
 

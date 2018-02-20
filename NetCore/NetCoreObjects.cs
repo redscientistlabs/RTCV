@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
+using System.Windows.Forms;
 
 namespace RTCV.NetCore
 {
@@ -49,6 +51,12 @@ namespace RTCV.NetCore
         public NetCoreAdvancedMessage(string _Type)
         {
             Type = _Type.Trim().ToUpper();
+        }
+
+        public NetCoreAdvancedMessage(string _Type, object _Obj)
+        {
+            Type = _Type.Trim().ToUpper();
+            objectValue = _Obj;
         }
     }
 
@@ -125,20 +133,51 @@ namespace RTCV.NetCore
             }
         }
         static ConsoleEx _singularity = null;
+        public ISynchronizeInvoke syncObject = null; //This can contain the form or anything that implements it.
+
+        public void Register(Action<object, NetCoreEventArgs> registrant, ISynchronizeInvoke _syncObject = null)
+        {
+            syncObject = _syncObject;
+
+            Unregister();
+            ConsoleWritten += registrant.Invoke; //We trick the eventhandler in executing the registrant instead
+        }
+
+        public void Unregister()
+        {
+            //finds any delegate referencing ConsoleWritten and dereferences it
+
+            FieldInfo eventFieldInfo = typeof(ConsoleEx).GetField("ConsoleWritten", BindingFlags.NonPublic | BindingFlags.Instance);
+            MulticastDelegate eventInstance = (MulticastDelegate)eventFieldInfo.GetValue(ConsoleEx.singularity);
+            Delegate[] invocationList = eventInstance?.GetInvocationList() ?? new Delegate[] { };
+            MethodInfo eventRemoveMethodInfo = typeof(ConsoleEx).GetEvent("ConsoleWritten").GetRemoveMethod(true);
+            foreach (Delegate eventHandler in invocationList)
+                eventRemoveMethodInfo.Invoke(ConsoleEx.singularity, new object[] { eventHandler });
+        }
 
         public event EventHandler<NetCoreEventArgs> ConsoleWritten;
-        public virtual void OnConsoleWritten(NetCoreEventArgs e) => ConsoleWritten?.Invoke(this, e);
-
-        public bool HasConsoleEventHandler()
+        public virtual void OnConsoleWritten(NetCoreEventArgs e)
         {
-            return ConsoleWritten != null;
+            if (syncObject != null)
+                if (syncObject.InvokeRequired)
+                {
+                    syncObject.Invoke(new MethodInvoker(() => { OnConsoleWritten(e); }),null);
+                    return;
+                }
+
+            ConsoleWritten?.Invoke(this, e);
+        }
+
+        public bool HasConsoleEventHandler
+        {
+            get { return ConsoleWritten != null; }
         }
 
         public static void WriteLine(string message)
         {
 
-            bool ShowBoops = false; // for debugging purposes, put this to true in order to see BOOP commands in the console
-            if (!ShowBoops && message.Contains("{BOOP}"))
+            bool ShowDebug = false; // for debugging purposes, put this to true in order to see BOOP commands in the console
+            if (!ShowDebug && (message.Contains("{BOOP}") || message.StartsWith("{EVENT_")))
                 return;
 
             string consoleLine = "[" + DateTime.Now.ToString("hh:mm:ss.ffff") + "] " + message;

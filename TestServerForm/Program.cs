@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace RTCV.TestServerForm
+namespace RTCV.TestForm
 {
     static class Program
     {
@@ -16,7 +16,7 @@ namespace RTCV.TestServerForm
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new TestMainForm(false)); //Start as server
         }
     }
 }
