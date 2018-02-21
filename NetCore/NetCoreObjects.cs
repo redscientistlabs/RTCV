@@ -77,7 +77,15 @@ namespace RTCV.NetCore
 
         public int messageReadTimerDelay = 10; //represents how often the messages are read (ms) (15ms = ~66fps)
 
-        public ISynchronizeInvoke syncObject = null;
+        public ISynchronizeInvoke syncObject
+        {
+            get { return _syncObject; }
+            set {
+                _syncObject = value;
+            }
+        }
+
+        private ISynchronizeInvoke _syncObject = null;
 
         #region Events
 

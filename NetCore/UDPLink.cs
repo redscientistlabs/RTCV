@@ -84,9 +84,22 @@ namespace RTCV.NetCore
                             Listener.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, UdpReceiveTimeout);
                         }
                     }
-                    catch (Exception ex2)
+                    catch (SocketException ex)
                     {
-                        ConsoleEx.WriteLine(ex2.ToString());
+                        if(ex.SocketErrorCode == SocketError.AddressAlreadyInUse)
+                        {
+                            ConsoleEx.WriteLine("UDP Socket Port Collision");
+                        }
+                        else
+                        {
+                            ConsoleEx.WriteLine(ex.ToString());
+                        }
+                        
+                        return;
+                    }
+                    catch (Exception ex)
+                    {
+                        ConsoleEx.WriteLine(ex.ToString());
                         return;
                     }
 

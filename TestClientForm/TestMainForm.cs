@@ -56,33 +56,13 @@ namespace RTCV.TestForm
 
         private void btnStartNetCore_Click(object sender, EventArgs e)
         {
-            if(connector != null)
+            if(connector != null && !connector.Disposed)
             {
                 MessageBox.Show("Connector not null");
                 return;
             }
 
-            string target = tbCustomTarget.Text;
-            string port = tbPort.Text;
-
-            NetCoreSpec spec = new NetCoreSpec();
-
-            spec.syncObject = this;
-
-            //ConsoleEx.singularity.ConsoleWritten += Singularity_ConsoleWritten;
-            ConsoleEx.singularity.Register((ob, ea) => Singularity_ConsoleWritten(ob,ea), this);
-
-            spec.Side = (IsClient ? NetworkSide.CLIENT : NetworkSide.SERVER);
-            spec.Port = Convert.ToInt32(port);
-            spec.Loopback = UseLoopback;
-
-            if(!UseLoopback)
-                spec.IP = target;
-
-            spec.MessageReceived += OnMessageReceived;
-
-            connector = new NetCoreConnector(spec);
-
+            StartClient();
 
            
         }
@@ -96,21 +76,33 @@ namespace RTCV.TestForm
         public void StartClient()
         {
 
-            var spec = new NetCoreSpec();
-            spec.Side = NetworkSide.CLIENT;
+            string target = tbCustomTarget.Text;
+            string port = tbPort.Text;
+
+            NetCoreSpec spec = new NetCoreSpec();
+
+            spec.syncObject = this;
+
+            //ConsoleEx.singularity.ConsoleWritten += Singularity_ConsoleWritten;
+            ConsoleEx.singularity.Register((ob, ea) => Singularity_ConsoleWritten(ob, ea), this);
+
+            spec.Side = (IsClient ? NetworkSide.CLIENT : NetworkSide.SERVER);
+            spec.Port = Convert.ToInt32(port);
+            spec.Loopback = UseLoopback;
+
+            if (!UseLoopback)
+                spec.IP = target;
+
             spec.MessageReceived += OnMessageReceived;
+
             connector = new NetCoreConnector(spec);
+
         }
 
         public void RestartClient()
         {
-            if (connector == null)
-            {
-                MessageBox.Show("connector is null");
-                return;
-            }
 
-            connector.Kill();
+            connector?.Kill();
             connector = null;
             StartClient();
         }
@@ -142,7 +134,7 @@ namespace RTCV.TestForm
 
         private void btnStopNetCore_Click(object sender, EventArgs e)
         {
-            if (connector == null)
+            if (connector == null || connector.Disposed)
             {
                 MessageBox.Show("connector is null");
                 return;
@@ -154,7 +146,9 @@ namespace RTCV.TestForm
 
         private void btnRestart_Click(object sender, EventArgs e)
         {
+            btnRestart.Enabled = false;
             RestartClient();
+            btnRestart.Enabled = true;
         }
 
         private void btnClearConsole_Click(object sender, EventArgs e)

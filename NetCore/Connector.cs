@@ -23,6 +23,8 @@ namespace RTCV.NetCore
             }
         }
 
+        public bool Disposed { get; set; } = false;
+
         public NetCoreConnector(NetCoreSpec _spec)
         {
             ConsoleEx.WriteLine($"NetCore Initialization");
@@ -95,7 +97,8 @@ namespace RTCV.NetCore
 
         public void Stop(bool force = false)
         {
- 
+            Disposed = true;
+
             if (!force)
             {
 

@@ -44,7 +44,7 @@ namespace RTCV.NetCore
         private object PeerMessageQueueLock = new object();
         private LinkedList<NetCoreAdvancedMessage> PeerMessageQueue = new LinkedList<NetCoreAdvancedMessage>();
 
-        private Thread streamReadingThread = null;
+        private volatile Thread streamReadingThread = null;
         private System.Timers.Timer BoopMonitoringTimer = null;
 
         private bool supposedToBeConnected = false;
@@ -393,11 +393,21 @@ namespace RTCV.NetCore
                 }
                 catch { }
 
-                if (!success || result == null)
+                if (!success || result == null || client == null)
                     throw new Exception("Failed to connect");
 
                 client.EndConnect(result);
                 clientStream = client.GetStream();
+
+                if (streamReadingThread != null)
+                {
+                    streamReadingThread.Abort();
+                    while (streamReadingThread != null && streamReadingThread.IsAlive)
+                    {
+                        System.Windows.Forms.Application.DoEvents();
+                        Thread.Sleep(10);
+                    } //Lets wait for the thread to die
+                }
 
                 streamReadingThread = new Thread(() => StoreMessages(clientStream));
                 streamReadingThread.Name = "TCP CLIENT";
@@ -444,6 +454,16 @@ namespace RTCV.NetCore
         {
             try
             {
+                if (streamReadingThread != null)
+                {
+                    streamReadingThread.Abort();
+                    while (streamReadingThread != null && streamReadingThread.IsAlive)
+                    {
+                        System.Windows.Forms.Application.DoEvents();
+                        Thread.Sleep(10);
+                    } //Lets wait for the thread to die
+                }
+
                 streamReadingThread = new Thread(() => StoreMessages(null));
                 streamReadingThread.Name = "TCP SERVER";
                 streamReadingThread.IsBackground = true;
