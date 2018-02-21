@@ -29,17 +29,19 @@ namespace RTCV.TestForm
 
         private void btnKillNetCore_Click(object sender, EventArgs e)
         {
-            KillClient();
-        }
-
-        public void KillClient()
-        {
             if (connector == null)
             {
                 MessageBox.Show("connector is null");
                 return;
             }
 
+            btnKillNetCore.Enabled = false;
+            KillClient();
+            btnKillNetCore.Enabled = true;
+        }
+
+        public void KillClient()
+        {
             connector?.Kill();
             connector = null;
         }
@@ -56,15 +58,17 @@ namespace RTCV.TestForm
 
         private void btnStartNetCore_Click(object sender, EventArgs e)
         {
+
             if(connector != null && !connector.Disposed)
             {
                 MessageBox.Show("Connector not null");
                 return;
             }
 
+            btnStartNetCore.Enabled = false;
             StartClient();
+            btnStartNetCore.Enabled = true;
 
-           
         }
 
         private void Singularity_ConsoleWritten(object sender, NetCoreEventArgs e)
@@ -140,8 +144,10 @@ namespace RTCV.TestForm
                 return;
             }
 
+            btnStopNetCore.Enabled = false;
             connector?.Stop();
             connector = null;
+            btnStopNetCore.Enabled = true;
         }
 
         private void btnRestart_Click(object sender, EventArgs e)
