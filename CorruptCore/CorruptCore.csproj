@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions.cs" />
     <Compile Include="Generator\Lifecycle.cs" />
     <Compile Include="Generator\Workflow.cs" />
     <Compile Include="Connector.cs" />

@@ -66,7 +66,7 @@ namespace RTCV.NetCore
             int UdpReceiveTimeout = 1000;
 
             UdpClient Listener = null;
-            IPEndPoint groupEP = new IPEndPoint((IP == "127.0.0.1" ? IPAddress.Loopback : IPAddress.Parse(IP)), port);
+            IPEndPoint groupEP = new IPEndPoint((IP == "127.0.0.1" ? IPAddress.Loopback : IPAddress.Any), port);
 
             try
             {

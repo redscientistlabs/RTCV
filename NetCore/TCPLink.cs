@@ -176,10 +176,7 @@ namespace RTCV.NetCore
 
                         if (pendingMessage.Type == "{BYE}")
                         {
-                            //There's no requirement to receive another {BYE}, sending one will queue a {SAIDBYE} in own queue (They execute the same code)
-                            //spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{SAIDBYE}"));
-
-                            lock (PeerMessageQueueLock)
+                            lock (PeerMessageQueueLock) //Since we're shutting down, let's clear the message queue
                                 PeerMessageQueue.Clear();
                         }
 
@@ -588,8 +585,7 @@ namespace RTCV.NetCore
 
                     break;
 
-                case "{SAIDBYE}": // End of disconnect or brutal disconnect
-                case "{BYE}":
+                case "{BYE}": // End of disconnect
                     Kill();
                     break;
 

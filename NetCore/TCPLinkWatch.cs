@@ -10,7 +10,6 @@ namespace RTCV.NetCore
     {
         private volatile System.Timers.Timer watchdog = null;
         private object watchLock = new object();
-        private volatile bool enabled = true;
         TCPLink tcp;
 
         internal TCPLinkWatch(TCPLink _tcp, NetCoreSpec spec)
