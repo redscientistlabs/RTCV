@@ -23,7 +23,7 @@
     <ProjectGuid>{44B5E025-83A8-4467-B64C-0730FA78D684}</ProjectGuid>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
-    <RootNamespace>DolphinTestClient</RootNamespace>
+    <RootNamespace>CPPTestClient</RootNamespace>
     <ProjectName>CPPTestClient</ProjectName>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>

@@ -1,0 +1,8 @@
+.vs/
+*.suo
+*.user
+bin
+obj
+packages
+x64
+x86
