@@ -8,8 +8,6 @@ namespace RTCV.CorruptCore
 {
     public class CorruptCoreConnector : IRoutable
     {
-
-
         public object OnMessageReceived(object sender, NetCoreEventArgs e)
         {
             //Use setReturnValue to handle returns

@@ -1,5 +1,6 @@
 ﻿using RTCV.NetCore;
 using RTCV.CorruptCore;
+using RTCV.DolphinCorrupt;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace RTCV.Vanguard
         TargetSpec spec;
 
         CorruptCoreConnector corruptConn;
+        DolphinCorruptConnector dolphinConn;
         NetCoreConnector netConn;
 
         public VanguardConnector(TargetSpec _spec)
@@ -20,6 +22,8 @@ namespace RTCV.Vanguard
 
             LocalNetCoreRouter.registerEndpoint(this, "VANGUARD");
             corruptConn = LocalNetCoreRouter.registerEndpoint(new CorruptCoreConnector(), "CORRUPTCORE");
+            dolphinConn = LocalNetCoreRouter.registerEndpoint(new DolphinCorruptConnector(), "DOLPHIN");
+
 
             var netCoreSpec = new NetCoreSpec();
             netCoreSpec.Side = NetworkSide.CLIENT;
@@ -27,6 +31,7 @@ namespace RTCV.Vanguard
 
             netConn = LocalNetCoreRouter.registerEndpoint(new NetCoreConnector(netCoreSpec), "RTCV");
             //LocalNetCoreRouter.registerEndpoint(netConn, "WGH"); //We can make an alias for WGH
+
 
         }
 
