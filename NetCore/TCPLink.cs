@@ -8,6 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Net;
 using System.Windows.Forms;
 using System.Runtime.Serialization;
+using System.IO;
 
 namespace RTCV.NetCore
 {
@@ -139,10 +140,29 @@ namespace RTCV.NetCore
 
                     if (networkStream != null && networkStream.DataAvailable)
                     {
-                        NetCoreAdvancedMessage message;
+                        NetCoreAdvancedMessage message = null;
+
                         try
                         {
-                            message = (NetCoreAdvancedMessage)binaryFormatter.Deserialize(networkStream);   //This is blocking
+                            using (MemoryStream ms = new MemoryStream())
+                            {
+                                //Read the size
+                                int lengthToReceive = 0;
+                                byte[] _lengthToReceive = new byte[4];
+                                networkStream.Read(_lengthToReceive, 0, _lengthToReceive.Length);
+                                lengthToReceive = BitConverter.ToInt32(_lengthToReceive, 0);
+
+                                //Console.WriteLine("I want this many bytes: " + lengthToReceive);
+                                //Now read until we have that many bytes
+                                long bytesRead = CopyBytes(lengthToReceive, networkStream, ms);
+                                //Console.WriteLine("I got this many bytes: " + bytesRead);
+
+                                //Deserialize it
+                                ms.Position = 0;
+                                message = (NetCoreAdvancedMessage)binaryFormatter.Deserialize(networkStream);
+                                //sw.Stop();
+                                //Console.WriteLine("It took " + sw.ElapsedMilliseconds + " ms to deserialize cmd " + cmd.Type + " of " + ms.ToArray().Length + " bytes");
+                            }
                         }
                         catch { throw; }
 
@@ -167,7 +187,21 @@ namespace RTCV.NetCore
 
                         try
                         {
-                            binaryFormatter.Serialize(networkStream, pendingMessage);
+                            using (MemoryStream ms = new MemoryStream())
+                            {
+                                //Write the length of the command to the first four bytes
+                                binaryFormatter.Serialize(ms, pendingMessage);
+
+                                //Write the length of the incoming object to the NetworkStream
+                                byte[] length = BitConverter.GetBytes(ms.ToArray().Length);
+                                networkStream.Write(length, 0, length.Length);
+                               
+                                //Write the data itself
+                                byte[] buf = ms.ToArray();
+                                networkStream.Write(buf, 0, buf.Length);
+                                //Console.WriteLine("It took " + sw.ElapsedMilliseconds + " ms to serialize backCmd " + backCmd.Type + " of " + ms.ToArray().Length + "	bytes");
+                            }
+
                         }
                         catch
                         {
@@ -708,8 +742,24 @@ namespace RTCV.NetCore
             return spec.Connector.watch.GetValue((Guid)message.requestGuid, message.Type); //This will lock here until value is returned from peer
         }
 
+        #region STREAM EXTENSIONS
+        //Thanks! https://stackoverflow.com/a/13021983
+        public static long CopyBytes(long bytesRequired, Stream inStream, Stream outStream)
+        {
+            long readSoFar = 0L;
+            var buffer = new byte[64 * 1024];
+            do
+            {
+                var toRead = Math.Min(bytesRequired - readSoFar, buffer.Length);
+                var readNow = inStream.Read(buffer, 0, (int)toRead);
+                if (readNow == 0)
+                    break; // End of stream
+                outStream.Write(buffer, 0, readNow);
+                readSoFar += readNow;
+            } while (readSoFar < bytesRequired);
+            return readSoFar;
+        }
+        #endregion
+
     }
-
-
-
 }
