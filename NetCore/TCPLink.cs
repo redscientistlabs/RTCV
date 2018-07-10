@@ -142,8 +142,12 @@ namespace RTCV.NetCore
                     {
                         NetCoreAdvancedMessage message = null;
 
+
                         try
                         {
+
+                            message = (NetCoreAdvancedMessage)binaryFormatter.Deserialize(networkStream);
+                            /*
                             using (MemoryStream ms = new MemoryStream())
                             {
                                 //Read the size
@@ -161,8 +165,8 @@ namespace RTCV.NetCore
                                 ms.Position = 0;
                                 message = (NetCoreAdvancedMessage)binaryFormatter.Deserialize(networkStream);
                                 //sw.Stop();
-                                //Console.WriteLine("It took " + sw.ElapsedMilliseconds + " ms to deserialize cmd " + cmd.Type + " of " + ms.ToArray().Length + " bytes");
-                            }
+                                //Console.WriteLine("It took " + sw.ElapsedMilliseconds + " ms to deserialize cmd " + cmd.Type + " of " + ms.ToArray().Length + " bytes"); 
+                            }*/
                         }
                         catch { throw; }
 
@@ -187,20 +191,22 @@ namespace RTCV.NetCore
 
                         try
                         {
-                            using (MemoryStream ms = new MemoryStream())
-                            {
-                                //Write the length of the command to the first four bytes
-                                binaryFormatter.Serialize(ms, pendingMessage);
+                            /*   using (MemoryStream ms = new MemoryStream())
+                               {
+                                   //Write the length of the command to the first four bytes
+                                   binaryFormatter.Serialize(ms, pendingMessage);
 
-                                //Write the length of the incoming object to the NetworkStream
-                                byte[] length = BitConverter.GetBytes(ms.ToArray().Length);
-                                networkStream.Write(length, 0, length.Length);
-                               
-                                //Write the data itself
-                                byte[] buf = ms.ToArray();
-                                networkStream.Write(buf, 0, buf.Length);
-                                //Console.WriteLine("It took " + sw.ElapsedMilliseconds + " ms to serialize backCmd " + backCmd.Type + " of " + ms.ToArray().Length + "	bytes");
-                            }
+                                   //Write the length of the incoming object to the NetworkStream
+                                   byte[] length = BitConverter.GetBytes(ms.ToArray().Length);
+                                   networkStream.Write(length, 0, length.Length);
+
+                                   //Write the data itself
+                                   byte[] buf = ms.ToArray();
+                                   networkStream.Write(buf, 0, buf.Length);
+                                   //Console.WriteLine("It took " + sw.ElapsedMilliseconds + " ms to serialize backCmd " + backCmd.Type + " of " + ms.ToArray().Length + "	bytes");
+                               }*/
+                            binaryFormatter.Serialize(networkStream, pendingMessage);
+
 
                         }
                         catch

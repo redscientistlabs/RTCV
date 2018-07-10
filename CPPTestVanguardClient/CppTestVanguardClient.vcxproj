@@ -20,12 +20,12 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{44B5E025-83A8-4467-B64C-0730FA78D684}</ProjectGuid>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <ProjectGuid>{C09F8B68-43E4-4809-AF29-92F261587F5A}</ProjectGuid>
     <Keyword>ManagedCProj</Keyword>
-    <RootNamespace>CPPTestClient</RootNamespace>
-    <ProjectName>CPPTestClient</ProjectName>
+    <RootNamespace>CppTestVanguardClient</RootNamespace>
+    <ProjectName>CppTestVanguardClient</ProjectName>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -141,22 +141,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Reference Include="NetCore">
-      <HintPath>..\..\..\..\Documents\RTCV\NetCore\bin\Debug\NetCore.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CPPTestClient.h" />
+    <ClInclude Include="CppTestVanguardClient.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CPPTestClient.cpp" />
+    <ClCompile Include="CppTestVanguardClient.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="app.ico" />
@@ -164,6 +161,9 @@
   <ItemGroup>
     <ProjectReference Include="..\NetCore\NetCore.csproj">
       <Project>{7e106aec-5614-4206-9e4d-25759c90e8ae}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\Vanguard\Vanguard.csproj">
+      <Project>{364c705e-b7ab-4a94-a59b-88899ce65958}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
