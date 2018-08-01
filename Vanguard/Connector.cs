@@ -21,7 +21,7 @@ namespace RTCV.Vanguard
             spec = _spec;
 
             LocalNetCoreRouter.registerEndpoint(this, "VANGUARD");
-            corruptConn = LocalNetCoreRouter.registerEndpoint(new CorruptCoreConnector(), "CORRUPTCORE");
+            corruptConn = LocalNetCoreRouter.registerEndpoint(new CorruptCoreConnector(spec.specDetails), "CORRUPTCORE");
             dolphinConn = LocalNetCoreRouter.registerEndpoint(new DolphinCorruptConnector(), "DOLPHIN");
 
 
@@ -31,6 +31,11 @@ namespace RTCV.Vanguard
 
             netConn = LocalNetCoreRouter.registerEndpoint(new NetCoreConnector(netCoreSpec), "RTCV");
             //LocalNetCoreRouter.registerEndpoint(netConn, "WGH"); //We can make an alias for WGH
+
+
+            //Once everything is registered, we can trigger the first update
+            //The first update is most likely going to be just the template
+            spec.specDetails.OnSpecUpdated(null);
 
 
         }
