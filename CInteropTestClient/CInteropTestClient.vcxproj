@@ -21,7 +21,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{9CAA08F3-D3F2-4929-9482-EC5C016F71A8}</ProjectGuid>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>CInteropTestClient</RootNamespace>
     <ProjectName>CInteropTestClient</ProjectName>
@@ -149,14 +149,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CPPTestClient.h" />
+    <ClInclude Include="CInteropTestClient.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CPPTestClient.cpp" />
+    <ClCompile Include="CInteropTestClient.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="app.ico" />

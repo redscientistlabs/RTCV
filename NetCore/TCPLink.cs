@@ -82,7 +82,7 @@ namespace RTCV.NetCore
                 var iasyncResult = listener.BeginAcceptSocket((ar) =>
                 {
                     try
-                    {
+                    {   
                         socket = listener.EndAcceptSocket(ar);
                         clientConnected.Set();
                     }
