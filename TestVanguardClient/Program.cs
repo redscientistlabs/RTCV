@@ -65,6 +65,13 @@ namespace RTCV.TestVanguardClient
 
             var spec = new Vanguard.TargetSpec();
             spec.MessageReceived += OnMessageReceived;
+
+            var partial = new NetCore.PartialSpec("VanguardSpec");
+            partial["SOME_VARIABLE"] = 420;
+            partial["NOT_SATAN"] = 666;
+
+            spec.specDetails = new NetCore.FullSpec(partial);
+
             connector = new Vanguard.VanguardConnector(spec);
         }
 
