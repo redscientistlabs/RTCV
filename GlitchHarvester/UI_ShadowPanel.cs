@@ -24,7 +24,7 @@ namespace RTCV.UI
 
             if (_type != null)
             {
-                var subFormType = Type.GetType("RTCV.GlitchHarvester.SubForms." + _type);
+                var subFormType = Type.GetType("RTCV.UI." + _type); //remove that and replace with componentform loader
                 subForm = (Form)Activator.CreateInstance(subFormType);
             }
             UpdateSubForm();
@@ -85,7 +85,7 @@ namespace RTCV.UI
 
                 if (subForm == null)
                 {
-                    SolidBrush darkBrush = new SolidBrush(Color.FromArgb(192, Color.Black));
+                    SolidBrush darkBrush = new SolidBrush(Color.FromArgb(96, Color.Black));
                     g.FillRectangle(darkBrush, rectSize);
 
                     Pen pn = new Pen(Color.Black, 1);

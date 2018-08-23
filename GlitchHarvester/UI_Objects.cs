@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -46,7 +47,7 @@ namespace RTCV.UI
                 if (i == 0)
                     UI_CanvasForm.loadTileFormMain(grids[i]);
                 else
-                    UI_CanvasForm.loadTileFormExtra(grids[i]);
+                    UI_CanvasForm.loadTileFormExtraWindow(grids[i]);
 
             }
         }
@@ -58,30 +59,53 @@ namespace RTCV.UI
 
         public int x = 0;
         public int y = 0;
-        public string[,] grid;
+        public string[,] gridComponent;
+        public Size?[,] gridComponentSize;
+        public bool?[,] gridComponentDisplayHeader;
 
-        public CanvasGrid(int _x, int _y)
+        public string GridName;
+
+        public CanvasGrid(int _x, int _y, string _GridName)
         {
             x = _x;
             y = _y;
-            grid = new string[x,y];
+            gridComponent = new string[x,y];
+            gridComponentSize = new Size?[x, y];
+            gridComponentDisplayHeader = new bool?[x, y];
+            GridName = _GridName;
         }
 
-        public void SetTileForm(string tileForm, int tilePosX, int tilePosY)
+        public void SetTileForm(string componentFormName, int tilePosX, int tilePosY, int tileSizeX, int tileSizeY, bool displayHeader = true)
         {
             //removes tileForm position if already exists
-            if(!tileForm.Contains("DummyTileForm"))
-                for (int _x = 0; _x < x; _x++)
-                    for (int _y = 0; _y < y; _y++)
-                        if (grid[_x, _y] == tileForm)
-                            grid[_x, _y] = null;
+            for (int _x = 0; _x < x; _x++)
+                for (int _y = 0; _y < y; _y++)
+                    if (gridComponent[_x, _y] == componentFormName)
+                    {
+                        gridComponent[_x, _y] = null;
+                        gridComponentSize[_x, _y] = null;
+                        gridComponentDisplayHeader[_x, _y] = null;
+                    }
 
             //place tileForm if within grid space
             if (tilePosX < x && tilePosY < y)
-                grid[tilePosX, tilePosY] = tileForm;
+            {
+                gridComponent[tilePosX, tilePosY] = componentFormName;
+                gridComponentSize[tilePosX, tilePosY] = new Size(tileSizeX, tileSizeY);
+                gridComponentDisplayHeader[tilePosX, tilePosY] = displayHeader;
+            }
 
         }
 
+        internal void LoadToMain()
+        {
+            UI_CanvasForm.loadTileFormMain(this);
+        }
+
+        internal void LoadToNewWindow()
+        {
+            UI_CanvasForm.loadTileFormExtraWindow(this);
+        }
     }
 
 }

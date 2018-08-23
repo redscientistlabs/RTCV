@@ -20,7 +20,7 @@ namespace RTCV.UI
 
         //Vallues used for padding and scaling properly in high dpi
         public static int xPadding;
-        public static int coreYPadding; // height of the top bar
+        public static int corePadding; // height of the top bar
         public static int yPadding;
 
 
@@ -37,10 +37,16 @@ namespace RTCV.UI
             cfForm.Show();
             cfForm.BringToFront();
 
-            xPadding = (Width - cfForm.Width);
-            coreYPadding = pnTopBar.Height;
-            yPadding = (Height - cfForm.Height) - coreYPadding;
-            
+            //For Horizontal tab-style menu in coreform
+            //xPadding = (Width - cfForm.Width);
+            //coreYPadding = pnTopBar.Height;
+            //yPadding = (Height - cfForm.Height) - coreYPadding;
+
+            //For Vertical tab-style menu in coreform
+            yPadding = (Height - cfForm.Height);
+            corePadding = pnTopBar.Width;
+            xPadding = (Width - cfForm.Width) - corePadding;
+
 
         }
 
@@ -51,7 +57,8 @@ namespace RTCV.UI
 
         public void SetSize(int x, int y)
         {
-            this.Size = new Size(x + xPadding, y + yPadding + coreYPadding);
+            //this.Size = new Size(x + xPadding, y + yPadding + coreYPadding); //For Horizontal tab-style menu in coreform
+            this.Size = new Size(x + xPadding + corePadding, y + yPadding); //For Vertical tab-style menu in coreform
         }
 
         private void UI_CoreForm_ResizeBegin(object sender, EventArgs e)
@@ -107,11 +114,8 @@ namespace RTCV.UI
             GlitchHarvester.SetTileForm("UI_RenderOutput", 1, 2);
             GlitchHarvester.SetTileForm("UI_StockpileManager", 3, 0);
             */
-            var EngineForm = new CanvasGrid(10, 10);
 
-            EngineForm.SetTileForm("UI_Engine_Intensity", 0, 0);
-            EngineForm.SetTileForm("UI_ComponentFormTile", 4, 0);
-            EngineForm.SetTileForm("UI_Engine_MemoryDomains", 0, 2);
+            //EngineForm.SetTileForm("UI_Engine_MemoryDomains", 0, 2);
             /*
             var TestForm = new CanvasGrid(5, 4);
             TestForm.SetTileForm("UI_DummyTileForm3x1", 0, 0);
@@ -123,20 +127,36 @@ namespace RTCV.UI
 
             /*
             var multiGrid = new MultiGrid(
-                EngineForm,
+                EngineGrid,
                 GlitchHarvester,
                 TestForm
             );
-            */
-            var multiGrid = new MultiGrid(
-                EngineForm
-            );
 
             multiGrid.Load();
+            */
 
+            var EngineGrid = new CanvasGrid(9, 8, "Engine Config");
+            EngineGrid.SetTileForm("General Parameters", 0, 0, 3, 3, false);
+            EngineGrid.SetTileForm("Corruption Engine", 3, 0, 6, 3);
+            EngineGrid.SetTileForm("Memory Domains", 0, 3, 3, 5);
+            EngineGrid.SetTileForm("Advanced Memory Tools", 3, 3, 6, 5, false);
+            EngineGrid.LoadToMain();
 
-            var tileForm = (TileForms.UI_ComponentFormTile)UI_CanvasForm.getTileForm("UI_ComponentFormTile");
-            tileForm.SetCompoentForm("ComponentForm host", 1, 1);
+            var TestGrid = new CanvasGrid(13, 8, "Glitch Harvester");
+            TestGrid.SetTileForm("Glitch Harvester", 0, 0, 9, 8, false);
+            TestGrid.LoadToNewWindow();
+
+            /*
+            var multiGrid = new MultiGrid(
+                EngineGrid,
+                TestGrid
+            );
+            */
+
+            //multiGrid.Load();
+
+            //var tileForm = (UI_ComponentFormTile)UI_CanvasForm.getTileForm("UI_ComponentFormTile");
+            //tileForm.SetCompoentForm("ComponentForm host", 4, 4);
 
         }
 
@@ -146,7 +166,7 @@ namespace RTCV.UI
 
             if (cfForm.spForm == null)
             {
-                cfForm.ShowSubForm("UI_DummySubForm");
+                cfForm.ShowSubForm("UI_ComponentFormSubForm");
             }
             else
                 cfForm.CloseSubForm();

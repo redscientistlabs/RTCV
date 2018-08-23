@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace RTCV.UI.TileForms
+namespace RTCV.UI
 {
     public partial class UI_ComponentFormTile : Form, ITileForm
     {
@@ -19,18 +19,38 @@ namespace RTCV.UI.TileForms
         public UI_ComponentFormTile()
         {
             InitializeComponent();
+
         }
 
-        public void SetCompoentForm(string _childForm, int _sizeX, int _sizeY)
+        public void SetCompoentForm(string _childForm, int _sizeX, int _sizeY, bool DisplayHeader)
         {
             childForm = _childForm;
             SizeX = _sizeX;
             SizeY = _sizeY;
 
-            this.Size = new Size(SizeX, SizeY);
 
-            //childForm.AttachToPanel(pnComponentFormHost);
-            lbComponentFormName.Text = childForm;
+            
+
+
+            this.Size = new Size(
+                (SizeX * UI_CanvasForm.tileSize) + ((SizeX - 1) * UI_CanvasForm.spacerSize),
+                (SizeY * UI_CanvasForm.tileSize) + ((SizeY - 1) * UI_CanvasForm.spacerSize)
+                );
+
+
+            //childForm.AttachToPanel(pnComponentFormHost); //ATTACH HERE
+
+
+            if (DisplayHeader)
+            {
+                lbComponentFormName.Text = childForm; // replace that with the childform's text property
+            }
+            else
+            {
+                lbComponentFormName.Visible = false;
+                pnComponentFormHost.Location = new Point(0, 0);
+                pnComponentFormHost.Size = this.Size;
+            }
         }
 
         public bool CanPopout { get; set; } = false;

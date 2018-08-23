@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI.TileForms
+﻿namespace RTCV.UI
 {
     partial class UI_ComponentFormTile
     {
@@ -47,6 +47,9 @@
             // 
             // pnComponentFormHost
             // 
+            this.pnComponentFormHost.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnComponentFormHost.BackColor = System.Drawing.Color.Gray;
             this.pnComponentFormHost.Controls.Add(this.label4);
             this.pnComponentFormHost.Location = new System.Drawing.Point(0, 24);
@@ -58,12 +61,14 @@
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label4.Location = new System.Drawing.Point(5, 7);
+            this.label4.Location = new System.Drawing.Point(5, 6);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(170, 13);
+            this.label4.Size = new System.Drawing.Size(270, 238);
             this.label4.TabIndex = 121;
             this.label4.Tag = "color:dark";
             this.label4.Text = "Component is detached to window";
@@ -81,7 +86,6 @@
             this.Tag = "color:dark";
             this.Text = "ComponentForm Tile";
             this.pnComponentFormHost.ResumeLayout(false);
-            this.pnComponentFormHost.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

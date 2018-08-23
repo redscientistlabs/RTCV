@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI.SubForms
+﻿namespace RTCV.UI
 {
     partial class UI_ComponentFormSubForm
     {

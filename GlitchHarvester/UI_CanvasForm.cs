@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using RTCV.UI.TileForms;
+using RTCV.UI;
 
 namespace RTCV.UI
 {
@@ -19,7 +19,7 @@ namespace RTCV.UI
         public static int spacerSize;
         public static int tileSize;
 
-        static Dictionary<string, Form> loadedTileForms = new Dictionary<string, Form>();
+        static Dictionary<string, UI_ComponentFormTile> loadedTileForms = new Dictionary<string, UI_ComponentFormTile>();
 
         public bool SubFormMode
         {
@@ -47,14 +47,19 @@ namespace RTCV.UI
 
         }
 
-        public static Form getTileForm(string tileForm)
+        public static UI_ComponentFormTile getTileForm(string componentFormName, int? newSizeX = null, int? newSizeY = null, bool DisplayHeader = true)
         {
-            if (!loadedTileForms.ContainsKey(tileForm))
+
+            if (!loadedTileForms.ContainsKey(componentFormName))
             {
-                loadedTileForms[tileForm] = (Form)Activator.CreateInstance(Type.GetType("RTCV.GlitchHarvester.TileForms." + tileForm));
+                var newForm = (UI_ComponentFormTile)Activator.CreateInstance(typeof(UI_ComponentFormTile));
+                loadedTileForms[componentFormName] = newForm;
+
+                if (newSizeX != null && newSizeY != null)
+                    newForm.SetCompoentForm(componentFormName, newSizeX.Value, newSizeY.Value, DisplayHeader);
             }
 
-            return loadedTileForms[tileForm];
+            return loadedTileForms[componentFormName];
         }
 
         public static int getTilePos(int gridPos)
@@ -81,6 +86,7 @@ namespace RTCV.UI
                 frm.Close();
             }
             extraForms.Clear();
+            loadedTileForms.Clear();
 
         }
 
@@ -102,14 +108,41 @@ namespace RTCV.UI
             mg.Load();
         }
 
-        public static void loadTileFormExtra(CanvasGrid canvasGrid)
+
+        public static void loadTileForm(UI_CanvasForm targetForm, CanvasGrid canvasGrid)
+        {
+
+            targetForm.ResizeCanvas(targetForm, canvasGrid);
+
+            for (int x = 0; x < canvasGrid.x; x++)
+                for (int y = 0; y < canvasGrid.y; y++)
+                    if (canvasGrid.gridComponent[x, y] != null)
+                    {
+                        targetForm.Text = canvasGrid.GridName;
+                        bool DisplayHeader = (canvasGrid.gridComponentDisplayHeader[x, y].HasValue ? canvasGrid.gridComponentDisplayHeader[x, y].Value : false);
+                        var size = canvasGrid.gridComponentSize[x, y];
+                        UI_ComponentFormTile tileForm = getTileForm(canvasGrid.gridComponent[x, y], size?.Width, size?.Height, DisplayHeader);
+                        tileForm.TopLevel = false;
+                        targetForm.Controls.Add(tileForm);
+                        tileForm.Location = getTileLocation(x, y);
+
+
+                        tileForm.Show();
+                    }
+
+
+
+        }
+
+        public static void loadTileFormExtraWindow(CanvasGrid canvasGrid, string WindowHeader = "RTC Extra Form")
         {
             UI_CanvasForm extraForm = new UI_CanvasForm(true);
+
             extraForm.Controls.Clear();
             extraForms.Add(extraForm);
             extraForm.FormBorderStyle = FormBorderStyle.FixedSingle;
             extraForm.MaximizeBox = false;
-            extraForm.Text = "RTC Extra Form";
+            extraForm.Text = WindowHeader;
             loadTileForm(extraForm, canvasGrid);
             extraForm.Show();
 
@@ -122,25 +155,6 @@ namespace RTCV.UI
             loadTileForm(thisForm, canvasGrid);
         }
 
-        public static void loadTileForm(UI_CanvasForm targetForm, CanvasGrid canvasGrid)
-        {
-
-            targetForm.ResizeCanvas(targetForm, canvasGrid);
-
-            for (int x = 0; x < canvasGrid.x; x++)
-                for (int y = 0; y < canvasGrid.y; y++)
-                    if (canvasGrid.grid[x, y] != null)
-                    {
-                        Form tileForm = getTileForm(canvasGrid.grid[x, y]);
-                        tileForm.TopLevel = false;
-                        targetForm.Controls.Add(tileForm);
-                        tileForm.Location = getTileLocation(x,y);
-                        tileForm.Show();
-                    }
-
-
-
-        }
 
         private void button4_Click(object sender, EventArgs e)
         {
@@ -148,7 +162,7 @@ namespace RTCV.UI
 
             if (spForm == null)
             {
-                ShowSubForm("UI_DummySubForm");
+                ShowSubForm("UI_ComponentFormSubForm");
             }
             else
                 CloseSubForm();

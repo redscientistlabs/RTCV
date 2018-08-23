@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace RTCV.UI.SubForms
+namespace RTCV.UI
 {
     public partial class UI_ComponentFormSubForm : Form, ISubForm
     {
