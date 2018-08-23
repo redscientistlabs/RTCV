@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace RTCV.GlitchHarvester
+namespace RTCV.UI
 {
     static class Program
     {
@@ -15,7 +15,7 @@ namespace RTCV.GlitchHarvester
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new GH_CoreForm());
+            Application.Run(new UI_CoreForm());
         }
     }
 }

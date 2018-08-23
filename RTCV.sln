@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCore", "NetCore\NetCore.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CorruptCore", "CorruptCore\CorruptCore.csproj", "{603CE184-B72E-447C-8D02-65CE86F732EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlitchHarvester", "GlitchHarvester\GlitchHarvester.csproj", "{C5C204E3-BF73-4DBA-98C0-913586D3C341}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "GlitchHarvester\UI.csproj", "{C5C204E3-BF73-4DBA-98C0-913586D3C341}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestServer", "TestServer\TestServer.csproj", "{CFF8629A-007C-47D4-8F8C-C650D3115704}"
 EndProject
