@@ -39,6 +39,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsGlitchHarvester">
+      <HintPath>..\..\WGH\WindowsGlitchHarvester\bin\Release\WindowsGlitchHarvester.exe</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Connector.cs" />
@@ -46,10 +49,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\wgh\WindowsGlitchHarvester\WindowsGlitchHarvester.csproj">
-      <Project>{3e59fb86-7a25-4310-a62a-97de5aa32528}</Project>
-      <Name>WindowsGlitchHarvester</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NetCore\NetCore.csproj">
       <Project>{7e106aec-5614-4206-9e4d-25759c90e8ae}</Project>
       <Name>NetCore</Name>

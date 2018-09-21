@@ -3,7 +3,7 @@
 #include <string>  
 #include <iostream>
 #include <msclr/marshal_cppstd.h>
-#include "tasks/tasks_internal.h"
+//#include "tasks/tasks_internal.h"
 
 #include "CInteropTestClient.h"
 
@@ -98,7 +98,7 @@ void NetcoreClient::LoadState(String^ filename)
 {
 	//Assuming your emulator uses std::string, you need to convert from System.String. This does that for you.
 	std::string converted_filename = msclr::interop::marshal_as< std::string >(filename);
-	content_load_state(converted_filename.c_str(), false, true);
+	//content_load_state(converted_filename.c_str(), false, true);
 }
 
 void NetcoreClient::SaveState(String^ filename, bool wait) 
@@ -281,11 +281,11 @@ void NetcoreClient::OnMessageReceived(Object^ sender, NetCoreEventArgs^ e)
 	}
 }
 
-/*
+
 int main() {
 	NetcoreClientInitializer::Initialize();
 
 	//Since everything runs in another thread, we need the main thread to sleep forever.
 	//This only matters for the test client. You'd call NetcoreClientInitializer::Initialize(); from the main thread of your emulator.
 	System::Threading::Thread::Sleep(INT_MAX);
-}*/
+}
