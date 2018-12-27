@@ -167,7 +167,7 @@ namespace RTCV.NetCore
         }
 
         [OnSerializing]
-        private void OnSerializing()
+        private void OnSerializing(StreamingContext context)
         {
             keys.Clear();
             keys.AddRange(specDico.Keys);
@@ -188,7 +188,7 @@ namespace RTCV.NetCore
         }
 
         [OnDeserialized]
-        private void OnDeserialized()
+        private void OnDeserialized(StreamingContext context)
         {
             for (int i = 0; i < keys.Count; i++)
                 specDico[keys[i]] = values[i];
