@@ -70,12 +70,14 @@ namespace RTCV.DolphinCorrupt
                             {
 
                                 NetCoreEventArgs args = new NetCoreEventArgs();
-                                Object[] parameters = new Object[3];
-                                parameters[0] = bv.Address;
-                                parameters[1] = 4;
-                                parameters[2] = bv.Values;
-                                args.message = new NetCoreAdvancedMessage("POKEBYTES", parameters);
-                                NetCore.LocalNetCoreRouter.Route("VANGUARD", this, args);
+                                Object[] parameters = new Object[2];
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    parameters[0] = bv.Address + i;
+                                    parameters[1] = bv.Values[i];
+                                    args.message = new NetCoreAdvancedMessage("POKEBYTE", parameters);
+                                    NetCore.LocalNetCoreRouter.Route("VANGUARD", this, args);
+                                }
 
                             }
 

@@ -58,6 +58,11 @@ namespace RTCV.NetCore
             Type = _Type.Trim().ToUpper();
             objectValue = _Obj;
         }
+
+        public NetCoreAdvancedMessage()
+        {
+        }
+
     }
 
     public class NetCoreSpec

@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
+using Ceras;
 
 namespace RTCV.NetCore
 {
@@ -24,7 +25,8 @@ namespace RTCV.NetCore
             FullSpec vanguardSpec = new FullSpec(vanguardSpecTemplate); //You have to feed a partial spec as a template
 
 
-            vanguardSpec.RegisterUpdateAction((ob, ea) => {
+            vanguardSpec.RegisterUpdateAction((ob, ea) =>
+            {
 
                 PartialSpec partial = ea.partialSpec;
                 //send partial update via netcore or whatever
@@ -53,14 +55,13 @@ namespace RTCV.NetCore
         private PartialSpec template = null;
         public string name = "UnnamedSpec";
 
-        public new object this[string key]  //FullSpec is readonly, must update with partials
+        public new object this[string key] //FullSpec is readonly, must update with partials
         {
             get
             {
                 if (specDico.ContainsKey(key))
                     return specDico[key];
-                else
-                    return null;
+                return null;
             }
         }
 
@@ -68,7 +69,7 @@ namespace RTCV.NetCore
         {
             //Creating a FullSpec requires a template
             template = partialSpec;
-            name = partialSpec.name;
+            name = partialSpec.Name;
             Update(template);
         }
 
@@ -82,12 +83,13 @@ namespace RTCV.NetCore
         {
             //finds any delegate referencing SpecUpdated and dereferences it
 
-            FieldInfo eventFieldInfo = typeof(FullSpec).GetField("SpecUpdated", BindingFlags.NonPublic | BindingFlags.Instance);
+            FieldInfo eventFieldInfo =
+                typeof(FullSpec).GetField("SpecUpdated", BindingFlags.NonPublic | BindingFlags.Instance);
             MulticastDelegate eventInstance = (MulticastDelegate)eventFieldInfo.GetValue(this);
             Delegate[] invocationList = eventInstance?.GetInvocationList() ?? new Delegate[] { };
             MethodInfo eventRemoveMethodInfo = typeof(FullSpec).GetEvent("SpecUpdated").GetRemoveMethod(true);
             foreach (Delegate eventHandler in invocationList)
-                eventRemoveMethodInfo.Invoke(this, new object[] { eventHandler });
+                eventRemoveMethodInfo.Invoke(this, new object[] {eventHandler});
         }
 
         public new void Reset()
@@ -100,105 +102,94 @@ namespace RTCV.NetCore
 
         public void Update(PartialSpec _partialSpec, bool propagate = true)
         {
-            if (name != _partialSpec.name)
+            if (name != _partialSpec.Name)
                 throw new Exception("Name mismatch between PartialSpec and FullSpec");
 
-            for (int i = 0; i < _partialSpec.keys.Count; i++)
-                base[_partialSpec.keys[i]] = _partialSpec.values[i];
+            //For initial
+            foreach (var key in _partialSpec.specDico.Keys)
+                base[key] = _partialSpec.specDico[key];
 
             if (propagate)
-                OnSpecUpdated(new SpecUpdateEventArgs() { partialSpec = _partialSpec });
+                OnSpecUpdated(new SpecUpdateEventArgs() {partialSpec = _partialSpec});
+        }
+
+        public void Update(String key, Object value, bool propagate = true)
+        {PartialSpec spec = new PartialSpec(name);
+            spec[key] = value;
+            Update(spec, propagate);
+        }
+
+        public PartialSpec GetPartialSpec()
+        {
+            PartialSpec p = new PartialSpec(name);
+            foreach (var key in specDico.Keys)
+            {
+                p[key] = base[key];
+            }
+
+            return p;
+        }
+
+        public void FullUpdate()
+        {
+            Update(GetPartialSpec());
         }
 
     }
 
     [Serializable]
+    [Ceras.MemberConfig(TargetMember.All)]
     public class PartialSpec : BaseSpec
     {
-        public string name;
+        public string Name;
+
         public PartialSpec(string _name)
         {
-            name = _name;
+            Name = _name;
+        }
+
+        public PartialSpec()
+        {
+        }
+
+        protected PartialSpec(SerializationInfo info, StreamingContext context)
+        {
+            Name = info.GetString("Name");
         }
     }
 
     [Serializable]
-    public abstract class BaseSpec : ISerializable
+    [Ceras.MemberConfig(TargetMember.All)]
+    public abstract class BaseSpec
     {
-
-        [IgnoreDataMember]
         internal Dictionary<string, object> specDico { get; set; } = new Dictionary<string, object>();
-
-        public List<string> keys = new List<string>();
-        public List<object> values = new List<object>();
 
         public object this[string key]
         {
             get
             {
-
                 if (specDico.ContainsKey(key))
                     return specDico[key];
-                else
-                    return null;
+                return null;
             }
-
             set
             {
-
-                if (value == null && !(this is PartialSpec))    // Partials can have null values
-                {                                               // A null value means a key removal in the Full Spec
+                if (value == null && !(this is PartialSpec)) // Partials can have null values
+                {
+                    // A null value means a key removal in the Full Spec
                     if (specDico.ContainsKey(key))
                         specDico.Remove(key);
                 }
                 else
                     specDico[key] = value;
-
             }
         }
 
         public void Reset() => specDico.Clear();
-
-        [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
-        public void GetObjectData(SerializationInfo info, StreamingContext context)
-        {
-            info.AddValue("Keys", keys);
-            info.AddValue("Values", values);
-        }
-
-        [OnSerializing]
-        private void OnSerializing(StreamingContext context)
-        {
-            keys.Clear();
-            keys.AddRange(specDico.Keys);
-
-            values.Clear();
-            values.AddRange(specDico.Values);
-
-            //If for some ungodly reason the indexes were not to match, this slower code below should fix that.
-            /*
-            keys.Clear();
-            values.Clear();
-            foreach (var key in specDico.Keys)
-            {
-                keys.Add(key);
-                values.Add(specDico[key]);
-            }
-            */
-        }
-
-        [OnDeserialized]
-        private void OnDeserialized(StreamingContext context)
-        {
-            for (int i = 0; i < keys.Count; i++)
-                specDico[keys[i]] = values[i];
-        }
-
     }
 
     public class SpecUpdateEventArgs : EventArgs
     {
         public PartialSpec partialSpec = null;
     }
-
 }

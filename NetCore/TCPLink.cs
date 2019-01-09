@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -9,6 +11,7 @@ using System.Net;
 using System.Windows.Forms;
 using System.Runtime.Serialization;
 using System.IO;
+using Ceras;
 
 namespace RTCV.NetCore
 {
@@ -106,7 +109,7 @@ namespace RTCV.NetCore
 
         private void StoreMessages(NetworkStream providedStream)
         {
-            var binaryFormatter = new BinaryFormatter();
+            var serializer = new CerasSerializer();
 
             TcpListener server = null;
             Socket socket = null;
@@ -146,10 +149,11 @@ namespace RTCV.NetCore
                         try
                         {
 
-                            message = (NetCoreAdvancedMessage)binaryFormatter.Deserialize(networkStream);
-                            /*
                             using (MemoryStream ms = new MemoryStream())
                             {
+                                Stopwatch sw = new Stopwatch();
+                                sw.Start();
+
                                 //Read the size
                                 int lengthToReceive = 0;
                                 byte[] _lengthToReceive = new byte[4];
@@ -163,10 +167,14 @@ namespace RTCV.NetCore
 
                                 //Deserialize it
                                 ms.Position = 0;
-                                message = (NetCoreAdvancedMessage)binaryFormatter.Deserialize(networkStream);
-                                //sw.Stop();
-                                //Console.WriteLine("It took " + sw.ElapsedMilliseconds + " ms to deserialize cmd " + cmd.Type + " of " + ms.ToArray().Length + " bytes"); 
-                            }*/
+
+                                //cmd = (RTC_Command)binaryFormatter.Deserialize(ms);
+                                var temp = ms.ToArray();
+                                message = serializer.Deserialize<NetCoreAdvancedMessage>(temp);
+
+                                sw.Stop();
+                                Console.WriteLine("It took " + sw.ElapsedMilliseconds + " ms to deserialize cmd " + message.Type + " of " + temp.Length + " bytes");
+                            }
                         }
                         catch { throw; }
 
@@ -205,9 +213,22 @@ namespace RTCV.NetCore
                                    networkStream.Write(buf, 0, buf.Length);
                                    //Console.WriteLine("It took " + sw.ElapsedMilliseconds + " ms to serialize backCmd " + backCmd.Type + " of " + ms.ToArray().Length + "	bytes");
                                }*/
-                            binaryFormatter.Serialize(networkStream, pendingMessage);
 
+                            Stopwatch sw = new Stopwatch();
+                            sw.Start();
+                            //Write the length of the command to the first four bytes
+                            byte[] buf = serializer.Serialize(pendingMessage);
 
+                            //Write the length of the incoming object to the NetworkStream
+                            byte[] length = BitConverter.GetBytes(buf.Length);
+                            networkStream.Write(length, 0, length.Length);
+                            //Console.WriteLine("I am giving you this many bytes " + BitConverter.ToInt32(length, 0));
+                            //Write the data itself
+                            //ms.Position = 0;
+                            //ms.CopyTo(networkStream);
+                            networkStream.Write(buf, 0, buf.Length);
+                            sw.Stop();
+                            Console.WriteLine("It took " + sw.ElapsedMilliseconds + " ms to serialize backCmd " + pendingMessage.Type + " of " + buf.Length + " bytes");
                         }
                         catch
                         {
