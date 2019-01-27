@@ -13,6 +13,7 @@ namespace RTCV.DolphinCorrupt
     {
         public object OnMessageReceived(object sender, NetCoreEventArgs e)
         {
+            /*
             //Use setReturnValue to handle returns
 
             var message = e.message;
@@ -89,7 +90,7 @@ namespace RTCV.DolphinCorrupt
                     new object();
                     break;
             }
-
+            */
             return e.returnMessage;
         }
 

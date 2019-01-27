@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
+using Ceras;
 
 namespace RTCV.NetCore
 {
@@ -25,22 +26,35 @@ namespace RTCV.NetCore
         LISTENING
     }
 
-    [Serializable()]
-    public abstract class NetCoreMessage
+	public class NetCoreReceiver
+	{
+		public bool Attached = false;
+		public event EventHandler<NetCoreEventArgs> MessageReceived;
+		public virtual void OnMessageReceived(NetCoreEventArgs e) => MessageReceived.Invoke(this, e);
+	}
+
+	[Serializable()]
+	[Ceras.MemberConfig(TargetMember.All)]
+	public abstract class NetCoreMessage
     {
         public string Type;
     }
 
     [Serializable()]
-    public class NetCoreSimpleMessage : NetCoreMessage
-    {
-        public NetCoreSimpleMessage(string _Type)
+	[Ceras.MemberConfig(TargetMember.All)]
+	public class NetCoreSimpleMessage : NetCoreMessage
+	{
+		public NetCoreSimpleMessage()
+		{
+		}
+		public NetCoreSimpleMessage(string _Type)
         {
             Type = _Type.Trim().ToUpper();
         }
     }
 
     [Serializable()]
+	[Ceras.MemberConfig(TargetMember.All)]
     public class NetCoreAdvancedMessage : NetCoreMessage
     {
         public string ReturnedFrom;
@@ -48,7 +62,11 @@ namespace RTCV.NetCore
         public Guid? requestGuid = null;
         public object objectValue = null;
 
-        public NetCoreAdvancedMessage(string _Type)
+		public NetCoreAdvancedMessage()
+		{
+
+		}
+		public NetCoreAdvancedMessage(string _Type)
         {
             Type = _Type.Trim().ToUpper();
         }
@@ -58,11 +76,6 @@ namespace RTCV.NetCore
             Type = _Type.Trim().ToUpper();
             objectValue = _Obj;
         }
-
-        public NetCoreAdvancedMessage()
-        {
-        }
-
     }
 
     public class NetCoreSpec
@@ -74,13 +87,14 @@ namespace RTCV.NetCore
         public NetworkSide Side = NetworkSide.NONE;
         public bool AutoReconnect = true;
         public int ClientReconnectDelay = 600;
-        public int DefaultBoopMonitoringCounter = 15;
+		public int DefaultBoopMonitoringCounter = 15;
 
-        public bool Loopback = true;
+		public bool Attached = true;
+		public bool Loopback = true;
         public string IP = "127.0.0.1";
         public int Port = 42069;
 
-        public int messageReadTimerDelay = 10; //represents how often the messages are read (ms) (15ms = ~66fps)
+        public int messageReadTimerDelay = 5; //represents how often the messages are read (ms) (15ms = ~66fps)
 
         public ISynchronizeInvoke syncObject
         {

@@ -56,14 +56,16 @@ namespace RTCV.NetCore
             {
                 Byte[] sdata = Encoding.ASCII.GetBytes(message.Type);
                 Sender.Send(sdata, sdata.Length);
-                ConsoleEx.WriteLine($"UDP : Sent simple message \"{message.Type}\"");
+				//Todo - Refactor this into a way to blacklist specific commands 
+				if(message.Type != "UI|KILLSWITCH_PULSE" || ConsoleEx.ShowDebug)
+					ConsoleEx.WriteLine($"UDP : Sent simple message \"{message.Type}\"");
             }
         }
 
         private void ListenToReader()
         {
             int port = (spec.Side == NetworkSide.SERVER ? PortClient : PortServer);
-            int UdpReceiveTimeout = 1000;
+            int UdpReceiveTimeout = Int32.MaxValue;
 
             UdpClient Listener = null;
             IPEndPoint groupEP = new IPEndPoint((IP == "127.0.0.1" ? IPAddress.Loopback : IPAddress.Any), port);
@@ -107,7 +109,8 @@ namespace RTCV.NetCore
 
                     try
                     {
-                        bytes = Listener.Receive(ref groupEP);
+						//if(Listener.Available > 0)
+						bytes = Listener.Receive(ref groupEP);
                     }
                     catch (SocketException ex)
                     {
@@ -121,8 +124,8 @@ namespace RTCV.NetCore
                         else
                             throw ex;
                     }
-
-                    spec.Connector.hub.QueueMessage(new NetCoreSimpleMessage(Encoding.ASCII.GetString(bytes, 0, bytes.Length)));
+					if(bytes != null)
+						spec.Connector.hub.QueueMessage(new NetCoreSimpleMessage(Encoding.ASCII.GetString(bytes, 0, bytes.Length)));
 
                 }
 

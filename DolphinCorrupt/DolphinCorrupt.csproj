@@ -39,8 +39,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="WindowsGlitchHarvester">
-      <HintPath>..\..\WGH\WindowsGlitchHarvester\bin\Release\WindowsGlitchHarvester.exe</HintPath>
+    <Reference Include="WindowsGlitchHarvester, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\wgh\WindowsGlitchHarvester\bin\x64\Debug\WindowsGlitchHarvester.exe</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

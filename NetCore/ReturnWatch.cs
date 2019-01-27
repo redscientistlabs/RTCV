@@ -36,7 +36,10 @@ namespace RTCV.NetCore
 
         public void AddReturn(NetCoreAdvancedMessage message)
         {
-            SyncReturns.Add((Guid)message.requestGuid, message.objectValue);
+			if (!message.requestGuid.HasValue)
+				return;
+
+			SyncReturns.Add(message.requestGuid.Value, message.objectValue);
         }
 
         internal object GetValue(Guid WatchedGuid, string type)
@@ -53,8 +56,8 @@ namespace RTCV.NetCore
             {
                 attemptsAtReading++;
 
-                if (attemptsAtReading % 100 == 0)
-                    System.Windows.Forms.Application.DoEvents(); //prevents the forms to freeze (not responding)
+              //  if (attemptsAtReading % 10000 == 0)
+                System.Windows.Forms.Application.DoEvents(); //prevents the forms to freeze (not responding)
 
                 if (KillReturnWatch)
                 {

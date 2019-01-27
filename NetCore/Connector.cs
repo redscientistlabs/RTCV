@@ -62,10 +62,10 @@ namespace RTCV.NetCore
         {
 
             if((e.message as NetCoreAdvancedMessage)?.requestGuid != null)
-                return SendMessage(e.message,true);
+                return SendMessage(e.message,true, true);
             else
             {
-                SendMessage(e.message);
+                SendMessage(e.message, false, true);
                 return null;
             }
 
@@ -76,22 +76,27 @@ namespace RTCV.NetCore
         public object SendSyncedMessage(string message) { return SendMessage(new NetCoreAdvancedMessage(message), true); }
         public object SendSyncedMessage(string message, object value) { return SendMessage(new NetCoreAdvancedMessage(message) { objectValue = value }, true); }
 
-        private object SendMessage(NetCoreMessage _message, bool synced = false)
+		private object SendMessage(NetCoreMessage _message, bool synced = false, bool external = false)
         {
             
-            if (_message.Type.Contains('|') && LocalNetCoreRouter.HasEndpoints)
+            if (!external && _message.Type.Contains('|'))
             {
                 string[] splitType = _message.Type.Split('|');
                 string target = splitType[0];
                 _message.Type = splitType[1];
+				if (LocalNetCoreRouter.hasEndpoint(target))
+				{
+					if (synced)
+					{
+						if (((NetCoreAdvancedMessage)_message).requestGuid == null)
+							((NetCoreAdvancedMessage)_message).requestGuid = Guid.NewGuid();
+					}
 
-                if (synced)
-                    (_message as NetCoreAdvancedMessage).requestGuid = Guid.NewGuid();
-                    
-                return LocalNetCoreRouter.Route(target, null, new NetCoreEventArgs() { message = _message });
+					return LocalNetCoreRouter.Route(target, new NetCoreEventArgs() { message = _message });
+				}
+
             }
             
-
             return hub?.SendMessage(_message, synced);
         }
 

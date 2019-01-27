@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.Runtime.Serialization;
 using System.IO;
 using Ceras;
+using Ceras.Helpers;
 
 namespace RTCV.NetCore
 {
@@ -108,8 +109,10 @@ namespace RTCV.NetCore
         }
 
         private void StoreMessages(NetworkStream providedStream)
-        {
-            var serializer = new CerasSerializer();
+		{
+			var config = new SerializerConfig();
+			config.PersistTypeCache = true;
+			var serializer = new CerasSerializer(config);
 
             TcpListener server = null;
             Socket socket = null;
@@ -145,10 +148,8 @@ namespace RTCV.NetCore
                     {
                         NetCoreAdvancedMessage message = null;
 
-
                         try
                         {
-
                             using (MemoryStream ms = new MemoryStream())
                             {
                                 Stopwatch sw = new Stopwatch();
@@ -173,7 +174,8 @@ namespace RTCV.NetCore
                                 message = serializer.Deserialize<NetCoreAdvancedMessage>(temp);
 
                                 sw.Stop();
-                                Console.WriteLine("It took " + sw.ElapsedMilliseconds + " ms to deserialize cmd " + message.Type + " of " + temp.Length + " bytes");
+								if(message.Type != "{BOOP}" && sw.ElapsedMilliseconds > 50)
+									Console.WriteLine("It took " + sw.ElapsedMilliseconds + " ms to deserialize cmd " + message.Type + " of " + temp.Length + " bytes");
                             }
                         }
                         catch { throw; }
@@ -199,21 +201,6 @@ namespace RTCV.NetCore
 
                         try
                         {
-                            /*   using (MemoryStream ms = new MemoryStream())
-                               {
-                                   //Write the length of the command to the first four bytes
-                                   binaryFormatter.Serialize(ms, pendingMessage);
-
-                                   //Write the length of the incoming object to the NetworkStream
-                                   byte[] length = BitConverter.GetBytes(ms.ToArray().Length);
-                                   networkStream.Write(length, 0, length.Length);
-
-                                   //Write the data itself
-                                   byte[] buf = ms.ToArray();
-                                   networkStream.Write(buf, 0, buf.Length);
-                                   //Console.WriteLine("It took " + sw.ElapsedMilliseconds + " ms to serialize backCmd " + backCmd.Type + " of " + ms.ToArray().Length + "	bytes");
-                               }*/
-
                             Stopwatch sw = new Stopwatch();
                             sw.Start();
                             //Write the length of the command to the first four bytes
@@ -222,13 +209,11 @@ namespace RTCV.NetCore
                             //Write the length of the incoming object to the NetworkStream
                             byte[] length = BitConverter.GetBytes(buf.Length);
                             networkStream.Write(length, 0, length.Length);
-                            //Console.WriteLine("I am giving you this many bytes " + BitConverter.ToInt32(length, 0));
-                            //Write the data itself
-                            //ms.Position = 0;
-                            //ms.CopyTo(networkStream);
+
                             networkStream.Write(buf, 0, buf.Length);
                             sw.Stop();
-                            Console.WriteLine("It took " + sw.ElapsedMilliseconds + " ms to serialize backCmd " + pendingMessage.Type + " of " + buf.Length + " bytes");
+							if (pendingMessage.Type != "{BOOP}" && sw.ElapsedMilliseconds > 50)
+								Console.WriteLine("It took " + sw.ElapsedMilliseconds + " ms to serialize backCmd " + pendingMessage.Type + " of " + buf.Length + " bytes");
                         }
                         catch
                         {
@@ -391,7 +376,7 @@ namespace RTCV.NetCore
             if (!stayConnected)
                 expectingSomeone = false;
 
-            if (spec.Side == NetworkSide.CLIENT && (status == NetworkStatus.CONNECTED || status == NetworkStatus.CONNECTING))
+            if (spec.Side == NetworkSide.CLIENT )
             {
                 if (stayConnected)
                 {
@@ -406,7 +391,7 @@ namespace RTCV.NetCore
                     spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{EVENT_CLIENTDISCONNECTED}"));
                 }
             }
-            else if (spec.Side == NetworkSide.SERVER && (status == NetworkStatus.CONNECTED || status == NetworkStatus.LISTENING))
+            else if (spec.Side == NetworkSide.SERVER)
             {
                 if (stayConnected)
                 {
