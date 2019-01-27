@@ -4,16 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using RTCV.CorruptCore;
 using NetworkSide = RTCV.NetCore.NetworkSide;
 
 namespace RTCV.Vanguard
 {
     public class VanguardConnector : IRoutable
     {
-        NetCoreReceiver receiver;
+        public NetCoreReceiver receiver;
 
-        public CorruptCoreConnector corruptConn;
         public NetCoreConnector netConn;
 
         public VanguardConnector(NetCoreReceiver _receiver)
@@ -23,7 +21,6 @@ namespace RTCV.Vanguard
 			LocalNetCoreRouter.registerEndpoint(this, "VANGUARD");
             //corruptConn = new CorruptCoreConnector();
             //dolphinConn = LocalNetCoreRouter.registerEndpoint(new DolphinCorruptConnector(), "DOLPHIN");
-            LocalNetCoreRouter.registerEndpoint(corruptConn, "CORRUPTCORE");
 
             if (receiver.Attached)//attached mode
 			{
