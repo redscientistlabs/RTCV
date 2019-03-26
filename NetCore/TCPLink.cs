@@ -64,7 +64,7 @@ namespace RTCV.NetCore
 
             DefaultBoopMonitoringCounter = spec.DefaultBoopMonitoringCounter;
             BoopMonitoringCounter = spec.DefaultBoopMonitoringCounter;
-
+			
             if (spec.AutoReconnect)
             {
                 linkWatch = new TCPLinkWatch(this, spec);
@@ -111,7 +111,13 @@ namespace RTCV.NetCore
         private void StoreMessages(NetworkStream providedStream)
 		{
 			var config = new SerializerConfig();
-			config.PersistTypeCache = true;
+			config.Advanced.PersistTypeCache = true;
+			config.OnResolveFormatter.Add((c, t) =>
+			{
+				if (t == typeof(HashSet<byte[]>))
+					return new NetCore.Extensions.HashSetFormatterThatKeepsItsComparer();
+				return null; // continue searching
+			});
 			var serializer = new CerasSerializer(config);
 
             TcpListener server = null;

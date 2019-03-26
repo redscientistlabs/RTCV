@@ -131,13 +131,13 @@
             this.pnBottom.Size = new System.Drawing.Size(519, 68);
             this.pnBottom.TabIndex = 7;
             // 
-            // button1
+            // btnDebugInfo
             // 
             this.btnDebugInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnDebugInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDebugInfo.ForeColor = System.Drawing.Color.White;
             this.btnDebugInfo.Location = new System.Drawing.Point(13, 8);
-            this.btnDebugInfo.Name = "button1";
+            this.btnDebugInfo.Name = "btnDebugInfo";
             this.btnDebugInfo.Size = new System.Drawing.Size(135, 23);
             this.btnDebugInfo.TabIndex = 7;
             this.btnDebugInfo.Text = "View debug info";

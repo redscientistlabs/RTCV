@@ -30,6 +30,7 @@ namespace RTCV.NetCore
                 if ((tcp.status == NetworkStatus.DISCONNECTED || tcp.status == NetworkStatus.CONNECTIONLOST))
                 {
                     tcp.StopNetworking(false);
+					Thread.Sleep(500);
                     tcp.StartNetworking();
                 }
             }

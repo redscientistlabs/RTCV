@@ -45,7 +45,12 @@ namespace RTCV.NetCore.StaticTools
 			//Type typ = typeof(T);
 
 			if (!instances.ContainsKey(typ))
+			{
 				instances[typ] = Activator.CreateInstance(typ);
+
+				if (typ.IsSubclassOf(typeof(System.Windows.Forms.Form)))
+					formRegister.OnFormRegistered(new NetCoreEventArgs("FORMREGISTER", instances[typ]));
+			}
 
 			return instances[typ];
 		}

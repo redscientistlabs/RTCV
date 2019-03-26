@@ -25,19 +25,17 @@ namespace RTCV.NetCore
 		public CloudDebug(Exception _ex, bool canContinue = false)
 		{
 			InitializeComponent();
-			var path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "7z.dll");
-			SevenZip.SevenZipBase.SetLibraryPath(path);
             ex = _ex;
 			if (!(ex is OperationAbortedException))
 			{
 				lbException.Text = ex.Message;
 				tbStackTrace.Text = ex.Message + "\n" + ex.StackTrace;
 				btnContinue.Visible = canContinue;
+				btnContinue.Visible = true;
 			}
 
 			this.Focus();
 			this.BringToFront();
-			this.TopMost = true;
 		}
 
 		public DialogResult Start()
@@ -53,8 +51,11 @@ namespace RTCV.NetCore
 			StringBuilder sb = new StringBuilder();
 			sb.AppendLine("Spec Dump from UICore");
 			sb.AppendLine();
+			sb.AppendLine("UISpec");
 			RTCV.NetCore.AllSpec.UISpec?.GetDump().ForEach(x => sb.AppendLine(x));
+			sb.AppendLine("CorruptCoreSpec");
 			RTCV.NetCore.AllSpec.CorruptCoreSpec?.GetDump().ForEach(x => sb.AppendLine(x));
+			sb.AppendLine("VanguardSpec");
 			RTCV.NetCore.AllSpec.VanguardSpec?.GetDump().ForEach(x => sb.AppendLine(x));
 
 			return sb.ToString();
@@ -91,13 +92,22 @@ namespace RTCV.NetCore
 					File.Delete(tempzipfile);
 
 
-				//Exporting Message
-				string messagefile = tempdebugdir + "\\MESSAGE.TXT";
-				File.WriteAllText(messagefile, ex.Message);
-
 				//Exporting Stacktrace
 				string stacktracefile = tempdebugdir + "\\STACKTRACE.TXT";
-				File.WriteAllText(stacktracefile, ex.StackTrace);
+				File.WriteAllText(stacktracefile, ex.Message + "\n" + ex.StackTrace);
+
+				//Exporting Inner Exception
+				string innerexceptionfile = tempdebugdir + "\\INNEREXCEPTION.TXT";
+				File.WriteAllText(innerexceptionfile, ex.Message + "\n" + ex.InnerException);
+
+				//Exporting data
+				string data = tempdebugdir + "\\DATA.TXT";
+				StringBuilder sb = new StringBuilder();
+				foreach (var key in ex.Data.Keys)
+				{
+					sb.AppendLine(key + " : " + ex.Data[key]);
+				}
+				File.WriteAllText(data, sb.ToString());
 
 				//Exporting Specs from RTC's perspective
 				string rtcfile = tempdebugdir + "\\RTC_PERSPECTIVE.TXT";
@@ -107,9 +117,22 @@ namespace RTCV.NetCore
 				string emufile = tempdebugdir + "\\EMU_PERSPECTIVE.txt";
 				File.WriteAllText(emufile, getEmuInfo());
 
+				//Copying the log files
+				string emuLog = tempdebugdir + "\\EMU_LOG.txt";
+				lock (Extensions.ConsoleHelper.con.FileWriter)
+				{
+					File.Copy(relativedir + "\\RTC\\EMU_LOG.txt", emuLog, true);
+				}
 
-				var path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), Environment.Is64BitProcess ? "x64" : "x86", "7z.dll");
-				SevenZip.SevenZipCompressor.SetLibraryPath(path);
+				//Copying the log files
+				string rtcLog = tempdebugdir + "\\RTC_LOG.txt";
+				lock (Extensions.ConsoleHelper.con.FileWriter)
+				{
+					File.Copy(relativedir + "\\RTC\\RTC_LOG.txt", rtcLog, true);
+				}
+
+				var path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "7z.dll");
+				SevenZip.SevenZipBase.SetLibraryPath(path);
 				var comp = new SevenZip.SevenZipCompressor();
 				comp.CompressionMode = SevenZip.CompressionMode.Create;
 				comp.TempFolderPath = Path.GetTempPath();
@@ -157,8 +180,6 @@ namespace RTCV.NetCore
 
 				File.Delete(downloadfilepath);
 				Process.Start(extractpath);
-
-
 			}
 		}
 
@@ -220,7 +241,10 @@ namespace RTCV.NetCore
 		private void CloudDebug_Load(object sender, EventArgs e)
 		{
 			if (RTCV.NetCore.Params.IsParamSet("DEBUG_FETCHMODE"))
+			{
 				btnSendDebug.Text = "Fetch data";
+				tbKey.ReadOnly = false;
+			}
 		}
 
 		private void btnDebugInfo_Click(object sender, EventArgs e)

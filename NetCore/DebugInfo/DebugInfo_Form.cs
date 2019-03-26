@@ -19,6 +19,8 @@ namespace RTCV.NetCore
 		{
 			InitializeComponent();
 			this.FormClosing += RTC_Debug_Form_FormClosing;
+			this.Focus();
+			this.BringToFront();
 		}
 
 		private void RTC_Debug_Form_FormClosing(object sender, FormClosingEventArgs e)
