@@ -5,7 +5,6 @@ using System.Text;
 using RTCV;
 using RTCV.NetCore;
 using RTCV.DolphinCorrupt;
-using WindowsGlitchHarvester;
 
 namespace RTCV.DolphinCorrupt
 {
