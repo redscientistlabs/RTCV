@@ -22,6 +22,7 @@ namespace RTCV.Vanguard
 
 			var netCoreSpec = new NetCoreSpec();
             netCoreSpec.Side = NetworkSide.CLIENT;
+            netCoreSpec.Port = 42169;
             netCoreSpec.MessageReceived += OnMessageReceivedProxy;;
 		
             netConn = LocalNetCoreRouter.registerEndpoint(new NetCoreConnector(netCoreSpec), "WGH");
