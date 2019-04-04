@@ -19,37 +19,16 @@ namespace RTCV.Vanguard
             receiver = _receiver;
 
 			LocalNetCoreRouter.registerEndpoint(this, "VANGUARD");
-            //corruptConn = new CorruptCoreConnector();
-            //dolphinConn = LocalNetCoreRouter.registerEndpoint(new DolphinCorruptConnector(), "DOLPHIN");
-
-            if (receiver.Attached)//attached mode
-			{
-			//	CorruptCore.CorruptCore.Attached = true;
-		//		RTCV.UI.UICore.Start(null);
-			//	return;
-			}
-
 
 			var netCoreSpec = new NetCoreSpec();
             netCoreSpec.Side = NetworkSide.CLIENT;
-            netCoreSpec.MessageReceived += OnMessageReceivedProxy;
-			netCoreSpec.ClientConnected += NetCoreSpec_ClientConnected;
-			netConn = new NetCoreConnector(netCoreSpec);
-            //netConn = LocalNetCoreRouter.registerEndpoint(new NetCoreConnector(netCoreSpec), "UI");
-            netConn = LocalNetCoreRouter.registerEndpoint(new NetCoreConnector(netCoreSpec), "RTCV");
-            LocalNetCoreRouter.registerEndpoint(netConn, "WGH"); //We can make an alias for WGH
+            netCoreSpec.MessageReceived += OnMessageReceivedProxy;;
+		
+            netConn = LocalNetCoreRouter.registerEndpoint(new NetCoreConnector(netCoreSpec), "WGH");
             LocalNetCoreRouter.registerEndpoint(netConn, "DEFAULT"); //Will send mesages to netcore if can't find the destination
 
 		}
 
-		public static void ImplyClientConnected() => NetCoreSpec_ClientConnected(null, null);
-
-		private static void NetCoreSpec_ClientConnected(object sender, EventArgs e)
-		{
-			LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_PUSHVANGUARDSPEC, RTCV.NetCore.AllSpec.VanguardSpec.GetPartialSpec(), true);
-			LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_ALLSPECSSENT, true);
-		}
-		
 
 		public void OnMessageReceivedProxy(object sender, NetCoreEventArgs e) => OnMessageReceived(sender, e);
         public object OnMessageReceived(object sender, NetCoreEventArgs e)
@@ -83,16 +62,6 @@ namespace RTCV.Vanguard
         {
 
         }
-
-		public static void PushVanguardSpecRef(FullSpec spec)
-		{
-			RTCV.NetCore.AllSpec.VanguardSpec = spec;
-		}
-
-		public static bool IsUIForm()
-		{
-			return RTCV.NetCore.AllSpec.UISpec?[NetcoreCommands.RTC_INFOCUS] != null;
-		}
 
 		public void KillNetcore()
 		{
