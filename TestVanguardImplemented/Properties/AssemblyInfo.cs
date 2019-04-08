@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CorruptCore")]
+[assembly: AssemblyTitle("TestVanguardImplemented")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CorruptCore")]
+[assembly: AssemblyProduct("TestVanguardImplemented")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("b5633a86-dc66-4723-88eb-7dfc95458072")]
+[assembly: Guid("6e4e8a42-53ae-441c-9d8e-728b9ddbcf2b")]
 
 // Version information for an assembly consists of the following four values:
 //
