@@ -137,7 +137,7 @@ namespace RTCV.NetCore
                     socket = KillableAcceptSocket(server);
                     networkStream = new NetworkStream(socket);
 
-                    server.Stop();
+                    //server.Stop();
 
                 }
 
@@ -294,11 +294,14 @@ namespace RTCV.NetCore
                 catch { } //nobody cares why this failed
 
 
-                try
-                {
-                    server.Stop();
-                }
-                catch { } //nobody cares why this failed
+				try
+				{
+					server.Stop();
+				}
+				catch (Exception ex)
+				{
+					DiscardException(ex);
+				} 
 
                 if (status == NetworkStatus.CONNECTED)
                     status = (expectingSomeone ? NetworkStatus.CONNECTIONLOST : NetworkStatus.DISCONNECTED);

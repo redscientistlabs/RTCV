@@ -92,6 +92,10 @@ namespace RTCV.NetCore
 					File.Delete(tempzipfile);
 
 
+				//Exporting side
+				string sideFile = tempdebugdir + "\\SIDE.txt";
+				File.WriteAllText(sideFile, System.Diagnostics.Process.GetCurrentProcess().ProcessName);
+
 				//Exporting Stacktrace
 				string stacktracefile = tempdebugdir + "\\STACKTRACE.TXT";
 				File.WriteAllText(stacktracefile, ex.Message + "\n" + ex.StackTrace);
