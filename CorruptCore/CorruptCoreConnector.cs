@@ -124,18 +124,21 @@ namespace RTCV.CorruptCore
 					bool backup = (bool)val[3];
 
 					BlastLayer bl = null;
-					SyncObjectSingleton.FormExecute((o, ea) =>
-					{
-						if (loadBeforeCorrupt)
-						{
-							StockpileManager_EmuSide.LoadState_NET(sk, true, false);
-						}
-						//We pull the domains here because if the syncsettings changed, there's a chance the domains changed
-						string[] domains = (string[])RTCV.NetCore.AllSpec.UISpec["SELECTEDDOMAINS"];
-						bl = CorruptCore.GenerateBlastLayer(domains);
-						if(applyBlastLayer)
-							bl?.Apply(backup);
-					});
+
+                    void a(object arg1, EventArgs arg2)
+                    {
+                        if (loadBeforeCorrupt)
+                        {
+                            StockpileManager_EmuSide.LoadState_NET(sk, true, false);
+                        }
+
+                        //We pull the domains here because if the syncsettings changed, there's a chance the domains changed
+                        string[] domains = (string[]) RTCV.NetCore.AllSpec.UISpec["SELECTEDDOMAINS"];
+                        bl = CorruptCore.GenerateBlastLayer(domains);
+                        if (applyBlastLayer) bl?.Apply(backup);
+                    }
+
+                    SyncObjectSingleton.FormExecute(a, null, true);
 					if (advancedMessage.requestGuid != null)
 					{
 						e.setReturnValue(bl);
@@ -147,10 +150,13 @@ namespace RTCV.CorruptCore
 					var temp = advancedMessage.objectValue as object[];
 					BlastLayer bl = (BlastLayer)temp[0];
 					bool backup = (bool)temp[1];
-					SyncObjectSingleton.FormExecute((o, ea) =>
-					{
-						bl.Apply(backup, true);
-					});
+
+                    void a(object arg1, EventArgs arg2)
+                    {
+                        bl.Apply(backup, true);
+                    }
+
+                    SyncObjectSingleton.FormExecute(a, null, true);
 						break;
 				}
 
