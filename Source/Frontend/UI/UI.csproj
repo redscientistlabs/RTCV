@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\Build\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -29,7 +29,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\..\Build\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -352,11 +352,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CorruptCore\CorruptCore.csproj">
+    <ProjectReference Include="..\..\Libraries\CorruptCore\CorruptCore.csproj">
       <Project>{b5633a86-dc66-4723-88eb-7dfc95458072}</Project>
       <Name>CorruptCore</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NetCore\NetCore.csproj">
+    <ProjectReference Include="..\..\Libraries\NetCore\NetCore.csproj">
       <Project>{7e106aec-5614-4206-9e4d-25759c90e8ae}</Project>
       <Name>NetCore</Name>
     </ProjectReference>

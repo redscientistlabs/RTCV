@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\Build\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -26,7 +26,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\..\Build\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -57,7 +57,7 @@
       <Name>NetCore</Name>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </ProjectReference>
-    <ProjectReference Include="..\UI\UI.csproj">
+    <ProjectReference Include="..\..\Frontend\UI\UI.csproj">
       <Project>{bd376bb2-17ec-4fb0-a9fe-6b1bbf4af3e3}</Project>
       <Name>UI</Name>
     </ProjectReference>

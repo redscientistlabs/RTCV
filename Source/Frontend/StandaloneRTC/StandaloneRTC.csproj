@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\Build\Debug\</OutputPath>
     <DefineConstants>DEBUG;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -30,7 +30,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\..\Build\Release\</OutputPath>
     <DefineConstants>WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -107,7 +107,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NetCore\NetCore.csproj">
+    <ProjectReference Include="..\..\Libraries\NetCore\NetCore.csproj">
       <Project>{7e106aec-5614-4206-9e4d-25759c90e8ae}</Project>
       <Name>NetCore</Name>
       <Private>False</Private>
