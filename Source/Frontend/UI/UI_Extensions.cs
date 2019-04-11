@@ -2152,25 +2152,6 @@ namespace RTCV.UI
 		}
 	}
 
-	//Enables the doublebuffered flag for DGVs
-	public static class ExtensionMethods
-	{
-		public static void DoubleBuffered(this DataGridView dgv, bool setting)
-		{
-			Type dgvType = dgv.GetType();
-			PropertyInfo pi = dgvType.GetProperty("DoubleBuffered",
-				BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.SetProperty);
-			pi.SetValue(dgv, setting, null);
-		}
-
-		/*public static void DoubleBuffered(this NumericUpDownHexFix updown, bool setting)
-		{
-			Type updownType = updown.GetType();
-			PropertyInfo pi = updownType.GetProperty("DoubleBuffered",
-				BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.SetProperty);
-			pi.SetValue(updown, setting, null);
-		}*/
-	}
 
 	//Fixes microsoft's numericupdown hex issues. Thanks microsoft
 	public class NumericUpDownHexFix : NumericUpDown
@@ -3006,7 +2987,7 @@ public static class StringExtensions
 }
 // Used code from this https://github.com/wasabii/Cogito/blob/master/Cogito.Core/RandomExtensions.cs
 // MIT Licensed. thank you very much.
-internal static class RandomExtensions
+public static class RandomExtensions
 {
 	public static long RandomLong(this Random rnd)
 	{
@@ -3057,6 +3038,8 @@ internal static class RandomExtensions
 		max = temp;
 	}
 }
+
+
 
 /// <summary>
 /// Provides a generic collection that supports data binding and additionally supports sorting.
@@ -3181,4 +3164,37 @@ public class SortableBindingList<T> : BindingList<T> where T : class
 		//not comparable, compare ToString
 		return lhsValue.ToString().CompareTo(rhsValue.ToString());
 	}
+}
+
+//From bizhawk
+/// <summary>
+/// A dictionary that creates new values on the fly as necessary so that any key you need will be defined. 
+/// </summary>
+/// <typeparam name="K">dictionary keys</typeparam>
+/// <typeparam name="V">dictionary values</typeparam>
+[Serializable]
+public class WorkingDictionary<K, V> : Dictionary<K, V> where V : new()
+{
+    public new V this[K key]
+    {
+        get
+        {
+            V temp;
+            if (!TryGetValue(key, out temp))
+            {
+                temp = this[key] = new V();
+            }
+
+            return temp;
+        }
+
+        set
+        {
+            base[key] = value;
+        }
+    }
+
+    public WorkingDictionary() { }
+
+    protected WorkingDictionary(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }

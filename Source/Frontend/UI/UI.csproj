@@ -26,7 +26,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>..\..\..\Build\Release\</OutputPath>
@@ -41,6 +41,10 @@
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="SlimDX, Version=4.0.13.43, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Build\Release\SlimDX.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -234,6 +238,12 @@
       <DependentUpon>RTC_Test_Form.cs</DependentUpon>
     </Compile>
     <Compile Include="GameProtection.cs" />
+    <Compile Include="Input\Bindings.cs" />
+    <Compile Include="Input\Gamepad.cs" />
+    <Compile Include="Input\Gamepad360.cs" />
+    <Compile Include="Input\Input.cs" />
+    <Compile Include="Input\IPCKeyInput.cs" />
+    <Compile Include="Input\Keyboard.cs" />
     <Compile Include="UICore.cs" />
     <Compile Include="UIConnector.cs" />
     <Compile Include="Program.cs" />
@@ -367,6 +377,8 @@
   <ItemGroup>
     <None Include="Resources\refresh new.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="SlimDX.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

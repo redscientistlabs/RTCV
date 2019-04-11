@@ -1103,7 +1103,12 @@ namespace RTCV.CorruptCore
 	//Lifted from Bizhawk https://github.com/TASVideos/BizHawk
 	public unsafe static class Win32
 	{
-		[DllImport("kernel32.dll")]
+
+
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr LoadLibrary(string dllToLoad);
+
+        [DllImport("kernel32.dll")]
 		public static extern FileType GetFileType(IntPtr hFile);
 
 		[DllImport("kernel32.dll", CharSet = CharSet.Auto)]

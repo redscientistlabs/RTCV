@@ -9,6 +9,7 @@ using System.Media;
 using System.Net;
 using System.Reflection;
 using System.Threading;
+using System.Timers;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using RTCV.CorruptCore;
@@ -30,13 +31,16 @@ namespace RTCV.UI
 		public static bool FirstConnect = true;
 		public static bool HideStartButton = false;
 
-		//RTC Main Forms
-		//public static Color generalColor = Color.FromArgb(60, 45, 70);
-		public static Color GeneralColor = Color.LightSteelBlue;
+        private static System.Timers.Timer inputCheckTimer;
+        private static System.Timers.Timer inputTimer;
+
+        //RTC Main Forms
+        //public static Color generalColor = Color.FromArgb(60, 45, 70);
+        public static Color GeneralColor = Color.LightSteelBlue;
 
 		public static void Start(Form standaloneForm = null)
 		{
-			S.formRegister.FormRegistered += FormRegister_FormRegistered;
+            S.formRegister.FormRegistered += FormRegister_FormRegistered;
 			registerFormEvents(S.GET<RTC_Core_Form>());
 
 			CorruptCore_Extensions.DirectoryRequired(paths: new string[] {
@@ -80,7 +84,20 @@ namespace RTCV.UI
 			S.GET<RTC_SettingsGeneral_Form>().cbUncapIntensity.Checked = RTCV.NetCore.Params.IsParamSet("UNCAP_INTENSITY");
 
 
-			S.GET<RTC_Core_Form>().ShowPanelForm(S.GET<RTC_ConnectionStatus_Form>());
+            //Initialize input code. Poll every 16ms
+            Input.Input.Initialize();
+            inputCheckTimer = new System.Timers.Timer();
+            inputCheckTimer.Elapsed += ProcessInputCheck;
+            inputCheckTimer.Interval = 5;
+            inputCheckTimer.Start();
+            RTCV.UI.Input.Bindings.BindButton("Test", "K");
+
+            //inputTimer = new System.Timers.Timer();
+            //inputCheckTimer.Elapsed += ProcessInputCheck;
+            //inputCheckTimer.Interval = 16;
+            //inputCheckTimer.Start();
+
+            S.GET<RTC_Core_Form>().ShowPanelForm(S.GET<RTC_ConnectionStatus_Form>());
 			if (HideStartButton)
 			{
 				S.GET<RTC_ConnectionStatus_Form>().btnStartEmuhawkDetached.Visible = false;
@@ -389,5 +406,70 @@ namespace RTCV.UI
 		}
 
 
-	}
+        //Borrowed from Bizhawk. Thanks guys
+        private static void ProcessInputCheck(Object o, ElapsedEventArgs e)
+        {
+            Input.Input.Instance.Update();
+            for (; ; )
+            {
+                // loop through all available events
+                var ie = Input.Input.Instance.DequeueEvent();
+                if (ie == null)
+                {
+                    break;
+                }
+
+                // useful debugging:
+                Console.WriteLine(ie);
+
+
+                // look for hotkey bindings for this key
+                var triggers = Input.Bindings.SearchBindings(ie.LogicalButton.ToString());
+
+                bool handled = false;
+                if (ie.EventType == RTCV.UI.Input.Input.InputEventType.Press)
+                {
+                    triggers.Aggregate(handled, (current, trigger) => current | CheckHotkey(trigger));
+                }
+
+                /*
+                if (triggers.Count == 0)
+                {
+                    // Maybe it is a system alt-key which hasnt been overridden
+                    if (ie.EventType == Input.InputEventType.Press)
+                    {
+                        if (ie.LogicalButton.Alt && ie.LogicalButton.Button.Length == 1)
+                        {
+                            var c = ie.LogicalButton.Button.ToLower()[0];
+                            if ((c >= 'a' && c <= 'z') || c == ' ')
+                            {
+                                SendAltKeyChar(c);
+                            }
+                        }
+
+                        if (ie.LogicalButton.Alt && ie.LogicalButton.Button == "Space")
+                        {
+                            SendPlainAltKey(32);
+                        }
+                    }*/
+
+                // TODO - wonder what happens if we pop up something interactive as a response to one of these hotkeys? may need to purge further processing
+
+
+            } // foreach event
+
+        }
+
+        private static bool CheckHotkey(string trigger)
+        {
+            switch (trigger)
+            {
+         //       case "Test":
+          //          MessageBox.Show("Test");
+           //         break;
+            }
+
+            return true;
+        }
+    }
 }
