@@ -461,16 +461,13 @@ namespace RTCV.UI
 
         private static void BindDefaultHotkeys()
         {
+            if (RTCV.NetCore.Params.IsParamSet("HOTKEYS"))
+            {
+                string[] hotkeys = RTCV.NetCore.Params.ReadParam("HOTKEYS").Split(',');
+                for(int i = 0; i < hotkeys.Length; i+=2)
+                    RTCV.UI.Input.Bindings.BindButton(hotkeys[i], hotkeys[i+1]);
 
-            RTCV.UI.Input.Bindings.BindButton("Auto-Corrupt", "NumberPad0");
-
-            RTCV.UI.Input.Bindings.BindButton("GH Load", "NumberPad1");
-            RTCV.UI.Input.Bindings.BindButton("GH Save", "NumberPad7");
-
-            RTCV.UI.Input.Bindings.BindButton("GH Load and Corrupt", "NumberPad2");
-            RTCV.UI.Input.Bindings.BindButton("GH Just Corrupt", "NumberPad3");
-            RTCV.UI.Input.Bindings.BindButton("Blast+RawStash", "NumberPadEnter");
-            RTCV.UI.Input.Bindings.BindButton("Game Protect Back", "RightControl");
+            }
         }
 
         private static bool CheckHotkey(string trigger)
