@@ -161,7 +161,7 @@ namespace RTCV.CorruptCore
 			return bytes;
 		}
 
-		public static string MakeSafeFilename(this string filename, char replaceChar)
+		public static string MakeSafeFilename(string filename, char replaceChar)
 		{
 			foreach (char c in Path.GetInvalidFileNameChars())
 			{
@@ -605,15 +605,14 @@ namespace RTCV.CorruptCore
 		}
 
 
-		#endregion CONTROL EXTENSIONS
+        #endregion CONTROL EXTENSIONS
 
-		#region PATH EXTENSIONS
+        #region PATH EXTENSIONS
+        #endregion PATH EXTENSIONS
 
-		#endregion PATH EXTENSIONS
-
-		#region STREAM EXTENSIONS
-		//Thanks! https://stackoverflow.com/a/13021983
-		public static long CopyBytes(long bytesRequired, Stream inStream, Stream outStream)
+        #region STREAM EXTENSIONS
+        //Thanks! https://stackoverflow.com/a/13021983
+        public static long CopyBytes(long bytesRequired, Stream inStream, Stream outStream)
 		{
 			long readSoFar = 0L;
 			var buffer = new byte[64 * 1024];

@@ -142,7 +142,7 @@ namespace RTCV.UI
 				}
 			}
 
-			String filename = tbListName.Text.MakeSafeFilename('-');
+			String filename = CorruptCore_Extensions.MakeSafeFilename(tbListName.Text, '-');
 			//Handle saving the list to a file
 			if (cbSaveFile.Checked)
 			{
