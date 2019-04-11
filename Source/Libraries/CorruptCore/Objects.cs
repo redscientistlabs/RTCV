@@ -1411,7 +1411,8 @@ namespace RTCV.CorruptCore
 					_value[i] = mi.PeekByte(Address + i);
 				}
 				//Return a new unit
-				return new BlastUnit(_value, Domain, Address, Precision, BigEndian, 0, 1, Note, IsEnabled, IsLocked);
+                //Note the false on bigEndian. That's because when reading from memory we're always reading from left to right and we don't want to flip the bytes twice
+				return new BlastUnit(_value, Domain, Address, Precision, false, 0, 1, Note, IsEnabled, IsLocked);
 
 			}
 			catch (Exception ex)
