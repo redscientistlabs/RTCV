@@ -125,7 +125,7 @@ namespace RTCV.CorruptCore
 
 					BlastLayer bl = null;
 
-                    void a(object arg1, EventArgs arg2)
+                    void a()
                     {
                         if (loadBeforeCorrupt)
                         {
@@ -138,7 +138,7 @@ namespace RTCV.CorruptCore
                         if (applyBlastLayer) bl?.Apply(backup);
                     }
 
-                    SyncObjectSingleton.FormExecute(a, null, true);
+                    SyncObjectSingleton.EmuThreadExecute(a, true);
 					if (advancedMessage.requestGuid != null)
 					{
 						e.setReturnValue(bl);
@@ -151,13 +151,13 @@ namespace RTCV.CorruptCore
 					BlastLayer bl = (BlastLayer)temp[0];
 					bool backup = (bool)temp[1];
 
-                    void a(object arg1, EventArgs arg2)
+                    void a()
                     {
                         bl.Apply(backup, true);
                     }
 
-                    SyncObjectSingleton.FormExecute(a, null, true);
-						break;
+                    SyncObjectSingleton.EmuThreadExecute(a, true);
+					break;
 				}
 
 				/*

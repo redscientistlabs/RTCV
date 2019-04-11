@@ -13,21 +13,39 @@ namespace RTCV.NetCore
 	{
 		public static Form SyncObject;
         public static volatile bool executing;
-        public static volatile Queue<Action<object, EventArgs>> ActionQueue = new Queue<Action<object, EventArgs>>();
+        public static volatile Queue<Action> ActionQueue = new Queue<Action>();
+        public delegate void ActionDelegate(Action a);
+        public static ActionDelegate EmuInvokeDelegate;
+        public static bool UseQueue = false;
+
 
         public static void FormExecute(Action<object, EventArgs> a, object[] args = null, bool useQueue = false)
         {
-            if (useQueue)
-            {
-                ActionDistributor.Enqueue("ACTION",a);
-                ActionDistributor.WaitForAction("ACTION", a);
-            }
+            if (SyncObject.InvokeRequired)
+                SyncObject.Invoke(new MethodInvoker(() => { a.Invoke(null, null); }));
             else
+                a.Invoke(null, null);
+        }
+
+        public static void EmuThreadExecute(Action a, bool fallBackToMainThread, object[] args = null)
+        {
+            if (UseQueue)
             {
-                if (SyncObject.InvokeRequired)
-                    SyncObject.Invoke(new MethodInvoker(() => { a.Invoke(null, null); }));
-                else
-                    a.Invoke(null, null);
+                ActionDistributor.Enqueue("ACTION", a);
+                ActionDistributor.WaitForAction("ACTION", a);
+                return;
+            }
+
+            //We invoke the main thread before invoking the thread because
+            //various emulators need this (Dolphin) and chaining delegates wasn't worth it
+            if (EmuInvokeDelegate != null)
+            {
+                FormExecute((o, ea) => { EmuInvokeDelegate.Invoke(a); });   
+            }
+            //If there's no emuthread, fall back to the main thread if told to
+            else if(fallBackToMainThread)
+            {
+                FormExecute((o, ea) => { a.Invoke(); });
             }
         }
 
@@ -41,27 +59,27 @@ namespace RTCV.NetCore
 	}
     public static class ActionDistributor
     {
-        static volatile Dictionary<string, LinkedList<Action<object, EventArgs>>> ActionDico = new Dictionary<string, LinkedList<Action<object, EventArgs>>>();
+        static volatile Dictionary<string, LinkedList<Action>> ActionDico = new Dictionary<string, LinkedList<Action>>();
         static object ActionPoolLock = new object();
 
-        public static void Enqueue(string key, Action<object, EventArgs> act)
+        public static void Enqueue(string key, Action act)
         {
             lock (ActionPoolLock)
             {
-                if (ActionDico.TryGetValue(key, out LinkedList<Action<object, EventArgs>> actions))
+                if (ActionDico.TryGetValue(key, out LinkedList<Action> actions))
                     actions.AddLast(act);
                 else
                 {
-                    ActionDico[key] = new LinkedList<Action<object, EventArgs>>();
+                    ActionDico[key] = new LinkedList<Action>();
                     actions = ActionDico[key];
                     actions.AddLast(act);
                 }
             }
         }
 
-        public static void WaitForAction(string key, Action<object, EventArgs> act)
+        public static void WaitForAction(string key, Action act)
         {
-            LinkedList<Action<object, EventArgs>> actions;
+            LinkedList<Action> actions;
 
             lock (ActionPoolLock)
             {
@@ -77,7 +95,7 @@ namespace RTCV.NetCore
         {
             lock (ActionPoolLock)
             {
-                LinkedList<Action<object, EventArgs>> actions;
+                LinkedList<Action> actions;
                 if (!ActionDico.TryGetValue(key, out actions))
                     return;
 
@@ -87,7 +105,7 @@ namespace RTCV.NetCore
                         return;
 
                     var act = actions.First.Value;
-                    act.Invoke(null, null);
+                    act.Invoke();
                     actions.RemoveFirst();
 
                 }

@@ -608,38 +608,6 @@ namespace RTCV.CorruptCore
 		#endregion CONTROL EXTENSIONS
 
 		#region PATH EXTENSIONS
-		//why not just use 
-		//System.IO.Path.GetFilename(String)
-		//System.IO.Path.GetFileNameWithoutExtension(String)
-		//System.IO.Path.GetDirectoryName(String) + "\"
-		public static string getShortFilenameFromPath(string longFilenamePath)
-		{
-			// >>> Will contain the character \ at the end
-
-			//returns the filename from the full path
-			if (longFilenamePath.Contains(Path.DirectorySeparatorChar))
-				return longFilenamePath.Substring(longFilenamePath.LastIndexOf(Path.DirectorySeparatorChar) + 1);
-			return longFilenamePath;
-		}
-
-		public static string removeFileExtension(string filename)
-		{
-			// filename.wav -> filename
-
-			if (filename.Contains("."))
-				return filename.Substring(0, filename.LastIndexOf("."));
-			return filename;
-		}
-
-		public static string getLongDirectoryFromPath(string longFilenamePath)
-		{
-			// >>> Will contain the character \ at the end
-
-			//returns the filename from the full path
-			if (longFilenamePath.Contains(Path.DirectorySeparatorChar))
-				return longFilenamePath.Substring(0, longFilenamePath.LastIndexOf(Path.DirectorySeparatorChar) + 1);
-			return longFilenamePath;
-		}
 
 		#endregion PATH EXTENSIONS
 

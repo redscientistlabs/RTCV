@@ -62,13 +62,13 @@ namespace RTCV.CorruptCore
 
 		public static long Intensity
 		{
-			get => (long)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CORE_INTENSITY.ToString()];
+			get => (long)RTCV.NetCore.AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_INTENSITY.ToString()];
 			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_INTENSITY.ToString(), value);
 		}
 
 		public static long ErrorDelay
 		{
-			get => (long)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CORE_ERRORDELAY.ToString()];
+			get => (long)RTCV.NetCore.AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_ERRORDELAY.ToString()];
 			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_ERRORDELAY.ToString(), value);
 		}
 
@@ -80,7 +80,7 @@ namespace RTCV.CorruptCore
 
 		public static bool AutoCorrupt
 		{
-			get => (bool)(RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CORE_AUTOCORRUPT.ToString()] ?? false);
+			get => (bool)(RTCV.NetCore.AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_AUTOCORRUPT.ToString()] ?? false);
 			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_AUTOCORRUPT.ToString(), value);
 		}
 
@@ -563,7 +563,7 @@ namespace RTCV.CorruptCore
 								Domain = selectedDomains[r];
 
 								MaxAddress = cachedDomainSizes[r];
-								RandomAddress = CorruptCore.RND.RandomLong(MaxAddress - cachedPrecision);
+								RandomAddress = CorruptCore.RND. RandomLong(MaxAddress - cachedPrecision);
 
 								bu = GetBlastUnit(Domain, RandomAddress, cachedPrecision);
 								if (bu != null)

@@ -113,7 +113,7 @@ namespace RTCV.CorruptCore
 					//If it's a cue file, find the bins and fix the cue to be relative
 					if (key.RomFilename.ToUpper().Contains(".CUE"))
 					{
-						string cueFolder = CorruptCore_Extensions.getLongDirectoryFromPath(key.RomFilename);
+						string cueFolder = Path.GetDirectoryName(key.RomFilename) + "\\";
 						string[] cueLines = File.ReadAllLines(key.RomFilename);
 						List<string> binFiles = new List<string>();
 
@@ -154,11 +154,11 @@ namespace RTCV.CorruptCore
 					{
 						List<string> binFiles = new List<string>();
 
-						if (File.Exists(CorruptCore_Extensions.removeFileExtension(key.RomFilename) + ".sub"))
-							binFiles.Add(CorruptCore_Extensions.removeFileExtension(key.RomFilename) + ".sub");
+						if (File.Exists(Path.GetFileNameWithoutExtension(key.RomFilename) + ".sub"))
+							binFiles.Add(Path.GetFileNameWithoutExtension(key.RomFilename) + ".sub");
 
-						if (File.Exists(CorruptCore_Extensions.removeFileExtension(key.RomFilename) + ".img"))
-							binFiles.Add(CorruptCore_Extensions.removeFileExtension(key.RomFilename) + ".img");
+						if (File.Exists(Path.GetFileNameWithoutExtension(key.RomFilename) + ".img"))
+							binFiles.Add(Path.GetFileNameWithoutExtension(key.RomFilename) + ".img");
 
 						allRoms.AddRange(binFiles);
 					}
@@ -180,8 +180,8 @@ namespace RTCV.CorruptCore
 			{
 				string rom = str;
 				string romTempfilename = CorruptCore.workingDir + Path.DirectorySeparatorChar + "TEMP" + Path.DirectorySeparatorChar + Path.GetFileName(rom);
-				if (!rom.Contains(Path.DirectorySeparatorChar))
-					rom = CorruptCore.workingDir + Path.DirectorySeparatorChar + "SKS" + Path.DirectorySeparatorChar + rom;
+			//	if (!rom.Contains(Path.DirectorySeparatorChar) && !rom.Contains("/" ))
+				//	rom = CorruptCore.workingDir + Path.DirectorySeparatorChar + "SKS" + Path.DirectorySeparatorChar + rom;
 
 				//If the file already exists, overwrite it.
 				if (File.Exists(romTempfilename))
@@ -220,7 +220,7 @@ namespace RTCV.CorruptCore
 			//Update stashkey info 
 			foreach (StashKey sk in sks.StashKeys)
 			{
-				sk.RomShortFilename = CorruptCore_Extensions.getShortFilenameFromPath(sk.RomFilename);
+				sk.RomShortFilename = Path.GetFileName(sk.RomFilename);
 				sk.RomFilename = CorruptCore.workingDir + Path.DirectorySeparatorChar + "SKS" + Path.DirectorySeparatorChar + sk.RomShortFilename;
 				sk.StateLocation = StashKeySavestateLocation.SKS;
 			}

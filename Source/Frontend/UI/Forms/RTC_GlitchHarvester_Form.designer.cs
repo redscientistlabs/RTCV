@@ -2234,8 +2234,6 @@
             // 
             this.cbCompressStockpiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cbCompressStockpiles.AutoSize = true;
-            this.cbCompressStockpiles.Checked = true;
-            this.cbCompressStockpiles.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbCompressStockpiles.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbCompressStockpiles.ForeColor = System.Drawing.Color.White;
             this.cbCompressStockpiles.Location = new System.Drawing.Point(697, 467);
