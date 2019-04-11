@@ -17,6 +17,7 @@ using RTCV.NetCore;
 using RTCV.UI;
 using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
+using static RTCV.NetCore.NetcoreCommands;
 
 namespace RTCV.UI
 {
@@ -71,7 +72,7 @@ namespace RTCV.UI
 			{
 				PartialSpec partial = e.partialSpec;
 
-				  LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHUISPECUPDATE, partial, e.syncedUpdate);
+				  LocalNetCoreRouter.Route(CORRUPTCORE, REMOTE_PUSHUISPECUPDATE, partial, e.syncedUpdate);
 			};
 
 			CorruptCore.CorruptCore.StartUISide();
@@ -180,13 +181,13 @@ namespace RTCV.UI
 			if (RTCV.NetCore.AllSpec.UISpec == null)
 				return;
 
-			bool previousState = (bool?)RTCV.NetCore.AllSpec.UISpec[NetcoreCommands.RTC_INFOCUS] ?? false;
+			bool previousState = (bool?)RTCV.NetCore.AllSpec.UISpec[RTC_INFOCUS] ?? false;
 			bool currentState = forceSet ?? isAnyRTCFormFocused();
 			Console.WriteLine("Setting state to " + currentState);
 
 			if (previousState != currentState)
 			{	//This is a non-synced spec update to prevent jittering. Shouldn't have any other noticeable impact
-				RTCV.NetCore.AllSpec.UISpec.Update(NetcoreCommands.RTC_INFOCUS, currentState,true,false);
+				RTCV.NetCore.AllSpec.UISpec.Update(RTC_INFOCUS, currentState,true,false);
 			}
 
 		}
@@ -464,9 +465,245 @@ namespace RTCV.UI
         {
             switch (trigger)
             {
-         //       case "Test":
-          //          MessageBox.Show("Test");
-           //         break;
+
+                case "Manual Blast":
+                    LocalNetCoreRouter.Route(CORRUPTCORE, ASYNCBLAST);
+                    break;
+
+                case "Auto-Corrupt":
+                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    {
+                        S.GET<RTC_Core_Form>().btnAutoCorrupt_Click(null, null);
+                    });
+                    break;
+
+                case "Error Delay--":
+                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    {
+                        //	if (S.GET<RTC_GeneralParameters_Form>().nmErrorDelay.Value > 1)
+                        //		S.GET<RTC_GeneralParameters_Form>().nmErrorDelay.Value--;
+                    });
+                    break;
+                    break;
+
+                case "Error Delay++":
+                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    {
+                        //	if (S.GET<RTC_GeneralParameters_Form>().nmErrorDelay.Value < S.GET<RTC_GeneralParameters_Form>().track_ErrorDelay.Maximum)
+                        //		S.GET<RTC_GeneralParameters_Form>().nmErrorDelay.Value++;
+                    });
+                    break;
+
+                case "Intensity--":
+                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    {
+                        //	if (S.GET<RTC_GeneralParameters_Form>().multiTB.Value > 1)
+                        //		S.GET<RTC_GeneralParameters_Form>().nmIntensity.Value--;
+                    });
+                    break;
+
+                case "Intensity++":
+                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    {
+                        //	if (S.GET<RTC_GeneralParameters_Form>().nmIntensity.Value < S.GET<RTC_GeneralParameters_Form>().track_Intensity.Maximum)
+                        //		S.GET<RTC_GeneralParameters_Form>().nmIntensity.Value++;
+                    });
+                    break;
+
+                case "GH Load and Corrupt":
+                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    {
+                        S.GET<RTC_GlitchHarvester_Form>().cbAutoLoadState.Checked = true;
+                        S.GET<RTC_GlitchHarvester_Form>().btnCorrupt_Click(null, null);
+                    });
+                    break;
+
+                case "GH Just Corrupt":
+                    RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(VSPEC.STEP_RUNBEFORE, true);
+
+                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    {
+                        bool isload = S.GET<RTC_GlitchHarvester_Form>().cbAutoLoadState.Checked;
+                        S.GET<RTC_GlitchHarvester_Form>().cbAutoLoadState.Checked = false;
+                        S.GET<RTC_GlitchHarvester_Form>().btnCorrupt_Click(null, null);
+                        S.GET<RTC_GlitchHarvester_Form>().cbAutoLoadState.Checked = isload;
+                    });
+                    break;
+
+                case "GH Reroll":
+                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    {
+                        S.GET<RTC_GlitchHarvester_Form>().btnRerollSelected_Click(null, null);
+                    });
+                    break;
+
+                case "GH Load":
+                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    {
+                        S.GET<RTC_GlitchHarvester_Form>().btnSaveLoad.Text = "LOAD";
+                        S.GET<RTC_GlitchHarvester_Form>().btnSaveLoad_Click(null, null);
+                    });
+                    break;
+
+                case "GH Save":
+                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    {
+                        S.GET<RTC_GlitchHarvester_Form>().btnSaveLoad.Text = "SAVE";
+                        S.GET<RTC_GlitchHarvester_Form>().btnSaveLoad_Click(null, null);
+                    });
+                    break;
+
+                case "Stash->Stockpile":
+                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    {
+                        S.GET<RTC_GlitchHarvester_Form>().AddStashToStockpile(false);
+                    });
+                    break;
+
+                case "Induce KS Crash":
+                    //
+                    break;
+
+                case "Blast+RawStash":
+                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    {
+                        RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(VSPEC.STEP_RUNBEFORE, true);
+                        LocalNetCoreRouter.Route(CORRUPTCORE, ASYNCBLAST, null, true);
+
+                        S.GET<RTC_GlitchHarvester_Form>().btnSendRaw_Click(null, null);
+                    });
+                    break;
+
+                case "Send Raw to Stash":
+                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    {
+                        S.GET<RTC_GlitchHarvester_Form>().btnSendRaw_Click(null, null);
+                    });
+                    break;
+
+                    break;
+
+                case "BlastLayer Toggle":
+                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    {
+                        S.GET<RTC_GlitchHarvester_Form>().btnBlastToggle_Click(null, null);
+                    });
+                    break;
+
+                case "BlastLayer Re-Blast":
+                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    {
+                        if (StockpileManager_UISide.CurrentStashkey == null || StockpileManager_UISide.CurrentStashkey.BlastLayer.Layer.Count == 0)
+                        {
+                            S.GET<RTC_GlitchHarvester_Form>().IsCorruptionApplied = false;
+                            return;
+                        }
+                        S.GET<RTC_GlitchHarvester_Form>().IsCorruptionApplied = true;
+                        StockpileManager_UISide.ApplyStashkey(StockpileManager_UISide.CurrentStashkey, false);
+                    });
+                    break;
+
+                case "Game Protect Back":
+                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    {
+                        var f = S.GET<RTC_Core_Form>();
+                        var b = f.btnGpJumpBack;
+                        if (b.Visible && b.Enabled)
+                            f.btnGpJumpBack_Click(null, null);
+                    });
+                    break;
+
+                case "Game Protect Now":
+                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    {
+                        var f = S.GET<RTC_Core_Form>();
+                        var b = f.btnGpJumpNow;
+                        if (b.Visible && b.Enabled)
+                            f.btnGpJumpNow_Click(null, null);
+                    });
+                    break;
+                case "BE Disable 50":
+                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    {
+                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        if (bef != null && Form.ActiveForm == bef)
+                        {
+                            bef.btnDisable50_Click(null, null);
+                        }
+                    });
+                    break;
+
+                case "BE Remove Disabled":
+                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    {
+                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        if (bef != null && Form.ActiveForm == bef)
+                        {
+                            bef.btnRemoveDisabled_Click(null, null);
+                        }
+                    });
+                    break;
+
+                case "BE Invert Disabled":
+                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    {
+                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        if (bef != null && Form.ActiveForm == bef)
+                        {
+                            bef.btnInvertDisabled_Click(null, null);
+                        }
+                    });
+                    break;
+                case "BE Shift Up":
+                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    {
+                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        if (bef != null && Form.ActiveForm == bef)
+                        {
+                            bef.btnShiftBlastLayerUp_Click(null, null);
+                        }
+                    });
+                    break;
+                case "BE Shift Down":
+                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    {
+                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        if (bef != null && Form.ActiveForm == bef)
+                        {
+                            bef.btnShiftBlastLayerDown_Click(null, null);
+                        }
+                    });
+                    break;
+                case "BE Load Corrupt":
+                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    {
+                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        if (bef != null && bef.Focused)
+                        {
+                            bef.btnLoadCorrupt_Click(null, null);
+                        }
+                    });
+                    break;
+                case "BE Apply":
+                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    {
+                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        if (bef != null && bef.Focused)
+                        {
+                            bef.btnCorrupt_Click(null, null);
+                        }
+                    });
+                    break;
+                case "BE Send Stash":
+                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    {
+                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        if (bef != null && Form.ActiveForm == bef)
+                        {
+                            bef.btnSendToStash_Click(null, null);
+                        }
+                    });
+                    break;
             }
 
             return true;

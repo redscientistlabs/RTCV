@@ -355,10 +355,6 @@ namespace RTCV.CorruptCore
 					});
 					break;
 
-				case REMOTE_HOTKEY_MANUALBLAST:
-					LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, ASYNCBLAST);
-					break;
-
 				default:
 					new object();
 					break;
