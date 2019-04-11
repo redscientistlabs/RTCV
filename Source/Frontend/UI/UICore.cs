@@ -89,24 +89,21 @@ namespace RTCV.UI
             Input.Input.Initialize();
             inputCheckTimer = new System.Timers.Timer();
             inputCheckTimer.Elapsed += ProcessInputCheck;
-            inputCheckTimer.Interval = 5;
+            inputCheckTimer.Interval = 16;
             inputCheckTimer.Start();
-            RTCV.UI.Input.Bindings.BindButton("Test", "K");
-
-            //inputTimer = new System.Timers.Timer();
-            //inputCheckTimer.Elapsed += ProcessInputCheck;
-            //inputCheckTimer.Interval = 16;
-            //inputCheckTimer.Start();
-
-            S.GET<RTC_Core_Form>().ShowPanelForm(S.GET<RTC_ConnectionStatus_Form>());
-			if (HideStartButton)
-			{
-				S.GET<RTC_ConnectionStatus_Form>().btnStartEmuhawkDetached.Visible = false;
-			}
-			S.GET<RTC_Core_Form>().Show();
+            BindDefaultHotkeys();
 
 
-		}
+            if (FirstConnect)
+            {
+                S.GET<RTC_Core_Form>().ShowPanelForm(S.GET<RTC_ConnectionStatus_Form>());
+                if (HideStartButton)
+                {
+                    S.GET<RTC_ConnectionStatus_Form>().btnStartEmuhawkDetached.Visible = false;
+                }
+            }
+            S.GET<RTC_Core_Form>().Show();
+        }
 
 		private static void FormRegister_FormRegistered(object sender, NetCoreEventArgs e)
 		{
@@ -459,6 +456,20 @@ namespace RTCV.UI
 
             } // foreach event
 
+        }
+
+        private static void BindDefaultHotkeys()
+        {
+
+            RTCV.UI.Input.Bindings.BindButton("Auto-Corrupt", "NumberPad0");
+
+            RTCV.UI.Input.Bindings.BindButton("GH Load", "NumberPad3");
+            RTCV.UI.Input.Bindings.BindButton("GH Save", "NumberPad7");
+
+            RTCV.UI.Input.Bindings.BindButton("GH Load and Corrupt", "NumberPad2");
+            RTCV.UI.Input.Bindings.BindButton("GH Just Corrupt", "NumberPad3");
+            RTCV.UI.Input.Bindings.BindButton("Blast+RawStash", "NumberPadEnter");
+            RTCV.UI.Input.Bindings.BindButton("Game Protect Back", "RightControl");
         }
 
         private static bool CheckHotkey(string trigger)
