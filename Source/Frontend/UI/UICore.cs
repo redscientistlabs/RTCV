@@ -492,33 +492,32 @@ namespace RTCV.UI
                 case "Error Delay--":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
-                        //	if (S.GET<RTC_GeneralParameters_Form>().nmErrorDelay.Value > 1)
-                        //		S.GET<RTC_GeneralParameters_Form>().nmErrorDelay.Value--;
+                        	if (S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value > 1)
+                        		S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value--;
                     });
-                    break;
                     break;
 
                 case "Error Delay++":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
-                        //	if (S.GET<RTC_GeneralParameters_Form>().nmErrorDelay.Value < S.GET<RTC_GeneralParameters_Form>().track_ErrorDelay.Maximum)
-                        //		S.GET<RTC_GeneralParameters_Form>().nmErrorDelay.Value++;
+                        	if (S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value < S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Maximum)
+                        		S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value++;
                     });
                     break;
 
                 case "Intensity--":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
-                        //	if (S.GET<RTC_GeneralParameters_Form>().multiTB.Value > 1)
-                        //		S.GET<RTC_GeneralParameters_Form>().nmIntensity.Value--;
+                        	if (S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value > 1)
+                        		S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value--;
                     });
                     break;
 
                 case "Intensity++":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
-                        //	if (S.GET<RTC_GeneralParameters_Form>().nmIntensity.Value < S.GET<RTC_GeneralParameters_Form>().track_Intensity.Maximum)
-                        //		S.GET<RTC_GeneralParameters_Form>().nmIntensity.Value++;
+                        	if (S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value < S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Maximum)
+                        		S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value++;
                     });
                     break;
 
@@ -591,8 +590,6 @@ namespace RTCV.UI
                     {
                         S.GET<RTC_GlitchHarvester_Form>().btnSendRaw_Click(null, null);
                     });
-                    break;
-
                     break;
 
                 case "BlastLayer Toggle":
