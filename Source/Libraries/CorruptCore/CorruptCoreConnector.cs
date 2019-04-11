@@ -72,11 +72,8 @@ namespace RTCV.CorruptCore
 
 				//Vanguard sent a spec update
 				case REMOTE_PUSHVANGUARDSPECUPDATE:
-					SyncObjectSingleton.FormExecute((o, ea) =>
-					{
-						RTCV.NetCore.AllSpec.VanguardSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
-					});
-					break;
+                    RTCV.NetCore.AllSpec.VanguardSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
+                break;
 
 				//UI sent a copy of the CorruptCore spec
 				case REMOTE_PUSHCORRUPTCORESPEC:
