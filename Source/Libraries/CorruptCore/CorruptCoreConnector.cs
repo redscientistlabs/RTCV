@@ -199,50 +199,53 @@ namespace RTCV.CorruptCore
 					bool loadBeforeCorrupt = (bool)(advancedMessage.objectValue as object[])[2];
 					bool applyAfterCorrupt = (bool)(advancedMessage.objectValue as object[])[3];
 
-					SyncObjectSingleton.FormExecute((o, ea) =>
-					{
-						returnList = BlastTools.GenerateBlastLayersFromBlastGeneratorProtos(blastGeneratorProtos, sk, loadBeforeCorrupt);
-						if (applyAfterCorrupt)
-						{
-							BlastLayer bl = new BlastLayer();
-							foreach (var p in returnList)
-							{
-								bl.Layer.AddRange(p.bl.Layer);
-							}
-							bl.Apply(true);
-						}
-					});
-					e.setReturnValue(returnList);
 
+                    void a()
+                    {
+                        returnList = BlastTools.GenerateBlastLayersFromBlastGeneratorProtos(blastGeneratorProtos, sk, loadBeforeCorrupt);
+                        if (applyAfterCorrupt)
+                        {
+                            BlastLayer bl = new BlastLayer();
+                            foreach (var p in returnList)
+                            {
+                                bl.Layer.AddRange(p.bl.Layer);
+                            }
+                            bl.Apply(true);
+                        }
+                    }
+                    SyncObjectSingleton.EmuThreadExecute(a, false);
+					e.setReturnValue(returnList);
 					break;
 				}
 
 
-					case REMOTE_LOADSTATE:
+				case REMOTE_LOADSTATE:
 				{
 					StashKey sk = (StashKey)(advancedMessage.objectValue as object[])[0];
 					bool reloadRom = (bool)(advancedMessage.objectValue as object[])[1];
 					bool runBlastLayer = (bool)(advancedMessage.objectValue as object[])[2];
 
 					bool returnValue = false;
-					SyncObjectSingleton.FormExecute((o, ea) =>
-					{
-						returnValue = StockpileManager_EmuSide.LoadState_NET(sk, reloadRom, runBlastLayer);
-					});
 
-					e.setReturnValue(returnValue);
+                    void a()
+                    {
+                        returnValue = StockpileManager_EmuSide.LoadState_NET(sk, reloadRom, runBlastLayer);
+                     }
+                    SyncObjectSingleton.EmuThreadExecute(a, false);
+                            e.setReturnValue(returnValue);
 				}
 				break;
 				case REMOTE_SAVESTATE:
 				{
 					StashKey sk = null;
-					SyncObjectSingleton.FormExecute((o, ea) =>
-					{
-						sk = StockpileManager_EmuSide.SaveState_NET(advancedMessage.objectValue as StashKey); //Has to be nullable cast
-					});
-					e.setReturnValue(sk);
+                    void a()
+                    {
+                        sk = StockpileManager_EmuSide.SaveState_NET(advancedMessage.objectValue as StashKey); //Has to be nullable cast
+                    }
+                    SyncObjectSingleton.EmuThreadExecute(a, false);
+                    e.setReturnValue(sk);
 				}
-					break;
+				break;
 
 				case REMOTE_BACKUPKEY_REQUEST:
 					{
@@ -252,34 +255,16 @@ namespace RTCV.CorruptCore
 						StashKey sk = null;
 						//We send an unsynced command back
 						SyncObjectSingleton.FormExecute((o, ea) =>
-							{
-								sk = StockpileManager_EmuSide.SaveState_NET();
-							});
+						{
+							sk = StockpileManager_EmuSide.SaveState_NET();
+						});
 
 						LocalNetCoreRouter.Route(NetcoreCommands.UI, REMOTE_BACKUPKEY_STASH, sk, false);
 						break;
 					}
-					
-
-				case REMOTE_DOMAIN_PEEKBYTE:
-					SyncObjectSingleton.FormExecute((o, ea) =>
-					{
-						e.setReturnValue(MemoryDomains.GetInterface((string)(advancedMessage.objectValue as object[])[0]).PeekByte((long)(advancedMessage.objectValue as object[])[1]));
-					});
-					break;
-
-				case REMOTE_DOMAIN_POKEBYTE:
-					SyncObjectSingleton.FormExecute((o, ea) =>
-					{
-						MemoryDomains.GetInterface((string)(advancedMessage.objectValue as object[])[0]).PokeByte((long)(advancedMessage.objectValue as object[])[1], (byte)(advancedMessage.objectValue as object[])[2]);
-					});
-					break;
-
 				case REMOTE_DOMAIN_GETDOMAINS:
 					e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_DOMAIN_GETDOMAINS, true));
 					break;
-
-
 				case REMOTE_PUSHVMDPROTOS:
 					MemoryDomains.VmdPool.Clear();
 					foreach (var proto in (advancedMessage.objectValue as VmdPrototype[]))
@@ -300,64 +285,65 @@ namespace RTCV.CorruptCore
 				}
 					break;
 
-				case REMOTE_DOMAIN_ACTIVETABLE_MAKEDUMP:
-					SyncObjectSingleton.FormExecute((o, ea) =>
-					{
-						MemoryDomains.GenerateActiveTableDump((string)(advancedMessage.objectValue as object[])[0], (string)(advancedMessage.objectValue as object[])[1]);
-					}); 
-					break;
+                case REMOTE_DOMAIN_ACTIVETABLE_MAKEDUMP:
+                {
+                    void a()
+                    {
+                        MemoryDomains.GenerateActiveTableDump((string) (advancedMessage.objectValue as object[])[0],
+                            (string) (advancedMessage.objectValue as object[])[1]);
+                    }
 
-				case REMOTE_BLASTTOOLS_GETAPPLIEDBACKUPLAYER:
+                    SyncObjectSingleton.EmuThreadExecute(a, false);
+                }
+                break;
+
+                case REMOTE_BLASTTOOLS_GETAPPLIEDBACKUPLAYER:
 				{
 					var bl = (BlastLayer)(advancedMessage.objectValue as object[])[0];
 					var sk = (StashKey)(advancedMessage.objectValue as object[])[1];
-					SyncObjectSingleton.FormExecute((o, ea) =>
-					{
-						e.setReturnValue(BlastTools.GetAppliedBackupLayer(bl, sk));
-					});
+
+                    void a()
+                    {
+                        e.setReturnValue(BlastTools.GetAppliedBackupLayer(bl, sk));
+                    }
+
+                    SyncObjectSingleton.EmuThreadExecute(a, false);
 					break;
 				}
-				/*
-				case "REMOTE_DOMAIN_SETSELECTEDDOMAINS":
-					MemoryDomains.UpdateSelectedDomains((string[])advancedMessage.objectValue);
-					break;
-					*/
 
-				case REMOTE_KEY_PUSHSAVESTATEDICO:
-					{
-						//var key = (string)(advancedMessage.objectValue as object[])[1];
-						//var sk = (StashKey)((advancedMessage.objectValue as object[])[0]);
-						//RTC_StockpileManager.SavestateStashkeyDico[key] = sk;
-						//S.GET<RTC_GlitchHarvester_Form>().RefreshSavestateTextboxes();
-					}
-					break;
-
-				case REMOTE_KEY_GETRAWBLASTLAYER:
-					SyncObjectSingleton.FormExecute((o, ea) =>
-					{
-						e.setReturnValue(StockpileManager_EmuSide.GetRawBlastlayer());
-					});
-					break;
+                case REMOTE_KEY_GETRAWBLASTLAYER:
+                {
+                    void a()
+                    {e.setReturnValue(StockpileManager_EmuSide.GetRawBlastlayer());}
+                    SyncObjectSingleton.EmuThreadExecute(a, false);
+                }
+				break;
 
 
-				case REMOTE_SET_APPLYUNCORRUPTBL:
-					SyncObjectSingleton.FormExecute((o, ea) =>
-					{
-						if (StockpileManager_EmuSide.UnCorruptBL != null)
-							StockpileManager_EmuSide.UnCorruptBL.Apply(true);
-					});
-					break;
+                case REMOTE_SET_APPLYUNCORRUPTBL:
+                {
+                    void a()
+                    {
+                        if (StockpileManager_EmuSide.UnCorruptBL != null)
+                            StockpileManager_EmuSide.UnCorruptBL.Apply(true);
+                    }
+                    SyncObjectSingleton.EmuThreadExecute(a, false);
+                }
+                break;
 
-				case REMOTE_SET_APPLYCORRUPTBL:
-					SyncObjectSingleton.FormExecute((o, ea) =>
-					{
-						if (StockpileManager_EmuSide.CorruptBL != null)
-							StockpileManager_EmuSide.CorruptBL.Apply(false);
-					});
-					break;
+                case REMOTE_SET_APPLYCORRUPTBL:
+                {
 
+                    void a()
+                    {
+                        if (StockpileManager_EmuSide.CorruptBL != null)
+                            StockpileManager_EmuSide.CorruptBL.Apply(false);
+                    }
+                    SyncObjectSingleton.EmuThreadExecute(a, false);
+                }
+                break;
 
-				case REMOTE_CLEARSTEPBLASTUNITS:
+                    case REMOTE_CLEARSTEPBLASTUNITS:
 					SyncObjectSingleton.FormExecute((o, ea) =>
 					{
 						StepActions.ClearStepBlastUnits();

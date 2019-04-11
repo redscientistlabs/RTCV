@@ -1290,7 +1290,17 @@ namespace RTCV.CorruptCore
 				switch (Source)
 				{
 					case (BlastUnitSource.STORE):
-						{
+                        {
+                            if (Working == null)
+                            {   
+                                Console.WriteLine("WORKING WAS NULL");
+                                return;
+                            }
+                            if (Working.StoreData == null)
+                            {
+                                Console.WriteLine("STOREDATA WAS NULL");
+                                return;
+                            }
 							//If there's no stored data, return out.
 							if (Working.StoreData.Count == 0)
 								return;

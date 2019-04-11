@@ -15,16 +15,24 @@ namespace RTCV.NetCore
         public static volatile bool executing;
         public static volatile Queue<Action> ActionQueue = new Queue<Action>();
         public delegate void ActionDelegate(Action a);
+        public delegate void GenericDelegate();
         public static ActionDelegate EmuInvokeDelegate;
         public static bool UseQueue = false;
 
 
-        public static void FormExecute(Action<object, EventArgs> a, object[] args = null, bool useQueue = false)
+        public static void FormExecute(Action<object, EventArgs> a, object[] args = null)
         {
             if (SyncObject.InvokeRequired)
                 SyncObject.Invoke(new MethodInvoker(() => { a.Invoke(null, null); }));
             else
                 a.Invoke(null, null);
+        }
+        public static void FormExecute(Delegate a)
+        {
+            if (SyncObject.InvokeRequired)
+                SyncObject.Invoke(a);
+            else
+                a.DynamicInvoke();
         }
 
         public static void EmuThreadExecute(Action a, bool fallBackToMainThread, object[] args = null)
