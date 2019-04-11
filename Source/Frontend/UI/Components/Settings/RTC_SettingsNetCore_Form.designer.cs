@@ -158,7 +158,7 @@
             0,
             0});
             this.nmGameProtectionDelay.Minimum = new decimal(new int[] {
-            5,
+            1,
             0,
             0,
             0});
@@ -167,7 +167,7 @@
             this.nmGameProtectionDelay.TabIndex = 114;
             this.nmGameProtectionDelay.Tag = "color:dark";
             this.nmGameProtectionDelay.Value = new decimal(new int[] {
-            30,
+            10,
             0,
             0,
             0});
