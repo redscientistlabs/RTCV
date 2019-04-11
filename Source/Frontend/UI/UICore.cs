@@ -179,8 +179,9 @@ namespace RTCV.UI
 				return;
 
 			bool previousState = (bool?)RTCV.NetCore.AllSpec.UISpec[RTC_INFOCUS] ?? false;
-			bool currentState = forceSet ?? isAnyRTCFormFocused();
-			Console.WriteLine("Setting state to " + currentState);
+            //bool currentState = forceSet ?? isAnyRTCFormFocused();
+            bool currentState = forceSet ?? true;
+            Console.WriteLine("Setting state to " + currentState);
 
 			if (previousState != currentState)
 			{	//This is a non-synced spec update to prevent jittering. Shouldn't have any other noticeable impact
@@ -463,7 +464,7 @@ namespace RTCV.UI
 
             RTCV.UI.Input.Bindings.BindButton("Auto-Corrupt", "NumberPad0");
 
-            RTCV.UI.Input.Bindings.BindButton("GH Load", "NumberPad3");
+            RTCV.UI.Input.Bindings.BindButton("GH Load", "NumberPad1");
             RTCV.UI.Input.Bindings.BindButton("GH Save", "NumberPad7");
 
             RTCV.UI.Input.Bindings.BindButton("GH Load and Corrupt", "NumberPad2");
