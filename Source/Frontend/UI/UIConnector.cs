@@ -48,14 +48,14 @@ namespace RTCV.UI
 			{
 				if (S.GET<RTC_ConnectionStatus_Form>() != null && !S.GET<RTC_ConnectionStatus_Form>().IsDisposed)
 				{
-					S.GET<RTC_ConnectionStatus_Form>().lbConnectionStatus.Text = "Connection status: Bizhawk timed out";
+					S.GET<RTC_ConnectionStatus_Form>().lbConnectionStatus.Text = "Connection status: Emulator timed out";
 					S.GET<RTC_ConnectionStatus_Form>().btnStartEmuhawkDetached.Visible = true;
 					S.GET<RTC_Core_Form>().ShowPanelForm(S.GET<RTC_ConnectionStatus_Form>());
 				}
 
 				if (S.GET<RTC_GlitchHarvester_Form>() != null && !S.GET<RTC_GlitchHarvester_Form>().IsDisposed)
 				{
-					S.GET<RTC_GlitchHarvester_Form>().lbConnectionStatus.Text = "Connection status: Bizhawk timed out";
+					S.GET<RTC_GlitchHarvester_Form>().lbConnectionStatus.Text = "Connection status: Emulator timed out";
 					S.GET<RTC_GlitchHarvester_Form>().pnHideGlitchHarvester.BringToFront();
 					S.GET<RTC_GlitchHarvester_Form>().pnHideGlitchHarvester.Show();
 				}
@@ -73,7 +73,7 @@ namespace RTCV.UI
 		{
 			SyncObjectSingleton.FormExecute((o, ea) =>
 			{
-				S.GET<RTC_ConnectionStatus_Form>().lbConnectionStatus.Text = "Connection status: Connected to Bizhawk";
+				S.GET<RTC_ConnectionStatus_Form>().lbConnectionStatus.Text = "Connection status: Connected to Emulator";
 			});
 		}
 

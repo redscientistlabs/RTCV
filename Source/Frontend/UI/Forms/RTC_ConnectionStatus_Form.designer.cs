@@ -45,9 +45,9 @@
             this.lbConnectionStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             this.lbConnectionStatus.Location = new System.Drawing.Point(65, 74);
             this.lbConnectionStatus.Name = "lbConnectionStatus";
-            this.lbConnectionStatus.Size = new System.Drawing.Size(247, 19);
+            this.lbConnectionStatus.Size = new System.Drawing.Size(253, 19);
             this.lbConnectionStatus.TabIndex = 1;
-            this.lbConnectionStatus.Text = "Connection status: Waiting for Bizhawk";
+            this.lbConnectionStatus.Text = "Connection status: Waiting for emulator";
             // 
             // btnStartEmuhawkDetached
             // 
@@ -61,7 +61,7 @@
             this.btnStartEmuhawkDetached.Name = "btnStartEmuhawkDetached";
             this.btnStartEmuhawkDetached.Size = new System.Drawing.Size(167, 42);
             this.btnStartEmuhawkDetached.TabIndex = 2;
-            this.btnStartEmuhawkDetached.Text = "  Start BizHawk";
+            this.btnStartEmuhawkDetached.Text = "  Start Emulator";
             this.btnStartEmuhawkDetached.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnStartEmuhawkDetached.UseVisualStyleBackColor = false;
             this.btnStartEmuhawkDetached.Click += new System.EventHandler(this.btnStartEmuhawkDetached_Click);
