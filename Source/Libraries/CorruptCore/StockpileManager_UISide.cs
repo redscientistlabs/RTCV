@@ -282,7 +282,7 @@ namespace RTCV.CorruptCore
 		public static StashKey SaveState(bool sendToStashDico, StashKey sk = null, bool threadSave = false)
 		{
 			StashKey _sk = LocalNetCoreRouter.QueryRoute<StashKey>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_SAVESTATE, sk, true);
-			if (sendToStashDico)
+			if (sendToStashDico && _sk != null)
 			{
 				var currentkey = CurrentSavestateKey;
 				if (currentkey != null)

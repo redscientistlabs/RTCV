@@ -401,9 +401,8 @@ namespace RTCV.UI
 				if (rbCorrupt.Checked)
 				{
 					string romFilename = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME];
-					if (romFilename == null)
-						return;
-					if (romFilename.Contains("|"))
+					
+					if (romFilename?.Contains("|") ?? false)
 					{
 						MessageBox.Show($"The Glitch Harvester attempted to corrupt a game bound to the following file:\n{romFilename}\n\nIt cannot be processed because the rom seems to be inside a Zip Archive\n(Bizhawk returned a filename with the chracter | in it)");
 						return;

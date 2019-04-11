@@ -256,7 +256,8 @@ namespace RTCV.CorruptCore
 							sk = StockpileManager_EmuSide.SaveState_NET();
 						});
 
-						LocalNetCoreRouter.Route(NetcoreCommands.UI, REMOTE_BACKUPKEY_STASH, sk, false);
+                        if(sk != null)
+						    LocalNetCoreRouter.Route(NetcoreCommands.UI, REMOTE_BACKUPKEY_STASH, sk, false);
 						break;
 					}
 				case REMOTE_DOMAIN_GETDOMAINS:

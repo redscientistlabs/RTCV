@@ -54,30 +54,42 @@ namespace RTCV.CorruptCore
 				}
 			}
 
-			string theoreticalSaveStateFilename = CorruptCore.workingDir + Path.DirectorySeparatorChar + stateLocation.ToString() + Path.DirectorySeparatorChar + gameName + "." + key + ".timejump.State";
+            //There's a chance we're on the main thread when we need to be on the emu thread (game not running)
+            //Now that we've booted the game, we can invoke the emulation thread for the rest of this
 
-			if (File.Exists(theoreticalSaveStateFilename))
-			{
-				if (!LocalNetCoreRouter.QueryRoute<bool>(NetcoreCommands.VANGUARD, NetcoreCommands.LOADSAVESTATE, new object[] { theoreticalSaveStateFilename, stateLocation }, true))
-				{
-					MessageBox.Show($"Error loading savestate : An internal Bizhawk error has occurred.\n Are you sure your savestate matches the game, your syncsettings match, and the savestate is supported by this version of Bizhawk?");
-					return false;
-				}
-			}
-			else
-			{
-				MessageBox.Show($"Error loading savestate : (File {theoreticalSaveStateFilename} not found)");
-				return false;
-			}
 
-			if (applyBlastLayer && sk?.BlastLayer?.Layer?.Count > 0)
-			{
-				CorruptBL = sk.BlastLayer;
-				sk.BlastLayer.Apply(true);
-			}
+            //Todo - refactor the invokes to allow a return value
+            bool returnValue = true;
+            void a()
+            {
+                string theoreticalSaveStateFilename = CorruptCore.workingDir + Path.DirectorySeparatorChar + stateLocation.ToString() + Path.DirectorySeparatorChar + gameName + "." + key + ".timejump.State";
 
-			return true;
-		}
+                if (File.Exists(theoreticalSaveStateFilename))
+                {
+                    if (!LocalNetCoreRouter.QueryRoute<bool>(NetcoreCommands.VANGUARD, NetcoreCommands.LOADSAVESTATE, new object[] {theoreticalSaveStateFilename, stateLocation}, true))
+                    {
+                        MessageBox.Show($"Error loading savestate : An internal Bizhawk error has occurred.\n Are you sure your savestate matches the game, your syncsettings match, and the savestate is supported by this version of Bizhawk?");
+                        returnValue = false;
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show($"Error loading savestate : (File {theoreticalSaveStateFilename} not found)");
+                    returnValue = false;
+                    return;
+                }
+
+                if (applyBlastLayer && sk?.BlastLayer?.Layer?.Count > 0)
+                {
+                    CorruptBL = sk.BlastLayer;
+                    sk.BlastLayer.Apply(true);
+                }
+                returnValue = true;
+            }   
+            SyncObjectSingleton.EmuThreadExecute(a, false);
+            return true;
+        }
 
 
 		public static StashKey SaveState_NET(StashKey _sk = null, bool threadSave = false)
@@ -100,7 +112,7 @@ namespace RTCV.CorruptCore
 				sk = _sk;
 			}
 
-			if (statePath == null)
+			if (string.IsNullOrEmpty(statePath))
 				return null;
 
 			//sk.StateShortFilename = statePath.Substring(statePath.LastIndexOf(Path.DirectorySeparatorChar) + 1, statePath.Length - (statePath.LastIndexOf(Path.DirectorySeparatorChar) + 1));
@@ -114,6 +126,8 @@ namespace RTCV.CorruptCore
 		public static StashKey GetRawBlastlayer()
 		{
 			StashKey sk = SaveState_NET();
+            if (sk == null)
+                return null;
 
 			BlastLayer bl = new BlastLayer();
 
