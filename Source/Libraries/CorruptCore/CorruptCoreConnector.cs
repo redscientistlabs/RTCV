@@ -247,8 +247,9 @@ namespace RTCV.CorruptCore
 				case REMOTE_BACKUPKEY_REQUEST:
 					{
 						//We don't store this in the spec as it'd be horrible to push it to the UI and it doesn't care
-						if (!LocalNetCoreRouter.QueryRoute<bool>(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_ISNORMALADVANCE))
-							break;
+						//if (!LocalNetCoreRouter.QueryRoute<bool>(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_ISNORMALADVANCE))
+							//break;
+
 						StashKey sk = null;
 						//We send an unsynced command back
 						SyncObjectSingleton.FormExecute((o, ea) =>
