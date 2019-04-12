@@ -72,6 +72,7 @@
             this.tbListValues.Size = new System.Drawing.Size(161, 226);
             this.tbListValues.TabIndex = 128;
             this.tbListValues.Tag = "color:dark";
+            this.tbListValues.MaxLength = 0;
             this.tbListValues.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // label2

@@ -154,20 +154,15 @@ namespace RTCV.CorruptCore
 		/// <returns>The hash of the list being registereds</returns>
 		public static string RegisterList(List<Byte[]> list, bool syncListsViaNetcore)
 		{
-			//Make one giant string to hash
-			string concat = String.Empty;
+			List<byte> bList = new List<byte>();
 			foreach (byte[] line in list)
 			{
-				StringBuilder sb = new StringBuilder();
-				foreach (var b in line)
-					sb.Append(b.ToString());
-
-				concat = String.Concat(concat, sb.ToString());
+				bList.AddRange(line);
 			}
 
 			//Hash it. We don't use GetHashCode because we want something consistent to hash to use as a key
 			MD5 hash = MD5.Create();
-			hash.ComputeHash(concat.GetBytes());
+			hash.ComputeHash(bList.ToArray());
 			string hashStr = Convert.ToBase64String(hash.Hash);
 
 			//Assuming the key doesn't already exist (we assume collions won't happen), add it.

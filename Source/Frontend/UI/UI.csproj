@@ -44,7 +44,7 @@
     </Reference>
     <Reference Include="SlimDX, Version=4.0.13.43, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Build\Release\SlimDX.dll</HintPath>
+      <HintPath>..\..\..\Deps\SlimDX.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -376,9 +376,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\refresh new.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="SlimDX.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
