@@ -15,9 +15,10 @@ namespace RTCV.NetCore
         public static volatile bool executing;
         public static volatile Queue<Action> ActionQueue = new Queue<Action>();
         public delegate void ActionDelegate(Action a);
-        public delegate void GenericDelegate();
+		public delegate void GenericDelegate();
         public static ActionDelegate EmuInvokeDelegate;
         public static bool UseQueue = false;
+        public static bool EmuThreadIsMainThread = false;
 
 
         public static void FormExecute(Action<object, EventArgs> a, object[] args = null)
@@ -51,7 +52,7 @@ namespace RTCV.NetCore
                 FormExecute((o, ea) => { EmuInvokeDelegate.Invoke(a); });   
             }
             //If there's no emuthread, fall back to the main thread if told to
-            else if(fallBackToMainThread)
+            else if(fallBackToMainThread || EmuThreadIsMainThread)
             {
                 FormExecute((o, ea) => { a.Invoke(); });
             }
