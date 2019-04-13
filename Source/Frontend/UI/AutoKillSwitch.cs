@@ -84,7 +84,7 @@ namespace RTCV.UI
 				switch (str)
 				{
 					case "KILL":
-						Process.Start(CorruptCore.CorruptCore.EmuDir + "KILLDETACHEDRTC.bat");
+						Process.Start(CorruptCore.CorruptCore.EmuDir + "\\KILLDETACHEDRTC.bat");
 						break;
 					case "KILL + RESTART":
 						Process.Start(CorruptCore.CorruptCore.EmuDir + "\\RESTARTDETACHEDRTC.bat");
