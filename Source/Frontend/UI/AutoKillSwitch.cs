@@ -81,16 +81,30 @@ namespace RTCV.UI
 				ShouldKillswitchFire = false;
 
 				PlayCrashSound(true);
-				switch (str)
+
+                var info = new ProcessStartInfo();
+
+                if(CorruptCore.CorruptCore.EmuDir == null)
+                {
+                    MessageBox.Show("Couldn't determine what emulator to start! Please start it manually.");
+                    return;
+                }
+
+
+                info.WorkingDirectory = CorruptCore.CorruptCore.EmuDir;
+
+                switch (str)
 				{
 					case "KILL":
-						Process.Start(CorruptCore.CorruptCore.EmuDir + "\\KILLDETACHEDRTC.bat");
+                        info.FileName = CorruptCore.CorruptCore.EmuDir + "\\KILLDETACHEDRTC.bat";
 						break;
 					case "KILL + RESTART":
-						Process.Start(CorruptCore.CorruptCore.EmuDir + "\\RESTARTDETACHEDRTC.bat");
+                        info.FileName = CorruptCore.CorruptCore.EmuDir + "\\RESTARTDETACHEDRTC.bat";
 						break;
 				}
-			});
+
+                Process.Start(info);
+            });
 		}
 		private static void KillswitchSpamPreventTimer_Tick(object sender, EventArgs e)
 		{
