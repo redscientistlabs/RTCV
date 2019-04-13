@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
 
@@ -15,7 +16,7 @@ namespace RTCV.CorruptCore
 			get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.RENDER_ISRENDERING.ToString()];
 			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_ISRENDERING.ToString(), value);
 		}
-
+		
 		public static RENDERTYPE RenderType
 		{
 			get => (RENDERTYPE)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.RENDER_RENDERTYPE.ToString()];
@@ -50,12 +51,21 @@ namespace RTCV.CorruptCore
 		}
 
 
-		public static void StartRender()
+		public static bool StartRender()
 		{
+			if (!((bool?) AllSpec.VanguardSpec[VSPEC.SUPPORTS_RENDERING] ?? false))
+			{
+				MessageBox.Show("Rendering isn't supported by this Emulator");
+				return false;
+            }
+                
+
 			if (IsRendering)
 				StopRender();
 
-			IsRendering = true; LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RENDER_START, true);
+			IsRendering = true;
+			LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RENDER_START, true);
+            return true;
 		}
 
 		public static void StopRender()

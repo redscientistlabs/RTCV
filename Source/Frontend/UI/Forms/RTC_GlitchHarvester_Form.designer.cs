@@ -34,8 +34,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnSidebar = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.label9 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.btnOpenRenderFolder = new System.Windows.Forms.Button();
             this.cbRenderType = new System.Windows.Forms.ComboBox();
@@ -177,28 +175,25 @@
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label9 = new System.Windows.Forms.Label();
+            this.pnRender = new System.Windows.Forms.Panel();
             this.pnSidebar.SuspendLayout();
-            this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.pnSavestateHolder.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.pnIntensity.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStockpile)).BeginInit();
+            this.pnRender.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnSidebar
             // 
             this.pnSidebar.AllowDrop = true;
             this.pnSidebar.BackColor = System.Drawing.Color.Gray;
-            this.pnSidebar.Controls.Add(this.panel4);
-            this.pnSidebar.Controls.Add(this.label4);
-            this.pnSidebar.Controls.Add(this.btnOpenRenderFolder);
-            this.pnSidebar.Controls.Add(this.cbRenderType);
+            this.pnSidebar.Controls.Add(this.pnRender);
             this.pnSidebar.Controls.Add(this.panel3);
-            this.pnSidebar.Controls.Add(this.cbRenderAtLoad);
             this.pnSidebar.Controls.Add(this.btnCorrupt);
-            this.pnSidebar.Controls.Add(this.btnRender);
             this.pnSidebar.Controls.Add(this.btnSendRaw);
             this.pnSidebar.Controls.Add(this.btnSaveSavestateList);
             this.pnSidebar.Controls.Add(this.btnLoadSavestateList);
@@ -216,33 +211,12 @@
             this.pnSidebar.TabIndex = 71;
             this.pnSidebar.Tag = "color:normal";
             // 
-            // panel4
-            // 
-            this.panel4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.panel4.Controls.Add(this.label9);
-            this.panel4.Location = new System.Drawing.Point(-5, 407);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(156, 22);
-            this.panel4.TabIndex = 139;
-            this.panel4.Tag = "color:dark";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
-            this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(8, 4);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(85, 15);
-            this.label9.TabIndex = 139;
-            this.label9.Text = "Render Output";
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(5, 437);
+            this.label4.Location = new System.Drawing.Point(10, 26);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(32, 13);
             this.label4.TabIndex = 142;
@@ -256,7 +230,7 @@
             this.btnOpenRenderFolder.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnOpenRenderFolder.ForeColor = System.Drawing.Color.White;
             this.btnOpenRenderFolder.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenRenderFolder.Image")));
-            this.btnOpenRenderFolder.Location = new System.Drawing.Point(103, 474);
+            this.btnOpenRenderFolder.Location = new System.Drawing.Point(104, 66);
             this.btnOpenRenderFolder.Name = "btnOpenRenderFolder";
             this.btnOpenRenderFolder.Size = new System.Drawing.Size(38, 24);
             this.btnOpenRenderFolder.TabIndex = 143;
@@ -279,9 +253,9 @@
             "WAV",
             "AVI",
             "MPEG"});
-            this.cbRenderType.Location = new System.Drawing.Point(38, 433);
+            this.cbRenderType.Location = new System.Drawing.Point(47, 22);
             this.cbRenderType.Name = "cbRenderType";
-            this.cbRenderType.Size = new System.Drawing.Size(102, 21);
+            this.cbRenderType.Size = new System.Drawing.Size(94, 21);
             this.cbRenderType.TabIndex = 141;
             this.cbRenderType.TabStop = false;
             this.cbRenderType.Tag = "color:dark";
@@ -313,7 +287,7 @@
             this.cbRenderAtLoad.AutoSize = true;
             this.cbRenderAtLoad.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbRenderAtLoad.ForeColor = System.Drawing.Color.White;
-            this.cbRenderAtLoad.Location = new System.Drawing.Point(7, 456);
+            this.cbRenderAtLoad.Location = new System.Drawing.Point(13, 47);
             this.cbRenderAtLoad.Name = "cbRenderAtLoad";
             this.cbRenderAtLoad.Size = new System.Drawing.Size(121, 17);
             this.cbRenderAtLoad.TabIndex = 76;
@@ -348,7 +322,7 @@
             this.btnRender.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRender.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnRender.ForeColor = System.Drawing.Color.White;
-            this.btnRender.Location = new System.Drawing.Point(6, 474);
+            this.btnRender.Location = new System.Drawing.Point(8, 66);
             this.btnRender.Name = "btnRender";
             this.btnRender.Size = new System.Drawing.Size(93, 24);
             this.btnRender.TabIndex = 134;
@@ -2402,6 +2376,32 @@
             this.dataGridViewTextBoxColumn4.ReadOnly = true;
             this.dataGridViewTextBoxColumn4.Visible = false;
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
+            this.label9.ForeColor = System.Drawing.Color.White;
+            this.label9.Location = new System.Drawing.Point(9, 3);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(85, 15);
+            this.label9.TabIndex = 139;
+            this.label9.Text = "Render Output";
+            // 
+            // pnRender
+            // 
+            this.pnRender.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.pnRender.Controls.Add(this.label9);
+            this.pnRender.Controls.Add(this.label4);
+            this.pnRender.Controls.Add(this.cbRenderType);
+            this.pnRender.Controls.Add(this.btnOpenRenderFolder);
+            this.pnRender.Controls.Add(this.btnRender);
+            this.pnRender.Controls.Add(this.cbRenderAtLoad);
+            this.pnRender.Location = new System.Drawing.Point(-5, 407);
+            this.pnRender.Name = "pnRender";
+            this.pnRender.Size = new System.Drawing.Size(146, 94);
+            this.pnRender.TabIndex = 139;
+            this.pnRender.Tag = "color:dark";
+            // 
             // RTC_GlitchHarvester_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2442,8 +2442,6 @@
             this.Load += new System.EventHandler(this.RTC_GH_Form_Load);
             this.pnSidebar.ResumeLayout(false);
             this.pnSidebar.PerformLayout();
-            this.panel4.ResumeLayout(false);
-            this.panel4.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.pnSavestateHolder.ResumeLayout(false);
@@ -2454,6 +2452,8 @@
             this.panel2.PerformLayout();
             this.pnIntensity.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvStockpile)).EndInit();
+            this.pnRender.ResumeLayout(false);
+            this.pnRender.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2585,7 +2585,6 @@
 		private System.Windows.Forms.Panel panel2;
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.Panel panel3;
-		private System.Windows.Forms.Label label9;
 		public DataGridViewDraggable dgvStockpile;
 		public System.Windows.Forms.Button btnRerollSelected;
 		public System.Windows.Forms.ComboBox cbRenderType;
@@ -2593,7 +2592,6 @@
 		public System.Windows.Forms.Button btnRender;
 		public System.Windows.Forms.Button btnOpenRenderFolder;
         public System.Windows.Forms.CheckBox cbCompressStockpiles;
-        private System.Windows.Forms.Panel panel4;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
@@ -2605,5 +2603,7 @@
 		private System.Windows.Forms.DataGridViewButtonColumn Note;
 		public System.Windows.Forms.Panel pnIntensity;
 		public Components.Controls.MultiTrackBar multiTB_Intensity;
-	}
+        public System.Windows.Forms.Panel pnRender;
+        private System.Windows.Forms.Label label9;
+    }
 }

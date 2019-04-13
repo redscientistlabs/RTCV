@@ -752,7 +752,7 @@ namespace RTCV.UI
 					{
 						return;
 					}
-					Stockpile.LoadBizhawkConfigFromStockpile();
+					Stockpile.LoadConfigFromStockpile();
 				}
 				finally
 				{
@@ -1695,16 +1695,18 @@ namespace RTCV.UI
 		{
 			if (btnRender.Text == "Start Render")
 			{
-				btnRender.Text ="Stop Render";
-				btnRender.ForeColor = Color.OrangeRed;
-				Render.StartRender();
-			}
+                if (Render.StartRender())
+                {
+					btnRender.Text = "Stop Render";
+					btnRender.ForeColor = Color.OrangeRed;
+                }
+            }
 			else
 			{
+				Render.StopRender();
 				btnRender.Text = "Start Render";
 				btnRender.ForeColor = Color.White;
-				Render.StopRender();
-			}
+            }
 		}
 
 		private void cbRenderAtLoad_CheckedChanged(object sender, EventArgs e)
@@ -1774,6 +1776,5 @@ namespace RTCV.UI
 				columnsMenu.Show(this, locate);
 			}
 		}
-
 	}
 }

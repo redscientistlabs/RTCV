@@ -80,6 +80,9 @@ namespace RTCV.UI
 							var vmdProtos = MemoryDomains.VmdPool.Values.Cast<VirtualMemoryDomain>().Select(x => x.Proto).ToArray();
 								LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHVMDPROTOS, vmdProtos, true);
 
+							//Configure the UI based on the vanguard spec
+							UICore.ConfigureUIFromVanguardSpec();
+
 							//Return to the main form. If the form is null for some reason, default to engineconfig
 							if(S.GET<RTC_Core_Form>().previousForm == null)
 								S.GET<RTC_Core_Form>().previousForm = S.GET<RTC_EngineConfig_Form>();

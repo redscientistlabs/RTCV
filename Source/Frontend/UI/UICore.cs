@@ -295,7 +295,6 @@ namespace RTCV.UI
 			}
 		}
 
-
 		public static void SetRTCColor(Color color, Form form = null)
 		{
 			List<Control> allControls = new List<Control>();
@@ -400,7 +399,6 @@ namespace RTCV.UI
 		{
 			RTCV.NetCore.Params.SetParam("COLOR", color.R.ToString() + "," + color.G.ToString() + "," + color.B.ToString());
 		}
-
 
         //Borrowed from Bizhawk. Thanks guys
         private static void ProcessInputCheck(Object o, ElapsedEventArgs e)
@@ -710,6 +708,16 @@ namespace RTCV.UI
             }
 
             return true;
+        }
+
+
+		/// <summary>
+        /// Disables things in the UI that aren't supported by the current spec.
+        /// </summary>
+		public static void ConfigureUIFromVanguardSpec()
+		{
+            S.GET<RTC_GlitchHarvester_Form>().pnRender.Visible = false;
+
         }
     }
 }
