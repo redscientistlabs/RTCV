@@ -9,14 +9,22 @@ namespace RTCV.NetCore
 {
 	public static class Params
 	{
+        //Todo - Isolate this out
+		public static string ParamsDir
+        {
+            get
+            {
 
-		public static string paramsDir = //This works on both sides because bizhawk is still in the same
-										 //folder as RTC but will break if the emu isn't in the same folder
-			Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + 
-			"RTC" + Path.DirectorySeparatorChar + 
-			"PARAMS" + Path.DirectorySeparatorChar;
+                if (AllSpec.CorruptCoreSpec?["RTCDIR"] is string rtcDir)
+                {
+                    return rtcDir + "\\PARAMS\\";
+                }
 
-		public static void SetParam(string paramName, string data = null)
+                return Directory.GetCurrentDirectory() + "\\RTC\\PARAMS\\";
+            }
+        }
+
+        public static void SetParam(string paramName, string data = null)
 		{
 			if (data == null)
 			{
@@ -24,26 +32,26 @@ namespace RTCV.NetCore
 					SetParam(paramName, "");
 			}
 			else
-				File.WriteAllText(paramsDir + Path.DirectorySeparatorChar + paramName, data);
+				File.WriteAllText(ParamsDir + Path.DirectorySeparatorChar + paramName, data);
 		}
 
 		public static void RemoveParam(string paramName)
 		{
 			if (IsParamSet(paramName))
-				File.Delete(paramsDir + Path.DirectorySeparatorChar + paramName);
+				File.Delete(ParamsDir + Path.DirectorySeparatorChar + paramName);
 		}
 
 		public static string ReadParam(string paramName)
 		{
 			if (IsParamSet(paramName))
-				return File.ReadAllText(paramsDir + Path.DirectorySeparatorChar + paramName);
+				return File.ReadAllText(ParamsDir + Path.DirectorySeparatorChar + paramName);
 
 			return null;
 		}
 
 		public static bool IsParamSet(string paramName)
 		{
-			return File.Exists(paramsDir + Path.DirectorySeparatorChar + paramName);
+			return File.Exists(ParamsDir + Path.DirectorySeparatorChar + paramName);
 		}
 	}
 

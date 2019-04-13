@@ -204,8 +204,8 @@ namespace RTCV.CorruptCore
 			}
 
 			//If there's a config, snag it
-			if (File.Exists(CorruptCore.bizhawkDir + Path.DirectorySeparatorChar + "config.ini"))
-				File.Copy(CorruptCore.bizhawkDir + Path.DirectorySeparatorChar + "config.ini", CorruptCore.workingDir + Path.DirectorySeparatorChar + "TEMP\\config.ini");
+			if (File.Exists(CorruptCore.EmuDir + Path.DirectorySeparatorChar + "config.ini"))
+				File.Copy(CorruptCore.EmuDir + Path.DirectorySeparatorChar + "config.ini", CorruptCore.workingDir + Path.DirectorySeparatorChar + "TEMP\\config.ini");
 
 
 			//Get all the limiter lists
@@ -484,13 +484,13 @@ namespace RTCV.CorruptCore
 		{
 			try
 			{
-				foreach (string file in Directory.GetFiles(CorruptCore.rtcDir + Path.DirectorySeparatorChar + $"{folder}"))
+				foreach (string file in Directory.GetFiles(CorruptCore.RtcDir + Path.DirectorySeparatorChar + $"{folder}"))
 				{
 					File.SetAttributes(file, FileAttributes.Normal);
 					File.Delete(file);
 				}
 
-				foreach (string dir in Directory.GetDirectories(CorruptCore.rtcDir + Path.DirectorySeparatorChar + $"{folder}"))
+				foreach (string dir in Directory.GetDirectories(CorruptCore.RtcDir + Path.DirectorySeparatorChar + $"{folder}"))
 					RecursiveDelete(new DirectoryInfo(dir));
 			}
 			catch (Exception ex)
@@ -511,13 +511,13 @@ namespace RTCV.CorruptCore
 			try
 			{
 				EmptyFolder(folder);
-				ZipFile.ExtractToDirectory(filename, CorruptCore.rtcDir + Path.DirectorySeparatorChar + $"{folder}" + Path.DirectorySeparatorChar);
+				ZipFile.ExtractToDirectory(filename, CorruptCore.RtcDir + Path.DirectorySeparatorChar + $"{folder}" + Path.DirectorySeparatorChar);
 
-				if (!File.Exists(CorruptCore.rtcDir + Path.DirectorySeparatorChar + $"{folder}\\{masterFile}"))
+				if (!File.Exists(CorruptCore.RtcDir + Path.DirectorySeparatorChar + $"{folder}\\{masterFile}"))
 				{
-					if (File.Exists(CorruptCore.rtcDir + Path.DirectorySeparatorChar + $"{folder}\\stockpile.xml"))
+					if (File.Exists(CorruptCore.RtcDir + Path.DirectorySeparatorChar + $"{folder}\\stockpile.xml"))
 						MessageBox.Show("Legacy stockpile found. This stockpile isn't supported by this version of the RTC.");
-					else if (File.Exists(CorruptCore.rtcDir + Path.DirectorySeparatorChar + $"{folder}\\keys.xml"))
+					else if (File.Exists(CorruptCore.RtcDir + Path.DirectorySeparatorChar + $"{folder}\\keys.xml"))
 						MessageBox.Show("Legacy SSK found. This SSK isn't supported by this version of the RTC.");
 					else
 						MessageBox.Show("The file could not be read properly");
@@ -557,17 +557,17 @@ namespace RTCV.CorruptCore
 					return;
 			}
 
-			if (File.Exists(CorruptCore.bizhawkDir + Path.DirectorySeparatorChar + "import_config.ini"))
-				File.Delete(CorruptCore.bizhawkDir + Path.DirectorySeparatorChar + "import_config.ini");
-			File.Copy(Filename, CorruptCore.bizhawkDir + Path.DirectorySeparatorChar + "import_config.ini");
+			if (File.Exists(CorruptCore.EmuDir + Path.DirectorySeparatorChar + "import_config.ini"))
+				File.Delete(CorruptCore.EmuDir + Path.DirectorySeparatorChar + "import_config.ini");
+			File.Copy(Filename, CorruptCore.EmuDir + Path.DirectorySeparatorChar + "import_config.ini");
 
-			if (File.Exists(CorruptCore.bizhawkDir + Path.DirectorySeparatorChar + "stockpile_config.ini"))
-				File.Delete(CorruptCore.bizhawkDir + Path.DirectorySeparatorChar + "stockpile_config.ini");
-			File.Copy(CorruptCore.bizhawkDir + Path.DirectorySeparatorChar + "config.ini", CorruptCore.bizhawkDir + Path.DirectorySeparatorChar + "stockpile_config.ini");
+			if (File.Exists(CorruptCore.EmuDir + Path.DirectorySeparatorChar + "stockpile_config.ini"))
+				File.Delete(CorruptCore.EmuDir + Path.DirectorySeparatorChar + "stockpile_config.ini");
+			File.Copy(CorruptCore.EmuDir + Path.DirectorySeparatorChar + "config.ini", CorruptCore.EmuDir + Path.DirectorySeparatorChar + "stockpile_config.ini");
 
 
 			LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_IMPORTKEYBINDS);
-			Process.Start(CorruptCore.bizhawkDir + Path.DirectorySeparatorChar + $"StockpileConfig.bat");
+			Process.Start(CorruptCore.EmuDir + Path.DirectorySeparatorChar + $"StockpileConfig.bat");
 
 		}
 
@@ -590,28 +590,29 @@ namespace RTCV.CorruptCore
 					return;
 			}
 
-			if (File.Exists(CorruptCore.bizhawkDir + Path.DirectorySeparatorChar + "backup_config.ini"))
+			if (File.Exists(CorruptCore.EmuDir + Path.DirectorySeparatorChar + "backup_config.ini"))
 			{
 				if (MessageBox.Show("Do you want to overwrite the previous Config Backup with the current Bizhawk Config?", "WARNING", MessageBoxButtons.YesNo) == DialogResult.Yes)
 				{
-					File.Delete(CorruptCore.bizhawkDir + Path.DirectorySeparatorChar + "backup_config.ini");
-					File.Copy((CorruptCore.bizhawkDir + Path.DirectorySeparatorChar + "config.ini"), (CorruptCore.bizhawkDir + Path.DirectorySeparatorChar + "backup_config.ini"));
+					File.Delete(CorruptCore.EmuDir + Path.DirectorySeparatorChar + "backup_config.ini");
+					File.Copy((CorruptCore.EmuDir + Path.DirectorySeparatorChar + "config.ini"), (CorruptCore.EmuDir + Path.DirectorySeparatorChar + "backup_config.ini"));
 				}
 			}
 			else
-				File.Copy((CorruptCore.bizhawkDir + Path.DirectorySeparatorChar + "config.ini"), (CorruptCore.bizhawkDir + Path.DirectorySeparatorChar + "backup_config.ini"));
+				File.Copy((CorruptCore.EmuDir + Path.DirectorySeparatorChar + "config.ini"), (CorruptCore.EmuDir + Path.DirectorySeparatorChar + "backup_config.ini"));
 
 			if (!Extract(Filename, "WORKING" + Path.DirectorySeparatorChar + "TEMP", "stockpile.json"))
 				return;
 
-			if (File.Exists(CorruptCore.bizhawkDir + Path.DirectorySeparatorChar + "stockpile_config.ini"))
-				File.Delete(CorruptCore.bizhawkDir + Path.DirectorySeparatorChar + "stockpile_config.ini");
-			File.Copy((CorruptCore.workingDir + Path.DirectorySeparatorChar + "TEMP\\config.ini"), (CorruptCore.bizhawkDir + Path.DirectorySeparatorChar + "stockpile_config.ini"));
+			if (File.Exists(CorruptCore.EmuDir + Path.DirectorySeparatorChar + "stockpile_config.ini"))
+				File.Delete(CorruptCore.EmuDir + Path.DirectorySeparatorChar + "stockpile_config.ini");
+			File.Copy((CorruptCore.workingDir + Path.DirectorySeparatorChar + "TEMP\\config.ini"), (CorruptCore.EmuDir + Path.DirectorySeparatorChar + "stockpile_config.ini"));
 
 			LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_MERGECONFIG);
 
 
-			Process.Start(CorruptCore.bizhawkDir + Path.DirectorySeparatorChar + $"StockpileConfig.bat");
+			//Todo - this is gonna break with split folders
+			Process.Start(CorruptCore.EmuDir + Path.DirectorySeparatorChar + $"StockpileConfig.bat");
 
 		}
 

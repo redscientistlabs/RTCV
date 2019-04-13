@@ -39,19 +39,15 @@ namespace RTCV.UI
         //public static Color generalColor = Color.FromArgb(60, 45, 70);
         public static Color GeneralColor = Color.LightSteelBlue;
 
-		public static void Start(Form standaloneForm = null)
+		//Directories
+
+
+        public static void Start(Form standaloneForm = null)
 		{
+
             S.formRegister.FormRegistered += FormRegister_FormRegistered;
 			registerFormEvents(S.GET<RTC_Core_Form>());
 
-			CorruptCore_Extensions.DirectoryRequired(paths: new string[] {
-				CorruptCore.CorruptCore.workingDir, CorruptCore.CorruptCore.workingDir + "\\TEMP\\"
-				, CorruptCore.CorruptCore.workingDir + "\\SKS\\", CorruptCore.CorruptCore.workingDir + "\\SSK\\"
-				, CorruptCore.CorruptCore.workingDir + "\\SESSION\\", CorruptCore.CorruptCore.workingDir + "\\MEMORYDUMPS\\"
-				, CorruptCore.CorruptCore.workingDir + "\\MP\\", CorruptCore.CorruptCore.assetsDir + "\\CRASHSOUNDS\\"
-				, CorruptCore.CorruptCore.rtcDir + "\\PARAMS\\", CorruptCore.CorruptCore.rtcDir + "\\LISTS\\"
-				, CorruptCore.CorruptCore.rtcDir + "\\RENDEROUTPUT\\",
-			});
 
 			S.SET<RTC_Standalone_Form>((RTC_Standalone_Form)standaloneForm);
 
@@ -72,13 +68,14 @@ namespace RTCV.UI
 			{
 				PartialSpec partial = e.partialSpec;
 
-				  LocalNetCoreRouter.Route(CORRUPTCORE, REMOTE_PUSHUISPECUPDATE, partial, e.syncedUpdate);
+				LocalNetCoreRouter.Route(CORRUPTCORE, REMOTE_PUSHUISPECUPDATE, partial, e.syncedUpdate);
 			};
 
-			CorruptCore.CorruptCore.StartUISide();
+            CorruptCore.CorruptCore.StartUISide();
 
-			//Loading RTC Params
-			LoadRTCColor();
+
+            //Loading RTC Params
+            LoadRTCColor();
 			S.GET<RTC_SettingsGeneral_Form>().cbDisableBizhawkOSD.Checked = !RTCV.NetCore.Params.IsParamSet("ENABLE_BIZHAWK_OSD");
 			S.GET<RTC_SettingsGeneral_Form>().cbAllowCrossCoreCorruption.Checked = RTCV.NetCore.Params.IsParamSet("ALLOW_CROSS_CORE_CORRUPTION");
 			S.GET<RTC_SettingsGeneral_Form>().cbDontCleanAtQuit.Checked = RTCV.NetCore.Params.IsParamSet("DONT_CLEAN_SAVESTATES_AT_QUIT");

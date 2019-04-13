@@ -28,14 +28,33 @@ namespace RTCV.CorruptCore
 
 		public static System.Windows.Forms.Timer KillswitchTimer = new System.Windows.Forms.Timer();
 
-		//Directories
-		public static string bizhawkDir = Directory.GetCurrentDirectory();
+        public static string EmuDir
+		{
+			get => (string)AllSpec.CorruptCoreSpec[RTCSPEC.EMUDIR];
+			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.EMUDIR, value);
+		}
+		public static string RtcDir
+		{
+			get => (string)AllSpec.CorruptCoreSpec[RTCSPEC.RTCDIR];
+			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.RTCDIR, value);
+		}
 
-		public static string rtcDir = bizhawkDir + Path.DirectorySeparatorChar + "RTC" + Path.DirectorySeparatorChar;
-		public static string workingDir = rtcDir + Path.DirectorySeparatorChar + "WORKING" + Path.DirectorySeparatorChar;
-		public static string assetsDir = rtcDir + Path.DirectorySeparatorChar + "ASSETS" + Path.DirectorySeparatorChar;
-		public static string listsDir = rtcDir + Path.DirectorySeparatorChar + "LISTS" + Path.DirectorySeparatorChar;
-		public static string engineTemplateDir = rtcDir + Path.DirectorySeparatorChar + "ENGINETEMPLATES" + Path.DirectorySeparatorChar;
+		public static string workingDir
+		{
+			get => RtcDir + Path.DirectorySeparatorChar + "WORKING" + Path.DirectorySeparatorChar;
+		}
+		public static string assetsDir
+		{
+			get => RtcDir + Path.DirectorySeparatorChar + "ASSETS" + Path.DirectorySeparatorChar;
+		}
+		public static string listsDir
+        {
+			get => RtcDir + Path.DirectorySeparatorChar + "LISTS" + Path.DirectorySeparatorChar;
+        }
+		public static string engineTemplateDir
+        {
+			get => RtcDir + Path.DirectorySeparatorChar + "ENGINETEMPLATES" + Path.DirectorySeparatorChar;
+        }
 
 
 		//This is for the UI only but needs to be in here as well
@@ -165,13 +184,13 @@ namespace RTCV.CorruptCore
 			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_BIZHAWKOSDDISABLED.ToString(), value);
 		}
 
-		public static bool IsStandaloneUI;
+
+        public static bool IsStandaloneUI;
 		public static bool IsEmulatorSide;
 
 		public static void Start()
 		{
-			CorruptCore_Extensions.DirectoryRequired(new[] {CorruptCore.engineTemplateDir});
-
+			
 		}
 
 		private static  void OneTimeSettingsInitialize()
@@ -188,7 +207,16 @@ namespace RTCV.CorruptCore
 				Start();
 				RegisterCorruptcoreSpec();
 
-				if (!NetCore.Params.IsParamSet("DISCLAIMER_READ"))
+                CorruptCore_Extensions.DirectoryRequired(paths: new string[] {
+                    RTCV.CorruptCore.CorruptCore.workingDir, RTCV.CorruptCore.CorruptCore.workingDir + "\\TEMP\\"
+                    , RTCV.CorruptCore.CorruptCore.workingDir + "\\SKS\\", RTCV.CorruptCore.CorruptCore.workingDir + "\\SSK\\"
+                    , RTCV.CorruptCore.CorruptCore.workingDir + "\\SESSION\\", RTCV.CorruptCore.CorruptCore.workingDir + "\\MEMORYDUMPS\\"
+                    , RTCV.CorruptCore.CorruptCore.workingDir + "\\MP\\", RTCV.CorruptCore.CorruptCore.assetsDir + "\\CRASHSOUNDS\\"
+                    , RTCV.CorruptCore.CorruptCore.RtcDir + "\\PARAMS\\", RTCV.CorruptCore.CorruptCore.RtcDir + "\\LISTS\\"
+                    , RTCV.CorruptCore.CorruptCore.RtcDir + "\\RENDEROUTPUT\\",RTCV.CorruptCore.CorruptCore.RtcDir + "\\LISTS\\"
+                });
+
+                if (!NetCore.Params.IsParamSet("DISCLAIMER_READ"))
 					OneTimeSettingsInitialize();
 
 				IsStandaloneUI = true;
@@ -228,8 +256,10 @@ namespace RTCV.CorruptCore
 			PartialSpec rtcSpecTemplate = new PartialSpec("RTCSpec");
 			rtcSpecTemplate["RTCVERSION"] = RtcVersion;
 
-			//Engine Settings
-			rtcSpecTemplate.Insert(CorruptCore.getDefaultPartial());
+			rtcSpecTemplate[RTCSPEC.RTCDIR] = Directory.GetCurrentDirectory() + "\\RTC\\";
+
+            //Engine Settings
+            rtcSpecTemplate.Insert(CorruptCore.getDefaultPartial());
 			rtcSpecTemplate.Insert(RTC_NightmareEngine.getDefaultPartial());
 			rtcSpecTemplate.Insert(RTC_HellgenieEngine.getDefaultPartial());
 			rtcSpecTemplate.Insert(RTC_DistortionEngine.getDefaultPartial());
@@ -350,7 +380,7 @@ namespace RTCV.CorruptCore
 			//Do this on its own thread as downloading the json is slow
 			(new Thread(() =>
 			{
-				string LocalPath = NetCore.Params.paramsDir + "\\BADPROCESSES";
+				string LocalPath = NetCore.Params.ParamsDir + "\\BADPROCESSES";
 
 				string json = "";
 				try

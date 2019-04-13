@@ -772,7 +772,7 @@ namespace RTCV.UI
 				finally
 				{
 				}
-			})).Enabled = (File.Exists(CorruptCore.CorruptCore.bizhawkDir + Path.DirectorySeparatorChar + "backup_config.ini"));
+			})).Enabled = (File.Exists(CorruptCore.CorruptCore.EmuDir + Path.DirectorySeparatorChar + "backup_config.ini"));
 
 			loadMenuItems.Show(this, locate);
 		}
@@ -1688,7 +1688,7 @@ namespace RTCV.UI
 
 		private void btnOpenRenderFolder_Click(object sender, EventArgs e)
 		{
-				Process.Start(CorruptCore.CorruptCore.rtcDir + Path.DirectorySeparatorChar + "RENDEROUTPUT" + Path.DirectorySeparatorChar);
+				Process.Start(CorruptCore.CorruptCore.RtcDir + Path.DirectorySeparatorChar + "RENDEROUTPUT" + Path.DirectorySeparatorChar);
 		}
 
 		private void btnRender_Click(object sender, EventArgs e)

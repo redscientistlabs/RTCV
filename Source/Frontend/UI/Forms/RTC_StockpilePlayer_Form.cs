@@ -220,7 +220,7 @@ namespace RTCV.UI
 				finally
 				{
 				}
-			})).Enabled = (File.Exists(CorruptCore.CorruptCore.bizhawkDir + Path.DirectorySeparatorChar + "backup_config.ini"));
+			})).Enabled = (File.Exists(CorruptCore.CorruptCore.EmuDir + Path.DirectorySeparatorChar + "backup_config.ini"));
 
 			LoadMenuItems.Show(this, locate);
 		}

@@ -39,7 +39,7 @@ namespace RTCV.UI
 		{
 			Process p = new Process();
 			p.StartInfo.FileName = "FactoryClean.bat";
-			p.StartInfo.WorkingDirectory = CorruptCore.CorruptCore.bizhawkDir;
+			p.StartInfo.WorkingDirectory = CorruptCore.CorruptCore.EmuDir;
 			p.Start();
 		}
 

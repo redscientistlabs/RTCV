@@ -39,9 +39,11 @@ namespace RTCV.UI
 
 			try
 			{
-				if (CorruptCore.CorruptCore.bizhawkDir.Contains(Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar))
+				//todo - rewrite this
+				/*
+				if (CorruptCore.CorruptCore.EmuDir.Contains(Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar))
 				{
-					var bizhawkFolder = new DirectoryInfo(CorruptCore.CorruptCore.bizhawkDir);
+					var bizhawkFolder = new DirectoryInfo(CorruptCore.CorruptCore.EmuDir);
 					var LauncherVersFolder = bizhawkFolder.Parent.Parent;
 
 					var versions = LauncherVersFolder.GetDirectories().Reverse().ToArray();
@@ -58,7 +60,7 @@ namespace RTCV.UI
 					else
 						Stockpile.LoadBizhawkKeyBindsFromIni();
 				}
-				else
+				else*/
 					Stockpile.LoadBizhawkKeyBindsFromIni();
 			}
 			finally

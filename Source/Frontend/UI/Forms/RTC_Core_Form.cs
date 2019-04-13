@@ -85,7 +85,7 @@ namespace RTCV.UI
 
 			if (!NetCore.Params.IsParamSet("DISCLAIMER_READ"))
 			{
-				MessageBox.Show(File.ReadAllText(CorruptCore.CorruptCore.rtcDir + Path.DirectorySeparatorChar + "LICENSES\\DISCLAIMER.TXT").Replace("[ver]", CorruptCore.CorruptCore.RtcVersion), "RTC", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				MessageBox.Show(File.ReadAllText(CorruptCore.CorruptCore.RtcDir + Path.DirectorySeparatorChar + "LICENSES\\DISCLAIMER.TXT").Replace("[ver]", CorruptCore.CorruptCore.RtcVersion), "RTC", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				NetCore.Params.SetParam("DISCLAIMER_READ");
 			}
 

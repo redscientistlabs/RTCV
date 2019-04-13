@@ -131,6 +131,8 @@ namespace StandaloneRTC
 		//Lifted from Bizhawk
 		static void WhackAllMOTW(string dllDir)
 		{
+            if (!Directory.Exists(dllDir))
+                return;
 			var todo = new Queue<DirectoryInfo>(new[] { new DirectoryInfo(dllDir) });
 			while (todo.Count > 0)
 			{
