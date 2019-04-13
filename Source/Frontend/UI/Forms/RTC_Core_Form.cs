@@ -84,8 +84,30 @@ namespace RTCV.UI
 			GhostBoxInvisible(pnCrashProtection);*/
 
 			if (!NetCore.Params.IsParamSet("DISCLAIMER_READ"))
-			{
-				MessageBox.Show(File.ReadAllText(CorruptCore.CorruptCore.RtcDir + Path.DirectorySeparatorChar + "LICENSES\\DISCLAIMER.TXT").Replace("[ver]", CorruptCore.CorruptCore.RtcVersion), "RTC", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            {
+                string disclaimer = @"Welcome to the Real-Time Corruptor
+Version [ver]
+
+Disclaimer:
+This program comes with absolutely ZERO warranty.
+You may use it at your own risk.
+
+BizHawk+RTC is distributed under an MIT Licence.
+Detailed information about other licences available at the
+following path: BizHawk -> RTC -> LICENCES
+
+Known facts(and warnings):
+- Can generate incredible amounts of flashing and noise
+- Can cause windows to BSOD (extremely rarely)
+- Can write a significant amount of data to your hard drive depending on usage
+
+This message only appears once.";
+
+                //Use the text file if it exists
+                if (File.Exists(CorruptCore.CorruptCore.RtcDir + Path.DirectorySeparatorChar + "LICENSES\\DISCLAIMER.TXT"))
+                    disclaimer = File.ReadAllText(CorruptCore.CorruptCore.RtcDir + Path.DirectorySeparatorChar + "LICENSES\\DISCLAIMER.TXT");
+
+                MessageBox.Show(disclaimer.Replace("[ver]", CorruptCore.CorruptCore.RtcVersion), "RTC", MessageBoxButtons.OK, MessageBoxIcon.Information);
 				NetCore.Params.SetParam("DISCLAIMER_READ");
 			}
 

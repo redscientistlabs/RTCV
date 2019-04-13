@@ -331,6 +331,8 @@ namespace RTCV.CorruptCore
 
 		public static void LoadUserTemplates()
 		{
+            if(!Directory.Exists(CorruptCore.engineTemplateDir))
+                Directory.CreateDirectory(CorruptCore.engineTemplateDir);
 			string[] paths = System.IO.Directory.GetFiles(CorruptCore.engineTemplateDir);
 			paths = paths.OrderBy(x => x).ToArray();
 			foreach (var p in paths)

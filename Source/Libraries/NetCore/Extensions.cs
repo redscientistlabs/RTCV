@@ -161,7 +161,10 @@ namespace RTCV.NetCore
 					oldOut = Console.Out;
 
 					try
-					{
+                    {
+                        var dir = Path.GetDirectoryName(path);
+                        if (!Directory.Exists(dir))
+                            Directory.CreateDirectory(dir);
 						File.Create(path).Close();
 						fileStream = File.Open(path, FileMode.Open, FileAccess.Write, FileShare.Read);
 						FileWriter = new StreamWriter(fileStream);

@@ -213,7 +213,8 @@ namespace RTCV.CorruptCore
                     , RTCV.CorruptCore.CorruptCore.workingDir + "\\SESSION\\", RTCV.CorruptCore.CorruptCore.workingDir + "\\MEMORYDUMPS\\"
                     , RTCV.CorruptCore.CorruptCore.workingDir + "\\MP\\", RTCV.CorruptCore.CorruptCore.assetsDir + "\\CRASHSOUNDS\\"
                     , RTCV.CorruptCore.CorruptCore.RtcDir + "\\PARAMS\\", RTCV.CorruptCore.CorruptCore.RtcDir + "\\LISTS\\"
-                    , RTCV.CorruptCore.CorruptCore.RtcDir + "\\RENDEROUTPUT\\",RTCV.CorruptCore.CorruptCore.RtcDir + "\\LISTS\\"
+                    , RTCV.CorruptCore.CorruptCore.RtcDir + "\\RENDEROUTPUT\\",RTCV.CorruptCore.CorruptCore.RtcDir + "\\ENGINETEMPLATES\\"
+                    ,RTCV.CorruptCore.CorruptCore.assetsDir + "\\PLATESHD\\"
                 });
 
                 if (!NetCore.Params.IsParamSet("DISCLAIMER_READ"))
