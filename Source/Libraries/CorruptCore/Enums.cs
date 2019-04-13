@@ -210,7 +210,7 @@
 		public static readonly string CORE_LASTLOADERROM = "CORE_LASTLOADERROM";
 		public static readonly string STEP_RUNBEFORE = "STEP_RUNBEFORE";
 		public static readonly string SYSTEM = "SYSTEM";
-        public static readonly string GAMENAME = "GAMENAME";
+		public static readonly string GAMENAME = "GAMENAME";
 		public static readonly string SYSTEMPREFIX = "SYSTEMPREFIX";
 		public static readonly string SYSTEMCORE = "SYSTEMCORE";
 		public static readonly string SYNCSETTINGS = "SYNCSETTINGS";
@@ -219,10 +219,12 @@
 		public static readonly string MEMORYDOMAINS_INTERFACES = "MEMORYDOMAINS_INTERFACES";
 		public static readonly string MEMORYDOMAINS_BLACKLISTEDDOMAINS = "MEMORYDOMAINS_BLACKLISTEDDOMAINS";
 		public static readonly string CORE_DISKBASED = "CORE_DISKBASED";
-		
-	}
-
-	public enum UISPEC
+		public static readonly string SUPPORTS_RENDERING = "SUPPORTS_RENDERING";
+		public static readonly string SUPPORTS_CONFIG_MANAGEMENT = "SUPPORTS_CONFIG_MANAGEMENT";
+		public static readonly string CONFIG_PATHS = "CONFIG_PATHS";
+        public static readonly string SUPPORTS_CONFIG_HANDOFF = "SUPPORTS_CONFIG_HANDOFF";
+    }
+    public enum UISPEC
 	{
 	}
 
