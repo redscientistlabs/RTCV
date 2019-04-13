@@ -198,7 +198,7 @@ namespace RTCV.UI
 			{
 				try
 				{
-					Stockpile.LoadBizhawkConfigFromStockpile();
+					Stockpile.LoadConfigFromStockpile();
 				}
 				catch (Exception ex)
 				{

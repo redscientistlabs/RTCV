@@ -28,6 +28,9 @@ namespace RTCV.UI
 			popoutAllowed = false;
 		}
 
+
+        //todo - rewrite this?
+        /*
 		private void btnImportKeyBindings_Click(object sender, EventArgs e)
 		{
 			
@@ -39,8 +42,6 @@ namespace RTCV.UI
 
 			try
 			{
-				//todo - rewrite this
-				/*
 				if (CorruptCore.CorruptCore.EmuDir.Contains(Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar))
 				{
 					var bizhawkFolder = new DirectoryInfo(CorruptCore.CorruptCore.EmuDir);
@@ -60,15 +61,15 @@ namespace RTCV.UI
 					else
 						Stockpile.LoadBizhawkKeyBindsFromIni();
 				}
-				else*/
+				else
 					Stockpile.LoadBizhawkKeyBindsFromIni();
 			}
 			finally
 			{
 			}
-		}
+		}*/
 
-		private void btnOpenOnlineWiki_Click(object sender, EventArgs e)
+        private void btnOpenOnlineWiki_Click(object sender, EventArgs e)
 		{
 			Process.Start("https://corrupt.wiki/");
 		}

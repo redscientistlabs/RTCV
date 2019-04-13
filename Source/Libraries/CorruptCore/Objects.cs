@@ -203,11 +203,13 @@ namespace RTCV.CorruptCore
 				File.Copy(CorruptCore.workingDir + Path.DirectorySeparatorChar + key.StateLocation + Path.DirectorySeparatorChar + stateFilename, CorruptCore.workingDir + Path.DirectorySeparatorChar + "TEMP" + Path.DirectorySeparatorChar + stateFilename, true); // copy savestates to temp folder
 			}
 
-			//If there's a config, snag it
-			if (File.Exists(CorruptCore.EmuDir + Path.DirectorySeparatorChar + "config.ini"))
-				File.Copy(CorruptCore.EmuDir + Path.DirectorySeparatorChar + "config.ini", CorruptCore.workingDir + Path.DirectorySeparatorChar + "TEMP\\config.ini");
-
-
+			if ((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_CONFIG_MANAGEMENT] ?? false)
+			{
+				string[] configPaths = AllSpec.VanguardSpec[VSPEC.CONFIG_PATHS] as string[] ?? new string[]{};
+				foreach(var path in configPaths)
+					if (File.Exists(path))
+                        File.Copy(path, Path.Combine(CorruptCore.workingDir, "TEMP", "CONFIGFS", Path.GetFileName(path)));
+            }
 			//Get all the limiter lists
 			List<string[]> limiterLists = Filtering.GetAllLimiterListsFromStockpile(sks);
 
@@ -537,7 +539,8 @@ namespace RTCV.CorruptCore
 			}
 		}
 
-
+		//Todo- Rewrite? Not sure if this is worth doing in vanguard
+		/*
 		public static void LoadBizhawkKeyBindsFromIni(string Filename = null)
 		{
 			if (Filename == null)
@@ -570,53 +573,83 @@ namespace RTCV.CorruptCore
 			Process.Start(CorruptCore.EmuDir + Path.DirectorySeparatorChar + $"StockpileConfig.bat");
 
 		}
-
-		public static void LoadBizhawkConfigFromStockpile(string Filename = null)
+		*/
+		public static void LoadConfigFromStockpile()
 		{
-			if (Filename == null)
-			{
-				OpenFileDialog ofd = new OpenFileDialog
-				{
-					DefaultExt = "sks",
-					Title = "Open Stockpile File",
-					Filter = "SKS files|*.sks",
-					RestoreDirectory = true
-				};
-				if (ofd.ShowDialog() == DialogResult.OK)
-				{
-					Filename = ofd.FileName.ToString();
-				}
-				else
-					return;
+            if((!(bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_CONFIG_MANAGEMENT] ?? false) == false)
+            {
+				MessageBox.Show("The currently selected emulator doesn't support config management");
 			}
 
-			if (File.Exists(CorruptCore.EmuDir + Path.DirectorySeparatorChar + "backup_config.ini"))
+			string[] configPaths = AllSpec.VanguardSpec[VSPEC.CONFIG_PATHS] as string[];
+			if (configPaths == null)
 			{
-				if (MessageBox.Show("Do you want to overwrite the previous Config Backup with the current Bizhawk Config?", "WARNING", MessageBoxButtons.YesNo) == DialogResult.Yes)
-				{
-					File.Delete(CorruptCore.EmuDir + Path.DirectorySeparatorChar + "backup_config.ini");
-					File.Copy((CorruptCore.EmuDir + Path.DirectorySeparatorChar + "config.ini"), (CorruptCore.EmuDir + Path.DirectorySeparatorChar + "backup_config.ini"));
-				}
+				throw new CustomException("ConfigMode was set but ConfigPath was null!", Environment.StackTrace);
+			}
+
+
+            string filename;
+			OpenFileDialog ofd = new OpenFileDialog
+			{
+				DefaultExt = "sks",
+				Title = "Open Stockpile File",
+				Filter = "SKS files|*.sks",
+				RestoreDirectory = true
+			};
+			if (ofd.ShowDialog() == DialogResult.OK)
+			{
+				filename = ofd.FileName.ToString();
 			}
 			else
-				File.Copy((CorruptCore.EmuDir + Path.DirectorySeparatorChar + "config.ini"), (CorruptCore.EmuDir + Path.DirectorySeparatorChar + "backup_config.ini"));
-
-			if (!Extract(Filename, "WORKING" + Path.DirectorySeparatorChar + "TEMP", "stockpile.json"))
 				return;
 
-			if (File.Exists(CorruptCore.EmuDir + Path.DirectorySeparatorChar + "stockpile_config.ini"))
-				File.Delete(CorruptCore.EmuDir + Path.DirectorySeparatorChar + "stockpile_config.ini");
-			File.Copy((CorruptCore.workingDir + Path.DirectorySeparatorChar + "TEMP\\config.ini"), (CorruptCore.EmuDir + Path.DirectorySeparatorChar + "stockpile_config.ini"));
+			var notified = false;
+            foreach (var path in configPaths)
+			{
+				var dir = Path.GetDirectoryName(path);
+				var backupFilename = Path.Combine(dir, "backup_", Path.GetFileName(path));
+				if (!notified && File.Exists(backupFilename) && MessageBox.Show("Do you want to overwrite the previous config backup with the current config?", "WARNING", MessageBoxButtons.YesNo) == DialogResult.Yes)
+				{
+					File.Delete(backupFilename);
+					notified = true;
+				}
+				File.Copy(path, backupFilename);
+            }
 
-			LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_MERGECONFIG);
+			if (!Extract(filename, "WORKING" + Path.DirectorySeparatorChar + "TEMP", "stockpile.json"))
+				return;
 
+			//Configs are stored in the "configs" folder within the stockpile
+			//Build up a filename map and use that when copying back in
 
-			//Todo - this is gonna break with split folders
+			Dictionary<string, string> name2filedico = new Dictionary<string, string>();
+			foreach (var str in configPaths)
+			{
+				name2filedico.Add(Path.GetFileName(str), str);
+			}
+
+			//Parse the configs folder and then if the emulator is looking for that file, copy it over.
+			//Otherwise ignore it (version change, wrong emulator, etc)
+			var newConfigPath = Path.Combine(CorruptCore.workingDir, "TEMP", "CONFIGS");
+			if (!Directory.Exists(newConfigPath))
+			{
+				MessageBox.Show("No configs found in stockpile");
+                return;
+			}
+
+			foreach (var file in Directory.GetFiles(newConfigPath))
+			{
+				var name = Path.GetFileName(file);
+				if (name2filedico.ContainsKey(name))
+					File.Copy(file, name2filedico[name]);
+			}
+
+            LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_MERGECONFIG);
 			Process.Start(CorruptCore.EmuDir + Path.DirectorySeparatorChar + $"StockpileConfig.bat");
 
 		}
 
-		public static void RestoreBizhawkConfig()
+        public static void RestoreBizhawkConfig()
 		{
 			LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESTOREBIZHAWKCONFIG);
 		}
