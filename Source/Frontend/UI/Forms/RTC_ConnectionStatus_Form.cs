@@ -28,7 +28,7 @@ namespace RTCV.UI
 		public void btnStartEmuhawkDetached_Click(object sender, EventArgs e)
 		{
 
-			S.GET<RTC_Core_Form>().pbAutoKillSwitchTimeout.Value = S.GET<RTC_Core_Form>().pbAutoKillSwitchTimeout.Maximum;
+			S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Maximum;
 
 			//RTC_NetCoreSettings.PlayCrashSound();
 
@@ -37,12 +37,13 @@ namespace RTCV.UI
 
 		private void btnReturnToSession_Click(object sender, EventArgs e)
 		{
+            //see if this is still usefull after old core form is dead
 			S.GET<RTC_Core_Form>().ShowPanelForm(S.GET<RTC_Core_Form>().previousForm);
 		}
 
 		private void btnStopGameProtection_Click(object sender, EventArgs e)
 		{
-			S.GET<RTC_Core_Form>().cbUseGameProtection.Checked = false;
+			S.GET<UI_CoreForm>().cbUseGameProtection.Checked = false;
 		}
 
 	}

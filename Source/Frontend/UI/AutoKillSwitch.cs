@@ -61,7 +61,7 @@ namespace RTCV.UI
 			SyncObjectSingleton.FormExecute((o, ea) =>
 			{
 
-				if (!ShouldKillswitchFire || (!S.GET<RTC_Core_Form>()
+				if (!ShouldKillswitchFire || (!S.GET<UI_CoreForm>()
 					.cbUseAutoKillSwitch.Checked && !forceBypass))
 					return;
 
@@ -145,12 +145,12 @@ namespace RTCV.UI
 			if(pulseCount < MaxMissedPulses - 1)
 				SyncObjectSingleton.FormExecute((o, ea) =>
 				{
-					S.GET<RTC_Core_Form>().pbAutoKillSwitchTimeout.PerformStep();
+					S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.PerformStep();
 				});
 			else
 				SyncObjectSingleton.FormExecute((o, ea) =>
 				{
-					S.GET<RTC_Core_Form>().pbAutoKillSwitchTimeout.Value = 0;
+					S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0;
 				});
 
 			if (pulseCount == 0)

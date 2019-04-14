@@ -30,10 +30,11 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UI_CoreForm));
             this.pnTopBar = new System.Windows.Forms.Panel();
+            this.pnGlitchHarvesterOpen = new System.Windows.Forms.Panel();
             this.pnCrashProtection = new System.Windows.Forms.Panel();
             this.btnGpJumpNow = new System.Windows.Forms.Button();
             this.btnGpJumpBack = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lbGameProtection = new System.Windows.Forms.Label();
             this.cbUseGameProtection = new System.Windows.Forms.CheckBox();
             this.btnTestSubform = new System.Windows.Forms.Button();
             this.pnAutoKillSwitch = new System.Windows.Forms.Panel();
@@ -55,7 +56,8 @@
             // 
             // pnTopBar
             // 
-            this.pnTopBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.pnTopBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.pnTopBar.Controls.Add(this.pnGlitchHarvesterOpen);
             this.pnTopBar.Controls.Add(this.pnCrashProtection);
             this.pnTopBar.Controls.Add(this.btnTestSubform);
             this.pnTopBar.Controls.Add(this.pnAutoKillSwitch);
@@ -72,21 +74,31 @@
             this.pnTopBar.Name = "pnTopBar";
             this.pnTopBar.Size = new System.Drawing.Size(150, 511);
             this.pnTopBar.TabIndex = 7;
-            this.pnTopBar.Tag = "color:darker";
+            this.pnTopBar.Tag = "color:darkerer";
+            // 
+            // pnGlitchHarvesterOpen
+            // 
+            this.pnGlitchHarvesterOpen.BackColor = System.Drawing.Color.Gray;
+            this.pnGlitchHarvesterOpen.Location = new System.Drawing.Point(-19, 137);
+            this.pnGlitchHarvesterOpen.Name = "pnGlitchHarvesterOpen";
+            this.pnGlitchHarvesterOpen.Size = new System.Drawing.Size(23, 25);
+            this.pnGlitchHarvesterOpen.TabIndex = 8;
+            this.pnGlitchHarvesterOpen.Tag = "color:light";
+            this.pnGlitchHarvesterOpen.Visible = false;
             // 
             // pnCrashProtection
             // 
             this.pnCrashProtection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.pnCrashProtection.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.pnCrashProtection.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.pnCrashProtection.Controls.Add(this.btnGpJumpNow);
             this.pnCrashProtection.Controls.Add(this.btnGpJumpBack);
-            this.pnCrashProtection.Controls.Add(this.label2);
+            this.pnCrashProtection.Controls.Add(this.lbGameProtection);
             this.pnCrashProtection.Controls.Add(this.cbUseGameProtection);
             this.pnCrashProtection.Location = new System.Drawing.Point(0, 364);
             this.pnCrashProtection.Name = "pnCrashProtection";
             this.pnCrashProtection.Size = new System.Drawing.Size(150, 60);
             this.pnCrashProtection.TabIndex = 128;
-            this.pnCrashProtection.Tag = "color:darker";
+            this.pnCrashProtection.Tag = "color:darkerer";
             // 
             // btnGpJumpNow
             // 
@@ -95,14 +107,16 @@
             this.btnGpJumpNow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGpJumpNow.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
             this.btnGpJumpNow.ForeColor = System.Drawing.Color.White;
-            this.btnGpJumpNow.Location = new System.Drawing.Point(77, 30);
+            this.btnGpJumpNow.Location = new System.Drawing.Point(80, 30);
             this.btnGpJumpNow.Name = "btnGpJumpNow";
-            this.btnGpJumpNow.Size = new System.Drawing.Size(59, 23);
+            this.btnGpJumpNow.Size = new System.Drawing.Size(60, 23);
             this.btnGpJumpNow.TabIndex = 117;
             this.btnGpJumpNow.TabStop = false;
             this.btnGpJumpNow.Tag = "color:darker";
             this.btnGpJumpNow.Text = "Now ⏩";
             this.btnGpJumpNow.UseVisualStyleBackColor = false;
+            this.btnGpJumpNow.Visible = false;
+            this.btnGpJumpNow.Click += new System.EventHandler(this.btnGpJumpNow_Click);
             // 
             // btnGpJumpBack
             // 
@@ -111,25 +125,27 @@
             this.btnGpJumpBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGpJumpBack.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
             this.btnGpJumpBack.ForeColor = System.Drawing.Color.White;
-            this.btnGpJumpBack.Location = new System.Drawing.Point(12, 30);
+            this.btnGpJumpBack.Location = new System.Drawing.Point(10, 30);
             this.btnGpJumpBack.Name = "btnGpJumpBack";
-            this.btnGpJumpBack.Size = new System.Drawing.Size(59, 23);
+            this.btnGpJumpBack.Size = new System.Drawing.Size(60, 23);
             this.btnGpJumpBack.TabIndex = 116;
             this.btnGpJumpBack.TabStop = false;
             this.btnGpJumpBack.Tag = "color:darker";
             this.btnGpJumpBack.Text = "⏪ Back";
             this.btnGpJumpBack.UseVisualStyleBackColor = false;
+            this.btnGpJumpBack.Visible = false;
+            this.btnGpJumpBack.Click += new System.EventHandler(this.btnGpJumpBack_Click);
             // 
-            // label2
+            // lbGameProtection
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F);
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(28, 8);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(105, 17);
-            this.label2.TabIndex = 111;
-            this.label2.Text = "Game Protection";
+            this.lbGameProtection.AutoSize = true;
+            this.lbGameProtection.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            this.lbGameProtection.ForeColor = System.Drawing.Color.White;
+            this.lbGameProtection.Location = new System.Drawing.Point(28, 8);
+            this.lbGameProtection.Name = "lbGameProtection";
+            this.lbGameProtection.Size = new System.Drawing.Size(105, 17);
+            this.lbGameProtection.TabIndex = 111;
+            this.lbGameProtection.Text = "Game Protection";
             // 
             // cbUseGameProtection
             // 
@@ -141,23 +157,24 @@
             this.cbUseGameProtection.Size = new System.Drawing.Size(15, 14);
             this.cbUseGameProtection.TabIndex = 76;
             this.cbUseGameProtection.UseVisualStyleBackColor = true;
+            this.cbUseGameProtection.CheckedChanged += new System.EventHandler(this.cbUseGameProtection_CheckedChanged);
             // 
             // btnTestSubform
             // 
-            this.btnTestSubform.BackColor = System.Drawing.Color.Transparent;
+            this.btnTestSubform.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.btnTestSubform.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnTestSubform.FlatAppearance.BorderSize = 0;
             this.btnTestSubform.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnTestSubform.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.btnTestSubform.ForeColor = System.Drawing.Color.White;
             this.btnTestSubform.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnTestSubform.Location = new System.Drawing.Point(0, 311);
+            this.btnTestSubform.Location = new System.Drawing.Point(0, 303);
             this.btnTestSubform.Name = "btnTestSubform";
             this.btnTestSubform.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.btnTestSubform.Size = new System.Drawing.Size(150, 33);
             this.btnTestSubform.TabIndex = 9;
             this.btnTestSubform.TabStop = false;
-            this.btnTestSubform.Tag = "color:darker";
+            this.btnTestSubform.Tag = "color:darkerer";
             this.btnTestSubform.Text = "Test Subform";
             this.btnTestSubform.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnTestSubform.UseVisualStyleBackColor = false;
@@ -167,7 +184,7 @@
             // pnAutoKillSwitch
             // 
             this.pnAutoKillSwitch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.pnAutoKillSwitch.BackColor = System.Drawing.Color.Transparent;
+            this.pnAutoKillSwitch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.pnAutoKillSwitch.Controls.Add(this.cbUseAutoKillSwitch);
             this.pnAutoKillSwitch.Controls.Add(this.pbAutoKillSwitchTimeout);
             this.pnAutoKillSwitch.Controls.Add(this.lbAks);
@@ -175,7 +192,8 @@
             this.pnAutoKillSwitch.Name = "pnAutoKillSwitch";
             this.pnAutoKillSwitch.Size = new System.Drawing.Size(150, 34);
             this.pnAutoKillSwitch.TabIndex = 127;
-            this.pnAutoKillSwitch.Tag = "color:darker";
+            this.pnAutoKillSwitch.Tag = "color:darkerer";
+            this.pnAutoKillSwitch.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnAutoKillSwitch_MouseClick);
             this.pnAutoKillSwitch.MouseEnter += new System.EventHandler(this.pnAutoKillSwitch_MouseHover);
             this.pnAutoKillSwitch.MouseLeave += new System.EventHandler(this.pnAutoKillSwitch_MouseLeave);
             this.pnAutoKillSwitch.MouseHover += new System.EventHandler(this.pnAutoKillSwitch_MouseHover);
@@ -192,6 +210,7 @@
             this.cbUseAutoKillSwitch.Size = new System.Drawing.Size(15, 14);
             this.cbUseAutoKillSwitch.TabIndex = 120;
             this.cbUseAutoKillSwitch.UseVisualStyleBackColor = true;
+            this.cbUseAutoKillSwitch.CheckedChanged += new System.EventHandler(this.cbUseAutoKillSwitch_CheckedChanged);
             this.cbUseAutoKillSwitch.MouseEnter += new System.EventHandler(this.pnAutoKillSwitch_MouseHover);
             this.cbUseAutoKillSwitch.MouseLeave += new System.EventHandler(this.pnAutoKillSwitch_MouseLeave);
             this.cbUseAutoKillSwitch.MouseHover += new System.EventHandler(this.pnAutoKillSwitch_MouseHover);
@@ -202,7 +221,7 @@
             this.pbAutoKillSwitchTimeout.MarqueeAnimationSpeed = 1;
             this.pbAutoKillSwitchTimeout.Maximum = 13;
             this.pbAutoKillSwitchTimeout.Name = "pbAutoKillSwitchTimeout";
-            this.pbAutoKillSwitchTimeout.Size = new System.Drawing.Size(123, 4);
+            this.pbAutoKillSwitchTimeout.Size = new System.Drawing.Size(130, 4);
             this.pbAutoKillSwitchTimeout.Step = 1;
             this.pbAutoKillSwitchTimeout.TabIndex = 119;
             this.pbAutoKillSwitchTimeout.Tag = "17";
@@ -227,7 +246,7 @@
             // 
             // btnSettings
             // 
-            this.btnSettings.BackColor = System.Drawing.Color.Transparent;
+            this.btnSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.btnSettings.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btnSettings.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnSettings.FlatAppearance.BorderSize = 0;
@@ -242,19 +261,20 @@
             this.btnSettings.Size = new System.Drawing.Size(150, 34);
             this.btnSettings.TabIndex = 126;
             this.btnSettings.TabStop = false;
-            this.btnSettings.Tag = "color:darker";
+            this.btnSettings.Tag = "color:darkerer";
             this.btnSettings.Text = " Settings and tools";
             this.btnSettings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSettings.UseVisualStyleBackColor = false;
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
             // btnLogo
             // 
-            this.btnLogo.BackColor = System.Drawing.Color.Transparent;
+            this.btnLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.btnLogo.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnLogo.FlatAppearance.BorderSize = 0;
             this.btnLogo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLogo.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold);
+            this.btnLogo.Font = new System.Drawing.Font("Segoe UI Semibold", 13F, System.Drawing.FontStyle.Bold);
             this.btnLogo.ForeColor = System.Drawing.Color.White;
             this.btnLogo.Location = new System.Drawing.Point(0, 0);
             this.btnLogo.Name = "btnLogo";
@@ -262,7 +282,7 @@
             this.btnLogo.Size = new System.Drawing.Size(150, 53);
             this.btnLogo.TabIndex = 125;
             this.btnLogo.TabStop = false;
-            this.btnLogo.Tag = "color:darker";
+            this.btnLogo.Tag = "color:darkerer";
             this.btnLogo.Text = "RTCV 0.00";
             this.btnLogo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnLogo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -270,7 +290,7 @@
             // 
             // btnEngineConfig
             // 
-            this.btnEngineConfig.BackColor = System.Drawing.Color.Transparent;
+            this.btnEngineConfig.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.btnEngineConfig.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnEngineConfig.FlatAppearance.BorderSize = 0;
             this.btnEngineConfig.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -284,7 +304,7 @@
             this.btnEngineConfig.Size = new System.Drawing.Size(150, 34);
             this.btnEngineConfig.TabIndex = 124;
             this.btnEngineConfig.TabStop = false;
-            this.btnEngineConfig.Tag = "color:darker";
+            this.btnEngineConfig.Tag = "color:darkerer";
             this.btnEngineConfig.Text = " Engine Config";
             this.btnEngineConfig.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnEngineConfig.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -293,7 +313,7 @@
             // 
             // btnEasyMode
             // 
-            this.btnEasyMode.BackColor = System.Drawing.Color.Transparent;
+            this.btnEasyMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.btnEasyMode.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnEasyMode.FlatAppearance.BorderSize = 0;
             this.btnEasyMode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -307,15 +327,16 @@
             this.btnEasyMode.Size = new System.Drawing.Size(150, 34);
             this.btnEasyMode.TabIndex = 121;
             this.btnEasyMode.TabStop = false;
-            this.btnEasyMode.Tag = "color:darker";
+            this.btnEasyMode.Tag = "color:darkerer";
             this.btnEasyMode.Text = " Easy Start";
             this.btnEasyMode.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnEasyMode.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnEasyMode.UseVisualStyleBackColor = false;
+            this.btnEasyMode.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnEasyMode_MouseDown);
             // 
             // btnStockpilePlayer
             // 
-            this.btnStockpilePlayer.BackColor = System.Drawing.Color.Transparent;
+            this.btnStockpilePlayer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.btnStockpilePlayer.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnStockpilePlayer.FlatAppearance.BorderSize = 0;
             this.btnStockpilePlayer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -329,15 +350,16 @@
             this.btnStockpilePlayer.Size = new System.Drawing.Size(150, 34);
             this.btnStockpilePlayer.TabIndex = 123;
             this.btnStockpilePlayer.TabStop = false;
-            this.btnStockpilePlayer.Tag = "color:darker";
+            this.btnStockpilePlayer.Tag = "color:darkerer";
             this.btnStockpilePlayer.Text = " Stockpile Player";
             this.btnStockpilePlayer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnStockpilePlayer.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnStockpilePlayer.UseVisualStyleBackColor = false;
+            this.btnStockpilePlayer.Click += new System.EventHandler(this.btnStockpilePlayer_Click);
             // 
             // btnGlitchHarvester
             // 
-            this.btnGlitchHarvester.BackColor = System.Drawing.Color.Transparent;
+            this.btnGlitchHarvester.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.btnGlitchHarvester.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnGlitchHarvester.FlatAppearance.BorderSize = 0;
             this.btnGlitchHarvester.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -351,7 +373,7 @@
             this.btnGlitchHarvester.Size = new System.Drawing.Size(150, 34);
             this.btnGlitchHarvester.TabIndex = 122;
             this.btnGlitchHarvester.TabStop = false;
-            this.btnGlitchHarvester.Tag = "color:darker";
+            this.btnGlitchHarvester.Tag = "color:darkerer";
             this.btnGlitchHarvester.Text = " Glitch Harvester";
             this.btnGlitchHarvester.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnGlitchHarvester.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -360,7 +382,7 @@
             // 
             // btnManualBlast
             // 
-            this.btnManualBlast.BackColor = System.Drawing.Color.Transparent;
+            this.btnManualBlast.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.btnManualBlast.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnManualBlast.FlatAppearance.BorderSize = 0;
             this.btnManualBlast.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -374,15 +396,16 @@
             this.btnManualBlast.Size = new System.Drawing.Size(150, 34);
             this.btnManualBlast.TabIndex = 119;
             this.btnManualBlast.TabStop = false;
-            this.btnManualBlast.Tag = "color:darker";
+            this.btnManualBlast.Tag = "color:darkerer";
             this.btnManualBlast.Text = " Manual Blast";
             this.btnManualBlast.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnManualBlast.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnManualBlast.UseVisualStyleBackColor = false;
+            this.btnManualBlast.Click += new System.EventHandler(this.btnManualBlast_Click);
             // 
             // btnAutoCorrupt
             // 
-            this.btnAutoCorrupt.BackColor = System.Drawing.Color.Transparent;
+            this.btnAutoCorrupt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.btnAutoCorrupt.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnAutoCorrupt.FlatAppearance.BorderSize = 0;
             this.btnAutoCorrupt.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -396,11 +419,12 @@
             this.btnAutoCorrupt.Size = new System.Drawing.Size(150, 34);
             this.btnAutoCorrupt.TabIndex = 120;
             this.btnAutoCorrupt.TabStop = false;
-            this.btnAutoCorrupt.Tag = "color:darker";
+            this.btnAutoCorrupt.Tag = "color:darkerer";
             this.btnAutoCorrupt.Text = " Start Auto-Corrupt";
             this.btnAutoCorrupt.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAutoCorrupt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAutoCorrupt.UseVisualStyleBackColor = false;
+            this.btnAutoCorrupt.Click += new System.EventHandler(this.btnAutoCorrupt_Click);
             // 
             // UI_CoreForm
             // 
@@ -446,9 +470,10 @@
         private System.Windows.Forms.Panel pnCrashProtection;
         public System.Windows.Forms.Button btnGpJumpNow;
         public System.Windows.Forms.Button btnGpJumpBack;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lbGameProtection;
         public System.Windows.Forms.CheckBox cbUseGameProtection;
         private System.Windows.Forms.Button btnTestSubform;
+        internal System.Windows.Forms.Panel pnGlitchHarvesterOpen;
     }
 }
 

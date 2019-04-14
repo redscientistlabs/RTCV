@@ -98,7 +98,7 @@ namespace RTCV.UI
 			pnCustomPrecision.Visible = false;
 			
 
-			S.GET<RTC_Core_Form>().btnAutoCorrupt.Visible = true;
+			S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = true;
 			S.GET<RTC_GlitchHarvester_Form>().pnIntensity.Visible = true;
 			S.GET<RTC_EngineConfig_Form>().pnGeneralParameters.Visible = true;
 			S.GET<RTC_EngineConfig_Form>().pnMemoryDomains.Visible = true;
@@ -150,8 +150,8 @@ namespace RTCV.UI
 					CorruptCore.CorruptCore.SelectedEngine = CorruptionEngine.BLASTGENERATORENGINE;
 					gbBlastGeneratorEngine.Visible = true;
 
-					S.GET<RTC_Core_Form>().AutoCorrupt = false;
-					S.GET<RTC_Core_Form>().btnAutoCorrupt.Visible = false;
+					S.GET<UI_CoreForm>().AutoCorrupt = false;
+					S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
 					S.GET<RTC_EngineConfig_Form>().pnGeneralParameters.Visible = false;
 					S.GET<RTC_EngineConfig_Form>().pnMemoryDomains.Visible = false;
 

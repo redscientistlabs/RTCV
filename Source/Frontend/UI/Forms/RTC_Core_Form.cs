@@ -168,7 +168,7 @@ This message only appears once.";
 		public void StartEasyMode(bool useTemplate)
 		{
 		//	if (RTC_NetcoreImplementation.isStandaloneUI && !S.GET<RTC_Core_Form>().cbUseGameProtection.Checked)
-				S.GET<RTC_Core_Form>().cbUseGameProtection.Checked = true;
+				S.GET<UI_CoreForm>().cbUseGameProtection.Checked = true;
 
 
 			if (useTemplate)
@@ -235,7 +235,7 @@ This message only appears once.";
 				}
 			}
 
-			this.AutoCorrupt = true;
+			S.GET<UI_CoreForm>().AutoCorrupt = true;
 		}
 
 		private void cbUseGameProtection_CheckedChanged(object sender, EventArgs e)

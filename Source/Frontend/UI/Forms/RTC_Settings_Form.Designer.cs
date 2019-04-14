@@ -41,21 +41,23 @@
             // lbSettingsAndTools
             // 
             this.lbSettingsAndTools.AutoSize = true;
-            this.lbSettingsAndTools.Font = new System.Drawing.Font("Segoe UI Semibold", 26.25F, System.Drawing.FontStyle.Bold);
-            this.lbSettingsAndTools.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.lbSettingsAndTools.Location = new System.Drawing.Point(11, 9);
+            this.lbSettingsAndTools.Font = new System.Drawing.Font("Segoe UI Semibold", 22F, System.Drawing.FontStyle.Bold);
+            this.lbSettingsAndTools.ForeColor = System.Drawing.Color.White;
+            this.lbSettingsAndTools.Location = new System.Drawing.Point(12, 17);
             this.lbSettingsAndTools.Name = "lbSettingsAndTools";
-            this.lbSettingsAndTools.Size = new System.Drawing.Size(307, 47);
+            this.lbSettingsAndTools.Size = new System.Drawing.Size(265, 41);
             this.lbSettingsAndTools.TabIndex = 118;
             this.lbSettingsAndTools.Text = "Settings and tools";
             // 
             // btnRtcFactoryClean
             // 
-            this.btnRtcFactoryClean.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnRtcFactoryClean.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRtcFactoryClean.BackColor = System.Drawing.Color.Gray;
             this.btnRtcFactoryClean.FlatAppearance.BorderSize = 0;
             this.btnRtcFactoryClean.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRtcFactoryClean.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnRtcFactoryClean.ForeColor = System.Drawing.Color.Black;
+            this.btnRtcFactoryClean.ForeColor = System.Drawing.Color.White;
             this.btnRtcFactoryClean.Image = ((System.Drawing.Image)(resources.GetObject("btnRtcFactoryClean.Image")));
             this.btnRtcFactoryClean.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnRtcFactoryClean.Location = new System.Drawing.Point(409, 465);
@@ -70,11 +72,13 @@
             // 
             // btnCloseSettings
             // 
-            this.btnCloseSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnCloseSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCloseSettings.BackColor = System.Drawing.Color.Gray;
             this.btnCloseSettings.FlatAppearance.BorderSize = 0;
             this.btnCloseSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCloseSettings.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnCloseSettings.ForeColor = System.Drawing.Color.Black;
+            this.btnCloseSettings.ForeColor = System.Drawing.Color.White;
             this.btnCloseSettings.Image = ((System.Drawing.Image)(resources.GetObject("btnCloseSettings.Image")));
             this.btnCloseSettings.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnCloseSettings.Location = new System.Drawing.Point(19, 465);
@@ -89,6 +93,9 @@
             // 
             // pnListBoxForm
             // 
+            this.pnListBoxForm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnListBoxForm.BackColor = System.Drawing.Color.Gray;
             this.pnListBoxForm.Location = new System.Drawing.Point(19, 66);
             this.pnListBoxForm.Name = "pnListBoxForm";
@@ -98,11 +105,11 @@
             // 
             // btnOpenConsole
             // 
-            this.btnOpenConsole.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnOpenConsole.BackColor = System.Drawing.Color.Gray;
             this.btnOpenConsole.FlatAppearance.BorderSize = 0;
             this.btnOpenConsole.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOpenConsole.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnOpenConsole.ForeColor = System.Drawing.Color.Black;
+            this.btnOpenConsole.ForeColor = System.Drawing.Color.White;
             this.btnOpenConsole.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenConsole.Image")));
             this.btnOpenConsole.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnOpenConsole.Location = new System.Drawing.Point(515, 27);
@@ -117,30 +124,37 @@
             // 
             // btnDebugInfo
             // 
-            this.btnDebugInfo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnDebugInfo.BackColor = System.Drawing.Color.Gray;
             this.btnDebugInfo.FlatAppearance.BorderSize = 0;
             this.btnDebugInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDebugInfo.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnDebugInfo.ForeColor = System.Drawing.Color.Black;
+            this.btnDebugInfo.ForeColor = System.Drawing.Color.White;
+            this.btnDebugInfo.Image = ((System.Drawing.Image)(resources.GetObject("btnDebugInfo.Image")));
             this.btnDebugInfo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnDebugInfo.Location = new System.Drawing.Point(380, 27);
             this.btnDebugInfo.Name = "btnDebugInfo";
             this.btnDebugInfo.Size = new System.Drawing.Size(126, 29);
             this.btnDebugInfo.TabIndex = 139;
             this.btnDebugInfo.Tag = "color:light";
-            this.btnDebugInfo.Text = "🙃 Show Debug Info";
+            this.btnDebugInfo.Text = " Show Debug Info";
             this.btnDebugInfo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnDebugInfo.UseVisualStyleBackColor = false;
             this.btnDebugInfo.Click += new System.EventHandler(this.btnDebugInfo_Click);
             // 
             // btnTestForm
             // 
-            this.btnTestForm.Location = new System.Drawing.Point(317, 9);
+            this.btnTestForm.BackColor = System.Drawing.Color.Gray;
+            this.btnTestForm.FlatAppearance.BorderSize = 0;
+            this.btnTestForm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTestForm.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnTestForm.ForeColor = System.Drawing.Color.White;
+            this.btnTestForm.Location = new System.Drawing.Point(314, 27);
             this.btnTestForm.Name = "btnTestForm";
-            this.btnTestForm.Size = new System.Drawing.Size(57, 51);
+            this.btnTestForm.Size = new System.Drawing.Size(57, 29);
             this.btnTestForm.TabIndex = 140;
-            this.btnTestForm.Text = "Open Test Form";
-            this.btnTestForm.UseVisualStyleBackColor = true;
+            this.btnTestForm.Tag = "color:light";
+            this.btnTestForm.Text = "Test";
+            this.btnTestForm.UseVisualStyleBackColor = false;
             this.btnTestForm.Visible = false;
             this.btnTestForm.Click += new System.EventHandler(this.BtnTestForm_Click);
             // 

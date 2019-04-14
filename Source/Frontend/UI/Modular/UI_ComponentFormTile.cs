@@ -40,7 +40,7 @@ namespace RTCV.UI
                 );
 
 
-            (childForm as ComponentForm)?.AnchorToPanel(pnComponentFormHost); //ATTACH HERE
+            (childForm as ComponentForm)?.AnchorToPanel(pnComponentFormHost);
 
 
             if (DisplayHeader)
@@ -52,6 +52,7 @@ namespace RTCV.UI
                 lbComponentFormName.Visible = false;
                 pnComponentFormHost.Location = new Point(0, 0);
                 pnComponentFormHost.Size = this.Size;
+                childForm.Size = this.Size;
             }
         }
 

@@ -40,7 +40,7 @@
             this.label14 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.nmActiveTableCapOffset = new NumericUpDownHexFix();
+            this.nmActiveTableCapOffset = new RTCV.UI.NumericUpDownHexFix();
             this.rbActiveTableCapBlockEnd = new System.Windows.Forms.RadioButton();
             this.rbActiveTableCapBlockStart = new System.Windows.Forms.RadioButton();
             this.rbActiveTableCapRandom = new System.Windows.Forms.RadioButton();
@@ -77,7 +77,7 @@
             this.btnActiveTableSubtractFile.FlatAppearance.BorderSize = 0;
             this.btnActiveTableSubtractFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnActiveTableSubtractFile.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnActiveTableSubtractFile.ForeColor = System.Drawing.Color.Black;
+            this.btnActiveTableSubtractFile.ForeColor = System.Drawing.Color.White;
             this.btnActiveTableSubtractFile.Location = new System.Drawing.Point(17, 180);
             this.btnActiveTableSubtractFile.Name = "btnActiveTableSubtractFile";
             this.btnActiveTableSubtractFile.Size = new System.Drawing.Size(88, 20);
@@ -95,7 +95,7 @@
             this.btnActiveTableGenerate.FlatAppearance.BorderSize = 0;
             this.btnActiveTableGenerate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnActiveTableGenerate.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnActiveTableGenerate.ForeColor = System.Drawing.Color.Black;
+            this.btnActiveTableGenerate.ForeColor = System.Drawing.Color.White;
             this.btnActiveTableGenerate.Location = new System.Drawing.Point(17, 224);
             this.btnActiveTableGenerate.Name = "btnActiveTableGenerate";
             this.btnActiveTableGenerate.Size = new System.Drawing.Size(161, 20);
@@ -113,7 +113,7 @@
             this.btnActiveTableQuickSave.FlatAppearance.BorderSize = 0;
             this.btnActiveTableQuickSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnActiveTableQuickSave.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnActiveTableQuickSave.ForeColor = System.Drawing.Color.Black;
+            this.btnActiveTableQuickSave.ForeColor = System.Drawing.Color.White;
             this.btnActiveTableQuickSave.Location = new System.Drawing.Point(107, 202);
             this.btnActiveTableQuickSave.Name = "btnActiveTableQuickSave";
             this.btnActiveTableQuickSave.Size = new System.Drawing.Size(71, 20);
@@ -145,10 +145,10 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Generation parameters";
             this.groupBox2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-			// 
-			// cbUseCorePrecision
-			// 
-			this.cbUseCorePrecision.AutoSize = true;
+            // 
+            // cbUseCorePrecision
+            // 
+            this.cbUseCorePrecision.AutoSize = true;
             this.cbUseCorePrecision.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbUseCorePrecision.ForeColor = System.Drawing.Color.White;
             this.cbUseCorePrecision.Location = new System.Drawing.Point(14, 82);
@@ -239,10 +239,10 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Capping distribution";
             this.groupBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-			// 
-			// label12
-			// 
-			this.label12.AutoSize = true;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
             this.label12.Location = new System.Drawing.Point(8, 65);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(42, 13);
@@ -355,12 +355,12 @@
             this.cbSelectedMemoryDomain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.cbSelectedMemoryDomain.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSelectedMemoryDomain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbSelectedMemoryDomain.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            this.cbSelectedMemoryDomain.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbSelectedMemoryDomain.ForeColor = System.Drawing.Color.White;
             this.cbSelectedMemoryDomain.FormattingEnabled = true;
             this.cbSelectedMemoryDomain.Location = new System.Drawing.Point(11, 62);
             this.cbSelectedMemoryDomain.Name = "cbSelectedMemoryDomain";
-            this.cbSelectedMemoryDomain.Size = new System.Drawing.Size(169, 25);
+            this.cbSelectedMemoryDomain.Size = new System.Drawing.Size(169, 21);
             this.cbSelectedMemoryDomain.TabIndex = 125;
             this.cbSelectedMemoryDomain.Tag = "color:dark";
             this.cbSelectedMemoryDomain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
@@ -372,7 +372,7 @@
             this.btnActiveTableLoad.FlatAppearance.BorderSize = 0;
             this.btnActiveTableLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnActiveTableLoad.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnActiveTableLoad.ForeColor = System.Drawing.Color.Black;
+            this.btnActiveTableLoad.ForeColor = System.Drawing.Color.White;
             this.btnActiveTableLoad.Location = new System.Drawing.Point(17, 202);
             this.btnActiveTableLoad.Name = "btnActiveTableLoad";
             this.btnActiveTableLoad.Size = new System.Drawing.Size(88, 20);
@@ -440,7 +440,7 @@
             this.btnActiveTableAddDump.FlatAppearance.BorderSize = 0;
             this.btnActiveTableAddDump.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnActiveTableAddDump.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnActiveTableAddDump.ForeColor = System.Drawing.Color.Black;
+            this.btnActiveTableAddDump.ForeColor = System.Drawing.Color.White;
             this.btnActiveTableAddDump.Location = new System.Drawing.Point(97, 34);
             this.btnActiveTableAddDump.Name = "btnActiveTableAddDump";
             this.btnActiveTableAddDump.Size = new System.Drawing.Size(83, 23);
@@ -470,7 +470,7 @@
             this.btnActiveTableDumpsReset.FlatAppearance.BorderSize = 0;
             this.btnActiveTableDumpsReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnActiveTableDumpsReset.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnActiveTableDumpsReset.ForeColor = System.Drawing.Color.Black;
+            this.btnActiveTableDumpsReset.ForeColor = System.Drawing.Color.White;
             this.btnActiveTableDumpsReset.Location = new System.Drawing.Point(97, 9);
             this.btnActiveTableDumpsReset.Name = "btnActiveTableDumpsReset";
             this.btnActiveTableDumpsReset.Size = new System.Drawing.Size(83, 23);
@@ -523,7 +523,7 @@
             this.btnActiveTableAddFile.FlatAppearance.BorderSize = 0;
             this.btnActiveTableAddFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnActiveTableAddFile.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnActiveTableAddFile.ForeColor = System.Drawing.Color.Black;
+            this.btnActiveTableAddFile.ForeColor = System.Drawing.Color.White;
             this.btnActiveTableAddFile.Location = new System.Drawing.Point(107, 180);
             this.btnActiveTableAddFile.Name = "btnActiveTableAddFile";
             this.btnActiveTableAddFile.Size = new System.Drawing.Size(71, 20);
@@ -539,8 +539,8 @@
             this.btnLoadDomains.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnLoadDomains.FlatAppearance.BorderSize = 0;
             this.btnLoadDomains.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLoadDomains.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.btnLoadDomains.ForeColor = System.Drawing.Color.Black;
+            this.btnLoadDomains.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnLoadDomains.ForeColor = System.Drawing.Color.White;
             this.btnLoadDomains.Location = new System.Drawing.Point(11, 9);
             this.btnLoadDomains.Name = "btnLoadDomains";
             this.btnLoadDomains.Size = new System.Drawing.Size(80, 48);

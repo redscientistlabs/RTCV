@@ -9,9 +9,12 @@ using RTCV.NetCore;
 
 namespace RTCV.UI
 {
-	public partial class RTC_StockpilePlayer_Form : Form, IAutoColorize
-	{
-		public bool DontLoadSelectedStockpile = false;
+	public partial class RTC_StockpilePlayer_Form : ComponentForm, IAutoColorize
+    {
+        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+
+        public bool DontLoadSelectedStockpile = false;
 		private bool currentlyLoading = false;
 
 		public RTC_StockpilePlayer_Form()
@@ -257,7 +260,7 @@ namespace RTCV.UI
 				if (dgvStockpile.SelectedRows.Count > 0)
 				{
 					//Shut autocorrupt off because people (Vinny) kept turning it on to add to corruptions then forgetting to turn it off
-					S.GET<RTC_Core_Form>().AutoCorrupt = false; 
+					S.GET<UI_CoreForm>().AutoCorrupt = false; 
 
 					S.GET<RTC_GlitchHarvester_Form>().rbCorrupt.Checked = true;
 					StockpileManager_UISide.CurrentStashkey = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);

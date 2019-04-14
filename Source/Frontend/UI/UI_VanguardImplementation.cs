@@ -68,11 +68,11 @@ namespace RTCV.UI
 					case REMOTE_ALLSPECSSENT:
 						SyncObjectSingleton.FormExecute((o, ea) =>
 						{
-							S.GET<RTC_Core_Form>().Show();
+							S.GET<UI_CoreForm>().Show();
 							if (UICore.FirstConnect)
 							{
 								UICore.FirstConnect = false;
-								S.GET<RTC_Core_Form>().btnEngineConfig_Click(null, null);
+								S.GET<UI_CoreForm>().btnEngineConfig_Click(null, null);
 							}
 							else
 							{
@@ -93,9 +93,10 @@ namespace RTCV.UI
 								S.GET<RTC_GlitchHarvester_Form>().pnHideGlitchHarvester.Hide();
 							}
 
-							S.GET<RTC_Core_Form>().pbAutoKillSwitchTimeout.Value = 0;
+							S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0;//remove this once core form is dead
+                            S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0;
 
-							if (!CorruptCore.CorruptCore.Attached)
+                            if (!CorruptCore.CorruptCore.Attached)
 								AutoKillSwitch.Enabled = true;
 						});
 						break;
@@ -136,7 +137,7 @@ namespace RTCV.UI
 					case ERROR_DISABLE_AUTOCORRUPT:
 						SyncObjectSingleton.FormExecute((o, ea) =>
 						{
-							S.GET<RTC_Core_Form>().AutoCorrupt = false;
+							S.GET<UI_CoreForm>().AutoCorrupt = false;
 						});
 						break;
 
@@ -147,8 +148,8 @@ namespace RTCV.UI
 						StockpileManager_UISide.AllBackupStates.Push((StashKey)advancedMessage.objectValue);
 						SyncObjectSingleton.FormExecute((o, ea) =>
 						{
-							S.GET<RTC_Core_Form>().btnGpJumpBack.Visible = true;
-							S.GET<RTC_Core_Form>().btnGpJumpNow.Visible = true;
+							S.GET<UI_CoreForm>().btnGpJumpBack.Visible = true;
+							S.GET<UI_CoreForm>().btnGpJumpNow.Visible = true;
 						});
 						break;
 

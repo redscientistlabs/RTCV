@@ -120,11 +120,11 @@
             // 
             // btnChangeRTCColor
             // 
-            this.btnChangeRTCColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnChangeRTCColor.BackColor = System.Drawing.Color.Gray;
             this.btnChangeRTCColor.FlatAppearance.BorderSize = 0;
             this.btnChangeRTCColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnChangeRTCColor.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnChangeRTCColor.ForeColor = System.Drawing.Color.Black;
+            this.btnChangeRTCColor.ForeColor = System.Drawing.Color.White;
             this.btnChangeRTCColor.Image = ((System.Drawing.Image)(resources.GetObject("btnChangeRTCColor.Image")));
             this.btnChangeRTCColor.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnChangeRTCColor.Location = new System.Drawing.Point(80, 91);
@@ -139,11 +139,11 @@
             // 
             // btnOpenOnlineWiki
             // 
-            this.btnOpenOnlineWiki.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnOpenOnlineWiki.BackColor = System.Drawing.Color.Gray;
             this.btnOpenOnlineWiki.FlatAppearance.BorderSize = 0;
             this.btnOpenOnlineWiki.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOpenOnlineWiki.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnOpenOnlineWiki.ForeColor = System.Drawing.Color.Black;
+            this.btnOpenOnlineWiki.ForeColor = System.Drawing.Color.White;
             this.btnOpenOnlineWiki.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenOnlineWiki.Image")));
             this.btnOpenOnlineWiki.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnOpenOnlineWiki.Location = new System.Drawing.Point(80, 40);

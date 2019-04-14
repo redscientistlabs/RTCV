@@ -34,14 +34,16 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.pnSidebar = new System.Windows.Forms.Panel();
+            this.pnRender = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.btnOpenRenderFolder = new System.Windows.Forms.Button();
             this.cbRenderType = new System.Windows.Forms.ComboBox();
+            this.btnOpenRenderFolder = new System.Windows.Forms.Button();
+            this.btnRender = new System.Windows.Forms.Button();
+            this.cbRenderAtLoad = new System.Windows.Forms.CheckBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.cbRenderAtLoad = new System.Windows.Forms.CheckBox();
             this.btnCorrupt = new System.Windows.Forms.Button();
-            this.btnRender = new System.Windows.Forms.Button();
             this.btnSendRaw = new System.Windows.Forms.Button();
             this.btnSaveSavestateList = new System.Windows.Forms.Button();
             this.btnLoadSavestateList = new System.Windows.Forms.Button();
@@ -164,27 +166,25 @@
             this.label8 = new System.Windows.Forms.Label();
             this.cbCompressStockpiles = new System.Windows.Forms.CheckBox();
             this.pnIntensity = new System.Windows.Forms.Panel();
-            this.multiTB_Intensity = new RTCV.UI.Components.Controls.MultiTrackBar();
             this.dgvStockpile = new RTCV.UI.DataGridViewDraggable();
             this.Item = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GameName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SystemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SystemCore = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Note = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.multiTB_Intensity = new RTCV.UI.Components.Controls.MultiTrackBar();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label9 = new System.Windows.Forms.Label();
-            this.pnRender = new System.Windows.Forms.Panel();
             this.pnSidebar.SuspendLayout();
+            this.pnRender.SuspendLayout();
             this.panel3.SuspendLayout();
             this.pnSavestateHolder.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.pnIntensity.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStockpile)).BeginInit();
-            this.pnRender.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnSidebar
@@ -211,6 +211,32 @@
             this.pnSidebar.TabIndex = 71;
             this.pnSidebar.Tag = "color:normal";
             // 
+            // pnRender
+            // 
+            this.pnRender.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.pnRender.Controls.Add(this.label9);
+            this.pnRender.Controls.Add(this.label4);
+            this.pnRender.Controls.Add(this.cbRenderType);
+            this.pnRender.Controls.Add(this.btnOpenRenderFolder);
+            this.pnRender.Controls.Add(this.btnRender);
+            this.pnRender.Controls.Add(this.cbRenderAtLoad);
+            this.pnRender.Location = new System.Drawing.Point(-5, 407);
+            this.pnRender.Name = "pnRender";
+            this.pnRender.Size = new System.Drawing.Size(146, 94);
+            this.pnRender.TabIndex = 139;
+            this.pnRender.Tag = "color:dark";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
+            this.label9.ForeColor = System.Drawing.Color.White;
+            this.label9.Location = new System.Drawing.Point(9, 3);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(85, 15);
+            this.label9.TabIndex = 139;
+            this.label9.Text = "Render Output";
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -221,24 +247,6 @@
             this.label4.Size = new System.Drawing.Size(32, 13);
             this.label4.TabIndex = 142;
             this.label4.Text = "Type:";
-            // 
-            // btnOpenRenderFolder
-            // 
-            this.btnOpenRenderFolder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnOpenRenderFolder.FlatAppearance.BorderSize = 0;
-            this.btnOpenRenderFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOpenRenderFolder.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnOpenRenderFolder.ForeColor = System.Drawing.Color.White;
-            this.btnOpenRenderFolder.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenRenderFolder.Image")));
-            this.btnOpenRenderFolder.Location = new System.Drawing.Point(104, 66);
-            this.btnOpenRenderFolder.Name = "btnOpenRenderFolder";
-            this.btnOpenRenderFolder.Size = new System.Drawing.Size(38, 24);
-            this.btnOpenRenderFolder.TabIndex = 143;
-            this.btnOpenRenderFolder.TabStop = false;
-            this.btnOpenRenderFolder.Tag = "color:darker";
-            this.btnOpenRenderFolder.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnOpenRenderFolder.UseVisualStyleBackColor = false;
-            this.btnOpenRenderFolder.Click += new System.EventHandler(this.btnOpenRenderFolder_Click);
             // 
             // cbRenderType
             // 
@@ -261,6 +269,55 @@
             this.cbRenderType.Tag = "color:dark";
             this.cbRenderType.SelectedIndexChanged += new System.EventHandler(this.cbRenderType_SelectedIndexChanged);
             // 
+            // btnOpenRenderFolder
+            // 
+            this.btnOpenRenderFolder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnOpenRenderFolder.FlatAppearance.BorderSize = 0;
+            this.btnOpenRenderFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOpenRenderFolder.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnOpenRenderFolder.ForeColor = System.Drawing.Color.White;
+            this.btnOpenRenderFolder.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenRenderFolder.Image")));
+            this.btnOpenRenderFolder.Location = new System.Drawing.Point(104, 66);
+            this.btnOpenRenderFolder.Name = "btnOpenRenderFolder";
+            this.btnOpenRenderFolder.Size = new System.Drawing.Size(38, 24);
+            this.btnOpenRenderFolder.TabIndex = 143;
+            this.btnOpenRenderFolder.TabStop = false;
+            this.btnOpenRenderFolder.Tag = "color:darker";
+            this.btnOpenRenderFolder.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnOpenRenderFolder.UseVisualStyleBackColor = false;
+            this.btnOpenRenderFolder.Click += new System.EventHandler(this.btnOpenRenderFolder_Click);
+            // 
+            // btnRender
+            // 
+            this.btnRender.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnRender.FlatAppearance.BorderSize = 0;
+            this.btnRender.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRender.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnRender.ForeColor = System.Drawing.Color.White;
+            this.btnRender.Location = new System.Drawing.Point(8, 66);
+            this.btnRender.Name = "btnRender";
+            this.btnRender.Size = new System.Drawing.Size(93, 24);
+            this.btnRender.TabIndex = 134;
+            this.btnRender.TabStop = false;
+            this.btnRender.Tag = "color:darker";
+            this.btnRender.Text = "Start Render";
+            this.btnRender.UseVisualStyleBackColor = false;
+            this.btnRender.Click += new System.EventHandler(this.btnRender_Click);
+            // 
+            // cbRenderAtLoad
+            // 
+            this.cbRenderAtLoad.AutoSize = true;
+            this.cbRenderAtLoad.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.cbRenderAtLoad.ForeColor = System.Drawing.Color.White;
+            this.cbRenderAtLoad.Location = new System.Drawing.Point(13, 47);
+            this.cbRenderAtLoad.Name = "cbRenderAtLoad";
+            this.cbRenderAtLoad.Size = new System.Drawing.Size(121, 17);
+            this.cbRenderAtLoad.TabIndex = 76;
+            this.cbRenderAtLoad.TabStop = false;
+            this.cbRenderAtLoad.Text = "Render file at load";
+            this.cbRenderAtLoad.UseVisualStyleBackColor = true;
+            this.cbRenderAtLoad.CheckedChanged += new System.EventHandler(this.cbRenderAtLoad_CheckedChanged);
+            // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -282,20 +339,6 @@
             this.label1.TabIndex = 37;
             this.label1.Text = "Savestate Manager";
             // 
-            // cbRenderAtLoad
-            // 
-            this.cbRenderAtLoad.AutoSize = true;
-            this.cbRenderAtLoad.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.cbRenderAtLoad.ForeColor = System.Drawing.Color.White;
-            this.cbRenderAtLoad.Location = new System.Drawing.Point(13, 47);
-            this.cbRenderAtLoad.Name = "cbRenderAtLoad";
-            this.cbRenderAtLoad.Size = new System.Drawing.Size(121, 17);
-            this.cbRenderAtLoad.TabIndex = 76;
-            this.cbRenderAtLoad.TabStop = false;
-            this.cbRenderAtLoad.Text = "Render file at load";
-            this.cbRenderAtLoad.UseVisualStyleBackColor = true;
-            this.cbRenderAtLoad.CheckedChanged += new System.EventHandler(this.cbRenderAtLoad_CheckedChanged);
-            // 
             // btnCorrupt
             // 
             this.btnCorrupt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
@@ -314,23 +357,6 @@
             this.btnCorrupt.UseVisualStyleBackColor = false;
             this.btnCorrupt.Click += new System.EventHandler(this.btnCorrupt_Click);
             this.btnCorrupt.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnCorrupt_MouseDown);
-            // 
-            // btnRender
-            // 
-            this.btnRender.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnRender.FlatAppearance.BorderSize = 0;
-            this.btnRender.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRender.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnRender.ForeColor = System.Drawing.Color.White;
-            this.btnRender.Location = new System.Drawing.Point(8, 66);
-            this.btnRender.Name = "btnRender";
-            this.btnRender.Size = new System.Drawing.Size(93, 24);
-            this.btnRender.TabIndex = 134;
-            this.btnRender.TabStop = false;
-            this.btnRender.Tag = "color:darker";
-            this.btnRender.Text = "Start Render";
-            this.btnRender.UseVisualStyleBackColor = false;
-            this.btnRender.Click += new System.EventHandler(this.btnRender_Click);
             // 
             // btnSendRaw
             // 
@@ -1743,11 +1769,11 @@
             // btnClearStashHistory
             // 
             this.btnClearStashHistory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnClearStashHistory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnClearStashHistory.BackColor = System.Drawing.Color.Gray;
             this.btnClearStashHistory.FlatAppearance.BorderSize = 0;
             this.btnClearStashHistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClearStashHistory.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnClearStashHistory.ForeColor = System.Drawing.Color.Black;
+            this.btnClearStashHistory.ForeColor = System.Drawing.Color.White;
             this.btnClearStashHistory.Location = new System.Drawing.Point(160, 469);
             this.btnClearStashHistory.Name = "btnClearStashHistory";
             this.btnClearStashHistory.Size = new System.Drawing.Size(200, 24);
@@ -1760,12 +1786,12 @@
             // 
             // btnStashDOWN
             // 
-            this.btnStashDOWN.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnStashDOWN.BackColor = System.Drawing.Color.Gray;
             this.btnStashDOWN.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnStashDOWN.FlatAppearance.BorderSize = 0;
             this.btnStashDOWN.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStashDOWN.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.btnStashDOWN.ForeColor = System.Drawing.Color.Black;
+            this.btnStashDOWN.ForeColor = System.Drawing.Color.White;
             this.btnStashDOWN.Location = new System.Drawing.Point(336, 182);
             this.btnStashDOWN.Name = "btnStashDOWN";
             this.btnStashDOWN.Size = new System.Drawing.Size(25, 22);
@@ -1778,12 +1804,12 @@
             // 
             // btnStashUP
             // 
-            this.btnStashUP.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnStashUP.BackColor = System.Drawing.Color.Gray;
             this.btnStashUP.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnStashUP.FlatAppearance.BorderSize = 0;
             this.btnStashUP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStashUP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.btnStashUP.ForeColor = System.Drawing.Color.Black;
+            this.btnStashUP.ForeColor = System.Drawing.Color.White;
             this.btnStashUP.Location = new System.Drawing.Point(310, 182);
             this.btnStashUP.Name = "btnStashUP";
             this.btnStashUP.Size = new System.Drawing.Size(25, 22);
@@ -1828,11 +1854,11 @@
             // btnStockpileMoveSelectedDown
             // 
             this.btnStockpileMoveSelectedDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnStockpileMoveSelectedDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnStockpileMoveSelectedDown.BackColor = System.Drawing.Color.Gray;
             this.btnStockpileMoveSelectedDown.FlatAppearance.BorderSize = 0;
             this.btnStockpileMoveSelectedDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStockpileMoveSelectedDown.Font = new System.Drawing.Font("Segoe UI Symbol", 7F);
-            this.btnStockpileMoveSelectedDown.ForeColor = System.Drawing.Color.Black;
+            this.btnStockpileMoveSelectedDown.ForeColor = System.Drawing.Color.White;
             this.btnStockpileMoveSelectedDown.Location = new System.Drawing.Point(816, 470);
             this.btnStockpileMoveSelectedDown.Name = "btnStockpileMoveSelectedDown";
             this.btnStockpileMoveSelectedDown.Size = new System.Drawing.Size(33, 24);
@@ -1846,11 +1872,11 @@
             // btnStockpileMoveSelectedUp
             // 
             this.btnStockpileMoveSelectedUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnStockpileMoveSelectedUp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnStockpileMoveSelectedUp.BackColor = System.Drawing.Color.Gray;
             this.btnStockpileMoveSelectedUp.FlatAppearance.BorderSize = 0;
             this.btnStockpileMoveSelectedUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStockpileMoveSelectedUp.Font = new System.Drawing.Font("Segoe UI Symbol", 7F);
-            this.btnStockpileMoveSelectedUp.ForeColor = System.Drawing.Color.Black;
+            this.btnStockpileMoveSelectedUp.ForeColor = System.Drawing.Color.White;
             this.btnStockpileMoveSelectedUp.Location = new System.Drawing.Point(778, 470);
             this.btnStockpileMoveSelectedUp.Margin = new System.Windows.Forms.Padding(0);
             this.btnStockpileMoveSelectedUp.Name = "btnStockpileMoveSelectedUp";
@@ -1917,11 +1943,11 @@
             // btnClearStockpile
             // 
             this.btnClearStockpile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClearStockpile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnClearStockpile.BackColor = System.Drawing.Color.Gray;
             this.btnClearStockpile.FlatAppearance.BorderSize = 0;
             this.btnClearStockpile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClearStockpile.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnClearStockpile.ForeColor = System.Drawing.Color.Black;
+            this.btnClearStockpile.ForeColor = System.Drawing.Color.White;
             this.btnClearStockpile.Location = new System.Drawing.Point(401, 469);
             this.btnClearStockpile.Name = "btnClearStockpile";
             this.btnClearStockpile.Size = new System.Drawing.Size(95, 24);
@@ -1935,11 +1961,11 @@
             // btnStockpileDOWN
             // 
             this.btnStockpileDOWN.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnStockpileDOWN.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnStockpileDOWN.BackColor = System.Drawing.Color.Gray;
             this.btnStockpileDOWN.FlatAppearance.BorderSize = 0;
             this.btnStockpileDOWN.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStockpileDOWN.Font = new System.Drawing.Font("Segoe UI Symbol", 8F);
-            this.btnStockpileDOWN.ForeColor = System.Drawing.Color.Black;
+            this.btnStockpileDOWN.ForeColor = System.Drawing.Color.White;
             this.btnStockpileDOWN.Location = new System.Drawing.Point(824, 4);
             this.btnStockpileDOWN.Name = "btnStockpileDOWN";
             this.btnStockpileDOWN.Size = new System.Drawing.Size(25, 22);
@@ -1953,11 +1979,11 @@
             // btnStockpileUP
             // 
             this.btnStockpileUP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnStockpileUP.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnStockpileUP.BackColor = System.Drawing.Color.Gray;
             this.btnStockpileUP.FlatAppearance.BorderSize = 0;
             this.btnStockpileUP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStockpileUP.Font = new System.Drawing.Font("Segoe UI Symbol", 8F);
-            this.btnStockpileUP.ForeColor = System.Drawing.Color.Black;
+            this.btnStockpileUP.ForeColor = System.Drawing.Color.White;
             this.btnStockpileUP.Location = new System.Drawing.Point(798, 4);
             this.btnStockpileUP.Name = "btnStockpileUP";
             this.btnStockpileUP.Size = new System.Drawing.Size(25, 22);
@@ -1982,11 +2008,11 @@
             // btnRemoveSelectedStockpile
             // 
             this.btnRemoveSelectedStockpile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRemoveSelectedStockpile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnRemoveSelectedStockpile.BackColor = System.Drawing.Color.Gray;
             this.btnRemoveSelectedStockpile.FlatAppearance.BorderSize = 0;
             this.btnRemoveSelectedStockpile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRemoveSelectedStockpile.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnRemoveSelectedStockpile.ForeColor = System.Drawing.Color.Black;
+            this.btnRemoveSelectedStockpile.ForeColor = System.Drawing.Color.White;
             this.btnRemoveSelectedStockpile.Location = new System.Drawing.Point(506, 469);
             this.btnRemoveSelectedStockpile.Name = "btnRemoveSelectedStockpile";
             this.btnRemoveSelectedStockpile.Size = new System.Drawing.Size(83, 24);
@@ -1999,11 +2025,11 @@
             // 
             // btnAddStashToStockpile
             // 
-            this.btnAddStashToStockpile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnAddStashToStockpile.BackColor = System.Drawing.Color.Gray;
             this.btnAddStashToStockpile.FlatAppearance.BorderSize = 0;
             this.btnAddStashToStockpile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddStashToStockpile.Font = new System.Drawing.Font("Segoe UI Symbol", 12F);
-            this.btnAddStashToStockpile.ForeColor = System.Drawing.Color.Black;
+            this.btnAddStashToStockpile.ForeColor = System.Drawing.Color.White;
             this.btnAddStashToStockpile.Location = new System.Drawing.Point(369, 285);
             this.btnAddStashToStockpile.Name = "btnAddStashToStockpile";
             this.btnAddStashToStockpile.Size = new System.Drawing.Size(24, 115);
@@ -2146,11 +2172,11 @@
             // btnRenameSelected
             // 
             this.btnRenameSelected.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRenameSelected.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnRenameSelected.BackColor = System.Drawing.Color.Gray;
             this.btnRenameSelected.FlatAppearance.BorderSize = 0;
             this.btnRenameSelected.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRenameSelected.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnRenameSelected.ForeColor = System.Drawing.Color.Black;
+            this.btnRenameSelected.ForeColor = System.Drawing.Color.White;
             this.btnRenameSelected.Location = new System.Drawing.Point(597, 469);
             this.btnRenameSelected.Name = "btnRenameSelected";
             this.btnRenameSelected.Size = new System.Drawing.Size(86, 24);
@@ -2227,22 +2253,6 @@
             this.pnIntensity.Size = new System.Drawing.Size(204, 58);
             this.pnIntensity.TabIndex = 122;
             this.pnIntensity.Tag = "color:normal";
-            // 
-            // multiTB_Intensity
-            // 
-            this.multiTB_Intensity.BackColor = System.Drawing.Color.Gray;
-            this.multiTB_Intensity.DisplayCheckbox = false;
-            this.multiTB_Intensity.Font = new System.Drawing.Font("Segoe UI", 8.25F);
-            this.multiTB_Intensity.LabelText = "Intensity";
-            this.multiTB_Intensity.Location = new System.Drawing.Point(0, 0);
-            this.multiTB_Intensity.Maximum = ((long)(65535));
-            this.multiTB_Intensity.Minimum = ((long)(1));
-            this.multiTB_Intensity.Name = "multiTB_Intensity";
-            this.multiTB_Intensity.Size = new System.Drawing.Size(204, 59);
-            this.multiTB_Intensity.TabIndex = 0;
-            this.multiTB_Intensity.Tag = "color:normal";
-            this.multiTB_Intensity.UncapNumericBox = false;
-            this.multiTB_Intensity.Value = ((long)(1));
             // 
             // dgvStockpile
             // 
@@ -2344,6 +2354,22 @@
             this.Note.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.Note.Text = "";
             // 
+            // multiTB_Intensity
+            // 
+            this.multiTB_Intensity.BackColor = System.Drawing.Color.Gray;
+            this.multiTB_Intensity.DisplayCheckbox = false;
+            this.multiTB_Intensity.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.multiTB_Intensity.LabelText = "Intensity";
+            this.multiTB_Intensity.Location = new System.Drawing.Point(0, 0);
+            this.multiTB_Intensity.Maximum = ((long)(65535));
+            this.multiTB_Intensity.Minimum = ((long)(1));
+            this.multiTB_Intensity.Name = "multiTB_Intensity";
+            this.multiTB_Intensity.Size = new System.Drawing.Size(204, 59);
+            this.multiTB_Intensity.TabIndex = 0;
+            this.multiTB_Intensity.Tag = "color:normal";
+            this.multiTB_Intensity.UncapNumericBox = false;
+            this.multiTB_Intensity.Value = ((long)(1));
+            // 
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.FillWeight = 145F;
@@ -2375,32 +2401,6 @@
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             this.dataGridViewTextBoxColumn4.ReadOnly = true;
             this.dataGridViewTextBoxColumn4.Visible = false;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
-            this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(9, 3);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(85, 15);
-            this.label9.TabIndex = 139;
-            this.label9.Text = "Render Output";
-            // 
-            // pnRender
-            // 
-            this.pnRender.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.pnRender.Controls.Add(this.label9);
-            this.pnRender.Controls.Add(this.label4);
-            this.pnRender.Controls.Add(this.cbRenderType);
-            this.pnRender.Controls.Add(this.btnOpenRenderFolder);
-            this.pnRender.Controls.Add(this.btnRender);
-            this.pnRender.Controls.Add(this.cbRenderAtLoad);
-            this.pnRender.Location = new System.Drawing.Point(-5, 407);
-            this.pnRender.Name = "pnRender";
-            this.pnRender.Size = new System.Drawing.Size(146, 94);
-            this.pnRender.TabIndex = 139;
-            this.pnRender.Tag = "color:dark";
             // 
             // RTC_GlitchHarvester_Form
             // 
@@ -2442,6 +2442,8 @@
             this.Load += new System.EventHandler(this.RTC_GH_Form_Load);
             this.pnSidebar.ResumeLayout(false);
             this.pnSidebar.PerformLayout();
+            this.pnRender.ResumeLayout(false);
+            this.pnRender.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.pnSavestateHolder.ResumeLayout(false);
@@ -2452,8 +2454,6 @@
             this.panel2.PerformLayout();
             this.pnIntensity.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvStockpile)).EndInit();
-            this.pnRender.ResumeLayout(false);
-            this.pnRender.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

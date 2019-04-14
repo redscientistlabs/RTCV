@@ -46,7 +46,7 @@
             this.btnGenerateList.FlatAppearance.BorderSize = 0;
             this.btnGenerateList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGenerateList.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.btnGenerateList.ForeColor = System.Drawing.Color.Black;
+            this.btnGenerateList.ForeColor = System.Drawing.Color.White;
             this.btnGenerateList.Location = new System.Drawing.Point(6, 83);
             this.btnGenerateList.Name = "btnGenerateList";
             this.btnGenerateList.Size = new System.Drawing.Size(203, 30);
@@ -66,13 +66,13 @@
             this.tbListValues.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.tbListValues.ForeColor = System.Drawing.Color.White;
             this.tbListValues.Location = new System.Drawing.Point(225, 12);
+            this.tbListValues.MaxLength = 0;
             this.tbListValues.Multiline = true;
             this.tbListValues.Name = "tbListValues";
             this.tbListValues.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbListValues.Size = new System.Drawing.Size(161, 226);
             this.tbListValues.TabIndex = 128;
             this.tbListValues.Tag = "color:dark";
-            this.tbListValues.MaxLength = 0;
             this.tbListValues.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // label2
@@ -113,7 +113,7 @@
             this.btnRefreshListsFromFile.FlatAppearance.BorderSize = 0;
             this.btnRefreshListsFromFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRefreshListsFromFile.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.btnRefreshListsFromFile.ForeColor = System.Drawing.Color.Black;
+            this.btnRefreshListsFromFile.ForeColor = System.Drawing.Color.White;
             this.btnRefreshListsFromFile.Location = new System.Drawing.Point(4, 208);
             this.btnRefreshListsFromFile.Name = "btnRefreshListsFromFile";
             this.btnRefreshListsFromFile.Size = new System.Drawing.Size(215, 30);

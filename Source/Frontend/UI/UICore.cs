@@ -47,7 +47,7 @@ namespace RTCV.UI
 
             S.formRegister.FormRegistered += FormRegister_FormRegistered;
 			registerFormEvents(S.GET<RTC_Core_Form>());
-
+            //registerFormEvents(S.GET<UI_CoreForm>());
 
 			S.SET<RTC_Standalone_Form>((RTC_Standalone_Form)standaloneForm);
 
@@ -323,15 +323,19 @@ namespace RTCV.UI
 			var darkererColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:darkerer"));
 
             bool flipLuminosity = false;
-
             float generalDarken = -0.50f;
+            float light = 0.10f;
+            float dark1 = -0.20f;
+            float dark2 = -0.35f;
+            float dark3 = -0.50f;
+
             color = color.ChangeColorBrightness(generalDarken);
 
-            Color LightColor = color.ChangeColorBrightness(0.20f * (flipLuminosity?-1:1));
+            Color LightColor = color.ChangeColorBrightness(light * (flipLuminosity?-1:1));
             Color NormalColor = color;
-            Color DarkColor = color.ChangeColorBrightness(-0.20f * (flipLuminosity ? -1 : 1));
-            Color DarkerColor = color.ChangeColorBrightness(-0.35f * (flipLuminosity ? -1 : 1));
-            Color DarkererColor = color.ChangeColorBrightness(-0.50f * (flipLuminosity ? -1 : 1));
+            Color DarkColor = color.ChangeColorBrightness(dark1 * (flipLuminosity ? -1 : 1));
+            Color DarkerColor = color.ChangeColorBrightness(dark2 * (flipLuminosity ? -1 : 1));
+            Color DarkererColor = color.ChangeColorBrightness(dark3 * (flipLuminosity ? -1 : 1));
 
             foreach (Control c in lightColorControls)
             {
@@ -514,7 +518,7 @@ namespace RTCV.UI
                 case "Auto-Corrupt":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
-                        S.GET<RTC_Core_Form>().btnAutoCorrupt_Click(null, null);
+                        S.GET<UI_CoreForm>().btnAutoCorrupt_Click(null, null);
                     });
                     break;
 
@@ -644,7 +648,7 @@ namespace RTCV.UI
                 case "Game Protect Back":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
-                        var f = S.GET<RTC_Core_Form>();
+                        var f = S.GET<UI_CoreForm>();
                         var b = f.btnGpJumpBack;
                         if (b.Visible && b.Enabled)
                             f.btnGpJumpBack_Click(null, null);
@@ -654,7 +658,7 @@ namespace RTCV.UI
                 case "Game Protect Now":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
-                        var f = S.GET<RTC_Core_Form>();
+                        var f = S.GET<UI_CoreForm>();
                         var b = f.btnGpJumpNow;
                         if (b.Visible && b.Enabled)
                             f.btnGpJumpNow_Click(null, null);

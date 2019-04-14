@@ -77,8 +77,8 @@
             this.btnLoadDomains.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnLoadDomains.FlatAppearance.BorderSize = 0;
             this.btnLoadDomains.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLoadDomains.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.btnLoadDomains.ForeColor = System.Drawing.Color.Black;
+            this.btnLoadDomains.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            this.btnLoadDomains.ForeColor = System.Drawing.Color.White;
             this.btnLoadDomains.Location = new System.Drawing.Point(4, 5);
             this.btnLoadDomains.Name = "btnLoadDomains";
             this.btnLoadDomains.Size = new System.Drawing.Size(80, 47);
@@ -93,11 +93,11 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.label17.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.label17.ForeColor = System.Drawing.Color.White;
-            this.label17.Location = new System.Drawing.Point(85, 4);
+            this.label17.Location = new System.Drawing.Point(85, 6);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(115, 19);
+            this.label17.Size = new System.Drawing.Size(106, 17);
             this.label17.TabIndex = 117;
             this.label17.Text = "Memory Domain";
             this.label17.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
@@ -197,8 +197,8 @@
             this.btnGenerateVMD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnGenerateVMD.FlatAppearance.BorderSize = 0;
             this.btnGenerateVMD.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGenerateVMD.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.btnGenerateVMD.ForeColor = System.Drawing.Color.Black;
+            this.btnGenerateVMD.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            this.btnGenerateVMD.ForeColor = System.Drawing.Color.White;
             this.btnGenerateVMD.Location = new System.Drawing.Point(4, 216);
             this.btnGenerateVMD.Name = "btnGenerateVMD";
             this.btnGenerateVMD.Size = new System.Drawing.Size(215, 30);
@@ -290,6 +290,7 @@
             // 
             // btnHelp
             // 
+            this.btnHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnHelp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnHelp.FlatAppearance.BorderSize = 0;
             this.btnHelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;

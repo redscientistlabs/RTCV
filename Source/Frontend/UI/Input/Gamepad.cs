@@ -35,7 +35,7 @@ namespace RTCV.UI.Input
 						continue; // Don't input XBOX 360 controllers into here; we'll process them via XInput (there are limitations in some trigger axes when xbox pads go over xinput)
 
 					var joystick = new Joystick(_dinput, device.InstanceGuid);
-					joystick.SetCooperativeLevel(S.GET<RTC_Core_Form>().Handle, CooperativeLevel.Background | CooperativeLevel.Nonexclusive);
+					joystick.SetCooperativeLevel(S.GET<UI_CoreForm>().Handle, CooperativeLevel.Background | CooperativeLevel.Nonexclusive);
 					foreach (DeviceObjectInstance deviceObject in joystick.GetObjects())
 					{
 						if ((deviceObject.ObjectType & ObjectDeviceType.Axis) != 0)

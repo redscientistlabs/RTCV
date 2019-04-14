@@ -68,7 +68,7 @@
             this.btnUnloadVmd.FlatAppearance.BorderSize = 0;
             this.btnUnloadVmd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUnloadVmd.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.btnUnloadVmd.ForeColor = System.Drawing.Color.Black;
+            this.btnUnloadVmd.ForeColor = System.Drawing.Color.White;
             this.btnUnloadVmd.Location = new System.Drawing.Point(197, 107);
             this.btnUnloadVmd.Name = "btnUnloadVmd";
             this.btnUnloadVmd.Size = new System.Drawing.Size(182, 25);
@@ -87,7 +87,7 @@
             this.btnLoadVmd.FlatAppearance.BorderSize = 0;
             this.btnLoadVmd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLoadVmd.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.btnLoadVmd.ForeColor = System.Drawing.Color.Black;
+            this.btnLoadVmd.ForeColor = System.Drawing.Color.White;
             this.btnLoadVmd.Location = new System.Drawing.Point(197, 14);
             this.btnLoadVmd.Name = "btnLoadVmd";
             this.btnLoadVmd.Size = new System.Drawing.Size(182, 25);
@@ -106,7 +106,7 @@
             this.btnSaveVmd.FlatAppearance.BorderSize = 0;
             this.btnSaveVmd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSaveVmd.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.btnSaveVmd.ForeColor = System.Drawing.Color.Black;
+            this.btnSaveVmd.ForeColor = System.Drawing.Color.White;
             this.btnSaveVmd.Location = new System.Drawing.Point(197, 45);
             this.btnSaveVmd.Name = "btnSaveVmd";
             this.btnSaveVmd.Size = new System.Drawing.Size(182, 25);
@@ -134,10 +134,10 @@
             this.gbVmdSummary.TabStop = false;
             this.gbVmdSummary.Text = "Selected VMD Summary";
             this.gbVmdSummary.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-			// 
-			// lbRealDomainValue
-			// 
-			this.lbRealDomainValue.AutoSize = true;
+            // 
+            // lbRealDomainValue
+            // 
+            this.lbRealDomainValue.AutoSize = true;
             this.lbRealDomainValue.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lbRealDomainValue.ForeColor = System.Drawing.Color.White;
             this.lbRealDomainValue.Location = new System.Drawing.Point(8, 72);
@@ -190,7 +190,7 @@
             this.btnRenameVMD.FlatAppearance.BorderSize = 0;
             this.btnRenameVMD.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRenameVMD.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.btnRenameVMD.ForeColor = System.Drawing.Color.Black;
+            this.btnRenameVMD.ForeColor = System.Drawing.Color.White;
             this.btnRenameVMD.Location = new System.Drawing.Point(197, 76);
             this.btnRenameVMD.Name = "btnRenameVMD";
             this.btnRenameVMD.Size = new System.Drawing.Size(182, 25);

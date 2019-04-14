@@ -61,11 +61,11 @@ namespace RTCV.UI
 				}
 
 				S.GET<RTC_VmdAct_Form>().cbAutoAddDump.Checked = false;
-				S.GET<RTC_Core_Form>().AutoCorrupt = false;
+				S.GET<UI_CoreForm>().AutoCorrupt = false;
 			});
 			GameProtection.Stop();
 
-			if(S.GET<RTC_Core_Form>().cbUseAutoKillSwitch.Checked)
+			if(S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked)
 				AutoKillSwitch.KillEmulator("KILL + RESTART");
 		}
 
