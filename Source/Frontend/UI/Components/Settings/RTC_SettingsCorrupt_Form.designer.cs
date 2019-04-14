@@ -244,7 +244,7 @@
             this.nmMaxInfiniteStepUnits.Name = "nmMaxInfiniteStepUnits";
             this.nmMaxInfiniteStepUnits.Size = new System.Drawing.Size(106, 22);
             this.nmMaxInfiniteStepUnits.TabIndex = 151;
-            this.nmMaxInfiniteStepUnits.Tag = "color:dark";
+            this.nmMaxInfiniteStepUnits.Tag = "color:dark1";
             this.nmMaxInfiniteStepUnits.Value = new decimal(new int[] {
             50,
             0,
@@ -321,7 +321,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RTC_SettingsCorrupt_Form";
             this.ShowInTaskbar = false;
-            this.Tag = "color:dark";
+            this.Tag = "color:dark1";
             this.Text = "Corruption Settings";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

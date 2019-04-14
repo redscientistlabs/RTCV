@@ -320,17 +320,16 @@ namespace RTCV.UI
                 allControls.Add(ctr);
             }
 
-            //this needs refactoring. the string contains method is broken as color:darker is also color:dark.
+            //this needs refactoring. the string contains method is broken as color:dark2 is also color:dark1.
             //at least the priority of the foreach loops makes it so it works like expected.
 
-            var lighterColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:lighter"));
-            var lightColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:light"));
+            var light2ColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:light2"));
+            var light1ColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:light1"));
 			var normalColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:normal"));
-			var darkColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:dark"));
-			var darkerColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:darker"));
-			var darkererColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:darkerer"));
+			var dark1ColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:dark1"));
+			var dark2ColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:dark2"));
+			var dark3ColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:dark3"));
 
-            bool flipLuminosity = false;
             float generalDarken = -0.50f;
             float light1 = 0.10f;
             float light2 = 0.45f;
@@ -340,35 +339,34 @@ namespace RTCV.UI
 
             color = color.ChangeColorBrightness(generalDarken);
 
-            Color LightColor = color.ChangeColorBrightness(light1 * (flipLuminosity?-1:1));
-            Color LighterColor = color.ChangeColorBrightness(light2 * (flipLuminosity ? -1 : 1));
+            Color Light1Color = color.ChangeColorBrightness(light1);
+            Color Light2Color = color.ChangeColorBrightness(light2);
             Color NormalColor = color;
-            Color DarkColor = color.ChangeColorBrightness(dark1 * (flipLuminosity ? -1 : 1));
-            Color DarkerColor = color.ChangeColorBrightness(dark2 * (flipLuminosity ? -1 : 1));
-            Color DarkererColor = color.ChangeColorBrightness(dark3 * (flipLuminosity ? -1 : 1));
+            Color Dark1Color = color.ChangeColorBrightness(dark1);
+            Color Dark2Color = color.ChangeColorBrightness(dark2);
+            Color Dark3Color = color.ChangeColorBrightness(dark3);
 
-
-            foreach (Control c in lightColorControls)
+            foreach (Control c in light1ColorControls)
             {
                 if (c is Label)
-                    c.ForeColor = LightColor;
+                    c.ForeColor = Light1Color;
                 else
-                    c.BackColor = LightColor;
+                    c.BackColor = Light1Color;
 
                 if (c is Button)
-                    (c as Button).FlatAppearance.BorderColor = LightColor;
+                    (c as Button).FlatAppearance.BorderColor = Light1Color;
             }
 
-            foreach (Control c in lighterColorControls)
+            foreach (Control c in light2ColorControls)
             {
                 
                 if (c is Label)
-                    c.ForeColor = LighterColor;
+                    c.ForeColor = Light2Color;
                 else
-                    c.BackColor = LighterColor;
+                    c.BackColor = Light2Color;
 
                 if (c is Button)
-                    (c as Button).FlatAppearance.BorderColor = LighterColor;
+                    (c as Button).FlatAppearance.BorderColor = Light2Color;
 
             }
 
@@ -391,39 +389,39 @@ namespace RTCV.UI
 			S.GET<RTC_NewBlastEditor_Form>().dgvBlastEditor.BackgroundColor = NormalColor;
 			S.GET<RTC_BlastGenerator_Form>().dgvBlastGenerator.BackgroundColor = NormalColor;
 
-            foreach (Control c in darkColorControls)
+            foreach (Control c in dark1ColorControls)
             {
                 if (c is Label)
-                    c.ForeColor = DarkColor;
+                    c.ForeColor = Dark1Color;
                 else
-                    c.BackColor = DarkColor;
+                    c.BackColor = Dark1Color;
 
                 if(c is Button)
-                    (c as Button).FlatAppearance.BorderColor = DarkColor;
+                    (c as Button).FlatAppearance.BorderColor = Dark1Color;
 
 
             }
 
-            foreach (Control c in darkerColorControls)
+            foreach (Control c in dark2ColorControls)
             {
                 if (c is Label)
-                    c.ForeColor = DarkerColor;
+                    c.ForeColor = Dark2Color;
                 else
-                    c.BackColor = DarkerColor;
+                    c.BackColor = Dark2Color;
 
                 if (c is Button)
-                    (c as Button).FlatAppearance.BorderColor = DarkerColor;
+                    (c as Button).FlatAppearance.BorderColor = Dark2Color;
             }
 
-            foreach (Control c in darkererColorControls)
+            foreach (Control c in dark3ColorControls)
             {
                 if (c is Label)
-                    c.ForeColor = DarkererColor;
+                    c.ForeColor = Dark3Color;
                 else
-                    c.BackColor = DarkererColor;
+                    c.BackColor = Dark3Color;
 
                 if (c is Button)
-                    (c as Button).FlatAppearance.BorderColor = DarkererColor;
+                    (c as Button).FlatAppearance.BorderColor = Dark3Color;
             }
 		}
 

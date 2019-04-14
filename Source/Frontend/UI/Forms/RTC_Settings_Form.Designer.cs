@@ -64,7 +64,7 @@
             this.btnRtcFactoryClean.Name = "btnRtcFactoryClean";
             this.btnRtcFactoryClean.Size = new System.Drawing.Size(232, 29);
             this.btnRtcFactoryClean.TabIndex = 127;
-            this.btnRtcFactoryClean.Tag = "color:light";
+            this.btnRtcFactoryClean.Tag = "color:light1";
             this.btnRtcFactoryClean.Text = "  RTC Factory Clean";
             this.btnRtcFactoryClean.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnRtcFactoryClean.UseVisualStyleBackColor = false;
@@ -85,7 +85,7 @@
             this.btnCloseSettings.Name = "btnCloseSettings";
             this.btnCloseSettings.Size = new System.Drawing.Size(215, 29);
             this.btnCloseSettings.TabIndex = 127;
-            this.btnCloseSettings.Tag = "color:light";
+            this.btnCloseSettings.Tag = "color:light1";
             this.btnCloseSettings.Text = " Close Settings";
             this.btnCloseSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCloseSettings.UseVisualStyleBackColor = false;
@@ -116,7 +116,7 @@
             this.btnOpenConsole.Name = "btnOpenConsole";
             this.btnOpenConsole.Size = new System.Drawing.Size(126, 29);
             this.btnOpenConsole.TabIndex = 138;
-            this.btnOpenConsole.Tag = "color:light";
+            this.btnOpenConsole.Tag = "color:light1";
             this.btnOpenConsole.Text = " Toggle Console";
             this.btnOpenConsole.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnOpenConsole.UseVisualStyleBackColor = false;
@@ -135,7 +135,7 @@
             this.btnDebugInfo.Name = "btnDebugInfo";
             this.btnDebugInfo.Size = new System.Drawing.Size(126, 29);
             this.btnDebugInfo.TabIndex = 139;
-            this.btnDebugInfo.Tag = "color:light";
+            this.btnDebugInfo.Tag = "color:light1";
             this.btnDebugInfo.Text = " Show Debug Info";
             this.btnDebugInfo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnDebugInfo.UseVisualStyleBackColor = false;
@@ -152,7 +152,7 @@
             this.btnTestForm.Name = "btnTestForm";
             this.btnTestForm.Size = new System.Drawing.Size(57, 29);
             this.btnTestForm.TabIndex = 140;
-            this.btnTestForm.Tag = "color:light";
+            this.btnTestForm.Tag = "color:light1";
             this.btnTestForm.Text = "Test";
             this.btnTestForm.UseVisualStyleBackColor = false;
             this.btnTestForm.Visible = false;
@@ -173,7 +173,7 @@
             this.Controls.Add(this.lbSettingsAndTools);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "RTC_Settings_Form";
-            this.Tag = "color:dark";
+            this.Tag = "color:dark1";
             this.Text = "RTC : Settings";
             this.Load += new System.EventHandler(this.RTC_Settings_Form_Load);
             this.ResumeLayout(false);

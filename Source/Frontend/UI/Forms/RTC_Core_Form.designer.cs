@@ -80,7 +80,7 @@
             this.btnAutoCorrupt.Size = new System.Drawing.Size(140, 34);
             this.btnAutoCorrupt.TabIndex = 8;
             this.btnAutoCorrupt.TabStop = false;
-            this.btnAutoCorrupt.Tag = "color:darker";
+            this.btnAutoCorrupt.Tag = "color:dark2";
             this.btnAutoCorrupt.Text = "Start Auto-Corrupt";
             this.btnAutoCorrupt.UseVisualStyleBackColor = false;
             this.btnAutoCorrupt.Visible = false;
@@ -99,7 +99,7 @@
             this.btnManualBlast.Size = new System.Drawing.Size(140, 34);
             this.btnManualBlast.TabIndex = 7;
             this.btnManualBlast.TabStop = false;
-            this.btnManualBlast.Tag = "color:darker";
+            this.btnManualBlast.Tag = "color:dark2";
             this.btnManualBlast.Text = "Manual Blast";
             this.btnManualBlast.UseVisualStyleBackColor = false;
             this.btnManualBlast.Visible = false;
@@ -138,7 +138,7 @@
             this.pnAutoKillSwitch.Name = "pnAutoKillSwitch";
             this.pnAutoKillSwitch.Size = new System.Drawing.Size(140, 101);
             this.pnAutoKillSwitch.TabIndex = 118;
-            this.pnAutoKillSwitch.Tag = "color:dark";
+            this.pnAutoKillSwitch.Tag = "color:dark1";
             this.pnAutoKillSwitch.Visible = false;
             // 
             // btnAutoKillSwitchExecute
@@ -153,7 +153,7 @@
             this.btnAutoKillSwitchExecute.Size = new System.Drawing.Size(106, 25);
             this.btnAutoKillSwitchExecute.TabIndex = 118;
             this.btnAutoKillSwitchExecute.TabStop = false;
-            this.btnAutoKillSwitchExecute.Tag = "color:light";
+            this.btnAutoKillSwitchExecute.Tag = "color:light1";
             this.btnAutoKillSwitchExecute.Text = "Kill + Restart";
             this.btnAutoKillSwitchExecute.UseVisualStyleBackColor = false;
             this.btnAutoKillSwitchExecute.Click += new System.EventHandler(this.btnAutoKillSwitchExecute_Click);
@@ -222,7 +222,7 @@
             this.pnCrashProtection.Name = "pnCrashProtection";
             this.pnCrashProtection.Size = new System.Drawing.Size(140, 84);
             this.pnCrashProtection.TabIndex = 116;
-            this.pnCrashProtection.Tag = "color:dark";
+            this.pnCrashProtection.Tag = "color:dark1";
             this.pnCrashProtection.Visible = false;
             // 
             // btnGpJumpNow
@@ -237,7 +237,7 @@
             this.btnGpJumpNow.Size = new System.Drawing.Size(59, 23);
             this.btnGpJumpNow.TabIndex = 117;
             this.btnGpJumpNow.TabStop = false;
-            this.btnGpJumpNow.Tag = "color:light";
+            this.btnGpJumpNow.Tag = "color:light1";
             this.btnGpJumpNow.Text = "Now ⏩";
             this.btnGpJumpNow.UseVisualStyleBackColor = false;
             this.btnGpJumpNow.Visible = false;
@@ -255,7 +255,7 @@
             this.btnGpJumpBack.Size = new System.Drawing.Size(59, 23);
             this.btnGpJumpBack.TabIndex = 116;
             this.btnGpJumpBack.TabStop = false;
-            this.btnGpJumpBack.Tag = "color:light";
+            this.btnGpJumpBack.Tag = "color:light1";
             this.btnGpJumpBack.Text = "⏪ Back";
             this.btnGpJumpBack.UseVisualStyleBackColor = false;
             this.btnGpJumpBack.Visible = false;
@@ -284,7 +284,7 @@
             this.btnEngineConfig.Size = new System.Drawing.Size(140, 34);
             this.btnEngineConfig.TabIndex = 118;
             this.btnEngineConfig.TabStop = false;
-            this.btnEngineConfig.Tag = "color:light";
+            this.btnEngineConfig.Tag = "color:light1";
             this.btnEngineConfig.Text = "Engine Config";
             this.btnEngineConfig.UseVisualStyleBackColor = false;
             this.btnEngineConfig.Visible = false;
@@ -304,7 +304,7 @@
             this.btnLogo.Size = new System.Drawing.Size(150, 52);
             this.btnLogo.TabIndex = 117;
             this.btnLogo.TabStop = false;
-            this.btnLogo.Tag = "color:darker";
+            this.btnLogo.Tag = "color:dark2";
             this.btnLogo.Text = "   Version 0.00";
             this.btnLogo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnLogo.UseVisualStyleBackColor = false;
@@ -325,7 +325,7 @@
             this.btnSettings.Size = new System.Drawing.Size(150, 33);
             this.btnSettings.TabIndex = 86;
             this.btnSettings.TabStop = false;
-            this.btnSettings.Tag = "color:darker";
+            this.btnSettings.Tag = "color:dark2";
             this.btnSettings.Text = "   Settings and tools";
             this.btnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSettings.UseVisualStyleBackColor = false;
@@ -345,7 +345,7 @@
             this.btnEasyMode.Size = new System.Drawing.Size(140, 47);
             this.btnEasyMode.TabIndex = 85;
             this.btnEasyMode.TabStop = false;
-            this.btnEasyMode.Tag = "color:light";
+            this.btnEasyMode.Tag = "color:light1";
             this.btnEasyMode.Text = " Easy Start";
             this.btnEasyMode.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnEasyMode.UseVisualStyleBackColor = false;
@@ -364,7 +364,7 @@
             this.btnStockpilePlayer.Size = new System.Drawing.Size(140, 34);
             this.btnStockpilePlayer.TabIndex = 109;
             this.btnStockpilePlayer.TabStop = false;
-            this.btnStockpilePlayer.Tag = "color:light";
+            this.btnStockpilePlayer.Tag = "color:light1";
             this.btnStockpilePlayer.Text = "Stockpile Player";
             this.btnStockpilePlayer.UseVisualStyleBackColor = false;
             this.btnStockpilePlayer.Visible = false;
@@ -382,7 +382,7 @@
             this.btnGlitchHarvester.Size = new System.Drawing.Size(140, 34);
             this.btnGlitchHarvester.TabIndex = 107;
             this.btnGlitchHarvester.TabStop = false;
-            this.btnGlitchHarvester.Tag = "color:light";
+            this.btnGlitchHarvester.Tag = "color:light1";
             this.btnGlitchHarvester.Text = "Glitch Harvester";
             this.btnGlitchHarvester.UseVisualStyleBackColor = false;
             this.btnGlitchHarvester.Visible = false;
@@ -402,7 +402,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "RTC_Core_Form";
-            this.Tag = "color:dark";
+            this.Tag = "color:dark1";
             this.Text = "RTC";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RTC_Form_FormClosing);
             this.Load += new System.EventHandler(this.RTC_Form_Load);

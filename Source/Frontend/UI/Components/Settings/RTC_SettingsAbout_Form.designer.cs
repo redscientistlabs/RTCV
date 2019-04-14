@@ -188,7 +188,7 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "RTC_SettingsAbout_Form";
-            this.Tag = "color:dark";
+            this.Tag = "color:dark1";
             this.Text = "About";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
             this.Load += new System.EventHandler(this.RTC_SettingsAbout_Form_Load);

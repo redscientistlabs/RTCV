@@ -39,7 +39,7 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "RTC_VmdNoTool_Form";
-            this.Tag = "color:dark";
+            this.Tag = "color:dark1";
             this.Text = "No Tool Selected";
             this.ResumeLayout(false);
 

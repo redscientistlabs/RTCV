@@ -66,7 +66,7 @@
             this.btnCancel.Size = new System.Drawing.Size(80, 33);
             this.btnCancel.TabIndex = 117;
             this.btnCancel.TabStop = false;
-            this.btnCancel.Tag = "color:light";
+            this.btnCancel.Tag = "color:light1";
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Visible = false;
@@ -87,7 +87,7 @@
             this.btnOk.Size = new System.Drawing.Size(65, 33);
             this.btnOk.TabIndex = 116;
             this.btnOk.TabStop = false;
-            this.btnOk.Tag = "color:light";
+            this.btnOk.Tag = "color:light1";
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = false;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);

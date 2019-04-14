@@ -73,7 +73,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(170, 13);
             this.label1.TabIndex = 119;
-            this.label1.Tag = "color:dark";
+            this.label1.Tag = "color:dark1";
             this.label1.Text = "Component is detached to window";
             // 
             // label5
@@ -116,7 +116,7 @@
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(170, 13);
             this.label7.TabIndex = 121;
-            this.label7.Tag = "color:dark";
+            this.label7.Tag = "color:dark1";
             this.label7.Text = "Component is detached to window";
             // 
             // label11
@@ -149,7 +149,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(170, 13);
             this.label4.TabIndex = 120;
-            this.label4.Tag = "color:dark";
+            this.label4.Tag = "color:dark1";
             this.label4.Text = "Component is detached to window";
             // 
             // label2
@@ -238,7 +238,7 @@
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(170, 13);
             this.label8.TabIndex = 122;
-            this.label8.Tag = "color:dark";
+            this.label8.Tag = "color:dark1";
             this.label8.Text = "Component is detached to window";
             // 
             // RTC_EngineConfig_Form
@@ -261,7 +261,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RTC_EngineConfig_Form";
-            this.Tag = "color:dark";
+            this.Tag = "color:dark1";
             this.Text = "RTC : Engine Config";
             this.pnGeneralParameters.ResumeLayout(false);
             this.pnGeneralParameters.PerformLayout();

@@ -125,7 +125,7 @@
             this.btnClearActive.Size = new System.Drawing.Size(122, 30);
             this.btnClearActive.TabIndex = 150;
             this.btnClearActive.TabStop = false;
-            this.btnClearActive.Tag = "color:light";
+            this.btnClearActive.Tag = "color:light1";
             this.btnClearActive.Text = "Clear all active units";
             this.btnClearActive.UseVisualStyleBackColor = false;
             this.btnClearActive.Click += new System.EventHandler(this.btnClearActive_Click);
@@ -201,7 +201,7 @@
             this.cbValueList.Name = "cbValueList";
             this.cbValueList.Size = new System.Drawing.Size(110, 21);
             this.cbValueList.TabIndex = 87;
-            this.cbValueList.Tag = "color:dark";
+            this.cbValueList.Tag = "color:dark1";
             this.cbValueList.SelectedIndexChanged += new System.EventHandler(this.cbValueList_SelectedIndexChanged);
             // 
             // gbValueSettings
@@ -267,7 +267,7 @@
             this.nmMaxValue.Name = "nmMaxValue";
             this.nmMaxValue.Size = new System.Drawing.Size(77, 20);
             this.nmMaxValue.TabIndex = 168;
-            this.nmMaxValue.Tag = "color:dark";
+            this.nmMaxValue.Tag = "color:dark1";
             this.nmMaxValue.Value = new decimal(new int[] {
             255,
             0,
@@ -285,7 +285,7 @@
             this.nmMinValue.Name = "nmMinValue";
             this.nmMinValue.Size = new System.Drawing.Size(77, 20);
             this.nmMinValue.TabIndex = 167;
-            this.nmMinValue.Tag = "color:dark";
+            this.nmMinValue.Tag = "color:dark1";
             this.nmMinValue.ValueChanged += new System.EventHandler(this.nmMinValue_ValueChanged);
             // 
             // gbValueSource
@@ -517,7 +517,7 @@
             this.cbLimiterList.Name = "cbLimiterList";
             this.cbLimiterList.Size = new System.Drawing.Size(110, 21);
             this.cbLimiterList.TabIndex = 87;
-            this.cbLimiterList.Tag = "color:dark";
+            this.cbLimiterList.Tag = "color:dark1";
             this.cbLimiterList.SelectedIndexChanged += new System.EventHandler(this.cbLimiterList_SelectedIndexChanged);
             // 
             // cbLoopUnit
@@ -582,7 +582,7 @@
             this.nmTilt.Name = "nmTilt";
             this.nmTilt.Size = new System.Drawing.Size(70, 22);
             this.nmTilt.TabIndex = 190;
-            this.nmTilt.Tag = "color:dark";
+            this.nmTilt.Tag = "color:dark1";
             this.nmTilt.ValueChanged += new System.EventHandler(this.nmTilt_ValueChanged);
             // 
             // label9
@@ -621,7 +621,7 @@
             this.nmDelay.Name = "nmDelay";
             this.nmDelay.Size = new System.Drawing.Size(70, 22);
             this.nmDelay.TabIndex = 187;
-            this.nmDelay.Tag = "color:dark";
+            this.nmDelay.Tag = "color:dark1";
             this.nmDelay.ValueChanged += new System.EventHandler(this.nmDelay_ValueChanged);
             // 
             // nmLifetime
@@ -638,7 +638,7 @@
             this.nmLifetime.Name = "nmLifetime";
             this.nmLifetime.Size = new System.Drawing.Size(70, 22);
             this.nmLifetime.TabIndex = 185;
-            this.nmLifetime.Tag = "color:dark";
+            this.nmLifetime.Tag = "color:dark1";
             this.nmLifetime.Value = new decimal(new int[] {
             1,
             0,
@@ -871,7 +871,7 @@
             this.cbSelectedTemplate.Name = "cbSelectedTemplate";
             this.cbSelectedTemplate.Size = new System.Drawing.Size(211, 21);
             this.cbSelectedTemplate.TabIndex = 168;
-            this.cbSelectedTemplate.Tag = "color:dark";
+            this.cbSelectedTemplate.Tag = "color:dark1";
             this.cbSelectedTemplate.SelectedIndexChanged += new System.EventHandler(this.cbSelectedTemplate_SelectedIndexChanged);
             // 
             // label2
@@ -953,7 +953,7 @@
             this.updownMaxInfiniteUnits.Name = "updownMaxInfiniteUnits";
             this.updownMaxInfiniteUnits.Size = new System.Drawing.Size(70, 22);
             this.updownMaxInfiniteUnits.TabIndex = 193;
-            this.updownMaxInfiniteUnits.Tag = "color:dark";
+            this.updownMaxInfiniteUnits.Tag = "color:dark1";
             this.updownMaxInfiniteUnits.Value = new decimal(new int[] {
             50,
             0,
@@ -999,7 +999,7 @@
             this.MaximumSize = new System.Drawing.Size(475, 475);
             this.MinimumSize = new System.Drawing.Size(475, 475);
             this.Name = "RTC_CustomEngineConfig_Form";
-            this.Tag = "color:dark";
+            this.Tag = "color:dark1";
             this.Text = "Custom Engine Config";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RTC_CustomEngineConfig_Form_FormClosing);
             this.Load += new System.EventHandler(this.RTC_CustomEngineConfig_Form_Load);

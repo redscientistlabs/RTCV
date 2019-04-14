@@ -128,7 +128,7 @@
             this.btnBlastToggle.Size = new System.Drawing.Size(627, 32);
             this.btnBlastToggle.TabIndex = 131;
             this.btnBlastToggle.TabStop = false;
-            this.btnBlastToggle.Tag = "color:darker";
+            this.btnBlastToggle.Tag = "color:dark2";
             this.btnBlastToggle.Text = "BlastLayer : OFF    (Attempts to uncorrupt/recorrupt in real-time)";
             this.btnBlastToggle.UseVisualStyleBackColor = false;
             this.btnBlastToggle.Click += new System.EventHandler(this.btnBlastToggle_Click);
@@ -294,7 +294,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(655, 515);
             this.Name = "RTC_StockpilePlayer_Form";
-            this.Tag = "color:dark";
+            this.Tag = "color:dark1";
             this.Text = "Stockpile Player";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RTC_BE_Form_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dgvStockpile)).EndInit();

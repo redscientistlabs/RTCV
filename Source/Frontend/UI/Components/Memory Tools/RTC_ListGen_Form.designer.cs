@@ -42,17 +42,17 @@
             // 
             // btnGenerateList
             // 
-            this.btnGenerateList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnGenerateList.BackColor = System.Drawing.Color.Gray;
             this.btnGenerateList.FlatAppearance.BorderSize = 0;
             this.btnGenerateList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGenerateList.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
+            this.btnGenerateList.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnGenerateList.ForeColor = System.Drawing.Color.White;
             this.btnGenerateList.Location = new System.Drawing.Point(6, 83);
             this.btnGenerateList.Name = "btnGenerateList";
             this.btnGenerateList.Size = new System.Drawing.Size(203, 30);
             this.btnGenerateList.TabIndex = 124;
             this.btnGenerateList.TabStop = false;
-            this.btnGenerateList.Tag = "color:light";
+            this.btnGenerateList.Tag = "color:light1";
             this.btnGenerateList.Text = "Generate New List";
             this.btnGenerateList.UseVisualStyleBackColor = false;
             this.btnGenerateList.Click += new System.EventHandler(this.btnGenerateList_Click);
@@ -72,7 +72,7 @@
             this.tbListValues.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbListValues.Size = new System.Drawing.Size(161, 226);
             this.tbListValues.TabIndex = 128;
-            this.tbListValues.Tag = "color:dark";
+            this.tbListValues.Tag = "color:dark1";
             this.tbListValues.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // label2
@@ -96,7 +96,7 @@
             this.tbListName.Name = "tbListName";
             this.tbListName.Size = new System.Drawing.Size(136, 22);
             this.tbListName.TabIndex = 132;
-            this.tbListName.Tag = "color:dark";
+            this.tbListName.Tag = "color:dark1";
             this.tbListName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // cbSaveFile
@@ -109,17 +109,17 @@
             // 
             // btnRefreshListsFromFile
             // 
-            this.btnRefreshListsFromFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnRefreshListsFromFile.BackColor = System.Drawing.Color.Gray;
             this.btnRefreshListsFromFile.FlatAppearance.BorderSize = 0;
             this.btnRefreshListsFromFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRefreshListsFromFile.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
+            this.btnRefreshListsFromFile.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnRefreshListsFromFile.ForeColor = System.Drawing.Color.White;
             this.btnRefreshListsFromFile.Location = new System.Drawing.Point(4, 208);
             this.btnRefreshListsFromFile.Name = "btnRefreshListsFromFile";
             this.btnRefreshListsFromFile.Size = new System.Drawing.Size(215, 30);
             this.btnRefreshListsFromFile.TabIndex = 136;
             this.btnRefreshListsFromFile.TabStop = false;
-            this.btnRefreshListsFromFile.Tag = "color:light";
+            this.btnRefreshListsFromFile.Tag = "color:light1";
             this.btnRefreshListsFromFile.Text = "Refresh Lists from Files";
             this.btnRefreshListsFromFile.UseVisualStyleBackColor = false;
             this.btnRefreshListsFromFile.Click += new System.EventHandler(this.btnRefreshListsFromFile_Click);
@@ -152,7 +152,7 @@
             this.btnHelp.Size = new System.Drawing.Size(19, 19);
             this.btnHelp.TabIndex = 138;
             this.btnHelp.TabStop = false;
-            this.btnHelp.Tag = "color:light";
+            this.btnHelp.Tag = "color:light1";
             this.btnHelp.UseVisualStyleBackColor = false;
             this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
             // 
@@ -170,7 +170,7 @@
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "RTC_ListGen_Form";
-            this.Tag = "color:darkerer";
+            this.Tag = "color:dark3";
             this.Text = "List Generator";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RTC_ListGen_Form_FormClosing);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.RTC_ListGen_Form_MouseDown);

@@ -131,7 +131,7 @@
             this.btnChangeRTCColor.Name = "btnChangeRTCColor";
             this.btnChangeRTCColor.Size = new System.Drawing.Size(250, 45);
             this.btnChangeRTCColor.TabIndex = 136;
-            this.btnChangeRTCColor.Tag = "color:light";
+            this.btnChangeRTCColor.Tag = "color:light1";
             this.btnChangeRTCColor.Text = "   Change color theme";
             this.btnChangeRTCColor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnChangeRTCColor.UseVisualStyleBackColor = false;
@@ -150,7 +150,7 @@
             this.btnOpenOnlineWiki.Name = "btnOpenOnlineWiki";
             this.btnOpenOnlineWiki.Size = new System.Drawing.Size(250, 45);
             this.btnOpenOnlineWiki.TabIndex = 135;
-            this.btnOpenOnlineWiki.Tag = "color:light";
+            this.btnOpenOnlineWiki.Tag = "color:light1";
             this.btnOpenOnlineWiki.Text = "    Open the online wiki";
             this.btnOpenOnlineWiki.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnOpenOnlineWiki.UseVisualStyleBackColor = false;
@@ -169,7 +169,7 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "RTC_SettingsGeneral_Form";
-            this.Tag = "color:dark";
+            this.Tag = "color:dark1";
             this.Text = "General";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);

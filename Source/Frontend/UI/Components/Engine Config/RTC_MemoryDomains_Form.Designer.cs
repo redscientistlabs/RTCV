@@ -52,7 +52,7 @@
             this.lbMemoryDomains.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.lbMemoryDomains.Size = new System.Drawing.Size(181, 208);
             this.lbMemoryDomains.TabIndex = 15;
-            this.lbMemoryDomains.Tag = "color:darker";
+            this.lbMemoryDomains.Tag = "color:dark2";
             this.lbMemoryDomains.SelectedIndexChanged += new System.EventHandler(this.lbMemoryDomains_SelectedIndexChanged);
             this.lbMemoryDomains.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
@@ -70,7 +70,7 @@
             this.btnAutoSelectDomains.Size = new System.Drawing.Size(181, 24);
             this.btnAutoSelectDomains.TabIndex = 18;
             this.btnAutoSelectDomains.TabStop = false;
-            this.btnAutoSelectDomains.Tag = "color:light";
+            this.btnAutoSelectDomains.Tag = "color:light1";
             this.btnAutoSelectDomains.Text = "Auto-select domains";
             this.btnAutoSelectDomains.UseVisualStyleBackColor = false;
             this.btnAutoSelectDomains.Click += new System.EventHandler(this.btnAutoSelectDomains_Click);
@@ -89,7 +89,7 @@
             this.btnRefreshDomains.Size = new System.Drawing.Size(88, 24);
             this.btnRefreshDomains.TabIndex = 16;
             this.btnRefreshDomains.TabStop = false;
-            this.btnRefreshDomains.Tag = "color:light";
+            this.btnRefreshDomains.Tag = "color:light1";
             this.btnRefreshDomains.Text = "Unselect all";
             this.btnRefreshDomains.UseVisualStyleBackColor = false;
             this.btnRefreshDomains.Click += new System.EventHandler(this.btnRefreshDomains_Click);
@@ -108,7 +108,7 @@
             this.btnSelectAll.Size = new System.Drawing.Size(88, 24);
             this.btnSelectAll.TabIndex = 17;
             this.btnSelectAll.TabStop = false;
-            this.btnSelectAll.Tag = "color:light";
+            this.btnSelectAll.Tag = "color:light1";
             this.btnSelectAll.Text = "Select all";
             this.btnSelectAll.UseVisualStyleBackColor = false;
             this.btnSelectAll.Click += new System.EventHandler(this.btnSelectAll_Click);
@@ -126,7 +126,7 @@
             this.Controls.Add(this.btnSelectAll);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "RTC_MemoryDomains_Form";
-            this.Tag = "color:dark";
+            this.Tag = "color:dark1";
             this.Text = "Memory Domains";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);

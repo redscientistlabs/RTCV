@@ -85,7 +85,7 @@
             this.multiTB_ErrorDelay.Name = "multiTB_ErrorDelay";
             this.multiTB_ErrorDelay.Size = new System.Drawing.Size(182, 60);
             this.multiTB_ErrorDelay.TabIndex = 23;
-            this.multiTB_ErrorDelay.Tag = "color:dark";
+            this.multiTB_ErrorDelay.Tag = "color:dark1";
             this.multiTB_ErrorDelay.UncapNumericBox = false;
             this.multiTB_ErrorDelay.Value = ((long)(1));
             // 
@@ -103,7 +103,7 @@
             this.multiTB_Intensity.Name = "multiTB_Intensity";
             this.multiTB_Intensity.Size = new System.Drawing.Size(181, 60);
             this.multiTB_Intensity.TabIndex = 22;
-            this.multiTB_Intensity.Tag = "color:dark";
+            this.multiTB_Intensity.Tag = "color:dark1";
             this.multiTB_Intensity.UncapNumericBox = false;
             this.multiTB_Intensity.Value = ((long)(1));
             // 
@@ -119,7 +119,7 @@
             this.Controls.Add(this.labelBlastRadius);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "RTC_GeneralParameters_Form";
-            this.Tag = "color:dark";
+            this.Tag = "color:dark1";
             this.Text = "General Parameters";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
             this.Load += new System.EventHandler(this.RTC_GeneralParameters_Form_Load);

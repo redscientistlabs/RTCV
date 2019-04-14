@@ -72,9 +72,9 @@
             this.pnTopBar.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnTopBar.Location = new System.Drawing.Point(0, 0);
             this.pnTopBar.Name = "pnTopBar";
-            this.pnTopBar.Size = new System.Drawing.Size(150, 511);
+            this.pnTopBar.Size = new System.Drawing.Size(150, 581);
             this.pnTopBar.TabIndex = 7;
-            this.pnTopBar.Tag = "color:darkerer";
+            this.pnTopBar.Tag = "color:dark3";
             // 
             // pnGlitchHarvesterOpen
             // 
@@ -83,7 +83,7 @@
             this.pnGlitchHarvesterOpen.Name = "pnGlitchHarvesterOpen";
             this.pnGlitchHarvesterOpen.Size = new System.Drawing.Size(23, 25);
             this.pnGlitchHarvesterOpen.TabIndex = 8;
-            this.pnGlitchHarvesterOpen.Tag = "color:light";
+            this.pnGlitchHarvesterOpen.Tag = "color:light1";
             this.pnGlitchHarvesterOpen.Visible = false;
             // 
             // pnCrashProtection
@@ -94,11 +94,11 @@
             this.pnCrashProtection.Controls.Add(this.btnGpJumpBack);
             this.pnCrashProtection.Controls.Add(this.lbGameProtection);
             this.pnCrashProtection.Controls.Add(this.cbUseGameProtection);
-            this.pnCrashProtection.Location = new System.Drawing.Point(0, 364);
+            this.pnCrashProtection.Location = new System.Drawing.Point(0, 434);
             this.pnCrashProtection.Name = "pnCrashProtection";
             this.pnCrashProtection.Size = new System.Drawing.Size(150, 60);
             this.pnCrashProtection.TabIndex = 128;
-            this.pnCrashProtection.Tag = "color:darkerer";
+            this.pnCrashProtection.Tag = "color:dark3";
             // 
             // btnGpJumpNow
             // 
@@ -112,7 +112,7 @@
             this.btnGpJumpNow.Size = new System.Drawing.Size(60, 23);
             this.btnGpJumpNow.TabIndex = 117;
             this.btnGpJumpNow.TabStop = false;
-            this.btnGpJumpNow.Tag = "color:darker";
+            this.btnGpJumpNow.Tag = "color:dark2";
             this.btnGpJumpNow.Text = "Now ⏩";
             this.btnGpJumpNow.UseVisualStyleBackColor = false;
             this.btnGpJumpNow.Visible = false;
@@ -130,7 +130,7 @@
             this.btnGpJumpBack.Size = new System.Drawing.Size(60, 23);
             this.btnGpJumpBack.TabIndex = 116;
             this.btnGpJumpBack.TabStop = false;
-            this.btnGpJumpBack.Tag = "color:darker";
+            this.btnGpJumpBack.Tag = "color:dark2";
             this.btnGpJumpBack.Text = "⏪ Back";
             this.btnGpJumpBack.UseVisualStyleBackColor = false;
             this.btnGpJumpBack.Visible = false;
@@ -174,7 +174,7 @@
             this.btnTestSubform.Size = new System.Drawing.Size(150, 33);
             this.btnTestSubform.TabIndex = 9;
             this.btnTestSubform.TabStop = false;
-            this.btnTestSubform.Tag = "color:darkerer";
+            this.btnTestSubform.Tag = "color:dark3";
             this.btnTestSubform.Text = "Test Subform";
             this.btnTestSubform.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnTestSubform.UseVisualStyleBackColor = false;
@@ -188,11 +188,11 @@
             this.pnAutoKillSwitch.Controls.Add(this.cbUseAutoKillSwitch);
             this.pnAutoKillSwitch.Controls.Add(this.pbAutoKillSwitchTimeout);
             this.pnAutoKillSwitch.Controls.Add(this.lbAks);
-            this.pnAutoKillSwitch.Location = new System.Drawing.Point(0, 429);
+            this.pnAutoKillSwitch.Location = new System.Drawing.Point(0, 499);
             this.pnAutoKillSwitch.Name = "pnAutoKillSwitch";
             this.pnAutoKillSwitch.Size = new System.Drawing.Size(150, 34);
             this.pnAutoKillSwitch.TabIndex = 127;
-            this.pnAutoKillSwitch.Tag = "color:darkerer";
+            this.pnAutoKillSwitch.Tag = "color:dark3";
             this.pnAutoKillSwitch.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnAutoKillSwitch_MouseClick);
             this.pnAutoKillSwitch.MouseEnter += new System.EventHandler(this.pnAutoKillSwitch_MouseHover);
             this.pnAutoKillSwitch.MouseLeave += new System.EventHandler(this.pnAutoKillSwitch_MouseLeave);
@@ -255,13 +255,13 @@
             this.btnSettings.ForeColor = System.Drawing.Color.White;
             this.btnSettings.Image = ((System.Drawing.Image)(resources.GetObject("btnSettings.Image")));
             this.btnSettings.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSettings.Location = new System.Drawing.Point(0, 477);
+            this.btnSettings.Location = new System.Drawing.Point(0, 547);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.btnSettings.Size = new System.Drawing.Size(150, 34);
             this.btnSettings.TabIndex = 126;
             this.btnSettings.TabStop = false;
-            this.btnSettings.Tag = "color:darkerer";
+            this.btnSettings.Tag = "color:dark3";
             this.btnSettings.Text = " Settings and tools";
             this.btnSettings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -282,7 +282,7 @@
             this.btnLogo.Size = new System.Drawing.Size(150, 53);
             this.btnLogo.TabIndex = 125;
             this.btnLogo.TabStop = false;
-            this.btnLogo.Tag = "color:darkerer";
+            this.btnLogo.Tag = "color:dark3";
             this.btnLogo.Text = "RTCV 0.00";
             this.btnLogo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnLogo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -304,7 +304,7 @@
             this.btnEngineConfig.Size = new System.Drawing.Size(150, 34);
             this.btnEngineConfig.TabIndex = 124;
             this.btnEngineConfig.TabStop = false;
-            this.btnEngineConfig.Tag = "color:darkerer";
+            this.btnEngineConfig.Tag = "color:dark3";
             this.btnEngineConfig.Text = " Engine Config";
             this.btnEngineConfig.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnEngineConfig.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -327,7 +327,7 @@
             this.btnEasyMode.Size = new System.Drawing.Size(150, 34);
             this.btnEasyMode.TabIndex = 121;
             this.btnEasyMode.TabStop = false;
-            this.btnEasyMode.Tag = "color:darkerer";
+            this.btnEasyMode.Tag = "color:dark3";
             this.btnEasyMode.Text = " Easy Start";
             this.btnEasyMode.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnEasyMode.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -350,7 +350,7 @@
             this.btnStockpilePlayer.Size = new System.Drawing.Size(150, 34);
             this.btnStockpilePlayer.TabIndex = 123;
             this.btnStockpilePlayer.TabStop = false;
-            this.btnStockpilePlayer.Tag = "color:darkerer";
+            this.btnStockpilePlayer.Tag = "color:dark3";
             this.btnStockpilePlayer.Text = " Stockpile Player";
             this.btnStockpilePlayer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnStockpilePlayer.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -373,7 +373,7 @@
             this.btnGlitchHarvester.Size = new System.Drawing.Size(150, 34);
             this.btnGlitchHarvester.TabIndex = 122;
             this.btnGlitchHarvester.TabStop = false;
-            this.btnGlitchHarvester.Tag = "color:darkerer";
+            this.btnGlitchHarvester.Tag = "color:dark3";
             this.btnGlitchHarvester.Text = " Glitch Harvester";
             this.btnGlitchHarvester.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnGlitchHarvester.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -396,7 +396,7 @@
             this.btnManualBlast.Size = new System.Drawing.Size(150, 34);
             this.btnManualBlast.TabIndex = 119;
             this.btnManualBlast.TabStop = false;
-            this.btnManualBlast.Tag = "color:darkerer";
+            this.btnManualBlast.Tag = "color:dark3";
             this.btnManualBlast.Text = " Manual Blast";
             this.btnManualBlast.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnManualBlast.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -419,7 +419,7 @@
             this.btnAutoCorrupt.Size = new System.Drawing.Size(150, 34);
             this.btnAutoCorrupt.TabIndex = 120;
             this.btnAutoCorrupt.TabStop = false;
-            this.btnAutoCorrupt.Tag = "color:darkerer";
+            this.btnAutoCorrupt.Tag = "color:dark3";
             this.btnAutoCorrupt.Text = " Start Auto-Corrupt";
             this.btnAutoCorrupt.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAutoCorrupt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -431,13 +431,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.ClientSize = new System.Drawing.Size(731, 511);
+            this.ClientSize = new System.Drawing.Size(844, 581);
             this.Controls.Add(this.pnTopBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(600, 550);
+            this.MinimumSize = new System.Drawing.Size(860, 620);
             this.Name = "UI_CoreForm";
-            this.Tag = "color:darker";
+            this.Tag = "color:dark2";
             this.Text = "RTC";
             this.Load += new System.EventHandler(this.UI_CoreForm_Load);
             this.ResizeBegin += new System.EventHandler(this.UI_CoreForm_ResizeBegin);

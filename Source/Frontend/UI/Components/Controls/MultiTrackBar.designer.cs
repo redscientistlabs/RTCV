@@ -104,7 +104,7 @@
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.Name = "MultiTrackBar";
             this.Size = new System.Drawing.Size(227, 60);
-            this.Tag = "color:dark";
+            this.Tag = "color:dark1";
             this.Load += new System.EventHandler(this.MultiTrackBar_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nmControlValue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbControlValue)).EndInit();

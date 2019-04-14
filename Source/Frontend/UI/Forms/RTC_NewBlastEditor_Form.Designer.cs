@@ -190,7 +190,7 @@ namespace RTCV.UI
             this.panelSidebar.Name = "panelSidebar";
             this.panelSidebar.Size = new System.Drawing.Size(159, 463);
             this.panelSidebar.TabIndex = 146;
-            this.panelSidebar.Tag = "color:dark";
+            this.panelSidebar.Tag = "color:dark1";
             // 
             // btnAddRow
             // 
@@ -204,7 +204,7 @@ namespace RTCV.UI
             this.btnAddRow.Size = new System.Drawing.Size(135, 25);
             this.btnAddRow.TabIndex = 177;
             this.btnAddRow.TabStop = false;
-            this.btnAddRow.Tag = "color:light";
+            this.btnAddRow.Tag = "color:light1";
             this.btnAddRow.Text = "Add New Row";
             this.btnAddRow.UseVisualStyleBackColor = false;
             this.btnAddRow.Click += new System.EventHandler(this.BtnAddRow_Click);
@@ -221,7 +221,7 @@ namespace RTCV.UI
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(136, 60);
             this.panel1.TabIndex = 137;
-            this.panel1.Tag = "color:lighter";
+            this.panel1.Tag = "color:light2";
             // 
             // cbShiftBlastlayer
             // 
@@ -232,7 +232,7 @@ namespace RTCV.UI
             this.cbShiftBlastlayer.Name = "cbShiftBlastlayer";
             this.cbShiftBlastlayer.Size = new System.Drawing.Size(114, 21);
             this.cbShiftBlastlayer.TabIndex = 148;
-            this.cbShiftBlastlayer.Tag = "color:dark";
+            this.cbShiftBlastlayer.Tag = "color:dark1";
             // 
             // btnShiftBlastLayerDown
             // 
@@ -246,7 +246,7 @@ namespace RTCV.UI
             this.btnShiftBlastLayerDown.Size = new System.Drawing.Size(21, 21);
             this.btnShiftBlastLayerDown.TabIndex = 147;
             this.btnShiftBlastLayerDown.TabStop = false;
-            this.btnShiftBlastLayerDown.Tag = "color:light";
+            this.btnShiftBlastLayerDown.Tag = "color:light1";
             this.btnShiftBlastLayerDown.Text = "◀";
             this.btnShiftBlastLayerDown.UseVisualStyleBackColor = false;
             this.btnShiftBlastLayerDown.Click += new System.EventHandler(this.btnShiftBlastLayerDown_Click);
@@ -263,7 +263,7 @@ namespace RTCV.UI
             this.btnShiftBlastLayerUp.Size = new System.Drawing.Size(22, 22);
             this.btnShiftBlastLayerUp.TabIndex = 146;
             this.btnShiftBlastLayerUp.TabStop = false;
-            this.btnShiftBlastLayerUp.Tag = "color:light";
+            this.btnShiftBlastLayerUp.Tag = "color:light1";
             this.btnShiftBlastLayerUp.Text = "▶";
             this.btnShiftBlastLayerUp.UseVisualStyleBackColor = false;
             this.btnShiftBlastLayerUp.Click += new System.EventHandler(this.btnShiftBlastLayerUp_Click);
@@ -278,7 +278,7 @@ namespace RTCV.UI
             this.updownShiftBlastLayerAmount.Name = "updownShiftBlastLayerAmount";
             this.updownShiftBlastLayerAmount.Size = new System.Drawing.Size(59, 22);
             this.updownShiftBlastLayerAmount.TabIndex = 145;
-            this.updownShiftBlastLayerAmount.Tag = "color:dark";
+            this.updownShiftBlastLayerAmount.Tag = "color:dark1";
             // 
             // pnMemoryTargetting
             // 
@@ -289,7 +289,7 @@ namespace RTCV.UI
             this.pnMemoryTargetting.Name = "pnMemoryTargetting";
             this.pnMemoryTargetting.Size = new System.Drawing.Size(135, 24);
             this.pnMemoryTargetting.TabIndex = 134;
-            this.pnMemoryTargetting.Tag = "color:lighter";
+            this.pnMemoryTargetting.Tag = "color:light2";
             // 
             // lbBlastLayerSize
             // 
@@ -313,7 +313,7 @@ namespace RTCV.UI
             this.btnHelp.Size = new System.Drawing.Size(27, 17);
             this.btnHelp.TabIndex = 176;
             this.btnHelp.TabStop = false;
-            this.btnHelp.Tag = "color:dark";
+            this.btnHelp.Tag = "color:dark1";
             this.btnHelp.UseVisualStyleBackColor = false;
             this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
             // 
@@ -342,7 +342,7 @@ namespace RTCV.UI
             this.btnLoadCorrupt.Size = new System.Drawing.Size(135, 25);
             this.btnLoadCorrupt.TabIndex = 14;
             this.btnLoadCorrupt.TabStop = false;
-            this.btnLoadCorrupt.Tag = "color:darker";
+            this.btnLoadCorrupt.Tag = "color:dark2";
             this.btnLoadCorrupt.Text = "Load + Corrupt";
             this.btnLoadCorrupt.UseVisualStyleBackColor = false;
             this.btnLoadCorrupt.Click += new System.EventHandler(this.btnLoadCorrupt_Click);
@@ -359,7 +359,7 @@ namespace RTCV.UI
             this.btnRemoveSelected.Size = new System.Drawing.Size(135, 25);
             this.btnRemoveSelected.TabIndex = 139;
             this.btnRemoveSelected.TabStop = false;
-            this.btnRemoveSelected.Tag = "color:light";
+            this.btnRemoveSelected.Tag = "color:light1";
             this.btnRemoveSelected.Text = "Remove Selected";
             this.btnRemoveSelected.UseVisualStyleBackColor = false;
             this.btnRemoveSelected.Click += new System.EventHandler(this.btnRemoveSelected_Click);
@@ -377,7 +377,7 @@ namespace RTCV.UI
             this.btnCorrupt.Size = new System.Drawing.Size(135, 25);
             this.btnCorrupt.TabIndex = 13;
             this.btnCorrupt.TabStop = false;
-            this.btnCorrupt.Tag = "color:darker";
+            this.btnCorrupt.Tag = "color:dark2";
             this.btnCorrupt.Text = "Apply Corruption";
             this.btnCorrupt.UseVisualStyleBackColor = false;
             this.btnCorrupt.Click += new System.EventHandler(this.btnCorrupt_Click);
@@ -395,7 +395,7 @@ namespace RTCV.UI
             this.btnSendToStash.Size = new System.Drawing.Size(135, 25);
             this.btnSendToStash.TabIndex = 12;
             this.btnSendToStash.TabStop = false;
-            this.btnSendToStash.Tag = "color:darker";
+            this.btnSendToStash.Tag = "color:dark2";
             this.btnSendToStash.Text = "Send To Stash";
             this.btnSendToStash.UseVisualStyleBackColor = false;
             this.btnSendToStash.Click += new System.EventHandler(this.btnSendToStash_Click);
@@ -412,7 +412,7 @@ namespace RTCV.UI
             this.btnRemoveDisabled.Size = new System.Drawing.Size(135, 25);
             this.btnRemoveDisabled.TabIndex = 115;
             this.btnRemoveDisabled.TabStop = false;
-            this.btnRemoveDisabled.Tag = "color:light";
+            this.btnRemoveDisabled.Tag = "color:light1";
             this.btnRemoveDisabled.Text = "Remove Disabled";
             this.btnRemoveDisabled.UseVisualStyleBackColor = false;
             this.btnRemoveDisabled.Click += new System.EventHandler(this.btnRemoveDisabled_Click);
@@ -440,7 +440,7 @@ namespace RTCV.UI
             this.btnDisable50.Size = new System.Drawing.Size(135, 25);
             this.btnDisable50.TabIndex = 114;
             this.btnDisable50.TabStop = false;
-            this.btnDisable50.Tag = "color:light";
+            this.btnDisable50.Tag = "color:light1";
             this.btnDisable50.Text = "Disable 50%";
             this.btnDisable50.UseVisualStyleBackColor = false;
             this.btnDisable50.Click += new System.EventHandler(this.btnDisable50_Click);
@@ -457,7 +457,7 @@ namespace RTCV.UI
             this.btnInvertDisabled.Size = new System.Drawing.Size(135, 25);
             this.btnInvertDisabled.TabIndex = 116;
             this.btnInvertDisabled.TabStop = false;
-            this.btnInvertDisabled.Tag = "color:light";
+            this.btnInvertDisabled.Tag = "color:light1";
             this.btnInvertDisabled.Text = "Invert Disabled";
             this.btnInvertDisabled.UseVisualStyleBackColor = false;
             this.btnInvertDisabled.Click += new System.EventHandler(this.btnInvertDisabled_Click);
@@ -474,7 +474,7 @@ namespace RTCV.UI
             this.btnDisableEverything.Size = new System.Drawing.Size(135, 25);
             this.btnDisableEverything.TabIndex = 128;
             this.btnDisableEverything.TabStop = false;
-            this.btnDisableEverything.Tag = "color:light";
+            this.btnDisableEverything.Tag = "color:light1";
             this.btnDisableEverything.Text = "Disable Everything";
             this.btnDisableEverything.UseVisualStyleBackColor = false;
             this.btnDisableEverything.Click += new System.EventHandler(this.btnDisableEverything_Click);
@@ -491,7 +491,7 @@ namespace RTCV.UI
             this.btnEnableEverything.Size = new System.Drawing.Size(135, 25);
             this.btnEnableEverything.TabIndex = 129;
             this.btnEnableEverything.TabStop = false;
-            this.btnEnableEverything.Tag = "color:light";
+            this.btnEnableEverything.Tag = "color:light1";
             this.btnEnableEverything.Text = "Enable Everything";
             this.btnEnableEverything.UseVisualStyleBackColor = false;
             this.btnEnableEverything.Click += new System.EventHandler(this.btnEnableEverything_Click);
@@ -508,7 +508,7 @@ namespace RTCV.UI
             this.btnDuplicateSelected.Size = new System.Drawing.Size(135, 25);
             this.btnDuplicateSelected.TabIndex = 130;
             this.btnDuplicateSelected.TabStop = false;
-            this.btnDuplicateSelected.Tag = "color:light";
+            this.btnDuplicateSelected.Tag = "color:light1";
             this.btnDuplicateSelected.Text = "Duplicate Selected";
             this.btnDuplicateSelected.UseVisualStyleBackColor = false;
             this.btnDuplicateSelected.Click += new System.EventHandler(this.btnDuplicateSelected_Click);
@@ -523,7 +523,7 @@ namespace RTCV.UI
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(662, 21);
             this.panel2.TabIndex = 148;
-            this.panel2.Tag = "color:light";
+            this.panel2.Tag = "color:light1";
             // 
             // cbFilterColumn
             // 
@@ -658,7 +658,7 @@ namespace RTCV.UI
             this.btnNote.Size = new System.Drawing.Size(120, 88);
             this.btnNote.TabIndex = 142;
             this.btnNote.TabStop = false;
-            this.btnNote.Tag = "color:light";
+            this.btnNote.Tag = "color:light1";
             this.btnNote.Text = "Open Note Editor";
             this.btnNote.UseVisualStyleBackColor = false;
             this.btnNote.Click += new System.EventHandler(this.btnNote_Click);

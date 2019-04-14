@@ -38,7 +38,7 @@
             this.pnScale.Name = "pnScale";
             this.pnScale.Size = new System.Drawing.Size(32, 32);
             this.pnScale.TabIndex = 5;
-            this.pnScale.Tag = "color:darker";
+            this.pnScale.Tag = "color:dark2";
             // 
             // UI_CanvasForm
             // 
@@ -49,7 +49,7 @@
             this.Controls.Add(this.pnScale);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "UI_CanvasForm";
-            this.Tag = "color:darker";
+            this.Tag = "color:dark2";
             this.Text = "UI_CanvasForm";
             this.Load += new System.EventHandler(this.UI_CanvasForm_Load);
             this.ResumeLayout(false);

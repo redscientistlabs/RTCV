@@ -58,7 +58,7 @@
             this.pnComponentFormHost.Name = "pnComponentFormHost";
             this.pnComponentFormHost.Size = new System.Drawing.Size(280, 256);
             this.pnComponentFormHost.TabIndex = 122;
-            this.pnComponentFormHost.Tag = "color:dark";
+            this.pnComponentFormHost.Tag = "color:dark1";
             // 
             // label4
             // 
@@ -72,7 +72,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(270, 238);
             this.label4.TabIndex = 121;
-            this.label4.Tag = "color:lighter";
+            this.label4.Tag = "color:light2";
             this.label4.Text = "Component is detached to window";
             // 
             // UI_ComponentFormTile
@@ -85,7 +85,7 @@
             this.Controls.Add(this.lbComponentFormName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "UI_ComponentFormTile";
-            this.Tag = "color:darkerer";
+            this.Tag = "color:dark3";
             this.Text = "ComponentForm Tile";
             this.Load += new System.EventHandler(this.UI_ComponentFormTile_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UI_ComponentFormTile_MouseDown);

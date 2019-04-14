@@ -126,7 +126,7 @@
             this.pnCustomPrecision.Name = "pnCustomPrecision";
             this.pnCustomPrecision.Size = new System.Drawing.Size(233, 32);
             this.pnCustomPrecision.TabIndex = 139;
-            this.pnCustomPrecision.Tag = "color:darker";
+            this.pnCustomPrecision.Tag = "color:dark2";
             this.pnCustomPrecision.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // label5
@@ -134,7 +134,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F);
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(6, 11);
+            this.label5.Location = new System.Drawing.Point(6, 10);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(95, 13);
             this.label5.TabIndex = 82;
@@ -152,7 +152,7 @@
             "8-bit",
             "16-bit",
             "32-bit"});
-            this.cbCustomPrecision.Location = new System.Drawing.Point(105, 6);
+            this.cbCustomPrecision.Location = new System.Drawing.Point(106, 5);
             this.cbCustomPrecision.Name = "cbCustomPrecision";
             this.cbCustomPrecision.Size = new System.Drawing.Size(121, 21);
             this.cbCustomPrecision.TabIndex = 81;
@@ -254,17 +254,17 @@
             // 
             // btnOpenBlastGenerator
             // 
-            this.btnOpenBlastGenerator.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnOpenBlastGenerator.BackColor = System.Drawing.Color.Gray;
             this.btnOpenBlastGenerator.FlatAppearance.BorderSize = 0;
             this.btnOpenBlastGenerator.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOpenBlastGenerator.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnOpenBlastGenerator.ForeColor = System.Drawing.Color.Black;
+            this.btnOpenBlastGenerator.ForeColor = System.Drawing.Color.White;
             this.btnOpenBlastGenerator.Location = new System.Drawing.Point(7, 120);
             this.btnOpenBlastGenerator.Name = "btnOpenBlastGenerator";
             this.btnOpenBlastGenerator.Size = new System.Drawing.Size(159, 24);
             this.btnOpenBlastGenerator.TabIndex = 77;
             this.btnOpenBlastGenerator.TabStop = false;
-            this.btnOpenBlastGenerator.Tag = "color:light";
+            this.btnOpenBlastGenerator.Tag = "color:light1";
             this.btnOpenBlastGenerator.Text = "Open Blast Generator";
             this.btnOpenBlastGenerator.UseVisualStyleBackColor = false;
             this.btnOpenBlastGenerator.Click += new System.EventHandler(this.btnOpenBlastGenerator_Click);
@@ -296,14 +296,14 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(408, 47);
             this.panel2.TabIndex = 135;
-            this.panel2.Tag = "color:darker";
+            this.panel2.Tag = "color:dark2";
             this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // lbVectorEngineValueText1
             // 
             this.lbVectorEngineValueText1.AutoSize = true;
             this.lbVectorEngineValueText1.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.lbVectorEngineValueText1.Location = new System.Drawing.Point(165, 22);
+            this.lbVectorEngineValueText1.Location = new System.Drawing.Point(165, 25);
             this.lbVectorEngineValueText1.Name = "lbVectorEngineValueText1";
             this.lbVectorEngineValueText1.Size = new System.Drawing.Size(108, 13);
             this.lbVectorEngineValueText1.TabIndex = 138;
@@ -352,14 +352,14 @@
             this.pnLimiterList.Name = "pnLimiterList";
             this.pnLimiterList.Size = new System.Drawing.Size(408, 47);
             this.pnLimiterList.TabIndex = 134;
-            this.pnLimiterList.Tag = "color:darker";
+            this.pnLimiterList.Tag = "color:dark2";
             this.pnLimiterList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // lbVectorEngineLimiterText1
             // 
             this.lbVectorEngineLimiterText1.AutoSize = true;
             this.lbVectorEngineLimiterText1.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.lbVectorEngineLimiterText1.Location = new System.Drawing.Point(165, 21);
+            this.lbVectorEngineLimiterText1.Location = new System.Drawing.Point(165, 24);
             this.lbVectorEngineLimiterText1.Name = "lbVectorEngineLimiterText1";
             this.lbVectorEngineLimiterText1.Size = new System.Drawing.Size(104, 13);
             this.lbVectorEngineLimiterText1.TabIndex = 141;
@@ -410,7 +410,7 @@
             this.comboBox6.Name = "comboBox6";
             this.comboBox6.Size = new System.Drawing.Size(165, 21);
             this.comboBox6.TabIndex = 82;
-            this.comboBox6.Tag = "color:dark";
+            this.comboBox6.Tag = "color:dark1";
             this.comboBox6.Visible = false;
             this.comboBox6.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
@@ -532,17 +532,17 @@
             // 
             // btnClearPipes
             // 
-            this.btnClearPipes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnClearPipes.BackColor = System.Drawing.Color.Gray;
             this.btnClearPipes.FlatAppearance.BorderSize = 0;
             this.btnClearPipes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClearPipes.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnClearPipes.ForeColor = System.Drawing.Color.Black;
+            this.btnClearPipes.ForeColor = System.Drawing.Color.White;
             this.btnClearPipes.Location = new System.Drawing.Point(7, 120);
             this.btnClearPipes.Name = "btnClearPipes";
             this.btnClearPipes.Size = new System.Drawing.Size(159, 24);
             this.btnClearPipes.TabIndex = 76;
             this.btnClearPipes.TabStop = false;
-            this.btnClearPipes.Tag = "color:light";
+            this.btnClearPipes.Tag = "color:light1";
             this.btnClearPipes.Text = "Clear Pipes";
             this.btnClearPipes.UseVisualStyleBackColor = false;
             this.btnClearPipes.Click += new System.EventHandler(this.btnClearPipes_Click);
@@ -594,17 +594,17 @@
             // 
             // btnResyncDistortionEngine
             // 
-            this.btnResyncDistortionEngine.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnResyncDistortionEngine.BackColor = System.Drawing.Color.Gray;
             this.btnResyncDistortionEngine.FlatAppearance.BorderSize = 0;
             this.btnResyncDistortionEngine.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnResyncDistortionEngine.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnResyncDistortionEngine.ForeColor = System.Drawing.Color.Black;
+            this.btnResyncDistortionEngine.ForeColor = System.Drawing.Color.White;
             this.btnResyncDistortionEngine.Location = new System.Drawing.Point(7, 120);
             this.btnResyncDistortionEngine.Name = "btnResyncDistortionEngine";
             this.btnResyncDistortionEngine.Size = new System.Drawing.Size(159, 24);
             this.btnResyncDistortionEngine.TabIndex = 76;
             this.btnResyncDistortionEngine.TabStop = false;
-            this.btnResyncDistortionEngine.Tag = "color:light";
+            this.btnResyncDistortionEngine.Tag = "color:light1";
             this.btnResyncDistortionEngine.Text = "Resync Distortion Engine";
             this.btnResyncDistortionEngine.UseVisualStyleBackColor = false;
             this.btnResyncDistortionEngine.Click += new System.EventHandler(this.btnResyncDistortionEngine_Click);
@@ -741,17 +741,17 @@
             // 
             // btnClearAllFreezes
             // 
-            this.btnClearAllFreezes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnClearAllFreezes.BackColor = System.Drawing.Color.Gray;
             this.btnClearAllFreezes.FlatAppearance.BorderSize = 0;
             this.btnClearAllFreezes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClearAllFreezes.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnClearAllFreezes.ForeColor = System.Drawing.Color.Black;
+            this.btnClearAllFreezes.ForeColor = System.Drawing.Color.White;
             this.btnClearAllFreezes.Location = new System.Drawing.Point(7, 120);
             this.btnClearAllFreezes.Name = "btnClearAllFreezes";
             this.btnClearAllFreezes.Size = new System.Drawing.Size(159, 24);
             this.btnClearAllFreezes.TabIndex = 10;
             this.btnClearAllFreezes.TabStop = false;
-            this.btnClearAllFreezes.Tag = "color:light";
+            this.btnClearAllFreezes.Tag = "color:light1";
             this.btnClearAllFreezes.Text = "Clear all freezes";
             this.btnClearAllFreezes.UseVisualStyleBackColor = false;
             this.btnClearAllFreezes.Click += new System.EventHandler(this.btnClearCheats_Click);
@@ -908,17 +908,17 @@
             // 
             // btnClearCheats
             // 
-            this.btnClearCheats.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnClearCheats.BackColor = System.Drawing.Color.Gray;
             this.btnClearCheats.FlatAppearance.BorderSize = 0;
             this.btnClearCheats.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClearCheats.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnClearCheats.ForeColor = System.Drawing.Color.Black;
+            this.btnClearCheats.ForeColor = System.Drawing.Color.White;
             this.btnClearCheats.Location = new System.Drawing.Point(7, 120);
             this.btnClearCheats.Name = "btnClearCheats";
             this.btnClearCheats.Size = new System.Drawing.Size(159, 24);
             this.btnClearCheats.TabIndex = 10;
             this.btnClearCheats.TabStop = false;
-            this.btnClearCheats.Tag = "color:light";
+            this.btnClearCheats.Tag = "color:light1";
             this.btnClearCheats.Text = "Clear all cheats";
             this.btnClearCheats.UseVisualStyleBackColor = false;
             this.btnClearCheats.Click += new System.EventHandler(this.btnClearCheats_Click);
@@ -1110,17 +1110,17 @@
             // 
             // btnOpenCustomEngine
             // 
-            this.btnOpenCustomEngine.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnOpenCustomEngine.BackColor = System.Drawing.Color.Gray;
             this.btnOpenCustomEngine.FlatAppearance.BorderSize = 0;
             this.btnOpenCustomEngine.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOpenCustomEngine.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnOpenCustomEngine.ForeColor = System.Drawing.Color.Black;
+            this.btnOpenCustomEngine.ForeColor = System.Drawing.Color.White;
             this.btnOpenCustomEngine.Location = new System.Drawing.Point(7, 120);
             this.btnOpenCustomEngine.Name = "btnOpenCustomEngine";
             this.btnOpenCustomEngine.Size = new System.Drawing.Size(159, 24);
             this.btnOpenCustomEngine.TabIndex = 77;
             this.btnOpenCustomEngine.TabStop = false;
-            this.btnOpenCustomEngine.Tag = "color:light";
+            this.btnOpenCustomEngine.Tag = "color:light1";
             this.btnOpenCustomEngine.Text = "Open Custom Engine";
             this.btnOpenCustomEngine.UseVisualStyleBackColor = false;
             this.btnOpenCustomEngine.Click += new System.EventHandler(this.btnOpenCustomEngine_Click);
@@ -1144,7 +1144,7 @@
             this.Controls.Add(this.gbSelectedEngine);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "RTC_CorruptionEngine_Form";
-            this.Tag = "color:dark";
+            this.Tag = "color:dark1";
             this.Text = "Corruption Engine";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
             this.Load += new System.EventHandler(this.RTC_CorruptionEngine_Form_Load);
