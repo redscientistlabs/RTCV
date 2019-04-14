@@ -45,6 +45,7 @@
             this.pnFloater.Name = "pnFloater";
             this.pnFloater.Size = new System.Drawing.Size(500, 400);
             this.pnFloater.TabIndex = 0;
+            this.pnFloater.Tag = "color:dark2";
             // 
             // pnContainer
             // 
@@ -53,14 +54,15 @@
             this.pnContainer.Name = "pnContainer";
             this.pnContainer.Size = new System.Drawing.Size(475, 320);
             this.pnContainer.TabIndex = 118;
+            this.pnContainer.Tag = "color:dark1";
             // 
             // btnCancel
             // 
-            this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnCancel.BackColor = System.Drawing.Color.Gray;
             this.btnCancel.FlatAppearance.BorderSize = 0;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.btnCancel.ForeColor = System.Drawing.Color.Black;
+            this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.Location = new System.Drawing.Point(11, 352);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(80, 33);
@@ -77,11 +79,11 @@
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOk.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnOk.BackColor = System.Drawing.Color.Gray;
             this.btnOk.FlatAppearance.BorderSize = 0;
             this.btnOk.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOk.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.btnOk.ForeColor = System.Drawing.Color.Black;
+            this.btnOk.ForeColor = System.Drawing.Color.White;
             this.btnOk.Location = new System.Drawing.Point(421, 352);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(65, 33);
@@ -102,6 +104,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "UI_ShadowPanel";
             this.Text = "ShadowPanel";
+            this.Load += new System.EventHandler(this.UI_ShadowPanel_Load);
             this.pnFloater.ResumeLayout(false);
             this.ResumeLayout(false);
 

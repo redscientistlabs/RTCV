@@ -42,7 +42,7 @@
             this.label1.TabIndex = 9;
             this.label1.Text = "Dummy Sub Form";
             // 
-            // UI_DummySubForm
+            // UI_ComponentFormSubForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -50,8 +50,10 @@
             this.ClientSize = new System.Drawing.Size(475, 320);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "UI_DummySubForm";
+            this.Name = "UI_ComponentFormSubForm";
+            this.Tag = "color:dark1";
             this.Text = "UI_DummySubForm";
+            this.Load += new System.EventHandler(this.UI_ComponentFormSubForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

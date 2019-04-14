@@ -14,6 +14,8 @@ namespace RTCV.UI
         public UI_ComponentFormSubForm()
         {
             InitializeComponent();
+
+            UICore.SetRTCColor(UICore.GeneralColor, this);
         }
 
 
@@ -33,5 +35,9 @@ namespace RTCV.UI
 
         }
 
+        private void UI_ComponentFormSubForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

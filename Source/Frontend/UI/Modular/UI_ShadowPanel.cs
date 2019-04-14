@@ -19,6 +19,8 @@ namespace RTCV.UI
         {
             InitializeComponent();
 
+            UICore.SetRTCColor(UICore.GeneralColor, this);
+
             parentForm = _parentForm;
             UpdateBackground();
 
@@ -63,6 +65,50 @@ namespace RTCV.UI
 
         }
 
+        public Bitmap FormScreenShot(Form f)
+        {
+            //recursively creates a screenshot of the form and subforms
+
+            var bitmap = new Bitmap(f.Width, f.Height);
+            var rectSize = new Rectangle(0, 0, f.Width, f.Height);
+            f.DrawToBitmap(bitmap, rectSize);
+
+            foreach(Control c in f.Controls)
+            {
+                if(c is Form)
+                {
+                    var cf = (Form)c;
+                    var subBitmap = FormScreenShot(cf);
+                    var subrect = new Rectangle(0, 0, cf.Width, cf.Height);
+                    //cf.DrawToBitmap(subBitmap, subrect);
+                    using (Graphics g = Graphics.FromImage(bitmap))
+                    {
+                        g.DrawImage(subBitmap, new Point(cf.Location.X, cf.Location.Y));
+                    }
+                }
+
+                if (c is Panel)
+                {
+                    var p = (Panel)c;
+                    foreach (Control cp in p.Controls)
+                    {
+                        if(cp is Form)
+                        {
+                            var subBitmap = FormScreenShot((Form)cp);
+                            var subrect = new Rectangle(0, 0, cp.Width, cp.Height);
+                            //cp.DrawToBitmap(subBitmap, subrect);
+                            using (Graphics g = Graphics.FromImage(bitmap))
+                            {
+                                g.DrawImage(subBitmap, new Point(p.Location.X + cp.Location.X, p.Location.Y + cp.Location.Y));
+                            }
+                        }
+                    }
+                }
+            }
+
+            return bitmap;
+        }
+
         public void UpdateBackground()
         {
             //Creates darkened blured background for the subform
@@ -73,9 +119,8 @@ namespace RTCV.UI
             if(parentForm.Width == 0 || parentForm.Height == 0)
                 return;
 
-            var bitmap = new Bitmap(parentForm.Width, parentForm.Height);
-            var rectSize = new Rectangle(0, 0, parentForm.Width, parentForm.Height);
-            parentForm.DrawToBitmap(bitmap, rectSize);
+            var bitmap = FormScreenShot(parentForm);
+            var rectSize = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
 
             Bitmap resized = new Bitmap(bitmap, new Size(bitmap.Width / 4, bitmap.Height / 4));
 
@@ -124,6 +169,11 @@ namespace RTCV.UI
                 (subForm as ISubForm).SubForm_Cancel();
 
             parentForm.CloseSubForm();
+        }
+
+        private void UI_ShadowPanel_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
