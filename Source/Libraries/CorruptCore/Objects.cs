@@ -207,8 +207,11 @@ namespace RTCV.CorruptCore
 			{
 				string[] configPaths = AllSpec.VanguardSpec[VSPEC.CONFIG_PATHS] as string[] ?? new string[]{};
 				foreach(var path in configPaths)
-					if (File.Exists(path))
-                        File.Copy(path, Path.Combine(CorruptCore.workingDir, "TEMP", "CONFIGFS", Path.GetFileName(path)));
+				if (File.Exists(path))
+				{
+					Directory.CreateDirectory(Path.Combine(CorruptCore.workingDir, "TEMP", "CONFIGS"));
+					File.Copy(path, Path.Combine(CorruptCore.workingDir, "TEMP", "CONFIGS", Path.GetFileName(path)));
+                }
             }
 			//Get all the limiter lists
 			List<string[]> limiterLists = Filtering.GetAllLimiterListsFromStockpile(sks);
@@ -576,9 +579,10 @@ namespace RTCV.CorruptCore
 		*/
 		public static void LoadConfigFromStockpile()
 		{
-            if((!(bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_CONFIG_MANAGEMENT] ?? false) == false)
+            if(((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_CONFIG_MANAGEMENT] ?? false) == false)
             {
 				MessageBox.Show("The currently selected emulator doesn't support config management");
+                return;
 			}
 
 			string[] configPaths = AllSpec.VanguardSpec[VSPEC.CONFIG_PATHS] as string[];
@@ -607,7 +611,7 @@ namespace RTCV.CorruptCore
             foreach (var path in configPaths)
 			{
 				var dir = Path.GetDirectoryName(path);
-				var backupFilename = Path.Combine(dir, "backup_", Path.GetFileName(path));
+				var backupFilename = Path.Combine(dir, "backup_" + Path.GetFileName(path));
 				if (!notified && File.Exists(backupFilename) && MessageBox.Show("Do you want to overwrite the previous config backup with the current config?", "WARNING", MessageBoxButtons.YesNo) == DialogResult.Yes)
 				{
 					File.Delete(backupFilename);
@@ -625,7 +629,9 @@ namespace RTCV.CorruptCore
 			Dictionary<string, string> name2filedico = new Dictionary<string, string>();
 			foreach (var str in configPaths)
 			{
-				name2filedico.Add(Path.GetFileName(str), str);
+				var relPath = CorruptCore_Extensions.GetRelativePath(CorruptCore.EmuDir, str);
+
+                name2filedico.Add(Path.GetFileName(str), relPath);
 			}
 
 			//Parse the configs folder and then if the emulator is looking for that file, copy it over.
@@ -641,11 +647,16 @@ namespace RTCV.CorruptCore
 			{
 				var name = Path.GetFileName(file);
 				if (name2filedico.ContainsKey(name))
-					File.Copy(file, name2filedico[name]);
+					File.Copy(file, CorruptCore.EmuDir + name2filedico[name], true);
 			}
 
             LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_MERGECONFIG);
-			Process.Start(CorruptCore.EmuDir + Path.DirectorySeparatorChar + $"StockpileConfig.bat");
+
+
+			ProcessStartInfo p = new ProcessStartInfo();
+			p.WorkingDirectory = CorruptCore.EmuDir;
+			p.FileName = CorruptCore.EmuDir + Path.DirectorySeparatorChar + $"StockpileConfig.bat";
+            Process.Start(p);
 
 		}
 

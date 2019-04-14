@@ -753,8 +753,10 @@ namespace RTCV.UI
 					{
 						return;
 					}
+                    AutoKillSwitch.Enabled = false;
 					Stockpile.LoadConfigFromStockpile();
-				}
+                    AutoKillSwitch.Enabled = true;
+                }
 				finally
 				{
 				}
@@ -768,8 +770,10 @@ namespace RTCV.UI
 						"You have unsaved edits in the Glitch Harvester Stockpile. \n\n This will restart Bizhawk. Are you sure you want to load without saving?",
 						"Unsaved edits in Stockpile", MessageBoxButtons.YesNo) == DialogResult.No)
 						return;
-					Stockpile.RestoreBizhawkConfig();
-				}
+                    AutoKillSwitch.Enabled = false;
+                    Stockpile.RestoreBizhawkConfig();
+                    AutoKillSwitch.Enabled = true;
+                }
 				finally
 				{
 				}
