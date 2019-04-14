@@ -113,6 +113,9 @@ This message only appears once.";
 
 			CorruptCore.CorruptCore.DownloadProblematicProcesses();
 
+
+            S.GET<UI_CoreForm>().Show();
+
 		}
 
 		private void btnGlitchHarvester_Click(object sender, EventArgs e)
@@ -492,6 +495,5 @@ Environment.NewLine + "───█───▌────────▐▀─
 			AutoKillSwitch.ShouldKillswitchFire = true;
 			AutoKillSwitch.KillEmulator(btnAutoKillSwitchExecute.Text.ToUpper(), true);
 		}
-
-	}
+    }
 }

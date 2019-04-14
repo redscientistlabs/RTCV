@@ -244,6 +244,37 @@
     <Compile Include="Input\Input.cs" />
     <Compile Include="Input\IPCKeyInput.cs" />
     <Compile Include="Input\Keyboard.cs" />
+    <Compile Include="Modular\UI_CanvasForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modular\UI_CanvasForm.Designer.cs">
+      <DependentUpon>UI_CanvasForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modular\UI_ComponentFormSubForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modular\UI_ComponentFormSubForm.Designer.cs">
+      <DependentUpon>UI_ComponentFormSubForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modular\UI_ComponentFormTile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modular\UI_ComponentFormTile.Designer.cs">
+      <DependentUpon>UI_ComponentFormTile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modular\UI_CoreForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modular\UI_CoreForm.Designer.cs">
+      <DependentUpon>UI_CoreForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Modular\UI_Objects.cs" />
+    <Compile Include="Modular\UI_ShadowPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modular\UI_ShadowPanel.Designer.cs">
+      <DependentUpon>UI_ShadowPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="UICore.cs" />
     <Compile Include="UIConnector.cs" />
     <Compile Include="Program.cs" />
@@ -336,6 +367,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RTC_Test_Form.resx">
       <DependentUpon>RTC_Test_Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modular\UI_CanvasForm.resx">
+      <DependentUpon>UI_CanvasForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modular\UI_ComponentFormSubForm.resx">
+      <DependentUpon>UI_ComponentFormSubForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modular\UI_ComponentFormTile.resx">
+      <DependentUpon>UI_ComponentFormTile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modular\UI_CoreForm.resx">
+      <DependentUpon>UI_CoreForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modular\UI_ShadowPanel.resx">
+      <DependentUpon>UI_ShadowPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

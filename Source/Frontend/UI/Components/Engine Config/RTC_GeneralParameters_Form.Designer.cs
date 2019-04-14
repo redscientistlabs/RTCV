@@ -36,7 +36,8 @@
             // 
             // cbBlastRadius
             // 
-            this.cbBlastRadius.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.cbBlastRadius.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbBlastRadius.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.cbBlastRadius.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbBlastRadius.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbBlastRadius.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -49,20 +50,21 @@
             "EVEN",
             "PROPORTIONAL",
             "NORMALIZED"});
-            this.cbBlastRadius.Location = new System.Drawing.Point(91, 134);
+            this.cbBlastRadius.Location = new System.Drawing.Point(91, 159);
             this.cbBlastRadius.Name = "cbBlastRadius";
             this.cbBlastRadius.Size = new System.Drawing.Size(100, 21);
             this.cbBlastRadius.TabIndex = 21;
-            this.cbBlastRadius.Tag = "color:dark";
+            this.cbBlastRadius.Tag = "color:normal";
             this.cbBlastRadius.SelectedIndexChanged += new System.EventHandler(this.cbBlastRadius_SelectedIndexChanged);
             this.cbBlastRadius.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // labelBlastRadius
             // 
+            this.labelBlastRadius.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.labelBlastRadius.AutoSize = true;
             this.labelBlastRadius.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.labelBlastRadius.ForeColor = System.Drawing.Color.White;
-            this.labelBlastRadius.Location = new System.Drawing.Point(7, 136);
+            this.labelBlastRadius.Location = new System.Drawing.Point(7, 161);
             this.labelBlastRadius.Name = "labelBlastRadius";
             this.labelBlastRadius.Size = new System.Drawing.Size(81, 17);
             this.labelBlastRadius.TabIndex = 20;
@@ -71,31 +73,37 @@
             // 
             // multiTB_ErrorDelay
             // 
-            this.multiTB_ErrorDelay.BackColor = System.Drawing.Color.Gray;
+            this.multiTB_ErrorDelay.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.multiTB_ErrorDelay.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.multiTB_ErrorDelay.DisplayCheckbox = false;
             this.multiTB_ErrorDelay.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.multiTB_ErrorDelay.LabelText = "Error Delay";
-            this.multiTB_ErrorDelay.Location = new System.Drawing.Point(9, 65);
+            this.multiTB_ErrorDelay.Location = new System.Drawing.Point(9, 81);
             this.multiTB_ErrorDelay.Maximum = ((long)(65535));
             this.multiTB_ErrorDelay.Minimum = ((long)(1));
             this.multiTB_ErrorDelay.Name = "multiTB_ErrorDelay";
             this.multiTB_ErrorDelay.Size = new System.Drawing.Size(182, 60);
             this.multiTB_ErrorDelay.TabIndex = 23;
-            this.multiTB_ErrorDelay.Tag = "color:normal";
+            this.multiTB_ErrorDelay.Tag = "color:dark";
             this.multiTB_ErrorDelay.UncapNumericBox = false;
             this.multiTB_ErrorDelay.Value = ((long)(1));
             // 
             // multiTB_Intensity
             // 
-            this.multiTB_Intensity.BackColor = System.Drawing.Color.Gray;
+            this.multiTB_Intensity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.multiTB_Intensity.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.multiTB_Intensity.DisplayCheckbox = false;
             this.multiTB_Intensity.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.multiTB_Intensity.LabelText = "Intensity";
-            this.multiTB_Intensity.Location = new System.Drawing.Point(9, 2);
+            this.multiTB_Intensity.Location = new System.Drawing.Point(9, 9);
             this.multiTB_Intensity.Maximum = ((long)(65535));
             this.multiTB_Intensity.Minimum = ((long)(1));
             this.multiTB_Intensity.Name = "multiTB_Intensity";
             this.multiTB_Intensity.Size = new System.Drawing.Size(181, 60);
             this.multiTB_Intensity.TabIndex = 22;
-            this.multiTB_Intensity.Tag = "color:normal";
+            this.multiTB_Intensity.Tag = "color:dark";
             this.multiTB_Intensity.UncapNumericBox = false;
             this.multiTB_Intensity.Value = ((long)(1));
             // 
@@ -103,15 +111,15 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Gray;
-            this.ClientSize = new System.Drawing.Size(200, 167);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ClientSize = new System.Drawing.Size(200, 192);
             this.Controls.Add(this.multiTB_ErrorDelay);
             this.Controls.Add(this.multiTB_Intensity);
             this.Controls.Add(this.cbBlastRadius);
             this.Controls.Add(this.labelBlastRadius);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "RTC_GeneralParameters_Form";
-            this.Tag = "color:normal";
+            this.Tag = "color:dark";
             this.Text = "General Parameters";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
             this.Load += new System.EventHandler(this.RTC_GeneralParameters_Form_Load);

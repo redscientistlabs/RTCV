@@ -36,19 +36,21 @@
             // 
             // pnComponentForm
             // 
-            this.pnComponentForm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.pnComponentForm.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnComponentForm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.pnComponentForm.Controls.Add(this.label8);
             this.pnComponentForm.Location = new System.Drawing.Point(11, 31);
             this.pnComponentForm.Name = "pnComponentForm";
             this.pnComponentForm.Size = new System.Drawing.Size(390, 250);
             this.pnComponentForm.TabIndex = 117;
-            this.pnComponentForm.Tag = "color:dark";
+            this.pnComponentForm.Tag = "color:normal";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.label8.ForeColor = System.Drawing.Color.Gray;
+            this.label8.ForeColor = System.Drawing.Color.Silver;
             this.label8.Location = new System.Drawing.Point(8, 8);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(170, 13);
@@ -58,7 +60,9 @@
             // 
             // cbSelectBox
             // 
-            this.cbSelectBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.cbSelectBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbSelectBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.cbSelectBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSelectBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbSelectBox.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -69,21 +73,21 @@
             this.cbSelectBox.Size = new System.Drawing.Size(390, 21);
             this.cbSelectBox.TabIndex = 116;
             this.cbSelectBox.TabStop = false;
-            this.cbSelectBox.Tag = "color:dark";
+            this.cbSelectBox.Tag = "color:normal";
             this.cbSelectBox.SelectedIndexChanged += new System.EventHandler(this.cbSelectBox_SelectedIndexChanged);
             // 
             // RTC_SelectBox_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Gray;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(413, 291);
             this.Controls.Add(this.pnComponentForm);
             this.Controls.Add(this.cbSelectBox);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "RTC_SelectBox_Form";
-            this.Tag = "color:normal";
+            this.Tag = "color:dark";
             this.Text = "SelectBox Component";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
             this.Load += new System.EventHandler(this.RTC_SelectBox_Form_Load);

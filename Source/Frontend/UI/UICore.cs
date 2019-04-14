@@ -322,43 +322,77 @@ namespace RTCV.UI
 			var darkerColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:darker"));
 			var darkererColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:darkerer"));
 
-			foreach (Control c in lightColorControls)
-				if (c is Label)
-					c.ForeColor = color.ChangeColorBrightness(0.30f);
-				else
-					c.BackColor = color.ChangeColorBrightness(0.30f);
+            bool flipLuminosity = false;
 
-			foreach (Control c in normalColorControls)
-				if (c is Label)
-					c.ForeColor = color;
-				else
-					c.BackColor = color;
+            Color LightColor = color.ChangeColorBrightness(0.20f * (flipLuminosity?-1:1));
+            Color NormalColor = color;
+            Color DarkColor = color.ChangeColorBrightness(-0.20f * (flipLuminosity ? -1 : 1));
+            Color DarkerColor = color.ChangeColorBrightness(-0.35f * (flipLuminosity ? -1 : 1));
+            Color DarkererColor = color.ChangeColorBrightness(-0.50f * (flipLuminosity ? -1 : 1));
 
-			S.GET<RTC_StockpilePlayer_Form>().dgvStockpile.BackgroundColor = color;
-			S.GET<RTC_GlitchHarvester_Form>().dgvStockpile.BackgroundColor = color;
+            foreach (Control c in lightColorControls)
+            {
+                if (c is Label)
+                    c.ForeColor = LightColor;
+                else
+                    c.BackColor = LightColor;
+
+                if (c is Button)
+                    (c as Button).FlatAppearance.BorderColor = LightColor;
+            }
+
+            foreach (Control c in normalColorControls)
+            {
+                if (c is Label)
+                    c.ForeColor = NormalColor;
+                else
+                    c.BackColor = NormalColor;
+
+                if (c is Button)
+                    (c as Button).FlatAppearance.BorderColor = NormalColor;
+            }
 
 
+			S.GET<RTC_StockpilePlayer_Form>().dgvStockpile.BackgroundColor = NormalColor;
+			S.GET<RTC_GlitchHarvester_Form>().dgvStockpile.BackgroundColor = NormalColor;
 
-			S.GET<RTC_NewBlastEditor_Form>().dgvBlastEditor.BackgroundColor = color;
-			S.GET<RTC_BlastGenerator_Form>().dgvBlastGenerator.BackgroundColor = color;
+			S.GET<RTC_NewBlastEditor_Form>().dgvBlastEditor.BackgroundColor = NormalColor;
+			S.GET<RTC_BlastGenerator_Form>().dgvBlastGenerator.BackgroundColor = NormalColor;
 
-			foreach (Control c in darkColorControls)
-				if (c is Label)
-					c.ForeColor = color.ChangeColorBrightness(-0.30f);
-				else
-					c.BackColor = color.ChangeColorBrightness(-0.30f);
+            foreach (Control c in darkColorControls)
+            {
+                if (c is Label)
+                    c.ForeColor = DarkColor;
+                else
+                    c.BackColor = DarkColor;
 
-			foreach (Control c in darkerColorControls)
-				if (c is Label)
-					c.ForeColor = color.ChangeColorBrightness(-0.55f);
-				else
-					c.BackColor = color.ChangeColorBrightness(-0.55f);
+                if(c is Button)
+                    (c as Button).FlatAppearance.BorderColor = DarkColor;
 
-			foreach (Control c in darkererColorControls)
-				if (c is Label)
-					c.ForeColor = color.ChangeColorBrightness(-0.75f);
-				else
-					c.BackColor = color.ChangeColorBrightness(-0.75f);
+
+            }
+
+            foreach (Control c in darkerColorControls)
+            {
+                if (c is Label)
+                    c.ForeColor = DarkerColor;
+                else
+                    c.BackColor = DarkerColor;
+
+                if (c is Button)
+                    (c as Button).FlatAppearance.BorderColor = DarkerColor;
+            }
+
+            foreach (Control c in darkererColorControls)
+            {
+                if (c is Label)
+                    c.ForeColor = DarkererColor;
+                else
+                    c.BackColor = DarkererColor;
+
+                if (c is Button)
+                    (c as Button).FlatAppearance.BorderColor = DarkererColor;
+            }
 		}
 
 		public static void SelectRTCColor()

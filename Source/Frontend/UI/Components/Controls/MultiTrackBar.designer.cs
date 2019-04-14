@@ -50,7 +50,7 @@
             // nmControlValue
             // 
             this.nmControlValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.nmControlValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.nmControlValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.nmControlValue.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.nmControlValue.ForeColor = System.Drawing.Color.White;
             this.nmControlValue.Location = new System.Drawing.Point(148, 7);
@@ -62,7 +62,7 @@
             this.nmControlValue.Name = "nmControlValue";
             this.nmControlValue.Size = new System.Drawing.Size(72, 22);
             this.nmControlValue.TabIndex = 2;
-            this.nmControlValue.Tag = "color:dark";
+            this.nmControlValue.Tag = "color:normal";
             this.nmControlValue.ValueChanged += new System.EventHandler(this.nmControlValue_ValueChanged);
             // 
             // tbControlValue
@@ -96,7 +96,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(94)))), ((int)(((byte)(94)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Controls.Add(this.cbControlName);
             this.Controls.Add(this.nmControlValue);
             this.Controls.Add(this.lbControlName);
@@ -104,7 +104,7 @@
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.Name = "MultiTrackBar";
             this.Size = new System.Drawing.Size(227, 60);
-            this.Tag = "color:normal";
+            this.Tag = "color:dark";
             this.Load += new System.EventHandler(this.MultiTrackBar_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nmControlValue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbControlValue)).EndInit();

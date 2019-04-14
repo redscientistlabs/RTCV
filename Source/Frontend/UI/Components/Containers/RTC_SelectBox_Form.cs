@@ -23,6 +23,8 @@ namespace RTCV.UI
 		{
 			InitializeComponent();
 
+            UICore.SetRTCColor(UICore.GeneralColor, this);
+
 			childForms = _childForms;
 
 			cbSelectBox.DisplayMember = "text";
