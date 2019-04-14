@@ -21,7 +21,6 @@ namespace RTCV.UI
             InitializeComponent();
 
             UICore.SetRTCColor(UICore.GeneralColor, this);
-
         }
 
         public void SetCompoentForm(Form _childForm, int _sizeX, int _sizeY, bool DisplayHeader)
@@ -60,16 +59,16 @@ namespace RTCV.UI
         public int TilesX { get { return SizeX; } set { SizeX = value; } }
         public int TilesY { get { return SizeY; } set { SizeY = value; } }
 
-        private void UI_ComponentFormTile_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void UI_ComponentFormTile_MouseDown(object sender, MouseEventArgs e)
         {
             Point p = new Point(e.Location.X, e.Location.Y - pnComponentFormHost.Location.Y);
             var ea = new MouseEventArgs(e.Button, e.Clicks, p.X, p.Y, e.Delta);
             (childForm as ComponentForm)?.HandleMouseDown(childForm, ea);
+        }
+
+        private void UI_ComponentFormTile_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

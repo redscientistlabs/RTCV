@@ -295,11 +295,11 @@ namespace RTCV.UI
 			}
 		}
 
-		public static void SetRTCColor(Color color, Form form = null)
+		public static void SetRTCColor(Color color, Control ctr = null)
 		{
 			List<Control> allControls = new List<Control>();
 
-			if (form == null)
+			if (ctr == null)
 			{
 				foreach (Form targetForm in UICore.AllRtcForms)
 				{
@@ -310,13 +310,18 @@ namespace RTCV.UI
 					}
 				}
 			}
-			else
+			else if (ctr is Form)
 			{
-				allControls.AddRange(form.Controls.getControlsWithTag());
-				allControls.Add(form);
+				allControls.AddRange(ctr.Controls.getControlsWithTag());
+				allControls.Add(ctr);
 			}
+            else
+            {
+                allControls.Add(ctr);
+            }
 
-			var lightColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:light"));
+            var lighterColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:lighter"));
+            var lightColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:light"));
 			var normalColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:normal"));
 			var darkColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:dark"));
 			var darkerColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:darker"));
@@ -324,18 +329,33 @@ namespace RTCV.UI
 
             bool flipLuminosity = false;
             float generalDarken = -0.50f;
-            float light = 0.10f;
+            float light1 = 0.10f;
+            float light2 = 0.30f;
             float dark1 = -0.20f;
             float dark2 = -0.35f;
             float dark3 = -0.50f;
 
             color = color.ChangeColorBrightness(generalDarken);
 
-            Color LightColor = color.ChangeColorBrightness(light * (flipLuminosity?-1:1));
+            Color LightColor = color.ChangeColorBrightness(light1 * (flipLuminosity?-1:1));
+            Color LighterColor = color.ChangeColorBrightness(light2 * (flipLuminosity ? -1 : 1));
             Color NormalColor = color;
             Color DarkColor = color.ChangeColorBrightness(dark1 * (flipLuminosity ? -1 : 1));
             Color DarkerColor = color.ChangeColorBrightness(dark2 * (flipLuminosity ? -1 : 1));
             Color DarkererColor = color.ChangeColorBrightness(dark3 * (flipLuminosity ? -1 : 1));
+
+            foreach (Control c in lighterColorControls)
+            {
+                
+                if (c is Label)
+                    c.ForeColor = LighterColor;
+                else
+                    c.BackColor = LighterColor;
+
+                if (c is Button)
+                    (c as Button).FlatAppearance.BorderColor = LighterColor;
+
+            }
 
             foreach (Control c in lightColorControls)
             {
