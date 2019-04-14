@@ -324,6 +324,9 @@ namespace RTCV.UI
 
             bool flipLuminosity = false;
 
+            float generalDarken = -0.50f;
+            color = color.ChangeColorBrightness(generalDarken);
+
             Color LightColor = color.ChangeColorBrightness(0.20f * (flipLuminosity?-1:1));
             Color NormalColor = color;
             Color DarkColor = color.ChangeColorBrightness(-0.20f * (flipLuminosity ? -1 : 1));
