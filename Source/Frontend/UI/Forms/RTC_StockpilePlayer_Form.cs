@@ -198,8 +198,10 @@ namespace RTCV.UI
 			{
 				try
 				{
-					Stockpile.LoadConfigFromStockpile();
-				}
+                    AutoKillSwitch.Enabled = false;
+                    Stockpile.LoadConfigFromStockpile();
+                    AutoKillSwitch.Enabled = true;
+                }
 				catch (Exception ex)
 				{
 					string additionalInfo = "Loading Settings Failure ->\n\n";
@@ -215,7 +217,9 @@ namespace RTCV.UI
 			{
 				try
 				{
-					Stockpile.RestoreBizhawkConfig();
+                    AutoKillSwitch.Enabled = false;
+                    Stockpile.RestoreBizhawkConfig();
+                    AutoKillSwitch.Enabled = true;
 				}
 				finally
 				{

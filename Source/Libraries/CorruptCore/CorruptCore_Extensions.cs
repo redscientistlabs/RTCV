@@ -608,6 +608,14 @@ namespace RTCV.CorruptCore
         #endregion CONTROL EXTENSIONS
 
         #region PATH EXTENSIONS
+
+		public static string GetRelativePath(string rootPath, string fullPath)
+		{
+			Uri _rootPath = new Uri(rootPath + "\\");
+			Uri _fullPath = new Uri(fullPath);
+            Uri diff = _rootPath.MakeRelativeUri(_fullPath);
+            return Uri.UnescapeDataString(diff.OriginalString).Replace('/', '\\');
+		}
         #endregion PATH EXTENSIONS
 
         #region STREAM EXTENSIONS

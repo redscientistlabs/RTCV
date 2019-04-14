@@ -30,9 +30,18 @@ namespace RTCV.CorruptCore
 
         public static string EmuDir
 		{
-			get => (string)AllSpec.CorruptCoreSpec[RTCSPEC.EMUDIR];
-			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.EMUDIR, value);
+			get
+			{
+				//In attached mode we can just use the directory we're in.
+				//We do this as the EmuDir is not set in attached
+				if (Attached)
+					return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+                return (string) AllSpec.VanguardSpec?[VSPEC.EMUDIR];
+			}
+			set => AllSpec.VanguardSpec.Update(VSPEC.EMUDIR, value);
 		}
+
 		public static string RtcDir
 		{
 			get => (string)AllSpec.CorruptCoreSpec[RTCSPEC.RTCDIR];

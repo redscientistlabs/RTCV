@@ -126,8 +126,6 @@
 
 	public static class RTCSPEC
 	{
-
-		public static readonly string EMUDIR = "EMUDIR";
 		public static readonly string RTCDIR = "RTCDIR";
 
         public static readonly string CORE_SELECTEDENGINE = "CORE_SELECTEDENGINE";
@@ -207,10 +205,13 @@
 
 	public static class VSPEC
 	{
-		public static readonly string CORE_LASTLOADERROM = "CORE_LASTLOADERROM";
+		public static readonly string NAME = "NAME";
+		public static readonly string EMUDIR = "EMUDIR";
+
+        public static readonly string CORE_LASTLOADERROM = "CORE_LASTLOADERROM";
 		public static readonly string STEP_RUNBEFORE = "STEP_RUNBEFORE";
 		public static readonly string SYSTEM = "SYSTEM";
-		public static readonly string GAMENAME = "GAMENAME";
+        public static readonly string GAMENAME = "GAMENAME";
 		public static readonly string SYSTEMPREFIX = "SYSTEMPREFIX";
 		public static readonly string SYSTEMCORE = "SYSTEMCORE";
 		public static readonly string SYNCSETTINGS = "SYNCSETTINGS";
