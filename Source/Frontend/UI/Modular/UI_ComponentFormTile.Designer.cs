@@ -44,6 +44,7 @@
             this.lbComponentFormName.Size = new System.Drawing.Size(133, 15);
             this.lbComponentFormName.TabIndex = 121;
             this.lbComponentFormName.Text = "ComponentForm Name";
+            this.lbComponentFormName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UI_ComponentFormTile_MouseDown);
             // 
             // pnComponentFormHost
             // 
@@ -87,6 +88,7 @@
             this.Tag = "color:darkerer";
             this.Text = "ComponentForm Tile";
             this.Load += new System.EventHandler(this.UI_ComponentFormTile_Load);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UI_ComponentFormTile_MouseDown);
             this.pnComponentFormHost.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -64,5 +64,12 @@ namespace RTCV.UI
         {
 
         }
+
+        private void UI_ComponentFormTile_MouseDown(object sender, MouseEventArgs e)
+        {
+            Point p = new Point(e.Location.X, e.Location.Y - pnComponentFormHost.Location.Y);
+            var ea = new MouseEventArgs(e.Button, e.Clicks, p.X, p.Y, e.Delta);
+            (childForm as ComponentForm)?.HandleMouseDown(childForm, ea);
+        }
     }
 }
