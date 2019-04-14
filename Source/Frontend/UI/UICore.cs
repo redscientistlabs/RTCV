@@ -320,6 +320,9 @@ namespace RTCV.UI
                 allControls.Add(ctr);
             }
 
+            //this needs refactoring. the string contains method is broken as color:darker is also color:dark.
+            //at least the priority of the foreach loops makes it so it works like expected.
+
             var lighterColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:lighter"));
             var lightColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:light"));
 			var normalColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:normal"));
@@ -330,7 +333,7 @@ namespace RTCV.UI
             bool flipLuminosity = false;
             float generalDarken = -0.50f;
             float light1 = 0.10f;
-            float light2 = 0.30f;
+            float light2 = 0.45f;
             float dark1 = -0.20f;
             float dark2 = -0.35f;
             float dark3 = -0.50f;
@@ -343,6 +346,18 @@ namespace RTCV.UI
             Color DarkColor = color.ChangeColorBrightness(dark1 * (flipLuminosity ? -1 : 1));
             Color DarkerColor = color.ChangeColorBrightness(dark2 * (flipLuminosity ? -1 : 1));
             Color DarkererColor = color.ChangeColorBrightness(dark3 * (flipLuminosity ? -1 : 1));
+
+
+            foreach (Control c in lightColorControls)
+            {
+                if (c is Label)
+                    c.ForeColor = LightColor;
+                else
+                    c.BackColor = LightColor;
+
+                if (c is Button)
+                    (c as Button).FlatAppearance.BorderColor = LightColor;
+            }
 
             foreach (Control c in lighterColorControls)
             {
@@ -357,16 +372,6 @@ namespace RTCV.UI
 
             }
 
-            foreach (Control c in lightColorControls)
-            {
-                if (c is Label)
-                    c.ForeColor = LightColor;
-                else
-                    c.BackColor = LightColor;
-
-                if (c is Button)
-                    (c as Button).FlatAppearance.BorderColor = LightColor;
-            }
 
             foreach (Control c in normalColorControls)
             {
