@@ -1221,10 +1221,15 @@ namespace RTCV.UI
 			{
 				StockpileManager_UISide.CurrentStashkey.BlastLayer.Reroll();
 
-				StockpileManager_UISide.AddCurrentStashkeyToStash();
-				RefreshStashHistory();
+                if (StockpileManager_UISide.AddCurrentStashkeyToStash())
+                {
+                    RefreshStashHistory();
+                    lbStashHistory.ClearSelected();
+                    DontLoadSelectedStash = true;
+                    lbStashHistory.SelectedIndex = lbStashHistory.Items.Count - 1;
+                }
 
-				StockpileManager_UISide.ApplyStashkey(StockpileManager_UISide.CurrentStashkey);
+                StockpileManager_UISide.ApplyStashkey(StockpileManager_UISide.CurrentStashkey);
 			}
 		}
 
@@ -1780,5 +1785,5 @@ namespace RTCV.UI
 				columnsMenu.Show(this, locate);
 			}
 		}
-	}
+    }
 }
