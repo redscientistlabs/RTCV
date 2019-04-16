@@ -543,8 +543,10 @@ namespace RTCV.UI
 				nmLifetime.Value = RTC_CustomEngine.Lifetime;
 
 
-				//Todo - replace this and data-bind it
-				switch (CorruptCore.CorruptCore.CurrentPrecision)
+                UpdateMinMaxBoxes(CorruptCore.CorruptCore.CurrentPrecision);
+
+                //Todo - replace this and data-bind it
+                switch (CorruptCore.CorruptCore.CurrentPrecision)
 				{
 					case 1:
 						S.GET<RTC_CorruptionEngine_Form>().cbCustomPrecision.SelectedIndex = 0;
