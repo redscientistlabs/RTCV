@@ -1350,8 +1350,8 @@ namespace RTCV.CorruptCore
 							if (Working.StoreData.Count == 0)
 								return;
 
-							//Apply the value we have stored
-							Working.ApplyValue = Working.StoreData.First();
+                            //Apply the value we have stored
+                            Working.ApplyValue = Working.StoreData.Peek;
 
 							//Remove it from the store pool if it's a continuous backup
 							if (StoreType == StoreType.CONTINUOUS)
