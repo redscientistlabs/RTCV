@@ -2217,7 +2217,7 @@
             this.btnRerollSelected.Tag = "color:dark2";
             this.btnRerollSelected.Text = "Reroll Selected";
             this.btnRerollSelected.UseVisualStyleBackColor = false;
-            this.btnRerollSelected.Click += new System.EventHandler(this.BtnRerollSelected_Click);
+            this.btnRerollSelected.Click += new System.EventHandler(this.btnRerollSelected_Click);
             this.btnRerollSelected.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnRerollSelected_MouseDown);
             // 
             // label8
