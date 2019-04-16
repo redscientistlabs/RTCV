@@ -280,23 +280,23 @@ namespace RTCV.NetCore
 
                 try
                 {
-                    networkStream.Close();
-                    networkStream.Dispose();
+                    networkStream?.Close();
+                    networkStream?.Dispose();
                 }
                 catch { } //nobody cares why this failed
 
 
                 try
                 {
-                    socket.Shutdown(SocketShutdown.Both);
-                    socket.Dispose();
+                    socket?.Shutdown(SocketShutdown.Both);
+                    socket?.Dispose();
                 }
                 catch { } //nobody cares why this failed
 
 
 				try
 				{
-					server.Stop();
+					server?.Stop();
 				}
 				catch (Exception ex)
 				{

@@ -917,24 +917,23 @@ namespace RTCV.CorruptCore
 
 
 	public static class JsonHelper
-	{
-		public static void Serialize(object value, Stream s, Formatting f = Formatting.None, SafeJsonTypeSerialization.JsonKnownTypesBinder binder = null)
-		{
-			using (StreamWriter writer = new StreamWriter(s))
-			using (JsonTextWriter jsonWriter = new JsonTextWriter(writer))
-			{
-				JsonSerializer ser = new JsonSerializer
-				{
-					Formatting = f,
-					SerializationBinder = binder ?? new SafeJsonTypeSerialization.JsonKnownTypesBinder()
-				};
-				ser.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
-				ser.Serialize(jsonWriter, value);
-				jsonWriter.Flush();
-			}
-		}
-
-		public static T Deserialize<T>(Stream s, SafeJsonTypeSerialization.JsonKnownTypesBinder binder = null)
+    {
+        public static void Serialize(object value, Stream s, Formatting f = Formatting.None, SafeJsonTypeSerialization.JsonKnownTypesBinder binder = null)
+        {
+            using (StreamWriter writer = new StreamWriter(s))
+            using (JsonTextWriter jsonWriter = new JsonTextWriter(writer))
+            {
+                JsonSerializer ser = new JsonSerializer
+                {
+                    Formatting = f,
+                    SerializationBinder = binder ?? new SafeJsonTypeSerialization.JsonKnownTypesBinder()
+                };
+                ser.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+                ser.Serialize(jsonWriter, value);
+                jsonWriter.Flush();
+            }
+        }
+        public static T Deserialize<T>(Stream s, SafeJsonTypeSerialization.JsonKnownTypesBinder binder = null)
 		{
 			using (StreamReader reader = new StreamReader(s))
 			using (JsonTextReader jsonReader = new JsonTextReader(reader))
@@ -946,7 +945,17 @@ namespace RTCV.CorruptCore
 				return ser.Deserialize<T>(jsonReader);
 			}
 		}
-	}
+
+        //Wrap JsonConvert so we can access this in vanguard implementations without importing json.net directly
+        public static String Serialize(object value)
+        {
+            return JsonConvert.SerializeObject(value);
+        }
+        public static T Deserialize<T>(string str)
+        {
+            return JsonConvert.DeserializeObject<T>(str);
+        }
+    }
 
 
 	//Lifted from Bizhawk https://github.com/TASVideos/BizHawk

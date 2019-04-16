@@ -1202,6 +1202,7 @@ namespace RTCV.UI
             this.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
+            this.MinimumSize = new System.Drawing.Size(837, 526);
             this.Name = "RTC_NewBlastEditor_Form";
             this.Text = "Blast Editor";
             this.Load += new System.EventHandler(this.RTC_NewBlastEditorForm_Load);
