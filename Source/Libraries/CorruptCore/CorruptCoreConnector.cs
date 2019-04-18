@@ -122,11 +122,21 @@ namespace RTCV.CorruptCore
 
 					BlastLayer bl = null;
 
+
+                    //Load the game from the main thread
+                    if (loadBeforeCorrupt)
+                    {
+                        SyncObjectSingleton.FormExecute((o, ea) =>
+                        {
+                            StockpileManager_EmuSide.LoadRom_NET(sk);
+                        });
+                    }
+                    //Do everything else on the emulation thread
                     void a()
                     {
                         if (loadBeforeCorrupt)
                         {
-                            StockpileManager_EmuSide.LoadState_NET(sk, true, false);
+                            StockpileManager_EmuSide.LoadState_NET(sk, false);
                         }
 
                         //We pull the domains here because if the syncsettings changed, there's a chance the domains changed
@@ -224,9 +234,18 @@ namespace RTCV.CorruptCore
 
 					bool returnValue = false;
 
+
+                    //Load the game from the main thread
+                    if (reloadRom)
+                    {
+                        SyncObjectSingleton.FormExecute((o, ea) =>
+                        {
+                            StockpileManager_EmuSide.LoadRom_NET(sk);
+                        });
+                    }
                     void a()
                     {
-                        returnValue = StockpileManager_EmuSide.LoadState_NET(sk, reloadRom, runBlastLayer);
+                        returnValue = StockpileManager_EmuSide.LoadState_NET(sk, runBlastLayer);
                      }
                     SyncObjectSingleton.EmuThreadExecute(a, false);
                             e.setReturnValue(returnValue);
