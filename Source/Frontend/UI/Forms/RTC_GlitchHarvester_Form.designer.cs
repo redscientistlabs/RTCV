@@ -2360,7 +2360,7 @@
             this.multiTB_Intensity.BackColor = System.Drawing.Color.Gray;
             this.multiTB_Intensity.DisplayCheckbox = false;
             this.multiTB_Intensity.Font = new System.Drawing.Font("Segoe UI", 8.25F);
-            this.multiTB_Intensity.LabelText = "Intensity";
+            this.multiTB_Intensity.Label = "Intensity";
             this.multiTB_Intensity.Location = new System.Drawing.Point(0, 0);
             this.multiTB_Intensity.Maximum = ((long)(65535));
             this.multiTB_Intensity.Minimum = ((long)(1));

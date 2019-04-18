@@ -20,26 +20,28 @@ namespace RTCV.UI.Components.Controls
 		public virtual void OnCheckChanged(object sender, EventArgs e) => CheckChanged?.Invoke(sender, e);
 
 		private bool GeneralUpdateFlag = false; //makes other events ignore firing
+        private bool initialized = false;
 
 		private long _Value;
         [Description("Net value of the control (displayed in numeric box)"), Category("Data")]
-        public long Value
+		public long Value
 		{
-			get
-			{
-				return _Value;
-			}
+			get { return _Value; }
 			set
 			{
-				_Value = value;
-
-				//Update the controls to whatever the value is. Note the null setter as we want to update both controls so
-				long nmValue = Convert.ToInt64(nmControlValue.Value);
-				int tbValue = nmValueToTbValueQuadScale(nmControlValue.Value);
-				UpdateAllControls(nmValue, tbValue, null);
+				if (!initialized)
+				{
+					var tbValue = nmValueToTbValueQuadScale(value);
+					UpdateAllControls(value, tbValue, null);
+					initialized = true;
+				}
+				else
+				{
+					_Value = value;
+				}
 			}
 		}
-		private bool _DisplayCheckbox = false;
+        private bool _DisplayCheckbox = false;
 		[Description("Display a checkbox before the label"), Category("Data")]
 		public bool DisplayCheckbox
 		{
@@ -98,8 +100,18 @@ namespace RTCV.UI.Components.Controls
             }
         }
 
+		private string name = "Name";
         [Description("Displayed label of the control"), Category("Data")]
-        public string LabelText { get { return lbControlName.Text; } set { lbControlName.Text = value; } }
+		public string Label
+		{
+			get { return name; }
+			set
+			{
+				name = value;
+				lbControlName.Text = value;
+				cbControlName.Text = value;
+			}
+		}
 
         [Description("Let the NumericBox override the maximum value"), Category("Data")]
         public bool UncapNumericBox { get; set; } = false;

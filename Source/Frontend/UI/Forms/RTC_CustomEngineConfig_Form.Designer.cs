@@ -92,16 +92,16 @@
             this.gbValueList.SuspendLayout();
             this.gbValueSettings.SuspendLayout();
             this.gbValueRange.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nmMaxValue)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nmMinValue)).BeginInit();
+            this.nmMaxValue.SuspendLayout();
+            this.nmMinValue.SuspendLayout();
             this.gbValueSource.SuspendLayout();
             this.gbLimiterList.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.gbStoreCompare.SuspendLayout();
             this.gbStepSettings.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nmTilt)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nmDelay)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nmLifetime)).BeginInit();
+			this.nmTilt.SuspendLayout();
+            this.nmDelay.SuspendLayout();
+            this.nmLifetime.SuspendLayout();
             this.gbStoreTime.SuspendLayout();
             this.gbStoreType.SuspendLayout();
             this.gbStoreSettings.SuspendLayout();
@@ -110,7 +110,7 @@
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.updownMaxInfiniteUnits)).BeginInit();
+			this.updownMaxInfiniteUnits.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnClearActive
@@ -1009,8 +1009,11 @@
             this.gbValueSettings.ResumeLayout(false);
             this.gbValueRange.ResumeLayout(false);
             this.gbValueRange.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nmMaxValue)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nmMinValue)).EndInit();
+
+			this.nmMaxValue.ResumeLayout(false);
+			this.nmMaxValue.PerformLayout();
+			this.nmMinValue.ResumeLayout(false);
+			this.nmMinValue.PerformLayout();
             this.gbValueSource.ResumeLayout(false);
             this.gbValueSource.PerformLayout();
             this.gbLimiterList.ResumeLayout(false);
@@ -1021,9 +1024,13 @@
             this.gbStoreCompare.PerformLayout();
             this.gbStepSettings.ResumeLayout(false);
             this.gbStepSettings.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nmTilt)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nmDelay)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nmLifetime)).EndInit();
+
+			this.nmTilt.ResumeLayout(false);
+			this.nmTilt.PerformLayout();
+			this.nmDelay.ResumeLayout(false);
+			this.nmDelay.PerformLayout();
+			this.nmLifetime.ResumeLayout(false);
+			this.nmLifetime.PerformLayout();
             this.gbStoreTime.ResumeLayout(false);
             this.gbStoreTime.PerformLayout();
             this.gbStoreType.ResumeLayout(false);
@@ -1037,7 +1044,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.updownMaxInfiniteUnits)).EndInit();
+			this.updownMaxInfiniteUnits.ResumeLayout(false);
+			this.updownMaxInfiniteUnits.PerformLayout();
             this.ResumeLayout(false);
 
 		}

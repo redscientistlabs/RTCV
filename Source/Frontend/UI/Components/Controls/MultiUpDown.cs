@@ -11,48 +11,46 @@ using RTCV.UI.Components.Controls;
 
 namespace RTCV.UI.Components.Controls
 {
-	public partial class MultiUpDown : NumericUpDown
+
+	public partial class MultiUpDown : SpecControl<decimal>
 	{
-		private bool GeneralUpdateFlag = false; //makes other events ignore firing
 
-		private Timer updater;
-		private int updateThreshold = 250;
-		private bool FirstLoadDone = false;
-
-
-		private List<MultiUpDown> slaveComps = new List<MultiUpDown>();
-		private MultiUpDown _parent = null;
-
+		[Description("Whether or not the NumericUpDown should use hex"), Category("Data")]
+		public bool Hexadecimal
+		{
+			get => updown.Hexadecimal;
+			set => updown.Hexadecimal = value;
+		}
+		[Description("The minimum value of the NumericUpDown"), Category("Data")]
+		public decimal Minimum
+		{
+			get => updown.Minimum;
+			set => updown.Minimum = value;
+		}
+		[Description("The maximum value of the NumericUpDown"), Category("Data")]
+		public decimal Maximum
+		{
+			get => updown.Maximum;
+			set => updown.Maximum = value;
+		}
 
 		public MultiUpDown()
 		{
-			updater = new Timer();
-			updater.Interval = updateThreshold;
-			updater.Tick += Updater_Tick;
-			this.ValueChanged += nmControlValue_ValueChanged;
+			InitializeComponent();
+			ForeColorChanged += (o, a) => updown.ForeColor = base.ForeColor.A == 255 ? base.ForeColor : Color.FromArgb(base.ForeColor.R, base.ForeColor.G, base.ForeColor.B);
+            BackColorChanged += (o, a) => updown.BackColor = base.BackColor.A == 255 ? base.BackColor : Color.FromArgb(base.BackColor.R, base.BackColor.G, base.BackColor.B);
+
+
+            updown.Tag = base.Tag;
+            updown.ValueChanged += updown_ValueChanged;
 		}
 
-		private void Updater_Tick(object sender, EventArgs e)
-		{
-			updater.Stop();
-		}
-
-		public void registerSlave(MultiUpDown comp)
-		{
-			//Sync the slave's settings
-			comp.Value = this.Value;
-			comp.Minimum = this.Minimum;
-			comp.Maximum = this.Maximum;
-			slaveComps.Add(comp);
-			comp._parent = this;
-		}
-
-		private void UpdateAllControls(decimal value, Control setter, bool ignore = false)
-		{
+        internal override void UpdateAllControls(decimal value, Control setter, bool ignore = false)
+        {
 			GeneralUpdateFlag = true;
 			if (setter != this || ignore)
 			{
-				this.Value = value;
+                updown.Value = value;
 
 				foreach (var slave in slaveComps)
 					slave.UpdateAllControls(value, this);
@@ -63,23 +61,23 @@ namespace RTCV.UI.Components.Controls
 			}
 
 			GeneralUpdateFlag = false;
-		}
+        }
 
-		private void PropagateValue(decimal value, Control setter)
+        public void registerSlave(MultiUpDown comp)
 		{
-			UpdateAllControls(value, setter, true);
-
-			updater.Stop();
-			updater.Start();
+			comp.Minimum = this.Minimum;
+			comp.Maximum = this.Maximum;
+			base.registerSlave(comp);
 		}
 
-		private void nmControlValue_ValueChanged(object sender, EventArgs e)
+		private void updown_ValueChanged(object sender, EventArgs e)
 		{
 			if (GeneralUpdateFlag)
 				return;
-			PropagateValue(this.Value, this);
+
+			PropagateValue(updown.Value, updown);
 		}
 
-	}
 
+	}
 }
