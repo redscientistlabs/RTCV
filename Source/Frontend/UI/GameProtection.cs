@@ -11,8 +11,9 @@ namespace RTCV.UI
 		static Timer t;
 		public static int BackupInterval = 10;
 		public static bool isRunning = false;
+        public static bool WasAutoCorruptRunning = false;
 
-		public static void Start()
+        public static void Start()
 		{
 			if (t == null)
 			{
