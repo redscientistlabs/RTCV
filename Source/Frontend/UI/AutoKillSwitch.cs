@@ -74,7 +74,7 @@ namespace RTCV.UI
 				catch { }
 
 				killswitchSpamPreventTimer = new Timer();
-				killswitchSpamPreventTimer.Interval = Debugger.IsAttached ? 300000 : 1000;
+				killswitchSpamPreventTimer.Interval = Debugger.IsAttached ? 300000 : 2000;
 				killswitchSpamPreventTimer.Tick += KillswitchSpamPreventTimer_Tick;
 				killswitchSpamPreventTimer.Start();
 
