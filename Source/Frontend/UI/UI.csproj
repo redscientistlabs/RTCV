@@ -84,7 +84,13 @@
       <DependentUpon>MultiTrackBar.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Controls\MultiUpDown.cs">
-      <SubType>Component</SubType>
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\Controls\MultiUpDown.Designer.cs">
+      <DependentUpon>MultiUpDown.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Controls\SpecControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Components\Engine Config\RTC_CorruptionEngine_Form.cs">
       <SubType>Form</SubType>
@@ -291,6 +297,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Controls\MultiTrackBar.resx">
       <DependentUpon>MultiTrackBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Controls\MultiUpDown.resx">
+      <DependentUpon>MultiUpDown.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Controls\SpecControl.resx">
+      <DependentUpon>SpecControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Engine Config\RTC_CorruptionEngine_Form.resx">
       <DependentUpon>RTC_CorruptionEngine_Form.cs</DependentUpon>
