@@ -324,7 +324,12 @@ namespace RTCV.UI.Components.Controls
             value = _value;
         }
     }
-	}
+
+        private void tbControlValue_Scroll(object sender, EventArgs e)
+        {
+
+        }
+    }
 
     internal class NoFocusTrackBar : System.Windows.Forms.TrackBar
     {

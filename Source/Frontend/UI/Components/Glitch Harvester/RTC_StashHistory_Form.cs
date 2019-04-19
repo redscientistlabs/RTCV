@@ -24,7 +24,8 @@ namespace RTCV.UI
 		{
 			InitializeComponent();
 
-			popoutAllowed = false;
+            popoutAllowed = true;
+            this.undockedSizable = true;
 
             this.MouseDoubleClick += ClearSelectedSKs;
 

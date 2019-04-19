@@ -30,8 +30,8 @@ namespace RTCV.UI
 		{
 			InitializeComponent();
 
-			popoutAllowed = false;
-
+            popoutAllowed = true;
+            this.undockedSizable = false;
 
 
             #region textbox states to dico
@@ -572,7 +572,7 @@ namespace RTCV.UI
             }
 
             //Bring the UI back to normal after a drag+drop to prevent weird merge stuff 
-            RedrawActionUI();
+            S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
         }
 
 

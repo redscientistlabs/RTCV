@@ -126,9 +126,9 @@
             this.btnSaveSavestateList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSaveSavestateList.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnSaveSavestateList.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.btnSaveSavestateList.Location = new System.Drawing.Point(82, 292);
+            this.btnSaveSavestateList.Location = new System.Drawing.Point(89, 308);
             this.btnSaveSavestateList.Name = "btnSaveSavestateList";
-            this.btnSaveSavestateList.Size = new System.Drawing.Size(68, 24);
+            this.btnSaveSavestateList.Size = new System.Drawing.Size(73, 24);
             this.btnSaveSavestateList.TabIndex = 168;
             this.btnSaveSavestateList.TabStop = false;
             this.btnSaveSavestateList.Tag = "color:dark2";
@@ -142,9 +142,9 @@
             this.btnLoadSavestateList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLoadSavestateList.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnLoadSavestateList.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.btnLoadSavestateList.Location = new System.Drawing.Point(15, 292);
+            this.btnLoadSavestateList.Location = new System.Drawing.Point(14, 308);
             this.btnLoadSavestateList.Name = "btnLoadSavestateList";
-            this.btnLoadSavestateList.Size = new System.Drawing.Size(64, 24);
+            this.btnLoadSavestateList.Size = new System.Drawing.Size(72, 24);
             this.btnLoadSavestateList.TabIndex = 167;
             this.btnLoadSavestateList.TabStop = false;
             this.btnLoadSavestateList.Tag = "color:dark2";
@@ -158,9 +158,9 @@
             this.btnBackPanelPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBackPanelPage.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnBackPanelPage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.btnBackPanelPage.Location = new System.Drawing.Point(16, 246);
+            this.btnBackPanelPage.Location = new System.Drawing.Point(14, 249);
             this.btnBackPanelPage.Name = "btnBackPanelPage";
-            this.btnBackPanelPage.Size = new System.Drawing.Size(63, 24);
+            this.btnBackPanelPage.Size = new System.Drawing.Size(72, 24);
             this.btnBackPanelPage.TabIndex = 166;
             this.btnBackPanelPage.TabStop = false;
             this.btnBackPanelPage.Tag = "color:dark2";
@@ -174,9 +174,9 @@
             this.btnForwardPanelPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnForwardPanelPage.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnForwardPanelPage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.btnForwardPanelPage.Location = new System.Drawing.Point(82, 246);
+            this.btnForwardPanelPage.Location = new System.Drawing.Point(89, 249);
             this.btnForwardPanelPage.Name = "btnForwardPanelPage";
-            this.btnForwardPanelPage.Size = new System.Drawing.Size(67, 24);
+            this.btnForwardPanelPage.Size = new System.Drawing.Size(73, 24);
             this.btnForwardPanelPage.TabIndex = 165;
             this.btnForwardPanelPage.TabStop = false;
             this.btnForwardPanelPage.Tag = "color:dark2";
@@ -266,9 +266,9 @@
             this.pnSavestateHolder.Controls.Add(this.btnSavestate12);
             this.pnSavestateHolder.Controls.Add(this.btnSavestate11);
             this.pnSavestateHolder.Font = new System.Drawing.Font("Segoe UI", 7F);
-            this.pnSavestateHolder.Location = new System.Drawing.Point(9, 36);
+            this.pnSavestateHolder.Location = new System.Drawing.Point(6, 39);
             this.pnSavestateHolder.Name = "pnSavestateHolder";
-            this.pnSavestateHolder.Size = new System.Drawing.Size(604, 206);
+            this.pnSavestateHolder.Size = new System.Drawing.Size(801, 206);
             this.pnSavestateHolder.TabIndex = 164;
             // 
             // tbSavestate29
@@ -276,7 +276,7 @@
             this.tbSavestate29.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate29.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate29.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate29.Location = new System.Drawing.Point(338, 163);
+            this.tbSavestate29.Location = new System.Drawing.Point(368, 163);
             this.tbSavestate29.Name = "tbSavestate29";
             this.tbSavestate29.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate29.TabIndex = 184;
@@ -288,7 +288,7 @@
             this.tbSavestate40.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate40.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate40.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate40.Location = new System.Drawing.Point(488, 183);
+            this.tbSavestate40.Location = new System.Drawing.Point(533, 183);
             this.tbSavestate40.Name = "tbSavestate40";
             this.tbSavestate40.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate40.TabIndex = 195;
@@ -300,7 +300,7 @@
             this.tbSavestate39.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate39.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate39.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate39.Location = new System.Drawing.Point(488, 163);
+            this.tbSavestate39.Location = new System.Drawing.Point(533, 163);
             this.tbSavestate39.Name = "tbSavestate39";
             this.tbSavestate39.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate39.TabIndex = 194;
@@ -314,7 +314,7 @@
             this.btnSavestate21.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate21.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate21.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate21.Location = new System.Drawing.Point(308, 3);
+            this.btnSavestate21.Location = new System.Drawing.Point(338, 3);
             this.btnSavestate21.Name = "btnSavestate21";
             this.btnSavestate21.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate21.TabIndex = 156;
@@ -328,7 +328,7 @@
             this.tbSavestate38.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate38.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate38.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate38.Location = new System.Drawing.Point(488, 143);
+            this.tbSavestate38.Location = new System.Drawing.Point(533, 143);
             this.tbSavestate38.Name = "tbSavestate38";
             this.tbSavestate38.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate38.TabIndex = 193;
@@ -342,7 +342,7 @@
             this.btnSavestate22.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate22.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate22.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate22.Location = new System.Drawing.Point(308, 23);
+            this.btnSavestate22.Location = new System.Drawing.Point(338, 23);
             this.btnSavestate22.Name = "btnSavestate22";
             this.btnSavestate22.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate22.TabIndex = 157;
@@ -356,7 +356,7 @@
             this.tbSavestate37.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate37.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate37.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate37.Location = new System.Drawing.Point(488, 123);
+            this.tbSavestate37.Location = new System.Drawing.Point(533, 123);
             this.tbSavestate37.Name = "tbSavestate37";
             this.tbSavestate37.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate37.TabIndex = 192;
@@ -370,7 +370,7 @@
             this.btnSavestate23.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate23.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate23.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate23.Location = new System.Drawing.Point(308, 43);
+            this.btnSavestate23.Location = new System.Drawing.Point(338, 43);
             this.btnSavestate23.Name = "btnSavestate23";
             this.btnSavestate23.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate23.TabIndex = 158;
@@ -384,7 +384,7 @@
             this.tbSavestate36.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate36.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate36.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate36.Location = new System.Drawing.Point(488, 103);
+            this.tbSavestate36.Location = new System.Drawing.Point(533, 103);
             this.tbSavestate36.Name = "tbSavestate36";
             this.tbSavestate36.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate36.TabIndex = 191;
@@ -398,7 +398,7 @@
             this.btnSavestate24.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate24.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate24.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate24.Location = new System.Drawing.Point(308, 63);
+            this.btnSavestate24.Location = new System.Drawing.Point(338, 63);
             this.btnSavestate24.Name = "btnSavestate24";
             this.btnSavestate24.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate24.TabIndex = 159;
@@ -412,7 +412,7 @@
             this.tbSavestate35.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate35.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate35.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate35.Location = new System.Drawing.Point(488, 83);
+            this.tbSavestate35.Location = new System.Drawing.Point(533, 83);
             this.tbSavestate35.Name = "tbSavestate35";
             this.tbSavestate35.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate35.TabIndex = 190;
@@ -426,7 +426,7 @@
             this.btnSavestate25.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate25.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate25.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate25.Location = new System.Drawing.Point(308, 83);
+            this.btnSavestate25.Location = new System.Drawing.Point(338, 83);
             this.btnSavestate25.Name = "btnSavestate25";
             this.btnSavestate25.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate25.TabIndex = 160;
@@ -440,7 +440,7 @@
             this.tbSavestate34.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate34.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate34.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate34.Location = new System.Drawing.Point(488, 63);
+            this.tbSavestate34.Location = new System.Drawing.Point(533, 63);
             this.tbSavestate34.Name = "tbSavestate34";
             this.tbSavestate34.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate34.TabIndex = 189;
@@ -454,7 +454,7 @@
             this.btnSavestate26.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate26.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate26.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate26.Location = new System.Drawing.Point(308, 103);
+            this.btnSavestate26.Location = new System.Drawing.Point(338, 103);
             this.btnSavestate26.Name = "btnSavestate26";
             this.btnSavestate26.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate26.TabIndex = 161;
@@ -468,7 +468,7 @@
             this.tbSavestate33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate33.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate33.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate33.Location = new System.Drawing.Point(488, 43);
+            this.tbSavestate33.Location = new System.Drawing.Point(533, 43);
             this.tbSavestate33.Name = "tbSavestate33";
             this.tbSavestate33.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate33.TabIndex = 188;
@@ -482,7 +482,7 @@
             this.btnSavestate27.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate27.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate27.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate27.Location = new System.Drawing.Point(308, 123);
+            this.btnSavestate27.Location = new System.Drawing.Point(338, 123);
             this.btnSavestate27.Name = "btnSavestate27";
             this.btnSavestate27.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate27.TabIndex = 162;
@@ -496,7 +496,7 @@
             this.tbSavestate32.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate32.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate32.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate32.Location = new System.Drawing.Point(488, 23);
+            this.tbSavestate32.Location = new System.Drawing.Point(533, 23);
             this.tbSavestate32.Name = "tbSavestate32";
             this.tbSavestate32.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate32.TabIndex = 187;
@@ -510,7 +510,7 @@
             this.btnSavestate28.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate28.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate28.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate28.Location = new System.Drawing.Point(308, 143);
+            this.btnSavestate28.Location = new System.Drawing.Point(338, 143);
             this.btnSavestate28.Name = "btnSavestate28";
             this.btnSavestate28.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate28.TabIndex = 163;
@@ -524,7 +524,7 @@
             this.tbSavestate31.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate31.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate31.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate31.Location = new System.Drawing.Point(488, 3);
+            this.tbSavestate31.Location = new System.Drawing.Point(533, 3);
             this.tbSavestate31.Name = "tbSavestate31";
             this.tbSavestate31.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate31.TabIndex = 186;
@@ -538,7 +538,7 @@
             this.btnSavestate29.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate29.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate29.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate29.Location = new System.Drawing.Point(308, 163);
+            this.btnSavestate29.Location = new System.Drawing.Point(338, 163);
             this.btnSavestate29.Name = "btnSavestate29";
             this.btnSavestate29.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate29.TabIndex = 164;
@@ -554,7 +554,7 @@
             this.btnSavestate30.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate30.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate30.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate30.Location = new System.Drawing.Point(308, 183);
+            this.btnSavestate30.Location = new System.Drawing.Point(338, 183);
             this.btnSavestate30.Name = "btnSavestate30";
             this.btnSavestate30.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate30.TabIndex = 165;
@@ -568,7 +568,7 @@
             this.tbSavestate30.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate30.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate30.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate30.Location = new System.Drawing.Point(338, 183);
+            this.tbSavestate30.Location = new System.Drawing.Point(368, 183);
             this.tbSavestate30.Name = "tbSavestate30";
             this.tbSavestate30.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate30.TabIndex = 185;
@@ -582,7 +582,7 @@
             this.btnSavestate40.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate40.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate40.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate40.Location = new System.Drawing.Point(458, 183);
+            this.btnSavestate40.Location = new System.Drawing.Point(503, 183);
             this.btnSavestate40.Name = "btnSavestate40";
             this.btnSavestate40.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate40.TabIndex = 175;
@@ -596,7 +596,7 @@
             this.tbSavestate21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate21.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate21.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate21.Location = new System.Drawing.Point(338, 3);
+            this.tbSavestate21.Location = new System.Drawing.Point(368, 3);
             this.tbSavestate21.Name = "tbSavestate21";
             this.tbSavestate21.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate21.TabIndex = 176;
@@ -610,7 +610,7 @@
             this.btnSavestate39.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate39.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate39.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate39.Location = new System.Drawing.Point(458, 163);
+            this.btnSavestate39.Location = new System.Drawing.Point(503, 163);
             this.btnSavestate39.Name = "btnSavestate39";
             this.btnSavestate39.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate39.TabIndex = 174;
@@ -624,7 +624,7 @@
             this.tbSavestate22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate22.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate22.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate22.Location = new System.Drawing.Point(338, 23);
+            this.tbSavestate22.Location = new System.Drawing.Point(368, 23);
             this.tbSavestate22.Name = "tbSavestate22";
             this.tbSavestate22.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate22.TabIndex = 177;
@@ -638,7 +638,7 @@
             this.btnSavestate38.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate38.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate38.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate38.Location = new System.Drawing.Point(458, 143);
+            this.btnSavestate38.Location = new System.Drawing.Point(503, 143);
             this.btnSavestate38.Name = "btnSavestate38";
             this.btnSavestate38.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate38.TabIndex = 173;
@@ -652,7 +652,7 @@
             this.tbSavestate28.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate28.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate28.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate28.Location = new System.Drawing.Point(338, 143);
+            this.tbSavestate28.Location = new System.Drawing.Point(368, 143);
             this.tbSavestate28.Name = "tbSavestate28";
             this.tbSavestate28.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate28.TabIndex = 183;
@@ -666,7 +666,7 @@
             this.btnSavestate37.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate37.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate37.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate37.Location = new System.Drawing.Point(458, 123);
+            this.btnSavestate37.Location = new System.Drawing.Point(503, 123);
             this.btnSavestate37.Name = "btnSavestate37";
             this.btnSavestate37.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate37.TabIndex = 172;
@@ -680,7 +680,7 @@
             this.tbSavestate23.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate23.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate23.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate23.Location = new System.Drawing.Point(338, 43);
+            this.tbSavestate23.Location = new System.Drawing.Point(368, 43);
             this.tbSavestate23.Name = "tbSavestate23";
             this.tbSavestate23.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate23.TabIndex = 178;
@@ -694,7 +694,7 @@
             this.btnSavestate36.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate36.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate36.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate36.Location = new System.Drawing.Point(458, 103);
+            this.btnSavestate36.Location = new System.Drawing.Point(503, 103);
             this.btnSavestate36.Name = "btnSavestate36";
             this.btnSavestate36.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate36.TabIndex = 171;
@@ -708,7 +708,7 @@
             this.tbSavestate27.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate27.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate27.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate27.Location = new System.Drawing.Point(338, 123);
+            this.tbSavestate27.Location = new System.Drawing.Point(368, 123);
             this.tbSavestate27.Name = "tbSavestate27";
             this.tbSavestate27.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate27.TabIndex = 182;
@@ -722,7 +722,7 @@
             this.btnSavestate35.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate35.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate35.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate35.Location = new System.Drawing.Point(458, 83);
+            this.btnSavestate35.Location = new System.Drawing.Point(503, 83);
             this.btnSavestate35.Name = "btnSavestate35";
             this.btnSavestate35.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate35.TabIndex = 170;
@@ -736,7 +736,7 @@
             this.tbSavestate24.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate24.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate24.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate24.Location = new System.Drawing.Point(338, 63);
+            this.tbSavestate24.Location = new System.Drawing.Point(368, 63);
             this.tbSavestate24.Name = "tbSavestate24";
             this.tbSavestate24.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate24.TabIndex = 179;
@@ -750,7 +750,7 @@
             this.btnSavestate34.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate34.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate34.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate34.Location = new System.Drawing.Point(458, 63);
+            this.btnSavestate34.Location = new System.Drawing.Point(503, 63);
             this.btnSavestate34.Name = "btnSavestate34";
             this.btnSavestate34.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate34.TabIndex = 169;
@@ -764,7 +764,7 @@
             this.tbSavestate26.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate26.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate26.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate26.Location = new System.Drawing.Point(338, 103);
+            this.tbSavestate26.Location = new System.Drawing.Point(368, 103);
             this.tbSavestate26.Name = "tbSavestate26";
             this.tbSavestate26.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate26.TabIndex = 181;
@@ -778,7 +778,7 @@
             this.btnSavestate33.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate33.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate33.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate33.Location = new System.Drawing.Point(458, 43);
+            this.btnSavestate33.Location = new System.Drawing.Point(503, 43);
             this.btnSavestate33.Name = "btnSavestate33";
             this.btnSavestate33.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate33.TabIndex = 168;
@@ -792,7 +792,7 @@
             this.tbSavestate25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate25.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate25.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate25.Location = new System.Drawing.Point(338, 83);
+            this.tbSavestate25.Location = new System.Drawing.Point(368, 83);
             this.tbSavestate25.Name = "tbSavestate25";
             this.tbSavestate25.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate25.TabIndex = 180;
@@ -806,7 +806,7 @@
             this.btnSavestate32.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate32.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate32.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate32.Location = new System.Drawing.Point(458, 23);
+            this.btnSavestate32.Location = new System.Drawing.Point(503, 23);
             this.btnSavestate32.Name = "btnSavestate32";
             this.btnSavestate32.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate32.TabIndex = 167;
@@ -822,7 +822,7 @@
             this.btnSavestate31.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate31.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate31.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate31.Location = new System.Drawing.Point(458, 3);
+            this.btnSavestate31.Location = new System.Drawing.Point(503, 3);
             this.btnSavestate31.Name = "btnSavestate31";
             this.btnSavestate31.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate31.TabIndex = 166;
@@ -848,7 +848,7 @@
             this.tbSavestate20.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate20.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate20.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate20.Location = new System.Drawing.Point(188, 183);
+            this.tbSavestate20.Location = new System.Drawing.Point(203, 183);
             this.tbSavestate20.Name = "tbSavestate20";
             this.tbSavestate20.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate20.TabIndex = 155;
@@ -860,7 +860,7 @@
             this.tbSavestate19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate19.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate19.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate19.Location = new System.Drawing.Point(188, 163);
+            this.tbSavestate19.Location = new System.Drawing.Point(203, 163);
             this.tbSavestate19.Name = "tbSavestate19";
             this.tbSavestate19.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate19.TabIndex = 154;
@@ -888,7 +888,7 @@
             this.tbSavestate18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate18.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate18.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate18.Location = new System.Drawing.Point(188, 143);
+            this.tbSavestate18.Location = new System.Drawing.Point(203, 143);
             this.tbSavestate18.Name = "tbSavestate18";
             this.tbSavestate18.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate18.TabIndex = 153;
@@ -916,7 +916,7 @@
             this.tbSavestate17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate17.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate17.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate17.Location = new System.Drawing.Point(188, 123);
+            this.tbSavestate17.Location = new System.Drawing.Point(203, 123);
             this.tbSavestate17.Name = "tbSavestate17";
             this.tbSavestate17.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate17.TabIndex = 152;
@@ -944,7 +944,7 @@
             this.tbSavestate16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate16.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate16.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate16.Location = new System.Drawing.Point(188, 103);
+            this.tbSavestate16.Location = new System.Drawing.Point(203, 103);
             this.tbSavestate16.Name = "tbSavestate16";
             this.tbSavestate16.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate16.TabIndex = 151;
@@ -972,7 +972,7 @@
             this.tbSavestate15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate15.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate15.Location = new System.Drawing.Point(188, 83);
+            this.tbSavestate15.Location = new System.Drawing.Point(203, 83);
             this.tbSavestate15.Name = "tbSavestate15";
             this.tbSavestate15.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate15.TabIndex = 150;
@@ -1000,7 +1000,7 @@
             this.tbSavestate14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate14.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate14.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate14.Location = new System.Drawing.Point(188, 63);
+            this.tbSavestate14.Location = new System.Drawing.Point(203, 63);
             this.tbSavestate14.Name = "tbSavestate14";
             this.tbSavestate14.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate14.TabIndex = 149;
@@ -1028,7 +1028,7 @@
             this.tbSavestate13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate13.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate13.Location = new System.Drawing.Point(188, 43);
+            this.tbSavestate13.Location = new System.Drawing.Point(203, 43);
             this.tbSavestate13.Name = "tbSavestate13";
             this.tbSavestate13.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate13.TabIndex = 148;
@@ -1056,7 +1056,7 @@
             this.tbSavestate12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate12.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate12.Location = new System.Drawing.Point(188, 23);
+            this.tbSavestate12.Location = new System.Drawing.Point(203, 23);
             this.tbSavestate12.Name = "tbSavestate12";
             this.tbSavestate12.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate12.TabIndex = 147;
@@ -1084,7 +1084,7 @@
             this.tbSavestate11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbSavestate11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbSavestate11.ForeColor = System.Drawing.Color.White;
-            this.tbSavestate11.Location = new System.Drawing.Point(188, 3);
+            this.tbSavestate11.Location = new System.Drawing.Point(203, 3);
             this.tbSavestate11.Name = "tbSavestate11";
             this.tbSavestate11.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate11.TabIndex = 146;
@@ -1142,7 +1142,7 @@
             this.btnSavestate20.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate20.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate20.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate20.Location = new System.Drawing.Point(158, 183);
+            this.btnSavestate20.Location = new System.Drawing.Point(173, 183);
             this.btnSavestate20.Name = "btnSavestate20";
             this.btnSavestate20.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate20.TabIndex = 127;
@@ -1170,7 +1170,7 @@
             this.btnSavestate19.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate19.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate19.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate19.Location = new System.Drawing.Point(158, 163);
+            this.btnSavestate19.Location = new System.Drawing.Point(173, 163);
             this.btnSavestate19.Name = "btnSavestate19";
             this.btnSavestate19.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate19.TabIndex = 126;
@@ -1198,7 +1198,7 @@
             this.btnSavestate18.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate18.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate18.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate18.Location = new System.Drawing.Point(158, 143);
+            this.btnSavestate18.Location = new System.Drawing.Point(173, 143);
             this.btnSavestate18.Name = "btnSavestate18";
             this.btnSavestate18.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate18.TabIndex = 125;
@@ -1226,7 +1226,7 @@
             this.btnSavestate17.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate17.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate17.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate17.Location = new System.Drawing.Point(158, 123);
+            this.btnSavestate17.Location = new System.Drawing.Point(173, 123);
             this.btnSavestate17.Name = "btnSavestate17";
             this.btnSavestate17.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate17.TabIndex = 124;
@@ -1254,7 +1254,7 @@
             this.btnSavestate16.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate16.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate16.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate16.Location = new System.Drawing.Point(158, 103);
+            this.btnSavestate16.Location = new System.Drawing.Point(173, 103);
             this.btnSavestate16.Name = "btnSavestate16";
             this.btnSavestate16.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate16.TabIndex = 123;
@@ -1282,7 +1282,7 @@
             this.btnSavestate15.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate15.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate15.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate15.Location = new System.Drawing.Point(158, 83);
+            this.btnSavestate15.Location = new System.Drawing.Point(173, 83);
             this.btnSavestate15.Name = "btnSavestate15";
             this.btnSavestate15.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate15.TabIndex = 122;
@@ -1310,7 +1310,7 @@
             this.btnSavestate14.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate14.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate14.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate14.Location = new System.Drawing.Point(158, 63);
+            this.btnSavestate14.Location = new System.Drawing.Point(173, 63);
             this.btnSavestate14.Name = "btnSavestate14";
             this.btnSavestate14.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate14.TabIndex = 121;
@@ -1338,7 +1338,7 @@
             this.btnSavestate13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate13.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate13.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate13.Location = new System.Drawing.Point(158, 43);
+            this.btnSavestate13.Location = new System.Drawing.Point(173, 43);
             this.btnSavestate13.Name = "btnSavestate13";
             this.btnSavestate13.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate13.TabIndex = 120;
@@ -1366,7 +1366,7 @@
             this.btnSavestate12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate12.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate12.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate12.Location = new System.Drawing.Point(158, 23);
+            this.btnSavestate12.Location = new System.Drawing.Point(173, 23);
             this.btnSavestate12.Name = "btnSavestate12";
             this.btnSavestate12.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate12.TabIndex = 119;
@@ -1382,7 +1382,7 @@
             this.btnSavestate11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSavestate11.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.btnSavestate11.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSavestate11.Location = new System.Drawing.Point(158, 3);
+            this.btnSavestate11.Location = new System.Drawing.Point(173, 3);
             this.btnSavestate11.Name = "btnSavestate11";
             this.btnSavestate11.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate11.TabIndex = 118;
@@ -1398,9 +1398,9 @@
             this.btnToggleSaveLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnToggleSaveLoad.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnToggleSaveLoad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.btnToggleSaveLoad.Location = new System.Drawing.Point(16, 9);
+            this.btnToggleSaveLoad.Location = new System.Drawing.Point(13, 12);
             this.btnToggleSaveLoad.Name = "btnToggleSaveLoad";
-            this.btnToggleSaveLoad.Size = new System.Drawing.Size(74, 24);
+            this.btnToggleSaveLoad.Size = new System.Drawing.Size(73, 24);
             this.btnToggleSaveLoad.TabIndex = 161;
             this.btnToggleSaveLoad.TabStop = false;
             this.btnToggleSaveLoad.Tag = "color:dark2";
@@ -1412,7 +1412,7 @@
             this.cbSavestateLoadOnClick.AutoSize = true;
             this.cbSavestateLoadOnClick.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbSavestateLoadOnClick.ForeColor = System.Drawing.Color.White;
-            this.cbSavestateLoadOnClick.Location = new System.Drawing.Point(16, 275);
+            this.cbSavestateLoadOnClick.Location = new System.Drawing.Point(13, 287);
             this.cbSavestateLoadOnClick.Name = "cbSavestateLoadOnClick";
             this.cbSavestateLoadOnClick.Size = new System.Drawing.Size(121, 17);
             this.cbSavestateLoadOnClick.TabIndex = 163;
@@ -1427,9 +1427,9 @@
             this.btnSaveLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSaveLoad.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnSaveLoad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSaveLoad.Location = new System.Drawing.Point(93, 9);
+            this.btnSaveLoad.Location = new System.Drawing.Point(89, 12);
             this.btnSaveLoad.Name = "btnSaveLoad";
-            this.btnSaveLoad.Size = new System.Drawing.Size(56, 24);
+            this.btnSaveLoad.Size = new System.Drawing.Size(73, 24);
             this.btnSaveLoad.TabIndex = 162;
             this.btnSaveLoad.TabStop = false;
             this.btnSaveLoad.Tag = "color:dark2";
@@ -1441,7 +1441,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(655, 334);
+            this.ClientSize = new System.Drawing.Size(831, 347);
             this.Controls.Add(this.btnSaveSavestateList);
             this.Controls.Add(this.btnLoadSavestateList);
             this.Controls.Add(this.btnBackPanelPage);
@@ -1454,7 +1454,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "RTC_SavestateManager_Form";
             this.Tag = "color:dark1";
-            this.Text = "No Tool Selected";
+            this.Text = "Savestate Manager";
             this.Load += new System.EventHandler(this.RTC_SavestateManager_Form_Load);
             this.pnSavestateHolder.ResumeLayout(false);
             this.pnSavestateHolder.PerformLayout();

@@ -100,7 +100,7 @@ namespace RTCV.UI
 			
 
 			S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = true;
-			S.GET<RTC_GlitchHarvesterIntensity_Form>().pnIntensity.Visible = true;
+			//S.GET<RTC_GlitchHarvesterIntensity_Form>().Visible = true;
 			S.GET<RTC_GeneralParameters_Form>().Show();
             S.GET<RTC_MemoryDomains_Form>().Show();
 
@@ -157,7 +157,7 @@ namespace RTCV.UI
                     S.GET<RTC_GeneralParameters_Form>().Hide();
 					S.GET<RTC_MemoryDomains_Form>().Hide();
 
-                    S.GET<RTC_GlitchHarvesterIntensity_Form>().pnIntensity.Visible = false;
+                    //S.GET<RTC_GlitchHarvesterIntensity_Form>().Visible = false;
 					break;
 
 				default:

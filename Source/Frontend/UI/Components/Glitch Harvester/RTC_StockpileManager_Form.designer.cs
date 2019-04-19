@@ -104,7 +104,7 @@
             this.dgvStockpile.RowHeadersVisible = false;
             this.dgvStockpile.RowTemplate.Height = 25;
             this.dgvStockpile.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvStockpile.Size = new System.Drawing.Size(489, 408);
+            this.dgvStockpile.Size = new System.Drawing.Size(489, 417);
             this.dgvStockpile.TabIndex = 169;
             this.dgvStockpile.Tag = "color:dark1";
             // 
@@ -159,7 +159,7 @@
             this.btnRenameSelected.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRenameSelected.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnRenameSelected.ForeColor = System.Drawing.Color.White;
-            this.btnRenameSelected.Location = new System.Drawing.Point(336, 460);
+            this.btnRenameSelected.Location = new System.Drawing.Point(335, 461);
             this.btnRenameSelected.Name = "btnRenameSelected";
             this.btnRenameSelected.Size = new System.Drawing.Size(86, 24);
             this.btnRenameSelected.TabIndex = 168;
@@ -170,13 +170,12 @@
             // 
             // btnImportStockpile
             // 
-            this.btnImportStockpile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnImportStockpile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnImportStockpile.FlatAppearance.BorderSize = 0;
             this.btnImportStockpile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnImportStockpile.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnImportStockpile.ForeColor = System.Drawing.Color.Black;
-            this.btnImportStockpile.Location = new System.Drawing.Point(346, 15);
+            this.btnImportStockpile.Location = new System.Drawing.Point(193, 15);
             this.btnImportStockpile.Name = "btnImportStockpile";
             this.btnImportStockpile.Size = new System.Drawing.Size(50, 22);
             this.btnImportStockpile.TabIndex = 167;
@@ -192,7 +191,7 @@
             this.btnStockpileMoveSelectedDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStockpileMoveSelectedDown.Font = new System.Drawing.Font("Segoe UI Symbol", 7F);
             this.btnStockpileMoveSelectedDown.ForeColor = System.Drawing.Color.White;
-            this.btnStockpileMoveSelectedDown.Location = new System.Drawing.Point(466, 461);
+            this.btnStockpileMoveSelectedDown.Location = new System.Drawing.Point(469, 461);
             this.btnStockpileMoveSelectedDown.Name = "btnStockpileMoveSelectedDown";
             this.btnStockpileMoveSelectedDown.Size = new System.Drawing.Size(33, 24);
             this.btnStockpileMoveSelectedDown.TabIndex = 166;
@@ -209,7 +208,7 @@
             this.btnStockpileMoveSelectedUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStockpileMoveSelectedUp.Font = new System.Drawing.Font("Segoe UI Symbol", 7F);
             this.btnStockpileMoveSelectedUp.ForeColor = System.Drawing.Color.White;
-            this.btnStockpileMoveSelectedUp.Location = new System.Drawing.Point(428, 461);
+            this.btnStockpileMoveSelectedUp.Location = new System.Drawing.Point(433, 461);
             this.btnStockpileMoveSelectedUp.Margin = new System.Windows.Forms.Padding(0);
             this.btnStockpileMoveSelectedUp.Name = "btnStockpileMoveSelectedUp";
             this.btnStockpileMoveSelectedUp.Size = new System.Drawing.Size(33, 24);
@@ -221,13 +220,12 @@
             // 
             // btnLoadStockpile
             // 
-            this.btnLoadStockpile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLoadStockpile.BackColor = System.Drawing.Color.Orange;
             this.btnLoadStockpile.FlatAppearance.BorderSize = 0;
             this.btnLoadStockpile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLoadStockpile.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnLoadStockpile.ForeColor = System.Drawing.Color.Black;
-            this.btnLoadStockpile.Location = new System.Drawing.Point(171, 15);
+            this.btnLoadStockpile.Location = new System.Drawing.Point(13, 15);
             this.btnLoadStockpile.Name = "btnLoadStockpile";
             this.btnLoadStockpile.Size = new System.Drawing.Size(50, 22);
             this.btnLoadStockpile.TabIndex = 160;
@@ -237,14 +235,13 @@
             // 
             // btnSaveStockpile
             // 
-            this.btnSaveStockpile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSaveStockpile.BackColor = System.Drawing.Color.LightGray;
             this.btnSaveStockpile.Enabled = false;
             this.btnSaveStockpile.FlatAppearance.BorderSize = 0;
             this.btnSaveStockpile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSaveStockpile.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnSaveStockpile.ForeColor = System.Drawing.Color.DimGray;
-            this.btnSaveStockpile.Location = new System.Drawing.Point(284, 15);
+            this.btnSaveStockpile.Location = new System.Drawing.Point(126, 15);
             this.btnSaveStockpile.Name = "btnSaveStockpile";
             this.btnSaveStockpile.Size = new System.Drawing.Size(44, 22);
             this.btnSaveStockpile.TabIndex = 163;
@@ -254,13 +251,12 @@
             // 
             // btnSaveStockpileAs
             // 
-            this.btnSaveStockpileAs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSaveStockpileAs.BackColor = System.Drawing.Color.Firebrick;
             this.btnSaveStockpileAs.FlatAppearance.BorderSize = 0;
             this.btnSaveStockpileAs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSaveStockpileAs.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnSaveStockpileAs.ForeColor = System.Drawing.Color.Black;
-            this.btnSaveStockpileAs.Location = new System.Drawing.Point(223, 15);
+            this.btnSaveStockpileAs.Location = new System.Drawing.Point(65, 15);
             this.btnSaveStockpileAs.Name = "btnSaveStockpileAs";
             this.btnSaveStockpileAs.Size = new System.Drawing.Size(59, 22);
             this.btnSaveStockpileAs.TabIndex = 159;
@@ -276,7 +272,7 @@
             this.btnClearStockpile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClearStockpile.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnClearStockpile.ForeColor = System.Drawing.Color.White;
-            this.btnClearStockpile.Location = new System.Drawing.Point(414, 15);
+            this.btnClearStockpile.Location = new System.Drawing.Point(418, 15);
             this.btnClearStockpile.Name = "btnClearStockpile";
             this.btnClearStockpile.Size = new System.Drawing.Size(28, 22);
             this.btnClearStockpile.TabIndex = 164;
@@ -293,7 +289,7 @@
             this.btnStockpileDOWN.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStockpileDOWN.Font = new System.Drawing.Font("Segoe UI Symbol", 8F);
             this.btnStockpileDOWN.ForeColor = System.Drawing.Color.White;
-            this.btnStockpileDOWN.Location = new System.Drawing.Point(474, 15);
+            this.btnStockpileDOWN.Location = new System.Drawing.Point(477, 15);
             this.btnStockpileDOWN.Name = "btnStockpileDOWN";
             this.btnStockpileDOWN.Size = new System.Drawing.Size(25, 22);
             this.btnStockpileDOWN.TabIndex = 162;
@@ -310,7 +306,7 @@
             this.btnStockpileUP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStockpileUP.Font = new System.Drawing.Font("Segoe UI Symbol", 8F);
             this.btnStockpileUP.ForeColor = System.Drawing.Color.White;
-            this.btnStockpileUP.Location = new System.Drawing.Point(448, 15);
+            this.btnStockpileUP.Location = new System.Drawing.Point(449, 15);
             this.btnStockpileUP.Name = "btnStockpileUP";
             this.btnStockpileUP.Size = new System.Drawing.Size(25, 22);
             this.btnStockpileUP.TabIndex = 161;
@@ -327,7 +323,7 @@
             this.btnRemoveSelectedStockpile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRemoveSelectedStockpile.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnRemoveSelectedStockpile.ForeColor = System.Drawing.Color.White;
-            this.btnRemoveSelectedStockpile.Location = new System.Drawing.Point(245, 460);
+            this.btnRemoveSelectedStockpile.Location = new System.Drawing.Point(249, 461);
             this.btnRemoveSelectedStockpile.Name = "btnRemoveSelectedStockpile";
             this.btnRemoveSelectedStockpile.Size = new System.Drawing.Size(83, 24);
             this.btnRemoveSelectedStockpile.TabIndex = 158;
@@ -373,7 +369,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "RTC_StockpileManager_Form";
             this.Tag = "color:dark1";
-            this.Text = "No Tool Selected";
+            this.Text = "Stockpile Manager";
             this.Load += new System.EventHandler(this.RTC_StockpileManager_Form_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvStockpile)).EndInit();
             this.ResumeLayout(false);

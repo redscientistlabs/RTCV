@@ -53,7 +53,7 @@
             this.nmControlValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.nmControlValue.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.nmControlValue.ForeColor = System.Drawing.Color.White;
-            this.nmControlValue.Location = new System.Drawing.Point(148, 7);
+            this.nmControlValue.Location = new System.Drawing.Point(75, 7);
             this.nmControlValue.Maximum = new decimal(new int[] {
             -1,
             2147483647,
@@ -72,10 +72,11 @@
             this.tbControlValue.Location = new System.Drawing.Point(0, 29);
             this.tbControlValue.Maximum = 65536;
             this.tbControlValue.Name = "tbControlValue";
-            this.tbControlValue.Size = new System.Drawing.Size(227, 45);
+            this.tbControlValue.Size = new System.Drawing.Size(161, 45);
             this.tbControlValue.TabIndex = 3;
             this.tbControlValue.TabStop = false;
             this.tbControlValue.TickFrequency = 6553;
+            this.tbControlValue.Scroll += new System.EventHandler(this.tbControlValue_Scroll);
             this.tbControlValue.ValueChanged += new System.EventHandler(this.tbControlValue_ValueChanged);
             // 
             // cbControlName
@@ -103,7 +104,7 @@
             this.Controls.Add(this.tbControlValue);
             this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.Name = "MultiTrackBar";
-            this.Size = new System.Drawing.Size(227, 60);
+            this.Size = new System.Drawing.Size(161, 60);
             this.Tag = "color:dark1";
             this.Load += new System.EventHandler(this.MultiTrackBar_Load);
             ((System.ComponentModel.ISupportInitialize)(this.nmControlValue)).EndInit();

@@ -44,9 +44,9 @@
             this.btnAddStashToStockpile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddStashToStockpile.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnAddStashToStockpile.ForeColor = System.Drawing.Color.White;
-            this.btnAddStashToStockpile.Location = new System.Drawing.Point(12, 367);
+            this.btnAddStashToStockpile.Location = new System.Drawing.Point(14, 362);
             this.btnAddStashToStockpile.Name = "btnAddStashToStockpile";
-            this.btnAddStashToStockpile.Size = new System.Drawing.Size(262, 26);
+            this.btnAddStashToStockpile.Size = new System.Drawing.Size(256, 26);
             this.btnAddStashToStockpile.TabIndex = 112;
             this.btnAddStashToStockpile.TabStop = false;
             this.btnAddStashToStockpile.Tag = "color:light1";
@@ -61,9 +61,9 @@
             this.btnClearStashHistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClearStashHistory.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnClearStashHistory.ForeColor = System.Drawing.Color.White;
-            this.btnClearStashHistory.Location = new System.Drawing.Point(191, 9);
+            this.btnClearStashHistory.Location = new System.Drawing.Point(186, 13);
             this.btnClearStashHistory.Name = "btnClearStashHistory";
-            this.btnClearStashHistory.Size = new System.Drawing.Size(26, 23);
+            this.btnClearStashHistory.Size = new System.Drawing.Size(26, 22);
             this.btnClearStashHistory.TabIndex = 111;
             this.btnClearStashHistory.TabStop = false;
             this.btnClearStashHistory.Tag = "color:light1";
@@ -79,7 +79,7 @@
             this.btnStashDOWN.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStashDOWN.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.btnStashDOWN.ForeColor = System.Drawing.Color.White;
-            this.btnStashDOWN.Location = new System.Drawing.Point(249, 9);
+            this.btnStashDOWN.Location = new System.Drawing.Point(245, 13);
             this.btnStashDOWN.Name = "btnStashDOWN";
             this.btnStashDOWN.Size = new System.Drawing.Size(25, 22);
             this.btnStashDOWN.TabIndex = 110;
@@ -97,7 +97,7 @@
             this.btnStashUP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStashUP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.btnStashUP.ForeColor = System.Drawing.Color.White;
-            this.btnStashUP.Location = new System.Drawing.Point(223, 9);
+            this.btnStashUP.Location = new System.Drawing.Point(216, 13);
             this.btnStashUP.Name = "btnStashUP";
             this.btnStashUP.Size = new System.Drawing.Size(25, 22);
             this.btnStashUP.TabIndex = 109;
@@ -117,11 +117,11 @@
             this.lbStashHistory.ForeColor = System.Drawing.Color.White;
             this.lbStashHistory.FormattingEnabled = true;
             this.lbStashHistory.IntegralHeight = false;
-            this.lbStashHistory.Location = new System.Drawing.Point(12, 37);
+            this.lbStashHistory.Location = new System.Drawing.Point(14, 39);
             this.lbStashHistory.Name = "lbStashHistory";
             this.lbStashHistory.ScrollAlwaysVisible = true;
             this.lbStashHistory.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbStashHistory.Size = new System.Drawing.Size(262, 319);
+            this.lbStashHistory.Size = new System.Drawing.Size(256, 319);
             this.lbStashHistory.TabIndex = 108;
             this.lbStashHistory.Tag = "color:normal";
             // 
@@ -140,7 +140,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "RTC_StashHistory_Form";
             this.Tag = "color:dark1";
-            this.Text = "No Tool Selected";
+            this.Text = "Stash History";
             this.Load += new System.EventHandler(this.RTC_StashHistory_Form_Load);
             this.ResumeLayout(false);
 

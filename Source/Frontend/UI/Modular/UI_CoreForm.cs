@@ -270,6 +270,8 @@ This message only appears once.";
         {
             pnGlitchHarvesterOpen.Visible = true;
 
+            UI_DefaultGrids.glitchHarvester.LoadToNewWindow();
+
             //make it open a grid in a new window
             //S.GET<RTC_GlitchHarvester_Form>().Show();
             //S.GET<RTC_GlitchHarvester_Form>().Focus();

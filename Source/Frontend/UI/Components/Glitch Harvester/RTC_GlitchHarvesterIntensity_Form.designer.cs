@@ -34,6 +34,8 @@
             // 
             // multiTB_Intensity
             // 
+            this.multiTB_Intensity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.multiTB_Intensity.BackColor = System.Drawing.Color.Gray;
             this.multiTB_Intensity.DisplayCheckbox = false;
             this.multiTB_Intensity.Font = new System.Drawing.Font("Segoe UI", 8.25F);
@@ -59,7 +61,7 @@
             this.label6.Text = "Parameters unavailable with\ncurrent engine";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // RTC_VmdNoTool_Form
+            // RTC_GlitchHarvesterIntensity_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -69,9 +71,9 @@
             this.Controls.Add(this.label6);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "RTC_VmdNoTool_Form";
+            this.Name = "RTC_GlitchHarvesterIntensity_Form";
             this.Tag = "color:dark1";
-            this.Text = "No Tool Selected";
+            this.Text = "Intensity Slider";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -594,6 +594,7 @@
             this.Tag = "color:dark2";
             this.Text = "Active Table Generator";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
+            this.Load += new System.EventHandler(this.RTC_VmdAct_Form_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();

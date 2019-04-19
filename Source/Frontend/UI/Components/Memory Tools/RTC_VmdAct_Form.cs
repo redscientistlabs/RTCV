@@ -644,5 +644,9 @@ namespace RTCV.UI
 			UseCorePrecision = cbUseCorePrecision.Checked;
 		}
 
-	}
+        private void RTC_VmdAct_Form_Load(object sender, EventArgs e)
+        {
+
+        }
+    }
 }

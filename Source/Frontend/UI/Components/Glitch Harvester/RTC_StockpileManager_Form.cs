@@ -25,7 +25,8 @@ namespace RTCV.UI
 		{
 			InitializeComponent();
 
-			popoutAllowed = false;
+			popoutAllowed = true;
+            this.undockedSizable = true;
 
             dgvStockpile.RowsAdded += (o, e) => {
                 RefreshNoteIcons();
@@ -83,13 +84,13 @@ namespace RTCV.UI
 
                     if (StockpileManager_EmuSide.RenderAtLoad && S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation)
                     {
-                        btnRender.Text = "Stop Render";
-                        btnRender.ForeColor = Color.OrangeRed;
+                        //btnRender.Text = "Stop Render";
+                       // btnRender.ForeColor = Color.OrangeRed;
                     }
                     else
                     {
-                        btnRender.Text = "Start Render";
-                        btnRender.ForeColor = Color.White;
+                       //btnRender.Text = "Start Render";
+                       //btnRender.ForeColor = Color.White;
                     }
                     S.GET<RTC_StashHistory_Form>().RefreshStashHistory();
                     return;
@@ -528,7 +529,7 @@ namespace RTCV.UI
         {
             dgvStockpile.AllowDrop = true;
             dgvStockpile.DragDrop += dgvStockpile_DragDrop;
-            dgvStockpzile.DragEnter += dgvStockpile_DragEnter;
+            dgvStockpile.DragEnter += dgvStockpile_DragEnter;
 
         }
     }

@@ -77,9 +77,10 @@ namespace RTCV.UI
 		{
 			InitializeComponent();
 
-			popoutAllowed = false;
+            popoutAllowed = true;
+            this.undockedSizable = false;
 
-            cbRenderType.SelectedIndex = 0;
+            //cbRenderType.SelectedIndex = 0;
         }
 
         public void OneTimeExecute()
@@ -419,5 +420,9 @@ namespace RTCV.UI
             StockpileManager_UISide.StashAfterOperation = cbStashCorrupted.Checked;
         }
 
+        private void RTC_GlitchHarvesterBlast_Form_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

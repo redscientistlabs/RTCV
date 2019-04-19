@@ -11,7 +11,7 @@ namespace RTCV.UI.Modular
 {
     public static class UI_DefaultGrids
     {
-        public static CanvasGrid _connectionStatus = null;
+        private static CanvasGrid _connectionStatus = null;
         public static CanvasGrid connectionStatus
         {
             get
@@ -27,7 +27,7 @@ namespace RTCV.UI.Modular
             }
         }
 
-        public static CanvasGrid _engineConfig = null;
+        private static CanvasGrid _engineConfig = null;
         public static CanvasGrid engineConfig
         {
             get
@@ -66,7 +66,7 @@ namespace RTCV.UI.Modular
             }
         }
 
-        public static CanvasGrid _stockpilePlayer = null;
+        private static CanvasGrid _stockpilePlayer = null;
         public static CanvasGrid stockpilePlayer
         {
             get
@@ -82,7 +82,7 @@ namespace RTCV.UI.Modular
             }
         }
 
-        public static CanvasGrid _settings = null;
+        private static CanvasGrid _settings = null;
         public static CanvasGrid settings
         {
             get
@@ -99,5 +99,34 @@ namespace RTCV.UI.Modular
             }
         }
 
+        private static CanvasGrid _glitchHarvester = null;
+        public static CanvasGrid glitchHarvester
+        {
+            get
+            {
+                if (_glitchHarvester == null)
+                {
+
+                    var ghGrid = new CanvasGrid(19, 12, "Glitch Harvester");
+
+
+
+                    Form ghbForm = S.GET<RTC_GlitchHarvesterBlast_Form>();
+                    Form ghiForm = S.GET<RTC_GlitchHarvesterIntensity_Form>();
+                    Form ssmForm = S.GET<RTC_SavestateManager_Form>();
+                    Form shForm = S.GET<RTC_StashHistory_Form>();
+                    Form spmForm = S.GET<RTC_StockpileManager_Form>();
+
+                    ghGrid.SetTileForm(ghbForm, 0, 0, 4, 4);
+                    ghGrid.SetTileForm(ssmForm, 0, 4, 4, 8);
+                    ghGrid.SetTileForm(ghiForm, 4, 0, 5, 2, false);
+                    ghGrid.SetTileForm(shForm, 4, 2, 5, 10);
+                    ghGrid.SetTileForm(spmForm, 9, 0, 10, 12);
+
+                    _glitchHarvester = ghGrid;
+                }
+                return _glitchHarvester;
+            }
+        }
     }
 }
