@@ -87,8 +87,8 @@ namespace RTCV.NetCore
                 {
                     try
                     {   
-                        socket = listener.EndAcceptSocket(ar);
-                        clientConnected.Set();
+                        socket = listener?.EndAcceptSocket(ar);
+                        clientConnected?.Set();
                     }
                     catch (ObjectDisposedException) { }
                     catch (Exception ex) { DiscardException(ex); }
@@ -229,7 +229,7 @@ namespace RTCV.NetCore
                         if (pendingMessage.Type == "{BYE}")
                         {
                             lock (PeerMessageQueueLock) //Since we're shutting down, let's clear the message queue
-                                PeerMessageQueue.Clear();
+                                PeerMessageQueue?.Clear();
                         }
 
                         if (status == NetworkStatus.DISCONNECTED || status == NetworkStatus.CONNECTIONLOST)
@@ -237,7 +237,7 @@ namespace RTCV.NetCore
                             //If the link's status changed from an outside factor, we want to stop the thread.
 
                             lock (PeerMessageQueueLock)
-                                PeerMessageQueue.Clear();
+                                PeerMessageQueue?.Clear();
 
                             return;
                         }
