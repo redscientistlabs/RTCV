@@ -37,17 +37,7 @@ namespace RTCV.UI.Modular
 
                     var ecGrid = new CanvasGrid(15, 12, "Engine Config");
 
-                    Form mtForm = new RTC_SelectBox_Form(new ComponentForm[] {
-                        S.GET<RTC_VmdNoTool_Form>(),
-                        S.GET<RTC_VmdPool_Form>(),
-                        S.GET<RTC_VmdGen_Form>(),
-                        S.GET<RTC_VmdAct_Form>(),
-                        S.GET<RTC_ListGen_Form>(),
-                        })
-                    {
-                        popoutAllowed = false,
-                        Text = "Advanced Memory Tools",
-                    };
+                   
 
                     Form gpForm = S.GET<RTC_GeneralParameters_Form>();
                     Form mdForm = S.GET<RTC_MemoryDomains_Form>();
@@ -56,7 +46,7 @@ namespace RTCV.UI.Modular
                     ecGrid.SetTileForm(gpForm, 0, 0, 5, 5);
                     ecGrid.SetTileForm(ceForm, 5, 0, 10, 5);
                     ecGrid.SetTileForm(mdForm, 0, 5, 5, 7);
-                    ecGrid.SetTileForm(mtForm, 5, 5, 10, 7);
+                    ecGrid.SetTileForm(UICore.mtForm, 5, 5, 10, 7);
 
                     _engineConfig = ecGrid;
                 }

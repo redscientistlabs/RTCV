@@ -12,6 +12,7 @@ using RTCV.CorruptCore;
 using RTCV.NetCore;
 using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
+using RTCV.UI.Modular;
 
 namespace RTCV.UI
 {
@@ -28,7 +29,9 @@ namespace RTCV.UI
 		{
 			InitializeComponent();
 
-			this.undockedSizable = false;
+            UICore.LoadLists();
+
+            this.undockedSizable = false;
 		}
 
 		private void RTC_CorruptionEngine_Form_Load(object sender, EventArgs e)
@@ -100,8 +103,9 @@ namespace RTCV.UI
 
 			S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = true;
 			S.GET<RTC_GlitchHarvester_Form>().pnIntensity.Visible = true;
-			S.GET<RTC_EngineConfig_Form>().pnGeneralParameters.Visible = true;
-			S.GET<RTC_EngineConfig_Form>().pnMemoryDomains.Visible = true;
+			S.GET<RTC_GeneralParameters_Form>().Show();
+            S.GET<RTC_MemoryDomains_Form>().Show();
+
 
 			switch (cbSelectedEngine.SelectedItem.ToString())
 			{
@@ -152,10 +156,10 @@ namespace RTCV.UI
 
 					S.GET<UI_CoreForm>().AutoCorrupt = false;
 					S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
-					S.GET<RTC_EngineConfig_Form>().pnGeneralParameters.Visible = false;
-					S.GET<RTC_EngineConfig_Form>().pnMemoryDomains.Visible = false;
+                    S.GET<RTC_GeneralParameters_Form>().Hide();
+					S.GET<RTC_MemoryDomains_Form>().Hide();
 
-					S.GET<RTC_GlitchHarvester_Form>().pnIntensity.Visible = false;
+                    S.GET<RTC_GlitchHarvester_Form>().pnIntensity.Visible = false;
 					break;
 
 				default:

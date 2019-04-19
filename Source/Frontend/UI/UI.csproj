@@ -188,12 +188,6 @@
     <Compile Include="Forms\RTC_CustomEngineConfig_Form.Designer.cs">
       <DependentUpon>RTC_CustomEngineConfig_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\RTC_EngineConfig_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\RTC_EngineConfig_Form.Designer.cs">
-      <DependentUpon>RTC_EngineConfig_Form.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\RTC_GlitchHarvester_Form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -346,9 +340,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RTC_CustomEngineConfig_Form.resx">
       <DependentUpon>RTC_CustomEngineConfig_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RTC_EngineConfig_Form.resx">
-      <DependentUpon>RTC_EngineConfig_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RTC_GlitchHarvester_Form.resx">
       <DependentUpon>RTC_GlitchHarvester_Form.cs</DependentUpon>

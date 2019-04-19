@@ -39,8 +39,17 @@ namespace RTCV.UI
         //public static Color generalColor = Color.FromArgb(60, 45, 70);
         public static Color GeneralColor = Color.LightSteelBlue;
 
-		//Directories
-
+        public static RTC_SelectBox_Form mtForm = new RTC_SelectBox_Form(new ComponentForm[] {
+                        S.GET<RTC_VmdNoTool_Form>(),
+                        S.GET<RTC_VmdPool_Form>(),
+                        S.GET<RTC_VmdGen_Form>(),
+                        S.GET<RTC_VmdAct_Form>(),
+                        S.GET<RTC_ListGen_Form>(),
+                        })
+        {
+            popoutAllowed = false,
+            Text = "Advanced Memory Tools",
+        };
 
         public static void Start(Form standaloneForm = null)
 		{
@@ -787,5 +796,57 @@ namespace RTCV.UI
             S.GET<RTC_GlitchHarvester_Form>().pnRender.Visible = false;
 
         }
+
+
+        private static void toggleLimiterBoxSource(bool setToBindingSource)
+        {
+            if (setToBindingSource)
+            {
+                S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.DisplayMember = "Name";
+                S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.ValueMember = "Value";
+                S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.DataSource = CorruptCore.CorruptCore.LimiterListBindingSource;
+
+
+                S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DisplayMember = "Name";
+                S.GET<RTC_CustomEngineConfig_Form>().cbValueList.ValueMember = "Value";
+                S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DataSource = CorruptCore.CorruptCore.ValueListBindingSource;
+
+
+
+                S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.DisplayMember = "Name";
+                S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.ValueMember = "Value";
+                S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.DataSource = CorruptCore.CorruptCore.LimiterListBindingSource;
+
+                S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.DisplayMember = "Name";
+                S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.ValueMember = "Value";
+                S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.DataSource = CorruptCore.CorruptCore.ValueListBindingSource;
+            }
+            else
+            {
+                S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.DataSource = null;
+                S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DataSource = null;
+
+                S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.DataSource = null;
+                S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.DataSource = null;
+            }
+        }
+
+        public static void LoadLists()
+        {
+            toggleLimiterBoxSource(false);
+
+            string[] paths = System.IO.Directory.GetFiles(CorruptCore.CorruptCore.listsDir);
+
+            paths = paths.OrderBy(x => x).ToArray();
+
+            List<string> hashes = Filtering.LoadListsFromPaths(paths);
+            for (int i = 0; i < hashes.Count; i++)
+            {
+                string[] _paths = paths[i].Split('\\', '.');
+                CorruptCore.Filtering.RegisterListInUI(_paths[_paths.Length - 2], hashes[i]);
+            }
+            toggleLimiterBoxSource(true);
+        }
+
     }
 }
