@@ -31,7 +31,6 @@ namespace RTCV.UI
 		public static Size NoteBoxSize;
 
 		public static bool FirstConnect = true;
-		public static bool HideStartButton = false;
 
         private static System.Timers.Timer inputCheckTimer;
 
@@ -93,10 +92,6 @@ namespace RTCV.UI
             if (FirstConnect)
             {
                 UI_DefaultGrids.connectionStatus.LoadToMain();
-                if (HideStartButton)
-                {
-                    S.GET<RTC_ConnectionStatus_Form>().btnStartEmuhawkDetached.Visible = false;
-                }
             }
 
             LoadRTCColor();

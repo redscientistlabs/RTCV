@@ -1,0 +1,1 @@
+name geo.chr geo.pal screen.nam

@@ -45,10 +45,8 @@ namespace RTCV.UI
 
 		public static void PlayCrashSound(bool forcePlay = false)
 		{
-			if (LoadedSounds != null && (forcePlay || S.GET<RTC_ConnectionStatus_Form>()
-				.btnStartEmuhawkDetached.Text == "Restart BizHawk"))
-				LoadedSounds[CorruptCore.CorruptCore.RND.Next(LoadedSounds.Length)]
-					.Play();
+			if (LoadedSounds != null )
+				LoadedSounds[CorruptCore.CorruptCore.RND.Next(LoadedSounds.Length)].Play();
 		}
 
 		public static void Pulse()
