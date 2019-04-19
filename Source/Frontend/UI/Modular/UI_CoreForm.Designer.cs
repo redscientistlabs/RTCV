@@ -146,6 +146,7 @@
             this.lbGameProtection.Size = new System.Drawing.Size(105, 17);
             this.lbGameProtection.TabIndex = 111;
             this.lbGameProtection.Text = "Game Protection";
+            this.lbGameProtection.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LbGameProtection_MouseClick);
             // 
             // cbUseGameProtection
             // 
@@ -225,6 +226,7 @@
             this.pbAutoKillSwitchTimeout.TabIndex = 119;
             this.pbAutoKillSwitchTimeout.Tag = "17";
             this.pbAutoKillSwitchTimeout.Value = 13;
+            this.pbAutoKillSwitchTimeout.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnAutoKillSwitch_MouseClick);
             this.pbAutoKillSwitchTimeout.MouseEnter += new System.EventHandler(this.pnAutoKillSwitch_MouseHover);
             this.pbAutoKillSwitchTimeout.MouseLeave += new System.EventHandler(this.pnAutoKillSwitch_MouseLeave);
             this.pbAutoKillSwitchTimeout.MouseHover += new System.EventHandler(this.pnAutoKillSwitch_MouseHover);
@@ -239,6 +241,7 @@
             this.lbAks.Size = new System.Drawing.Size(93, 17);
             this.lbAks.TabIndex = 111;
             this.lbAks.Text = "Auto-KillSwitch";
+            this.lbAks.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnAutoKillSwitch_MouseClick);
             this.lbAks.MouseEnter += new System.EventHandler(this.pnAutoKillSwitch_MouseHover);
             this.lbAks.MouseLeave += new System.EventHandler(this.pnAutoKillSwitch_MouseLeave);
             this.lbAks.MouseHover += new System.EventHandler(this.pnAutoKillSwitch_MouseHover);

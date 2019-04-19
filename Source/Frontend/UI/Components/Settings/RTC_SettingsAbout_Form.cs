@@ -29,12 +29,12 @@ namespace RTCV.UI
 		{
 			lbVersion.Text += CorruptCore.CorruptCore.RtcVersion;
 			lbProcess.Text += (CorruptCore.CorruptCore.Attached ? "Attached mode" : "Detached mode");
-			lbConnectedTo.Text += "BizHawk Emulator";
+			lbConnectedTo.Text += (String)NetCore.AllSpec.VanguardSpec[VSPEC.NAME] ??  "Vanguard Implementation";
 		}
 
 		private void LbSourceCode_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			System.Diagnostics.Process.Start("https://github.com/ircluzar/RTC3/");
+			System.Diagnostics.Process.Start("https://github.com/ircluzar/RTCV");
 		}
 
 		private void LbRTCHome_Clicked(object sender, LinkLabelLinkClickedEventArgs e)

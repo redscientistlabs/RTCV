@@ -18,6 +18,11 @@ namespace RTCV.UI
 			InitializeComponent();
 		}
 
+        private readonly string[] _flavorText = {
+            "Imagine if we had actual flavor text",
+            "Fun flavor text goes here",
+        };
+
 		private void RTC_ConnectionStatus_Form_Load(object sender, EventArgs e)
 		{
 			int crashSound = 0;
@@ -26,7 +31,8 @@ namespace RTCV.UI
 				crashSound = Convert.ToInt32(NetCore.Params.ReadParam("CRASHSOUND"));
 
 			S.GET<RTC_SettingsNetCore_Form>().cbCrashSoundEffect.SelectedIndex = crashSound;
-		}
+            lbFlavorText.Text = _flavorText[CorruptCore.CorruptCore.RND.Next(0, _flavorText.Length)];
+        }
 
 		public void btnStartEmuhawkDetached_Click(object sender, EventArgs e)
 		{

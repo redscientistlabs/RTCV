@@ -29,10 +29,6 @@ public partial class Loader : UI_Extensions.RTC_Standalone_Form
 				RTCV.NetCore.Extensions.ConsoleHelper.HideConsole();
 			}
 
-			if (args.Contains("-HIDESTARTBUTTON"))
-			{
-				UICore.HideStartButton = true;
-			}
 			UICore.Start(this);
 		}
 

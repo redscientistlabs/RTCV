@@ -83,10 +83,10 @@
             this.lbSourceCode.LinkColor = System.Drawing.Color.White;
             this.lbSourceCode.Location = new System.Drawing.Point(131, 326);
             this.lbSourceCode.Name = "lbSourceCode";
-            this.lbSourceCode.Size = new System.Drawing.Size(230, 20);
+            this.lbSourceCode.Size = new System.Drawing.Size(225, 20);
             this.lbSourceCode.TabIndex = 4;
             this.lbSourceCode.TabStop = true;
-            this.lbSourceCode.Text = "https://github.com/ircluzar/RTC3/";
+            this.lbSourceCode.Text = "https://github.com/ircluzar/RTCV";
             this.lbSourceCode.VisitedLinkColor = System.Drawing.Color.Gray;
             this.lbSourceCode.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LbSourceCode_LinkClicked);
             // 
