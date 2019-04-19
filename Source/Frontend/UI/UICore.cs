@@ -476,7 +476,7 @@ namespace RTCV.UI
                 }
 
                 // useful debugging:
-                Console.WriteLine(ie);
+                //Console.WriteLine(ie);
 
 
                 // look for hotkey bindings for this key
