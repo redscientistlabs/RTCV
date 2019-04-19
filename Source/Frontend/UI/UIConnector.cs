@@ -53,12 +53,15 @@ namespace RTCV.UI
                     UI_DefaultGrids.connectionStatus.LoadToMain();
 				}
 
+                //refactor to put save button in main window
+                /*
 				if (S.GET<RTC_GlitchHarvester_Form>() != null && !S.GET<RTC_GlitchHarvester_Form>().IsDisposed)
 				{
 					S.GET<RTC_GlitchHarvester_Form>().lbConnectionStatus.Text = "Connection status: Emulator timed out";
 					S.GET<RTC_GlitchHarvester_Form>().pnHideGlitchHarvester.BringToFront();
 					S.GET<RTC_GlitchHarvester_Form>().pnHideGlitchHarvester.Show();
 				}
+                */
 
 				S.GET<RTC_VmdAct_Form>().cbAutoAddDump.Checked = false;
                 GameProtection.WasAutoCorruptRunning = CorruptCore.CorruptCore.AutoCorrupt;

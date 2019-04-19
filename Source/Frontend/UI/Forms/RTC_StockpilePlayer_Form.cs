@@ -128,7 +128,7 @@ namespace RTCV.UI
 
 		private void btnBlastToggle_Click(object sender, EventArgs e)
 		{
-			S.GET<RTC_GlitchHarvester_Form>().btnBlastToggle_Click(null, null);
+			S.GET<RTC_GlitchHarvesterBlast_Form>().btnBlastToggle_Click(null, null);
 		}
 
 		private void dgvStockpile_MouseDown(object sender, MouseEventArgs e)
@@ -147,7 +147,7 @@ namespace RTCV.UI
 				(columnsMenu.Items.Add("Show System Core", null, new EventHandler((ob, ev) => { dgvStockpile.Columns["SystemCore"].Visible ^= true; })) as ToolStripMenuItem).Checked = dgvStockpile.Columns["SystemCore"].Visible;
 				(columnsMenu.Items.Add("Show Note", null, new EventHandler((ob, ev) => { dgvStockpile.Columns["Note"].Visible ^= true; })) as ToolStripMenuItem).Checked = dgvStockpile.Columns["Note"].Visible;
 				columnsMenu.Items.Add(stripSeparator);
-				(columnsMenu.Items.Add("Load on Select", null, new EventHandler((ob, ev) => { S.GET<RTC_GlitchHarvester_Form>().cbLoadOnSelect.Checked ^= true; })) as ToolStripMenuItem).Checked = S.GET<RTC_GlitchHarvester_Form>().cbLoadOnSelect.Checked;
+				(columnsMenu.Items.Add("Load on Select", null, new EventHandler((ob, ev) => { S.GET<RTC_GlitchHarvesterBlast_Form>().cbLoadOnSelect.Checked ^= true; })) as ToolStripMenuItem).Checked = S.GET<RTC_GlitchHarvesterBlast_Form>().cbLoadOnSelect.Checked;
 				(columnsMenu.Items.Add("Clear Cheats/Freezes on Rewind", null, new EventHandler((ob, ev) => { S.GET<RTC_CorruptionEngine_Form>().cbClearCheatsOnRewind.Checked ^= true; })) as ToolStripMenuItem).Checked = S.GET<RTC_CorruptionEngine_Form>().cbClearCheatsOnRewind.Checked;
 				(columnsMenu.Items.Add("Clear Pipes on Rewind", null, new EventHandler((ob, ev) => { S.GET<RTC_CorruptionEngine_Form>().cbClearPipesOnRewind.Checked ^= true; })) as ToolStripMenuItem).Checked = S.GET<RTC_CorruptionEngine_Form>().cbClearPipesOnRewind.Checked;
 
@@ -180,7 +180,7 @@ namespace RTCV.UI
 
 					if (Stockpile.Load(dgvStockpile))
 					{
-						S.GET<RTC_GlitchHarvester_Form>().dgvStockpile.Rows.Clear();
+                        S.GET<RTC_StockpileManager_Form>().dgvStockpile.Rows.Clear();
 					}
 					dgvStockpile.ClearSelection();
 					RefreshNoteIcons();
@@ -266,14 +266,14 @@ namespace RTCV.UI
 					//Shut autocorrupt off because people (Vinny) kept turning it on to add to corruptions then forgetting to turn it off
 					S.GET<UI_CoreForm>().AutoCorrupt = false; 
 
-					S.GET<RTC_GlitchHarvester_Form>().rbCorrupt.Checked = true;
+					S.GET<RTC_GlitchHarvesterBlast_Form>().rbCorrupt.Checked = true;
 					StockpileManager_UISide.CurrentStashkey = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
 					StockpileManager_UISide.ApplyStashkey(StockpileManager_UISide.CurrentStashkey);
 
-					S.GET<RTC_GlitchHarvester_Form>().lbStashHistory.ClearSelected();
-					S.GET<RTC_GlitchHarvester_Form>().dgvStockpile.ClearSelection();
+					S.GET<RTC_StashHistory_Form>().lbStashHistory.ClearSelected();
+					S.GET<RTC_StockpileManager_Form>().dgvStockpile.ClearSelection();
 
-					S.GET<RTC_GlitchHarvester_Form>().IsCorruptionApplied = !(StockpileManager_UISide.CurrentStashkey.BlastLayer == null || StockpileManager_UISide.CurrentStashkey.BlastLayer.Layer.Count == 0);
+					S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = !(StockpileManager_UISide.CurrentStashkey.BlastLayer == null || StockpileManager_UISide.CurrentStashkey.BlastLayer.Layer.Count == 0);
 				}
 			}
 			finally

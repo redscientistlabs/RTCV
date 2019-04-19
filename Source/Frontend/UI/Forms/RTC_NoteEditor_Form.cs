@@ -98,10 +98,10 @@ namespace RTCV.UI
 
 			//If our cell comes from the GH's dgv and the text changed, prompt unsavededits
 			if (oldText != cleanText && cells?.First()
-				?.DataGridView == S.GET<RTC_GlitchHarvester_Form>()
+				?.DataGridView == S.GET<RTC_StockpileManager_Form>()
 				.dgvStockpile)
 			{
-				S.GET<RTC_GlitchHarvester_Form>().UnsavedEdits = true;
+				S.GET<RTC_StockpileManager_Form>().UnsavedEdits = true;
 			}
 		}
 

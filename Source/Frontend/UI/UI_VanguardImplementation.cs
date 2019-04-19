@@ -92,9 +92,11 @@ namespace RTCV.UI
 
                                 UICore.LoadLists();
 
+                                /*
                                 //Unhide the GH
                                 S.GET<RTC_GlitchHarvester_Form>().pnHideGlitchHarvester.Size = S.GET<RTC_GlitchHarvester_Form>().Size;
                                 S.GET<RTC_GlitchHarvester_Form>().pnHideGlitchHarvester.Hide();
+                                */
                             }
 
 							S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0;//remove this once core form is dead

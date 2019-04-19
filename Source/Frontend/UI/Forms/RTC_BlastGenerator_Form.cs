@@ -385,13 +385,13 @@ namespace RTCV.UI
 				else
 				{
 					StockpileManager_UISide.StashHistory.Add(newSk);
-					S.GET<RTC_GlitchHarvester_Form>().RefreshStashHistory();
-					S.GET<RTC_GlitchHarvester_Form>().dgvStockpile.ClearSelection();
-					S.GET<RTC_GlitchHarvester_Form>().lbStashHistory.ClearSelected();
+					S.GET<RTC_StashHistory_Form>().RefreshStashHistory();
+					S.GET<RTC_StockpileManager_Form>().dgvStockpile.ClearSelection();
+					S.GET<RTC_StashHistory_Form>().lbStashHistory.ClearSelected();
 
-					S.GET<RTC_GlitchHarvester_Form>().DontLoadSelectedStash = true;
-					S.GET<RTC_GlitchHarvester_Form>().lbStashHistory.SelectedIndex = S.GET<RTC_GlitchHarvester_Form>().lbStashHistory.Items.Count - 1;
-					StockpileManager_UISide.CurrentStashkey = StockpileManager_UISide.StashHistory[S.GET<RTC_GlitchHarvester_Form>().lbStashHistory.SelectedIndex];
+					S.GET<RTC_StashHistory_Form>().DontLoadSelectedStash = true;
+					S.GET<RTC_StashHistory_Form>().lbStashHistory.SelectedIndex = S.GET<RTC_StashHistory_Form>().lbStashHistory.Items.Count - 1;
+					StockpileManager_UISide.CurrentStashkey = StockpileManager_UISide.StashHistory[S.GET<RTC_StashHistory_Form>().lbStashHistory.SelectedIndex];
 				}
 			}
 			finally

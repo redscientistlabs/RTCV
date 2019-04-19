@@ -186,7 +186,22 @@ namespace RTCV.UI
 			}
 		}
 
-		private void RTC_NewBlastEditorForm_Load(object sender, EventArgs e)
+        public static void OpenBlastEditor(StashKey sk)
+        {
+            S.GET<RTC_NewBlastEditor_Form>().Close();
+            S.SET(new RTC_NewBlastEditor_Form());
+
+            //If the blastlayer is big, prompt them before opening it. Let's go with 5k for now.
+
+            //TODO
+            if (sk.BlastLayer.Layer.Count > 5000 && (DialogResult.Yes == MessageBox.Show($"You're trying to open a blastlayer of size " + sk.BlastLayer.Layer.Count + ". This could take a while. Are you sure you want to continue?", "Opening a large BlastLayer", MessageBoxButtons.YesNo)))
+                S.GET<RTC_NewBlastEditor_Form>().LoadStashkey(sk);
+            else if (sk.BlastLayer.Layer.Count <= 5000)
+                S.GET<RTC_NewBlastEditor_Form>().LoadStashkey(sk);
+        }
+
+
+        private void RTC_NewBlastEditorForm_Load(object sender, EventArgs e)
 		{
 			UICore.SetRTCColor(UICore.GeneralColor, this);
 			domains = MemoryDomains.MemoryInterfaces?.Keys?.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
@@ -1222,7 +1237,7 @@ namespace RTCV.UI
 			dgvBlastEditor.Refresh();
 		}
 
-		private void btnRemoveSelected_Click(object sender, EventArgs e)
+		public void btnRemoveSelected_Click(object sender, EventArgs e)
 		{
 			foreach(DataGridViewRow row in dgvBlastEditor.SelectedRows)
 			{
@@ -1267,13 +1282,13 @@ namespace RTCV.UI
 
 			StockpileManager_UISide.StashHistory.Add(newSk);
 
-			S.GET<RTC_GlitchHarvester_Form>().RefreshStashHistory();
-			S.GET<RTC_GlitchHarvester_Form>().dgvStockpile.ClearSelection();
-			S.GET<RTC_GlitchHarvester_Form>().lbStashHistory.ClearSelected();
+			S.GET<RTC_StashHistory_Form>().RefreshStashHistory();
+			S.GET<RTC_StockpileManager_Form>().dgvStockpile.ClearSelection();
+			S.GET<RTC_StashHistory_Form>().lbStashHistory.ClearSelected();
 
-			S.GET<RTC_GlitchHarvester_Form>().DontLoadSelectedStash = true;
-			S.GET<RTC_GlitchHarvester_Form>().lbStashHistory.SelectedIndex = S.GET<RTC_GlitchHarvester_Form>().lbStashHistory.Items.Count - 1;
-			StockpileManager_UISide.CurrentStashkey = StockpileManager_UISide.StashHistory[S.GET<RTC_GlitchHarvester_Form>().lbStashHistory.SelectedIndex];
+			S.GET<RTC_StashHistory_Form>().DontLoadSelectedStash = true;
+			S.GET<RTC_StashHistory_Form>().lbStashHistory.SelectedIndex = S.GET<RTC_StashHistory_Form>().lbStashHistory.Items.Count - 1;
+			StockpileManager_UISide.CurrentStashkey = StockpileManager_UISide.StashHistory[S.GET<RTC_StashHistory_Form>().lbStashHistory.SelectedIndex];
 
 		}
 

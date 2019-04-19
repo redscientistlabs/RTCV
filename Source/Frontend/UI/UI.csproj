@@ -110,6 +110,36 @@
     <Compile Include="Components\Engine Config\RTC_MemoryDomains_Form.Designer.cs">
       <DependentUpon>RTC_MemoryDomains_Form.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\Glitch Harvester\RTC_GlitchHarvesterBlast_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Components\Glitch Harvester\RTC_GlitchHarvesterBlast_Form.designer.cs">
+      <DependentUpon>RTC_GlitchHarvesterBlast_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Glitch Harvester\RTC_SavestateManager_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Components\Glitch Harvester\RTC_SavestateManager_Form.designer.cs">
+      <DependentUpon>RTC_SavestateManager_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Glitch Harvester\RTC_GlitchHarvesterIntensity_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Components\Glitch Harvester\RTC_GlitchHarvesterIntensity_Form.designer.cs">
+      <DependentUpon>RTC_GlitchHarvesterIntensity_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Glitch Harvester\RTC_StashHistory_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Components\Glitch Harvester\RTC_StashHistory_Form.designer.cs">
+      <DependentUpon>RTC_StashHistory_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Glitch Harvester\RTC_StockpileManager_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Components\Glitch Harvester\RTC_StockpileManager_Form.designer.cs">
+      <DependentUpon>RTC_StockpileManager_Form.cs</DependentUpon>
+    </Compile>
     <Compile Include="Components\Settings\RTC_SettingsCorrupt_Form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -301,6 +331,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Engine Config\RTC_MemoryDomains_Form.resx">
       <DependentUpon>RTC_MemoryDomains_Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Glitch Harvester\RTC_GlitchHarvesterBlast_Form.resx">
+      <DependentUpon>RTC_GlitchHarvesterBlast_Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Glitch Harvester\RTC_SavestateManager_Form.resx">
+      <DependentUpon>RTC_SavestateManager_Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Glitch Harvester\RTC_GlitchHarvesterIntensity_Form.resx">
+      <DependentUpon>RTC_GlitchHarvesterIntensity_Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Glitch Harvester\RTC_StashHistory_Form.resx">
+      <DependentUpon>RTC_StashHistory_Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Glitch Harvester\RTC_StockpileManager_Form.resx">
+      <DependentUpon>RTC_StockpileManager_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Settings\RTC_SettingsCorrupt_Form.resx">
       <DependentUpon>RTC_SettingsCorrupt_Form.cs</DependentUpon>

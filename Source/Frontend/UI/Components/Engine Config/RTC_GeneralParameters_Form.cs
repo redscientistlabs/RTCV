@@ -23,7 +23,7 @@ namespace RTCV.UI
 		{
 			InitializeComponent();
 			multiTB_Intensity.ValueChanged += (sender, args) => CorruptCore.CorruptCore.Intensity = multiTB_Intensity.Value;
-			multiTB_Intensity.registerSlave(S.GET<RTC_GlitchHarvester_Form>().multiTB_Intensity);
+			multiTB_Intensity.registerSlave(S.GET<RTC_GlitchHarvesterIntensity_Form>().multiTB_Intensity);
 
 			multiTB_ErrorDelay.ValueChanged += (sender, args) => CorruptCore.CorruptCore.ErrorDelay = multiTB_ErrorDelay.Value;
 		}

@@ -81,7 +81,7 @@ namespace RTCV.UI
 
         private void UI_CoreForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (S.GET<RTC_GlitchHarvester_Form>().UnsavedEdits && !UICore.isClosing && MessageBox.Show("You have unsaved edits in the Glitch Harvester Stockpile. \n\n Are you sure you want to close RTC without saving?", "Unsaved edits in Stockpile", MessageBoxButtons.YesNo) == DialogResult.No)
+            if (S.GET<RTC_StockpileManager_Form>().UnsavedEdits && !UICore.isClosing && MessageBox.Show("You have unsaved edits in the Glitch Harvester Stockpile. \n\n Are you sure you want to close RTC without saving?", "Unsaved edits in Stockpile", MessageBoxButtons.YesNo) == DialogResult.No)
             {
                 e.Cancel = true;
                 return;
@@ -270,8 +270,9 @@ This message only appears once.";
         {
             pnGlitchHarvesterOpen.Visible = true;
 
-            S.GET<RTC_GlitchHarvester_Form>().Show();
-            S.GET<RTC_GlitchHarvester_Form>().Focus();
+            //make it open a grid in a new window
+            //S.GET<RTC_GlitchHarvester_Form>().Show();
+            //S.GET<RTC_GlitchHarvester_Form>().Focus();
         }
 
         public void btnAutoCorrupt_Click(object sender, EventArgs e)

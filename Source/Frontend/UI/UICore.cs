@@ -381,7 +381,7 @@ namespace RTCV.UI
             if(ctr == null)
             {
                 S.GET<RTC_StockpilePlayer_Form>().dgvStockpile.BackgroundColor = NormalColor;
-                S.GET<RTC_GlitchHarvester_Form>().dgvStockpile.BackgroundColor = NormalColor;
+                S.GET<RTC_StockpileManager_Form>().dgvStockpile.BackgroundColor = NormalColor;
 
                 S.GET<RTC_NewBlastEditor_Form>().dgvBlastEditor.BackgroundColor = NormalColor;
                 S.GET<RTC_BlastGenerator_Form>().dgvBlastGenerator.BackgroundColor = NormalColor;
@@ -578,8 +578,8 @@ namespace RTCV.UI
                 case "GH Load and Corrupt":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
-                        S.GET<RTC_GlitchHarvester_Form>().cbAutoLoadState.Checked = true;
-                        S.GET<RTC_GlitchHarvester_Form>().btnCorrupt_Click(null, null);
+                        S.GET<RTC_GlitchHarvesterBlast_Form>().cbAutoLoadState.Checked = true;
+                        S.GET<RTC_GlitchHarvesterBlast_Form>().btnCorrupt_Click(null, null);
                     });
                     break;
 
@@ -588,40 +588,40 @@ namespace RTCV.UI
 
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
-                        bool isload = S.GET<RTC_GlitchHarvester_Form>().cbAutoLoadState.Checked;
-                        S.GET<RTC_GlitchHarvester_Form>().cbAutoLoadState.Checked = false;
-                        S.GET<RTC_GlitchHarvester_Form>().btnCorrupt_Click(null, null);
-                        S.GET<RTC_GlitchHarvester_Form>().cbAutoLoadState.Checked = isload;
+                        bool isload = S.GET<RTC_GlitchHarvesterBlast_Form>().cbAutoLoadState.Checked;
+                        S.GET<RTC_GlitchHarvesterBlast_Form>().cbAutoLoadState.Checked = false;
+                        S.GET<RTC_GlitchHarvesterBlast_Form>().btnCorrupt_Click(null, null);
+                        S.GET<RTC_GlitchHarvesterBlast_Form>().cbAutoLoadState.Checked = isload;
                     });
                     break;
 
                 case "GH Reroll":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
-                        S.GET<RTC_GlitchHarvester_Form>().btnRerollSelected_Click(null, null);
+                        S.GET<RTC_GlitchHarvesterBlast_Form>().btnRerollSelected_Click(null, null);
                     });
                     break;
 
                 case "GH Load":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
-                        S.GET<RTC_GlitchHarvester_Form>().btnSaveLoad.Text = "LOAD";
-                        S.GET<RTC_GlitchHarvester_Form>().btnSaveLoad_Click(null, null);
+                        S.GET<RTC_SavestateManager_Form>().btnSaveLoad.Text = "LOAD";
+                        S.GET<RTC_SavestateManager_Form>().btnSaveLoad_Click(null, null);
                     });
                     break;
 
                 case "GH Save":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
-                        S.GET<RTC_GlitchHarvester_Form>().btnSaveLoad.Text = "SAVE";
-                        S.GET<RTC_GlitchHarvester_Form>().btnSaveLoad_Click(null, null);
+                        S.GET<RTC_SavestateManager_Form>().btnSaveLoad.Text = "SAVE";
+                        S.GET<RTC_SavestateManager_Form>().btnSaveLoad_Click(null, null);
                     });
                     break;
 
                 case "Stash->Stockpile":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
-                        S.GET<RTC_GlitchHarvester_Form>().AddStashToStockpile(false);
+                        S.GET<RTC_StashHistory_Form>().AddStashToStockpile(false);
                     });
                     break;
 
@@ -635,21 +635,21 @@ namespace RTCV.UI
                         RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(VSPEC.STEP_RUNBEFORE, true);
                         LocalNetCoreRouter.Route(CORRUPTCORE, ASYNCBLAST, null, true);
 
-                        S.GET<RTC_GlitchHarvester_Form>().btnSendRaw_Click(null, null);
+                        S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw_Click(null, null);
                     });
                     break;
 
                 case "Send Raw to Stash":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
-                        S.GET<RTC_GlitchHarvester_Form>().btnSendRaw_Click(null, null);
+                        S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw_Click(null, null);
                     });
                     break;
 
                 case "BlastLayer Toggle":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
-                        S.GET<RTC_GlitchHarvester_Form>().btnBlastToggle_Click(null, null);
+                        S.GET<RTC_GlitchHarvesterBlast_Form>().btnBlastToggle_Click(null, null);
                     });
                     break;
 
@@ -658,10 +658,10 @@ namespace RTCV.UI
                     {
                         if (StockpileManager_UISide.CurrentStashkey == null || StockpileManager_UISide.CurrentStashkey.BlastLayer.Layer.Count == 0)
                         {
-                            S.GET<RTC_GlitchHarvester_Form>().IsCorruptionApplied = false;
+                            S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = false;
                             return;
                         }
-                        S.GET<RTC_GlitchHarvester_Form>().IsCorruptionApplied = true;
+                        S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = true;
                         StockpileManager_UISide.ApplyStashkey(StockpileManager_UISide.CurrentStashkey, false);
                     });
                     break;
@@ -778,7 +778,7 @@ namespace RTCV.UI
         /// </summary>
 		public static void ConfigureUIFromVanguardSpec()
 		{
-            S.GET<RTC_GlitchHarvester_Form>().pnRender.Visible = false;
+            //S.GET<RTC_GlitchHarvester_Form>().pnRender.Visible = false;
 
         }
 
