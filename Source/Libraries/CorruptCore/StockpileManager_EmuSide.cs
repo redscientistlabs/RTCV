@@ -30,7 +30,23 @@ namespace RTCV.CorruptCore
 			return partial;
 		}
 
-		public static bool LoadState_NET(StashKey sk, bool reloadRom = true, bool applyBlastLayer = true)
+        public static bool LoadRom_NET(StashKey sk)
+        {
+            if (sk == null)
+                return false;
+            LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_LOADROM, sk.RomFilename, true);
+
+            string ss = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.SYNCSETTINGS.ToString()];
+            //If the syncsettings are different, update them and load it again. Otheriwse, leave as is
+            if (sk.SyncSettings != ss && sk.SyncSettings != null)
+            {
+                LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_KEY_SETSYNCSETTINGS, sk.SyncSettings, true);
+                LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_LOADROM, sk.RomFilename, true);
+            }
+            return true;
+        }
+
+		public static bool LoadState_NET(StashKey sk, bool applyBlastLayer = true)
 		{
 			if (sk == null)
 				return false;
@@ -41,53 +57,27 @@ namespace RTCV.CorruptCore
 			string key = sk.ParentKey;
 			StashKeySavestateLocation stateLocation = sk.StateLocation;
 
-			if (reloadRom)
-			{
-				LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_LOADROM, sk.RomFilename, true);
+            string theoreticalSaveStateFilename = CorruptCore.workingDir + Path.DirectorySeparatorChar + stateLocation.ToString() + Path.DirectorySeparatorChar + gameName + "." + key + ".timejump.State";
 
-				string ss = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.SYNCSETTINGS.ToString()];
-				//If the syncsettings are different, update them and load it again. Otheriwse, leave as is
-				if (sk.SyncSettings != ss && sk.SyncSettings != null)
-				{
-					LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_KEY_SETSYNCSETTINGS, sk.SyncSettings, true);
-					LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_LOADROM, sk.RomFilename, true);
-				}
-			}
-
-            //There's a chance we're on the main thread when we need to be on the emu thread (game not running)
-            //Now that we've booted the game, we can invoke the emulation thread for the rest of this
-
-
-            //Todo - refactor the invokes to allow a return value
-            bool returnValue = true;
-            void a()
+            if (File.Exists(theoreticalSaveStateFilename))
             {
-                string theoreticalSaveStateFilename = CorruptCore.workingDir + Path.DirectorySeparatorChar + stateLocation.ToString() + Path.DirectorySeparatorChar + gameName + "." + key + ".timejump.State";
+                if (!LocalNetCoreRouter.QueryRoute<bool>(NetcoreCommands.VANGUARD, NetcoreCommands.LOADSAVESTATE, new object[] { theoreticalSaveStateFilename, stateLocation }, true))
+                {
+                    MessageBox.Show($"Error loading savestate : An internal Bizhawk error has occurred.\n Are you sure your savestate matches the game, your syncsettings match, and the savestate is supported by this version of Bizhawk?");
+                    return false;
+                }
+            }
+            else
+            {
+                MessageBox.Show($"Error loading savestate : (File {theoreticalSaveStateFilename} not found)");
+                return false;
+            }
 
-                if (File.Exists(theoreticalSaveStateFilename))
-                {
-                    if (!LocalNetCoreRouter.QueryRoute<bool>(NetcoreCommands.VANGUARD, NetcoreCommands.LOADSAVESTATE, new object[] {theoreticalSaveStateFilename, stateLocation}, true))
-                    {
-                        MessageBox.Show($"Error loading savestate : An internal Bizhawk error has occurred.\n Are you sure your savestate matches the game, your syncsettings match, and the savestate is supported by this version of Bizhawk?");
-                        returnValue = false;
-                        return;
-                    }
-                }
-                else
-                {
-                    MessageBox.Show($"Error loading savestate : (File {theoreticalSaveStateFilename} not found)");
-                    returnValue = false;
-                    return;
-                }
-
-                if (applyBlastLayer && sk?.BlastLayer?.Layer?.Count > 0)
-                {
-                    CorruptBL = sk.BlastLayer;
-                    sk.BlastLayer.Apply(true);
-                }
-                returnValue = true;
-            }   
-            SyncObjectSingleton.EmuThreadExecute(a, false);
+            if (applyBlastLayer && sk?.BlastLayer?.Layer?.Count > 0)
+            {
+                CorruptBL = sk.BlastLayer;
+                sk.BlastLayer.Apply(true);
+            }
             return true;
         }
 

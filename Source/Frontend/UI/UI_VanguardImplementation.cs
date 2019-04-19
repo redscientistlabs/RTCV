@@ -101,8 +101,24 @@ namespace RTCV.UI
                             S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0;
 
                             if (!CorruptCore.CorruptCore.Attached)
-								AutoKillSwitch.Enabled = true;
-						});
+                                    AutoKillSwitch.Enabled = true;
+
+                            //Restart game protection
+                            if (S.GET<UI_CoreForm>().cbUseGameProtection.Checked)
+                            {
+                                if (CorruptCore.StockpileManager_UISide.BackupedState != null)
+                                    CorruptCore.StockpileManager_UISide.BackupedState.Run();
+
+                                if (CorruptCore.StockpileManager_UISide.BackupedState != null)
+                                    S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected(CorruptCore.StockpileManager_UISide.BackupedState.SelectedDomains.ToArray());
+
+                                GameProtection.Start();
+                                if (GameProtection.WasAutoCorruptRunning)
+                                    S.GET<UI_CoreForm>().AutoCorrupt = true;
+                            }
+                                
+
+                        });
 						break;
 
 					case REMOTE_PUSHVANGUARDSPECUPDATE:
@@ -144,9 +160,6 @@ namespace RTCV.UI
 							S.GET<UI_CoreForm>().AutoCorrupt = false;
 						});
 						break;
-
-
-
 					case REMOTE_BACKUPKEY_STASH:
 						StockpileManager_UISide.BackupedState = (StashKey)advancedMessage.objectValue;
 						StockpileManager_UISide.AllBackupStates.Push((StashKey)advancedMessage.objectValue);
@@ -160,6 +173,10 @@ namespace RTCV.UI
 					case KILLSWITCH_PULSE:
 						AutoKillSwitch.Pulse();
 						break;
+                    case RESET_GAME_PROTECTION_IF_RUNNING:
+                        if (GameProtection.isRunning)
+                            GameProtection.Reset();
+                        break;
 
 				}
 			}

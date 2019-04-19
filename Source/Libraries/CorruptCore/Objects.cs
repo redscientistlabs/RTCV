@@ -743,12 +743,13 @@ namespace RTCV.CorruptCore
 			return Alias;
 		}
 
+        ///Can be called from UI Side
 		public bool Run()
 		{
 			StockpileManager_UISide.CurrentStashkey = this;
 			return StockpileManager_UISide.ApplyStashkey(this);
 		}
-
+        ///Can be called from UI Side
 		public void RunOriginal()
 		{
 			StockpileManager_UISide.CurrentStashkey = this;
@@ -1350,8 +1351,8 @@ namespace RTCV.CorruptCore
 							if (Working.StoreData.Count == 0)
 								return;
 
-							//Apply the value we have stored
-							Working.ApplyValue = Working.StoreData.First();
+                            //Apply the value we have stored
+                            Working.ApplyValue = Working.StoreData.Peek();
 
 							//Remove it from the store pool if it's a continuous backup
 							if (StoreType == StoreType.CONTINUOUS)
