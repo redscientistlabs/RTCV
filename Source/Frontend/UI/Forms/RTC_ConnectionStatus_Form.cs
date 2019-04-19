@@ -8,9 +8,12 @@ using RTCV.NetCore.StaticTools;
 
 namespace RTCV.UI
 {
-	public partial class RTC_ConnectionStatus_Form : Form, IAutoColorize
+	public partial class RTC_ConnectionStatus_Form : ComponentForm, IAutoColorize
 	{
-		public RTC_ConnectionStatus_Form()
+        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+
+        public RTC_ConnectionStatus_Form()
 		{
 			InitializeComponent();
 		}

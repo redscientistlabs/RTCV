@@ -16,7 +16,7 @@ using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
-    public partial class UI_CoreForm : Form
+    public partial class UI_CoreForm : Form, IAutoColorize
     {
         //This form traps events and forwards them.
         //It contains the single UI_CanvasForm instance.
@@ -55,7 +55,7 @@ namespace RTCV.UI
             InitializeComponent();
             thisForm = this;
 
-            UICore.SetRTCColor(UICore.GeneralColor, this);
+
 
             cfForm = new UI_CanvasForm();
             cfForm.TopLevel = false;
@@ -75,7 +75,7 @@ namespace RTCV.UI
             corePadding = pnTopBar.Width;
             xPadding = (Width - cfForm.Width) - corePadding;
 
-
+            //UICore.SetRTCColor(UICore.GeneralColor);
         }
 
         private void UI_CoreForm_Load(object sender, EventArgs e)
@@ -112,7 +112,7 @@ This message only appears once.";
 
             CorruptCore.CorruptCore.DownloadProblematicProcesses();
 
-            UI_DefaultGrids.engineConfig.LoadToMain();
+            //UI_DefaultGrids.engineConfig.LoadToMain();
         }
 
         public void SetSize(int x, int y)
@@ -278,7 +278,7 @@ This message only appears once.";
 
             ContextMenuStrip easyButtonMenu = new ContextMenuStrip();
                                                                                                               //Refactor this shit later.
-            easyButtonMenu.Items.Add("Start with Recommended Settings", null, new EventHandler(((ob, ev) => { S.GET<RTC_Core_Form>().StartEasyMode(true); })));
+            easyButtonMenu.Items.Add("Start with Recommended Settings", null, new EventHandler(((ob, ev) => { S.GET<UI_CoreForm>().StartEasyMode(true); })));
             easyButtonMenu.Items.Add(new ToolStripSeparator());
             //EasyButtonMenu.Items.Add("Watch a tutorial video", null, new EventHandler((ob,ev) => Process.Start("https://www.youtube.com/watch?v=sIELpn4-Umw"))).Enabled = false;
             easyButtonMenu.Items.Add("Open the online wiki", null, new EventHandler((ob, ev) => Process.Start("https://corrupt.wiki/")));
@@ -377,5 +377,91 @@ This message only appears once.";
         {
             UI_DefaultGrids.connectionStatus.LoadToMain();
         }
+
+        public void StartEasyMode(bool useTemplate)
+        {
+            //	if (RTC_NetcoreImplementation.isStandaloneUI && !S.GET<RTC_Core_Form>().cbUseGameProtection.Checked)
+            S.GET<UI_CoreForm>().cbUseGameProtection.Checked = true;
+
+
+            if (useTemplate)
+            {
+                //Put Console templates HERE
+                string thisSystem = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.SYSTEM];
+
+                switch (thisSystem)
+                {
+                    case "NES":     //Nintendo Entertainment system
+                        SetEngineByName("Nightmare Engine");
+                        S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value = 2;
+                        S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value = 1;
+                        break;
+
+                    case "GB":      //Gameboy
+                    case "GBC":     //Gameboy Color
+                        SetEngineByName("Nightmare Engine");
+                        S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value = 1;
+                        S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value = 4;
+                        break;
+
+                    case "SNES":    //Super Nintendo
+                        SetEngineByName("Nightmare Engine");
+                        S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value = 1;
+                        S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value = 2;
+                        break;
+
+                    case "GBA":     //Gameboy Advance
+                        SetEngineByName("Nightmare Engine");
+                        S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value = 1;
+                        S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value = 1;
+                        break;
+
+                    case "N64":     //Nintendo 64
+                        SetEngineByName("Vector Engine");
+                        S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value = 75;
+                        S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value = 1;
+                        break;
+
+                    case "SG":      //Sega SG-1000
+                    case "GG":      //Sega GameGear
+                    case "SMS":     //Sega Master System
+                    case "GEN":     //Sega Genesis and CD
+                    case "PCE":     //PC-Engine / Turbo Grafx
+                    case "PSX":     //Sony Playstation 1
+                    case "A26":     //Atari 2600
+                    case "A78":     //Atari 7800
+                    case "LYNX":    //Atari Lynx
+                    case "INTV":    //Intellivision
+                    case "PCECD":   //related to PC-Engine / Turbo Grafx
+                    case "SGX":     //related to PC-Engine / Turbo Grafx
+                    case "TI83":    //Ti-83 Calculator
+                    case "WSWAN":   //Wonderswan
+                    case "C64":     //Commodore 64
+                    case "Coleco":  //Colecovision
+                    case "SGB":     //Super Gameboy
+                    case "SAT":     //Sega Saturn
+                    case "DGB":
+                        MessageBox.Show("WARNING: No Easy-Mode template was made for this system. Please configure it manually and use the current settings.");
+                        return;
+
+                        //TODO: Add more domains for systems like gamegear, atari, turbo graphx
+                }
+            }
+
+            S.GET<UI_CoreForm>().AutoCorrupt = true;
+        }
+
+        public void SetEngineByName(string name)
+        {
+            //Selects an engine from a given string name
+
+            for (int i = 0; i < S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Count; i++)
+                if (S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items[i].ToString() == name)
+                {
+                    S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.SelectedIndex = i;
+                    break;
+                }
+        }
+
     }
 }

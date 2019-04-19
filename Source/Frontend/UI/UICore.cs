@@ -75,7 +75,7 @@ namespace RTCV.UI
 
 
             //Loading RTC Params
-            LoadRTCColor();
+            
 			S.GET<RTC_SettingsGeneral_Form>().cbDisableBizhawkOSD.Checked = !RTCV.NetCore.Params.IsParamSet("ENABLE_BIZHAWK_OSD");
 			S.GET<RTC_SettingsGeneral_Form>().cbAllowCrossCoreCorruption.Checked = RTCV.NetCore.Params.IsParamSet("ALLOW_CROSS_CORE_CORRUPTION");
 			S.GET<RTC_SettingsGeneral_Form>().cbDontCleanAtQuit.Checked = RTCV.NetCore.Params.IsParamSet("DONT_CLEAN_SAVESTATES_AT_QUIT");
@@ -100,6 +100,7 @@ namespace RTCV.UI
                 }
             }
 
+            LoadRTCColor();
             S.GET<UI_CoreForm>().Show();
         }
 
@@ -220,7 +221,7 @@ namespace RTCV.UI
 				List<Form> all = new List<Form>();
 
 
-				foreach (Type t in Assembly.GetAssembly(typeof(RTCV.UI.RTC_Core_Form)).GetTypes())
+				foreach (Type t in Assembly.GetAssembly(typeof(RTCV.UI.UI_CoreForm)).GetTypes())
 					if (typeof(IAutoColorize).IsAssignableFrom(t) && t != typeof(IAutoColorize))
 						all.Add((Form)S.GET(Type.GetType(t.ToString())));
 

@@ -182,12 +182,6 @@
     <Compile Include="Forms\RTC_ConnectionStatus_Form.designer.cs">
       <DependentUpon>RTC_ConnectionStatus_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\RTC_Core_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\RTC_Core_Form.designer.cs">
-      <DependentUpon>RTC_Core_Form.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\RTC_CustomEngineConfig_Form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -349,9 +343,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RTC_ConnectionStatus_Form.resx">
       <DependentUpon>RTC_ConnectionStatus_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RTC_Core_Form.resx">
-      <DependentUpon>RTC_Core_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RTC_CustomEngineConfig_Form.resx">
       <DependentUpon>RTC_CustomEngineConfig_Form.cs</DependentUpon>
