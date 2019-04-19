@@ -34,7 +34,7 @@
             // pnScale
             // 
             this.pnScale.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.pnScale.Location = new System.Drawing.Point(15, 15);
+            this.pnScale.Location = new System.Drawing.Point(16, 16);
             this.pnScale.Name = "pnScale";
             this.pnScale.Size = new System.Drawing.Size(32, 32);
             this.pnScale.TabIndex = 5;

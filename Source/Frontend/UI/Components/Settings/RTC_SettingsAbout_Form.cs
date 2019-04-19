@@ -29,7 +29,7 @@ namespace RTCV.UI
 		{
 			lbVersion.Text += CorruptCore.CorruptCore.RtcVersion;
 			lbProcess.Text += (CorruptCore.CorruptCore.Attached ? "Attached mode" : "Detached mode");
-			lbConnectedTo.Text += "BizHawk Emulator";
+			lbConnectedTo.Text += (String)NetCore.AllSpec.VanguardSpec[VSPEC.NAME] ??  "Vanguard Implementation";
 		}
 
 		private void LbSourceCode_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

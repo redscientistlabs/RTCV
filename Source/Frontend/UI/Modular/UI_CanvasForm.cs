@@ -23,13 +23,15 @@ namespace RTCV.UI
 
         public bool SubFormMode
         {
-            get {
+            get
+            {
                 return (spForm != null);
             }
-            set {
+            set
+            {
                 if (value == false && spForm != null)
                     CloseSubForm();
-                }
+            }
         }
 
         public UI_CanvasForm(bool extraForm = false)
@@ -45,8 +47,6 @@ namespace RTCV.UI
                 tileSize = pnScale.Size.Width;
                 Controls.Remove(pnScale);
             }
-
-
         }
 
         public static UI_ComponentFormTile getTileForm(Form componentForm, int? newSizeX = null, int? newSizeY = null, bool DisplayHeader = true)
@@ -89,7 +89,6 @@ namespace RTCV.UI
             }
             extraForms.Clear();
             loadedTileForms.Clear();
-
         }
 
         public void ResizeCanvas(UI_CanvasForm targetForm, CanvasGrid canvasGrid)
@@ -109,7 +108,6 @@ namespace RTCV.UI
         {
             mg.Load();
         }
-
 
         public static void loadTileForm(UI_CanvasForm targetForm, CanvasGrid canvasGrid)
         {
@@ -131,9 +129,6 @@ namespace RTCV.UI
 
                         tileForm.Show();
                     }
-
-
-
         }
 
         public static void loadTileFormExtraWindow(CanvasGrid canvasGrid, string WindowHeader = "RTC Extra Form")
@@ -147,8 +142,6 @@ namespace RTCV.UI
             extraForm.Text = WindowHeader;
             loadTileForm(extraForm, canvasGrid);
             extraForm.Show();
-
-
         }
 
         public static void loadTileFormMain(CanvasGrid canvasGrid)

@@ -54,6 +54,7 @@ namespace RTCV.UI
         {
             InitializeComponent();
             thisForm = this;
+            this.FormClosing += UI_CoreForm_FormClosing;
 
 
 
@@ -76,6 +77,22 @@ namespace RTCV.UI
             xPadding = (Width - cfForm.Width) - corePadding;
 
             //UICore.SetRTCColor(UICore.GeneralColor);
+        }
+
+        private void UI_CoreForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (S.GET<RTC_GlitchHarvester_Form>().UnsavedEdits && !UICore.isClosing && MessageBox.Show("You have unsaved edits in the Glitch Harvester Stockpile. \n\n Are you sure you want to close RTC without saving?", "Unsaved edits in Stockpile", MessageBoxButtons.YesNo) == DialogResult.No)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_EVENT_CLOSEEMULATOR);
+
+            //Sleep to make sure the message is sent
+            System.Threading.Thread.Sleep(500);
+
+            UICore.CloseAllRtcForms();
         }
 
         private void UI_CoreForm_Load(object sender, EventArgs e)
