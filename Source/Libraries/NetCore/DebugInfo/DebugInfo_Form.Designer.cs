@@ -43,7 +43,7 @@
             this.btnGetDebugRTC.Name = "btnGetDebugRTC";
             this.btnGetDebugRTC.Size = new System.Drawing.Size(213, 29);
             this.btnGetDebugRTC.TabIndex = 0;
-            this.btnGetDebugRTC.Tag = "color:lighter";
+            this.btnGetDebugRTC.Tag = "color:light2";
             this.btnGetDebugRTC.Text = "Get Debug Info (RTC)";
             this.btnGetDebugRTC.UseVisualStyleBackColor = false;
             this.btnGetDebugRTC.Click += new System.EventHandler(this.btnGetDebugRTC_Click);
@@ -57,7 +57,7 @@
             this.tbRTC.Name = "tbRTC";
             this.tbRTC.Size = new System.Drawing.Size(212, 259);
             this.tbRTC.TabIndex = 1;
-            this.tbRTC.Tag = "color:dark";
+            this.tbRTC.Tag = "color:dark1";
             this.tbRTC.Text = "";
             // 
             // richTextBox2
@@ -70,7 +70,7 @@
             this.richTextBox2.Name = "richTextBox2";
             this.richTextBox2.Size = new System.Drawing.Size(212, 259);
             this.richTextBox2.TabIndex = 3;
-            this.richTextBox2.Tag = "color:dark";
+            this.richTextBox2.Tag = "color:dark1";
             this.richTextBox2.Text = "";
             // 
             // btnGetDebugEmu
@@ -82,7 +82,7 @@
             this.btnGetDebugEmu.Name = "btnGetDebugEmu";
             this.btnGetDebugEmu.Size = new System.Drawing.Size(213, 29);
             this.btnGetDebugEmu.TabIndex = 2;
-            this.btnGetDebugEmu.Tag = "color:lighter";
+            this.btnGetDebugEmu.Tag = "color:light2";
             this.btnGetDebugEmu.Text = "Get Debug Info (Emu)";
             this.btnGetDebugEmu.UseVisualStyleBackColor = false;
             this.btnGetDebugEmu.Click += new System.EventHandler(this.btnGetDebugEmu_Click);

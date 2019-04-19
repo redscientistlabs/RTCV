@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_ConnectionStatus_Form));
             this.lbConnectionStatus = new System.Windows.Forms.Label();
             this.btnStartEmuhawkDetached = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.lbRTCver = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -57,7 +56,7 @@
             this.btnStartEmuhawkDetached.Font = new System.Drawing.Font("Segoe UI Semibold", 11F, System.Drawing.FontStyle.Bold);
             this.btnStartEmuhawkDetached.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnStartEmuhawkDetached.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnStartEmuhawkDetached.Location = new System.Drawing.Point(31, 407);
+            this.btnStartEmuhawkDetached.Location = new System.Drawing.Point(19, 447);
             this.btnStartEmuhawkDetached.Name = "btnStartEmuhawkDetached";
             this.btnStartEmuhawkDetached.Size = new System.Drawing.Size(167, 42);
             this.btnStartEmuhawkDetached.TabIndex = 2;
@@ -65,15 +64,6 @@
             this.btnStartEmuhawkDetached.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnStartEmuhawkDetached.UseVisualStyleBackColor = false;
             this.btnStartEmuhawkDetached.Click += new System.EventHandler(this.btnStartEmuhawkDetached_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.Transparent;
-            this.panel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("panel1.BackgroundImage")));
-            this.panel1.Location = new System.Drawing.Point(31, 69);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(32, 32);
-            this.panel1.TabIndex = 117;
             // 
             // lbRTCver
             // 
@@ -107,7 +97,6 @@
             this.Controls.Add(this.btnStartEmuhawkDetached);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lbRTCver);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.lbConnectionStatus);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -125,7 +114,6 @@
 		#endregion
 		public System.Windows.Forms.Label lbConnectionStatus;
 		public System.Windows.Forms.Button btnStartEmuhawkDetached;
-		private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lbRTCver;
 		private System.Windows.Forms.PictureBox pictureBox1;
 	}

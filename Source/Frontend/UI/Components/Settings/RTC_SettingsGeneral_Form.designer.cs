@@ -120,18 +120,18 @@
             // 
             // btnChangeRTCColor
             // 
-            this.btnChangeRTCColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnChangeRTCColor.BackColor = System.Drawing.Color.Gray;
             this.btnChangeRTCColor.FlatAppearance.BorderSize = 0;
             this.btnChangeRTCColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnChangeRTCColor.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnChangeRTCColor.ForeColor = System.Drawing.Color.Black;
+            this.btnChangeRTCColor.ForeColor = System.Drawing.Color.White;
             this.btnChangeRTCColor.Image = ((System.Drawing.Image)(resources.GetObject("btnChangeRTCColor.Image")));
             this.btnChangeRTCColor.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnChangeRTCColor.Location = new System.Drawing.Point(80, 91);
             this.btnChangeRTCColor.Name = "btnChangeRTCColor";
             this.btnChangeRTCColor.Size = new System.Drawing.Size(250, 45);
             this.btnChangeRTCColor.TabIndex = 136;
-            this.btnChangeRTCColor.Tag = "color:light";
+            this.btnChangeRTCColor.Tag = "color:light1";
             this.btnChangeRTCColor.Text = "   Change color theme";
             this.btnChangeRTCColor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnChangeRTCColor.UseVisualStyleBackColor = false;
@@ -139,18 +139,18 @@
             // 
             // btnOpenOnlineWiki
             // 
-            this.btnOpenOnlineWiki.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnOpenOnlineWiki.BackColor = System.Drawing.Color.Gray;
             this.btnOpenOnlineWiki.FlatAppearance.BorderSize = 0;
             this.btnOpenOnlineWiki.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOpenOnlineWiki.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnOpenOnlineWiki.ForeColor = System.Drawing.Color.Black;
+            this.btnOpenOnlineWiki.ForeColor = System.Drawing.Color.White;
             this.btnOpenOnlineWiki.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenOnlineWiki.Image")));
             this.btnOpenOnlineWiki.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnOpenOnlineWiki.Location = new System.Drawing.Point(80, 40);
             this.btnOpenOnlineWiki.Name = "btnOpenOnlineWiki";
             this.btnOpenOnlineWiki.Size = new System.Drawing.Size(250, 45);
             this.btnOpenOnlineWiki.TabIndex = 135;
-            this.btnOpenOnlineWiki.Tag = "color:light";
+            this.btnOpenOnlineWiki.Tag = "color:light1";
             this.btnOpenOnlineWiki.Text = "    Open the online wiki";
             this.btnOpenOnlineWiki.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnOpenOnlineWiki.UseVisualStyleBackColor = false;
@@ -169,7 +169,7 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "RTC_SettingsGeneral_Form";
-            this.Tag = "color:dark";
+            this.Tag = "color:dark1";
             this.Text = "General";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);

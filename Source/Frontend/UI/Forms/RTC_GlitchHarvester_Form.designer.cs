@@ -166,13 +166,13 @@
             this.label8 = new System.Windows.Forms.Label();
             this.cbCompressStockpiles = new System.Windows.Forms.CheckBox();
             this.pnIntensity = new System.Windows.Forms.Panel();
-            this.multiTB_Intensity = new RTCV.UI.Components.Controls.MultiTrackBar();
             this.dgvStockpile = new RTCV.UI.DataGridViewDraggable();
             this.Item = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GameName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SystemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SystemCore = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Note = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.multiTB_Intensity = new RTCV.UI.Components.Controls.MultiTrackBar();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -224,7 +224,7 @@
             this.pnRender.Name = "pnRender";
             this.pnRender.Size = new System.Drawing.Size(146, 94);
             this.pnRender.TabIndex = 139;
-            this.pnRender.Tag = "color:dark";
+            this.pnRender.Tag = "color:dark1";
             // 
             // label9
             // 
@@ -266,7 +266,7 @@
             this.cbRenderType.Size = new System.Drawing.Size(94, 21);
             this.cbRenderType.TabIndex = 141;
             this.cbRenderType.TabStop = false;
-            this.cbRenderType.Tag = "color:dark";
+            this.cbRenderType.Tag = "color:dark1";
             this.cbRenderType.SelectedIndexChanged += new System.EventHandler(this.cbRenderType_SelectedIndexChanged);
             // 
             // btnOpenRenderFolder
@@ -282,7 +282,7 @@
             this.btnOpenRenderFolder.Size = new System.Drawing.Size(38, 24);
             this.btnOpenRenderFolder.TabIndex = 143;
             this.btnOpenRenderFolder.TabStop = false;
-            this.btnOpenRenderFolder.Tag = "color:darker";
+            this.btnOpenRenderFolder.Tag = "color:dark2";
             this.btnOpenRenderFolder.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnOpenRenderFolder.UseVisualStyleBackColor = false;
             this.btnOpenRenderFolder.Click += new System.EventHandler(this.btnOpenRenderFolder_Click);
@@ -299,7 +299,7 @@
             this.btnRender.Size = new System.Drawing.Size(93, 24);
             this.btnRender.TabIndex = 134;
             this.btnRender.TabStop = false;
-            this.btnRender.Tag = "color:darker";
+            this.btnRender.Tag = "color:dark2";
             this.btnRender.Text = "Start Render";
             this.btnRender.UseVisualStyleBackColor = false;
             this.btnRender.Click += new System.EventHandler(this.btnRender_Click);
@@ -326,7 +326,7 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(156, 27);
             this.panel3.TabIndex = 138;
-            this.panel3.Tag = "color:dark";
+            this.panel3.Tag = "color:dark1";
             // 
             // label1
             // 
@@ -352,7 +352,7 @@
             this.btnCorrupt.Size = new System.Drawing.Size(133, 28);
             this.btnCorrupt.TabIndex = 72;
             this.btnCorrupt.TabStop = false;
-            this.btnCorrupt.Tag = "color:darker";
+            this.btnCorrupt.Tag = "color:dark2";
             this.btnCorrupt.Text = "Blast/Send";
             this.btnCorrupt.UseVisualStyleBackColor = false;
             this.btnCorrupt.Click += new System.EventHandler(this.btnCorrupt_Click);
@@ -371,7 +371,7 @@
             this.btnSendRaw.Size = new System.Drawing.Size(133, 24);
             this.btnSendRaw.TabIndex = 134;
             this.btnSendRaw.TabStop = false;
-            this.btnSendRaw.Tag = "color:darker";
+            this.btnSendRaw.Tag = "color:dark2";
             this.btnSendRaw.Text = "Send Raw to Stash";
             this.btnSendRaw.UseVisualStyleBackColor = false;
             this.btnSendRaw.Click += new System.EventHandler(this.btnSendRaw_Click);
@@ -388,7 +388,7 @@
             this.btnSaveSavestateList.Size = new System.Drawing.Size(68, 24);
             this.btnSaveSavestateList.TabIndex = 160;
             this.btnSaveSavestateList.TabStop = false;
-            this.btnSaveSavestateList.Tag = "color:darker";
+            this.btnSaveSavestateList.Tag = "color:dark2";
             this.btnSaveSavestateList.Text = "Save List";
             this.btnSaveSavestateList.UseVisualStyleBackColor = false;
             this.btnSaveSavestateList.Click += new System.EventHandler(this.btnSaveSavestateList_Click);
@@ -405,7 +405,7 @@
             this.btnLoadSavestateList.Size = new System.Drawing.Size(64, 24);
             this.btnLoadSavestateList.TabIndex = 159;
             this.btnLoadSavestateList.TabStop = false;
-            this.btnLoadSavestateList.Tag = "color:darker";
+            this.btnLoadSavestateList.Tag = "color:dark2";
             this.btnLoadSavestateList.Text = "Load List";
             this.btnLoadSavestateList.UseVisualStyleBackColor = false;
             this.btnLoadSavestateList.Click += new System.EventHandler(this.btnLoadSavestateList_Click);
@@ -423,7 +423,7 @@
             this.btnBackPanelPage.Size = new System.Drawing.Size(63, 24);
             this.btnBackPanelPage.TabIndex = 158;
             this.btnBackPanelPage.TabStop = false;
-            this.btnBackPanelPage.Tag = "color:darker";
+            this.btnBackPanelPage.Tag = "color:dark2";
             this.btnBackPanelPage.Text = "Back";
             this.btnBackPanelPage.UseVisualStyleBackColor = false;
             this.btnBackPanelPage.Click += new System.EventHandler(this.btnBackPanelPage_Click);
@@ -440,7 +440,7 @@
             this.btnForwardPanelPage.Size = new System.Drawing.Size(67, 24);
             this.btnForwardPanelPage.TabIndex = 157;
             this.btnForwardPanelPage.TabStop = false;
-            this.btnForwardPanelPage.Tag = "color:darker";
+            this.btnForwardPanelPage.Tag = "color:dark2";
             this.btnForwardPanelPage.Text = "Forward ";
             this.btnForwardPanelPage.UseVisualStyleBackColor = false;
             this.btnForwardPanelPage.Click += new System.EventHandler(this.btnForwardPanelPage_Click);
@@ -543,7 +543,7 @@
             this.tbSavestate29.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate29.TabIndex = 184;
             this.tbSavestate29.TabStop = false;
-            this.tbSavestate29.Tag = "color:darker";
+            this.tbSavestate29.Tag = "color:dark2";
             // 
             // tbSavestate40
             // 
@@ -555,7 +555,7 @@
             this.tbSavestate40.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate40.TabIndex = 195;
             this.tbSavestate40.TabStop = false;
-            this.tbSavestate40.Tag = "color:darker";
+            this.tbSavestate40.Tag = "color:dark2";
             // 
             // tbSavestate39
             // 
@@ -567,7 +567,7 @@
             this.tbSavestate39.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate39.TabIndex = 194;
             this.tbSavestate39.TabStop = false;
-            this.tbSavestate39.Tag = "color:darker";
+            this.tbSavestate39.Tag = "color:dark2";
             // 
             // btnSavestate21
             // 
@@ -581,7 +581,7 @@
             this.btnSavestate21.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate21.TabIndex = 156;
             this.btnSavestate21.TabStop = false;
-            this.btnSavestate21.Tag = "color:darker";
+            this.btnSavestate21.Tag = "color:dark2";
             this.btnSavestate21.Text = "21";
             this.btnSavestate21.UseVisualStyleBackColor = false;
             this.btnSavestate21.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -596,7 +596,7 @@
             this.tbSavestate38.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate38.TabIndex = 193;
             this.tbSavestate38.TabStop = false;
-            this.tbSavestate38.Tag = "color:darker";
+            this.tbSavestate38.Tag = "color:dark2";
             // 
             // btnSavestate22
             // 
@@ -610,7 +610,7 @@
             this.btnSavestate22.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate22.TabIndex = 157;
             this.btnSavestate22.TabStop = false;
-            this.btnSavestate22.Tag = "color:darker";
+            this.btnSavestate22.Tag = "color:dark2";
             this.btnSavestate22.Text = "22";
             this.btnSavestate22.UseVisualStyleBackColor = false;
             this.btnSavestate22.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -625,7 +625,7 @@
             this.tbSavestate37.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate37.TabIndex = 192;
             this.tbSavestate37.TabStop = false;
-            this.tbSavestate37.Tag = "color:darker";
+            this.tbSavestate37.Tag = "color:dark2";
             // 
             // btnSavestate23
             // 
@@ -639,7 +639,7 @@
             this.btnSavestate23.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate23.TabIndex = 158;
             this.btnSavestate23.TabStop = false;
-            this.btnSavestate23.Tag = "color:darker";
+            this.btnSavestate23.Tag = "color:dark2";
             this.btnSavestate23.Text = "23";
             this.btnSavestate23.UseVisualStyleBackColor = false;
             this.btnSavestate23.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -654,7 +654,7 @@
             this.tbSavestate36.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate36.TabIndex = 191;
             this.tbSavestate36.TabStop = false;
-            this.tbSavestate36.Tag = "color:darker";
+            this.tbSavestate36.Tag = "color:dark2";
             // 
             // btnSavestate24
             // 
@@ -668,7 +668,7 @@
             this.btnSavestate24.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate24.TabIndex = 159;
             this.btnSavestate24.TabStop = false;
-            this.btnSavestate24.Tag = "color:darker";
+            this.btnSavestate24.Tag = "color:dark2";
             this.btnSavestate24.Text = "24";
             this.btnSavestate24.UseVisualStyleBackColor = false;
             this.btnSavestate24.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -683,7 +683,7 @@
             this.tbSavestate35.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate35.TabIndex = 190;
             this.tbSavestate35.TabStop = false;
-            this.tbSavestate35.Tag = "color:darker";
+            this.tbSavestate35.Tag = "color:dark2";
             // 
             // btnSavestate25
             // 
@@ -697,7 +697,7 @@
             this.btnSavestate25.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate25.TabIndex = 160;
             this.btnSavestate25.TabStop = false;
-            this.btnSavestate25.Tag = "color:darker";
+            this.btnSavestate25.Tag = "color:dark2";
             this.btnSavestate25.Text = "25";
             this.btnSavestate25.UseVisualStyleBackColor = false;
             this.btnSavestate25.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -712,7 +712,7 @@
             this.tbSavestate34.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate34.TabIndex = 189;
             this.tbSavestate34.TabStop = false;
-            this.tbSavestate34.Tag = "color:darker";
+            this.tbSavestate34.Tag = "color:dark2";
             // 
             // btnSavestate26
             // 
@@ -726,7 +726,7 @@
             this.btnSavestate26.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate26.TabIndex = 161;
             this.btnSavestate26.TabStop = false;
-            this.btnSavestate26.Tag = "color:darker";
+            this.btnSavestate26.Tag = "color:dark2";
             this.btnSavestate26.Text = "26";
             this.btnSavestate26.UseVisualStyleBackColor = false;
             this.btnSavestate26.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -741,7 +741,7 @@
             this.tbSavestate33.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate33.TabIndex = 188;
             this.tbSavestate33.TabStop = false;
-            this.tbSavestate33.Tag = "color:darker";
+            this.tbSavestate33.Tag = "color:dark2";
             // 
             // btnSavestate27
             // 
@@ -755,7 +755,7 @@
             this.btnSavestate27.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate27.TabIndex = 162;
             this.btnSavestate27.TabStop = false;
-            this.btnSavestate27.Tag = "color:darker";
+            this.btnSavestate27.Tag = "color:dark2";
             this.btnSavestate27.Text = "27";
             this.btnSavestate27.UseVisualStyleBackColor = false;
             this.btnSavestate27.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -770,7 +770,7 @@
             this.tbSavestate32.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate32.TabIndex = 187;
             this.tbSavestate32.TabStop = false;
-            this.tbSavestate32.Tag = "color:darker";
+            this.tbSavestate32.Tag = "color:dark2";
             // 
             // btnSavestate28
             // 
@@ -784,7 +784,7 @@
             this.btnSavestate28.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate28.TabIndex = 163;
             this.btnSavestate28.TabStop = false;
-            this.btnSavestate28.Tag = "color:darker";
+            this.btnSavestate28.Tag = "color:dark2";
             this.btnSavestate28.Text = "28";
             this.btnSavestate28.UseVisualStyleBackColor = false;
             this.btnSavestate28.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -799,7 +799,7 @@
             this.tbSavestate31.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate31.TabIndex = 186;
             this.tbSavestate31.TabStop = false;
-            this.tbSavestate31.Tag = "color:darker";
+            this.tbSavestate31.Tag = "color:dark2";
             // 
             // btnSavestate29
             // 
@@ -813,7 +813,7 @@
             this.btnSavestate29.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate29.TabIndex = 164;
             this.btnSavestate29.TabStop = false;
-            this.btnSavestate29.Tag = "color:darker";
+            this.btnSavestate29.Tag = "color:dark2";
             this.btnSavestate29.Text = "29";
             this.btnSavestate29.UseVisualStyleBackColor = false;
             this.btnSavestate29.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -830,7 +830,7 @@
             this.btnSavestate30.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate30.TabIndex = 165;
             this.btnSavestate30.TabStop = false;
-            this.btnSavestate30.Tag = "color:darker";
+            this.btnSavestate30.Tag = "color:dark2";
             this.btnSavestate30.Text = "30";
             this.btnSavestate30.UseVisualStyleBackColor = false;
             this.btnSavestate30.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -845,7 +845,7 @@
             this.tbSavestate30.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate30.TabIndex = 185;
             this.tbSavestate30.TabStop = false;
-            this.tbSavestate30.Tag = "color:darker";
+            this.tbSavestate30.Tag = "color:dark2";
             // 
             // btnSavestate40
             // 
@@ -859,7 +859,7 @@
             this.btnSavestate40.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate40.TabIndex = 175;
             this.btnSavestate40.TabStop = false;
-            this.btnSavestate40.Tag = "color:darker";
+            this.btnSavestate40.Tag = "color:dark2";
             this.btnSavestate40.Text = "40";
             this.btnSavestate40.UseVisualStyleBackColor = false;
             this.btnSavestate40.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -874,7 +874,7 @@
             this.tbSavestate21.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate21.TabIndex = 176;
             this.tbSavestate21.TabStop = false;
-            this.tbSavestate21.Tag = "color:darker";
+            this.tbSavestate21.Tag = "color:dark2";
             // 
             // btnSavestate39
             // 
@@ -888,7 +888,7 @@
             this.btnSavestate39.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate39.TabIndex = 174;
             this.btnSavestate39.TabStop = false;
-            this.btnSavestate39.Tag = "color:darker";
+            this.btnSavestate39.Tag = "color:dark2";
             this.btnSavestate39.Text = "39";
             this.btnSavestate39.UseVisualStyleBackColor = false;
             this.btnSavestate39.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -903,7 +903,7 @@
             this.tbSavestate22.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate22.TabIndex = 177;
             this.tbSavestate22.TabStop = false;
-            this.tbSavestate22.Tag = "color:darker";
+            this.tbSavestate22.Tag = "color:dark2";
             // 
             // btnSavestate38
             // 
@@ -917,7 +917,7 @@
             this.btnSavestate38.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate38.TabIndex = 173;
             this.btnSavestate38.TabStop = false;
-            this.btnSavestate38.Tag = "color:darker";
+            this.btnSavestate38.Tag = "color:dark2";
             this.btnSavestate38.Text = "38";
             this.btnSavestate38.UseVisualStyleBackColor = false;
             this.btnSavestate38.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -932,7 +932,7 @@
             this.tbSavestate28.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate28.TabIndex = 183;
             this.tbSavestate28.TabStop = false;
-            this.tbSavestate28.Tag = "color:darker";
+            this.tbSavestate28.Tag = "color:dark2";
             // 
             // btnSavestate37
             // 
@@ -946,7 +946,7 @@
             this.btnSavestate37.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate37.TabIndex = 172;
             this.btnSavestate37.TabStop = false;
-            this.btnSavestate37.Tag = "color:darker";
+            this.btnSavestate37.Tag = "color:dark2";
             this.btnSavestate37.Text = "37";
             this.btnSavestate37.UseVisualStyleBackColor = false;
             this.btnSavestate37.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -961,7 +961,7 @@
             this.tbSavestate23.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate23.TabIndex = 178;
             this.tbSavestate23.TabStop = false;
-            this.tbSavestate23.Tag = "color:darker";
+            this.tbSavestate23.Tag = "color:dark2";
             // 
             // btnSavestate36
             // 
@@ -975,7 +975,7 @@
             this.btnSavestate36.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate36.TabIndex = 171;
             this.btnSavestate36.TabStop = false;
-            this.btnSavestate36.Tag = "color:darker";
+            this.btnSavestate36.Tag = "color:dark2";
             this.btnSavestate36.Text = "36";
             this.btnSavestate36.UseVisualStyleBackColor = false;
             this.btnSavestate36.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -990,7 +990,7 @@
             this.tbSavestate27.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate27.TabIndex = 182;
             this.tbSavestate27.TabStop = false;
-            this.tbSavestate27.Tag = "color:darker";
+            this.tbSavestate27.Tag = "color:dark2";
             // 
             // btnSavestate35
             // 
@@ -1004,7 +1004,7 @@
             this.btnSavestate35.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate35.TabIndex = 170;
             this.btnSavestate35.TabStop = false;
-            this.btnSavestate35.Tag = "color:darker";
+            this.btnSavestate35.Tag = "color:dark2";
             this.btnSavestate35.Text = "35";
             this.btnSavestate35.UseVisualStyleBackColor = false;
             this.btnSavestate35.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -1019,7 +1019,7 @@
             this.tbSavestate24.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate24.TabIndex = 179;
             this.tbSavestate24.TabStop = false;
-            this.tbSavestate24.Tag = "color:darker";
+            this.tbSavestate24.Tag = "color:dark2";
             // 
             // btnSavestate34
             // 
@@ -1033,7 +1033,7 @@
             this.btnSavestate34.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate34.TabIndex = 169;
             this.btnSavestate34.TabStop = false;
-            this.btnSavestate34.Tag = "color:darker";
+            this.btnSavestate34.Tag = "color:dark2";
             this.btnSavestate34.Text = "34";
             this.btnSavestate34.UseVisualStyleBackColor = false;
             this.btnSavestate34.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -1048,7 +1048,7 @@
             this.tbSavestate26.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate26.TabIndex = 181;
             this.tbSavestate26.TabStop = false;
-            this.tbSavestate26.Tag = "color:darker";
+            this.tbSavestate26.Tag = "color:dark2";
             // 
             // btnSavestate33
             // 
@@ -1062,7 +1062,7 @@
             this.btnSavestate33.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate33.TabIndex = 168;
             this.btnSavestate33.TabStop = false;
-            this.btnSavestate33.Tag = "color:darker";
+            this.btnSavestate33.Tag = "color:dark2";
             this.btnSavestate33.Text = "33";
             this.btnSavestate33.UseVisualStyleBackColor = false;
             this.btnSavestate33.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -1077,7 +1077,7 @@
             this.tbSavestate25.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate25.TabIndex = 180;
             this.tbSavestate25.TabStop = false;
-            this.tbSavestate25.Tag = "color:darker";
+            this.tbSavestate25.Tag = "color:dark2";
             // 
             // btnSavestate32
             // 
@@ -1091,7 +1091,7 @@
             this.btnSavestate32.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate32.TabIndex = 167;
             this.btnSavestate32.TabStop = false;
-            this.btnSavestate32.Tag = "color:darker";
+            this.btnSavestate32.Tag = "color:dark2";
             this.btnSavestate32.Text = "32";
             this.btnSavestate32.UseVisualStyleBackColor = false;
             this.btnSavestate32.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -1108,7 +1108,7 @@
             this.btnSavestate31.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate31.TabIndex = 166;
             this.btnSavestate31.TabStop = false;
-            this.btnSavestate31.Tag = "color:darker";
+            this.btnSavestate31.Tag = "color:dark2";
             this.btnSavestate31.Text = "31";
             this.btnSavestate31.UseVisualStyleBackColor = false;
             this.btnSavestate31.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -1123,7 +1123,7 @@
             this.tbSavestate09.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate09.TabIndex = 144;
             this.tbSavestate09.TabStop = false;
-            this.tbSavestate09.Tag = "color:darker";
+            this.tbSavestate09.Tag = "color:dark2";
             // 
             // tbSavestate20
             // 
@@ -1135,7 +1135,7 @@
             this.tbSavestate20.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate20.TabIndex = 155;
             this.tbSavestate20.TabStop = false;
-            this.tbSavestate20.Tag = "color:darker";
+            this.tbSavestate20.Tag = "color:dark2";
             // 
             // tbSavestate19
             // 
@@ -1147,7 +1147,7 @@
             this.tbSavestate19.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate19.TabIndex = 154;
             this.tbSavestate19.TabStop = false;
-            this.tbSavestate19.Tag = "color:darker";
+            this.tbSavestate19.Tag = "color:dark2";
             // 
             // btnSavestate01
             // 
@@ -1161,7 +1161,7 @@
             this.btnSavestate01.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate01.TabIndex = 108;
             this.btnSavestate01.TabStop = false;
-            this.btnSavestate01.Tag = "color:darker";
+            this.btnSavestate01.Tag = "color:dark2";
             this.btnSavestate01.Text = "01";
             this.btnSavestate01.UseVisualStyleBackColor = false;
             this.btnSavestate01.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -1176,7 +1176,7 @@
             this.tbSavestate18.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate18.TabIndex = 153;
             this.tbSavestate18.TabStop = false;
-            this.tbSavestate18.Tag = "color:darker";
+            this.tbSavestate18.Tag = "color:dark2";
             // 
             // btnSavestate02
             // 
@@ -1190,7 +1190,7 @@
             this.btnSavestate02.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate02.TabIndex = 109;
             this.btnSavestate02.TabStop = false;
-            this.btnSavestate02.Tag = "color:darker";
+            this.btnSavestate02.Tag = "color:dark2";
             this.btnSavestate02.Text = "02";
             this.btnSavestate02.UseVisualStyleBackColor = false;
             this.btnSavestate02.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -1205,7 +1205,7 @@
             this.tbSavestate17.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate17.TabIndex = 152;
             this.tbSavestate17.TabStop = false;
-            this.tbSavestate17.Tag = "color:darker";
+            this.tbSavestate17.Tag = "color:dark2";
             // 
             // btnSavestate03
             // 
@@ -1219,7 +1219,7 @@
             this.btnSavestate03.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate03.TabIndex = 110;
             this.btnSavestate03.TabStop = false;
-            this.btnSavestate03.Tag = "color:darker";
+            this.btnSavestate03.Tag = "color:dark2";
             this.btnSavestate03.Text = "03";
             this.btnSavestate03.UseVisualStyleBackColor = false;
             this.btnSavestate03.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -1234,7 +1234,7 @@
             this.tbSavestate16.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate16.TabIndex = 151;
             this.tbSavestate16.TabStop = false;
-            this.tbSavestate16.Tag = "color:darker";
+            this.tbSavestate16.Tag = "color:dark2";
             // 
             // btnSavestate04
             // 
@@ -1248,7 +1248,7 @@
             this.btnSavestate04.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate04.TabIndex = 111;
             this.btnSavestate04.TabStop = false;
-            this.btnSavestate04.Tag = "color:darker";
+            this.btnSavestate04.Tag = "color:dark2";
             this.btnSavestate04.Text = "04";
             this.btnSavestate04.UseVisualStyleBackColor = false;
             this.btnSavestate04.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -1263,7 +1263,7 @@
             this.tbSavestate15.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate15.TabIndex = 150;
             this.tbSavestate15.TabStop = false;
-            this.tbSavestate15.Tag = "color:darker";
+            this.tbSavestate15.Tag = "color:dark2";
             // 
             // btnSavestate05
             // 
@@ -1277,7 +1277,7 @@
             this.btnSavestate05.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate05.TabIndex = 112;
             this.btnSavestate05.TabStop = false;
-            this.btnSavestate05.Tag = "color:darker";
+            this.btnSavestate05.Tag = "color:dark2";
             this.btnSavestate05.Text = "05";
             this.btnSavestate05.UseVisualStyleBackColor = false;
             this.btnSavestate05.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -1292,7 +1292,7 @@
             this.tbSavestate14.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate14.TabIndex = 149;
             this.tbSavestate14.TabStop = false;
-            this.tbSavestate14.Tag = "color:darker";
+            this.tbSavestate14.Tag = "color:dark2";
             // 
             // btnSavestate06
             // 
@@ -1306,7 +1306,7 @@
             this.btnSavestate06.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate06.TabIndex = 113;
             this.btnSavestate06.TabStop = false;
-            this.btnSavestate06.Tag = "color:darker";
+            this.btnSavestate06.Tag = "color:dark2";
             this.btnSavestate06.Text = "06";
             this.btnSavestate06.UseVisualStyleBackColor = false;
             this.btnSavestate06.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -1321,7 +1321,7 @@
             this.tbSavestate13.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate13.TabIndex = 148;
             this.tbSavestate13.TabStop = false;
-            this.tbSavestate13.Tag = "color:darker";
+            this.tbSavestate13.Tag = "color:dark2";
             // 
             // btnSavestate07
             // 
@@ -1335,7 +1335,7 @@
             this.btnSavestate07.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate07.TabIndex = 114;
             this.btnSavestate07.TabStop = false;
-            this.btnSavestate07.Tag = "color:darker";
+            this.btnSavestate07.Tag = "color:dark2";
             this.btnSavestate07.Text = "07";
             this.btnSavestate07.UseVisualStyleBackColor = false;
             this.btnSavestate07.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -1350,7 +1350,7 @@
             this.tbSavestate12.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate12.TabIndex = 147;
             this.tbSavestate12.TabStop = false;
-            this.tbSavestate12.Tag = "color:darker";
+            this.tbSavestate12.Tag = "color:dark2";
             // 
             // btnSavestate08
             // 
@@ -1364,7 +1364,7 @@
             this.btnSavestate08.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate08.TabIndex = 115;
             this.btnSavestate08.TabStop = false;
-            this.btnSavestate08.Tag = "color:darker";
+            this.btnSavestate08.Tag = "color:dark2";
             this.btnSavestate08.Text = "08";
             this.btnSavestate08.UseVisualStyleBackColor = false;
             this.btnSavestate08.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -1379,7 +1379,7 @@
             this.tbSavestate11.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate11.TabIndex = 146;
             this.tbSavestate11.TabStop = false;
-            this.tbSavestate11.Tag = "color:darker";
+            this.tbSavestate11.Tag = "color:dark2";
             // 
             // btnSavestate09
             // 
@@ -1393,7 +1393,7 @@
             this.btnSavestate09.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate09.TabIndex = 116;
             this.btnSavestate09.TabStop = false;
-            this.btnSavestate09.Tag = "color:darker";
+            this.btnSavestate09.Tag = "color:dark2";
             this.btnSavestate09.Text = "09";
             this.btnSavestate09.UseVisualStyleBackColor = false;
             this.btnSavestate09.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -1410,7 +1410,7 @@
             this.btnSavestate10.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate10.TabIndex = 117;
             this.btnSavestate10.TabStop = false;
-            this.btnSavestate10.Tag = "color:darker";
+            this.btnSavestate10.Tag = "color:dark2";
             this.btnSavestate10.Text = "10";
             this.btnSavestate10.UseVisualStyleBackColor = false;
             this.btnSavestate10.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -1425,7 +1425,7 @@
             this.tbSavestate10.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate10.TabIndex = 145;
             this.tbSavestate10.TabStop = false;
-            this.tbSavestate10.Tag = "color:darker";
+            this.tbSavestate10.Tag = "color:dark2";
             // 
             // btnSavestate20
             // 
@@ -1439,7 +1439,7 @@
             this.btnSavestate20.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate20.TabIndex = 127;
             this.btnSavestate20.TabStop = false;
-            this.btnSavestate20.Tag = "color:darker";
+            this.btnSavestate20.Tag = "color:dark2";
             this.btnSavestate20.Text = "20";
             this.btnSavestate20.UseVisualStyleBackColor = false;
             this.btnSavestate20.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -1454,7 +1454,7 @@
             this.tbSavestate01.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate01.TabIndex = 136;
             this.tbSavestate01.TabStop = false;
-            this.tbSavestate01.Tag = "color:darker";
+            this.tbSavestate01.Tag = "color:dark2";
             // 
             // btnSavestate19
             // 
@@ -1468,7 +1468,7 @@
             this.btnSavestate19.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate19.TabIndex = 126;
             this.btnSavestate19.TabStop = false;
-            this.btnSavestate19.Tag = "color:darker";
+            this.btnSavestate19.Tag = "color:dark2";
             this.btnSavestate19.Text = "19";
             this.btnSavestate19.UseVisualStyleBackColor = false;
             this.btnSavestate19.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -1483,7 +1483,7 @@
             this.tbSavestate02.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate02.TabIndex = 137;
             this.tbSavestate02.TabStop = false;
-            this.tbSavestate02.Tag = "color:darker";
+            this.tbSavestate02.Tag = "color:dark2";
             // 
             // btnSavestate18
             // 
@@ -1497,7 +1497,7 @@
             this.btnSavestate18.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate18.TabIndex = 125;
             this.btnSavestate18.TabStop = false;
-            this.btnSavestate18.Tag = "color:darker";
+            this.btnSavestate18.Tag = "color:dark2";
             this.btnSavestate18.Text = "18";
             this.btnSavestate18.UseVisualStyleBackColor = false;
             this.btnSavestate18.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -1512,7 +1512,7 @@
             this.tbSavestate08.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate08.TabIndex = 143;
             this.tbSavestate08.TabStop = false;
-            this.tbSavestate08.Tag = "color:darker";
+            this.tbSavestate08.Tag = "color:dark2";
             // 
             // btnSavestate17
             // 
@@ -1526,7 +1526,7 @@
             this.btnSavestate17.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate17.TabIndex = 124;
             this.btnSavestate17.TabStop = false;
-            this.btnSavestate17.Tag = "color:darker";
+            this.btnSavestate17.Tag = "color:dark2";
             this.btnSavestate17.Text = "17";
             this.btnSavestate17.UseVisualStyleBackColor = false;
             this.btnSavestate17.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -1541,7 +1541,7 @@
             this.tbSavestate03.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate03.TabIndex = 138;
             this.tbSavestate03.TabStop = false;
-            this.tbSavestate03.Tag = "color:darker";
+            this.tbSavestate03.Tag = "color:dark2";
             // 
             // btnSavestate16
             // 
@@ -1555,7 +1555,7 @@
             this.btnSavestate16.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate16.TabIndex = 123;
             this.btnSavestate16.TabStop = false;
-            this.btnSavestate16.Tag = "color:darker";
+            this.btnSavestate16.Tag = "color:dark2";
             this.btnSavestate16.Text = "16";
             this.btnSavestate16.UseVisualStyleBackColor = false;
             this.btnSavestate16.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -1570,7 +1570,7 @@
             this.tbSavestate07.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate07.TabIndex = 142;
             this.tbSavestate07.TabStop = false;
-            this.tbSavestate07.Tag = "color:darker";
+            this.tbSavestate07.Tag = "color:dark2";
             // 
             // btnSavestate15
             // 
@@ -1584,7 +1584,7 @@
             this.btnSavestate15.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate15.TabIndex = 122;
             this.btnSavestate15.TabStop = false;
-            this.btnSavestate15.Tag = "color:darker";
+            this.btnSavestate15.Tag = "color:dark2";
             this.btnSavestate15.Text = "15";
             this.btnSavestate15.UseVisualStyleBackColor = false;
             this.btnSavestate15.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -1599,7 +1599,7 @@
             this.tbSavestate04.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate04.TabIndex = 139;
             this.tbSavestate04.TabStop = false;
-            this.tbSavestate04.Tag = "color:darker";
+            this.tbSavestate04.Tag = "color:dark2";
             // 
             // btnSavestate14
             // 
@@ -1613,7 +1613,7 @@
             this.btnSavestate14.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate14.TabIndex = 121;
             this.btnSavestate14.TabStop = false;
-            this.btnSavestate14.Tag = "color:darker";
+            this.btnSavestate14.Tag = "color:dark2";
             this.btnSavestate14.Text = "14";
             this.btnSavestate14.UseVisualStyleBackColor = false;
             this.btnSavestate14.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -1628,7 +1628,7 @@
             this.tbSavestate06.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate06.TabIndex = 141;
             this.tbSavestate06.TabStop = false;
-            this.tbSavestate06.Tag = "color:darker";
+            this.tbSavestate06.Tag = "color:dark2";
             // 
             // btnSavestate13
             // 
@@ -1642,7 +1642,7 @@
             this.btnSavestate13.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate13.TabIndex = 120;
             this.btnSavestate13.TabStop = false;
-            this.btnSavestate13.Tag = "color:darker";
+            this.btnSavestate13.Tag = "color:dark2";
             this.btnSavestate13.Text = "13";
             this.btnSavestate13.UseVisualStyleBackColor = false;
             this.btnSavestate13.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -1657,7 +1657,7 @@
             this.tbSavestate05.Size = new System.Drawing.Size(103, 20);
             this.tbSavestate05.TabIndex = 140;
             this.tbSavestate05.TabStop = false;
-            this.tbSavestate05.Tag = "color:darker";
+            this.tbSavestate05.Tag = "color:dark2";
             // 
             // btnSavestate12
             // 
@@ -1671,7 +1671,7 @@
             this.btnSavestate12.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate12.TabIndex = 119;
             this.btnSavestate12.TabStop = false;
-            this.btnSavestate12.Tag = "color:darker";
+            this.btnSavestate12.Tag = "color:dark2";
             this.btnSavestate12.Text = "12";
             this.btnSavestate12.UseVisualStyleBackColor = false;
             this.btnSavestate12.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -1688,7 +1688,7 @@
             this.btnSavestate11.Size = new System.Drawing.Size(29, 19);
             this.btnSavestate11.TabIndex = 118;
             this.btnSavestate11.TabStop = false;
-            this.btnSavestate11.Tag = "color:darker";
+            this.btnSavestate11.Tag = "color:dark2";
             this.btnSavestate11.Text = "11";
             this.btnSavestate11.UseVisualStyleBackColor = false;
             this.btnSavestate11.Click += new System.EventHandler(this.btnSavestate_Click);
@@ -1705,7 +1705,7 @@
             this.btnToggleSaveLoad.Size = new System.Drawing.Size(74, 24);
             this.btnToggleSaveLoad.TabIndex = 107;
             this.btnToggleSaveLoad.TabStop = false;
-            this.btnToggleSaveLoad.Tag = "color:darker";
+            this.btnToggleSaveLoad.Tag = "color:dark2";
             this.btnToggleSaveLoad.Text = "Change ->";
             this.btnToggleSaveLoad.UseVisualStyleBackColor = false;
             this.btnToggleSaveLoad.Click += new System.EventHandler(this.btnToggleSaveLoad_Click);
@@ -1745,7 +1745,7 @@
             this.btnSaveLoad.Size = new System.Drawing.Size(56, 24);
             this.btnSaveLoad.TabIndex = 128;
             this.btnSaveLoad.TabStop = false;
-            this.btnSaveLoad.Tag = "color:darker";
+            this.btnSaveLoad.Tag = "color:dark2";
             this.btnSaveLoad.Text = "LOAD";
             this.btnSaveLoad.UseVisualStyleBackColor = false;
             this.btnSaveLoad.Click += new System.EventHandler(this.btnSaveLoad_Click);
@@ -1769,53 +1769,53 @@
             // btnClearStashHistory
             // 
             this.btnClearStashHistory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnClearStashHistory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnClearStashHistory.BackColor = System.Drawing.Color.Gray;
             this.btnClearStashHistory.FlatAppearance.BorderSize = 0;
             this.btnClearStashHistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClearStashHistory.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnClearStashHistory.ForeColor = System.Drawing.Color.Black;
+            this.btnClearStashHistory.ForeColor = System.Drawing.Color.White;
             this.btnClearStashHistory.Location = new System.Drawing.Point(160, 469);
             this.btnClearStashHistory.Name = "btnClearStashHistory";
             this.btnClearStashHistory.Size = new System.Drawing.Size(200, 24);
             this.btnClearStashHistory.TabIndex = 84;
             this.btnClearStashHistory.TabStop = false;
-            this.btnClearStashHistory.Tag = "color:light";
+            this.btnClearStashHistory.Tag = "color:light1";
             this.btnClearStashHistory.Text = "Clear History";
             this.btnClearStashHistory.UseVisualStyleBackColor = false;
             this.btnClearStashHistory.Click += new System.EventHandler(this.btnClearStashHistory_Click);
             // 
             // btnStashDOWN
             // 
-            this.btnStashDOWN.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnStashDOWN.BackColor = System.Drawing.Color.Gray;
             this.btnStashDOWN.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnStashDOWN.FlatAppearance.BorderSize = 0;
             this.btnStashDOWN.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStashDOWN.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.btnStashDOWN.ForeColor = System.Drawing.Color.Black;
+            this.btnStashDOWN.ForeColor = System.Drawing.Color.White;
             this.btnStashDOWN.Location = new System.Drawing.Point(336, 182);
             this.btnStashDOWN.Name = "btnStashDOWN";
             this.btnStashDOWN.Size = new System.Drawing.Size(25, 22);
             this.btnStashDOWN.TabIndex = 83;
             this.btnStashDOWN.TabStop = false;
-            this.btnStashDOWN.Tag = "color:light";
+            this.btnStashDOWN.Tag = "color:light1";
             this.btnStashDOWN.Text = "▼";
             this.btnStashDOWN.UseVisualStyleBackColor = false;
             this.btnStashDOWN.Click += new System.EventHandler(this.btnStashDOWN_Click);
             // 
             // btnStashUP
             // 
-            this.btnStashUP.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnStashUP.BackColor = System.Drawing.Color.Gray;
             this.btnStashUP.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnStashUP.FlatAppearance.BorderSize = 0;
             this.btnStashUP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStashUP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.btnStashUP.ForeColor = System.Drawing.Color.Black;
+            this.btnStashUP.ForeColor = System.Drawing.Color.White;
             this.btnStashUP.Location = new System.Drawing.Point(310, 182);
             this.btnStashUP.Name = "btnStashUP";
             this.btnStashUP.Size = new System.Drawing.Size(25, 22);
             this.btnStashUP.TabIndex = 82;
             this.btnStashUP.TabStop = false;
-            this.btnStashUP.Tag = "color:light";
+            this.btnStashUP.Tag = "color:light1";
             this.btnStashUP.Text = "▲";
             this.btnStashUP.UseVisualStyleBackColor = false;
             this.btnStashUP.Click += new System.EventHandler(this.btnStashUP_Click);
@@ -1854,17 +1854,17 @@
             // btnStockpileMoveSelectedDown
             // 
             this.btnStockpileMoveSelectedDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnStockpileMoveSelectedDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnStockpileMoveSelectedDown.BackColor = System.Drawing.Color.Gray;
             this.btnStockpileMoveSelectedDown.FlatAppearance.BorderSize = 0;
             this.btnStockpileMoveSelectedDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStockpileMoveSelectedDown.Font = new System.Drawing.Font("Segoe UI Symbol", 7F);
-            this.btnStockpileMoveSelectedDown.ForeColor = System.Drawing.Color.Black;
+            this.btnStockpileMoveSelectedDown.ForeColor = System.Drawing.Color.White;
             this.btnStockpileMoveSelectedDown.Location = new System.Drawing.Point(816, 470);
             this.btnStockpileMoveSelectedDown.Name = "btnStockpileMoveSelectedDown";
             this.btnStockpileMoveSelectedDown.Size = new System.Drawing.Size(33, 24);
             this.btnStockpileMoveSelectedDown.TabIndex = 118;
             this.btnStockpileMoveSelectedDown.TabStop = false;
-            this.btnStockpileMoveSelectedDown.Tag = "color:light";
+            this.btnStockpileMoveSelectedDown.Tag = "color:light1";
             this.btnStockpileMoveSelectedDown.Text = "▼▼";
             this.btnStockpileMoveSelectedDown.UseVisualStyleBackColor = false;
             this.btnStockpileMoveSelectedDown.Click += new System.EventHandler(this.btnStockpileMoveSelectedDown_Click);
@@ -1872,18 +1872,18 @@
             // btnStockpileMoveSelectedUp
             // 
             this.btnStockpileMoveSelectedUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnStockpileMoveSelectedUp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnStockpileMoveSelectedUp.BackColor = System.Drawing.Color.Gray;
             this.btnStockpileMoveSelectedUp.FlatAppearance.BorderSize = 0;
             this.btnStockpileMoveSelectedUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStockpileMoveSelectedUp.Font = new System.Drawing.Font("Segoe UI Symbol", 7F);
-            this.btnStockpileMoveSelectedUp.ForeColor = System.Drawing.Color.Black;
+            this.btnStockpileMoveSelectedUp.ForeColor = System.Drawing.Color.White;
             this.btnStockpileMoveSelectedUp.Location = new System.Drawing.Point(778, 470);
             this.btnStockpileMoveSelectedUp.Margin = new System.Windows.Forms.Padding(0);
             this.btnStockpileMoveSelectedUp.Name = "btnStockpileMoveSelectedUp";
             this.btnStockpileMoveSelectedUp.Size = new System.Drawing.Size(33, 24);
             this.btnStockpileMoveSelectedUp.TabIndex = 117;
             this.btnStockpileMoveSelectedUp.TabStop = false;
-            this.btnStockpileMoveSelectedUp.Tag = "color:light";
+            this.btnStockpileMoveSelectedUp.Tag = "color:light1";
             this.btnStockpileMoveSelectedUp.Text = "▲▲";
             this.btnStockpileMoveSelectedUp.UseVisualStyleBackColor = false;
             this.btnStockpileMoveSelectedUp.Click += new System.EventHandler(this.btnStockpileMoveSelectedUp_Click);
@@ -1943,17 +1943,17 @@
             // btnClearStockpile
             // 
             this.btnClearStockpile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClearStockpile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnClearStockpile.BackColor = System.Drawing.Color.Gray;
             this.btnClearStockpile.FlatAppearance.BorderSize = 0;
             this.btnClearStockpile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClearStockpile.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnClearStockpile.ForeColor = System.Drawing.Color.Black;
+            this.btnClearStockpile.ForeColor = System.Drawing.Color.White;
             this.btnClearStockpile.Location = new System.Drawing.Point(401, 469);
             this.btnClearStockpile.Name = "btnClearStockpile";
             this.btnClearStockpile.Size = new System.Drawing.Size(95, 24);
             this.btnClearStockpile.TabIndex = 115;
             this.btnClearStockpile.TabStop = false;
-            this.btnClearStockpile.Tag = "color:light";
+            this.btnClearStockpile.Tag = "color:light1";
             this.btnClearStockpile.Text = "Clear Stockpile";
             this.btnClearStockpile.UseVisualStyleBackColor = false;
             this.btnClearStockpile.Click += new System.EventHandler(this.btnClearStockpile_Click);
@@ -1961,17 +1961,17 @@
             // btnStockpileDOWN
             // 
             this.btnStockpileDOWN.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnStockpileDOWN.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnStockpileDOWN.BackColor = System.Drawing.Color.Gray;
             this.btnStockpileDOWN.FlatAppearance.BorderSize = 0;
             this.btnStockpileDOWN.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStockpileDOWN.Font = new System.Drawing.Font("Segoe UI Symbol", 8F);
-            this.btnStockpileDOWN.ForeColor = System.Drawing.Color.Black;
+            this.btnStockpileDOWN.ForeColor = System.Drawing.Color.White;
             this.btnStockpileDOWN.Location = new System.Drawing.Point(824, 4);
             this.btnStockpileDOWN.Name = "btnStockpileDOWN";
             this.btnStockpileDOWN.Size = new System.Drawing.Size(25, 22);
             this.btnStockpileDOWN.TabIndex = 113;
             this.btnStockpileDOWN.TabStop = false;
-            this.btnStockpileDOWN.Tag = "color:light";
+            this.btnStockpileDOWN.Tag = "color:light1";
             this.btnStockpileDOWN.Text = "▼";
             this.btnStockpileDOWN.UseVisualStyleBackColor = false;
             this.btnStockpileDOWN.Click += new System.EventHandler(this.btnStockpileDOWN_Click);
@@ -1979,17 +1979,17 @@
             // btnStockpileUP
             // 
             this.btnStockpileUP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnStockpileUP.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnStockpileUP.BackColor = System.Drawing.Color.Gray;
             this.btnStockpileUP.FlatAppearance.BorderSize = 0;
             this.btnStockpileUP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStockpileUP.Font = new System.Drawing.Font("Segoe UI Symbol", 8F);
-            this.btnStockpileUP.ForeColor = System.Drawing.Color.Black;
+            this.btnStockpileUP.ForeColor = System.Drawing.Color.White;
             this.btnStockpileUP.Location = new System.Drawing.Point(798, 4);
             this.btnStockpileUP.Name = "btnStockpileUP";
             this.btnStockpileUP.Size = new System.Drawing.Size(25, 22);
             this.btnStockpileUP.TabIndex = 112;
             this.btnStockpileUP.TabStop = false;
-            this.btnStockpileUP.Tag = "color:light";
+            this.btnStockpileUP.Tag = "color:light1";
             this.btnStockpileUP.Text = "▲";
             this.btnStockpileUP.UseVisualStyleBackColor = false;
             this.btnStockpileUP.Click += new System.EventHandler(this.btnStockpileUP_Click);
@@ -2008,34 +2008,34 @@
             // btnRemoveSelectedStockpile
             // 
             this.btnRemoveSelectedStockpile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRemoveSelectedStockpile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnRemoveSelectedStockpile.BackColor = System.Drawing.Color.Gray;
             this.btnRemoveSelectedStockpile.FlatAppearance.BorderSize = 0;
             this.btnRemoveSelectedStockpile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRemoveSelectedStockpile.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnRemoveSelectedStockpile.ForeColor = System.Drawing.Color.Black;
+            this.btnRemoveSelectedStockpile.ForeColor = System.Drawing.Color.White;
             this.btnRemoveSelectedStockpile.Location = new System.Drawing.Point(506, 469);
             this.btnRemoveSelectedStockpile.Name = "btnRemoveSelectedStockpile";
             this.btnRemoveSelectedStockpile.Size = new System.Drawing.Size(83, 24);
             this.btnRemoveSelectedStockpile.TabIndex = 108;
             this.btnRemoveSelectedStockpile.TabStop = false;
-            this.btnRemoveSelectedStockpile.Tag = "color:light";
+            this.btnRemoveSelectedStockpile.Tag = "color:light1";
             this.btnRemoveSelectedStockpile.Text = "Remove Item";
             this.btnRemoveSelectedStockpile.UseVisualStyleBackColor = false;
             this.btnRemoveSelectedStockpile.Click += new System.EventHandler(this.btnRemoveSelectedStockpile_Click);
             // 
             // btnAddStashToStockpile
             // 
-            this.btnAddStashToStockpile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnAddStashToStockpile.BackColor = System.Drawing.Color.Gray;
             this.btnAddStashToStockpile.FlatAppearance.BorderSize = 0;
             this.btnAddStashToStockpile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddStashToStockpile.Font = new System.Drawing.Font("Segoe UI Symbol", 12F);
-            this.btnAddStashToStockpile.ForeColor = System.Drawing.Color.Black;
+            this.btnAddStashToStockpile.ForeColor = System.Drawing.Color.White;
             this.btnAddStashToStockpile.Location = new System.Drawing.Point(369, 285);
             this.btnAddStashToStockpile.Name = "btnAddStashToStockpile";
             this.btnAddStashToStockpile.Size = new System.Drawing.Size(24, 115);
             this.btnAddStashToStockpile.TabIndex = 107;
             this.btnAddStashToStockpile.TabStop = false;
-            this.btnAddStashToStockpile.Tag = "color:light";
+            this.btnAddStashToStockpile.Tag = "color:light1";
             this.btnAddStashToStockpile.Text = "▶";
             this.btnAddStashToStockpile.UseVisualStyleBackColor = false;
             this.btnAddStashToStockpile.Click += new System.EventHandler(this.btnAddStashToStockpile_Click);
@@ -2067,7 +2067,7 @@
             this.btnBlastToggle.Size = new System.Drawing.Size(96, 24);
             this.btnBlastToggle.TabIndex = 131;
             this.btnBlastToggle.TabStop = false;
-            this.btnBlastToggle.Tag = "color:darker";
+            this.btnBlastToggle.Tag = "color:dark2";
             this.btnBlastToggle.Text = "BlastLayer : OFF";
             this.btnBlastToggle.UseVisualStyleBackColor = false;
             this.btnBlastToggle.Click += new System.EventHandler(this.btnBlastToggle_Click);
@@ -2082,7 +2082,7 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(75, 48);
             this.panel1.TabIndex = 76;
-            this.panel1.Tag = "color:dark";
+            this.panel1.Tag = "color:dark1";
             // 
             // rbOriginal
             // 
@@ -2172,17 +2172,17 @@
             // btnRenameSelected
             // 
             this.btnRenameSelected.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRenameSelected.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnRenameSelected.BackColor = System.Drawing.Color.Gray;
             this.btnRenameSelected.FlatAppearance.BorderSize = 0;
             this.btnRenameSelected.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRenameSelected.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnRenameSelected.ForeColor = System.Drawing.Color.Black;
+            this.btnRenameSelected.ForeColor = System.Drawing.Color.White;
             this.btnRenameSelected.Location = new System.Drawing.Point(597, 469);
             this.btnRenameSelected.Name = "btnRenameSelected";
             this.btnRenameSelected.Size = new System.Drawing.Size(86, 24);
             this.btnRenameSelected.TabIndex = 135;
             this.btnRenameSelected.TabStop = false;
-            this.btnRenameSelected.Tag = "color:light";
+            this.btnRenameSelected.Tag = "color:light1";
             this.btnRenameSelected.Text = "Rename Item";
             this.btnRenameSelected.UseVisualStyleBackColor = false;
             this.btnRenameSelected.Click += new System.EventHandler(this.btnRenameSelected_Click);
@@ -2214,7 +2214,7 @@
             this.btnRerollSelected.Size = new System.Drawing.Size(93, 24);
             this.btnRerollSelected.TabIndex = 133;
             this.btnRerollSelected.TabStop = false;
-            this.btnRerollSelected.Tag = "color:darker";
+            this.btnRerollSelected.Tag = "color:dark2";
             this.btnRerollSelected.Text = "Reroll Selected";
             this.btnRerollSelected.UseVisualStyleBackColor = false;
             this.btnRerollSelected.Click += new System.EventHandler(this.btnRerollSelected_Click);
@@ -2254,22 +2254,6 @@
             this.pnIntensity.Size = new System.Drawing.Size(204, 58);
             this.pnIntensity.TabIndex = 122;
             this.pnIntensity.Tag = "color:normal";
-            // 
-            // multiTB_Intensity
-            // 
-            this.multiTB_Intensity.BackColor = System.Drawing.Color.Gray;
-            this.multiTB_Intensity.DisplayCheckbox = false;
-            this.multiTB_Intensity.Font = new System.Drawing.Font("Segoe UI", 8.25F);
-            this.multiTB_Intensity.LabelText = "Intensity";
-            this.multiTB_Intensity.Location = new System.Drawing.Point(0, 0);
-            this.multiTB_Intensity.Maximum = ((long)(65535));
-            this.multiTB_Intensity.Minimum = ((long)(1));
-            this.multiTB_Intensity.Name = "multiTB_Intensity";
-            this.multiTB_Intensity.Size = new System.Drawing.Size(204, 59);
-            this.multiTB_Intensity.TabIndex = 0;
-            this.multiTB_Intensity.Tag = "color:normal";
-            this.multiTB_Intensity.UncapNumericBox = false;
-            this.multiTB_Intensity.Value = ((long)(1));
             // 
             // dgvStockpile
             // 
@@ -2324,7 +2308,7 @@
             this.dgvStockpile.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvStockpile.Size = new System.Drawing.Size(451, 432);
             this.dgvStockpile.TabIndex = 140;
-            this.dgvStockpile.Tag = "color:dark";
+            this.dgvStockpile.Tag = "color:dark1";
             this.dgvStockpile.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStockpile_CellClick);
             this.dgvStockpile.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvStockpile_MouseDown);
             // 
@@ -2370,6 +2354,22 @@
             this.Note.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Note.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.Note.Text = "";
+            // 
+            // multiTB_Intensity
+            // 
+            this.multiTB_Intensity.BackColor = System.Drawing.Color.Gray;
+            this.multiTB_Intensity.DisplayCheckbox = false;
+            this.multiTB_Intensity.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.multiTB_Intensity.Label = "Intensity";
+            this.multiTB_Intensity.Location = new System.Drawing.Point(0, 0);
+            this.multiTB_Intensity.Maximum = ((long)(65535));
+            this.multiTB_Intensity.Minimum = ((long)(1));
+            this.multiTB_Intensity.Name = "multiTB_Intensity";
+            this.multiTB_Intensity.Size = new System.Drawing.Size(204, 59);
+            this.multiTB_Intensity.TabIndex = 0;
+            this.multiTB_Intensity.Tag = "color:normal";
+            this.multiTB_Intensity.UncapNumericBox = false;
+            this.multiTB_Intensity.Value = ((long)(1));
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -2437,7 +2437,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(870, 540);
             this.Name = "RTC_GlitchHarvester_Form";
-            this.Tag = "color:dark";
+            this.Tag = "color:dark1";
             this.Text = "Glitch Harvester";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RTC_GH_Form_FormClosing);
             this.Load += new System.EventHandler(this.RTC_GH_Form_Load);

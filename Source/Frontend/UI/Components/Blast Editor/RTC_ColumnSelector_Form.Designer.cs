@@ -60,7 +60,7 @@
             this.tablePanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tablePanel.Size = new System.Drawing.Size(269, 285);
             this.tablePanel.TabIndex = 0;
-            this.tablePanel.Tag = "color:dark";
+            this.tablePanel.Tag = "color:dark1";
             // 
             // panel1
             // 
@@ -73,7 +73,7 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(280, 297);
             this.panel1.TabIndex = 141;
-            this.panel1.Tag = "color:dark";
+            this.panel1.Tag = "color:dark1";
             // 
             // ColumnSelector
             // 

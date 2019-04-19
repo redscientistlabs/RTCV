@@ -125,6 +125,7 @@ namespace RTCV.UI
             this.rasterizeVMDsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bakeBlastunitsToVALUEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openBlastGeneratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnSanitize = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBlastEditor)).BeginInit();
             this.panelSidebar.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -169,6 +170,7 @@ namespace RTCV.UI
             // panelSidebar
             // 
             this.panelSidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panelSidebar.Controls.Add(this.btnSanitize);
             this.panelSidebar.Controls.Add(this.btnAddRow);
             this.panelSidebar.Controls.Add(this.panel1);
             this.panelSidebar.Controls.Add(this.pnMemoryTargetting);
@@ -190,21 +192,21 @@ namespace RTCV.UI
             this.panelSidebar.Name = "panelSidebar";
             this.panelSidebar.Size = new System.Drawing.Size(159, 463);
             this.panelSidebar.TabIndex = 146;
-            this.panelSidebar.Tag = "color:dark";
+            this.panelSidebar.Tag = "color:dark1";
             // 
             // btnAddRow
             // 
-            this.btnAddRow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnAddRow.BackColor = System.Drawing.Color.Gray;
             this.btnAddRow.FlatAppearance.BorderSize = 0;
             this.btnAddRow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddRow.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.btnAddRow.ForeColor = System.Drawing.Color.Black;
-            this.btnAddRow.Location = new System.Drawing.Point(14, 330);
+            this.btnAddRow.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnAddRow.ForeColor = System.Drawing.Color.White;
+            this.btnAddRow.Location = new System.Drawing.Point(14, 351);
             this.btnAddRow.Name = "btnAddRow";
-            this.btnAddRow.Size = new System.Drawing.Size(135, 25);
+            this.btnAddRow.Size = new System.Drawing.Size(135, 23);
             this.btnAddRow.TabIndex = 177;
             this.btnAddRow.TabStop = false;
-            this.btnAddRow.Tag = "color:light";
+            this.btnAddRow.Tag = "color:light1";
             this.btnAddRow.Text = "Add New Row";
             this.btnAddRow.UseVisualStyleBackColor = false;
             this.btnAddRow.Click += new System.EventHandler(this.BtnAddRow_Click);
@@ -221,7 +223,7 @@ namespace RTCV.UI
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(136, 60);
             this.panel1.TabIndex = 137;
-            this.panel1.Tag = "color:lighter";
+            this.panel1.Tag = "color:light2";
             // 
             // cbShiftBlastlayer
             // 
@@ -232,7 +234,7 @@ namespace RTCV.UI
             this.cbShiftBlastlayer.Name = "cbShiftBlastlayer";
             this.cbShiftBlastlayer.Size = new System.Drawing.Size(114, 21);
             this.cbShiftBlastlayer.TabIndex = 148;
-            this.cbShiftBlastlayer.Tag = "color:dark";
+            this.cbShiftBlastlayer.Tag = "color:dark1";
             // 
             // btnShiftBlastLayerDown
             // 
@@ -246,7 +248,7 @@ namespace RTCV.UI
             this.btnShiftBlastLayerDown.Size = new System.Drawing.Size(21, 21);
             this.btnShiftBlastLayerDown.TabIndex = 147;
             this.btnShiftBlastLayerDown.TabStop = false;
-            this.btnShiftBlastLayerDown.Tag = "color:light";
+            this.btnShiftBlastLayerDown.Tag = "color:light1";
             this.btnShiftBlastLayerDown.Text = "◀";
             this.btnShiftBlastLayerDown.UseVisualStyleBackColor = false;
             this.btnShiftBlastLayerDown.Click += new System.EventHandler(this.btnShiftBlastLayerDown_Click);
@@ -263,7 +265,7 @@ namespace RTCV.UI
             this.btnShiftBlastLayerUp.Size = new System.Drawing.Size(22, 22);
             this.btnShiftBlastLayerUp.TabIndex = 146;
             this.btnShiftBlastLayerUp.TabStop = false;
-            this.btnShiftBlastLayerUp.Tag = "color:light";
+            this.btnShiftBlastLayerUp.Tag = "color:light1";
             this.btnShiftBlastLayerUp.Text = "▶";
             this.btnShiftBlastLayerUp.UseVisualStyleBackColor = false;
             this.btnShiftBlastLayerUp.Click += new System.EventHandler(this.btnShiftBlastLayerUp_Click);
@@ -278,7 +280,7 @@ namespace RTCV.UI
             this.updownShiftBlastLayerAmount.Name = "updownShiftBlastLayerAmount";
             this.updownShiftBlastLayerAmount.Size = new System.Drawing.Size(59, 22);
             this.updownShiftBlastLayerAmount.TabIndex = 145;
-            this.updownShiftBlastLayerAmount.Tag = "color:dark";
+            this.updownShiftBlastLayerAmount.Tag = "color:dark1";
             // 
             // pnMemoryTargetting
             // 
@@ -289,7 +291,7 @@ namespace RTCV.UI
             this.pnMemoryTargetting.Name = "pnMemoryTargetting";
             this.pnMemoryTargetting.Size = new System.Drawing.Size(135, 24);
             this.pnMemoryTargetting.TabIndex = 134;
-            this.pnMemoryTargetting.Tag = "color:lighter";
+            this.pnMemoryTargetting.Tag = "color:light2";
             // 
             // lbBlastLayerSize
             // 
@@ -313,7 +315,7 @@ namespace RTCV.UI
             this.btnHelp.Size = new System.Drawing.Size(27, 17);
             this.btnHelp.TabIndex = 176;
             this.btnHelp.TabStop = false;
-            this.btnHelp.Tag = "color:dark";
+            this.btnHelp.Tag = "color:dark1";
             this.btnHelp.UseVisualStyleBackColor = false;
             this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
             // 
@@ -342,24 +344,24 @@ namespace RTCV.UI
             this.btnLoadCorrupt.Size = new System.Drawing.Size(135, 25);
             this.btnLoadCorrupt.TabIndex = 14;
             this.btnLoadCorrupt.TabStop = false;
-            this.btnLoadCorrupt.Tag = "color:darker";
+            this.btnLoadCorrupt.Tag = "color:dark2";
             this.btnLoadCorrupt.Text = "Load + Corrupt";
             this.btnLoadCorrupt.UseVisualStyleBackColor = false;
             this.btnLoadCorrupt.Click += new System.EventHandler(this.btnLoadCorrupt_Click);
             // 
             // btnRemoveSelected
             // 
-            this.btnRemoveSelected.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnRemoveSelected.BackColor = System.Drawing.Color.Gray;
             this.btnRemoveSelected.FlatAppearance.BorderSize = 0;
             this.btnRemoveSelected.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRemoveSelected.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.btnRemoveSelected.ForeColor = System.Drawing.Color.Black;
-            this.btnRemoveSelected.Location = new System.Drawing.Point(14, 273);
+            this.btnRemoveSelected.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnRemoveSelected.ForeColor = System.Drawing.Color.White;
+            this.btnRemoveSelected.Location = new System.Drawing.Point(14, 297);
             this.btnRemoveSelected.Name = "btnRemoveSelected";
-            this.btnRemoveSelected.Size = new System.Drawing.Size(135, 25);
+            this.btnRemoveSelected.Size = new System.Drawing.Size(135, 23);
             this.btnRemoveSelected.TabIndex = 139;
             this.btnRemoveSelected.TabStop = false;
-            this.btnRemoveSelected.Tag = "color:light";
+            this.btnRemoveSelected.Tag = "color:light1";
             this.btnRemoveSelected.Text = "Remove Selected";
             this.btnRemoveSelected.UseVisualStyleBackColor = false;
             this.btnRemoveSelected.Click += new System.EventHandler(this.btnRemoveSelected_Click);
@@ -377,7 +379,7 @@ namespace RTCV.UI
             this.btnCorrupt.Size = new System.Drawing.Size(135, 25);
             this.btnCorrupt.TabIndex = 13;
             this.btnCorrupt.TabStop = false;
-            this.btnCorrupt.Tag = "color:darker";
+            this.btnCorrupt.Tag = "color:dark2";
             this.btnCorrupt.Text = "Apply Corruption";
             this.btnCorrupt.UseVisualStyleBackColor = false;
             this.btnCorrupt.Click += new System.EventHandler(this.btnCorrupt_Click);
@@ -395,24 +397,24 @@ namespace RTCV.UI
             this.btnSendToStash.Size = new System.Drawing.Size(135, 25);
             this.btnSendToStash.TabIndex = 12;
             this.btnSendToStash.TabStop = false;
-            this.btnSendToStash.Tag = "color:darker";
+            this.btnSendToStash.Tag = "color:dark2";
             this.btnSendToStash.Text = "Send To Stash";
             this.btnSendToStash.UseVisualStyleBackColor = false;
             this.btnSendToStash.Click += new System.EventHandler(this.btnSendToStash_Click);
             // 
             // btnRemoveDisabled
             // 
-            this.btnRemoveDisabled.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnRemoveDisabled.BackColor = System.Drawing.Color.Gray;
             this.btnRemoveDisabled.FlatAppearance.BorderSize = 0;
             this.btnRemoveDisabled.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRemoveDisabled.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.btnRemoveDisabled.ForeColor = System.Drawing.Color.Black;
-            this.btnRemoveDisabled.Location = new System.Drawing.Point(14, 186);
+            this.btnRemoveDisabled.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnRemoveDisabled.ForeColor = System.Drawing.Color.White;
+            this.btnRemoveDisabled.Location = new System.Drawing.Point(14, 182);
             this.btnRemoveDisabled.Name = "btnRemoveDisabled";
-            this.btnRemoveDisabled.Size = new System.Drawing.Size(135, 25);
+            this.btnRemoveDisabled.Size = new System.Drawing.Size(135, 23);
             this.btnRemoveDisabled.TabIndex = 115;
             this.btnRemoveDisabled.TabStop = false;
-            this.btnRemoveDisabled.Tag = "color:light";
+            this.btnRemoveDisabled.Tag = "color:light1";
             this.btnRemoveDisabled.Text = "Remove Disabled";
             this.btnRemoveDisabled.UseVisualStyleBackColor = false;
             this.btnRemoveDisabled.Click += new System.EventHandler(this.btnRemoveDisabled_Click);
@@ -430,85 +432,85 @@ namespace RTCV.UI
             // 
             // btnDisable50
             // 
-            this.btnDisable50.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnDisable50.BackColor = System.Drawing.Color.Gray;
             this.btnDisable50.FlatAppearance.BorderSize = 0;
             this.btnDisable50.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDisable50.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.btnDisable50.ForeColor = System.Drawing.Color.Black;
+            this.btnDisable50.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnDisable50.ForeColor = System.Drawing.Color.White;
             this.btnDisable50.Location = new System.Drawing.Point(14, 134);
             this.btnDisable50.Name = "btnDisable50";
-            this.btnDisable50.Size = new System.Drawing.Size(135, 25);
+            this.btnDisable50.Size = new System.Drawing.Size(135, 23);
             this.btnDisable50.TabIndex = 114;
             this.btnDisable50.TabStop = false;
-            this.btnDisable50.Tag = "color:light";
+            this.btnDisable50.Tag = "color:light1";
             this.btnDisable50.Text = "Disable 50%";
             this.btnDisable50.UseVisualStyleBackColor = false;
             this.btnDisable50.Click += new System.EventHandler(this.btnDisable50_Click);
             // 
             // btnInvertDisabled
             // 
-            this.btnInvertDisabled.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnInvertDisabled.BackColor = System.Drawing.Color.Gray;
             this.btnInvertDisabled.FlatAppearance.BorderSize = 0;
             this.btnInvertDisabled.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnInvertDisabled.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.btnInvertDisabled.ForeColor = System.Drawing.Color.Black;
-            this.btnInvertDisabled.Location = new System.Drawing.Point(14, 160);
+            this.btnInvertDisabled.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnInvertDisabled.ForeColor = System.Drawing.Color.White;
+            this.btnInvertDisabled.Location = new System.Drawing.Point(14, 158);
             this.btnInvertDisabled.Name = "btnInvertDisabled";
-            this.btnInvertDisabled.Size = new System.Drawing.Size(135, 25);
+            this.btnInvertDisabled.Size = new System.Drawing.Size(135, 23);
             this.btnInvertDisabled.TabIndex = 116;
             this.btnInvertDisabled.TabStop = false;
-            this.btnInvertDisabled.Tag = "color:light";
+            this.btnInvertDisabled.Tag = "color:light1";
             this.btnInvertDisabled.Text = "Invert Disabled";
             this.btnInvertDisabled.UseVisualStyleBackColor = false;
             this.btnInvertDisabled.Click += new System.EventHandler(this.btnInvertDisabled_Click);
             // 
             // btnDisableEverything
             // 
-            this.btnDisableEverything.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnDisableEverything.BackColor = System.Drawing.Color.Gray;
             this.btnDisableEverything.FlatAppearance.BorderSize = 0;
             this.btnDisableEverything.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDisableEverything.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.btnDisableEverything.ForeColor = System.Drawing.Color.Black;
-            this.btnDisableEverything.Location = new System.Drawing.Point(14, 216);
+            this.btnDisableEverything.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnDisableEverything.ForeColor = System.Drawing.Color.White;
+            this.btnDisableEverything.Location = new System.Drawing.Point(14, 242);
             this.btnDisableEverything.Name = "btnDisableEverything";
-            this.btnDisableEverything.Size = new System.Drawing.Size(135, 25);
+            this.btnDisableEverything.Size = new System.Drawing.Size(135, 23);
             this.btnDisableEverything.TabIndex = 128;
             this.btnDisableEverything.TabStop = false;
-            this.btnDisableEverything.Tag = "color:light";
+            this.btnDisableEverything.Tag = "color:light1";
             this.btnDisableEverything.Text = "Disable Everything";
             this.btnDisableEverything.UseVisualStyleBackColor = false;
             this.btnDisableEverything.Click += new System.EventHandler(this.btnDisableEverything_Click);
             // 
             // btnEnableEverything
             // 
-            this.btnEnableEverything.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnEnableEverything.BackColor = System.Drawing.Color.Gray;
             this.btnEnableEverything.FlatAppearance.BorderSize = 0;
             this.btnEnableEverything.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEnableEverything.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.btnEnableEverything.ForeColor = System.Drawing.Color.Black;
-            this.btnEnableEverything.Location = new System.Drawing.Point(14, 242);
+            this.btnEnableEverything.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnEnableEverything.ForeColor = System.Drawing.Color.White;
+            this.btnEnableEverything.Location = new System.Drawing.Point(14, 266);
             this.btnEnableEverything.Name = "btnEnableEverything";
-            this.btnEnableEverything.Size = new System.Drawing.Size(135, 25);
+            this.btnEnableEverything.Size = new System.Drawing.Size(135, 23);
             this.btnEnableEverything.TabIndex = 129;
             this.btnEnableEverything.TabStop = false;
-            this.btnEnableEverything.Tag = "color:light";
+            this.btnEnableEverything.Tag = "color:light1";
             this.btnEnableEverything.Text = "Enable Everything";
             this.btnEnableEverything.UseVisualStyleBackColor = false;
             this.btnEnableEverything.Click += new System.EventHandler(this.btnEnableEverything_Click);
             // 
             // btnDuplicateSelected
             // 
-            this.btnDuplicateSelected.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnDuplicateSelected.BackColor = System.Drawing.Color.Gray;
             this.btnDuplicateSelected.FlatAppearance.BorderSize = 0;
             this.btnDuplicateSelected.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDuplicateSelected.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.btnDuplicateSelected.ForeColor = System.Drawing.Color.Black;
-            this.btnDuplicateSelected.Location = new System.Drawing.Point(14, 303);
+            this.btnDuplicateSelected.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnDuplicateSelected.ForeColor = System.Drawing.Color.White;
+            this.btnDuplicateSelected.Location = new System.Drawing.Point(14, 327);
             this.btnDuplicateSelected.Name = "btnDuplicateSelected";
-            this.btnDuplicateSelected.Size = new System.Drawing.Size(135, 25);
+            this.btnDuplicateSelected.Size = new System.Drawing.Size(135, 23);
             this.btnDuplicateSelected.TabIndex = 130;
             this.btnDuplicateSelected.TabStop = false;
-            this.btnDuplicateSelected.Tag = "color:light";
+            this.btnDuplicateSelected.Tag = "color:light1";
             this.btnDuplicateSelected.Text = "Duplicate Selected";
             this.btnDuplicateSelected.UseVisualStyleBackColor = false;
             this.btnDuplicateSelected.Click += new System.EventHandler(this.btnDuplicateSelected_Click);
@@ -523,7 +525,7 @@ namespace RTCV.UI
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(662, 21);
             this.panel2.TabIndex = 148;
-            this.panel2.Tag = "color:light";
+            this.panel2.Tag = "color:light1";
             // 
             // cbFilterColumn
             // 
@@ -658,7 +660,7 @@ namespace RTCV.UI
             this.btnNote.Size = new System.Drawing.Size(120, 88);
             this.btnNote.TabIndex = 142;
             this.btnNote.TabStop = false;
-            this.btnNote.Tag = "color:light";
+            this.btnNote.Tag = "color:light1";
             this.btnNote.Text = "Open Note Editor";
             this.btnNote.UseVisualStyleBackColor = false;
             this.btnNote.Click += new System.EventHandler(this.btnNote_Click);
@@ -1189,6 +1191,23 @@ namespace RTCV.UI
             this.openBlastGeneratorToolStripMenuItem.Text = "Open Blast Generator";
             this.openBlastGeneratorToolStripMenuItem.Click += new System.EventHandler(this.OpenBlastGeneratorToolStripMenuItem_Click);
             // 
+            // btnSanitize
+            // 
+            this.btnSanitize.BackColor = System.Drawing.Color.Gray;
+            this.btnSanitize.FlatAppearance.BorderSize = 0;
+            this.btnSanitize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSanitize.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnSanitize.ForeColor = System.Drawing.Color.White;
+            this.btnSanitize.Location = new System.Drawing.Point(15, 212);
+            this.btnSanitize.Name = "btnSanitize";
+            this.btnSanitize.Size = new System.Drawing.Size(135, 23);
+            this.btnSanitize.TabIndex = 178;
+            this.btnSanitize.TabStop = false;
+            this.btnSanitize.Tag = "color:light1";
+            this.btnSanitize.Text = "Sanitize";
+            this.btnSanitize.UseVisualStyleBackColor = false;
+            this.btnSanitize.Click += new System.EventHandler(this.btnSanitize_Click);
+            // 
             // RTC_NewBlastEditor_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1202,7 +1221,6 @@ namespace RTCV.UI
             this.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.MinimumSize = new System.Drawing.Size(837, 526);
             this.Name = "RTC_NewBlastEditor_Form";
             this.Text = "Blast Editor";
             this.Load += new System.EventHandler(this.RTC_NewBlastEditorForm_Load);
@@ -1335,5 +1353,6 @@ namespace RTCV.UI
 		private Label label17;
 		private ToolStripMenuItem openBlastGeneratorToolStripMenuItem;
 		private Button btnAddRow;
-	}
+        private Button btnSanitize;
+    }
 }

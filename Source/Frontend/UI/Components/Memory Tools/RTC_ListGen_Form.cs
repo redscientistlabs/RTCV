@@ -201,7 +201,7 @@ namespace RTCV.UI
 
 		private void btnRefreshListsFromFile_Click(object sender, EventArgs e)
 		{
-			S.GET<RTC_EngineConfig_Form>().LoadLists();
+			UICore.LoadLists();
 		}
 
 		private void btnHelp_Click(object sender, EventArgs e)

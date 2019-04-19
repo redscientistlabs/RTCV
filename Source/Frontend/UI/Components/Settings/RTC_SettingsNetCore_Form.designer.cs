@@ -85,7 +85,7 @@
             this.cbCrashSoundEffect.Name = "cbCrashSoundEffect";
             this.cbCrashSoundEffect.Size = new System.Drawing.Size(163, 21);
             this.cbCrashSoundEffect.TabIndex = 127;
-            this.cbCrashSoundEffect.Tag = "color:dark";
+            this.cbCrashSoundEffect.Tag = "color:dark1";
             this.cbCrashSoundEffect.SelectedIndexChanged += new System.EventHandler(this.cbCrashSoundEffect_SelectedIndexChanged);
             // 
             // label1
@@ -165,7 +165,7 @@
             this.nmGameProtectionDelay.Name = "nmGameProtectionDelay";
             this.nmGameProtectionDelay.Size = new System.Drawing.Size(45, 25);
             this.nmGameProtectionDelay.TabIndex = 114;
-            this.nmGameProtectionDelay.Tag = "color:dark";
+            this.nmGameProtectionDelay.Tag = "color:dark1";
             this.nmGameProtectionDelay.Value = new decimal(new int[] {
             10,
             0,
@@ -197,7 +197,7 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "RTC_SettingsNetCore_Form";
-            this.Tag = "color:dark";
+            this.Tag = "color:dark1";
             this.Text = "NetCore";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
             this.Load += new System.EventHandler(this.RTC_SettingsNetCore_Form_Load);

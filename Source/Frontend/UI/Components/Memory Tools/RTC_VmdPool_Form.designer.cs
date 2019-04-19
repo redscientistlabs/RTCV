@@ -48,7 +48,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbLoadedVmdList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.lbLoadedVmdList.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lbLoadedVmdList.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.lbLoadedVmdList.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lbLoadedVmdList.ForeColor = System.Drawing.Color.White;
             this.lbLoadedVmdList.FormattingEnabled = true;
             this.lbLoadedVmdList.Location = new System.Drawing.Point(12, 14);
@@ -57,24 +57,24 @@
             this.lbLoadedVmdList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lbLoadedVmdList.Size = new System.Drawing.Size(173, 223);
             this.lbLoadedVmdList.TabIndex = 12;
-            this.lbLoadedVmdList.Tag = "color:dark";
+            this.lbLoadedVmdList.Tag = "color:dark1";
             this.lbLoadedVmdList.SelectedIndexChanged += new System.EventHandler(this.lbLoadedVmdList_SelectedIndexChanged);
             this.lbLoadedVmdList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // btnUnloadVmd
             // 
             this.btnUnloadVmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnUnloadVmd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnUnloadVmd.BackColor = System.Drawing.Color.Gray;
             this.btnUnloadVmd.FlatAppearance.BorderSize = 0;
             this.btnUnloadVmd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnUnloadVmd.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.btnUnloadVmd.ForeColor = System.Drawing.Color.Black;
+            this.btnUnloadVmd.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnUnloadVmd.ForeColor = System.Drawing.Color.White;
             this.btnUnloadVmd.Location = new System.Drawing.Point(197, 107);
             this.btnUnloadVmd.Name = "btnUnloadVmd";
             this.btnUnloadVmd.Size = new System.Drawing.Size(182, 25);
             this.btnUnloadVmd.TabIndex = 13;
             this.btnUnloadVmd.TabStop = false;
-            this.btnUnloadVmd.Tag = "color:light";
+            this.btnUnloadVmd.Tag = "color:light1";
             this.btnUnloadVmd.Text = "Unload Selected VMDs";
             this.btnUnloadVmd.UseVisualStyleBackColor = false;
             this.btnUnloadVmd.Click += new System.EventHandler(this.btnUnloadVMD_Click);
@@ -83,17 +83,17 @@
             // btnLoadVmd
             // 
             this.btnLoadVmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLoadVmd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnLoadVmd.BackColor = System.Drawing.Color.Gray;
             this.btnLoadVmd.FlatAppearance.BorderSize = 0;
             this.btnLoadVmd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLoadVmd.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.btnLoadVmd.ForeColor = System.Drawing.Color.Black;
+            this.btnLoadVmd.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnLoadVmd.ForeColor = System.Drawing.Color.White;
             this.btnLoadVmd.Location = new System.Drawing.Point(197, 14);
             this.btnLoadVmd.Name = "btnLoadVmd";
             this.btnLoadVmd.Size = new System.Drawing.Size(182, 25);
             this.btnLoadVmd.TabIndex = 14;
             this.btnLoadVmd.TabStop = false;
-            this.btnLoadVmd.Tag = "color:light";
+            this.btnLoadVmd.Tag = "color:light1";
             this.btnLoadVmd.Text = "Load VMD from File";
             this.btnLoadVmd.UseVisualStyleBackColor = false;
             this.btnLoadVmd.Click += new System.EventHandler(this.btnLoadVmd_Click);
@@ -102,17 +102,17 @@
             // btnSaveVmd
             // 
             this.btnSaveVmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSaveVmd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnSaveVmd.BackColor = System.Drawing.Color.Gray;
             this.btnSaveVmd.FlatAppearance.BorderSize = 0;
             this.btnSaveVmd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSaveVmd.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.btnSaveVmd.ForeColor = System.Drawing.Color.Black;
+            this.btnSaveVmd.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnSaveVmd.ForeColor = System.Drawing.Color.White;
             this.btnSaveVmd.Location = new System.Drawing.Point(197, 45);
             this.btnSaveVmd.Name = "btnSaveVmd";
             this.btnSaveVmd.Size = new System.Drawing.Size(182, 25);
             this.btnSaveVmd.TabIndex = 15;
             this.btnSaveVmd.TabStop = false;
-            this.btnSaveVmd.Tag = "color:light";
+            this.btnSaveVmd.Tag = "color:light1";
             this.btnSaveVmd.Text = "Save Selected VMD to File";
             this.btnSaveVmd.UseVisualStyleBackColor = false;
             this.btnSaveVmd.Click += new System.EventHandler(this.btnSaveVmd_Click);
@@ -125,7 +125,7 @@
             this.gbVmdSummary.Controls.Add(this.lbRealDomainLabel);
             this.gbVmdSummary.Controls.Add(this.lbVmdSizeValue);
             this.gbVmdSummary.Controls.Add(this.lbVmdSizeLabel);
-            this.gbVmdSummary.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
+            this.gbVmdSummary.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.gbVmdSummary.ForeColor = System.Drawing.Color.White;
             this.gbVmdSummary.Location = new System.Drawing.Point(197, 144);
             this.gbVmdSummary.Name = "gbVmdSummary";
@@ -134,10 +134,10 @@
             this.gbVmdSummary.TabStop = false;
             this.gbVmdSummary.Text = "Selected VMD Summary";
             this.gbVmdSummary.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-			// 
-			// lbRealDomainValue
-			// 
-			this.lbRealDomainValue.AutoSize = true;
+            // 
+            // lbRealDomainValue
+            // 
+            this.lbRealDomainValue.AutoSize = true;
             this.lbRealDomainValue.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lbRealDomainValue.ForeColor = System.Drawing.Color.White;
             this.lbRealDomainValue.Location = new System.Drawing.Point(8, 72);
@@ -150,11 +150,11 @@
             // lbRealDomainLabel
             // 
             this.lbRealDomainLabel.AutoSize = true;
-            this.lbRealDomainLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            this.lbRealDomainLabel.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lbRealDomainLabel.ForeColor = System.Drawing.Color.White;
             this.lbRealDomainLabel.Location = new System.Drawing.Point(8, 53);
             this.lbRealDomainLabel.Name = "lbRealDomainLabel";
-            this.lbRealDomainLabel.Size = new System.Drawing.Size(85, 17);
+            this.lbRealDomainLabel.Size = new System.Drawing.Size(75, 13);
             this.lbRealDomainLabel.TabIndex = 94;
             this.lbRealDomainLabel.Text = "Real Domain:";
             this.lbRealDomainLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
@@ -174,11 +174,11 @@
             // lbVmdSizeLabel
             // 
             this.lbVmdSizeLabel.AutoSize = true;
-            this.lbVmdSizeLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            this.lbVmdSizeLabel.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lbVmdSizeLabel.ForeColor = System.Drawing.Color.White;
             this.lbVmdSizeLabel.Location = new System.Drawing.Point(8, 19);
             this.lbVmdSizeLabel.Name = "lbVmdSizeLabel";
-            this.lbVmdSizeLabel.Size = new System.Drawing.Size(67, 17);
+            this.lbVmdSizeLabel.Size = new System.Drawing.Size(58, 13);
             this.lbVmdSizeLabel.TabIndex = 89;
             this.lbVmdSizeLabel.Text = "VMD Size:";
             this.lbVmdSizeLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
@@ -186,17 +186,17 @@
             // btnRenameVMD
             // 
             this.btnRenameVMD.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRenameVMD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnRenameVMD.BackColor = System.Drawing.Color.Gray;
             this.btnRenameVMD.FlatAppearance.BorderSize = 0;
             this.btnRenameVMD.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRenameVMD.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.btnRenameVMD.ForeColor = System.Drawing.Color.Black;
+            this.btnRenameVMD.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnRenameVMD.ForeColor = System.Drawing.Color.White;
             this.btnRenameVMD.Location = new System.Drawing.Point(197, 76);
             this.btnRenameVMD.Name = "btnRenameVMD";
             this.btnRenameVMD.Size = new System.Drawing.Size(182, 25);
             this.btnRenameVMD.TabIndex = 130;
             this.btnRenameVMD.TabStop = false;
-            this.btnRenameVMD.Tag = "color:light";
+            this.btnRenameVMD.Tag = "color:light1";
             this.btnRenameVMD.Text = "Rename Selected VMD";
             this.btnRenameVMD.UseVisualStyleBackColor = false;
             this.btnRenameVMD.Click += new System.EventHandler(this.btnRenameVMD_Click);
@@ -217,7 +217,7 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "RTC_VmdPool_Form";
-            this.Tag = "color:darkerer";
+            this.Tag = "color:dark3";
             this.Text = "VMD Pool";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
             this.Load += new System.EventHandler(this.RTC_VmdPool_Form_Load);

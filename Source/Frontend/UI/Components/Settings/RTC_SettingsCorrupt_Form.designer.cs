@@ -52,7 +52,7 @@
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nmMaxInfiniteStepUnits)).BeginInit();
+			this.nmMaxInfiniteStepUnits.SuspendLayout();
             this.panel6.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -244,7 +244,7 @@
             this.nmMaxInfiniteStepUnits.Name = "nmMaxInfiniteStepUnits";
             this.nmMaxInfiniteStepUnits.Size = new System.Drawing.Size(106, 22);
             this.nmMaxInfiniteStepUnits.TabIndex = 151;
-            this.nmMaxInfiniteStepUnits.Tag = "color:dark";
+            this.nmMaxInfiniteStepUnits.Tag = "color:dark1";
             this.nmMaxInfiniteStepUnits.Value = new decimal(new int[] {
             50,
             0,
@@ -321,7 +321,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RTC_SettingsCorrupt_Form";
             this.ShowInTaskbar = false;
-            this.Tag = "color:dark";
+            this.Tag = "color:dark1";
             this.Text = "Corruption Settings";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -331,7 +331,8 @@
             this.panel4.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nmMaxInfiniteStepUnits)).EndInit();
+			this.nmMaxInfiniteStepUnits.PerformLayout();
+			this.nmMaxInfiniteStepUnits.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.ResumeLayout(false);

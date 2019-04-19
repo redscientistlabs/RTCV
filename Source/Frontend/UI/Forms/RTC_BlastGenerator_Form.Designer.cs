@@ -118,7 +118,7 @@
 			this.panelSidebar.Name = "panelSidebar";
 			this.panelSidebar.Size = new System.Drawing.Size(159, 365);
 			this.panelSidebar.TabIndex = 166;
-			this.panelSidebar.Tag = "color:dark";
+			this.panelSidebar.Tag = "color:dark1";
 			// 
 			// cbUnitsShareNote
 			// 
@@ -146,7 +146,7 @@
 			this.btnHelp.Size = new System.Drawing.Size(27, 22);
 			this.btnHelp.TabIndex = 174;
 			this.btnHelp.TabStop = false;
-			this.btnHelp.Tag = "color:dark";
+			this.btnHelp.Tag = "color:dark1";
 			this.btnHelp.UseVisualStyleBackColor = false;
 			this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
 			// 
@@ -163,7 +163,7 @@
 			this.btnLoadCorrupt.Size = new System.Drawing.Size(149, 23);
 			this.btnLoadCorrupt.TabIndex = 173;
 			this.btnLoadCorrupt.TabStop = false;
-			this.btnLoadCorrupt.Tag = "color:darker";
+			this.btnLoadCorrupt.Tag = "color:dark2";
 			this.btnLoadCorrupt.Text = "Load + Corrupt";
 			this.btnLoadCorrupt.UseVisualStyleBackColor = false;
 			this.btnLoadCorrupt.Click += new System.EventHandler(this.btnLoadCorrupt_Click);
@@ -181,7 +181,7 @@
 			this.btnJustCorrupt.Size = new System.Drawing.Size(149, 23);
 			this.btnJustCorrupt.TabIndex = 172;
 			this.btnJustCorrupt.TabStop = false;
-			this.btnJustCorrupt.Tag = "color:darker";
+			this.btnJustCorrupt.Tag = "color:dark2";
 			this.btnJustCorrupt.Text = "Apply Corruption";
 			this.btnJustCorrupt.UseVisualStyleBackColor = false;
 			this.btnJustCorrupt.Click += new System.EventHandler(this.btnJustCorrupt_Click);
@@ -198,7 +198,7 @@
 			this.btnRefreshDomains.Size = new System.Drawing.Size(149, 25);
 			this.btnRefreshDomains.TabIndex = 161;
 			this.btnRefreshDomains.TabStop = false;
-			this.btnRefreshDomains.Tag = "color:light";
+			this.btnRefreshDomains.Tag = "color:light1";
 			this.btnRefreshDomains.Text = "Refresh Domains";
 			this.btnRefreshDomains.UseVisualStyleBackColor = false;
 			this.btnRefreshDomains.Click += new System.EventHandler(this.btnRefreshDomains_Click);
@@ -216,7 +216,7 @@
 			this.btnSendTo.Size = new System.Drawing.Size(149, 23);
 			this.btnSendTo.TabIndex = 171;
 			this.btnSendTo.TabStop = false;
-			this.btnSendTo.Tag = "color:darker";
+			this.btnSendTo.Tag = "color:dark2";
 			this.btnSendTo.Text = "Send To Stash";
 			this.btnSendTo.UseVisualStyleBackColor = false;
 			this.btnSendTo.Click += new System.EventHandler(this.btnSendTo_Click);
@@ -233,7 +233,7 @@
 			this.btnAddRow.Size = new System.Drawing.Size(149, 25);
 			this.btnAddRow.TabIndex = 160;
 			this.btnAddRow.TabStop = false;
-			this.btnAddRow.Tag = "color:light";
+			this.btnAddRow.Tag = "color:light1";
 			this.btnAddRow.Text = "Add Row";
 			this.btnAddRow.UseVisualStyleBackColor = false;
 			this.btnAddRow.Click += new System.EventHandler(this.btnAddRow_Click);
@@ -277,7 +277,7 @@
 			this.btnNudgeParam2Up.Size = new System.Drawing.Size(21, 20);
 			this.btnNudgeParam2Up.TabIndex = 167;
 			this.btnNudgeParam2Up.TabStop = false;
-			this.btnNudgeParam2Up.Tag = "color:light";
+			this.btnNudgeParam2Up.Tag = "color:light1";
 			this.btnNudgeParam2Up.Text = "▶";
 			this.btnNudgeParam2Up.UseVisualStyleBackColor = false;
 			this.btnNudgeParam2Up.Click += new System.EventHandler(this.btnNudgeParam2Up_Click);
@@ -295,7 +295,7 @@
 			this.btnNudgeParam2Down.Size = new System.Drawing.Size(21, 19);
 			this.btnNudgeParam2Down.TabIndex = 168;
 			this.btnNudgeParam2Down.TabStop = false;
-			this.btnNudgeParam2Down.Tag = "color:light";
+			this.btnNudgeParam2Down.Tag = "color:light1";
 			this.btnNudgeParam2Down.Text = "◀";
 			this.btnNudgeParam2Down.UseVisualStyleBackColor = false;
 			this.btnNudgeParam2Down.Click += new System.EventHandler(this.btnNudgeParam2Down_Click);
@@ -315,7 +315,7 @@
 			this.updownNudgeParam2.Name = "updownNudgeParam2";
 			this.updownNudgeParam2.Size = new System.Drawing.Size(59, 20);
 			this.updownNudgeParam2.TabIndex = 166;
-			this.updownNudgeParam2.Tag = "color:dark hex";
+			this.updownNudgeParam2.Tag = "color:dark1 hex";
 			this.updownNudgeParam2.Value = new decimal(new int[] {
 			1,
 			0,
@@ -335,7 +335,7 @@
 			this.btnNudgeParam1Up.Size = new System.Drawing.Size(21, 20);
 			this.btnNudgeParam1Up.TabIndex = 164;
 			this.btnNudgeParam1Up.TabStop = false;
-			this.btnNudgeParam1Up.Tag = "color:light";
+			this.btnNudgeParam1Up.Tag = "color:light1";
 			this.btnNudgeParam1Up.Text = "▶";
 			this.btnNudgeParam1Up.UseVisualStyleBackColor = false;
 			this.btnNudgeParam1Up.Click += new System.EventHandler(this.btnNudgeParam1Up_Click);
@@ -353,7 +353,7 @@
 			this.btnNudgeParam1Down.Size = new System.Drawing.Size(21, 20);
 			this.btnNudgeParam1Down.TabIndex = 165;
 			this.btnNudgeParam1Down.TabStop = false;
-			this.btnNudgeParam1Down.Tag = "color:light";
+			this.btnNudgeParam1Down.Tag = "color:light1";
 			this.btnNudgeParam1Down.Text = "◀";
 			this.btnNudgeParam1Down.UseVisualStyleBackColor = false;
 			this.btnNudgeParam1Down.Click += new System.EventHandler(this.btnNudgeParam1Down_Click);
@@ -373,7 +373,7 @@
 			this.updownNudgeParam1.Name = "updownNudgeParam1";
 			this.updownNudgeParam1.Size = new System.Drawing.Size(59, 20);
 			this.updownNudgeParam1.TabIndex = 163;
-			this.updownNudgeParam1.Tag = "color:dark hex";
+			this.updownNudgeParam1.Tag = "color:dark1 hex";
 			this.updownNudgeParam1.Value = new decimal(new int[] {
 			1,
 			0,
@@ -393,7 +393,7 @@
 			this.btnNudgeEndAddressUp.Size = new System.Drawing.Size(21, 20);
 			this.btnNudgeEndAddressUp.TabIndex = 161;
 			this.btnNudgeEndAddressUp.TabStop = false;
-			this.btnNudgeEndAddressUp.Tag = "color:light";
+			this.btnNudgeEndAddressUp.Tag = "color:light1";
 			this.btnNudgeEndAddressUp.Text = "▶";
 			this.btnNudgeEndAddressUp.UseVisualStyleBackColor = false;
 			this.btnNudgeEndAddressUp.Click += new System.EventHandler(this.btnNudgeEndAddressUp_Click);
@@ -411,7 +411,7 @@
 			this.btnNudgeEndAddressDown.Size = new System.Drawing.Size(21, 20);
 			this.btnNudgeEndAddressDown.TabIndex = 162;
 			this.btnNudgeEndAddressDown.TabStop = false;
-			this.btnNudgeEndAddressDown.Tag = "color:light";
+			this.btnNudgeEndAddressDown.Tag = "color:light1";
 			this.btnNudgeEndAddressDown.Text = "◀";
 			this.btnNudgeEndAddressDown.UseVisualStyleBackColor = false;
 			this.btnNudgeEndAddressDown.Click += new System.EventHandler(this.btnNudgeEndAddressDown_Click);
@@ -431,7 +431,7 @@
 			this.updownNudgeEndAddress.Name = "updownNudgeEndAddress";
 			this.updownNudgeEndAddress.Size = new System.Drawing.Size(59, 20);
 			this.updownNudgeEndAddress.TabIndex = 160;
-			this.updownNudgeEndAddress.Tag = "color:dark hex";
+			this.updownNudgeEndAddress.Tag = "color:dark1 hex";
 			this.updownNudgeEndAddress.Value = new decimal(new int[] {
 			1,
 			0,
@@ -451,7 +451,7 @@
 			this.btnNudgeStartAddressUp.Size = new System.Drawing.Size(21, 20);
 			this.btnNudgeStartAddressUp.TabIndex = 158;
 			this.btnNudgeStartAddressUp.TabStop = false;
-			this.btnNudgeStartAddressUp.Tag = "color:light";
+			this.btnNudgeStartAddressUp.Tag = "color:light1";
 			this.btnNudgeStartAddressUp.Text = "▶";
 			this.btnNudgeStartAddressUp.UseVisualStyleBackColor = false;
 			this.btnNudgeStartAddressUp.Click += new System.EventHandler(this.btnNudgeStartAddressUp_Click);
@@ -469,7 +469,7 @@
 			this.btnNudgeStartAddressDown.Size = new System.Drawing.Size(21, 20);
 			this.btnNudgeStartAddressDown.TabIndex = 159;
 			this.btnNudgeStartAddressDown.TabStop = false;
-			this.btnNudgeStartAddressDown.Tag = "color:light";
+			this.btnNudgeStartAddressDown.Tag = "color:light1";
 			this.btnNudgeStartAddressDown.Text = "◀";
 			this.btnNudgeStartAddressDown.UseVisualStyleBackColor = false;
 			this.btnNudgeStartAddressDown.Click += new System.EventHandler(this.btnNudgeStartAddressDown_Click);
@@ -489,7 +489,7 @@
 			this.updownNudgeStartAddress.Name = "updownNudgeStartAddress";
 			this.updownNudgeStartAddress.Size = new System.Drawing.Size(59, 20);
 			this.updownNudgeStartAddress.TabIndex = 157;
-			this.updownNudgeStartAddress.Tag = "color:dark hex";
+			this.updownNudgeStartAddress.Tag = "color:dark1 hex";
 			this.updownNudgeStartAddress.Value = new decimal(new int[] {
 			1,
 			0,
@@ -951,7 +951,7 @@
 			this.MainMenuStrip = this.menuStripEx1;
 			this.MinimumSize = new System.Drawing.Size(18, 428);
 			this.Name = "RTC_BlastGenerator_Form";
-			this.Tag = "color:dark";
+			this.Tag = "color:dark1";
 			this.Text = "Blast Generator";
 			this.Load += new System.EventHandler(this.RTC_BlastGeneratorForm_Load);
 			this.panelSidebar.ResumeLayout(false);

@@ -39,8 +39,8 @@
             this.gbValueRange = new System.Windows.Forms.GroupBox();
             this.label26 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
-            this.nmMaxValue = new RTCV.UI.NumericUpDownHexFix();
-            this.nmMinValue = new RTCV.UI.NumericUpDownHexFix();
+            this.nmMaxValue = new RTCV.UI.Components.Controls.MultiUpDown();
+            this.nmMinValue = new RTCV.UI.Components.Controls.MultiUpDown();
             this.gbValueSource = new System.Windows.Forms.GroupBox();
             this.rbRandom = new System.Windows.Forms.RadioButton();
             this.rbRange = new System.Windows.Forms.RadioButton();
@@ -60,11 +60,11 @@
             this.cbLoopUnit = new System.Windows.Forms.CheckBox();
             this.gbStepSettings = new System.Windows.Forms.GroupBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.nmTilt = new System.Windows.Forms.NumericUpDown();
+            this.nmTilt = new RTCV.UI.Components.Controls.MultiUpDown();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.nmDelay = new System.Windows.Forms.NumericUpDown();
-            this.nmLifetime = new System.Windows.Forms.NumericUpDown();
+            this.nmDelay = new RTCV.UI.Components.Controls.MultiUpDown();
+            this.nmLifetime = new RTCV.UI.Components.Controls.MultiUpDown();
             this.gbStoreTime = new System.Windows.Forms.GroupBox();
             this.rbStoreImmediate = new System.Windows.Forms.RadioButton();
             this.rbStoreFirstExecute = new System.Windows.Forms.RadioButton();
@@ -92,16 +92,11 @@
             this.gbValueList.SuspendLayout();
             this.gbValueSettings.SuspendLayout();
             this.gbValueRange.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nmMaxValue)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nmMinValue)).BeginInit();
             this.gbValueSource.SuspendLayout();
             this.gbLimiterList.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.gbStoreCompare.SuspendLayout();
             this.gbStepSettings.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nmTilt)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nmDelay)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nmLifetime)).BeginInit();
             this.gbStoreTime.SuspendLayout();
             this.gbStoreType.SuspendLayout();
             this.gbStoreSettings.SuspendLayout();
@@ -110,7 +105,6 @@
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.updownMaxInfiniteUnits)).BeginInit();
             this.SuspendLayout();
             // 
             // btnClearActive
@@ -125,7 +119,7 @@
             this.btnClearActive.Size = new System.Drawing.Size(122, 30);
             this.btnClearActive.TabIndex = 150;
             this.btnClearActive.TabStop = false;
-            this.btnClearActive.Tag = "color:light";
+            this.btnClearActive.Tag = "color:light1";
             this.btnClearActive.Text = "Clear all active units";
             this.btnClearActive.UseVisualStyleBackColor = false;
             this.btnClearActive.Click += new System.EventHandler(this.btnClearActive_Click);
@@ -201,7 +195,7 @@
             this.cbValueList.Name = "cbValueList";
             this.cbValueList.Size = new System.Drawing.Size(110, 21);
             this.cbValueList.TabIndex = 87;
-            this.cbValueList.Tag = "color:dark";
+            this.cbValueList.Tag = "color:dark1";
             this.cbValueList.SelectedIndexChanged += new System.EventHandler(this.cbValueList_SelectedIndexChanged);
             // 
             // gbValueSettings
@@ -264,16 +258,26 @@
             this.nmMaxValue.ForeColor = System.Drawing.Color.White;
             this.nmMaxValue.Hexadecimal = true;
             this.nmMaxValue.Location = new System.Drawing.Point(67, 38);
-            this.nmMaxValue.Name = "nmMaxValue";
-            this.nmMaxValue.Size = new System.Drawing.Size(77, 20);
-            this.nmMaxValue.TabIndex = 168;
-            this.nmMaxValue.Tag = "color:dark";
-            this.nmMaxValue.Value = new decimal(new int[] {
-            255,
+            this.nmMaxValue.Maximum = new decimal(new int[] {
+            -1,
+            -1,
+            0,
+            0});
+            this.nmMaxValue.Minimum = new decimal(new int[] {
+            0,
             0,
             0,
             0});
-            this.nmMaxValue.ValueChanged += new System.EventHandler(this.nmMaxValue_ValueChanged);
+            this.nmMaxValue.Name = "nmMaxValue";
+            this.nmMaxValue.Size = new System.Drawing.Size(77, 20);
+            this.nmMaxValue.TabIndex = 168;
+            this.nmMaxValue.Tag = "color:dark1";
+            this.nmMaxValue.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.nmMaxValue.ValueChanged += new System.EventHandler<RTCV.UI.Components.Controls.ValueUpdateEventArgs<decimal>>(this.nmMaxValue_ValueChanged);
             // 
             // nmMinValue
             // 
@@ -282,11 +286,26 @@
             this.nmMinValue.ForeColor = System.Drawing.Color.White;
             this.nmMinValue.Hexadecimal = true;
             this.nmMinValue.Location = new System.Drawing.Point(67, 13);
+            this.nmMinValue.Maximum = new decimal(new int[] {
+            -1,
+            -1,
+            0,
+            0});
+            this.nmMinValue.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             this.nmMinValue.Name = "nmMinValue";
             this.nmMinValue.Size = new System.Drawing.Size(77, 20);
             this.nmMinValue.TabIndex = 167;
-            this.nmMinValue.Tag = "color:dark";
-            this.nmMinValue.ValueChanged += new System.EventHandler(this.nmMinValue_ValueChanged);
+            this.nmMinValue.Tag = "color:dark1";
+            this.nmMinValue.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.nmMinValue.ValueChanged += new System.EventHandler<RTCV.UI.Components.Controls.ValueUpdateEventArgs<decimal>>(this.nmMinValue_ValueChanged);
             // 
             // gbValueSource
             // 
@@ -517,7 +536,7 @@
             this.cbLimiterList.Name = "cbLimiterList";
             this.cbLimiterList.Size = new System.Drawing.Size(110, 21);
             this.cbLimiterList.TabIndex = 87;
-            this.cbLimiterList.Tag = "color:dark";
+            this.cbLimiterList.Tag = "color:dark1";
             this.cbLimiterList.SelectedIndexChanged += new System.EventHandler(this.cbLimiterList_SelectedIndexChanged);
             // 
             // cbLoopUnit
@@ -568,6 +587,7 @@
             this.nmTilt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.nmTilt.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.nmTilt.ForeColor = System.Drawing.Color.White;
+            this.nmTilt.Hexadecimal = false;
             this.nmTilt.Location = new System.Drawing.Point(74, 63);
             this.nmTilt.Maximum = new decimal(new int[] {
             -1981284353,
@@ -582,8 +602,13 @@
             this.nmTilt.Name = "nmTilt";
             this.nmTilt.Size = new System.Drawing.Size(70, 22);
             this.nmTilt.TabIndex = 190;
-            this.nmTilt.Tag = "color:dark";
-            this.nmTilt.ValueChanged += new System.EventHandler(this.nmTilt_ValueChanged);
+            this.nmTilt.Tag = "color:dark1";
+            this.nmTilt.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.nmTilt.ValueChanged += new System.EventHandler<RTCV.UI.Components.Controls.ValueUpdateEventArgs<decimal>>(this.nmTilt_ValueChanged);
             // 
             // label9
             // 
@@ -612,39 +637,56 @@
             this.nmDelay.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.nmDelay.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.nmDelay.ForeColor = System.Drawing.Color.White;
+            this.nmDelay.Hexadecimal = false;
             this.nmDelay.Location = new System.Drawing.Point(74, 38);
             this.nmDelay.Maximum = new decimal(new int[] {
             -1981284353,
             -1966660860,
             0,
             0});
+            this.nmDelay.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             this.nmDelay.Name = "nmDelay";
             this.nmDelay.Size = new System.Drawing.Size(70, 22);
             this.nmDelay.TabIndex = 187;
-            this.nmDelay.Tag = "color:dark";
-            this.nmDelay.ValueChanged += new System.EventHandler(this.nmDelay_ValueChanged);
+            this.nmDelay.Tag = "color:dark1";
+            this.nmDelay.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.nmDelay.ValueChanged += new System.EventHandler<RTCV.UI.Components.Controls.ValueUpdateEventArgs<decimal>>(this.nmDelay_ValueChanged);
             // 
             // nmLifetime
             // 
             this.nmLifetime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.nmLifetime.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.nmLifetime.ForeColor = System.Drawing.Color.White;
+            this.nmLifetime.Hexadecimal = false;
             this.nmLifetime.Location = new System.Drawing.Point(74, 13);
             this.nmLifetime.Maximum = new decimal(new int[] {
             -1981284353,
             -1966660860,
             0,
             0});
-            this.nmLifetime.Name = "nmLifetime";
-            this.nmLifetime.Size = new System.Drawing.Size(70, 22);
-            this.nmLifetime.TabIndex = 185;
-            this.nmLifetime.Tag = "color:dark";
-            this.nmLifetime.Value = new decimal(new int[] {
-            1,
+            this.nmLifetime.Minimum = new decimal(new int[] {
+            0,
             0,
             0,
             0});
-            this.nmLifetime.ValueChanged += new System.EventHandler(this.nmLifetime_ValueChanged);
+            this.nmLifetime.Name = "nmLifetime";
+            this.nmLifetime.Size = new System.Drawing.Size(70, 22);
+            this.nmLifetime.TabIndex = 185;
+            this.nmLifetime.Tag = "color:dark1";
+            this.nmLifetime.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.nmLifetime.ValueChanged += new System.EventHandler<RTCV.UI.Components.Controls.ValueUpdateEventArgs<decimal>>(this.nmLifetime_ValueChanged);
             // 
             // gbStoreTime
             // 
@@ -871,7 +913,7 @@
             this.cbSelectedTemplate.Name = "cbSelectedTemplate";
             this.cbSelectedTemplate.Size = new System.Drawing.Size(211, 21);
             this.cbSelectedTemplate.TabIndex = 168;
-            this.cbSelectedTemplate.Tag = "color:dark";
+            this.cbSelectedTemplate.Tag = "color:dark1";
             this.cbSelectedTemplate.SelectedIndexChanged += new System.EventHandler(this.cbSelectedTemplate_SelectedIndexChanged);
             // 
             // label2
@@ -944,18 +986,24 @@
             this.updownMaxInfiniteUnits.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.updownMaxInfiniteUnits.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.updownMaxInfiniteUnits.ForeColor = System.Drawing.Color.White;
+            this.updownMaxInfiniteUnits.Hexadecimal = false;
             this.updownMaxInfiniteUnits.Location = new System.Drawing.Point(74, 37);
             this.updownMaxInfiniteUnits.Maximum = new decimal(new int[] {
             65536,
             0,
             0,
             0});
+            this.updownMaxInfiniteUnits.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             this.updownMaxInfiniteUnits.Name = "updownMaxInfiniteUnits";
             this.updownMaxInfiniteUnits.Size = new System.Drawing.Size(70, 22);
             this.updownMaxInfiniteUnits.TabIndex = 193;
-            this.updownMaxInfiniteUnits.Tag = "color:dark";
+            this.updownMaxInfiniteUnits.Tag = "color:dark1";
             this.updownMaxInfiniteUnits.Value = new decimal(new int[] {
-            50,
+            0,
             0,
             0,
             0});
@@ -999,7 +1047,7 @@
             this.MaximumSize = new System.Drawing.Size(475, 475);
             this.MinimumSize = new System.Drawing.Size(475, 475);
             this.Name = "RTC_CustomEngineConfig_Form";
-            this.Tag = "color:dark";
+            this.Tag = "color:dark1";
             this.Text = "Custom Engine Config";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RTC_CustomEngineConfig_Form_FormClosing);
             this.Load += new System.EventHandler(this.RTC_CustomEngineConfig_Form_Load);
@@ -1009,8 +1057,6 @@
             this.gbValueSettings.ResumeLayout(false);
             this.gbValueRange.ResumeLayout(false);
             this.gbValueRange.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nmMaxValue)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nmMinValue)).EndInit();
             this.gbValueSource.ResumeLayout(false);
             this.gbValueSource.PerformLayout();
             this.gbLimiterList.ResumeLayout(false);
@@ -1021,9 +1067,6 @@
             this.gbStoreCompare.PerformLayout();
             this.gbStepSettings.ResumeLayout(false);
             this.gbStepSettings.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nmTilt)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nmDelay)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nmLifetime)).EndInit();
             this.gbStoreTime.ResumeLayout(false);
             this.gbStoreTime.PerformLayout();
             this.gbStoreType.ResumeLayout(false);
@@ -1037,7 +1080,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.updownMaxInfiniteUnits)).EndInit();
             this.ResumeLayout(false);
 
 		}
@@ -1063,10 +1105,7 @@
 		private System.Windows.Forms.GroupBox gbStepSettings;
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.Label label10;
-		public System.Windows.Forms.NumericUpDown nmDelay;
-		public System.Windows.Forms.NumericUpDown nmLifetime;
 		private System.Windows.Forms.Label label11;
-		public System.Windows.Forms.NumericUpDown nmTilt;
 		private System.Windows.Forms.GroupBox gbStoreTime;
 		private System.Windows.Forms.RadioButton rbStoreFirstExecute;
 		private System.Windows.Forms.RadioButton rbStoreImmediate;
@@ -1079,8 +1118,6 @@
 		private System.Windows.Forms.GroupBox gbValueRange;
 		private System.Windows.Forms.Label label26;
 		private System.Windows.Forms.Label label27;
-		public NumericUpDownHexFix nmMaxValue;
-		public NumericUpDownHexFix nmMinValue;
 		public System.Windows.Forms.CheckBox cbLimiterInverted;
 		private System.Windows.Forms.Panel pnTopBar;
 		private System.Windows.Forms.Panel panel1;
@@ -1102,5 +1139,10 @@
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.PictureBox pictureBox1;
 		private System.Windows.Forms.Label lbFlavorText;
-	}
+        public Components.Controls.MultiUpDown nmDelay;
+        public Components.Controls.MultiUpDown nmLifetime;
+        public Components.Controls.MultiUpDown nmTilt;
+        public Components.Controls.MultiUpDown nmMaxValue;
+        public Components.Controls.MultiUpDown nmMinValue;
+    }
 }

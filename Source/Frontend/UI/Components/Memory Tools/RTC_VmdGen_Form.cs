@@ -231,10 +231,10 @@ namespace RTCV.UI
 			S.GET<RTC_VmdPool_Form>().RefreshVMDs();
 
 			//Selects back the VMD Pool menu
-			foreach(var item in S.GET<RTC_EngineConfig_Form>().mtForm.cbSelectBox.Items)
+			foreach(var item in UICore.mtForm.cbSelectBox.Items)
 				if(((dynamic)item).value is RTC_VmdPool_Form)
 				{
-					S.GET<RTC_EngineConfig_Form>().mtForm.cbSelectBox.SelectedItem = item;
+					UICore.mtForm.cbSelectBox.SelectedItem = item;
 					break;
 				}
 

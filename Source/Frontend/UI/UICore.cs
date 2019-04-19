@@ -18,6 +18,7 @@ using RTCV.UI;
 using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
 using static RTCV.NetCore.NetcoreCommands;
+using RTCV.UI.Modular;
 
 namespace RTCV.UI
 {
@@ -33,21 +34,19 @@ namespace RTCV.UI
 		public static bool HideStartButton = false;
 
         private static System.Timers.Timer inputCheckTimer;
-        private static System.Timers.Timer inputTimer;
 
         //RTC Main Forms
         //public static Color generalColor = Color.FromArgb(60, 45, 70);
         public static Color GeneralColor = Color.LightSteelBlue;
 
-		//Directories
-
+        public static RTC_SelectBox_Form mtForm = null;
 
         public static void Start(Form standaloneForm = null)
 		{
 
             S.formRegister.FormRegistered += FormRegister_FormRegistered;
-			registerFormEvents(S.GET<RTC_Core_Form>());
-
+			//registerFormEvents(S.GET<RTC_Core_Form>());
+            registerFormEvents(S.GET<UI_CoreForm>());
 
 			S.SET<RTC_Standalone_Form>((RTC_Standalone_Form)standaloneForm);
 
@@ -75,7 +74,7 @@ namespace RTCV.UI
 
 
             //Loading RTC Params
-            LoadRTCColor();
+            
 			S.GET<RTC_SettingsGeneral_Form>().cbDisableBizhawkOSD.Checked = !RTCV.NetCore.Params.IsParamSet("ENABLE_BIZHAWK_OSD");
 			S.GET<RTC_SettingsGeneral_Form>().cbAllowCrossCoreCorruption.Checked = RTCV.NetCore.Params.IsParamSet("ALLOW_CROSS_CORE_CORRUPTION");
 			S.GET<RTC_SettingsGeneral_Form>().cbDontCleanAtQuit.Checked = RTCV.NetCore.Params.IsParamSet("DONT_CLEAN_SAVESTATES_AT_QUIT");
@@ -93,13 +92,15 @@ namespace RTCV.UI
 
             if (FirstConnect)
             {
-                S.GET<RTC_Core_Form>().ShowPanelForm(S.GET<RTC_ConnectionStatus_Form>());
+                UI_DefaultGrids.connectionStatus.LoadToMain();
                 if (HideStartButton)
                 {
                     S.GET<RTC_ConnectionStatus_Form>().btnStartEmuhawkDetached.Visible = false;
                 }
             }
-            S.GET<RTC_Core_Form>().Show();
+
+            LoadRTCColor();
+            S.GET<UI_CoreForm>().Show();
         }
 
 		private static void FormRegister_FormRegistered(object sender, NetCoreEventArgs e)
@@ -219,7 +220,7 @@ namespace RTCV.UI
 				List<Form> all = new List<Form>();
 
 
-				foreach (Type t in Assembly.GetAssembly(typeof(RTCV.UI.RTC_Core_Form)).GetTypes())
+				foreach (Type t in Assembly.GetAssembly(typeof(RTCV.UI.UI_CoreForm)).GetTypes())
 					if (typeof(IAutoColorize).IsAssignableFrom(t) && t != typeof(IAutoColorize))
 						all.Add((Form)S.GET(Type.GetType(t.ToString())));
 
@@ -295,11 +296,11 @@ namespace RTCV.UI
 			}
 		}
 
-		public static void SetRTCColor(Color color, Form form = null)
+		public static void SetRTCColor(Color color, Control ctr = null)
 		{
 			List<Control> allControls = new List<Control>();
 
-			if (form == null)
+			if (ctr == null)
 			{
 				foreach (Form targetForm in UICore.AllRtcForms)
 				{
@@ -310,55 +311,121 @@ namespace RTCV.UI
 					}
 				}
 			}
-			else
+			else if (ctr is Form)
 			{
-				allControls.AddRange(form.Controls.getControlsWithTag());
-				allControls.Add(form);
+				allControls.AddRange(ctr.Controls.getControlsWithTag());
+				allControls.Add(ctr);
 			}
+            else
+            {
+                allControls.Add(ctr);
+            }
 
-			var lightColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:light"));
+            //this needs refactoring. the string contains method is broken as color:dark2 is also color:dark1.
+            //at least the priority of the foreach loops makes it so it works like expected.
+
+            var light2ColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:light2"));
+            var light1ColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:light1"));
 			var normalColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:normal"));
-			var darkColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:dark"));
-			var darkerColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:darker"));
-			var darkererColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:darkerer"));
+			var dark1ColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:dark1"));
+			var dark2ColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:dark2"));
+			var dark3ColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:dark3"));
 
-			foreach (Control c in lightColorControls)
-				if (c is Label)
-					c.ForeColor = color.ChangeColorBrightness(0.30f);
-				else
-					c.BackColor = color.ChangeColorBrightness(0.30f);
+            float generalDarken = -0.50f;
+            float light1 = 0.10f;
+            float light2 = 0.45f;
+            float dark1 = -0.20f;
+            float dark2 = -0.35f;
+            float dark3 = -0.50f;
 
-			foreach (Control c in normalColorControls)
-				if (c is Label)
-					c.ForeColor = color;
-				else
-					c.BackColor = color;
+            color = color.ChangeColorBrightness(generalDarken);
 
-			S.GET<RTC_StockpilePlayer_Form>().dgvStockpile.BackgroundColor = color;
-			S.GET<RTC_GlitchHarvester_Form>().dgvStockpile.BackgroundColor = color;
+            Color Light1Color = color.ChangeColorBrightness(light1);
+            Color Light2Color = color.ChangeColorBrightness(light2);
+            Color NormalColor = color;
+            Color Dark1Color = color.ChangeColorBrightness(dark1);
+            Color Dark2Color = color.ChangeColorBrightness(dark2);
+            Color Dark3Color = color.ChangeColorBrightness(dark3);
+
+            foreach (Control c in light1ColorControls)
+            {
+                if (c is Label)
+                    c.ForeColor = Light1Color;
+                else
+                    c.BackColor = Light1Color;
+
+                if (c is Button)
+                    (c as Button).FlatAppearance.BorderColor = Light1Color;
+            }
+
+            foreach (Control c in light2ColorControls)
+            {
+                
+                if (c is Label)
+                    c.ForeColor = Light2Color;
+                else
+                    c.BackColor = Light2Color;
+
+                if (c is Button)
+                    (c as Button).FlatAppearance.BorderColor = Light2Color;
+
+            }
 
 
+            foreach (Control c in normalColorControls)
+            {
+                if (c is Label)
+                    c.ForeColor = NormalColor;
+                else
+                    c.BackColor = NormalColor;
 
-			S.GET<RTC_NewBlastEditor_Form>().dgvBlastEditor.BackgroundColor = color;
-			S.GET<RTC_BlastGenerator_Form>().dgvBlastGenerator.BackgroundColor = color;
+                if (c is Button)
+                    (c as Button).FlatAppearance.BorderColor = NormalColor;
+            }
 
-			foreach (Control c in darkColorControls)
-				if (c is Label)
-					c.ForeColor = color.ChangeColorBrightness(-0.30f);
-				else
-					c.BackColor = color.ChangeColorBrightness(-0.30f);
+            if(ctr == null)
+            {
+                S.GET<RTC_StockpilePlayer_Form>().dgvStockpile.BackgroundColor = NormalColor;
+                S.GET<RTC_GlitchHarvester_Form>().dgvStockpile.BackgroundColor = NormalColor;
 
-			foreach (Control c in darkerColorControls)
-				if (c is Label)
-					c.ForeColor = color.ChangeColorBrightness(-0.55f);
-				else
-					c.BackColor = color.ChangeColorBrightness(-0.55f);
+                S.GET<RTC_NewBlastEditor_Form>().dgvBlastEditor.BackgroundColor = NormalColor;
+                S.GET<RTC_BlastGenerator_Form>().dgvBlastGenerator.BackgroundColor = NormalColor;
+            }
 
-			foreach (Control c in darkererColorControls)
-				if (c is Label)
-					c.ForeColor = color.ChangeColorBrightness(-0.75f);
-				else
-					c.BackColor = color.ChangeColorBrightness(-0.75f);
+            foreach (Control c in dark1ColorControls)
+            {
+                if (c is Label)
+                    c.ForeColor = Dark1Color;
+                else
+                    c.BackColor = Dark1Color;
+
+                if(c is Button)
+                    (c as Button).FlatAppearance.BorderColor = Dark1Color;
+
+
+            }
+
+            foreach (Control c in dark2ColorControls)
+            {
+                if (c is Label)
+                    c.ForeColor = Dark2Color;
+                else
+                    c.BackColor = Dark2Color;
+
+                if (c is Button)
+                    (c as Button).FlatAppearance.BorderColor = Dark2Color;
+            }
+
+            foreach (Control c in dark3ColorControls)
+            {
+                if (c is Label)
+                    c.ForeColor = Dark3Color;
+                else
+                    c.BackColor = Dark3Color;
+
+                if (c is Button)
+                    (c as Button).FlatAppearance.BorderColor = Dark3Color;
+            }
 		}
 
 		public static void SelectRTCColor()
@@ -477,7 +544,7 @@ namespace RTCV.UI
                 case "Auto-Corrupt":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
-                        S.GET<RTC_Core_Form>().btnAutoCorrupt_Click(null, null);
+                        S.GET<UI_CoreForm>().btnAutoCorrupt_Click(null, null);
                     });
                     break;
 
@@ -607,7 +674,7 @@ namespace RTCV.UI
                 case "Game Protect Back":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
-                        var f = S.GET<RTC_Core_Form>();
+                        var f = S.GET<UI_CoreForm>();
                         var b = f.btnGpJumpBack;
                         if (b.Visible && b.Enabled)
                             f.btnGpJumpBack_Click(null, null);
@@ -617,7 +684,7 @@ namespace RTCV.UI
                 case "Game Protect Now":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
-                        var f = S.GET<RTC_Core_Form>();
+                        var f = S.GET<UI_CoreForm>();
                         var b = f.btnGpJumpNow;
                         if (b.Visible && b.Enabled)
                             f.btnGpJumpNow_Click(null, null);
@@ -719,5 +786,57 @@ namespace RTCV.UI
             S.GET<RTC_GlitchHarvester_Form>().pnRender.Visible = false;
 
         }
+
+
+        private static void toggleLimiterBoxSource(bool setToBindingSource)
+        {
+            if (setToBindingSource)
+            {
+                S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.DisplayMember = "Name";
+                S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.ValueMember = "Value";
+                S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.DataSource = CorruptCore.CorruptCore.LimiterListBindingSource;
+
+
+                S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DisplayMember = "Name";
+                S.GET<RTC_CustomEngineConfig_Form>().cbValueList.ValueMember = "Value";
+                S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DataSource = CorruptCore.CorruptCore.ValueListBindingSource;
+
+
+
+                S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.DisplayMember = "Name";
+                S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.ValueMember = "Value";
+                S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.DataSource = CorruptCore.CorruptCore.LimiterListBindingSource;
+
+                S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.DisplayMember = "Name";
+                S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.ValueMember = "Value";
+                S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.DataSource = CorruptCore.CorruptCore.ValueListBindingSource;
+            }
+            else
+            {
+                S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.DataSource = null;
+                S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DataSource = null;
+
+                S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.DataSource = null;
+                S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.DataSource = null;
+            }
+        }
+
+        public static void LoadLists()
+        {
+            toggleLimiterBoxSource(false);
+
+            string[] paths = System.IO.Directory.GetFiles(CorruptCore.CorruptCore.listsDir);
+
+            paths = paths.OrderBy(x => x).ToArray();
+
+            List<string> hashes = Filtering.LoadListsFromPaths(paths);
+            for (int i = 0; i < hashes.Count; i++)
+            {
+                string[] _paths = paths[i].Split('\\', '.');
+                CorruptCore.Filtering.RegisterListInUI(_paths[_paths.Length - 2], hashes[i]);
+            }
+            toggleLimiterBoxSource(true);
+        }
+
     }
 }

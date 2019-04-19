@@ -1824,7 +1824,39 @@ namespace RTCV.UI
 			lbBlastLayerSize.Text = "Size: " + currentSK.BlastLayer.Layer.Count;
 		}
 
-		public StashKey[] GetStashKeys()
+        private void btnSanitize_Click(object sender, EventArgs e)
+        {
+            DialogResult lastAnswer = DialogResult.Ignore;
+
+            while(lastAnswer != DialogResult.Cancel && currentSK.BlastLayer.Layer.Count > 1)
+            {
+                switch(lastAnswer)
+                {
+                    case DialogResult.Ignore:
+                        break;
+                    case DialogResult.Yes:
+                        btnRemoveDisabled_Click(null, null);
+                        break;
+                    case DialogResult.No:
+                        btnInvertDisabled_Click(null, null);
+                        btnRemoveDisabled_Click(null, null);
+                        break;
+                    default:
+                        return;
+                }
+
+                btnDisable50_Click(null, null);
+                btnLoadCorrupt_Click(null, null);
+
+                if (currentSK.BlastLayer.Layer.Count == 1)
+                    return;
+
+                lastAnswer = MessageBox.Show(@"Is the effect you are looking for still present?", "BlastLayer sanitization", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            }
+
+        }
+
+        public StashKey[] GetStashKeys()
 		{
 			return new[] {currentSK, originalSK};
 		}

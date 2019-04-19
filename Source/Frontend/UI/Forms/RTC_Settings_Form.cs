@@ -12,10 +12,12 @@ using RTCV.NetCore.StaticTools;
 
 namespace RTCV.UI
 {
-	public partial class RTC_Settings_Form : Form, IAutoColorize
+	public partial class RTC_Settings_Form : ComponentForm, IAutoColorize
 	{
+        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-		public RTC_ListBox_Form lbForm;
+        public RTC_ListBox_Form lbForm;
 
 		public RTC_Settings_Form()
 		{
@@ -52,11 +54,16 @@ namespace RTCV.UI
 
 		private void btnCloseSettings_Click(object sender, EventArgs e)
 		{
-			//If we're not connected, go to connectionstatus
+            //If we're not connected, go to connectionstatus
+            /*
 			if (UI_VanguardImplementation.connector.netConn.status != NetCore.NetworkStatus.CONNECTED)
 				S.GET<RTC_Core_Form>().ShowPanelForm(S.GET<RTC_ConnectionStatus_Form>());
 			else
 				S.GET<RTC_Core_Form>().ShowPanelForm(S.GET<RTC_Core_Form>().previousForm, false);
+             */
+
+            
+            MessageBox.Show("is this even needed anymore?");
 		}
 
 		private void btnToggleConsole_Click(object sender, EventArgs e)

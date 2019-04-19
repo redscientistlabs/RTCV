@@ -50,7 +50,7 @@
             this.lbComponentForms.Name = "lbComponentForms";
             this.lbComponentForms.Size = new System.Drawing.Size(172, 207);
             this.lbComponentForms.TabIndex = 16;
-            this.lbComponentForms.Tag = "color:dark";
+            this.lbComponentForms.Tag = "color:dark1";
             this.lbComponentForms.SelectedIndexChanged += new System.EventHandler(this.lbComponentForms_SelectedIndexChanged);
             // 
             // pnTargetComponentForm
@@ -64,7 +64,7 @@
             this.pnTargetComponentForm.Name = "pnTargetComponentForm";
             this.pnTargetComponentForm.Size = new System.Drawing.Size(218, 209);
             this.pnTargetComponentForm.TabIndex = 17;
-            this.pnTargetComponentForm.Tag = "color:dark";
+            this.pnTargetComponentForm.Tag = "color:dark1";
             // 
             // label8
             // 

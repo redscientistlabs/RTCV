@@ -11,6 +11,7 @@ using RTCV.NetCore;
 using RTCV.UI;
 using static RTCV.NetCore.NetcoreCommands;
 using RTCV.NetCore.StaticTools;
+using RTCV.UI.Modular;
 
 namespace RTCV.UI
 {
@@ -68,39 +69,42 @@ namespace RTCV.UI
 					case REMOTE_ALLSPECSSENT:
 						SyncObjectSingleton.FormExecute((o, ea) =>
 						{
-							S.GET<RTC_Core_Form>().Show();
-							if (UICore.FirstConnect)
-							{
-								UICore.FirstConnect = false;
-								S.GET<RTC_Core_Form>().btnEngineConfig_Click(null, null);
-							}
-							else
-							{
-							//Push the VMDs since we store them out of spec
-							var vmdProtos = MemoryDomains.VmdPool.Values.Cast<VirtualMemoryDomain>().Select(x => x.Proto).ToArray();
-								LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHVMDPROTOS, vmdProtos, true);
+							S.GET<UI_CoreForm>().Show();
+                            if (UICore.FirstConnect)
+                            {
+                                UICore.FirstConnect = false;
+                                S.GET<UI_CoreForm>().btnEngineConfig_Click(null, null);
+                            }
+                            else
+                            {
+                                //Push the VMDs since we store them out of spec
+                                var vmdProtos = MemoryDomains.VmdPool.Values.Cast<VirtualMemoryDomain>().Select(x => x.Proto).ToArray();
+                                LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHVMDPROTOS, vmdProtos, true);
 
-							//Configure the UI based on the vanguard spec
-							UICore.ConfigureUIFromVanguardSpec();
+                                //Configure the UI based on the vanguard spec
+                                UICore.ConfigureUIFromVanguardSpec();
 
-							//Return to the main form. If the form is null for some reason, default to engineconfig
-							if(S.GET<RTC_Core_Form>().previousForm == null)
-								S.GET<RTC_Core_Form>().previousForm = S.GET<RTC_EngineConfig_Form>();
-							S.GET<RTC_Core_Form>().ShowPanelForm(S.GET<RTC_Core_Form>().previousForm, false);
+                                //Return to the main form. If the form is null for some reason, default to engineconfig
+                                if (S.GET<UI_CoreForm>().previousGrid == null)
+                                    S.GET<UI_CoreForm>().previousGrid = UI_DefaultGrids.engineConfig;
 
-							//Unhide the GH
-							S.GET<RTC_GlitchHarvester_Form>().pnHideGlitchHarvester.Size = S.GET<RTC_GlitchHarvester_Form>().Size;
-								S.GET<RTC_GlitchHarvester_Form>().pnHideGlitchHarvester.Hide();
-							}
+                                S.GET<UI_CoreForm>().previousGrid.LoadToMain();
 
-							S.GET<RTC_Core_Form>().pbAutoKillSwitchTimeout.Value = 0;
+                                UICore.LoadLists();
 
-                            //Restart the killswitch
-							if (!CorruptCore.CorruptCore.Attached)
-								AutoKillSwitch.Enabled = true;
+                                //Unhide the GH
+                                S.GET<RTC_GlitchHarvester_Form>().pnHideGlitchHarvester.Size = S.GET<RTC_GlitchHarvester_Form>().Size;
+                                S.GET<RTC_GlitchHarvester_Form>().pnHideGlitchHarvester.Hide();
+                            }
+
+							S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0;//remove this once core form is dead
+                            S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0;
+
+                            if (!CorruptCore.CorruptCore.Attached)
+                                    AutoKillSwitch.Enabled = true;
 
                             //Restart game protection
-                            if (S.GET<RTC_Core_Form>().cbUseGameProtection.Checked)
+                            if (S.GET<UI_CoreForm>().cbUseGameProtection.Checked)
                             {
                                 if (CorruptCore.StockpileManager_UISide.BackupedState != null)
                                     CorruptCore.StockpileManager_UISide.BackupedState.Run();
@@ -110,7 +114,7 @@ namespace RTCV.UI
 
                                 GameProtection.Start();
                                 if (GameProtection.WasAutoCorruptRunning)
-                                    S.GET<RTC_Core_Form>().AutoCorrupt = true;
+                                    S.GET<UI_CoreForm>().AutoCorrupt = true;
                             }
                                 
 
@@ -153,7 +157,7 @@ namespace RTCV.UI
 					case ERROR_DISABLE_AUTOCORRUPT:
 						SyncObjectSingleton.FormExecute((o, ea) =>
 						{
-							S.GET<RTC_Core_Form>().AutoCorrupt = false;
+							S.GET<UI_CoreForm>().AutoCorrupt = false;
 						});
 						break;
 					case REMOTE_BACKUPKEY_STASH:
@@ -161,8 +165,8 @@ namespace RTCV.UI
 						StockpileManager_UISide.AllBackupStates.Push((StashKey)advancedMessage.objectValue);
 						SyncObjectSingleton.FormExecute((o, ea) =>
 						{
-							S.GET<RTC_Core_Form>().btnGpJumpBack.Visible = true;
-							S.GET<RTC_Core_Form>().btnGpJumpNow.Visible = true;
+							S.GET<UI_CoreForm>().btnGpJumpBack.Visible = true;
+							S.GET<UI_CoreForm>().btnGpJumpNow.Visible = true;
 						});
 						break;
 

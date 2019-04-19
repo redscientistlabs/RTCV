@@ -54,11 +54,11 @@ namespace RTCV.UI
 				}
 				else
 				{
-					btnBlastToggle.BackColor = S.GET<RTC_Core_Form>().btnLogo.BackColor;
+					btnBlastToggle.BackColor = S.GET<UI_CoreForm>().btnLogo.BackColor;
 					btnBlastToggle.ForeColor = Color.White;
 					btnBlastToggle.Text = "BlastLayer : OFF";
 
-					S.GET<RTC_StockpilePlayer_Form>().btnBlastToggle.BackColor = S.GET<RTC_Core_Form>().btnLogo.BackColor;
+					S.GET<RTC_StockpilePlayer_Form>().btnBlastToggle.BackColor = S.GET<UI_CoreForm>().btnLogo.BackColor;
 					S.GET<RTC_StockpilePlayer_Form>().btnBlastToggle.ForeColor = Color.White;
 					S.GET<RTC_StockpilePlayer_Form>().btnBlastToggle.Text = "BlastLayer : OFF    (Attempts to uncorrupt/recorrupt in real-time)";
 				}
@@ -373,8 +373,8 @@ namespace RTCV.UI
 			{
 				//Shut off autocorrupt if it's on.
 				//Leave this check here so we don't wastefully update the spec
-				if(S.GET<RTC_Core_Form>().AutoCorrupt)
-					S.GET<RTC_Core_Form>().AutoCorrupt = false;
+				if(S.GET<UI_CoreForm>().AutoCorrupt)
+					S.GET<UI_CoreForm>().AutoCorrupt = false;
 
 				btnCorrupt.Visible = false;
 
@@ -454,8 +454,9 @@ namespace RTCV.UI
 		{
 			if (e.CloseReason != CloseReason.FormOwnerClosing)
 			{
-				S.GET<RTC_Core_Form>().btnGlitchHarvester.Text = S.GET<RTC_Core_Form>().btnGlitchHarvester.Text.Replace("○ ", "");
-				e.Cancel = true;
+				//S.GET<RTC_Core_Form>().btnGlitchHarvester.Text = S.GET<RTC_Core_Form>().btnGlitchHarvester.Text.Replace("○ ", "");
+                S.GET<UI_CoreForm>().pnGlitchHarvesterOpen.Visible = false;
+                e.Cancel = true;
 				this.Hide();
 			}
 		}
@@ -518,7 +519,7 @@ namespace RTCV.UI
 		private void OneTimeExecute()
 		{
 			//Disable autocorrupt
-			S.GET<RTC_Core_Form>().AutoCorrupt = false;
+			S.GET<UI_CoreForm>().AutoCorrupt = false;
 
 			if (rbCorrupt.Checked)
 				IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(StockpileManager_UISide.CurrentStashkey, loadBeforeOperation);
@@ -1194,9 +1195,9 @@ namespace RTCV.UI
 				ContextMenuStrip rerollMenu = new ContextMenuStrip();
 				rerollMenu.Items.Add("Configure Reroll", null, new EventHandler((ob, ev) =>
 				{
-					S.GET<RTC_Core_Form>().ShowPanelForm(S.GET<RTC_Settings_Form>(), false);
+                    S.GET<UI_CoreForm>().btnSettings_Click(null,null);
 					S.GET<RTC_Settings_Form>().lbForm.SetFocusedForm(S.GET<RTC_SettingsCorrupt_Form>());
-					S.GET<RTC_Core_Form>().BringToFront();
+					S.GET<UI_CoreForm>().BringToFront();
 				}));
 
 				rerollMenu.Show(this, locate);
