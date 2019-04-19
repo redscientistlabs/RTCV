@@ -69,7 +69,7 @@ namespace RTCV.UI
 		private void btnAutoSelectDomains_Click(object sender, EventArgs e)
 		{
 			RefreshDomains();
-			SetMemoryDomainsAllButSelectedDomains((string[])RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS]);
+			SetMemoryDomainsAllButSelectedDomains((string[])RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] ?? new string[] { });
 		}
 
 		public void RefreshDomains()

@@ -15,7 +15,7 @@ namespace RTCV.UI.Components.Controls
     {
         internal bool GeneralUpdateFlag = false; //makes other events ignore firing
         internal Timer updater;
-        internal int updateThreshold = 250;
+        internal int updateThreshold = 50;
         internal bool FirstLoadDone = false;
 
 		internal List<SpecControl<T>> slaveComps = new List<SpecControl<T>>();
