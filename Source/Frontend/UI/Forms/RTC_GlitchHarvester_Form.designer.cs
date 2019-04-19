@@ -28,23 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_GlitchHarvester_Form));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_GlitchHarvester_Form));
             this.pnSidebar = new System.Windows.Forms.Panel();
-            this.pnRender = new System.Windows.Forms.Panel();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.cbRenderType = new System.Windows.Forms.ComboBox();
-            this.btnOpenRenderFolder = new System.Windows.Forms.Button();
-            this.btnRender = new System.Windows.Forms.Button();
-            this.cbRenderAtLoad = new System.Windows.Forms.CheckBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.btnCorrupt = new System.Windows.Forms.Button();
             this.btnSendRaw = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.rbOriginal = new System.Windows.Forms.RadioButton();
+            this.rbInject = new System.Windows.Forms.RadioButton();
+            this.rbCorrupt = new System.Windows.Forms.RadioButton();
+            this.btnBlastToggle = new System.Windows.Forms.Button();
             this.btnSaveSavestateList = new System.Windows.Forms.Button();
             this.btnLoadSavestateList = new System.Windows.Forms.Button();
             this.btnBackPanelPage = new System.Windows.Forms.Button();
@@ -134,7 +133,6 @@
             this.cbSavestateLoadOnClick = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
             this.btnSaveLoad = new System.Windows.Forms.Button();
-            this.cbAutoLoadState = new System.Windows.Forms.CheckBox();
             this.btnClearStashHistory = new System.Windows.Forms.Button();
             this.btnStashDOWN = new System.Windows.Forms.Button();
             this.btnStashUP = new System.Windows.Forms.Button();
@@ -151,50 +149,41 @@
             this.label3 = new System.Windows.Forms.Label();
             this.btnRemoveSelectedStockpile = new System.Windows.Forms.Button();
             this.btnAddStashToStockpile = new System.Windows.Forms.Button();
-            this.cbLoadOnSelect = new System.Windows.Forms.CheckBox();
-            this.btnBlastToggle = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.rbOriginal = new System.Windows.Forms.RadioButton();
-            this.rbInject = new System.Windows.Forms.RadioButton();
-            this.rbCorrupt = new System.Windows.Forms.RadioButton();
-            this.cbStashCorrupted = new System.Windows.Forms.CheckBox();
             this.btnImportStockpile = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
             this.btnRenameSelected = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.btnRerollSelected = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
             this.cbCompressStockpiles = new System.Windows.Forms.CheckBox();
-            this.pnIntensity = new System.Windows.Forms.Panel();
             this.dgvStockpile = new RTCV.UI.DataGridViewDraggable();
             this.Item = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GameName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SystemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SystemCore = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Note = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.multiTB_Intensity = new RTCV.UI.Components.Controls.MultiTrackBar();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.pnIntensity = new System.Windows.Forms.Panel();
+            this.multiTB_Intensity = new RTCV.UI.Components.Controls.MultiTrackBar();
+            this.btnRerollSelected = new System.Windows.Forms.Button();
             this.pnSidebar.SuspendLayout();
-            this.pnRender.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.pnSavestateHolder.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.pnIntensity.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.pnSavestateHolder.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStockpile)).BeginInit();
+            this.pnIntensity.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnSidebar
             // 
             this.pnSidebar.AllowDrop = true;
             this.pnSidebar.BackColor = System.Drawing.Color.Gray;
-            this.pnSidebar.Controls.Add(this.pnRender);
             this.pnSidebar.Controls.Add(this.panel3);
             this.pnSidebar.Controls.Add(this.btnCorrupt);
             this.pnSidebar.Controls.Add(this.btnSendRaw);
+            this.pnSidebar.Controls.Add(this.panel2);
             this.pnSidebar.Controls.Add(this.btnSaveSavestateList);
             this.pnSidebar.Controls.Add(this.btnLoadSavestateList);
             this.pnSidebar.Controls.Add(this.btnBackPanelPage);
@@ -211,118 +200,11 @@
             this.pnSidebar.TabIndex = 71;
             this.pnSidebar.Tag = "color:normal";
             // 
-            // pnRender
-            // 
-            this.pnRender.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.pnRender.Controls.Add(this.label9);
-            this.pnRender.Controls.Add(this.label4);
-            this.pnRender.Controls.Add(this.cbRenderType);
-            this.pnRender.Controls.Add(this.btnOpenRenderFolder);
-            this.pnRender.Controls.Add(this.btnRender);
-            this.pnRender.Controls.Add(this.cbRenderAtLoad);
-            this.pnRender.Location = new System.Drawing.Point(-5, 407);
-            this.pnRender.Name = "pnRender";
-            this.pnRender.Size = new System.Drawing.Size(146, 94);
-            this.pnRender.TabIndex = 139;
-            this.pnRender.Tag = "color:dark1";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
-            this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(9, 3);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(85, 15);
-            this.label9.TabIndex = 139;
-            this.label9.Text = "Render Output";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(10, 26);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(32, 13);
-            this.label4.TabIndex = 142;
-            this.label4.Text = "Type:";
-            // 
-            // cbRenderType
-            // 
-            this.cbRenderType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.cbRenderType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbRenderType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbRenderType.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.cbRenderType.ForeColor = System.Drawing.Color.White;
-            this.cbRenderType.FormattingEnabled = true;
-            this.cbRenderType.Items.AddRange(new object[] {
-            "NONE",
-            "WAV",
-            "AVI",
-            "MPEG"});
-            this.cbRenderType.Location = new System.Drawing.Point(47, 22);
-            this.cbRenderType.Name = "cbRenderType";
-            this.cbRenderType.Size = new System.Drawing.Size(94, 21);
-            this.cbRenderType.TabIndex = 141;
-            this.cbRenderType.TabStop = false;
-            this.cbRenderType.Tag = "color:dark1";
-            this.cbRenderType.SelectedIndexChanged += new System.EventHandler(this.cbRenderType_SelectedIndexChanged);
-            // 
-            // btnOpenRenderFolder
-            // 
-            this.btnOpenRenderFolder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnOpenRenderFolder.FlatAppearance.BorderSize = 0;
-            this.btnOpenRenderFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOpenRenderFolder.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnOpenRenderFolder.ForeColor = System.Drawing.Color.White;
-            this.btnOpenRenderFolder.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenRenderFolder.Image")));
-            this.btnOpenRenderFolder.Location = new System.Drawing.Point(104, 66);
-            this.btnOpenRenderFolder.Name = "btnOpenRenderFolder";
-            this.btnOpenRenderFolder.Size = new System.Drawing.Size(38, 24);
-            this.btnOpenRenderFolder.TabIndex = 143;
-            this.btnOpenRenderFolder.TabStop = false;
-            this.btnOpenRenderFolder.Tag = "color:dark2";
-            this.btnOpenRenderFolder.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnOpenRenderFolder.UseVisualStyleBackColor = false;
-            this.btnOpenRenderFolder.Click += new System.EventHandler(this.btnOpenRenderFolder_Click);
-            // 
-            // btnRender
-            // 
-            this.btnRender.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnRender.FlatAppearance.BorderSize = 0;
-            this.btnRender.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRender.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnRender.ForeColor = System.Drawing.Color.White;
-            this.btnRender.Location = new System.Drawing.Point(8, 66);
-            this.btnRender.Name = "btnRender";
-            this.btnRender.Size = new System.Drawing.Size(93, 24);
-            this.btnRender.TabIndex = 134;
-            this.btnRender.TabStop = false;
-            this.btnRender.Tag = "color:dark2";
-            this.btnRender.Text = "Start Render";
-            this.btnRender.UseVisualStyleBackColor = false;
-            this.btnRender.Click += new System.EventHandler(this.btnRender_Click);
-            // 
-            // cbRenderAtLoad
-            // 
-            this.cbRenderAtLoad.AutoSize = true;
-            this.cbRenderAtLoad.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.cbRenderAtLoad.ForeColor = System.Drawing.Color.White;
-            this.cbRenderAtLoad.Location = new System.Drawing.Point(13, 47);
-            this.cbRenderAtLoad.Name = "cbRenderAtLoad";
-            this.cbRenderAtLoad.Size = new System.Drawing.Size(121, 17);
-            this.cbRenderAtLoad.TabIndex = 76;
-            this.cbRenderAtLoad.TabStop = false;
-            this.cbRenderAtLoad.Text = "Render file at load";
-            this.cbRenderAtLoad.UseVisualStyleBackColor = true;
-            this.cbRenderAtLoad.CheckedChanged += new System.EventHandler(this.cbRenderAtLoad_CheckedChanged);
-            // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.panel3.Controls.Add(this.label1);
-            this.panel3.Location = new System.Drawing.Point(-4, 70);
+            this.panel3.Location = new System.Drawing.Point(0, 156);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(156, 27);
             this.panel3.TabIndex = 138;
@@ -333,7 +215,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(7, 8);
+            this.label1.Location = new System.Drawing.Point(5, 7);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(107, 15);
             this.label1.TabIndex = 37;
@@ -376,6 +258,87 @@
             this.btnSendRaw.UseVisualStyleBackColor = false;
             this.btnSendRaw.Click += new System.EventHandler(this.btnSendRaw_Click);
             // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.Gray;
+            this.panel2.Controls.Add(this.panel1);
+            this.panel2.Controls.Add(this.btnBlastToggle);
+            this.panel2.Location = new System.Drawing.Point(0, 73);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(149, 85);
+            this.panel2.TabIndex = 136;
+            this.panel2.Tag = "color:normal";
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panel1.Controls.Add(this.rbOriginal);
+            this.panel1.Controls.Add(this.rbInject);
+            this.panel1.Controls.Add(this.rbCorrupt);
+            this.panel1.Location = new System.Drawing.Point(5, 6);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(75, 48);
+            this.panel1.TabIndex = 76;
+            this.panel1.Tag = "color:dark1";
+            // 
+            // rbOriginal
+            // 
+            this.rbOriginal.AutoSize = true;
+            this.rbOriginal.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.rbOriginal.ForeColor = System.Drawing.Color.White;
+            this.rbOriginal.Location = new System.Drawing.Point(6, 29);
+            this.rbOriginal.Name = "rbOriginal";
+            this.rbOriginal.Size = new System.Drawing.Size(67, 17);
+            this.rbOriginal.TabIndex = 85;
+            this.rbOriginal.Text = "Original";
+            this.rbOriginal.UseVisualStyleBackColor = true;
+            this.rbOriginal.CheckedChanged += new System.EventHandler(this.rbOriginal_CheckedChanged);
+            // 
+            // rbInject
+            // 
+            this.rbInject.AutoSize = true;
+            this.rbInject.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.rbInject.ForeColor = System.Drawing.Color.White;
+            this.rbInject.Location = new System.Drawing.Point(6, 15);
+            this.rbInject.Name = "rbInject";
+            this.rbInject.Size = new System.Drawing.Size(53, 17);
+            this.rbInject.TabIndex = 84;
+            this.rbInject.Text = "Inject";
+            this.rbInject.UseVisualStyleBackColor = true;
+            this.rbInject.CheckedChanged += new System.EventHandler(this.rbInject_CheckedChanged);
+            // 
+            // rbCorrupt
+            // 
+            this.rbCorrupt.AutoSize = true;
+            this.rbCorrupt.Checked = true;
+            this.rbCorrupt.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.rbCorrupt.ForeColor = System.Drawing.Color.White;
+            this.rbCorrupt.Location = new System.Drawing.Point(6, 1);
+            this.rbCorrupt.Name = "rbCorrupt";
+            this.rbCorrupt.Size = new System.Drawing.Size(65, 17);
+            this.rbCorrupt.TabIndex = 83;
+            this.rbCorrupt.TabStop = true;
+            this.rbCorrupt.Text = "Corrupt";
+            this.rbCorrupt.UseVisualStyleBackColor = true;
+            this.rbCorrupt.CheckedChanged += new System.EventHandler(this.rbCorrupt_CheckedChanged);
+            // 
+            // btnBlastToggle
+            // 
+            this.btnBlastToggle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnBlastToggle.FlatAppearance.BorderSize = 0;
+            this.btnBlastToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBlastToggle.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnBlastToggle.ForeColor = System.Drawing.Color.White;
+            this.btnBlastToggle.Location = new System.Drawing.Point(5, 58);
+            this.btnBlastToggle.Name = "btnBlastToggle";
+            this.btnBlastToggle.Size = new System.Drawing.Size(140, 22);
+            this.btnBlastToggle.TabIndex = 131;
+            this.btnBlastToggle.TabStop = false;
+            this.btnBlastToggle.Tag = "color:dark2";
+            this.btnBlastToggle.Text = "BlastLayer : OFF";
+            this.btnBlastToggle.UseVisualStyleBackColor = false;
+            this.btnBlastToggle.Click += new System.EventHandler(this.btnBlastToggle_Click);
+            // 
             // btnSaveSavestateList
             // 
             this.btnSaveSavestateList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
@@ -383,7 +346,7 @@
             this.btnSaveSavestateList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSaveSavestateList.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnSaveSavestateList.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.btnSaveSavestateList.Location = new System.Drawing.Point(73, 377);
+            this.btnSaveSavestateList.Location = new System.Drawing.Point(73, 469);
             this.btnSaveSavestateList.Name = "btnSaveSavestateList";
             this.btnSaveSavestateList.Size = new System.Drawing.Size(68, 24);
             this.btnSaveSavestateList.TabIndex = 160;
@@ -400,7 +363,7 @@
             this.btnLoadSavestateList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLoadSavestateList.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnLoadSavestateList.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.btnLoadSavestateList.Location = new System.Drawing.Point(6, 377);
+            this.btnLoadSavestateList.Location = new System.Drawing.Point(6, 469);
             this.btnLoadSavestateList.Name = "btnLoadSavestateList";
             this.btnLoadSavestateList.Size = new System.Drawing.Size(64, 24);
             this.btnLoadSavestateList.TabIndex = 159;
@@ -418,7 +381,7 @@
             this.btnBackPanelPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBackPanelPage.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnBackPanelPage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.btnBackPanelPage.Location = new System.Drawing.Point(7, 334);
+            this.btnBackPanelPage.Location = new System.Drawing.Point(7, 423);
             this.btnBackPanelPage.Name = "btnBackPanelPage";
             this.btnBackPanelPage.Size = new System.Drawing.Size(63, 24);
             this.btnBackPanelPage.TabIndex = 158;
@@ -435,7 +398,7 @@
             this.btnForwardPanelPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnForwardPanelPage.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnForwardPanelPage.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.btnForwardPanelPage.Location = new System.Drawing.Point(73, 334);
+            this.btnForwardPanelPage.Location = new System.Drawing.Point(73, 423);
             this.btnForwardPanelPage.Name = "btnForwardPanelPage";
             this.btnForwardPanelPage.Size = new System.Drawing.Size(67, 24);
             this.btnForwardPanelPage.TabIndex = 157;
@@ -528,7 +491,7 @@
             this.pnSavestateHolder.Controls.Add(this.btnSavestate12);
             this.pnSavestateHolder.Controls.Add(this.btnSavestate11);
             this.pnSavestateHolder.Font = new System.Drawing.Font("Segoe UI", 7F);
-            this.pnSavestateHolder.Location = new System.Drawing.Point(0, 128);
+            this.pnSavestateHolder.Location = new System.Drawing.Point(0, 213);
             this.pnSavestateHolder.Name = "pnSavestateHolder";
             this.pnSavestateHolder.Size = new System.Drawing.Size(604, 206);
             this.pnSavestateHolder.TabIndex = 156;
@@ -1700,7 +1663,7 @@
             this.btnToggleSaveLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnToggleSaveLoad.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnToggleSaveLoad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.btnToggleSaveLoad.Location = new System.Drawing.Point(8, 104);
+            this.btnToggleSaveLoad.Location = new System.Drawing.Point(7, 186);
             this.btnToggleSaveLoad.Name = "btnToggleSaveLoad";
             this.btnToggleSaveLoad.Size = new System.Drawing.Size(74, 24);
             this.btnToggleSaveLoad.TabIndex = 107;
@@ -1715,7 +1678,7 @@
             this.cbSavestateLoadOnClick.AutoSize = true;
             this.cbSavestateLoadOnClick.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbSavestateLoadOnClick.ForeColor = System.Drawing.Color.White;
-            this.cbSavestateLoadOnClick.Location = new System.Drawing.Point(7, 360);
+            this.cbSavestateLoadOnClick.Location = new System.Drawing.Point(7, 452);
             this.cbSavestateLoadOnClick.Name = "cbSavestateLoadOnClick";
             this.cbSavestateLoadOnClick.Size = new System.Drawing.Size(121, 17);
             this.cbSavestateLoadOnClick.TabIndex = 133;
@@ -1740,7 +1703,7 @@
             this.btnSaveLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSaveLoad.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnSaveLoad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSaveLoad.Location = new System.Drawing.Point(85, 104);
+            this.btnSaveLoad.Location = new System.Drawing.Point(84, 186);
             this.btnSaveLoad.Name = "btnSaveLoad";
             this.btnSaveLoad.Size = new System.Drawing.Size(56, 24);
             this.btnSaveLoad.TabIndex = 128;
@@ -1750,22 +1713,6 @@
             this.btnSaveLoad.UseVisualStyleBackColor = false;
             this.btnSaveLoad.Click += new System.EventHandler(this.btnSaveLoad_Click);
             // 
-            // cbAutoLoadState
-            // 
-            this.cbAutoLoadState.AutoSize = true;
-            this.cbAutoLoadState.Checked = true;
-            this.cbAutoLoadState.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbAutoLoadState.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.cbAutoLoadState.ForeColor = System.Drawing.Color.White;
-            this.cbAutoLoadState.Location = new System.Drawing.Point(90, 7);
-            this.cbAutoLoadState.Name = "cbAutoLoadState";
-            this.cbAutoLoadState.Size = new System.Drawing.Size(109, 17);
-            this.cbAutoLoadState.TabIndex = 75;
-            this.cbAutoLoadState.TabStop = false;
-            this.cbAutoLoadState.Text = "Auto-Load State";
-            this.cbAutoLoadState.UseVisualStyleBackColor = true;
-            this.cbAutoLoadState.CheckedChanged += new System.EventHandler(this.cbAutoLoadState_CheckedChanged);
-            // 
             // btnClearStashHistory
             // 
             this.btnClearStashHistory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -1774,7 +1721,7 @@
             this.btnClearStashHistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClearStashHistory.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnClearStashHistory.ForeColor = System.Drawing.Color.White;
-            this.btnClearStashHistory.Location = new System.Drawing.Point(160, 469);
+            this.btnClearStashHistory.Location = new System.Drawing.Point(160, 468);
             this.btnClearStashHistory.Name = "btnClearStashHistory";
             this.btnClearStashHistory.Size = new System.Drawing.Size(200, 24);
             this.btnClearStashHistory.TabIndex = 84;
@@ -1792,7 +1739,7 @@
             this.btnStashDOWN.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStashDOWN.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.btnStashDOWN.ForeColor = System.Drawing.Color.White;
-            this.btnStashDOWN.Location = new System.Drawing.Point(336, 182);
+            this.btnStashDOWN.Location = new System.Drawing.Point(335, 94);
             this.btnStashDOWN.Name = "btnStashDOWN";
             this.btnStashDOWN.Size = new System.Drawing.Size(25, 22);
             this.btnStashDOWN.TabIndex = 83;
@@ -1810,7 +1757,7 @@
             this.btnStashUP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStashUP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.btnStashUP.ForeColor = System.Drawing.Color.White;
-            this.btnStashUP.Location = new System.Drawing.Point(310, 182);
+            this.btnStashUP.Location = new System.Drawing.Point(309, 94);
             this.btnStashUP.Name = "btnStashUP";
             this.btnStashUP.Size = new System.Drawing.Size(25, 22);
             this.btnStashUP.TabIndex = 82;
@@ -1825,7 +1772,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(162, 189);
+            this.label2.Location = new System.Drawing.Point(161, 101);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(77, 15);
             this.label2.TabIndex = 81;
@@ -1841,11 +1788,11 @@
             this.lbStashHistory.ForeColor = System.Drawing.Color.White;
             this.lbStashHistory.FormattingEnabled = true;
             this.lbStashHistory.IntegralHeight = false;
-            this.lbStashHistory.Location = new System.Drawing.Point(160, 207);
+            this.lbStashHistory.Location = new System.Drawing.Point(160, 122);
             this.lbStashHistory.Name = "lbStashHistory";
             this.lbStashHistory.ScrollAlwaysVisible = true;
             this.lbStashHistory.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbStashHistory.Size = new System.Drawing.Size(200, 254);
+            this.lbStashHistory.Size = new System.Drawing.Size(200, 335);
             this.lbStashHistory.TabIndex = 80;
             this.lbStashHistory.Tag = "color:normal";
             this.lbStashHistory.SelectedIndexChanged += new System.EventHandler(this.lbStashHistory_SelectedIndexChanged);
@@ -1859,7 +1806,7 @@
             this.btnStockpileMoveSelectedDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStockpileMoveSelectedDown.Font = new System.Drawing.Font("Segoe UI Symbol", 7F);
             this.btnStockpileMoveSelectedDown.ForeColor = System.Drawing.Color.White;
-            this.btnStockpileMoveSelectedDown.Location = new System.Drawing.Point(816, 470);
+            this.btnStockpileMoveSelectedDown.Location = new System.Drawing.Point(816, 469);
             this.btnStockpileMoveSelectedDown.Name = "btnStockpileMoveSelectedDown";
             this.btnStockpileMoveSelectedDown.Size = new System.Drawing.Size(33, 24);
             this.btnStockpileMoveSelectedDown.TabIndex = 118;
@@ -1877,7 +1824,7 @@
             this.btnStockpileMoveSelectedUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStockpileMoveSelectedUp.Font = new System.Drawing.Font("Segoe UI Symbol", 7F);
             this.btnStockpileMoveSelectedUp.ForeColor = System.Drawing.Color.White;
-            this.btnStockpileMoveSelectedUp.Location = new System.Drawing.Point(778, 470);
+            this.btnStockpileMoveSelectedUp.Location = new System.Drawing.Point(778, 469);
             this.btnStockpileMoveSelectedUp.Margin = new System.Windows.Forms.Padding(0);
             this.btnStockpileMoveSelectedUp.Name = "btnStockpileMoveSelectedUp";
             this.btnStockpileMoveSelectedUp.Size = new System.Drawing.Size(33, 24);
@@ -1896,7 +1843,7 @@
             this.btnLoadStockpile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLoadStockpile.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnLoadStockpile.ForeColor = System.Drawing.Color.Black;
-            this.btnLoadStockpile.Location = new System.Drawing.Point(557, 4);
+            this.btnLoadStockpile.Location = new System.Drawing.Point(557, 6);
             this.btnLoadStockpile.Name = "btnLoadStockpile";
             this.btnLoadStockpile.Size = new System.Drawing.Size(50, 22);
             this.btnLoadStockpile.TabIndex = 110;
@@ -1914,7 +1861,7 @@
             this.btnSaveStockpile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSaveStockpile.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnSaveStockpile.ForeColor = System.Drawing.Color.DimGray;
-            this.btnSaveStockpile.Location = new System.Drawing.Point(670, 4);
+            this.btnSaveStockpile.Location = new System.Drawing.Point(670, 6);
             this.btnSaveStockpile.Name = "btnSaveStockpile";
             this.btnSaveStockpile.Size = new System.Drawing.Size(44, 22);
             this.btnSaveStockpile.TabIndex = 114;
@@ -1931,7 +1878,7 @@
             this.btnSaveStockpileAs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSaveStockpileAs.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnSaveStockpileAs.ForeColor = System.Drawing.Color.Black;
-            this.btnSaveStockpileAs.Location = new System.Drawing.Point(609, 4);
+            this.btnSaveStockpileAs.Location = new System.Drawing.Point(609, 6);
             this.btnSaveStockpileAs.Name = "btnSaveStockpileAs";
             this.btnSaveStockpileAs.Size = new System.Drawing.Size(59, 22);
             this.btnSaveStockpileAs.TabIndex = 109;
@@ -1948,7 +1895,7 @@
             this.btnClearStockpile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClearStockpile.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnClearStockpile.ForeColor = System.Drawing.Color.White;
-            this.btnClearStockpile.Location = new System.Drawing.Point(401, 469);
+            this.btnClearStockpile.Location = new System.Drawing.Point(401, 468);
             this.btnClearStockpile.Name = "btnClearStockpile";
             this.btnClearStockpile.Size = new System.Drawing.Size(95, 24);
             this.btnClearStockpile.TabIndex = 115;
@@ -1966,7 +1913,7 @@
             this.btnStockpileDOWN.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStockpileDOWN.Font = new System.Drawing.Font("Segoe UI Symbol", 8F);
             this.btnStockpileDOWN.ForeColor = System.Drawing.Color.White;
-            this.btnStockpileDOWN.Location = new System.Drawing.Point(824, 4);
+            this.btnStockpileDOWN.Location = new System.Drawing.Point(824, 6);
             this.btnStockpileDOWN.Name = "btnStockpileDOWN";
             this.btnStockpileDOWN.Size = new System.Drawing.Size(25, 22);
             this.btnStockpileDOWN.TabIndex = 113;
@@ -1984,7 +1931,7 @@
             this.btnStockpileUP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStockpileUP.Font = new System.Drawing.Font("Segoe UI Symbol", 8F);
             this.btnStockpileUP.ForeColor = System.Drawing.Color.White;
-            this.btnStockpileUP.Location = new System.Drawing.Point(798, 4);
+            this.btnStockpileUP.Location = new System.Drawing.Point(798, 6);
             this.btnStockpileUP.Name = "btnStockpileUP";
             this.btnStockpileUP.Size = new System.Drawing.Size(25, 22);
             this.btnStockpileUP.TabIndex = 112;
@@ -2013,7 +1960,7 @@
             this.btnRemoveSelectedStockpile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRemoveSelectedStockpile.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnRemoveSelectedStockpile.ForeColor = System.Drawing.Color.White;
-            this.btnRemoveSelectedStockpile.Location = new System.Drawing.Point(506, 469);
+            this.btnRemoveSelectedStockpile.Location = new System.Drawing.Point(506, 468);
             this.btnRemoveSelectedStockpile.Name = "btnRemoveSelectedStockpile";
             this.btnRemoveSelectedStockpile.Size = new System.Drawing.Size(83, 24);
             this.btnRemoveSelectedStockpile.TabIndex = 108;
@@ -2040,107 +1987,6 @@
             this.btnAddStashToStockpile.UseVisualStyleBackColor = false;
             this.btnAddStashToStockpile.Click += new System.EventHandler(this.btnAddStashToStockpile_Click);
             // 
-            // cbLoadOnSelect
-            // 
-            this.cbLoadOnSelect.AutoSize = true;
-            this.cbLoadOnSelect.Checked = true;
-            this.cbLoadOnSelect.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbLoadOnSelect.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.cbLoadOnSelect.ForeColor = System.Drawing.Color.White;
-            this.cbLoadOnSelect.Location = new System.Drawing.Point(90, 22);
-            this.cbLoadOnSelect.Name = "cbLoadOnSelect";
-            this.cbLoadOnSelect.Size = new System.Drawing.Size(100, 17);
-            this.cbLoadOnSelect.TabIndex = 132;
-            this.cbLoadOnSelect.TabStop = false;
-            this.cbLoadOnSelect.Text = "Load on select";
-            this.cbLoadOnSelect.UseVisualStyleBackColor = true;
-            // 
-            // btnBlastToggle
-            // 
-            this.btnBlastToggle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnBlastToggle.FlatAppearance.BorderSize = 0;
-            this.btnBlastToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBlastToggle.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnBlastToggle.ForeColor = System.Drawing.Color.White;
-            this.btnBlastToggle.Location = new System.Drawing.Point(7, 57);
-            this.btnBlastToggle.Name = "btnBlastToggle";
-            this.btnBlastToggle.Size = new System.Drawing.Size(96, 24);
-            this.btnBlastToggle.TabIndex = 131;
-            this.btnBlastToggle.TabStop = false;
-            this.btnBlastToggle.Tag = "color:dark2";
-            this.btnBlastToggle.Text = "BlastLayer : OFF";
-            this.btnBlastToggle.UseVisualStyleBackColor = false;
-            this.btnBlastToggle.Click += new System.EventHandler(this.btnBlastToggle_Click);
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.panel1.Controls.Add(this.rbOriginal);
-            this.panel1.Controls.Add(this.rbInject);
-            this.panel1.Controls.Add(this.rbCorrupt);
-            this.panel1.Location = new System.Drawing.Point(7, 6);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(75, 48);
-            this.panel1.TabIndex = 76;
-            this.panel1.Tag = "color:dark1";
-            // 
-            // rbOriginal
-            // 
-            this.rbOriginal.AutoSize = true;
-            this.rbOriginal.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.rbOriginal.ForeColor = System.Drawing.Color.White;
-            this.rbOriginal.Location = new System.Drawing.Point(6, 29);
-            this.rbOriginal.Name = "rbOriginal";
-            this.rbOriginal.Size = new System.Drawing.Size(67, 17);
-            this.rbOriginal.TabIndex = 85;
-            this.rbOriginal.Text = "Original";
-            this.rbOriginal.UseVisualStyleBackColor = true;
-            this.rbOriginal.CheckedChanged += new System.EventHandler(this.rbOriginal_CheckedChanged);
-            // 
-            // rbInject
-            // 
-            this.rbInject.AutoSize = true;
-            this.rbInject.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.rbInject.ForeColor = System.Drawing.Color.White;
-            this.rbInject.Location = new System.Drawing.Point(6, 15);
-            this.rbInject.Name = "rbInject";
-            this.rbInject.Size = new System.Drawing.Size(53, 17);
-            this.rbInject.TabIndex = 84;
-            this.rbInject.Text = "Inject";
-            this.rbInject.UseVisualStyleBackColor = true;
-            this.rbInject.CheckedChanged += new System.EventHandler(this.rbInject_CheckedChanged);
-            // 
-            // rbCorrupt
-            // 
-            this.rbCorrupt.AutoSize = true;
-            this.rbCorrupt.Checked = true;
-            this.rbCorrupt.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.rbCorrupt.ForeColor = System.Drawing.Color.White;
-            this.rbCorrupt.Location = new System.Drawing.Point(6, 1);
-            this.rbCorrupt.Name = "rbCorrupt";
-            this.rbCorrupt.Size = new System.Drawing.Size(65, 17);
-            this.rbCorrupt.TabIndex = 83;
-            this.rbCorrupt.TabStop = true;
-            this.rbCorrupt.Text = "Corrupt";
-            this.rbCorrupt.UseVisualStyleBackColor = true;
-            this.rbCorrupt.CheckedChanged += new System.EventHandler(this.rbCorrupt_CheckedChanged);
-            // 
-            // cbStashCorrupted
-            // 
-            this.cbStashCorrupted.AutoSize = true;
-            this.cbStashCorrupted.Checked = true;
-            this.cbStashCorrupted.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbStashCorrupted.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.cbStashCorrupted.ForeColor = System.Drawing.Color.White;
-            this.cbStashCorrupted.Location = new System.Drawing.Point(90, 37);
-            this.cbStashCorrupted.Name = "cbStashCorrupted";
-            this.cbStashCorrupted.Size = new System.Drawing.Size(94, 17);
-            this.cbStashCorrupted.TabIndex = 75;
-            this.cbStashCorrupted.TabStop = false;
-            this.cbStashCorrupted.Text = "Stash Results";
-            this.cbStashCorrupted.UseVisualStyleBackColor = true;
-            this.cbStashCorrupted.CheckedChanged += new System.EventHandler(this.cbStashCorrupted_CheckedChanged);
-            // 
             // btnImportStockpile
             // 
             this.btnImportStockpile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -2149,7 +1995,7 @@
             this.btnImportStockpile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnImportStockpile.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnImportStockpile.ForeColor = System.Drawing.Color.Black;
-            this.btnImportStockpile.Location = new System.Drawing.Point(732, 4);
+            this.btnImportStockpile.Location = new System.Drawing.Point(732, 6);
             this.btnImportStockpile.Name = "btnImportStockpile";
             this.btnImportStockpile.Size = new System.Drawing.Size(50, 22);
             this.btnImportStockpile.TabIndex = 121;
@@ -2157,17 +2003,6 @@
             this.btnImportStockpile.Text = "Import";
             this.btnImportStockpile.UseVisualStyleBackColor = false;
             this.btnImportStockpile.Click += new System.EventHandler(this.btnImportStockpile_Click);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.ForeColor = System.Drawing.Color.White;
-            this.label6.Location = new System.Drawing.Point(191, 44);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(139, 26);
-            this.label6.TabIndex = 123;
-            this.label6.Text = "Parameters unavailable with\ncurrent engine";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnRenameSelected
             // 
@@ -2177,7 +2012,7 @@
             this.btnRenameSelected.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRenameSelected.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnRenameSelected.ForeColor = System.Drawing.Color.White;
-            this.btnRenameSelected.Location = new System.Drawing.Point(597, 469);
+            this.btnRenameSelected.Location = new System.Drawing.Point(597, 468);
             this.btnRenameSelected.Name = "btnRenameSelected";
             this.btnRenameSelected.Size = new System.Drawing.Size(86, 24);
             this.btnRenameSelected.TabIndex = 135;
@@ -2187,73 +2022,19 @@
             this.btnRenameSelected.UseVisualStyleBackColor = false;
             this.btnRenameSelected.Click += new System.EventHandler(this.btnRenameSelected_Click);
             // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.Gray;
-            this.panel2.Controls.Add(this.btnRerollSelected);
-            this.panel2.Controls.Add(this.panel1);
-            this.panel2.Controls.Add(this.cbLoadOnSelect);
-            this.panel2.Controls.Add(this.cbStashCorrupted);
-            this.panel2.Controls.Add(this.cbAutoLoadState);
-            this.panel2.Controls.Add(this.btnBlastToggle);
-            this.panel2.Location = new System.Drawing.Point(158, 87);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(204, 87);
-            this.panel2.TabIndex = 136;
-            this.panel2.Tag = "color:normal";
-            // 
-            // btnRerollSelected
-            // 
-            this.btnRerollSelected.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnRerollSelected.FlatAppearance.BorderSize = 0;
-            this.btnRerollSelected.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRerollSelected.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnRerollSelected.ForeColor = System.Drawing.Color.White;
-            this.btnRerollSelected.Location = new System.Drawing.Point(106, 57);
-            this.btnRerollSelected.Name = "btnRerollSelected";
-            this.btnRerollSelected.Size = new System.Drawing.Size(93, 24);
-            this.btnRerollSelected.TabIndex = 133;
-            this.btnRerollSelected.TabStop = false;
-            this.btnRerollSelected.Tag = "color:dark2";
-            this.btnRerollSelected.Text = "Reroll Selected";
-            this.btnRerollSelected.UseVisualStyleBackColor = false;
-            this.btnRerollSelected.Click += new System.EventHandler(this.btnRerollSelected_Click);
-            this.btnRerollSelected.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnRerollSelected_MouseDown);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
-            this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(161, 11);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(66, 15);
-            this.label8.TabIndex = 137;
-            this.label8.Text = "Parameters";
-            // 
             // cbCompressStockpiles
             // 
             this.cbCompressStockpiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cbCompressStockpiles.AutoSize = true;
             this.cbCompressStockpiles.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbCompressStockpiles.ForeColor = System.Drawing.Color.White;
-            this.cbCompressStockpiles.Location = new System.Drawing.Point(697, 467);
+            this.cbCompressStockpiles.Location = new System.Drawing.Point(697, 466);
             this.cbCompressStockpiles.Name = "cbCompressStockpiles";
             this.cbCompressStockpiles.Size = new System.Drawing.Size(78, 30);
             this.cbCompressStockpiles.TabIndex = 144;
             this.cbCompressStockpiles.TabStop = false;
             this.cbCompressStockpiles.Text = "Compress\nStockpiles";
             this.cbCompressStockpiles.UseVisualStyleBackColor = true;
-            // 
-            // pnIntensity
-            // 
-            this.pnIntensity.BackColor = System.Drawing.Color.Gray;
-            this.pnIntensity.Controls.Add(this.multiTB_Intensity);
-            this.pnIntensity.Location = new System.Drawing.Point(158, 30);
-            this.pnIntensity.Name = "pnIntensity";
-            this.pnIntensity.Size = new System.Drawing.Size(204, 58);
-            this.pnIntensity.TabIndex = 122;
-            this.pnIntensity.Tag = "color:normal";
             // 
             // dgvStockpile
             // 
@@ -2292,7 +2073,7 @@
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dgvStockpile.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvStockpile.GridColor = System.Drawing.Color.Black;
-            this.dgvStockpile.Location = new System.Drawing.Point(401, 29);
+            this.dgvStockpile.Location = new System.Drawing.Point(401, 32);
             this.dgvStockpile.Name = "dgvStockpile";
             this.dgvStockpile.RightToLeft = System.Windows.Forms.RightToLeft.No;
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -2306,7 +2087,7 @@
             this.dgvStockpile.RowHeadersVisible = false;
             this.dgvStockpile.RowTemplate.Height = 25;
             this.dgvStockpile.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvStockpile.Size = new System.Drawing.Size(451, 432);
+            this.dgvStockpile.Size = new System.Drawing.Size(451, 425);
             this.dgvStockpile.TabIndex = 140;
             this.dgvStockpile.Tag = "color:dark1";
             this.dgvStockpile.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStockpile_CellClick);
@@ -2355,22 +2136,6 @@
             this.Note.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.Note.Text = "";
             // 
-            // multiTB_Intensity
-            // 
-            this.multiTB_Intensity.BackColor = System.Drawing.Color.Gray;
-            this.multiTB_Intensity.DisplayCheckbox = false;
-            this.multiTB_Intensity.Font = new System.Drawing.Font("Segoe UI", 8.25F);
-            this.multiTB_Intensity.Label = "Intensity";
-            this.multiTB_Intensity.Location = new System.Drawing.Point(0, 0);
-            this.multiTB_Intensity.Maximum = ((long)(65535));
-            this.multiTB_Intensity.Minimum = ((long)(1));
-            this.multiTB_Intensity.Name = "multiTB_Intensity";
-            this.multiTB_Intensity.Size = new System.Drawing.Size(204, 59);
-            this.multiTB_Intensity.TabIndex = 0;
-            this.multiTB_Intensity.Tag = "color:normal";
-            this.multiTB_Intensity.UncapNumericBox = false;
-            this.multiTB_Intensity.Value = ((long)(1));
-            // 
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.FillWeight = 145F;
@@ -2403,16 +2168,82 @@
             this.dataGridViewTextBoxColumn4.ReadOnly = true;
             this.dataGridViewTextBoxColumn4.Visible = false;
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
+            this.label8.ForeColor = System.Drawing.Color.White;
+            this.label8.Location = new System.Drawing.Point(161, 11);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(66, 15);
+            this.label8.TabIndex = 137;
+            this.label8.Text = "Parameters";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.ForeColor = System.Drawing.Color.White;
+            this.label6.Location = new System.Drawing.Point(191, 44);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(139, 26);
+            this.label6.TabIndex = 123;
+            this.label6.Text = "Parameters unavailable with\ncurrent engine";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // pnIntensity
+            // 
+            this.pnIntensity.BackColor = System.Drawing.Color.Gray;
+            this.pnIntensity.Controls.Add(this.multiTB_Intensity);
+            this.pnIntensity.Location = new System.Drawing.Point(158, 34);
+            this.pnIntensity.Name = "pnIntensity";
+            this.pnIntensity.Size = new System.Drawing.Size(204, 55);
+            this.pnIntensity.TabIndex = 122;
+            this.pnIntensity.Tag = "color:normal";
+            // 
+            // multiTB_Intensity
+            // 
+            this.multiTB_Intensity.BackColor = System.Drawing.Color.Gray;
+            this.multiTB_Intensity.DisplayCheckbox = false;
+            this.multiTB_Intensity.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.multiTB_Intensity.Label = "Intensity";
+            this.multiTB_Intensity.Location = new System.Drawing.Point(0, -1);
+            this.multiTB_Intensity.Maximum = ((long)(65535));
+            this.multiTB_Intensity.Minimum = ((long)(1));
+            this.multiTB_Intensity.Name = "multiTB_Intensity";
+            this.multiTB_Intensity.Size = new System.Drawing.Size(204, 51);
+            this.multiTB_Intensity.TabIndex = 0;
+            this.multiTB_Intensity.Tag = "color:normal";
+            this.multiTB_Intensity.UncapNumericBox = false;
+            this.multiTB_Intensity.Value = ((long)(1));
+            // 
+            // btnRerollSelected
+            // 
+            this.btnRerollSelected.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnRerollSelected.FlatAppearance.BorderSize = 0;
+            this.btnRerollSelected.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRerollSelected.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnRerollSelected.ForeColor = System.Drawing.Color.White;
+            this.btnRerollSelected.Location = new System.Drawing.Point(82, 79);
+            this.btnRerollSelected.Name = "btnRerollSelected";
+            this.btnRerollSelected.Size = new System.Drawing.Size(62, 48);
+            this.btnRerollSelected.TabIndex = 133;
+            this.btnRerollSelected.TabStop = false;
+            this.btnRerollSelected.Tag = "color:dark2";
+            this.btnRerollSelected.Text = "Reroll Selected";
+            this.btnRerollSelected.UseVisualStyleBackColor = false;
+            this.btnRerollSelected.Click += new System.EventHandler(this.btnRerollSelected_Click);
+            this.btnRerollSelected.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnRerollSelected_MouseDown);
+            // 
             // RTC_GlitchHarvester_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(854, 501);
+            this.Controls.Add(this.btnRerollSelected);
             this.Controls.Add(this.pnSidebar);
             this.Controls.Add(this.dgvStockpile);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.panel2);
             this.Controls.Add(this.btnRenameSelected);
             this.Controls.Add(this.pnIntensity);
             this.Controls.Add(this.btnImportStockpile);
@@ -2443,18 +2274,15 @@
             this.Load += new System.EventHandler(this.RTC_GH_Form_Load);
             this.pnSidebar.ResumeLayout(false);
             this.pnSidebar.PerformLayout();
-            this.pnRender.ResumeLayout(false);
-            this.pnRender.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            this.pnSavestateHolder.ResumeLayout(false);
-            this.pnSavestateHolder.PerformLayout();
+            this.panel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            this.pnIntensity.ResumeLayout(false);
+            this.pnSavestateHolder.ResumeLayout(false);
+            this.pnSavestateHolder.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStockpile)).EndInit();
+            this.pnIntensity.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2483,16 +2311,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnRemoveSelectedStockpile;
         private System.Windows.Forms.Button btnAddStashToStockpile;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnImportStockpile;
         private System.Windows.Forms.Label label5;
-        public System.Windows.Forms.CheckBox cbRenderAtLoad;
-        public System.Windows.Forms.CheckBox cbAutoLoadState;
-        public System.Windows.Forms.RadioButton rbInject;
-        public System.Windows.Forms.RadioButton rbCorrupt;
-        public System.Windows.Forms.CheckBox cbStashCorrupted;
-        public System.Windows.Forms.RadioButton rbOriginal;
-        public System.Windows.Forms.CheckBox cbLoadOnSelect;
         public System.Windows.Forms.CheckBox cbSavestateLoadOnClick;
         public System.Windows.Forms.Button btnSavestate01;
         public System.Windows.Forms.Button btnSavestate20;
@@ -2514,10 +2334,8 @@
         public System.Windows.Forms.Button btnSavestate04;
         public System.Windows.Forms.Button btnSavestate03;
         public System.Windows.Forms.Button btnSavestate02;
-        private System.Windows.Forms.Label label6;
         public System.Windows.Forms.Button btnSendRaw;
 		private System.Windows.Forms.Button btnRenameSelected;
-		public System.Windows.Forms.Button btnBlastToggle;
 		private System.Windows.Forms.TextBox tbSavestate01;
 		private System.Windows.Forms.TextBox tbSavestate12;
 		private System.Windows.Forms.TextBox tbSavestate11;
@@ -2583,15 +2401,8 @@
 		private System.Windows.Forms.Button btnForwardPanelPage;
 		private System.Windows.Forms.Button btnSaveSavestateList;
 		private System.Windows.Forms.Button btnLoadSavestateList;
-		private System.Windows.Forms.Panel panel2;
-		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.Panel panel3;
 		public DataGridViewDraggable dgvStockpile;
-		public System.Windows.Forms.Button btnRerollSelected;
-		public System.Windows.Forms.ComboBox cbRenderType;
-		private System.Windows.Forms.Label label4;
-		public System.Windows.Forms.Button btnRender;
-		public System.Windows.Forms.Button btnOpenRenderFolder;
         public System.Windows.Forms.CheckBox cbCompressStockpiles;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
@@ -2602,9 +2413,16 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn SystemName;
 		private System.Windows.Forms.DataGridViewTextBoxColumn SystemCore;
 		private System.Windows.Forms.DataGridViewButtonColumn Note;
-		public System.Windows.Forms.Panel pnIntensity;
-		public Components.Controls.MultiTrackBar multiTB_Intensity;
-        public System.Windows.Forms.Panel pnRender;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel1;
+        public System.Windows.Forms.RadioButton rbOriginal;
+        public System.Windows.Forms.RadioButton rbInject;
+        public System.Windows.Forms.RadioButton rbCorrupt;
+        public System.Windows.Forms.Button btnBlastToggle;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label6;
+        public System.Windows.Forms.Panel pnIntensity;
+        public Components.Controls.MultiTrackBar multiTB_Intensity;
+        public System.Windows.Forms.Button btnRerollSelected;
     }
 }
