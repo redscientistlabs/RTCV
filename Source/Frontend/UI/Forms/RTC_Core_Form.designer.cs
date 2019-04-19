@@ -288,7 +288,6 @@
             this.btnEngineConfig.Text = "Engine Config";
             this.btnEngineConfig.UseVisualStyleBackColor = false;
             this.btnEngineConfig.Visible = false;
-            this.btnEngineConfig.Click += new System.EventHandler(this.btnEngineConfig_Click);
             // 
             // btnLogo
             // 
@@ -329,7 +328,6 @@
             this.btnSettings.Text = "   Settings and tools";
             this.btnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSettings.UseVisualStyleBackColor = false;
-            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
             // btnEasyMode
             // 
@@ -368,7 +366,6 @@
             this.btnStockpilePlayer.Text = "Stockpile Player";
             this.btnStockpilePlayer.UseVisualStyleBackColor = false;
             this.btnStockpilePlayer.Visible = false;
-            this.btnStockpilePlayer.Click += new System.EventHandler(this.btnStockPilePlayer_Click);
             // 
             // btnGlitchHarvester
             // 

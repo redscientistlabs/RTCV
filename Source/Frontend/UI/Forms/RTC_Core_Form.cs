@@ -257,7 +257,7 @@ This message only appears once.";
 		private void btnLogo_MouseClick(object sender, MouseEventArgs e)
 		{
 			//if (RTC_NetcoreImplementation.isStandaloneUI)
-			ShowPanelForm(S.GET<RTC_ConnectionStatus_Form>(), false);
+			//ShowPanelForm(S.GET<RTC_ConnectionStatus_Form>(), false);
 		}
 
 		private void btnEasyMode_MouseDown(object sender, MouseEventArgs e)
@@ -296,6 +296,7 @@ This message only appears once.";
 				Controls.Remove(ctrl);
 		}
 
+        /*
 		public void ShowPanelForm(Form frm, bool hideButtons = true)
 		{
 			if (frm == null)
@@ -360,12 +361,13 @@ This message only appears once.";
 
 			frm.Refresh();
 		}
+        */
 
-		public void btnEngineConfig_Click(object sender, EventArgs e) => ShowPanelForm(S.GET<RTC_EngineConfig_Form>());
+		//public void btnEngineConfig_Click(object sender, EventArgs e) => ShowPanelForm(S.GET<RTC_EngineConfig_Form>());
 
-		private void btnSettings_Click(object sender, EventArgs e) => ShowPanelForm(S.GET<RTC_Settings_Form>());
+		//private void btnSettings_Click(object sender, EventArgs e) => ShowPanelForm(S.GET<RTC_Settings_Form>());
 
-		private void btnStockPilePlayer_Click(object sender, EventArgs e) => ShowPanelForm(S.GET<RTC_StockpilePlayer_Form>());
+		//private void btnStockPilePlayer_Click(object sender, EventArgs e) => ShowPanelForm(S.GET<RTC_StockpilePlayer_Form>());
 
 		public void btnGpJumpBack_Click(object sender, EventArgs e)
 		{
@@ -489,7 +491,7 @@ Environment.NewLine + "───█───▌────────▐▀─
 
 		private void btnAutoKillSwitchExecute_Click(object sender, EventArgs e)
 		{
-			ShowPanelForm(S.GET<RTC_ConnectionStatus_Form>());
+			//ShowPanelForm(S.GET<RTC_ConnectionStatus_Form>());
 
 			S.GET<RTC_Core_Form>().pbAutoKillSwitchTimeout.Value = S.GET<RTC_Core_Form>().pbAutoKillSwitchTimeout.Maximum;
 			AutoKillSwitch.ShouldKillswitchFire = true;

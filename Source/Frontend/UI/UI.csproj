@@ -274,6 +274,7 @@
     <Compile Include="Modular\UI_CoreForm.Designer.cs">
       <DependentUpon>UI_CoreForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modular\UI_DefaultGrids.cs" />
     <Compile Include="Modular\UI_Objects.cs" />
     <Compile Include="Modular\UI_ShadowPanel.cs">
       <SubType>Form</SubType>

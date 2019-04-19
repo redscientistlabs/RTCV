@@ -286,6 +286,8 @@
             this.btnLogo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnLogo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnLogo.UseVisualStyleBackColor = false;
+            this.btnLogo.Click += new System.EventHandler(this.btnLogo_Click);
+            this.btnLogo.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btnLogo_MouseClick);
             // 
             // btnEngineConfig
             // 

@@ -35,12 +35,6 @@ namespace RTCV.UI
 			Process.Start("RESTARTDETACHEDRTC.bat");
 		}
 
-		private void btnReturnToSession_Click(object sender, EventArgs e)
-		{
-            //see if this is still usefull after old core form is dead
-			S.GET<RTC_Core_Form>().ShowPanelForm(S.GET<RTC_Core_Form>().previousForm);
-		}
-
 		private void btnStopGameProtection_Click(object sender, EventArgs e)
 		{
 			S.GET<UI_CoreForm>().cbUseGameProtection.Checked = false;

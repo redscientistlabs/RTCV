@@ -18,6 +18,7 @@ using RTCV.UI;
 using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
 using static RTCV.NetCore.NetcoreCommands;
+using RTCV.UI.Modular;
 
 namespace RTCV.UI
 {
@@ -33,7 +34,6 @@ namespace RTCV.UI
 		public static bool HideStartButton = false;
 
         private static System.Timers.Timer inputCheckTimer;
-        private static System.Timers.Timer inputTimer;
 
         //RTC Main Forms
         //public static Color generalColor = Color.FromArgb(60, 45, 70);
@@ -46,8 +46,8 @@ namespace RTCV.UI
 		{
 
             S.formRegister.FormRegistered += FormRegister_FormRegistered;
-			registerFormEvents(S.GET<RTC_Core_Form>());
-            //registerFormEvents(S.GET<UI_CoreForm>());
+			//registerFormEvents(S.GET<RTC_Core_Form>());
+            registerFormEvents(S.GET<UI_CoreForm>());
 
 			S.SET<RTC_Standalone_Form>((RTC_Standalone_Form)standaloneForm);
 
@@ -93,13 +93,14 @@ namespace RTCV.UI
 
             if (FirstConnect)
             {
-                S.GET<RTC_Core_Form>().ShowPanelForm(S.GET<RTC_ConnectionStatus_Form>());
+                UI_DefaultGrids.connectionStatus.LoadToMain();
                 if (HideStartButton)
                 {
                     S.GET<RTC_ConnectionStatus_Form>().btnStartEmuhawkDetached.Visible = false;
                 }
             }
-            S.GET<RTC_Core_Form>().Show();
+
+            S.GET<UI_CoreForm>().Show();
         }
 
 		private static void FormRegister_FormRegistered(object sender, NetCoreEventArgs e)
@@ -382,12 +383,14 @@ namespace RTCV.UI
                     (c as Button).FlatAppearance.BorderColor = NormalColor;
             }
 
+            if(ctr == null)
+            {
+                S.GET<RTC_StockpilePlayer_Form>().dgvStockpile.BackgroundColor = NormalColor;
+                S.GET<RTC_GlitchHarvester_Form>().dgvStockpile.BackgroundColor = NormalColor;
 
-			S.GET<RTC_StockpilePlayer_Form>().dgvStockpile.BackgroundColor = NormalColor;
-			S.GET<RTC_GlitchHarvester_Form>().dgvStockpile.BackgroundColor = NormalColor;
-
-			S.GET<RTC_NewBlastEditor_Form>().dgvBlastEditor.BackgroundColor = NormalColor;
-			S.GET<RTC_BlastGenerator_Form>().dgvBlastGenerator.BackgroundColor = NormalColor;
+                S.GET<RTC_NewBlastEditor_Form>().dgvBlastEditor.BackgroundColor = NormalColor;
+                S.GET<RTC_BlastGenerator_Form>().dgvBlastGenerator.BackgroundColor = NormalColor;
+            }
 
             foreach (Control c in dark1ColorControls)
             {

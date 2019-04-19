@@ -1,6 +1,7 @@
 ﻿using RTCV.CorruptCore;
 using RTCV.NetCore;
 using RTCV.NetCore.StaticTools;
+using RTCV.UI.Modular;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,11 +24,7 @@ namespace RTCV.UI
         public static UI_CoreForm thisForm;
         public static UI_CanvasForm cfForm;
 
-
-        CanvasGrid ecGrid = null;
-        CanvasGrid ghGrid = null;
-        CanvasGrid spGrid = null;
-        CanvasGrid stGrid = null;
+        public CanvasGrid previousGrid = null;
 
         //Vallues used for padding and scaling properly in high dpi
         public static int xPadding;
@@ -85,8 +82,7 @@ namespace RTCV.UI
         {
             btnLogo.Text = "RTCV " + CorruptCore.CorruptCore.RtcVersion;
 
-            //disabled for now, remove false once old interface is dead
-            if (false && !NetCore.Params.IsParamSet("DISCLAIMER_READ"))
+            if (!NetCore.Params.IsParamSet("DISCLAIMER_READ"))
             {
                 string disclaimer = @"Welcome to the Real-Time Corruptor
 Version [ver]
@@ -114,10 +110,9 @@ This message only appears once.";
                 NetCore.Params.SetParam("DISCLAIMER_READ");
             }
 
-            //uncomment once old interface is gone
-            //CorruptCore.CorruptCore.DownloadProblematicProcesses();
+            CorruptCore.CorruptCore.DownloadProblematicProcesses();
 
-            btnEngineConfig_Click(null, null);
+            UI_DefaultGrids.engineConfig.LoadToMain();
         }
 
         public void SetSize(int x, int y)
@@ -185,6 +180,10 @@ This message only appears once.";
 
         public void btnEngineConfig_Click(object sender, EventArgs e)
         {
+            UI_DefaultGrids.engineConfig.LoadToMain();
+
+            //old garbage
+
             //Test button, creates forms using class names and coordinates.
             /*
             var GlitchHarvester = new CanvasGrid(6, 3);
@@ -216,31 +215,6 @@ This message only appears once.";
 
             multiGrid.Load();
             */
-
-            ecGrid = new CanvasGrid(15, 12, "Engine Config");
-
-            Form mtForm = new RTC_SelectBox_Form(new ComponentForm[] {
-                S.GET<RTC_VmdNoTool_Form>(),
-                S.GET<RTC_VmdPool_Form>(),
-                S.GET<RTC_VmdGen_Form>(),
-                S.GET<RTC_VmdAct_Form>(),
-                S.GET<RTC_ListGen_Form>(),
-            })
-            {
-                popoutAllowed = false,
-                Text = "Advanced Memory Tools",
-            };
-
-            Form gpForm = S.GET<RTC_GeneralParameters_Form>();
-            Form mdForm = S.GET<RTC_MemoryDomains_Form>();
-            Form ceForm = S.GET<RTC_CorruptionEngine_Form>();
-
-            ecGrid.SetTileForm(gpForm, 0, 0, 5, 5);
-            ecGrid.SetTileForm(ceForm, 5, 0, 10, 5);
-            ecGrid.SetTileForm(mdForm, 0, 5, 5, 7);
-            ecGrid.SetTileForm(mtForm, 5, 5, 10, 7);
-
-            ecGrid.LoadToMain();
 
             /*
             var TestGrid = new CanvasGrid(13, 8, "Glitch Harvester");
@@ -313,28 +287,18 @@ This message only appears once.";
 
         private void btnStockpilePlayer_Click(object sender, EventArgs e)
         {
-            spGrid = new CanvasGrid(15, 12, "Stockpile Player");
-
-            Form spForm = S.GET<RTC_StockpilePlayer_Form>();
-            spGrid.SetTileForm(spForm, 0, 0, 15, 12, false);
-
-            spGrid.LoadToMain();
+            UI_DefaultGrids.stockpilePlayer.LoadToMain();
         }
 
         public void btnSettings_Click(object sender, EventArgs e)
         {
-            stGrid = new CanvasGrid(15, 12, "Settings and Tools");
-
-            Form stForm = S.GET<RTC_Settings_Form>();
-            stGrid.SetTileForm(stForm, 0, 0, 15, 12, false);
-
-            stGrid.LoadToMain();
+            UI_DefaultGrids.settings.LoadToMain();
         }
 
         private void pnAutoKillSwitch_MouseClick(object sender, MouseEventArgs e)
         {
             //needed anymore?
-            S.GET<RTC_Core_Form>().ShowPanelForm(S.GET<RTC_ConnectionStatus_Form>());
+            S.GET<UI_CoreForm>().btnLogo_Click(sender, e);
 
             S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Maximum;
             AutoKillSwitch.ShouldKillswitchFire = true;
@@ -402,6 +366,16 @@ This message only appears once.";
             {
                 btnGpJumpNow.Visible = true;
             }
+        }
+
+        private void btnLogo_MouseClick(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void btnLogo_Click(object sender, EventArgs e)
+        {
+            UI_DefaultGrids.connectionStatus.LoadToMain();
         }
     }
 }

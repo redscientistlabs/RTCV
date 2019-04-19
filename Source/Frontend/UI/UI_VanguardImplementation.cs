@@ -11,6 +11,7 @@ using RTCV.NetCore;
 using RTCV.UI;
 using static RTCV.NetCore.NetcoreCommands;
 using RTCV.NetCore.StaticTools;
+using RTCV.UI.Modular;
 
 namespace RTCV.UI
 {
@@ -84,12 +85,13 @@ namespace RTCV.UI
 							UICore.ConfigureUIFromVanguardSpec();
 
 							//Return to the main form. If the form is null for some reason, default to engineconfig
-							if(S.GET<RTC_Core_Form>().previousForm == null)
-								S.GET<RTC_Core_Form>().previousForm = S.GET<RTC_EngineConfig_Form>();
-							S.GET<RTC_Core_Form>().ShowPanelForm(S.GET<RTC_Core_Form>().previousForm, false);
+							if(S.GET<UI_CoreForm>().previousGrid == null)
+								S.GET<UI_CoreForm>().previousGrid = UI_DefaultGrids.engineConfig;
 
-							//Unhide the GH
-							S.GET<RTC_GlitchHarvester_Form>().pnHideGlitchHarvester.Size = S.GET<RTC_GlitchHarvester_Form>().Size;
+                            S.GET<UI_CoreForm>().previousGrid.LoadToMain();
+
+                            //Unhide the GH
+                                S.GET<RTC_GlitchHarvester_Form>().pnHideGlitchHarvester.Size = S.GET<RTC_GlitchHarvester_Form>().Size;
 								S.GET<RTC_GlitchHarvester_Form>().pnHideGlitchHarvester.Hide();
 							}
 

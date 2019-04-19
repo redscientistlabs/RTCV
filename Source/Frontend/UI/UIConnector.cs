@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using RTCV.CorruptCore;
 using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
+using RTCV.UI.Modular;
 
 namespace RTCV.UI
 {
@@ -50,7 +51,7 @@ namespace RTCV.UI
 				{
 					S.GET<RTC_ConnectionStatus_Form>().lbConnectionStatus.Text = "Connection status: Emulator timed out";
 					S.GET<RTC_ConnectionStatus_Form>().btnStartEmuhawkDetached.Visible = true;
-					S.GET<RTC_Core_Form>().ShowPanelForm(S.GET<RTC_ConnectionStatus_Form>());
+                    UI_DefaultGrids.connectionStatus.LoadToMain();
 				}
 
 				if (S.GET<RTC_GlitchHarvester_Form>() != null && !S.GET<RTC_GlitchHarvester_Form>().IsDisposed)
