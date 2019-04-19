@@ -313,6 +313,10 @@ This message only appears once.";
             AutoKillSwitch.Enabled = cbUseAutoKillSwitch.Checked;
         }
 
+        private void LbGameProtection_MouseClick(object sender, MouseEventArgs e)
+        {
+            cbUseGameProtection.Checked = !cbUseGameProtection.Checked;
+        }
         private void cbUseGameProtection_CheckedChanged(object sender, EventArgs e)
         {
             if (cbUseGameProtection.Checked)

@@ -146,6 +146,7 @@
             this.lbGameProtection.Size = new System.Drawing.Size(105, 17);
             this.lbGameProtection.TabIndex = 111;
             this.lbGameProtection.Text = "Game Protection";
+            this.lbGameProtection.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LbGameProtection_MouseClick);
             // 
             // cbUseGameProtection
             // 
