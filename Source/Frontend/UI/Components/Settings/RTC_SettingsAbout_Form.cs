@@ -34,7 +34,7 @@ namespace RTCV.UI
 
 		private void LbSourceCode_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			System.Diagnostics.Process.Start("https://github.com/ircluzar/RTC3/");
+			System.Diagnostics.Process.Start("https://github.com/ircluzar/RTCV");
 		}
 
 		private void LbRTCHome_Clicked(object sender, LinkLabelLinkClickedEventArgs e)
