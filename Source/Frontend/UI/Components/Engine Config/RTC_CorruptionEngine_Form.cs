@@ -29,8 +29,6 @@ namespace RTCV.UI
 		{
 			InitializeComponent();
 
-            UICore.LoadLists();
-
             this.undockedSizable = false;
 		}
 

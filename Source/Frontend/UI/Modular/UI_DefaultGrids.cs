@@ -43,6 +43,18 @@ namespace RTCV.UI.Modular
                     Form mdForm = S.GET<RTC_MemoryDomains_Form>();
                     Form ceForm = S.GET<RTC_CorruptionEngine_Form>();
 
+                    UICore.mtForm = new RTC_SelectBox_Form(new ComponentForm[] {
+                        S.GET<RTC_VmdNoTool_Form>(),
+                        S.GET<RTC_VmdPool_Form>(),
+                        S.GET<RTC_VmdGen_Form>(),
+                        S.GET<RTC_VmdAct_Form>(),
+                        S.GET<RTC_ListGen_Form>(),
+                        })
+                    {
+                        popoutAllowed = false,
+                        Text = "Advanced Memory Tools",
+                    };
+
                     ecGrid.SetTileForm(gpForm, 0, 0, 5, 5);
                     ecGrid.SetTileForm(ceForm, 5, 0, 10, 5);
                     ecGrid.SetTileForm(mdForm, 0, 5, 5, 7);

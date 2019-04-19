@@ -70,30 +70,32 @@ namespace RTCV.UI
 						SyncObjectSingleton.FormExecute((o, ea) =>
 						{
 							S.GET<UI_CoreForm>().Show();
-							if (UICore.FirstConnect)
-							{
-								UICore.FirstConnect = false;
-								S.GET<UI_CoreForm>().btnEngineConfig_Click(null, null);
-							}
-							else
-							{
-							//Push the VMDs since we store them out of spec
-							var vmdProtos = MemoryDomains.VmdPool.Values.Cast<VirtualMemoryDomain>().Select(x => x.Proto).ToArray();
-								LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHVMDPROTOS, vmdProtos, true);
+                            if (UICore.FirstConnect)
+                            {
+                                UICore.FirstConnect = false;
+                                S.GET<UI_CoreForm>().btnEngineConfig_Click(null, null);
+                            }
+                            else
+                            {
+                                //Push the VMDs since we store them out of spec
+                                var vmdProtos = MemoryDomains.VmdPool.Values.Cast<VirtualMemoryDomain>().Select(x => x.Proto).ToArray();
+                                LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHVMDPROTOS, vmdProtos, true);
 
-							//Configure the UI based on the vanguard spec
-							UICore.ConfigureUIFromVanguardSpec();
+                                //Configure the UI based on the vanguard spec
+                                UICore.ConfigureUIFromVanguardSpec();
 
-							//Return to the main form. If the form is null for some reason, default to engineconfig
-							if(S.GET<UI_CoreForm>().previousGrid == null)
-								S.GET<UI_CoreForm>().previousGrid = UI_DefaultGrids.engineConfig;
+                                //Return to the main form. If the form is null for some reason, default to engineconfig
+                                if (S.GET<UI_CoreForm>().previousGrid == null)
+                                    S.GET<UI_CoreForm>().previousGrid = UI_DefaultGrids.engineConfig;
 
-                            S.GET<UI_CoreForm>().previousGrid.LoadToMain();
+                                S.GET<UI_CoreForm>().previousGrid.LoadToMain();
 
-                            //Unhide the GH
+                                UICore.LoadLists();
+
+                                //Unhide the GH
                                 S.GET<RTC_GlitchHarvester_Form>().pnHideGlitchHarvester.Size = S.GET<RTC_GlitchHarvester_Form>().Size;
-								S.GET<RTC_GlitchHarvester_Form>().pnHideGlitchHarvester.Hide();
-							}
+                                S.GET<RTC_GlitchHarvester_Form>().pnHideGlitchHarvester.Hide();
+                            }
 
 							S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0;//remove this once core form is dead
                             S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0;

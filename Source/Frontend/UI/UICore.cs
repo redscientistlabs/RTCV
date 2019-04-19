@@ -39,17 +39,7 @@ namespace RTCV.UI
         //public static Color generalColor = Color.FromArgb(60, 45, 70);
         public static Color GeneralColor = Color.LightSteelBlue;
 
-        public static RTC_SelectBox_Form mtForm = new RTC_SelectBox_Form(new ComponentForm[] {
-                        S.GET<RTC_VmdNoTool_Form>(),
-                        S.GET<RTC_VmdPool_Form>(),
-                        S.GET<RTC_VmdGen_Form>(),
-                        S.GET<RTC_VmdAct_Form>(),
-                        S.GET<RTC_ListGen_Form>(),
-                        })
-        {
-            popoutAllowed = false,
-            Text = "Advanced Memory Tools",
-        };
+        public static RTC_SelectBox_Form mtForm = null;
 
         public static void Start(Form standaloneForm = null)
 		{
