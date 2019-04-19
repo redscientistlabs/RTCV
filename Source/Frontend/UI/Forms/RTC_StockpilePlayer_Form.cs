@@ -264,10 +264,10 @@ namespace RTCV.UI
 				if (dgvStockpile.SelectedRows.Count > 0)
 				{
 					//Shut autocorrupt off because people (Vinny) kept turning it on to add to corruptions then forgetting to turn it off
-					S.GET<UI_CoreForm>().AutoCorrupt = false; 
+					S.GET<UI_CoreForm>().AutoCorrupt = false;
 
-					S.GET<RTC_GlitchHarvesterBlast_Form>().rbCorrupt.Checked = true;
-					StockpileManager_UISide.CurrentStashkey = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
+                    S.GET<RTC_GlitchHarvesterBlast_Form>().ghMode = GlitchHarvesterMode.CORRUPT;
+                    StockpileManager_UISide.CurrentStashkey = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
 					StockpileManager_UISide.ApplyStashkey(StockpileManager_UISide.CurrentStashkey);
 
 					S.GET<RTC_StashHistory_Form>().lbStashHistory.ClearSelected();

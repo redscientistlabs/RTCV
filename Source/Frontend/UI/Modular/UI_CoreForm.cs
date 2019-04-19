@@ -185,14 +185,27 @@ This message only appears once.";
 
         private void button4_Click(object sender, EventArgs e)
         {
-            //test button, loads a dummy form in SubForm mode
+            var ghGrid = new CanvasGrid(26, 19, "Custom Grid");
 
-            if (cfForm.spForm == null)
-            {
-                cfForm.ShowSubForm("UI_ComponentFormSubForm");
-            }
-            else
-                cfForm.CloseSubForm();
+            Form gpForm = S.GET<RTC_GeneralParameters_Form>();
+            Form mdForm = S.GET<RTC_MemoryDomains_Form>();
+            Form ceForm = S.GET<RTC_CorruptionEngine_Form>();
+            Form ghbForm = S.GET<RTC_GlitchHarvesterBlast_Form>();
+            Form ghiForm = S.GET<RTC_GlitchHarvesterIntensity_Form>();
+            Form ssmForm = S.GET<RTC_SavestateManager_Form>();
+            Form shForm = S.GET<RTC_StashHistory_Form>();
+            Form spmForm = S.GET<RTC_StockpileManager_Form>();
+
+            ghGrid.SetTileForm(gpForm, 0, 0, 5, 5);
+            ghGrid.SetTileForm(ceForm, 5, 0, 10, 7);
+            ghGrid.SetTileForm(mdForm, 0, 5, 5, 14);
+            ghGrid.SetTileForm(UICore.mtForm, 15, 0, 10, 7);
+            ghGrid.SetTileForm(ghbForm, 5, 7, 4, 4);
+            ghGrid.SetTileForm(ssmForm, 5, 11, 4, 8);
+            ghGrid.SetTileForm(shForm, 9, 7, 6, 12);
+            ghGrid.SetTileForm(spmForm, 15, 7, 11, 12);
+
+            ghGrid.LoadToMain();
         }
 
         public void btnEngineConfig_Click(object sender, EventArgs e)

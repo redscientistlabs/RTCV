@@ -107,7 +107,7 @@ namespace RTCV.UI.Modular
                 if (_glitchHarvester == null)
                 {
 
-                    var ghGrid = new CanvasGrid(19, 12, "Glitch Harvester");
+                    var ghGrid = new CanvasGrid(20, 12, "Glitch Harvester");
 
 
 
@@ -119,9 +119,9 @@ namespace RTCV.UI.Modular
 
                     ghGrid.SetTileForm(ghbForm, 0, 0, 4, 4);
                     ghGrid.SetTileForm(ssmForm, 0, 4, 4, 8);
-                    ghGrid.SetTileForm(ghiForm, 4, 0, 5, 2, false);
-                    ghGrid.SetTileForm(shForm, 4, 2, 5, 10);
-                    ghGrid.SetTileForm(spmForm, 9, 0, 10, 12);
+                    ghGrid.SetTileForm(ghiForm, 4, 0, 5, 3);
+                    ghGrid.SetTileForm(shForm, 4, 3, 5, 9);
+                    ghGrid.SetTileForm(spmForm, 9, 0, 11, 12);
 
                     _glitchHarvester = ghGrid;
                 }

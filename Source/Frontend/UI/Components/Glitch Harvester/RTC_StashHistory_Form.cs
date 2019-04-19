@@ -222,23 +222,20 @@ namespace RTCV.UI
 
                 var blastForm = S.GET<RTC_GlitchHarvesterBlast_Form>();
 
-                if (!blastForm.rbCorrupt.Checked && !blastForm.rbInject.Checked && !blastForm.rbOriginal.Checked)
-                    blastForm.rbCorrupt.Checked = true;
+                if (blastForm.ghMode == GlitchHarvesterMode.MERGE)
+                    blastForm.ghMode = GlitchHarvesterMode.CORRUPT;
 
-                if (blastForm.btnCorrupt.Text == "Merge")
+                if (blastForm.ghMode == GlitchHarvesterMode.MERGE)
                 {
-                    blastForm.rbCorrupt.Enabled = true;
-                    blastForm.rbInject.Enabled = true;
-                    blastForm.rbOriginal.Enabled = true;
                     S.GET<RTC_StockpileManager_Form>().btnRenameSelected.Visible = true;
                     S.GET<RTC_StockpileManager_Form>().btnRemoveSelectedStockpile.Text = "Remove Item";
 
-                    if (blastForm.rbCorrupt.Checked)
-                        blastForm.btnCorrupt.Text = "Blast/Send";
-                    else if (blastForm.rbInject.Checked)
-                        blastForm.btnCorrupt.Text = "Inject";
-                    else if (blastForm.rbOriginal.Checked)
-                        blastForm.btnCorrupt.Text = "Original";
+                    if (blastForm.ghMode == GlitchHarvesterMode.CORRUPT)
+                        blastForm.btnCorrupt.Text = "  Corrupt";
+                    else if (blastForm.ghMode == GlitchHarvesterMode.INJECT)
+                        blastForm.btnCorrupt.Text = "  Inject";
+                    else if (blastForm.ghMode == GlitchHarvesterMode.ORIGINAL)
+                        blastForm.btnCorrupt.Text = "  Original";
                 }
 
                 StockpileManager_UISide.CurrentStashkey = StockpileManager_UISide.StashHistory[lbStashHistory.SelectedIndex];
@@ -267,12 +264,12 @@ namespace RTCV.UI
 
             var blastForm = S.GET<RTC_GlitchHarvesterBlast_Form>();
 
-            if (blastForm.rbCorrupt.Checked)
-                blastForm.btnCorrupt.Text = "Blast/Send";
-            else if (blastForm.rbInject.Checked)
-                blastForm.btnCorrupt.Text = "Inject";
-            else if (blastForm.rbOriginal.Checked)
-                blastForm.btnCorrupt.Text = "Original";
+            if (blastForm.ghMode == GlitchHarvesterMode.CORRUPT)
+                blastForm.btnCorrupt.Text = "  Corrupt";
+            else if (blastForm.ghMode == GlitchHarvesterMode.INJECT)
+                blastForm.btnCorrupt.Text = "  Inject";
+            else if (blastForm.ghMode == GlitchHarvesterMode.ORIGINAL)
+                blastForm.btnCorrupt.Text = "  Original";
         }
 
         private void btnClearStashHistory_Click(object sender, EventArgs e)

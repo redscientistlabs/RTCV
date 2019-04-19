@@ -28,18 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_GlitchHarvesterBlast_Form));
             this.btnCorrupt = new System.Windows.Forms.Button();
             this.btnSendRaw = new System.Windows.Forms.Button();
             this.btnRerollSelected = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.rbOriginal = new System.Windows.Forms.RadioButton();
-            this.rbInject = new System.Windows.Forms.RadioButton();
-            this.rbCorrupt = new System.Windows.Forms.RadioButton();
             this.btnBlastToggle = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.panel1.SuspendLayout();
+            this.btnGlitchHarvesterSettings = new System.Windows.Forms.Button();
+            this.btnRenderOutput = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnCorrupt
@@ -48,15 +44,20 @@
             this.btnCorrupt.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnCorrupt.FlatAppearance.BorderSize = 0;
             this.btnCorrupt.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCorrupt.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnCorrupt.Font = new System.Drawing.Font("Segoe UI", 12F);
             this.btnCorrupt.ForeColor = System.Drawing.Color.OrangeRed;
-            this.btnCorrupt.Location = new System.Drawing.Point(11, 12);
+            this.btnCorrupt.Image = ((System.Drawing.Image)(resources.GetObject("btnCorrupt.Image")));
+            this.btnCorrupt.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCorrupt.Location = new System.Drawing.Point(11, 13);
             this.btnCorrupt.Name = "btnCorrupt";
-            this.btnCorrupt.Size = new System.Drawing.Size(126, 24);
+            this.btnCorrupt.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.btnCorrupt.Size = new System.Drawing.Size(115, 32);
             this.btnCorrupt.TabIndex = 137;
             this.btnCorrupt.TabStop = false;
             this.btnCorrupt.Tag = "color:dark2";
-            this.btnCorrupt.Text = "Blast/Send";
+            this.btnCorrupt.Text = "  Corrupt";
+            this.btnCorrupt.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCorrupt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCorrupt.UseVisualStyleBackColor = false;
             // 
             // btnSendRaw
@@ -65,96 +66,51 @@
             this.btnSendRaw.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnSendRaw.FlatAppearance.BorderSize = 0;
             this.btnSendRaw.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSendRaw.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnSendRaw.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnSendRaw.ForeColor = System.Drawing.Color.OrangeRed;
-            this.btnSendRaw.Location = new System.Drawing.Point(11, 39);
+            this.btnSendRaw.Image = ((System.Drawing.Image)(resources.GetObject("btnSendRaw.Image")));
+            this.btnSendRaw.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSendRaw.Location = new System.Drawing.Point(11, 48);
             this.btnSendRaw.Name = "btnSendRaw";
-            this.btnSendRaw.Size = new System.Drawing.Size(126, 24);
+            this.btnSendRaw.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.btnSendRaw.Size = new System.Drawing.Size(115, 32);
             this.btnSendRaw.TabIndex = 139;
             this.btnSendRaw.TabStop = false;
             this.btnSendRaw.Tag = "color:dark2";
-            this.btnSendRaw.Text = "Send Raw to Stash";
+            this.btnSendRaw.Text = "  Raw to Stash";
+            this.btnSendRaw.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSendRaw.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSendRaw.UseVisualStyleBackColor = false;
             // 
             // btnRerollSelected
             // 
-            this.btnRerollSelected.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnRerollSelected.BackColor = System.Drawing.Color.Gray;
             this.btnRerollSelected.FlatAppearance.BorderSize = 0;
             this.btnRerollSelected.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRerollSelected.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnRerollSelected.ForeColor = System.Drawing.Color.White;
-            this.btnRerollSelected.Location = new System.Drawing.Point(103, 66);
+            this.btnRerollSelected.Location = new System.Drawing.Point(11, 83);
             this.btnRerollSelected.Name = "btnRerollSelected";
-            this.btnRerollSelected.Size = new System.Drawing.Size(60, 50);
+            this.btnRerollSelected.Size = new System.Drawing.Size(152, 26);
             this.btnRerollSelected.TabIndex = 133;
             this.btnRerollSelected.TabStop = false;
-            this.btnRerollSelected.Tag = "color:dark2";
+            this.btnRerollSelected.Tag = "color:light1";
             this.btnRerollSelected.Text = "Reroll Selected";
             this.btnRerollSelected.UseVisualStyleBackColor = false;
             // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.panel1.Controls.Add(this.rbOriginal);
-            this.panel1.Controls.Add(this.rbInject);
-            this.panel1.Controls.Add(this.rbCorrupt);
-            this.panel1.Location = new System.Drawing.Point(11, 67);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(71, 48);
-            this.panel1.TabIndex = 76;
-            this.panel1.Tag = "color:dark1";
-            // 
-            // rbOriginal
-            // 
-            this.rbOriginal.AutoSize = true;
-            this.rbOriginal.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.rbOriginal.ForeColor = System.Drawing.Color.White;
-            this.rbOriginal.Location = new System.Drawing.Point(3, 28);
-            this.rbOriginal.Name = "rbOriginal";
-            this.rbOriginal.Size = new System.Drawing.Size(67, 17);
-            this.rbOriginal.TabIndex = 85;
-            this.rbOriginal.Text = "Original";
-            this.rbOriginal.UseVisualStyleBackColor = true;
-            // 
-            // rbInject
-            // 
-            this.rbInject.AutoSize = true;
-            this.rbInject.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.rbInject.ForeColor = System.Drawing.Color.White;
-            this.rbInject.Location = new System.Drawing.Point(3, 14);
-            this.rbInject.Name = "rbInject";
-            this.rbInject.Size = new System.Drawing.Size(53, 17);
-            this.rbInject.TabIndex = 84;
-            this.rbInject.Text = "Inject";
-            this.rbInject.UseVisualStyleBackColor = true;
-            // 
-            // rbCorrupt
-            // 
-            this.rbCorrupt.AutoSize = true;
-            this.rbCorrupt.Checked = true;
-            this.rbCorrupt.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.rbCorrupt.ForeColor = System.Drawing.Color.White;
-            this.rbCorrupt.Location = new System.Drawing.Point(3, 1);
-            this.rbCorrupt.Name = "rbCorrupt";
-            this.rbCorrupt.Size = new System.Drawing.Size(65, 17);
-            this.rbCorrupt.TabIndex = 83;
-            this.rbCorrupt.TabStop = true;
-            this.rbCorrupt.Text = "Corrupt";
-            this.rbCorrupt.UseVisualStyleBackColor = true;
-            // 
             // btnBlastToggle
             // 
-            this.btnBlastToggle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnBlastToggle.BackColor = System.Drawing.Color.Gray;
             this.btnBlastToggle.FlatAppearance.BorderSize = 0;
             this.btnBlastToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBlastToggle.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnBlastToggle.ForeColor = System.Drawing.Color.White;
-            this.btnBlastToggle.Location = new System.Drawing.Point(11, 119);
+            this.btnBlastToggle.Location = new System.Drawing.Point(11, 112);
             this.btnBlastToggle.Name = "btnBlastToggle";
-            this.btnBlastToggle.Size = new System.Drawing.Size(152, 22);
+            this.btnBlastToggle.Size = new System.Drawing.Size(152, 26);
             this.btnBlastToggle.TabIndex = 131;
             this.btnBlastToggle.TabStop = false;
-            this.btnBlastToggle.Tag = "color:dark2";
+            this.btnBlastToggle.Tag = "color:light1";
             this.btnBlastToggle.Text = "BlastLayer : OFF";
             this.btnBlastToggle.UseVisualStyleBackColor = false;
             // 
@@ -163,44 +119,44 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.label5.Location = new System.Drawing.Point(37, 72);
+            this.label5.Location = new System.Drawing.Point(37, 88);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(0, 14);
             this.label5.TabIndex = 138;
             // 
-            // button1
+            // btnGlitchHarvesterSettings
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.button1.ForeColor = System.Drawing.Color.OrangeRed;
-            this.button1.Location = new System.Drawing.Point(139, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(24, 24);
-            this.button1.TabIndex = 140;
-            this.button1.TabStop = false;
-            this.button1.Tag = "color:dark2";
-            this.button1.Text = "X";
-            this.button1.UseVisualStyleBackColor = false;
+            this.btnGlitchHarvesterSettings.BackColor = System.Drawing.Color.Gray;
+            this.btnGlitchHarvesterSettings.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnGlitchHarvesterSettings.FlatAppearance.BorderSize = 0;
+            this.btnGlitchHarvesterSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGlitchHarvesterSettings.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnGlitchHarvesterSettings.ForeColor = System.Drawing.Color.OrangeRed;
+            this.btnGlitchHarvesterSettings.Image = ((System.Drawing.Image)(resources.GetObject("btnGlitchHarvesterSettings.Image")));
+            this.btnGlitchHarvesterSettings.Location = new System.Drawing.Point(131, 13);
+            this.btnGlitchHarvesterSettings.Name = "btnGlitchHarvesterSettings";
+            this.btnGlitchHarvesterSettings.Size = new System.Drawing.Size(32, 32);
+            this.btnGlitchHarvesterSettings.TabIndex = 140;
+            this.btnGlitchHarvesterSettings.TabStop = false;
+            this.btnGlitchHarvesterSettings.Tag = "color:light1";
+            this.btnGlitchHarvesterSettings.UseVisualStyleBackColor = false;
             // 
-            // button2
+            // btnRenderOutput
             // 
-            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.button2.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.button2.ForeColor = System.Drawing.Color.OrangeRed;
-            this.button2.Location = new System.Drawing.Point(139, 39);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(24, 24);
-            this.button2.TabIndex = 141;
-            this.button2.TabStop = false;
-            this.button2.Tag = "color:dark2";
-            this.button2.Text = "X";
-            this.button2.UseVisualStyleBackColor = false;
+            this.btnRenderOutput.BackColor = System.Drawing.Color.Gray;
+            this.btnRenderOutput.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnRenderOutput.FlatAppearance.BorderSize = 0;
+            this.btnRenderOutput.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRenderOutput.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnRenderOutput.ForeColor = System.Drawing.Color.OrangeRed;
+            this.btnRenderOutput.Image = ((System.Drawing.Image)(resources.GetObject("btnRenderOutput.Image")));
+            this.btnRenderOutput.Location = new System.Drawing.Point(131, 48);
+            this.btnRenderOutput.Name = "btnRenderOutput";
+            this.btnRenderOutput.Size = new System.Drawing.Size(32, 32);
+            this.btnRenderOutput.TabIndex = 141;
+            this.btnRenderOutput.TabStop = false;
+            this.btnRenderOutput.Tag = "color:light1";
+            this.btnRenderOutput.UseVisualStyleBackColor = false;
             // 
             // RTC_GlitchHarvesterBlast_Form
             // 
@@ -208,10 +164,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(270, 232);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnRenderOutput);
+            this.Controls.Add(this.btnGlitchHarvesterSettings);
             this.Controls.Add(this.btnRerollSelected);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnCorrupt);
             this.Controls.Add(this.btnBlastToggle);
             this.Controls.Add(this.btnSendRaw);
@@ -222,8 +177,6 @@
             this.Tag = "color:dark1";
             this.Text = "Blast Tools";
             this.Load += new System.EventHandler(this.RTC_GlitchHarvesterBlast_Form_Load);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -234,13 +187,9 @@
         public System.Windows.Forms.Button btnCorrupt;
         public System.Windows.Forms.Button btnSendRaw;
         public System.Windows.Forms.Button btnRerollSelected;
-        private System.Windows.Forms.Panel panel1;
-        public System.Windows.Forms.RadioButton rbOriginal;
-        public System.Windows.Forms.RadioButton rbInject;
-        public System.Windows.Forms.RadioButton rbCorrupt;
         public System.Windows.Forms.Button btnBlastToggle;
         private System.Windows.Forms.Label label5;
-        public System.Windows.Forms.Button button1;
-        public System.Windows.Forms.Button button2;
+        public System.Windows.Forms.Button btnGlitchHarvesterSettings;
+        public System.Windows.Forms.Button btnRenderOutput;
     }
 }

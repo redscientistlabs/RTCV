@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_StashHistory_Form));
             this.btnAddStashToStockpile = new System.Windows.Forms.Button();
             this.btnClearStashHistory = new System.Windows.Forms.Button();
             this.btnStashDOWN = new System.Windows.Forms.Button();
@@ -44,30 +45,37 @@
             this.btnAddStashToStockpile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddStashToStockpile.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnAddStashToStockpile.ForeColor = System.Drawing.Color.White;
-            this.btnAddStashToStockpile.Location = new System.Drawing.Point(14, 362);
+            this.btnAddStashToStockpile.Image = ((System.Drawing.Image)(resources.GetObject("btnAddStashToStockpile.Image")));
+            this.btnAddStashToStockpile.Location = new System.Drawing.Point(14, 357);
             this.btnAddStashToStockpile.Name = "btnAddStashToStockpile";
-            this.btnAddStashToStockpile.Size = new System.Drawing.Size(256, 26);
+            this.btnAddStashToStockpile.Size = new System.Drawing.Size(256, 32);
             this.btnAddStashToStockpile.TabIndex = 112;
             this.btnAddStashToStockpile.TabStop = false;
             this.btnAddStashToStockpile.Tag = "color:light1";
-            this.btnAddStashToStockpile.Text = "To Stockpile ▶▶";
+            this.btnAddStashToStockpile.Text = " To Stockpile";
+            this.btnAddStashToStockpile.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnAddStashToStockpile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAddStashToStockpile.UseVisualStyleBackColor = false;
             // 
             // btnClearStashHistory
             // 
-            this.btnClearStashHistory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClearStashHistory.BackColor = System.Drawing.Color.Gray;
             this.btnClearStashHistory.FlatAppearance.BorderSize = 0;
             this.btnClearStashHistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClearStashHistory.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnClearStashHistory.ForeColor = System.Drawing.Color.White;
-            this.btnClearStashHistory.Location = new System.Drawing.Point(186, 13);
+            this.btnClearStashHistory.Image = ((System.Drawing.Image)(resources.GetObject("btnClearStashHistory.Image")));
+            this.btnClearStashHistory.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnClearStashHistory.Location = new System.Drawing.Point(14, 13);
             this.btnClearStashHistory.Name = "btnClearStashHistory";
-            this.btnClearStashHistory.Size = new System.Drawing.Size(26, 22);
+            this.btnClearStashHistory.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.btnClearStashHistory.Size = new System.Drawing.Size(105, 32);
             this.btnClearStashHistory.TabIndex = 111;
             this.btnClearStashHistory.TabStop = false;
             this.btnClearStashHistory.Tag = "color:light1";
-            this.btnClearStashHistory.Text = "X";
+            this.btnClearStashHistory.Text = "  Clear stash";
+            this.btnClearStashHistory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnClearStashHistory.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnClearStashHistory.UseVisualStyleBackColor = false;
             // 
             // btnStashDOWN
@@ -77,11 +85,11 @@
             this.btnStashDOWN.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnStashDOWN.FlatAppearance.BorderSize = 0;
             this.btnStashDOWN.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnStashDOWN.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.btnStashDOWN.Font = new System.Drawing.Font("Segoe UI Symbol", 12F);
             this.btnStashDOWN.ForeColor = System.Drawing.Color.White;
-            this.btnStashDOWN.Location = new System.Drawing.Point(245, 13);
+            this.btnStashDOWN.Location = new System.Drawing.Point(238, 13);
             this.btnStashDOWN.Name = "btnStashDOWN";
-            this.btnStashDOWN.Size = new System.Drawing.Size(25, 22);
+            this.btnStashDOWN.Size = new System.Drawing.Size(32, 32);
             this.btnStashDOWN.TabIndex = 110;
             this.btnStashDOWN.TabStop = false;
             this.btnStashDOWN.Tag = "color:light1";
@@ -95,11 +103,11 @@
             this.btnStashUP.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnStashUP.FlatAppearance.BorderSize = 0;
             this.btnStashUP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnStashUP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.btnStashUP.Font = new System.Drawing.Font("Segoe UI Symbol", 12F);
             this.btnStashUP.ForeColor = System.Drawing.Color.White;
-            this.btnStashUP.Location = new System.Drawing.Point(216, 13);
+            this.btnStashUP.Location = new System.Drawing.Point(203, 13);
             this.btnStashUP.Name = "btnStashUP";
-            this.btnStashUP.Size = new System.Drawing.Size(25, 22);
+            this.btnStashUP.Size = new System.Drawing.Size(32, 32);
             this.btnStashUP.TabIndex = 109;
             this.btnStashUP.TabStop = false;
             this.btnStashUP.Tag = "color:light1";
@@ -117,11 +125,11 @@
             this.lbStashHistory.ForeColor = System.Drawing.Color.White;
             this.lbStashHistory.FormattingEnabled = true;
             this.lbStashHistory.IntegralHeight = false;
-            this.lbStashHistory.Location = new System.Drawing.Point(14, 39);
+            this.lbStashHistory.Location = new System.Drawing.Point(14, 48);
             this.lbStashHistory.Name = "lbStashHistory";
             this.lbStashHistory.ScrollAlwaysVisible = true;
             this.lbStashHistory.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbStashHistory.Size = new System.Drawing.Size(256, 319);
+            this.lbStashHistory.Size = new System.Drawing.Size(256, 306);
             this.lbStashHistory.TabIndex = 108;
             this.lbStashHistory.Tag = "color:normal";
             // 

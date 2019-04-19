@@ -20,6 +20,7 @@ namespace RTCV.UI
 		public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
 		public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
+        public GlitchHarvesterMode ghMode = GlitchHarvesterMode.CORRUPT;
 
         //delete me later on
         public Button btnRender = new Button();
@@ -88,14 +89,14 @@ namespace RTCV.UI
             //Disable autocorrupt
             S.GET<UI_CoreForm>().AutoCorrupt = false;
 
-            if (rbCorrupt.Checked)
+            if (ghMode == GlitchHarvesterMode.CORRUPT)
                 IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(StockpileManager_UISide.CurrentStashkey, loadBeforeOperation);
-            else if (rbInject.Checked)
+            else if (ghMode == GlitchHarvesterMode.INJECT)
             {
                 IsCorruptionApplied = StockpileManager_UISide.InjectFromStashkey(StockpileManager_UISide.CurrentStashkey, loadBeforeOperation);
                 S.GET<RTC_StashHistory_Form>().RefreshStashHistory();
             }
-            else if (rbOriginal.Checked)
+            else if (ghMode == GlitchHarvesterMode.ORIGINAL)
                 IsCorruptionApplied = StockpileManager_UISide.OriginalFromStashkey(StockpileManager_UISide.CurrentStashkey);
 
             if (StockpileManager_EmuSide.RenderAtLoad && loadBeforeOperation)
@@ -110,53 +111,27 @@ namespace RTCV.UI
             }
         }
 
-        private void rbInject_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbInject.Checked)
-                btnCorrupt.Text = "Inject";
-        }
-
-        private void rbCorrupt_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbCorrupt.Checked)
-                btnCorrupt.Text = "Blast/Send";
-        }
-
-        private void rbOriginal_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbOriginal.Checked)
-                btnCorrupt.Text = "Original";
-        }
-
         public void RedrawActionUI()
         {
             // Merge tool and ui change
             if (S.GET<RTC_StockpileManager_Form>().dgvStockpile.SelectedRows.Count > 1)
             {
-                rbCorrupt.Checked = true;
-                rbCorrupt.Enabled = false;
-                rbInject.Enabled = false;
-                rbOriginal.Enabled = false;
-                btnCorrupt.Text = "Merge";
+                ghMode = GlitchHarvesterMode.MERGE;
+                btnCorrupt.Text = "  Merge";
                 S.GET<RTC_StockpileManager_Form>().btnRenameSelected.Visible = false;
                 S.GET<RTC_StockpileManager_Form>().btnRemoveSelectedStockpile.Text = "Remove Items";
-
-                rbCorrupt.Checked = true;
             }
             else
             {
-                rbCorrupt.Enabled = true;
-                rbInject.Enabled = true;
-                rbOriginal.Enabled = true;
                 S.GET<RTC_StockpileManager_Form>().btnRenameSelected.Visible = true;
                 S.GET<RTC_StockpileManager_Form>().btnRemoveSelectedStockpile.Text = "Remove Item";
 
-                if (rbCorrupt.Checked)
-                    btnCorrupt.Text = "Blast/Send";
-                else if (rbInject.Checked)
-                    btnCorrupt.Text = "Inject";
-                else if (rbOriginal.Checked)
-                    btnCorrupt.Text = "Original";
+                if (ghMode == GlitchHarvesterMode.CORRUPT)
+                    btnCorrupt.Text = "  Corrupt";
+                else if (ghMode == GlitchHarvesterMode.INJECT)
+                    btnCorrupt.Text = "  Inject";
+                else if (ghMode == GlitchHarvesterMode.ORIGINAL)
+                    btnCorrupt.Text = "  Original";
             }
         }
 
@@ -177,7 +152,7 @@ namespace RTCV.UI
 
                 StashKey psk = StockpileManager_UISide.GetCurrentSavestateStashkey();
 
-                if (btnCorrupt.Text.ToUpper() == "MERGE")
+                if (ghMode == GlitchHarvesterMode.MERGE)
                 {
                     List<StashKey> sks = new List<StashKey>();
 
@@ -195,7 +170,7 @@ namespace RTCV.UI
                 }
 
 
-                if (rbCorrupt.Checked)
+                if (ghMode == GlitchHarvesterMode.CORRUPT)
                 {
                     string romFilename = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME];
 
@@ -209,7 +184,7 @@ namespace RTCV.UI
                     IsCorruptionApplied = StockpileManager_UISide.Corrupt(loadBeforeOperation);
                     S.GET<RTC_StashHistory_Form>().RefreshStashHistorySelectLast();
                 }
-                else if (rbInject.Checked)
+                else if (ghMode == GlitchHarvesterMode.INJECT)
                 {
                     if (StockpileManager_UISide.CurrentStashkey == null)
                         throw new CustomException("CurrentStashkey in inject was somehow null! Report this to the devs and tell them how you caused this.", Environment.StackTrace);
@@ -219,7 +194,7 @@ namespace RTCV.UI
                     IsCorruptionApplied = StockpileManager_UISide.InjectFromStashkey(StockpileManager_UISide.CurrentStashkey, loadBeforeOperation);
                     S.GET<RTC_StashHistory_Form>().RefreshStashHistorySelectLast();
                 }
-                else if (rbOriginal.Checked)
+                else if (ghMode == GlitchHarvesterMode.ORIGINAL)
                 {
                     if (StockpileManager_UISide.CurrentStashkey == null)
                         throw new CustomException("CurrentStashkey in original was somehow null! Report this to the devs and tell them how you caused this.", Environment.StackTrace);
@@ -424,5 +399,13 @@ namespace RTCV.UI
         {
 
         }
+    }
+
+    public enum GlitchHarvesterMode
+    {
+        CORRUPT,
+        INJECT,
+        ORIGINAL,
+        MERGE,
     }
 }

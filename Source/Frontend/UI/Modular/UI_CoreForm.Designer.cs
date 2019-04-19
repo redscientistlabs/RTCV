@@ -36,6 +36,7 @@
             this.btnGpJumpBack = new System.Windows.Forms.Button();
             this.lbGameProtection = new System.Windows.Forms.Label();
             this.cbUseGameProtection = new System.Windows.Forms.CheckBox();
+            this.btnTestCustomLayout = new System.Windows.Forms.Button();
             this.btnTestSubform = new System.Windows.Forms.Button();
             this.pnAutoKillSwitch = new System.Windows.Forms.Panel();
             this.cbUseAutoKillSwitch = new System.Windows.Forms.CheckBox();
@@ -59,6 +60,7 @@
             this.pnTopBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.pnTopBar.Controls.Add(this.pnGlitchHarvesterOpen);
             this.pnTopBar.Controls.Add(this.pnCrashProtection);
+            this.pnTopBar.Controls.Add(this.btnTestCustomLayout);
             this.pnTopBar.Controls.Add(this.btnTestSubform);
             this.pnTopBar.Controls.Add(this.pnAutoKillSwitch);
             this.pnTopBar.Controls.Add(this.btnSettings);
@@ -160,6 +162,27 @@
             this.cbUseGameProtection.UseVisualStyleBackColor = true;
             this.cbUseGameProtection.CheckedChanged += new System.EventHandler(this.cbUseGameProtection_CheckedChanged);
             // 
+            // btnTestCustomLayout
+            // 
+            this.btnTestCustomLayout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.btnTestCustomLayout.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnTestCustomLayout.FlatAppearance.BorderSize = 0;
+            this.btnTestCustomLayout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTestCustomLayout.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            this.btnTestCustomLayout.ForeColor = System.Drawing.Color.White;
+            this.btnTestCustomLayout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnTestCustomLayout.Location = new System.Drawing.Point(0, 333);
+            this.btnTestCustomLayout.Name = "btnTestCustomLayout";
+            this.btnTestCustomLayout.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.btnTestCustomLayout.Size = new System.Drawing.Size(150, 33);
+            this.btnTestCustomLayout.TabIndex = 9;
+            this.btnTestCustomLayout.TabStop = false;
+            this.btnTestCustomLayout.Tag = "color:dark3";
+            this.btnTestCustomLayout.Text = "Test Custom Layout";
+            this.btnTestCustomLayout.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnTestCustomLayout.UseVisualStyleBackColor = false;
+            this.btnTestCustomLayout.Click += new System.EventHandler(this.button4_Click);
+            // 
             // btnTestSubform
             // 
             this.btnTestSubform.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
@@ -169,7 +192,7 @@
             this.btnTestSubform.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.btnTestSubform.ForeColor = System.Drawing.Color.White;
             this.btnTestSubform.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnTestSubform.Location = new System.Drawing.Point(0, 303);
+            this.btnTestSubform.Location = new System.Drawing.Point(0, 293);
             this.btnTestSubform.Name = "btnTestSubform";
             this.btnTestSubform.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.btnTestSubform.Size = new System.Drawing.Size(150, 33);
@@ -439,7 +462,6 @@
             this.Controls.Add(this.pnTopBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(860, 620);
             this.Name = "UI_CoreForm";
             this.Tag = "color:dark2";
             this.Text = "RTC";
@@ -478,6 +500,7 @@
         public System.Windows.Forms.CheckBox cbUseGameProtection;
         private System.Windows.Forms.Button btnTestSubform;
         internal System.Windows.Forms.Panel pnGlitchHarvesterOpen;
+        private System.Windows.Forms.Button btnTestCustomLayout;
     }
 }
 
