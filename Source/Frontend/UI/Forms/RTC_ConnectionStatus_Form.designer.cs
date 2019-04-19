@@ -33,7 +33,7 @@
             this.lbRTCver = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lbFlavorText = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
@@ -81,15 +81,15 @@
             this.pictureBox2.TabIndex = 133;
             this.pictureBox2.TabStop = false;
             // 
-            // label1
+            // lbFlavorText
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI Symbol", 16F);
-            this.label1.Location = new System.Drawing.Point(16, 509);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(201, 30);
-            this.label1.TabIndex = 134;
-            this.label1.Text = "Fun flavor text here";
+            this.lbFlavorText.AutoSize = true;
+            this.lbFlavorText.Font = new System.Drawing.Font("Segoe UI Symbol", 16F);
+            this.lbFlavorText.Location = new System.Drawing.Point(16, 509);
+            this.lbFlavorText.Name = "lbFlavorText";
+            this.lbFlavorText.Size = new System.Drawing.Size(114, 30);
+            this.lbFlavorText.TabIndex = 134;
+            this.lbFlavorText.Text = "Flavor text";
             // 
             // RTC_ConnectionStatus_Form
             // 
@@ -98,7 +98,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.ClientSize = new System.Drawing.Size(655, 560);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lbFlavorText);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lbRTCver);
             this.Controls.Add(this.lbConnectionStatus);
@@ -123,6 +123,6 @@
         private System.Windows.Forms.Label lbRTCver;
 		private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lbFlavorText;
     }
 }
