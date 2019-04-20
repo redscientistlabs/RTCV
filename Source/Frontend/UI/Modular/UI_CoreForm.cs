@@ -251,10 +251,10 @@ This message only appears once.";
 
         private void btnEasyMode_MouseDown(object sender, MouseEventArgs e)
         {
-            Point locate = new Point(((Button)sender).Location.X + e.Location.X, ((Button)sender).Location.Y + e.Location.Y);
+            Point locate = e.GetMouseLocation(sender);
 
             ContextMenuStrip easyButtonMenu = new ContextMenuStrip();
-                                                                                                              //Refactor this shit later.
+
             easyButtonMenu.Items.Add("Start with Recommended Settings", null, new EventHandler(((ob, ev) => { S.GET<UI_CoreForm>().StartEasyMode(true); })));
             easyButtonMenu.Items.Add(new ToolStripSeparator());
             //EasyButtonMenu.Items.Add("Watch a tutorial video", null, new EventHandler((ob,ev) => Process.Start("https://www.youtube.com/watch?v=sIELpn4-Umw"))).Enabled = false;

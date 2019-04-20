@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UI_ComponentFormTile));
             this.lbComponentFormName = new System.Windows.Forms.Label();
-            this.pnComponentFormHost = new System.Windows.Forms.Panel();
+            this.pnComponentFormHost = new ComponentPanel();
             this.label4 = new System.Windows.Forms.Label();
             this.pnComponentFormHost.SuspendLayout();
             this.SuspendLayout();
@@ -100,7 +100,7 @@
         #endregion
 
         private System.Windows.Forms.Label lbComponentFormName;
-        private System.Windows.Forms.Panel pnComponentFormHost;
+        private ComponentPanel pnComponentFormHost;
         private System.Windows.Forms.Label label4;
     }
 }

@@ -71,4 +71,9 @@ namespace RTCV.UI
 
         }
     }
+
+    public class ComponentPanel : Panel
+    {
+
+    }
 }
