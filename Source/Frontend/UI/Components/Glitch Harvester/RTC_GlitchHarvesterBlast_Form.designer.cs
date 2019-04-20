@@ -146,6 +146,7 @@
             this.btnGlitchHarvesterSettings.TabStop = false;
             this.btnGlitchHarvesterSettings.Tag = "color:light1";
             this.btnGlitchHarvesterSettings.UseVisualStyleBackColor = false;
+            this.btnGlitchHarvesterSettings.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnGlitchHarvesterSettings_MouseDown);
             // 
             // btnRenderOutput
             // 
@@ -163,6 +164,7 @@
             this.btnRenderOutput.TabStop = false;
             this.btnRenderOutput.Tag = "color:light1";
             this.btnRenderOutput.UseVisualStyleBackColor = false;
+            this.btnRenderOutput.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnRenderOutput_MouseDown);
             // 
             // RTC_GlitchHarvesterBlast_Form
             // 

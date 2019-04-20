@@ -37,7 +37,8 @@
             // 
             // cbBlastRadius
             // 
-            this.cbBlastRadius.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbBlastRadius.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cbBlastRadius.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.cbBlastRadius.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbBlastRadius.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -51,9 +52,9 @@
             "EVEN",
             "PROPORTIONAL",
             "NORMALIZED"});
-            this.cbBlastRadius.Location = new System.Drawing.Point(91, 159);
+            this.cbBlastRadius.Location = new System.Drawing.Point(94, 159);
             this.cbBlastRadius.Name = "cbBlastRadius";
-            this.cbBlastRadius.Size = new System.Drawing.Size(100, 21);
+            this.cbBlastRadius.Size = new System.Drawing.Size(83, 21);
             this.cbBlastRadius.TabIndex = 21;
             this.cbBlastRadius.Tag = "color:normal";
             this.cbBlastRadius.SelectedIndexChanged += new System.EventHandler(this.cbBlastRadius_SelectedIndexChanged);
@@ -61,11 +62,11 @@
             // 
             // labelBlastRadius
             // 
-            this.labelBlastRadius.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelBlastRadius.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelBlastRadius.AutoSize = true;
             this.labelBlastRadius.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.labelBlastRadius.ForeColor = System.Drawing.Color.White;
-            this.labelBlastRadius.Location = new System.Drawing.Point(7, 161);
+            this.labelBlastRadius.Location = new System.Drawing.Point(14, 161);
             this.labelBlastRadius.Name = "labelBlastRadius";
             this.labelBlastRadius.Size = new System.Drawing.Size(81, 17);
             this.labelBlastRadius.TabIndex = 20;

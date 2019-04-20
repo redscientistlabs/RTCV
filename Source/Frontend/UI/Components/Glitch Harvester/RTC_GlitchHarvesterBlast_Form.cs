@@ -268,7 +268,7 @@ namespace RTCV.UI
         {
             if (e.Button == MouseButtons.Right)
             {
-                Point locate = new Point((sender as Control).Location.X + e.Location.X, (sender as Control).Location.Y + e.Location.Y);
+                Point locate = e.GetMouseLocation(sender);
 
                 ContextMenuStrip columnsMenu = new ContextMenuStrip();
                 columnsMenu.Items.Add("Blast + Send RAW To Stash", null, new EventHandler((ob, ev) =>
@@ -398,6 +398,74 @@ namespace RTCV.UI
         private void RTC_GlitchHarvesterBlast_Form_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnGlitchHarvesterSettings_MouseDown(object sender, MouseEventArgs e)
+        {
+            Point locate = e.GetMouseLocation(sender);
+            ContextMenuStrip ghSettingsMenu = new ContextMenuStrip();
+
+            ghSettingsMenu.Items.Add(new ToolStripLabel("Glitch Harvester Mode"){
+                Font = new Font("Segoe UI", 12)
+            });
+
+            ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Corrupt", null, new EventHandler((ob, ev) => {
+            }))).Checked = (ghMode == GlitchHarvesterMode.CORRUPT);
+            ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Inject", null, new EventHandler((ob, ev) => {
+            }))).Checked = (ghMode == GlitchHarvesterMode.INJECT);
+            ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Original", null, new EventHandler((ob, ev) => {
+            }))).Checked = (ghMode == GlitchHarvesterMode.ORIGINAL);
+
+            ghSettingsMenu.Items.Add(new ToolStripSeparator());
+
+            ghSettingsMenu.Items.Add(new ToolStripLabel("Behaviors"){
+                Font = new Font("Segoe UI", 12)
+            });
+
+            ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Auto-Load State", null, new EventHandler((ob, ev) => {
+            }))).Checked = cbAutoLoadState.Checked;
+            ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Load on select", null, new EventHandler((ob, ev) => {
+            }))).Checked = cbLoadOnSelect.Checked;
+            ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Stash results", null, new EventHandler((ob, ev) => {
+            }))).Checked = cbStashCorrupted.Checked;
+
+            ghSettingsMenu.Show(this, locate);
+        }
+
+        private void btnRenderOutput_MouseDown(object sender, MouseEventArgs e)
+        {
+            Point locate = e.GetMouseLocation(sender);
+            ContextMenuStrip ghSettingsMenu = new ContextMenuStrip();
+
+            ghSettingsMenu.Items.Add(new ToolStripLabel("Render Output Type")
+            { Font = new Font("Segoe UI", 12, FontStyle.Bold)
+            });
+
+            ghSettingsMenu.Items.Add("WAV", null, new EventHandler((ob, ev) => {
+            }));
+            ghSettingsMenu.Items.Add("AVI", null, new EventHandler((ob, ev) => {
+            }));
+            ghSettingsMenu.Items.Add("MPEG", null, new EventHandler((ob, ev) => {
+            }));
+
+            ghSettingsMenu.Items.Add(new ToolStripSeparator());
+
+            ghSettingsMenu.Items.Add(new ToolStripLabel("Behaviors"){
+                Font = new Font("Segoe UI", 12, FontStyle.Bold)
+            });
+
+            ghSettingsMenu.Items.Add("Render file at load", null, new EventHandler((ob, ev) => {
+            }));
+
+            ghSettingsMenu.Items.Add(new ToolStripSeparator());
+
+            ghSettingsMenu.Items.Add("Start rendering", null, new EventHandler((ob, ev) => {
+            }));
+
+            ghSettingsMenu.Items.Add("Open RENDEROUTPUT Folder", null, new EventHandler((ob, ev) => {
+            }));
+
+            ghSettingsMenu.Show(this, locate);
         }
     }
 
