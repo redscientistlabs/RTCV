@@ -89,6 +89,18 @@
     <Compile Include="Components\Controls\MultiUpDown.Designer.cs">
       <DependentUpon>MultiUpDown.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\Controls\SavestateHolder.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\Controls\SavestateHolder.Designer.cs">
+      <DependentUpon>SavestateHolder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Controls\SavestateList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\Controls\SavestateList.Designer.cs">
+      <DependentUpon>SavestateList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Components\Controls\SpecControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -289,6 +301,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Controls\MultiUpDown.resx">
       <DependentUpon>MultiUpDown.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Controls\SavestateHolder.resx">
+      <DependentUpon>SavestateHolder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Controls\SavestateList.resx">
+      <DependentUpon>SavestateList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Controls\SpecControl.resx">
       <DependentUpon>SpecControl.cs</DependentUpon>
