@@ -605,16 +605,16 @@ namespace RTCV.UI
                 case "GH Load":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
-                        S.GET<RTC_SavestateManager_Form>().btnSaveLoad.Text = "LOAD";
-                        S.GET<RTC_SavestateManager_Form>().btnSaveLoad_Click(null, null);
+                        S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad.Text = "LOAD";
+                        S.GET<RTC_SavestateManager_Form>().savestateList.BtnSaveLoad_Click(null, null);
                     });
                     break;
 
                 case "GH Save":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
-                        S.GET<RTC_SavestateManager_Form>().btnSaveLoad.Text = "SAVE";
-                        S.GET<RTC_SavestateManager_Form>().btnSaveLoad_Click(null, null);
+                        S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad.Text = "SAVE";
+                        S.GET<RTC_SavestateManager_Form>().savestateList.BtnSaveLoad_Click(null, null);
                     });
                     break;
 

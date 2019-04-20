@@ -61,6 +61,9 @@ namespace RTCV.UI.Components.Controls
 
         private void _DataSource_PositionChanged(object sender, EventArgs e)
         {
+            if (_DataSource.Position == -1)
+                return;
+
             for (int i = 0; i < controlList.Count; i++)
             {
                 if (i + _DataSource.Position < _DataSource.Count)
@@ -99,10 +102,9 @@ namespace RTCV.UI.Components.Controls
 
         private void InitializeSavestateHolder()
         {
-            int padding = 8;
-            int ssHeight = 22;
+            int ssHeight = 22+2;
             //Calculate how many we can fit within the space we have.
-            numPerPage = flowPanel.Height / (ssHeight + padding);
+            numPerPage = (flowPanel.Height / (ssHeight)) - 1;
             //Create the list
             flowPanel.Controls.Clear();
             controlList = new List<SavestateHolder>();
@@ -246,7 +248,7 @@ namespace RTCV.UI.Components.Controls
             return true;
         }
 
-        private void BtnSaveLoad_Click(object sender, EventArgs e)
+        public void BtnSaveLoad_Click(object sender, EventArgs e)
         {
             if (btnSaveLoad.Text == "LOAD")
             {

@@ -58,7 +58,7 @@
             this.tbSavestate.ForeColor = System.Drawing.Color.White;
             this.tbSavestate.Location = new System.Drawing.Point(30, 0);
             this.tbSavestate.Name = "tbSavestate";
-            this.tbSavestate.Size = new System.Drawing.Size(95, 22);
+            this.tbSavestate.Size = new System.Drawing.Size(120, 22);
             this.tbSavestate.TabIndex = 138;
             this.tbSavestate.TabStop = false;
             this.tbSavestate.Tag = "color:dark2";
@@ -71,9 +71,10 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.tbSavestate);
             this.Controls.Add(this.btnSavestate);
-            this.MinimumSize = new System.Drawing.Size(125, 22);
+            this.Margin = new System.Windows.Forms.Padding(1);
+            this.MinimumSize = new System.Drawing.Size(150, 22);
             this.Name = "SavestateHolder";
-            this.Size = new System.Drawing.Size(125, 22);
+            this.Size = new System.Drawing.Size(150, 22);
             this.ResumeLayout(false);
             this.PerformLayout();
 
