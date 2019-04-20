@@ -15,19 +15,17 @@ namespace RTCV.CorruptCore
 		public static Stockpile CurrentStockpile { get; set; }
 
 		public static StashKey CurrentStashkey { get; set; }
+        public static StashKey CurrentSavestateStashKey { get; set; }
 
-		public static volatile Stack<StashKey> AllBackupStates = new Stack<StashKey>();
+        public static volatile Stack<StashKey> AllBackupStates = new Stack<StashKey>();
 		public static volatile StashKey BackupedState;
 
 
-		public static string CurrentSavestateKey;
 
 		public static bool StashAfterOperation = true;
 
 		public static volatile List<StashKey> StashHistory = new List<StashKey>();
 
-		// key: some key or guid, value: [0] savestate key [1] rom file
-		public static volatile Dictionary<string, StashKey> SavestateStashkeyDico = new Dictionary<string, StashKey>();
 
     
 
@@ -42,14 +40,6 @@ namespace RTCV.CorruptCore
 			{
 				Render.StartRender();
 			}
-		}
-
-		public static StashKey GetCurrentSavestateStashkey()
-		{
-			if (CurrentSavestateKey == null || !SavestateStashkeyDico.ContainsKey(CurrentSavestateKey))
-				return null;
-
-			return SavestateStashkeyDico[CurrentSavestateKey];
 		}
 
 		public static bool ApplyStashkey(StashKey sk, bool _loadBeforeOperation = true)
@@ -79,9 +69,9 @@ namespace RTCV.CorruptCore
 			PreApplyStashkey();
 
 
-			StashKey psk = StockpileManager_UISide.GetCurrentSavestateStashkey();
+            StashKey psk = CurrentSavestateStashKey;
 
-			if (psk == null)
+            if (psk == null)
 			{
 				MessageBox.Show("The Glitch Harvester could not perform the CORRUPT action\n\nEither no Savestate Box was selected in the Savestate Manager\nor the Savetate Box itself is empty.");
 				return false;
@@ -130,9 +120,9 @@ namespace RTCV.CorruptCore
 		{
 			PreApplyStashkey();
 
-			StashKey psk = StockpileManager_UISide.GetCurrentSavestateStashkey();
+            StashKey psk = CurrentSavestateStashKey;
 
-			if (psk == null)
+            if (psk == null)
 			{
 				MessageBox.Show("The Glitch Harvester could not perform the INJECT action\n\nEither no Savestate Box was selected in the Savestate Manager\nor the Savetate Box itself is empty.");
 				return false;
@@ -279,17 +269,10 @@ namespace RTCV.CorruptCore
 			return true;
 		}
 
-		public static StashKey SaveState(bool sendToStashDico, StashKey sk = null, bool threadSave = false)
+		public static StashKey SaveState(StashKey sk = null, bool threadSave = false)
 		{
 			StashKey _sk = LocalNetCoreRouter.QueryRoute<StashKey>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_SAVESTATE, sk, true);
-			if (sendToStashDico && _sk != null)
-			{
-				var currentkey = CurrentSavestateKey;
-				if (currentkey != null)
-					SavestateStashkeyDico[currentkey] = _sk;
-			}
-
-			return _sk;
+            return _sk;
 		}
 
 

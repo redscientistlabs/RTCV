@@ -304,8 +304,8 @@ namespace RTCV.UI
 
 				StashKey newSk = null;
 				if (sk == null)
-				{
-					StashKey psk = StockpileManager_UISide.GetCurrentSavestateStashkey();
+                {
+                    StashKey psk = StockpileManager_UISide.CurrentSavestateStashKey;
 					if (psk == null)
 					{
 						MessageBox.Show(
@@ -346,8 +346,8 @@ namespace RTCV.UI
 				StashKey newSk = null;
 				if (sk == null)
 				{
-					StashKey psk = StockpileManager_UISide.GetCurrentSavestateStashkey();
-					if (psk == null)
+					StashKey psk = StockpileManager_UISide.CurrentSavestateStashKey;
+                    if (psk == null)
 					{
 						MessageBox.Show("Could not perform the CORRUPT action\n\nEither no Savestate Box was selected in the Savestate Manager\nor the Savetate Box itself is empty.");
 						return;
@@ -451,8 +451,8 @@ namespace RTCV.UI
 					//If opened from engine config, use the GH state
 					if (!OpenedFromBlastEditor)
 					{
-						StashKey psk = StockpileManager_UISide.GetCurrentSavestateStashkey();
-						if (psk == null)
+						StashKey psk = StockpileManager_UISide.CurrentSavestateStashKey;
+                        if (psk == null)
 						{
 							MessageBox.Show(
 								"The Blast Generator could not perform the CORRUPT action\n\nEither no Savestate Box was selected in the Savestate Manager\nor the Savetate Box itself is empty.");

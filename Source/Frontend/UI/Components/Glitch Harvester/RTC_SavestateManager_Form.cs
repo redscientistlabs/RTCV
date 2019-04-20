@@ -50,75 +50,6 @@ namespace RTCV.UI
 
         }
 
-        public void btnSavestate_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                ((Button)sender).Visible = false;
-
-                Button clickedButton = ((Button)sender);
-                clickedButton.ForeColor = Color.OrangeRed;
-                clickedButton.BringToFront();
-
-                StockpileManager_UISide.CurrentSavestateKey = clickedButton.Text;
-                StashKey psk = StockpileManager_UISide.GetCurrentSavestateStashkey();
-
-                if (psk != null && !File.Exists(psk.RomFilename))
-                {
-                    if (DialogResult.Yes == MessageBox.Show($"Can't find file {psk.RomFilename}\nGame name: {psk.GameName}\nSystem name: {psk.SystemName}\n\n Would you like to provide a new file for replacement?", "Error: File not found", MessageBoxButtons.YesNo))
-                    {
-                        OpenFileDialog ofd = new OpenFileDialog
-                        {
-                            DefaultExt = "*",
-                            Title = "Select Replacement File",
-                            Filter = "Any file|*.*",
-                            RestoreDirectory = true
-                        };
-                        if (ofd.ShowDialog() == DialogResult.OK)
-                        {
-                            string filename = ofd.FileName.ToString();
-                            string oldFilename = psk.RomFilename;
-                            for (int i = 1; i < 41; i++)
-                            {
-                                string key = i.ToString().PadLeft(2, '0');
-
-                                if (StockpileManager_UISide.SavestateStashkeyDico.ContainsKey(key))
-                                {
-                                    StashKey sk = StockpileManager_UISide.SavestateStashkeyDico[key];
-                                    if (sk.RomFilename == oldFilename)
-                                        sk.RomFilename = filename;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            clickedButton.ForeColor = Color.FromArgb(192, 255, 192);
-                            StockpileManager_UISide.CurrentSavestateKey = null;
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        clickedButton.ForeColor = Color.FromArgb(192, 255, 192);
-                        StockpileManager_UISide.CurrentSavestateKey = null;
-                        return;
-                    }
-                }
-
-
-                if (cbSavestateLoadOnClick.Checked)
-                {
-            //        btnSaveLoad.Text = "LOAD";
-             //       btnSaveLoad_Click(null, null);
-                }
-                //StockpileManager_UISide.LoadState(StockpileManager_UISide.getCurrentSavestateStashkey());
-            }
-            finally
-            {
-                ((Button)sender).Visible = true;
-            }
-        }
-
         private void loadSavestateList(string fileName = null)
         {
             if (fileName == null)
@@ -148,6 +79,7 @@ namespace RTCV.UI
 
             //Commit any used states to the SESSION folder
             commitUsedStatesToSession();
+            savestateBindingSource.Clear();
 
             try
             {
@@ -179,11 +111,9 @@ namespace RTCV.UI
                 return;
             }
 
-
-            for (int i = 1; i < 41; i++)
+            for (var i = 0; i < ssk.StashKeys.Count; i++)
             {
-                StashKey key = ssk.StashKeys[i];
-
+                var key = ssk.StashKeys[i];
                 if (key == null)
                     continue;
 
@@ -195,28 +125,8 @@ namespace RTCV.UI
 
                 key.StateFilename = newStatePath;
                 key.StateShortFilename = Path.GetFileName(newStatePath);
-            }
 
-            //clear the stockpile dico
-            StockpileManager_UISide.SavestateStashkeyDico.Clear();
-
-            //fill text/state controls/dico
-            for (int i = 1; i < 41; i++)
-            {
-                string key = i.ToString().PadLeft(2, '0');
-
-                if (ssk.StashKeys[i] != null)
-                {
-                    if (!StockpileManager_UISide.SavestateStashkeyDico.ContainsKey(key))
-                        StockpileManager_UISide.SavestateStashkeyDico.Add(key, ssk.StashKeys[i]);
-                    else
-                        StockpileManager_UISide.SavestateStashkeyDico[key] = ssk.StashKeys[i];
-                }
-
-                StateBoxes[key].Text = "";
-
-                if (ssk.Text[i] != null)
-                    StateBoxes[key].Text = ssk.Text[i];
+                savestateBindingSource.Add(new Tuple<StashKey, string>(key, ssk.Text[i]));
             }
         }
 
@@ -259,21 +169,7 @@ namespace RTCV.UI
                 {
                     //Commit any used states to disk
                     commitUsedStatesToSession();
-
-
-                    for (int i = 1; i < 41; i++)
-                    {
-                        string key = i.ToString().PadLeft(2, '0');
-
-                        if (key == null)
-                            continue;
-
-                        if (StockpileManager_UISide.SavestateStashkeyDico.ContainsKey(key))
-                            StockpileManager_UISide.SavestateStashkeyDico.Remove(key);
-
-                    }
-
-                    StockpileManager_UISide.CurrentSavestateKey = null;
+                    savestateBindingSource.Clear();
 
                 }));
 
@@ -287,20 +183,10 @@ namespace RTCV.UI
             {
                 SaveStateKeys ssk = new SaveStateKeys();
 
-                for (int i = 1; i < 41; i++)
+                foreach (Tuple<StashKey, string> x in savestateBindingSource.List)
                 {
-                    string key = i.ToString().PadLeft(2, '0');
-
-                    if (StockpileManager_UISide.SavestateStashkeyDico.ContainsKey(key))
-                    {
-                        ssk.StashKeys[i] = StockpileManager_UISide.SavestateStashkeyDico[key];
-                        ssk.Text[i] = StateBoxes[key].Text;
-                    }
-                    else
-                    {
-                        ssk.StashKeys[i] = null;
-                        ssk.Text[i] = null;
-                    }
+                    ssk.StashKeys.Add(x.Item1);
+                    ssk.Text.Add(x.Item2);
                 }
 
                 string Filename;
@@ -415,7 +301,5 @@ namespace RTCV.UI
             //Bring the UI back to normal after a drag+drop to prevent weird merge stuff 
             S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
         }
-
-
     }
 }

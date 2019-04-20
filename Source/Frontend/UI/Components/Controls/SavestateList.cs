@@ -16,7 +16,17 @@ namespace RTCV.UI.Components.Controls
     public partial class SavestateList : UserControl
     {
         private List<SavestateHolder> controlList;
-        private SavestateHolder selectedHolder = null;
+        private SavestateHolder _selectedHolder;
+
+        private SavestateHolder selectedHolder
+        {
+            get => _selectedHolder;
+            set
+            {
+                _selectedHolder = value;
+                CorruptCore.StockpileManager_UISide.CurrentSavestateStashKey = value.sk;
+            }
+        }
 
 
         private int numPerPage;
@@ -102,9 +112,10 @@ namespace RTCV.UI.Components.Controls
 
         private void InitializeSavestateHolder()
         {
-            int ssHeight = 22+2;
+            int ssHeight = 22;
+            int padding = 4;
             //Calculate how many we can fit within the space we have.
-            numPerPage = (flowPanel.Height / (ssHeight)) - 1;
+            numPerPage = (flowPanel.Height / (ssHeight + padding)) - 1;
             //Create the list
             flowPanel.Controls.Clear();
             controlList = new List<SavestateHolder>();
@@ -130,47 +141,13 @@ namespace RTCV.UI.Components.Controls
                 if (selectedHolder.sk == null)
                     return;
 
-                StockpileManager_UISide.CurrentSavestateKey = selectedHolder.sk.Key;
-                StashKey psk = StockpileManager_UISide.GetCurrentSavestateStashkey();
+                StashKey psk = selectedHolder.sk;
 
                 if (psk != null && !File.Exists(psk.RomFilename))
                 {
-                    if (DialogResult.Yes == MessageBox.Show($"Can't find file {psk.RomFilename}\nGame name: {psk.GameName}\nSystem name: {psk.SystemName}\n\n Would you like to provide a new file for replacement?", "Error: File not found", MessageBoxButtons.YesNo))
-                    {
-                        OpenFileDialog ofd = new OpenFileDialog
-                        {
-                            DefaultExt = "*",
-                            Title = "Select Replacement File",
-                            Filter = "Any file|*.*",
-                            RestoreDirectory = true
-                        };
-                        if (ofd.ShowDialog() == DialogResult.OK)
-                        {
-                            string filename = ofd.FileName.ToString();
-                            string oldFilename = psk.RomFilename;
-                            for (int i = 1; i < 41; i++)
-                            {
-                                string key = i.ToString().PadLeft(2, '0');
-
-                                if (StockpileManager_UISide.SavestateStashkeyDico.ContainsKey(key))
-                                {
-                                    StashKey sk = StockpileManager_UISide.SavestateStashkeyDico[key];
-                                    if (sk.RomFilename == oldFilename)
-                                        sk.RomFilename = filename;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            selectedHolder?.SetSelected(false);
-                            StockpileManager_UISide.CurrentSavestateKey = null;
-                            return;
-                        }
-                    }
-                    else
+                    if (!checkAndFixingMissingStates(psk))
                     {
                         selectedHolder?.SetSelected(false);
-                        StockpileManager_UISide.CurrentSavestateKey = null;
                         return;
                     }
                 }
@@ -204,7 +181,7 @@ namespace RTCV.UI.Components.Controls
 
         public StashKey GetSelectedStashkey()
         {
-            return selectedHolder.sk;
+            return selectedHolder?.sk;
         }
 
         private void BtnToggleSaveLoad_Click(object sender, EventArgs e)
@@ -237,9 +214,9 @@ namespace RTCV.UI.Components.Controls
                     {
                         string filename = ofd.FileName.ToString();
                         string oldFilename = psk.RomFilename;
-                        foreach (var sk in StockpileManager_UISide.SavestateStashkeyDico.Values.Where(x => x.RomFilename == oldFilename))
+                        foreach (var item in _DataSource.List.OfType<Tuple<StashKey, string>>().Where(x => x.Item1.RomFilename == oldFilename))
                         {
-                            sk.RomFilename = filename;
+                            item.Item1.RomFilename = filename;
                         }
                     }
                     else
@@ -264,13 +241,33 @@ namespace RTCV.UI.Components.Controls
             }
             else
             {
-                if (StockpileManager_UISide.CurrentSavestateKey == null)
+                if (selectedHolder == null)
                 {
                     MessageBox.Show("No Savestate Box is currently selected in the Glitch Harvester's Savestate Manager");
                     return;
                 }
 
-                StashKey sk = StockpileManager_UISide.SaveState(true);
+                StashKey sk = StockpileManager_UISide.SaveState();
+
+                //Replace if there'a already a sk
+                if (selectedHolder.sk != null)
+                {
+                    int indexToReplace = controlList.IndexOf(selectedHolder) + _DataSource.Position;
+                    if (sk != null)
+                    {
+                        _DataSource.Insert(indexToReplace, new Tuple<StashKey, String>(sk, ""));
+                        _DataSource.RemoveAt(indexToReplace + 1);
+                    }
+
+                }
+                //Otherwise add to the last box
+                else
+                {
+                    if (sk != null)
+                    {
+                        _DataSource.Add(new Tuple<StashKey, String>(sk, ""));
+                    }
+                }
 
                 btnSaveLoad.Text = "LOAD";
                 btnSaveLoad.ForeColor = Color.FromArgb(192, 255, 192);

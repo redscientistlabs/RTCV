@@ -71,7 +71,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.tbSavestate);
             this.Controls.Add(this.btnSavestate);
-            this.Margin = new System.Windows.Forms.Padding(1);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(150, 22);
             this.Name = "SavestateHolder";
             this.Size = new System.Drawing.Size(150, 22);

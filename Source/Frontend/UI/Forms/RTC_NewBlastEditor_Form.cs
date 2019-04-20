@@ -1358,10 +1358,11 @@ namespace RTCV.UI
 		}
 
 		private void replaceRomFromGHToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			StashKey temp = StockpileManager_UISide.GetCurrentSavestateStashkey();
+        {
+            StashKey temp = StockpileManager_UISide.CurrentSavestateStashKey;
 
-			if (temp == null)
+
+            if (temp == null)
 			{
 				MessageBox.Show("There is no savestate selected in the Glitch Harvester, or the current selected box is empty");
 				return;
@@ -1466,8 +1467,8 @@ namespace RTCV.UI
 		private void replaceSavestateFromGHToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 
-			StashKey temp = StockpileManager_UISide.GetCurrentSavestateStashkey();
-			if (temp == null)
+			StashKey temp = StockpileManager_UISide.CurrentSavestateStashKey;
+            if (temp == null)
 			{
 				MessageBox.Show("There is no savestate selected in the glitch harvester, or the current selected box is empty");
 				return;

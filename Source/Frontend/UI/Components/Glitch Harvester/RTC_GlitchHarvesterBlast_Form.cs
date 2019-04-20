@@ -150,7 +150,7 @@ namespace RTCV.UI
 
                 btnCorrupt.Visible = false;
 
-                StashKey psk = StockpileManager_UISide.GetCurrentSavestateStashkey();
+                StashKey psk = StockpileManager_UISide.CurrentSavestateStashKey;
 
                 if (ghMode == GlitchHarvesterMode.MERGE)
                 {

@@ -813,8 +813,8 @@ namespace RTCV.CorruptCore
 	[Ceras.MemberConfig(TargetMember.All)]
 	public class SaveStateKeys
 	{
-		public StashKey[] StashKeys = new StashKey[41];
-		public string[] Text = new string[41];
+		public List<StashKey> StashKeys = new List<StashKey>();
+		public List<String> Text = new List<string>();
 	}
 
 	[Serializable]

@@ -23,6 +23,7 @@ namespace RTCV.UI.Components.Controls
             tbSavestate.Visible = false;
         }
 
+
         public void SetStashKey(StashKey sk, String name, int number)
         {
             this._sk = sk;
