@@ -34,6 +34,7 @@ namespace RTCV.UI
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_NewBlastEditor_Form));
             this.dgvBlastEditor = new System.Windows.Forms.DataGridView();
             this.panelSidebar = new System.Windows.Forms.Panel();
+            this.btnSanitize = new System.Windows.Forms.Button();
             this.btnAddRow = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cbShiftBlastlayer = new System.Windows.Forms.ComboBox();
@@ -125,7 +126,6 @@ namespace RTCV.UI
             this.rasterizeVMDsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bakeBlastunitsToVALUEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openBlastGeneratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnSanitize = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBlastEditor)).BeginInit();
             this.panelSidebar.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -193,6 +193,23 @@ namespace RTCV.UI
             this.panelSidebar.Size = new System.Drawing.Size(159, 463);
             this.panelSidebar.TabIndex = 146;
             this.panelSidebar.Tag = "color:dark1";
+            // 
+            // btnSanitize
+            // 
+            this.btnSanitize.BackColor = System.Drawing.Color.Gray;
+            this.btnSanitize.FlatAppearance.BorderSize = 0;
+            this.btnSanitize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSanitize.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnSanitize.ForeColor = System.Drawing.Color.White;
+            this.btnSanitize.Location = new System.Drawing.Point(15, 212);
+            this.btnSanitize.Name = "btnSanitize";
+            this.btnSanitize.Size = new System.Drawing.Size(135, 23);
+            this.btnSanitize.TabIndex = 178;
+            this.btnSanitize.TabStop = false;
+            this.btnSanitize.Tag = "color:light1";
+            this.btnSanitize.Text = "Sanitize";
+            this.btnSanitize.UseVisualStyleBackColor = false;
+            this.btnSanitize.Click += new System.EventHandler(this.btnSanitize_Click);
             // 
             // btnAddRow
             // 
@@ -1190,23 +1207,6 @@ namespace RTCV.UI
             this.openBlastGeneratorToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
             this.openBlastGeneratorToolStripMenuItem.Text = "Open Blast Generator";
             this.openBlastGeneratorToolStripMenuItem.Click += new System.EventHandler(this.OpenBlastGeneratorToolStripMenuItem_Click);
-            // 
-            // btnSanitize
-            // 
-            this.btnSanitize.BackColor = System.Drawing.Color.Gray;
-            this.btnSanitize.FlatAppearance.BorderSize = 0;
-            this.btnSanitize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSanitize.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.btnSanitize.ForeColor = System.Drawing.Color.White;
-            this.btnSanitize.Location = new System.Drawing.Point(15, 212);
-            this.btnSanitize.Name = "btnSanitize";
-            this.btnSanitize.Size = new System.Drawing.Size(135, 23);
-            this.btnSanitize.TabIndex = 178;
-            this.btnSanitize.TabStop = false;
-            this.btnSanitize.Tag = "color:light1";
-            this.btnSanitize.Text = "Sanitize";
-            this.btnSanitize.UseVisualStyleBackColor = false;
-            this.btnSanitize.Click += new System.EventHandler(this.btnSanitize_Click);
             // 
             // RTC_NewBlastEditor_Form
             // 

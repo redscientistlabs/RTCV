@@ -461,6 +461,7 @@
             this.ClientSize = new System.Drawing.Size(844, 581);
             this.Controls.Add(this.pnTopBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "UI_CoreForm";
             this.Tag = "color:dark2";

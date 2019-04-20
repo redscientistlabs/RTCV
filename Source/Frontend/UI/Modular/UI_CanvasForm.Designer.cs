@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UI_CanvasForm));
             this.pnScale = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
@@ -48,9 +49,11 @@
             this.ClientSize = new System.Drawing.Size(591, 425);
             this.Controls.Add(this.pnScale);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "UI_CanvasForm";
             this.Tag = "color:dark2";
             this.Text = "UI_CanvasForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UI_CanvasForm_FormClosing);
             this.Load += new System.EventHandler(this.UI_CanvasForm_Load);
             this.ResumeLayout(false);
 

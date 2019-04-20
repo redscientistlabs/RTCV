@@ -9,6 +9,7 @@ using System.Xml.Serialization;
 using System.Runtime.InteropServices;
 using RTCV.CorruptCore;
 using static RTCV.UI.UI_Extensions;
+using System.Collections;
 
 namespace RTCV.UI
 {
@@ -37,12 +38,33 @@ namespace RTCV.UI
 
 		private void cbSelectBox_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			((cbSelectBox.SelectedItem as dynamic).value as ComponentForm)?.AnchorToPanel(pnComponentForm);
+			((cbSelectBox.SelectedItem as dynamic)?.value as ComponentForm)?.AnchorToPanel(pnComponentForm);
 		}
 
 		private void RTC_SelectBox_Form_Load(object sender, EventArgs e)
 		{
 			cbSelectBox.SelectedIndex = 0;
 		}
-	}
+
+        private void RTC_SelectBox_Form_Resize(object sender, EventArgs e)
+        {
+            cbSelectBox_SelectedIndexChanged(sender, e);
+            /*
+            var cf = pnComponentForm.Controls.OfType<ComponentForm>().FirstOrDefault();
+
+            if(cf != null)
+            {
+                cf.
+            }
+            */
+            /*
+            var controls = new ArrayList().AddRange(pnComponentForm.Controls);
+            var query = from element in pnComponentForm.Controls
+                        where element is ComponentForm
+                        select element;
+
+            var result = query.FirstOrDefault();
+            */
+        }
+    }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UI_ComponentFormTile));
             this.lbComponentFormName = new System.Windows.Forms.Label();
             this.pnComponentFormHost = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
@@ -84,6 +85,7 @@
             this.Controls.Add(this.pnComponentFormHost);
             this.Controls.Add(this.lbComponentFormName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "UI_ComponentFormTile";
             this.Tag = "color:dark3";
             this.Text = "ComponentForm Tile";

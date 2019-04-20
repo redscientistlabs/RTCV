@@ -172,6 +172,7 @@
             this.Controls.Add(this.btnRtcFactoryClean);
             this.Controls.Add(this.lbSettingsAndTools);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RTC_Settings_Form";
             this.Tag = "color:dark1";
             this.Text = "RTC : Settings";

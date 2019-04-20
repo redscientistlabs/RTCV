@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_GeneralParameters_Form));
             this.cbBlastRadius = new System.Windows.Forms.ComboBox();
             this.labelBlastRadius = new System.Windows.Forms.Label();
             this.multiTB_ErrorDelay = new RTCV.UI.Components.Controls.MultiTrackBar();
@@ -118,6 +119,7 @@
             this.Controls.Add(this.cbBlastRadius);
             this.Controls.Add(this.labelBlastRadius);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RTC_GeneralParameters_Form";
             this.Tag = "color:dark1";
             this.Text = "General Parameters";

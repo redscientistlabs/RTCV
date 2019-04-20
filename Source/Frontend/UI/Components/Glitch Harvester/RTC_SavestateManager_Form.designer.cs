@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_SavestateManager_Form));
             this.btnSaveSavestateList = new System.Windows.Forms.Button();
             this.btnLoadSavestateList = new System.Windows.Forms.Button();
             this.btnBackPanelPage = new System.Windows.Forms.Button();
@@ -1452,6 +1453,7 @@
             this.Controls.Add(this.btnSaveLoad);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RTC_SavestateManager_Form";
             this.Tag = "color:dark1";
             this.Text = "Savestate Manager";

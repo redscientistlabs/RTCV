@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_GlitchHarvesterIntensity_Form));
             this.label6 = new System.Windows.Forms.Label();
             this.multiTB_Intensity = new RTCV.UI.Components.Controls.MultiTrackBar();
             this.pnIntensityHolder = new System.Windows.Forms.Panel();
@@ -87,6 +88,7 @@
             this.Controls.Add(this.label6);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RTC_GlitchHarvesterIntensity_Form";
             this.Tag = "color:dark1";
             this.Text = "Generator Control";

@@ -103,9 +103,9 @@ namespace RTCV.UI
             UI_CanvasForm.loadTileFormMain(this);
         }
 
-        internal void LoadToNewWindow()
+        internal void LoadToNewWindow(string GridID = null)
         {
-            UI_CanvasForm.loadTileFormExtraWindow(this);
+            UI_CanvasForm.loadTileFormExtraWindow(this, GridID);
         }
     }
 

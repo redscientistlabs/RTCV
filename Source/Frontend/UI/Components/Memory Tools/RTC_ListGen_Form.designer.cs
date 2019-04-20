@@ -169,6 +169,7 @@
             this.Font = new System.Drawing.Font("Segoe UI Symbol", 8F);
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RTC_ListGen_Form";
             this.Tag = "color:dark3";
             this.Text = "List Generator";

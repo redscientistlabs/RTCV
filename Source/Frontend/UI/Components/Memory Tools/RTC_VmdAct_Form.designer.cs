@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_VmdAct_Form));
             this.btnActiveTableSubtractFile = new System.Windows.Forms.Button();
             this.btnActiveTableGenerate = new System.Windows.Forms.Button();
             this.btnActiveTableQuickSave = new System.Windows.Forms.Button();
@@ -590,6 +591,7 @@
             this.Controls.Add(this.label16);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RTC_VmdAct_Form";
             this.Tag = "color:dark2";
             this.Text = "Active Table Generator";

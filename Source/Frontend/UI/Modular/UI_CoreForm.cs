@@ -199,7 +199,7 @@ This message only appears once.";
             ghGrid.SetTileForm(gpForm, 0, 0, 5, 5);
             ghGrid.SetTileForm(ceForm, 5, 0, 10, 7);
             ghGrid.SetTileForm(mdForm, 0, 5, 5, 14);
-            ghGrid.SetTileForm(UICore.mtForm, 15, 0, 10, 7);
+            ghGrid.SetTileForm(UICore.mtForm, 15, 0, 11, 7);
             ghGrid.SetTileForm(ghbForm, 5, 7, 4, 4);
             ghGrid.SetTileForm(ssmForm, 5, 11, 4, 8);
             ghGrid.SetTileForm(shForm, 9, 7, 6, 12);
@@ -211,59 +211,6 @@ This message only appears once.";
         public void btnEngineConfig_Click(object sender, EventArgs e)
         {
             UI_DefaultGrids.engineConfig.LoadToMain();
-
-            //old garbage
-
-            //Test button, creates forms using class names and coordinates.
-            /*
-            var GlitchHarvester = new CanvasGrid(6, 3);
-            GlitchHarvester.SetTileForm("UI_SavestateManager", 0, 0);
-            GlitchHarvester.SetTileForm("UI_Engine_Blast", 1, 0);
-            GlitchHarvester.SetTileForm("UI_BlastManipulator", 2, 0);
-            GlitchHarvester.SetTileForm("UI_BlastParameters", 1, 1);
-            GlitchHarvester.SetTileForm("UI_StashHistory", 2, 1);
-            GlitchHarvester.SetTileForm("UI_RenderOutput", 1, 2);
-            GlitchHarvester.SetTileForm("UI_StockpileManager", 3, 0);
-            */
-
-            //EngineForm.SetTileForm("UI_Engine_MemoryDomains", 0, 2);
-            /*
-            var TestForm = new CanvasGrid(5, 4);
-            TestForm.SetTileForm("UI_DummyTileForm3x1", 0, 0);
-            TestForm.SetTileForm("UI_DummyTileForm2x1", 3, 2);
-            TestForm.SetTileForm("UI_DummyTileForm2x2", 3, 0);
-            TestForm.SetTileForm("UI_DummyTileForm1x1", 4, 3);
-            TestForm.SetTileForm("UI_DummyTileForm3x3", 0, 1);
-            */
-
-            /*
-            var multiGrid = new MultiGrid(
-                EngineGrid,
-                GlitchHarvester,
-                TestForm
-            );
-
-            multiGrid.Load();
-            */
-
-            /*
-            var TestGrid = new CanvasGrid(13, 8, "Glitch Harvester");
-            TestGrid.SetTileForm("Glitch Harvester", 0, 0, 9, 8, false);
-            TestGrid.LoadToNewWindow();
-            */
-
-
-            /*
-            var multiGrid = new MultiGrid(
-                EngineGrid,
-                TestGrid
-            );
-            */
-
-            //multiGrid.Load();
-
-            //var tileForm = (UI_ComponentFormTile)UI_CanvasForm.getTileForm("UI_ComponentFormTile");
-            //tileForm.SetCompoentForm("ComponentForm host", 4, 4);
 
         }
 
@@ -283,11 +230,8 @@ This message only appears once.";
         {
             pnGlitchHarvesterOpen.Visible = true;
 
-            UI_DefaultGrids.glitchHarvester.LoadToNewWindow();
+            UI_DefaultGrids.glitchHarvester.LoadToNewWindow("Glitch Harvester");
 
-            //make it open a grid in a new window
-            //S.GET<RTC_GlitchHarvester_Form>().Show();
-            //S.GET<RTC_GlitchHarvester_Form>().Focus();
         }
 
         public void btnAutoCorrupt_Click(object sender, EventArgs e)

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_ListBox_Form));
             this.lbComponentForms = new System.Windows.Forms.ListBox();
             this.pnTargetComponentForm = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
@@ -88,6 +89,7 @@
             this.Controls.Add(this.lbComponentForms);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RTC_ListBox_Form";
             this.Tag = "color:normal";
             this.Text = "Listbox Form";

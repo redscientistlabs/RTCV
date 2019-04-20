@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_VmdPool_Form));
             this.lbLoadedVmdList = new System.Windows.Forms.ListBox();
             this.btnUnloadVmd = new System.Windows.Forms.Button();
             this.btnLoadVmd = new System.Windows.Forms.Button();
@@ -216,6 +217,7 @@
             this.Controls.Add(this.lbLoadedVmdList);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RTC_VmdPool_Form";
             this.Tag = "color:dark3";
             this.Text = "VMD Pool";

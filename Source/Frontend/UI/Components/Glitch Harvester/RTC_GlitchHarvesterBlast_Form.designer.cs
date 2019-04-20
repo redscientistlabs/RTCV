@@ -173,6 +173,7 @@
             this.Controls.Add(this.label5);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RTC_GlitchHarvesterBlast_Form";
             this.Tag = "color:dark1";
             this.Text = "Blast Tools";

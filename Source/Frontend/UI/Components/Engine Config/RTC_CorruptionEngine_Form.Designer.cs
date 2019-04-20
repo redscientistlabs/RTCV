@@ -102,18 +102,15 @@
             this.panel2.SuspendLayout();
             this.pnLimiterList.SuspendLayout();
             this.gbPipeEngine.SuspendLayout();
-            this.updownMaxPipes.SuspendLayout();
             this.gbDistortionEngine.SuspendLayout();
-			this.nmDistortionDelay.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nmDistortionDelay)).BeginInit();
             this.gbFreezeEngine.SuspendLayout();
-			this.updownMaxFreeze.SuspendLayout();
-			this.gbHellgenieEngine.SuspendLayout();
-            this.updownMaxCheats.SuspendLayout();
-            this.nmMaxValueHellgenie.SuspendLayout();
-            this.nmMinValueHellgenie.SuspendLayout();
+            this.gbHellgenieEngine.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nmMaxValueHellgenie)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nmMinValueHellgenie)).BeginInit();
             this.gbNightmareEngine.SuspendLayout();
-            this.nmMaxValueNightmare.SuspendLayout();
-            this.nmMinValueNightmare.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nmMaxValueNightmare)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nmMinValueNightmare)).BeginInit();
             this.gbCustomEngine.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -459,9 +456,15 @@
             this.updownMaxPipes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.updownMaxPipes.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.updownMaxPipes.ForeColor = System.Drawing.Color.White;
+            this.updownMaxPipes.Hexadecimal = false;
             this.updownMaxPipes.Location = new System.Drawing.Point(96, 40);
             this.updownMaxPipes.Maximum = new decimal(new int[] {
             65536,
+            0,
+            0,
+            0});
+            this.updownMaxPipes.Minimum = new decimal(new int[] {
+            0,
             0,
             0,
             0});
@@ -470,7 +473,7 @@
             this.updownMaxPipes.TabIndex = 142;
             this.updownMaxPipes.Tag = "color:normal";
             this.updownMaxPipes.Value = new decimal(new int[] {
-            50,
+            0,
             0,
             0,
             0});
@@ -682,9 +685,15 @@
             this.updownMaxFreeze.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.updownMaxFreeze.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.updownMaxFreeze.ForeColor = System.Drawing.Color.White;
+            this.updownMaxFreeze.Hexadecimal = false;
             this.updownMaxFreeze.Location = new System.Drawing.Point(96, 39);
             this.updownMaxFreeze.Maximum = new decimal(new int[] {
             65536,
+            0,
+            0,
+            0});
+            this.updownMaxFreeze.Minimum = new decimal(new int[] {
+            0,
             0,
             0,
             0});
@@ -693,7 +702,7 @@
             this.updownMaxFreeze.TabIndex = 142;
             this.updownMaxFreeze.Tag = "color:normal";
             this.updownMaxFreeze.Value = new decimal(new int[] {
-            50,
+            0,
             0,
             0,
             0});
@@ -805,9 +814,15 @@
             this.updownMaxCheats.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.updownMaxCheats.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.updownMaxCheats.ForeColor = System.Drawing.Color.White;
+            this.updownMaxCheats.Hexadecimal = false;
             this.updownMaxCheats.Location = new System.Drawing.Point(96, 90);
             this.updownMaxCheats.Maximum = new decimal(new int[] {
             65536,
+            0,
+            0,
+            0});
+            this.updownMaxCheats.Minimum = new decimal(new int[] {
+            0,
             0,
             0,
             0});
@@ -816,7 +831,7 @@
             this.updownMaxCheats.TabIndex = 140;
             this.updownMaxCheats.Tag = "color:normal";
             this.updownMaxCheats.Value = new decimal(new int[] {
-            50,
+            0,
             0,
             0,
             0});
@@ -1143,6 +1158,7 @@
             this.Controls.Add(this.cbSelectedEngine);
             this.Controls.Add(this.gbSelectedEngine);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RTC_CorruptionEngine_Form";
             this.Tag = "color:dark1";
             this.Text = "Corruption Engine";
@@ -1161,31 +1177,19 @@
             this.pnLimiterList.PerformLayout();
             this.gbPipeEngine.ResumeLayout(false);
             this.gbPipeEngine.PerformLayout();
-			this.updownMaxPipes.ResumeLayout(false);
-			this.updownMaxPipes.PerformLayout();
-			this.gbDistortionEngine.ResumeLayout(false);
-			this.gbDistortionEngine.PerformLayout();
-			this.nmDistortionDelay.ResumeLayout(false);
-			this.nmDistortionDelay.PerformLayout();
+            this.gbDistortionEngine.ResumeLayout(false);
+            this.gbDistortionEngine.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nmDistortionDelay)).EndInit();
             this.gbFreezeEngine.ResumeLayout(false);
             this.gbFreezeEngine.PerformLayout();
-
-			this.updownMaxFreeze.ResumeLayout(false);
-			this.updownMaxFreeze.PerformLayout();
             this.gbHellgenieEngine.ResumeLayout(false);
             this.gbHellgenieEngine.PerformLayout();
-			this.updownMaxCheats.ResumeLayout(false);
-			this.updownMaxCheats.PerformLayout();
-			this.nmMaxValueHellgenie.ResumeLayout(false);
-			this.nmMaxValueHellgenie.PerformLayout();
-			this.nmMinValueHellgenie.ResumeLayout(false);
-			this.nmMinValueHellgenie.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nmMaxValueHellgenie)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nmMinValueHellgenie)).EndInit();
             this.gbNightmareEngine.ResumeLayout(false);
             this.gbNightmareEngine.PerformLayout();
-			this.nmMaxValueNightmare.ResumeLayout(false);
-			this.nmMaxValueNightmare.PerformLayout();
-			this.nmMinValueNightmare.ResumeLayout(false);
-			this.nmMinValueNightmare.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nmMaxValueNightmare)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nmMinValueNightmare)).EndInit();
             this.gbCustomEngine.ResumeLayout(false);
             this.gbCustomEngine.PerformLayout();
             this.ResumeLayout(false);

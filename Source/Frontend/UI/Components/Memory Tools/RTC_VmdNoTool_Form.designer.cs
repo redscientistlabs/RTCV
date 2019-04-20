@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_VmdNoTool_Form));
             this.SuspendLayout();
             // 
             // RTC_VmdNoTool_Form
@@ -38,6 +39,7 @@
             this.ClientSize = new System.Drawing.Size(390, 250);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RTC_VmdNoTool_Form";
             this.Tag = "color:dark1";
             this.Text = "No Tool Selected";

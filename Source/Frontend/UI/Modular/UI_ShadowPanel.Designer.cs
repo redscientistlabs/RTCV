@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UI_ShadowPanel));
             this.pnFloater = new System.Windows.Forms.Panel();
             this.pnContainer = new System.Windows.Forms.Panel();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -102,6 +103,7 @@
             this.ClientSize = new System.Drawing.Size(600, 500);
             this.Controls.Add(this.pnFloater);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "UI_ShadowPanel";
             this.Text = "ShadowPanel";
             this.Load += new System.EventHandler(this.UI_ShadowPanel_Load);

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using RTCV.NetCore.StaticTools;
 using RTCV.UI;
 
 namespace RTCV.UI
@@ -14,6 +15,7 @@ namespace RTCV.UI
     {
         public static UI_CanvasForm thisForm;
         public static List<UI_CanvasForm> extraForms = new List<UI_CanvasForm>();
+        public static Dictionary<string, UI_CanvasForm> allExtraForms = new Dictionary<string, UI_CanvasForm>();
         public UI_ShadowPanel spForm;
 
         public static int spacerSize;
@@ -131,17 +133,31 @@ namespace RTCV.UI
                     }
         }
 
+
+
         public static void loadTileFormExtraWindow(CanvasGrid canvasGrid, string WindowHeader = "RTC Extra Form")
         {
-            UI_CanvasForm extraForm = new UI_CanvasForm(true);
 
-            extraForm.Controls.Clear();
-            extraForms.Add(extraForm);
-            extraForm.FormBorderStyle = FormBorderStyle.FixedSingle;
-            extraForm.MaximizeBox = false;
-            extraForm.Text = WindowHeader;
-            loadTileForm(extraForm, canvasGrid);
+            UI_CanvasForm extraForm;
+
+            if (allExtraForms.ContainsKey(WindowHeader))
+            {
+                extraForm = allExtraForms[WindowHeader];
+            }
+            else
+            {
+                extraForm = new UI_CanvasForm(true);
+                allExtraForms[WindowHeader] = extraForm;
+
+                extraForm.Controls.Clear();
+                extraForms.Add(extraForm);
+                extraForm.FormBorderStyle = FormBorderStyle.FixedSingle;
+                extraForm.MaximizeBox = false;
+                extraForm.Text = WindowHeader;
+                loadTileForm(extraForm, canvasGrid);
+            }
             extraForm.Show();
+            extraForm.Focus();
         }
 
         public static void loadTileFormMain(CanvasGrid canvasGrid)
@@ -221,6 +237,19 @@ namespace RTCV.UI
         {
             
         }
-        
+
+        private void UI_CanvasForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason != CloseReason.FormOwnerClosing)
+            {
+                //S.GET<RTC_Core_Form>().btnGlitchHarvester.Text = S.GET<RTC_Core_Form>().btnGlitchHarvester.Text.Replace("○ ", "");
+
+                if(this.Text == "Glitch Harvester")
+                    S.GET<UI_CoreForm>().pnGlitchHarvesterOpen.Visible = false;
+
+                e.Cancel = true;
+                this.Hide();
+            }
+        }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_SelectBox_Form));
             this.pnComponentForm = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.cbSelectBox = new System.Windows.Forms.ComboBox();
@@ -86,12 +87,14 @@
             this.Controls.Add(this.cbSelectBox);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RTC_SelectBox_Form";
             this.Tag = "color:dark1";
             this.Text = "SelectBox Component";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
             this.Load += new System.EventHandler(this.RTC_SelectBox_Form_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
+            this.Resize += new System.EventHandler(this.RTC_SelectBox_Form_Resize);
             this.pnComponentForm.ResumeLayout(false);
             this.pnComponentForm.PerformLayout();
             this.ResumeLayout(false);

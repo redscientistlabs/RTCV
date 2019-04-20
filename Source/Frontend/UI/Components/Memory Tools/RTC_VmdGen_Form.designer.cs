@@ -401,6 +401,7 @@
             this.Controls.Add(this.cbSelectedMemoryDomain);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RTC_VmdGen_Form";
             this.Tag = "color:dark3";
             this.Text = "VMD Generator";
