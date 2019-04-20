@@ -49,7 +49,7 @@ namespace RTCV.UI
 			{
 				if (S.GET<RTC_ConnectionStatus_Form>() != null && !S.GET<RTC_ConnectionStatus_Form>().IsDisposed)
 				{
-					S.GET<RTC_ConnectionStatus_Form>().lbConnectionStatus.Text = "Connection status: Emulator timed out";
+					S.GET<RTC_ConnectionStatus_Form>().lbConnectionStatus.Text = "Vanguard connection timed out";
                     UI_DefaultGrids.connectionStatus.LoadToMain();
 				}
 
@@ -77,7 +77,7 @@ namespace RTCV.UI
 		{
 			SyncObjectSingleton.FormExecute((o, ea) =>
 			{
-				S.GET<RTC_ConnectionStatus_Form>().lbConnectionStatus.Text = "Connection status: Connected to Emulator";
+				S.GET<RTC_ConnectionStatus_Form>().lbConnectionStatus.Text = "Connected to vanguard";
 			});
 		}
 

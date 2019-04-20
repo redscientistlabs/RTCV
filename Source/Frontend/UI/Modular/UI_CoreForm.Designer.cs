@@ -465,7 +465,7 @@
             this.MaximizeBox = false;
             this.Name = "UI_CoreForm";
             this.Tag = "color:dark2";
-            this.Text = "RTC";
+            this.Text = "Real-Time Corruptor";
             this.Load += new System.EventHandler(this.UI_CoreForm_Load);
             this.ResizeBegin += new System.EventHandler(this.UI_CoreForm_ResizeBegin);
             this.ResizeEnd += new System.EventHandler(this.UI_CoreForm_ResizeEnd);

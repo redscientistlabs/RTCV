@@ -42,13 +42,13 @@
             // 
             this.lbConnectionStatus.AutoSize = true;
             this.lbConnectionStatus.BackColor = System.Drawing.Color.Transparent;
-            this.lbConnectionStatus.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.lbConnectionStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.lbConnectionStatus.Font = new System.Drawing.Font("Segoe UI", 13F);
+            this.lbConnectionStatus.ForeColor = System.Drawing.Color.White;
             this.lbConnectionStatus.Location = new System.Drawing.Point(17, 72);
             this.lbConnectionStatus.Name = "lbConnectionStatus";
-            this.lbConnectionStatus.Size = new System.Drawing.Size(253, 19);
+            this.lbConnectionStatus.Size = new System.Drawing.Size(269, 25);
             this.lbConnectionStatus.TabIndex = 1;
-            this.lbConnectionStatus.Text = "Connection status: Waiting for emulator";
+            this.lbConnectionStatus.Text = "Waiting for vanguard to connect";
             // 
             // lbRTCver
             // 
@@ -89,6 +89,7 @@
             this.lbFlavorText.Name = "lbFlavorText";
             this.lbFlavorText.Size = new System.Drawing.Size(114, 30);
             this.lbFlavorText.TabIndex = 134;
+            this.lbFlavorText.Tag = "color:light2";
             this.lbFlavorText.Text = "Flavor text";
             // 
             // RTC_ConnectionStatus_Form
