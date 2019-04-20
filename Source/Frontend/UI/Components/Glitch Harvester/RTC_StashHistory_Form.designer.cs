@@ -56,6 +56,7 @@
             this.btnAddStashToStockpile.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnAddStashToStockpile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAddStashToStockpile.UseVisualStyleBackColor = false;
+            this.btnAddStashToStockpile.Click += new System.EventHandler(this.btnClearStashHistory_Click);
             // 
             // btnClearStashHistory
             // 
@@ -95,6 +96,7 @@
             this.btnStashDOWN.Tag = "color:light1";
             this.btnStashDOWN.Text = "▼";
             this.btnStashDOWN.UseVisualStyleBackColor = false;
+            this.btnStashDOWN.Click += new System.EventHandler(this.btnStashDOWN_Click);
             // 
             // btnStashUP
             // 
@@ -113,6 +115,7 @@
             this.btnStashUP.Tag = "color:light1";
             this.btnStashUP.Text = "▲";
             this.btnStashUP.UseVisualStyleBackColor = false;
+            this.btnStashUP.Click += new System.EventHandler(this.btnStashUP_Click);
             // 
             // lbStashHistory
             // 
@@ -132,6 +135,8 @@
             this.lbStashHistory.Size = new System.Drawing.Size(256, 306);
             this.lbStashHistory.TabIndex = 108;
             this.lbStashHistory.Tag = "color:normal";
+            this.lbStashHistory.SelectedIndexChanged += new System.EventHandler(this.lbStashHistory_SelectedIndexChanged);
+            this.lbStashHistory.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbStashHistory_MouseDown);
             // 
             // RTC_StashHistory_Form
             // 

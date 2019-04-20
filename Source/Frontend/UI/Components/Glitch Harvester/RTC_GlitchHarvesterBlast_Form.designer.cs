@@ -59,6 +59,8 @@
             this.btnCorrupt.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCorrupt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCorrupt.UseVisualStyleBackColor = false;
+            this.btnCorrupt.Click += new System.EventHandler(this.btnCorrupt_Click);
+            this.btnCorrupt.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnCorrupt_MouseDown);
             // 
             // btnSendRaw
             // 
@@ -81,6 +83,7 @@
             this.btnSendRaw.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSendRaw.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSendRaw.UseVisualStyleBackColor = false;
+            this.btnSendRaw.Click += new System.EventHandler(this.btnSendRaw_Click);
             // 
             // btnRerollSelected
             // 
@@ -97,6 +100,8 @@
             this.btnRerollSelected.Tag = "color:light1";
             this.btnRerollSelected.Text = "Reroll Selected";
             this.btnRerollSelected.UseVisualStyleBackColor = false;
+            this.btnRerollSelected.Click += new System.EventHandler(this.btnRerollSelected_Click);
+            this.btnRerollSelected.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnRerollSelected_MouseDown);
             // 
             // btnBlastToggle
             // 
@@ -113,6 +118,7 @@
             this.btnBlastToggle.Tag = "color:light1";
             this.btnBlastToggle.Text = "BlastLayer : OFF";
             this.btnBlastToggle.UseVisualStyleBackColor = false;
+            this.btnBlastToggle.Click += new System.EventHandler(this.btnBlastToggle_Click);
             // 
             // label5
             // 

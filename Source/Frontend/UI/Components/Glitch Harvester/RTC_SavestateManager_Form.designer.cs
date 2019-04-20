@@ -135,6 +135,7 @@
             this.btnSaveSavestateList.Tag = "color:dark2";
             this.btnSaveSavestateList.Text = "Save List";
             this.btnSaveSavestateList.UseVisualStyleBackColor = false;
+            this.btnSaveSavestateList.Click += new System.EventHandler(this.btnSaveSavestateList_Click);
             // 
             // btnLoadSavestateList
             // 
@@ -151,6 +152,8 @@
             this.btnLoadSavestateList.Tag = "color:dark2";
             this.btnLoadSavestateList.Text = "Load List";
             this.btnLoadSavestateList.UseVisualStyleBackColor = false;
+            this.btnLoadSavestateList.Click += new System.EventHandler(this.btnLoadSavestateList_Click);
+            this.btnLoadSavestateList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnLoadSavestateList_MouseDown);
             // 
             // btnBackPanelPage
             // 
@@ -167,6 +170,7 @@
             this.btnBackPanelPage.Tag = "color:dark2";
             this.btnBackPanelPage.Text = "Back";
             this.btnBackPanelPage.UseVisualStyleBackColor = false;
+            this.btnBackPanelPage.Click += new System.EventHandler(this.btnBackPanelPage_Click);
             // 
             // btnForwardPanelPage
             // 
@@ -183,6 +187,7 @@
             this.btnForwardPanelPage.Tag = "color:dark2";
             this.btnForwardPanelPage.Text = "Forward ";
             this.btnForwardPanelPage.UseVisualStyleBackColor = false;
+            this.btnForwardPanelPage.Click += new System.EventHandler(this.btnForwardPanelPage_Click);
             // 
             // pnSavestateHolder
             // 
@@ -323,6 +328,7 @@
             this.btnSavestate21.Tag = "color:dark2";
             this.btnSavestate21.Text = "21";
             this.btnSavestate21.UseVisualStyleBackColor = false;
+            this.btnSavestate21.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate38
             // 
@@ -351,6 +357,7 @@
             this.btnSavestate22.Tag = "color:dark2";
             this.btnSavestate22.Text = "22";
             this.btnSavestate22.UseVisualStyleBackColor = false;
+            this.btnSavestate22.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate37
             // 
@@ -379,6 +386,7 @@
             this.btnSavestate23.Tag = "color:dark2";
             this.btnSavestate23.Text = "23";
             this.btnSavestate23.UseVisualStyleBackColor = false;
+            this.btnSavestate23.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate36
             // 
@@ -407,6 +415,7 @@
             this.btnSavestate24.Tag = "color:dark2";
             this.btnSavestate24.Text = "24";
             this.btnSavestate24.UseVisualStyleBackColor = false;
+            this.btnSavestate24.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate35
             // 
@@ -435,6 +444,7 @@
             this.btnSavestate25.Tag = "color:dark2";
             this.btnSavestate25.Text = "25";
             this.btnSavestate25.UseVisualStyleBackColor = false;
+            this.btnSavestate25.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate34
             // 
@@ -463,6 +473,7 @@
             this.btnSavestate26.Tag = "color:dark2";
             this.btnSavestate26.Text = "26";
             this.btnSavestate26.UseVisualStyleBackColor = false;
+            this.btnSavestate26.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate33
             // 
@@ -491,6 +502,7 @@
             this.btnSavestate27.Tag = "color:dark2";
             this.btnSavestate27.Text = "27";
             this.btnSavestate27.UseVisualStyleBackColor = false;
+            this.btnSavestate27.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate32
             // 
@@ -519,6 +531,7 @@
             this.btnSavestate28.Tag = "color:dark2";
             this.btnSavestate28.Text = "28";
             this.btnSavestate28.UseVisualStyleBackColor = false;
+            this.btnSavestate28.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate31
             // 
@@ -547,6 +560,7 @@
             this.btnSavestate29.Tag = "color:dark2";
             this.btnSavestate29.Text = "29";
             this.btnSavestate29.UseVisualStyleBackColor = false;
+            this.btnSavestate29.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // btnSavestate30
             // 
@@ -563,6 +577,7 @@
             this.btnSavestate30.Tag = "color:dark2";
             this.btnSavestate30.Text = "30";
             this.btnSavestate30.UseVisualStyleBackColor = false;
+            this.btnSavestate30.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate30
             // 
@@ -591,6 +606,7 @@
             this.btnSavestate40.Tag = "color:dark2";
             this.btnSavestate40.Text = "40";
             this.btnSavestate40.UseVisualStyleBackColor = false;
+            this.btnSavestate40.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate21
             // 
@@ -619,6 +635,7 @@
             this.btnSavestate39.Tag = "color:dark2";
             this.btnSavestate39.Text = "39";
             this.btnSavestate39.UseVisualStyleBackColor = false;
+            this.btnSavestate39.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate22
             // 
@@ -647,6 +664,7 @@
             this.btnSavestate38.Tag = "color:dark2";
             this.btnSavestate38.Text = "38";
             this.btnSavestate38.UseVisualStyleBackColor = false;
+            this.btnSavestate38.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate28
             // 
@@ -675,6 +693,7 @@
             this.btnSavestate37.Tag = "color:dark2";
             this.btnSavestate37.Text = "37";
             this.btnSavestate37.UseVisualStyleBackColor = false;
+            this.btnSavestate37.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate23
             // 
@@ -703,6 +722,7 @@
             this.btnSavestate36.Tag = "color:dark2";
             this.btnSavestate36.Text = "36";
             this.btnSavestate36.UseVisualStyleBackColor = false;
+            this.btnSavestate36.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate27
             // 
@@ -731,6 +751,7 @@
             this.btnSavestate35.Tag = "color:dark2";
             this.btnSavestate35.Text = "35";
             this.btnSavestate35.UseVisualStyleBackColor = false;
+            this.btnSavestate35.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate24
             // 
@@ -759,6 +780,7 @@
             this.btnSavestate34.Tag = "color:dark2";
             this.btnSavestate34.Text = "34";
             this.btnSavestate34.UseVisualStyleBackColor = false;
+            this.btnSavestate34.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate26
             // 
@@ -787,6 +809,7 @@
             this.btnSavestate33.Tag = "color:dark2";
             this.btnSavestate33.Text = "33";
             this.btnSavestate33.UseVisualStyleBackColor = false;
+            this.btnSavestate33.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate25
             // 
@@ -815,6 +838,7 @@
             this.btnSavestate32.Tag = "color:dark2";
             this.btnSavestate32.Text = "32";
             this.btnSavestate32.UseVisualStyleBackColor = false;
+            this.btnSavestate32.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // btnSavestate31
             // 
@@ -831,6 +855,7 @@
             this.btnSavestate31.Tag = "color:dark2";
             this.btnSavestate31.Text = "31";
             this.btnSavestate31.UseVisualStyleBackColor = false;
+            this.btnSavestate31.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate09
             // 
@@ -883,6 +908,7 @@
             this.btnSavestate01.Tag = "color:dark2";
             this.btnSavestate01.Text = "01";
             this.btnSavestate01.UseVisualStyleBackColor = false;
+            this.btnSavestate01.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate18
             // 
@@ -911,6 +937,7 @@
             this.btnSavestate02.Tag = "color:dark2";
             this.btnSavestate02.Text = "02";
             this.btnSavestate02.UseVisualStyleBackColor = false;
+            this.btnSavestate02.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate17
             // 
@@ -939,6 +966,7 @@
             this.btnSavestate03.Tag = "color:dark2";
             this.btnSavestate03.Text = "03";
             this.btnSavestate03.UseVisualStyleBackColor = false;
+            this.btnSavestate03.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate16
             // 
@@ -967,6 +995,7 @@
             this.btnSavestate04.Tag = "color:dark2";
             this.btnSavestate04.Text = "04";
             this.btnSavestate04.UseVisualStyleBackColor = false;
+            this.btnSavestate04.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate15
             // 
@@ -995,6 +1024,7 @@
             this.btnSavestate05.Tag = "color:dark2";
             this.btnSavestate05.Text = "05";
             this.btnSavestate05.UseVisualStyleBackColor = false;
+            this.btnSavestate05.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate14
             // 
@@ -1023,6 +1053,7 @@
             this.btnSavestate06.Tag = "color:dark2";
             this.btnSavestate06.Text = "06";
             this.btnSavestate06.UseVisualStyleBackColor = false;
+            this.btnSavestate06.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate13
             // 
@@ -1051,6 +1082,7 @@
             this.btnSavestate07.Tag = "color:dark2";
             this.btnSavestate07.Text = "07";
             this.btnSavestate07.UseVisualStyleBackColor = false;
+            this.btnSavestate07.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate12
             // 
@@ -1079,6 +1111,7 @@
             this.btnSavestate08.Tag = "color:dark2";
             this.btnSavestate08.Text = "08";
             this.btnSavestate08.UseVisualStyleBackColor = false;
+            this.btnSavestate08.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate11
             // 
@@ -1107,6 +1140,7 @@
             this.btnSavestate09.Tag = "color:dark2";
             this.btnSavestate09.Text = "09";
             this.btnSavestate09.UseVisualStyleBackColor = false;
+            this.btnSavestate09.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // btnSavestate10
             // 
@@ -1123,6 +1157,7 @@
             this.btnSavestate10.Tag = "color:dark2";
             this.btnSavestate10.Text = "10";
             this.btnSavestate10.UseVisualStyleBackColor = false;
+            this.btnSavestate10.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate10
             // 
@@ -1151,6 +1186,7 @@
             this.btnSavestate20.Tag = "color:dark2";
             this.btnSavestate20.Text = "20";
             this.btnSavestate20.UseVisualStyleBackColor = false;
+            this.btnSavestate20.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate01
             // 
@@ -1179,6 +1215,7 @@
             this.btnSavestate19.Tag = "color:dark2";
             this.btnSavestate19.Text = "19";
             this.btnSavestate19.UseVisualStyleBackColor = false;
+            this.btnSavestate19.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate02
             // 
@@ -1207,6 +1244,7 @@
             this.btnSavestate18.Tag = "color:dark2";
             this.btnSavestate18.Text = "18";
             this.btnSavestate18.UseVisualStyleBackColor = false;
+            this.btnSavestate18.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate08
             // 
@@ -1235,6 +1273,7 @@
             this.btnSavestate17.Tag = "color:dark2";
             this.btnSavestate17.Text = "17";
             this.btnSavestate17.UseVisualStyleBackColor = false;
+            this.btnSavestate17.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate03
             // 
@@ -1263,6 +1302,7 @@
             this.btnSavestate16.Tag = "color:dark2";
             this.btnSavestate16.Text = "16";
             this.btnSavestate16.UseVisualStyleBackColor = false;
+            this.btnSavestate16.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate07
             // 
@@ -1291,6 +1331,7 @@
             this.btnSavestate15.Tag = "color:dark2";
             this.btnSavestate15.Text = "15";
             this.btnSavestate15.UseVisualStyleBackColor = false;
+            this.btnSavestate15.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate04
             // 
@@ -1319,6 +1360,7 @@
             this.btnSavestate14.Tag = "color:dark2";
             this.btnSavestate14.Text = "14";
             this.btnSavestate14.UseVisualStyleBackColor = false;
+            this.btnSavestate14.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate06
             // 
@@ -1347,6 +1389,7 @@
             this.btnSavestate13.Tag = "color:dark2";
             this.btnSavestate13.Text = "13";
             this.btnSavestate13.UseVisualStyleBackColor = false;
+            this.btnSavestate13.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // tbSavestate05
             // 
@@ -1375,6 +1418,7 @@
             this.btnSavestate12.Tag = "color:dark2";
             this.btnSavestate12.Text = "12";
             this.btnSavestate12.UseVisualStyleBackColor = false;
+            this.btnSavestate12.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // btnSavestate11
             // 
@@ -1391,6 +1435,7 @@
             this.btnSavestate11.Tag = "color:dark2";
             this.btnSavestate11.Text = "11";
             this.btnSavestate11.UseVisualStyleBackColor = false;
+            this.btnSavestate11.Click += new System.EventHandler(this.btnSavestate_Click);
             // 
             // btnToggleSaveLoad
             // 
@@ -1407,6 +1452,7 @@
             this.btnToggleSaveLoad.Tag = "color:dark2";
             this.btnToggleSaveLoad.Text = "Change ->";
             this.btnToggleSaveLoad.UseVisualStyleBackColor = false;
+            this.btnToggleSaveLoad.Click += new System.EventHandler(this.btnToggleSaveLoad_Click);
             // 
             // cbSavestateLoadOnClick
             // 
@@ -1436,6 +1482,7 @@
             this.btnSaveLoad.Tag = "color:dark2";
             this.btnSaveLoad.Text = "LOAD";
             this.btnSaveLoad.UseVisualStyleBackColor = false;
+            this.btnSaveLoad.Click += new System.EventHandler(this.btnSaveLoad_Click);
             // 
             // RTC_SavestateManager_Form
             // 

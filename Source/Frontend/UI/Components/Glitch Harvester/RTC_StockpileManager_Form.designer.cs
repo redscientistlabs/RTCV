@@ -108,6 +108,8 @@
             this.dgvStockpile.Size = new System.Drawing.Size(489, 402);
             this.dgvStockpile.TabIndex = 169;
             this.dgvStockpile.Tag = "color:dark1";
+            this.dgvStockpile.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStockpile_CellClick);
+            this.dgvStockpile.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvStockpile_MouseDown);
             // 
             // Item
             // 
@@ -168,6 +170,7 @@
             this.btnRenameSelected.Tag = "color:light1";
             this.btnRenameSelected.Text = "Rename Item";
             this.btnRenameSelected.UseVisualStyleBackColor = false;
+            this.btnRenameSelected.Click += new System.EventHandler(this.btnRenameSelected_Click);
             // 
             // btnImportStockpile
             // 
@@ -190,6 +193,7 @@
             this.btnImportStockpile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnImportStockpile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnImportStockpile.UseVisualStyleBackColor = false;
+            this.btnImportStockpile.Click += new System.EventHandler(this.btnImportStockpile_Click);
             // 
             // btnStockpileMoveSelectedDown
             // 
@@ -207,6 +211,7 @@
             this.btnStockpileMoveSelectedDown.Tag = "color:light1";
             this.btnStockpileMoveSelectedDown.Text = "▼▼";
             this.btnStockpileMoveSelectedDown.UseVisualStyleBackColor = false;
+            this.btnStockpileMoveSelectedDown.Click += new System.EventHandler(this.btnStockpileMoveSelectedDown_Click);
             // 
             // btnStockpileMoveSelectedUp
             // 
@@ -225,6 +230,7 @@
             this.btnStockpileMoveSelectedUp.Tag = "color:light1";
             this.btnStockpileMoveSelectedUp.Text = "▲▲";
             this.btnStockpileMoveSelectedUp.UseVisualStyleBackColor = false;
+            this.btnStockpileMoveSelectedUp.Click += new System.EventHandler(this.btnStockpileMoveSelectedUp_Click);
             // 
             // btnLoadStockpile
             // 
@@ -246,6 +252,7 @@
             this.btnLoadStockpile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnLoadStockpile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnLoadStockpile.UseVisualStyleBackColor = false;
+            this.btnLoadStockpile.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnLoadStockpile_Click);
             // 
             // btnSaveStockpile
             // 
@@ -268,6 +275,7 @@
             this.btnSaveStockpile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSaveStockpile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSaveStockpile.UseVisualStyleBackColor = false;
+            this.btnSaveStockpile.Click += new System.EventHandler(this.btnSaveStockpile_Click);
             // 
             // btnSaveStockpileAs
             // 
@@ -289,6 +297,7 @@
             this.btnSaveStockpileAs.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSaveStockpileAs.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSaveStockpileAs.UseVisualStyleBackColor = false;
+            this.btnSaveStockpileAs.Click += new System.EventHandler(this.btnSaveStockpileAs_Click);
             // 
             // btnClearStockpile
             // 
@@ -310,6 +319,7 @@
             this.btnClearStockpile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnClearStockpile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnClearStockpile.UseVisualStyleBackColor = false;
+            this.btnClearStockpile.Click += new System.EventHandler(this.btnClearStockpile_Click);
             // 
             // btnStockpileDOWN
             // 
@@ -327,6 +337,7 @@
             this.btnStockpileDOWN.Tag = "color:light1";
             this.btnStockpileDOWN.Text = "▼";
             this.btnStockpileDOWN.UseVisualStyleBackColor = false;
+            this.btnStockpileDOWN.Click += new System.EventHandler(this.btnStockpileDOWN_Click);
             // 
             // btnStockpileUP
             // 
@@ -344,6 +355,7 @@
             this.btnStockpileUP.Tag = "color:light1";
             this.btnStockpileUP.Text = "▲";
             this.btnStockpileUP.UseVisualStyleBackColor = false;
+            this.btnStockpileUP.Click += new System.EventHandler(this.btnStockpileUP_Click);
             // 
             // btnRemoveSelectedStockpile
             // 
@@ -361,6 +373,7 @@
             this.btnRemoveSelectedStockpile.Tag = "color:light1";
             this.btnRemoveSelectedStockpile.Text = "Remove Item";
             this.btnRemoveSelectedStockpile.UseVisualStyleBackColor = false;
+            this.btnRemoveSelectedStockpile.Click += new System.EventHandler(this.btnRemoveSelectedStockpile_Click);
             // 
             // btnGlitchHarvesterSettings
             // 
