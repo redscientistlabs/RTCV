@@ -16,6 +16,8 @@ namespace RTCV.UI.Components.Controls
         private StashKey _sk = null;
         public StashKey sk { get => _sk; }
 
+        private SaveStateKey ssk = null;
+
         public SavestateHolder(int num)
         {
             InitializeComponent();
@@ -24,18 +26,24 @@ namespace RTCV.UI.Components.Controls
         }
 
 
-        public void SetStashKey(StashKey sk, String name, int number)
+        public void SetStashKey(SaveStateKey key, int number)
         {
-            this._sk = sk;
-            if (name == null)
+            ssk = key;
+            _sk = key?.StashKey;
+            if (key?.Text == null)
                 tbSavestate.Visible = false;
             else
             {
-                tbSavestate.Text = name;
+                tbSavestate.Text = key.Text;
                 tbSavestate.Visible = true;
             }
             btnSavestate.Text = number.ToString();
-            this.Invalidate();
+            tbSavestate.TextChanged += TbSavestate_TextChanged;
+        }
+
+        private void TbSavestate_TextChanged(object sender, EventArgs e)
+        {
+            ssk.Text = tbSavestate.Text;
         }
 
         public void SetSelected(bool selected)

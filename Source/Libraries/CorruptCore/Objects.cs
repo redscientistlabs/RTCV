@@ -809,15 +809,28 @@ namespace RTCV.CorruptCore
 
 	}
 
-	[Serializable]
-	[Ceras.MemberConfig(TargetMember.All)]
-	public class SaveStateKeys
-	{
-		public List<StashKey> StashKeys = new List<StashKey>();
-		public List<String> Text = new List<string>();
-	}
+    [Serializable]
+    [Ceras.MemberConfig(TargetMember.All)]
+    public class SaveStateKey
+    {
+        public StashKey StashKey = null;
+        public String Text = "";
 
-	[Serializable]
+        public SaveStateKey(StashKey stashKey, string text)
+        {
+            StashKey = stashKey;
+            Text = text;
+        }
+    }
+    [Serializable]
+    [Ceras.MemberConfig(TargetMember.All)]
+    public class SaveStateKeys
+    {
+        public List<StashKey> StashKeys = new List<StashKey>();
+        public List<String> Text = new List<string>();
+    }
+
+    [Serializable]
 	[Ceras.MemberConfig(TargetMember.All)]
 	public class BlastTarget
 	{

@@ -72,17 +72,25 @@ namespace RTCV.UI.Components.Controls
         private void _DataSource_PositionChanged(object sender, EventArgs e)
         {
             if (_DataSource.Position == -1)
-                return;
-
-            for (int i = 0; i < controlList.Count; i++)
             {
-                if (i + _DataSource.Position < _DataSource.Count)
+                for (int i = 0; i < controlList.Count; i++)
                 {
-                    var x = (Tuple<StashKey, string>) _DataSource[i + _DataSource.Position];
-                    controlList[i].SetStashKey(x.Item1, x.Item2, i + _DataSource.Position);
+                    controlList[i].SetStashKey(null, i + _DataSource.Position + 1);
                 }
-                else
-                    controlList[i].SetStashKey(null, null, i + _DataSource.Position);
+            }
+            else
+            {
+                for (int i = 0; i < controlList.Count; i++)
+                {
+                    //Update it
+                    if (i + _DataSource.Position < _DataSource.Count)
+                    {
+                        var x = (SaveStateKey)_DataSource[i + _DataSource.Position];
+                        controlList[i].SetStashKey(x, i + _DataSource.Position);
+                    }
+                    else
+                        controlList[i].SetStashKey(null, i + _DataSource.Position);
+                }
             }
         }
 
@@ -90,16 +98,16 @@ namespace RTCV.UI.Components.Controls
         {
 
             if (e.ListChangedType == ListChangedType.ItemAdded ||
-                e.ListChangedType == ListChangedType.ItemChanged ||
-                e.ListChangedType == ListChangedType.ItemMoved)
+                e.ListChangedType == ListChangedType.ItemChanged )
                 if (e.NewIndex < _DataSource.Position + numPerPage)
                 {
-                    var x = (Tuple<StashKey, string>) _DataSource[e.NewIndex];
-                    controlList[e.NewIndex - _DataSource.Position].SetStashKey(x.Item1, x.Item2, e.NewIndex);
+                    var x = (SaveStateKey) _DataSource[e.NewIndex];
+                    var pos = _DataSource.Position;
+                    controlList[e.NewIndex - pos].SetStashKey(x, e.NewIndex);
                 }
 
             //If deleted just refresh as it's easier than moving everything ourselves
-            if (e.ListChangedType == ListChangedType.ItemDeleted)
+            if (e.ListChangedType == ListChangedType.ItemDeleted || e.ListChangedType == ListChangedType.Reset)
             {
                 _DataSource_PositionChanged(null, null);
             }
@@ -170,7 +178,7 @@ namespace RTCV.UI.Components.Controls
         private void BtnForward_Click(object sender, EventArgs e)
         {
 
-            if (_DataSource.Position + NumPerPage < _DataSource.Count - 1)
+            if (_DataSource.Position + NumPerPage <= _DataSource.Count)
                 _DataSource.Position = _DataSource.Position + NumPerPage;
         }
 
@@ -214,9 +222,9 @@ namespace RTCV.UI.Components.Controls
                     {
                         string filename = ofd.FileName.ToString();
                         string oldFilename = psk.RomFilename;
-                        foreach (var item in _DataSource.List.OfType<Tuple<StashKey, string>>().Where(x => x.Item1.RomFilename == oldFilename))
+                        foreach (var item in _DataSource.List.OfType<SaveStateKey>().Where(x => x.StashKey.RomFilename == oldFilename))
                         {
-                            item.Item1.RomFilename = filename;
+                            item.StashKey.RomFilename = filename;
                         }
                     }
                     else
@@ -232,7 +240,7 @@ namespace RTCV.UI.Components.Controls
                 StashKey psk = selectedHolder.sk;
                 if (psk != null)
                 {
-                    if (checkAndFixingMissingStates(psk))
+                    if (!checkAndFixingMissingStates(psk))
                         return;
                     StockpileManager_UISide.LoadState(psk);
                 }
@@ -255,8 +263,8 @@ namespace RTCV.UI.Components.Controls
                     int indexToReplace = controlList.IndexOf(selectedHolder) + _DataSource.Position;
                     if (sk != null)
                     {
-                        _DataSource.Insert(indexToReplace, new Tuple<StashKey, String>(sk, ""));
-                        _DataSource.RemoveAt(indexToReplace + 1);
+                        _DataSource.RemoveAt(indexToReplace);
+                        _DataSource.Insert(indexToReplace, new SaveStateKey(sk, ""));
                     }
 
                 }
@@ -265,7 +273,7 @@ namespace RTCV.UI.Components.Controls
                 {
                     if (sk != null)
                     {
-                        _DataSource.Add(new Tuple<StashKey, String>(sk, ""));
+                        _DataSource.Add(new SaveStateKey(sk, ""));
                     }
                 }
 

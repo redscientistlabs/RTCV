@@ -23,7 +23,7 @@ namespace RTCV.UI
 
 
         Dictionary<string, TextBox> StateBoxes = new Dictionary<string, TextBox>();
-        private BindingSource savestateBindingSource = new BindingSource(new BindingList<Tuple<StashKey, string>>(), null);
+        private BindingSource savestateBindingSource = new BindingSource(new BindingList<SaveStateKey>(), null);
 
 
         public RTC_SavestateManager_Form()
@@ -126,7 +126,7 @@ namespace RTCV.UI
                 key.StateFilename = newStatePath;
                 key.StateShortFilename = Path.GetFileName(newStatePath);
 
-                savestateBindingSource.Add(new Tuple<StashKey, string>(key, ssk.Text[i]));
+                savestateBindingSource.Add(new SaveStateKey(key, ssk.Text[i]));
             }
         }
 
@@ -183,10 +183,10 @@ namespace RTCV.UI
             {
                 SaveStateKeys ssk = new SaveStateKeys();
 
-                foreach (Tuple<StashKey, string> x in savestateBindingSource.List)
+                foreach (SaveStateKey x in savestateBindingSource.List)
                 {
-                    ssk.StashKeys.Add(x.Item1);
-                    ssk.Text.Add(x.Item2);
+                    ssk.StashKeys.Add(x.StashKey);
+                    ssk.Text.Add(x.Text);
                 }
 
                 string Filename;
@@ -212,10 +212,8 @@ namespace RTCV.UI
                 //clean temp folder
                 Stockpile.EmptyFolder(Path.DirectorySeparatorChar + "WORKING\\TEMP");
 
-                for (int i = 1; i < 41; i++)
+                foreach(var key in ssk.StashKeys)
                 {
-                    StashKey key = ssk.StashKeys[i];
-
                     if (key == null)
                         continue;
 
@@ -227,7 +225,7 @@ namespace RTCV.UI
                     {
                         MessageBox.Show("Couldn't find savestate " + CorruptCore.CorruptCore.workingDir + Path.DirectorySeparatorChar +
                                         key.StateLocation.ToString() + Path.DirectorySeparatorChar + statefilename +
-                                        "!\n\n. This is savestate index " + i + 1 + ".\nAborting save");
+                                        "!\n\n. This is savestate index " +  ssk.StashKeys.IndexOf(key) + 1 + ".\nAborting save");
                         Stockpile.EmptyFolder(Path.DirectorySeparatorChar + "WORKING\\TEMP");
                         return;
                     }
@@ -235,10 +233,8 @@ namespace RTCV.UI
                 }
 
                 //Use two separate loops here in case the first one aborts. We don't want to update the StateLocation unless we know we're good
-                for (int i = 1; i < 41; i++)
+                foreach(var key in ssk.StashKeys)
                 {
-                    StashKey key = ssk.StashKeys[i];
-
                     if (key == null)
                         continue;
                     key.StateLocation = StashKeySavestateLocation.SSK;
