@@ -43,6 +43,8 @@
             this.Name = "RTC_VmdNoTool_Form";
             this.Tag = "color:dark1";
             this.Text = "No Tool Selected";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             this.ResumeLayout(false);
 
         }

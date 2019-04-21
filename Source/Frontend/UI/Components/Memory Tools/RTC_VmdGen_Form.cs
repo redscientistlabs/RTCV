@@ -269,29 +269,5 @@ address is excluded from the range.
 pointer spacer parameter");
 		}
 
-		private void RTC_VmdGen_Form_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			if (e.CloseReason != CloseReason.FormOwnerClosing)
-			{
-				e.Cancel = true;
-				this.RestoreToPreviousPanel();
-				return;
-			}
-		}
-
-		private void RTC_VmdGen_Form_MouseDown(object sender, MouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Right && (sender as ComponentForm).FormBorderStyle == FormBorderStyle.None)
-			{
-				Point locate = new Point(((Control)sender).Location.X + e.Location.X, ((Control)sender).Location.Y + e.Location.Y);
-				ContextMenuStrip columnsMenu = new ContextMenuStrip();
-				columnsMenu.Items.Add("Detach to window", null, new EventHandler((ob, ev) =>
-				{
-					(sender as ComponentForm).SwitchToWindow();
-				}));
-				columnsMenu.Show(this, locate);
-			}
-		}
-
 	}
 }

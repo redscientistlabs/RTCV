@@ -92,6 +92,8 @@
             this.Name = "RTC_GlitchHarvesterIntensity_Form";
             this.Tag = "color:dark1";
             this.Text = "Generator Control";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             this.pnIntensityHolder.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

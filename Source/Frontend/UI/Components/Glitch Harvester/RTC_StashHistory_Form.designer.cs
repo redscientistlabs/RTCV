@@ -155,7 +155,9 @@
             this.Name = "RTC_StashHistory_Form";
             this.Tag = "color:dark1";
             this.Text = "Stash History";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
             this.Load += new System.EventHandler(this.RTC_StashHistory_Form_Load);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             this.ResumeLayout(false);
 
         }

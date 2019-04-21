@@ -87,6 +87,7 @@
             // 
             this.savestateList.DataSource = null;
             this.savestateList.Location = new System.Drawing.Point(12, 0);
+            this.savestateList.Margin = new System.Windows.Forms.Padding(1);
             this.savestateList.Name = "savestateList";
             this.savestateList.Size = new System.Drawing.Size(150, 280);
             this.savestateList.TabIndex = 169;
@@ -107,7 +108,9 @@
             this.Name = "RTC_SavestateManager_Form";
             this.Tag = "color:dark1";
             this.Text = "Savestate Manager";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
             this.Load += new System.EventHandler(this.RTC_SavestateManager_Form_Load);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -418,7 +418,9 @@
             this.Name = "RTC_StockpileManager_Form";
             this.Tag = "color:dark1";
             this.Text = "Stockpile Manager";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
             this.Load += new System.EventHandler(this.RTC_StockpileManager_Form_Load);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             ((System.ComponentModel.ISupportInitialize)(this.dgvStockpile)).EndInit();
             this.ResumeLayout(false);
 

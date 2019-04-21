@@ -173,8 +173,8 @@
             this.Name = "RTC_ListGen_Form";
             this.Tag = "color:dark3";
             this.Text = "List Generator";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RTC_ListGen_Form_FormClosing);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.RTC_ListGen_Form_MouseDown);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
