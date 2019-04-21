@@ -19,7 +19,6 @@ namespace RTCV.UI
         public UI_ComponentFormTile()
         {
             InitializeComponent();
-
             UICore.SetRTCColor(UICore.GeneralColor, this);
         }
 
@@ -66,10 +65,11 @@ namespace RTCV.UI
             (childForm as ComponentForm)?.HandleMouseDown(childForm, ea);
         }
 
-        private void UI_ComponentFormTile_Load(object sender, EventArgs e)
+        public void ReAnchorToPanel()
         {
-
+            (childForm as ComponentForm)?.AnchorToPanel(pnComponentFormHost);
         }
+
     }
 
     public class ComponentPanel : Panel

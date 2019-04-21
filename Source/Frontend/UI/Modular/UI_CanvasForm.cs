@@ -62,6 +62,12 @@ namespace RTCV.UI
                 if (newSizeX != null && newSizeY != null)
                     newForm.SetCompoentForm(componentForm, newSizeX.Value, newSizeY.Value, DisplayHeader);
             }
+            /*
+            else
+            {
+                componentForm.Size = new Size(newSizeX.Value, newSizeY.Value);
+            }
+            */
 
             return loadedTileForms[componentForm];
         }
@@ -77,19 +83,30 @@ namespace RTCV.UI
 
         public static void unloadTileForms()
         {
-            clearTileForms();
+            clearExtraTileForms();
             loadedTileForms.Clear();
         }
 
-        public static void clearTileForms()
+        public static void clearExtraTileForms()
         {
-            thisForm.Controls.Clear();
+            //thisForm.Controls.Clear();
+
+            
             foreach (Form frm in extraForms)
             {
                 frm.Controls.Clear();
                 frm.Close();
             }
+            
+
             extraForms.Clear();
+            loadedTileForms.Clear();
+        }
+
+        public static void clearMainTileForm()
+        {
+            thisForm.Controls.Clear();
+
             loadedTileForms.Clear();
         }
 
@@ -143,6 +160,29 @@ namespace RTCV.UI
             if (allExtraForms.ContainsKey(WindowHeader))
             {
                 extraForm = allExtraForms[WindowHeader];
+                
+                foreach (Control ctr in extraForm.Controls)
+                {
+                    var cft = (ctr as UI_ComponentFormTile);
+                    if (ctr != null)
+                    {
+                        cft.ReAnchorToPanel();
+                    }
+                }
+
+                /*
+                extraForm.Close();
+
+                extraForm = new UI_CanvasForm(true);
+                allExtraForms[WindowHeader] = extraForm;
+
+                extraForm.Controls.Clear();
+                extraForms.Add(extraForm);
+                extraForm.FormBorderStyle = FormBorderStyle.FixedSingle;
+                extraForm.MaximizeBox = false;
+                extraForm.Text = WindowHeader;
+                loadTileForm(extraForm, canvasGrid);
+                */
             }
             else
             {
@@ -162,7 +202,7 @@ namespace RTCV.UI
 
         public static void loadTileFormMain(CanvasGrid canvasGrid)
         {
-            clearTileForms();
+            clearMainTileForm();
             loadTileForm(thisForm, canvasGrid);
         }
 

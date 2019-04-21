@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UI_ComponentFormTile));
             this.lbComponentFormName = new System.Windows.Forms.Label();
-            this.pnComponentFormHost = new ComponentPanel();
+            this.pnComponentFormHost = new RTCV.UI.ComponentPanel();
             this.label4 = new System.Windows.Forms.Label();
             this.pnComponentFormHost.SuspendLayout();
             this.SuspendLayout();
@@ -89,7 +89,6 @@
             this.Name = "UI_ComponentFormTile";
             this.Tag = "color:dark3";
             this.Text = "ComponentForm Tile";
-            this.Load += new System.EventHandler(this.UI_ComponentFormTile_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UI_ComponentFormTile_MouseDown);
             this.pnComponentFormHost.ResumeLayout(false);
             this.ResumeLayout(false);
