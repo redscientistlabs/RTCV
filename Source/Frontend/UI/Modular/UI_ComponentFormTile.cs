@@ -67,7 +67,13 @@ namespace RTCV.UI
 
         public void ReAnchorToPanel()
         {
-            (childForm as ComponentForm)?.AnchorToPanel(pnComponentFormHost);
+            var cf = (childForm as ComponentForm);
+
+            if (cf != null)
+            {
+                cf.AnchorToPanel(pnComponentFormHost);
+                cf.Size = pnComponentFormHost.Size;
+            }
         }
 
     }
