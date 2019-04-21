@@ -73,7 +73,9 @@ namespace RTCV.UI
                             if (UICore.FirstConnect)
                             {
                                 UICore.FirstConnect = false;
-                                S.GET<UI_CoreForm>().btnEngineConfig_Click(null, null);
+
+                                UI_DefaultGrids.engineConfig.LoadToMain();
+                                UI_DefaultGrids.glitchHarvester.LoadToNewWindow("Glitch Harvester", true);
                             }
                             else
                             {

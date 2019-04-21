@@ -197,12 +197,12 @@ This message only appears once.";
             Form spmForm = S.GET<RTC_StockpileManager_Form>();
 
             ghGrid.SetTileForm(gpForm, 0, 0, 5, 5);
-            ghGrid.SetTileForm(ceForm, 5, 0, 10, 7);
+            ghGrid.SetTileForm(ceForm, 5, 0, 10, 5);
             ghGrid.SetTileForm(mdForm, 0, 5, 5, 14);
             ghGrid.SetTileForm(UICore.mtForm, 15, 0, 11, 7);
-            ghGrid.SetTileForm(ghbForm, 5, 7, 4, 4);
-            ghGrid.SetTileForm(ssmForm, 5, 11, 4, 8);
-            ghGrid.SetTileForm(shForm, 9, 7, 6, 12);
+            ghGrid.SetTileForm(ghbForm, 5, 5, 4, 4);
+            ghGrid.SetTileForm(ssmForm, 5, 9, 4, 10);
+            ghGrid.SetTileForm(shForm, 9, 5, 6, 14);
             ghGrid.SetTileForm(spmForm, 15, 7, 11, 12);
 
             ghGrid.LoadToMain();

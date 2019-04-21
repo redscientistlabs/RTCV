@@ -48,7 +48,7 @@ namespace RTCV.UI
                 if (i == 0)
                     UI_CanvasForm.loadTileFormMain(grids[i]);
                 else
-                    UI_CanvasForm.loadTileFormExtraWindow(grids[i]);
+                    UI_CanvasForm.loadTileFormExtraWindow(grids[i], "Custom Layout");
 
             }
         }
@@ -103,9 +103,9 @@ namespace RTCV.UI
             UI_CanvasForm.loadTileFormMain(this);
         }
 
-        internal void LoadToNewWindow(string GridID = null)
+        internal void LoadToNewWindow(string GridID = null, bool silent = false)
         {
-            UI_CanvasForm.loadTileFormExtraWindow(this, GridID);
+            UI_CanvasForm.loadTileFormExtraWindow(this, GridID, silent);
         }
     }
 

@@ -89,16 +89,13 @@ namespace RTCV.UI
 
         public static void clearExtraTileForms()
         {
-            //thisForm.Controls.Clear();
 
-            
             foreach (Form frm in extraForms)
             {
                 frm.Controls.Clear();
                 frm.Close();
             }
             
-
             extraForms.Clear();
             loadedTileForms.Clear();
         }
@@ -152,7 +149,7 @@ namespace RTCV.UI
 
 
 
-        public static void loadTileFormExtraWindow(CanvasGrid canvasGrid, string WindowHeader = "RTC Extra Form")
+        public static void loadTileFormExtraWindow(CanvasGrid canvasGrid, string WindowHeader, bool silent = false)
         {
 
             UI_CanvasForm extraForm;
@@ -169,20 +166,7 @@ namespace RTCV.UI
                         cft.ReAnchorToPanel();
                     }
                 }
-
-                /*
-                extraForm.Close();
-
-                extraForm = new UI_CanvasForm(true);
-                allExtraForms[WindowHeader] = extraForm;
-
-                extraForm.Controls.Clear();
-                extraForms.Add(extraForm);
-                extraForm.FormBorderStyle = FormBorderStyle.FixedSingle;
-                extraForm.MaximizeBox = false;
-                extraForm.Text = WindowHeader;
-                loadTileForm(extraForm, canvasGrid);
-                */
+                
             }
             else
             {
@@ -196,8 +180,12 @@ namespace RTCV.UI
                 extraForm.Text = WindowHeader;
                 loadTileForm(extraForm, canvasGrid);
             }
-            extraForm.Show();
-            extraForm.Focus();
+
+            if (!silent)
+            {
+                extraForm.Show();
+                extraForm.Focus();
+            }
         }
 
         public static void loadTileFormMain(CanvasGrid canvasGrid)
