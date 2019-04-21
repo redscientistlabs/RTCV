@@ -202,7 +202,7 @@
             this.btnTestSubform.Text = "Test Subform";
             this.btnTestSubform.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnTestSubform.UseVisualStyleBackColor = false;
-            this.btnTestSubform.Click += new System.EventHandler(this.button4_Click);
+            this.btnTestSubform.Click += new System.EventHandler(this.button1_Click);
             // 
             // pnAutoKillSwitch
             // 
