@@ -19,7 +19,10 @@ namespace RTCV.UI
 		public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         public bool DontLoadSelectedStockpile = false;
-        public bool UnsavedEdits { get; set; }
+        public bool UnsavedEdits { get; set; } = false;
+
+        public bool CompressStockpiles = true;
+        public bool IncludeReferencedFiles = true;
 
         public RTC_StockpileManager_Form()
 		{
@@ -531,6 +534,29 @@ namespace RTCV.UI
             dgvStockpile.DragDrop += dgvStockpile_DragDrop;
             dgvStockpile.DragEnter += dgvStockpile_DragEnter;
 
+        }
+
+        private void btnGlitchHarvesterSettings_MouseDown(object sender, MouseEventArgs e)
+        {
+            Point locate = e.GetMouseLocation(sender);
+            ContextMenuStrip ghSettingsMenu = new ContextMenuStrip();
+
+            ghSettingsMenu.Items.Add(new ToolStripLabel("Stockpile Manager settings")
+            {
+                Font = new Font("Segoe UI", 12)
+            });
+            
+            ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Compress Stockpiles", null, new EventHandler((ob, ev) => {
+                CompressStockpiles = CompressStockpiles ^= true;
+            }))).Checked = CompressStockpiles;
+
+            ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Include referenced files", null, new EventHandler((ob, ev) => {
+                IncludeReferencedFiles = IncludeReferencedFiles ^= true;
+            }))).Checked = IncludeReferencedFiles;
+
+
+
+            ghSettingsMenu.Show(this, locate);
         }
     }
 }

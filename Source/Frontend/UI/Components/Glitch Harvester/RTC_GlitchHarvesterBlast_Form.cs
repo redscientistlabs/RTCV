@@ -381,7 +381,7 @@ namespace RTCV.UI
             Point locate = e.GetMouseLocation(sender);
             ContextMenuStrip ghSettingsMenu = new ContextMenuStrip();
 
-            ghSettingsMenu.Items.Add(new ToolStripLabel("Render Type")
+            ghSettingsMenu.Items.Add(new ToolStripLabel("Render Output")
             {
                 Font = new Font("Segoe UI", 12)
             });

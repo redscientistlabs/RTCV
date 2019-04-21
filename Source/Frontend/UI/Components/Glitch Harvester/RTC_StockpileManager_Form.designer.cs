@@ -391,6 +391,7 @@
             this.btnGlitchHarvesterSettings.TabStop = false;
             this.btnGlitchHarvesterSettings.Tag = "color:light1";
             this.btnGlitchHarvesterSettings.UseVisualStyleBackColor = false;
+            this.btnGlitchHarvesterSettings.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnGlitchHarvesterSettings_MouseDown);
             // 
             // RTC_StockpileManager_Form
             // 
