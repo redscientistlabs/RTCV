@@ -68,7 +68,7 @@ namespace RTCV.UI
 
                 StockpileManager_UISide.CurrentStashkey = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
 
-                if (!S.GET<RTC_GlitchHarvesterBlast_Form>().cbLoadOnSelect.Checked)
+                if (!S.GET<RTC_GlitchHarvesterBlast_Form>().LoadOnSelect)
                     return;
 
                 // Merge Execution
@@ -246,7 +246,7 @@ namespace RTCV.UI
 
             if (force || MessageBox.Show("Are you sure you want to clear the stockpile?", "Clearing stockpile", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                S.GET<RTC_StockpileManager_Form>().dgvStockpile.Rows.Clear();
+                dgvStockpile.Rows.Clear();
 
                 if (StockpileManager_UISide.CurrentStockpile != null)
                 {
@@ -254,9 +254,9 @@ namespace RTCV.UI
                     StockpileManager_UISide.CurrentStockpile.ShortFilename = null;
                 }
 
-                S.GET<RTC_StockpileManager_Form>().btnSaveStockpile.Enabled = false;
-                S.GET<RTC_StockpileManager_Form>().btnSaveStockpile.BackColor = Color.Gray;
-                S.GET<RTC_StockpileManager_Form>().btnSaveStockpile.ForeColor = Color.DimGray;
+                btnSaveStockpile.Enabled = false;
+                btnSaveStockpile.BackColor = Color.Gray;
+                btnSaveStockpile.ForeColor = Color.DimGray;
 
                 StockpileManager_UISide.StockpileChanged();
 
@@ -350,20 +350,20 @@ namespace RTCV.UI
 
         private void btnSaveStockpileAs_Click(object sender, EventArgs e)
         {
-            if (S.GET<RTC_StockpileManager_Form>().dgvStockpile.Rows.Count == 0)
+            if (dgvStockpile.Rows.Count == 0)
             {
                 MessageBox.Show("You cannot save the Stockpile because it is empty");
                 return;
             }
 
 
-            Stockpile sks = new Stockpile(S.GET<RTC_StockpileManager_Form>().dgvStockpile);
+            Stockpile sks = new Stockpile(dgvStockpile);
             if (Stockpile.Save(sks))
             {
                 sendCurrentStockpileToSKS();
-                S.GET<RTC_StockpileManager_Form>().btnSaveStockpile.Enabled = true;
-                S.GET<RTC_StockpileManager_Form>().btnSaveStockpile.BackColor = Color.Tomato;
-                S.GET<RTC_StockpileManager_Form>().btnSaveStockpile.ForeColor = Color.Black;
+                btnSaveStockpile.Enabled = true;
+                btnSaveStockpile.BackColor = Color.Tomato;
+                btnSaveStockpile.ForeColor = Color.Black;
             }
 
             UnsavedEdits = false;
@@ -382,7 +382,7 @@ namespace RTCV.UI
 
         private void sendCurrentStockpileToSKS()
         {
-            foreach (DataGridViewRow dataRow in S.GET<RTC_StockpileManager_Form>().dgvStockpile.Rows)
+            foreach (DataGridViewRow dataRow in dgvStockpile.Rows)
             {
                 StashKey sk = (StashKey)dataRow.Cells["Item"].Value;
             }

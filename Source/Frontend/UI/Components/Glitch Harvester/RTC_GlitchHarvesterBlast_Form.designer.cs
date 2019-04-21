@@ -185,7 +185,6 @@
             this.Name = "RTC_GlitchHarvesterBlast_Form";
             this.Tag = "color:dark1";
             this.Text = "Blast Tools";
-            this.Load += new System.EventHandler(this.RTC_GlitchHarvesterBlast_Form_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

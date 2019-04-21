@@ -22,23 +22,12 @@ namespace RTCV.UI
 
         public GlitchHarvesterMode ghMode = GlitchHarvesterMode.CORRUPT;
 
-        //delete me later on
-        public Button btnRender = new Button();
-        public CheckBox cbAutoLoadState = new CheckBox();
-        public CheckBox cbLoadOnSelect = new CheckBox();
-        public CheckBox cbRenderAtLoad = new CheckBox();
-        public CheckBox cbStashCorrupted = new CheckBox();
-        public ComboBox cbRenderType = new ComboBox();
-
-        public bool AutoLoadState = true;
         public bool LoadOnSelect = true;
-        public bool StashCorrupted = true;
+        public bool loadBeforeOperation = true;
 
+        public bool IsRendering = false; 
         public bool RenderAtLoad = false;
         public string RenderType = "";
-
-
-        public bool loadBeforeOperation = true;
 
         private bool isCorruptionApplied;
         public bool IsCorruptionApplied
@@ -100,15 +89,9 @@ namespace RTCV.UI
                 IsCorruptionApplied = StockpileManager_UISide.OriginalFromStashkey(StockpileManager_UISide.CurrentStashkey);
 
             if (StockpileManager_EmuSide.RenderAtLoad && loadBeforeOperation)
-            {
-                btnRender.Text = "Stop Render";
-                btnRender.ForeColor = Color.OrangeRed;
-            }
+                IsRendering = true;
             else
-            {
-                btnRender.Text = "Start Render";
-                btnRender.ForeColor = Color.White;
-            }
+                IsRendering = false;
         }
 
         public void RedrawActionUI()
@@ -204,15 +187,9 @@ namespace RTCV.UI
                 }
 
                 if (StockpileManager_EmuSide.RenderAtLoad && loadBeforeOperation)
-                {
-                    btnRender.Text = "Stop Render";
-                    btnRender.ForeColor = Color.OrangeRed;
-                }
+                    IsRendering = true;
                 else
-                {
-                    btnRender.Text = "Start Render";
-                    btnRender.ForeColor = Color.White;
-                }
+                    IsRendering = false;
 
                 Console.WriteLine("Blast done");
             }
@@ -224,44 +201,20 @@ namespace RTCV.UI
 
 
 
-
-        private void cbRenderType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Render.setType(cbRenderType.SelectedItem.ToString());
-        }
-
         private void btnOpenRenderFolder_Click(object sender, EventArgs e)
         {
             Process.Start(CorruptCore.CorruptCore.RtcDir + Path.DirectorySeparatorChar + "RENDEROUTPUT" + Path.DirectorySeparatorChar);
         }
 
-        private void btnRender_Click(object sender, EventArgs e)
-        {
-            if (btnRender.Text == "Start Render")
-            {
-                if (Render.StartRender())
-                {
-                    btnRender.Text = "Stop Render";
-                    btnRender.ForeColor = Color.OrangeRed;
-                }
-            }
-            else
-            {
-                Render.StopRender();
-                btnRender.Text = "Start Render";
-                btnRender.ForeColor = Color.White;
-            }
-        }
-
         private void cbRenderAtLoad_CheckedChanged(object sender, EventArgs e)
         {
-            StockpileManager_EmuSide.RenderAtLoad = cbRenderAtLoad.Checked;
+            StockpileManager_EmuSide.RenderAtLoad = RenderAtLoad;
         }
 
         private void BlastRawStash()
         {
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.ASYNCBLAST, true);
-            S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw_Click(null, null);
+            btnSendRaw_Click(null, null);
         }
 
         private void btnCorrupt_MouseDown(object sender, MouseEventArgs e)
@@ -385,21 +338,6 @@ namespace RTCV.UI
             }
         }
 
-        private void cbAutoLoadState_CheckedChanged(object sender, EventArgs e)
-        {
-            loadBeforeOperation = cbAutoLoadState.Checked;
-        }
-
-        private void cbStashCorrupted_CheckedChanged(object sender, EventArgs e)
-        {
-            StockpileManager_UISide.StashAfterOperation = cbStashCorrupted.Checked;
-        }
-
-        private void RTC_GlitchHarvesterBlast_Form_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void btnGlitchHarvesterSettings_MouseDown(object sender, MouseEventArgs e)
         {
             Point locate = e.GetMouseLocation(sender);
@@ -410,10 +348,13 @@ namespace RTCV.UI
             });
 
             ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Corrupt", null, new EventHandler((ob, ev) => {
+                ghMode = GlitchHarvesterMode.CORRUPT;
             }))).Checked = (ghMode == GlitchHarvesterMode.CORRUPT);
             ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Inject", null, new EventHandler((ob, ev) => {
+                ghMode = GlitchHarvesterMode.INJECT;
             }))).Checked = (ghMode == GlitchHarvesterMode.INJECT);
             ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Original", null, new EventHandler((ob, ev) => {
+                ghMode = GlitchHarvesterMode.ORIGINAL;
             }))).Checked = (ghMode == GlitchHarvesterMode.ORIGINAL);
 
             ghSettingsMenu.Items.Add(new ToolStripSeparator());
@@ -423,11 +364,14 @@ namespace RTCV.UI
             });
 
             ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Auto-Load State", null, new EventHandler((ob, ev) => {
-            }))).Checked = cbAutoLoadState.Checked;
+                loadBeforeOperation = loadBeforeOperation ^= true;
+            }))).Checked = loadBeforeOperation;
             ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Load on select", null, new EventHandler((ob, ev) => {
-            }))).Checked = cbLoadOnSelect.Checked;
+                LoadOnSelect = LoadOnSelect ^= true;
+            }))).Checked = LoadOnSelect;
             ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Stash results", null, new EventHandler((ob, ev) => {
-            }))).Checked = cbStashCorrupted.Checked;
+                StockpileManager_UISide.StashAfterOperation = StockpileManager_UISide.StashAfterOperation ^= true;
+            }))).Checked = StockpileManager_UISide.StashAfterOperation;
 
             ghSettingsMenu.Show(this, locate);
         }
@@ -437,33 +381,52 @@ namespace RTCV.UI
             Point locate = e.GetMouseLocation(sender);
             ContextMenuStrip ghSettingsMenu = new ContextMenuStrip();
 
-            ghSettingsMenu.Items.Add(new ToolStripLabel("Render Output Type")
-            { Font = new Font("Segoe UI", 12, FontStyle.Bold)
+            ghSettingsMenu.Items.Add(new ToolStripLabel("Render Type")
+            {
+                Font = new Font("Segoe UI", 12)
             });
 
-            ghSettingsMenu.Items.Add("WAV", null, new EventHandler((ob, ev) => {
+            ((ToolStripMenuItem)ghSettingsMenu.Items.Add((IsRendering ? "Stop rendering" : "Start rendering"), null, new EventHandler((ob, ev) => {
+
+                if (IsRendering)
+                    Render.StopRender();
+                else
+                    Render.StartRender();
+
+            }))).Checked = IsRendering;
+
+            ghSettingsMenu.Items.Add("Open RENDEROUTPUT Folder", null, new EventHandler((ob, ev) => {
+                Process.Start(CorruptCore.CorruptCore.RtcDir + Path.DirectorySeparatorChar + "RENDEROUTPUT" + Path.DirectorySeparatorChar);
             }));
-            ghSettingsMenu.Items.Add("AVI", null, new EventHandler((ob, ev) => {
-            }));
-            ghSettingsMenu.Items.Add("MPEG", null, new EventHandler((ob, ev) => {
-            }));
+
+            ghSettingsMenu.Items.Add(new ToolStripSeparator());
+
+            ghSettingsMenu.Items.Add(new ToolStripLabel("Render Type"){
+                Font = new Font("Segoe UI", 12)
+            });
+
+            ((ToolStripMenuItem)ghSettingsMenu.Items.Add("WAV", null, new EventHandler((ob, ev) => {
+                Render.RenderType = Render.RENDERTYPE.WAV;
+            }))).Checked = Render.RenderType == Render.RENDERTYPE.WAV;
+            ((ToolStripMenuItem)ghSettingsMenu.Items.Add("AVI", null, new EventHandler((ob, ev) => {
+                Render.RenderType = Render.RENDERTYPE.AVI;
+            }))).Checked = Render.RenderType == Render.RENDERTYPE.AVI;
+            ((ToolStripMenuItem)ghSettingsMenu.Items.Add("MPEG", null, new EventHandler((ob, ev) => {
+                Render.RenderType = Render.RENDERTYPE.MPEG;
+            }))).Checked = Render.RenderType == Render.RENDERTYPE.MPEG;
 
             ghSettingsMenu.Items.Add(new ToolStripSeparator());
 
             ghSettingsMenu.Items.Add(new ToolStripLabel("Behaviors"){
-                Font = new Font("Segoe UI", 12, FontStyle.Bold)
+                Font = new Font("Segoe UI", 12)
             });
 
-            ghSettingsMenu.Items.Add("Render file at load", null, new EventHandler((ob, ev) => {
-            }));
+            ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Render file at load", null, new EventHandler((ob, ev) => {
+                RenderAtLoad = RenderAtLoad ^= true;
+            }))).Checked = RenderAtLoad;
 
-            ghSettingsMenu.Items.Add(new ToolStripSeparator());
+            
 
-            ghSettingsMenu.Items.Add("Start rendering", null, new EventHandler((ob, ev) => {
-            }));
-
-            ghSettingsMenu.Items.Add("Open RENDEROUTPUT Folder", null, new EventHandler((ob, ev) => {
-            }));
 
             ghSettingsMenu.Show(this, locate);
         }

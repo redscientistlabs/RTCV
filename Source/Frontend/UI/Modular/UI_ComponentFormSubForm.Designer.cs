@@ -55,7 +55,6 @@
             this.Name = "UI_ComponentFormSubForm";
             this.Tag = "color:dark1";
             this.Text = "UI_DummySubForm";
-            this.Load += new System.EventHandler(this.UI_ComponentFormSubForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

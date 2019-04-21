@@ -578,7 +578,7 @@ namespace RTCV.UI
                 case "GH Load and Corrupt":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().cbAutoLoadState.Checked = true;
+                        S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation = true;
                         S.GET<RTC_GlitchHarvesterBlast_Form>().btnCorrupt_Click(null, null);
                     });
                     break;
@@ -588,10 +588,10 @@ namespace RTCV.UI
 
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
-                        bool isload = S.GET<RTC_GlitchHarvesterBlast_Form>().cbAutoLoadState.Checked;
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().cbAutoLoadState.Checked = false;
+                        bool isload = S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation;
+                        S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation = false;
                         S.GET<RTC_GlitchHarvesterBlast_Form>().btnCorrupt_Click(null, null);
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().cbAutoLoadState.Checked = isload;
+                        S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation = isload;
                     });
                     break;
 

@@ -240,7 +240,7 @@ namespace RTCV.UI
 
                 StockpileManager_UISide.CurrentStashkey = StockpileManager_UISide.StashHistory[lbStashHistory.SelectedIndex];
 
-                if (!blastForm.cbLoadOnSelect.Checked)
+                if (!blastForm.LoadOnSelect)
                     return;
 
                 blastForm.OneTimeExecute();

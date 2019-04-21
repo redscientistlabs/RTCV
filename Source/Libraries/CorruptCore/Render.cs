@@ -27,27 +27,8 @@ namespace RTCV.CorruptCore
 		{
 			var partial = new PartialSpec("RTCSpec");
 			partial[RTCSPEC.RENDER_ISRENDERING.ToString()] = false;
-			partial[RTCSPEC.RENDER_RENDERTYPE.ToString()] = RENDERTYPE.NONE;
+			partial[RTCSPEC.RENDER_RENDERTYPE.ToString()] = RENDERTYPE.WAV;
 			return partial;
-		}
-
-		public static void setType(string _type)
-		{
-			switch (_type)
-			{
-				case "NONE":
-					RenderType = RENDERTYPE.NONE;
-					break;
-				case "WAV":
-					RenderType = RENDERTYPE.WAV;
-					break;
-				case "AVI":
-					RenderType = RENDERTYPE.AVI;
-					break;
-				case "MPEG":
-					RenderType = RENDERTYPE.MPEG;
-					break;
-			}
 		}
 
 
