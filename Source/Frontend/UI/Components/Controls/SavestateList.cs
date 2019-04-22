@@ -274,6 +274,9 @@ namespace RTCV.UI.Components.Controls
                     if (sk != null)
                     {
                         _DataSource.Add(new SaveStateKey(sk, ""));
+                        selectedHolder?.SetSelected(false);
+                        selectedHolder = controlList.Where(x => x.sk == sk).First() ?? null;
+                        selectedHolder?.SetSelected(true);
                     }
                 }
 
