@@ -20,6 +20,7 @@ namespace RTCV.UI
 		public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
 		public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
+        public bool MergeMode = false;
         public GlitchHarvesterMode ghMode = GlitchHarvesterMode.CORRUPT;
 
         public bool LoadOnSelect = true;
@@ -99,13 +100,14 @@ namespace RTCV.UI
             // Merge tool and ui change
             if (S.GET<RTC_StockpileManager_Form>().dgvStockpile.SelectedRows.Count > 1)
             {
-                ghMode = GlitchHarvesterMode.MERGE;
+                MergeMode = true;
                 btnCorrupt.Text = "  Merge";
                 S.GET<RTC_StockpileManager_Form>().btnRenameSelected.Visible = false;
                 S.GET<RTC_StockpileManager_Form>().btnRemoveSelectedStockpile.Text = "  Remove Items";
             }
             else
             {
+                MergeMode = false;
                 S.GET<RTC_StockpileManager_Form>().btnRenameSelected.Visible = true;
                 S.GET<RTC_StockpileManager_Form>().btnRemoveSelectedStockpile.Text = "  Remove Item";
 
@@ -135,7 +137,7 @@ namespace RTCV.UI
 
                 StashKey psk = StockpileManager_UISide.CurrentSavestateStashKey;
 
-                if (ghMode == GlitchHarvesterMode.MERGE)
+                if (MergeMode)
                 {
                     List<StashKey> sks = new List<StashKey>();
 
@@ -349,12 +351,15 @@ namespace RTCV.UI
 
             ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Corrupt", null, new EventHandler((ob, ev) => {
                 ghMode = GlitchHarvesterMode.CORRUPT;
+                RedrawActionUI();
             }))).Checked = (ghMode == GlitchHarvesterMode.CORRUPT);
             ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Inject", null, new EventHandler((ob, ev) => {
                 ghMode = GlitchHarvesterMode.INJECT;
+                RedrawActionUI();
             }))).Checked = (ghMode == GlitchHarvesterMode.INJECT);
             ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Original", null, new EventHandler((ob, ev) => {
                 ghMode = GlitchHarvesterMode.ORIGINAL;
+                RedrawActionUI();
             }))).Checked = (ghMode == GlitchHarvesterMode.ORIGINAL);
 
             ghSettingsMenu.Items.Add(new ToolStripSeparator());
@@ -365,15 +370,20 @@ namespace RTCV.UI
 
             ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Auto-Load State", null, new EventHandler((ob, ev) => {
                 loadBeforeOperation = loadBeforeOperation ^= true;
+                RedrawActionUI();
             }))).Checked = loadBeforeOperation;
             ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Load on select", null, new EventHandler((ob, ev) => {
                 LoadOnSelect = LoadOnSelect ^= true;
+                RedrawActionUI();
             }))).Checked = LoadOnSelect;
             ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Stash results", null, new EventHandler((ob, ev) => {
                 StockpileManager_UISide.StashAfterOperation = StockpileManager_UISide.StashAfterOperation ^= true;
+                RedrawActionUI();
             }))).Checked = StockpileManager_UISide.StashAfterOperation;
 
             ghSettingsMenu.Show(this, locate);
+
+            
         }
 
         private void btnRenderOutput_MouseDown(object sender, MouseEventArgs e)

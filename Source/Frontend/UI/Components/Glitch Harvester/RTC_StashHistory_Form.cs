@@ -223,11 +223,9 @@ namespace RTCV.UI
 
                 var blastForm = S.GET<RTC_GlitchHarvesterBlast_Form>();
 
-                if (blastForm.ghMode == GlitchHarvesterMode.MERGE)
-                    blastForm.ghMode = GlitchHarvesterMode.CORRUPT;
-
-                if (blastForm.ghMode == GlitchHarvesterMode.MERGE)
+                if (S.GET<RTC_GlitchHarvesterBlast_Form>().MergeMode)
                 {
+                    blastForm.ghMode = GlitchHarvesterMode.CORRUPT;
                     S.GET<RTC_StockpileManager_Form>().btnRenameSelected.Visible = true;
                     S.GET<RTC_StockpileManager_Form>().btnRemoveSelectedStockpile.Text = "  Remove Item";
 
@@ -253,6 +251,7 @@ namespace RTCV.UI
                 btnStashDOWN.Enabled = true;
                 btnAddStashToStockpile.Enabled = true;
                 ((Control)sender).Focus();
+                S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
             }
         }
 
@@ -262,15 +261,8 @@ namespace RTCV.UI
             lbStashHistory.ClearSelected();
             DontLoadSelectedStash = true;
             S.GET<RTC_StockpileManager_Form>().dgvStockpile.ClearSelection();
+            S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
 
-            var blastForm = S.GET<RTC_GlitchHarvesterBlast_Form>();
-
-            if (blastForm.ghMode == GlitchHarvesterMode.CORRUPT)
-                blastForm.btnCorrupt.Text = "  Corrupt";
-            else if (blastForm.ghMode == GlitchHarvesterMode.INJECT)
-                blastForm.btnCorrupt.Text = "  Inject";
-            else if (blastForm.ghMode == GlitchHarvesterMode.ORIGINAL)
-                blastForm.btnCorrupt.Text = "  Original";
         }
 
         private void btnClearStashHistory_Click(object sender, EventArgs e)

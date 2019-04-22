@@ -133,7 +133,10 @@ namespace RTCV.UI
                 dgvStockpile.Enabled = true;
                 btnStockpileUP.Enabled = true;
                 btnStockpileDOWN.Enabled = true;
+                
             }
+
+            S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
         }
 
         private void dgvStockpile_MouseDown(object sender, MouseEventArgs e)
