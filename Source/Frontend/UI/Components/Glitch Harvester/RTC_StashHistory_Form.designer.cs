@@ -56,7 +56,7 @@
             this.btnAddStashToStockpile.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnAddStashToStockpile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAddStashToStockpile.UseVisualStyleBackColor = false;
-            this.btnAddStashToStockpile.Click += new System.EventHandler(this.btnClearStashHistory_Click);
+            this.btnAddStashToStockpile.Click += new System.EventHandler(this.btnAddStashToStockpile_Click);
             // 
             // btnClearStashHistory
             // 
@@ -78,6 +78,7 @@
             this.btnClearStashHistory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnClearStashHistory.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnClearStashHistory.UseVisualStyleBackColor = false;
+            this.btnClearStashHistory.Click += new System.EventHandler(this.btnClearStashHistory_Click);
             // 
             // btnStashDOWN
             // 

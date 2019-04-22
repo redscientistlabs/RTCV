@@ -64,7 +64,7 @@ namespace RTCV.UI
 				"Make your own engine",
 				"Yes it probably works",
 				"Never ask me for anything ever again",
-				">Imagine using default engines",
+				"Imagine using default engines",
 				"I just needed to fill this empty space",
 				"I've run out of ideas for flavor text",
 			};

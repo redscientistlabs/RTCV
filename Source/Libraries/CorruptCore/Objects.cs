@@ -395,7 +395,10 @@ namespace RTCV.CorruptCore
 
 				}
 				EmptyFolder(Path.DirectorySeparatorChar + "WORKING\\TEMP");
-			}
+
+                
+
+            }
 			else
 			{
 
@@ -438,10 +441,11 @@ namespace RTCV.CorruptCore
 			return true;
 		}
 
-		public static void Import(string filename, DataGridView dgvStockpile)
+		public static bool Import(string filename, DataGridView dgvStockpile)
 		{
-			Load(dgvStockpile, filename, true);
-		}
+            return Load(dgvStockpile, filename, true);
+                
+        }
 		/// <summary>
 		/// Checks a stockpile for compatibility with the current version of the RTC
 		/// </summary>

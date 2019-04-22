@@ -19,7 +19,33 @@ namespace RTCV.UI
 		public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         public bool DontLoadSelectedStockpile = false;
-        public bool UnsavedEdits { get; set; } = false;
+
+        private Color? originalSaveButtonColor = null;
+        private bool _UnsavedEdits= false;
+        public bool UnsavedEdits
+        {
+            get
+            {
+                return _UnsavedEdits;
+            }
+            set
+            {
+                _UnsavedEdits = value;
+                
+                if(_UnsavedEdits && btnSaveStockpile.Enabled)
+                {
+                    if (originalSaveButtonColor == null)
+                        originalSaveButtonColor = btnSaveStockpile.BackColor;
+
+                    btnSaveStockpile.BackColor = Color.Tomato;
+                }
+                else
+                {
+                    if (originalSaveButtonColor != null)
+                        btnSaveStockpile.BackColor = originalSaveButtonColor.Value;
+                }
+            }
+        }
 
         public bool CompressStockpiles = true;
         public bool IncludeReferencedFiles = true;
@@ -258,8 +284,6 @@ namespace RTCV.UI
                 }
 
                 btnSaveStockpile.Enabled = false;
-                btnSaveStockpile.BackColor = Color.Gray;
-                btnSaveStockpile.ForeColor = Color.DimGray;
 
                 StockpileManager_UISide.StockpileChanged();
 
@@ -282,7 +306,7 @@ namespace RTCV.UI
             {
                 btnSaveStockpile.Enabled = true;
                 btnSaveStockpile.BackColor = Color.Tomato;
-                btnSaveStockpile.ForeColor = Color.Black;
+                btnSaveStockpile.ForeColor = Color.White;
                 RefreshNoteIcons();
             }
 
@@ -365,8 +389,6 @@ namespace RTCV.UI
             {
                 sendCurrentStockpileToSKS();
                 btnSaveStockpile.Enabled = true;
-                btnSaveStockpile.BackColor = Color.Tomato;
-                btnSaveStockpile.ForeColor = Color.Black;
             }
 
             UnsavedEdits = false;
@@ -480,8 +502,11 @@ namespace RTCV.UI
 
         private void btnImportStockpile_Click(object sender, EventArgs e)
         {
-            Stockpile.Import(null, dgvStockpile);
+            if(Stockpile.Import(null, dgvStockpile))
+                UnsavedEdits = true;
+
             RefreshNoteIcons();
+
         }
 
         private void btnStockpileUP_Click(object sender, EventArgs e)

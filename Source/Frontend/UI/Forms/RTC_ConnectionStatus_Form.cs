@@ -21,6 +21,7 @@ namespace RTCV.UI
         private readonly string[] _flavorText = {
             "Imagine if we had actual flavor text",
             "Fun flavor text goes here",
+            "The V probably stands for Vanguard",
         };
 
 		private void RTC_ConnectionStatus_Form_Load(object sender, EventArgs e)
