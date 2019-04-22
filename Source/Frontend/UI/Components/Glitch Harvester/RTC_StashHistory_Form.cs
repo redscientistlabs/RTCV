@@ -228,7 +228,7 @@ namespace RTCV.UI
                 if (blastForm.ghMode == GlitchHarvesterMode.MERGE)
                 {
                     S.GET<RTC_StockpileManager_Form>().btnRenameSelected.Visible = true;
-                    S.GET<RTC_StockpileManager_Form>().btnRemoveSelectedStockpile.Text = "Remove Item";
+                    S.GET<RTC_StockpileManager_Form>().btnRemoveSelectedStockpile.Text = "  Remove Item";
 
                     if (blastForm.ghMode == GlitchHarvesterMode.CORRUPT)
                         blastForm.btnCorrupt.Text = "  Corrupt";

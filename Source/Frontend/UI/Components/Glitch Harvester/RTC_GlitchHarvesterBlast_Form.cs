@@ -102,12 +102,12 @@ namespace RTCV.UI
                 ghMode = GlitchHarvesterMode.MERGE;
                 btnCorrupt.Text = "  Merge";
                 S.GET<RTC_StockpileManager_Form>().btnRenameSelected.Visible = false;
-                S.GET<RTC_StockpileManager_Form>().btnRemoveSelectedStockpile.Text = "Remove Items";
+                S.GET<RTC_StockpileManager_Form>().btnRemoveSelectedStockpile.Text = "  Remove Items";
             }
             else
             {
                 S.GET<RTC_StockpileManager_Form>().btnRenameSelected.Visible = true;
-                S.GET<RTC_StockpileManager_Form>().btnRemoveSelectedStockpile.Text = "Remove Item";
+                S.GET<RTC_StockpileManager_Form>().btnRemoveSelectedStockpile.Text = "  Remove Item";
 
                 if (ghMode == GlitchHarvesterMode.CORRUPT)
                     btnCorrupt.Text = "  Corrupt";
