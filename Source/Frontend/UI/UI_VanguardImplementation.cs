@@ -92,7 +92,6 @@ namespace RTCV.UI
 
                                 S.GET<UI_CoreForm>().previousGrid.LoadToMain();
 
-                                UICore.LoadLists();
 
                                 /*
                                 //Unhide the GH

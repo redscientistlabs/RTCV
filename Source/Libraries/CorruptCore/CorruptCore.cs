@@ -266,7 +266,7 @@ namespace RTCV.CorruptCore
 			PartialSpec rtcSpecTemplate = new PartialSpec("RTCSpec");
 			rtcSpecTemplate["RTCVERSION"] = RtcVersion;
 
-			rtcSpecTemplate[RTCSPEC.RTCDIR] = Assembly.GetExecutingAssembly().Location + "\\RTC\\";
+			rtcSpecTemplate[RTCSPEC.RTCDIR] = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\RTC\\";
 
             //Engine Settings
             rtcSpecTemplate.Insert(CorruptCore.getDefaultPartial());

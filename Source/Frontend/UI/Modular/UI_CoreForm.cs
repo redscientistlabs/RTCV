@@ -129,6 +129,7 @@ This message only appears once.";
 
             CorruptCore.CorruptCore.DownloadProblematicProcesses();
 
+            UICore.LoadLists();
             //UI_DefaultGrids.engineConfig.LoadToMain();
         }
 
@@ -405,6 +406,12 @@ This message only appears once.";
                         break;
 
                     case "N64":     //Nintendo 64
+                        SetEngineByName("Vector Engine");
+                        S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value = 75;
+                        S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value = 1;
+                        break;
+
+                    case "Dolphin":     //GC/Wii
                         SetEngineByName("Vector Engine");
                         S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value = 75;
                         S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value = 1;
