@@ -203,6 +203,7 @@ namespace RTCV.UI
 
         private void lbStashHistory_SelectedIndexChanged(object sender, EventArgs e)
         {
+
             try
             {
                 lbStashHistory.Enabled = false;
@@ -294,11 +295,12 @@ namespace RTCV.UI
             }
             else
             {
-                int newPos = lbStashHistory.SelectedIndex--;
+                int newPos = lbStashHistory.SelectedIndex - 1;
                 lbStashHistory.ClearSelected();
                 lbStashHistory.SelectedIndex = newPos;
 
             }
+
         }
 
         private void btnStashDOWN_Click(object sender, EventArgs e)
@@ -307,6 +309,7 @@ namespace RTCV.UI
             if (lbStashHistory.SelectedIndex == -1)
                 return;
 
+
             if (lbStashHistory.SelectedIndex == lbStashHistory.Items.Count - 1)
             {
                 lbStashHistory.ClearSelected();
@@ -314,11 +317,12 @@ namespace RTCV.UI
             }
             else
             {
-                int newPos = lbStashHistory.SelectedIndex++;
+                int newPos = lbStashHistory.SelectedIndex + 1;
                 lbStashHistory.ClearSelected();
                 lbStashHistory.SelectedIndex = newPos;
 
             }
+
         }
 
 
