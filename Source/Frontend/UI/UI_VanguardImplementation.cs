@@ -178,7 +178,13 @@ namespace RTCV.UI
 						break;
                     case RESET_GAME_PROTECTION_IF_RUNNING:
                         if (GameProtection.isRunning)
-                            GameProtection.Reset();
+                        {
+                            SyncObjectSingleton.FormExecute((o, ea) =>
+                            {
+                                S.GET<UI_CoreForm>().cbUseGameProtection.Checked = false;
+                                S.GET<UI_CoreForm>().cbUseGameProtection.Checked = true;
+                            });
+                        }
                         break;
 
 				}

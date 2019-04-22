@@ -53,7 +53,7 @@ namespace RTCV.CorruptCore
 
 			StashKey.SetCore(sk);
 			string gameSystem = sk.SystemName;
-			string gameName = sk.GameName;
+			string gameName = CorruptCore_Extensions.MakeSafeFilename(sk.GameName,'-');
 			string key = sk.ParentKey;
 			StashKeySavestateLocation stateLocation = sk.StateLocation;
 

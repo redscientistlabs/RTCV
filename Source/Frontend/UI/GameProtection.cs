@@ -9,7 +9,7 @@ namespace RTCV.UI
 	public static class GameProtection
 	{
 		static Timer t;
-		public static int BackupInterval = 10;
+		public static int BackupInterval = 5;
 		public static bool isRunning = false;
         public static bool WasAutoCorruptRunning = false;
 
