@@ -27,7 +27,7 @@ namespace RTCV.NetCore
 		
 		public const string REMOTE_RENDER_STOP = "REMOTE_RENDER_STOP";
 		public const string REMOTE_RENDER_START = "REMOTE_RENDER_START";
-        public const string UI_RENDER_DISPLAY = "UI_RENDER_DISPLAY";
+        public const string REMOTE_RENDER_DISPLAY = "REMOTE_RENDER_DISPLAY";
 
         public const string REMOTE_EVENT_DOMAINSUPDATED = "REMOTE_EVENT_DOMAINSUPDATED";
 		public const string REMOTE_GETBLASTGENERATOR_LAYER = "REMOTE_GETBLASTGENERATOR_LAYER";

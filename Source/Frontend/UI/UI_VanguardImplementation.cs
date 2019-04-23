@@ -163,7 +163,13 @@ namespace RTCV.UI
 							S.GET<UI_CoreForm>().AutoCorrupt = false;
 						});
 						break;
-					case REMOTE_BACKUPKEY_STASH:
+                    case REMOTE_RENDER_DISPLAY:
+                        SyncObjectSingleton.FormExecute((o, ea) =>
+                        {
+                            S.GET<RTC_GlitchHarvesterBlast_Form>().refreshRenderOutputButton();
+                        });
+                        break;
+                    case REMOTE_BACKUPKEY_STASH:
 						StockpileManager_UISide.BackupedState = (StashKey)advancedMessage.objectValue;
 						StockpileManager_UISide.AllBackupStates.Push((StashKey)advancedMessage.objectValue);
 						SyncObjectSingleton.FormExecute((o, ea) =>

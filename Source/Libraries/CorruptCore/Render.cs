@@ -24,11 +24,7 @@ namespace RTCV.CorruptCore
 			set
             {
                 RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_ISRENDERING.ToString(), value);
-
-                if(value)//is rendering
-                {
-                    LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.UI_RENDER_DISPLAY, value);
-                }
+                LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_RENDER_DISPLAY);
             }
 		}
 		

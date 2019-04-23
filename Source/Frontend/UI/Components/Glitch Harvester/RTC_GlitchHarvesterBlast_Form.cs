@@ -26,6 +26,8 @@ namespace RTCV.UI
         public bool LoadOnSelect = true;
         public bool loadBeforeOperation = true;
 
+        public Color? originalRenderOutputButtonColor = null;
+
         private bool isCorruptionApplied;
         public bool IsCorruptionApplied
         {
@@ -86,9 +88,9 @@ namespace RTCV.UI
                 IsCorruptionApplied = StockpileManager_UISide.OriginalFromStashkey(StockpileManager_UISide.CurrentStashkey);
 
             if (Render.RenderAtLoad && loadBeforeOperation)
-                Render.IsRendering = true;
+                Render.StartRender();
             else
-                Render.IsRendering = false;
+                Render.StopRender();
         }
 
         public void RedrawActionUI()
@@ -113,6 +115,22 @@ namespace RTCV.UI
                     btnCorrupt.Text = "  Inject";
                 else if (ghMode == GlitchHarvesterMode.ORIGINAL)
                     btnCorrupt.Text = "  Original";
+            }
+        }
+
+        public void refreshRenderOutputButton()
+        {
+            if(Render.IsRendering)
+            {
+                if (originalRenderOutputButtonColor == null)
+                    originalRenderOutputButtonColor = btnRenderOutput.BackColor;
+
+                btnRenderOutput.BackColor = Color.LimeGreen;
+            }
+            else
+            {
+                if (originalRenderOutputButtonColor != null)
+                    btnRenderOutput.BackColor = originalRenderOutputButtonColor.Value;
             }
         }
 
@@ -185,9 +203,9 @@ namespace RTCV.UI
                 }
 
                 if (Render.RenderAtLoad && loadBeforeOperation)
-                    Render.IsRendering = true;
+                    Render.StartRender();
                 else
-                    Render.IsRendering = false;
+                    Render.StopRender();
 
                 Console.WriteLine("Blast done");
             }
