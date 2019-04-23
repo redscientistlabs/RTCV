@@ -41,14 +41,19 @@
             this.btnSaveSavestateList.FlatAppearance.BorderSize = 0;
             this.btnSaveSavestateList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSaveSavestateList.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnSaveSavestateList.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.btnSaveSavestateList.Location = new System.Drawing.Point(89, 308);
+            this.btnSaveSavestateList.ForeColor = System.Drawing.Color.White;
+            this.btnSaveSavestateList.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveSavestateList.Image")));
+            this.btnSaveSavestateList.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSaveSavestateList.Location = new System.Drawing.Point(90, 303);
             this.btnSaveSavestateList.Name = "btnSaveSavestateList";
-            this.btnSaveSavestateList.Size = new System.Drawing.Size(73, 24);
+            this.btnSaveSavestateList.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.btnSaveSavestateList.Size = new System.Drawing.Size(71, 32);
             this.btnSaveSavestateList.TabIndex = 168;
             this.btnSaveSavestateList.TabStop = false;
             this.btnSaveSavestateList.Tag = "color:dark2";
-            this.btnSaveSavestateList.Text = "Save List";
+            this.btnSaveSavestateList.Text = "  Save";
+            this.btnSaveSavestateList.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSaveSavestateList.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSaveSavestateList.UseVisualStyleBackColor = false;
             this.btnSaveSavestateList.Click += new System.EventHandler(this.btnSaveSavestateList_Click);
             // 
@@ -58,14 +63,19 @@
             this.btnLoadSavestateList.FlatAppearance.BorderSize = 0;
             this.btnLoadSavestateList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLoadSavestateList.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnLoadSavestateList.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.btnLoadSavestateList.Location = new System.Drawing.Point(14, 308);
+            this.btnLoadSavestateList.ForeColor = System.Drawing.Color.White;
+            this.btnLoadSavestateList.Image = ((System.Drawing.Image)(resources.GetObject("btnLoadSavestateList.Image")));
+            this.btnLoadSavestateList.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLoadSavestateList.Location = new System.Drawing.Point(12, 303);
             this.btnLoadSavestateList.Name = "btnLoadSavestateList";
-            this.btnLoadSavestateList.Size = new System.Drawing.Size(72, 24);
+            this.btnLoadSavestateList.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.btnLoadSavestateList.Size = new System.Drawing.Size(71, 32);
             this.btnLoadSavestateList.TabIndex = 167;
             this.btnLoadSavestateList.TabStop = false;
             this.btnLoadSavestateList.Tag = "color:dark2";
-            this.btnLoadSavestateList.Text = "Load List";
+            this.btnLoadSavestateList.Text = "  Load";
+            this.btnLoadSavestateList.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLoadSavestateList.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnLoadSavestateList.UseVisualStyleBackColor = false;
             this.btnLoadSavestateList.Click += new System.EventHandler(this.btnLoadSavestateList_Click);
             this.btnLoadSavestateList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnLoadSavestateList_MouseDown);
@@ -75,21 +85,22 @@
             this.cbSavestateLoadOnClick.AutoSize = true;
             this.cbSavestateLoadOnClick.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbSavestateLoadOnClick.ForeColor = System.Drawing.Color.White;
-            this.cbSavestateLoadOnClick.Location = new System.Drawing.Point(13, 287);
+            this.cbSavestateLoadOnClick.Location = new System.Drawing.Point(13, 282);
             this.cbSavestateLoadOnClick.Name = "cbSavestateLoadOnClick";
             this.cbSavestateLoadOnClick.Size = new System.Drawing.Size(121, 17);
             this.cbSavestateLoadOnClick.TabIndex = 163;
             this.cbSavestateLoadOnClick.TabStop = false;
             this.cbSavestateLoadOnClick.Text = "Load state on click";
             this.cbSavestateLoadOnClick.UseVisualStyleBackColor = true;
+            this.cbSavestateLoadOnClick.CheckedChanged += new System.EventHandler(this.cbSavestateLoadOnClick_CheckedChanged);
             // 
             // savestateList
             // 
             this.savestateList.DataSource = null;
-            this.savestateList.Location = new System.Drawing.Point(12, 0);
+            this.savestateList.Location = new System.Drawing.Point(12, 8);
             this.savestateList.Margin = new System.Windows.Forms.Padding(1);
             this.savestateList.Name = "savestateList";
-            this.savestateList.Size = new System.Drawing.Size(150, 280);
+            this.savestateList.Size = new System.Drawing.Size(150, 268);
             this.savestateList.TabIndex = 169;
             // 
             // RTC_SavestateManager_Form

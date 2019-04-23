@@ -43,10 +43,10 @@
             // 
             this.flowPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.flowPanel.Location = new System.Drawing.Point(0, 32);
+            this.flowPanel.Location = new System.Drawing.Point(0, 35);
             this.flowPanel.Margin = new System.Windows.Forms.Padding(0);
             this.flowPanel.Name = "flowPanel";
-            this.flowPanel.Size = new System.Drawing.Size(150, 248);
+            this.flowPanel.Size = new System.Drawing.Size(150, 245);
             this.flowPanel.TabIndex = 0;
             // 
             // panel1
@@ -54,9 +54,9 @@
             this.panel1.Controls.Add(this.btnForward);
             this.panel1.Controls.Add(this.btnBack);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 251);
+            this.panel1.Location = new System.Drawing.Point(0, 250);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(150, 29);
+            this.panel1.Size = new System.Drawing.Size(150, 30);
             this.panel1.TabIndex = 0;
             // 
             // btnForward
@@ -67,9 +67,9 @@
             this.btnForward.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnForward.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnForward.ForeColor = System.Drawing.Color.White;
-            this.btnForward.Location = new System.Drawing.Point(99, 4);
+            this.btnForward.Location = new System.Drawing.Point(78, 4);
             this.btnForward.Name = "btnForward";
-            this.btnForward.Size = new System.Drawing.Size(40, 22);
+            this.btnForward.Size = new System.Drawing.Size(71, 22);
             this.btnForward.TabIndex = 160;
             this.btnForward.TabStop = false;
             this.btnForward.Tag = "color:dark2";
@@ -84,9 +84,9 @@
             this.btnBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBack.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnBack.ForeColor = System.Drawing.Color.White;
-            this.btnBack.Location = new System.Drawing.Point(10, 4);
+            this.btnBack.Location = new System.Drawing.Point(0, 4);
             this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(40, 22);
+            this.btnBack.Size = new System.Drawing.Size(71, 22);
             this.btnBack.TabIndex = 159;
             this.btnBack.TabStop = false;
             this.btnBack.Tag = "color:dark2";
@@ -101,7 +101,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(150, 32);
+            this.panel2.Size = new System.Drawing.Size(150, 35);
             this.panel2.TabIndex = 1;
             // 
             // btnToggleSaveLoad
@@ -111,9 +111,9 @@
             this.btnToggleSaveLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnToggleSaveLoad.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnToggleSaveLoad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.btnToggleSaveLoad.Location = new System.Drawing.Point(10, 5);
+            this.btnToggleSaveLoad.Location = new System.Drawing.Point(0, 4);
             this.btnToggleSaveLoad.Name = "btnToggleSaveLoad";
-            this.btnToggleSaveLoad.Size = new System.Drawing.Size(74, 24);
+            this.btnToggleSaveLoad.Size = new System.Drawing.Size(71, 24);
             this.btnToggleSaveLoad.TabIndex = 129;
             this.btnToggleSaveLoad.TabStop = false;
             this.btnToggleSaveLoad.Tag = "color:dark2";
@@ -128,15 +128,15 @@
             this.btnSaveLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSaveLoad.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnSaveLoad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnSaveLoad.Location = new System.Drawing.Point(89, 5);
+            this.btnSaveLoad.Location = new System.Drawing.Point(78, 4);
             this.btnSaveLoad.Name = "btnSaveLoad";
-            this.btnSaveLoad.Size = new System.Drawing.Size(56, 24);
+            this.btnSaveLoad.Size = new System.Drawing.Size(71, 24);
             this.btnSaveLoad.TabIndex = 130;
             this.btnSaveLoad.TabStop = false;
             this.btnSaveLoad.Tag = "color:dark2";
             this.btnSaveLoad.Text = "LOAD";
             this.btnSaveLoad.UseVisualStyleBackColor = false;
-            this.btnSaveLoad.Click += new System.EventHandler(this.BtnSaveLoad_Click);
+            this.btnSaveLoad.Click += new System.EventHandler(this.btnSaveLoad_Click);
             // 
             // SavestateList
             // 

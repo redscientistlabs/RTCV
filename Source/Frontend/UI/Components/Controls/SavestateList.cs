@@ -121,7 +121,7 @@ namespace RTCV.UI.Components.Controls
         private void InitializeSavestateHolder()
         {
             int ssHeight = 22;
-            int padding = 4;
+            int padding = 3;
             //Calculate how many we can fit within the space we have.
             numPerPage = (flowPanel.Height / (ssHeight + padding)) - 1;
             //Create the list
@@ -138,12 +138,12 @@ namespace RTCV.UI.Components.Controls
 
         private void BtnSavestate_MouseDown(object sender, MouseEventArgs e)
         {
-            Point locate = new Point(((Control) sender).Location.X + e.Location.X, ((Control) sender).Location.Y + e.Location.Y);
+            Point locate = new Point(((Control)sender).Location.X + e.Location.X, ((Control)sender).Location.Y + e.Location.Y);
 
             if (e.Button == MouseButtons.Left)
             {
                 selectedHolder?.SetSelected(false);
-                selectedHolder = (SavestateHolder) ((Button) sender).Parent;
+                selectedHolder = (SavestateHolder)((Button)sender).Parent;
                 selectedHolder.SetSelected(true);
 
                 if (selectedHolder.sk == null)
@@ -160,18 +160,25 @@ namespace RTCV.UI.Components.Controls
                     }
                 }
 
-                if (e.Button == MouseButtons.Right)
+                var smForm = (Parent as RTC_SavestateManager_Form);
+                if (smForm != null && smForm.cbSavestateLoadOnClick.Checked)
                 {
-                    ContextMenuStrip cms = new ContextMenuStrip();
-                    cms.Items.Add("Delete entry", null, (ob, ev) =>
-                    {
-                        var holder = (SavestateHolder) ((Button) sender).Parent;
-                        int indexToRemove = controlList.IndexOf(holder) + _DataSource.Position;
-                        if (indexToRemove <= _DataSource.Count)
-                            _DataSource.RemoveAt(indexToRemove);
-                    });
-                    cms.Show((Control) sender, locate);
+                    btnSaveLoad.Text = "LOAD";
+                    btnSaveLoad_Click(null, null);
                 }
+
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                ContextMenuStrip cms = new ContextMenuStrip();
+                cms.Items.Add("Delete entry", null, (ob, ev) =>
+                {
+                    var holder = (SavestateHolder)((Button)sender).Parent;
+                    int indexToRemove = controlList.IndexOf(holder) + _DataSource.Position;
+                    if (indexToRemove <= _DataSource.Count)
+                        _DataSource.RemoveAt(indexToRemove);
+                });
+                cms.Show((Control)sender, locate);
             }
         }
 
@@ -233,7 +240,7 @@ namespace RTCV.UI.Components.Controls
             return true;
         }
 
-        public void BtnSaveLoad_Click(object sender, EventArgs e)
+        public void btnSaveLoad_Click(object sender, EventArgs e)
         {
             if (btnSaveLoad.Text == "LOAD")
             {
