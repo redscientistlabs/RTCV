@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.flowPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pnBackForwardPage = new System.Windows.Forms.Panel();
             this.btnForward = new System.Windows.Forms.Button();
             this.btnBack = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.pnChangeLoadSave = new System.Windows.Forms.Panel();
             this.btnToggleSaveLoad = new System.Windows.Forms.Button();
             this.btnSaveLoad = new System.Windows.Forms.Button();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.pnBackForwardPage.SuspendLayout();
+            this.pnChangeLoadSave.SuspendLayout();
             this.SuspendLayout();
             // 
             // flowPanel
@@ -49,15 +49,15 @@
             this.flowPanel.Size = new System.Drawing.Size(150, 245);
             this.flowPanel.TabIndex = 0;
             // 
-            // panel1
+            // pnBackForwardPage
             // 
-            this.panel1.Controls.Add(this.btnForward);
-            this.panel1.Controls.Add(this.btnBack);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 250);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(150, 30);
-            this.panel1.TabIndex = 0;
+            this.pnBackForwardPage.Controls.Add(this.btnForward);
+            this.pnBackForwardPage.Controls.Add(this.btnBack);
+            this.pnBackForwardPage.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnBackForwardPage.Location = new System.Drawing.Point(0, 250);
+            this.pnBackForwardPage.Name = "pnBackForwardPage";
+            this.pnBackForwardPage.Size = new System.Drawing.Size(150, 30);
+            this.pnBackForwardPage.TabIndex = 0;
             // 
             // btnForward
             // 
@@ -94,15 +94,15 @@
             this.btnBack.UseVisualStyleBackColor = false;
             this.btnBack.Click += new System.EventHandler(this.BtnBack_Click);
             // 
-            // panel2
+            // pnChangeLoadSave
             // 
-            this.panel2.Controls.Add(this.btnToggleSaveLoad);
-            this.panel2.Controls.Add(this.btnSaveLoad);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(150, 35);
-            this.panel2.TabIndex = 1;
+            this.pnChangeLoadSave.Controls.Add(this.btnToggleSaveLoad);
+            this.pnChangeLoadSave.Controls.Add(this.btnSaveLoad);
+            this.pnChangeLoadSave.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnChangeLoadSave.Location = new System.Drawing.Point(0, 0);
+            this.pnChangeLoadSave.Name = "pnChangeLoadSave";
+            this.pnChangeLoadSave.Size = new System.Drawing.Size(150, 35);
+            this.pnChangeLoadSave.TabIndex = 1;
             // 
             // btnToggleSaveLoad
             // 
@@ -142,14 +142,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.pnBackForwardPage);
             this.Controls.Add(this.flowPanel);
-            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.pnChangeLoadSave);
             this.Margin = new System.Windows.Forms.Padding(1);
             this.Name = "SavestateList";
             this.Size = new System.Drawing.Size(150, 280);
-            this.panel1.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
+            this.pnBackForwardPage.ResumeLayout(false);
+            this.pnChangeLoadSave.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -157,10 +157,10 @@
         #endregion
 
         private System.Windows.Forms.FlowLayoutPanel flowPanel;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pnBackForwardPage;
         private System.Windows.Forms.Button btnBack;
         private System.Windows.Forms.Button btnForward;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel pnChangeLoadSave;
         private System.Windows.Forms.Button btnToggleSaveLoad;
         public System.Windows.Forms.Button btnSaveLoad;
     }

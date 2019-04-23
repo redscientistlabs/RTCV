@@ -263,6 +263,7 @@ namespace RTCV.UI.Components.Controls
                 }
 
                 StashKey sk = StockpileManager_UISide.SaveState();
+                StockpileManager_UISide.CurrentSavestateStashKey = sk;
 
                 //Replace if there'a already a sk
                 if (selectedHolder.sk != null)
