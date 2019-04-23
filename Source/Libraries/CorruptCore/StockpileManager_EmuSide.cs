@@ -12,11 +12,7 @@ namespace RTCV.CorruptCore
 	{
 
 
-		public static bool RenderAtLoad
-		{
-			get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.RENDER_AT_LOAD.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_AT_LOAD.ToString(), value);
-		}
+
 
 
 		public static BlastLayer CorruptBL = null;

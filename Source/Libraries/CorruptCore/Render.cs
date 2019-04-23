@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,10 +12,24 @@ namespace RTCV.CorruptCore
 {
 	public static class Render
 	{
-		public static bool IsRendering
+        public static bool RenderAtLoad
+        {
+            get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.RENDER_AT_LOAD.ToString()];
+            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_AT_LOAD.ToString(), value);
+        }
+
+        public static bool IsRendering
 		{
 			get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.RENDER_ISRENDERING.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_ISRENDERING.ToString(), value);
+			set
+            {
+                RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_ISRENDERING.ToString(), value);
+
+                if(value)//is rendering
+                {
+                    LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.UI_RENDER_DISPLAY, value);
+                }
+            }
 		}
 		
 		public static RENDERTYPE RenderType
@@ -51,7 +66,7 @@ namespace RTCV.CorruptCore
 
 		public static void StopRender()
 		{
-			IsRendering = true;
+			IsRendering = false;
 			LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RENDER_STOP, true);
 		}
 

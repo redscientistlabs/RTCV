@@ -111,16 +111,9 @@ namespace RTCV.UI
                     sks.Reverse();
                     StockpileManager_UISide.MergeStashkeys(sks);
 
-                    if (StockpileManager_EmuSide.RenderAtLoad && S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation)
-                    {
-                        //btnRender.Text = "Stop Render";
-                       // btnRender.ForeColor = Color.OrangeRed;
-                    }
-                    else
-                    {
-                       //btnRender.Text = "Start Render";
-                       //btnRender.ForeColor = Color.White;
-                    }
+                    if (Render.RenderAtLoad && S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation)
+                        Render.StartRender();
+
                     S.GET<RTC_StashHistory_Form>().RefreshStashHistory();
                     return;
                 }

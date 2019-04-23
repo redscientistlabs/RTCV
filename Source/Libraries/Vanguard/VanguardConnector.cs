@@ -20,9 +20,9 @@ namespace RTCV.Vanguard
         {
             receiver = _receiver;
 
-			LocalNetCoreRouter.registerEndpoint(this, "VANGUARD");
+			LocalNetCoreRouter.registerEndpoint(this, NetcoreCommands.VANGUARD);
             corruptConn = new CorruptCoreConnector();
-            LocalNetCoreRouter.registerEndpoint(corruptConn, "CORRUPTCORE");
+            LocalNetCoreRouter.registerEndpoint(corruptConn, NetcoreCommands.CORRUPTCORE);
 
 
 			if (receiver.Attached)//attached mode
@@ -43,7 +43,7 @@ namespace RTCV.Vanguard
 			}
 
             //netConn = LocalNetCoreRouter.registerEndpoint(new NetCoreConnector(netCoreSpec), "WGH");
-            LocalNetCoreRouter.registerEndpoint(netConn, "DEFAULT"); //Will send mesages to netcore if can't find the destination
+            LocalNetCoreRouter.registerEndpoint(netConn, NetcoreCommands.DEFAULT); //Will send mesages to netcore if can't find the destination
 
 		}
 

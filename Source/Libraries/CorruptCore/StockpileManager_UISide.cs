@@ -36,7 +36,7 @@ namespace RTCV.CorruptCore
 
 		private static void PostApplyStashkey()
 		{
-			if (StockpileManager_EmuSide.RenderAtLoad)
+			if (Render.RenderAtLoad)
 			{
 				Render.StartRender();
 			}
@@ -265,8 +265,8 @@ namespace RTCV.CorruptCore
 
 		public static bool LoadState(StashKey sk, bool reloadRom = true, bool applyBlastLayer = true)
 		{
-			LocalNetCoreRouter.QueryRoute<bool>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_LOADSTATE, new object[] {sk, true, applyBlastLayer}, true);
-			return true;
+			bool success = LocalNetCoreRouter.QueryRoute<bool>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_LOADSTATE, new object[] {sk, true, applyBlastLayer}, true);
+			return success;
 		}
 
 		public static StashKey SaveState(StashKey sk = null, bool threadSave = false)

@@ -36,8 +36,8 @@ namespace RTCV.UI
 			netCoreSpec.ServerDisconnected += NetCoreSpec_ServerConnectionLost;
 
 			netConn = new NetCoreConnector(netCoreSpec);
-			LocalNetCoreRouter.registerEndpoint(netConn, "VANGUARD");
-			LocalNetCoreRouter.registerEndpoint(netConn, "DEFAULT"); //Will send mesages to netcore if can't find the destination
+			LocalNetCoreRouter.registerEndpoint(netConn, NetcoreCommands.VANGUARD);
+			LocalNetCoreRouter.registerEndpoint(netConn, NetcoreCommands.DEFAULT); //Will send mesages to netcore if can't find the destination
 		}
 
 		private void NetCoreSpec_ServerConnectionLost(object sender, EventArgs e)
@@ -52,16 +52,6 @@ namespace RTCV.UI
 					S.GET<RTC_ConnectionStatus_Form>().lbConnectionStatus.Text = "Vanguard connection timed out";
                     UI_DefaultGrids.connectionStatus.LoadToMain();
 				}
-
-                //refactor to put save button in main window
-                /*
-				if (S.GET<RTC_GlitchHarvester_Form>() != null && !S.GET<RTC_GlitchHarvester_Form>().IsDisposed)
-				{
-					S.GET<RTC_GlitchHarvester_Form>().lbConnectionStatus.Text = "Connection status: Emulator timed out";
-					S.GET<RTC_GlitchHarvester_Form>().pnHideGlitchHarvester.BringToFront();
-					S.GET<RTC_GlitchHarvester_Form>().pnHideGlitchHarvester.Show();
-				}
-                */
 
 				S.GET<RTC_VmdAct_Form>().cbAutoAddDump.Checked = false;
                 GameProtection.WasAutoCorruptRunning = CorruptCore.CorruptCore.AutoCorrupt;

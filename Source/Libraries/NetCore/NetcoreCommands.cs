@@ -10,7 +10,8 @@ namespace RTCV.NetCore
 	{
 		public const string CORRUPTCORE = "CORRUPTCORE";
 		public const string VANGUARD = "VANGUARD";
-		public const string UI = "UI";
+        public const string DEFAULT = "DEFAULT";
+        public const string UI = "UI";
         public const string KILLSWITCH_PULSE = "KILLSWITCH_PULSE";
         public const string RESET_GAME_PROTECTION_IF_RUNNING = "RESET_GAME_PROTECTION_IF_RUNNING";
         
@@ -26,8 +27,9 @@ namespace RTCV.NetCore
 		
 		public const string REMOTE_RENDER_STOP = "REMOTE_RENDER_STOP";
 		public const string REMOTE_RENDER_START = "REMOTE_RENDER_START";
+        public const string UI_RENDER_DISPLAY = "UI_RENDER_DISPLAY";
 
-		public const string REMOTE_EVENT_DOMAINSUPDATED = "REMOTE_EVENT_DOMAINSUPDATED";
+        public const string REMOTE_EVENT_DOMAINSUPDATED = "REMOTE_EVENT_DOMAINSUPDATED";
 		public const string REMOTE_GETBLASTGENERATOR_LAYER = "REMOTE_GETBLASTGENERATOR_LAYER";
 		public const string ASYNCBLAST = "ASYNCBLAST";
 		public const string APPLYBLASTLAYER = "APPLYBLASTLAYER";

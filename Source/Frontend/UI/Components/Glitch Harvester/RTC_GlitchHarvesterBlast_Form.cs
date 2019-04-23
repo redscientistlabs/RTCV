@@ -26,10 +26,6 @@ namespace RTCV.UI
         public bool LoadOnSelect = true;
         public bool loadBeforeOperation = true;
 
-        public bool IsRendering = false; 
-        public bool RenderAtLoad = false;
-        public string RenderType = "";
-
         private bool isCorruptionApplied;
         public bool IsCorruptionApplied
         {
@@ -89,10 +85,10 @@ namespace RTCV.UI
             else if (ghMode == GlitchHarvesterMode.ORIGINAL)
                 IsCorruptionApplied = StockpileManager_UISide.OriginalFromStashkey(StockpileManager_UISide.CurrentStashkey);
 
-            if (StockpileManager_EmuSide.RenderAtLoad && loadBeforeOperation)
-                IsRendering = true;
+            if (Render.RenderAtLoad && loadBeforeOperation)
+                Render.IsRendering = true;
             else
-                IsRendering = false;
+                Render.IsRendering = false;
         }
 
         public void RedrawActionUI()
@@ -188,10 +184,10 @@ namespace RTCV.UI
                     IsCorruptionApplied = StockpileManager_UISide.OriginalFromStashkey(StockpileManager_UISide.CurrentStashkey);
                 }
 
-                if (StockpileManager_EmuSide.RenderAtLoad && loadBeforeOperation)
-                    IsRendering = true;
+                if (Render.RenderAtLoad && loadBeforeOperation)
+                    Render.IsRendering = true;
                 else
-                    IsRendering = false;
+                    Render.IsRendering = false;
 
                 Console.WriteLine("Blast done");
             }
@@ -206,11 +202,6 @@ namespace RTCV.UI
         private void btnOpenRenderFolder_Click(object sender, EventArgs e)
         {
             Process.Start(CorruptCore.CorruptCore.RtcDir + Path.DirectorySeparatorChar + "RENDEROUTPUT" + Path.DirectorySeparatorChar);
-        }
-
-        private void cbRenderAtLoad_CheckedChanged(object sender, EventArgs e)
-        {
-            StockpileManager_EmuSide.RenderAtLoad = RenderAtLoad;
         }
 
         private void BlastRawStash()
@@ -396,14 +387,14 @@ namespace RTCV.UI
                 Font = new Font("Segoe UI", 12)
             });
 
-            ((ToolStripMenuItem)ghSettingsMenu.Items.Add((IsRendering ? "Stop rendering" : "Start rendering"), null, new EventHandler((ob, ev) => {
+            ((ToolStripMenuItem)ghSettingsMenu.Items.Add((Render.IsRendering ? "Stop rendering" : "Start rendering"), null, new EventHandler((ob, ev) => {
 
-                if (IsRendering)
+                if (Render.IsRendering)
                     Render.StopRender();
                 else
                     Render.StartRender();
 
-            }))).Checked = IsRendering;
+            }))).Checked = Render.IsRendering;
 
             ghSettingsMenu.Items.Add("Open RENDEROUTPUT Folder", null, new EventHandler((ob, ev) => {
                 Process.Start(CorruptCore.CorruptCore.RtcDir + Path.DirectorySeparatorChar + "RENDEROUTPUT" + Path.DirectorySeparatorChar);
@@ -432,8 +423,8 @@ namespace RTCV.UI
             });
 
             ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Render file at load", null, new EventHandler((ob, ev) => {
-                RenderAtLoad = RenderAtLoad ^= true;
-            }))).Checked = RenderAtLoad;
+                Render.RenderAtLoad = Render.RenderAtLoad ^= true;
+            }))).Checked = Render.RenderAtLoad;
 
             
 
