@@ -38,10 +38,6 @@ namespace RTCV.Vanguard
             netCoreSpec.ClientConnected += NetCoreSpec_ClientConnected;
             netConn = new NetCoreConnector(netCoreSpec);
 
-            if (Environment.GetCommandLineArgs().Contains("-CONSOLE")){
-				NetCore.Extensions.ConsoleHelper.CreateConsole("log.txt");
-			}
-
             //netConn = LocalNetCoreRouter.registerEndpoint(new NetCoreConnector(netCoreSpec), "WGH");
             LocalNetCoreRouter.registerEndpoint(netConn, NetcoreCommands.DEFAULT); //Will send mesages to netcore if can't find the destination
 

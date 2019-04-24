@@ -122,18 +122,27 @@ namespace RTCV.NetCore
 				File.WriteAllText(emufile, getEmuInfo());
 
 				//Copying the log files
-				string emuLog = tempdebugdir + "\\EMU_LOG.txt";
-				lock (Extensions.ConsoleHelper.con.FileWriter)
+				if (AllSpec.CorruptCoreSpec?["RTCDIR"] is string rtcdir)
 				{
-					File.Copy(relativedir + "\\RTC\\EMU_LOG.txt", emuLog, true);
+					string rtcLog = rtcdir + "\\RTC_LOG.txt";
+					string rtcLogOutput = tempdebugdir + "\\RTC_LOG.txt";
+                    lock (Extensions.ConsoleHelper.con.FileWriter)
+					{
+						File.Copy(rtcLog, rtcLogOutput, true);
+					}
+                }
+
+				if (AllSpec.VanguardSpec?["EMUDIR"] is string emudir)
+				{
+					string emuLog = emudir + "\\EMU_LOG.txt";
+					string emuLogOutput = tempdebugdir + "\\EMU_LOG.txt";
+					lock (Extensions.ConsoleHelper.con.FileWriter)
+					{
+						File.Copy(emuLog, emuLogOutput, true);
+					}
 				}
 
 				//Copying the log files
-				string rtcLog = tempdebugdir + "\\RTC_LOG.txt";
-				lock (Extensions.ConsoleHelper.con.FileWriter)
-				{
-					File.Copy(relativedir + "\\RTC\\RTC_LOG.txt", rtcLog, true);
-				}
 
 				var path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "7z.dll");
 				SevenZip.SevenZipBase.SetLibraryPath(path);
