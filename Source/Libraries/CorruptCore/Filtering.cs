@@ -127,6 +127,7 @@ namespace RTCV.CorruptCore
 				}
 				catch (Exception e)
 				{
+                    Console.Write(e);
 					MessageBox.Show("Error reading list " + Path.GetFileName(path) + ". Error at line " + (i+1) + ".\nValue: " + t + "\n. Valid format is a list of raw byte values.");
 					break;
 				}

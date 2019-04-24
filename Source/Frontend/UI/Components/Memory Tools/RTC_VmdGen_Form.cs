@@ -66,7 +66,8 @@ namespace RTCV.UI
 			}
 			catch (FormatException e)
 			{
-				return -1;
+                Console.Write(e);
+                return -1;
 			}
 		}
 

@@ -36,7 +36,7 @@ namespace RTCV.UI.Components.Controls
             get => numPerPage;
         }
 
-        private BindingSource pagedSource;
+        //private BindingSource pagedSource;
 
         private BindingSource _DataSource;
 

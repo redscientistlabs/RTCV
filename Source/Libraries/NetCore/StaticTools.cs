@@ -15,7 +15,7 @@ namespace RTCV.NetCore.StaticTools
 	//Call or create a singleton using class type
 	public static class S
 	{
-		static Dictionary<Type, object> instances = new Dictionary<Type, object>();
+		static readonly Dictionary<Type, object> instances = new Dictionary<Type, object>();
 
 		public static FormRegister formRegister = new FormRegister();
 

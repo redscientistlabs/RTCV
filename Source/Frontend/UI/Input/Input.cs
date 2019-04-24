@@ -31,7 +31,7 @@ namespace RTCV.UI.Input
 			if (types.HasFlag(InputFocus.Mouse) && !wants) WantingMouseFocus.Remove(c);
 		}
 
-		HashSet<System.Windows.Forms.Control> WantingMouseFocus = new HashSet<System.Windows.Forms.Control>();
+        readonly HashSet<System.Windows.Forms.Control> WantingMouseFocus = new HashSet<System.Windows.Forms.Control>();
 
 		[Flags]
 		public enum ModifierKey

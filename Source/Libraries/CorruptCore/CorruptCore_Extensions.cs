@@ -121,6 +121,7 @@ namespace RTCV.CorruptCore
 				}
 				catch (FormatException e)
 				{
+                    Console.Write(e);
 					return null;
 				}
 
@@ -153,6 +154,7 @@ namespace RTCV.CorruptCore
 				}
 				catch (FormatException e)
 				{
+                    Console.Write(e);
 					return null;
 				}
 				
@@ -424,7 +426,8 @@ namespace RTCV.CorruptCore
 					return outArray;
 				}
 			}
-			return null;
+
+			//return null;
 		}
 
 		private static decimal Mod(decimal x, long m)
@@ -968,7 +971,7 @@ namespace RTCV.CorruptCore
 			private set;
 		}
 
-		static bool NeedToRelease;
+		//static bool NeedToRelease;
 		static string SkipEverythingButProgramInCommandLine(string cmdLine)
 		{
 			//skip past the program name. can anyone think of a better way to do this?

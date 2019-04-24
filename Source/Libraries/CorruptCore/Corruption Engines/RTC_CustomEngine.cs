@@ -685,7 +685,7 @@ namespace RTCV.CorruptCore
 								}catch(ArgumentException e)
 								{
 									throw new Exception("Couldn't convert " + t.ToString() +
-										" to " + type.Name + "! Something is wrong with your template.");
+										" to " + type.Name + "! Something is wrong with your template.", e);
 								}
 							}
 							else

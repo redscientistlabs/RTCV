@@ -58,9 +58,12 @@ namespace RTCV.UI
 
 
 
-            cfForm = new UI_CanvasForm();
-            cfForm.TopLevel = false;
-            cfForm.Dock = DockStyle.Fill;
+            cfForm = new UI_CanvasForm
+            {
+                TopLevel = false,
+                Dock = DockStyle.Fill
+            };
+
             this.Controls.Add(cfForm);
             cfForm.Location = new Point(0, pnTopBar.Size.Height);
             cfForm.Show();
@@ -199,7 +202,7 @@ This message only appears once.";
             Form mdForm = S.GET<RTC_MemoryDomains_Form>();
             Form ceForm = S.GET<RTC_CorruptionEngine_Form>();
             Form ghbForm = S.GET<RTC_GlitchHarvesterBlast_Form>();
-            Form ghiForm = S.GET<RTC_GlitchHarvesterIntensity_Form>();
+            //Form ghiForm = S.GET<RTC_GlitchHarvesterIntensity_Form>();
             Form ssmForm = S.GET<RTC_SavestateManager_Form>();
             Form shForm = S.GET<RTC_StashHistory_Form>();
             Form spmForm = S.GET<RTC_StockpileManager_Form>();

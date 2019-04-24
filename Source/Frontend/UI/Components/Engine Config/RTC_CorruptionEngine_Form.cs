@@ -21,7 +21,7 @@ namespace RTCV.UI
 		public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
 		public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-		private int defaultPrecision = -1;
+		//private int defaultPrecision = -1;
 		private bool updatingMinMax = false;
 
 

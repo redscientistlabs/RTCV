@@ -19,7 +19,7 @@ namespace RTCV.UI
 		public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
 		public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-		long currentDomainSize = 0;
+		//long currentDomainSize = 0;
 
 		public RTC_ListGen_Form()
 		{

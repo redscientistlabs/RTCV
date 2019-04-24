@@ -35,8 +35,8 @@ namespace RTCV.UI
 
 
 		
-		Guid? errorDelayToken = null;
-		Guid? intensityToken = null;
+		//Guid? errorDelayToken = null;
+		//Guid? intensityToken = null;
 
 
 		private void cbBlastRadius_SelectedIndexChanged(object sender, EventArgs e)

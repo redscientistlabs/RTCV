@@ -277,6 +277,7 @@ namespace RTCV.CorruptCore
 			}
 			catch(Exception e)
 			{
+                Console.Write(e);
 				MessageBox.Show("Unable to empty the stockpile folder. There's probably something locking a file inside it (iso based game loaded?)\n. Your stockpile is saved, but your current session is bunk.\nRe-load the file");
 			}
 			foreach (string file in Directory.GetFiles(CorruptCore.workingDir + Path.DirectorySeparatorChar + "TEMP"))
@@ -287,6 +288,7 @@ namespace RTCV.CorruptCore
 				}
 				catch (Exception e)
 				{
+                    Console.Write(e);
 					MessageBox.Show("Unable to move " + Path.GetFileName(file) +
 						"to SKS. Your stockpile should be saved.\n" +
 						"If you're seeing this error, that means the file is probably in use. If it is, everything should technically be fine assuming it's the same file.\n" +
@@ -542,7 +544,8 @@ namespace RTCV.CorruptCore
 				//If it errors out, empty the folder
 				EmptyFolder(folder);
 				throw new CustomException("The file could not be read properly", e.Message + "\n" + e.StackTrace);
-				return false;
+
+                //return false; this code can never be reached
 			}
 		}
 

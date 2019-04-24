@@ -190,36 +190,36 @@ namespace RTCV.UI
 		{
 			try
 			{
-				if (row.Cells["dgvDomain"] is DataGridViewComboBoxCell)
-				{
-					DataGridViewComboBoxCell cell = (DataGridViewComboBoxCell)row.Cells["dgvDomain"];
-					object currentValue = cell.Value;
+                if (row.Cells["dgvDomain"] is DataGridViewComboBoxCell cell)
+                {
+                    object currentValue = cell.Value;
 
-					cell.Value = null;
-					cell.Items.Clear();
+                    cell.Value = null;
+                    cell.Items.Clear();
 
-					foreach (string domain in domains)
-					{
-						cell.Items.Add(domain);
-					}
+                    foreach (string domain in domains)
+                    {
+                        cell.Items.Add(domain);
+                    }
 
 
-					if (currentValue != null && cell.Items.Contains(currentValue))
-						cell.Value = currentValue;
-					else if (cell.Items.Count > 0)
-						cell.Value = cell.Items[0];
-					else
-						cell.Value = null;
+                    if (currentValue != null && cell.Items.Contains(currentValue))
+                        cell.Value = currentValue;
+                    else if (cell.Items.Count > 0)
+                        cell.Value = cell.Items[0];
+                    else
+                        cell.Value = null;
 
-				}
+                }
 
-				UpdateAddressRange(row);
+                UpdateAddressRange(row);
 
 				return true;
 			}
 			catch (Exception ex)
 			{
-				throw;
+                Console.Write(ex);
+                throw;
 			}
 		}
 
@@ -244,34 +244,33 @@ namespace RTCV.UI
 
 		private static void PopulateModeCombobox(DataGridViewRow row)
 		{
-			DataGridViewComboBoxCell cell = row.Cells["dgvMode"] as DataGridViewComboBoxCell;
 
-			if (cell != null)
-			{
-				cell.Value = null;
-				cell.Items.Clear();
+            if (row.Cells["dgvMode"] is DataGridViewComboBoxCell cell)
+            {
+                cell.Value = null;
+                cell.Items.Clear();
 
 
-				switch (row.Cells["dgvType"].Value.ToString())
-				{
-					case "Value":
-						foreach (BGValueModes type in Enum.GetValues(typeof(BGValueModes)))
-						{
-							cell.Items.Add(type.ToString());
-						}
-						break;
-					case "Store":
-						foreach (BGStoreModes type in Enum.GetValues(typeof(BGStoreModes)))
-						{
-							cell.Items.Add(type.ToString());
-						}
-						break;
-					default:
-						break;
-				}
-				cell.Value = cell.Items[0];
-			}
-		}
+                switch (row.Cells["dgvType"].Value.ToString())
+                {
+                    case "Value":
+                        foreach (BGValueModes type in Enum.GetValues(typeof(BGValueModes)))
+                        {
+                            cell.Items.Add(type.ToString());
+                        }
+                        break;
+                    case "Store":
+                        foreach (BGStoreModes type in Enum.GetValues(typeof(BGStoreModes)))
+                        {
+                            cell.Items.Add(type.ToString());
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                cell.Value = cell.Items[0];
+            }
+        }
 
 		private void btnJustCorrupt_Click(object sender, EventArgs e)
 		{
@@ -570,7 +569,8 @@ namespace RTCV.UI
 			}
 			catch (Exception ex)
 			{
-				throw;
+                Console.Write(ex);
+                throw;
 			}
 		}
 
@@ -717,7 +717,8 @@ namespace RTCV.UI
 							"Are you sure you don't have an invalid domain selected?\n" +
 							"Make sure any VMDs are loaded and you have the correct core loaded in Bizhawk\n" +
 							ex.ToString() + ex.StackTrace);
-				return false;
+
+				//return false; this will never be reached
 			}
 		}
 
