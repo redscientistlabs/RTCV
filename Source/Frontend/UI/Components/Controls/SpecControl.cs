@@ -1,55 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RTCV.UI.Components.Controls
 {
+
     public abstract class SpecControl<T> : UserControl where T : new()
     {
-        internal SpecControl<T> _parent;
-
-        private T _Value;
-        internal bool FirstLoadDone;
         internal bool GeneralUpdateFlag = false; //makes other events ignore firing
-
-        internal bool initialized;
-
-        internal List<SpecControl<T>> slaveComps = new List<SpecControl<T>>();
         internal Timer updater;
         internal int updateThreshold = 50;
+        internal bool FirstLoadDone = false;
+
+        internal List<SpecControl<T>> slaveComps = new List<SpecControl<T>>();
+        internal SpecControl<T> _parent = null;
+
+        public event EventHandler<ValueUpdateEventArgs<T>> ValueChanged;
+        public virtual void OnValueChanged(ValueUpdateEventArgs<T> e) => ValueChanged?.Invoke(this, e);
+
+        internal T _Value;
+
+        internal bool initialized = false;
+
+        [Description("Net value of the control"), Category("Data")]
+        public T Value
+        {
+            get { return _Value; }
+            set
+            {
+                if (!initialized)
+                {
+                    _Value = value;
+                    UpdateAllControls(value, null);
+                    initialized = true;
+                    return;
+                }
+                _Value = value;
+            }
+        }
 
         public SpecControl()
         {
             updater = new Timer();
             updater.Interval = updateThreshold;
             updater.Tick += Updater_Tick;
-            Load += SpecControl_Load;
-        }
-
-        [Description("Net value of the control")]
-        [Category("Data")]
-        public T Value
-        {
-            get => _Value;
-            set
-            {
-                if (!initialized)
-                {
-                    UpdateAllControls(value, null);
-                    initialized = true;
-                    return;
-                }
-
-                _Value = value;
-            }
-        }
-
-        public event EventHandler<ValueUpdateEventArgs<T>> ValueChanged;
-
-        public virtual void OnValueChanged(ValueUpdateEventArgs<T> e)
-        {
-            ValueChanged?.Invoke(this, e);
+            this.Load += SpecControl_Load;
         }
 
         internal abstract void UpdateAllControls(T value, Control setter, bool ignore = false);
@@ -73,7 +74,7 @@ namespace RTCV.UI.Components.Controls
 
         internal void PropagateValue(T value, Control setter)
         {
-            UpdateAllControls(value, setter, true);
+            UpdateAllControls(value, setter);
             Value = value;
             updater.Stop();
             updater.Start();

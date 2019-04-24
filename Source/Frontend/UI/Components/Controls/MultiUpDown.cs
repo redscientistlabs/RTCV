@@ -66,6 +66,7 @@ namespace RTCV.UI.Components.Controls
             if (setter != this || ignore)
             {
                 updown.Value = value;
+                _Value = value;
 
                 foreach (var slave in slaveComps)
                     slave.UpdateAllControls(value, this);
@@ -78,10 +79,12 @@ namespace RTCV.UI.Components.Controls
             GeneralUpdateFlag = false;
         }
 
-        public void registerSlave(MultiUpDown comp)
+        public void registerSlave(MultiUpDown comp, EventHandler<ValueUpdateEventArgs<decimal>> valueChangedHandler = null)
         {
             comp.Minimum = this.Minimum;
             comp.Maximum = this.Maximum;
+            if (valueChangedHandler != null)
+                comp.ValueChanged += valueChangedHandler;
             base.registerSlave(comp);
         }
 

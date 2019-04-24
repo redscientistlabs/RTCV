@@ -28,14 +28,15 @@ namespace RTCV.UI
 
 			Load += RTC_SettingRerollForm_Load;
 
-			nmMaxInfiniteStepUnits.registerSlave(S.GET<RTC_CorruptionEngine_Form>().updownMaxCheats);
-			nmMaxInfiniteStepUnits.registerSlave(S.GET<RTC_CorruptionEngine_Form>().updownMaxFreeze);
-			nmMaxInfiniteStepUnits.registerSlave(S.GET<RTC_CorruptionEngine_Form>().updownMaxPipes);
-			nmMaxInfiniteStepUnits.registerSlave(S.GET<RTC_CustomEngineConfig_Form>().updownMaxInfiniteUnits);
-			nmMaxInfiniteStepUnits.ValueChanged += nmMaxInfiniteStepUnits_ValueChanged;
+            var handler = new EventHandler<Components.Controls.ValueUpdateEventArgs<decimal>>(nmMaxInfiniteStepUnits_ValueChanged);
+            nmMaxInfiniteStepUnits.ValueChanged += handler;
+            nmMaxInfiniteStepUnits.registerSlave(S.GET<RTC_CorruptionEngine_Form>().updownMaxCheats, handler);
+            nmMaxInfiniteStepUnits.registerSlave(S.GET<RTC_CorruptionEngine_Form>().updownMaxFreeze, handler);
+            nmMaxInfiniteStepUnits.registerSlave(S.GET<RTC_CorruptionEngine_Form>().updownMaxPipes, handler);
+            nmMaxInfiniteStepUnits.registerSlave(S.GET<RTC_CustomEngineConfig_Form>().updownMaxInfiniteUnits, handler);
 
 
-			cbRerollAddress.Checked = CorruptCore.CorruptCore.RerollAddress;
+            cbRerollAddress.Checked = CorruptCore.CorruptCore.RerollAddress;
 			cbRerollSourceAddress.Checked = CorruptCore.CorruptCore.RerollSourceAddress;
 
 			cbRerollDomain.Checked = CorruptCore.CorruptCore.RerollDomain;
