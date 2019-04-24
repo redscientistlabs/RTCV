@@ -1745,48 +1745,47 @@ namespace RTCV.UI
 		}
 
 
-		private void ShiftBlastLayer(decimal amount, string column, List<DataGridViewRow> rows, bool shiftDown)
-		{
-			foreach (DataGridViewRow row in rows) 
-			{
-				var cell = row.Cells[column];
+        private void ShiftBlastLayer(decimal amount, string column, List<DataGridViewRow> rows, bool shiftDown)
+        {
+            foreach (DataGridViewRow row in rows)
+            {
+                var cell = row.Cells[column];
 
-				//Can't use a switch statement because tostring is evaluated at runtime
-				if (cell is DataGridViewNumericUpDownCell u)
-					{
-						if (shiftDown)
-							{
-								if ((Convert.ToInt64(u.Value) - amount) >= 0)
-									u.Value = Convert.ToInt64(u.Value) - amount;
-								else
-									u.Value = 0;
-						}
-						else
-						{
-							if ((Convert.ToInt64(u.Value) + amount) <= u.Maximum)
-								u.Value = Convert.ToInt64(u.Value) + amount;
-							else
-								u.Value = u.Maximum;
-						}
-					}
-					else if (cell.OwningColumn.Name == BuProperty.ValueString.ToString())
-					{
-					if (shiftDown)
-						amount = 0 - amount;
-						int precision = (int)row.Cells[BuProperty.Precision.ToString()].Value;
-						cell.Value = getShiftedHexString((string)cell.Value, amount, precision);
-					}
-					else
-					{
-						throw new NotImplementedException("Invalid column type.");
-					}
+                //Can't use a switch statement because tostring is evaluated at runtime
+                if (cell is DataGridViewNumericUpDownCell u)
+                {
+                    if (shiftDown)
+                    {
+                        if ((Convert.ToInt64(u.Value) - amount) >= 0)
+                            u.Value = Convert.ToInt64(u.Value) - amount;
+                        else
+                            u.Value = 0;
+                    }
+                    else
+                    {
+                        if ((Convert.ToInt64(u.Value) + amount) <= u.Maximum)
+                            u.Value = Convert.ToInt64(u.Value) + amount;
+                        else
+                            u.Value = u.Maximum;
+                    }
+                }
+                else if (cell.OwningColumn.Name == BuProperty.ValueString.ToString())
+                {
+                    var _amount = shiftDown ? 0 - amount : amount;
+                    int precision = (int)row.Cells[BuProperty.Precision.ToString()].Value;
+                    cell.Value = getShiftedHexString((string)cell.Value, _amount, precision);
+                }
+                else
+                {
+                    throw new NotImplementedException("Invalid column type.");
+                }
 
-				}
-			dgvBlastEditor.Refresh();
-			UpdateBottom();
-		}
+            }
+            dgvBlastEditor.Refresh();
+            UpdateBottom();
+        }
 
-		private string getShiftedHexString(string value, decimal amount, int precision)
+        private string getShiftedHexString(string value, decimal amount, int precision)
 		{
 			//Convert the string we have into a byte array
 			var valueBytes= CorruptCore_Extensions.StringToByteArrayPadLeft(value, precision);
