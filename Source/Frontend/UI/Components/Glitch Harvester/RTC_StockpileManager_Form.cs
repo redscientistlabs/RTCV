@@ -381,7 +381,7 @@ namespace RTCV.UI
 
 
             Stockpile sks = new Stockpile(dgvStockpile);
-            if (Stockpile.Save(sks))
+            if (Stockpile.Save(sks, false, CompressStockpiles))
             {
                 sendCurrentStockpileToSKS();
                 btnSaveStockpile.Enabled = true;
@@ -395,7 +395,7 @@ namespace RTCV.UI
         {
 
             Stockpile sks = new Stockpile(dgvStockpile);
-            if (Stockpile.Save(sks, true))
+            if (Stockpile.Save(sks, true, CompressStockpiles))
                 sendCurrentStockpileToSKS();
 
             UnsavedEdits = false;
