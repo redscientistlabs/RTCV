@@ -83,6 +83,8 @@ namespace RTCV.UI.Components.Controls
         {
             comp.Minimum = this.Minimum;
             comp.Maximum = this.Maximum;
+            comp.Value = this.Value;
+
             if (valueChangedHandler != null)
                 comp.ValueChanged += valueChangedHandler;
             base.registerSlave(comp);

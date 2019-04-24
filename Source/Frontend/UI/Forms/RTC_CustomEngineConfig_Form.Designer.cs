@@ -994,7 +994,7 @@
             0,
             0});
             this.updownMaxInfiniteUnits.Minimum = new decimal(new int[] {
-            0,
+            1,
             0,
             0,
             0});
@@ -1003,7 +1003,7 @@
             this.updownMaxInfiniteUnits.TabIndex = 193;
             this.updownMaxInfiniteUnits.Tag = "color:dark1";
             this.updownMaxInfiniteUnits.Value = new decimal(new int[] {
-            0,
+            50,
             0,
             0,
             0});

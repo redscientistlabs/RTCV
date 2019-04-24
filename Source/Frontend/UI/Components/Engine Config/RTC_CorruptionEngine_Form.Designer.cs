@@ -464,7 +464,7 @@
             0,
             0});
             this.updownMaxPipes.Minimum = new decimal(new int[] {
-            0,
+            1,
             0,
             0,
             0});
@@ -473,7 +473,7 @@
             this.updownMaxPipes.TabIndex = 142;
             this.updownMaxPipes.Tag = "color:normal";
             this.updownMaxPipes.Value = new decimal(new int[] {
-            0,
+            50,
             0,
             0,
             0});
@@ -693,7 +693,7 @@
             0,
             0});
             this.updownMaxFreeze.Minimum = new decimal(new int[] {
-            0,
+            1,
             0,
             0,
             0});
@@ -702,7 +702,7 @@
             this.updownMaxFreeze.TabIndex = 142;
             this.updownMaxFreeze.Tag = "color:normal";
             this.updownMaxFreeze.Value = new decimal(new int[] {
-            0,
+            50,
             0,
             0,
             0});
@@ -822,7 +822,7 @@
             0,
             0});
             this.updownMaxCheats.Minimum = new decimal(new int[] {
-            0,
+            1,
             0,
             0,
             0});
@@ -831,7 +831,7 @@
             this.updownMaxCheats.TabIndex = 140;
             this.updownMaxCheats.Tag = "color:normal";
             this.updownMaxCheats.Value = new decimal(new int[] {
-            0,
+            50,
             0,
             0,
             0});
