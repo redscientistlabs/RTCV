@@ -431,6 +431,7 @@
             this.btnManualBlast.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnManualBlast.UseVisualStyleBackColor = false;
             this.btnManualBlast.Click += new System.EventHandler(this.btnManualBlast_Click);
+            this.btnManualBlast.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BtnManualBlast_MouseDown);
             // 
             // btnAutoCorrupt
             // 

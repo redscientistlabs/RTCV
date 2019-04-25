@@ -460,5 +460,75 @@ This message only appears once.";
                     break;
                 }
         }
+        private void BlastRawStash()
+        {
+            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.ASYNCBLAST, true);
+            S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw_Click(null, null);
+        }
+
+
+        int manualBlastRightClickCount = 0;
+        System.Windows.Forms.Timer testErrorTimer = null;
+        private void BtnManualBlast_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                if (testErrorTimer == null && !RTCV.NetCore.Params.IsParamSet("DEBUG_FETCHMODE"))
+                {
+                    testErrorTimer = new System.Windows.Forms.Timer();
+                    testErrorTimer.Interval = 3000;
+                    testErrorTimer.Tick += TestErrorTimer_Tick;
+                    testErrorTimer.Start();
+                }
+
+                manualBlastRightClickCount++;
+
+                Point locate = e.GetMouseLocation(sender);
+
+                ContextMenuStrip columnsMenu = new ContextMenuStrip();
+                columnsMenu.Items.Add("Blast + Send RAW To Stash (Glitch Harvester)", null, new EventHandler((ob, ev) =>
+                {
+                    BlastRawStash();
+                }));
+
+                if (RTCV.NetCore.Params.IsParamSet("DEBUG_FETCHMODE") || manualBlastRightClickCount > 2)
+                {
+                    columnsMenu.Items.Add("Open Debug window", null, new EventHandler((ob, ev) =>
+                    {
+                        error();
+                    }));
+                }
+
+                columnsMenu.Show(this, locate);
+            }
+
+        }
+
+        private void error()
+        {
+            //SECRET CRASH DONT TELL ANYONE
+            //Trigger: Hold Manual Blast for 7 seconds
+            //Purpose: Testing debug window
+            var ex = new CustomException("SECRET CRASH DONT TELL ANYONE",
+"───────▄▀▀▀▀▀▀▀▀▀▀▄▄" + Environment.NewLine + "────▄▀▀─────────────▀▄" + Environment.NewLine + "──▄▀──────────────────▀▄" + Environment.NewLine +
+"──█─────────────────────▀▄" + Environment.NewLine + "─▐▌────────▄▄▄▄▄▄▄───────▐▌" + Environment.NewLine + "─█───────────▄▄▄▄──▀▀▀▀▀──█" + Environment.NewLine +
+"▐▌───────▀▀▀▀─────▀▀▀▀▀───▐▌" + Environment.NewLine + "█─────────▄▄▀▀▀▀▀────▀▀▀▀▄─█" + Environment.NewLine + "█────────────────▀───▐─────▐▌" +
+Environment.NewLine + "▐▌─────────▐▀▀██▄──────▄▄▄─▐▌" + Environment.NewLine + "─█───────────▀▀▀──────▀▀██──█" + Environment.NewLine + "─▐▌────▄─────────────▌──────█" + Environment.NewLine + "──▐▌──▐──────────────▀▄─────█" +
+Environment.NewLine + "───█───▌────────▐▀────▄▀───▐▌" + Environment.NewLine + "───▐▌──▀▄────────▀─▀─▀▀───▄▀" + Environment.NewLine + "───▐▌──▐▀▄────────────────█" + Environment.NewLine + "───▐▌───▌─▀▄────▀▀▀▀▀▀───█" + Environment.NewLine +
+"───█───▀────▀▄──────────▄▀" + Environment.NewLine + "──▐▌──────────▀▄──────▄▀" + Environment.NewLine +
+"─▄▀───▄▀────────▀▀▀▀█▀" + Environment.NewLine + "▀───▄▀──────────▀───▀▀▀▀▄▄▄▄▄"
+            );
+
+            Form error = new RTCV.NetCore.CloudDebug(ex, true);
+            var result = error.ShowDialog();
+        }
+
+        private void TestErrorTimer_Tick(object sender, EventArgs e)
+        {
+            testErrorTimer?.Stop();
+            testErrorTimer = null;
+            manualBlastRightClickCount = 0;
+        }
+
     }
 }
