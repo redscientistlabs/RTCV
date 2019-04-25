@@ -586,7 +586,7 @@ namespace RTCV.UI
 
 			if (temp != null && cbSelectedMemoryDomain.Items.Contains(temp))
 				cbSelectedMemoryDomain.SelectedItem = temp;
-			else
+			else if(cbSelectedMemoryDomain.Items.Count > 0)
 				cbSelectedMemoryDomain.SelectedIndex = 0;
 		}
 
