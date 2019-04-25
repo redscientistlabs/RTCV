@@ -217,7 +217,7 @@ namespace RTCV.UI
         {
             string value = "";
 
-            if (GetInputBox("Glitch Harvester", "Enter the new Stash name:", ref value) == DialogResult.OK)
+            if (GetInputBox("Glitch Harvester", "Enter the new Stash name:", ref value) == DialogResult.OK && !String.IsNullOrWhiteSpace(value))
             {
                 sk.Alias = value.Trim();
             }
