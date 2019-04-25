@@ -113,9 +113,29 @@ namespace RTCV.CorruptCore
 				return domain;
 		}
 
-		public static void GenerateVmdFromStashkey(StashKey sk)
+
+        public static VmdPrototype GetVmdPrototypeFromBlastlayer(BlastLayer bl)
+        {
+            //If the BL references a VMD that doesn't exist, return null
+            if (bl.Layer.Any(x => MemoryDomains.GetInterface(x.Domain) == null))
+                return null;
+
+            VmdPrototype proto = new VmdPrototype();
+            proto.VmdName = CorruptCore.GetRandomKey();
+            proto.GenDomain = "Hybrid";
+
+            BlastUnit bu = bl.Layer[0];
+            MemoryInterface mi = MemoryDomains.GetInterface(bu.Domain);
+            proto.BigEndian = mi.BigEndian;
+            proto.WordSize = mi.WordSize;
+            proto.SuppliedBlastLayer = bl;
+            return proto;
+        }
+        public static void GenerateVmdFromStashkey(StashKey sk)
 		{
-			VmdPrototype proto = new VmdPrototype(sk.BlastLayer);
+			VmdPrototype proto = GetVmdPrototypeFromBlastlayer(sk.BlastLayer);
+            if (proto == null)
+                MessageBox.Show("The resulting layer was empty or contained invalid data (unloaded VMD?)");
 			AddVMD(proto);
 		}
 
@@ -325,7 +345,7 @@ namespace RTCV.CorruptCore
 		}
 	}
 
-	[XmlInclude(typeof(BlastLayer))]
+    [XmlInclude(typeof(BlastLayer))]
 	[XmlInclude(typeof(BlastUnit))]
 	[Serializable]
 	[Ceras.MemberConfig(TargetMember.All)]
@@ -352,19 +372,7 @@ namespace RTCV.CorruptCore
 
 		}
 
-		public VmdPrototype(BlastLayer bl)
-		{
-			VmdName = CorruptCore.GetRandomKey();
-			GenDomain = "Hybrid";
-
-			BlastUnit bu = bl.Layer[0];
-			MemoryInterface mi = MemoryDomains.GetInterface(bu.Domain);
-			BigEndian = mi.BigEndian;
-			WordSize = mi.WordSize;
-			SuppliedBlastLayer = bl;
-		}
-
-		public VirtualMemoryDomain Generate()
+        public VirtualMemoryDomain Generate()
 		{
 			VirtualMemoryDomain VMD = new VirtualMemoryDomain
 			{
