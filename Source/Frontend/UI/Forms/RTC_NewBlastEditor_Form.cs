@@ -1827,8 +1827,11 @@ namespace RTCV.UI
         {
             DialogResult lastAnswer = DialogResult.Ignore;
 
-            while(lastAnswer != DialogResult.Cancel && currentSK.BlastLayer.Layer.Count > 1)
+            while(lastAnswer != DialogResult.Cancel && currentSK?.BlastLayer?.Layer?.Count > 1)
             {
+                if (currentSK?.BlastLayer?.Layer == null)
+                    return;
+
                 switch(lastAnswer)
                 {
                     case DialogResult.Ignore:
@@ -1847,7 +1850,7 @@ namespace RTCV.UI
                 btnDisable50_Click(null, null);
                 btnLoadCorrupt_Click(null, null);
 
-                if (currentSK.BlastLayer.Layer.Count == 1)
+                if (currentSK?.BlastLayer?.Layer?.Count == 1)
                     return;
 
                 lastAnswer = MessageBox.Show(@"Is the effect you are looking for still present?", "BlastLayer sanitization", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
