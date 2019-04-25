@@ -34,7 +34,8 @@ namespace RTCV.UI
 			cbSelectedMemoryDomain.Items.Clear();
 			cbSelectedMemoryDomain.Items.AddRange(MemoryDomains.MemoryInterfaces.Keys.Where(it => !it.Contains("[V]")).ToArray());
 
-			cbSelectedMemoryDomain.SelectedIndex = 0;
+            if(cbSelectedMemoryDomain.Items.Count > 0)
+                cbSelectedMemoryDomain.SelectedIndex = 0;
 		}
 
 		private void cbSelectedMemoryDomain_SelectedIndexChanged(object sender, EventArgs e)
@@ -74,9 +75,8 @@ namespace RTCV.UI
 		private void btnGenerateVMD_Click(object sender, EventArgs e) => GenerateVMD();
 
 		private bool GenerateVMD()
-		{
-
-			if (string.IsNullOrWhiteSpace(cbSelectedMemoryDomain.SelectedItem?.ToString()) || !MemoryDomains.MemoryInterfaces.ContainsKey(cbSelectedMemoryDomain.SelectedItem.ToString()))
+        {
+            if (string.IsNullOrWhiteSpace(cbSelectedMemoryDomain.SelectedItem?.ToString()) || !MemoryDomains.MemoryInterfaces.ContainsKey(cbSelectedMemoryDomain.SelectedItem.ToString()))
 			{
 				cbSelectedMemoryDomain.Items.Clear();
 				return false;
@@ -88,7 +88,7 @@ namespace RTCV.UI
 				return false;
 			}
 
-			MemoryInterface mi = MemoryDomains.MemoryInterfaces[cbSelectedMemoryDomain.SelectedItem.ToString()];
+            MemoryInterface mi = MemoryDomains.MemoryInterfaces[cbSelectedMemoryDomain.SelectedItem.ToString()];
 			VirtualMemoryDomain VMD = new VirtualMemoryDomain();
 			VmdPrototype proto = new VmdPrototype();
 
