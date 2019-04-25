@@ -441,6 +441,7 @@ namespace RTCV.UI
             UnsavedEdits = true;
 
             StockpileManager_UISide.StockpileChanged();
+            S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
         }
 
         private void btnStockpileMoveSelectedDown_Click(object sender, EventArgs e)
@@ -476,6 +477,7 @@ namespace RTCV.UI
             UnsavedEdits = true;
 
             StockpileManager_UISide.StockpileChanged();
+            S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
         }
 
         private void dgvStockpile_DragDrop(object sender, DragEventArgs e)
