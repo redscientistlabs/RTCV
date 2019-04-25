@@ -55,10 +55,10 @@ namespace RTCV.UI.Modular
                         Text = "Advanced Memory Tools",
                     };
 
-                    ecGrid.SetTileForm(gpForm, 0, 0, 5, 5);
-                    ecGrid.SetTileForm(ceForm, 5, 0, 10, 5);
-                    ecGrid.SetTileForm(mdForm, 0, 5, 5, 7);
-                    ecGrid.SetTileForm(UICore.mtForm, 5, 5, 10, 7);
+                    ecGrid.SetTileForm(gpForm, 0, 0, 5, 5, true);
+                    ecGrid.SetTileForm(ceForm, 5, 0, 10, 5, true);
+                    ecGrid.SetTileForm(mdForm, 0, 5, 5, 7, true);
+                    ecGrid.SetTileForm(UICore.mtForm, 5, 5, 10, 7, true);
 
                     _engineConfig = ecGrid;
                 }
@@ -108,7 +108,7 @@ namespace RTCV.UI.Modular
                 {
 
                     var ghGrid = new CanvasGrid(20, 12, "Glitch Harvester");
-
+                    ghGrid.isResizable = true;
 
 
                     Form ghbForm = S.GET<RTC_GlitchHarvesterBlast_Form>();
@@ -117,11 +117,11 @@ namespace RTCV.UI.Modular
                     Form shForm = S.GET<RTC_StashHistory_Form>();
                     Form spmForm = S.GET<RTC_StockpileManager_Form>();
 
-                    ghGrid.SetTileForm(ghbForm, 0, 0, 4, 4);
-                    ghGrid.SetTileForm(ssmForm, 0, 4, 4, 8);
-                    ghGrid.SetTileForm(ghiForm, 4, 0, 5, 3);
-                    ghGrid.SetTileForm(shForm, 4, 3, 5, 9);
-                    ghGrid.SetTileForm(spmForm, 9, 0, 11, 12);
+                    ghGrid.SetTileForm(ghbForm, 0, 0, 4, 4, true);
+                    ghGrid.SetTileForm(ssmForm, 0, 4, 4, 8, true);
+                    ghGrid.SetTileForm(ghiForm, 4, 0, 5, 3, true);
+                    ghGrid.SetTileForm(shForm, 4, 3, 5, 9, true, (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom));
+                    ghGrid.SetTileForm(spmForm, 9, 0, 11, 12, true, (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom));
 
                     _glitchHarvester = ghGrid;
                 }

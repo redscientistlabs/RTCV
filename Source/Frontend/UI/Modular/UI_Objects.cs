@@ -64,7 +64,8 @@ namespace RTCV.UI
         public Size?[,] gridComponentSize;
         public bool?[,] gridComponentDisplayHeader;
 
-        public string GridName;
+        public string GridName = "";
+        internal bool isResizable = false;
 
         public CanvasGrid(int _x, int _y, string _GridName)
         {
@@ -76,7 +77,7 @@ namespace RTCV.UI
             GridName = _GridName;
         }
 
-        public void SetTileForm(Form componentForm, int tilePosX, int tilePosY, int tileSizeX, int tileSizeY, bool displayHeader = true)
+        public void SetTileForm(Form componentForm, int tilePosX, int tilePosY, int tileSizeX, int tileSizeY, bool displayHeader, AnchorStyles anchor = (AnchorStyles.Top | AnchorStyles.Left))
         {
             //removes tileForm position if already exists
             for (int _x = 0; _x < x; _x++)
@@ -96,6 +97,7 @@ namespace RTCV.UI
                 gridComponentDisplayHeader[tilePosX, tilePosY] = displayHeader;
             }
 
+            componentForm.Anchor = anchor;
         }
 
         internal void LoadToMain()

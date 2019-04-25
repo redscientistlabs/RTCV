@@ -145,6 +145,9 @@ namespace RTCV.UI
 
                         tileForm.Show();
                     }
+
+            targetForm.MinimumSize = targetForm.Size;
+
         }
 
 
@@ -175,7 +178,12 @@ namespace RTCV.UI
 
                 extraForm.Controls.Clear();
                 extraForms.Add(extraForm);
-                extraForm.FormBorderStyle = FormBorderStyle.FixedSingle;
+
+                if(canvasGrid.isResizable)
+                    extraForm.FormBorderStyle = FormBorderStyle.Sizable;
+                else
+                    extraForm.FormBorderStyle = FormBorderStyle.FixedSingle;
+
                 extraForm.MaximizeBox = false;
                 extraForm.Text = WindowHeader;
                 loadTileForm(extraForm, canvasGrid);

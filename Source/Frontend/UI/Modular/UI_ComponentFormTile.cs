@@ -73,6 +73,7 @@ namespace RTCV.UI
             {
                 cf.AnchorToPanel(pnComponentFormHost);
                 cf.Size = pnComponentFormHost.Size;
+                this.Anchor = cf.Anchor;
             }
         }
 
