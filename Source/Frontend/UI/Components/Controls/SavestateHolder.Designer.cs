@@ -57,11 +57,13 @@
             this.tbSavestate.Font = new System.Drawing.Font("Segoe UI", 8.25F);
             this.tbSavestate.ForeColor = System.Drawing.Color.White;
             this.tbSavestate.Location = new System.Drawing.Point(30, 0);
+            this.tbSavestate.MaxLength = 400;
             this.tbSavestate.Name = "tbSavestate";
-            this.tbSavestate.Size = new System.Drawing.Size(110, 22);
+            this.tbSavestate.Size = new System.Drawing.Size(120, 22);
             this.tbSavestate.TabIndex = 138;
             this.tbSavestate.TabStop = false;
             this.tbSavestate.Tag = "color:dark2";
+            this.tbSavestate.WordWrap = false;
             // 
             // SavestateHolder
             // 
@@ -71,7 +73,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.tbSavestate);
             this.Controls.Add(this.btnSavestate);
-            this.Margin = new System.Windows.Forms.Padding(0,3,4,0);
+            this.Margin = new System.Windows.Forms.Padding(0, 3, 4, 0);
             this.MinimumSize = new System.Drawing.Size(150, 22);
             this.Name = "SavestateHolder";
             this.Size = new System.Drawing.Size(150, 22);
