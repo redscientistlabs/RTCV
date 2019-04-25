@@ -96,21 +96,8 @@ namespace RTCV.UI.Components.Controls
 
         void _DataSource_ListChanged(object sender, ListChangedEventArgs e)
         {
-
-            if (e.ListChangedType == ListChangedType.ItemAdded ||
-                e.ListChangedType == ListChangedType.ItemChanged )
-                if (e.NewIndex < _DataSource.Position + numPerPage)
-                {
-                    var x = (SaveStateKey) _DataSource[e.NewIndex];
-                    var pos = _DataSource.Position;
-                    controlList[e.NewIndex - pos].SetStashKey(x, e.NewIndex);
-                }
-
-            //If deleted just refresh as it's easier than moving everything ourselves
-            if (e.ListChangedType == ListChangedType.ItemDeleted || e.ListChangedType == ListChangedType.Reset)
-            {
-                _DataSource_PositionChanged(null, null);
-            }
+			//Just refresh as it's cleaner and we're not dealing with so many that it causes perf problems
+			_DataSource_PositionChanged(null, null);
         }
 
         public SavestateList()
