@@ -244,7 +244,7 @@ namespace RTCV.UI.Components.Controls
         {
             if (btnSaveLoad.Text == "LOAD")
             {
-                StashKey psk = selectedHolder.sk;
+                StashKey psk = selectedHolder?.sk;
                 if (psk != null)
                 {
                     if (!checkAndFixingMissingStates(psk))
@@ -266,7 +266,7 @@ namespace RTCV.UI.Components.Controls
                 StockpileManager_UISide.CurrentSavestateStashKey = sk;
 
                 //Replace if there'a already a sk
-                if (selectedHolder.sk != null)
+                if (selectedHolder?.sk != null)
                 {
                     int indexToReplace = controlList.IndexOf(selectedHolder) + _DataSource.Position;
                     if (sk != null)
