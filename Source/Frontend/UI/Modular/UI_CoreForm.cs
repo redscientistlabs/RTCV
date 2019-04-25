@@ -61,7 +61,7 @@ namespace RTCV.UI
             cfForm = new UI_CanvasForm
             {
                 TopLevel = false,
-                Dock = DockStyle.Fill
+                Dock = DockStyle.Fill,
             };
 
             this.Controls.Add(cfForm);
@@ -196,7 +196,8 @@ This message only appears once.";
 
         private void button4_Click(object sender, EventArgs e)
         {
-            var ghGrid = new CanvasGrid(26, 19, "Custom Grid");
+            var cuGrid = new CanvasGrid(26, 19, "Custom Grid");
+            cuGrid.isResizable = true;
 
             Form gpForm = S.GET<RTC_GeneralParameters_Form>();
             Form mdForm = S.GET<RTC_MemoryDomains_Form>();
@@ -207,16 +208,16 @@ This message only appears once.";
             Form shForm = S.GET<RTC_StashHistory_Form>();
             Form spmForm = S.GET<RTC_StockpileManager_Form>();
 
-            ghGrid.SetTileForm(gpForm, 0, 0, 5, 5, true);
-            ghGrid.SetTileForm(ceForm, 5, 0, 10, 5, true);
-            ghGrid.SetTileForm(mdForm, 0, 5, 5, 14, true);
-            ghGrid.SetTileForm(UICore.mtForm, 15, 0, 11, 7, true);
-            ghGrid.SetTileForm(ghbForm, 5, 5, 4, 4, true);
-            ghGrid.SetTileForm(ssmForm, 5, 9, 4, 10, true);
-            ghGrid.SetTileForm(shForm, 9, 5, 6, 14, true);
-            ghGrid.SetTileForm(spmForm, 15, 7, 11, 12, true);
+            cuGrid.SetTileForm(gpForm, 0, 0, 5, 5, true);
+            cuGrid.SetTileForm(ceForm, 5, 0, 10, 5, true);
+            cuGrid.SetTileForm(mdForm, 0, 5, 5, 14, true, (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom));
+            cuGrid.SetTileForm(UICore.mtForm, 15, 0, 11, 7, true);
+            cuGrid.SetTileForm(ghbForm, 5, 5, 4, 4, true);
+            cuGrid.SetTileForm(ssmForm, 5, 9, 4, 10, true);
+            cuGrid.SetTileForm(shForm, 9, 5, 6, 14, true, (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom));
+            cuGrid.SetTileForm(spmForm, 15, 7, 11, 12, true, (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right));
 
-            ghGrid.LoadToMain();
+            cuGrid.LoadToMain();
         }
 
         public void btnEngineConfig_Click(object sender, EventArgs e)

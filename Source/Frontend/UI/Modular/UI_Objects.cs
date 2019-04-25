@@ -28,32 +28,6 @@ namespace RTCV.UI
 
     }
 
-    public class MultiGrid
-    {
-        // multiple grids that will load on multiple forms
-
-        public CanvasGrid[] grids;
-
-        public MultiGrid(params CanvasGrid[] _grids)
-        {
-            grids = _grids;
-        }
-
-        public void Load()
-        {
-            //Deploys and loads all the grids in the multigrid object
-
-            for(int i=0;i<grids.Count();i++)
-            {
-                if (i == 0)
-                    UI_CanvasForm.loadTileFormMain(grids[i]);
-                else
-                    UI_CanvasForm.loadTileFormExtraWindow(grids[i], "Custom Layout");
-
-            }
-        }
-    }
-
     public class CanvasGrid
     {
         //grid that represents the layout of a single form

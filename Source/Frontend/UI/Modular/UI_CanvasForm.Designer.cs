@@ -52,7 +52,6 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "UI_CanvasForm";
             this.Tag = "color:dark2";
-            this.Text = "UI_CanvasForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.UI_CanvasForm_FormClosing);
             this.Load += new System.EventHandler(this.UI_CanvasForm_Load);
             this.ResumeLayout(false);

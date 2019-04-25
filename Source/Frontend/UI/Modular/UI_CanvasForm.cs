@@ -13,7 +13,7 @@ namespace RTCV.UI
 {
     public partial class UI_CanvasForm : Form
     {
-        public static UI_CanvasForm thisForm;
+        public static UI_CanvasForm mainForm;
         public static List<UI_CanvasForm> extraForms = new List<UI_CanvasForm>();
         public static Dictionary<string, UI_CanvasForm> allExtraForms = new Dictionary<string, UI_CanvasForm>();
         public UI_ShadowPanel spForm;
@@ -44,11 +44,12 @@ namespace RTCV.UI
 
             if (!extraForm)
             {
-                thisForm = this;
+                mainForm = this;
                 spacerSize = pnScale.Location.X;
                 tileSize = pnScale.Size.Width;
                 Controls.Remove(pnScale);
             }
+
         }
 
         public static UI_ComponentFormTile getTileForm(Form componentForm, int? newSizeX = null, int? newSizeY = null, bool DisplayHeader = true)
@@ -102,7 +103,7 @@ namespace RTCV.UI
 
         public static void clearMainTileForm()
         {
-            thisForm.Controls.Clear();
+            mainForm.Controls.Clear();
 
             loadedTileForms.Clear();
         }
@@ -118,11 +119,6 @@ namespace RTCV.UI
                 this.Size = new Size(x + UI_CoreForm.xPadding, y + UI_CoreForm.yPadding);
             else
                 UI_CoreForm.thisForm.SetSize(x, y);
-        }
-
-        public static void loadMultiGrid(MultiGrid mg)
-        {
-            mg.Load();
         }
 
         public static void loadTileForm(UI_CanvasForm targetForm, CanvasGrid canvasGrid)
@@ -147,6 +143,7 @@ namespace RTCV.UI
                     }
 
             targetForm.MinimumSize = targetForm.Size;
+
 
         }
 
@@ -199,7 +196,23 @@ namespace RTCV.UI
         public static void loadTileFormMain(CanvasGrid canvasGrid)
         {
             clearMainTileForm();
-            loadTileForm(thisForm, canvasGrid);
+            loadTileForm(mainForm, canvasGrid);
+
+            if (mainForm.Parent is Form f)
+            {
+                if (canvasGrid.isResizable)
+                {
+                    f.FormBorderStyle = FormBorderStyle.Sizable;
+                    f.MaximizeBox = true;
+                }
+                else
+                {
+                    f.FormBorderStyle = FormBorderStyle.FixedSingle;
+                    f.MaximizeBox = false;
+                }
+            }
+
+            //thisForm.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
         }
 
 
@@ -245,9 +258,9 @@ namespace RTCV.UI
             if (spForm != null)
                 CloseSubForm();
 
-            spForm = new UI_ShadowPanel(thisForm, _type);
+            spForm = new UI_ShadowPanel(mainForm, _type);
             spForm.TopLevel = false;
-            thisForm.Controls.Add(spForm);
+            mainForm.Controls.Add(spForm);
             spForm.Show();
             spForm.BringToFront();
         }

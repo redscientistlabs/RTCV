@@ -37,8 +37,8 @@ namespace RTCV.UI
                 (SizeY * UI_CanvasForm.tileSize) + ((SizeY - 1) * UI_CanvasForm.spacerSize)
                 );
 
-
-            (childForm as ComponentForm)?.AnchorToPanel(pnComponentFormHost);
+            if (childForm is ComponentForm cf)
+                cf.AnchorToPanel(pnComponentFormHost);
 
 
             if (DisplayHeader)
