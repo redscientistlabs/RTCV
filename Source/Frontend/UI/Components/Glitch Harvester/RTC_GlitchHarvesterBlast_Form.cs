@@ -142,14 +142,13 @@ namespace RTCV.UI
 
             try
             {
+				setBlastButtonVisibility(false);
                 //Shut off autocorrupt if it's on.
                 //Leave this check here so we don't wastefully update the spec
                 if (S.GET<UI_CoreForm>().AutoCorrupt)
                     S.GET<UI_CoreForm>().AutoCorrupt = false;
 
-                btnCorrupt.Visible = false;
-
-                StashKey psk = StockpileManager_UISide.CurrentSavestateStashKey;
+				StashKey psk = StockpileManager_UISide.CurrentSavestateStashKey;
 
                 if (MergeMode)
                 {
@@ -211,7 +210,7 @@ namespace RTCV.UI
             }
             finally
             {
-                btnCorrupt.Visible = true;
+				setBlastButtonVisibility(true);
             }
         }
 
@@ -245,10 +244,11 @@ namespace RTCV.UI
 
         public void btnSendRaw_Click(object sender, EventArgs e)
         {
-            try
-            {
-                btnSendRaw.Visible = false;
-
+            if (!btnSendRaw.Visible)
+                return;
+			try
+			{
+				setBlastButtonVisibility(false);
 
                 string romFilename = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME];
                 if (romFilename == null)
@@ -317,36 +317,70 @@ namespace RTCV.UI
             }
         }
 
-        public void btnRerollSelected_Click(object sender, EventArgs e)
-        {
-            
+		public void btnRerollSelected_Click(object sender, EventArgs e)
+		{
+			if (!btnRerollSelected.Visible)
+				return;
 
-            if (S.GET<RTC_StashHistory_Form>().lbStashHistory.SelectedIndex != -1)
-            {
-                StockpileManager_UISide.CurrentStashkey = (StashKey)StockpileManager_UISide.StashHistory[S.GET<RTC_StashHistory_Form>().lbStashHistory.SelectedIndex].Clone();
-            }
-            else if (S.GET<RTC_StockpileManager_Form>().dgvStockpile.SelectedRows.Count != 0 && S.GET<RTC_StockpileManager_Form>().dgvStockpile.SelectedRows[0].Cells[0].Value != null)
-            {
-                StockpileManager_UISide.CurrentStashkey = (StashKey)(S.GET<RTC_StockpileManager_Form>().dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey)?.Clone();
-                //StockpileManager_UISide.unsavedEdits = true;
-            }
-            else
-                return;
+			try
+			{
+				setBlastButtonVisibility(false);
 
-            if (StockpileManager_UISide.CurrentStashkey != null)
-            {
-                StockpileManager_UISide.CurrentStashkey.BlastLayer.Reroll();
 
-                if (StockpileManager_UISide.AddCurrentStashkeyToStash())
-                {
-                    S.GET<RTC_StashHistory_Form>().RefreshStashHistory();
-                    S.GET<RTC_StashHistory_Form>().lbStashHistory.ClearSelected();
-                    S.GET<RTC_StashHistory_Form>().DontLoadSelectedStash = true;
-                    S.GET<RTC_StashHistory_Form>().lbStashHistory.SelectedIndex = S.GET<RTC_StashHistory_Form>().lbStashHistory.Items.Count - 1;
-                }
+                if (S.GET<RTC_StashHistory_Form>()
+					.lbStashHistory.SelectedIndex != -1)
+				{
+					StockpileManager_UISide.CurrentStashkey = (StashKey) StockpileManager_UISide.StashHistory[S.GET<RTC_StashHistory_Form>()
+							.lbStashHistory.SelectedIndex]
+						.Clone();
+				}
+				else if (S.GET<RTC_StockpileManager_Form>()
+					.dgvStockpile.SelectedRows.Count != 0 && S.GET<RTC_StockpileManager_Form>()
+					.dgvStockpile.SelectedRows[0]
+					.Cells[0]
+					.Value != null)
+				{
+					StockpileManager_UISide.CurrentStashkey = (StashKey) (S.GET<RTC_StockpileManager_Form>()
+						.dgvStockpile.SelectedRows[0]
+						.Cells[0]
+						.Value as StashKey)?.Clone();
+					//StockpileManager_UISide.unsavedEdits = true;
+				}
+				else
+					return;
 
-                StockpileManager_UISide.ApplyStashkey(StockpileManager_UISide.CurrentStashkey);
-            }
+				if (StockpileManager_UISide.CurrentStashkey != null)
+				{
+					StockpileManager_UISide.CurrentStashkey.BlastLayer.Reroll();
+
+					if (StockpileManager_UISide.AddCurrentStashkeyToStash())
+					{
+						S.GET<RTC_StashHistory_Form>()
+							.RefreshStashHistory();
+						S.GET<RTC_StashHistory_Form>()
+							.lbStashHistory.ClearSelected();
+						S.GET<RTC_StashHistory_Form>()
+							.DontLoadSelectedStash = true;
+						S.GET<RTC_StashHistory_Form>()
+							.lbStashHistory.SelectedIndex = S.GET<RTC_StashHistory_Form>()
+							.lbStashHistory.Items.Count - 1;
+					}
+
+					StockpileManager_UISide.ApplyStashkey(StockpileManager_UISide.CurrentStashkey);
+				}
+			}
+			finally
+			{
+				setBlastButtonVisibility(true);
+			}
+        }
+
+
+		private void setBlastButtonVisibility(bool visible)
+		{
+			btnCorrupt.Visible = visible;
+            btnRerollSelected.Visible = visible;
+            btnSendRaw.Visible = visible;
         }
 
         private void btnGlitchHarvesterSettings_MouseDown(object sender, MouseEventArgs e)
