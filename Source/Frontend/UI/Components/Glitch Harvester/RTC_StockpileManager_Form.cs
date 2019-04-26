@@ -301,8 +301,6 @@ namespace RTCV.UI
             if (Stockpile.Load(dgvStockpile, filename))
             {
                 btnSaveStockpile.Enabled = true;
-                btnSaveStockpile.BackColor = Color.Tomato;
-                btnSaveStockpile.ForeColor = Color.White;
                 RefreshNoteIcons();
             }
 
