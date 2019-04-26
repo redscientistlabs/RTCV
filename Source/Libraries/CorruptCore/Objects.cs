@@ -96,9 +96,6 @@ namespace RTCV.CorruptCore
 				sks.ShortFilename = StockpileManager_UISide.CurrentStockpile.ShortFilename;
 			}
 
-			//Backup bizhawk settings
-			LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_EVENT_SAVEBIZHAWKCONFIG, true);
-
 			//Watermarking RTC Version
 			sks.RtcVersion = CorruptCore.RtcVersion;
 
@@ -207,11 +204,11 @@ namespace RTCV.CorruptCore
 			{
 				string[] configPaths = AllSpec.VanguardSpec[VSPEC.CONFIG_PATHS] as string[] ?? new string[]{};
 				foreach(var path in configPaths)
-				if (File.Exists(path))
-				{
-					Directory.CreateDirectory(Path.Combine(CorruptCore.workingDir, "TEMP", "CONFIGS"));
-					File.Copy(path, Path.Combine(CorruptCore.workingDir, "TEMP", "CONFIGS", Path.GetFileName(path)));
-                }
+					if (File.Exists(path))
+					{
+						Directory.CreateDirectory(Path.Combine(CorruptCore.workingDir, "TEMP", "CONFIGS"));
+						File.Copy(path, Path.Combine(CorruptCore.workingDir, "TEMP", "CONFIGS", Path.GetFileName(path)));
+					}
             }
 			//Get all the limiter lists
 			List<string[]> limiterLists = Filtering.GetAllLimiterListsFromStockpile(sks);
@@ -657,22 +654,41 @@ namespace RTCV.CorruptCore
 					File.Copy(file, CorruptCore.EmuDir + name2filedico[name], true);
 			}
 
-            LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_MERGECONFIG);
-
-
 			ProcessStartInfo p = new ProcessStartInfo();
 			p.WorkingDirectory = CorruptCore.EmuDir;
-			p.FileName = CorruptCore.EmuDir + Path.DirectorySeparatorChar + $"StockpileConfig.bat";
+			p.FileName = CorruptCore.EmuDir + Path.DirectorySeparatorChar + $"RESTARTDETACHEDRTC.bat";
             Process.Start(p);
 
 		}
 
         public static void RestoreBizhawkConfig()
 		{
-			LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESTOREBIZHAWKCONFIG);
-		}
+			if (((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_CONFIG_MANAGEMENT] ?? false) == false)
+			{
+				MessageBox.Show("The currently selected emulator doesn't support config management");
+				return;
+			}
+	
+			string[] configPaths = AllSpec.VanguardSpec[VSPEC.CONFIG_PATHS] as string[];
+			if (configPaths == null)
+			{
+				throw new CustomException("ConfigMode was set but ConfigPath was null!", Environment.StackTrace);
+			}
 
+			Dictionary<string, string> name2filedico = new Dictionary<string, string>();
+			foreach (var str in configPaths)
+			{
+				var path = Path.Combine(Path.GetDirectoryName(str), "backup_" + Path.GetFileName(str));
+				if (File.Exists(path))
+					File.Copy(path, str, true);
 
+			}
+
+			ProcessStartInfo p = new ProcessStartInfo();
+			p.WorkingDirectory = CorruptCore.EmuDir;
+			p.FileName = CorruptCore.EmuDir + Path.DirectorySeparatorChar + $"RESTARTDETACHEDRTC.bat";
+			Process.Start(p);
+        }
 	}
 
 	[Serializable]
