@@ -112,6 +112,7 @@ namespace RTCV.UI
 
             DontLoadSelectedStash = true;
             lbStashHistory.DataSource = null;
+            lbStashHistory.SelectedIndex = -1;
 
             DontLoadSelectedStash = true;
             //lbStashHistory.BeginUpdate();
