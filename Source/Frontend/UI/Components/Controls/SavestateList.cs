@@ -92,7 +92,9 @@ namespace RTCV.UI.Components.Controls
                         controlList[i].SetStashKey(null, i + _DataSource.Position);
                 }
             }
-        }
+
+			RefreshForwardBackwardButtons();
+		}
 
         void _DataSource_ListChanged(object sender, ListChangedEventArgs e)
         {
@@ -169,9 +171,14 @@ namespace RTCV.UI.Components.Controls
             }
         }
 
+		private void RefreshForwardBackwardButtons()
+		{
+			btnForward.Enabled = _DataSource.Count >= _DataSource.Position + NumPerPage;
+			btnBack.Enabled = _DataSource.Position > 0;
+		}
+
         private void BtnForward_Click(object sender, EventArgs e)
         {
-
             if (_DataSource.Position + NumPerPage <= _DataSource.Count)
                 _DataSource.Position = _DataSource.Position + NumPerPage;
         }
