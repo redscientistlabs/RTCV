@@ -329,10 +329,7 @@ This message only appears once.";
                 if (!GameProtection.HasBackedUpStates)
                     return;
 
-                StashKey sk = GameProtection.PopBackupState();
-
-                sk?.Run();
-
+                GameProtection.PopAndRunBackupState();
                 GameProtection.Reset(false);
             }
             finally

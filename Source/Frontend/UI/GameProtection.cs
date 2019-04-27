@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
@@ -17,16 +18,13 @@ namespace RTCV.UI
 		public static bool isRunning = false;
         public static bool WasAutoCorruptRunning = false;
         private const int maxStates = 20;
-        private static LinkedList<StashKey> AllBackupStates;
+        private static readonly LinkedList<StashKey> AllBackupStates = new LinkedList<StashKey>();
         public static bool HasBackedUpStates => AllBackupStates?.Count > 0;
         public static void Start(bool reset = true)
 		{
             if (reset)
             {
-                lock (AllBackupStates)
-                {
-                    AllBackupStates = new LinkedList<StashKey>();
-                }
+                ClearAllBackups();
             }
 
             if (t == null)
@@ -48,10 +46,6 @@ namespace RTCV.UI
             {
                 //If the states are too large this could take forever so do it async
                 Task.Run(ClearAllBackups);
-                lock (AllBackupStates)
-                {
-                    AllBackupStates = null;
-                }
             }
 
             t?.Stop();
@@ -81,18 +75,19 @@ namespace RTCV.UI
             }
         }
 
-        public static StashKey PopBackupState()
+        public static void PopAndRunBackupState()
         {
+            StashKey sk = null;
             lock (AllBackupStates)
             {
                 if (AllBackupStates.Count > 0)
                 {
-                    var sk = AllBackupStates.Last.Value;
+                    sk = AllBackupStates.Last.Value;
                     AllBackupStates.RemoveLast();
-                    return sk;
                 }
             }
-            return null;
+            sk?.Run(); 
+            Task.Run(() => RemoveBackup(sk)); //Don't wait on the hdd operations
         }
 
 
@@ -108,16 +103,27 @@ namespace RTCV.UI
                 Console.WriteLine("Unable to remove backup " + sk + " from queue!");
             }
         }
+
         public static void ClearAllBackups()
         {
             StockpileManager_UISide.BackupedState = null;
+            StashKey[] states = new StashKey[0];
+
+            //Grab a copy then clear it out
             lock (AllBackupStates)
             {
-                foreach (var sk in AllBackupStates)
+                states = AllBackupStates?.ToArray();
+                AllBackupStates.Clear();
+            }
+
+            //Do this async
+            Task.Run(() =>
+            {
+                foreach (var sk in states)
                 {
                     RemoveBackup(sk);
                 }
-            }
+            });
         }
 
         private static void Tick(object sender, EventArgs e)
