@@ -462,6 +462,7 @@ namespace RTCV.UI
 						newSk.SystemName = psk.SystemName;
 						newSk.SystemCore = psk.SystemCore;
 						newSk.GameName = psk.GameName;
+                        newSk.StateLocation = psk.StateLocation;
 						newSk.SyncSettings = psk.SyncSettings;
 					}
 					else
