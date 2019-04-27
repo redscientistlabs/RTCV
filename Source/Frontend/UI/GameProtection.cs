@@ -17,11 +17,17 @@ namespace RTCV.UI
 		public static bool isRunning = false;
         public static bool WasAutoCorruptRunning = false;
         private const int maxStates = 20;
-        private static ConcurrentQueue<StashKey> AllBackupStates;
-
-        public static void Start()
+        private static LinkedList<StashKey> AllBackupStates;
+        public static bool HasBackedUpStates => AllBackupStates?.Count > 0;
+        public static void Start(bool reset = true)
 		{
-            AllBackupStates = new ConcurrentQueue<StashKey>();
+            if (reset)
+            {
+                lock (AllBackupStates)
+                {
+                    AllBackupStates = new LinkedList<StashKey>();
+                }
+            }
 
             if (t == null)
 			{
@@ -36,33 +42,59 @@ namespace RTCV.UI
 
 		}
 
-		public static void Stop()
+		public static void Stop(bool reset = true)
         {
-            AllBackupStates = null;
-            //If the states are too large this could take forever so do it async
-            Task.Run(ClearAllBackups);
+            if (reset)
+            {
+                //If the states are too large this could take forever so do it async
+                Task.Run(ClearAllBackups);
+                lock (AllBackupStates)
+                {
+                    AllBackupStates = null;
+                }
+            }
 
             t?.Stop();
 
 			isRunning = false;
 		}
 
-		public static void Reset()
+		public static void Reset(bool reinit)
 		{
-			Stop();
-			Start();
+			Stop(reinit);
+			Start(reinit);
 		}
 
         public static void AddBackupState(StashKey sk)
         {
-            if (AllBackupStates.Count > maxStates)
+            lock (AllBackupStates)
             {
-                AllBackupStates.TryDequeue(out sk);
-                if(sk != null)
-                    Task.Run(() => RemoveBackup(sk)); //Do this async to prevent hangs from a slow drive
+                if (AllBackupStates.Count > maxStates)
+                {
+                    var _sk = AllBackupStates.First.Value;
+                    AllBackupStates.RemoveFirst();
+                    if (_sk != null)
+                        Task.Run(() => RemoveBackup(_sk)); //Do this async to prevent hangs from a slow drive
+                }
+
+                AllBackupStates.AddLast(sk);
             }
-            AllBackupStates.Enqueue(sk);
         }
+
+        public static StashKey PopBackupState()
+        {
+            lock (AllBackupStates)
+            {
+                if (AllBackupStates.Count > 0)
+                {
+                    var sk = AllBackupStates.Last.Value;
+                    AllBackupStates.RemoveLast();
+                    return sk;
+                }
+            }
+            return null;
+        }
+
 
         private static void RemoveBackup(StashKey sk)
         {
@@ -79,9 +111,12 @@ namespace RTCV.UI
         public static void ClearAllBackups()
         {
             StockpileManager_UISide.BackupedState = null;
-            foreach (var sk in AllBackupStates.ToArray())
+            lock (AllBackupStates)
             {
-                RemoveBackup(sk);
+                foreach (var sk in AllBackupStates)
+                {
+                    RemoveBackup(sk);
+                }
             }
         }
 

@@ -315,8 +315,6 @@ This message only appears once.";
             else
             {
                 GameProtection.Stop();
-                StockpileManager_UISide.BackupedState = null;
-                StockpileManager_UISide.AllBackupStates.Clear();
                 btnGpJumpBack.Visible = false;
                 btnGpJumpNow.Visible = false;
             }
@@ -328,18 +326,18 @@ This message only appears once.";
             {
                 btnGpJumpBack.Visible = false;
 
-                if (StockpileManager_UISide.AllBackupStates.Count == 0)
+                if (!GameProtection.HasBackedUpStates)
                     return;
 
-                StashKey sk = StockpileManager_UISide.AllBackupStates.Pop();
+                StashKey sk = GameProtection.PopBackupState();
 
                 sk?.Run();
 
-                GameProtection.Reset();
+                GameProtection.Reset(false);
             }
             finally
             {
-                if (StockpileManager_UISide.AllBackupStates.Count != 0)
+                if (GameProtection.HasBackedUpStates)
                     btnGpJumpBack.Visible = true;
             }
         }
@@ -353,7 +351,7 @@ This message only appears once.";
                 if (StockpileManager_UISide.BackupedState != null)
                     StockpileManager_UISide.BackupedState.Run();
 
-                GameProtection.Reset();
+                GameProtection.Reset(false);
             }
             finally
             {

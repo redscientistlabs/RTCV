@@ -59,7 +59,7 @@ namespace RTCV.UI
 		{
 			GameProtection.BackupInterval = Convert.ToInt32(S.GET<RTC_SettingsNetCore_Form>().nmGameProtectionDelay.Value);
 			if (GameProtection.isRunning)
-				GameProtection.Reset();
+				GameProtection.Reset(false);
 		}
 
 		private void RTC_SettingsNetCore_Form_Load(object sender, EventArgs e)
