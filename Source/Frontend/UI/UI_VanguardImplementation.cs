@@ -86,6 +86,9 @@ namespace RTCV.UI
                                 //Configure the UI based on the vanguard spec
                                 UICore.ConfigureUIFromVanguardSpec();
 
+                                //Unblock the controls in the GH
+                                S.GET<RTC_GlitchHarvesterBlast_Form>().SetBlastButtonVisibility(true);
+
                                 //Return to the main form. If the form is null for some reason, default to engineconfig
                                 if (S.GET<UI_CoreForm>().previousGrid == null)
                                     S.GET<UI_CoreForm>().previousGrid = UI_DefaultGrids.engineConfig;

@@ -142,7 +142,7 @@ namespace RTCV.UI
 
             try
             {
-				setBlastButtonVisibility(false);
+				SetBlastButtonVisibility(false);
                 //Shut off autocorrupt if it's on.
                 //Leave this check here so we don't wastefully update the spec
                 if (S.GET<UI_CoreForm>().AutoCorrupt)
@@ -210,7 +210,7 @@ namespace RTCV.UI
             }
             finally
             {
-				setBlastButtonVisibility(true);
+				SetBlastButtonVisibility(true);
             }
         }
 
@@ -248,7 +248,7 @@ namespace RTCV.UI
                 return;
 			try
 			{
-				setBlastButtonVisibility(false);
+				SetBlastButtonVisibility(false);
 
                 string romFilename = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME];
                 if (romFilename == null)
@@ -324,7 +324,7 @@ namespace RTCV.UI
 
 			try
 			{
-				setBlastButtonVisibility(false);
+				SetBlastButtonVisibility(false);
 
 
                 if (S.GET<RTC_StashHistory_Form>()
@@ -371,12 +371,12 @@ namespace RTCV.UI
 			}
 			finally
 			{
-				setBlastButtonVisibility(true);
+				SetBlastButtonVisibility(true);
 			}
         }
 
 
-		private void setBlastButtonVisibility(bool visible)
+		public void SetBlastButtonVisibility(bool visible)
 		{
 			btnCorrupt.Visible = visible;
             btnRerollSelected.Visible = visible;
