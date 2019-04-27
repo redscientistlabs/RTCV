@@ -17,7 +17,6 @@ namespace RTCV.CorruptCore
 		public static StashKey CurrentStashkey { get; set; }
         public static StashKey CurrentSavestateStashKey { get; set; }
 
-        public static volatile Stack<StashKey> AllBackupStates = new Stack<StashKey>();
 		public static volatile StashKey BackupedState;
 
 

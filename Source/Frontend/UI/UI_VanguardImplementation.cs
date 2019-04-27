@@ -173,16 +173,18 @@ namespace RTCV.UI
                         });
                         break;
                     case REMOTE_BACKUPKEY_STASH:
-						StockpileManager_UISide.BackupedState = (StashKey)advancedMessage.objectValue;
-						StockpileManager_UISide.AllBackupStates.Push((StashKey)advancedMessage.objectValue);
-						SyncObjectSingleton.FormExecute((o, ea) =>
-						{
-							S.GET<UI_CoreForm>().btnGpJumpBack.Visible = true;
-							S.GET<UI_CoreForm>().btnGpJumpNow.Visible = true;
-						});
-						break;
-
-					case KILLSWITCH_PULSE:
+                        if (advancedMessage?.objectValue is StashKey sk)
+                        {
+                            StockpileManager_UISide.BackupedState = sk;
+                            GameProtection.AddBackupState(sk);
+                            SyncObjectSingleton.FormExecute((o, ea) =>
+                            {
+                                S.GET<UI_CoreForm>().btnGpJumpBack.Visible = true;
+                                S.GET<UI_CoreForm>().btnGpJumpNow.Visible = true;
+                            });
+                        }
+                        break;
+                    case KILLSWITCH_PULSE:
 						AutoKillSwitch.Pulse();
 						break;
                     case RESET_GAME_PROTECTION_IF_RUNNING:
