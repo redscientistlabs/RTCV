@@ -46,6 +46,11 @@ namespace RTCV.UI.Input
                 _bindings[action].Add(control.Trim());
             }
         }
+
+        public static void ClearBindings()
+        {
+            _bindings.Clear();
+        }
     }
 
     public class Binding

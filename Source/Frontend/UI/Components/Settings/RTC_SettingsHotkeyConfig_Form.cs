@@ -53,6 +53,7 @@ namespace RTCV.UI
 
         private void Save()
         {
+            Input.Bindings.ClearBindings();
             foreach (var w in InputWidgets)
             {
                 var b = UICore.HotkeyBindings.FirstOrDefault(x => x.DisplayName == w.WidgetName);
