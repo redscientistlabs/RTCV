@@ -77,6 +77,15 @@
     <Compile Include="Components\Containers\RTC_SelectBox_Form.designer.cs">
       <DependentUpon>RTC_SelectBox_Form.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\Controls\InputCompositeWidget.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\Controls\InputCompositeWidget.Designer.cs">
+      <DependentUpon>InputCompositeWidget.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Controls\InputWidget.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Components\Controls\MultiTrackBar.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -212,6 +221,12 @@
     <Compile Include="Components\Settings\RTC_SettingsNetCore_Form.designer.cs">
       <DependentUpon>RTC_SettingsNetCore_Form.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\Settings\RTC_SettingsHotkeyConfig_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Components\Settings\RTC_SettingsHotkeyConfig_Form.designer.cs">
+      <DependentUpon>RTC_SettingsHotkeyConfig_Form.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\RTC_BlastGenerator_Form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -320,6 +335,9 @@
     <EmbeddedResource Include="Components\Containers\RTC_SelectBox_Form.resx">
       <DependentUpon>RTC_SelectBox_Form.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Components\Controls\InputCompositeWidget.resx">
+      <DependentUpon>InputCompositeWidget.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Components\Controls\MultiTrackBar.resx">
       <DependentUpon>MultiTrackBar.cs</DependentUpon>
     </EmbeddedResource>
@@ -385,6 +403,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Settings\RTC_SettingsGeneral_Form.resx">
       <DependentUpon>RTC_SettingsGeneral_Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Settings\RTC_SettingsHotkeyConfig_Form.resx">
+      <DependentUpon>RTC_SettingsHotkeyConfig_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Settings\RTC_SettingsNetCore_Form.resx">
       <DependentUpon>RTC_SettingsNetCore_Form.cs</DependentUpon>

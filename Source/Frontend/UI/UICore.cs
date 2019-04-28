@@ -17,6 +17,7 @@ using RTCV.NetCore;
 using RTCV.UI;
 using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
+using RTCV.UI.Input;
 using static RTCV.NetCore.NetcoreCommands;
 using RTCV.UI.Modular;
 
@@ -32,13 +33,14 @@ namespace RTCV.UI
 
 		public static bool FirstConnect = true;
 
-        private static System.Timers.Timer inputCheckTimer;
+        public static System.Timers.Timer inputCheckTimer;
 
         //RTC Main Forms
         //public static Color generalColor = Color.FromArgb(60, 45, 70);
         public static Color GeneralColor = Color.LightSteelBlue;
 
         public static RTC_SelectBox_Form mtForm = null;
+        public static BindingCollection HotkeyBindings = new BindingCollection();
 
         public static void Start(Form standaloneForm = null)
 		{
@@ -86,7 +88,6 @@ namespace RTCV.UI
             inputCheckTimer.Elapsed += ProcessInputCheck;
             inputCheckTimer.Interval = 16;
             inputCheckTimer.Start();
-            BindDefaultHotkeys();
 
 
             if (FirstConnect)
@@ -465,9 +466,9 @@ namespace RTCV.UI
         //Borrowed from Bizhawk. Thanks guys
         private static void ProcessInputCheck(Object o, ElapsedEventArgs e)
         {
-            Input.Input.Instance.Update();
             for (; ; )
             {
+                Input.Input.Instance.Update();
                 // loop through all available events
                 var ie = Input.Input.Instance.DequeueEvent();
                 if (ie == null)
@@ -476,7 +477,7 @@ namespace RTCV.UI
                 }
 
                 // useful debugging:
-                //Console.WriteLine(ie);
+                Console.WriteLine(ie);
 
 
                 // look for hotkey bindings for this key
@@ -516,16 +517,6 @@ namespace RTCV.UI
 
         }
 
-        private static void BindDefaultHotkeys()
-        {
-            if (RTCV.NetCore.Params.IsParamSet("HOTKEYS"))
-            {
-                string[] hotkeys = RTCV.NetCore.Params.ReadParam("HOTKEYS").Split(',');
-                for(int i = 0; i < hotkeys.Length; i+=2)
-                    RTCV.UI.Input.Bindings.BindButton(hotkeys[i], hotkeys[i+1]);
-
-            }
-        }
 
         private static bool CheckHotkey(string trigger)
         {
@@ -575,7 +566,7 @@ namespace RTCV.UI
                     });
                     break;
 
-                case "GH Load and Corrupt":
+                case "Load and Corrupt":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
                         S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation = true;
@@ -583,7 +574,7 @@ namespace RTCV.UI
                     });
                     break;
 
-                case "GH Just Corrupt":
+                case "Just Corrupt":
                     RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(VSPEC.STEP_RUNBEFORE, true);
 
                     SyncObjectSingleton.FormExecute((o, ea) =>
@@ -595,14 +586,14 @@ namespace RTCV.UI
                     });
                     break;
 
-                case "GH Reroll":
+                case "Reroll":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
                         S.GET<RTC_GlitchHarvesterBlast_Form>().btnRerollSelected_Click(null, null);
                     });
                     break;
 
-                case "GH Load":
+                case "Load":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
                         S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad.Text = "LOAD";
@@ -610,7 +601,7 @@ namespace RTCV.UI
                     });
                     break;
 
-                case "GH Save":
+                case "Save":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
                         S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad.Text = "SAVE";
@@ -685,7 +676,7 @@ namespace RTCV.UI
                             f.btnGpJumpNow_Click(null, null);
                     });
                     break;
-                case "BE Disable 50":
+                case "Disable 50":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
                         var bef = S.GET<RTC_NewBlastEditor_Form>();
@@ -696,7 +687,7 @@ namespace RTCV.UI
                     });
                     break;
 
-                case "BE Remove Disabled":
+                case "Remove Disabled":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
                         var bef = S.GET<RTC_NewBlastEditor_Form>();
@@ -707,7 +698,7 @@ namespace RTCV.UI
                     });
                     break;
 
-                case "BE Invert Disabled":
+                case "Invert Disabled":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
                         var bef = S.GET<RTC_NewBlastEditor_Form>();
@@ -717,7 +708,7 @@ namespace RTCV.UI
                         }
                     });
                     break;
-                case "BE Shift Up":
+                case "Shift Up":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
                         var bef = S.GET<RTC_NewBlastEditor_Form>();
@@ -727,7 +718,7 @@ namespace RTCV.UI
                         }
                     });
                     break;
-                case "BE Shift Down":
+                case "Shift Down":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
                         var bef = S.GET<RTC_NewBlastEditor_Form>();
@@ -737,7 +728,7 @@ namespace RTCV.UI
                         }
                     });
                     break;
-                case "BE Load Corrupt":
+                case "Load Corrupt":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
                         var bef = S.GET<RTC_NewBlastEditor_Form>();
@@ -747,7 +738,7 @@ namespace RTCV.UI
                         }
                     });
                     break;
-                case "BE Apply":
+                case "Apply":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
                         var bef = S.GET<RTC_NewBlastEditor_Form>();
@@ -757,7 +748,7 @@ namespace RTCV.UI
                         }
                     });
                     break;
-                case "BE Send Stash":
+                case "Send Stash":
                     SyncObjectSingleton.FormExecute((o, ea) =>
                     {
                         var bef = S.GET<RTC_NewBlastEditor_Form>();
