@@ -57,7 +57,10 @@ namespace RTCV.UI
             {
                 var b = UICore.HotkeyBindings.FirstOrDefault(x => x.DisplayName == w.WidgetName);
                 b.Bindings = w.Bindings;
+                //Rebind
+                Input.Bindings.BindMulti(b.DisplayName, b.Bindings);
             }
+
             var binds = JsonConvert.SerializeObject(UICore.HotkeyBindings, Formatting.Indented);
             RTCV.NetCore.Params.SetParam("HOTKEYS", binds);
         }
