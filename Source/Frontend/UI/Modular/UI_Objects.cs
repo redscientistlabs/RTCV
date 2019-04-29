@@ -37,11 +37,12 @@ namespace RTCV.UI
         public Form[,] gridComponent;
         public Size?[,] gridComponentSize;
         public bool?[,] gridComponentDisplayHeader;
+        public Form blockerForm;
 
         public string GridName = "";
         internal bool isResizable = false;
 
-        public CanvasGrid(int _x, int _y, string _GridName)
+        public CanvasGrid(int _x, int _y, string _GridName, Form _blockerForm = null)
         {
             x = _x;
             y = _y;
@@ -49,6 +50,7 @@ namespace RTCV.UI
             gridComponentSize = new Size?[x, y];
             gridComponentDisplayHeader = new bool?[x, y];
             GridName = _GridName;
+            blockerForm = _blockerForm;
         }
 
         public void SetTileForm(Form componentForm, int tilePosX, int tilePosY, int tileSizeX, int tileSizeY, bool displayHeader, AnchorStyles anchor = (AnchorStyles.Top | AnchorStyles.Left))

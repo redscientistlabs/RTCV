@@ -369,7 +369,7 @@ namespace RTCV.UI
             loadMenuItems.Show(this, locate);
         }
 
-        private void btnSaveStockpileAs_Click(object sender, EventArgs e)
+        public void btnSaveStockpileAs_Click(object sender, EventArgs e)
         {
             if (dgvStockpile.Rows.Count == 0)
             {

@@ -110,6 +110,8 @@ namespace RTCV.UI.Modular
                     var ghGrid = new CanvasGrid(20, 12, "Glitch Harvester");
                     ghGrid.isResizable = true;
 
+                    ghGrid.blockerForm = S.GET<RTC_GlitchHarvesterBlocker_Form>();
+
 
                     Form ghbForm = S.GET<RTC_GlitchHarvesterBlast_Form>();
                     Form ghiForm = S.GET<RTC_GlitchHarvesterIntensity_Form>();

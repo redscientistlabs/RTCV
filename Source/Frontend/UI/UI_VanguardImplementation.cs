@@ -95,12 +95,9 @@ namespace RTCV.UI
 
                                 S.GET<UI_CoreForm>().previousGrid.LoadToMain();
 
-
-                                /*
-                                //Unhide the GH
-                                S.GET<RTC_GlitchHarvester_Form>().pnHideGlitchHarvester.Size = S.GET<RTC_GlitchHarvester_Form>().Size;
-                                S.GET<RTC_GlitchHarvester_Form>().pnHideGlitchHarvester.Hide();
-                                */
+                                //Unblock canvas forms
+                                foreach (var f in UI_CanvasForm.allExtraForms.Values)
+                                    f.CloseBlockerForm();
                             }
 
 							S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0;//remove this once core form is dead

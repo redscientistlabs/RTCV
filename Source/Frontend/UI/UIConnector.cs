@@ -51,7 +51,11 @@ namespace RTCV.UI
 				{
 					S.GET<RTC_ConnectionStatus_Form>().lbConnectionStatus.Text = "Vanguard connection timed out";
                     UI_DefaultGrids.connectionStatus.LoadToMain();
-				}
+
+                    //Block canvas forms
+                    foreach (var f in UI_CanvasForm.allExtraForms.Values)
+                        f.OpenBlockerForm();
+                }
 
 				S.GET<RTC_VmdAct_Form>().cbAutoAddDump.Checked = false;
                 GameProtection.WasAutoCorruptRunning = CorruptCore.CorruptCore.AutoCorrupt;

@@ -131,6 +131,12 @@
     <Compile Include="Components\Engine Config\RTC_MemoryDomains_Form.Designer.cs">
       <DependentUpon>RTC_MemoryDomains_Form.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\Generic\RTC_GenericBlocker_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Components\Generic\RTC_GenericBlocker_Form.designer.cs">
+      <DependentUpon>RTC_GenericBlocker_Form.cs</DependentUpon>
+    </Compile>
     <Compile Include="Components\Glitch Harvester\RTC_GlitchHarvesterBlast_Form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -160,6 +166,12 @@
     </Compile>
     <Compile Include="Components\Glitch Harvester\RTC_StockpileManager_Form.designer.cs">
       <DependentUpon>RTC_StockpileManager_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Glitch Harvester\RTC_GlitchHarvesterBlocker_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Components\Glitch Harvester\RTC_GlitchHarvesterBlocker_Form.designer.cs">
+      <DependentUpon>RTC_GlitchHarvesterBlocker_Form.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Settings\RTC_SettingsCorrupt_Form.cs">
       <SubType>Form</SubType>
@@ -362,8 +374,14 @@
     <EmbeddedResource Include="Components\Engine Config\RTC_MemoryDomains_Form.resx">
       <DependentUpon>RTC_MemoryDomains_Form.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Components\Generic\RTC_GenericBlocker_Form.resx">
+      <DependentUpon>RTC_GenericBlocker_Form.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Components\Glitch Harvester\RTC_GlitchHarvesterBlast_Form.resx">
       <DependentUpon>RTC_GlitchHarvesterBlast_Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Glitch Harvester\RTC_GlitchHarvesterBlocker_Form.resx">
+      <DependentUpon>RTC_GlitchHarvesterBlocker_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Glitch Harvester\RTC_SavestateManager_Form.resx">
       <DependentUpon>RTC_SavestateManager_Form.cs</DependentUpon>

@@ -17,6 +17,26 @@ namespace RTCV.UI
         public static List<UI_CanvasForm> extraForms = new List<UI_CanvasForm>();
         public static Dictionary<string, UI_CanvasForm> allExtraForms = new Dictionary<string, UI_CanvasForm>();
         public UI_ShadowPanel spForm;
+        private Form _blockerForm;
+
+        public Form blockerForm
+        {
+            get => _blockerForm;
+            set
+            {
+                if (_blockerForm != null && this.Controls.Contains(_blockerForm))
+                    this.Controls.Remove(_blockerForm);
+
+                _blockerForm = value;
+
+                if (_blockerForm != null)
+                {
+                    _blockerForm.TopLevel = false;
+                    this.Controls.Add(_blockerForm);
+                }
+                    
+            }
+        }
 
         public static int spacerSize;
         public static int tileSize;
@@ -36,9 +56,10 @@ namespace RTCV.UI
             }
         }
 
-        public UI_CanvasForm(bool extraForm = false)
+        public UI_CanvasForm(bool extraForm = false, Form _blockerForm = null)
         {
             InitializeComponent();
+            blockerForm = _blockerForm;
 
             UICore.SetRTCColor(UICore.GeneralColor, this);
 
@@ -124,6 +145,7 @@ namespace RTCV.UI
         public static void loadTileForm(UI_CanvasForm targetForm, CanvasGrid canvasGrid)
         {
 
+            targetForm.blockerForm = canvasGrid.blockerForm;
             targetForm.ResizeCanvas(targetForm, canvasGrid);
 
             for (int x = 0; x < canvasGrid.x; x++)
@@ -160,8 +182,7 @@ namespace RTCV.UI
                 
                 foreach (Control ctr in extraForm.Controls)
                 {
-                    var cft = (ctr as UI_ComponentFormTile);
-                    if (ctr != null)
+                    if (ctr is UI_ComponentFormTile cft)
                     {
                         cft.ReAnchorToPanel();
                     }
@@ -216,18 +237,6 @@ namespace RTCV.UI
         }
 
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-            //test button, to delete later
-
-            if (spForm == null)
-            {
-                ShowSubForm("UI_ComponentFormSubForm");
-            }
-            else
-                CloseSubForm();
-        }
-
         public int getTileSpacesX()
         {
             int sizeX = this.Size.Width;
@@ -280,6 +289,22 @@ namespace RTCV.UI
                 spForm.Close();
                 spForm = null;
             }
+        }
+
+        public void OpenBlockerForm()
+        {
+            if (blockerForm != null)
+            {
+                blockerForm.Dock = DockStyle.Fill;
+                blockerForm.TopLevel = false;
+                blockerForm.Show();
+                blockerForm.BringToFront();
+            }
+        }
+
+        public void CloseBlockerForm()
+        {
+            blockerForm?.Hide();
         }
 
         private void UI_CanvasForm_Load(object sender, EventArgs e)
