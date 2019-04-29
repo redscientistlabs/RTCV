@@ -104,7 +104,7 @@ namespace RTCV.NetCore
             }
             finally
             {
-                listener.Stop();
+                listener?.Stop();
             }
         }
 
@@ -317,7 +317,7 @@ namespace RTCV.NetCore
         private void DiscardException(Exception ex)
         {
             //Discarded exception but write it in console
-            ConsoleEx.WriteLine($"{spec.Side}:{status} -> {ex}");
+            ConsoleEx.WriteLine($"{spec.Side}:{status} -> {ex} \n Supposed to be connected -> {supposedToBeConnected} \n expectingsomeone -> {expectingSomeone} \n status -> {status} \n {ex.StackTrace}");
         }
 
         internal void Kill()
@@ -443,7 +443,10 @@ namespace RTCV.NetCore
                     result = client.BeginConnect(IP, Port, null, null);
                     success = result.AsyncWaitHandle.WaitOne(TimeSpan.FromMilliseconds(200)); //This will block the thread for 200ms
                 }
-                catch { }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
 
                 if (!success || result == null || client == null)
                     throw new Exception("Failed to connect");
