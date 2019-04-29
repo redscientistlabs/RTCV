@@ -256,7 +256,7 @@ namespace RTCV.UI
         }
 
 
-        public void ShowSubForm(string _type)
+        public void OpenSubForm(string _type)
         {
 
             //sets program to SubForm mode, darkens screen and displays flating form.

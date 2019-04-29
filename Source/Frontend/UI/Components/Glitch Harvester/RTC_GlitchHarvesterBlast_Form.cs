@@ -273,7 +273,7 @@ namespace RTCV.UI
             }
             finally
             {
-                btnSendRaw.Visible = true;
+                SetBlastButtonVisibility(true);
             }
         }
         

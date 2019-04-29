@@ -91,7 +91,7 @@
             this.btnOk.TabIndex = 116;
             this.btnOk.TabStop = false;
             this.btnOk.Tag = "color:light1";
-            this.btnOk.Text = "Ok";
+            this.btnOk.Text = "OK";
             this.btnOk.UseVisualStyleBackColor = false;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
