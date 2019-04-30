@@ -964,7 +964,7 @@
             this.lbFlavorText.Name = "lbFlavorText";
             this.lbFlavorText.Size = new System.Drawing.Size(241, 14);
             this.lbFlavorText.TabIndex = 194;
-            this.lbFlavorText.Text = "Actually kinda works!";
+            this.lbFlavorText.Text = "Flavor text";
             this.lbFlavorText.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // groupBox1

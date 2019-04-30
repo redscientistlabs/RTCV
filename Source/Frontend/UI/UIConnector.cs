@@ -49,12 +49,10 @@ namespace RTCV.UI
 			{
 				if (S.GET<RTC_ConnectionStatus_Form>() != null && !S.GET<RTC_ConnectionStatus_Form>().IsDisposed)
 				{
-					S.GET<RTC_ConnectionStatus_Form>().lbConnectionStatus.Text = "Vanguard connection timed out";
-                    UI_DefaultGrids.connectionStatus.LoadToMain();
+					S.GET<RTC_ConnectionStatus_Form>().lbConnectionStatus.Text = $"{(string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard"} connection timed out";
 
-                    //Block canvas forms
-                    foreach (var f in UI_CanvasForm.allExtraForms.Values)
-                        f.OpenBlockerForm();
+                    UICore.LockInterface();
+                    UI_DefaultGrids.connectionStatus.LoadToMain();
                 }
 
 				S.GET<RTC_VmdAct_Form>().cbAutoAddDump.Checked = false;
@@ -64,15 +62,15 @@ namespace RTCV.UI
 			GameProtection.Stop();
 
 			if(S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked)
-				AutoKillSwitch.KillEmulator("KILL + RESTART");
+				AutoKillSwitch.KillEmulator();
 		}
 
 		private static void Spec_ServerConnected(object sender, EventArgs e)
 		{
 			SyncObjectSingleton.FormExecute((o, ea) =>
 			{
-				S.GET<RTC_ConnectionStatus_Form>().lbConnectionStatus.Text = "Connected to vanguard";
-			});
+				S.GET<RTC_ConnectionStatus_Form>().lbConnectionStatus.Text = $"Connected to { (string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard"}";
+                });
 		}
 
 		public void OnMessageReceivedProxy(object sender, NetCoreEventArgs e) => OnMessageReceived(sender, e);

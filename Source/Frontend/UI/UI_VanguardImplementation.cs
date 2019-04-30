@@ -93,15 +93,11 @@ namespace RTCV.UI
                                 if (S.GET<UI_CoreForm>().previousGrid == null)
                                     S.GET<UI_CoreForm>().previousGrid = UI_DefaultGrids.engineConfig;
 
+                                UICore.UnlockInterface();
                                 S.GET<UI_CoreForm>().previousGrid.LoadToMain();
-
-                                //Unblock canvas forms
-                                foreach (var f in UI_CanvasForm.allExtraForms.Values)
-                                    f.CloseBlockerForm();
                             }
 
 							S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0;//remove this once core form is dead
-                            S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0;
 
                             if (!CorruptCore.CorruptCore.Attached)
                                     AutoKillSwitch.Enabled = true;

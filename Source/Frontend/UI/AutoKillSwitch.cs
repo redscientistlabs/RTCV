@@ -54,7 +54,7 @@ namespace RTCV.UI
 			pulseCount = MaxMissedPulses;
 		}
 
-		public static void KillEmulator(string str, bool forceBypass = false)
+		public static void KillEmulator(bool forceBypass = false)
 		{
 			SyncObjectSingleton.FormExecute((o, ea) =>
 			{
@@ -90,16 +90,7 @@ namespace RTCV.UI
 
 
                 info.WorkingDirectory = CorruptCore.CorruptCore.EmuDir;
-
-                switch (str)
-				{
-					case "KILL":
-                        info.FileName = CorruptCore.CorruptCore.EmuDir + "\\KILLDETACHEDRTC.bat";
-						break;
-					case "KILL + RESTART":
-                        info.FileName = CorruptCore.CorruptCore.EmuDir + "\\RESTARTDETACHEDRTC.bat";
-						break;
-				}
+                info.FileName = CorruptCore.CorruptCore.EmuDir + "\\RESTARTDETACHEDRTC.bat";
 
                 Process.Start(info);
             });
@@ -153,7 +144,7 @@ namespace RTCV.UI
 
 			if (pulseCount == 0)
 			{
-				KillEmulator("KILL + RESTART");
+				KillEmulator();
 			}
 		}
 	}

@@ -29,14 +29,79 @@
 		private void InitializeComponent()
 		{
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_ConnectionStatus_Form));
-            this.lbConnectionStatus = new System.Windows.Forms.Label();
-            this.lbRTCver = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.btnEmergencySaveAs = new System.Windows.Forms.Button();
+            this.btnTriggerKillswitch = new System.Windows.Forms.Button();
             this.lbFlavorText = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.pbName = new System.Windows.Forms.PictureBox();
+            this.lbRTCver = new System.Windows.Forms.Label();
+            this.lbConnectionStatus = new System.Windows.Forms.Label();
+            this.pbMonster = new System.Windows.Forms.PictureBox();
+            this.pnBlockedButtons = new System.Windows.Forms.Panel();
+            ((System.ComponentModel.ISupportInitialize)(this.pbName)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMonster)).BeginInit();
+            this.pnBlockedButtons.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // btnEmergencySaveAs
+            // 
+            this.btnEmergencySaveAs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnEmergencySaveAs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEmergencySaveAs.Location = new System.Drawing.Point(3, 43);
+            this.btnEmergencySaveAs.Name = "btnEmergencySaveAs";
+            this.btnEmergencySaveAs.Size = new System.Drawing.Size(168, 29);
+            this.btnEmergencySaveAs.TabIndex = 136;
+            this.btnEmergencySaveAs.Tag = "color:dark1";
+            this.btnEmergencySaveAs.Text = "Emergency Save-As Stockpile";
+            this.btnEmergencySaveAs.UseVisualStyleBackColor = false;
+            this.btnEmergencySaveAs.Click += new System.EventHandler(this.BtnEmergencySaveAs_Click);
+            // 
+            // btnTriggerKillswitch
+            // 
+            this.btnTriggerKillswitch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnTriggerKillswitch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTriggerKillswitch.Location = new System.Drawing.Point(3, 3);
+            this.btnTriggerKillswitch.Name = "btnTriggerKillswitch";
+            this.btnTriggerKillswitch.Size = new System.Drawing.Size(168, 29);
+            this.btnTriggerKillswitch.TabIndex = 135;
+            this.btnTriggerKillswitch.Tag = "color:dark1";
+            this.btnTriggerKillswitch.Text = "Trigger Killswitch";
+            this.btnTriggerKillswitch.UseVisualStyleBackColor = false;
+            this.btnTriggerKillswitch.MouseClick += (this.BtnTriggerKillswitch_MouseClick);
+            // 
+            // lbFlavorText
+            // 
+            this.lbFlavorText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbFlavorText.BackColor = System.Drawing.Color.Transparent;
+            this.lbFlavorText.Font = new System.Drawing.Font("Segoe UI", 14F);
+            this.lbFlavorText.Location = new System.Drawing.Point(22, 481);
+            this.lbFlavorText.Name = "lbFlavorText";
+            this.lbFlavorText.Size = new System.Drawing.Size(384, 70);
+            this.lbFlavorText.TabIndex = 134;
+            this.lbFlavorText.Tag = "color:light2";
+            this.lbFlavorText.Text = "Flavor text";
+            this.lbFlavorText.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            // 
+            // pbName
+            // 
+            this.pbName.BackColor = System.Drawing.Color.Transparent;
+            this.pbName.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pbName.BackgroundImage")));
+            this.pbName.Location = new System.Drawing.Point(2, 16);
+            this.pbName.Name = "pbName";
+            this.pbName.Size = new System.Drawing.Size(421, 50);
+            this.pbName.TabIndex = 132;
+            this.pbName.TabStop = false;
+            // 
+            // lbRTCver
+            // 
+            this.lbRTCver.AutoSize = true;
+            this.lbRTCver.BackColor = System.Drawing.Color.Transparent;
+            this.lbRTCver.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
+            this.lbRTCver.ForeColor = System.Drawing.Color.White;
+            this.lbRTCver.Location = new System.Drawing.Point(491, 32);
+            this.lbRTCver.Name = "lbRTCver";
+            this.lbRTCver.Size = new System.Drawing.Size(0, 37);
+            this.lbRTCver.TabIndex = 131;
             // 
             // lbConnectionStatus
             // 
@@ -50,47 +115,26 @@
             this.lbConnectionStatus.TabIndex = 1;
             this.lbConnectionStatus.Text = "Waiting for vanguard to connect";
             // 
-            // lbRTCver
+            // pbMonster
             // 
-            this.lbRTCver.AutoSize = true;
-            this.lbRTCver.BackColor = System.Drawing.Color.Transparent;
-            this.lbRTCver.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Bold);
-            this.lbRTCver.ForeColor = System.Drawing.Color.White;
-            this.lbRTCver.Location = new System.Drawing.Point(491, 32);
-            this.lbRTCver.Name = "lbRTCver";
-            this.lbRTCver.Size = new System.Drawing.Size(0, 37);
-            this.lbRTCver.TabIndex = 131;
+            this.pbMonster.BackColor = System.Drawing.Color.Transparent;
+            this.pbMonster.Image = ((System.Drawing.Image)(resources.GetObject("pbMonster.Image")));
+            this.pbMonster.Location = new System.Drawing.Point(260, 72);
+            this.pbMonster.Name = "pbMonster";
+            this.pbMonster.Size = new System.Drawing.Size(650, 589);
+            this.pbMonster.TabIndex = 133;
+            this.pbMonster.TabStop = false;
             // 
-            // pictureBox1
+            // pnBlockedButtons
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
-            this.pictureBox1.Location = new System.Drawing.Point(2, 16);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(421, 50);
-            this.pictureBox1.TabIndex = 132;
-            this.pictureBox1.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(240, 72);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(650, 589);
-            this.pictureBox2.TabIndex = 133;
-            this.pictureBox2.TabStop = false;
-            // 
-            // lbFlavorText
-            // 
-            this.lbFlavorText.AutoSize = true;
-            this.lbFlavorText.Font = new System.Drawing.Font("Segoe UI Symbol", 16F);
-            this.lbFlavorText.Location = new System.Drawing.Point(16, 509);
-            this.lbFlavorText.Name = "lbFlavorText";
-            this.lbFlavorText.Size = new System.Drawing.Size(114, 30);
-            this.lbFlavorText.TabIndex = 134;
-            this.lbFlavorText.Tag = "color:light2";
-            this.lbFlavorText.Text = "Flavor text";
+            this.pnBlockedButtons.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pnBlockedButtons.Controls.Add(this.btnTriggerKillswitch);
+            this.pnBlockedButtons.Controls.Add(this.btnEmergencySaveAs);
+            this.pnBlockedButtons.Location = new System.Drawing.Point(22, 128);
+            this.pnBlockedButtons.Name = "pnBlockedButtons";
+            this.pnBlockedButtons.Size = new System.Drawing.Size(191, 84);
+            this.pnBlockedButtons.TabIndex = 137;
+            this.pnBlockedButtons.Visible = false;
             // 
             // RTC_ConnectionStatus_Form
             // 
@@ -98,12 +142,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ClientSize = new System.Drawing.Size(655, 560);
+            this.ClientSize = new System.Drawing.Size(704, 560);
             this.Controls.Add(this.lbFlavorText);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.pnBlockedButtons);
+            this.Controls.Add(this.pbName);
             this.Controls.Add(this.lbRTCver);
             this.Controls.Add(this.lbConnectionStatus);
-            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.pbMonster);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.White;
@@ -113,8 +158,9 @@
             this.Tag = "color:dark3";
             this.Text = "RTC_ConnectionStatus_Form";
             this.Load += new System.EventHandler(this.RTC_ConnectionStatus_Form_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbName)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pbMonster)).EndInit();
+            this.pnBlockedButtons.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -123,8 +169,11 @@
 		#endregion
 		public System.Windows.Forms.Label lbConnectionStatus;
         private System.Windows.Forms.Label lbRTCver;
-		private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBox2;
+		private System.Windows.Forms.PictureBox pbName;
+        private System.Windows.Forms.PictureBox pbMonster;
         private System.Windows.Forms.Label lbFlavorText;
+        private System.Windows.Forms.Button btnTriggerKillswitch;
+        private System.Windows.Forms.Button btnEmergencySaveAs;
+        public System.Windows.Forms.Panel pnBlockedButtons;
     }
 }

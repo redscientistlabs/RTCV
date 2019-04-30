@@ -210,6 +210,8 @@ namespace RTCV.UI
             var cf = S.GET<UI_CoreForm>();
             cf.LockSideBar();
 
+            S.GET<RTC_ConnectionStatus_Form>().pnBlockedButtons.Show();
+
             //UI_CanvasForm.mainForm.BlockView();
             UI_CanvasForm.extraForms.ForEach(it => it.BlockView());
 
@@ -225,6 +227,9 @@ namespace RTCV.UI
         {
             interfaceLocked = false;
             S.GET<UI_CoreForm>().UnlockSideBar();
+
+
+            S.GET<RTC_ConnectionStatus_Form>().pnBlockedButtons.Hide();
 
             var ifs = S.GETINTERFACES<IBlockable>();
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
@@ -16,12 +17,21 @@ namespace RTCV.UI
         public RTC_ConnectionStatus_Form()
 		{
 			InitializeComponent();
-		}
+            this.Shown += RTC_ConnectionStatus_Form_Shown;
+        }
+
 
         private readonly string[] _flavorText = {
             "Imagine if we had actual flavor text",
             "Fun flavor text goes here",
             "The V probably stands for Vanguard",
+            "What are naming conventions",
+            "Over 35,000 lines of code to make Mario do the funny",
+            "We love circular dependencies",
+            "Don't show this to your epileptic friends",
+            "Clown vomit, spikes and needles",
+            "My mom says to blow in the cartridge so it works best",
+            "The Vanguard of unreliable sloshy behavior r&&d innovation for the thrill of gamers",
         };
 
 		private void RTC_ConnectionStatus_Form_Load(object sender, EventArgs e)
@@ -32,23 +42,30 @@ namespace RTCV.UI
 				crashSound = Convert.ToInt32(NetCore.Params.ReadParam("CRASHSOUND"));
 
 			S.GET<RTC_SettingsNetCore_Form>().cbCrashSoundEffect.SelectedIndex = crashSound;
+        }
+
+        private void RTC_ConnectionStatus_Form_Shown(object sender, EventArgs e)
+        {
             lbFlavorText.Text = _flavorText[CorruptCore.CorruptCore.RND.Next(0, _flavorText.Length)];
         }
 
-		public void btnStartEmuhawkDetached_Click(object sender, EventArgs e)
-		{
+        private void BtnEmergencySaveAs_Click(object sender, EventArgs e)
+        {
+            S.GET<RTC_StockpileManager_Form>().btnSaveStockpileAs_Click(null, null);
+        }
 
-			S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Maximum;
+        private void BtnTriggerKillswitch_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                Point locate = e.GetMouseLocation(sender);
+                ContextMenuStrip columnsMenu = new ContextMenuStrip();
+                columnsMenu.Items.Add("Open Debug window", null, new EventHandler((ob, ev) => { UI_CoreForm.ForceCloudDebug(); }));
+                columnsMenu.Show(this, locate);
+            }
 
-			//RTC_NetCoreSettings.PlayCrashSound();
-
-			Process.Start("RESTARTDETACHEDRTC.bat");
-		}
-
-		private void btnStopGameProtection_Click(object sender, EventArgs e)
-		{
-			S.GET<UI_CoreForm>().cbUseGameProtection.Checked = false;
-		}
-
-	}
+            S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Maximum;
+            AutoKillSwitch.KillEmulator(true);
+        }
+    }
 }

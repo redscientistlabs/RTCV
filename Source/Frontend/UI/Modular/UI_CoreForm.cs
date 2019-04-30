@@ -324,7 +324,7 @@ This message only appears once.";
             AutoKillSwitch.ShouldKillswitchFire = true;
 
             //refactor this to not use string once old coreform is dead
-            AutoKillSwitch.KillEmulator("KILL + RESTART", true);
+            AutoKillSwitch.KillEmulator(true);
         }
 
         private void cbUseAutoKillSwitch_CheckedChanged(object sender, EventArgs e)
@@ -522,7 +522,7 @@ This message only appears once.";
                 {
                     columnsMenu.Items.Add("Open Debug window", null, new EventHandler((ob, ev) =>
                     {
-                        error();
+                        ForceCloudDebug();
                     }));
                 }
 
@@ -531,7 +531,7 @@ This message only appears once.";
 
         }
 
-        private void error()
+        public static void ForceCloudDebug()
         {
             //SECRET CRASH DONT TELL ANYONE
             //Trigger: Hold Manual Blast for 7 seconds
