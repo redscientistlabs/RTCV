@@ -94,7 +94,8 @@ namespace RTCV.UI
 		}
 		public void LoadNoStashKey()
 		{
-			RefreshDomains();
+            if (!RefreshDomains())
+                return;
 			AddDefaultRow();
 			PopulateModeCombobox(dgvBlastGenerator.Rows[0]);
 			OpenedFromBlastEditor = false;
@@ -110,11 +111,13 @@ namespace RTCV.UI
 			if (_sk == null)
 				return;
 
-			sk = (StashKey)_sk.Clone();
+            if (!RefreshDomains())
+                return;
+
+            sk = (StashKey)_sk.Clone();
 			sk.BlastLayer = new BlastLayer();
 
-			RefreshDomains();
-			AddDefaultRow();
+            AddDefaultRow();
 			PopulateModeCombobox(dgvBlastGenerator.Rows[0]);
 			OpenedFromBlastEditor = true;
 			btnSendTo.Text = "Send to Blast Editor";
@@ -711,16 +714,14 @@ namespace RTCV.UI
 					PopulateDomainCombobox(row);
 				return true;
 			}
-			catch (Exception ex)
-			{
-				throw new Exception(
-							"An error occurred in RTC while refreshing the domains\n" +
-							"Are you sure you don't have an invalid domain selected?\n" +
-							"Make sure any VMDs are loaded and you have the correct core loaded in Bizhawk\n" +
-							ex.ToString() + ex.StackTrace);
-
-				//return false; this will never be reached
-			}
+			catch (NullReferenceException e)
+            {
+                MessageBox.Show("An error occurred in RTC while refreshing the domains\n" +
+                                "Are you sure you don't have an invalid domain selected?\n" +
+                                "Make sure any VMDs are loaded and you have the correct system loaded.\n");
+                Console.WriteLine("Blast generator domains null! " + e + "\n" + e.StackTrace);
+                return false;
+            }
 		}
 
 		private void btnRefreshDomains_Click(object sender, EventArgs e)
