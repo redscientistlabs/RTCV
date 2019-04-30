@@ -773,8 +773,19 @@ namespace RTCV.UI
 			return loadDataGridView(dgv, true);
 		}
 
-		private bool loadDataGridView(DataGridView dgv, bool import = false)
-		{
+        private static object GetDefault(Type t)
+        {
+            Func<object> f = GetDefault<object>;
+            return f.Method.GetGenericMethodDefinition().MakeGenericMethod(t).Invoke(null, null);
+        }
+
+        private static T GetDefault<T>()
+        {
+            return default(T);
+        }
+
+        private bool loadDataGridView(DataGridView dgv, bool import = false)
+        {
 			OpenFileDialog ofd = new OpenFileDialog
 			{
 				Filter = "bg|*.bg"
@@ -817,10 +828,10 @@ namespace RTCV.UI
 						for (int i = 0; i < dgv.Rows[lastrow].Cells.Count; i++)
 						{
 							var item = row.ItemArray[i];
-							if(item is DBNull)
-								dgv.Rows[lastrow].Cells[i].Value = 0;
 							else
 								dgv.Rows[lastrow].Cells[i].Value = item;
+                            if (item is DBNull)
+                                dgv.Rows[lastrow].Cells[i].Value = GetDefault(dgv.Rows[lastrow].Cells[i].ValueType);
 
 						}
 						//Override these two
