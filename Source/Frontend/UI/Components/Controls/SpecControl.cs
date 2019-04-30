@@ -26,7 +26,6 @@ namespace RTCV.UI.Components.Controls
 
         internal T _Value;
 
-        internal bool initialized = false;
 
         [Description("Net value of the control"), Category("Data")]
         public T Value
@@ -34,14 +33,9 @@ namespace RTCV.UI.Components.Controls
             get { return _Value; }
             set
             {
-                if (!initialized)
-                {
-                    _Value = value;
-                    UpdateAllControls(value, null);
-                    initialized = true;
-                    return;
-                }
                 _Value = value;
+                if(!GeneralUpdateFlag)
+                    UpdateAllControls(value, null);
             }
         }
 

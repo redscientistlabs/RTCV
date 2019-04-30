@@ -31,7 +31,6 @@ namespace RTCV.UI.Components.Controls
                 //If the minimum is going to change the current value, we need to mark initialized as false at the end
                 bool reinit = value < updown.Value;
                 updown.Minimum = value;
-                initialized = reinit;
             }
         }
 
@@ -45,7 +44,6 @@ namespace RTCV.UI.Components.Controls
                 //If the minimum is going to change the current value, we need to mark initialized as false at the end
                 bool reinit = value > updown.Value;
                 updown.Maximum = value;
-                initialized = reinit;
             }
         }
 

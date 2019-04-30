@@ -20,7 +20,6 @@ namespace RTCV.UI.Components.Controls
 		public virtual void OnCheckChanged(object sender, EventArgs e) => CheckChanged?.Invoke(sender, e);
 
 		private bool GeneralUpdateFlag = false; //makes other events ignore firing
-        private bool initialized = false;
 
 		private long _Value;
         [Description("Net value of the control (displayed in numeric box)"), Category("Data")]
@@ -28,18 +27,12 @@ namespace RTCV.UI.Components.Controls
 		{
 			get { return _Value; }
 			set
-			{
-				if (!initialized)
-				{
-					var tbValue = nmValueToTbValueQuadScale(value);
-					UpdateAllControls(value, tbValue, null);
-					initialized = true;
-				}
-				else
-				{
-					_Value = value;
-				}
-			}
+            {
+                _Value = value;
+                var tbValue = nmValueToTbValueQuadScale(value);
+                if (!GeneralUpdateFlag)
+                    UpdateAllControls(value, tbValue, null);
+            }
 		}
         private bool _DisplayCheckbox = false;
 		[Description("Display a checkbox before the label"), Category("Data")]
