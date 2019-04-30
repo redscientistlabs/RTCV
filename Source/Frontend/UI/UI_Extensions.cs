@@ -70,7 +70,67 @@ namespace RTCV.UI
 			return dialogResult;
 		}
 
-		public interface ISF<T>
+        public static void Tint(this Bitmap bmp, Color col)
+        {
+
+            Rectangle rectSize = new Rectangle(0, 0, bmp.Width, bmp.Height);
+
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.DrawImage(bmp, rectSize);
+
+                SolidBrush darkBrush = new SolidBrush(col);
+                g.FillRectangle(darkBrush, rectSize);
+
+            }
+        }
+
+
+        public static Bitmap getFormScreenShot(this Control con)
+        {
+            //recursively creates a screenshot of the form/panel and subcontrols
+
+            var bitmap = new Bitmap(con.Width, con.Height);
+            var rectSize = new Rectangle(0, 0, con.Width, con.Height);
+
+            con.DrawToBitmap(bitmap, rectSize);
+
+            foreach (Control c in con.Controls)
+            {
+                if (c is Form frm)
+                {
+
+                    var subBitmap = getFormScreenShot(frm);
+                    var subrect = new Rectangle(0, 0, frm.Width, frm.Height);
+                    //cf.DrawToBitmap(subBitmap, subrect);
+                    using (Graphics g = Graphics.FromImage(bitmap))
+                    {
+                        g.DrawImage(subBitmap, new Point(frm.Location.X, frm.Location.Y));
+                    }
+                }
+
+                if (c is Panel p)
+                {
+                    foreach (Control cp in p.Controls)
+                    {
+                        if (cp is Form f)
+                        {
+                            var subBitmap = getFormScreenShot(f);
+                            var subrect = new Rectangle(0, 0, f.Width, f.Height);
+                            using (Graphics g = Graphics.FromImage(bitmap))
+                            {
+                                g.DrawImage(subBitmap, new Point(p.Location.X + f.Location.X, p.Location.Y + f.Location.Y));
+                            }
+                        }
+                    }
+                }
+            }
+
+            return bitmap;
+        }
+
+
+        public interface ISF<T>
 		{
 			//Interface for Singleton Form
 			T Me();
@@ -84,16 +144,18 @@ namespace RTCV.UI
 
 		public class RTC_Standalone_Form : Form { }
 
-		public class ComponentForm : Form
+		public class ComponentForm : Form, IBlockable
 		{
 
 			Panel defaultPanel = null;
 			Panel previousPanel = null;
 
+            public Panel blockPanel { get; set; } = null;
+
 			public bool undockedSizable = true;
 			public bool popoutAllowed = true;
-			
-			public void AnchorToPanel(Panel pn)
+
+            public void AnchorToPanel(Panel pn)
 			{
 
 				if (defaultPanel == null)

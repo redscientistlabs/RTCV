@@ -31,6 +31,16 @@ namespace RTCV.UI
 
     }
 
+    public interface IBlockable
+    {
+        //Interface used for querying blockable fornms/panels and do actions of them
+        Panel blockPanel { get; set; }
+        //void BlockView();
+        //void UnblockView();
+    }
+
+
+
     public class CanvasGrid
     {
         //grid that represents the layout of a single form

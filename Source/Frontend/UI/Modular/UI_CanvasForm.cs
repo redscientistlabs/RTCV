@@ -11,13 +11,15 @@ using RTCV.UI;
 
 namespace RTCV.UI
 {
-    public partial class UI_CanvasForm : Form
+    public partial class UI_CanvasForm : Form, IBlockable
     {
         public static UI_CanvasForm mainForm;
         public static List<UI_CanvasForm> extraForms = new List<UI_CanvasForm>();
         public static Dictionary<string, UI_CanvasForm> allExtraForms = new Dictionary<string, UI_CanvasForm>();
         public UI_ShadowPanel spForm;
         private Form _blockerForm;
+
+        public Panel blockPanel { get; set; } = null;
 
         public Form blockerForm
         {
@@ -169,7 +171,8 @@ namespace RTCV.UI
 
         }
 
-
+        //public void BlockView() => (this as IBlockable)?.BlockView();
+        //public void UnblockView() => (this as IBlockable)?.UnblockView();
 
         public static void loadTileFormExtraWindow(CanvasGrid canvasGrid, string WindowHeader, bool silent = false)
         {
@@ -256,13 +259,16 @@ namespace RTCV.UI
         }
 
 
-        public void OpenSubForm(Form reqForm)
+        public void OpenSubForm(Form reqForm, bool lockSidebar = false)
         {
 
             //sets program to SubForm mode, darkens screen and displays flating form.
             //Start by giving type of Form class. Implement interface SubForms.UI_SubForm for Cancel/Ok buttons
 
             //See DummySubForm for example
+
+            if (lockSidebar && mainForm.Parent is UI_CoreForm c)
+                c.LockSideBar();
 
             if (spForm != null)
                 CloseSubForm();
@@ -272,6 +278,8 @@ namespace RTCV.UI
             mainForm.Controls.Add(spForm);
             spForm.Show();
             spForm.BringToFront();
+
+
         }
 
         public void CloseSubForm()
@@ -279,12 +287,17 @@ namespace RTCV.UI
             //Closes subform and exists SubForm mode.
             //is automatically called when Cancel/Ok is pressed in SubForm.
 
+            if (mainForm.Parent is UI_CoreForm c)
+                c.UnlockSideBar();
+
             if (spForm != null)
             {
                 spForm.subForm = null;
                 spForm.Hide();
                 spForm = null;
             }
+
+
         }
 
         public void OpenBlockerForm()

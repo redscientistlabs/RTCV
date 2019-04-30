@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UI_CoreForm));
-            this.pnTopBar = new System.Windows.Forms.Panel();
+            this.pnSideBar = new System.Windows.Forms.Panel();
             this.pnGlitchHarvesterOpen = new System.Windows.Forms.Panel();
             this.pnCrashProtection = new System.Windows.Forms.Panel();
             this.btnGpJumpNow = new System.Windows.Forms.Button();
@@ -50,33 +50,35 @@
             this.btnGlitchHarvester = new System.Windows.Forms.Button();
             this.btnManualBlast = new System.Windows.Forms.Button();
             this.btnAutoCorrupt = new System.Windows.Forms.Button();
-            this.pnTopBar.SuspendLayout();
+            this.button1 = new System.Windows.Forms.Button();
+            this.pnSideBar.SuspendLayout();
             this.pnCrashProtection.SuspendLayout();
             this.pnAutoKillSwitch.SuspendLayout();
             this.SuspendLayout();
             // 
-            // pnTopBar
+            // pnSideBar
             // 
-            this.pnTopBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.pnTopBar.Controls.Add(this.pnGlitchHarvesterOpen);
-            this.pnTopBar.Controls.Add(this.pnCrashProtection);
-            this.pnTopBar.Controls.Add(this.btnTestCustomLayout);
-            this.pnTopBar.Controls.Add(this.btnTestSubform);
-            this.pnTopBar.Controls.Add(this.pnAutoKillSwitch);
-            this.pnTopBar.Controls.Add(this.btnSettings);
-            this.pnTopBar.Controls.Add(this.btnLogo);
-            this.pnTopBar.Controls.Add(this.btnEngineConfig);
-            this.pnTopBar.Controls.Add(this.btnEasyMode);
-            this.pnTopBar.Controls.Add(this.btnStockpilePlayer);
-            this.pnTopBar.Controls.Add(this.btnGlitchHarvester);
-            this.pnTopBar.Controls.Add(this.btnManualBlast);
-            this.pnTopBar.Controls.Add(this.btnAutoCorrupt);
-            this.pnTopBar.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pnTopBar.Location = new System.Drawing.Point(0, 0);
-            this.pnTopBar.Name = "pnTopBar";
-            this.pnTopBar.Size = new System.Drawing.Size(150, 581);
-            this.pnTopBar.TabIndex = 7;
-            this.pnTopBar.Tag = "color:dark3";
+            this.pnSideBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.pnSideBar.Controls.Add(this.button1);
+            this.pnSideBar.Controls.Add(this.pnGlitchHarvesterOpen);
+            this.pnSideBar.Controls.Add(this.pnCrashProtection);
+            this.pnSideBar.Controls.Add(this.btnTestCustomLayout);
+            this.pnSideBar.Controls.Add(this.btnTestSubform);
+            this.pnSideBar.Controls.Add(this.pnAutoKillSwitch);
+            this.pnSideBar.Controls.Add(this.btnSettings);
+            this.pnSideBar.Controls.Add(this.btnLogo);
+            this.pnSideBar.Controls.Add(this.btnEngineConfig);
+            this.pnSideBar.Controls.Add(this.btnEasyMode);
+            this.pnSideBar.Controls.Add(this.btnStockpilePlayer);
+            this.pnSideBar.Controls.Add(this.btnGlitchHarvester);
+            this.pnSideBar.Controls.Add(this.btnManualBlast);
+            this.pnSideBar.Controls.Add(this.btnAutoCorrupt);
+            this.pnSideBar.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pnSideBar.Location = new System.Drawing.Point(0, 0);
+            this.pnSideBar.Name = "pnSideBar";
+            this.pnSideBar.Size = new System.Drawing.Size(150, 581);
+            this.pnSideBar.TabIndex = 7;
+            this.pnSideBar.Tag = "color:dark3";
             // 
             // pnGlitchHarvesterOpen
             // 
@@ -455,13 +457,34 @@
             this.btnAutoCorrupt.UseVisualStyleBackColor = false;
             this.btnAutoCorrupt.Click += new System.EventHandler(this.btnAutoCorrupt_Click);
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.Location = new System.Drawing.Point(0, 382);
+            this.button1.Name = "button1";
+            this.button1.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.button1.Size = new System.Drawing.Size(150, 33);
+            this.button1.TabIndex = 129;
+            this.button1.TabStop = false;
+            this.button1.Tag = "color:dark3";
+            this.button1.Text = "Test Lockdown";
+            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.Button1_Click_1);
+            // 
             // UI_CoreForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(844, 581);
-            this.Controls.Add(this.pnTopBar);
+            this.Controls.Add(this.pnSideBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -472,7 +495,7 @@
             this.ResizeBegin += new System.EventHandler(this.UI_CoreForm_ResizeBegin);
             this.ResizeEnd += new System.EventHandler(this.UI_CoreForm_ResizeEnd);
             this.Resize += new System.EventHandler(this.UI_CoreForm_Resize);
-            this.pnTopBar.ResumeLayout(false);
+            this.pnSideBar.ResumeLayout(false);
             this.pnCrashProtection.ResumeLayout(false);
             this.pnCrashProtection.PerformLayout();
             this.pnAutoKillSwitch.ResumeLayout(false);
@@ -483,7 +506,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel pnTopBar;
+        private System.Windows.Forms.Panel pnSideBar;
         private System.Windows.Forms.Button btnEngineConfig;
         public System.Windows.Forms.Button btnEasyMode;
         private System.Windows.Forms.Button btnStockpilePlayer;
@@ -504,6 +527,7 @@
         private System.Windows.Forms.Button btnTestSubform;
         internal System.Windows.Forms.Panel pnGlitchHarvesterOpen;
         private System.Windows.Forms.Button btnTestCustomLayout;
+        private System.Windows.Forms.Button button1;
     }
 }
 

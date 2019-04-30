@@ -40,7 +40,14 @@ namespace RTCV.NetCore.StaticTools
 			return (T)instances[typ];
 		}
 
-		public static object GET(Type typ)
+        //returns all singletons that implements a certain type
+        public static T[] GETINTERFACES<T>() => instances.Values
+            .Where(it => it is T)
+            .Select(it => (T)it)
+            .ToArray();
+        
+
+        public static object GET(Type typ)
 		{
 			//Type typ = typeof(T);
 

@@ -23,15 +23,15 @@ using RTCV.UI.Modular;
 
 namespace RTCV.UI
 {
-	public static class UICore
-	{
+    public static class UICore
+    {
 
 
-		//Note Box Settings
-		public static Point NoteBoxPosition;
-		public static Size NoteBoxSize;
+        //Note Box Settings
+        public static Point NoteBoxPosition;
+        public static Size NoteBoxSize;
 
-		public static bool FirstConnect = true;
+        public static bool FirstConnect = true;
 
         public static System.Timers.Timer inputCheckTimer;
 
@@ -43,43 +43,43 @@ namespace RTCV.UI
         public static BindingCollection HotkeyBindings = new BindingCollection();
 
         public static void Start(Form standaloneForm = null)
-		{
+        {
 
             S.formRegister.FormRegistered += FormRegister_FormRegistered;
-			//registerFormEvents(S.GET<RTC_Core_Form>());
+            //registerFormEvents(S.GET<RTC_Core_Form>());
             registerFormEvents(S.GET<UI_CoreForm>());
 
-			S.SET<RTC_Standalone_Form>((RTC_Standalone_Form)standaloneForm);
+            S.SET<RTC_Standalone_Form>((RTC_Standalone_Form)standaloneForm);
 
-			Form dummy = new Form();
-			IntPtr Handle = dummy.Handle;
+            Form dummy = new Form();
+            IntPtr Handle = dummy.Handle;
 
-			SyncObjectSingleton.SyncObject = dummy;
+            SyncObjectSingleton.SyncObject = dummy;
 
-			UI_VanguardImplementation.StartServer();
+            UI_VanguardImplementation.StartServer();
 
 
-			PartialSpec p = new PartialSpec("UISpec");
+            PartialSpec p = new PartialSpec("UISpec");
 
-			p["SELECTEDDOMAINS"] = new string[]{};
+            p["SELECTEDDOMAINS"] = new string[] { };
 
-			RTCV.NetCore.AllSpec.UISpec = new FullSpec(p, !CorruptCore.CorruptCore.Attached);
-			RTCV.NetCore.AllSpec.UISpec.SpecUpdated += (o, e) =>
-			{
-				PartialSpec partial = e.partialSpec;
+            RTCV.NetCore.AllSpec.UISpec = new FullSpec(p, !CorruptCore.CorruptCore.Attached);
+            RTCV.NetCore.AllSpec.UISpec.SpecUpdated += (o, e) =>
+            {
+                PartialSpec partial = e.partialSpec;
 
-				LocalNetCoreRouter.Route(CORRUPTCORE, REMOTE_PUSHUISPECUPDATE, partial, e.syncedUpdate);
-			};
+                LocalNetCoreRouter.Route(CORRUPTCORE, REMOTE_PUSHUISPECUPDATE, partial, e.syncedUpdate);
+            };
 
             CorruptCore.CorruptCore.StartUISide();
 
 
             //Loading RTC Params
-            
-			S.GET<RTC_SettingsGeneral_Form>().cbDisableBizhawkOSD.Checked = !RTCV.NetCore.Params.IsParamSet("ENABLE_BIZHAWK_OSD");
-			S.GET<RTC_SettingsGeneral_Form>().cbAllowCrossCoreCorruption.Checked = RTCV.NetCore.Params.IsParamSet("ALLOW_CROSS_CORE_CORRUPTION");
-			S.GET<RTC_SettingsGeneral_Form>().cbDontCleanAtQuit.Checked = RTCV.NetCore.Params.IsParamSet("DONT_CLEAN_SAVESTATES_AT_QUIT");
-			S.GET<RTC_SettingsGeneral_Form>().cbUncapIntensity.Checked = RTCV.NetCore.Params.IsParamSet("UNCAP_INTENSITY");
+
+            S.GET<RTC_SettingsGeneral_Form>().cbDisableBizhawkOSD.Checked = !RTCV.NetCore.Params.IsParamSet("ENABLE_BIZHAWK_OSD");
+            S.GET<RTC_SettingsGeneral_Form>().cbAllowCrossCoreCorruption.Checked = RTCV.NetCore.Params.IsParamSet("ALLOW_CROSS_CORE_CORRUPTION");
+            S.GET<RTC_SettingsGeneral_Form>().cbDontCleanAtQuit.Checked = RTCV.NetCore.Params.IsParamSet("DONT_CLEAN_SAVESTATES_AT_QUIT");
+            S.GET<RTC_SettingsGeneral_Form>().cbUncapIntensity.Checked = RTCV.NetCore.Params.IsParamSet("UNCAP_INTENSITY");
 
 
             //Initialize input code. Poll every 16ms
@@ -99,115 +99,178 @@ namespace RTCV.UI
             S.GET<UI_CoreForm>().Show();
         }
 
-		private static void FormRegister_FormRegistered(object sender, NetCoreEventArgs e)
-		{
-			Form newForm = ((e.message as NetCoreAdvancedMessage)?.objectValue as Form);
+        private static void FormRegister_FormRegistered(object sender, NetCoreEventArgs e)
+        {
+            Form newForm = ((e.message as NetCoreAdvancedMessage)?.objectValue as Form);
 
-			if (newForm != null)
-			{
-				registerFormEvents(newForm);
-				registerHotkeyBlacklistControls(newForm);
-			}
-			
-		}
+            if (newForm != null)
+            {
+                registerFormEvents(newForm);
+                registerHotkeyBlacklistControls(newForm);
+            }
 
-		public static void registerHotkeyBlacklistControls(Control container)
-		{
-			foreach (Control c in container.Controls)
-			{
-				registerHotkeyBlacklistControls(c);
-				if (c is NumericUpDown || c is TextBox)
-				{
-					c.Enter -= ControlFocusObtained;
-					c.Enter += ControlFocusObtained;
+        }
 
-					c.Leave -= ControlFocusLost;
-					c.Leave += ControlFocusLost;
+        public static void registerHotkeyBlacklistControls(Control container)
+        {
+            foreach (Control c in container.Controls)
+            {
+                registerHotkeyBlacklistControls(c);
+                if (c is NumericUpDown || c is TextBox)
+                {
+                    c.Enter -= ControlFocusObtained;
+                    c.Enter += ControlFocusObtained;
 
-				}
-				else if (c is DataGridView dgv)
-				{
-					dgv.CellBeginEdit -= ControlFocusObtained;
-					dgv.CellBeginEdit += ControlFocusObtained;
+                    c.Leave -= ControlFocusLost;
+                    c.Leave += ControlFocusLost;
 
-					dgv.CellEndEdit -= ControlFocusLost;
-					dgv.CellEndEdit += ControlFocusLost;
-				}
-			}
-		}
+                }
+                else if (c is DataGridView dgv)
+                {
+                    dgv.CellBeginEdit -= ControlFocusObtained;
+                    dgv.CellBeginEdit += ControlFocusObtained;
 
-		public static void registerFormEvents(Form f)
-		{
-			f.Deactivate -= NewForm_FocusChanged;
-			f.Deactivate += NewForm_FocusChanged;
+                    dgv.CellEndEdit -= ControlFocusLost;
+                    dgv.CellEndEdit += ControlFocusLost;
+                }
+            }
+        }
 
-			f.Activated -= NewForm_FocusChanged;
-			f.Activated += NewForm_FocusChanged;
+        public static void registerFormEvents(Form f)
+        {
+            f.Deactivate -= NewForm_FocusChanged;
+            f.Deactivate += NewForm_FocusChanged;
 
-			f.GotFocus -= NewForm_FocusChanged;
-			f.GotFocus += NewForm_FocusChanged;
+            f.Activated -= NewForm_FocusChanged;
+            f.Activated += NewForm_FocusChanged;
 
-			f.LostFocus -= NewForm_FocusChanged;
-			f.LostFocus += NewForm_FocusChanged;
+            f.GotFocus -= NewForm_FocusChanged;
+            f.GotFocus += NewForm_FocusChanged;
 
-			
-			//There's a chance that the form may already be visible by the time this fires
-			if (f.Focused)
-			{
-				UpdateFormFocusStatus(true);
-			}
-		}
+            f.LostFocus -= NewForm_FocusChanged;
+            f.LostFocus += NewForm_FocusChanged;
 
-		private static void ControlFocusObtained(object sender, EventArgs e) => UpdateFormFocusStatus(false);
-		private static void ControlFocusLost(object sender, EventArgs e) => UpdateFormFocusStatus(true);
 
-		private static void NewForm_FocusChanged(object sender, EventArgs e)
-		{
-			((Control) sender).TabIndex = 0;
-			UpdateFormFocusStatus(null);
-		}
+            //There's a chance that the form may already be visible by the time this fires
+            if (f.Focused)
+            {
+                UpdateFormFocusStatus(true);
+            }
+        }
 
-		public static void UpdateFormFocusStatus(bool? forceSet = null)
-		{
-			if (RTCV.NetCore.AllSpec.UISpec == null)
-				return;
+        private static void ControlFocusObtained(object sender, EventArgs e) => UpdateFormFocusStatus(false);
+        private static void ControlFocusLost(object sender, EventArgs e) => UpdateFormFocusStatus(true);
 
-			bool previousState = (bool?)RTCV.NetCore.AllSpec.UISpec[RTC_INFOCUS] ?? false;
+        private static void NewForm_FocusChanged(object sender, EventArgs e)
+        {
+            ((Control)sender).TabIndex = 0;
+            UpdateFormFocusStatus(null);
+        }
+
+        public static void UpdateFormFocusStatus(bool? forceSet = null)
+        {
+            if (RTCV.NetCore.AllSpec.UISpec == null)
+                return;
+
+            bool previousState = (bool?)RTCV.NetCore.AllSpec.UISpec[RTC_INFOCUS] ?? false;
             //bool currentState = forceSet ?? isAnyRTCFormFocused();
             bool currentState = forceSet ?? true;
             Console.WriteLine("Setting state to " + currentState);
 
-			if (previousState != currentState)
-			{	//This is a non-synced spec update to prevent jittering. Shouldn't have any other noticeable impact
-				RTCV.NetCore.AllSpec.UISpec.Update(RTC_INFOCUS, currentState,true,false);
-			}
+            if (previousState != currentState)
+            {   //This is a non-synced spec update to prevent jittering. Shouldn't have any other noticeable impact
+                RTCV.NetCore.AllSpec.UISpec.Update(RTC_INFOCUS, currentState, true, false);
+            }
 
-		}
+        }
 
-		private static bool isAnyRTCFormFocused()
-		{
-			bool ExternalForm = Form.ActiveForm == null;
+        private static bool isAnyRTCFormFocused()
+        {
+            bool ExternalForm = Form.ActiveForm == null;
 
-			if (ExternalForm)
-				return false;
+            if (ExternalForm)
+                return false;
 
-			var form = Form.ActiveForm;
-			var t = form.GetType();
+            var form = Form.ActiveForm;
+            var t = form.GetType();
 
-			focus = (
-				typeof(IAutoColorize).IsAssignableFrom(t) ||
-				typeof(CloudDebug).IsAssignableFrom(t) ||
-				typeof(DebugInfo_Form).IsAssignableFrom(t)
-			);
+            focus = (
+                typeof(IAutoColorize).IsAssignableFrom(t) ||
+                typeof(CloudDebug).IsAssignableFrom(t) ||
+                typeof(DebugInfo_Form).IsAssignableFrom(t)
+            );
 
-			bool isAllowedForm = focus;
+            bool isAllowedForm = focus;
 
-			return isAllowedForm;
-		}
+            return isAllowedForm;
+        }
+
+        public static void LockInterface()
+        {
+            interfaceLocked = true;
+            var cf = S.GET<UI_CoreForm>();
+            cf.LockSideBar();
+
+            //UI_CanvasForm.mainForm.BlockView();
+            UI_CanvasForm.extraForms.ForEach(it => it.BlockView());
+
+            var ifs = S.GETINTERFACES<IBlockable>();
+
+            foreach(var i in ifs)
+                i.BlockView();
+
+            cf.Focus();
+        }
+
+        public static void UnlockInterface()
+        {
+            interfaceLocked = false;
+            S.GET<UI_CoreForm>().UnlockSideBar();
+
+            var ifs = S.GETINTERFACES<IBlockable>();
+
+            foreach (var i in ifs)
+                i.UnblockView();
+
+            
+        }
 
 
-		//All RTC forms
-		public static Form[] AllRtcForms
+        public static void BlockView(this IBlockable ib)
+        {
+            if (ib is RTC_ConnectionStatus_Form)
+                return;
+
+            if (ib.blockPanel == null)
+                ib.blockPanel = new Panel();
+
+            if(ib is Control c)
+            {
+                c.Controls.Add(ib.blockPanel);
+                ib.blockPanel.Location = new Point(0, 0);
+                ib.blockPanel.Size = c.Size;
+                ib.blockPanel.BringToFront();
+
+                var bmp = c.getFormScreenShot();
+                bmp.Tint(Color.FromArgb(0xEF, UICore.Dark4Color));
+
+                ib.blockPanel.BackgroundImage = bmp;
+            }
+
+            ib.blockPanel.Visible = true;
+        }
+
+        public static void UnblockView(this IBlockable ib)
+        {
+            if (ib is RTC_ConnectionStatus_Form)
+                return;
+
+            if (ib.blockPanel != null)
+                ib.blockPanel.Visible = false;
+        }
+
+        //All RTC forms
+        public static Form[] AllRtcForms
 		{
 			get
 			{
@@ -299,6 +362,7 @@ namespace RTCV.UI
         public static Color Dark2Color;
         public static Color Dark3Color;
         public static Color Dark4Color;
+        private static bool interfaceLocked;
 
         public static void SetRTCColor(Color color, Control ctr = null)
 		{

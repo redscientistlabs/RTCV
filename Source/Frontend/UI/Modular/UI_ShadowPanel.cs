@@ -78,49 +78,6 @@ namespace RTCV.UI
 
         }
 
-        public Bitmap FormScreenShot(Form f)
-        {
-            //recursively creates a screenshot of the form and subforms
-
-            var bitmap = new Bitmap(f.Width, f.Height);
-            var rectSize = new Rectangle(0, 0, f.Width, f.Height);
-            f.DrawToBitmap(bitmap, rectSize);
-
-            foreach(Control c in f.Controls)
-            {
-                if(c is Form)
-                {
-                    var cf = (Form)c;
-                    var subBitmap = FormScreenShot(cf);
-                    var subrect = new Rectangle(0, 0, cf.Width, cf.Height);
-                    //cf.DrawToBitmap(subBitmap, subrect);
-                    using (Graphics g = Graphics.FromImage(bitmap))
-                    {
-                        g.DrawImage(subBitmap, new Point(cf.Location.X, cf.Location.Y));
-                    }
-                }
-
-                if (c is Panel)
-                {
-                    var p = (Panel)c;
-                    foreach (Control cp in p.Controls)
-                    {
-                        if(cp is Form)
-                        {
-                            var subBitmap = FormScreenShot((Form)cp);
-                            var subrect = new Rectangle(0, 0, cp.Width, cp.Height);
-                            //cp.DrawToBitmap(subBitmap, subrect);
-                            using (Graphics g = Graphics.FromImage(bitmap))
-                            {
-                                g.DrawImage(subBitmap, new Point(p.Location.X + cp.Location.X, p.Location.Y + cp.Location.Y));
-                            }
-                        }
-                    }
-                }
-            }
-
-            return bitmap;
-        }
 
         public void UpdateBackground()
         {
@@ -132,59 +89,14 @@ namespace RTCV.UI
             if(parentForm.Width == 0 || parentForm.Height == 0)
                 return;
 
-            var bitmap = FormScreenShot(parentForm);
-            var rectSize = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
-
-            using (Graphics g = Graphics.FromImage(bitmap))
-            {
-                g.DrawImage(bitmap, rectSize);
-
-                SolidBrush darkBrush = new SolidBrush(Color.FromArgb(0xCC, UICore.Dark4Color));
-                g.FillRectangle(darkBrush, rectSize);
-
-            }
+            Bitmap bmp = parentForm.getFormScreenShot();
+            bmp.Tint(Color.FromArgb(0xCC, UICore.Dark4Color));
 
             this.Size = parentForm.Size;
-            this.BackgroundImage = bitmap;
-            //this.BackgroundImage = bgFlat;
+            this.BackgroundImage = bmp;
+
             pnFloater.Location = new Point((parentForm.Width - pnFloater.Width) / 2, (parentForm.Height - pnFloater.Height) / 2);
 
-        }
-
-
-        public Image SetImageOpacity(Image image, float opacity)
-        {
-            try
-            {
-                //create a Bitmap the size of the image provided  
-                Bitmap bmp = new Bitmap(image.Width, image.Height);
-
-                //create a graphics object from the image  
-                using (Graphics gfx = Graphics.FromImage(bmp))
-                {
-
-                    //create a color matrix object  
-                    ColorMatrix matrix = new ColorMatrix();
-
-                    //set the opacity  
-                    matrix.Matrix33 = opacity;
-
-                    //create image attributes  
-                    ImageAttributes attributes = new ImageAttributes();
-
-                    //set the color(opacity) of the image  
-                    attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
-
-                    //now draw the image  
-                    gfx.DrawImage(image, new Rectangle(0, 0, bmp.Width, bmp.Height), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, attributes);
-                }
-                return bmp;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return null;
-            }
         }
 
         private void btnRight_Click(object sender, EventArgs e)

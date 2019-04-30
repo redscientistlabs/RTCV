@@ -31,6 +31,7 @@ namespace RTCV.UI
         public static int corePadding; // height of the top bar
         public static int yPadding;
 
+        public Panel pnLockSidebar = null;
 
         public bool AutoCorrupt
         {
@@ -65,7 +66,7 @@ namespace RTCV.UI
             };
 
             this.Controls.Add(cfForm);
-            cfForm.Location = new Point(0, pnTopBar.Size.Height);
+            cfForm.Location = new Point(0, pnSideBar.Size.Height);
             cfForm.Show();
             cfForm.BringToFront();
 
@@ -76,7 +77,7 @@ namespace RTCV.UI
 
             //For Vertical tab-style menu in coreform
             yPadding = (Height - cfForm.Height);
-            corePadding = pnTopBar.Width;
+            corePadding = pnSideBar.Width;
             xPadding = (Width - cfForm.Width) - corePadding;
 
             //UICore.SetRTCColor(UICore.GeneralColor);
@@ -187,7 +188,7 @@ This message only appears once.";
             //test button, loads a dummy form in SubForm mode
 
             var f = S.GET<UI_ComponentFormSubForm>();
-            cfForm.OpenSubForm(f);
+            cfForm.OpenSubForm(f, true);
 
         }
 
@@ -215,6 +216,39 @@ This message only appears once.";
             cuGrid.SetTileForm(spmForm, 15, 7, 11, 12, true, (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right));
 
             cuGrid.LoadToMain();
+        }
+
+        private void PrepareLockSideBar()
+        {
+            if (pnLockSidebar == null || !pnSideBar.Controls.Contains(pnLockSidebar))
+            {
+                pnLockSidebar = new Panel()
+                {
+                    Size = pnSideBar.Size,
+                    Location = new Point(0, 0),
+                    BackColor = UICore.Dark4Color,
+                    Visible = false,
+                };
+                pnSideBar.Controls.Add(pnLockSidebar);
+                pnLockSidebar.BringToFront();
+   
+            }    
+        }
+
+        public void LockSideBar()
+        {
+            PrepareLockSideBar();
+
+            Bitmap bmp = pnSideBar.getFormScreenShot();
+            bmp.Tint(Color.FromArgb(0xF0, UICore.Dark4Color));
+            pnLockSidebar.BackgroundImage = bmp;
+            pnLockSidebar.Visible = true;
+
+        }
+
+        public void UnlockSideBar()
+        {
+            pnLockSidebar.Visible = false;
         }
 
         public void btnEngineConfig_Click(object sender, EventArgs e)
@@ -523,5 +557,10 @@ Environment.NewLine + "───█───▌────────▐▀─
             manualBlastRightClickCount = 0;
         }
 
+        private void Button1_Click_1(object sender, EventArgs e)
+        {
+            UICore.LockInterface();
+            UI_DefaultGrids.connectionStatus.LoadToMain();
+        }
     }
 }
