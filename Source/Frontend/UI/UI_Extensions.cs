@@ -209,6 +209,10 @@ namespace RTCV.UI
 
 			public void RestoreToPreviousPanel()
 			{
+                //We don't care about redocking on quit and depending on what's open, exceptions may occur otherwise
+                if (UICore.isClosing)
+                    return;
+
 				if (defaultPanel == null)
 					throw new Exception("Default panel unset");
 
