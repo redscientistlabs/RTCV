@@ -18,6 +18,7 @@ namespace RTCV.UI
 		{
 			InitializeComponent();
             this.Shown += RTC_ConnectionStatus_Form_Shown;
+            this.btnTriggerKillswitch.MouseClick += BtnTriggerKillswitch_MouseClick;
         }
 
 
