@@ -747,7 +747,7 @@ namespace RTCV.CorruptCore
 
 			string jsonString = pSpec.GetSerializedDico();
 			File.WriteAllText(path, jsonString);
-			Name2TemplateDico.Add(templateName, pSpec);
+            Name2TemplateDico[templateName] = pSpec;
 			return templateName;
 		}
 	}
