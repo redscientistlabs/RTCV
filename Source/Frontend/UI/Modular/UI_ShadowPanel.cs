@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -12,8 +13,8 @@ namespace RTCV.UI
 {
     public partial class UI_ShadowPanel : Form
     {
-        public static UI_CanvasForm parentForm;
-        public static Form subForm = null;
+        public UI_CanvasForm parentForm;
+        public Form subForm = null;
 
         public UI_ShadowPanel(UI_CanvasForm _parentForm, Form reqForm)
         {
@@ -134,33 +135,56 @@ namespace RTCV.UI
             var bitmap = FormScreenShot(parentForm);
             var rectSize = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
 
-            Bitmap resized = new Bitmap(bitmap, new Size(bitmap.Width / 4, bitmap.Height / 4));
-
             using (Graphics g = Graphics.FromImage(bitmap))
             {
-                g.DrawImage(resized, rectSize);
+                g.DrawImage(bitmap, rectSize);
 
-                if (subForm == null)
-                {
-                    SolidBrush darkBrush = new SolidBrush(Color.FromArgb(96, Color.Black));
-                    g.FillRectangle(darkBrush, rectSize);
-
-                    Pen pn = new Pen(Color.Black, 1);
-                    for (int y = 0; y < rectSize.Height / 2; y++)
-                        g.DrawLine(pn, new Point(0, y * 2), new Point(rectSize.Width, y * 2));
-                }
-                else
-                {
-                    SolidBrush darkBrush = new SolidBrush(Color.Black);
-                    g.FillRectangle(darkBrush, rectSize);
-                }
+                SolidBrush darkBrush = new SolidBrush(Color.FromArgb(0xCC, UICore.Dark4Color));
+                g.FillRectangle(darkBrush, rectSize);
 
             }
 
             this.Size = parentForm.Size;
             this.BackgroundImage = bitmap;
+            //this.BackgroundImage = bgFlat;
             pnFloater.Location = new Point((parentForm.Width - pnFloater.Width) / 2, (parentForm.Height - pnFloater.Height) / 2);
 
+        }
+
+
+        public Image SetImageOpacity(Image image, float opacity)
+        {
+            try
+            {
+                //create a Bitmap the size of the image provided  
+                Bitmap bmp = new Bitmap(image.Width, image.Height);
+
+                //create a graphics object from the image  
+                using (Graphics gfx = Graphics.FromImage(bmp))
+                {
+
+                    //create a color matrix object  
+                    ColorMatrix matrix = new ColorMatrix();
+
+                    //set the opacity  
+                    matrix.Matrix33 = opacity;
+
+                    //create image attributes  
+                    ImageAttributes attributes = new ImageAttributes();
+
+                    //set the color(opacity) of the image  
+                    attributes.SetColorMatrix(matrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
+
+                    //now draw the image  
+                    gfx.DrawImage(image, new Rectangle(0, 0, bmp.Width, bmp.Height), 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, attributes);
+                }
+                return bmp;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
         }
 
         private void btnRight_Click(object sender, EventArgs e)

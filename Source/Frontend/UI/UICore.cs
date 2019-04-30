@@ -292,7 +292,15 @@ namespace RTCV.UI
 			}
 		}
 
-		public static void SetRTCColor(Color color, Control ctr = null)
+        public static Color Light1Color;
+        public static Color Light2Color;
+        public static Color NormalColor;
+        public static Color Dark1Color;
+        public static Color Dark2Color;
+        public static Color Dark3Color;
+        public static Color Dark4Color;
+
+        public static void SetRTCColor(Color color, Control ctr = null)
 		{
 			List<Control> allControls = new List<Control>();
 
@@ -333,15 +341,17 @@ namespace RTCV.UI
             float dark1 = -0.20f;
             float dark2 = -0.35f;
             float dark3 = -0.50f;
+            float dark4 = -0.85f;
 
             color = color.ChangeColorBrightness(generalDarken);
 
-            Color Light1Color = color.ChangeColorBrightness(light1);
-            Color Light2Color = color.ChangeColorBrightness(light2);
-            Color NormalColor = color;
-            Color Dark1Color = color.ChangeColorBrightness(dark1);
-            Color Dark2Color = color.ChangeColorBrightness(dark2);
-            Color Dark3Color = color.ChangeColorBrightness(dark3);
+            Light1Color = color.ChangeColorBrightness(light1);
+            Light2Color = color.ChangeColorBrightness(light2);
+            NormalColor = color;
+            Dark1Color = color.ChangeColorBrightness(dark1);
+            Dark2Color = color.ChangeColorBrightness(dark2);
+            Dark3Color = color.ChangeColorBrightness(dark3);
+            Dark4Color = color.ChangeColorBrightness(dark4);
 
             foreach (Control c in light1ColorControls)
             {

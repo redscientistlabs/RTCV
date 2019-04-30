@@ -186,12 +186,9 @@ This message only appears once.";
         {
             //test button, loads a dummy form in SubForm mode
 
-            if (cfForm.spForm == null)
-            {
-                cfForm.OpenSubForm(S.GET<UI_ComponentFormSubForm>());
-            }
-            else
-                cfForm.CloseSubForm();
+            var f = S.GET<UI_ComponentFormSubForm>();
+            cfForm.OpenSubForm(f);
+
         }
 
         private void button4_Click(object sender, EventArgs e)

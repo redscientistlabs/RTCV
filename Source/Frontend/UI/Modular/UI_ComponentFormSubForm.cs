@@ -7,10 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
+using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
-    public partial class UI_ComponentFormSubForm : Form, ISubForm
+    public partial class UI_ComponentFormSubForm : ComponentForm, ISubForm
     {
         public UI_ComponentFormSubForm()
         {
@@ -21,9 +22,9 @@ namespace RTCV.UI
 
 
         public bool SubForm_HasLeftButton => false;
-        public bool SubForm_HasRightButton => false;
+        public bool SubForm_HasRightButton => true;
         public string SubForm_LeftButtonText => "This lefy";
-        public string SubForm_RightButtonText => "Right text yoo";
+        public string SubForm_RightButtonText => "Peter Griffin";
 
         public void SubForm_LeftButton_Click()
         {

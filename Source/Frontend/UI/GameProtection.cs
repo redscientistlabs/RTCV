@@ -100,7 +100,7 @@ namespace RTCV.UI
             }
             catch (Exception e)
             {
-                Console.WriteLine("Unable to remove backup " + sk + " from queue!");
+                Console.WriteLine("Unable to remove backup " + sk + " from queue!\n\n" + e.ToString());
             }
         }
 

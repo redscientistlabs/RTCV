@@ -279,14 +279,10 @@ namespace RTCV.UI
             //Closes subform and exists SubForm mode.
             //is automatically called when Cancel/Ok is pressed in SubForm.
 
-            if (UI_ShadowPanel.subForm != null) {
-                UI_ShadowPanel.subForm.Close();
-                UI_ShadowPanel.subForm = null;
-            }
-
             if (spForm != null)
             {
-                spForm.Close();
+                spForm.subForm = null;
+                spForm.Hide();
                 spForm = null;
             }
         }
