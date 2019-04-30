@@ -828,10 +828,10 @@ namespace RTCV.UI
 						for (int i = 0; i < dgv.Rows[lastrow].Cells.Count; i++)
 						{
 							var item = row.ItemArray[i];
-							else
-								dgv.Rows[lastrow].Cells[i].Value = item;
                             if (item is DBNull)
                                 dgv.Rows[lastrow].Cells[i].Value = GetDefault(dgv.Rows[lastrow].Cells[i].ValueType);
+                            else
+								dgv.Rows[lastrow].Cells[i].Value = item;
 
 						}
 						//Override these two
