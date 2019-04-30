@@ -24,7 +24,7 @@ namespace StandaloneRTC
 			AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 			
 			//Remove any zone files on the dlls because Windows likes to append them
-			string dllDir = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "RTC", "DLL");
+			string dllDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 			WhackAllMOTW(dllDir);
 
 			var processes = Process.GetProcesses().Select(it => $"{it.ProcessName.ToUpper()}").OrderBy(x => x).ToArray();
@@ -104,7 +104,7 @@ namespace StandaloneRTC
 
 					//load missing assemblies by trying to find them in the dll directory
 					string dllname = new AssemblyName(requested).Name + ".dll";
-					string directory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "RTC", "DLL");
+					string directory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
 					string simpleName = new AssemblyName(requested).Name;
 					string fname = Path.Combine(directory, dllname);
 					if (!File.Exists(fname))
