@@ -82,12 +82,12 @@
             this.cbSelectedTemplate = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lbFlavorText = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.updownMaxInfiniteUnits = new RTCV.UI.Components.Controls.MultiUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.cbClearRewind = new System.Windows.Forms.CheckBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.gbUnitSource.SuspendLayout();
             this.gbValueList.SuspendLayout();
             this.gbValueSettings.SuspendLayout();
@@ -103,7 +103,6 @@
             this.groupBox3.SuspendLayout();
             this.pnTopBar.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -931,7 +930,6 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.Gray;
             this.panel1.Controls.Add(this.gbUnitSource);
-            this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.lbFlavorText);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.btnClearActive);
@@ -939,28 +937,19 @@
             this.panel1.Controls.Add(this.gbStepSettings);
             this.panel1.Controls.Add(this.gbLimiterList);
             this.panel1.Controls.Add(this.gbValueSettings);
+            this.panel1.Controls.Add(this.label3);
             this.panel1.Location = new System.Drawing.Point(10, 60);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(441, 365);
             this.panel1.TabIndex = 192;
             this.panel1.Tag = "color:normal";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(366, 310);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(65, 30);
-            this.pictureBox1.TabIndex = 193;
-            this.pictureBox1.TabStop = false;
-            // 
             // lbFlavorText
             // 
             this.lbFlavorText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lbFlavorText.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))));
             this.lbFlavorText.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lbFlavorText.Location = new System.Drawing.Point(190, 346);
+            this.lbFlavorText.Location = new System.Drawing.Point(187, 344);
             this.lbFlavorText.Name = "lbFlavorText";
             this.lbFlavorText.Size = new System.Drawing.Size(241, 14);
             this.lbFlavorText.TabIndex = 194;
@@ -1031,6 +1020,19 @@
             this.cbClearRewind.UseVisualStyleBackColor = false;
             this.cbClearRewind.CheckedChanged += new System.EventHandler(this.CbClearRewind_CheckedChanged);
             // 
+            // label3
+            // 
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold);
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(349, 310);
+            this.label3.Margin = new System.Windows.Forms.Padding(0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(83, 30);
+            this.label3.TabIndex = 195;
+            this.label3.Text = "RTCV";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // RTC_CustomEngineConfig_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1077,7 +1079,6 @@
             this.pnTopBar.ResumeLayout(false);
             this.pnTopBar.PerformLayout();
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -1137,12 +1138,12 @@
 		private System.Windows.Forms.Label label1;
 		public Components.Controls.MultiUpDown updownMaxInfiniteUnits;
 		private System.Windows.Forms.GroupBox groupBox1;
-		private System.Windows.Forms.PictureBox pictureBox1;
 		private System.Windows.Forms.Label lbFlavorText;
         public Components.Controls.MultiUpDown nmDelay;
         public Components.Controls.MultiUpDown nmLifetime;
         public Components.Controls.MultiUpDown nmTilt;
         public Components.Controls.MultiUpDown nmMaxValue;
         public Components.Controls.MultiUpDown nmMinValue;
+        public System.Windows.Forms.Label label3;
     }
 }
