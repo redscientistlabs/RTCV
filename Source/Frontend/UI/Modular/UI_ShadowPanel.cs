@@ -15,7 +15,7 @@ namespace RTCV.UI
         public static UI_CanvasForm parentForm;
         public static Form subForm = null;
 
-        public UI_ShadowPanel(UI_CanvasForm _parentForm, string _type)
+        public UI_ShadowPanel(UI_CanvasForm _parentForm, Form reqForm)
         {
             InitializeComponent();
 
@@ -24,11 +24,8 @@ namespace RTCV.UI
             parentForm = _parentForm;
             UpdateBackground();
 
-            if (_type != null)
-            {
-                var subFormType = Type.GetType("RTCV.UI." + _type); //remove that and replace with componentform loader
-                subForm = (Form)Activator.CreateInstance(subFormType);
-            }
+            subForm = reqForm;
+
             UpdateSubForm();
 
         }
@@ -60,8 +57,23 @@ namespace RTCV.UI
                 subForm.Show();
             }
 
-            if(subForm is ISubForm)
-                    btnCancel.Visible = (subForm as ISubForm).HasCancelButton;
+            if (subForm is ISubForm sf)
+            {
+                btnLeft.Visible = sf.SubForm_HasLeftButton;
+                btnRight.Visible = sf.SubForm_HasRightButton;
+
+                if(!sf.SubForm_HasLeftButton && !sf.SubForm_HasRightButton)
+                {
+                    int newYSize = pnFloater.Size.Height - (pnContainer.Location.Y*2);
+                    pnContainer.Size = new Size(pnContainer.Size.Width, newYSize);
+                }
+
+                if (sf.SubForm_LeftButtonText != null)
+                    btnLeft.Text = sf.SubForm_LeftButtonText;
+
+                if (sf.SubForm_RightButtonText != null)
+                    btnRight.Text = sf.SubForm_RightButtonText;
+            }
 
         }
 
@@ -151,22 +163,22 @@ namespace RTCV.UI
 
         }
 
-        private void btnOk_Click(object sender, EventArgs e)
+        private void btnRight_Click(object sender, EventArgs e)
         {
             //Fires SubForm_Ok() from Interface ISubForm then Exits SubForm Mode
 
             if (subForm is ISubForm)
-                (subForm as ISubForm).SubForm_Ok();
+                (subForm as ISubForm).SubForm_RightButton_Click();
 
             parentForm.CloseSubForm();
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void btnLeft_Click(object sender, EventArgs e)
         {
             //Fires SubForm_Cancel() from Interface ISubForm then Exits SubForm Mode
 
             if (subForm is ISubForm)
-                (subForm as ISubForm).SubForm_Cancel();
+                (subForm as ISubForm).SubForm_LeftButton_Click();
 
             parentForm.CloseSubForm();
         }

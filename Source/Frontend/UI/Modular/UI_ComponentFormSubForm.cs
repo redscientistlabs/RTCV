@@ -20,18 +20,17 @@ namespace RTCV.UI
         }
 
 
-        public bool HasCancelButton
+        public bool SubForm_HasLeftButton => false;
+        public bool SubForm_HasRightButton => false;
+        public string SubForm_LeftButtonText => "This lefy";
+        public string SubForm_RightButtonText => "Right text yoo";
+
+        public void SubForm_LeftButton_Click()
         {
-            get { return false; }
-            set { }
+
         }
 
-        public void SubForm_Cancel()
-        {
-
-        }
-
-        public void SubForm_Ok()
+        public void SubForm_RightButton_Click()
         {
 
         }

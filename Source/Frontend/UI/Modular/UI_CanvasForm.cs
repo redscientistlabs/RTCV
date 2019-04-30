@@ -256,7 +256,7 @@ namespace RTCV.UI
         }
 
 
-        public void OpenSubForm(string _type)
+        public void OpenSubForm(Form reqForm)
         {
 
             //sets program to SubForm mode, darkens screen and displays flating form.
@@ -267,7 +267,7 @@ namespace RTCV.UI
             if (spForm != null)
                 CloseSubForm();
 
-            spForm = new UI_ShadowPanel(mainForm, _type);
+            spForm = new UI_ShadowPanel(mainForm, reqForm);
             spForm.TopLevel = false;
             mainForm.Controls.Add(spForm);
             spForm.Show();

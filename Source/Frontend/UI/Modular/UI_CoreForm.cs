@@ -188,7 +188,7 @@ This message only appears once.";
 
             if (cfForm.spForm == null)
             {
-                cfForm.OpenSubForm("UI_ComponentFormSubForm");
+                cfForm.OpenSubForm(S.GET<UI_ComponentFormSubForm>());
             }
             else
                 cfForm.CloseSubForm();
