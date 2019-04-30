@@ -50,7 +50,7 @@ namespace RTCV.CorruptCore
 			Save(this, isQuickSave);
 		}
 
-		public static bool Save(Stockpile sks, bool isQuickSave = false, bool compress = true)
+		public static bool Save(Stockpile sks, bool includeReferencedFiles = false, bool isQuickSave = false, bool compress = true)
 		{
 			if (sks.StashKeys.Count == 0)
 			{
@@ -101,96 +101,107 @@ namespace RTCV.CorruptCore
 
 			List<string> allRoms = new List<string>();
 
-			//populating Allroms array
-			foreach (StashKey key in sks.StashKeys)
-				if (!allRoms.Contains(key.RomFilename))
-				{
-					allRoms.Add(key.RomFilename);
+            if (includeReferencedFiles)
+            {
 
-					//If it's a cue file, find the bins and fix the cue to be relative
-					if (key.RomFilename.ToUpper().Contains(".CUE"))
-					{
-						string cueFolder = Path.GetDirectoryName(key.RomFilename) + "\\";
-						string[] cueLines = File.ReadAllLines(key.RomFilename);
-						List<string> binFiles = new List<string>();
+                //populating Allroms array
+                foreach (StashKey key in sks.StashKeys)
+                    if (!allRoms.Contains(key.RomFilename))
+                    {
+                        allRoms.Add(key.RomFilename);
 
-						string[] fixedCue = new string[cueLines.Length];
-						for (int i = 0; i < cueLines.Length; i++)
-						{
-							if (cueLines[i].Contains("FILE") && cueLines[i].Contains("BINARY"))
-							{
-								int startFilename;
-								int endFilename = cueLines[i].LastIndexOf('"');
+                        //If it's a cue file, find the bins and fix the cue to be relative
+                        if (key.RomFilename.ToUpper().Contains(".CUE"))
+                        {
+                            string cueFolder = Path.GetDirectoryName(key.RomFilename) + "\\";
+                            string[] cueLines = File.ReadAllLines(key.RomFilename);
+                            List<string> binFiles = new List<string>();
 
-								//If it's an absolute path, convert it to a relative path then fix the cue as well
-								if (cueLines[i].Contains(':'))
-								{
-									startFilename = cueLines[i].LastIndexOfAny(new char[] { '\\', '/' }) + 1;
-									fixedCue[i] = "FILE \"" + cueLines[i].Substring(startFilename, endFilename - startFilename) + "\" BINARY";
-								}
-								else
-								{
-									//Just copy the old cue into the new one
-									startFilename = cueLines[i].IndexOf('"') + 1;
-									fixedCue[i] = cueLines[i];
-								}
+                            string[] fixedCue = new string[cueLines.Length];
+                            for (int i = 0; i < cueLines.Length; i++)
+                            {
+                                if (cueLines[i].Contains("FILE") && cueLines[i].Contains("BINARY"))
+                                {
+                                    int startFilename;
+                                    int endFilename = cueLines[i].LastIndexOf('"');
 
-								binFiles.Add(cueLines[i].Substring(startFilename, endFilename - startFilename));
-							}
-							else
-								fixedCue[i] = cueLines[i];
+                                    //If it's an absolute path, convert it to a relative path then fix the cue as well
+                                    if (cueLines[i].Contains(':'))
+                                    {
+                                        startFilename = cueLines[i].LastIndexOfAny(new char[] { '\\', '/' }) + 1;
+                                        fixedCue[i] = "FILE \"" + cueLines[i].Substring(startFilename, endFilename - startFilename) + "\" BINARY";
+                                    }
+                                    else
+                                    {
+                                        //Just copy the old cue into the new one
+                                        startFilename = cueLines[i].IndexOf('"') + 1;
+                                        fixedCue[i] = cueLines[i];
+                                    }
 
-						}
-						//Write our new cue
-						File.WriteAllLines(key.RomFilename, fixedCue);
+                                    binFiles.Add(cueLines[i].Substring(startFilename, endFilename - startFilename));
+                                }
+                                else
+                                    fixedCue[i] = cueLines[i];
 
-						allRoms.AddRange(binFiles.Select(it => cueFolder + it));
-					}
+                            }
+                            //Write our new cue
+                            File.WriteAllLines(key.RomFilename, fixedCue);
 
-					if (key.RomFilename.ToUpper().Contains(".CCD"))
-					{
-						List<string> binFiles = new List<string>();
+                            allRoms.AddRange(binFiles.Select(it => cueFolder + it));
+                        }
 
-						if (File.Exists(Path.GetFileNameWithoutExtension(key.RomFilename) + ".sub"))
-							binFiles.Add(Path.GetFileNameWithoutExtension(key.RomFilename) + ".sub");
+                        if (key.RomFilename.ToUpper().Contains(".CCD"))
+                        {
+                            List<string> binFiles = new List<string>();
 
-						if (File.Exists(Path.GetFileNameWithoutExtension(key.RomFilename) + ".img"))
-							binFiles.Add(Path.GetFileNameWithoutExtension(key.RomFilename) + ".img");
+                            if (File.Exists(Path.GetFileNameWithoutExtension(key.RomFilename) + ".sub"))
+                                binFiles.Add(Path.GetFileNameWithoutExtension(key.RomFilename) + ".sub");
 
-						allRoms.AddRange(binFiles);
-					}
-				}
+                            if (File.Exists(Path.GetFileNameWithoutExtension(key.RomFilename) + ".img"))
+                                binFiles.Add(Path.GetFileNameWithoutExtension(key.RomFilename) + ".img");
 
-			//clean temp folder
-			try
-			{
-				EmptyFolder(Path.DirectorySeparatorChar + "WORKING\\TEMP");
-			}
-			catch (Exception e)
-			{
-				MessageBox.Show(e.Message);
-				return false;
-			}
+                            allRoms.AddRange(binFiles);
+                        }
+                    }
 
-			//populating temp folder with roms
-			foreach (string str in allRoms)
-			{
-				string rom = str;
-				string romTempfilename = CorruptCore.workingDir + Path.DirectorySeparatorChar + "TEMP" + Path.DirectorySeparatorChar + Path.GetFileName(rom);
-			//	if (!rom.Contains(Path.DirectorySeparatorChar) && !rom.Contains("/" ))
-				//	rom = CorruptCore.workingDir + Path.DirectorySeparatorChar + "SKS" + Path.DirectorySeparatorChar + rom;
+                //clean temp folder
+                try
+                {
+                    EmptyFolder(Path.DirectorySeparatorChar + "WORKING\\TEMP");
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                    return false;
+                }
 
-				//If the file already exists, overwrite it.
-				if (File.Exists(romTempfilename))
-				{
-					//Whack the attributes in case a rom is readonly 
-					File.SetAttributes(romTempfilename, FileAttributes.Normal);
-					File.Delete(romTempfilename);
-					File.Copy(rom, romTempfilename);
-				}
-				else
-					File.Copy(rom, romTempfilename);
-			}
+                //populating temp folder with roms
+                foreach (string str in allRoms)
+                {
+                    string rom = str;
+                    string romTempfilename = CorruptCore.workingDir + Path.DirectorySeparatorChar + "TEMP" + Path.DirectorySeparatorChar + Path.GetFileName(rom);
+                    //	if (!rom.Contains(Path.DirectorySeparatorChar) && !rom.Contains("/" ))
+                    //	rom = CorruptCore.workingDir + Path.DirectorySeparatorChar + "SKS" + Path.DirectorySeparatorChar + rom;
+
+                    //If the file already exists, overwrite it.
+                    if (File.Exists(romTempfilename))
+                    {
+                        //Whack the attributes in case a rom is readonly 
+                        File.SetAttributes(romTempfilename, FileAttributes.Normal);
+                        File.Delete(romTempfilename);
+                        File.Copy(rom, romTempfilename);
+                    }
+                    else
+                        File.Copy(rom, romTempfilename);
+                }
+
+                //Update the paths
+                foreach (var sk in sks.StashKeys)
+                {
+                    sk.RomShortFilename = Path.GetFileName(sk.RomFilename);
+                    sk.RomFilename = CorruptCore.workingDir + Path.DirectorySeparatorChar + "SKS" + Path.DirectorySeparatorChar + sk.RomShortFilename;
+                }
+            }
 
 			//Copy all the savestates
 			foreach (StashKey key in sks.StashKeys)
@@ -222,8 +233,6 @@ namespace RTCV.CorruptCore
 			//Update stashkey info 
 			foreach (StashKey sk in sks.StashKeys)
 			{
-				sk.RomShortFilename = Path.GetFileName(sk.RomFilename);
-				sk.RomFilename = CorruptCore.workingDir + Path.DirectorySeparatorChar + "SKS" + Path.DirectorySeparatorChar + sk.RomShortFilename;
 				sk.StateLocation = StashKeySavestateLocation.SKS;
 			}
 			//Create stockpile.xml to temp folder from stockpile object
@@ -414,7 +423,11 @@ namespace RTCV.CorruptCore
 			//Set up the correct paths
 			foreach (StashKey t in sks.StashKeys)
 			{
-				t.RomFilename = CorruptCore.workingDir + Path.DirectorySeparatorChar + "SKS" + Path.DirectorySeparatorChar + t.RomShortFilename;
+                //If we have the file, update the path
+                var newFilename = CorruptCore.workingDir + Path.DirectorySeparatorChar + "SKS" + Path.DirectorySeparatorChar + t.RomShortFilename;
+                if (File.Exists(newFilename))
+                    t.RomFilename = newFilename;
+
 				t.StateLocation = StashKeySavestateLocation.SKS;
 			}
 

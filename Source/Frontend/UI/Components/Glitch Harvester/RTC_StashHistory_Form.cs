@@ -204,7 +204,6 @@ namespace RTCV.UI
 
         private void lbStashHistory_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             try
             {
                 lbStashHistory.Enabled = false;

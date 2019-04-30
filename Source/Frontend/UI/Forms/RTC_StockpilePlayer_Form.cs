@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
+using System.Linq;
 using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
 using RTCV.NetCore;
@@ -182,6 +184,13 @@ namespace RTCV.UI
 					{
                         S.GET<RTC_StockpileManager_Form>().dgvStockpile.Rows.Clear();
 					}
+
+                    List<StashKey> keys = dgvStockpile.Rows.Cast<DataGridViewRow>().Select(x => (StashKey) x.Cells["Item"].Value).ToList();
+                    foreach (var sk in keys)
+                    {
+                        StockpileManager_UISide.CheckAndFixMissingReference(sk, keys);
+                    }
+
 					dgvStockpile.ClearSelection();
 					RefreshNoteIcons();
 				}

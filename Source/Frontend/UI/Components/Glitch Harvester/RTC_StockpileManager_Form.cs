@@ -97,6 +97,10 @@ namespace RTCV.UI
 
                 StockpileManager_UISide.CurrentStashkey = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
 
+                List<StashKey> keys = dgvStockpile.Rows.Cast<DataGridViewRow>().Select(x => (StashKey)x.Cells[0].Value).ToList();
+                if (!StockpileManager_UISide.CheckAndFixMissingReference(StockpileManager_UISide.CurrentStashkey, keys))
+                    return;
+
                 if (!S.GET<RTC_GlitchHarvesterBlast_Form>().LoadOnSelect)
                     return;
 
@@ -379,7 +383,7 @@ namespace RTCV.UI
 
 
             Stockpile sks = new Stockpile(dgvStockpile);
-            if (Stockpile.Save(sks, false, CompressStockpiles))
+            if (Stockpile.Save(sks, IncludeReferencedFiles, false, CompressStockpiles))
             {
                 sendCurrentStockpileToSKS();
                 btnSaveStockpile.Enabled = true;
@@ -393,7 +397,7 @@ namespace RTCV.UI
         {
 
             Stockpile sks = new Stockpile(dgvStockpile);
-            if (Stockpile.Save(sks, true, CompressStockpiles))
+            if (Stockpile.Save(sks, IncludeReferencedFiles, true, CompressStockpiles))
                 sendCurrentStockpileToSKS();
 
             UnsavedEdits = false;

@@ -293,5 +293,40 @@ namespace RTCV.CorruptCore
 			return isCorruptionApplied;
 		}
 
-	}
+        /// <summary>
+        /// Takes a stashkey and a list of keys, fixing the path and if a list of keys is provided, it'll look for all shared references and update them
+        /// </summary>
+        /// <param name="psk"></param>
+        /// <param name="keys"></param>
+        /// <returns></returns>
+        public static bool CheckAndFixMissingReference(StashKey psk, List<StashKey> keys = null)
+        {
+            if (!File.Exists(psk.RomFilename))
+                if (DialogResult.Yes == MessageBox.Show($"Can't find file {psk.RomFilename}\nGame name: {psk.GameName}\nSystem name: {psk.SystemName}\n\n Would you like to provide a new file for replacement?", "Error: File not found", MessageBoxButtons.YesNo))
+                {
+                    OpenFileDialog ofd = new OpenFileDialog
+                    {
+                        DefaultExt = "*",
+                        Title = "Select Replacement File",
+                        Filter = "Any file|*.*",
+                        RestoreDirectory = true
+                    };
+                    if (ofd.ShowDialog() == DialogResult.OK)
+                    {
+                        string filename = ofd.FileName.ToString();
+                        string oldFilename = psk.RomFilename;
+                        foreach (var sk in keys.Where(x => x.RomFilename == oldFilename))
+                        {
+                            sk.RomFilename = filename;
+                            sk.RomShortFilename = Path.GetFileName(sk.RomFilename);
+                        }
+                    }
+                    else
+                        return false;
+                }
+            return true;
+        }
+
+
+    }
 }
