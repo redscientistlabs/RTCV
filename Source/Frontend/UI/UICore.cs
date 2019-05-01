@@ -231,6 +231,7 @@ namespace RTCV.UI
 
             S.GET<RTC_ConnectionStatus_Form>().pnBlockedButtons.Hide();
 
+            UI_CanvasForm.extraForms.ForEach(it => it.UnblockView());
             var ifs = S.GETINTERFACES<IBlockable>();
 
             foreach (var i in ifs)
