@@ -67,7 +67,6 @@
     <Compile Include="Enums.cs" />
     <Compile Include="CorruptCore_Extensions.cs" />
     <Compile Include="Filtering.cs" />
-    <Compile Include="Hotkeys.cs" />
     <Compile Include="MemoryDomains.cs" />
     <Compile Include="Objects.cs" />
     <Compile Include="Render.cs" />
