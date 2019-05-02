@@ -137,7 +137,7 @@ namespace RTCV.NetCore
                     socket = KillableAcceptSocket(server);
                     networkStream = new NetworkStream(socket);
 
-                    //server.Stop();
+                    server.Stop();
 
                 }
 
