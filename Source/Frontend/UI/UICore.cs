@@ -599,6 +599,7 @@ namespace RTCV.UI
 
         private static bool CheckHotkey(string trigger)
         {
+            Console.WriteLine(trigger);
             switch (trigger)
             {
 

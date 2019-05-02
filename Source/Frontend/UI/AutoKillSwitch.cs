@@ -56,13 +56,15 @@ namespace RTCV.UI
 
 		public static void KillEmulator(bool forceBypass = false)
 		{
-			SyncObjectSingleton.FormExecute((o, ea) =>
+
+            if (!ShouldKillswitchFire || (!S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked && !forceBypass))
+                return;
+
+            //Nuke netcore
+            UI_VanguardImplementation.RestartServer();
+
+            SyncObjectSingleton.FormExecute((o, ea) =>
 			{
-
-				if (!ShouldKillswitchFire || (!S.GET<UI_CoreForm>()
-					.cbUseAutoKillSwitch.Checked && !forceBypass))
-					return;
-
 				//Stop the old timer and eat any exceptions
 				try
 				{
@@ -126,7 +128,7 @@ namespace RTCV.UI
 
 		private static void BoopMonitoringTimer_Tick(object sender, EventArgs e)
 		{
-			if (!Enabled || UI_VanguardImplementation.connector.netConn.status != NetCore.NetworkStatus.CONNECTED)
+			if (!Enabled || (UI_VanguardImplementation.connector?.netConn?.status != NetCore.NetworkStatus.CONNECTED))
 				return;
 
 			pulseCount--;

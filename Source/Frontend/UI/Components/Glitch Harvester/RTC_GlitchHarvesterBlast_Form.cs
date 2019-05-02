@@ -143,6 +143,14 @@ namespace RTCV.UI
             try
             {
 				SetBlastButtonVisibility(false);
+
+                var domains = RTCV.NetCore.AllSpec.UISpec["SELECTEDDOMAINS"] as string[];
+                if (domains == null || domains.Length == 0)
+                {
+                    MessageBox.Show("Can't corrupt with no domains selected.");
+                    return;
+                }
+
                 //Shut off autocorrupt if it's on.
                 //Leave this check here so we don't wastefully update the spec
                 if (S.GET<UI_CoreForm>().AutoCorrupt)

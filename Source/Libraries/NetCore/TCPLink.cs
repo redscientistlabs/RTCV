@@ -90,7 +90,6 @@ namespace RTCV.NetCore
                         socket = listener?.EndAcceptSocket(ar);
                         clientConnected?.Set();
                     }
-                    catch (ObjectDisposedException) { }
                     catch (Exception ex) { DiscardException(ex); }
 
                 }, null);
@@ -149,9 +148,11 @@ namespace RTCV.NetCore
 
                 while (true)
                 {
-
                     if (networkStream != null && networkStream.DataAvailable)
                     {
+                        if(spec.Side == NetworkSide.SERVER && (!socket?.Connected ?? true))
+                            return;
+
                         NetCoreAdvancedMessage message = null;
 
                         try
