@@ -376,8 +376,14 @@ This message only appears once.";
             {
                 btnGpJumpNow.Visible = false;
 
-                if (StockpileManager_UISide.BackupedState != null)
-                    StockpileManager_UISide.BackupedState.Run();
+                //Do this to prevent any potential race
+                var sk = StockpileManager_UISide.BackupedState;;
+
+                if (sk != null)
+                {
+                    GameProtection.AddBackupState(sk);
+                    sk.Run();
+                }
 
                 GameProtection.Reset(false);
             }

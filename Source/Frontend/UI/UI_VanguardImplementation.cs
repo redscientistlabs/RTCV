@@ -115,8 +115,6 @@ namespace RTCV.UI
                                 if (GameProtection.WasAutoCorruptRunning)
                                     S.GET<UI_CoreForm>().AutoCorrupt = true;
                             }
-                                
-
                         });
 						break;
 

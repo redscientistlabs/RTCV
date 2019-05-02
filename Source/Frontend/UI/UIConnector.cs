@@ -59,7 +59,7 @@ namespace RTCV.UI
                 GameProtection.WasAutoCorruptRunning = CorruptCore.CorruptCore.AutoCorrupt;
                 S.GET<UI_CoreForm>().AutoCorrupt = false;
 			});
-			GameProtection.Stop();
+			GameProtection.Stop(false);
 
 			if(S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked)
 				AutoKillSwitch.KillEmulator();

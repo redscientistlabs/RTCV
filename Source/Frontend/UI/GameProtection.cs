@@ -87,7 +87,9 @@ namespace RTCV.UI
                 }
             }
             sk?.Run(); 
-            Task.Run(() => RemoveBackup(sk)); //Don't wait on the hdd operations
+            //Don't delete it if it's also our "current" state
+            if(sk != CorruptCore.StockpileManager_UISide.BackupedState)
+                Task.Run(() => RemoveBackup(sk)); //Don't wait on the hdd operations
         }
 
 
