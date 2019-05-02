@@ -33,6 +33,9 @@ namespace RTCV.UI
             "Clown vomit, spikes and needles",
             "My mom says to blow in the cartridge so it works best",
             "The Vanguard of unreliable sloshy behavior r&&d innovation for the thrill of gamers",
+            "Where are all these plates coming from anyway",
+            "Preparing more plates, please standby",
+            "Unpredictable and profoundly cursed",
         };
 
 		private void RTC_ConnectionStatus_Form_Load(object sender, EventArgs e)
