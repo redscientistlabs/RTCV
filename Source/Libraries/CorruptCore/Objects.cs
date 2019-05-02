@@ -1608,16 +1608,19 @@ namespace RTCV.CorruptCore
 							switch (Precision)
 							{
 								case (1):
-									randomValue = CorruptCore.RND.RandomLong(RTC_CustomEngine.MinValue8Bit, RTC_CustomEngine.MaxValue8Bit);
+									randomValue = CorruptCore.RND.RandomULong(RTC_CustomEngine.MinValue8Bit, RTC_CustomEngine.MaxValue8Bit);
 									break;
 								case (2):
-									randomValue = CorruptCore.RND.RandomLong(RTC_CustomEngine.MinValue16Bit, RTC_CustomEngine.MaxValue16Bit);
+									randomValue = CorruptCore.RND.RandomULong(RTC_CustomEngine.MinValue16Bit, RTC_CustomEngine.MaxValue16Bit);
 									break;
-								case (4):
-									randomValue = CorruptCore.RND.RandomLong(RTC_CustomEngine.MinValue32Bit, RTC_CustomEngine.MaxValue32Bit);
-									break;
-								//No limits if out of normal range
-								default:
+                                case (4):
+                                    randomValue = CorruptCore.RND.RandomULong(RTC_CustomEngine.MinValue32Bit, RTC_CustomEngine.MaxValue32Bit);
+                                    break;
+                                case (8):
+                                    randomValue = CorruptCore.RND.RandomULong(RTC_CustomEngine.MinValue64Bit, RTC_CustomEngine.MaxValue64Bit);
+                                    break;
+                                //No limits if out of normal range
+                                default:
 									byte[] _randomValue = new byte[Precision];
 									CorruptCore.RND.NextBytes(_randomValue);
 									randomValue = new BigInteger(_randomValue);
@@ -1629,16 +1632,19 @@ namespace RTCV.CorruptCore
 							switch (this.Precision)
 							{
 								case (1):
-									randomValue = CorruptCore.RND.RandomLong(0, 0xFF);
+									randomValue = CorruptCore.RND.RandomULong(0, 0xFF);
 									break;
 								case (2):
-									randomValue = CorruptCore.RND.RandomLong(0, 0xFFFF);
-									break;
-								case (4):
-									randomValue = CorruptCore.RND.RandomLong(0, 0xFFFFFFFF);
-									break;
-								//No limits if out of normal range
-								default:
+									randomValue = CorruptCore.RND.RandomULong(0, 0xFFFF);
+                                    break;
+                                case (4):
+                                    randomValue = CorruptCore.RND.RandomLong(0, 0xFFFFFFFF);
+                                    break;
+                                case (8):
+                                    randomValue = CorruptCore.RND.RandomULong(0, 0xFFFFFFFFFFFFFFFF);
+                                    break;
+                                //No limits if out of normal range
+                                default:
 									byte[] _randomValue = new byte[Precision];
 									CorruptCore.RND.NextBytes(_randomValue);
 									randomValue = new BigInteger(_randomValue);
@@ -1659,16 +1665,19 @@ namespace RTCV.CorruptCore
 					switch (Precision)
 					{
 						case (1):
-							randomValue = CorruptCore.RND.RandomLong(0, 0xFF);
+							randomValue = CorruptCore.RND.RandomULong(0, 0xFF);
 							break;
 						case (2):
-							randomValue = CorruptCore.RND.RandomLong(0, 0xFFFF);
+							randomValue = CorruptCore.RND.RandomULong(0, 0xFFFF);
 							break;
-						case (4):
-							randomValue = CorruptCore.RND.RandomLong(0, 0xFFFFFFFF);
-							break;
-						//No limits if out of normal range
-						default:
+                        case (4):
+                            randomValue = CorruptCore.RND.RandomULong(0, 0xFFFFFFFF);
+                            break;
+                        case (8):
+                            randomValue = CorruptCore.RND.RandomULong(0, 0xFFFFFFFFFFFFFFFF);
+                            break;
+                        //No limits if out of normal range
+                        default:
 							byte[] _randomValue = new byte[Precision];
 							CorruptCore.RND.NextBytes(_randomValue);
 							randomValue = new BigInteger(_randomValue);

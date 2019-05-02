@@ -278,21 +278,35 @@ namespace RTCV.UI
 					nmMaxValueHellgenie.Value = RTC_HellgenieEngine.MaxValue16Bit;
 
 					break;
-				case 4:
-					nmMinValueNightmare.Maximum = UInt32.MaxValue;
-					nmMaxValueNightmare.Maximum = UInt32.MaxValue;
+                case 4:
+                    nmMinValueNightmare.Maximum = UInt32.MaxValue;
+                    nmMaxValueNightmare.Maximum = UInt32.MaxValue;
 
-					nmMinValueHellgenie.Maximum = UInt32.MaxValue;
-					nmMaxValueHellgenie.Maximum = UInt32.MaxValue;
+                    nmMinValueHellgenie.Maximum = UInt32.MaxValue;
+                    nmMaxValueHellgenie.Maximum = UInt32.MaxValue;
 
-					nmMinValueNightmare.Value = RTC_NightmareEngine.MinValue32Bit;
-					nmMaxValueNightmare.Value = RTC_NightmareEngine.MaxValue32Bit;
+                    nmMinValueNightmare.Value = RTC_NightmareEngine.MinValue32Bit;
+                    nmMaxValueNightmare.Value = RTC_NightmareEngine.MaxValue32Bit;
 
-					nmMinValueHellgenie.Value = RTC_HellgenieEngine.MinValue32Bit;
-					nmMaxValueHellgenie.Value = RTC_HellgenieEngine.MaxValue32Bit;
+                    nmMinValueHellgenie.Value = RTC_HellgenieEngine.MinValue32Bit;
+                    nmMaxValueHellgenie.Value = RTC_HellgenieEngine.MaxValue32Bit;
 
-					break;
-			}
+                    break;
+                case 8:
+                    nmMinValueNightmare.Maximum = UInt64.MaxValue;
+                    nmMaxValueNightmare.Maximum = UInt64.MaxValue;
+
+                    nmMinValueHellgenie.Maximum = UInt64.MaxValue;
+                    nmMaxValueHellgenie.Maximum = UInt64.MaxValue;
+
+                    nmMinValueNightmare.Value = RTC_NightmareEngine.MinValue64Bit;
+                    nmMaxValueNightmare.Value = RTC_NightmareEngine.MaxValue64Bit;
+
+                    nmMinValueHellgenie.Value = RTC_HellgenieEngine.MinValue64Bit;
+                    nmMaxValueHellgenie.Value = RTC_HellgenieEngine.MaxValue64Bit;
+
+                    break;
+            }
 			updatingMinMax = false;
 		}
 
@@ -313,10 +327,13 @@ namespace RTCV.UI
 					case 1:
 						CorruptCore.CorruptCore.CurrentPrecision = 2;
 						break;
-					case 2:
-						CorruptCore.CorruptCore.CurrentPrecision = 4;
-						break;
-				}
+                    case 2:
+                        CorruptCore.CorruptCore.CurrentPrecision = 4;
+                        break;
+                    case 3:
+                        CorruptCore.CorruptCore.CurrentPrecision = 8;
+                        break;
+                }
 				
 				updateMinMaxBoxes(CorruptCore.CorruptCore.CurrentPrecision);
 				S.GET<RTC_CustomEngineConfig_Form>().UpdateMinMaxBoxes(CorruptCore.CorruptCore.CurrentPrecision);
@@ -338,7 +355,7 @@ namespace RTCV.UI
 			if (updatingMinMax)
 				return;
 
-			long value = Convert.ToInt64(nmMinValueNightmare.Value);
+			ulong value = Convert.ToUInt64(nmMinValueNightmare.Value);
 
 
 			switch (CorruptCore.CorruptCore.CurrentPrecision)
@@ -349,10 +366,13 @@ namespace RTCV.UI
 				case 2:
 					RTC_NightmareEngine.MinValue16Bit = value;
 					break;
-				case 4:
-					RTC_NightmareEngine.MinValue32Bit = value;
-					break;
-			}
+                case 4:
+                    RTC_NightmareEngine.MinValue32Bit = value;
+                    break;
+                case 8:
+                    RTC_NightmareEngine.MinValue64Bit = value;
+                    break;
+            }
 
 		}
 
@@ -361,7 +381,7 @@ namespace RTCV.UI
 			//We don't want to trigger this if it caps when stepping downwards
 			if (updatingMinMax)
 				return;
-			long value = Convert.ToInt64(nmMaxValueNightmare.Value);
+			ulong value = Convert.ToUInt64(nmMaxValueNightmare.Value);
 			
 
 			switch (CorruptCore.CorruptCore.CurrentPrecision)
@@ -372,10 +392,13 @@ namespace RTCV.UI
 				case 2:
 					RTC_NightmareEngine.MaxValue16Bit = value;
 					break;
-				case 4:
-					RTC_NightmareEngine.MaxValue32Bit = value;
-					break;
-			}
+                case 4:
+                    RTC_NightmareEngine.MaxValue32Bit = value;
+                    break;
+                case 8:
+                    RTC_NightmareEngine.MaxValue64Bit = value;
+                    break;
+            }
 		}
 
 		private void nmMinValueHellgenie_ValueChanged(object sender, EventArgs e)
@@ -383,7 +406,7 @@ namespace RTCV.UI
 			//We don't want to trigger this if it caps when stepping downwards
 			if (updatingMinMax)
 				return;
-			long value = Convert.ToInt64(nmMinValueHellgenie.Value);
+			ulong value = Convert.ToUInt64(nmMinValueHellgenie.Value);
 
 			switch (CorruptCore.CorruptCore.CurrentPrecision)
 			{
@@ -393,10 +416,13 @@ namespace RTCV.UI
 				case 2:
 					RTC_HellgenieEngine.MinValue16Bit = value;
 					break;
-				case 4:
-					RTC_HellgenieEngine.MinValue32Bit = value;
-					break;
-			}
+                case 4:
+                    RTC_HellgenieEngine.MinValue32Bit = value;
+                    break;
+                case 8:
+                    RTC_HellgenieEngine.MinValue64Bit = value;
+                    break;
+            }
 		}
 
 		private void nmMaxValueHellgenie_ValueChanged(object sender, EventArgs e)
@@ -405,7 +431,7 @@ namespace RTCV.UI
 			if (updatingMinMax)
 				return;
 
-			long value = Convert.ToInt64(nmMaxValueHellgenie.Value);
+			ulong value = Convert.ToUInt64(nmMaxValueHellgenie.Value);
 
 			switch (CorruptCore.CorruptCore.CurrentPrecision)
 			{
@@ -415,10 +441,13 @@ namespace RTCV.UI
 				case 2:
 					RTC_HellgenieEngine.MaxValue16Bit = value;
 					break;
-				case 4:
-					RTC_HellgenieEngine.MaxValue32Bit = value;
-					break;
-			}
+                case 4:
+                    RTC_HellgenieEngine.MaxValue32Bit = value;
+                    break;
+                case 8:
+                    RTC_HellgenieEngine.MaxValue64Bit = value;
+                    break;
+            }
 		}
 
 

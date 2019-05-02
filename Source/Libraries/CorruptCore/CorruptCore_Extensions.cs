@@ -460,12 +460,19 @@ namespace RTCV.CorruptCore
 							Array.Reverse(value);
 						return value;
 					}
-			}
+				case 8:
+				{
+					byte[] value = BitConverter.GetBytes(Convert.ToUInt64(newValue));
+					if (needsBytesFlipped)
+						Array.Reverse(value);
+					return value;
+				}
+            }
 
 			return null;
 		}
 
-		public static byte[] GetByteArrayValue(int precision, long newValue, bool needsBytesFlipped = false)
+		public static byte[] GetByteArrayValue(int precision, ulong newValue, bool needsBytesFlipped = false)
 		{
 			switch (precision)
 			{
@@ -479,13 +486,20 @@ namespace RTCV.CorruptCore
 						return value;
 					}
 				case 4:
-					{
-						byte[] value = BitConverter.GetBytes(Convert.ToUInt32(newValue));
-						if (needsBytesFlipped)
-							Array.Reverse(value);
-						return value;
-					}
-			}
+				{
+					byte[] value = BitConverter.GetBytes(Convert.ToUInt32(newValue));
+					if (needsBytesFlipped)
+						Array.Reverse(value);
+					return value;
+				}
+				case 8:
+				{
+					byte[] value = BitConverter.GetBytes(newValue);
+					if (needsBytesFlipped)
+						Array.Reverse(value);
+					return value;
+				}
+            }
 
 			return null;
 		}
@@ -770,14 +784,23 @@ namespace RTCV.CorruptCore
 	// MIT Licensed. thank you very much.
 	internal static class RandomExtensions
 	{
-		public static long RandomLong(this Random rnd)
-		{
-			byte[] buffer = new byte[8];
-			rnd.NextBytes(buffer);
-			return BitConverter.ToInt64(buffer, 0);
-		}
+        public static long RandomLong(this Random rnd)
+        {
+            byte[] buffer = new byte[8];
+            rnd.NextBytes(buffer);
+            return BitConverter.ToInt64(buffer, 0);
+        }
+        public static ulong RandomULong(this Random rnd)
+        {
+            return (ulong)rnd.RandomLong();
+        }
 
-		public static long RandomLong(this Random rnd, long min, long max)
+        public static ulong RandomULong(this Random rnd, ulong min, ulong max)
+        {
+            return (ulong)rnd.RandomLong((long)min, (long)max);
+        }
+
+        public static long RandomLong(this Random rnd, long min, long max)
 		{
 			EnsureMinLEQMax(ref min, ref max);
 			long numbersInRange = unchecked(max - min + 1);
@@ -790,9 +813,15 @@ namespace RTCV.CorruptCore
 			return min + PositiveModuloOrZero(randomOffset, numbersInRange);
 		}
 
+        
+
 		public static long RandomLong(this Random rnd, long max)
 		{
 			return rnd.RandomLong(0, max);
+		}
+		public static ulong RandomULong(this Random rnd, long max)
+		{
+			return (ulong)rnd.RandomLong(0, max);
 		}
 
 		private static bool IsModuloBiased(long randomOffset, long numbersInRange)

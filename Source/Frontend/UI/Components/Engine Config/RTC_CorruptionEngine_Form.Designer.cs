@@ -148,7 +148,8 @@
             this.cbCustomPrecision.Items.AddRange(new object[] {
             "8-bit",
             "16-bit",
-            "32-bit"});
+            "32-bit",
+            "64-bit"});
             this.cbCustomPrecision.Location = new System.Drawing.Point(106, 5);
             this.cbCustomPrecision.Name = "cbCustomPrecision";
             this.cbCustomPrecision.Size = new System.Drawing.Size(121, 21);
@@ -457,7 +458,7 @@
             this.updownMaxPipes.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.updownMaxPipes.ForeColor = System.Drawing.Color.White;
             this.updownMaxPipes.Hexadecimal = false;
-            this.updownMaxPipes.Location = new System.Drawing.Point(96, 40);
+            this.updownMaxPipes.Location = new System.Drawing.Point(96, 39);
             this.updownMaxPipes.Maximum = new decimal(new int[] {
             65536,
             0,

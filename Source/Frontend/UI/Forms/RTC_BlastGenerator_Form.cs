@@ -588,10 +588,13 @@ namespace RTCV.UI
 				case 2:
 					return "16-bit";
 
-				case 4:
-					return "32-bit";
+                case 4:
+                    return "32-bit";
 
-				default:
+                case 8:
+                    return "64-bit";
+
+                default:
 					return null;
 			}
 		}
@@ -606,10 +609,13 @@ namespace RTCV.UI
 				case "16-bit":
 					return 2;
 
-				case "32-bit":
-					return 4;
+                case "32-bit":
+                    return 4;
 
-				default:
+                case "64-bit":
+                    return 4;
+
+                default:
 					return -1;
 			}
 		}

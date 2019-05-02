@@ -646,7 +646,9 @@
             this.dgvPrecision.Items.AddRange(new object[] {
             "8-bit",
             "16-bit",
-            "32-bit"});
+            "32-bit",
+            "64-bit",
+            });
             this.dgvPrecision.Name = "dgvPrecision";
             this.dgvPrecision.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.dgvPrecision.ToolTipText = "The size of the generated blast";

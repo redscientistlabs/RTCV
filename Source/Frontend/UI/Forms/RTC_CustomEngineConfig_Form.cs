@@ -175,7 +175,7 @@ namespace RTCV.UI
 			//We don't want to trigger this if it caps when stepping downwards
 			if (updatingMinMax)
 				return;
-			long value = Convert.ToInt64(nmMinValue.Value);
+			ulong value = Convert.ToUInt64(nmMinValue.Value);
 
 			switch (CorruptCore.CorruptCore.CurrentPrecision)
 			{
@@ -185,10 +185,13 @@ namespace RTCV.UI
 				case 2:
 					RTC_CustomEngine.MinValue16Bit = value;
 					break;
-				case 4:
-					RTC_CustomEngine.MinValue32Bit = value;
-					break;
-			}
+                case 4:
+                    RTC_CustomEngine.MinValue32Bit = value;
+                    break;
+                case 8:
+                    RTC_CustomEngine.MinValue64Bit = value;
+                    break;
+            }
 		}
 
 		private void nmMaxValue_ValueChanged(object sender, EventArgs e)
@@ -199,7 +202,7 @@ namespace RTCV.UI
 			//We don't want to trigger this if it caps when stepping downwards
 			if (updatingMinMax)
 				return;
-			long value = Convert.ToInt64(nmMaxValue.Value);
+			ulong value = Convert.ToUInt64(nmMaxValue.Value);
 
 
 			switch (CorruptCore.CorruptCore.CurrentPrecision)
@@ -210,10 +213,13 @@ namespace RTCV.UI
 				case 2:
 					RTC_CustomEngine.MaxValue16Bit = value;
 					break;
-				case 4:
-					RTC_CustomEngine.MaxValue32Bit = value;
-					break;
-			}
+                case 4:
+                    RTC_CustomEngine.MaxValue32Bit = value;
+                    break;
+                case 8:
+                    RTC_CustomEngine.MaxValue64Bit = value;
+                    break;
+            }
 		}
 
 		public void SetRewindBoxes(bool enabled)
@@ -337,14 +343,20 @@ namespace RTCV.UI
 					nmMinValue.Value = RTC_CustomEngine.MinValue16Bit;
 					nmMaxValue.Value = RTC_CustomEngine.MaxValue16Bit;
 					break;
-				case 4:
-					nmMinValue.Maximum = UInt32.MaxValue;
-					nmMaxValue.Maximum = UInt32.MaxValue;
+                case 4:
+                    nmMinValue.Maximum = UInt32.MaxValue;
+                    nmMaxValue.Maximum = UInt32.MaxValue;
 
-					nmMinValue.Value = RTC_CustomEngine.MinValue32Bit;
-					nmMaxValue.Value = RTC_CustomEngine.MaxValue32Bit;
+                    nmMinValue.Value = RTC_CustomEngine.MinValue32Bit;
+                    nmMaxValue.Value = RTC_CustomEngine.MaxValue32Bit;
+                    break;
+                case 8:
+                    nmMinValue.Maximum = UInt64.MaxValue;
+                    nmMaxValue.Maximum = UInt64.MaxValue;
 
-					break;
+                    nmMinValue.Value = RTC_CustomEngine.MinValue64Bit;
+                    nmMaxValue.Value = RTC_CustomEngine.MaxValue64Bit;
+                    break;
 			}
 			updatingMinMax = false;
 		}
@@ -554,10 +566,13 @@ namespace RTCV.UI
 					case 2:
 						S.GET<RTC_CorruptionEngine_Form>().cbCustomPrecision.SelectedIndex = 1;
 						break;
-					case 4:
-						S.GET<RTC_CorruptionEngine_Form>().cbCustomPrecision.SelectedIndex = 2;
-						break;
-				}
+                    case 4:
+                        S.GET<RTC_CorruptionEngine_Form>().cbCustomPrecision.SelectedIndex = 2;
+                        break;
+                    case 8:
+                        S.GET<RTC_CorruptionEngine_Form>().cbCustomPrecision.SelectedIndex = 3;
+                        break;
+                }
 
 				switch (CorruptCore.CorruptCore.CurrentPrecision)
 				{
@@ -567,10 +582,13 @@ namespace RTCV.UI
 					case 2:
 						nmMinValue.Value = RTC_CustomEngine.MinValue16Bit;
 						break;
-					case 4:
-						nmMinValue.Value = RTC_CustomEngine.MinValue32Bit;
-						break;
-				}
+                    case 4:
+                        nmMinValue.Value = RTC_CustomEngine.MinValue32Bit;
+                        break;
+                    case 8:
+                        nmMinValue.Value = RTC_CustomEngine.MinValue64Bit;
+                        break;
+                }
 
 				switch (CorruptCore.CorruptCore.CurrentPrecision)
 				{
@@ -580,10 +598,13 @@ namespace RTCV.UI
 					case 2:
 						nmMaxValue.Value = RTC_CustomEngine.MaxValue16Bit;
 						break;
-					case 4:
-						nmMaxValue.Value = RTC_CustomEngine.MaxValue32Bit;
-						break;
-				}
+                    case 4:
+                        nmMaxValue.Value = RTC_CustomEngine.MaxValue32Bit;
+                        break;
+                    case 8:
+                        nmMaxValue.Value = RTC_CustomEngine.MaxValue64Bit;
+                        break;
+                }
 			}
 			finally
 			{

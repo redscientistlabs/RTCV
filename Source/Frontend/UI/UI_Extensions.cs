@@ -2290,7 +2290,7 @@ namespace RTCV.UI
 
 			if (Hexadecimal)
 			{
-				text = ((Int64)num).ToString("X", CultureInfo.InvariantCulture);
+				text = ((ulong)num).ToString("X", CultureInfo.InvariantCulture);
 				Debug.Assert(text == text.ToUpper(CultureInfo.InvariantCulture), "GetPreferredSize assumes hex digits to be uppercase.");
 			}
 			else
@@ -2307,7 +2307,7 @@ namespace RTCV.UI
 			{
 				if (!string.IsNullOrEmpty(Text) && !(Text.Length == 1 && Text == "-"))
 				{
-					var val = Convert.ToDecimal(Convert.ToInt64(base.Text, 16));
+					var val = Convert.ToDecimal(Convert.ToUInt64(base.Text, 16));
 
 					if (val > Maximum)
 					{
