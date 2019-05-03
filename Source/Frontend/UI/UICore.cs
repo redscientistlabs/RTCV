@@ -47,7 +47,8 @@ namespace RTCV.UI
 
             S.formRegister.FormRegistered += FormRegister_FormRegistered;
             //registerFormEvents(S.GET<RTC_Core_Form>());
-            registerFormEvents(S.GET<UI_CoreForm>());
+			registerFormEvents(S.GET<UI_CoreForm>());
+			registerHotkeyBlacklistControls(S.GET<UI_CoreForm>());
 
             S.SET<RTC_Standalone_Form>((RTC_Standalone_Form)standaloneForm);
 
@@ -177,7 +178,9 @@ namespace RTCV.UI
             bool currentState = forceSet ?? true;   
 
             if (previousState != currentState)
-            {   //This is a non-synced spec update to prevent jittering. Shouldn't have any other noticeable impact
+			{
+				Console.WriteLine($"Swapping focus state {previousState} => {currentState}");
+				//This is a non-synced spec update to prevent jittering. Shouldn't have any other noticeable impact
                 RTCV.NetCore.AllSpec.UISpec.Update(RTC_INFOCUS, currentState, true, false);
             }
 

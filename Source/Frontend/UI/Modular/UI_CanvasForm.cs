@@ -184,6 +184,9 @@ namespace RTCV.UI
 
                 extraForm.MaximizeBox = false;
                 extraForm.Text = WindowHeader;
+
+				UICore.registerFormEvents(extraForm);
+				UICore.registerHotkeyBlacklistControls(extraForm);
                 loadTileForm(extraForm, canvasGrid);
             }
 
