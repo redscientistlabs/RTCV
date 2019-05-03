@@ -21,6 +21,7 @@ Features:
 Please consult the Official Wiki for software documentation. https://corrupt.wiki
 
 Download link: http://redscientist.com/rtc
+Trello: https://trello.com/b/9QYo50OC/rtcv
 
 
 Icon graciously provided by (ShyGuyXXL)[https://twitter.com/shyguyxxl]
