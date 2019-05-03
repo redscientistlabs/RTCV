@@ -96,14 +96,25 @@ namespace RTCV.CorruptCore
 				sks.ShortFilename = StockpileManager_UISide.CurrentStockpile.ShortFilename;
 			}
 
-			//Watermarking RTC Version
-			sks.RtcVersion = CorruptCore.RtcVersion;
+
+			//clean temp folder
+			try
+			{
+				EmptyFolder(Path.DirectorySeparatorChar + "WORKING\\TEMP");
+			}
+			catch (Exception e)
+			{
+				MessageBox.Show(e.Message);
+				return false;
+			}
+
+            //Watermarking RTC Version
+            sks.RtcVersion = CorruptCore.RtcVersion;
 
 			List<string> allRoms = new List<string>();
 
             if (includeReferencedFiles)
             {
-
                 //populating Allroms array
                 foreach (StashKey key in sks.StashKeys)
                     if (!allRoms.Contains(key.RomFilename))
@@ -163,17 +174,6 @@ namespace RTCV.CorruptCore
                             allRoms.AddRange(binFiles);
                         }
                     }
-
-                //clean temp folder
-                try
-                {
-                    EmptyFolder(Path.DirectorySeparatorChar + "WORKING\\TEMP");
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message);
-                    return false;
-                }
 
                 //populating temp folder with roms
                 foreach (string str in allRoms)
