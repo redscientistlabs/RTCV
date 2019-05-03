@@ -188,7 +188,7 @@ namespace RTCV.UI
                     List<StashKey> keys = dgvStockpile.Rows.Cast<DataGridViewRow>().Select(x => (StashKey) x.Cells["Item"].Value).ToList();
                     foreach (var sk in keys)
                     {
-                        StockpileManager_UISide.CheckAndFixMissingReference(sk, keys);
+                        StockpileManager_UISide.CheckAndFixMissingReference(sk, false, keys);
                     }
 
 					dgvStockpile.ClearSelection();

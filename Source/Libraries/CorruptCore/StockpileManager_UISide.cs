@@ -299,10 +299,13 @@ namespace RTCV.CorruptCore
         /// <param name="psk"></param>
         /// <param name="keys"></param>
         /// <returns></returns>
-        public static bool CheckAndFixMissingReference(StashKey psk, List<StashKey> keys = null)
-        {
-            if (!File.Exists(psk.RomFilename))
-                if (DialogResult.Yes == MessageBox.Show($"Can't find file {psk.RomFilename}\nGame name: {psk.GameName}\nSystem name: {psk.SystemName}\n\n Would you like to provide a new file for replacement?", "Error: File not found", MessageBoxButtons.YesNo))
+        public static bool CheckAndFixMissingReference(StashKey psk, bool force = false, List<StashKey> keys = null, string customTitle = null, string customMessage = null)
+		{
+			string message = customMessage ?? $"Can't find file {psk.RomFilename}\nGame name: {psk.GameName}\nSystem name: {psk.SystemName}\n\n To continue loading, provide a new file for replacement.";
+			string title = customTitle ?? "Error: File not found";
+
+            if (force || !File.Exists(psk.RomFilename))
+                if (DialogResult.OK == MessageBox.Show(message, title, MessageBoxButtons.OKCancel))
                 {
                     OpenFileDialog ofd = new OpenFileDialog
                     {
@@ -324,7 +327,9 @@ namespace RTCV.CorruptCore
                     else
                         return false;
                 }
-            return true;
+                else
+                    return false;
+			return true;
         }
 
 

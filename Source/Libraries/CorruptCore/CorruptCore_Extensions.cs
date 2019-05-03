@@ -633,6 +633,35 @@ namespace RTCV.CorruptCore
             Uri diff = _rootPath.MakeRelativeUri(_fullPath);
             return Uri.UnescapeDataString(diff.OriginalString).Replace('/', '\\');
 		}
+		//https://stackoverflow.com/a/23354773
+        public static bool IsOrIsSubDirectoryOf(string candidate, string other)
+		{
+			var isChild = false;
+			try
+			{
+				var candidateInfo = new DirectoryInfo(candidate);
+				var otherInfo = new DirectoryInfo(other);
+
+				while (true)
+				{
+					if (Path.GetFullPath(candidateInfo.FullName + Path.DirectorySeparatorChar) == Path.GetFullPath(otherInfo.FullName + Path.DirectorySeparatorChar))
+					{
+						isChild = true;
+						break;
+					}
+                    if (candidateInfo.Parent == null)
+                        break;
+					candidateInfo = candidateInfo.Parent;
+				}
+			}
+			catch (Exception error)
+			{
+				var message = String.Format("Unable to check directories {0} and {1}: {2}", candidate, other, error);
+				Trace.WriteLine(message);
+			}
+
+			return isChild;
+		}
         #endregion PATH EXTENSIONS
 
         #region STREAM EXTENSIONS
