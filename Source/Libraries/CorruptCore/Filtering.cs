@@ -279,11 +279,9 @@ namespace RTCV.CorruptCore
 			else if (outValue.Length > precision)
 			{
 				//It'd probably be faster to do this via bitshifting but it's 4am and I want to be able to read this code in the future so...
-
-				outValue = value.FlipBytes(); //Flip the bytes (stored as little endian)
+                outValue.FlipBytes(); //Flip the bytes (stored as little endian)
 				Array.Resize(ref outValue, precision); //Truncate
-				outValue = outValue.FlipBytes(); //Flip them back
-				return outValue;
+				outValue.FlipBytes(); //Flip them back
 			}
 			return outValue;
 		}

@@ -235,6 +235,8 @@ namespace RTCV.CorruptCore
             }
 			//Get all the limiter lists
 			List<string[]> limiterLists = Filtering.GetAllLimiterListsFromStockpile(sks);
+            if (limiterLists == null)
+                return false;
 
 			//Write them to a file
 			for (int i = 0; i < limiterLists?.Count; i++)
