@@ -70,12 +70,22 @@ namespace RTCV.UI
         {
             if (RTCV.NetCore.Params.IsParamSet("HOTKEYS"))
             {
-                var binds = JsonConvert.DeserializeObject<Input.BindingCollection>(NetCore.Params.ReadParam("HOTKEYS"));
-                UICore.HotkeyBindings = binds;
-
-                foreach (var b in UICore.HotkeyBindings)
+                try
                 {
-                    Input.Bindings.BindMulti(b.DisplayName, b.Bindings);
+                    var binds = JsonConvert.DeserializeObject<Input.BindingCollection>(NetCore.Params.ReadParam("HOTKEYS"));
+
+                    UICore.HotkeyBindings = binds;
+
+                    foreach (var b in UICore.HotkeyBindings)
+                    {
+                        Input.Bindings.BindMulti(b.DisplayName, b.Bindings);
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Something went wrong when loading your hotkeys. Deleting old hotkeys and contining");
+                    Console.WriteLine(e + "\n" + e.StackTrace);
+                    NetCore.Params.RemoveParam("HOTKEYS");
                 }
             }
         }
