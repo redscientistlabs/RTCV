@@ -60,6 +60,8 @@ namespace RTCV.UI
             if (!ShouldKillswitchFire || (!S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked && !forceBypass))
                 return;
 
+            ShouldKillswitchFire = false;
+
             //Nuke netcore
             UI_VanguardImplementation.RestartServer();
 
@@ -78,7 +80,6 @@ namespace RTCV.UI
 				killswitchSpamPreventTimer.Tick += KillswitchSpamPreventTimer_Tick;
 				killswitchSpamPreventTimer.Start();
 
-				ShouldKillswitchFire = false;
 
 				PlayCrashSound(true);
 
