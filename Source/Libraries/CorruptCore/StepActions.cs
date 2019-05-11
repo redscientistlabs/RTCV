@@ -287,12 +287,8 @@ namespace RTCV.CorruptCore
 			//Queue everything up
 			CheckApply();
 
+            //Get the backups for any store units
 			GetStoreBackups();
-
-			//Execute all infinite lifetime units
-			foreach (List<BlastUnit> buList in appliedInfinite)
-				foreach (BlastUnit bu in buList)
-					bu.Execute();
 
 			//Execute all temp units
 			List<List<BlastUnit>> itemsToRemove = new List<List<BlastUnit>>();
@@ -300,11 +296,17 @@ namespace RTCV.CorruptCore
 			{
 				foreach (BlastUnit bu in buList)
 					bu.Execute();
+
 				if (buList[0].Working.LastFrame == currentFrame)
 					itemsToRemove.Add(buList);
 			}
 
-			bool needsRefilter = false;
+            //Execute all infinite lifetime units
+            foreach (List<BlastUnit> buList in appliedInfinite)
+                foreach (BlastUnit bu in buList)
+                    bu.Execute();
+
+            bool needsRefilter = false;
 
 			//Increment the frame
 			currentFrame++;
