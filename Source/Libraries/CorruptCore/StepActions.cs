@@ -190,9 +190,18 @@ namespace RTCV.CorruptCore
 
 		public static void AddBlastUnit(BlastUnit bu)
 		{
-			bu.Working.ExecuteFrameQueued = bu.ExecuteFrame + currentFrame;
-			//We subtract 1 here as we want lifetime to be exclusive. 1 means 1 apply, not applies 0 > applies 1 > done
-			bu.Working.LastFrame = bu.Working.ExecuteFrameQueued + bu.Lifetime - 1;
+            bool UseRealtime = (AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME] as bool? ?? true);
+            if (!UseRealtime)
+            {
+                bu.Working.ExecuteFrameQueued = 0;
+                bu.Working.LastFrame = 1;
+            }
+            else
+            {
+                bu.Working.ExecuteFrameQueued = bu.ExecuteFrame + currentFrame;
+                //We subtract 1 here as we want lifetime to be exclusive. 1 means 1 apply, not applies 0 > applies 1 > done
+                bu.Working.LastFrame = bu.Working.ExecuteFrameQueued + bu.Lifetime - 1;
+            }
 
 			var collection = GetBatchedLayer(bu);
 			collection.Add(bu);

@@ -931,15 +931,8 @@ namespace RTCV.CorruptCore
 				{
                     if (bb == null) //BlastCheat getBackup() always returns null so they can happen and they are valid
                         success = true;
-                    else
-                        if (UseRealtime)
+                    else 
                         success = bb.Apply();
-                    else
-                    {
-                        success = true;
-                        bb.Execute(false);
-                        return;
-                    }
 
 					if (!success)
 						throw new Exception(
@@ -948,9 +941,15 @@ namespace RTCV.CorruptCore
 				}
 
 				//Only filter if there are actually enabled units
-				if (Layer.Any(x => x.IsEnabled))
-					StepActions.FilterBuListCollection();
-			}
+                if (Layer.Any(x => x.IsEnabled))
+                {
+                    StepActions.FilterBuListCollection();
+
+                    //If we're not using realtime, we execute right away.
+                    if (!UseRealtime)
+                        StepActions.Execute();
+                }
+            }
 			catch (Exception ex)
 			{
 				throw new CustomException(
@@ -1441,9 +1440,8 @@ namespace RTCV.CorruptCore
 						{
 							//We only calculate it once for Value and then store it in ApplyValue.
 							//If the length has changed (blast editor) we gotta recalc it
-							if (UseRealtime && Working.ApplyValue == null)
+							if (Working.ApplyValue == null)
 							{
-
 								//We don't want to modify the original array
 								Working.ApplyValue = (byte[])Value.Clone();
 
@@ -1457,10 +1455,7 @@ namespace RTCV.CorruptCore
 							//Poke the memory
 							for (int i = 0; i < Precision; i++)
 							{
-                                if(UseRealtime)
-								    mi.PokeByte(Address + i, Working.ApplyValue[i]);
-                                else
-                                    mi.PokeByte(Address + i, this.Value[i]);
+                                mi.PokeByte(Address + i, Working.ApplyValue[i]);
                             }
 
 							break;

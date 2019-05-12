@@ -10,11 +10,6 @@ namespace RTCV.CorruptCore
 {
 	public static class StockpileManager_EmuSide
 	{
-
-
-
-
-
 		public static BlastLayer CorruptBL = null;
 		public static BlastLayer UnCorruptBL = null;
 
@@ -43,30 +38,35 @@ namespace RTCV.CorruptCore
         }
 
 		public static bool LoadState_NET(StashKey sk, bool applyBlastLayer = true)
-		{
-			if (sk == null)
-				return false;
+        {
+            if (sk == null)
+                return false;
 
-			StashKey.SetCore(sk);
-			string gameSystem = sk.SystemName;
-			string gameName = CorruptCore_Extensions.MakeSafeFilename(sk.GameName,'-');
-			string key = sk.ParentKey;
-			StashKeySavestateLocation stateLocation = sk.StateLocation;
+            bool useStates = (AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] as bool? ?? false);
 
-            string theoreticalSaveStateFilename = CorruptCore.workingDir + Path.DirectorySeparatorChar + stateLocation.ToString() + Path.DirectorySeparatorChar + gameName + "." + key + ".timejump.State";
-
-            if (File.Exists(theoreticalSaveStateFilename))
+            if (useStates)
             {
-                if (!LocalNetCoreRouter.QueryRoute<bool>(NetcoreCommands.VANGUARD, NetcoreCommands.LOADSAVESTATE, new object[] { theoreticalSaveStateFilename, stateLocation }, true))
+                StashKey.SetCore(sk);
+                string gameSystem = sk.SystemName;
+                string gameName = CorruptCore_Extensions.MakeSafeFilename(sk.GameName, '-');
+                string key = sk.ParentKey;
+                StashKeySavestateLocation stateLocation = sk.StateLocation;
+
+                string theoreticalSaveStateFilename = CorruptCore.workingDir + Path.DirectorySeparatorChar + stateLocation.ToString() + Path.DirectorySeparatorChar + gameName + "." + key + ".timejump.State";
+
+                if (File.Exists(theoreticalSaveStateFilename))
                 {
-                    MessageBox.Show($"Error loading savestate : An internal Bizhawk error has occurred.\n Are you sure your savestate matches the game, your syncsettings match, and the savestate is supported by this version of Bizhawk?");
+                    if (!LocalNetCoreRouter.QueryRoute<bool>(NetcoreCommands.VANGUARD, NetcoreCommands.LOADSAVESTATE, new object[] { theoreticalSaveStateFilename, stateLocation }, true))
+                    {
+                        MessageBox.Show($"Error loading savestate : An internal Bizhawk error has occurred.\n Are you sure your savestate matches the game, your syncsettings match, and the savestate is supported by this version of Bizhawk?");
+                        return false;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show($"Error loading savestate : (File {theoreticalSaveStateFilename} not found)");
                     return false;
                 }
-            }
-            else
-            {
-                MessageBox.Show($"Error loading savestate : (File {theoreticalSaveStateFilename} not found)");
-                return false;
             }
 
             if (applyBlastLayer && sk?.BlastLayer?.Layer?.Count > 0)
