@@ -13,20 +13,11 @@ namespace RTCV.CorruptCore
 	{
 		//Object references
 		public static Stockpile CurrentStockpile { get; set; }
-
 		public static StashKey CurrentStashkey { get; set; }
         public static StashKey CurrentSavestateStashKey { get; set; }
-
 		public static volatile StashKey BackupedState;
-
-
-
 		public static bool StashAfterOperation = true;
-
 		public static volatile List<StashKey> StashHistory = new List<StashKey>();
-
-
-    
 
 		private static void PreApplyStashkey()
 		{
@@ -50,8 +41,6 @@ namespace RTCV.CorruptCore
 
             if(!UseSavestates)
                 LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_POSTCORRUPTACTION);
-
-
         }
 
 		public static bool ApplyStashkey(StashKey sk, bool _loadBeforeOperation = true)
@@ -79,12 +68,9 @@ namespace RTCV.CorruptCore
 		public static bool Corrupt(bool _loadBeforeOperation = true)
 		{
 			PreApplyStashkey();
-
-
             StashKey psk = CurrentSavestateStashKey;
 
             bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
-
             if (!UseSavestates)
                 psk = SaveState();
 

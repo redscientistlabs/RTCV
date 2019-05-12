@@ -215,13 +215,16 @@ namespace RTCV.CorruptCore
 					
 			}
 
-			//Copy all the savestates
-			foreach (StashKey key in sks.StashKeys)
-			{
-				// get savestate name
-				string stateFilename = key.GameName + "." + key.ParentKey + ".timejump.State";
-				File.Copy(CorruptCore.workingDir + Path.DirectorySeparatorChar + key.StateLocation + Path.DirectorySeparatorChar + stateFilename, CorruptCore.workingDir + Path.DirectorySeparatorChar + "TEMP" + Path.DirectorySeparatorChar + stateFilename, true); // copy savestates to temp folder
-			}
+            if((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] ?? false)
+            {
+                //Copy all the savestates
+                foreach (StashKey key in sks.StashKeys)
+                {
+                    // get savestate name
+                    string stateFilename = key.GameName + "." + key.ParentKey + ".timejump.State";
+                    File.Copy(CorruptCore.workingDir + Path.DirectorySeparatorChar + key.StateLocation + Path.DirectorySeparatorChar + stateFilename, CorruptCore.workingDir + Path.DirectorySeparatorChar + "TEMP" + Path.DirectorySeparatorChar + stateFilename, true); // copy savestates to temp folder
+                }
+            }
 
 			if ((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_CONFIG_MANAGEMENT] ?? false)
 			{
@@ -417,13 +420,9 @@ namespace RTCV.CorruptCore
 
 				}
 				EmptyFolder(Path.DirectorySeparatorChar + "WORKING\\TEMP");
-
-                
-
             }
 			else
 			{
-
 				//Update the current stockpile to this one
 				StockpileManager_UISide.CurrentStockpile = sks;
 

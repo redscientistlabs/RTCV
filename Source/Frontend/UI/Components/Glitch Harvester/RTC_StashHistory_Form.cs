@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.Runtime.InteropServices;
 using RTCV.CorruptCore;
+using RTCV.NetCore;
 using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
 
@@ -51,6 +52,25 @@ namespace RTCV.UI
 
             string Name = "";
             string value = "";
+            
+            StashKey sk = (StashKey)lbStashHistory.SelectedItem;;
+            StockpileManager_UISide.CurrentStashkey = sk;
+
+            //If we don't support mixed stockpiles
+            if(!((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_MIXED_STOCKPILE] ?? false))
+            {
+                if (S.GET<RTC_StockpileManager_Form>().dgvStockpile.Rows.Count > 0)
+                {
+                    string firstGameName = ((StashKey)S.GET<RTC_StockpileManager_Form>().dgvStockpile[0, 0].Value).GameName;
+                    if (sk.GameName != firstGameName)
+                    {
+                        string name = (AllSpec.VanguardSpec[VSPEC.NAME] as string) ?? "Vanguard implementation";
+                        MessageBox.Show($"{name} does not support mixed stockpiles.");
+                        return;
+                    }
+
+                }
+            }
 
             if (askForName)
             {
@@ -66,15 +86,12 @@ namespace RTCV.UI
             else
                 Name = StockpileManager_UISide.CurrentStashkey.Alias;
 
-            StockpileManager_UISide.CurrentStashkey = (StashKey)lbStashHistory.SelectedItem;
 
             if (String.IsNullOrWhiteSpace(Name))
                 StockpileManager_UISide.CurrentStashkey.Alias = StockpileManager_UISide.CurrentStashkey.Key;
             else
                 StockpileManager_UISide.CurrentStashkey.Alias = Name;
 
-
-            StashKey sk = StockpileManager_UISide.CurrentStashkey;
 
             sk.BlastLayer.RasterizeVMDs();
 
