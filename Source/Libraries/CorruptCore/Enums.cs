@@ -230,9 +230,10 @@
 		public static readonly string SUPPORTS_CONFIG_MANAGEMENT = "SUPPORTS_CONFIG_MANAGEMENT";
         public static readonly string SUPPORTS_SAVESTATES = "SUPPORTS_SAVESTATES";
         public static readonly string SUPPORTS_REALTIME = "SUPPORTS_REALTIME";
+        public static readonly string SUPPORTS_MIXED_STOCKPILE = "SUPPORTS_MIXED_STOCKPILE";
         public static readonly string SUPPORTS_KILLSWITCH = "SUPPORTS_KILLSWITCH";
-        public static readonly string CONFIG_PATHS = "CONFIG_PATHS";
         public static readonly string SUPPORTS_CONFIG_HANDOFF = "SUPPORTS_CONFIG_HANDOFF";
+        public static readonly string CONFIG_PATHS = "CONFIG_PATHS";
     }
     public enum UISPEC
 	{
