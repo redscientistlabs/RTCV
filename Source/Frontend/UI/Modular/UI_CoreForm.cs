@@ -298,7 +298,7 @@ This message only appears once.";
 
             ContextMenuStrip easyButtonMenu = new ContextMenuStrip();
 
-            easyButtonMenu.Items.Add("Start with Recommended Settings", null, new EventHandler(((ob, ev) => { S.GET<UI_CoreForm>().StartEasyMode(true); })));
+            (easyButtonMenu.Items.Add("Start with Recommended Settings", null, new EventHandler(((ob, ev) => { S.GET<UI_CoreForm>().StartEasyMode(true); })))).Enabled = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] == true;
             easyButtonMenu.Items.Add(new ToolStripSeparator());
             //EasyButtonMenu.Items.Add("Watch a tutorial video", null, new EventHandler((ob,ev) => Process.Start("https://www.youtube.com/watch?v=sIELpn4-Umw"))).Enabled = false;
             easyButtonMenu.Items.Add("Open the online wiki", null, new EventHandler((ob, ev) => Process.Start("https://corrupt.wiki/")));

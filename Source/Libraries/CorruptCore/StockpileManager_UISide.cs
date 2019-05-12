@@ -31,15 +31,28 @@ namespace RTCV.CorruptCore
 		private static void PreApplyStashkey()
 		{
 			LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_CLEARSTEPBLASTUNITS, null, true);
-		}
+
+            bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
+
+            if (!UseSavestates)
+                LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_PRECORRUPTACTION, null,true);
+        }
 
 		private static void PostApplyStashkey()
 		{
-			if (Render.RenderAtLoad)
+            bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
+            bool UseRealtime = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME];
+
+            if (Render.RenderAtLoad && UseRealtime)
 			{
 				Render.StartRender();
 			}
-		}
+
+            if(!UseSavestates)
+                LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_POSTCORRUPTACTION);
+
+
+        }
 
 		public static bool ApplyStashkey(StashKey sk, bool _loadBeforeOperation = true)
 		{
@@ -70,14 +83,19 @@ namespace RTCV.CorruptCore
 
             StashKey psk = CurrentSavestateStashKey;
 
-            if (psk == null)
+            bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
+
+            if (!UseSavestates)
+                psk = SaveState();
+
+            if (psk == null && UseSavestates)
 			{
 				MessageBox.Show("The Glitch Harvester could not perform the CORRUPT action\n\nEither no Savestate Box was selected in the Savestate Manager\nor the Savetate Box itself is empty.");
 				return false;
 			}
 
 			string currentGame = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.GAMENAME.ToString()];
-			if (currentGame == null || psk.GameName != currentGame) 
+			if (UseSavestates && (currentGame == null || psk.GameName != currentGame)) 
 			{
 				LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_LOADROM, psk.RomFilename, true);
 			}
@@ -270,12 +288,17 @@ namespace RTCV.CorruptCore
 
 		public static StashKey SaveState(StashKey sk = null, bool threadSave = false)
 		{
-			StashKey _sk = LocalNetCoreRouter.QueryRoute<StashKey>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_SAVESTATE, sk, true);
-            return _sk;
-		}
+            bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
+
+            if (UseSavestates)
+                return LocalNetCoreRouter.QueryRoute<StashKey>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_SAVESTATE, sk, true);
+            else
+                return LocalNetCoreRouter.QueryRoute<StashKey>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_SAVESTATELESS, sk, true);
+
+        }
 
 
-		public static void StockpileChanged()
+        public static void StockpileChanged()
 		{
 			//S.GET<RTC_StockpileBlastBoard_Form>().RefreshButtons();
 		}

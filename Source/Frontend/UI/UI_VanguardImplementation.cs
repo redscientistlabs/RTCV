@@ -189,8 +189,35 @@ namespace RTCV.UI
                         }
                         break;
 
-				}
-			}
+                    case REMOTE_DISABLESAVESTATESUPPORT:
+                        SyncObjectSingleton.FormExecute((o, ea) =>
+                        {
+                        S.GET<RTC_SavestateManager_Form>().DisableFeature();
+                        S.GET<UI_CoreForm>().pnCrashProtection.Visible = false;
+                        });
+                        break;
+
+                    case REMOTE_DISABLEREALTIMESUPPORT:
+                        SyncObjectSingleton.FormExecute((o, ea) =>
+                        {
+                            S.GET<UI_CoreForm>().btnManualBlast.Enabled = false;
+                            S.GET<UI_CoreForm>().btnAutoCorrupt.Enabled = false;
+                            S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Enabled = false;
+                            S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw.Enabled = false;
+                            S.GET<RTC_GlitchHarvesterBlast_Form>().btnBlastToggle.Enabled = false;
+                        });
+                        break;
+                    case REMOTE_DISABLEKILLSWITCHSUPPORT:
+                        SyncObjectSingleton.FormExecute((o, ea) =>
+                        {
+                            S.GET<UI_CoreForm>().pnAutoKillSwitch.Visible = false;
+                            S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked = false;
+                        });
+                        break;
+
+
+                }
+            }
 			catch (Exception ex)
 			{
 				if (CloudDebug.ShowErrorDialog(ex) == DialogResult.Abort)

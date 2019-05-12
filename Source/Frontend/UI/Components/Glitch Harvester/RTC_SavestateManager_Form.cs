@@ -281,6 +281,11 @@ namespace RTCV.UI
             }
         }
 
+        internal void DisableFeature()
+        {
+            Controls.Clear();
+        }
+
         private void pnSavestateHolder_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Link;

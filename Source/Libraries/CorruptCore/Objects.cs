@@ -923,14 +923,23 @@ namespace RTCV.CorruptCore
 
 			bool success;
 
+            bool UseRealtime = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME];
+
 			try
 			{
 				foreach (BlastUnit bb in Layer)
 				{
-					if (bb == null) //BlastCheat getBackup() always returns null so they can happen and they are valid
-						success = true;
-					else
-						success = bb.Apply();
+                    if (bb == null) //BlastCheat getBackup() always returns null so they can happen and they are valid
+                        success = true;
+                    else
+                        if (UseRealtime)
+                        success = bb.Apply();
+                    else
+                    {
+                        success = true;
+                        bb.Execute(false);
+                        return;
+                    }
 
 					if (!success)
 						throw new Exception(
@@ -1376,7 +1385,7 @@ namespace RTCV.CorruptCore
 		/// Executes (applies) a blastunit. This shouldn't be called manually.
 		/// If you want to execute a blastunit, add it to the execution pool using Apply()
 		/// </summary>
-		public void Execute()
+		public void Execute(bool UseRealtime = true)
 		{
 			if (!IsEnabled)
 				return;
@@ -1432,7 +1441,7 @@ namespace RTCV.CorruptCore
 						{
 							//We only calculate it once for Value and then store it in ApplyValue.
 							//If the length has changed (blast editor) we gotta recalc it
-							if (Working.ApplyValue == null)
+							if (UseRealtime && Working.ApplyValue == null)
 							{
 
 								//We don't want to modify the original array
@@ -1448,8 +1457,11 @@ namespace RTCV.CorruptCore
 							//Poke the memory
 							for (int i = 0; i < Precision; i++)
 							{
-								mi.PokeByte(Address + i, Working.ApplyValue[i]);
-							}
+                                if(UseRealtime)
+								    mi.PokeByte(Address + i, Working.ApplyValue[i]);
+                                else
+                                    mi.PokeByte(Address + i, this.Value[i]);
+                            }
 
 							break;
 						}

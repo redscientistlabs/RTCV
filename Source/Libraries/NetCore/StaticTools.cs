@@ -81,7 +81,7 @@ namespace RTCV.NetCore.StaticTools
 	public class FormRegister
 	{
 		public event EventHandler<NetCoreEventArgs> FormRegistered;
-		public virtual void OnFormRegistered(NetCoreEventArgs e) => FormRegistered.Invoke(this, e);
+		public virtual void OnFormRegistered(NetCoreEventArgs e) => FormRegistered?.Invoke(this, e);
 	}
 
 }

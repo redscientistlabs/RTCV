@@ -103,7 +103,20 @@ namespace RTCV.CorruptCore
 					MemoryDomains.RefreshDomains(domainsChanged);
 					break;
 
-				case ASYNCBLAST:
+                case REMOTE_EVENT_RESTRICTFEATURES:
+                        if(!RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_SAVESTATES) ?? true)
+                            LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_DISABLESAVESTATESUPPORT);
+
+                        if (!RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true)
+                            LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_DISABLEREALTIMESUPPORT);
+
+                        if (!RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_KILLSWITCH) ?? true)
+                            LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_DISABLEKILLSWITCHSUPPORT);
+
+                        break;
+
+
+                case ASYNCBLAST:
 					{
 						SyncObjectSingleton.FormExecute((o, ea) =>
 						{
@@ -122,9 +135,11 @@ namespace RTCV.CorruptCore
 
 					BlastLayer bl = null;
 
+                    bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
+
 
                     //Load the game from the main thread
-                    if (loadBeforeCorrupt)
+                    if (UseSavestates && loadBeforeCorrupt)
                     {
                         SyncObjectSingleton.FormExecute((o, ea) =>
                         {
@@ -134,7 +149,7 @@ namespace RTCV.CorruptCore
                     //Do everything else on the emulation thread
                     void a()
                     {
-                        if (loadBeforeCorrupt)
+                        if (UseSavestates && loadBeforeCorrupt)
                         {
                             StockpileManager_EmuSide.LoadState_NET(sk, false);
                         }
@@ -262,8 +277,19 @@ namespace RTCV.CorruptCore
                     e.setReturnValue(sk);
 				}
 				break;
+                    case REMOTE_SAVESTATELESS:
+                        {
+                            StashKey sk = null;
+                            void a()
+                            {
+                                sk = StockpileManager_EmuSide.SaveStateLess_NET(advancedMessage.objectValue as StashKey); //Has to be nullable cast
+                            }
+                            SyncObjectSingleton.EmuThreadExecute(a, false);
+                            e.setReturnValue(sk);
+                        }
+                        break;
 
-				case REMOTE_BACKUPKEY_REQUEST:
+                    case REMOTE_BACKUPKEY_REQUEST:
 					{
 						//We don't store this in the spec as it'd be horrible to push it to the UI and it doesn't care
 						//if (!LocalNetCoreRouter.QueryRoute<bool>(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_ISNORMALADVANCE))

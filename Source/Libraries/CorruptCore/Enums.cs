@@ -228,7 +228,10 @@
 		public static readonly string CORE_DISKBASED = "CORE_DISKBASED";
 		public static readonly string SUPPORTS_RENDERING = "SUPPORTS_RENDERING";
 		public static readonly string SUPPORTS_CONFIG_MANAGEMENT = "SUPPORTS_CONFIG_MANAGEMENT";
-		public static readonly string CONFIG_PATHS = "CONFIG_PATHS";
+        public static readonly string SUPPORTS_SAVESTATES = "SUPPORTS_SAVESTATES";
+        public static readonly string SUPPORTS_REALTIME = "SUPPORTS_REALTIME";
+        public static readonly string SUPPORTS_KILLSWITCH = "SUPPORTS_KILLSWITCH";
+        public static readonly string CONFIG_PATHS = "CONFIG_PATHS";
         public static readonly string SUPPORTS_CONFIG_HANDOFF = "SUPPORTS_CONFIG_HANDOFF";
     }
     public enum UISPEC

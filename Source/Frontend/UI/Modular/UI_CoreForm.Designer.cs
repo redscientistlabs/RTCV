@@ -513,15 +513,13 @@
         public System.Windows.Forms.Button btnEasyMode;
         private System.Windows.Forms.Button btnStockpilePlayer;
         public System.Windows.Forms.Button btnGlitchHarvester;
-        private System.Windows.Forms.Button btnManualBlast;
+        public System.Windows.Forms.Button btnManualBlast;
         public System.Windows.Forms.Button btnAutoCorrupt;
         public System.Windows.Forms.Button btnLogo;
         public System.Windows.Forms.Button btnSettings;
-        private System.Windows.Forms.Panel pnAutoKillSwitch;
         public System.Windows.Forms.CheckBox cbUseAutoKillSwitch;
         public System.Windows.Forms.ProgressBar pbAutoKillSwitchTimeout;
         private System.Windows.Forms.Label lbAks;
-        private System.Windows.Forms.Panel pnCrashProtection;
         public System.Windows.Forms.Button btnGpJumpNow;
         public System.Windows.Forms.Button btnGpJumpBack;
         private System.Windows.Forms.Label lbGameProtection;
@@ -530,6 +528,8 @@
         internal System.Windows.Forms.Panel pnGlitchHarvesterOpen;
         private System.Windows.Forms.Button btnTestCustomLayout;
         private System.Windows.Forms.Button button1;
+        public System.Windows.Forms.Panel pnCrashProtection;
+        public System.Windows.Forms.Panel pnAutoKillSwitch;
     }
 }
 

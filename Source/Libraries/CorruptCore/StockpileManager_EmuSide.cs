@@ -77,10 +77,38 @@ namespace RTCV.CorruptCore
             return true;
         }
 
+        public static StashKey SaveStateLess_NET(StashKey _sk = null, bool threadSave = false)
+        {
+            string Key;
+            //string statePath = "";
 
-		public static StashKey SaveState_NET(StashKey _sk = null, bool threadSave = false)
+            StashKey sk;
+
+            if (_sk == null)
+            {
+                Key = CorruptCore.GetRandomKey();
+                //statePath = LocalNetCoreRouter.QueryRoute<String>(NetcoreCommands.VANGUARD, NetcoreCommands.SAVESAVESTATE, Key, true);
+                sk = new StashKey(Key, Key, null);
+            }
+            else
+            {
+                Key = _sk.Key;
+                //statePath = _sk.StateFilename;
+                sk = _sk;
+            }
+
+            //if (string.IsNullOrEmpty(statePath))
+            //    return null;
+
+            //sk.StateShortFilename = statePath.Substring(statePath.LastIndexOf(Path.DirectorySeparatorChar) + 1, statePath.Length - (statePath.LastIndexOf(Path.DirectorySeparatorChar) + 1));
+            sk.StateShortFilename = "";
+            sk.StateFilename = "";
+
+            return sk;
+        }
+        public static StashKey SaveState_NET(StashKey _sk = null, bool threadSave = false)
 		{
-			string Key = CorruptCore.GetRandomKey();
+			string Key;
 			string statePath;
 
 			StashKey sk;
