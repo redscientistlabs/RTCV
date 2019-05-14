@@ -27,9 +27,19 @@ namespace RTCV.NetCore
 			InitializeComponent();
             ex = _ex;
 			if (!(ex is OperationAbortedException))
-			{
-				lbException.Text = ex.Message;
-				tbStackTrace.Text = ex.Message + "\n" + ex.StackTrace;
+            {
+                lbException.Text = ex.Message;
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine($"{ex.Message}\n{ex.StackTrace}");
+                var e = _ex;
+                while (e.InnerException != null)
+                {
+                    sb.AppendLine();
+                    sb.AppendLine($"Inner Exception: {ex.Message}\n{ex.StackTrace}");
+                    e = e.InnerException;
+                }
+                tbStackTrace.Text = sb.ToString();
+
 				btnContinue.Visible = canContinue;
 				btnContinue.Visible = true;
 			}
@@ -96,17 +106,24 @@ namespace RTCV.NetCore
 				string sideFile = tempdebugdir + "\\SIDE.txt";
 				File.WriteAllText(sideFile, System.Diagnostics.Process.GetCurrentProcess().ProcessName);
 
-				//Exporting Stacktrace
-				string stacktracefile = tempdebugdir + "\\STACKTRACE.TXT";
-				File.WriteAllText(stacktracefile, ex.Message + "\n" + ex.StackTrace);
+                //Exporting Stacktrace
+                var _ex = ex;
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine($"Exception: {ex.Message}\n{ex.StackTrace}");
+                while (_ex.InnerException != null)
+                {
+                    sb.AppendLine();
+                    sb.AppendLine($"Inner Exception: {ex.Message}\n{ex.StackTrace}");
+                    _ex = _ex.InnerException;
+                }
+                tbStackTrace.Text = sb.ToString();
+                string stacktracefile = tempdebugdir + "\\STACKTRACE.TXT";
+				File.WriteAllText(stacktracefile, sb.ToString());
 
-				//Exporting Inner Exception
-				string innerexceptionfile = tempdebugdir + "\\INNEREXCEPTION.TXT";
-				File.WriteAllText(innerexceptionfile, ex.Message + "\n" + ex.InnerException);
 
 				//Exporting data
 				string data = tempdebugdir + "\\DATA.TXT";
-				StringBuilder sb = new StringBuilder();
+				sb = new StringBuilder();
 				foreach (var key in ex.Data.Keys)
 				{
 					sb.AppendLine(key + " : " + ex.Data[key]);
