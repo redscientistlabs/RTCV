@@ -16,6 +16,7 @@ namespace RTCV.Vanguard
         public NetCoreConnector netConn;
         public CorruptCoreConnector corruptConn;
 
+        public NetworkStatus netcoreStatus => netConn.status;
         public VanguardConnector(NetCoreReceiver _receiver)
         {
             receiver = _receiver;

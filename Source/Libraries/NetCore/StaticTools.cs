@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RTCV.NetCore.StaticTools
@@ -18,6 +20,41 @@ namespace RTCV.NetCore.StaticTools
 		static readonly Dictionary<Type, object> instances = new Dictionary<Type, object>();
 
 		public static FormRegister formRegister = new FormRegister();
+
+
+        [ThreadStatic]
+        public static volatile Dictionary<int,List<string>> InvokeStackTraces = new Dictionary<int, List<string>>();
+        static readonly object dicoLock = new object();
+        public static void InvokeLog(this ISynchronizeInvoke si, Delegate method, object[] args)
+        {
+            int pid = Thread.CurrentThread.ManagedThreadId;
+
+            List<string> IST = null;
+            bool listExists;
+
+            lock (dicoLock)
+                listExists = InvokeStackTraces.TryGetValue(32, out IST);
+
+            if (listExists)
+            {
+                IST = new List<string>();
+
+                lock (dicoLock)
+                    InvokeStackTraces.Add(pid, IST);
+            }
+            IST.Add(Environment.StackTrace);
+
+            var iar = si.BeginInvoke(method, args);
+            si.EndInvoke(iar);
+
+            lock (dicoLock)
+            {
+                InvokeStackTraces.Remove(InvokeStackTraces.Count - 1);
+                if (InvokeStackTraces.Count == 0)
+                    InvokeStackTraces.Remove(pid);
+            }
+        }
+
 
 		public static bool ISNULL<T>()
 		{
