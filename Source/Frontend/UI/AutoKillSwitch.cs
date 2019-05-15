@@ -139,7 +139,7 @@ namespace RTCV.UI
 				{
 					S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.PerformStep();
 				});
-			else
+			else if(S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value != 0)
 				SyncObjectSingleton.FormExecute((o, ea) =>
 				{
 					S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0;
