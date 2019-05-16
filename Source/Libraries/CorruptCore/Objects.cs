@@ -100,7 +100,7 @@ namespace RTCV.CorruptCore
 			//clean temp folder
 			try
 			{
-				EmptyFolder(Path.DirectorySeparatorChar + "WORKING\\TEMP");
+				EmptyFolder(Path.DirectorySeparatorChar + "WORKING" + Path.DirectorySeparatorChar + "TEMP");
 			}
 			catch (Exception e)
 			{
@@ -178,7 +178,7 @@ namespace RTCV.CorruptCore
                 foreach (string str in allRoms)
                 {
                     string rom = str;
-                    string romTempfilename = CorruptCore.workingDir + Path.DirectorySeparatorChar + "TEMP" + Path.DirectorySeparatorChar + Path.GetFileName(rom);
+                    string romTempfilename = Path.Combine(CorruptCore.workingDir, "TEMP", Path.GetFileName(rom));
                     //	if (!rom.Contains(Path.DirectorySeparatorChar) && !rom.Contains("/" ))
                     //	rom = CorruptCore.workingDir + Path.DirectorySeparatorChar + "SKS" + Path.DirectorySeparatorChar + rom;
 
@@ -198,7 +198,7 @@ namespace RTCV.CorruptCore
                 foreach (var sk in sks.StashKeys)
                 {
                     sk.RomShortFilename = Path.GetFileName(sk.RomFilename);
-                    sk.RomFilename = CorruptCore.workingDir + Path.DirectorySeparatorChar + "SKS" + Path.DirectorySeparatorChar + sk.RomShortFilename;
+                    sk.RomFilename = Path.Combine(CorruptCore.workingDir, "SKS", sk.RomShortFilename);
                 }
             }
 			else
@@ -222,7 +222,9 @@ namespace RTCV.CorruptCore
                 {
                     // get savestate name
                     string stateFilename = key.GameName + "." + key.ParentKey + ".timejump.State";
-                    File.Copy(CorruptCore.workingDir + Path.DirectorySeparatorChar + key.StateLocation + Path.DirectorySeparatorChar + stateFilename, CorruptCore.workingDir + Path.DirectorySeparatorChar + "TEMP" + Path.DirectorySeparatorChar + stateFilename, true); // copy savestates to temp folder
+                    File.Copy(
+                        Path.Combine(CorruptCore.workingDir, key.StateLocation.ToString(), stateFilename), 
+                        Path.Combine(CorruptCore.workingDir, "TEMP", stateFilename), true); // copy savestates to temp folder
                 }
             }
 
@@ -244,7 +246,7 @@ namespace RTCV.CorruptCore
 			//Write them to a file
 			for (int i = 0; i < limiterLists?.Count; i++)
 			{
-				File.WriteAllLines(CorruptCore.workingDir + Path.DirectorySeparatorChar + "TEMP" + Path.DirectorySeparatorChar + i + ".limiter", limiterLists[i]);
+				File.WriteAllLines(Path.Combine(CorruptCore.workingDir, "TEMP" + i + ".limiter"), limiterLists[i]);
 			}
 
 			//Update stashkey info 
@@ -253,7 +255,7 @@ namespace RTCV.CorruptCore
 				sk.StateLocation = StashKeySavestateLocation.SKS;
 			}
 			//Create stockpile.xml to temp folder from stockpile object
-			using (FileStream fs = File.Open(CorruptCore.workingDir + Path.DirectorySeparatorChar + "TEMP\\stockpile.json", FileMode.OpenOrCreate))
+			using (FileStream fs = File.Open(Path.Combine(CorruptCore.workingDir, "TEMP\\stockpile.json"), FileMode.OpenOrCreate))
 			{
 				JsonHelper.Serialize(sks, fs, Formatting.Indented);
 				fs.Close();
@@ -296,18 +298,17 @@ namespace RTCV.CorruptCore
 			//Move all the files from temp into SKS
 			try
 			{
-				EmptyFolder(Path.DirectorySeparatorChar + "WORKING\\SKS");
+				EmptyFolder(Path.DirectorySeparatorChar + "WORKING" + Path.DirectorySeparatorChar + "SKS");
 			}
 			catch(Exception e)
 			{
                 Console.Write(e);
 				MessageBox.Show("Unable to empty the stockpile folder. There's probably something locking a file inside it (iso based game loaded?)\n. Your stockpile is saved, but your current session is bunk.\nRe-load the file");
 			}
-			foreach (string file in Directory.GetFiles(CorruptCore.workingDir + Path.DirectorySeparatorChar + "TEMP"))
+			foreach (string file in Directory.GetFiles(Path.Combine(CorruptCore.workingDir, "TEMP")))
 				try
 				{
-					File.Move(file, CorruptCore.workingDir + Path.DirectorySeparatorChar + "SKS" + Path.DirectorySeparatorChar +
-						Path.GetFileName(file));
+					File.Move(file, Path.Combine(CorruptCore.workingDir,"SKS", Path.GetFileName(file)));
 				}
 				catch (Exception e)
 				{
@@ -373,7 +374,7 @@ namespace RTCV.CorruptCore
 			//Read in the stockpile
 			try
 			{
-				using (FileStream fs = File.Open(CorruptCore.workingDir + Path.DirectorySeparatorChar + extractFolder + Path.DirectorySeparatorChar + "stockpile.json", FileMode.OpenOrCreate))
+				using (FileStream fs = File.Open(Path.Combine(CorruptCore.workingDir, extractFolder, "stockpile.json"), FileMode.OpenOrCreate))
 				{
 					sks = JsonHelper.Deserialize<Stockpile>(fs);
 					fs.Close();
@@ -396,7 +397,7 @@ namespace RTCV.CorruptCore
 					{
 						try
 						{
-							string dest = CorruptCore.workingDir + Path.DirectorySeparatorChar + "SKS" + Path.DirectorySeparatorChar + Path.GetFileName(file);
+							string dest = Path.Combine(CorruptCore.workingDir, "SKS", Path.GetFileName(file));
 
 							//Only copy if a version doesn't exist
 							//This prevents copying over keys
@@ -419,7 +420,7 @@ namespace RTCV.CorruptCore
 					}
 
 				}
-				EmptyFolder(Path.DirectorySeparatorChar + "WORKING\\TEMP");
+				EmptyFolder(Path.DirectorySeparatorChar + "WORKING" + Path.DirectorySeparatorChar + "TEMP");
             }
 			else
 			{
@@ -437,7 +438,7 @@ namespace RTCV.CorruptCore
 			foreach (StashKey t in sks.StashKeys)
 			{
                 //If we have the file, update the path
-                var newFilename = CorruptCore.workingDir + Path.DirectorySeparatorChar + "SKS" + Path.DirectorySeparatorChar + t.RomShortFilename;
+                var newFilename = Path.Combine(CorruptCore.workingDir, "SKS", t.RomShortFilename);
                 if (File.Exists(newFilename))
                     t.RomFilename = newFilename;
 
@@ -518,13 +519,13 @@ namespace RTCV.CorruptCore
 		{
 			try
 			{
-				foreach (string file in Directory.GetFiles(CorruptCore.RtcDir + Path.DirectorySeparatorChar + $"{folder}"))
+				foreach (string file in Directory.GetFiles(Path.Combine(CorruptCore.RtcDir, folder)))
 				{
 					File.SetAttributes(file, FileAttributes.Normal);
 					File.Delete(file);
 				}
 
-				foreach (string dir in Directory.GetDirectories(CorruptCore.RtcDir + Path.DirectorySeparatorChar + $"{folder}"))
+				foreach (string dir in Directory.GetDirectories(Path.Combine(CorruptCore.RtcDir , folder)))
 					RecursiveDelete(new DirectoryInfo(dir));
 			}
 			catch (Exception ex)
@@ -545,13 +546,13 @@ namespace RTCV.CorruptCore
 			try
 			{
 				EmptyFolder(folder);
-				ZipFile.ExtractToDirectory(filename, CorruptCore.RtcDir + Path.DirectorySeparatorChar + $"{folder}" + Path.DirectorySeparatorChar);
+				ZipFile.ExtractToDirectory(filename, CorruptCore.RtcDir + Path.DirectorySeparatorChar + folder + Path.DirectorySeparatorChar);
 
-				if (!File.Exists(CorruptCore.RtcDir + Path.DirectorySeparatorChar + $"{folder}\\{masterFile}"))
+				if (!File.Exists(Path.Combine(CorruptCore.RtcDir, folder, masterFile)))
 				{
-					if (File.Exists(CorruptCore.RtcDir + Path.DirectorySeparatorChar + $"{folder}\\stockpile.xml"))
+					if (File.Exists(Path.Combine(CorruptCore.RtcDir, $"{folder}\\stockpile.xml")))
 						MessageBox.Show("Legacy stockpile found. This stockpile isn't supported by this version of the RTC.");
-					else if (File.Exists(CorruptCore.RtcDir + Path.DirectorySeparatorChar + $"{folder}\\keys.xml"))
+					else if (File.Exists(Path.Combine(CorruptCore.RtcDir, $"{folder}\\keys.xml")))
 						MessageBox.Show("Legacy SSK found. This SSK isn't supported by this version of the RTC.");
 					else
 						MessageBox.Show("The file could not be read properly");
@@ -682,7 +683,7 @@ namespace RTCV.CorruptCore
 
 			ProcessStartInfo p = new ProcessStartInfo();
 			p.WorkingDirectory = CorruptCore.EmuDir;
-			p.FileName = CorruptCore.EmuDir + Path.DirectorySeparatorChar + $"RESTARTDETACHEDRTC.bat";
+			p.FileName = Path.Combine(CorruptCore.EmuDir, "RESTARTDETACHEDRTC.bat");
             Process.Start(p);
 
 		}
@@ -712,7 +713,7 @@ namespace RTCV.CorruptCore
 
 			ProcessStartInfo p = new ProcessStartInfo();
 			p.WorkingDirectory = CorruptCore.EmuDir;
-			p.FileName = CorruptCore.EmuDir + Path.DirectorySeparatorChar + $"RESTARTDETACHEDRTC.bat";
+			p.FileName = Path.Combine(CorruptCore.EmuDir, "RESTARTDETACHEDRTC.bat");
 			Process.Start(p);
         }
 	}
@@ -836,7 +837,7 @@ namespace RTCV.CorruptCore
 
 		public string GetSavestateFullPath()
 		{
-			return CorruptCore.workingDir + Path.DirectorySeparatorChar + this.StateLocation.ToString() + Path.DirectorySeparatorChar + this.GameName + "." + this.ParentKey + ".timejump.State"; // get savestate name
+			return Path.Combine(CorruptCore.workingDir, this.StateLocation.ToString(), this.GameName + "." + this.ParentKey + ".timejump.State"); // get savestate name
 		}
 
 		//Todo - Replace this when compat is broken
