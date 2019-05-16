@@ -101,14 +101,9 @@ namespace RTCV.UI
 				saveFileDialog1.RestoreDirectory = true;
 
 				if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-				{
 					currentFilename = saveFileDialog1.FileName;
-					//sks.ShortFilename = sks.Filename.Substring(sks.Filename.LastIndexOf(Path.DirectorySeparatorChar) + 1, sks.Filename.Length - (sks.Filename.LastIndexOf(Path.DirectorySeparatorChar) + 1));
-				}
 				else
-				{
 					return;
-				}
 			}
 
 			ActiveTableObject act = new ActiveTableObject(ActiveTableGenerated);
@@ -132,7 +127,7 @@ namespace RTCV.UI
 
 		public byte[] GetDumpFromFile(string key)
 		{
-			return File.ReadAllBytes(CorruptCore.CorruptCore.workingDir + Path.DirectorySeparatorChar + "MEMORYDUMPS" + Path.DirectorySeparatorChar + key + ".dmp");
+			return File.ReadAllBytes(Path.Combine(CorruptCore.CorruptCore.workingDir, "MEMORYDUMPS", key + ".dmp"));
 		}
 
 		public long[] CapActiveTable(long[] tempActiveTable)
@@ -304,7 +299,7 @@ namespace RTCV.UI
 
 			ActiveTableDumps = new List<string>();
 
-			foreach (string file in Directory.GetFiles(CorruptCore.CorruptCore.workingDir + Path.DirectorySeparatorChar + "MEMORYDUMPS"))
+			foreach (string file in Directory.GetFiles(Path.Combine(CorruptCore.CorruptCore.workingDir, "MEMORYDUMPS")))
 				File.Delete(file);
 
 			currentFilename = null;

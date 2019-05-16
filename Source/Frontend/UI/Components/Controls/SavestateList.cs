@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
+using RTCV.NetCore;
 
 namespace RTCV.UI.Components.Controls
 {
@@ -236,6 +237,12 @@ namespace RTCV.UI.Components.Controls
 
         public void btnSaveLoad_Click(object sender, EventArgs e)
         {
+            string saveStateWord = "Savestate";
+
+            object renameSaveStateWord = AllSpec.VanguardSpec[VSPEC.RENAME_SAVESTATE];
+            if (renameSaveStateWord != null && renameSaveStateWord is String s)
+                saveStateWord = s;
+
             if (btnSaveLoad.Text == "LOAD")
             {
                 StashKey psk = selectedHolder?.sk;
@@ -246,17 +253,27 @@ namespace RTCV.UI.Components.Controls
                     StockpileManager_UISide.LoadState(psk);
                 }
                 else
-                    MessageBox.Show("Savestate box is empty");
+                    MessageBox.Show($"{saveStateWord} box is empty");
             }
             else
             {
                 if (selectedHolder == null)
                 {
-                    MessageBox.Show("No Savestate Box is currently selected in the Glitch Harvester's Savestate Manager");
+                    
+
+                    MessageBox.Show($"No {saveStateWord} Box is currently selected in the Glitch Harvester's {saveStateWord} Manager");
                     return;
                 }
 
                 StashKey sk = StockpileManager_UISide.SaveState();
+
+                if(sk == null)
+                {
+                    btnSaveLoad.Text = "LOAD";
+                    btnSaveLoad.ForeColor = Color.FromArgb(192, 255, 192);
+                    return;
+                }
+
                 StockpileManager_UISide.CurrentSavestateStashKey = sk;
 
                 //Replace if there'a already a sk

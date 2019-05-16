@@ -52,7 +52,7 @@ namespace RTCV.CorruptCore
                 string key = sk.ParentKey;
                 StashKeySavestateLocation stateLocation = sk.StateLocation;
 
-                string theoreticalSaveStateFilename = CorruptCore.workingDir + Path.DirectorySeparatorChar + stateLocation.ToString() + Path.DirectorySeparatorChar + gameName + "." + key + ".timejump.State";
+                string theoreticalSaveStateFilename = Path.Combine(CorruptCore.workingDir,stateLocation.ToString(), gameName + "." + key + ".timejump.State");
 
                 if (File.Exists(theoreticalSaveStateFilename))
                 {
@@ -117,6 +117,10 @@ namespace RTCV.CorruptCore
 			{
 				Key = CorruptCore.GetRandomKey();
 				statePath = LocalNetCoreRouter.QueryRoute<String>(NetcoreCommands.VANGUARD, NetcoreCommands.SAVESAVESTATE, Key, true);
+
+                if (statePath == null)
+                    return null;
+
 				sk = new StashKey(Key, Key, null);
 			}
 			else

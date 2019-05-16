@@ -121,6 +121,7 @@
             this.Text = "Savestate Manager";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
             this.Load += new System.EventHandler(this.RTC_SavestateManager_Form_Load);
+            this.Shown += new System.EventHandler(this.RTC_SavestateManager_Form_Shown);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             this.ResumeLayout(false);
             this.PerformLayout();

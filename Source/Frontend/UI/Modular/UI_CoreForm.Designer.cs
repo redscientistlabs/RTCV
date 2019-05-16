@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UI_CoreForm));
             this.pnSideBar = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnTestLockdown = new System.Windows.Forms.Button();
             this.pnGlitchHarvesterOpen = new System.Windows.Forms.Panel();
             this.pnCrashProtection = new System.Windows.Forms.Panel();
             this.btnGpJumpNow = new System.Windows.Forms.Button();
@@ -59,7 +59,7 @@
             // pnSideBar
             // 
             this.pnSideBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.pnSideBar.Controls.Add(this.button1);
+            this.pnSideBar.Controls.Add(this.btnTestLockdown);
             this.pnSideBar.Controls.Add(this.pnGlitchHarvesterOpen);
             this.pnSideBar.Controls.Add(this.pnCrashProtection);
             this.pnSideBar.Controls.Add(this.btnTestCustomLayout);
@@ -80,27 +80,27 @@
             this.pnSideBar.TabIndex = 7;
             this.pnSideBar.Tag = "color:dark3";
             // 
-            // button1
+            // btnTestLockdown
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.button1.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 9.75F);
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.Location = new System.Drawing.Point(0, 382);
-            this.button1.Name = "button1";
-            this.button1.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.button1.Size = new System.Drawing.Size(150, 33);
-            this.button1.TabIndex = 129;
-            this.button1.TabStop = false;
-            this.button1.Tag = "color:dark3";
-            this.button1.Text = "Test Lockdown";
-            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.Button1_Click_1);
+            this.btnTestLockdown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.btnTestLockdown.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnTestLockdown.FlatAppearance.BorderSize = 0;
+            this.btnTestLockdown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTestLockdown.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            this.btnTestLockdown.ForeColor = System.Drawing.Color.White;
+            this.btnTestLockdown.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnTestLockdown.Location = new System.Drawing.Point(0, 382);
+            this.btnTestLockdown.Name = "btnTestLockdown";
+            this.btnTestLockdown.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.btnTestLockdown.Size = new System.Drawing.Size(150, 33);
+            this.btnTestLockdown.TabIndex = 129;
+            this.btnTestLockdown.TabStop = false;
+            this.btnTestLockdown.Tag = "color:dark3";
+            this.btnTestLockdown.Text = "Test Lockdown";
+            this.btnTestLockdown.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnTestLockdown.UseVisualStyleBackColor = false;
+            this.btnTestLockdown.Visible = false;
+            this.btnTestLockdown.Click += new System.EventHandler(this.Button1_Click_1);
             // 
             // pnGlitchHarvesterOpen
             // 
@@ -125,6 +125,7 @@
             this.pnCrashProtection.Size = new System.Drawing.Size(150, 60);
             this.pnCrashProtection.TabIndex = 128;
             this.pnCrashProtection.Tag = "color:dark3";
+            this.pnCrashProtection.Visible = false;
             // 
             // btnGpJumpNow
             // 
@@ -242,6 +243,7 @@
             this.pnAutoKillSwitch.Size = new System.Drawing.Size(150, 34);
             this.pnAutoKillSwitch.TabIndex = 127;
             this.pnAutoKillSwitch.Tag = "color:dark3";
+            this.pnAutoKillSwitch.Visible = false;
             this.pnAutoKillSwitch.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnAutoKillSwitch_MouseClick);
             this.pnAutoKillSwitch.MouseEnter += new System.EventHandler(this.pnAutoKillSwitch_MouseHover);
             this.pnAutoKillSwitch.MouseLeave += new System.EventHandler(this.pnAutoKillSwitch_MouseLeave);
@@ -362,6 +364,7 @@
             this.btnEngineConfig.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnEngineConfig.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnEngineConfig.UseVisualStyleBackColor = false;
+            this.btnEngineConfig.Visible = false;
             this.btnEngineConfig.Click += new System.EventHandler(this.btnEngineConfig_Click);
             // 
             // btnEasyMode
@@ -385,6 +388,7 @@
             this.btnEasyMode.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnEasyMode.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnEasyMode.UseVisualStyleBackColor = false;
+            this.btnEasyMode.Visible = false;
             this.btnEasyMode.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnEasyMode_MouseDown);
             // 
             // btnStockpilePlayer
@@ -408,6 +412,7 @@
             this.btnStockpilePlayer.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnStockpilePlayer.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnStockpilePlayer.UseVisualStyleBackColor = false;
+            this.btnStockpilePlayer.Visible = false;
             this.btnStockpilePlayer.Click += new System.EventHandler(this.btnStockpilePlayer_Click);
             // 
             // btnGlitchHarvester
@@ -431,6 +436,7 @@
             this.btnGlitchHarvester.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnGlitchHarvester.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnGlitchHarvester.UseVisualStyleBackColor = false;
+            this.btnGlitchHarvester.Visible = false;
             this.btnGlitchHarvester.Click += new System.EventHandler(this.btnGlitchHarvester_Click);
             // 
             // btnManualBlast
@@ -454,6 +460,7 @@
             this.btnManualBlast.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnManualBlast.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnManualBlast.UseVisualStyleBackColor = false;
+            this.btnManualBlast.Visible = false;
             this.btnManualBlast.Click += new System.EventHandler(this.btnManualBlast_Click);
             this.btnManualBlast.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BtnManualBlast_MouseDown);
             // 
@@ -478,6 +485,7 @@
             this.btnAutoCorrupt.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAutoCorrupt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAutoCorrupt.UseVisualStyleBackColor = false;
+            this.btnAutoCorrupt.Visible = false;
             this.btnAutoCorrupt.Click += new System.EventHandler(this.btnAutoCorrupt_Click);
             // 
             // UI_CoreForm
@@ -507,8 +515,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel pnSideBar;
         private System.Windows.Forms.Button btnEngineConfig;
         public System.Windows.Forms.Button btnEasyMode;
         private System.Windows.Forms.Button btnStockpilePlayer;
@@ -527,9 +533,10 @@
         private System.Windows.Forms.Button btnTestSubform;
         internal System.Windows.Forms.Panel pnGlitchHarvesterOpen;
         private System.Windows.Forms.Button btnTestCustomLayout;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnTestLockdown;
         public System.Windows.Forms.Panel pnCrashProtection;
         public System.Windows.Forms.Panel pnAutoKillSwitch;
+        public System.Windows.Forms.Panel pnSideBar;
     }
 }
 

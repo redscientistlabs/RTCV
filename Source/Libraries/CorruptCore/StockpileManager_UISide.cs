@@ -25,8 +25,7 @@ namespace RTCV.CorruptCore
 
             bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
 
-            if (!UseSavestates)
-                LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_PRECORRUPTACTION, null,true);
+            LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_PRECORRUPTACTION, null,true);
         }
 
 		private static void PostApplyStashkey()
@@ -39,8 +38,7 @@ namespace RTCV.CorruptCore
 				Render.StartRender();
 			}
 
-            if(!UseSavestates)
-                LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_POSTCORRUPTACTION);
+            LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_POSTCORRUPTACTION);
         }
 
 		public static bool ApplyStashkey(StashKey sk, bool _loadBeforeOperation = true)
@@ -67,7 +65,13 @@ namespace RTCV.CorruptCore
 
 		public static bool Corrupt(bool _loadBeforeOperation = true)
 		{
-			PreApplyStashkey();
+            string saveStateWord = "Savestate";
+
+            object renameSaveStateWord = AllSpec.VanguardSpec[VSPEC.RENAME_SAVESTATE];
+            if (renameSaveStateWord != null && renameSaveStateWord is String s)
+                saveStateWord = s;
+
+            PreApplyStashkey();
             StashKey psk = CurrentSavestateStashKey;
 
             bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
@@ -76,7 +80,7 @@ namespace RTCV.CorruptCore
 
             if (psk == null && UseSavestates)
 			{
-				MessageBox.Show("The Glitch Harvester could not perform the CORRUPT action\n\nEither no Savestate Box was selected in the Savestate Manager\nor the Savetate Box itself is empty.");
+				MessageBox.Show($"The Glitch Harvester could not perform the CORRUPT action\n\nEither no {saveStateWord} Box was selected in the {saveStateWord} Manager\nor the {saveStateWord} Box itself is empty.");
 				return false;
 			}
 
@@ -121,13 +125,20 @@ namespace RTCV.CorruptCore
 
 		public static bool InjectFromStashkey(StashKey sk, bool _loadBeforeOperation = true)
 		{
-			PreApplyStashkey();
+            string saveStateWord = "Savestate";
+
+            object renameSaveStateWord = AllSpec.VanguardSpec[VSPEC.RENAME_SAVESTATE];
+            if (renameSaveStateWord != null && renameSaveStateWord is String s)
+                saveStateWord = s;
+
+
+            PreApplyStashkey();
 
             StashKey psk = CurrentSavestateStashKey;
 
             if (psk == null)
 			{
-				MessageBox.Show("The Glitch Harvester could not perform the INJECT action\n\nEither no Savestate Box was selected in the Savestate Manager\nor the Savetate Box itself is empty.");
+				MessageBox.Show($"The Glitch Harvester could not perform the INJECT action\n\nEither no {saveStateWord} Box was selected in the {saveStateWord} Manager\nor the {saveStateWord} Box itself is empty.");
 				return false;
 			}
 

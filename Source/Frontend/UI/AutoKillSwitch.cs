@@ -10,6 +10,7 @@ using RTCV.NetCore.StaticTools;
 using RTCV.CorruptCore;
 using RTCV.UI;
 using static RTCV.UI.UI_Extensions;
+using System.IO;
 
 namespace RTCV.UI
 {
@@ -93,7 +94,7 @@ namespace RTCV.UI
 
 
                 info.WorkingDirectory = CorruptCore.CorruptCore.EmuDir;
-                info.FileName = CorruptCore.CorruptCore.EmuDir + "\\RESTARTDETACHEDRTC.bat";
+                info.FileName = Path.Combine(CorruptCore.CorruptCore.EmuDir, "RESTARTDETACHEDRTC.bat");
 
                 Process.Start(info);
             });

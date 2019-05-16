@@ -298,7 +298,13 @@ namespace RTCV.UI
 
 		private void btnLoadCorrupt_Click(object sender, EventArgs e)
 		{
-			try
+            string saveStateWord = "Savestate";
+
+            object renameSaveStateWord = AllSpec.VanguardSpec[VSPEC.RENAME_SAVESTATE];
+            if (renameSaveStateWord != null && renameSaveStateWord is String s)
+                saveStateWord = s;
+
+            try
 			{ 
 				btnLoadCorrupt.Enabled = false;
 				btnSendTo.Enabled = false;
@@ -311,7 +317,7 @@ namespace RTCV.UI
 					if (psk == null)
 					{
 						MessageBox.Show(
-							"Could not perform the CORRUPT action\n\nEither no Savestate Box was selected in the Savestate Manager\nor the Savetate Box itself is empty.");
+							$"Could not perform the CORRUPT action\n\nEither no {saveStateWord} Box was selected in the {saveStateWord} Manager\nor the {saveStateWord} Box itself is empty.");
 						return;
 					}
 
@@ -339,8 +345,13 @@ namespace RTCV.UI
 
 		private void btnSendTo_Click(object sender, EventArgs e)
 		{
+            string saveStateWord = "Savestate";
 
-			btnLoadCorrupt.Enabled = false;
+            object renameSaveStateWord = AllSpec.VanguardSpec[VSPEC.RENAME_SAVESTATE];
+            if (renameSaveStateWord != null && renameSaveStateWord is String s)
+                saveStateWord = s;
+
+            btnLoadCorrupt.Enabled = false;
 			btnSendTo.Enabled = false;
 			btnJustCorrupt.Enabled = false;
 			try
@@ -351,7 +362,7 @@ namespace RTCV.UI
 					StashKey psk = StockpileManager_UISide.CurrentSavestateStashKey;
                     if (psk == null)
 					{
-						MessageBox.Show("Could not perform the CORRUPT action\n\nEither no Savestate Box was selected in the Savestate Manager\nor the Savetate Box itself is empty.");
+						MessageBox.Show($"Could not perform the CORRUPT action\n\nEither no {saveStateWord} Box was selected in the {saveStateWord} Manager\nor the {saveStateWord} Box itself is empty.");
 						return;
 					}
 					newSk = new StashKey(CorruptCore.CorruptCore.GetRandomKey(), psk.ParentKey, null);
@@ -441,7 +452,14 @@ namespace RTCV.UI
 
 		public BlastLayer GenerateBlastLayers(bool loadBeforeCorrupt = false, bool applyAfterCorrupt = false)
 		{
-			StashKey newSk = null;
+            string saveStateWord = "Savestate";
+
+            object renameSaveStateWord = AllSpec.VanguardSpec[VSPEC.RENAME_SAVESTATE];
+            if (renameSaveStateWord != null && renameSaveStateWord is String s)
+                saveStateWord = s;
+
+
+            StashKey newSk = null;
 			try
 			{
 				RefreshDomains();
@@ -457,7 +475,7 @@ namespace RTCV.UI
                         if (psk == null)
 						{
 							MessageBox.Show(
-								"The Blast Generator could not perform the CORRUPT action\n\nEither no Savestate Box was selected in the Savestate Manager\nor the Savetate Box itself is empty.");
+                                $"The Blast Generator could not perform the CORRUPT action\n\nEither no {saveStateWord} Box was selected in the {saveStateWord} Manager\nor the {saveStateWord} Box itself is empty.");
 							return null;
 						}
 						newSk = new StashKey(CorruptCore.CorruptCore.GetRandomKey(), psk.ParentKey, bl);

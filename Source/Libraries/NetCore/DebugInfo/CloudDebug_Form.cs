@@ -88,7 +88,7 @@ namespace RTCV.NetCore
 				string password = Guid.NewGuid().ToString().Replace("-", "").Replace("{", "").Replace("}", "").ToUpper();
 
 				string relativedir = Directory.GetCurrentDirectory();
-				string tempdebugdir = relativedir + "\\debug";
+				string tempdebugdir = Path.Combine(relativedir, "debug");
 				string tempzipfile = tempdebugdir + ".7z";
 
 				if (!Directory.Exists(tempdebugdir))
@@ -103,7 +103,7 @@ namespace RTCV.NetCore
 
 
 				//Exporting side
-				string sideFile = tempdebugdir + "\\SIDE.txt";
+				string sideFile = Path.Combine(tempdebugdir, "SIDE.txt");
 				File.WriteAllText(sideFile, System.Diagnostics.Process.GetCurrentProcess().ProcessName);
 
                 //Exporting Stacktrace
@@ -117,12 +117,12 @@ namespace RTCV.NetCore
                     _ex = _ex.InnerException;
                 }
                 tbStackTrace.Text = sb.ToString();
-                string stacktracefile = tempdebugdir + "\\STACKTRACE.TXT";
+                string stacktracefile = Path.Combine(tempdebugdir, "STACKTRACE.TXT");
 				File.WriteAllText(stacktracefile, sb.ToString());
 
 
 				//Exporting data
-				string data = tempdebugdir + "\\DATA.TXT";
+				string data = Path.Combine(tempdebugdir, "DATA.TXT");
 				sb = new StringBuilder();
 				foreach (var key in ex.Data.Keys)
 				{
@@ -131,18 +131,18 @@ namespace RTCV.NetCore
 				File.WriteAllText(data, sb.ToString());
 
 				//Exporting Specs from RTC's perspective
-				string rtcfile = tempdebugdir + "\\RTC_PERSPECTIVE.TXT";
+				string rtcfile = Path.Combine(tempdebugdir, "RTC_PERSPECTIVE.TXT");
 				File.WriteAllText(rtcfile, getRTCInfo());
 
 				//Exporting Specs from the Emu's perspective
-				string emufile = tempdebugdir + "\\EMU_PERSPECTIVE.txt";
+				string emufile = Path.Combine(tempdebugdir, "EMU_PERSPECTIVE.txt");
 				File.WriteAllText(emufile, getEmuInfo());
 
 				//Copying the log files
 				if (AllSpec.CorruptCoreSpec?["RTCDIR"] is string rtcdir)
 				{
-					string rtcLog = rtcdir + "\\RTC_LOG.txt";
-					string rtcLogOutput = tempdebugdir + "\\RTC_LOG.txt";
+					string rtcLog = Path.Combine(rtcdir, "RTC_LOG.txt");
+					string rtcLogOutput = Path.Combine(tempdebugdir, "RTC_LOG.txt");
                     lock (Extensions.ConsoleHelper.con.FileWriter)
 					{
 						File.Copy(rtcLog, rtcLogOutput, true);
@@ -151,8 +151,8 @@ namespace RTCV.NetCore
 
 				if (AllSpec.VanguardSpec?["EMUDIR"] is string emudir)
 				{
-					string emuLog = emudir + "\\EMU_LOG.txt";
-					string emuLogOutput = tempdebugdir + "\\EMU_LOG.txt";
+					string emuLog = Path.Combine(emudir, "EMU_LOG.txt");
+					string emuLogOutput = Path.Combine(tempdebugdir, "EMU_LOG.txt");
 					lock (Extensions.ConsoleHelper.con.FileWriter)
 					{
 						File.Copy(emuLog, emuLogOutput, true);

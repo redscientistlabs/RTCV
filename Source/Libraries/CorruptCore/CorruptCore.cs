@@ -47,22 +47,21 @@ namespace RTCV.CorruptCore
 			get => (string)AllSpec.CorruptCoreSpec[RTCSPEC.RTCDIR];
 			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.RTCDIR, value);
 		}
-
 		public static string workingDir
 		{
-			get => RtcDir + Path.DirectorySeparatorChar + "WORKING" + Path.DirectorySeparatorChar;
+			get => Path.Combine(RtcDir,"WORKING");
 		}
 		public static string assetsDir
 		{
-			get => RtcDir + Path.DirectorySeparatorChar + "ASSETS" + Path.DirectorySeparatorChar;
+			get => Path.Combine(RtcDir,"ASSETS");
 		}
 		public static string listsDir
         {
-			get => RtcDir + Path.DirectorySeparatorChar + "LISTS" + Path.DirectorySeparatorChar;
+			get => Path.Combine(RtcDir,"LISTS");
         }
 		public static string engineTemplateDir
         {
-			get => RtcDir + Path.DirectorySeparatorChar + "ENGINETEMPLATES" + Path.DirectorySeparatorChar;
+			get => Path.Combine(RtcDir,"ENGINETEMPLATES");
         }
 
 
@@ -217,13 +216,19 @@ namespace RTCV.CorruptCore
 				RegisterCorruptcoreSpec();
 
                 CorruptCore_Extensions.DirectoryRequired(paths: new string[] {
-                    RTCV.CorruptCore.CorruptCore.workingDir, RTCV.CorruptCore.CorruptCore.workingDir + "\\TEMP\\"
-                    , RTCV.CorruptCore.CorruptCore.workingDir + "\\SKS\\", RTCV.CorruptCore.CorruptCore.workingDir + "\\SSK\\"
-                    , RTCV.CorruptCore.CorruptCore.workingDir + "\\SESSION\\", RTCV.CorruptCore.CorruptCore.workingDir + "\\MEMORYDUMPS\\"
-                    , RTCV.CorruptCore.CorruptCore.workingDir + "\\MP\\", RTCV.CorruptCore.CorruptCore.assetsDir + "\\CRASHSOUNDS\\"
-                    , RTCV.CorruptCore.CorruptCore.RtcDir + "\\PARAMS\\", RTCV.CorruptCore.CorruptCore.RtcDir + "\\LISTS\\"
-                    , RTCV.CorruptCore.CorruptCore.RtcDir + "\\RENDEROUTPUT\\",RTCV.CorruptCore.CorruptCore.RtcDir + "\\ENGINETEMPLATES\\"
-                    ,RTCV.CorruptCore.CorruptCore.assetsDir + "\\PLATESHD\\"
+                    RTCV.CorruptCore.CorruptCore.workingDir
+                    , Path.Combine(RTCV.CorruptCore.CorruptCore.workingDir,"TEMP")
+                    , Path.Combine(RTCV.CorruptCore.CorruptCore.workingDir, "SKS")
+                    , Path.Combine(RTCV.CorruptCore.CorruptCore.workingDir, "SSK")
+                    , Path.Combine(RTCV.CorruptCore.CorruptCore.workingDir, "SESSION")
+                    , Path.Combine(RTCV.CorruptCore.CorruptCore.workingDir, "MEMORYDUMPS")
+                    , Path.Combine(RTCV.CorruptCore.CorruptCore.workingDir, "MP")
+                    , Path.Combine(RTCV.CorruptCore.CorruptCore.assetsDir, "CRASHSOUNDS")
+                    , Path.Combine(RTCV.CorruptCore.CorruptCore.RtcDir, "PARAMS")
+                    , Path.Combine(RTCV.CorruptCore.CorruptCore.RtcDir, "LISTS")
+                    , Path.Combine(RTCV.CorruptCore.CorruptCore.RtcDir, "RENDEROUTPUT")
+                    , Path.Combine(RTCV.CorruptCore.CorruptCore.RtcDir, "ENGINETEMPLATES")
+                    , Path.Combine(RTCV.CorruptCore.CorruptCore.assetsDir, "PLATESHD")
                 });
 
                 if (!NetCore.Params.IsParamSet("DISCLAIMER_READ"))
@@ -266,7 +271,7 @@ namespace RTCV.CorruptCore
 			PartialSpec rtcSpecTemplate = new PartialSpec("RTCSpec");
 			rtcSpecTemplate["RTCVERSION"] = RtcVersion;
 
-			rtcSpecTemplate[RTCSPEC.RTCDIR] = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\RTC\\";
+			rtcSpecTemplate[RTCSPEC.RTCDIR] = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "RTC");
 
             //Engine Settings
             rtcSpecTemplate.Insert(CorruptCore.getDefaultPartial());
@@ -390,7 +395,7 @@ namespace RTCV.CorruptCore
 			//Do this on its own thread as downloading the json is slow
 			(new Thread(() =>
 			{
-				string LocalPath = NetCore.Params.ParamsDir + "\\BADPROCESSES";
+				string LocalPath = Path.Combine(NetCore.Params.ParamsDir, "BADPROCESSES");
 
 				string json = "";
 				try

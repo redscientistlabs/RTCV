@@ -123,9 +123,11 @@ Known facts(and warnings):
 
 This message only appears once.";
 
+                string disclaimerPath = Path.Combine(CorruptCore.CorruptCore.RtcDir, "LICENSES", "DISCLAIMER.TXT");
+
                 //Use the text file if it exists
-                if (File.Exists(CorruptCore.CorruptCore.RtcDir + Path.DirectorySeparatorChar + "LICENSES\\DISCLAIMER.TXT"))
-                    disclaimer = File.ReadAllText(CorruptCore.CorruptCore.RtcDir + Path.DirectorySeparatorChar + "LICENSES\\DISCLAIMER.TXT");
+                if (File.Exists(disclaimerPath))
+                    disclaimer = File.ReadAllText(disclaimerPath);
 
                 MessageBox.Show(disclaimer.Replace("[ver]", CorruptCore.CorruptCore.RtcVersion), "RTC", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 NetCore.Params.SetParam("DISCLAIMER_READ");
@@ -254,7 +256,6 @@ This message only appears once.";
         public void btnEngineConfig_Click(object sender, EventArgs e)
         {
             UI_DefaultGrids.engineConfig.LoadToMain();
-
         }
 
         private void pnAutoKillSwitch_MouseHover(object sender, EventArgs e)

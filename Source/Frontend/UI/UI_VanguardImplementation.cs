@@ -60,8 +60,11 @@ namespace RTCV.UI
 						LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHUISPEC, RTCV.NetCore.AllSpec.UISpec.GetPartialSpec(), true);
 							LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHCORRUPTCORESPEC, RTCV.NetCore.AllSpec.CorruptCoreSpec.GetPartialSpec(), true);
 
-						//Specs are all set up so UI is clear.
-						LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_ALLSPECSSENT, true);
+                            S.GET<UI_CoreForm>().pnAutoKillSwitch.Visible = true;
+                            S.GET<UI_CoreForm>().pnCrashProtection.Visible = true;
+
+                            //Specs are all set up so UI is clear.
+                            LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_ALLSPECSSENT, true);
 						});
 						break;
 
@@ -73,6 +76,12 @@ namespace RTCV.UI
                             if (UICore.FirstConnect)
                             {
                                 UICore.FirstConnect = false;
+
+                                var sidebar = S.GET<UI_CoreForm>().pnSideBar;
+                                foreach (Control c in sidebar.Controls)
+                                    if (c is Button b)
+                                        if (!b.Text.Contains("Test"))
+                                            b.Visible = true;
 
                                 UI_DefaultGrids.engineConfig.LoadToMain();
                                 UI_DefaultGrids.glitchHarvester.LoadToNewWindow("Glitch Harvester", true);
@@ -194,6 +203,13 @@ namespace RTCV.UI
                         {
                         S.GET<RTC_SavestateManager_Form>().DisableFeature();
                         S.GET<UI_CoreForm>().pnCrashProtection.Visible = false;
+                        });
+                        break;
+
+                    case REMOTE_DISABLEGAMEPROTECTIONSUPPORT:
+                        SyncObjectSingleton.FormExecute((o, ea) =>
+                        {
+                            S.GET<UI_CoreForm>().pnCrashProtection.Visible = false;
                         });
                         break;
 

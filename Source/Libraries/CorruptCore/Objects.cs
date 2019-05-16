@@ -84,7 +84,6 @@ namespace RTCV.CorruptCore
 				if (saveFileDialog1.ShowDialog() == DialogResult.OK)
 				{
 					sks.Filename = saveFileDialog1.FileName;
-					//sks.ShortFilename = sks.Filename.Substring(sks.Filename.LastIndexOf(Path.DirectorySeparatorChar) + 1, sks.Filename.Length - (sks.Filename.LastIndexOf(Path.DirectorySeparatorChar) + 1));
 					sks.ShortFilename = Path.GetFileName(sks.Filename);
 				}
 				else
@@ -100,7 +99,7 @@ namespace RTCV.CorruptCore
 			//clean temp folder
 			try
 			{
-				EmptyFolder(Path.DirectorySeparatorChar + "WORKING" + Path.DirectorySeparatorChar + "TEMP");
+				EmptyFolder(Path.Combine("WORKING", "TEMP"));
 			}
 			catch (Exception e)
 			{
@@ -124,7 +123,7 @@ namespace RTCV.CorruptCore
                         //If it's a cue file, find the bins and fix the cue to be relative
                         if (key.RomFilename.ToUpper().Contains(".CUE"))
                         {
-                            string cueFolder = Path.GetDirectoryName(key.RomFilename) + "\\";
+                            string cueFolder = Path.GetDirectoryName(key.RomFilename);
                             string[] cueLines = File.ReadAllLines(key.RomFilename);
                             List<string> binFiles = new List<string>();
 
@@ -157,7 +156,7 @@ namespace RTCV.CorruptCore
                             //Write our new cue
                             File.WriteAllLines(key.RomFilename, fixedCue);
 
-                            allRoms.AddRange(binFiles.Select(it => cueFolder + it));
+                            allRoms.AddRange(binFiles.Select(file => Path.Combine(cueFolder,file)));
                         }
 
                         if (key.RomFilename.ToUpper().Contains(".CCD"))
@@ -179,8 +178,6 @@ namespace RTCV.CorruptCore
                 {
                     string rom = str;
                     string romTempfilename = Path.Combine(CorruptCore.workingDir, "TEMP", Path.GetFileName(rom));
-                    //	if (!rom.Contains(Path.DirectorySeparatorChar) && !rom.Contains("/" ))
-                    //	rom = CorruptCore.workingDir + Path.DirectorySeparatorChar + "SKS" + Path.DirectorySeparatorChar + rom;
 
                     //If the file already exists, overwrite it.
                     if (File.Exists(romTempfilename))
@@ -255,7 +252,7 @@ namespace RTCV.CorruptCore
 				sk.StateLocation = StashKeySavestateLocation.SKS;
 			}
 			//Create stockpile.xml to temp folder from stockpile object
-			using (FileStream fs = File.Open(Path.Combine(CorruptCore.workingDir, "TEMP\\stockpile.json"), FileMode.OpenOrCreate))
+			using (FileStream fs = File.Open(Path.Combine(CorruptCore.workingDir, "TEMP", "stockpile.json"), FileMode.OpenOrCreate))
 			{
 				JsonHelper.Serialize(sks, fs, Formatting.Indented);
 				fs.Close();
@@ -278,7 +275,7 @@ namespace RTCV.CorruptCore
 			if (!compress)
 				comp = CompressionLevel.NoCompression;
 			//Create the file into temp
-			ZipFile.CreateFromDirectory(CorruptCore.workingDir + Path.DirectorySeparatorChar + "TEMP" + Path.DirectorySeparatorChar, tempFilename, comp, false);
+			ZipFile.CreateFromDirectory(Path.Combine(CorruptCore.workingDir, "TEMP"), tempFilename, comp, false);
 
 			//Remove the old stockpile
 			try
@@ -298,7 +295,7 @@ namespace RTCV.CorruptCore
 			//Move all the files from temp into SKS
 			try
 			{
-				EmptyFolder(Path.DirectorySeparatorChar + "WORKING" + Path.DirectorySeparatorChar + "SKS");
+				EmptyFolder(Path.Combine("WORKING", "SKS"));
 			}
 			catch(Exception e)
 			{
@@ -368,7 +365,7 @@ namespace RTCV.CorruptCore
 			var extractFolder = import ? "TEMP" : "SKS";
 
 			//Extract the stockpile
-			if (!Extract(Filename, Path.DirectorySeparatorChar + "WORKING" + Path.DirectorySeparatorChar + extractFolder, "stockpile.json"))
+			if (!Extract(Filename, Path.Combine("WORKING", extractFolder), "stockpile.json"))
 				return false;
 
 			//Read in the stockpile
@@ -391,7 +388,7 @@ namespace RTCV.CorruptCore
 			{
 				var allCopied = new List<string>();
 				//Copy from temp to sks
-				foreach (string file in Directory.GetFiles(CorruptCore.workingDir + Path.DirectorySeparatorChar + "TEMP" + Path.DirectorySeparatorChar))
+				foreach (string file in Directory.GetFiles(Path.Combine(CorruptCore.workingDir, "TEMP")))
 				{
 					if (!file.Contains(".sk"))
 					{
@@ -420,7 +417,7 @@ namespace RTCV.CorruptCore
 					}
 
 				}
-				EmptyFolder(Path.DirectorySeparatorChar + "WORKING" + Path.DirectorySeparatorChar + "TEMP");
+				EmptyFolder(Path.Combine("WORKING", "TEMP"));
             }
 			else
 			{
@@ -519,13 +516,16 @@ namespace RTCV.CorruptCore
 		{
 			try
 			{
-				foreach (string file in Directory.GetFiles(Path.Combine(CorruptCore.RtcDir, folder)))
+                string targetFolder = Path.Combine(CorruptCore.RtcDir, folder);
+
+
+                foreach (string file in Directory.GetFiles(targetFolder))
 				{
 					File.SetAttributes(file, FileAttributes.Normal);
 					File.Delete(file);
 				}
 
-				foreach (string dir in Directory.GetDirectories(Path.Combine(CorruptCore.RtcDir , folder)))
+				foreach (string dir in Directory.GetDirectories(targetFolder))
 					RecursiveDelete(new DirectoryInfo(dir));
 			}
 			catch (Exception ex)
@@ -546,13 +546,13 @@ namespace RTCV.CorruptCore
 			try
 			{
 				EmptyFolder(folder);
-				ZipFile.ExtractToDirectory(filename, CorruptCore.RtcDir + Path.DirectorySeparatorChar + folder + Path.DirectorySeparatorChar);
+				ZipFile.ExtractToDirectory(filename, Path.Combine(CorruptCore.RtcDir,folder));
 
 				if (!File.Exists(Path.Combine(CorruptCore.RtcDir, folder, masterFile)))
 				{
-					if (File.Exists(Path.Combine(CorruptCore.RtcDir, $"{folder}\\stockpile.xml")))
+					if (File.Exists(Path.Combine(CorruptCore.RtcDir, folder, "stockpile.xml")))
 						MessageBox.Show("Legacy stockpile found. This stockpile isn't supported by this version of the RTC.");
-					else if (File.Exists(Path.Combine(CorruptCore.RtcDir, $"{folder}\\keys.xml")))
+					else if (File.Exists(Path.Combine(CorruptCore.RtcDir, folder, "keys.xml")))
 						MessageBox.Show("Legacy SSK found. This SSK isn't supported by this version of the RTC.");
 					else
 						MessageBox.Show("The file could not be read properly");
@@ -651,7 +651,7 @@ namespace RTCV.CorruptCore
 				File.Copy(path, backupFilename);
             }
 
-			if (!Extract(filename, "WORKING" + Path.DirectorySeparatorChar + "TEMP", "stockpile.json"))
+			if (!Extract(filename, Path.Combine("WORKING", "TEMP"), "stockpile.json"))
 				return;
 
 			//Configs are stored in the "configs" folder within the stockpile

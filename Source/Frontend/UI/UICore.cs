@@ -318,7 +318,7 @@ namespace RTCV.UI
 			//Clean out the working folders
 			if (!CorruptCore.CorruptCore.DontCleanSavestatesOnQuit)
 			{
-				Stockpile.EmptyFolder(Path.DirectorySeparatorChar + "WORKING" + Path.DirectorySeparatorChar);
+				Stockpile.EmptyFolder("WORKING");
 			}
 
 			Environment.Exit(-1);

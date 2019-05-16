@@ -154,6 +154,7 @@ namespace RTCV.UI
 
 			public bool undockedSizable = true;
 			public bool popoutAllowed = true;
+            public UI_ComponentFormTile ParentComponentFormTitle = null;
 
             public void AnchorToPanel(Panel pn)
 			{

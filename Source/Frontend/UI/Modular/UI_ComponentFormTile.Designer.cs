@@ -97,9 +97,8 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label lbComponentFormName;
         private ComponentPanel pnComponentFormHost;
         private System.Windows.Forms.Label label4;
+        public System.Windows.Forms.Label lbComponentFormName;
     }
 }

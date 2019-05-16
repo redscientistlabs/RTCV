@@ -148,7 +148,7 @@ namespace RTCV.UI
 			{
 				if (!String.IsNullOrWhiteSpace(filename))
 				{
-					File.WriteAllLines(CorruptCore.CorruptCore.RtcDir + "//LISTS//" + filename + ".txt", newList);
+					File.WriteAllLines(Path.Combine(CorruptCore.CorruptCore.RtcDir, "LISTS", filename + ".txt"), newList);
 				}
 				else
 				{

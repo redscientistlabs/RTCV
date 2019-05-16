@@ -30,18 +30,18 @@ namespace RTCV.UI
 			switch (cbCrashSoundEffect.SelectedIndex)
 			{
 				case 0:
-					var PlatesHdFiles = Directory.GetFiles(CorruptCore.CorruptCore.assetsDir + Path.DirectorySeparatorChar + "PLATESHD" + Path.DirectorySeparatorChar);
+					var PlatesHdFiles = Directory.GetFiles(Path.Combine(CorruptCore.CorruptCore.assetsDir, "PLATESHD"));
 					AutoKillSwitch.LoadedSounds = PlatesHdFiles.Select(it => new SoundPlayer(it)).ToArray();
 					break;
 				case 1:
-					AutoKillSwitch.LoadedSounds = new SoundPlayer[] { new SoundPlayer(CorruptCore.CorruptCore.assetsDir + Path.DirectorySeparatorChar + "crash.wav") };
+					AutoKillSwitch.LoadedSounds = new SoundPlayer[] { new SoundPlayer(Path.Combine(CorruptCore.CorruptCore.assetsDir, "crash.wav")) };
 					break;
 
 				case 2:
 					AutoKillSwitch.LoadedSounds = null;
 					break;
 				case 3:
-					var CrashSoundsFiles = Directory.GetFiles(CorruptCore.CorruptCore.assetsDir + Path.DirectorySeparatorChar + "CRASHSOUNDS");
+					var CrashSoundsFiles = Directory.GetFiles(Path.Combine(CorruptCore.CorruptCore.assetsDir, "CRASHSOUNDS"));
 					AutoKillSwitch.LoadedSounds = CrashSoundsFiles.Select(it => new SoundPlayer(it)).ToArray();
 					break;
 			}

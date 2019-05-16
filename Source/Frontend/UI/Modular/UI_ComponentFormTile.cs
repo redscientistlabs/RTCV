@@ -38,7 +38,10 @@ namespace RTCV.UI
                 );
 
             if (childForm is ComponentForm cf)
+            {
                 cf.AnchorToPanel(pnComponentFormHost);
+                cf.ParentComponentFormTitle = this;
+            }
 
 
             if (DisplayHeader)

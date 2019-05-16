@@ -202,7 +202,7 @@ namespace RTCV.CorruptCore
 
 			byte[] dump = mi.GetDump();
 
-			File.WriteAllBytes(CorruptCore.workingDir + Path.DirectorySeparatorChar + "MEMORYDUMPS" + Path.DirectorySeparatorChar + key + ".dmp", dump.ToArray());
+			File.WriteAllBytes(Path.Combine(CorruptCore.workingDir,"MEMORYDUMPS",key + ".dmp"), dump.ToArray());
 		}
 
 		public static byte[] GetDomainData(string domain)

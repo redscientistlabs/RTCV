@@ -43,7 +43,7 @@ namespace RTCV.CorruptCore
 
 		public static void LoadStockpileLists(Stockpile sks)
 		{
-			var lists = LoadListsFromPaths(Directory.GetFiles(CorruptCore.workingDir + Path.DirectorySeparatorChar + "SKS" + Path.DirectorySeparatorChar, "*.limiter"));
+			var lists = LoadListsFromPaths(Directory.GetFiles(Path.Combine(CorruptCore.workingDir,"SKS"), "*.limiter"));
 
 			Dictionary<string, string> allKnownLists = new Dictionary<string, string>();
 

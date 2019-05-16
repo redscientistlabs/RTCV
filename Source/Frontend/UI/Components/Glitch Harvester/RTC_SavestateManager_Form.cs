@@ -85,11 +85,11 @@ namespace RTCV.UI
             try
             {
 
-                Stockpile.EmptyFolder(Path.DirectorySeparatorChar + "WORKING\\TEMP");
-                if (!Stockpile.Extract(fileName, Path.DirectorySeparatorChar + "WORKING\\SSK", "keys.json"))
+                Stockpile.EmptyFolder(Path.Combine("WORKING", "TEMP"));
+                if (!Stockpile.Extract(fileName, Path.Combine("WORKING", "SSK"), "keys.json"))
                     return;
 
-                using (FileStream fs = File.Open(CorruptCore.CorruptCore.workingDir + Path.DirectorySeparatorChar + "SSK\\keys.json", FileMode.OpenOrCreate))
+                using (FileStream fs = File.Open(Path.Combine(CorruptCore.CorruptCore.workingDir, "SSK", "keys.json"), FileMode.OpenOrCreate))
                 {
                     ssk = JsonHelper.Deserialize<SaveStateKeys>(fs);
                 }
@@ -122,7 +122,7 @@ namespace RTCV.UI
                 key.StateLocation = StashKeySavestateLocation.SSK;
 
                 string statefilename = key.GameName + "." + key.ParentKey + ".timejump.State"; // get savestate name
-                string newStatePath = CorruptCore.CorruptCore.workingDir + Path.DirectorySeparatorChar + key.StateLocation + Path.DirectorySeparatorChar + statefilename;
+                string newStatePath = Path.Combine(CorruptCore.CorruptCore.workingDir, key.StateLocation.ToString(), statefilename);
 
                 key.StateFilename = newStatePath;
                 key.StateShortFilename = Path.GetFileName(newStatePath);
@@ -148,8 +148,8 @@ namespace RTCV.UI
                 try
                 {
                     var stateName = sk.GameName + "." + sk.ParentKey + ".timejump.State"; // get savestate name
-                    File.Copy(CorruptCore.CorruptCore.workingDir + Path.DirectorySeparatorChar + "SSK" + Path.DirectorySeparatorChar + stateName
-                        , CorruptCore.CorruptCore.workingDir + Path.DirectorySeparatorChar + "SESSION" + Path.DirectorySeparatorChar + stateName, true);
+                    File.Copy(Path.Combine(CorruptCore.CorruptCore.workingDir, "SSK", stateName)
+                        , Path.Combine(CorruptCore.CorruptCore.workingDir, "SESSION", stateName), true);
                     sk.StateLocation = StashKeySavestateLocation.SESSION;
                 }
                 catch (IOException e)
@@ -204,30 +204,31 @@ namespace RTCV.UI
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
                     Filename = saveFileDialog1.FileName;
-                    //ShortFilename = Filename.Substring(Filename.LastIndexOf(Path.DirectorySeparatorChar) + 1, Filename.Length - (Filename.LastIndexOf(Path.DirectorySeparatorChar) + 1));
                     ShortFilename = Path.GetFileName(Filename);
                 }
                 else
                     return;
 
                 //clean temp folder
-                Stockpile.EmptyFolder(Path.DirectorySeparatorChar + "WORKING\\TEMP");
+                Stockpile.EmptyFolder(Path.Combine("WORKING", "TEMP"));
 
                 foreach(var key in ssk.StashKeys)
                 {
                     if (key == null)
                         continue;
 
-                    string statefilename = key.GameName + "." + key.ParentKey + ".timejump.State"; // get savestate name
+                    string stateFilename = key.GameName + "." + key.ParentKey + ".timejump.State"; // get savestate name
 
-                    if (File.Exists(CorruptCore.CorruptCore.workingDir + Path.DirectorySeparatorChar + key.StateLocation.ToString() + Path.DirectorySeparatorChar + statefilename))
-                        File.Copy(CorruptCore.CorruptCore.workingDir + Path.DirectorySeparatorChar + key.StateLocation.ToString() + Path.DirectorySeparatorChar + statefilename, CorruptCore.CorruptCore.workingDir + Path.DirectorySeparatorChar + "TEMP" + Path.DirectorySeparatorChar + statefilename); // copy savestates to temp folder
+                    string statePath = Path.Combine(CorruptCore.CorruptCore.workingDir, key.StateLocation.ToString(), stateFilename);
+                    string tempPath = Path.Combine(CorruptCore.CorruptCore.workingDir, "TEMP", stateFilename);
+
+                    if (File.Exists(statePath))
+                        File.Copy(statePath, tempPath); // copy savestates to temp folder
                     else
                     {
-                        MessageBox.Show("Couldn't find savestate " + CorruptCore.CorruptCore.workingDir + Path.DirectorySeparatorChar +
-                                        key.StateLocation.ToString() + Path.DirectorySeparatorChar + statefilename +
-                                        "!\n\n. This is savestate index " +  ssk.StashKeys.IndexOf(key) + 1 + ".\nAborting save");
-                        Stockpile.EmptyFolder(Path.DirectorySeparatorChar + "WORKING\\TEMP");
+
+                        MessageBox.Show("Couldn't find savestate " + statePath + "!\n\n. This is savestate index " +  ssk.StashKeys.IndexOf(key) + 1 + ".\nAborting save");
+                        Stockpile.EmptyFolder(Path.Combine("WORKING", "TEMP"));
                         return;
                     }
 
@@ -242,19 +243,16 @@ namespace RTCV.UI
                 }
 
                 //Create keys.json
-                using (FileStream fs = File.Open(CorruptCore.CorruptCore.workingDir + Path.DirectorySeparatorChar + "TEMP\\keys.json", FileMode.OpenOrCreate))
+                using (FileStream fs = File.Open(Path.Combine(CorruptCore.CorruptCore.workingDir, "TEMP", "keys.json"), FileMode.OpenOrCreate))
                 {
                     JsonHelper.Serialize(ssk, fs, Formatting.Indented);
                     fs.Close();
                 }
 
-                //7z the temp folder to destination filename
-                //string[] stringargs = { "-c", Filename, RTC_Core.rtcDir + Path.DirectorySeparatorChar + "TEMP4" + Path.DirectorySeparatorChar };
-                //FastZipProgram.Exec(stringargs);
-
                 string tempFilename = Filename + ".temp";
+                string tempFolderPath = Path.Combine(CorruptCore.CorruptCore.workingDir, "TEMP");
 
-                System.IO.Compression.ZipFile.CreateFromDirectory(CorruptCore.CorruptCore.workingDir + Path.DirectorySeparatorChar + "TEMP" + Path.DirectorySeparatorChar, tempFilename, System.IO.Compression.CompressionLevel.Fastest, false);
+                System.IO.Compression.ZipFile.CreateFromDirectory(tempFolderPath, tempFilename, System.IO.Compression.CompressionLevel.Fastest, false);
 
                 if (File.Exists(Filename))
                     File.Delete(Filename);
@@ -262,10 +260,9 @@ namespace RTCV.UI
                 File.Move(tempFilename, Filename);
 
                 //Move all the files from temp into SSK
-                Stockpile.EmptyFolder(Path.DirectorySeparatorChar + "WORKING\\SSK");
-                foreach (string file in Directory.GetFiles(CorruptCore.CorruptCore.workingDir + Path.DirectorySeparatorChar + "TEMP"))
-                    //File.Move(file, RTC_Core.workingDir + Path.DirectorySeparatorChar + "SSK" + Path.DirectorySeparatorChar + (file.Substring(file.LastIndexOf(Path.DirectorySeparatorChar) + 1, file.Length - (file.LastIndexOf(Path.DirectorySeparatorChar) + 1))));
-                    File.Move(file, CorruptCore.CorruptCore.workingDir + Path.DirectorySeparatorChar + "SSK" + Path.DirectorySeparatorChar + Path.GetFileName(file));
+                Stockpile.EmptyFolder(Path.Combine("WORKING", "SSK"));
+                foreach (string file in Directory.GetFiles(tempFolderPath))
+                    File.Move(file, Path.Combine(CorruptCore.CorruptCore.workingDir, "SSK", Path.GetFileName(file)));
             }
             catch (Exception ex)
             {
@@ -307,6 +304,18 @@ namespace RTCV.UI
         private void cbSavestateLoadOnClick_CheckedChanged(object sender, EventArgs e)
         {
             LoadSavestateOnClick = cbSavestateLoadOnClick.Checked;
+        }
+
+        private void RTC_SavestateManager_Form_Shown(object sender, EventArgs e)
+        {
+
+            object param = AllSpec.VanguardSpec[VSPEC.RENAME_SAVESTATE];
+            if (param != null && param is string RenameTitle)
+            {
+                Text = RenameTitle;
+                ParentComponentFormTitle.lbComponentFormName.Text = $"{RenameTitle} Manager";
+            }
+
         }
     }
 }

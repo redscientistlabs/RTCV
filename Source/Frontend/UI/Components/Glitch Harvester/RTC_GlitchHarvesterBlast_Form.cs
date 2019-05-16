@@ -226,7 +226,7 @@ namespace RTCV.UI
 
         private void btnOpenRenderFolder_Click(object sender, EventArgs e)
         {
-            Process.Start(CorruptCore.CorruptCore.RtcDir + Path.DirectorySeparatorChar + "RENDEROUTPUT" + Path.DirectorySeparatorChar);
+            Process.Start(Path.Combine(CorruptCore.CorruptCore.RtcDir, "RENDEROUTPUT"));
         }
 
         private void BlastRawStash()
@@ -457,7 +457,7 @@ namespace RTCV.UI
             }))).Checked = Render.IsRendering;
 
             ghSettingsMenu.Items.Add("Open RENDEROUTPUT Folder", null, new EventHandler((ob, ev) => {
-                Process.Start(CorruptCore.CorruptCore.RtcDir + Path.DirectorySeparatorChar + "RENDEROUTPUT" + Path.DirectorySeparatorChar);
+                Process.Start(Path.Combine(CorruptCore.CorruptCore.RtcDir,"RENDEROUTPUT"));
             }));
 
             ghSettingsMenu.Items.Add(new ToolStripSeparator());
