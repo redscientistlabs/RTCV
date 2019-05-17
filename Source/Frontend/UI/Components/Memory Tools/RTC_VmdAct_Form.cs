@@ -577,9 +577,12 @@ namespace RTCV.UI
 			var temp = cbSelectedMemoryDomain.SelectedItem;
 
 			cbSelectedMemoryDomain.Items.Clear();
-			cbSelectedMemoryDomain.Items.AddRange(MemoryDomains.MemoryInterfaces.Keys.Where(it => !it.Contains("[V]")).ToArray());
+			var domains = MemoryDomains.MemoryInterfaces?.Keys.Where(it => !it.Contains("[V]")).ToArray();
+			if (domains?.Length > 0)
+				cbSelectedMemoryDomain.Items.AddRange(domains);
 
-			if (temp != null && cbSelectedMemoryDomain.Items.Contains(temp))
+
+            if (temp != null && cbSelectedMemoryDomain.Items.Contains(temp))
 				cbSelectedMemoryDomain.SelectedItem = temp;
 			else if(cbSelectedMemoryDomain.Items.Count > 0)
 				cbSelectedMemoryDomain.SelectedIndex = 0;
