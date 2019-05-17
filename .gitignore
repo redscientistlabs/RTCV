@@ -7,3 +7,4 @@ packages
 x64
 x86
 build
+Output/*
