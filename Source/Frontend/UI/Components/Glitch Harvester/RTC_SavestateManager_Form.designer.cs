@@ -116,6 +116,7 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(172, 347);
             this.Name = "RTC_SavestateManager_Form";
             this.Tag = "color:dark1";
             this.Text = "Savestate Manager";

@@ -46,7 +46,7 @@
             this.btnAddStashToStockpile.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnAddStashToStockpile.ForeColor = System.Drawing.Color.White;
             this.btnAddStashToStockpile.Image = ((System.Drawing.Image)(resources.GetObject("btnAddStashToStockpile.Image")));
-            this.btnAddStashToStockpile.Location = new System.Drawing.Point(14, 357);
+            this.btnAddStashToStockpile.Location = new System.Drawing.Point(14, 355);
             this.btnAddStashToStockpile.Name = "btnAddStashToStockpile";
             this.btnAddStashToStockpile.Size = new System.Drawing.Size(256, 32);
             this.btnAddStashToStockpile.TabIndex = 112;
@@ -133,7 +133,7 @@
             this.lbStashHistory.Name = "lbStashHistory";
             this.lbStashHistory.ScrollAlwaysVisible = true;
             this.lbStashHistory.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbStashHistory.Size = new System.Drawing.Size(256, 306);
+            this.lbStashHistory.Size = new System.Drawing.Size(256, 304);
             this.lbStashHistory.TabIndex = 108;
             this.lbStashHistory.Tag = "color:normal";
             this.lbStashHistory.SelectedIndexChanged += new System.EventHandler(this.lbStashHistory_SelectedIndexChanged);
@@ -144,7 +144,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(284, 402);
+            this.ClientSize = new System.Drawing.Size(284, 400);
             this.Controls.Add(this.btnAddStashToStockpile);
             this.Controls.Add(this.btnClearStashHistory);
             this.Controls.Add(this.btnStashDOWN);
@@ -153,6 +153,7 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(284, 200);
             this.Name = "RTC_StashHistory_Form";
             this.Tag = "color:dark1";
             this.Text = "Stash History";
