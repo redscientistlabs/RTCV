@@ -58,7 +58,7 @@ namespace RTCV.UI.Components.Controls
 			}
 		}
 
-		private bool FirstLoadDone = false;
+		public bool FirstLoadDone = false;
 
 		private long _Minimum = 0;
 		[Description("Minimum value of the control"), Category("Data")]

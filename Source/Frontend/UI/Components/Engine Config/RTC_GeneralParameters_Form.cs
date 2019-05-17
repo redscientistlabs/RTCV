@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using RTCV.CorruptCore;
 using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
+using RTCV.NetCore;
 
 namespace RTCV.UI
 {
@@ -110,5 +111,19 @@ namespace RTCV.UI
 		{
 
 		}
-	}
+
+        private void RTC_GeneralParameters_Form_Shown(object sender, EventArgs e)
+        {
+            object paramValue = AllSpec.VanguardSpec[VSPEC.OVERRIDE_DEFAULTMAXINTENSITY];
+
+            if (paramValue != null && paramValue is int maxintensity)
+            {
+                var prevState = multiTB_Intensity.FirstLoadDone;
+                multiTB_Intensity.FirstLoadDone = false;
+                multiTB_Intensity.Maximum = maxintensity;
+                multiTB_Intensity.FirstLoadDone = prevState;
+            }
+                
+        }
+    }
 }

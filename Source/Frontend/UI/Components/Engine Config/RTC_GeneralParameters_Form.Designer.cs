@@ -126,6 +126,7 @@
             this.Text = "General Parameters";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
             this.Load += new System.EventHandler(this.RTC_GeneralParameters_Form_Load);
+            this.Shown += new System.EventHandler(this.RTC_GeneralParameters_Form_Shown);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             this.ResumeLayout(false);
             this.PerformLayout();

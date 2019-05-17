@@ -235,6 +235,7 @@
         public static readonly string SUPPORTS_KILLSWITCH = "SUPPORTS_KILLSWITCH";
         public static readonly string SUPPORTS_CONFIG_HANDOFF = "SUPPORTS_CONFIG_HANDOFF";
         public static readonly string RENAME_SAVESTATE = "RENAME_SAVESTATE";
+        public static readonly string OVERRIDE_DEFAULTMAXINTENSITY = "OVERRIDE_DEFAULTMAXINTENSITY";
         public static readonly string CONFIG_PATHS = "CONFIG_PATHS";
     }
     public enum UISPEC

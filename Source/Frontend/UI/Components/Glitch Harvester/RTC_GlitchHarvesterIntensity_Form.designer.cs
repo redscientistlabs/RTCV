@@ -29,11 +29,24 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_GlitchHarvesterIntensity_Form));
+            this.pnIntensityHolder = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
             this.multiTB_Intensity = new RTCV.UI.Components.Controls.MultiTrackBar();
-            this.pnIntensityHolder = new System.Windows.Forms.Panel();
             this.pnIntensityHolder.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // pnIntensityHolder
+            // 
+            this.pnIntensityHolder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnIntensityHolder.BackColor = System.Drawing.Color.Gray;
+            this.pnIntensityHolder.Controls.Add(this.multiTB_Intensity);
+            this.pnIntensityHolder.Location = new System.Drawing.Point(12, 13);
+            this.pnIntensityHolder.Name = "pnIntensityHolder";
+            this.pnIntensityHolder.Size = new System.Drawing.Size(231, 80);
+            this.pnIntensityHolder.TabIndex = 125;
+            this.pnIntensityHolder.Tag = "color:normal";
             // 
             // label6
             // 
@@ -65,19 +78,6 @@
             this.multiTB_Intensity.UncapNumericBox = false;
             this.multiTB_Intensity.Value = ((long)(1));
             // 
-            // pnIntensityHolder
-            // 
-            this.pnIntensityHolder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnIntensityHolder.BackColor = System.Drawing.Color.Gray;
-            this.pnIntensityHolder.Controls.Add(this.multiTB_Intensity);
-            this.pnIntensityHolder.Location = new System.Drawing.Point(12, 13);
-            this.pnIntensityHolder.Name = "pnIntensityHolder";
-            this.pnIntensityHolder.Size = new System.Drawing.Size(231, 80);
-            this.pnIntensityHolder.TabIndex = 125;
-            this.pnIntensityHolder.Tag = "color:normal";
-            // 
             // RTC_GlitchHarvesterIntensity_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -93,6 +93,7 @@
             this.Tag = "color:dark1";
             this.Text = "Generator Control";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
+            this.Shown += new System.EventHandler(this.RTC_GlitchHarvesterIntensity_Form_Shown);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             this.pnIntensityHolder.ResumeLayout(false);
             this.ResumeLayout(false);
