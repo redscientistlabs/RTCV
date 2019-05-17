@@ -409,8 +409,8 @@ namespace RTCV.UI
 				else
 					c.BackColor = _color;
 
-				if (c is Button)
-					(c as Button).FlatAppearance.BorderColor = _color;
+				if (c is Button btn)
+					btn.FlatAppearance.BorderColor = _color;
 
 				if (c is DataGridView dgv)
 					dgv.BackgroundColor = _color;
