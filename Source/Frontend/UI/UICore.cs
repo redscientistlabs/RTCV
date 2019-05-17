@@ -324,44 +324,6 @@ namespace RTCV.UI
 			Environment.Exit(-1);
 		}
 
-		public static void SetRTCHexadecimal(bool useHex, Form form = null)
-		{
-			//Sets the interface to use Hex across the board
-
-			List<Control> allControls = new List<Control>();
-
-			if (form == null)
-			{
-				foreach (Form targetForm in UICore.AllRtcForms)
-				{
-					if (targetForm != null)
-					{
-						allControls.AddRange(targetForm.Controls.getControlsWithTag());
-						allControls.Add(targetForm);
-					}
-				}
-			}
-			else
-			{
-				allControls.AddRange(form.Controls.getControlsWithTag());
-				allControls.Add(form);
-			}
-
-			var hexadecimal = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("hex"));
-
-			foreach (NumericUpDownHexFix updown in hexadecimal)
-				updown.Hexadecimal = true;
-
-			foreach (DataGridView dgv in hexadecimal)
-			foreach (DataGridViewColumn column in dgv.Columns)
-			{
-				if (column.CellType.Name == "DataGridViewNumericUpDownCell")
-				{
-					DataGridViewNumericUpDownColumn _column = column as DataGridViewNumericUpDownColumn;
-					_column.Hexadecimal = useHex;
-				}
-			}
-		}
 
         public static Color Light1Color;
         public static Color Light2Color;
@@ -400,12 +362,15 @@ namespace RTCV.UI
             //this needs refactoring. the string contains method is broken as color:dark2 is also color:dark1.
             //at least the priority of the foreach loops makes it so it works like expected.
 
-            var light2ColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:light2"));
-            var light1ColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:light1"));
-			var normalColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:normal"));
-			var dark1ColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:dark1"));
-			var dark2ColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:dark2"));
-			var dark3ColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:dark3"));
+			var tag2ColorDico = new Dictionary<string, Color>();
+			tag2ColorDico.Add("color:light2", Light2Color);
+			tag2ColorDico.Add("color:light1", Light1Color);
+			tag2ColorDico.Add("color:normal", NormalColor);
+			tag2ColorDico.Add("color:dark1", Dark1Color);
+			tag2ColorDico.Add("color:dark2", Dark2Color);
+			tag2ColorDico.Add("color:dark3", Dark3Color);
+			tag2ColorDico.Add("color:dark4", Dark4Color);
+
 
             float generalDarken = -0.50f;
             float light1 = 0.10f;
@@ -425,84 +390,30 @@ namespace RTCV.UI
             Dark3Color = color.ChangeColorBrightness(dark3);
             Dark4Color = color.ChangeColorBrightness(dark4);
 
-            foreach (Control c in light1ColorControls)
-            {
-                if (c is Label)
-                    c.ForeColor = Light1Color;
-                else
-                    c.BackColor = Light1Color;
+            foreach (var c in allControls)
+			{
+				var tag = c.Tag?.ToString().Split(' ');
 
-                if (c is Button)
-                    (c as Button).FlatAppearance.BorderColor = Light1Color;
-            }
+                if (tag == null || tag.Length == 0)
+                    continue;
 
-            foreach (Control c in light2ColorControls)
-            {
-                
-                if (c is Label)
-                    c.ForeColor = Light2Color;
-                else
-                    c.BackColor = Light2Color;
+				//Snag the tag and look for the color.
+				var ctag = tag.FirstOrDefault(x => x.Contains("color:"));
 
-                if (c is Button)
-                    (c as Button).FlatAppearance.BorderColor = Light2Color;
+                //We didn't find a valid color
+				if (ctag == null || !tag2ColorDico.TryGetValue(ctag, out Color _color))
+                    continue;
 
-            }
+				if (c is Label)
+					c.ForeColor = _color;
+				else
+					c.BackColor = _color;
 
+				if (c is Button)
+					(c as Button).FlatAppearance.BorderColor = _color;
 
-            foreach (Control c in normalColorControls)
-            {
-                if (c is Label)
-                    c.ForeColor = NormalColor;
-                else
-                    c.BackColor = NormalColor;
-
-                if (c is Button)
-                    (c as Button).FlatAppearance.BorderColor = NormalColor;
-            }
-
-            if(ctr == null)
-            {
-                S.GET<RTC_StockpilePlayer_Form>().dgvStockpile.BackgroundColor = NormalColor;
-                S.GET<RTC_StockpileManager_Form>().dgvStockpile.BackgroundColor = NormalColor;
-
-                S.GET<RTC_NewBlastEditor_Form>().dgvBlastEditor.BackgroundColor = NormalColor;
-                S.GET<RTC_BlastGenerator_Form>().dgvBlastGenerator.BackgroundColor = NormalColor;
-            }
-
-            foreach (Control c in dark1ColorControls)
-            {
-                if (c is Label)
-                    c.ForeColor = Dark1Color;
-                else
-                    c.BackColor = Dark1Color;
-
-                if(c is Button)
-                    (c as Button).FlatAppearance.BorderColor = Dark1Color;
-
-
-            }
-
-            foreach (Control c in dark2ColorControls)
-            {
-                if (c is Label)
-                    c.ForeColor = Dark2Color;
-                else
-                    c.BackColor = Dark2Color;
-
-                if (c is Button)
-                    (c as Button).FlatAppearance.BorderColor = Dark2Color;
-            }
-
-            foreach (Control c in dark3ColorControls)
-            {
-                if (c is Label)
-                    c.ForeColor = Dark3Color;
-                else
-                    c.BackColor = Dark3Color;
-
-                if (c is Button)
-                    (c as Button).FlatAppearance.BorderColor = Dark3Color;
+				if (c is DataGridView dgv)
+					dgv.BackgroundColor = _color;
             }
 		}
 

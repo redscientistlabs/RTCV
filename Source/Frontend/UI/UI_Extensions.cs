@@ -130,6 +130,26 @@ namespace RTCV.UI
         }
 
 
+		#region CONTROL EXTENSIONS
+
+		public static List<Control> getControlsWithTag(this Control.ControlCollection controls)
+		{
+			List<Control> allControls = new List<Control>();
+
+			foreach (Control c in controls)
+			{
+				if (c.Tag != null)
+					allControls.Add(c);
+
+				if (c.HasChildren)
+					allControls.AddRange(c.Controls.getControlsWithTag()); //Recursively check all children controls as well; ie groupboxes or tabpages
+			}
+
+			return allControls;
+		}
+
+		#endregion CONTROL EXTENSIONS
+
         public interface ISF<T>
 		{
 			//Interface for Singleton Form
@@ -339,9 +359,9 @@ namespace RTCV.UI
 				}
 			}
 
-			public int IntValue => int.Parse(Text);
+			public int IntValue => Int32.Parse(Text);
 
-			public decimal DecimalValue => decimal.Parse(Text);
+			public decimal DecimalValue => Decimal.Parse(Text);
 
 			public bool AllowSpace { get; set; }
 
@@ -391,7 +411,7 @@ namespace RTCV.UI
 					if (value.HasValue)
 						value = value.Value & ((1L << (MaxLength * 4)) - 1);
 					else value = 0;
-					Text = string.Format(_addressFormatStr, value.Value);
+					Text = String.Format(_addressFormatStr, value.Value);
 				}
 			}
 
@@ -407,7 +427,7 @@ namespace RTCV.UI
 
 			public override void ResetText()
 			{
-				Text = _nullable ? "" : string.Format(_addressFormatStr, 0);
+				Text = _nullable ? "" : String.Format(_addressFormatStr, 0);
 			}
 
 			protected override void OnKeyPress(KeyPressEventArgs e)
@@ -427,7 +447,7 @@ namespace RTCV.UI
 			{
 				if (e.KeyCode == Keys.Up)
 				{
-					if (Text.IsHex() && !string.IsNullOrEmpty(_addressFormatStr))
+					if (Text.IsHex() && !String.IsNullOrEmpty(_addressFormatStr))
 					{
 						var val = (uint)ToRawInt();
 
@@ -440,12 +460,12 @@ namespace RTCV.UI
 							val++;
 						}
 
-						Text = string.Format(_addressFormatStr, val);
+						Text = String.Format(_addressFormatStr, val);
 					}
 				}
 				else if (e.KeyCode == Keys.Down)
 				{
-					if (Text.IsHex() && !string.IsNullOrEmpty(_addressFormatStr))
+					if (Text.IsHex() && !String.IsNullOrEmpty(_addressFormatStr))
 					{
 						var val = (uint)ToRawInt();
 						if (val == 0)
@@ -457,7 +477,7 @@ namespace RTCV.UI
 							val--;
 						}
 
-						Text = string.Format(_addressFormatStr, val);
+						Text = String.Format(_addressFormatStr, val);
 					}
 				}
 				else
@@ -468,7 +488,7 @@ namespace RTCV.UI
 
 			protected override void OnTextChanged(EventArgs e)
 			{
-				if (string.IsNullOrWhiteSpace(Text))
+				if (String.IsNullOrWhiteSpace(Text))
 				{
 					ResetText();
 					SelectAll();
@@ -480,7 +500,7 @@ namespace RTCV.UI
 
 			public int? ToRawInt()
 			{
-				if (string.IsNullOrWhiteSpace(Text))
+				if (String.IsNullOrWhiteSpace(Text))
 				{
 					if (Nullable)
 					{
@@ -490,22 +510,22 @@ namespace RTCV.UI
 					return 0;
 				}
 
-				return int.Parse(Text, NumberStyles.HexNumber);
+				return Int32.Parse(Text, NumberStyles.HexNumber);
 			}
 
 			public void SetFromRawInt(int? val)
 			{
-				Text = val.HasValue ? string.Format(_addressFormatStr, val) : "";
+				Text = val.HasValue ? String.Format(_addressFormatStr, val) : "";
 			}
 
 			public void SetFromLong(long val)
 			{
-				Text = string.Format(_addressFormatStr, val);
+				Text = String.Format(_addressFormatStr, val);
 			}
 
 			public long? ToLong()
 			{
-				if (string.IsNullOrWhiteSpace(Text))
+				if (String.IsNullOrWhiteSpace(Text))
 				{
 					if (Nullable)
 					{
@@ -515,7 +535,7 @@ namespace RTCV.UI
 					return 0;
 				}
 
-				return long.Parse(Text, NumberStyles.HexNumber);
+				return Int64.Parse(Text, NumberStyles.HexNumber);
 			}
 		}
 
@@ -555,7 +575,7 @@ namespace RTCV.UI
 					if (Text.IsHex())
 					{
 						var val = (uint)ToRawInt();
-						if (val == uint.MaxValue)
+						if (val == UInt32.MaxValue)
 						{
 							val = 0;
 						}
@@ -575,7 +595,7 @@ namespace RTCV.UI
 
 						if (val == 0)
 						{
-							val = uint.MaxValue;
+							val = UInt32.MaxValue;
 						}
 						else
 						{
@@ -593,7 +613,7 @@ namespace RTCV.UI
 
 			protected override void OnTextChanged(EventArgs e)
 			{
-				if (string.IsNullOrWhiteSpace(Text) || !Text.IsHex())
+				if (String.IsNullOrWhiteSpace(Text) || !Text.IsHex())
 				{
 					ResetText();
 					SelectAll();
@@ -605,7 +625,7 @@ namespace RTCV.UI
 
 			public int? ToRawInt()
 			{
-				if (string.IsNullOrWhiteSpace(Text) || !Text.IsHex())
+				if (String.IsNullOrWhiteSpace(Text) || !Text.IsHex())
 				{
 					if (Nullable)
 					{
@@ -615,7 +635,7 @@ namespace RTCV.UI
 					return 0;
 				}
 
-				return (int)uint.Parse(Text);
+				return (int)UInt32.Parse(Text);
 			}
 
 			public void SetFromRawInt(int? val)
@@ -2695,6 +2715,12 @@ public static class NumberExtensions
 }
 public static class StringExtensions
 {
+	/// <summary>
+    /// Gets the string before a specific string
+    /// </summary>
+    /// <param name="str"></param>
+    /// <param name="value"></param>
+    /// <returns></returns>
 	public static string GetPrecedingString(this string str, string value)
 	{
 		var index = str.IndexOf(value);
