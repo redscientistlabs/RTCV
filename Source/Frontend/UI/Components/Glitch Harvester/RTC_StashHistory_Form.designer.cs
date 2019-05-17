@@ -153,7 +153,7 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(284, 200);
+            this.MinimumSize = new System.Drawing.Size(203, 200);
             this.Name = "RTC_StashHistory_Form";
             this.Tag = "color:dark1";
             this.Text = "Stash History";
