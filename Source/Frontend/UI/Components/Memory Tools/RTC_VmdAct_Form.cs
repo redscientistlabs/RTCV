@@ -178,7 +178,7 @@ namespace RTCV.UI
 
 		public bool ComputeActiveTableActivity()
 		{
-			if (ActiveTableDumps.Count < 2)
+			if (ActiveTableDumps == null || ActiveTableDumps.Count < 2)
 			{
 				MessageBox.Show("Not enough dumps for generation");
 				return false;
