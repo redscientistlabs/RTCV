@@ -1145,11 +1145,37 @@ namespace RTCV.CorruptCore
 			}
 		}
 
+
+        private BlastUnitSource source;
 		[Category("Source")]
 		[Description("The source for the value for this unit for STORE mode")]
 		[DisplayName("Source")]
 		[JsonConverter(typeof(StringEnumConverter))]
-		public BlastUnitSource Source { get; set; }
+		public BlastUnitSource Source {
+            get
+            {
+                return source;
+            }
+            set
+            {
+                //Cleanup from other types of units
+                switch (value)
+                {
+                    case BlastUnitSource.STORE:
+                    {
+                        Value = null;
+                        break;
+                    }
+
+                    case BlastUnitSource.VALUE:
+                    {
+                        Value = new byte[Precision];
+                        break;
+                    }
+                }
+                source = value;
+            }
+        }
 
 		[Category("Store")]
 		[Description("The time when the store will take place")]
