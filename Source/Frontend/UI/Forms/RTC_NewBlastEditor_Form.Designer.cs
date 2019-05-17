@@ -603,10 +603,13 @@ namespace RTCV.UI
             // 
             // upDownLifetime
             // 
+            this.upDownLifetime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.upDownLifetime.ForeColor = System.Drawing.Color.White;
             this.upDownLifetime.Location = new System.Drawing.Point(3, 61);
             this.upDownLifetime.Name = "upDownLifetime";
             this.upDownLifetime.Size = new System.Drawing.Size(109, 22);
             this.upDownLifetime.TabIndex = 25;
+            this.upDownLifetime.Tag = "color:dark1";
             // 
             // label1
             // 
@@ -619,10 +622,13 @@ namespace RTCV.UI
             // 
             // upDownExecuteFrame
             // 
+            this.upDownExecuteFrame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.upDownExecuteFrame.ForeColor = System.Drawing.Color.White;
             this.upDownExecuteFrame.Location = new System.Drawing.Point(3, 19);
             this.upDownExecuteFrame.Name = "upDownExecuteFrame";
             this.upDownExecuteFrame.Size = new System.Drawing.Size(109, 22);
             this.upDownExecuteFrame.TabIndex = 12;
+            this.upDownExecuteFrame.Tag = "color:dark1";
             // 
             // cbLoop
             // 
@@ -699,11 +705,14 @@ namespace RTCV.UI
             // 
             // cbStoreLimiterSource
             // 
+            this.cbStoreLimiterSource.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.cbStoreLimiterSource.ForeColor = System.Drawing.Color.White;
             this.cbStoreLimiterSource.FormattingEnabled = true;
             this.cbStoreLimiterSource.Location = new System.Drawing.Point(107, 57);
             this.cbStoreLimiterSource.Name = "cbStoreLimiterSource";
             this.cbStoreLimiterSource.Size = new System.Drawing.Size(92, 21);
             this.cbStoreLimiterSource.TabIndex = 13;
+            this.cbStoreLimiterSource.Tag = "color:dark1";
             // 
             // label17
             // 
@@ -726,11 +735,14 @@ namespace RTCV.UI
             // 
             // cbLimiterTime
             // 
+            this.cbLimiterTime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.cbLimiterTime.ForeColor = System.Drawing.Color.White;
             this.cbLimiterTime.FormattingEnabled = true;
             this.cbLimiterTime.Location = new System.Drawing.Point(107, 19);
             this.cbLimiterTime.Name = "cbLimiterTime";
             this.cbLimiterTime.Size = new System.Drawing.Size(92, 21);
             this.cbLimiterTime.TabIndex = 10;
+            this.cbLimiterTime.Tag = "color:dark1";
             // 
             // label18
             // 
@@ -743,6 +755,8 @@ namespace RTCV.UI
             // 
             // cbLimiterList
             // 
+            this.cbLimiterList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.cbLimiterList.ForeColor = System.Drawing.Color.White;
             this.cbLimiterList.FormattingEnabled = true;
             this.cbLimiterList.IntegralHeight = false;
             this.cbLimiterList.Location = new System.Drawing.Point(3, 19);
@@ -750,6 +764,7 @@ namespace RTCV.UI
             this.cbLimiterList.Name = "cbLimiterList";
             this.cbLimiterList.Size = new System.Drawing.Size(92, 21);
             this.cbLimiterList.TabIndex = 8;
+            this.cbLimiterList.Tag = "color:dark1";
             // 
             // label19
             // 
@@ -765,10 +780,13 @@ namespace RTCV.UI
             this.tbTiltValue.AllowDecimal = false;
             this.tbTiltValue.AllowNegative = true;
             this.tbTiltValue.AllowSpace = false;
+            this.tbTiltValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.tbTiltValue.ForeColor = System.Drawing.Color.White;
             this.tbTiltValue.Location = new System.Drawing.Point(4, 148);
             this.tbTiltValue.Name = "tbTiltValue";
             this.tbTiltValue.Size = new System.Drawing.Size(108, 22);
             this.tbTiltValue.TabIndex = 24;
+            this.tbTiltValue.Tag = "color:dark1";
             // 
             // label15
             // 
@@ -790,11 +808,14 @@ namespace RTCV.UI
             // 
             // cbSource
             // 
+            this.cbSource.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.cbSource.ForeColor = System.Drawing.Color.White;
             this.cbSource.FormattingEnabled = true;
             this.cbSource.Location = new System.Drawing.Point(128, 19);
             this.cbSource.Name = "cbSource";
             this.cbSource.Size = new System.Drawing.Size(109, 21);
             this.cbSource.TabIndex = 15;
+            this.cbSource.Tag = "color:dark1";
             // 
             // panel6
             // 
@@ -817,14 +838,17 @@ namespace RTCV.UI
             // 
             // tbValue
             // 
+            this.tbValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbValue.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.tbValue.Font = new System.Drawing.Font("Consolas", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.tbValue.ForeColor = System.Drawing.Color.White;
             this.tbValue.Location = new System.Drawing.Point(3, 17);
             this.tbValue.MaxLength = 16348;
             this.tbValue.Name = "tbValue";
             this.tbValue.Nullable = true;
             this.tbValue.Size = new System.Drawing.Size(100, 20);
             this.tbValue.TabIndex = 0;
+            this.tbValue.Tag = "color:dark1";
             this.tbValue.Text = "FFFFFFFF";
             // 
             // panel7
@@ -845,20 +869,26 @@ namespace RTCV.UI
             // 
             // cbSourceDomain
             // 
+            this.cbSourceDomain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.cbSourceDomain.ForeColor = System.Drawing.Color.White;
             this.cbSourceDomain.FormattingEnabled = true;
             this.cbSourceDomain.Location = new System.Drawing.Point(95, 18);
             this.cbSourceDomain.Name = "cbSourceDomain";
             this.cbSourceDomain.Size = new System.Drawing.Size(109, 21);
             this.cbSourceDomain.TabIndex = 11;
+            this.cbSourceDomain.Tag = "color:dark1";
             // 
             // upDownSourceAddress
             // 
+            this.upDownSourceAddress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.upDownSourceAddress.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.upDownSourceAddress.ForeColor = System.Drawing.Color.White;
             this.upDownSourceAddress.Hexadecimal = true;
             this.upDownSourceAddress.Location = new System.Drawing.Point(95, 58);
             this.upDownSourceAddress.Name = "upDownSourceAddress";
             this.upDownSourceAddress.Size = new System.Drawing.Size(109, 22);
             this.upDownSourceAddress.TabIndex = 13;
+            this.upDownSourceAddress.Tag = "color:dark1";
             // 
             // label13
             // 
@@ -880,11 +910,14 @@ namespace RTCV.UI
             // 
             // cbStoreTime
             // 
+            this.cbStoreTime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.cbStoreTime.ForeColor = System.Drawing.Color.White;
             this.cbStoreTime.FormattingEnabled = true;
             this.cbStoreTime.Location = new System.Drawing.Point(3, 58);
             this.cbStoreTime.Name = "cbStoreTime";
             this.cbStoreTime.Size = new System.Drawing.Size(83, 21);
             this.cbStoreTime.TabIndex = 10;
+            this.cbStoreTime.Tag = "color:dark1";
             // 
             // label6
             // 
@@ -897,11 +930,14 @@ namespace RTCV.UI
             // 
             // cbStoreType
             // 
+            this.cbStoreType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.cbStoreType.ForeColor = System.Drawing.Color.White;
             this.cbStoreType.FormattingEnabled = true;
             this.cbStoreType.Location = new System.Drawing.Point(3, 18);
             this.cbStoreType.Name = "cbStoreType";
             this.cbStoreType.Size = new System.Drawing.Size(83, 21);
             this.cbStoreType.TabIndex = 8;
+            this.cbStoreType.Tag = "color:dark1";
             // 
             // label7
             // 
@@ -923,6 +959,8 @@ namespace RTCV.UI
             // 
             // upDownPrecision
             // 
+            this.upDownPrecision.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.upDownPrecision.ForeColor = System.Drawing.Color.White;
             this.upDownPrecision.Location = new System.Drawing.Point(3, 102);
             this.upDownPrecision.Minimum = new decimal(new int[] {
             1,
@@ -932,6 +970,7 @@ namespace RTCV.UI
             this.upDownPrecision.Name = "upDownPrecision";
             this.upDownPrecision.Size = new System.Drawing.Size(109, 22);
             this.upDownPrecision.TabIndex = 11;
+            this.upDownPrecision.Tag = "color:dark1";
             this.upDownPrecision.Value = new decimal(new int[] {
             1,
             0,
@@ -949,12 +988,15 @@ namespace RTCV.UI
             // 
             // upDownAddress
             // 
+            this.upDownAddress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.upDownAddress.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.upDownAddress.ForeColor = System.Drawing.Color.White;
             this.upDownAddress.Hexadecimal = true;
             this.upDownAddress.Location = new System.Drawing.Point(4, 58);
             this.upDownAddress.Name = "upDownAddress";
             this.upDownAddress.Size = new System.Drawing.Size(109, 22);
             this.upDownAddress.TabIndex = 9;
+            this.upDownAddress.Tag = "color:dark1";
             // 
             // label8
             // 
@@ -967,11 +1009,14 @@ namespace RTCV.UI
             // 
             // cbDomain
             // 
+            this.cbDomain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.cbDomain.ForeColor = System.Drawing.Color.White;
             this.cbDomain.FormattingEnabled = true;
             this.cbDomain.Location = new System.Drawing.Point(4, 18);
             this.cbDomain.Name = "cbDomain";
             this.cbDomain.Size = new System.Drawing.Size(109, 21);
             this.cbDomain.TabIndex = 0;
+            this.cbDomain.Tag = "color:dark1";
             // 
             // label2
             // 
