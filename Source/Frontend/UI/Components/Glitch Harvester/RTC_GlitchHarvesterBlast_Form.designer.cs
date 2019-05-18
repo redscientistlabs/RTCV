@@ -29,14 +29,68 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_GlitchHarvesterBlast_Form));
-            this.btnCorrupt = new System.Windows.Forms.Button();
-            this.btnSendRaw = new System.Windows.Forms.Button();
-            this.btnRerollSelected = new System.Windows.Forms.Button();
-            this.btnBlastToggle = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.btnGlitchHarvesterSettings = new System.Windows.Forms.Button();
             this.btnRenderOutput = new System.Windows.Forms.Button();
+            this.btnGlitchHarvesterSettings = new System.Windows.Forms.Button();
+            this.btnRerollSelected = new System.Windows.Forms.Button();
+            this.btnCorrupt = new System.Windows.Forms.Button();
+            this.btnBlastToggle = new System.Windows.Forms.Button();
+            this.btnSendRaw = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
+            // 
+            // btnRenderOutput
+            // 
+            this.btnRenderOutput.BackColor = System.Drawing.Color.Gray;
+            this.btnRenderOutput.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnRenderOutput.FlatAppearance.BorderSize = 0;
+            this.btnRenderOutput.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRenderOutput.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnRenderOutput.ForeColor = System.Drawing.Color.OrangeRed;
+            this.btnRenderOutput.Image = ((System.Drawing.Image)(resources.GetObject("btnRenderOutput.Image")));
+            this.btnRenderOutput.Location = new System.Drawing.Point(131, 48);
+            this.btnRenderOutput.Name = "btnRenderOutput";
+            this.btnRenderOutput.Size = new System.Drawing.Size(32, 32);
+            this.btnRenderOutput.TabIndex = 141;
+            this.btnRenderOutput.TabStop = false;
+            this.btnRenderOutput.Tag = "color:light1";
+            this.btnRenderOutput.UseVisualStyleBackColor = false;
+            this.btnRenderOutput.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnRenderOutput_MouseDown);
+            // 
+            // btnGlitchHarvesterSettings
+            // 
+            this.btnGlitchHarvesterSettings.BackColor = System.Drawing.Color.Gray;
+            this.btnGlitchHarvesterSettings.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnGlitchHarvesterSettings.FlatAppearance.BorderSize = 0;
+            this.btnGlitchHarvesterSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGlitchHarvesterSettings.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnGlitchHarvesterSettings.ForeColor = System.Drawing.Color.OrangeRed;
+            this.btnGlitchHarvesterSettings.Image = ((System.Drawing.Image)(resources.GetObject("btnGlitchHarvesterSettings.Image")));
+            this.btnGlitchHarvesterSettings.Location = new System.Drawing.Point(131, 13);
+            this.btnGlitchHarvesterSettings.Name = "btnGlitchHarvesterSettings";
+            this.btnGlitchHarvesterSettings.Size = new System.Drawing.Size(32, 32);
+            this.btnGlitchHarvesterSettings.TabIndex = 140;
+            this.btnGlitchHarvesterSettings.TabStop = false;
+            this.btnGlitchHarvesterSettings.Tag = "color:light1";
+            this.btnGlitchHarvesterSettings.UseVisualStyleBackColor = false;
+            this.btnGlitchHarvesterSettings.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnGlitchHarvesterSettings_MouseDown);
+            // 
+            // btnRerollSelected
+            // 
+            this.btnRerollSelected.BackColor = System.Drawing.Color.Gray;
+            this.btnRerollSelected.FlatAppearance.BorderSize = 0;
+            this.btnRerollSelected.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRerollSelected.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnRerollSelected.ForeColor = System.Drawing.Color.White;
+            this.btnRerollSelected.Location = new System.Drawing.Point(11, 83);
+            this.btnRerollSelected.Name = "btnRerollSelected";
+            this.btnRerollSelected.Size = new System.Drawing.Size(152, 26);
+            this.btnRerollSelected.TabIndex = 133;
+            this.btnRerollSelected.TabStop = false;
+            this.btnRerollSelected.Tag = "color:light1";
+            this.btnRerollSelected.Text = "Reroll Selected";
+            this.btnRerollSelected.UseVisualStyleBackColor = false;
+            this.btnRerollSelected.Click += new System.EventHandler(this.btnRerollSelected_Click);
+            this.btnRerollSelected.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnRerollSelected_MouseDown);
             // 
             // btnCorrupt
             // 
@@ -62,6 +116,23 @@
             this.btnCorrupt.Click += new System.EventHandler(this.btnCorrupt_Click);
             this.btnCorrupt.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnCorrupt_MouseDown);
             // 
+            // btnBlastToggle
+            // 
+            this.btnBlastToggle.BackColor = System.Drawing.Color.Gray;
+            this.btnBlastToggle.FlatAppearance.BorderSize = 0;
+            this.btnBlastToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBlastToggle.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnBlastToggle.ForeColor = System.Drawing.Color.White;
+            this.btnBlastToggle.Location = new System.Drawing.Point(11, 112);
+            this.btnBlastToggle.Name = "btnBlastToggle";
+            this.btnBlastToggle.Size = new System.Drawing.Size(152, 26);
+            this.btnBlastToggle.TabIndex = 131;
+            this.btnBlastToggle.TabStop = false;
+            this.btnBlastToggle.Tag = "color:dark2";
+            this.btnBlastToggle.Text = "BlastLayer : OFF";
+            this.btnBlastToggle.UseVisualStyleBackColor = false;
+            this.btnBlastToggle.Click += new System.EventHandler(this.btnBlastToggle_Click);
+            // 
             // btnSendRaw
             // 
             this.btnSendRaw.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
@@ -85,41 +156,6 @@
             this.btnSendRaw.UseVisualStyleBackColor = false;
             this.btnSendRaw.Click += new System.EventHandler(this.btnSendRaw_Click);
             // 
-            // btnRerollSelected
-            // 
-            this.btnRerollSelected.BackColor = System.Drawing.Color.Gray;
-            this.btnRerollSelected.FlatAppearance.BorderSize = 0;
-            this.btnRerollSelected.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRerollSelected.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnRerollSelected.ForeColor = System.Drawing.Color.White;
-            this.btnRerollSelected.Location = new System.Drawing.Point(11, 83);
-            this.btnRerollSelected.Name = "btnRerollSelected";
-            this.btnRerollSelected.Size = new System.Drawing.Size(152, 26);
-            this.btnRerollSelected.TabIndex = 133;
-            this.btnRerollSelected.TabStop = false;
-            this.btnRerollSelected.Tag = "color:light1";
-            this.btnRerollSelected.Text = "Reroll Selected";
-            this.btnRerollSelected.UseVisualStyleBackColor = false;
-            this.btnRerollSelected.Click += new System.EventHandler(this.btnRerollSelected_Click);
-            this.btnRerollSelected.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnRerollSelected_MouseDown);
-            // 
-            // btnBlastToggle
-            // 
-            this.btnBlastToggle.BackColor = System.Drawing.Color.Gray;
-            this.btnBlastToggle.FlatAppearance.BorderSize = 0;
-            this.btnBlastToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBlastToggle.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnBlastToggle.ForeColor = System.Drawing.Color.White;
-            this.btnBlastToggle.Location = new System.Drawing.Point(11, 112);
-            this.btnBlastToggle.Name = "btnBlastToggle";
-            this.btnBlastToggle.Size = new System.Drawing.Size(152, 26);
-            this.btnBlastToggle.TabIndex = 131;
-            this.btnBlastToggle.TabStop = false;
-            this.btnBlastToggle.Tag = "color:light1";
-            this.btnBlastToggle.Text = "BlastLayer : OFF";
-            this.btnBlastToggle.UseVisualStyleBackColor = false;
-            this.btnBlastToggle.Click += new System.EventHandler(this.btnBlastToggle_Click);
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -129,42 +165,6 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(0, 14);
             this.label5.TabIndex = 138;
-            // 
-            // btnGlitchHarvesterSettings
-            // 
-            this.btnGlitchHarvesterSettings.BackColor = System.Drawing.Color.Gray;
-            this.btnGlitchHarvesterSettings.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btnGlitchHarvesterSettings.FlatAppearance.BorderSize = 0;
-            this.btnGlitchHarvesterSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGlitchHarvesterSettings.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnGlitchHarvesterSettings.ForeColor = System.Drawing.Color.OrangeRed;
-            this.btnGlitchHarvesterSettings.Image = ((System.Drawing.Image)(resources.GetObject("btnGlitchHarvesterSettings.Image")));
-            this.btnGlitchHarvesterSettings.Location = new System.Drawing.Point(131, 13);
-            this.btnGlitchHarvesterSettings.Name = "btnGlitchHarvesterSettings";
-            this.btnGlitchHarvesterSettings.Size = new System.Drawing.Size(32, 32);
-            this.btnGlitchHarvesterSettings.TabIndex = 140;
-            this.btnGlitchHarvesterSettings.TabStop = false;
-            this.btnGlitchHarvesterSettings.Tag = "color:light1";
-            this.btnGlitchHarvesterSettings.UseVisualStyleBackColor = false;
-            this.btnGlitchHarvesterSettings.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnGlitchHarvesterSettings_MouseDown);
-            // 
-            // btnRenderOutput
-            // 
-            this.btnRenderOutput.BackColor = System.Drawing.Color.Gray;
-            this.btnRenderOutput.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btnRenderOutput.FlatAppearance.BorderSize = 0;
-            this.btnRenderOutput.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRenderOutput.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnRenderOutput.ForeColor = System.Drawing.Color.OrangeRed;
-            this.btnRenderOutput.Image = ((System.Drawing.Image)(resources.GetObject("btnRenderOutput.Image")));
-            this.btnRenderOutput.Location = new System.Drawing.Point(131, 48);
-            this.btnRenderOutput.Name = "btnRenderOutput";
-            this.btnRenderOutput.Size = new System.Drawing.Size(32, 32);
-            this.btnRenderOutput.TabIndex = 141;
-            this.btnRenderOutput.TabStop = false;
-            this.btnRenderOutput.Tag = "color:light1";
-            this.btnRenderOutput.UseVisualStyleBackColor = false;
-            this.btnRenderOutput.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnRenderOutput_MouseDown);
             // 
             // RTC_GlitchHarvesterBlast_Form
             // 
