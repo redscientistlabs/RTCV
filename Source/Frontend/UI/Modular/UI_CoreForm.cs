@@ -339,6 +339,8 @@ This message only appears once.";
                         ForceCloudDebug();
                     }));
                 }
+
+                columnsMenu.Show(locate);
             }
             else if (e.Button == MouseButtons.Left)
             {
