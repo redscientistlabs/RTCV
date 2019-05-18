@@ -58,7 +58,7 @@ namespace RTCV.CorruptCore
 				return false;
 			}
 
-			if ((bool?)AllSpec.VanguardSpec[VSPEC.CORE_DISKBASED] ?? false)
+			if ((AllSpec.VanguardSpec[VSPEC.CORE_DISKBASED] as bool? ?? false) && ((AllSpec.VanguardSpec[VSPEC.GAMENAME] as string ?? "DEFAULT") != ""))
 			{
 				var dr = MessageBox.Show("The currently loaded game is disk based and needs to be closed before saving. Press OK to close the game and continue saving.", "Saving requires closing game", MessageBoxButtons.OKCancel);
 				if (dr == DialogResult.OK)
