@@ -435,9 +435,12 @@ namespace RTCV.CorruptCore
 			foreach (StashKey t in sks.StashKeys)
 			{
                 //If we have the file, update the path
-                var newFilename = Path.Combine(CorruptCore.workingDir, "SKS", t.RomShortFilename);
-                if (File.Exists(newFilename))
-                    t.RomFilename = newFilename;
+                if (!String.IsNullOrEmpty(t.RomShortFilename))
+                {
+                    var newFilename = Path.Combine(CorruptCore.workingDir, "SKS", t.RomShortFilename);
+                    if (File.Exists(newFilename))
+                        t.RomFilename = newFilename;
+                }
 
 				t.StateLocation = StashKeySavestateLocation.SKS;
 			}
