@@ -311,9 +311,39 @@ This message only appears once.";
             UI_DefaultGrids.stockpilePlayer.LoadToMain();
         }
 
-        public void btnSettings_Click(object sender, EventArgs e)
+
+
+        int settingsRightClickTimer = 0;
+        System.Windows.Forms.Timer testErrorTimer = null;
+        public void btnSettings_MouseClick(object sender, MouseEventArgs e)
         {
-            UI_DefaultGrids.settings.LoadToMain();
+            if (e.Button == MouseButtons.Right)
+            {
+                if (testErrorTimer == null && !RTCV.NetCore.Params.IsParamSet("DEBUG_FETCHMODE"))
+                {
+                    testErrorTimer = new System.Windows.Forms.Timer();
+                    testErrorTimer.Interval = 3000;
+                    testErrorTimer.Tick += TestErrorTimer_Tick;
+                    testErrorTimer.Start();
+                }
+
+                settingsRightClickTimer++;
+
+                Point locate = e.GetMouseLocation(sender);
+                ContextMenuStrip columnsMenu = new ContextMenuStrip();
+
+                if (RTCV.NetCore.Params.IsParamSet("DEBUG_FETCHMODE") || settingsRightClickTimer > 2)
+                {
+                    columnsMenu.Items.Add("Open Debug window", null, new EventHandler((ob, ev) =>
+                    {
+                        ForceCloudDebug();
+                    }));
+                }
+            }
+            else if (e.Button == MouseButtons.Left)
+            {
+                UI_DefaultGrids.settings.LoadToMain();
+            }
         }
 
         private void pnAutoKillSwitch_MouseClick(object sender, MouseEventArgs e)
@@ -500,38 +530,18 @@ This message only appears once.";
             S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw_Click(null, null);
         }
 
-
-        int manualBlastRightClickCount = 0;
-        System.Windows.Forms.Timer testErrorTimer = null;
         private void BtnManualBlast_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
-                if (testErrorTimer == null && !RTCV.NetCore.Params.IsParamSet("DEBUG_FETCHMODE"))
-                {
-                    testErrorTimer = new System.Windows.Forms.Timer();
-                    testErrorTimer.Interval = 3000;
-                    testErrorTimer.Tick += TestErrorTimer_Tick;
-                    testErrorTimer.Start();
-                }
-
-                manualBlastRightClickCount++;
+                ContextMenuStrip columnsMenu = new ContextMenuStrip();
 
                 Point locate = e.GetMouseLocation(sender);
-
-                ContextMenuStrip columnsMenu = new ContextMenuStrip();
                 columnsMenu.Items.Add("Blast + Send RAW To Stash (Glitch Harvester)", null, new EventHandler((ob, ev) =>
                 {
                     BlastRawStash();
                 }));
 
-                if (RTCV.NetCore.Params.IsParamSet("DEBUG_FETCHMODE") || manualBlastRightClickCount > 2)
-                {
-                    columnsMenu.Items.Add("Open Debug window", null, new EventHandler((ob, ev) =>
-                    {
-                        ForceCloudDebug();
-                    }));
-                }
 
                 columnsMenu.Show(this, locate);
             }
