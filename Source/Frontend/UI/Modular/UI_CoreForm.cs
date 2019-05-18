@@ -571,7 +571,7 @@ Environment.NewLine + "───█───▌────────▐▀─
         {
             testErrorTimer?.Stop();
             testErrorTimer = null;
-            manualBlastRightClickCount = 0;
+            settingsRightClickTimer = 0;
         }
 
         private void Button1_Click_1(object sender, EventArgs e)
