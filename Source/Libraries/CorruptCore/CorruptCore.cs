@@ -19,7 +19,7 @@ namespace RTCV.CorruptCore
 	public static class CorruptCore
 	{
 		//General RTC Values
-		public static string RtcVersion = "0.0.6";
+		public static string RtcVersion = "0.0.8";
 
 		public static Random RND = new Random();
 		public static bool Attached = false;

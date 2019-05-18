@@ -315,7 +315,7 @@ This message only appears once.";
 
         int settingsRightClickTimer = 0;
         System.Windows.Forms.Timer testErrorTimer = null;
-        public void btnSettings_MouseClick(object sender, MouseEventArgs e)
+        public void btnSettings_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -340,7 +340,7 @@ This message only appears once.";
                     }));
                 }
 
-                columnsMenu.Show(locate);
+                columnsMenu.Show(this, locate);
             }
             else if (e.Button == MouseButtons.Left)
             {
