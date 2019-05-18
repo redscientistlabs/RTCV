@@ -25,7 +25,7 @@ namespace RTCV.UI.Components.Controls
             set
             {
                 _selectedHolder = value;
-                CorruptCore.StockpileManager_UISide.CurrentSavestateStashKey = value.sk;
+                CorruptCore.StockpileManager_UISide.CurrentSavestateStashKey = value?.sk;
             }
         }
 
@@ -110,6 +110,10 @@ namespace RTCV.UI.Components.Controls
 
         private void InitializeSavestateHolder()
         {
+			//Nuke any old holder if it exists
+			selectedHolder?.SetSelected(false);
+            selectedHolder = null;
+
             int ssHeight = 22;
             int padding = 3;
             //Calculate how many we can fit within the space we have.
@@ -259,8 +263,6 @@ namespace RTCV.UI.Components.Controls
             {
                 if (selectedHolder == null)
                 {
-                    
-
                     MessageBox.Show($"No {saveStateWord} Box is currently selected in the Glitch Harvester's {saveStateWord} Manager");
                     return;
                 }
@@ -284,7 +286,8 @@ namespace RTCV.UI.Components.Controls
                     {
                         _DataSource.RemoveAt(indexToReplace);
                         _DataSource.Insert(indexToReplace, new SaveStateKey(sk, ""));
-                    }
+						_DataSource.Position = _DataSource.Position - 1;
+					}
 
                 }
                 //Otherwise add to the last box
