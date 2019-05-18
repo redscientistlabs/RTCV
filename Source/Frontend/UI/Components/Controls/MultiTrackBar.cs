@@ -72,7 +72,7 @@ namespace RTCV.UI.Components.Controls
 			{
 				_Minimum = value;
 				nmControlValue.Minimum = value;
-				tbControlValue.Minimum = nmValueToTbValueQuadScale(value);
+				tbControlValue.Minimum = Convert.ToInt32(value);
 				if (FirstLoadDone)
 					tbControlValue_ValueChanged(null, null);
 			}
@@ -219,9 +219,9 @@ namespace RTCV.UI.Components.Controls
                 {
                     if (tbValue > 65536)
                         tbControlValue.Value = Convert.ToInt32(65536);
-					else if (tbValue < Minimum)
+					else if (tbValue < tbControlValue.Minimum)
 					{
-						tbControlValue.Value = Convert.ToInt32(Minimum);
+						tbControlValue.Value = Convert.ToInt32(Min);
 					}
                     else
                         tbControlValue.Value = Convert.ToInt32(tbValue);
