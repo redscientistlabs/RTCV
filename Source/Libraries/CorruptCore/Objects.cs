@@ -1169,7 +1169,8 @@ namespace RTCV.CorruptCore
 
                     case BlastUnitSource.VALUE:
                     {
-                        Value = new byte[Precision];
+                        if(Value != null)
+                            Value = new byte[Precision];
                         break;
                     }
                 }
