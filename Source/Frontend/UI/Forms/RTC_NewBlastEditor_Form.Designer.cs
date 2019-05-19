@@ -245,6 +245,7 @@ namespace RTCV.UI
             // cbShiftBlastlayer
             // 
             this.cbShiftBlastlayer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.cbShiftBlastlayer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbShiftBlastlayer.ForeColor = System.Drawing.Color.White;
             this.cbShiftBlastlayer.FormattingEnabled = true;
             this.cbShiftBlastlayer.Location = new System.Drawing.Point(11, 7);
@@ -290,6 +291,7 @@ namespace RTCV.UI
             // updownShiftBlastLayerAmount
             // 
             this.updownShiftBlastLayerAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.updownShiftBlastLayerAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.updownShiftBlastLayerAmount.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.updownShiftBlastLayerAmount.ForeColor = System.Drawing.Color.White;
             this.updownShiftBlastLayerAmount.Hexadecimal = true;
@@ -604,6 +606,7 @@ namespace RTCV.UI
             // upDownLifetime
             // 
             this.upDownLifetime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.upDownLifetime.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.upDownLifetime.ForeColor = System.Drawing.Color.White;
             this.upDownLifetime.Location = new System.Drawing.Point(3, 61);
             this.upDownLifetime.Name = "upDownLifetime";
@@ -623,6 +626,7 @@ namespace RTCV.UI
             // upDownExecuteFrame
             // 
             this.upDownExecuteFrame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.upDownExecuteFrame.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.upDownExecuteFrame.ForeColor = System.Drawing.Color.White;
             this.upDownExecuteFrame.Location = new System.Drawing.Point(3, 19);
             this.upDownExecuteFrame.Name = "upDownExecuteFrame";
@@ -706,6 +710,7 @@ namespace RTCV.UI
             // cbStoreLimiterSource
             // 
             this.cbStoreLimiterSource.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.cbStoreLimiterSource.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbStoreLimiterSource.ForeColor = System.Drawing.Color.White;
             this.cbStoreLimiterSource.FormattingEnabled = true;
             this.cbStoreLimiterSource.Location = new System.Drawing.Point(107, 57);
@@ -736,6 +741,7 @@ namespace RTCV.UI
             // cbLimiterTime
             // 
             this.cbLimiterTime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.cbLimiterTime.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbLimiterTime.ForeColor = System.Drawing.Color.White;
             this.cbLimiterTime.FormattingEnabled = true;
             this.cbLimiterTime.Location = new System.Drawing.Point(107, 19);
@@ -756,6 +762,7 @@ namespace RTCV.UI
             // cbLimiterList
             // 
             this.cbLimiterList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.cbLimiterList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbLimiterList.ForeColor = System.Drawing.Color.White;
             this.cbLimiterList.FormattingEnabled = true;
             this.cbLimiterList.IntegralHeight = false;
@@ -781,6 +788,7 @@ namespace RTCV.UI
             this.tbTiltValue.AllowNegative = true;
             this.tbTiltValue.AllowSpace = false;
             this.tbTiltValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.tbTiltValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbTiltValue.ForeColor = System.Drawing.Color.White;
             this.tbTiltValue.Location = new System.Drawing.Point(4, 148);
             this.tbTiltValue.Name = "tbTiltValue";
@@ -809,6 +817,7 @@ namespace RTCV.UI
             // cbSource
             // 
             this.cbSource.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.cbSource.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbSource.ForeColor = System.Drawing.Color.White;
             this.cbSource.FormattingEnabled = true;
             this.cbSource.Location = new System.Drawing.Point(128, 19);
@@ -839,6 +848,7 @@ namespace RTCV.UI
             // tbValue
             // 
             this.tbValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.tbValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbValue.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.tbValue.Font = new System.Drawing.Font("Consolas", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.tbValue.ForeColor = System.Drawing.Color.White;
@@ -870,6 +880,7 @@ namespace RTCV.UI
             // cbSourceDomain
             // 
             this.cbSourceDomain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.cbSourceDomain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbSourceDomain.ForeColor = System.Drawing.Color.White;
             this.cbSourceDomain.FormattingEnabled = true;
             this.cbSourceDomain.Location = new System.Drawing.Point(95, 18);
@@ -881,6 +892,7 @@ namespace RTCV.UI
             // upDownSourceAddress
             // 
             this.upDownSourceAddress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.upDownSourceAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.upDownSourceAddress.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.upDownSourceAddress.ForeColor = System.Drawing.Color.White;
             this.upDownSourceAddress.Hexadecimal = true;
@@ -911,6 +923,7 @@ namespace RTCV.UI
             // cbStoreTime
             // 
             this.cbStoreTime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.cbStoreTime.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbStoreTime.ForeColor = System.Drawing.Color.White;
             this.cbStoreTime.FormattingEnabled = true;
             this.cbStoreTime.Location = new System.Drawing.Point(3, 58);
@@ -931,6 +944,7 @@ namespace RTCV.UI
             // cbStoreType
             // 
             this.cbStoreType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.cbStoreType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbStoreType.ForeColor = System.Drawing.Color.White;
             this.cbStoreType.FormattingEnabled = true;
             this.cbStoreType.Location = new System.Drawing.Point(3, 18);
@@ -960,6 +974,7 @@ namespace RTCV.UI
             // upDownPrecision
             // 
             this.upDownPrecision.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.upDownPrecision.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.upDownPrecision.ForeColor = System.Drawing.Color.White;
             this.upDownPrecision.Location = new System.Drawing.Point(3, 102);
             this.upDownPrecision.Minimum = new decimal(new int[] {
@@ -989,6 +1004,7 @@ namespace RTCV.UI
             // upDownAddress
             // 
             this.upDownAddress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.upDownAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.upDownAddress.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.upDownAddress.ForeColor = System.Drawing.Color.White;
             this.upDownAddress.Hexadecimal = true;
@@ -1010,6 +1026,7 @@ namespace RTCV.UI
             // cbDomain
             // 
             this.cbDomain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.cbDomain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbDomain.ForeColor = System.Drawing.Color.White;
             this.cbDomain.FormattingEnabled = true;
             this.cbDomain.Location = new System.Drawing.Point(4, 18);
