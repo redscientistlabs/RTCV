@@ -1,5 +1,7 @@
-﻿using System;
-using System.CodeDom;
+﻿using Ceras;
+using Newtonsoft.Json;
+using RTCV.NetCore;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -8,14 +10,10 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using Ceras;
-using Newtonsoft.Json;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
 
 namespace RTCV.CorruptCore
 {
-	public static class MemoryDomains
+    public static class MemoryDomains
 	{
 
 		public static Dictionary<string, MemoryDomainProxy> MemoryInterfaces
@@ -692,7 +690,7 @@ namespace RTCV.CorruptCore
         //File management
         public static Dictionary<String, String> CompositeFilenameDico { get; set; }
 
-
+        public static FileInterfaceIdentity identity = FileInterfaceIdentity.SELF_DESCRIBE;
         public override string Name => ShortFilename;
         public override long Size => lastMemorySize.GetValueOrDefault(0);
 
@@ -702,6 +700,7 @@ namespace RTCV.CorruptCore
         public string Filename;
         public string ShortFilename = null;
 
+        public MultipleFileInterface parent = null;
         public override byte[][] lastMemoryDump { get; set; } = null;
         public override bool cacheEnabled { get { return lastMemoryDump != null; } }
 
@@ -709,23 +708,40 @@ namespace RTCV.CorruptCore
         //lastRealMemorySize is used in peek/poke to cancel out non-existing adresses
         public override long? lastMemorySize { get; set; }
         public long? lastRealMemorySize { get; set; }
+        public bool useAutomaticFileBackups { get; set; } = false;
 
         public long MultiFilePosition = 0;
         public long MultiFilePositionCeiling = 0;
         private static readonly bool writeCopyMode = false;
 
+        public string InterfaceUniquePrefix = "";
+
         public override string ToString()
         {
-            return ShortFilename;
+            switch(identity)
+            {
+                case FileInterfaceIdentity.HASHED_PREFIX:
+                    return InterfaceUniquePrefix + ":" + ShortFilename;
+                case FileInterfaceIdentity.FULL_PATH:
+                    return Filename;
+                case FileInterfaceIdentity.SELF_DESCRIBE:
+                default:
+                    return ShortFilename;
+            }
+
         }
 
-        public FileInterface(string _targetId)
+        public FileInterface(string _targetId, bool _useAutomaticFileBackups = false)
         {
             try
             {
                 string[] targetId = _targetId.Split('|');
                 Filename = targetId[1];
-                ShortFilename = new FileInfo(Filename).Name;
+                var fi = new FileInfo(Filename);
+                ShortFilename = fi.Name;
+
+                InterfaceUniquePrefix = Filename.CreateMD5().Substring(0, 4).ToUpper();
+                useAutomaticFileBackups = _useAutomaticFileBackups;
 
                 if (!File.Exists(Filename))
                     throw new FileNotFoundException("The file " + Filename + " doesn't exist! Cancelling load");
@@ -740,7 +756,7 @@ namespace RTCV.CorruptCore
                 {
                     using (Stream stream = new FileStream(Filename, FileMode.Open))
                     {
-                        //Dummy code
+
                         Console.Write(stream.Length);
                     }
                 }
@@ -757,7 +773,8 @@ namespace RTCV.CorruptCore
                 }
 
 
-                //SetBackup();
+                if(useAutomaticFileBackups)
+                    SetBackup();
 
                 //getMemoryDump();
                 getMemorySize();
@@ -765,6 +782,7 @@ namespace RTCV.CorruptCore
             }
             catch (Exception ex)
             {
+                if(parent != null && !MultipleFileInterface.LoadAnything)
                 MessageBox.Show($"FileInterface failed to load something \n\n" + "Culprit file: " + Filename + "\n\n" + ex.ToString());
 
                 throw;
@@ -789,10 +807,44 @@ namespace RTCV.CorruptCore
             return name;
         }
 
-        public static bool SaveCompositeFilenameDico()
+
+        public static bool LoadCompositeFilenameDico(string jsonBaseDir = null)
         {
+            if (jsonBaseDir == null)
+                jsonBaseDir = CorruptCore.EmuDir;
+
             JsonSerializer serializer = new JsonSerializer();
-            var path = Path.Combine(CorruptCore.EmuDir, "TEMP", "filemap.json");
+            var path = Path.Combine(jsonBaseDir, "TEMP","filemap.json");
+            if (!File.Exists(path))
+            {
+                CompositeFilenameDico = new Dictionary<string, string>();
+                return true;
+            }
+            try
+            {
+
+                using (StreamReader sw = new StreamReader(path))
+                using (JsonTextReader reader = new JsonTextReader(sw))
+                {
+                    CompositeFilenameDico = serializer.Deserialize<Dictionary<string, string>>(reader);
+                }
+            }
+            catch (IOException e)
+            {
+                MessageBox.Show("Unable to access the filemap! Figure out what's locking it and then restart the WGH.\n" + e.ToString());
+                return false;
+            }
+            return true;
+        }
+
+
+        public static bool SaveCompositeFilenameDico(string jsonFilePath = null)
+        {
+            if (jsonFilePath == null)
+                jsonFilePath = CorruptCore.EmuDir;
+
+            JsonSerializer serializer = new JsonSerializer();
+            var path = Path.Combine(jsonFilePath, "TEMP", "filemap.json");
             try
             {
                 using (StreamWriter sw = new StreamWriter(path))
@@ -842,7 +894,9 @@ namespace RTCV.CorruptCore
 
         public string SetWorkingFile()
         {
+
             string corruptFilename = getCorruptFilename();
+
 
             if (!File.Exists(corruptFilename))
                 File.Copy(getBackupFilename(), corruptFilename, true);
@@ -1116,7 +1170,7 @@ namespace RTCV.CorruptCore
 
         public List<FileInterface> FileInterfaces = new List<FileInterface>();
 
-        public MultipleFileInterface(string _targetId)
+        public MultipleFileInterface(string _targetId, bool _useAutomaticFileBackups = false)
         {
 
 
@@ -1126,12 +1180,29 @@ namespace RTCV.CorruptCore
                 string[] targetId = _targetId.Split('|');
 
                 for (int i = 0; i < targetId.Length; i++)
-                    FileInterfaces.Add(new FileInterface("File|" + targetId[i]));
+                {
+                    try
+                    {
+                        var fi = new FileInterface("File|" + targetId[i], _useAutomaticFileBackups);
+                        fi.parent = this;
+                        FileInterfaces.Add(fi);
+                    }
+                    catch
+                    {
+                        if (MultipleFileInterface.LoadAnything)
+                            break;
+                        else
+                            throw;
+                    }
+                }
 
                 Filename = "MultipleFiles";
                 ShortFilename = "MultipleFiles";
 
-                //SetBackup();
+                
+                if(_useAutomaticFileBackups)
+                    SetBackup();
+                
 
                 //getMemoryDump();
                 getMemorySize();
@@ -1161,6 +1232,11 @@ namespace RTCV.CorruptCore
                     fi.stream = null;
                 }
 
+        }
+
+        public override string ToString()
+        {
+            return "Multiple Files";
         }
         public string getCompositeFilename(string prefix)
         {
@@ -1326,6 +1402,7 @@ namespace RTCV.CorruptCore
         }
 
         public override long? lastMemorySize { get; set; }
+        public static bool LoadAnything { get; set; } = false;
 
         public override void PokeBytes(long address, byte[] data)
         {
@@ -1398,7 +1475,12 @@ namespace RTCV.CorruptCore
 
     }
 
-
+    public enum FileInterfaceIdentity
+    {
+        SELF_DESCRIBE,
+        HASHED_PREFIX,
+        FULL_PATH,
+    }
 
     public interface IMemoryDomain
 	{

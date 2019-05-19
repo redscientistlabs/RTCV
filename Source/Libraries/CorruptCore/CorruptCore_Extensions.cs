@@ -86,13 +86,34 @@ namespace RTCV.CorruptCore
 			var data = Convert.FromBase64String(base64);
 			return Encoding.UTF8.GetString(data);
 		}
-		/// <summary>
-		/// Gets you a byte array representing the characters in a string.
-		/// THIS DOES NOT CONVERT A STRING TO A BYTE ARRAY CONTAINING THE SAME CHARACTERS
-		/// </summary>
-		/// <param name="str"></param>
-		/// <returns></returns>
-		public static byte[] GetBytes(this string str)
+
+        //taken from https://stackoverflow.com/questions/11454004/calculate-a-md5-hash-from-a-string
+        public static string CreateMD5(this string input)
+        {
+            // Use input string to calculate MD5 hash
+            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+            {
+                byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+                // Convert the byte array to hexadecimal string
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    sb.Append(hashBytes[i].ToString("X2"));
+                }
+                return sb.ToString();
+            }
+        }
+
+
+        /// <summary>
+        /// Gets you a byte array representing the characters in a string.
+        /// THIS DOES NOT CONVERT A STRING TO A BYTE ARRAY CONTAINING THE SAME CHARACTERS
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static byte[] GetBytes(this string str)
 		{
 			byte[] bytes = new byte[str.Length * sizeof(char)];
 			System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
@@ -289,7 +310,7 @@ namespace RTCV.CorruptCore
 			return 0;
 		}
 
-		public static decimal GetDecimalValue(byte[] value, bool needsBytesFlipped)
+        public static decimal GetDecimalValue(byte[] value, bool needsBytesFlipped)
 		{
 			byte[] _value = (byte[])value.Clone();
 
@@ -526,7 +547,7 @@ namespace RTCV.CorruptCore
 		/// <summary>
 		/// Converts bytes to an uppercase string of hex numbers in upper case without any spacing or anything
 		/// </summary>
-		public static string BytesToHexString(byte[] bytes)
+		public static string BytesToHexString(this byte[] bytes)
 		{
 			var sb = new StringBuilder();
 			foreach (var b in bytes)

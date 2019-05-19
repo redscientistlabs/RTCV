@@ -28,13 +28,15 @@ namespace RTCV.CorruptCore
 
 		public static System.Windows.Forms.Timer KillswitchTimer = new System.Windows.Forms.Timer();
 
+        public static bool EmuDirOverride = false;
+
         public static string EmuDir
 		{
 			get
 			{
 				//In attached mode we can just use the directory we're in.
 				//We do this as the EmuDir is not set in attached
-				if (Attached)
+				if (Attached || EmuDirOverride)
 					return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
                 return (string) AllSpec.VanguardSpec?[VSPEC.EMUDIR];
