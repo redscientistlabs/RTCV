@@ -95,8 +95,13 @@ namespace RTCV.UI
 
                 info.WorkingDirectory = CorruptCore.CorruptCore.EmuDir;
                 info.FileName = Path.Combine(CorruptCore.CorruptCore.EmuDir, "RESTARTDETACHEDRTC.bat");
-
-                Process.Start(info);
+				if (!File.Exists(info.FileName))
+				{
+					MessageBox.Show($"Couldn't find {info.FileName}! Killswitch will not work.");
+                    return;
+                }
+					
+				Process.Start(info);
             });
 		}
 		private static void KillswitchSpamPreventTimer_Tick(object sender, EventArgs e)
