@@ -221,7 +221,7 @@ namespace RTCV.UI.Components.Controls
                         tbControlValue.Value = Convert.ToInt32(65536);
 					else if (tbValue < tbControlValue.Minimum)
 					{
-						tbControlValue.Value = Convert.ToInt32(Min);
+						tbControlValue.Value = Convert.ToInt32(Minimum);
 					}
                     else
                         tbControlValue.Value = Convert.ToInt32(tbValue);
