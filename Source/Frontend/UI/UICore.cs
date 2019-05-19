@@ -278,20 +278,17 @@ namespace RTCV.UI
         }
 
         //All RTC forms
-        public static Form[] AllRtcForms
+        public static Form[] AllColorizedSingletons
 		{
 			get
 			{
-				//This fetches all singletons of interface IAutoColorized
+				//This fetches all singletons interface IAutoColorized
 
 				List<Form> all = new List<Form>();
-
-
 				foreach (Type t in Assembly.GetAssembly(typeof(RTCV.UI.UI_CoreForm)).GetTypes())
 					if (typeof(IAutoColorize).IsAssignableFrom(t) && t != typeof(IAutoColorize))
 						all.Add((Form)S.GET(Type.GetType(t.ToString())));
-
-				return all.ToArray();
+                return all.ToArray();
 
 			}
 		}
@@ -306,7 +303,7 @@ namespace RTCV.UI
 
 			isClosing = true;
 
-			foreach (Form frm in UICore.AllRtcForms)
+			foreach (Form frm in UICore.AllColorizedSingletons)
 			{
 				if (frm != null)
 					frm.Close();
@@ -340,7 +337,7 @@ namespace RTCV.UI
 
 			if (ctr == null)
 			{
-				foreach (Form targetForm in UICore.AllRtcForms)
+				foreach (Form targetForm in UICore.AllColorizedSingletons)
 				{
 					if (targetForm != null)
 					{
@@ -348,6 +345,22 @@ namespace RTCV.UI
 						allControls.Add(targetForm);
 					}
 				}
+
+				//Get the extraforms
+				foreach (UI_CanvasForm targetForm in UI_CanvasForm.extraForms)
+				{
+					allControls.AddRange(targetForm.Controls.getControlsWithTag());
+					allControls.Add(targetForm);
+                }
+
+                //We have to manually add the etform because it's not singleton, not an extraForm, and not owned by any specific form
+                //Todo - Refactor this so we don't need to add it separately
+				if (mtForm != null)
+				{
+					allControls.AddRange(mtForm.Controls.getControlsWithTag());
+					allControls.Add(mtForm);
+                }
+
 			}
 			else if (ctr is Form)
 			{
@@ -358,19 +371,6 @@ namespace RTCV.UI
             {
                 allControls.Add(ctr);
             }
-
-            //this needs refactoring. the string contains method is broken as color:dark2 is also color:dark1.
-            //at least the priority of the foreach loops makes it so it works like expected.
-
-			var tag2ColorDico = new Dictionary<string, Color>();
-			tag2ColorDico.Add("color:light2", Light2Color);
-			tag2ColorDico.Add("color:light1", Light1Color);
-			tag2ColorDico.Add("color:normal", NormalColor);
-			tag2ColorDico.Add("color:dark1", Dark1Color);
-			tag2ColorDico.Add("color:dark2", Dark2Color);
-			tag2ColorDico.Add("color:dark3", Dark3Color);
-			tag2ColorDico.Add("color:dark4", Dark4Color);
-
 
             float generalDarken = -0.50f;
             float light1 = 0.10f;
@@ -389,6 +389,15 @@ namespace RTCV.UI
             Dark2Color = color.ChangeColorBrightness(dark2);
             Dark3Color = color.ChangeColorBrightness(dark3);
             Dark4Color = color.ChangeColorBrightness(dark4);
+
+			var tag2ColorDico = new Dictionary<string, Color>();
+			tag2ColorDico.Add("color:light2", Light2Color);
+			tag2ColorDico.Add("color:light1", Light1Color);
+			tag2ColorDico.Add("color:normal", NormalColor);
+			tag2ColorDico.Add("color:dark1", Dark1Color);
+			tag2ColorDico.Add("color:dark2", Dark2Color);
+			tag2ColorDico.Add("color:dark3", Dark3Color);
+			tag2ColorDico.Add("color:dark4", Dark4Color);
 
             foreach (var c in allControls)
 			{
@@ -414,7 +423,9 @@ namespace RTCV.UI
 
 				if (c is DataGridView dgv)
 					dgv.BackgroundColor = _color;
-            }
+
+				c.Invalidate();
+			}
 		}
 
 		public static void SelectRTCColor()
