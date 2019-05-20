@@ -237,6 +237,7 @@
         public static readonly string RENAME_SAVESTATE = "RENAME_SAVESTATE";
         public static readonly string OVERRIDE_DEFAULTMAXINTENSITY = "OVERRIDE_DEFAULTMAXINTENSITY";
         public static readonly string CONFIG_PATHS = "CONFIG_PATHS";
+        public static readonly string REPLACE_MANUALBLAST_WITH_GHCORRUPT = "REPLACE_MANUALBLAST_WITH_GHCORRUPT";
     }
     public enum UISPEC
 	{

@@ -290,7 +290,10 @@ This message only appears once.";
 
         private void btnManualBlast_Click(object sender, EventArgs e)
         {
-            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.ASYNCBLAST, true);
+            if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null)
+                S.GET<RTC_GlitchHarvesterBlast_Form>().btnCorrupt_Click(sender, e);
+            else
+                LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.ASYNCBLAST, true);
         }
 
         private void btnEasyMode_MouseDown(object sender, MouseEventArgs e)
