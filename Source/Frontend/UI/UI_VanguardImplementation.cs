@@ -221,10 +221,10 @@ namespace RTCV.UI
                                 S.GET<UI_CoreForm>().btnManualBlast.Text = "  Corrupt";
                             }
                             else
-                                S.GET<UI_CoreForm>().btnManualBlast.Enabled = false;
+                                S.GET<UI_CoreForm>().btnManualBlast.Visible = false;
 
 
-                            S.GET<UI_CoreForm>().btnAutoCorrupt.Enabled = false;
+                            S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
                             S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Enabled = false;
                             S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw.Enabled = false;
                             S.GET<RTC_GlitchHarvesterBlast_Form>().btnBlastToggle.Enabled = false;

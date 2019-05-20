@@ -66,6 +66,7 @@ namespace RTCV.UI
                 ContextMenuStrip columnsMenu = new ContextMenuStrip();
                 columnsMenu.Items.Add("Open Debug window", null, new EventHandler((ob, ev) => { UI_CoreForm.ForceCloudDebug(); }));
                 columnsMenu.Show(this, locate);
+                return;
             }
 
             S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Maximum;

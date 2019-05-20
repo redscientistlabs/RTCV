@@ -137,8 +137,10 @@ namespace RTCV.UI
         public void btnCorrupt_Click(object sender, EventArgs e)
         {
             Console.WriteLine("btnCorrupt Clicked");
-            if (!btnCorrupt.Visible)
+
+            if (!(btnCorrupt.Visible  || AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null && S.GET<UI_CoreForm>().btnManualBlast.Visible))
                 return;
+
 
             try
             {
@@ -389,6 +391,9 @@ namespace RTCV.UI
 			btnCorrupt.Visible = visible;
             btnRerollSelected.Visible = visible;
             btnSendRaw.Visible = visible;
+
+            if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null)
+                S.GET<UI_CoreForm>().btnManualBlast.Visible = visible;
         }
 
         private void btnGlitchHarvesterSettings_MouseDown(object sender, MouseEventArgs e)

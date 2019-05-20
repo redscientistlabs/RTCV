@@ -266,7 +266,7 @@ namespace RTCV.CorruptCore
                         returnValue = StockpileManager_EmuSide.LoadState_NET(sk, runBlastLayer);
                      }
                     SyncObjectSingleton.EmuThreadExecute(a, false);
-                            e.setReturnValue(returnValue);
+                    e.setReturnValue(returnValue);
 				}
 				break;
 				case REMOTE_SAVESTATE:
