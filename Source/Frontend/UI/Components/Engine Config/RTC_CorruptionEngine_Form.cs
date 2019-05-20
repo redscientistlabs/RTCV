@@ -97,11 +97,25 @@ namespace RTCV.UI
 			gbCustomEngine.Visible = false;
 
 			pnCustomPrecision.Visible = false;
-			
 
-			S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = true;
-			//S.GET<RTC_GlitchHarvesterIntensity_Form>().Visible = true;
-			S.GET<RTC_GeneralParameters_Form>().Show();
+            object realtime = AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME];
+            if (realtime != null && ((bool)realtime))
+            {
+                S.GET<UI_CoreForm>().btnManualBlast.Visible = true;
+                S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = true;
+            }
+            else
+            {
+                if(AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] == null)
+                    S.GET<UI_CoreForm>().btnManualBlast.Visible = false;
+                else
+                    S.GET<UI_CoreForm>().btnManualBlast.Visible = true;
+
+                S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
+            }
+
+            //S.GET<RTC_GlitchHarvesterIntensity_Form>().Visible = true;
+            S.GET<RTC_GeneralParameters_Form>().Show();
             S.GET<RTC_MemoryDomains_Form>().Show();
 
 

@@ -12,6 +12,7 @@ using RTCV.UI;
 using static RTCV.NetCore.NetcoreCommands;
 using RTCV.NetCore.StaticTools;
 using RTCV.UI.Modular;
+using System.Drawing;
 
 namespace RTCV.UI
 {
@@ -80,7 +81,7 @@ namespace RTCV.UI
                                 var sidebar = S.GET<UI_CoreForm>().pnSideBar;
                                 foreach (Control c in sidebar.Controls)
                                     if (c is Button b)
-                                        if (!b.Text.Contains("Test"))
+                                        if (!b.Text.Contains("Test") && b.ForeColor != Color.OrangeRed)
                                             b.Visible = true;
 
                                 UI_DefaultGrids.engineConfig.LoadToMain();
@@ -216,14 +217,15 @@ namespace RTCV.UI
                     case REMOTE_DISABLEREALTIMESUPPORT:
                         SyncObjectSingleton.FormExecute((o, ea) =>
                         {
-                            if(AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null)
+                            Button btnManual = S.GET<UI_CoreForm>().btnManualBlast;
+                            if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null)
                             {
-                                S.GET<UI_CoreForm>().btnManualBlast.Text = "  Corrupt";
+                                btnManual.Text = "  Corrupt";
                             }
                             else
-                                S.GET<UI_CoreForm>().btnManualBlast.Visible = false;
+                                btnManual.Visible = false;
 
-
+                            S.GET<UI_CoreForm>().btnAutoCorrupt.Enabled = false;
                             S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
                             S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Enabled = false;
                             S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw.Enabled = false;

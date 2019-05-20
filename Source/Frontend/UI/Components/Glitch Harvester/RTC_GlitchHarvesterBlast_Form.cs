@@ -394,6 +394,7 @@ namespace RTCV.UI
 
             if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null)
                 S.GET<UI_CoreForm>().btnManualBlast.Visible = visible;
+
         }
 
         private void btnGlitchHarvesterSettings_MouseDown(object sender, MouseEventArgs e)
