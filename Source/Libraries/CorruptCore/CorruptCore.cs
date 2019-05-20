@@ -44,7 +44,12 @@ namespace RTCV.CorruptCore
 			set => AllSpec.VanguardSpec.Update(VSPEC.EMUDIR, value);
 		}
 
-		public static string RtcDir
+        public static string EmuAssetsDir
+        {
+            get => Path.Combine(EmuDir, "ASSETS");
+        }
+
+        public static string RtcDir
 		{
 			get => (string)AllSpec.CorruptCoreSpec[RTCSPEC.RTCDIR];
 			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.RTCDIR, value);
