@@ -685,7 +685,7 @@ namespace RTCV.CorruptCore
     }
 
     [Serializable()]
-    public class FileInterface : FileMemoryInterface, IMemoryDomain
+    public class FileInterface : FileMemoryInterface
     {
         //File management
         public static Dictionary<String, String> CompositeFilenameDico { get; set; }
@@ -694,7 +694,7 @@ namespace RTCV.CorruptCore
         public override string Name => ShortFilename;
         public override long Size => lastMemorySize.GetValueOrDefault(0);
 
-        public override bool BigEndian => false;
+        public override bool BigEndian { get; }
         public override int WordSize => 4;
 
         public string Filename;
@@ -731,7 +731,7 @@ namespace RTCV.CorruptCore
 
         }
 
-        public FileInterface(string _targetId, bool _useAutomaticFileBackups = false)
+        public FileInterface(string _targetId, bool _bigEndian, bool _useAutomaticFileBackups = false)
         {
             try
             {
@@ -739,7 +739,7 @@ namespace RTCV.CorruptCore
                 Filename = targetId[1];
                 var fi = new FileInfo(Filename);
                 ShortFilename = fi.Name;
-
+                BigEndian = _bigEndian;
                 InterfaceUniquePrefix = Filename.CreateMD5().Substring(0, 4).ToUpper();
                 useAutomaticFileBackups = _useAutomaticFileBackups;
 
@@ -783,7 +783,7 @@ namespace RTCV.CorruptCore
             catch (Exception ex)
             {
                 if(parent != null && !MultipleFileInterface.LoadAnything)
-                MessageBox.Show($"FileInterface failed to load something \n\n" + "Culprit file: " + Filename + "\n\n" + ex.ToString());
+                    MessageBox.Show($"FileInterface failed to load something \n\n" + "Culprit file: " + Filename + "\n\n" + ex.ToString());
 
                 throw;
             }
@@ -1146,7 +1146,7 @@ namespace RTCV.CorruptCore
         public override string Name => ShortFilename;
         public override long Size => lastMemorySize.GetValueOrDefault(0);
 
-        public override bool BigEndian => false;
+        public override bool BigEndian { get; }
         public override int WordSize => 4;
 
 
@@ -1155,20 +1155,17 @@ namespace RTCV.CorruptCore
 
         public List<FileInterface> FileInterfaces = new List<FileInterface>();
 
-        public MultipleFileInterface(string _targetId, bool _useAutomaticFileBackups = false)
+        public MultipleFileInterface(string _targetId, bool _bigEndian, bool _useAutomaticFileBackups = false)
         {
-
-
-
             try
             {
+                BigEndian = _bigEndian;
                 string[] targetId = _targetId.Split('|');
-
-                for (int i = 0; i < targetId.Length; i++)
+                foreach (string t in targetId)
                 {
                     try
                     {
-                        var fi = new FileInterface("File|" + targetId[i], _useAutomaticFileBackups);
+                        var fi = new FileInterface("File|" + t, _bigEndian, _useAutomaticFileBackups);
                         fi.parent = this;
                         FileInterfaces.Add(fi);
                     }

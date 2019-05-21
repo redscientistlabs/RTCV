@@ -844,20 +844,34 @@ namespace RTCV.CorruptCore
 		}
 
 		//Todo - Replace this when compat is broken
-		//Yes I intentionally wrote disgusting code so I'd want to rewrite it the moment I can
 		public void PopulateKnownLists()
 		{
 			List<String> knownListKeys = new List<string>();
-			foreach (var bu in BlastLayer.Layer.Where(x => x.LimiterListHash != null))
+            foreach (var bu in BlastLayer.Layer.Where(x => x.LimiterListHash != null))
 			{
+				Console.WriteLine($"Looking for knownlist {bu.LimiterListHash}");
 				if (knownListKeys.Contains(bu.LimiterListHash))
-					continue;
-				knownListKeys.Add(bu.LimiterListHash);
+				{
+					Console.WriteLine($"knownListKeys already contains {bu.LimiterListHash}");
+					Console.WriteLine("Done\n");
+                    continue;
+                }
 
-				Filtering.Hash2NameDico.TryGetValue(bu.LimiterListHash, out string name);
-				this.KnownLists[bu.LimiterListHash] = Path.GetFileNameWithoutExtension(name) ?? ("UNKNOWN_" + Filtering.StockpileListCount++);
+				Console.WriteLine($"Adding {bu.LimiterListHash} to knownListKeys");
+                knownListKeys.Add(bu.LimiterListHash);
+
+				Console.WriteLine($"Getting name of {bu.LimiterListHash} from Hash2NameDico");
+                Filtering.Hash2NameDico.TryGetValue(bu.LimiterListHash, out string name);
+
+				if (name == null)
+					name = "UNKNOWN_" + Filtering.StockpileListCount++;
+				else
+					name = Path.GetFileNameWithoutExtension(name);
+
+                Console.WriteLine($"Setting KnownLists[{bu.LimiterListHash}] to {name}");
+				this.KnownLists[bu.LimiterListHash] = name;
+				Console.WriteLine("Done\n");
 			}
-
 		}
 
 	}
