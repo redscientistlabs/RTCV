@@ -972,7 +972,10 @@ namespace RTCV.CorruptCore
 
         public override void getMemoryDump()
         {
-            lastMemoryDump = MemoryBanks.ReadFile(getBackupFilename());
+            if(useAutomaticFileBackups)
+                lastMemoryDump = MemoryBanks.ReadFile(getBackupFilename());
+            else
+                lastMemoryDump = MemoryBanks.ReadFile(Filename);
 
         }
 
