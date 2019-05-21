@@ -162,20 +162,28 @@ namespace RTCV.CorruptCore
                                 string[] domains = (string[])RTCV.NetCore.AllSpec.UISpec["SELECTEDDOMAINS"];
 
 
-                                if (AllSpec.VanguardSpec[VSPEC.SUPPORTS_MULTITHREAD] == null)
+                                var cpus = Environment.ProcessorCount;
+
+                                if (cpus == 1 || AllSpec.VanguardSpec[VSPEC.SUPPORTS_MULTITHREAD] == null)
                                     bl = CorruptCore.GenerateBlastLayer(domains);
                                 else
                                 {
                                     //if emulator supports multithreaded access of the domains, disregard the emulation thread and just span threads...
 
-                                    //bl = new BlastLayer();
+                                    long reminder = CorruptCore.Intensity % (cpus - 1);
 
-                                    var cpus = Environment.ProcessorCount;
-                                    long splitintensity = CorruptCore.Intensity / cpus;
+                                    long splitintensity = (CorruptCore.Intensity - reminder) / (cpus - 1);
 
                                     Task<BlastLayer>[] tasks = new Task<BlastLayer>[cpus];
                                     for (int i = 0; i < cpus; i++)
-                                        tasks[i] = Task.Factory.StartNew(() => CorruptCore.GenerateBlastLayer(domains, splitintensity));
+                                    {
+                                        long requestedIntensity = splitintensity;
+
+                                        if (i == 0 && reminder != 0)
+                                            requestedIntensity = reminder;
+
+                                        tasks[i] = Task.Factory.StartNew(() => CorruptCore.GenerateBlastLayer(domains, requestedIntensity));
+                                    }
 
                                     Task.WaitAll(tasks);
 

@@ -21,8 +21,23 @@ namespace RTCV.CorruptCore
 		//General RTC Values
 		public static string RtcVersion = "0.0.9";
 
-		public static Random RND = new Random();
-		public static bool Attached = false;
+        private static volatile int _seed = DateTime.Now.Millisecond;
+        public static int seed { get { return ++_seed; } }
+
+        [ThreadStatic]
+        private static Random _RND = null;
+        public static Random RND
+        {
+            get
+            {
+                if (_RND == null)
+                    _RND = new Random(seed);
+
+                return _RND;
+            }
+        }
+
+        public static bool Attached = false;
 
 		public static List<ProblematicProcess> ProblematicProcesses;
 
@@ -559,6 +574,9 @@ namespace RTCV.CorruptCore
 
 		public static BlastLayer GenerateBlastLayer(string[] selectedDomains, long overrideIntensity = -1)
 		{
+            if (overrideIntensity == 0)
+                return null;
+
 			try
 			{
 				string Domain = null;
