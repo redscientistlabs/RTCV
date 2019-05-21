@@ -213,7 +213,7 @@ namespace RTCV.CorruptCore
 		private static bool CheckNesHeader(string filename)
 		{
 			byte[] buffer = new byte[4];
-			using (Stream fs = File.OpenRead(filename))
+			using (Stream fs = File.Open(filename, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
 			{
 				fs.Read(buffer, 0, buffer.Length);
 			}
@@ -974,21 +974,6 @@ namespace RTCV.CorruptCore
         {
             lastMemoryDump = MemoryBanks.ReadFile(getBackupFilename());
 
-            /*
-            //lastMemoryDump = File.ReadAllBytes(getBackupFilename());
-
-            lastMemoryDump = new byte[lastMemorySize.Value];
-
-            using (Stream stream = File.Open(getBackupFilename(), FileMode.Open))
-            {
-
-                //byte[] readBytes = new byte[bankSize];
-                stream.Position = 0;
-                stream.Read(lastMemoryDump, 0, Convert.ToInt32(lastRealMemorySize.Value));
-            }
-
-            //return lastMemoryDump;
-            */
         }
 
         public override long getMemorySize()
@@ -1057,7 +1042,7 @@ namespace RTCV.CorruptCore
                 return;
 
             if (stream == null)
-                stream = File.Open(SetWorkingFile(), FileMode.Open);
+                stream = File.Open(SetWorkingFile(), FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
 
             stream.Position = address;
             stream.Write(data, 0, data.Length);
@@ -1079,7 +1064,7 @@ namespace RTCV.CorruptCore
                 return;
 
             if (stream == null)
-                stream = File.Open(SetWorkingFile(), FileMode.Open);
+                stream = File.Open(SetWorkingFile(), FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
 
             stream.Position = address;
             stream.WriteByte(data);
@@ -1102,7 +1087,7 @@ namespace RTCV.CorruptCore
             byte[] readBytes = new byte[1];
 
             if (stream == null)
-                stream = File.Open(SetWorkingFile(), FileMode.Open);
+                stream = File.Open(SetWorkingFile(), FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
 
 
             stream.Position = address;
@@ -1127,7 +1112,7 @@ namespace RTCV.CorruptCore
 
 
             if (stream == null)
-                stream = File.Open(SetWorkingFile(), FileMode.Open);
+                stream = File.Open(SetWorkingFile(), FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
 
 
             stream.Position = address;

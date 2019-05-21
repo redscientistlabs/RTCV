@@ -33,7 +33,7 @@ namespace RTCV.CorruptCore
 
                 byte[][] Banks = new byte[banksCount][];
 
-                using (Stream stream = File.Open(path, FileMode.Open))
+                using (Stream stream = File.Open(path, FileMode.Open, FileAccess.ReadWrite, FileShare.Read))
                 {
                     for (long i = 0; i < banksCount; i++)
                     {

@@ -557,7 +557,7 @@ namespace RTCV.CorruptCore
 
 		//Generates or applies a blast layer using one of the multiple BlastRadius algorithms
 
-		public static BlastLayer GenerateBlastLayer(string[] selectedDomains)
+		public static BlastLayer GenerateBlastLayer(string[] selectedDomains, long overrideIntensity = -1)
 		{
 			try
 			{
@@ -586,6 +586,9 @@ namespace RTCV.CorruptCore
 						return null;
 
 					long intensity = CorruptCore.Intensity; //general RTC intensity
+
+                    if (overrideIntensity != -1)
+                        intensity = overrideIntensity;
 
 				// Capping intensity at engine-specific maximums
 					if ((CorruptCore.SelectedEngine == CorruptionEngine.HELLGENIE ||

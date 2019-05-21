@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
@@ -151,17 +152,50 @@ namespace RTCV.CorruptCore
                     }
                     //Do everything else on the emulation thread
                     void a()
-                    {
-                        if (UseSavestates && loadBeforeCorrupt)
-                        {
-                            StockpileManager_EmuSide.LoadState_NET(sk, false);
-                        }
+                            {
+                                if (UseSavestates && loadBeforeCorrupt)
+                                {
+                                    StockpileManager_EmuSide.LoadState_NET(sk, false);
+                                }
 
-                        //We pull the domains here because if the syncsettings changed, there's a chance the domains changed
-                        string[] domains = (string[]) RTCV.NetCore.AllSpec.UISpec["SELECTEDDOMAINS"];
-                        bl = CorruptCore.GenerateBlastLayer(domains);
-                        if (applyBlastLayer) bl?.Apply(backup);
-                    }
+                                //We pull the domains here because if the syncsettings changed, there's a chance the domains changed
+                                string[] domains = (string[])RTCV.NetCore.AllSpec.UISpec["SELECTEDDOMAINS"];
+
+
+                                if (AllSpec.VanguardSpec[VSPEC.SUPPORTS_MULTITHREAD] == null)
+                                    bl = CorruptCore.GenerateBlastLayer(domains);
+                                else
+                                {
+                                    //if emulator supports multithreaded access of the domains, disregard the emulation thread and just span threads...
+
+                                    //bl = new BlastLayer();
+
+                                    var cpus = Environment.ProcessorCount;
+                                    long splitintensity = CorruptCore.Intensity / cpus;
+
+                                    Task<BlastLayer>[] tasks = new Task<BlastLayer>[cpus];
+                                    for (int i = 0; i < cpus; i++)
+                                        tasks[i] = Task.Factory.StartNew(() => CorruptCore.GenerateBlastLayer(domains, splitintensity));
+
+                                    Task.WaitAll(tasks);
+
+                                    bl = tasks[0].Result ?? new BlastLayer();
+
+                                    if (tasks.Length > 1)
+                                        for (int i = 1; i < tasks.Length; i++)
+                                            if(tasks[i].Result != null)
+                                                bl.Layer.AddRange(tasks[i].Result.Layer);
+
+
+                                    if (bl.Layer.Count == 0)
+                                        bl = null;
+                                }
+
+
+
+
+                                if (applyBlastLayer) bl?.Apply(backup);
+                            }
 
                     SyncObjectSingleton.EmuThreadExecute(a, true);
 					if (advancedMessage.requestGuid != null)
