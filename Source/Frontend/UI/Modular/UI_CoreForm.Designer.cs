@@ -207,7 +207,7 @@
             this.btnOpenCustomLayout.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnOpenCustomLayout.UseVisualStyleBackColor = false;
             this.btnOpenCustomLayout.Visible = false;
-            this.btnOpenCustomLayout.Click += new System.EventHandler(this.button4_Click);
+            this.btnOpenCustomLayout.Click += new System.EventHandler(this.BtnOpenCustomLayout_Click);
             // 
             // btnTestSubform
             // 

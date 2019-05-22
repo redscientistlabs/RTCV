@@ -194,36 +194,11 @@ This message only appears once.";
 
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void BtnOpenCustomLayout_Click(object sender, EventArgs e)
         {
-            
 
                 CanvasGrid.LoadCustomLayout();
 
-
-            
-            /*
-            Form gpForm = S.GET<RTC_GeneralParameters_Form>();
-            Form mdForm = S.GET<RTC_MemoryDomains_Form>();
-            Form ceForm = S.GET<RTC_CorruptionEngine_Form>();
-            Form ghbForm = S.GET<RTC_GlitchHarvesterBlast_Form>();
-            //Form ghiForm = S.GET<RTC_GlitchHarvesterIntensity_Form>();
-            Form ssmForm = S.GET<RTC_SavestateManager_Form>();
-            Form shForm = S.GET<RTC_StashHistory_Form>();
-            Form spmForm = S.GET<RTC_StockpileManager_Form>();
-
-
-
-            cuGrid.SetTileForm(gpForm, 0, 0, 5, 5, true);
-            cuGrid.SetTileForm(ceForm, 5, 0, 10, 5, true);
-            cuGrid.SetTileForm(mdForm, 0, 5, 5, 14, true, (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom));
-            cuGrid.SetTileForm(UICore.mtForm, 15, 0, 11, 7, true);
-            cuGrid.SetTileForm(ghbForm, 5, 5, 4, 4, true);
-            cuGrid.SetTileForm(ssmForm, 5, 9, 4, 10, true);
-            cuGrid.SetTileForm(shForm, 9, 5, 6, 14, true, (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom));
-            cuGrid.SetTileForm(spmForm, 15, 7, 11, 12, true, (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right));
-            */
-            
         }
 
         private void PrepareLockSideBar()

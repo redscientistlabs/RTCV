@@ -74,7 +74,7 @@
             this.label4.Size = new System.Drawing.Size(270, 238);
             this.label4.TabIndex = 121;
             this.label4.Tag = "color:light2";
-            this.label4.Text = "Component is detached to window";
+            this.label4.Text = "Component is detached";
             // 
             // UI_ComponentFormTile
             // 

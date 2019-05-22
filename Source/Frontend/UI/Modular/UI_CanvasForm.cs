@@ -65,13 +65,17 @@ namespace RTCV.UI
                 if (newSizeX != null && newSizeY != null)
                     newForm.SetCompoentForm(componentForm, newSizeX.Value, newSizeY.Value, DisplayHeader);
             }
+            else
+            {
+                var foundForm = loadedTileForms[componentForm];
+                foundForm.SetCompoentForm(componentForm, newSizeX.Value, newSizeY.Value, DisplayHeader);
+            }
             /*
             else
             {
                 componentForm.Size = new Size(newSizeX.Value, newSizeY.Value);
             }
             */
-
             return loadedTileForms[componentForm];
         }
 
@@ -159,36 +163,41 @@ namespace RTCV.UI
             if (allExtraForms.ContainsKey(WindowHeader))
             {
                 extraForm = allExtraForms[WindowHeader];
-                
-                foreach (Control ctr in extraForm.Controls)
+
+                foreach (Control ctr in extraForm?.Controls)
                 {
                     if (ctr is UI_ComponentFormTile cft)
                     {
                         cft.ReAnchorToPanel();
                     }
                 }
-                
+
             }
             else
             {
                 extraForm = new UI_CanvasForm(true);
                 allExtraForms[WindowHeader] = extraForm;
+                extraForms.Add(extraForm);
+            }
 
                 extraForm.Controls.Clear();
-                extraForms.Add(extraForm);
-
-                if(canvasGrid.isResizable)
-                    extraForm.FormBorderStyle = FormBorderStyle.Sizable;
-                else
-                    extraForm.FormBorderStyle = FormBorderStyle.FixedSingle;
-
-                extraForm.MaximizeBox = false;
                 extraForm.Text = WindowHeader;
 
 				UICore.registerFormEvents(extraForm);
 				UICore.registerHotkeyBlacklistControls(extraForm);
                 loadTileForm(extraForm, canvasGrid);
-            }
+
+                if (canvasGrid.isResizable)
+                {
+                    extraForm.MaximizeBox = true;
+                    extraForm.FormBorderStyle = FormBorderStyle.Sizable;
+                }
+                else
+                {
+                    extraForm.MaximizeBox = false;
+                    extraForm.FormBorderStyle = FormBorderStyle.FixedSingle;
+                }
+
 
             if (!silent)
             {

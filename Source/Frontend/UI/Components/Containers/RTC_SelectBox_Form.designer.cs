@@ -57,7 +57,7 @@
             this.label8.Size = new System.Drawing.Size(170, 13);
             this.label8.TabIndex = 120;
             this.label8.Tag = "color:normal";
-            this.label8.Text = "Component is detached to window";
+            this.label8.Text = "Component is detached";
             // 
             // cbSelectBox
             // 
