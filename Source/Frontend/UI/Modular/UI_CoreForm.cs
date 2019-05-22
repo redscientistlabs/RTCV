@@ -196,9 +196,13 @@ This message only appears once.";
 
         private void button4_Click(object sender, EventArgs e)
         {
-            var cuGrid = new CanvasGrid(26, 19, "Custom Grid");
-            cuGrid.isResizable = true;
+            
 
+                CanvasGrid.LoadCustomLayout();
+
+
+            
+            /*
             Form gpForm = S.GET<RTC_GeneralParameters_Form>();
             Form mdForm = S.GET<RTC_MemoryDomains_Form>();
             Form ceForm = S.GET<RTC_CorruptionEngine_Form>();
@@ -208,6 +212,8 @@ This message only appears once.";
             Form shForm = S.GET<RTC_StashHistory_Form>();
             Form spmForm = S.GET<RTC_StockpileManager_Form>();
 
+
+
             cuGrid.SetTileForm(gpForm, 0, 0, 5, 5, true);
             cuGrid.SetTileForm(ceForm, 5, 0, 10, 5, true);
             cuGrid.SetTileForm(mdForm, 0, 5, 5, 14, true, (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom));
@@ -216,8 +222,8 @@ This message only appears once.";
             cuGrid.SetTileForm(ssmForm, 5, 9, 4, 10, true);
             cuGrid.SetTileForm(shForm, 9, 5, 6, 14, true, (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom));
             cuGrid.SetTileForm(spmForm, 15, 7, 11, 12, true, (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right));
-
-            cuGrid.LoadToMain();
+            */
+            
         }
 
         private void PrepareLockSideBar()

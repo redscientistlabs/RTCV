@@ -13,6 +13,7 @@ using static RTCV.NetCore.NetcoreCommands;
 using RTCV.NetCore.StaticTools;
 using RTCV.UI.Modular;
 using System.Drawing;
+using System.IO;
 
 namespace RTCV.UI
 {
@@ -78,11 +79,15 @@ namespace RTCV.UI
                             {
                                 UICore.FirstConnect = false;
 
-                                var sidebar = S.GET<UI_CoreForm>().pnSideBar;
+                                Panel sidebar = S.GET<UI_CoreForm>().pnSideBar;
                                 foreach (Control c in sidebar.Controls)
                                     if (c is Button b)
-                                        if (!b.Text.Contains("Test") && b.ForeColor != Color.OrangeRed)
+                                        if (!b.Text.Contains("Test")&& !b.Text.Contains("Custom Layout") && b.ForeColor != Color.OrangeRed)
                                             b.Visible = true;
+
+                                string customLayoutPath = Path.Combine(RTCV.CorruptCore.CorruptCore.RtcDir, "CustomLayout.txt");
+                                if (File.Exists(customLayoutPath))
+                                    S.GET<UI_CoreForm>().btnOpenCustomLayout.Visible = true;
 
                                 UI_DefaultGrids.engineConfig.LoadToMain();
                                 UI_DefaultGrids.glitchHarvester.LoadToNewWindow("Glitch Harvester", true);

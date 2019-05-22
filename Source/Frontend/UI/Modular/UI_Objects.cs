@@ -1,6 +1,8 @@
-﻿using System;
+﻿using RTCV.NetCore.StaticTools;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -12,10 +14,10 @@ namespace RTCV.UI
     {
         //Interface used for added contrals in SubForms
 
-        bool SubForm_HasLeftButton { get;}
-        bool SubForm_HasRightButton { get;}
-        string SubForm_LeftButtonText { get;}
-        string SubForm_RightButtonText { get;}
+        bool SubForm_HasLeftButton { get; }
+        bool SubForm_HasRightButton { get; }
+        string SubForm_LeftButtonText { get; }
+        string SubForm_RightButtonText { get; }
         void SubForm_LeftButton_Click();
         void SubForm_RightButton_Click();
     }
@@ -58,7 +60,7 @@ namespace RTCV.UI
         {
             x = _x;
             y = _y;
-            gridComponent = new Form[x,y];
+            gridComponent = new Form[x, y];
             gridComponentSize = new Size?[x, y];
             gridComponentDisplayHeader = new bool?[x, y];
             GridName = _GridName;
@@ -96,6 +98,107 @@ namespace RTCV.UI
         {
             UI_CanvasForm.loadTileFormExtraWindow(this, GridID, silent);
         }
-    }
 
+        internal static void LoadCustomLayout()
+        {
+            string customLayoutPath = Path.Combine(RTCV.CorruptCore.CorruptCore.RtcDir, "CustomLayout.txt");
+            string[] allLines = File.ReadAllLines(customLayoutPath);
+
+            int gridSizeX = 26;
+            int gridSizeY = 19;
+            string gridName = "Custom Grid";
+            CanvasGrid cuGrid = new CanvasGrid(gridSizeX, gridSizeY, gridName);
+
+
+            //foreach(string line in allLines.Select(it => it.Trim()))
+            for (int i = 0; i < allLines.Length; i++)
+            {
+                string line = allLines[i].Trim();
+
+
+                if (line == "" || line.StartsWith("//"))
+                    continue;
+
+                if (line.Contains("//"))
+                {
+                    string[] lineParts = line.Split('/');
+                    line = lineParts[0].Trim();
+                }
+
+                string[] parts = line.Split(':');
+
+                string command = parts[0];
+                string data = (parts.Length > 1 ? parts[1] : "");
+
+
+
+                switch (command)
+                {
+                    case "GridName":
+                        {
+                            gridName = data;
+                            break;
+                        }
+                    case "GridSize":
+                        {
+                            string[] subData = data.Split(',');
+
+                            gridSizeX = Convert.ToInt32(subData[0].Trim());
+                            gridSizeY = Convert.ToInt32(subData[1].Trim());
+
+                            break;
+                        }
+                    case "CreateGrid":
+                        {
+                            cuGrid = new CanvasGrid(gridSizeX, gridSizeY, gridName);
+                            break;
+                        }
+                    case "IsResizable":
+                        {
+                            cuGrid.isResizable = true;
+                            break;
+                        }
+                    case "SetTileForm":
+                        {
+                            string[] subData = data.Split(',');
+
+                            string formName = subData[0].Trim();
+
+                            int formGridPosX = Convert.ToInt32(subData[1].Trim());
+                            int formGridPosY = Convert.ToInt32(subData[2].Trim());
+                            int formGridSizeX = Convert.ToInt32(subData[3].Trim());
+                            int formGridSizeY = Convert.ToInt32(subData[4].Trim());
+
+
+                            AnchorStyles formGridAnchor = (AnchorStyles.Top | AnchorStyles.Left);
+
+                            if (subData.Length > 5)
+                                formGridAnchor = (AnchorStyles)Convert.ToInt32(subData[5].Trim());
+
+                            Form tileForm = null;
+
+                            if (formName == "MemoryTools")
+                                tileForm = UICore.mtForm;
+                            else
+                                tileForm = (Form)S.GET(Type.GetType("RTCV.UI." + formName));
+
+                            cuGrid.SetTileForm(tileForm, formGridPosX, formGridPosY, formGridSizeX, formGridSizeY, true, formGridAnchor);
+
+                            break;
+                        }
+                    case "LoadTo":
+                        {
+                            if (data == "Main")
+                                cuGrid.LoadToMain();
+                            else
+                                cuGrid.LoadToNewWindow("External");
+
+                            break;
+                        }
+                }
+            }
+        }
+    }
 }
+
+

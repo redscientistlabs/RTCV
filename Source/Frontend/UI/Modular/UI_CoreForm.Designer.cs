@@ -37,7 +37,7 @@
             this.btnGpJumpBack = new System.Windows.Forms.Button();
             this.lbGameProtection = new System.Windows.Forms.Label();
             this.cbUseGameProtection = new System.Windows.Forms.CheckBox();
-            this.btnTestCustomLayout = new System.Windows.Forms.Button();
+            this.btnOpenCustomLayout = new System.Windows.Forms.Button();
             this.btnTestSubform = new System.Windows.Forms.Button();
             this.pnAutoKillSwitch = new System.Windows.Forms.Panel();
             this.cbUseAutoKillSwitch = new System.Windows.Forms.CheckBox();
@@ -62,7 +62,7 @@
             this.pnSideBar.Controls.Add(this.btnTestLockdown);
             this.pnSideBar.Controls.Add(this.pnGlitchHarvesterOpen);
             this.pnSideBar.Controls.Add(this.pnCrashProtection);
-            this.pnSideBar.Controls.Add(this.btnTestCustomLayout);
+            this.pnSideBar.Controls.Add(this.btnOpenCustomLayout);
             this.pnSideBar.Controls.Add(this.btnTestSubform);
             this.pnSideBar.Controls.Add(this.pnAutoKillSwitch);
             this.pnSideBar.Controls.Add(this.btnSettings);
@@ -89,7 +89,7 @@
             this.btnTestLockdown.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.btnTestLockdown.ForeColor = System.Drawing.Color.White;
             this.btnTestLockdown.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnTestLockdown.Location = new System.Drawing.Point(0, 382);
+            this.btnTestLockdown.Location = new System.Drawing.Point(0, 395);
             this.btnTestLockdown.Name = "btnTestLockdown";
             this.btnTestLockdown.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.btnTestLockdown.Size = new System.Drawing.Size(150, 33);
@@ -187,27 +187,27 @@
             this.cbUseGameProtection.UseVisualStyleBackColor = true;
             this.cbUseGameProtection.CheckedChanged += new System.EventHandler(this.cbUseGameProtection_CheckedChanged);
             // 
-            // btnTestCustomLayout
+            // btnOpenCustomLayout
             // 
-            this.btnTestCustomLayout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.btnTestCustomLayout.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnTestCustomLayout.FlatAppearance.BorderSize = 0;
-            this.btnTestCustomLayout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnTestCustomLayout.Font = new System.Drawing.Font("Segoe UI", 9.75F);
-            this.btnTestCustomLayout.ForeColor = System.Drawing.Color.White;
-            this.btnTestCustomLayout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnTestCustomLayout.Location = new System.Drawing.Point(0, 333);
-            this.btnTestCustomLayout.Name = "btnTestCustomLayout";
-            this.btnTestCustomLayout.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.btnTestCustomLayout.Size = new System.Drawing.Size(150, 33);
-            this.btnTestCustomLayout.TabIndex = 9;
-            this.btnTestCustomLayout.TabStop = false;
-            this.btnTestCustomLayout.Tag = "color:dark3";
-            this.btnTestCustomLayout.Text = "Test Custom Layout";
-            this.btnTestCustomLayout.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnTestCustomLayout.UseVisualStyleBackColor = false;
-            this.btnTestCustomLayout.Visible = false;
-            this.btnTestCustomLayout.Click += new System.EventHandler(this.button4_Click);
+            this.btnOpenCustomLayout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.btnOpenCustomLayout.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnOpenCustomLayout.FlatAppearance.BorderSize = 0;
+            this.btnOpenCustomLayout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOpenCustomLayout.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            this.btnOpenCustomLayout.ForeColor = System.Drawing.Color.White;
+            this.btnOpenCustomLayout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnOpenCustomLayout.Location = new System.Drawing.Point(0, 282);
+            this.btnOpenCustomLayout.Name = "btnOpenCustomLayout";
+            this.btnOpenCustomLayout.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.btnOpenCustomLayout.Size = new System.Drawing.Size(150, 33);
+            this.btnOpenCustomLayout.TabIndex = 9;
+            this.btnOpenCustomLayout.TabStop = false;
+            this.btnOpenCustomLayout.Tag = "color:dark3";
+            this.btnOpenCustomLayout.Text = "Load Custom Layout";
+            this.btnOpenCustomLayout.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnOpenCustomLayout.UseVisualStyleBackColor = false;
+            this.btnOpenCustomLayout.Visible = false;
+            this.btnOpenCustomLayout.Click += new System.EventHandler(this.button4_Click);
             // 
             // btnTestSubform
             // 
@@ -218,7 +218,7 @@
             this.btnTestSubform.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.btnTestSubform.ForeColor = System.Drawing.Color.White;
             this.btnTestSubform.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnTestSubform.Location = new System.Drawing.Point(0, 293);
+            this.btnTestSubform.Location = new System.Drawing.Point(0, 356);
             this.btnTestSubform.Name = "btnTestSubform";
             this.btnTestSubform.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.btnTestSubform.Size = new System.Drawing.Size(150, 33);
@@ -532,11 +532,11 @@
         public System.Windows.Forms.CheckBox cbUseGameProtection;
         private System.Windows.Forms.Button btnTestSubform;
         internal System.Windows.Forms.Panel pnGlitchHarvesterOpen;
-        private System.Windows.Forms.Button btnTestCustomLayout;
         private System.Windows.Forms.Button btnTestLockdown;
         public System.Windows.Forms.Panel pnCrashProtection;
         public System.Windows.Forms.Panel pnAutoKillSwitch;
         public System.Windows.Forms.Panel pnSideBar;
+        public System.Windows.Forms.Button btnOpenCustomLayout;
     }
 }
 
