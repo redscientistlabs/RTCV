@@ -71,7 +71,7 @@ namespace RTCV.CorruptCore
             return partial;
 		}
 
-		public static BlastUnit GenerateUnit(string domain, long address, int precision)
+		public static BlastUnit GenerateUnit(string domain, long address, int precision, int alignment)
 		{
 			try
 			{
@@ -81,7 +81,9 @@ namespace RTCV.CorruptCore
 
 				Byte[] value = new Byte[precision];
 
-				long safeAddress = address - (address % precision);
+				long safeAddress = address - (address % precision) + alignment;
+				if (safeAddress > mi.Size - precision)
+					safeAddress = mi.Size - (2 * precision) + alignment; //If we're out of range, hit the last aligned address
 
                 ulong randomValue = 0;
                 bool def = false;

@@ -131,7 +131,8 @@
         public static readonly string CORE_SELECTEDENGINE = "CORE_SELECTEDENGINE";
 		public static readonly string CORE_ALLOWCROSSCORECORRUPTION = "CORE_ALLOWCROSSCORECORRUPTION";
 		public static readonly string CORE_CURRENTPRECISION = "CORE_CURRENTPRECISION";
-		public static readonly string CORE_INTENSITY = "CORE_INTENSITY";
+        public static readonly string CORE_CURRENTALIGNMENT = "CORE_CURRENTALIGNMENT";
+        public static readonly string CORE_INTENSITY = "CORE_INTENSITY";
 		public static readonly string CORE_ERRORDELAY = "CORE_ERRORDELAY";
 		public static readonly string CORE_RADIUS = "CORE_RADIUS";
 		public static readonly string STEP_CLEARSTEPACTIONSONREWIND = "STEP_CLEARSTEPACTIONSONREWIND";

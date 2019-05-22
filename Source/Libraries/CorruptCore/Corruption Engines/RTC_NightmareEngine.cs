@@ -79,7 +79,7 @@ namespace RTCV.CorruptCore
 
 		private static NightmareType type = NightmareType.SET;
 
-		public static BlastUnit GenerateUnit(string domain, long address, int precision)
+		public static BlastUnit GenerateUnit(string domain, long address, int precision, int alignment)
 		{
 			// Randomly selects a memory operation according to the selected algorithm
 
@@ -137,7 +137,9 @@ namespace RTCV.CorruptCore
 
 				byte[] value = new byte[precision];
 
-				long safeAddress = address - (address % precision);
+				long safeAddress = address - (address % precision) + alignment;
+				if (safeAddress > mi.Size - precision)
+					safeAddress = mi.Size - (2*precision) + alignment; //If we're out of range, hit the last aligned address
 
 				if (type == NightmareType.SET)
                 {

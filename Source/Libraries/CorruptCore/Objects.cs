@@ -1784,12 +1784,12 @@ namespace RTCV.CorruptCore
 
 		public override string ToString()
 		{
-			string enabledString = "[ ] BlastByte -> ";
+			string enabledString = "[ ] BlastUnit -> ";
 			if (IsEnabled)
-				enabledString = "[x] BlastByte -> ";
+				enabledString = "[x] BlastUnit -> ";
 
 			string cleanDomainName = Domain.Replace("(nametables)", ""); //Shortens the domain name if it contains "(nametables)"
-			return (enabledString + cleanDomainName + "(" + Convert.ToInt32(Address).ToString() + ")." + Source.ToString() + "(" + ValueString + ")");
+			return (enabledString + cleanDomainName + "(" + Convert.ToInt32(Address).ToString("X") + ")." + Source.ToString() + "(" + ValueString + ")");
 		}
 
 		/// <summary>

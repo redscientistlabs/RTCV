@@ -96,6 +96,8 @@
             this.comboBox7 = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.btnOpenCustomEngine = new System.Windows.Forms.Button();
+            this.nmAlignment = new RTCV.UI.Components.Controls.MultiUpDown();
+            this.label8 = new System.Windows.Forms.Label();
             this.pnCustomPrecision.SuspendLayout();
             this.gbBlastGeneratorEngine.SuspendLayout();
             this.gbVectorEngine.SuspendLayout();
@@ -117,11 +119,13 @@
             // pnCustomPrecision
             // 
             this.pnCustomPrecision.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.pnCustomPrecision.Controls.Add(this.label5);
             this.pnCustomPrecision.Controls.Add(this.cbCustomPrecision);
-            this.pnCustomPrecision.Location = new System.Drawing.Point(207, 157);
+            this.pnCustomPrecision.Controls.Add(this.label5);
+            this.pnCustomPrecision.Controls.Add(this.label8);
+            this.pnCustomPrecision.Controls.Add(this.nmAlignment);
+            this.pnCustomPrecision.Location = new System.Drawing.Point(19, 157);
             this.pnCustomPrecision.Name = "pnCustomPrecision";
-            this.pnCustomPrecision.Size = new System.Drawing.Size(233, 32);
+            this.pnCustomPrecision.Size = new System.Drawing.Size(421, 32);
             this.pnCustomPrecision.TabIndex = 139;
             this.pnCustomPrecision.Tag = "color:dark2";
             this.pnCustomPrecision.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
@@ -131,7 +135,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F);
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(6, 10);
+            this.label5.Location = new System.Drawing.Point(195, 8);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(95, 13);
             this.label5.TabIndex = 82;
@@ -150,7 +154,7 @@
             "16-bit",
             "32-bit",
             "64-bit"});
-            this.cbCustomPrecision.Location = new System.Drawing.Point(106, 5);
+            this.cbCustomPrecision.Location = new System.Drawing.Point(294, 5);
             this.cbCustomPrecision.Name = "cbCustomPrecision";
             this.cbCustomPrecision.Size = new System.Drawing.Size(121, 21);
             this.cbCustomPrecision.TabIndex = 81;
@@ -1141,6 +1145,46 @@
             this.btnOpenCustomEngine.UseVisualStyleBackColor = false;
             this.btnOpenCustomEngine.Click += new System.EventHandler(this.btnOpenCustomEngine_Click);
             // 
+            // nmAlignment
+            // 
+            this.nmAlignment.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
+            this.nmAlignment.Font = new System.Drawing.Font("Segoe UI", 7F);
+            this.nmAlignment.ForeColor = System.Drawing.Color.White;
+            this.nmAlignment.Hexadecimal = false;
+            this.nmAlignment.Location = new System.Drawing.Point(152, 5);
+            this.nmAlignment.Maximum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.nmAlignment.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.nmAlignment.Name = "nmAlignment";
+            this.nmAlignment.Size = new System.Drawing.Size(37, 21);
+            this.nmAlignment.TabIndex = 148;
+            this.nmAlignment.Tag = "color:normal";
+            this.nmAlignment.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.nmAlignment.ValueChanged += this.nmAlignment_ValueChanged;
+            this.nmAlignment.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F);
+            this.label8.ForeColor = System.Drawing.Color.White;
+            this.label8.Location = new System.Drawing.Point(86, 8);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(63, 13);
+            this.label8.TabIndex = 149;
+            this.label8.Text = "Alignment:";
+            // 
             // RTC_CorruptionEngine_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1266,5 +1310,7 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label6;
 		public Components.Controls.MultiUpDown updownMaxFreeze;
-	}
+        private System.Windows.Forms.Label label8;
+        public Components.Controls.MultiUpDown nmAlignment;
+    }
 }

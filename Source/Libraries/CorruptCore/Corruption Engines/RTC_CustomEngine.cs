@@ -147,7 +147,7 @@ namespace RTCV.CorruptCore
 		
 
 
-		public static BlastUnit GenerateUnit(string domain, long address, int precision)
+		public static BlastUnit GenerateUnit(string domain, long address, int precision, int alignment)
 		{
 			try
 			{
@@ -159,10 +159,11 @@ namespace RTCV.CorruptCore
 
 
 				byte[] value = new byte[precision];
-				long safeAddress = address - (address % precision);
+				long safeAddress = address - (address % precision) + alignment;
+				if (safeAddress > mi.Size - precision)
+					safeAddress = mi.Size - (2*precision) + alignment; //If we're out of range, hit the last aligned address
 
-			
-				BlastUnit bu = new BlastUnit();
+                BlastUnit bu = new BlastUnit();
 
 				switch (Source)
 				{
@@ -228,7 +229,12 @@ namespace RTCV.CorruptCore
 							case CustomStoreAddress.RANDOM:
 							{
 								BlastTarget bt = CorruptCore.GetBlastTarget();
-								long safeStartAddress = bt.Address - (bt.Address % precision);
+								MemoryInterface _mi = MemoryDomains.GetInterface(bt.Domain);
+								long safeStartAddress = bt.Address - (bt.Address % precision) + alignment;
+
+								if (safeStartAddress > _mi.Size - precision)
+									safeStartAddress = _mi.Size - (2 * precision) + alignment; //If we're out of range, hit the last aligned address
+
 								bu.SourceDomain = bt.Domain;
 								bu.SourceAddress = safeStartAddress;
 							}

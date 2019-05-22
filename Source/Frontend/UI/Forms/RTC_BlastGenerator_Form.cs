@@ -168,7 +168,7 @@ namespace RTCV.UI
 				((DataGridViewNumericUpDownCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvExecuteFrame"]).Value = 0M;
 
 
-				//Generate a random seed
+				//Generate a random Seed
 				((DataGridViewTextBoxCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvSeed"]).Value = CorruptCore.CorruptCore.RND.Next();
 
 

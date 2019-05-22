@@ -95,8 +95,8 @@ namespace RTCV.UI
 			gbVectorEngine.Visible = false;
 			gbBlastGeneratorEngine.Visible = false;
 			gbCustomEngine.Visible = false;
+			cbCustomPrecision.Enabled = false;
 
-			pnCustomPrecision.Visible = false;
 
             object realtime = AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME];
             if (realtime != null && ((bool)realtime))
@@ -124,32 +124,32 @@ namespace RTCV.UI
 				case "Nightmare Engine":
 					CorruptCore.CorruptCore.SelectedEngine = CorruptionEngine.NIGHTMARE;
 					gbNightmareEngine.Visible = true;
-					pnCustomPrecision.Visible = true;
+                    cbCustomPrecision.Enabled = true;
 					break;
 
 				case "Hellgenie Engine":
 					CorruptCore.CorruptCore.SelectedEngine = CorruptionEngine.HELLGENIE;
 					gbHellgenieEngine.Visible = true;
-					pnCustomPrecision.Visible = true;
-					break;
+					cbCustomPrecision.Enabled = true;
+                    break;
 
 				case "Distortion Engine":
 					CorruptCore.CorruptCore.SelectedEngine = CorruptionEngine.DISTORTION;
 					gbDistortionEngine.Visible = true;
-					pnCustomPrecision.Visible = true;
-					break;
+					cbCustomPrecision.Enabled = true;
+                    break;
 
 				case "Freeze Engine":
 					CorruptCore.CorruptCore.SelectedEngine = CorruptionEngine.FREEZE;
 					gbFreezeEngine.Visible = true;
-					pnCustomPrecision.Visible = true;
-					break;
+					cbCustomPrecision.Enabled = true;
+                    break;
 
 				case "Pipe Engine":
 					CorruptCore.CorruptCore.SelectedEngine = CorruptionEngine.PIPE;
 					gbPipeEngine.Visible = true;
-					pnCustomPrecision.Visible = true;
-					break;
+					cbCustomPrecision.Enabled = true;
+                    break;
 
 				case "Vector Engine":
 					CorruptCore.CorruptCore.SelectedEngine = CorruptionEngine.VECTOR;
@@ -159,8 +159,8 @@ namespace RTCV.UI
 				case "Custom Engine":
 					CorruptCore.CorruptCore.SelectedEngine = CorruptionEngine.CUSTOM;
 					gbCustomEngine.Visible = true;
-					pnCustomPrecision.Visible = true;
-					break;
+					cbCustomPrecision.Enabled = true;
+                    break;
 
 				case "Blast Generator":
 					CorruptCore.CorruptCore.SelectedEngine = CorruptionEngine.BLASTGENERATORENGINE;
@@ -350,11 +350,19 @@ namespace RTCV.UI
                 }
 				
 				updateMinMaxBoxes(CorruptCore.CorruptCore.CurrentPrecision);
-				S.GET<RTC_CustomEngineConfig_Form>().UpdateMinMaxBoxes(CorruptCore.CorruptCore.CurrentPrecision);
+                nmAlignment.Maximum = CorruptCore.CorruptCore.CurrentPrecision - 1;
+                S.GET<RTC_CustomEngineConfig_Form>().UpdateMinMaxBoxes(CorruptCore.CorruptCore.CurrentPrecision);
 			}
 		}
 
-		private void btnOpenBlastGenerator_Click(object sender, EventArgs e)
+
+        private void nmAlignment_ValueChanged(object sender, EventArgs e)
+        {
+            CorruptCore.CorruptCore.Alignment = Convert.ToInt32(nmAlignment.Value);
+        }
+
+
+        private void btnOpenBlastGenerator_Click(object sender, EventArgs e)
 		{
 			if (S.GET<RTC_BlastGenerator_Form>() != null)
 				S.GET<RTC_BlastGenerator_Form>().Close();
@@ -495,5 +503,5 @@ namespace RTCV.UI
 			S.GET<RTC_CustomEngineConfig_Form>().Focus();
 		}
 
-	}
+    }
 }
