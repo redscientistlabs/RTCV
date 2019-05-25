@@ -570,7 +570,7 @@ namespace RTCV.CorruptCore
         {
             if (Compacted)
             {
-                long prevAddresses = 0;
+                long currentBankStartAddress = 0;
 
 
                 foreach (long[] addressBank in CompactPointerAddresses)
@@ -578,10 +578,10 @@ namespace RTCV.CorruptCore
                     try
                     {
 
-                        if ((address - prevAddresses) < (prevAddresses + addressBank.Length)) // are we in the right bank?
-                            return addressBank[address - prevAddresses];
+                        if (address < (currentBankStartAddress + addressBank.Length)) // are we in the right bank?
+                            return addressBank[address - currentBankStartAddress];
                         else
-                            prevAddresses += addressBank.Length;
+                            currentBankStartAddress += addressBank.Length;
 
                     }
                     catch (Exception ex)
