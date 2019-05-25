@@ -484,6 +484,9 @@ namespace RTCV.CorruptCore
                 return;
             }
 
+            if (PointerDomains.Count == 0 && PointerAddresses.Count == 0)
+                return;
+
             List<string> domains = new List<string>();
             List<List<long>> domainAdresses = new List<List<long>>();
 

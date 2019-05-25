@@ -1040,12 +1040,14 @@ namespace RTCV.CorruptCore
 
         public void SanitizeDuplicates()
         {
+            /*
             Layer = Layer.GroupBy(x => new { x.Address, x.Domain })
               .Where(g => g.Count() > 1)
               .Select(y => y.First())
               .ToList();
+              */
 
-            /*
+            
             List<BlastUnit> bul = new List<BlastUnit>(Layer.ToArray().Reverse());
             List<long> usedAddresses = new List<long>();
 
@@ -1058,7 +1060,7 @@ namespace RTCV.CorruptCore
                     Layer.Remove(bu);
                 }
             }
-            */
+            
 
         }
     }
