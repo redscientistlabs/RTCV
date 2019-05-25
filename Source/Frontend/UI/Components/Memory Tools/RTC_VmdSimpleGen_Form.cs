@@ -8,17 +8,18 @@ using System.Windows.Forms;
 using RTCV.CorruptCore;
 using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
+using RTCV.UI.Components.Controls;
 
 namespace RTCV.UI
 {
-	public partial class RTC_VmdGen_Form : ComponentForm, IAutoColorize
+	public partial class RTC_VmdSimpleGen_Form : ComponentForm, IAutoColorize
 	{
 		public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
 		public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
 		long currentDomainSize = 0;
 
-		public RTC_VmdGen_Form()
+		public RTC_VmdSimpleGen_Form()
 		{
 			InitializeComponent();
 		}
@@ -55,9 +56,26 @@ namespace RTCV.UI
 			lbEndianTypeValue.Text = (mi.BigEndian ? "Big" : "Little");
 
 			currentDomainSize = Convert.ToInt64(mi.Size);
+
+            updateInterface();
 		}
 
-		public long SafeStringToLong(string input)
+        private void updateInterface()
+        {
+            MemoryInterface mi = MemoryDomains.MemoryInterfaces[cbSelectedMemoryDomain.SelectedItem.ToString()];
+
+            long fullRange = mi.Size;
+
+            if(mtbStartAddress.Value > fullRange)
+                mtbStartAddress.Value = fullRange;
+            mtbStartAddress.Maximum = fullRange;
+
+            mtbStartAddress.Enabled = true;
+            mtbRange.Enabled = true;
+            btnGenerateVMD.Enabled = true;
+        }
+
+        public long SafeStringToLong(string input)
 		{
 			try
 			{
@@ -105,15 +123,7 @@ namespace RTCV.UI
 			proto.WordSize = mi.WordSize;
 			proto.Padding = 0;
 
-			if (cbUsePointerSpacer.Checked && nmPointerSpacer.Value > 1)
-				proto.PointerSpacer = Convert.ToInt64(nmPointerSpacer.Value);
-
-			if (cbUsePadding.Checked && nmPadding.Value > 0)
-			{
-				proto.Padding = Convert.ToInt64(nmPadding.Value);
-			}
-
-			foreach (string line in tbCustomAddresses.Lines)
+			foreach (string line in tbRangeExpression.Lines)
 			{
 				if (string.IsNullOrWhiteSpace(line))
 					continue;
@@ -220,10 +230,7 @@ namespace RTCV.UI
 
 			currentDomainSize = 0;
 
-			nmPointerSpacer.Value = 2;
-			cbUsePointerSpacer.Checked = false;
-
-			tbCustomAddresses.Text = "";
+			tbRangeExpression.Text = "";
 
 			lbDomainSizeValue.Text = "######";
 			lbEndianTypeValue.Text = "######";
@@ -271,5 +278,37 @@ address is excluded from the range.
 pointer spacer parameter");
 		}
 
-	}
+        private void MtbStartAddress_ValueChanged(object sender, Components.Controls.MultiTrackBar.ValueUpdateEventArgs e)
+        {
+
+            var AdressRangeLeft = mtbStartAddress.Maximum - mtbStartAddress.Value;
+            /*
+            if (mtbRange.Value > AdressRangeLeft)
+            {
+                mtbRange.Value = AdressRangeLeft;
+            }
+            */
+            mtbRange.Maximum = AdressRangeLeft;
+
+            ComputeRangeExpression();
+
+        }
+
+        private void MtbRange_CheckChanged(object sender, EventArgs e) => ComputeRangeExpression();
+        private void MtbRange_ValueChanged(object sender, MultiTrackBar.ValueUpdateEventArgs e) => ComputeRangeExpression();
+        private void ComputeRangeExpression()
+        {
+            long maxAddress = mtbStartAddress.Maximum;
+            long startAddress = mtbStartAddress.Value;
+            long range = mtbRange.Value;
+            long addressPlusRange = startAddress + range;
+            bool rangeUsed = mtbRange.Checked;
+
+            string generatedExpression = $"{startAddress.ToHexString()}-{(rangeUsed ? addressPlusRange.ToHexString() : maxAddress.ToHexString())}";
+
+                tbRangeExpression.Text = generatedExpression;
+
+
+        }
+    }
 }

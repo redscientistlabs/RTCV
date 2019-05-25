@@ -353,7 +353,7 @@ namespace RTCV.CorruptCore
 		public string GenDomain { get; set; }
 		public bool BigEndian { get; set; }
 		public int WordSize { get; set; }
-		public long PointerSpacer { get; set; }
+        public long PointerSpacer { get; set; } = 1;
 
 		public long Padding { get; set; }
 

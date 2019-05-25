@@ -2612,7 +2612,12 @@ public static class NumberExtensions
 		return string.Format("{0:X" + numdigits + "}", n);
 	}
 
-	public static string ToHexString(this ulong n, int numdigits)
+    public static string ToHexString(this long n)
+    {
+        return $"{n:X}";
+    }
+
+    public static string ToHexString(this ulong n, int numdigits)
 	{
 		return string.Format("{0:X" + numdigits + "}", n);
 	}

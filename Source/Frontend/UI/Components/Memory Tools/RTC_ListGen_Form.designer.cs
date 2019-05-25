@@ -47,9 +47,9 @@
             this.btnGenerateList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGenerateList.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnGenerateList.ForeColor = System.Drawing.Color.White;
-            this.btnGenerateList.Location = new System.Drawing.Point(6, 83);
+            this.btnGenerateList.Location = new System.Drawing.Point(9, 83);
             this.btnGenerateList.Name = "btnGenerateList";
-            this.btnGenerateList.Size = new System.Drawing.Size(203, 30);
+            this.btnGenerateList.Size = new System.Drawing.Size(189, 30);
             this.btnGenerateList.TabIndex = 124;
             this.btnGenerateList.TabStop = false;
             this.btnGenerateList.Tag = "color:light1";
@@ -65,7 +65,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbListValues.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.tbListValues.ForeColor = System.Drawing.Color.White;
-            this.tbListValues.Location = new System.Drawing.Point(225, 12);
+            this.tbListValues.Location = new System.Drawing.Point(220, 12);
             this.tbListValues.MaxLength = 0;
             this.tbListValues.Multiline = true;
             this.tbListValues.Name = "tbListValues";
@@ -80,7 +80,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(8, 48);
+            this.label2.Location = new System.Drawing.Point(11, 48);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(59, 13);
             this.label2.TabIndex = 131;
@@ -92,16 +92,16 @@
             this.tbListName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.tbListName.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.tbListName.ForeColor = System.Drawing.Color.White;
-            this.tbListName.Location = new System.Drawing.Point(71, 44);
+            this.tbListName.Location = new System.Drawing.Point(74, 44);
             this.tbListName.Name = "tbListName";
-            this.tbListName.Size = new System.Drawing.Size(136, 22);
+            this.tbListName.Size = new System.Drawing.Size(124, 22);
             this.tbListName.TabIndex = 132;
             this.tbListName.Tag = "color:dark1";
             this.tbListName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // cbSaveFile
             // 
-            this.cbSaveFile.Location = new System.Drawing.Point(11, 21);
+            this.cbSaveFile.Location = new System.Drawing.Point(14, 21);
             this.cbSaveFile.Name = "cbSaveFile";
             this.cbSaveFile.Size = new System.Drawing.Size(104, 24);
             this.cbSaveFile.TabIndex = 0;
@@ -114,9 +114,9 @@
             this.btnRefreshListsFromFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRefreshListsFromFile.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnRefreshListsFromFile.ForeColor = System.Drawing.Color.White;
-            this.btnRefreshListsFromFile.Location = new System.Drawing.Point(4, 208);
+            this.btnRefreshListsFromFile.Location = new System.Drawing.Point(7, 208);
             this.btnRefreshListsFromFile.Name = "btnRefreshListsFromFile";
-            this.btnRefreshListsFromFile.Size = new System.Drawing.Size(215, 30);
+            this.btnRefreshListsFromFile.Size = new System.Drawing.Size(207, 30);
             this.btnRefreshListsFromFile.TabIndex = 136;
             this.btnRefreshListsFromFile.TabStop = false;
             this.btnRefreshListsFromFile.Tag = "color:light1";
@@ -132,9 +132,9 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.tbListName);
             this.groupBox1.ForeColor = System.Drawing.Color.White;
-            this.groupBox1.Location = new System.Drawing.Point(4, 8);
+            this.groupBox1.Location = new System.Drawing.Point(7, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(215, 128);
+            this.groupBox1.Size = new System.Drawing.Size(209, 128);
             this.groupBox1.TabIndex = 137;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "List Generator";
@@ -147,7 +147,7 @@
             this.btnHelp.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
             this.btnHelp.ForeColor = System.Drawing.Color.Black;
             this.btnHelp.Image = ((System.Drawing.Image)(resources.GetObject("btnHelp.Image")));
-            this.btnHelp.Location = new System.Drawing.Point(188, 13);
+            this.btnHelp.Location = new System.Drawing.Point(179, 19);
             this.btnHelp.Name = "btnHelp";
             this.btnHelp.Size = new System.Drawing.Size(19, 19);
             this.btnHelp.TabIndex = 138;

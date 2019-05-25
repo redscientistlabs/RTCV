@@ -58,7 +58,15 @@ namespace RTCV.UI.Components.Controls
 			}
 		}
 
-		public bool FirstLoadDone = false;
+
+        [Description("Value of the checkbox"), Category("Data")]
+        public bool Checked
+        {
+            get => cbControlName.Checked;
+            set => cbControlName.Checked = value;
+        }
+
+        public bool FirstLoadDone = false;
 
 		private long _Minimum = 0;
 		[Description("Minimum value of the control"), Category("Data")]
@@ -161,7 +169,10 @@ namespace RTCV.UI.Components.Controls
             decimal max_X_Squared = max_X * max_X;
             decimal A = Maximum / max_X_Squared;
 
-            decimal X = DecSqrt(Y / A);
+            decimal X = Maximum;
+
+            if (A != 0) // fixes divisions by 0
+            X = DecSqrt(Y / A);
 
             decimal Floored_X = Math.Floor(X);
             return Convert.ToInt32(Floored_X);
@@ -207,6 +218,12 @@ namespace RTCV.UI.Components.Controls
         private void MultiTrackBar_Load(object sender, EventArgs e)
         {
             FirstLoadDone = true;
+
+            if(DisplayCheckbox && !cbControlName.Checked)
+            {
+                nmControlValue.Enabled = false;
+                tbControlValue.Enabled = false;
+            }
         }
 
         private void UpdateAllControls(long nmValue, long tbValue, Control setter)
@@ -294,7 +311,14 @@ namespace RTCV.UI.Components.Controls
         }
 		private void cbControlName_CheckedChanged(object sender, EventArgs e)
 		{
-			OnCheckChanged(sender, e);
+            if (DisplayCheckbox)
+            {
+                nmControlValue.Enabled = cbControlName.Checked;
+                tbControlValue.Enabled = cbControlName.Checked;
+            }
+
+            OnCheckChanged(sender, e);
+
 		}
 
 		private void nmControlValue_KeyUp(object sender, KeyEventArgs e)

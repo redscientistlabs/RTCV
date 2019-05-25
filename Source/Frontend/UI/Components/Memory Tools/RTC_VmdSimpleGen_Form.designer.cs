@@ -1,6 +1,6 @@
 ﻿namespace RTCV.UI
 {
-    partial class RTC_VmdGen_Form
+    partial class RTC_VmdSimpleGen_Form
     {
         /// <summary>
         /// Required designer variable.
@@ -28,18 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_VmdGen_Form));
-            this.label1 = new System.Windows.Forms.Label();
-            this.nmPadding = new System.Windows.Forms.NumericUpDown();
-            this.cbUsePadding = new System.Windows.Forms.CheckBox();
-            this.btnHelp = new System.Windows.Forms.Button();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_VmdSimpleGen_Form));
+            this.mtbRange = new RTCV.UI.Components.Controls.MultiTrackBar();
+            this.mtbStartAddress = new RTCV.UI.Components.Controls.MultiTrackBar();
             this.tbVmdName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.tbCustomAddresses = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.nmPointerSpacer = new System.Windows.Forms.NumericUpDown();
-            this.cbUsePointerSpacer = new System.Windows.Forms.CheckBox();
+            this.tbRangeExpression = new System.Windows.Forms.TextBox();
             this.btnGenerateVMD = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lbEndianTypeValue = new System.Windows.Forms.Label();
@@ -51,85 +46,58 @@
             this.label17 = new System.Windows.Forms.Label();
             this.btnLoadDomains = new System.Windows.Forms.Button();
             this.cbSelectedMemoryDomain = new System.Windows.Forms.ComboBox();
-            ((System.ComponentModel.ISupportInitialize)(this.nmPadding)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nmPointerSpacer)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label1
+            // mtbRange
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(98, 168);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(95, 13);
-            this.label1.TabIndex = 137;
-            this.label1.Text = "bytes of padding";
-            this.label1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
+            this.mtbRange.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.mtbRange.Checked = false;
+            this.mtbRange.DisplayCheckbox = true;
+            this.mtbRange.Enabled = false;
+            this.mtbRange.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.mtbRange.Label = "Range";
+            this.mtbRange.Location = new System.Drawing.Point(4, 125);
+            this.mtbRange.Maximum = ((long)(65535));
+            this.mtbRange.Minimum = ((long)(0));
+            this.mtbRange.Name = "mtbRange";
+            this.mtbRange.Size = new System.Drawing.Size(212, 60);
+            this.mtbRange.TabIndex = 139;
+            this.mtbRange.Tag = "color:dark3";
+            this.mtbRange.UncapNumericBox = false;
+            this.mtbRange.Value = ((long)(0));
+            this.mtbRange.ValueChanged += new System.EventHandler<RTCV.UI.Components.Controls.MultiTrackBar.ValueUpdateEventArgs>(this.MtbRange_ValueChanged);
+            this.mtbRange.CheckChanged += new System.EventHandler<System.EventArgs>(this.MtbRange_CheckChanged);
             // 
-            // nmPadding
+            // mtbStartAddress
             // 
-            this.nmPadding.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.nmPadding.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.nmPadding.ForeColor = System.Drawing.Color.White;
-            this.nmPadding.Location = new System.Drawing.Point(49, 164);
-            this.nmPadding.Maximum = new decimal(new int[] {
-            8192,
-            0,
-            0,
-            0});
-            this.nmPadding.Name = "nmPadding";
-            this.nmPadding.Size = new System.Drawing.Size(47, 22);
-            this.nmPadding.TabIndex = 136;
-            this.nmPadding.Tag = "color:dark1";
-            this.nmPadding.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nmPadding.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // cbUsePadding
-            // 
-            this.cbUsePadding.AutoSize = true;
-            this.cbUsePadding.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.cbUsePadding.ForeColor = System.Drawing.Color.White;
-            this.cbUsePadding.Location = new System.Drawing.Point(4, 167);
-            this.cbUsePadding.Name = "cbUsePadding";
-            this.cbUsePadding.Size = new System.Drawing.Size(47, 17);
-            this.cbUsePadding.TabIndex = 135;
-            this.cbUsePadding.Text = "Add";
-            this.cbUsePadding.UseVisualStyleBackColor = true;
-            this.cbUsePadding.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // btnHelp
-            // 
-            this.btnHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnHelp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.btnHelp.FlatAppearance.BorderSize = 0;
-            this.btnHelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHelp.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
-            this.btnHelp.ForeColor = System.Drawing.Color.Black;
-            this.btnHelp.Image = ((System.Drawing.Image)(resources.GetObject("btnHelp.Image")));
-            this.btnHelp.Location = new System.Drawing.Point(366, 4);
-            this.btnHelp.Name = "btnHelp";
-            this.btnHelp.Size = new System.Drawing.Size(19, 19);
-            this.btnHelp.TabIndex = 134;
-            this.btnHelp.TabStop = false;
-            this.btnHelp.Tag = "color:light1";
-            this.btnHelp.UseVisualStyleBackColor = false;
-            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
-            this.btnHelp.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
+            this.mtbStartAddress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.mtbStartAddress.Checked = false;
+            this.mtbStartAddress.DisplayCheckbox = false;
+            this.mtbStartAddress.Enabled = false;
+            this.mtbStartAddress.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.mtbStartAddress.Label = "Start Address";
+            this.mtbStartAddress.Location = new System.Drawing.Point(4, 58);
+            this.mtbStartAddress.Maximum = ((long)(65535));
+            this.mtbStartAddress.Minimum = ((long)(0));
+            this.mtbStartAddress.Name = "mtbStartAddress";
+            this.mtbStartAddress.Size = new System.Drawing.Size(212, 60);
+            this.mtbStartAddress.TabIndex = 138;
+            this.mtbStartAddress.Tag = "color:dark3";
+            this.mtbStartAddress.UncapNumericBox = false;
+            this.mtbStartAddress.Value = ((long)(0));
+            this.mtbStartAddress.ValueChanged += new System.EventHandler<RTCV.UI.Components.Controls.MultiTrackBar.ValueUpdateEventArgs>(this.MtbStartAddress_ValueChanged);
             // 
             // tbVmdName
             // 
+            this.tbVmdName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbVmdName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.tbVmdName.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.tbVmdName.ForeColor = System.Drawing.Color.White;
-            this.tbVmdName.Location = new System.Drawing.Point(72, 191);
+            this.tbVmdName.Location = new System.Drawing.Point(74, 191);
             this.tbVmdName.Name = "tbVmdName";
-            this.tbVmdName.Size = new System.Drawing.Size(147, 22);
+            this.tbVmdName.Size = new System.Drawing.Size(311, 22);
             this.tbVmdName.TabIndex = 132;
             this.tbVmdName.Tag = "color:dark1";
             this.tbVmdName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
@@ -151,88 +119,42 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(222, 8);
+            this.label5.Location = new System.Drawing.Point(224, 93);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(126, 13);
+            this.label5.Size = new System.Drawing.Size(98, 13);
             this.label5.TabIndex = 129;
-            this.label5.Text = "Remove/Add addresses";
+            this.label5.Text = "Range expression";
             this.label5.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
-            // tbCustomAddresses
+            // tbRangeExpression
             // 
-            this.tbCustomAddresses.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.tbRangeExpression.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbCustomAddresses.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.tbCustomAddresses.Font = new System.Drawing.Font("Consolas", 8F);
-            this.tbCustomAddresses.ForeColor = System.Drawing.Color.White;
-            this.tbCustomAddresses.Location = new System.Drawing.Point(225, 24);
-            this.tbCustomAddresses.Multiline = true;
-            this.tbCustomAddresses.Name = "tbCustomAddresses";
-            this.tbCustomAddresses.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbCustomAddresses.Size = new System.Drawing.Size(161, 222);
-            this.tbCustomAddresses.TabIndex = 128;
-            this.tbCustomAddresses.Tag = "color:dark1";
-            this.tbCustomAddresses.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(163, 144);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(58, 13);
-            this.label4.TabIndex = 127;
-            this.label4.Text = "addresses";
-            this.label4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // nmPointerSpacer
-            // 
-            this.nmPointerSpacer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.nmPointerSpacer.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.nmPointerSpacer.ForeColor = System.Drawing.Color.White;
-            this.nmPointerSpacer.Location = new System.Drawing.Point(114, 140);
-            this.nmPointerSpacer.Minimum = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.nmPointerSpacer.Name = "nmPointerSpacer";
-            this.nmPointerSpacer.Size = new System.Drawing.Size(47, 23);
-            this.nmPointerSpacer.TabIndex = 126;
-            this.nmPointerSpacer.Tag = "color:dark1";
-            this.nmPointerSpacer.Value = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.nmPointerSpacer.ValueChanged += new System.EventHandler(this.numericUpDown2_ValueChanged);
-            this.nmPointerSpacer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // cbUsePointerSpacer
-            // 
-            this.cbUsePointerSpacer.AutoSize = true;
-            this.cbUsePointerSpacer.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.cbUsePointerSpacer.ForeColor = System.Drawing.Color.White;
-            this.cbUsePointerSpacer.Location = new System.Drawing.Point(4, 143);
-            this.cbUsePointerSpacer.Name = "cbUsePointerSpacer";
-            this.cbUsePointerSpacer.Size = new System.Drawing.Size(112, 17);
-            this.cbUsePointerSpacer.TabIndex = 125;
-            this.cbUsePointerSpacer.Text = "Set pointer every";
-            this.cbUsePointerSpacer.UseVisualStyleBackColor = true;
-            this.cbUsePointerSpacer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
+            this.tbRangeExpression.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tbRangeExpression.Font = new System.Drawing.Font("Consolas", 8F);
+            this.tbRangeExpression.ForeColor = System.Drawing.Color.White;
+            this.tbRangeExpression.Location = new System.Drawing.Point(224, 110);
+            this.tbRangeExpression.Multiline = true;
+            this.tbRangeExpression.Name = "tbRangeExpression";
+            this.tbRangeExpression.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbRangeExpression.Size = new System.Drawing.Size(161, 71);
+            this.tbRangeExpression.TabIndex = 128;
+            this.tbRangeExpression.Tag = "color:dark1";
+            this.tbRangeExpression.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // btnGenerateVMD
             // 
+            this.btnGenerateVMD.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnGenerateVMD.BackColor = System.Drawing.Color.Gray;
+            this.btnGenerateVMD.Enabled = false;
             this.btnGenerateVMD.FlatAppearance.BorderSize = 0;
             this.btnGenerateVMD.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGenerateVMD.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnGenerateVMD.ForeColor = System.Drawing.Color.White;
-            this.btnGenerateVMD.Location = new System.Drawing.Point(4, 219);
+            this.btnGenerateVMD.Location = new System.Drawing.Point(6, 220);
             this.btnGenerateVMD.Name = "btnGenerateVMD";
-            this.btnGenerateVMD.Size = new System.Drawing.Size(215, 26);
+            this.btnGenerateVMD.Size = new System.Drawing.Size(379, 26);
             this.btnGenerateVMD.TabIndex = 124;
             this.btnGenerateVMD.TabStop = false;
             this.btnGenerateVMD.Tag = "color:light1";
@@ -243,6 +165,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.lbEndianTypeValue);
             this.groupBox1.Controls.Add(this.lbWordSizeValue);
             this.groupBox1.Controls.Add(this.lbDomainSizeValue);
@@ -251,9 +175,9 @@
             this.groupBox1.Controls.Add(this.lbDomainSizeLabel);
             this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.groupBox1.ForeColor = System.Drawing.Color.White;
-            this.groupBox1.Location = new System.Drawing.Point(4, 54);
+            this.groupBox1.Location = new System.Drawing.Point(229, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(215, 81);
+            this.groupBox1.Size = new System.Drawing.Size(156, 81);
             this.groupBox1.TabIndex = 123;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Domain summary";
@@ -264,7 +188,7 @@
             this.lbEndianTypeValue.AutoSize = true;
             this.lbEndianTypeValue.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lbEndianTypeValue.ForeColor = System.Drawing.Color.White;
-            this.lbEndianTypeValue.Location = new System.Drawing.Point(87, 57);
+            this.lbEndianTypeValue.Location = new System.Drawing.Point(86, 56);
             this.lbEndianTypeValue.Name = "lbEndianTypeValue";
             this.lbEndianTypeValue.Size = new System.Drawing.Size(42, 13);
             this.lbEndianTypeValue.TabIndex = 92;
@@ -276,7 +200,7 @@
             this.lbWordSizeValue.AutoSize = true;
             this.lbWordSizeValue.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lbWordSizeValue.ForeColor = System.Drawing.Color.White;
-            this.lbWordSizeValue.Location = new System.Drawing.Point(87, 38);
+            this.lbWordSizeValue.Location = new System.Drawing.Point(86, 37);
             this.lbWordSizeValue.Name = "lbWordSizeValue";
             this.lbWordSizeValue.Size = new System.Drawing.Size(42, 13);
             this.lbWordSizeValue.TabIndex = 91;
@@ -288,7 +212,7 @@
             this.lbDomainSizeValue.AutoSize = true;
             this.lbDomainSizeValue.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lbDomainSizeValue.ForeColor = System.Drawing.Color.White;
-            this.lbDomainSizeValue.Location = new System.Drawing.Point(87, 20);
+            this.lbDomainSizeValue.Location = new System.Drawing.Point(86, 20);
             this.lbDomainSizeValue.Name = "lbDomainSizeValue";
             this.lbDomainSizeValue.Size = new System.Drawing.Size(42, 13);
             this.lbDomainSizeValue.TabIndex = 90;
@@ -300,7 +224,7 @@
             this.lbEndianTypeLabel.AutoSize = true;
             this.lbEndianTypeLabel.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lbEndianTypeLabel.ForeColor = System.Drawing.Color.White;
-            this.lbEndianTypeLabel.Location = new System.Drawing.Point(7, 55);
+            this.lbEndianTypeLabel.Location = new System.Drawing.Point(6, 54);
             this.lbEndianTypeLabel.Name = "lbEndianTypeLabel";
             this.lbEndianTypeLabel.Size = new System.Drawing.Size(71, 13);
             this.lbEndianTypeLabel.TabIndex = 88;
@@ -312,7 +236,7 @@
             this.lbWordSizeLabel.AutoSize = true;
             this.lbWordSizeLabel.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lbWordSizeLabel.ForeColor = System.Drawing.Color.White;
-            this.lbWordSizeLabel.Location = new System.Drawing.Point(7, 37);
+            this.lbWordSizeLabel.Location = new System.Drawing.Point(6, 36);
             this.lbWordSizeLabel.Name = "lbWordSizeLabel";
             this.lbWordSizeLabel.Size = new System.Drawing.Size(62, 13);
             this.lbWordSizeLabel.TabIndex = 87;
@@ -324,7 +248,7 @@
             this.lbDomainSizeLabel.AutoSize = true;
             this.lbDomainSizeLabel.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lbDomainSizeLabel.ForeColor = System.Drawing.Color.White;
-            this.lbDomainSizeLabel.Location = new System.Drawing.Point(7, 18);
+            this.lbDomainSizeLabel.Location = new System.Drawing.Point(6, 18);
             this.lbDomainSizeLabel.Name = "lbDomainSizeLabel";
             this.lbDomainSizeLabel.Size = new System.Drawing.Size(73, 13);
             this.lbDomainSizeLabel.TabIndex = 86;
@@ -336,7 +260,7 @@
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label17.ForeColor = System.Drawing.Color.White;
-            this.label17.Location = new System.Drawing.Point(85, 8);
+            this.label17.Location = new System.Drawing.Point(88, 8);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(91, 13);
             this.label17.TabIndex = 117;
@@ -350,7 +274,7 @@
             this.btnLoadDomains.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLoadDomains.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnLoadDomains.ForeColor = System.Drawing.Color.White;
-            this.btnLoadDomains.Location = new System.Drawing.Point(4, 5);
+            this.btnLoadDomains.Location = new System.Drawing.Point(6, 5);
             this.btnLoadDomains.Name = "btnLoadDomains";
             this.btnLoadDomains.Size = new System.Drawing.Size(80, 47);
             this.btnLoadDomains.TabIndex = 17;
@@ -369,7 +293,7 @@
             this.cbSelectedMemoryDomain.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.cbSelectedMemoryDomain.ForeColor = System.Drawing.Color.White;
             this.cbSelectedMemoryDomain.FormattingEnabled = true;
-            this.cbSelectedMemoryDomain.Location = new System.Drawing.Point(89, 26);
+            this.cbSelectedMemoryDomain.Location = new System.Drawing.Point(92, 26);
             this.cbSelectedMemoryDomain.Name = "cbSelectedMemoryDomain";
             this.cbSelectedMemoryDomain.Size = new System.Drawing.Size(130, 25);
             this.cbSelectedMemoryDomain.TabIndex = 16;
@@ -377,23 +301,18 @@
             this.cbSelectedMemoryDomain.SelectedIndexChanged += new System.EventHandler(this.cbSelectedMemoryDomain_SelectedIndexChanged);
             this.cbSelectedMemoryDomain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
-            // RTC_VmdGen_Form
+            // RTC_VmdSimpleGen_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(390, 250);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.nmPadding);
-            this.Controls.Add(this.cbUsePadding);
-            this.Controls.Add(this.btnHelp);
+            this.Controls.Add(this.mtbRange);
+            this.Controls.Add(this.mtbStartAddress);
             this.Controls.Add(this.tbVmdName);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.tbCustomAddresses);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.nmPointerSpacer);
-            this.Controls.Add(this.cbUsePointerSpacer);
+            this.Controls.Add(this.tbRangeExpression);
             this.Controls.Add(this.btnGenerateVMD);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label17);
@@ -402,13 +321,11 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "RTC_VmdGen_Form";
+            this.Name = "RTC_VmdSimpleGen_Form";
             this.Tag = "color:dark3";
-            this.Text = "VMD Generator";
+            this.Text = "Simple VMD Generator";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            ((System.ComponentModel.ISupportInitialize)(this.nmPadding)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nmPointerSpacer)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -426,19 +343,14 @@
         public System.Windows.Forms.Label lbDomainSizeLabel;
         public System.Windows.Forms.Label lbEndianTypeLabel;
         private System.Windows.Forms.Button btnGenerateVMD;
-        public System.Windows.Forms.CheckBox cbUsePointerSpacer;
-        public System.Windows.Forms.NumericUpDown nmPointerSpacer;
         public System.Windows.Forms.Label lbDomainSizeValue;
-        private System.Windows.Forms.Label label4;
         public System.Windows.Forms.Label lbEndianTypeValue;
         public System.Windows.Forms.Label lbWordSizeValue;
-        private System.Windows.Forms.TextBox tbCustomAddresses;
+        private System.Windows.Forms.TextBox tbRangeExpression;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tbVmdName;
-        private System.Windows.Forms.Button btnHelp;
-		private System.Windows.Forms.Label label1;
-		public System.Windows.Forms.NumericUpDown nmPadding;
-		public System.Windows.Forms.CheckBox cbUsePadding;
-	}
+        private Components.Controls.MultiTrackBar mtbStartAddress;
+        private Components.Controls.MultiTrackBar mtbRange;
+    }
 }
