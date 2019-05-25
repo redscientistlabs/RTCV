@@ -34,6 +34,14 @@ namespace RTCV.UI.Components.Controls
                     UpdateAllControls(value, tbValue, null);
             }
 		}
+
+        [Description("Whether or not the NumericUpDown should use hex"), Category("Data")]
+        public bool Hexadecimal
+        {
+            get => nmControlValue.Hexadecimal;
+            set => nmControlValue.Hexadecimal = value;
+        }
+
         private bool _DisplayCheckbox = false;
 		[Description("Display a checkbox before the label"), Category("Data")]
 		public bool DisplayCheckbox

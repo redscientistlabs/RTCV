@@ -56,6 +56,7 @@
             this.mtbRange.DisplayCheckbox = true;
             this.mtbRange.Enabled = false;
             this.mtbRange.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.mtbRange.Hexadecimal = true;
             this.mtbRange.Label = "Range";
             this.mtbRange.Location = new System.Drawing.Point(4, 125);
             this.mtbRange.Maximum = ((long)(65535));
@@ -76,6 +77,7 @@
             this.mtbStartAddress.DisplayCheckbox = false;
             this.mtbStartAddress.Enabled = false;
             this.mtbStartAddress.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.mtbStartAddress.Hexadecimal = true;
             this.mtbStartAddress.Label = "Start Address";
             this.mtbStartAddress.Location = new System.Drawing.Point(4, 58);
             this.mtbStartAddress.Maximum = ((long)(65535));
