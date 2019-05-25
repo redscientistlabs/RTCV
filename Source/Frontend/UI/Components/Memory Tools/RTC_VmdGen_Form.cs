@@ -207,11 +207,12 @@ namespace RTCV.UI
 
 			VMD = proto.Generate();
 
-			if (VMD.PointerAddresses.Count == 0)
-			{
-				MessageBox.Show("The resulting VMD had no pointers so the operation got cancelled.");
-				return false;
-			}
+            if (VMD.Size == 0)
+            {
+                MessageBox.Show("The resulting VMD had no pointers so the operation got cancelled.");
+                return false;
+            }
+
 
 			MemoryDomains.AddVMD(VMD);
 
