@@ -424,7 +424,7 @@ namespace RTCV.CorruptCore
             VMD.CompactPointerDomains = new string[] { GenDomain };
             VMD.CompactPointerAddresses = new long[][] { VMD.PointerAddresses.ToArray() };
 
-            VMD.Compact();
+            VMD.Compact(true);
 
 			return VMD;
 		}
@@ -473,8 +473,8 @@ namespace RTCV.CorruptCore
         {
             if (Compacted || preCompacted)
             {
-                PointerAddresses = null;
-                PointerDomains = null;
+                PointerAddresses.Clear();
+                PointerDomains.Clear();
 
                 Compacted = true;
 
@@ -506,8 +506,8 @@ namespace RTCV.CorruptCore
             CompactPointerDomains = domains.ToArray();
             CompactPointerAddresses = domainAdresses.Select(addressArray => addressArray.OrderBy(address => address).ToArray()).ToArray();
 
-            PointerAddresses = null;
-            PointerDomains = null;
+            PointerAddresses.Clear();
+            PointerDomains.Clear();
 
             Compacted = true;
 
@@ -575,20 +575,12 @@ namespace RTCV.CorruptCore
 
                 foreach (long[] addressBank in CompactPointerAddresses)
                 {
-                    try
-                    {
 
-                        if (address < (currentBankStartAddress + addressBank.Length)) // are we in the right bank?
+                    if (address < (currentBankStartAddress + addressBank.Length)) // are we in the right bank?
                             return addressBank[address - currentBankStartAddress];
                         else
                             currentBankStartAddress += addressBank.Length;
 
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                        throw;
-                    }
 
                 }
                 return 0; //failure
