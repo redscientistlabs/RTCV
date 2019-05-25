@@ -96,6 +96,7 @@ namespace RTCV.UI
 			gbBlastGeneratorEngine.Visible = false;
 			gbCustomEngine.Visible = false;
 			cbCustomPrecision.Enabled = false;
+            nmAlignment.Maximum = CorruptCore.CorruptCore.CurrentPrecision - 1;
 
 
             object realtime = AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME];
@@ -148,12 +149,13 @@ namespace RTCV.UI
 				case "Pipe Engine":
 					CorruptCore.CorruptCore.SelectedEngine = CorruptionEngine.PIPE;
 					gbPipeEngine.Visible = true;
-					cbCustomPrecision.Enabled = true;
+                    cbCustomPrecision.Enabled = true;
                     break;
 
 				case "Vector Engine":
 					CorruptCore.CorruptCore.SelectedEngine = CorruptionEngine.VECTOR;
-					gbVectorEngine.Visible = true;
+                    nmAlignment.Maximum = 3;
+                    gbVectorEngine.Visible = true;
 					break;
 
 				case "Custom Engine":
