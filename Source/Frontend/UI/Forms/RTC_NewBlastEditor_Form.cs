@@ -1306,18 +1306,7 @@ namespace RTCV.UI
 
 		private void sanitizeDuplicatesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			List<BlastUnit> bul = new List<BlastUnit>(currentSK.BlastLayer.Layer.ToArray().Reverse());
-			List<long> usedAddresses = new List<long>();
-
-			foreach (BlastUnit bu in bul)
-			{
-				if (!usedAddresses.Contains(bu.Address) && !bu.IsLocked)
-					usedAddresses.Add(bu.Address);
-				else
-				{
-					bs.Remove(bu);
-				}
-			}
+            currentSK.BlastLayer.SanitizeDuplicates();
 
 		}
 

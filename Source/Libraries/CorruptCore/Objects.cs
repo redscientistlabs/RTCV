@@ -1037,7 +1037,31 @@ namespace RTCV.CorruptCore
 					bu.Note = value;
 			}
 		}
-	}
+
+        public void SanitizeDuplicates()
+        {
+            Layer = Layer.GroupBy(x => new { x.Address, x.Domain })
+              .Where(g => g.Count() > 1)
+              .Select(y => y.First())
+              .ToList();
+
+            /*
+            List<BlastUnit> bul = new List<BlastUnit>(Layer.ToArray().Reverse());
+            List<long> usedAddresses = new List<long>();
+
+            foreach (BlastUnit bu in bul)
+            {
+                if (!usedAddresses.Contains(bu.Address) && !bu.IsLocked)
+                    usedAddresses.Add(bu.Address);
+                else
+                {
+                    Layer.Remove(bu);
+                }
+            }
+            */
+
+        }
+    }
 
 	/// <summary>
 	/// Working data for BlastUnits.
@@ -1373,30 +1397,46 @@ namespace RTCV.CorruptCore
 		{
 		}
 
-		/// <summary>
-		/// Rasterizes VMDs to their underlying domain
-		/// </summary>
-		public void RasterizeVMDs()
-		{
-			//Todo - Change this to a more unique marker than [V]?
-			if (Domain.Contains("[V]"))
-			{
-				string domain = (string)Domain.Clone();
-				long address = Address;
+        /// <summary>
+        /// Rasterizes VMDs to their underlying domain
+        /// </summary>
+        public void RasterizeVMDs()
+        {
+            //Todo - Change this to a more unique marker than [V]?
+            if (Domain.Contains("[V]"))
+            {
+                string domain = (string)Domain.Clone();
+                long address = Address;
 
-				Domain = (MemoryDomains.VmdPool[domain] as VirtualMemoryDomain)?.PointerDomains[(int)address] ?? "ERROR";
-				Address = (MemoryDomains.VmdPool[domain] as VirtualMemoryDomain)?.PointerAddresses[(int)address] ?? -1;
-			}
-			if (SourceDomain?.Contains("[V]") ?? false)
-			{
-				string sourceDomain = (string)SourceDomain.Clone();
-				long sourceAddress = SourceAddress;
+                if (MemoryDomains.VmdPool[domain] is VirtualMemoryDomain vmd)
+                {
+                    Domain = vmd.GetRealDomain(address);
+                    Address = vmd.GetRealAddress(address);
+                }
+                else
+                {
+                    Domain = "ERROR";
+                    Address = -1;
+                }
+            }
+            if (SourceDomain?.Contains("[V]") ?? false)
+            {
+                string sourceDomain = (string)SourceDomain.Clone();
+                long sourceAddress = SourceAddress;
 
-				SourceDomain = (MemoryDomains.VmdPool[sourceDomain] as VirtualMemoryDomain)?.PointerDomains[(int)sourceAddress] ?? "ERROR";
-				SourceAddress = (MemoryDomains.VmdPool[sourceDomain] as VirtualMemoryDomain)?.PointerAddresses[(int)sourceAddress] ?? -1;
-			}
+                if (MemoryDomains.VmdPool[sourceDomain] is VirtualMemoryDomain vmd)
+                {
+                    Domain = vmd.GetRealDomain(sourceAddress);
+                    Address = vmd.GetRealAddress(sourceAddress);
+                }
+                else
+                {
+                    Domain = "ERROR";
+                    Address = -1;
+                }
+            }
 
-		}
+        }
 		/// <summary>
 		/// Adds a blastunit to the execution pool
 		/// </summary>

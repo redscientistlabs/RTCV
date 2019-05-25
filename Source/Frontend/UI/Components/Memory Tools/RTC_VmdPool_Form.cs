@@ -112,10 +112,19 @@ namespace RTCV.UI
 
 			lbVmdSizeValue.Text = mi.Size.ToString() + " (0x" + mi.Size.ToString("X") + ")";
 
-			if ((mi as VirtualMemoryDomain)?.PointerDomains.Distinct().Count() > 1)
-				lbRealDomainValue.Text = "Hybrid";
-			else
-				lbRealDomainValue.Text = (mi as VirtualMemoryDomain)?.PointerDomains.FirstOrDefault();
+            var vmd = (mi as VirtualMemoryDomain);
+
+            if (vmd.Compacted)
+            {
+                lbRealDomainValue.Text = (vmd.CompactPointerDomains.Length > 1 ? "Hybrid" : vmd.CompactPointerDomains.First());
+            }
+            else
+            {
+                if (vmd.PointerDomains.Distinct().Count() > 1)
+                    lbRealDomainValue.Text = "Hybrid";
+                else
+                    lbRealDomainValue.Text = vmd.PointerDomains.FirstOrDefault();
+            }
 		}
 
 		private void btnSaveVmd_Click(object sender, EventArgs e)

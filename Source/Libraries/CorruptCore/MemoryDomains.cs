@@ -384,13 +384,14 @@ namespace RTCV.CorruptCore
 			if (SuppliedBlastLayer != null)
 			{
 				VMD.AddFromBlastLayer(SuppliedBlastLayer);
+                VMD.Compact();
 				return VMD;
 			}
 
 			int addressCount = 0;
 			for (int i = 0; i < Padding; i++)
 			{
-				VMD.PointerDomains.Add(GenDomain);
+				//VMD.PointerDomains.Add(GenDomain);
 				VMD.PointerAddresses.Add(i);
 			}
 
@@ -406,7 +407,7 @@ namespace RTCV.CorruptCore
 					if (!IsAddressInRanges(i, RemoveSingles, RemoveRanges))
 						if (PointerSpacer == 1 || addressCount % PointerSpacer == 0)
 						{
-							VMD.PointerDomains.Add(GenDomain);
+							//VMD.PointerDomains.Add(GenDomain);
 							VMD.PointerAddresses.Add(i);
 						}
 					addressCount++;
@@ -415,10 +416,15 @@ namespace RTCV.CorruptCore
 
 			foreach (long single in AddSingles)
 			{
-				VMD.PointerDomains.Add(GenDomain);
+				//VMD.PointerDomains.Add(GenDomain);
 				VMD.PointerAddresses.Add(single);
 				addressCount++;
 			}
+
+            VMD.CompactPointerDomains = new string[] { GenDomain };
+            VMD.CompactPointerAddresses = new long[][] { VMD.PointerAddresses.ToArray() };
+
+            VMD.Compact();
 
 			return VMD;
 		}
@@ -447,47 +453,150 @@ namespace RTCV.CorruptCore
 	{
 		public List<string> PointerDomains { get; set; }  =  new List<string>();
 		public List<long> PointerAddresses { get; set; } = new List<long>();
-		public VmdPrototype Proto { get; set; }
+
+        public string[] CompactPointerDomains { get; set; } = null;
+
+        public long[][] CompactPointerAddresses { get; set; } = null;
+
+        public VmdPrototype Proto { get; set; }
+
+        public bool Compacted = false;
 
 
-		public VirtualMemoryDomain()
+
+        public VirtualMemoryDomain()
 		{
 
 		}
 
-		public override long Size { get => PointerDomains.Count;
-			set { } }
+        public void Compact(bool preCompacted = false)
+        {
+            if (Compacted || preCompacted)
+            {
+                PointerAddresses = null;
+                PointerDomains = null;
+
+                Compacted = true;
+
+                GC.Collect();
+                GC.WaitForFullGCComplete();
+
+                return;
+            }
+
+            List<string> domains = new List<string>();
+            List<List<long>> domainAdresses = new List<List<long>>();
+
+            for(int i= 0; i< PointerAddresses.Count();i++)
+            {
+                var dom = PointerDomains[i];
+                if (!domains.Contains(dom))
+                {
+                    domains.Add(dom);
+                    domainAdresses.Add(new List<long>());
+                }
+
+                int domainIndex = domains.FindIndex(it => it == dom);
+                domainAdresses[domainIndex].Add(PointerAddresses[i]);
+            }
+
+            CompactPointerDomains = domains.ToArray();
+            CompactPointerAddresses = domainAdresses.Select(addressArray => addressArray.OrderBy(address => address).ToArray()).ToArray();
+
+            PointerAddresses = null;
+            PointerDomains = null;
+
+            Compacted = true;
+
+            GC.Collect();
+            GC.WaitForFullGCComplete();
+
+        }
+
+		public override long Size
+        {
+            get
+            {
+                if (Compacted)
+                    return CompactPointerAddresses.Sum(it => it.Length);
+                else
+                    return PointerAddresses.Count;
+            }
+            set{ }
+        }
 
 		public void AddFromBlastLayer(BlastLayer bl)
 		{
 			if (bl == null)
 				return;
 
-			foreach (BlastUnit bu in bl.Layer)
+            bl.SanitizeDuplicates();
+
+
+            foreach (BlastUnit bu in bl.Layer)
 			{
-				PointerDomains.Add(bu.Domain);
 				for (int i = 0; i < bu.Precision; i++)
-				{
-					PointerAddresses.Add(bu.Address);
+				{ 
+                    PointerDomains.Add(bu.Domain);
+                    PointerAddresses.Add(bu.Address);
 				}
 					
 			}
 		}
 
+        private int GetCompactedDomainIndexFromAddress(long address)
+        {
+            return 0;
+        }
 		public string GetRealDomain(long address)
 		{
-			if (address < 0 || address > PointerDomains.Count)
-				return "ERROR";
+            if (Compacted)
+            {
+                return CompactPointerDomains[GetCompactedDomainIndexFromAddress(address)];
+            }
+            else
+            {
+                if (address < 0 || address > PointerDomains.Count)
+                    return "ERROR";
 
-			return PointerDomains[(int)address];
+                return PointerDomains[(int)address];
+            }
 		}
 
-		public long GetRealAddress(long address)
-		{
-			if (address < 0 || address > PointerAddresses.Count || address < Proto.Padding)
-				return 0;
-			return PointerAddresses[(int)address];
-		}
+        public long GetRealAddress(long address)
+        {
+            if (Compacted)
+            {
+                long prevAddresses = 0;
+
+
+                foreach (long[] addressBank in CompactPointerAddresses)
+                {
+                    try
+                    {
+
+                        if ((address - prevAddresses) < (prevAddresses + addressBank.Length)) // are we in the right bank?
+                            return addressBank[address - prevAddresses];
+                        else
+                            prevAddresses += addressBank.Length;
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                        throw;
+                    }
+
+                }
+                return 0; //failure
+            }
+            else
+            {
+                if (address < 0 || address > PointerAddresses.Count || address < Proto.Padding)
+                    return 0;
+                return PointerAddresses[(int)address];
+            }
+        }
 
 		public byte[] ToData()
 		{
