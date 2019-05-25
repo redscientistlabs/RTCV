@@ -302,8 +302,28 @@ namespace RTCV.CorruptCore
 					rp.Error = "Unfortunately, Bizhawk doesn't support editing the ISOs while it is running. Maybe in a future version...";
 					break;
 				default:
-					rp.Error = "The RTC devs haven't added support for this system. Go yell at them to make it work.";
-					break;
+                    {
+                        /*
+                        //just take the first domain
+                        MemoryDomainProxy[] mdps = (AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_INTERFACES] as MemoryDomainProxy[]);
+
+                        if(mdps.Length == 0)
+                        {
+                            rp.Error = "No domains could be hooked onto";
+                            break;
+                        }
+
+                        string selectedDomain = mdps.First().Name;
+
+                        rp.PrimaryDomain = selectedDomain;
+
+                        if (mdps.Length > 0)
+                            MessageBox.Show($"More than one domain is loaded, the first one ({selectedDomain}) was selected.");
+                        */
+
+                    rp.Error = "Domain has no preset";
+                    break;
+                    }
 			}
 
 			return rp;
@@ -317,7 +337,7 @@ namespace RTCV.CorruptCore
 		public string Error { get; set; }
 		public string PrimaryDomain { get; set; }
 		public string SecondDomain { get; set; }
-		public int SkipBytes { get; set; }
+        public int SkipBytes { get; set; } = 0;
 	}
 
 	[Serializable]
@@ -1579,7 +1599,8 @@ namespace RTCV.CorruptCore
 		bool BigEndian { get; }
 
 		byte PeekByte(long addr);
-		void PokeByte(long addr, byte val);
+        byte[] PeekBytes(long address, int length);
+        void PokeByte(long addr, byte val);
 	}
 
 }

@@ -93,6 +93,7 @@
     <Compile Include="MemoryDomains.cs" />
     <Compile Include="Objects.cs" />
     <Compile Include="Render.cs" />
+    <Compile Include="BlastDiff.cs" />
     <Compile Include="StepActions.cs" />
     <Compile Include="StockpileManager_UISide.cs" />
     <Compile Include="StockpileManager_EmuSide.cs" />

@@ -79,7 +79,7 @@ namespace RTCV.CorruptCore
 
 		private static NightmareType type = NightmareType.SET;
 
-		public static BlastUnit GenerateUnit(string domain, long address, int precision, int alignment)
+		public static BlastUnit GenerateUnit(string domain, long address, int precision, int alignment, byte[] replacementValue = null)
 		{
 			// Randomly selects a memory operation according to the selected algorithm
 
@@ -165,13 +165,18 @@ namespace RTCV.CorruptCore
                             break;
                     }
 
-                    if(def)
-                        for (int i = 0; i < precision; i++)
-                            value[i] = (byte)CorruptCore.RND.Next();
+                    if (replacementValue == null)
+                    {
+                        if (def)
+                            for (int i = 0; i < precision; i++)
+                                value[i] = (byte)CorruptCore.RND.Next();
+                        else
+                            value = CorruptCore_Extensions.GetByteArrayValue(precision, randomValue, true);
+                    }
                     else
-					    value = CorruptCore_Extensions.GetByteArrayValue(precision, randomValue, true);
-					
-					return new BlastUnit(value, domain, safeAddress, precision, mi.BigEndian, 0, 1);
+                        value = replacementValue;
+
+                    return new BlastUnit(value, domain, safeAddress, precision, mi.BigEndian, 0, 1);
 				}
 				BlastUnit bu = new BlastUnit(StoreType.ONCE, StoreTime.PREEXECUTE, domain, safeAddress, domain, safeAddress, precision, mi.BigEndian);
 				switch (type)

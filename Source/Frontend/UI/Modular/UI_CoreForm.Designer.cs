@@ -438,6 +438,7 @@
             this.btnGlitchHarvester.UseVisualStyleBackColor = false;
             this.btnGlitchHarvester.Visible = false;
             this.btnGlitchHarvester.Click += new System.EventHandler(this.btnGlitchHarvester_Click);
+            this.btnGlitchHarvester.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BtnGlitchHarvester_MouseDown);
             // 
             // btnManualBlast
             // 

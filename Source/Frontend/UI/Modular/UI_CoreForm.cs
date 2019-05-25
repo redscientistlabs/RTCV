@@ -565,5 +565,22 @@ Environment.NewLine + "───█───▌────────▐▀─
             UICore.LockInterface();
             UI_DefaultGrids.connectionStatus.LoadToMain();
         }
+
+        private void BtnGlitchHarvester_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                ContextMenuStrip columnsMenu = new ContextMenuStrip();
+
+                Point locate = e.GetMouseLocation(sender);
+                columnsMenu.Items.Add("Open Blast Editor", null, new EventHandler((ob, ev) =>
+                {
+                    RTC_NewBlastEditor_Form.OpenBlastEditor();
+                }));
+
+
+                columnsMenu.Show(this, locate);
+            }
+        }
     }
 }

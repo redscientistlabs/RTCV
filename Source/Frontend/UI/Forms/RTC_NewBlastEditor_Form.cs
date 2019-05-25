@@ -178,10 +178,13 @@ namespace RTCV.UI
 			}
 		}
 
-        public static void OpenBlastEditor(StashKey sk)
+        public static void OpenBlastEditor(StashKey sk = null)
         {
             S.GET<RTC_NewBlastEditor_Form>().Close();
             S.SET(new RTC_NewBlastEditor_Form());
+
+            if (sk == null)
+                sk = new StashKey();
 
             //If the blastlayer is big, prompt them before opening it. Let's go with 5k for now.
 
@@ -1851,5 +1854,39 @@ namespace RTCV.UI
 		{
 			return new[] {currentSK, originalSK};
 		}
-	}
+
+        private void ImportBlastlayerFromCorruptedFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string filename = null;
+
+            if (filename == null)
+            {
+                OpenFileDialog ofd = new OpenFileDialog
+                {
+                    DefaultExt = "*",
+                    Title = "Open Corrupted File",
+                    Filter = "Any file|*.*",
+                    RestoreDirectory = true
+                };
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    filename = ofd.FileName;
+                }
+                else
+                    return;
+            }
+
+            var bl = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_BL_GETDIFFBLASTLAYER, filename);
+
+            ImportBlastLayer(bl);
+        }
+
+        private void NewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            bs.Clear();
+            dgvBlastEditor.ResetBindings();
+            RefreshAllNoteIcons();
+            dgvBlastEditor.Refresh();
+        }
+    }
 }

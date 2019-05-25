@@ -111,6 +111,7 @@ namespace RTCV.UI
             this.saveAsToFileblToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importBlastlayerblToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToCSVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importBlastlayerFromCorruptedFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveStateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.runOriginalSavestateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.replaceSavestateFromGHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -126,6 +127,7 @@ namespace RTCV.UI
             this.rasterizeVMDsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bakeBlastunitsToVALUEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openBlastGeneratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBlastEditor)).BeginInit();
             this.panelSidebar.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -1105,11 +1107,13 @@ namespace RTCV.UI
             // blastLayerToolStripMenuItem
             // 
             this.blastLayerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newToolStripMenuItem,
             this.loadFromFileblToolStripMenuItem,
             this.saveToFileblToolStripMenuItem,
             this.saveAsToFileblToolStripMenuItem,
             this.importBlastlayerblToolStripMenuItem,
-            this.exportToCSVToolStripMenuItem});
+            this.exportToCSVToolStripMenuItem,
+            this.importBlastlayerFromCorruptedFileToolStripMenuItem});
             this.blastLayerToolStripMenuItem.Name = "blastLayerToolStripMenuItem";
             this.blastLayerToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
             this.blastLayerToolStripMenuItem.Tag = "";
@@ -1118,37 +1122,44 @@ namespace RTCV.UI
             // loadFromFileblToolStripMenuItem
             // 
             this.loadFromFileblToolStripMenuItem.Name = "loadFromFileblToolStripMenuItem";
-            this.loadFromFileblToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.loadFromFileblToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
             this.loadFromFileblToolStripMenuItem.Text = "&Load From File (.bl)";
             this.loadFromFileblToolStripMenuItem.Click += new System.EventHandler(this.loadFromFileblToolStripMenuItem_Click);
             // 
             // saveToFileblToolStripMenuItem
             // 
             this.saveToFileblToolStripMenuItem.Name = "saveToFileblToolStripMenuItem";
-            this.saveToFileblToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.saveToFileblToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
             this.saveToFileblToolStripMenuItem.Text = "&Save to File (.bl)";
             this.saveToFileblToolStripMenuItem.Click += new System.EventHandler(this.saveToFileblToolStripMenuItem_Click);
             // 
             // saveAsToFileblToolStripMenuItem
             // 
             this.saveAsToFileblToolStripMenuItem.Name = "saveAsToFileblToolStripMenuItem";
-            this.saveAsToFileblToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.saveAsToFileblToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
             this.saveAsToFileblToolStripMenuItem.Text = "&Save As to File (.bl)";
             this.saveAsToFileblToolStripMenuItem.Click += new System.EventHandler(this.saveAsToFileblToolStripMenuItem_Click);
             // 
             // importBlastlayerblToolStripMenuItem
             // 
             this.importBlastlayerblToolStripMenuItem.Name = "importBlastlayerblToolStripMenuItem";
-            this.importBlastlayerblToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.importBlastlayerblToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
             this.importBlastlayerblToolStripMenuItem.Text = "&Import Blastlayer (.bl)";
             this.importBlastlayerblToolStripMenuItem.Click += new System.EventHandler(this.importBlastlayerblToolStripMenuItem_Click);
             // 
             // exportToCSVToolStripMenuItem
             // 
             this.exportToCSVToolStripMenuItem.Name = "exportToCSVToolStripMenuItem";
-            this.exportToCSVToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.exportToCSVToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
             this.exportToCSVToolStripMenuItem.Text = "&Export to CSV";
             this.exportToCSVToolStripMenuItem.Click += new System.EventHandler(this.exportToCSVToolStripMenuItem_Click);
+            // 
+            // importBlastLayerFromCorruptedFileToolStripMenuItem
+            // 
+            this.importBlastlayerFromCorruptedFileToolStripMenuItem.Name = "importBlastlayerFromCorruptedFileToolStripMenuItem";
+            this.importBlastlayerFromCorruptedFileToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
+            this.importBlastlayerFromCorruptedFileToolStripMenuItem.Text = "Import Blastlayer From Corrupted &File";
+            this.importBlastlayerFromCorruptedFileToolStripMenuItem.Click += new System.EventHandler(this.ImportBlastlayerFromCorruptedFileToolStripMenuItem_Click);
             // 
             // saveStateToolStripMenuItem
             // 
@@ -1269,6 +1280,13 @@ namespace RTCV.UI
             this.openBlastGeneratorToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
             this.openBlastGeneratorToolStripMenuItem.Text = "Open Blast Generator";
             this.openBlastGeneratorToolStripMenuItem.Click += new System.EventHandler(this.OpenBlastGeneratorToolStripMenuItem_Click);
+            // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
+            this.newToolStripMenuItem.Text = "&New";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.NewToolStripMenuItem_Click);
             // 
             // RTC_NewBlastEditor_Form
             // 
@@ -1416,5 +1434,7 @@ namespace RTCV.UI
 		private ToolStripMenuItem openBlastGeneratorToolStripMenuItem;
 		private Button btnAddRow;
         private Button btnSanitize;
+        private ToolStripMenuItem importBlastlayerFromCorruptedFileToolStripMenuItem;
+        private ToolStripMenuItem newToolStripMenuItem;
     }
 }

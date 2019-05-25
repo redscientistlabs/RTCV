@@ -408,6 +408,16 @@ namespace RTCV.CorruptCore
                 }
 				break;
 
+                case REMOTE_BL_GETDIFFBLASTLAYER:
+                {
+                    string filename = (advancedMessage.objectValue as string);
+                    void a()
+                    { e.setReturnValue(BlastDiff.GetBlastLayer(filename)); }
+                    SyncObjectSingleton.EmuThreadExecute(a, false);
+                }
+                 break;
+                
+
 
                 case REMOTE_SET_APPLYUNCORRUPTBL:
                 {

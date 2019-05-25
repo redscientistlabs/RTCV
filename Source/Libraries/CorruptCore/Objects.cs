@@ -758,26 +758,33 @@ namespace RTCV.CorruptCore
 		}
 
 
-		public StashKey(string key, string parentkey, BlastLayer blastlayer)
-		{
-			Key = key;
-			ParentKey = parentkey;
-			BlastLayer = blastlayer;
-
-			RomFilename = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.OPENROMFILENAME] ?? "ERROR";
-			SystemName = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.SYSTEM] ?? "ERROR";
-			SystemCore = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.SYSTEMCORE] ?? "ERROR";
-			GameName = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.GAMENAME] ?? "ERROR";
-			SyncSettings = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.SYNCSETTINGS] ?? "";
-
-			this.SelectedDomains.AddRange((string[])RTCV.NetCore.AllSpec.UISpec["SELECTEDDOMAINS"]);
-		}
 
 		public StashKey()
 		{
-		}
+            string key = CorruptCore.GetRandomKey();
+            string parentkey = null;
+            BlastLayer blastlayer = new BlastLayer();
+            StashKeyConstructor(key, parentkey, blastlayer);
+        }
 
-		public object Clone()
+        public StashKey(string key, string parentkey, BlastLayer blastlayer) => StashKeyConstructor(key, parentkey, blastlayer);
+
+        private void StashKeyConstructor(string key, string parentkey, BlastLayer blastlayer)
+        {
+            Key = key;
+            ParentKey = parentkey;
+            BlastLayer = blastlayer;
+
+            RomFilename = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.OPENROMFILENAME] ?? "ERROR";
+            SystemName = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.SYSTEM] ?? "ERROR";
+            SystemCore = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.SYSTEMCORE] ?? "ERROR";
+            GameName = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.GAMENAME] ?? "ERROR";
+            SyncSettings = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.SYNCSETTINGS] ?? "";
+
+            this.SelectedDomains.AddRange((string[])RTCV.NetCore.AllSpec.UISpec["SELECTEDDOMAINS"]);
+        }
+
+        public object Clone()
 		{
 			object sk = ObjectCopierCeras.Clone(this);
 			((StashKey)sk).Key = CorruptCore.GetRandomKey();
