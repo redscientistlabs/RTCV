@@ -38,9 +38,25 @@ namespace RTCV.CorruptCore
 				DirectoryRequired(path);
 		}
 
-		#region ARRAY EXTENSIONS
+        #region ARRAY EXTENSIONS
 
-		public static T[] SubArray<T>(this T[] data, long index, long length)
+        public static int IndexOf<T>(this T[] haystack, T[] needle)
+        {
+            if ((needle != null) && (haystack.Length >= needle.Length))
+            {
+                for (int l = 0; l < haystack.Length - needle.Length + 1; l++)
+                {
+                    if (!needle.Where((data, index) => !haystack[l + index].Equals(data)).Any())
+                    {
+                        return l;
+                    }
+                }
+            }
+
+            return -1;
+        }
+
+        public static T[] SubArray<T>(this T[] data, long index, long length)
 		{
 			T[] result = new T[length];
 
