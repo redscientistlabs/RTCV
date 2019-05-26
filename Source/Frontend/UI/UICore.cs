@@ -278,19 +278,18 @@ namespace RTCV.UI
         }
 
         //All RTC forms
-        public static Form[] AllColorizedSingletons
+        public static Form[] AllColorizedSingletons(Type baseType = null)
 		{
-			get
-			{
-				//This fetches all singletons interface IAutoColorized
 
-				List<Form> all = new List<Form>();
-				foreach (Type t in Assembly.GetAssembly(typeof(RTCV.UI.UI_CoreForm)).GetTypes())
+            if (baseType == null)
+                baseType = typeof(RTCV.UI.UI_CoreForm);
+                //This fetches all singletons interface IAutoColorized
+
+            List<Form> all = new List<Form>();
+				foreach (Type t in Assembly.GetAssembly(baseType).GetTypes())
 					if (typeof(IAutoColorize).IsAssignableFrom(t) && t != typeof(IAutoColorize))
 						all.Add((Form)S.GET(Type.GetType(t.ToString())));
                 return all.ToArray();
-
-			}
 		}
 
 		public static volatile bool isClosing = false;
@@ -303,7 +302,7 @@ namespace RTCV.UI
 
 			isClosing = true;
 
-			foreach (Form frm in UICore.AllColorizedSingletons)
+			foreach (Form frm in UICore.AllColorizedSingletons())
 			{
 				if (frm != null)
 					frm.Close();
@@ -337,7 +336,7 @@ namespace RTCV.UI
 
 			if (ctr == null)
 			{
-				foreach (Form targetForm in UICore.AllColorizedSingletons)
+				foreach (Form targetForm in UICore.AllColorizedSingletons())
 				{
 					if (targetForm != null)
 					{
@@ -413,7 +412,7 @@ namespace RTCV.UI
 				if (ctag == null || !tag2ColorDico.TryGetValue(ctag, out Color _color))
                     continue;
 
-				if (c is Label)
+                if (c is Label l && l.BackColor != Color.FromArgb(30, 31, 32))
 					c.ForeColor = _color;
 				else
 					c.BackColor = _color;
