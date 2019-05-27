@@ -193,23 +193,31 @@ namespace RTCV.CorruptCore
 
 			//Find the precision
 			long precision = endAddress - startAddress;
-			byte[] values = new byte[precision];
+            byte[] values = null;
+            try
+            {
+                values = CorruptCore.ByteArrayPool.Rent(4);
 
-			//Peek the memory
-			for (long i = 0; i < precision; i++)
-			{
-				values[i] = mi.PeekByte(startAddress + i);
-			}
+                //Peek the memory
+                for (long i = 0; i < precision; i++)
+                {
+                    values[i] = mi.PeekByte(startAddress + i);
+                }
 
-			//The compare is done as little endian
-			if (mi.BigEndian)
-				values = values.FlipBytes();
+                //The compare is done as little endian
+                if (mi.BigEndian)
+                    values = values.FlipBytes();
 
-			//If the limiter contains the value we peeked, return true
-			if (LimiterContainsValue(values, hash))
-				return true;
+                //If the limiter contains the value we peeked, return true
+                if (LimiterContainsValue(values, hash))
+                    return true;
 
-			return false;
+                return false;
+            }
+            finally
+            {
+                CorruptCore.ByteArrayPool.Return(values);
+            }
 		}
 
 		/// <summary>
