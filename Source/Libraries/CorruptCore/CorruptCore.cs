@@ -10,7 +10,6 @@ using System.Net.Http;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
-using System.Buffers;
 using RTCV.CorruptCore;
 using Newtonsoft.Json;
 using RTCV.NetCore;
@@ -45,8 +44,6 @@ namespace RTCV.CorruptCore
 		public static System.Windows.Forms.Timer KillswitchTimer = new System.Windows.Forms.Timer();
 
         public static bool EmuDirOverride = false;
-
-        public static ArrayPool<byte> ByteArrayPool = ArrayPool<byte>.Create();
 
         public static string EmuDir
 		{
