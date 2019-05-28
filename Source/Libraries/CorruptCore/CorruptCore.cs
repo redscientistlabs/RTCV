@@ -19,7 +19,7 @@ namespace RTCV.CorruptCore
 	public static class CorruptCore
 	{
 		//General RTC Values
-		public static string RtcVersion = "0.0.9";
+		public static string RtcVersion = "0.1.0";
 
         private static volatile int seed = DateTime.Now.Millisecond;
         public static int Seed => ++seed;
