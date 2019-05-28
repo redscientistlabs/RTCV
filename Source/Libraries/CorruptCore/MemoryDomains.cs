@@ -968,10 +968,15 @@ namespace RTCV.CorruptCore
                 jsonFilePath = CorruptCore.EmuDir;
 
             JsonSerializer serializer = new JsonSerializer();
-            var path = Path.Combine(jsonFilePath, "TEMP", "filemap.json");
+            var folder = Path.Combine(jsonFilePath, "TEMP", "filemap.json");
+
+            if (!Directory.Exists(folder))
+                Directory.CreateDirectory(folder);
+
+            var path = Path.Combine(folder, "filemap.json");
             try
             {
-                using (StreamWriter sw = new StreamWriter(path))
+                using (StreamWriter sw = new StreamWriter(File.Create(path)))
                 using (JsonWriter writer = new JsonTextWriter(sw))
                 {
                     serializer.Serialize(writer, CompositeFilenameDico);
