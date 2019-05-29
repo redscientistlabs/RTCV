@@ -50,7 +50,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>gem2.ico</ApplicationIcon>
+    <ApplicationIcon>LauncherIcon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>false</SignManifests>
@@ -152,13 +152,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="gem2.ico" />
     <Content Include="LauncherIcon.ico" />
     <None Include="Resources\corruptwiki.png" />
     <None Include="Resources\discord.png" />
     <None Include="Resources\LauncherBack.png" />
     <None Include="Resources\notificationBadge.png" />
-    <Content Include="RTC_Launcher_Icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

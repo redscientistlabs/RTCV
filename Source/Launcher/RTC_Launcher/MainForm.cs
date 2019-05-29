@@ -33,11 +33,12 @@ namespace RTC_Launcher
         public static DownloadForm dForm = null;
         public static Form lpForm = null;
 
-        public static int launcherVer = 4;
+        public static int launcherVer = 5;
 
 
         public static int devCounter = 0;
         internal static string SelectedVersion = null;
+        internal static string lastSelectedVersion = null;
 
         public MainForm()
         {
@@ -196,6 +197,7 @@ namespace RTC_Launcher
             else
             {
                 SelectedVersion = lbVersions.SelectedItem.ToString();
+                lastSelectedVersion = SelectedVersion;
             }
 
             if (Directory.Exists(MainForm.launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + SelectedVersion + Path.DirectorySeparatorChar + "Launcher"))
@@ -276,7 +278,21 @@ namespace RTC_Launcher
             dForm.Close();
             dForm = null;
 
+            if(lastSelectedVersion != null)
+            {
+                int index = -1;
+                for( int i=0; i < lbVersions.Items.Count; i++)
+                {
+                    var item = lbVersions.Items[i];
+                    if (item.ToString() == lastSelectedVersion)
+                    {
+                        index = i;
+                        break;
+                    }
+                }
 
+                lbVersions.SelectedIndex = index;
+            }
 
         }
 
@@ -354,6 +370,8 @@ namespace RTC_Launcher
         private void btnVersionDownloader_Click(object sender, EventArgs e)
         {
             lbVersions.SelectedIndex = -1;
+
+            lastSelectedVersion = null;
 
             clearAnchorRight();
 

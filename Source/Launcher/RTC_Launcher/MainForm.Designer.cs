@@ -35,8 +35,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.lbVersions = new System.Windows.Forms.ListBox();
             this.pnLeftSide = new System.Windows.Forms.Panel();
-            this.btnVersionDownloader = new System.Windows.Forms.Button();
             this.pbNewVersionNotification = new System.Windows.Forms.PictureBox();
+            this.btnVersionDownloader = new System.Windows.Forms.Button();
             this.pnAnchorRight = new System.Windows.Forms.Panel();
             this.pnTopPanel = new System.Windows.Forms.Panel();
             this.btnDiscord = new System.Windows.Forms.Button();
@@ -132,6 +132,17 @@
             this.pnLeftSide.Size = new System.Drawing.Size(138, 451);
             this.pnLeftSide.TabIndex = 134;
             // 
+            // pbNewVersionNotification
+            // 
+            this.pbNewVersionNotification.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pbNewVersionNotification.Image = global::RTC_Launcher.Properties.Resources.notificationBadge;
+            this.pbNewVersionNotification.InitialImage = global::RTC_Launcher.Properties.Resources.notificationBadge;
+            this.pbNewVersionNotification.Location = new System.Drawing.Point(118, 409);
+            this.pbNewVersionNotification.Name = "pbNewVersionNotification";
+            this.pbNewVersionNotification.Size = new System.Drawing.Size(14, 14);
+            this.pbNewVersionNotification.TabIndex = 0;
+            this.pbNewVersionNotification.TabStop = false;
+            // 
             // btnVersionDownloader
             // 
             this.btnVersionDownloader.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -149,17 +160,6 @@
             this.btnVersionDownloader.Text = "Version downloader";
             this.btnVersionDownloader.UseVisualStyleBackColor = false;
             this.btnVersionDownloader.Click += new System.EventHandler(this.btnVersionDownloader_Click);
-            // 
-            // pbNewVersionNotification
-            // 
-            this.pbNewVersionNotification.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.pbNewVersionNotification.Image = global::RTC_Launcher.Properties.Resources.notificationBadge;
-            this.pbNewVersionNotification.InitialImage = global::RTC_Launcher.Properties.Resources.notificationBadge;
-            this.pbNewVersionNotification.Location = new System.Drawing.Point(118, 409);
-            this.pbNewVersionNotification.Name = "pbNewVersionNotification";
-            this.pbNewVersionNotification.Size = new System.Drawing.Size(14, 14);
-            this.pbNewVersionNotification.TabIndex = 0;
-            this.pbNewVersionNotification.TabStop = false;
             // 
             // pnAnchorRight
             // 

@@ -89,6 +89,8 @@ namespace RTC_Launcher
             string downloadedFile = MainForm.launcherDir + Path.DirectorySeparatorChar + "PACKAGES" + Path.DirectorySeparatorChar + version + ".zip";
             string extractDirectory = MainForm.launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version;
 
+            MainForm.lastSelectedVersion = version;
+
             MainForm.mf.DownloadFile(downloadUrl, downloadedFile, extractDirectory);
 
 
