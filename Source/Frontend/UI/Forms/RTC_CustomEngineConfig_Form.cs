@@ -43,14 +43,14 @@ namespace RTCV.UI
 			cbLimiterList.ValueMember = "Value";
 
 			//Do this here as if it's stuck into the designer, it keeps defaulting out
-			cbValueList.DataSource = CorruptCore.CorruptCore.ValueListBindingSource;
-			cbLimiterList.DataSource = CorruptCore.CorruptCore.LimiterListBindingSource;
+			cbValueList.DataSource = CorruptCore.RtcCore.ValueListBindingSource;
+			cbLimiterList.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
 	
-			if (CorruptCore.CorruptCore.ValueListBindingSource.Count > 0)
+			if (CorruptCore.RtcCore.ValueListBindingSource.Count > 0)
 			{
 				cbValueList_SelectedIndexChanged(cbValueList, null);
 			}
-			if (CorruptCore.CorruptCore.LimiterListBindingSource.Count > 0)
+			if (CorruptCore.RtcCore.LimiterListBindingSource.Count > 0)
 			{
 				cbLimiterList_SelectedIndexChanged(cbLimiterList, null);
 			}
@@ -177,7 +177,7 @@ namespace RTCV.UI
 				return;
 			ulong value = Convert.ToUInt64(nmMinValue.Value);
 
-			switch (CorruptCore.CorruptCore.CurrentPrecision)
+			switch (CorruptCore.RtcCore.CurrentPrecision)
 			{
 				case 1:
 					RTC_CustomEngine.MinValue8Bit = value;
@@ -205,7 +205,7 @@ namespace RTCV.UI
 			ulong value = Convert.ToUInt64(nmMaxValue.Value);
 
 
-			switch (CorruptCore.CorruptCore.CurrentPrecision)
+			switch (CorruptCore.RtcCore.CurrentPrecision)
 			{
 				case 1:
 					RTC_CustomEngine.MaxValue8Bit = value;
@@ -555,10 +555,10 @@ namespace RTCV.UI
 				nmLifetime.Value = RTC_CustomEngine.Lifetime;
 
 
-                UpdateMinMaxBoxes(CorruptCore.CorruptCore.CurrentPrecision);
+                UpdateMinMaxBoxes(CorruptCore.RtcCore.CurrentPrecision);
 
                 //Todo - replace this and data-bind it
-                switch (CorruptCore.CorruptCore.CurrentPrecision)
+                switch (CorruptCore.RtcCore.CurrentPrecision)
 				{
 					case 1:
 						S.GET<RTC_CorruptionEngine_Form>().cbCustomPrecision.SelectedIndex = 0;
@@ -574,7 +574,7 @@ namespace RTCV.UI
                         break;
                 }
 
-				switch (CorruptCore.CorruptCore.CurrentPrecision)
+				switch (CorruptCore.RtcCore.CurrentPrecision)
 				{
 					case 1:
 						nmMinValue.Value = RTC_CustomEngine.MinValue8Bit;
@@ -590,7 +590,7 @@ namespace RTCV.UI
                         break;
                 }
 
-				switch (CorruptCore.CorruptCore.CurrentPrecision)
+				switch (CorruptCore.RtcCore.CurrentPrecision)
 				{
 					case 1:
 						nmMaxValue.Value = RTC_CustomEngine.MaxValue8Bit;

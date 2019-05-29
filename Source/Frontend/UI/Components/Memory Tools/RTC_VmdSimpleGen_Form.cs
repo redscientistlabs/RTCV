@@ -115,7 +115,7 @@ namespace RTCV.UI
 			proto.GenDomain = cbSelectedMemoryDomain.SelectedItem.ToString();
 
 			if (string.IsNullOrWhiteSpace(tbVmdName.Text))
-				proto.VmdName = CorruptCore.CorruptCore.GetRandomKey();
+				proto.VmdName = CorruptCore.RtcCore.GetRandomKey();
 			else
 				proto.VmdName = tbVmdName.Text;
 

@@ -89,7 +89,7 @@ namespace RTCV.UI
                 if (!Stockpile.Extract(fileName, Path.Combine("WORKING", "SSK"), "keys.json"))
                     return;
 
-                using (FileStream fs = File.Open(Path.Combine(CorruptCore.CorruptCore.workingDir, "SSK", "keys.json"), FileMode.OpenOrCreate))
+                using (FileStream fs = File.Open(Path.Combine(CorruptCore.RtcCore.workingDir, "SSK", "keys.json"), FileMode.OpenOrCreate))
                 {
                     ssk = JsonHelper.Deserialize<SaveStateKeys>(fs);
                 }
@@ -122,7 +122,7 @@ namespace RTCV.UI
                 key.StateLocation = StashKeySavestateLocation.SSK;
 
                 string statefilename = key.GameName + "." + key.ParentKey + ".timejump.State"; // get savestate name
-                string newStatePath = Path.Combine(CorruptCore.CorruptCore.workingDir, key.StateLocation.ToString(), statefilename);
+                string newStatePath = Path.Combine(CorruptCore.RtcCore.workingDir, key.StateLocation.ToString(), statefilename);
 
                 key.StateFilename = newStatePath;
                 key.StateShortFilename = Path.GetFileName(newStatePath);
@@ -148,8 +148,8 @@ namespace RTCV.UI
                 try
                 {
                     var stateName = sk.GameName + "." + sk.ParentKey + ".timejump.State"; // get savestate name
-                    File.Copy(Path.Combine(CorruptCore.CorruptCore.workingDir, "SSK", stateName)
-                        , Path.Combine(CorruptCore.CorruptCore.workingDir, "SESSION", stateName), true);
+                    File.Copy(Path.Combine(CorruptCore.RtcCore.workingDir, "SSK", stateName)
+                        , Path.Combine(CorruptCore.RtcCore.workingDir, "SESSION", stateName), true);
                     sk.StateLocation = StashKeySavestateLocation.SESSION;
                 }
                 catch (IOException e)
@@ -219,8 +219,8 @@ namespace RTCV.UI
 
                     string stateFilename = key.GameName + "." + key.ParentKey + ".timejump.State"; // get savestate name
 
-                    string statePath = Path.Combine(CorruptCore.CorruptCore.workingDir, key.StateLocation.ToString(), stateFilename);
-                    string tempPath = Path.Combine(CorruptCore.CorruptCore.workingDir, "TEMP", stateFilename);
+                    string statePath = Path.Combine(CorruptCore.RtcCore.workingDir, key.StateLocation.ToString(), stateFilename);
+                    string tempPath = Path.Combine(CorruptCore.RtcCore.workingDir, "TEMP", stateFilename);
 
                     if (File.Exists(statePath))
                         File.Copy(statePath, tempPath); // copy savestates to temp folder
@@ -243,14 +243,14 @@ namespace RTCV.UI
                 }
 
                 //Create keys.json
-                using (FileStream fs = File.Open(Path.Combine(CorruptCore.CorruptCore.workingDir, "TEMP", "keys.json"), FileMode.OpenOrCreate))
+                using (FileStream fs = File.Open(Path.Combine(CorruptCore.RtcCore.workingDir, "TEMP", "keys.json"), FileMode.OpenOrCreate))
                 {
                     JsonHelper.Serialize(ssk, fs, Formatting.Indented);
                     fs.Close();
                 }
 
                 string tempFilename = Filename + ".temp";
-                string tempFolderPath = Path.Combine(CorruptCore.CorruptCore.workingDir, "TEMP");
+                string tempFolderPath = Path.Combine(CorruptCore.RtcCore.workingDir, "TEMP");
 
                 System.IO.Compression.ZipFile.CreateFromDirectory(tempFolderPath, tempFilename, System.IO.Compression.CompressionLevel.Fastest, false);
 
@@ -262,7 +262,7 @@ namespace RTCV.UI
                 //Move all the files from temp into SSK
                 Stockpile.EmptyFolder(Path.Combine("WORKING", "SSK"));
                 foreach (string file in Directory.GetFiles(tempFolderPath))
-                    File.Move(file, Path.Combine(CorruptCore.CorruptCore.workingDir, "SSK", Path.GetFileName(file)));
+                    File.Move(file, Path.Combine(CorruptCore.RtcCore.workingDir, "SSK", Path.GetFileName(file)));
             }
             catch (Exception ex)
             {

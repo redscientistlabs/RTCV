@@ -14,7 +14,7 @@ using Newtonsoft.Json.Serialization;
 
 namespace RTCV.NetCore
 {
-	public class Extensions
+	public class NetCore_Extensions
 	{  
 		public static class ObjectCopier
 		{

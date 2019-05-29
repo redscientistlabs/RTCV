@@ -275,7 +275,7 @@ namespace RTCV.NetCore
 		}
 
 		public void Reset() => specDico.Clear();
-		public object Clone() => Extensions.ObjectCopier.Clone(this);
+		public object Clone() => NetCore_Extensions.ObjectCopier.Clone(this);
 
 	}
 

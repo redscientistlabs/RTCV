@@ -236,7 +236,7 @@ namespace RTCV.UI
 				finally
 				{
 				}
-			})).Enabled = (File.Exists(Path.Combine(CorruptCore.CorruptCore.EmuDir, "backup_config.ini")));
+			})).Enabled = (File.Exists(Path.Combine(CorruptCore.RtcCore.EmuDir, "backup_config.ini")));
 
 			LoadMenuItems.Show(this, locate);
 		}

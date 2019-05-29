@@ -114,7 +114,7 @@ namespace RTCV.NetCore
 			config.OnResolveFormatter.Add((c, t) =>
 			{
 				if (t == typeof(HashSet<byte[]>))
-					return new NetCore.Extensions.HashSetFormatterThatKeepsItsComparer();
+					return new NetCore.NetCore_Extensions.HashSetFormatterThatKeepsItsComparer();
 				return null; // continue searching
 			});
 			var serializer = new CerasSerializer(config);

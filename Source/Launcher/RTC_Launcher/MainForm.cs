@@ -33,7 +33,7 @@ namespace RTC_Launcher
         public static DownloadForm dForm = null;
         public static Form lpForm = null;
 
-        public static int launcherVer = 5;
+        public static int launcherVer = 6;
 
 
         public static int devCounter = 0;

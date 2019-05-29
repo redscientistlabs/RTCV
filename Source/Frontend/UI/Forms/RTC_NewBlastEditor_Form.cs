@@ -693,7 +693,7 @@ namespace RTCV.UI
 				cbLimiterTime.SelectedItem = bu.LimiterTime;
 				cbStoreLimiterSource.SelectedItem = bu.StoreLimiterSource;
 
-				cbLimiterList.SelectedItem = CorruptCore.CorruptCore.LimiterListBindingSource.FirstOrDefault(x => x.Value == bu.LimiterListHash);
+				cbLimiterList.SelectedItem = CorruptCore.RtcCore.LimiterListBindingSource.FirstOrDefault(x => x.Value == bu.LimiterListHash);
 
 				cbInvertLimiter.Checked = bu.InvertLimiter;
 				cbStoreTime.SelectedItem = bu.StoreTime;
@@ -791,7 +791,7 @@ namespace RTCV.UI
 				cbSource.Items.Add(item);
 			}
 
-			cbLimiterList.DataSource = CorruptCore.CorruptCore.LimiterListBindingSource;
+			cbLimiterList.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
 			cbLimiterList.DisplayMember = "Name";
 			cbLimiterList.ValueMember = "Value";
 
@@ -898,7 +898,7 @@ namespace RTCV.UI
 			dgvBlastEditor.Columns.Add(limiterTime);
 
 			DataGridViewComboBoxColumn limiterHash = CreateColumn(BuProperty.LimiterListHash.ToString(), BuProperty.LimiterListHash.ToString(), "Limiter List", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
-			limiterHash.DataSource = CorruptCore.CorruptCore.LimiterListBindingSource;
+			limiterHash.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
 			limiterHash.DisplayMember = "Name";
 			limiterHash.ValueMember = "Value";
 			limiterHash.MaxDropDownItems = 15;
@@ -1164,7 +1164,7 @@ namespace RTCV.UI
 
 			foreach (BlastUnit bu in currentSK.BlastLayer.Layer
 				.Where(x => x.IsLocked == false)
-				.OrderBy(x => CorruptCore.CorruptCore.RND.Next())
+				.OrderBy(x => CorruptCore.RtcCore.RND.Next())
 				.Take(currentSK.BlastLayer.Layer.Count / 2))
 			{
 				bu.IsEnabled = false;
@@ -1372,7 +1372,7 @@ namespace RTCV.UI
 
 				LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_LOADROM, filename, true);
 
-				StashKey temp = new StashKey(CorruptCore.CorruptCore.GetRandomKey(), currentSK.ParentKey, currentSK.BlastLayer);
+				StashKey temp = new StashKey(CorruptCore.RtcCore.GetRandomKey(), currentSK.ParentKey, currentSK.BlastLayer);
 
 				// We have to null this as to properly create a stashkey, we need to use it in the constructor,
 				// but then the user needs to provide a savestate
@@ -1504,7 +1504,7 @@ namespace RTCV.UI
 			string oldSS = currentSK.SyncSettings;
 
 			//Get a new key
-			currentSK.ParentKey = CorruptCore.CorruptCore.GetRandomKey();
+			currentSK.ParentKey = CorruptCore.RtcCore.GetRandomKey();
 			//Null the syncsettings out
 			currentSK.SyncSettings = null;
 
@@ -1520,7 +1520,7 @@ namespace RTCV.UI
 			}
 
 			//Grab the syncsettings
-			StashKey temp = new StashKey(CorruptCore.CorruptCore.GetRandomKey(), currentSK.ParentKey, currentSK.BlastLayer);
+			StashKey temp = new StashKey(CorruptCore.RtcCore.GetRandomKey(), currentSK.ParentKey, currentSK.BlastLayer);
 			currentSK.SyncSettings = temp.SyncSettings;
 		}
 

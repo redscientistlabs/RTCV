@@ -15,7 +15,7 @@ namespace RTCV.CorruptCore
 			{
 				if (domain == null)
 					return null;
-				BlastTarget pipeStart = CorruptCore.GetBlastTarget();
+				BlastTarget pipeStart = RtcCore.GetBlastTarget();
 				MemoryInterface mi = MemoryDomains.GetInterface(domain);
 				MemoryInterface startmi = MemoryDomains.GetInterface(pipeStart.Domain);
 

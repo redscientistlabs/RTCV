@@ -28,7 +28,7 @@ namespace RTCV.UI
 			var spec = new NetCoreReceiver();
 			spec.MessageReceived += OnMessageReceived;
 
-			spec.Attached = CorruptCore.CorruptCore.Attached;
+			spec.Attached = CorruptCore.RtcCore.Attached;
 
 			connector = new UIConnector(spec);
 		}
@@ -53,8 +53,8 @@ namespace RTCV.UI
 					case REMOTE_PUSHVANGUARDSPEC:
 						SyncObjectSingleton.FormExecute((o, ea) =>
 						{
-							if (!CorruptCore.CorruptCore.Attached)
-								RTCV.NetCore.AllSpec.VanguardSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !CorruptCore.CorruptCore.Attached);
+							if (!CorruptCore.RtcCore.Attached)
+								RTCV.NetCore.AllSpec.VanguardSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !CorruptCore.RtcCore.Attached);
 
 							e.setReturnValue(true);
 
@@ -85,7 +85,7 @@ namespace RTCV.UI
                                         if (!b.Text.Contains("Test")&& !b.Text.Contains("Custom Layout") && b.ForeColor != Color.OrangeRed)
                                             b.Visible = true;
 
-                                string customLayoutPath = Path.Combine(RTCV.CorruptCore.CorruptCore.RtcDir, "CustomLayout.txt");
+                                string customLayoutPath = Path.Combine(RTCV.CorruptCore.RtcCore.RtcDir, "CustomLayout.txt");
                                 if (File.Exists(customLayoutPath))
                                     S.GET<UI_CoreForm>().btnOpenCustomLayout.Visible = true;
 
@@ -114,7 +114,7 @@ namespace RTCV.UI
 
 							S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0;//remove this once core form is dead
 
-                            if (!CorruptCore.CorruptCore.Attached)
+                            if (!CorruptCore.RtcCore.Attached)
                                     AutoKillSwitch.Enabled = true;
 
                             //Restart game protection

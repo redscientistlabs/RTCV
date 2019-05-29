@@ -119,7 +119,7 @@ namespace RTCV.CorruptCore
                 return null;
 
             VmdPrototype proto = new VmdPrototype();
-            proto.VmdName = CorruptCore.GetRandomKey();
+            proto.VmdName = RtcCore.GetRandomKey();
             proto.GenDomain = "Hybrid";
 
             BlastUnit bu = bl.Layer[0];
@@ -200,7 +200,7 @@ namespace RTCV.CorruptCore
 
 			byte[] dump = mi.GetDump();
 
-			File.WriteAllBytes(Path.Combine(CorruptCore.workingDir,"MEMORYDUMPS",key + ".dmp"), dump.ToArray());
+			File.WriteAllBytes(Path.Combine(RtcCore.workingDir,"MEMORYDUMPS",key + ".dmp"), dump.ToArray());
 		}
 
 		public static byte[] GetDomainData(string domain)
@@ -935,7 +935,7 @@ namespace RTCV.CorruptCore
         public static bool LoadCompositeFilenameDico(string jsonBaseDir = null)
         {
             if (jsonBaseDir == null)
-                jsonBaseDir = CorruptCore.EmuDir;
+                jsonBaseDir = RtcCore.EmuDir;
 
             JsonSerializer serializer = new JsonSerializer();
             var path = Path.Combine(jsonBaseDir, "TEMP","filemap.json");
@@ -965,7 +965,7 @@ namespace RTCV.CorruptCore
         public static bool SaveCompositeFilenameDico(string jsonFilePath = null)
         {
             if (jsonFilePath == null)
-                jsonFilePath = CorruptCore.EmuDir;
+                jsonFilePath = RtcCore.EmuDir;
 
             JsonSerializer serializer = new JsonSerializer();
             var folder = Path.Combine(jsonFilePath, "TEMP", "filemap.json");
@@ -995,13 +995,13 @@ namespace RTCV.CorruptCore
         public string getCorruptFilename(bool overrideWriteCopyMode = false)
         {
             if (overrideWriteCopyMode || FileInterface.writeCopyMode)
-                return Path.Combine(CorruptCore.EmuDir, "TEMP", getCompositeFilename("CORRUPT"));
+                return Path.Combine(RtcCore.EmuDir, "TEMP", getCompositeFilename("CORRUPT"));
             else
                 return Filename;
         }
         public string getBackupFilename()
         {
-            return Path.Combine(CorruptCore.EmuDir, "TEMP", getCompositeFilename("BACKUP"));
+            return Path.Combine(RtcCore.EmuDir, "TEMP", getCompositeFilename("BACKUP"));
         }
 
         public override void ResetWorkingFile()

@@ -43,7 +43,7 @@ namespace RTCV.CorruptCore
 
 		public static void LoadStockpileLists(Stockpile sks)
 		{
-			var lists = LoadListsFromPaths(Directory.GetFiles(Path.Combine(CorruptCore.workingDir,"SKS"), "*.limiter"));
+			var lists = LoadListsFromPaths(Directory.GetFiles(Path.Combine(RtcCore.workingDir,"SKS"), "*.limiter"));
 
 			Dictionary<string, string> allKnownLists = new Dictionary<string, string>();
 
@@ -265,7 +265,7 @@ namespace RTCV.CorruptCore
 			}
 
 			//Get a random line in the list and grab the value
-			int line = CorruptCore.RND.Next(Hash2ValueDico[hash].Count);
+			int line = RtcCore.RND.Next(Hash2ValueDico[hash].Count);
 			Byte[] value = Hash2ValueDico[hash][line];
 
 			//Copy the value to a working array
@@ -353,14 +353,14 @@ namespace RTCV.CorruptCore
 		{
 			//Don't double-register the same name. For now, just iterate over the limiter lists and pull the names out.
 			//In the future, we'll keep a proper dictionary when this code is re-written
-			if (CorruptCore.LimiterListBindingSource.Any(x => x.Value == hash))
+			if (RtcCore.LimiterListBindingSource.Any(x => x.Value == hash))
 				return false;
 
-			if (CorruptCore.LimiterListBindingSource.Any(x => x.Name == name))
+			if (RtcCore.LimiterListBindingSource.Any(x => x.Name == name))
 				name = name + "_1";
 
-			CorruptCore.LimiterListBindingSource.Add(new ComboBoxItem<String>(name, hash));
-			CorruptCore.ValueListBindingSource.Add((new ComboBoxItem<String>(name, hash)));
+			RtcCore.LimiterListBindingSource.Add(new ComboBoxItem<String>(name, hash));
+			RtcCore.ValueListBindingSource.Add((new ComboBoxItem<String>(name, hash)));
 			return true;
 		}
 

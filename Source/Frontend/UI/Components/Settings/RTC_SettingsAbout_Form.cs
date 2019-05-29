@@ -27,8 +27,8 @@ namespace RTCV.UI
 
 		private void RTC_SettingsAbout_Form_Load(object sender, EventArgs e)
 		{
-			lbVersion.Text += CorruptCore.CorruptCore.RtcVersion;
-			lbProcess.Text += (CorruptCore.CorruptCore.Attached ? "Attached mode" : "Detached mode");
+			lbVersion.Text += CorruptCore.RtcCore.RtcVersion;
+			lbProcess.Text += (CorruptCore.RtcCore.Attached ? "Attached mode" : "Detached mode");
 			lbConnectedTo.Text += (String)NetCore.AllSpec.VanguardSpec[VSPEC.NAME] ??  "Vanguard Implementation";
 		}
 

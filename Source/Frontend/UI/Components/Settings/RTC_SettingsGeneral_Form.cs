@@ -86,7 +86,7 @@ namespace RTCV.UI
 			else
 				RTCV.NetCore.Params.SetParam("ENABLE_BIZHAWK_OSD");
 
-			CorruptCore.CorruptCore.BizhawkOsdDisabled = cbDisableBizhawkOSD.Checked;
+			CorruptCore.RtcCore.BizhawkOsdDisabled = cbDisableBizhawkOSD.Checked;
 		}
 
 		private void cbAllowCrossCoreCorruption_CheckedChanged(object sender, EventArgs e)
@@ -96,7 +96,7 @@ namespace RTCV.UI
 			else
 				RTCV.NetCore.Params.RemoveParam("ALLOW_CROSS_CORE_CORRUPTION");
 
-			CorruptCore.CorruptCore.AllowCrossCoreCorruption = cbAllowCrossCoreCorruption.Checked;
+			CorruptCore.RtcCore.AllowCrossCoreCorruption = cbAllowCrossCoreCorruption.Checked;
 		}
 
 		private void cbDontCleanAtQuit_CheckedChanged(object sender, EventArgs e)
@@ -106,7 +106,7 @@ namespace RTCV.UI
 			else
 				RTCV.NetCore.Params.RemoveParam("DONT_CLEAN_SAVESTATES_AT_QUIT");
 
-			CorruptCore.CorruptCore.DontCleanSavestatesOnQuit = cbDontCleanAtQuit.Checked;
+			CorruptCore.RtcCore.DontCleanSavestatesOnQuit = cbDontCleanAtQuit.Checked;
 		}
 
 		private void CbUncapIntensity_CheckedChanged(object sender, EventArgs e)

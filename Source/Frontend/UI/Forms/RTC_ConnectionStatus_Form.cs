@@ -50,7 +50,7 @@ namespace RTCV.UI
 
         private void RTC_ConnectionStatus_Form_Shown(object sender, EventArgs e)
         {
-            lbFlavorText.Text = _flavorText[CorruptCore.CorruptCore.RND.Next(0, _flavorText.Length)];
+            lbFlavorText.Text = _flavorText[CorruptCore.RtcCore.RND.Next(0, _flavorText.Length)];
         }
 
         private void BtnEmergencySaveAs_Click(object sender, EventArgs e)

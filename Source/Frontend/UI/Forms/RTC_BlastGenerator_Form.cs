@@ -169,7 +169,7 @@ namespace RTCV.UI
 
 
 				//Generate a random Seed
-				((DataGridViewTextBoxCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvSeed"]).Value = CorruptCore.CorruptCore.RND.Next();
+				((DataGridViewTextBoxCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvSeed"]).Value = CorruptCore.RtcCore.RND.Next();
 
 
 				PopulateDomainCombobox(dgvBlastGenerator.Rows[lastrow]);
@@ -321,7 +321,7 @@ namespace RTCV.UI
 						return;
 					}
 
-					newSk = new StashKey(CorruptCore.CorruptCore.GetRandomKey(), psk.ParentKey, null)
+					newSk = new StashKey(CorruptCore.RtcCore.GetRandomKey(), psk.ParentKey, null)
 					{
 						RomFilename = psk.RomFilename, SystemName = psk.SystemName, SystemCore = psk.SystemCore
 						, GameName = psk.GameName, SyncSettings = psk.SyncSettings, StateLocation = psk.StateLocation
@@ -365,7 +365,7 @@ namespace RTCV.UI
 						MessageBox.Show($"Could not perform the CORRUPT action\n\nEither no {saveStateWord} Box was selected in the {saveStateWord} Manager\nor the {saveStateWord} Box itself is empty.");
 						return;
 					}
-					newSk = new StashKey(CorruptCore.CorruptCore.GetRandomKey(), psk.ParentKey, null);
+					newSk = new StashKey(CorruptCore.RtcCore.GetRandomKey(), psk.ParentKey, null);
 					newSk.RomFilename = psk.RomFilename;
 					newSk.SystemName = psk.SystemName;
 					newSk.SystemCore = psk.SystemCore;
@@ -478,7 +478,7 @@ namespace RTCV.UI
                                 $"The Blast Generator could not perform the CORRUPT action\n\nEither no {saveStateWord} Box was selected in the {saveStateWord} Manager\nor the {saveStateWord} Box itself is empty.");
 							return null;
 						}
-						newSk = new StashKey(CorruptCore.CorruptCore.GetRandomKey(), psk.ParentKey, bl);
+						newSk = new StashKey(CorruptCore.RtcCore.GetRandomKey(), psk.ParentKey, bl);
 						newSk.RomFilename = psk.RomFilename;
 						newSk.SystemName = psk.SystemName;
 						newSk.SystemCore = psk.SystemCore;

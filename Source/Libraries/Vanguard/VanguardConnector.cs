@@ -28,7 +28,7 @@ namespace RTCV.Vanguard
 
 			if (receiver.Attached)//attached mode
 			{
-				CorruptCore.CorruptCore.Attached = true;
+				CorruptCore.RtcCore.Attached = true;
 				RTCV.UI.UICore.Start(null);
 				return;
 			}

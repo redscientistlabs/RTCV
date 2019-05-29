@@ -184,16 +184,16 @@ namespace RTCV.CorruptCore
                                 switch (precision)
                                 {
                                     case 1:
-                                        randomValue = CorruptCore.RND.RandomULong(MinValue8Bit, MaxValue8Bit);
+                                        randomValue = RtcCore.RND.RandomULong(MinValue8Bit, MaxValue8Bit);
                                         break;
                                     case 2:
-                                        randomValue = CorruptCore.RND.RandomULong(MinValue16Bit, MaxValue16Bit);
+                                        randomValue = RtcCore.RND.RandomULong(MinValue16Bit, MaxValue16Bit);
                                         break;
                                     case 4:
-                                        randomValue = CorruptCore.RND.RandomULong(MinValue32Bit, MaxValue32Bit);
+                                        randomValue = RtcCore.RND.RandomULong(MinValue32Bit, MaxValue32Bit);
                                         break;
                                     case 8:
-                                        randomValue = CorruptCore.RND.RandomULong(MinValue64Bit, MaxValue64Bit);
+                                        randomValue = RtcCore.RND.RandomULong(MinValue64Bit, MaxValue64Bit);
                                         break;
                                     default:
                                         def = true;
@@ -204,14 +204,14 @@ namespace RTCV.CorruptCore
                                     value = CorruptCore_Extensions.GetByteArrayValue(precision, randomValue, true);
                                 else
                                     for (int i = 0; i < precision; i++)
-										value[i] = (byte)CorruptCore.RND.Next();
+										value[i] = (byte)RtcCore.RND.Next();
 							}
 							break;
 
 							case CustomValueSource.RANDOM:
 							{
 								for (int i = 0; i < precision; i++)
-									value[i] = (byte)CorruptCore.RND.Next();
+									value[i] = (byte)RtcCore.RND.Next();
 							}
 							break;
 								
@@ -228,7 +228,7 @@ namespace RTCV.CorruptCore
 						{
 							case CustomStoreAddress.RANDOM:
 							{
-								BlastTarget bt = CorruptCore.GetBlastTarget();
+								BlastTarget bt = RtcCore.GetBlastTarget();
 								MemoryInterface _mi = MemoryDomains.GetInterface(bt.Domain);
 								long safeStartAddress = bt.Address - (bt.Address % precision) + alignment;
 
@@ -306,11 +306,11 @@ namespace RTCV.CorruptCore
 			if (list == null)
 			{
 				byte[] buffer = new byte[4];
-				CorruptCore.RND.NextBytes(buffer);
+				RtcCore.RND.NextBytes(buffer);
 				return buffer;
 			}
 
-			return StringToByteArray(list[CorruptCore.RND.Next(list.Length)]);
+			return StringToByteArray(list[RtcCore.RND.Next(list.Length)]);
 		}
 
 		public static byte[] StringToByteArray(string hex)
@@ -355,9 +355,9 @@ namespace RTCV.CorruptCore
 
 		public static void LoadUserTemplates()
 		{
-            if(!Directory.Exists(CorruptCore.engineTemplateDir))
-                Directory.CreateDirectory(CorruptCore.engineTemplateDir);
-			string[] paths = System.IO.Directory.GetFiles(CorruptCore.engineTemplateDir);
+            if(!Directory.Exists(RtcCore.engineTemplateDir))
+                Directory.CreateDirectory(RtcCore.engineTemplateDir);
+			string[] paths = System.IO.Directory.GetFiles(RtcCore.engineTemplateDir);
 			paths = paths.OrderBy(x => x).ToArray();
 			foreach (var p in paths)
 			{
@@ -787,7 +787,7 @@ namespace RTCV.CorruptCore
 
 			pSpec[RTCSPEC.CUSTOM_NAME.ToString()] = templateName;
 			pSpec[RTCSPEC.CUSTOM_PATH.ToString()] = path;
-			pSpec[RTCSPEC.CORE_CURRENTPRECISION] = CorruptCore.CurrentPrecision;
+			pSpec[RTCSPEC.CORE_CURRENTPRECISION] = RtcCore.CurrentPrecision;
 
 
 			string jsonString = pSpec.GetSerializedDico();

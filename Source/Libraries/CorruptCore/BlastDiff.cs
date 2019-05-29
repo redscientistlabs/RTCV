@@ -58,7 +58,7 @@ namespace RTCV.CorruptCore
 
             bool useCustomPrecision = false;
 
-            if (CorruptCore.CurrentPrecision != 1)
+            if (RtcCore.CurrentPrecision != 1)
             {
                 var result = MessageBox.Show("Do you want to use Custom Precision for import?", "Use Custom Precision", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 useCustomPrecision = (result == DialogResult.Yes);
@@ -116,7 +116,7 @@ namespace RTCV.CorruptCore
                 return null;
             }
 
-            int precision = (useCustomPrecision ? CorruptCore.CurrentPrecision : 1);
+            int precision = (useCustomPrecision ? RtcCore.CurrentPrecision : 1);
 
             for (long i = 0; i < OriginalMaxAddress; i += precision)
             {

@@ -318,7 +318,7 @@ namespace RTCV.UI
 
         private void btnLoadStockpile_Click(object sender, MouseEventArgs e)
         {
-            CorruptCore.CorruptCore.CheckForProblematicProcesses();
+            CorruptCore.RtcCore.CheckForProblematicProcesses();
 
             Point locate = new Point(((Control)sender).Location.X + e.Location.X, ((Control)sender).Location.Y + e.Location.Y);
 
@@ -368,7 +368,7 @@ namespace RTCV.UI
                 finally
                 {
                 }
-            })).Enabled = (File.Exists(Path.Combine(CorruptCore.CorruptCore.EmuDir, "backup_config.ini")));
+            })).Enabled = (File.Exists(Path.Combine(CorruptCore.RtcCore.EmuDir, "backup_config.ini")));
 
             loadMenuItems.Show(this, locate);
         }

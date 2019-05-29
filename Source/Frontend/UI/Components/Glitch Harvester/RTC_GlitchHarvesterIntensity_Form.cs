@@ -26,7 +26,7 @@ namespace RTCV.UI
 			InitializeComponent();
 			popoutAllowed = false;
 
-            multiTB_Intensity.ValueChanged += (sender, args) => CorruptCore.CorruptCore.Intensity = multiTB_Intensity.Value;
+            multiTB_Intensity.ValueChanged += (sender, args) => CorruptCore.RtcCore.Intensity = multiTB_Intensity.Value;
 
         }
 

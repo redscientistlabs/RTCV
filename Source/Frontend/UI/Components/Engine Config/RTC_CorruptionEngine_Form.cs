@@ -59,14 +59,14 @@ namespace RTCV.UI
 			cbVectorLimiterList.ValueMember = "Value";
 
 			//Do this here as if it's stuck into the designer, it keeps defaulting out
-			cbVectorValueList.DataSource = CorruptCore.CorruptCore.ValueListBindingSource;
-			cbVectorLimiterList.DataSource = CorruptCore.CorruptCore.LimiterListBindingSource;
+			cbVectorValueList.DataSource = CorruptCore.RtcCore.ValueListBindingSource;
+			cbVectorLimiterList.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
 
-			if (CorruptCore.CorruptCore.LimiterListBindingSource.Count > 0)
+			if (CorruptCore.RtcCore.LimiterListBindingSource.Count > 0)
 			{
 				cbVectorLimiterList_SelectedIndexChanged(cbVectorLimiterList, null);
 			}
-			if (CorruptCore.CorruptCore.ValueListBindingSource.Count > 0)
+			if (CorruptCore.RtcCore.ValueListBindingSource.Count > 0)
 			{
 				cbVectorValueList_SelectedIndexChanged(cbVectorValueList, null);
 			}
@@ -96,7 +96,7 @@ namespace RTCV.UI
 			gbBlastGeneratorEngine.Visible = false;
 			gbCustomEngine.Visible = false;
 			cbCustomPrecision.Enabled = false;
-            nmAlignment.Maximum = CorruptCore.CorruptCore.CurrentPrecision - 1;
+            nmAlignment.Maximum = CorruptCore.RtcCore.CurrentPrecision - 1;
 
 
             object realtime = AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME];
@@ -123,49 +123,49 @@ namespace RTCV.UI
 			switch (cbSelectedEngine.SelectedItem.ToString())
 			{
 				case "Nightmare Engine":
-					CorruptCore.CorruptCore.SelectedEngine = CorruptionEngine.NIGHTMARE;
+					CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.NIGHTMARE;
 					gbNightmareEngine.Visible = true;
                     cbCustomPrecision.Enabled = true;
 					break;
 
 				case "Hellgenie Engine":
-					CorruptCore.CorruptCore.SelectedEngine = CorruptionEngine.HELLGENIE;
+					CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.HELLGENIE;
 					gbHellgenieEngine.Visible = true;
 					cbCustomPrecision.Enabled = true;
                     break;
 
 				case "Distortion Engine":
-					CorruptCore.CorruptCore.SelectedEngine = CorruptionEngine.DISTORTION;
+					CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.DISTORTION;
 					gbDistortionEngine.Visible = true;
 					cbCustomPrecision.Enabled = true;
                     break;
 
 				case "Freeze Engine":
-					CorruptCore.CorruptCore.SelectedEngine = CorruptionEngine.FREEZE;
+					CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.FREEZE;
 					gbFreezeEngine.Visible = true;
 					cbCustomPrecision.Enabled = true;
                     break;
 
 				case "Pipe Engine":
-					CorruptCore.CorruptCore.SelectedEngine = CorruptionEngine.PIPE;
+					CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.PIPE;
 					gbPipeEngine.Visible = true;
                     cbCustomPrecision.Enabled = true;
                     break;
 
 				case "Vector Engine":
-					CorruptCore.CorruptCore.SelectedEngine = CorruptionEngine.VECTOR;
+					CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.VECTOR;
                     nmAlignment.Maximum = 3;
                     gbVectorEngine.Visible = true;
 					break;
 
 				case "Custom Engine":
-					CorruptCore.CorruptCore.SelectedEngine = CorruptionEngine.CUSTOM;
+					CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.CUSTOM;
 					gbCustomEngine.Visible = true;
 					cbCustomPrecision.Enabled = true;
                     break;
 
 				case "Blast Generator":
-					CorruptCore.CorruptCore.SelectedEngine = CorruptionEngine.BLASTGENERATORENGINE;
+					CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.BLASTGENERATORENGINE;
 					gbBlastGeneratorEngine.Visible = true;
 
 					S.GET<UI_CoreForm>().AutoCorrupt = false;
@@ -338,29 +338,29 @@ namespace RTCV.UI
 				switch (cbCustomPrecision.SelectedIndex)
 				{
 					case 0:
-						CorruptCore.CorruptCore.CurrentPrecision = 1;
+						CorruptCore.RtcCore.CurrentPrecision = 1;
 						break;
 					case 1:
-						CorruptCore.CorruptCore.CurrentPrecision = 2;
+						CorruptCore.RtcCore.CurrentPrecision = 2;
 						break;
                     case 2:
-                        CorruptCore.CorruptCore.CurrentPrecision = 4;
+                        CorruptCore.RtcCore.CurrentPrecision = 4;
                         break;
                     case 3:
-                        CorruptCore.CorruptCore.CurrentPrecision = 8;
+                        CorruptCore.RtcCore.CurrentPrecision = 8;
                         break;
                 }
 				
-				updateMinMaxBoxes(CorruptCore.CorruptCore.CurrentPrecision);
-                nmAlignment.Maximum = CorruptCore.CorruptCore.CurrentPrecision - 1;
-                S.GET<RTC_CustomEngineConfig_Form>().UpdateMinMaxBoxes(CorruptCore.CorruptCore.CurrentPrecision);
+				updateMinMaxBoxes(CorruptCore.RtcCore.CurrentPrecision);
+                nmAlignment.Maximum = CorruptCore.RtcCore.CurrentPrecision - 1;
+                S.GET<RTC_CustomEngineConfig_Form>().UpdateMinMaxBoxes(CorruptCore.RtcCore.CurrentPrecision);
 			}
 		}
 
 
         private void nmAlignment_ValueChanged(object sender, EventArgs e)
         {
-            CorruptCore.CorruptCore.Alignment = Convert.ToInt32(nmAlignment.Value);
+            CorruptCore.RtcCore.Alignment = Convert.ToInt32(nmAlignment.Value);
         }
 
 
@@ -382,7 +382,7 @@ namespace RTCV.UI
 			ulong value = Convert.ToUInt64(nmMinValueNightmare.Value);
 
 
-			switch (CorruptCore.CorruptCore.CurrentPrecision)
+			switch (CorruptCore.RtcCore.CurrentPrecision)
 			{
 				case 1:
 					RTC_NightmareEngine.MinValue8Bit = value;
@@ -408,7 +408,7 @@ namespace RTCV.UI
 			ulong value = Convert.ToUInt64(nmMaxValueNightmare.Value);
 			
 
-			switch (CorruptCore.CorruptCore.CurrentPrecision)
+			switch (CorruptCore.RtcCore.CurrentPrecision)
 			{
 				case 1:
 					RTC_NightmareEngine.MaxValue8Bit = value;
@@ -432,7 +432,7 @@ namespace RTCV.UI
 				return;
 			ulong value = Convert.ToUInt64(nmMinValueHellgenie.Value);
 
-			switch (CorruptCore.CorruptCore.CurrentPrecision)
+			switch (CorruptCore.RtcCore.CurrentPrecision)
 			{
 				case 1:
 					RTC_HellgenieEngine.MinValue8Bit = value;
@@ -457,7 +457,7 @@ namespace RTCV.UI
 
 			ulong value = Convert.ToUInt64(nmMaxValueHellgenie.Value);
 
-			switch (CorruptCore.CorruptCore.CurrentPrecision)
+			switch (CorruptCore.RtcCore.CurrentPrecision)
 			{
 				case 1:
 					RTC_HellgenieEngine.MaxValue8Bit = value;

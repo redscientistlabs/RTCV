@@ -37,7 +37,7 @@ namespace RTCV.UI
         {
             get
             {
-                return CorruptCore.CorruptCore.AutoCorrupt;
+                return CorruptCore.RtcCore.AutoCorrupt;
             }
             set
             {
@@ -46,7 +46,7 @@ namespace RTCV.UI
                 else
                     btnAutoCorrupt.Text = " Start Auto-Corrupt";
 
-                CorruptCore.CorruptCore.AutoCorrupt = value;
+                CorruptCore.RtcCore.AutoCorrupt = value;
             }
         }
 
@@ -101,7 +101,7 @@ namespace RTCV.UI
 
         private void UI_CoreForm_Load(object sender, EventArgs e)
         {
-            btnLogo.Text = "RTCV " + CorruptCore.CorruptCore.RtcVersion;
+            btnLogo.Text = "RTCV " + CorruptCore.RtcCore.RtcVersion;
 
             if (!NetCore.Params.IsParamSet("DISCLAIMER_READ"))
             {
@@ -123,17 +123,17 @@ Known facts(and warnings):
 
 This message only appears once.";
 
-                string disclaimerPath = Path.Combine(CorruptCore.CorruptCore.RtcDir, "LICENSES", "DISCLAIMER.TXT");
+                string disclaimerPath = Path.Combine(CorruptCore.RtcCore.RtcDir, "LICENSES", "DISCLAIMER.TXT");
 
                 //Use the text file if it exists
                 if (File.Exists(disclaimerPath))
                     disclaimer = File.ReadAllText(disclaimerPath);
 
-                MessageBox.Show(disclaimer.Replace("[ver]", CorruptCore.CorruptCore.RtcVersion), "RTC", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(disclaimer.Replace("[ver]", CorruptCore.RtcCore.RtcVersion), "RTC", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 NetCore.Params.SetParam("DISCLAIMER_READ");
             }
 
-            CorruptCore.CorruptCore.DownloadProblematicProcesses();
+            CorruptCore.RtcCore.DownloadProblematicProcesses();
 
             UICore.LoadLists();
             //UI_DefaultGrids.engineConfig.LoadToMain();

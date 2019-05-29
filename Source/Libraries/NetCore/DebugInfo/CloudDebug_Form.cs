@@ -143,7 +143,7 @@ namespace RTCV.NetCore
 				{
 					string rtcLog = Path.Combine(rtcdir, "RTC_LOG.txt");
 					string rtcLogOutput = Path.Combine(tempdebugdir, "RTC_LOG.txt");
-                    lock (Extensions.ConsoleHelper.con.FileWriter)
+                    lock (NetCore_Extensions.ConsoleHelper.con.FileWriter)
 					{
 						File.Copy(rtcLog, rtcLogOutput, true);
 					}
@@ -153,7 +153,7 @@ namespace RTCV.NetCore
 				{
 					string emuLog = Path.Combine(emudir, "EMU_LOG.txt");
 					string emuLogOutput = Path.Combine(tempdebugdir, "EMU_LOG.txt");
-					lock (Extensions.ConsoleHelper.con.FileWriter)
+					lock (NetCore_Extensions.ConsoleHelper.con.FileWriter)
 					{
 						File.Copy(emuLog, emuLogOutput, true);
 					}

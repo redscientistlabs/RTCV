@@ -47,7 +47,7 @@ namespace RTCV.UI
 		public static void PlayCrashSound(bool forcePlay = false)
 		{
 			if (LoadedSounds != null )
-				LoadedSounds[CorruptCore.CorruptCore.RND.Next(LoadedSounds.Length)].Play();
+				LoadedSounds[CorruptCore.RtcCore.RND.Next(LoadedSounds.Length)].Play();
 		}
 
 		public static void Pulse()
@@ -86,15 +86,15 @@ namespace RTCV.UI
 
                 var info = new ProcessStartInfo();
 
-                if(CorruptCore.CorruptCore.EmuDir == null)
+                if(CorruptCore.RtcCore.EmuDir == null)
                 {
                     MessageBox.Show("Couldn't determine what emulator to start! Please start it manually.");
                     return;
                 }
 
 
-                info.WorkingDirectory = CorruptCore.CorruptCore.EmuDir;
-                info.FileName = Path.Combine(CorruptCore.CorruptCore.EmuDir, "RESTARTDETACHEDRTC.bat");
+                info.WorkingDirectory = CorruptCore.RtcCore.EmuDir;
+                info.FileName = Path.Combine(CorruptCore.RtcCore.EmuDir, "RESTARTDETACHEDRTC.bat");
 				if (!File.Exists(info.FileName))
 				{
 					MessageBox.Show($"Couldn't find {info.FileName}! Killswitch will not work.");

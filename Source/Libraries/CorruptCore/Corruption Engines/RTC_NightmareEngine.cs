@@ -92,7 +92,7 @@ namespace RTCV.CorruptCore
 						break;
 
 					case NightmareAlgo.RANDOMTILT: //RANDOMTILT may add 1,substract 1 or set a random value
-						int result = CorruptCore.RND.Next(1, 4);
+						int result = RtcCore.RND.Next(1, 4);
 						switch (result)
 						{
 							case 1:
@@ -112,7 +112,7 @@ namespace RTCV.CorruptCore
 						break;
 
 					case NightmareAlgo.TILT: //TILT can either add 1 or substract 1
-						result = CorruptCore.RND.Next(1, 3);
+						result = RtcCore.RND.Next(1, 3);
 						switch (result)
 						{
 							case 1:
@@ -149,16 +149,16 @@ namespace RTCV.CorruptCore
 					switch (precision)
 					{
 						case 1:
-							randomValue = CorruptCore.RND.RandomULong(MinValue8Bit, MaxValue8Bit);
+							randomValue = RtcCore.RND.RandomULong(MinValue8Bit, MaxValue8Bit);
 							break;
 						case 2:
-							randomValue = CorruptCore.RND.RandomULong(MinValue16Bit, MaxValue16Bit);
+							randomValue = RtcCore.RND.RandomULong(MinValue16Bit, MaxValue16Bit);
 							break;
                         case 4:
-                            randomValue = CorruptCore.RND.RandomULong(MinValue32Bit, MaxValue32Bit);
+                            randomValue = RtcCore.RND.RandomULong(MinValue32Bit, MaxValue32Bit);
                             break;
                         case 8:
-                            randomValue = CorruptCore.RND.RandomULong(MinValue32Bit, MaxValue32Bit);
+                            randomValue = RtcCore.RND.RandomULong(MinValue32Bit, MaxValue32Bit);
                             break;
                         default:
                             def = true;
@@ -169,7 +169,7 @@ namespace RTCV.CorruptCore
                     {
                         if (def)
                             for (int i = 0; i < precision; i++)
-                                value[i] = (byte)CorruptCore.RND.Next();
+                                value[i] = (byte)RtcCore.RND.Next();
                         else
                             value = CorruptCore_Extensions.GetByteArrayValue(precision, randomValue, true);
                     }

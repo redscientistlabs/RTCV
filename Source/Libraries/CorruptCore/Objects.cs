@@ -108,7 +108,7 @@ namespace RTCV.CorruptCore
 			}
 
             //Watermarking RTC Version
-            sks.RtcVersion = CorruptCore.RtcVersion;
+            sks.RtcVersion = RtcCore.RtcVersion;
 
 			List<string> allRoms = new List<string>();
 
@@ -177,7 +177,7 @@ namespace RTCV.CorruptCore
                 foreach (string str in allRoms)
                 {
                     string rom = str;
-                    string romTempfilename = Path.Combine(CorruptCore.workingDir, "TEMP", Path.GetFileName(rom));
+                    string romTempfilename = Path.Combine(RtcCore.workingDir, "TEMP", Path.GetFileName(rom));
 
                     //If the file already exists, overwrite it.
                     if (File.Exists(romTempfilename))
@@ -195,7 +195,7 @@ namespace RTCV.CorruptCore
                 foreach (var sk in sks.StashKeys)
                 {
                     sk.RomShortFilename = Path.GetFileName(sk.RomFilename);
-                    sk.RomFilename = Path.Combine(CorruptCore.workingDir, "SKS", sk.RomShortFilename);
+                    sk.RomFilename = Path.Combine(RtcCore.workingDir, "SKS", sk.RomShortFilename);
                 }
             }
 			else
@@ -205,7 +205,7 @@ namespace RTCV.CorruptCore
 				{
 					string title = "Reference found in RTC dir";
 					string message = $"Can't save with file {key.RomFilename}\nGame name: {key.GameName}\n\nThis file appears to be in temporary storage (e.g. loaded from a stockpile).\nTo save without references, you will need to provide a replacement from outside the RTC's working directory.";
-                    while(CorruptCore_Extensions.IsOrIsSubDirectoryOf( Path.GetDirectoryName(key.RomFilename), CorruptCore.workingDir)) // Make sure they don't give a new file within working
+                    while(CorruptCore_Extensions.IsOrIsSubDirectoryOf( Path.GetDirectoryName(key.RomFilename), RtcCore.workingDir)) // Make sure they don't give a new file within working
 						if (!StockpileManager_UISide.CheckAndFixMissingReference(key, true, sks.StashKeys, title, message))
 							return false;
 				}
@@ -220,8 +220,8 @@ namespace RTCV.CorruptCore
                     // get savestate name
                     string stateFilename = key.GameName + "." + key.ParentKey + ".timejump.State";
                     File.Copy(
-                        Path.Combine(CorruptCore.workingDir, key.StateLocation.ToString(), stateFilename), 
-                        Path.Combine(CorruptCore.workingDir, "TEMP", stateFilename), true); // copy savestates to temp folder
+                        Path.Combine(RtcCore.workingDir, key.StateLocation.ToString(), stateFilename), 
+                        Path.Combine(RtcCore.workingDir, "TEMP", stateFilename), true); // copy savestates to temp folder
                 }
             }
 
@@ -231,8 +231,8 @@ namespace RTCV.CorruptCore
 				foreach(var path in configPaths)
 					if (File.Exists(path))
 					{
-						Directory.CreateDirectory(Path.Combine(CorruptCore.workingDir, "TEMP", "CONFIGS"));
-						File.Copy(path, Path.Combine(CorruptCore.workingDir, "TEMP", "CONFIGS", Path.GetFileName(path)));
+						Directory.CreateDirectory(Path.Combine(RtcCore.workingDir, "TEMP", "CONFIGS"));
+						File.Copy(path, Path.Combine(RtcCore.workingDir, "TEMP", "CONFIGS", Path.GetFileName(path)));
 					}
             }
 			//Get all the limiter lists
@@ -243,7 +243,7 @@ namespace RTCV.CorruptCore
 			//Write them to a file
 			for (int i = 0; i < limiterLists?.Count; i++)
 			{
-				File.WriteAllLines(Path.Combine(CorruptCore.workingDir, "TEMP" + i + ".limiter"), limiterLists[i]);
+				File.WriteAllLines(Path.Combine(RtcCore.workingDir, "TEMP" + i + ".limiter"), limiterLists[i]);
 			}
 
 			//Update stashkey info 
@@ -252,7 +252,7 @@ namespace RTCV.CorruptCore
 				sk.StateLocation = StashKeySavestateLocation.SKS;
 			}
 			//Create stockpile.xml to temp folder from stockpile object
-			using (FileStream fs = File.Open(Path.Combine(CorruptCore.workingDir, "TEMP", "stockpile.json"), FileMode.OpenOrCreate))
+			using (FileStream fs = File.Open(Path.Combine(RtcCore.workingDir, "TEMP", "stockpile.json"), FileMode.OpenOrCreate))
 			{
 				JsonHelper.Serialize(sks, fs, Formatting.Indented);
 				fs.Close();
@@ -275,7 +275,7 @@ namespace RTCV.CorruptCore
 			if (!compress)
 				comp = CompressionLevel.NoCompression;
 			//Create the file into temp
-			ZipFile.CreateFromDirectory(Path.Combine(CorruptCore.workingDir, "TEMP"), tempFilename, comp, false);
+			ZipFile.CreateFromDirectory(Path.Combine(RtcCore.workingDir, "TEMP"), tempFilename, comp, false);
 
 			//Remove the old stockpile
 			try
@@ -302,10 +302,10 @@ namespace RTCV.CorruptCore
                 Console.Write(e);
 				MessageBox.Show("Unable to empty the stockpile folder. There's probably something locking a file inside it (iso based game loaded?)\n. Your stockpile is saved, but your current session is bunk.\nRe-load the file");
 			}
-			foreach (string file in Directory.GetFiles(Path.Combine(CorruptCore.workingDir, "TEMP")))
+			foreach (string file in Directory.GetFiles(Path.Combine(RtcCore.workingDir, "TEMP")))
 				try
 				{
-					File.Move(file, Path.Combine(CorruptCore.workingDir,"SKS", Path.GetFileName(file)));
+					File.Move(file, Path.Combine(RtcCore.workingDir,"SKS", Path.GetFileName(file)));
 				}
 				catch (Exception e)
 				{
@@ -371,7 +371,7 @@ namespace RTCV.CorruptCore
 			//Read in the stockpile
 			try
 			{
-				using (FileStream fs = File.Open(Path.Combine(CorruptCore.workingDir, extractFolder, "stockpile.json"), FileMode.OpenOrCreate))
+				using (FileStream fs = File.Open(Path.Combine(RtcCore.workingDir, extractFolder, "stockpile.json"), FileMode.OpenOrCreate))
 				{
 					sks = JsonHelper.Deserialize<Stockpile>(fs);
 					fs.Close();
@@ -388,13 +388,13 @@ namespace RTCV.CorruptCore
 			{
 				var allCopied = new List<string>();
 				//Copy from temp to sks
-				foreach (string file in Directory.GetFiles(Path.Combine(CorruptCore.workingDir, "TEMP")))
+				foreach (string file in Directory.GetFiles(Path.Combine(RtcCore.workingDir, "TEMP")))
 				{
 					if (!file.Contains(".sk"))
 					{
 						try
 						{
-							string dest = Path.Combine(CorruptCore.workingDir, "SKS", Path.GetFileName(file));
+							string dest = Path.Combine(RtcCore.workingDir, "SKS", Path.GetFileName(file));
 
 							//Only copy if a version doesn't exist
 							//This prevents copying over keys
@@ -437,7 +437,7 @@ namespace RTCV.CorruptCore
                 //If we have the file, update the path
                 if (!String.IsNullOrEmpty(t.RomShortFilename))
                 {
-                    var newFilename = Path.Combine(CorruptCore.workingDir, "SKS", t.RomShortFilename);
+                    var newFilename = Path.Combine(RtcCore.workingDir, "SKS", t.RomShortFilename);
                     if (File.Exists(newFilename))
                         t.RomFilename = newFilename;
                 }
@@ -480,12 +480,12 @@ namespace RTCV.CorruptCore
 		{
 			List<string> errorMessages = new List<string>();
 
-			if (sks.RtcVersion != CorruptCore.RtcVersion)
+			if (sks.RtcVersion != RtcCore.RtcVersion)
 			{
 				if (sks.RtcVersion == null)
 					errorMessages.Add("You have loaded a broken stockpile that didn't contain an RTC Version number\n. There is no reason to believe that these items will work.");
 				else
-					errorMessages.Add("You have loaded a stockpile created with RTC " + sks.RtcVersion + " using RTC " + CorruptCore.RtcVersion + "\n" + "Items might not appear identical to how they when they were created or it is possible that they don't work if BizHawk was upgraded.");
+					errorMessages.Add("You have loaded a stockpile created with RTC " + sks.RtcVersion + " using RTC " + RtcCore.RtcVersion + "\n" + "Items might not appear identical to how they when they were created or it is possible that they don't work if BizHawk was upgraded.");
 			}
 
 			if (errorMessages.Count == 0)
@@ -519,7 +519,7 @@ namespace RTCV.CorruptCore
 		{
 			try
 			{
-                string targetFolder = Path.Combine(CorruptCore.RtcDir, folder);
+                string targetFolder = Path.Combine(RtcCore.RtcDir, folder);
 
 
                 foreach (string file in Directory.GetFiles(targetFolder))
@@ -549,13 +549,13 @@ namespace RTCV.CorruptCore
 			try
 			{
 				EmptyFolder(folder);
-				ZipFile.ExtractToDirectory(filename, Path.Combine(CorruptCore.RtcDir,folder));
+				ZipFile.ExtractToDirectory(filename, Path.Combine(RtcCore.RtcDir,folder));
 
-				if (!File.Exists(Path.Combine(CorruptCore.RtcDir, folder, masterFile)))
+				if (!File.Exists(Path.Combine(RtcCore.RtcDir, folder, masterFile)))
 				{
-					if (File.Exists(Path.Combine(CorruptCore.RtcDir, folder, "stockpile.xml")))
+					if (File.Exists(Path.Combine(RtcCore.RtcDir, folder, "stockpile.xml")))
 						MessageBox.Show("Legacy stockpile found. This stockpile isn't supported by this version of the RTC.");
-					else if (File.Exists(Path.Combine(CorruptCore.RtcDir, folder, "keys.xml")))
+					else if (File.Exists(Path.Combine(RtcCore.RtcDir, folder, "keys.xml")))
 						MessageBox.Show("Legacy SSK found. This SSK isn't supported by this version of the RTC.");
 					else
 						MessageBox.Show("The file could not be read properly");
@@ -663,14 +663,14 @@ namespace RTCV.CorruptCore
 			Dictionary<string, string> name2filedico = new Dictionary<string, string>();
 			foreach (var str in configPaths)
 			{
-				var relPath = CorruptCore_Extensions.GetRelativePath(CorruptCore.EmuDir, str);
+				var relPath = CorruptCore_Extensions.GetRelativePath(RtcCore.EmuDir, str);
 
                 name2filedico.Add(Path.GetFileName(str), relPath);
 			}
 
 			//Parse the configs folder and then if the emulator is looking for that file, copy it over.
 			//Otherwise ignore it (version change, wrong emulator, etc)
-			var newConfigPath = Path.Combine(CorruptCore.workingDir, "TEMP", "CONFIGS");
+			var newConfigPath = Path.Combine(RtcCore.workingDir, "TEMP", "CONFIGS");
 			if (!Directory.Exists(newConfigPath))
 			{
 				MessageBox.Show("No configs found in stockpile");
@@ -681,12 +681,12 @@ namespace RTCV.CorruptCore
 			{
 				var name = Path.GetFileName(file);
 				if (name2filedico.ContainsKey(name))
-					File.Copy(file, CorruptCore.EmuDir + name2filedico[name], true);
+					File.Copy(file, RtcCore.EmuDir + name2filedico[name], true);
 			}
 
 			ProcessStartInfo p = new ProcessStartInfo();
-			p.WorkingDirectory = CorruptCore.EmuDir;
-			p.FileName = Path.Combine(CorruptCore.EmuDir, "RESTARTDETACHEDRTC.bat");
+			p.WorkingDirectory = RtcCore.EmuDir;
+			p.FileName = Path.Combine(RtcCore.EmuDir, "RESTARTDETACHEDRTC.bat");
             Process.Start(p);
 
 		}
@@ -715,8 +715,8 @@ namespace RTCV.CorruptCore
 			}
 
 			ProcessStartInfo p = new ProcessStartInfo();
-			p.WorkingDirectory = CorruptCore.EmuDir;
-			p.FileName = Path.Combine(CorruptCore.EmuDir, "RESTARTDETACHEDRTC.bat");
+			p.WorkingDirectory = RtcCore.EmuDir;
+			p.FileName = Path.Combine(RtcCore.EmuDir, "RESTARTDETACHEDRTC.bat");
 			Process.Start(p);
         }
 	}
@@ -761,7 +761,7 @@ namespace RTCV.CorruptCore
 
 		public StashKey()
 		{
-            string key = CorruptCore.GetRandomKey();
+            string key = RtcCore.GetRandomKey();
             string parentkey = null;
             BlastLayer blastlayer = new BlastLayer();
             StashKeyConstructor(key, parentkey, blastlayer);
@@ -787,7 +787,7 @@ namespace RTCV.CorruptCore
         public object Clone()
 		{
 			object sk = ObjectCopierCeras.Clone(this);
-			((StashKey)sk).Key = CorruptCore.GetRandomKey();
+			((StashKey)sk).Key = RtcCore.GetRandomKey();
 			((StashKey)sk).Alias = null;
 			return sk;
 		}
@@ -847,7 +847,7 @@ namespace RTCV.CorruptCore
 
 		public string GetSavestateFullPath()
 		{
-			return Path.Combine(CorruptCore.workingDir, this.StateLocation.ToString(), this.GameName + "." + this.ParentKey + ".timejump.State"); // get savestate name
+			return Path.Combine(RtcCore.workingDir, this.StateLocation.ToString(), this.GameName + "." + this.ParentKey + ".timejump.State"); // get savestate name
 		}
 
 		//Todo - Replace this when compat is broken
@@ -1700,9 +1700,9 @@ namespace RTCV.CorruptCore
 
 			if (Source == BlastUnitSource.VALUE)
 			{
-				if (CorruptCore.RerollFollowsCustomEngine)
+				if (RtcCore.RerollFollowsCustomEngine)
 				{
-					if (this.GeneratedUsingValueList && !CorruptCore.RerollIgnoresOriginalSource)
+					if (this.GeneratedUsingValueList && !RtcCore.RerollIgnoresOriginalSource)
 					{
 						Value = Filtering.GetRandomConstant(RTC_CustomEngine.ValueListHash, Precision);
 					}
@@ -1722,21 +1722,21 @@ namespace RTCV.CorruptCore
 							switch (Precision)
 							{
 								case (1):
-									randomValue = CorruptCore.RND.RandomULong(RTC_CustomEngine.MinValue8Bit, RTC_CustomEngine.MaxValue8Bit);
+									randomValue = RtcCore.RND.RandomULong(RTC_CustomEngine.MinValue8Bit, RTC_CustomEngine.MaxValue8Bit);
 									break;
 								case (2):
-									randomValue = CorruptCore.RND.RandomULong(RTC_CustomEngine.MinValue16Bit, RTC_CustomEngine.MaxValue16Bit);
+									randomValue = RtcCore.RND.RandomULong(RTC_CustomEngine.MinValue16Bit, RTC_CustomEngine.MaxValue16Bit);
 									break;
                                 case (4):
-                                    randomValue = CorruptCore.RND.RandomULong(RTC_CustomEngine.MinValue32Bit, RTC_CustomEngine.MaxValue32Bit);
+                                    randomValue = RtcCore.RND.RandomULong(RTC_CustomEngine.MinValue32Bit, RTC_CustomEngine.MaxValue32Bit);
                                     break;
                                 case (8):
-                                    randomValue = CorruptCore.RND.RandomULong(RTC_CustomEngine.MinValue64Bit, RTC_CustomEngine.MaxValue64Bit);
+                                    randomValue = RtcCore.RND.RandomULong(RTC_CustomEngine.MinValue64Bit, RTC_CustomEngine.MaxValue64Bit);
                                     break;
                                 //No limits if out of normal range
                                 default:
 									byte[] _randomValue = new byte[Precision];
-									CorruptCore.RND.NextBytes(_randomValue);
+									RtcCore.RND.NextBytes(_randomValue);
 									randomValue = new BigInteger(_randomValue);
 									break;
 							}
@@ -1746,21 +1746,21 @@ namespace RTCV.CorruptCore
 							switch (this.Precision)
 							{
 								case (1):
-									randomValue = CorruptCore.RND.RandomULong(0, 0xFF);
+									randomValue = RtcCore.RND.RandomULong(0, 0xFF);
 									break;
 								case (2):
-									randomValue = CorruptCore.RND.RandomULong(0, 0xFFFF);
+									randomValue = RtcCore.RND.RandomULong(0, 0xFFFF);
                                     break;
                                 case (4):
-                                    randomValue = CorruptCore.RND.RandomLong(0, 0xFFFFFFFF);
+                                    randomValue = RtcCore.RND.RandomLong(0, 0xFFFFFFFF);
                                     break;
                                 case (8):
-                                    randomValue = CorruptCore.RND.RandomULong(0, 0xFFFFFFFFFFFFFFFF);
+                                    randomValue = RtcCore.RND.RandomULong(0, 0xFFFFFFFFFFFFFFFF);
                                     break;
                                 //No limits if out of normal range
                                 default:
 									byte[] _randomValue = new byte[Precision];
-									CorruptCore.RND.NextBytes(_randomValue);
+									RtcCore.RND.NextBytes(_randomValue);
 									randomValue = new BigInteger(_randomValue);
 									break;
 							}
@@ -1779,21 +1779,21 @@ namespace RTCV.CorruptCore
 					switch (Precision)
 					{
 						case (1):
-							randomValue = CorruptCore.RND.RandomULong(0, 0xFF);
+							randomValue = RtcCore.RND.RandomULong(0, 0xFF);
 							break;
 						case (2):
-							randomValue = CorruptCore.RND.RandomULong(0, 0xFFFF);
+							randomValue = RtcCore.RND.RandomULong(0, 0xFFFF);
 							break;
                         case (4):
-                            randomValue = CorruptCore.RND.RandomULong(0, 0xFFFFFFFF);
+                            randomValue = RtcCore.RND.RandomULong(0, 0xFFFFFFFF);
                             break;
                         case (8):
-                            randomValue = CorruptCore.RND.RandomULong(0, 0xFFFFFFFFFFFFFFFF);
+                            randomValue = RtcCore.RND.RandomULong(0, 0xFFFFFFFFFFFFFFFF);
                             break;
                         //No limits if out of normal range
                         default:
 							byte[] _randomValue = new byte[Precision];
-							CorruptCore.RND.NextBytes(_randomValue);
+							RtcCore.RND.NextBytes(_randomValue);
 							randomValue = new BigInteger(_randomValue);
 							break;
 					}
@@ -1809,24 +1809,24 @@ namespace RTCV.CorruptCore
 				string[] _selectedDomains = (string[])RTCV.NetCore.AllSpec.UISpec["SELECTEDDOMAINS"];
 
 				//Always reroll domain before address
-				if (CorruptCore.RerollSourceDomain)
+				if (RtcCore.RerollSourceDomain)
 				{
-					SourceDomain = _selectedDomains[CorruptCore.RND.Next(_selectedDomains.Length)];
+					SourceDomain = _selectedDomains[RtcCore.RND.Next(_selectedDomains.Length)];
 				}
-				if (CorruptCore.RerollSourceAddress)
+				if (RtcCore.RerollSourceAddress)
 				{
 					long maxAddress = MemoryDomains.GetInterface(SourceDomain)?.Size ?? 1;
-					SourceAddress = CorruptCore.RND.RandomLong(maxAddress - 1);
+					SourceAddress = RtcCore.RND.RandomLong(maxAddress - 1);
 				}
 				
-				if (CorruptCore.RerollDomain)
+				if (RtcCore.RerollDomain)
 				{
-					Domain = _selectedDomains[CorruptCore.RND.Next(_selectedDomains.Length)];
+					Domain = _selectedDomains[RtcCore.RND.Next(_selectedDomains.Length)];
 				}
-				if (CorruptCore.RerollAddress)
+				if (RtcCore.RerollAddress)
 				{
 					long maxAddress = MemoryDomains.GetInterface(Domain)?.Size ?? 1;
-					Address = CorruptCore.RND.RandomLong(maxAddress - 1);
+					Address = RtcCore.RND.RandomLong(maxAddress - 1);
 				}
 			}
 		}

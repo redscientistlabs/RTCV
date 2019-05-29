@@ -64,7 +64,7 @@ namespace RTCV.UI
 
             p["SELECTEDDOMAINS"] = new string[] { };
 
-            RTCV.NetCore.AllSpec.UISpec = new FullSpec(p, !CorruptCore.CorruptCore.Attached);
+            RTCV.NetCore.AllSpec.UISpec = new FullSpec(p, !CorruptCore.RtcCore.Attached);
             RTCV.NetCore.AllSpec.UISpec.SpecUpdated += (o, e) =>
             {
                 PartialSpec partial = e.partialSpec;
@@ -72,7 +72,7 @@ namespace RTCV.UI
                 LocalNetCoreRouter.Route(CORRUPTCORE, REMOTE_PUSHUISPECUPDATE, partial, e.syncedUpdate);
             };
 
-            CorruptCore.CorruptCore.StartUISide();
+            CorruptCore.RtcCore.StartUISide();
 
 
             //Loading RTC Params
@@ -312,7 +312,7 @@ namespace RTCV.UI
 				S.GET<RTC_Standalone_Form>().Close();
 
 			//Clean out the working folders
-			if (!CorruptCore.CorruptCore.DontCleanSavestatesOnQuit)
+			if (!CorruptCore.RtcCore.DontCleanSavestatesOnQuit)
 			{
 				Stockpile.EmptyFolder("WORKING");
 			}
@@ -784,22 +784,22 @@ namespace RTCV.UI
             {
                 S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.DisplayMember = "Name";
                 S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.ValueMember = "Value";
-                S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.DataSource = CorruptCore.CorruptCore.LimiterListBindingSource;
+                S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
 
 
                 S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DisplayMember = "Name";
                 S.GET<RTC_CustomEngineConfig_Form>().cbValueList.ValueMember = "Value";
-                S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DataSource = CorruptCore.CorruptCore.ValueListBindingSource;
+                S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DataSource = CorruptCore.RtcCore.ValueListBindingSource;
 
 
 
                 S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.DisplayMember = "Name";
                 S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.ValueMember = "Value";
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.DataSource = CorruptCore.CorruptCore.LimiterListBindingSource;
+                S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
 
                 S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.DisplayMember = "Name";
                 S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.ValueMember = "Value";
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.DataSource = CorruptCore.CorruptCore.ValueListBindingSource;
+                S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.DataSource = CorruptCore.RtcCore.ValueListBindingSource;
             }
             else
             {
@@ -815,7 +815,7 @@ namespace RTCV.UI
         {
             toggleLimiterBoxSource(false);
 
-            string[] paths = System.IO.Directory.GetFiles(CorruptCore.CorruptCore.listsDir);
+            string[] paths = System.IO.Directory.GetFiles(CorruptCore.RtcCore.listsDir);
 
             paths = paths.OrderBy(x => x).ToArray();
 

@@ -23,10 +23,10 @@ namespace RTCV.UI
 		public RTC_GeneralParameters_Form()
 		{
 			InitializeComponent();
-			multiTB_Intensity.ValueChanged += (sender, args) => CorruptCore.CorruptCore.Intensity = multiTB_Intensity.Value;
+			multiTB_Intensity.ValueChanged += (sender, args) => CorruptCore.RtcCore.Intensity = multiTB_Intensity.Value;
 			multiTB_Intensity.registerSlave(S.GET<RTC_GlitchHarvesterIntensity_Form>().multiTB_Intensity);
 
-			multiTB_ErrorDelay.ValueChanged += (sender, args) => CorruptCore.CorruptCore.ErrorDelay = multiTB_ErrorDelay.Value;
+			multiTB_ErrorDelay.ValueChanged += (sender, args) => CorruptCore.RtcCore.ErrorDelay = multiTB_ErrorDelay.Value;
 		}
 
 		private void RTC_GeneralParameters_Form_Load(object sender, EventArgs e)
@@ -45,27 +45,27 @@ namespace RTCV.UI
 			switch (cbBlastRadius.SelectedItem.ToString())
 			{
 				case "SPREAD":
-					CorruptCore.CorruptCore.Radius = BlastRadius.SPREAD;
+					CorruptCore.RtcCore.Radius = BlastRadius.SPREAD;
 					break;
 
 				case "CHUNK":
-					CorruptCore.CorruptCore.Radius = BlastRadius.CHUNK;
+					CorruptCore.RtcCore.Radius = BlastRadius.CHUNK;
 					break;
 
 				case "BURST":
-					CorruptCore.CorruptCore.Radius = BlastRadius.BURST;
+					CorruptCore.RtcCore.Radius = BlastRadius.BURST;
 					break;
 
 				case "NORMALIZED":
-					CorruptCore.CorruptCore.Radius = BlastRadius.NORMALIZED;
+					CorruptCore.RtcCore.Radius = BlastRadius.NORMALIZED;
 					break;
 
 				case "PROPORTIONAL":
-					CorruptCore.CorruptCore.Radius = BlastRadius.PROPORTIONAL;
+					CorruptCore.RtcCore.Radius = BlastRadius.PROPORTIONAL;
 					break;
 
 				case "EVEN":
-					CorruptCore.CorruptCore.Radius = BlastRadius.EVEN;
+					CorruptCore.RtcCore.Radius = BlastRadius.EVEN;
 					break;
 			}
 		}

@@ -50,7 +50,7 @@ namespace RTCV.CorruptCore
 				case REMOTE_PUSHUISPEC:
 					SyncObjectSingleton.FormExecute((o, ea) =>
 					{
-						RTCV.NetCore.AllSpec.UISpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !CorruptCore.Attached);
+						RTCV.NetCore.AllSpec.UISpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
 					}); 
 					break;
 
@@ -66,8 +66,8 @@ namespace RTCV.CorruptCore
 				case REMOTE_PUSHVANGUARDSPEC:
 					SyncObjectSingleton.FormExecute((o, ea) =>
 					{
-						if(!CorruptCore.Attached)
-							RTCV.NetCore.AllSpec.VanguardSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !CorruptCore.Attached);
+						if(!RtcCore.Attached)
+							RTCV.NetCore.AllSpec.VanguardSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
 					});
 					break;
 
@@ -80,7 +80,7 @@ namespace RTCV.CorruptCore
 				case REMOTE_PUSHCORRUPTCORESPEC:
 					SyncObjectSingleton.FormExecute((o, ea) =>
 					{
-						RTCV.NetCore.AllSpec.CorruptCoreSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !CorruptCore.Attached);
+						RTCV.NetCore.AllSpec.CorruptCoreSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
 						RTCV.NetCore.AllSpec.CorruptCoreSpec.SpecUpdated += (ob, eas) =>
 						{
 							PartialSpec partial = eas.partialSpec;
@@ -124,7 +124,7 @@ namespace RTCV.CorruptCore
 					{
 						SyncObjectSingleton.FormExecute((o, ea) =>
 						{
-							CorruptCore.ASyncGenerateAndBlast();
+							RtcCore.ASyncGenerateAndBlast();
 						});
 					}
 					break;
@@ -165,14 +165,14 @@ namespace RTCV.CorruptCore
                                 var cpus = Environment.ProcessorCount;
 
                                 if (cpus == 1 || AllSpec.VanguardSpec[VSPEC.SUPPORTS_MULTITHREAD] == null)
-                                    bl = CorruptCore.GenerateBlastLayer(domains);
+                                    bl = RtcCore.GenerateBlastLayer(domains);
                                 else
                                 {
                                     //if emulator supports multithreaded access of the domains, disregard the emulation thread and just span threads...
 
-                                    long reminder = CorruptCore.Intensity % (cpus - 1);
+                                    long reminder = RtcCore.Intensity % (cpus - 1);
 
-                                    long splitintensity = (CorruptCore.Intensity - reminder) / (cpus - 1);
+                                    long splitintensity = (RtcCore.Intensity - reminder) / (cpus - 1);
 
                                     Task<BlastLayer>[] tasks = new Task<BlastLayer>[cpus];
                                     for (int i = 0; i < cpus; i++)
@@ -182,7 +182,7 @@ namespace RTCV.CorruptCore
                                         if (i == 0 && reminder != 0)
                                             requestedIntensity = reminder;
 
-                                        tasks[i] = Task.Factory.StartNew(() => CorruptCore.GenerateBlastLayer(domains, requestedIntensity));
+                                        tasks[i] = Task.Factory.StartNew(() => RtcCore.GenerateBlastLayer(domains, requestedIntensity));
                                     }
 
                                     Task.WaitAll(tasks);
@@ -248,7 +248,7 @@ namespace RTCV.CorruptCore
 
 
 				case REMOTE_PUSHRTCSPEC:
-					RTCV.NetCore.AllSpec.CorruptCoreSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !CorruptCore.Attached);
+					RTCV.NetCore.AllSpec.CorruptCoreSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
 					e.setReturnValue(true);
 					break;
 
