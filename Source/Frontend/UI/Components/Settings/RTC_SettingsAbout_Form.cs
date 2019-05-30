@@ -29,7 +29,7 @@ namespace RTCV.UI
 		{
 			lbVersion.Text += CorruptCore.RtcCore.RtcVersion;
 			lbProcess.Text += (CorruptCore.RtcCore.Attached ? "Attached mode" : "Detached mode");
-			lbConnectedTo.Text += (String)NetCore.AllSpec.VanguardSpec[VSPEC.NAME] ??  "Vanguard Implementation";
+			lbConnectedTo.Text += (String)NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ??  "Not Connected";
 		}
 
 		private void LbSourceCode_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
