@@ -42,18 +42,11 @@ namespace RTCV.CorruptCore
 
 			if (safeAddress > mi.Size - 4)
 				safeAddress = mi.Size - 8 + alignment; //If we're out of range, hit the last aligned address
-            try
-            {
-                //Enforce the safeaddress at generation
-                if (Filtering.LimiterPeekBytes(safeAddress, safeAddress + 4, domain, LimiterListHash, mi))
-                    return new BlastUnit(Filtering.GetRandomConstant(ValueListHash, 4), domain, safeAddress, 4,
-                        mi.BigEndian, 0, 1, null, true, false, true);
-                return null;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Vector Engine GenerateUnit Threw Up", ex);
-            }
+            //Enforce the safeaddress at generation
+            if (Filtering.LimiterPeekBytes(safeAddress, safeAddress + 4, domain, LimiterListHash, mi))
+                return new BlastUnit(Filtering.GetRandomConstant(ValueListHash, 4), domain, safeAddress, 4,
+                    mi.BigEndian, 0, 1, null, true, false, true);
+            return null;
         }
     }
 }

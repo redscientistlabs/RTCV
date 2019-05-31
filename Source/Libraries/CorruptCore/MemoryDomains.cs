@@ -1195,11 +1195,25 @@ namespace RTCV.CorruptCore
             if (address >= lastRealMemorySize)
                 return;
 
-            if (stream == null)
-                stream = File.Open(SetWorkingFile(), FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
+            try
+            {
+                if (stream == null)
+                    stream = File.Open(SetWorkingFile(), FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
 
-            stream.Position = address;
-            stream.WriteByte(data);
+                stream.Position = address;
+                stream.WriteByte(data);
+            }
+
+            catch (IOException e)
+            {
+                Console.WriteLine($"IOException in FileInterface.PokeByte! {e.Message}\n{e.StackTrace}");
+                Exception _e = e.InnerException;
+                while (_e != null)
+                {
+                    Console.WriteLine($"InnerException {_e.Message}\n{_e.StackTrace}");
+                    _e = _e.InnerException;
+                }
+            }
 
             if (cacheEnabled)
                 MemoryBanks.PokeByte(lastMemoryDump, address, data);
@@ -1215,19 +1229,32 @@ namespace RTCV.CorruptCore
             if (cacheEnabled)
                 return MemoryBanks.PeekByte(lastMemoryDump, address);
             //return lastMemoryDump[address];
+            try
+            {
+                byte[] readBytes = new byte[1];
 
-            byte[] readBytes = new byte[1];
-
-            if (stream == null)
-                stream = File.Open(SetWorkingFile(), FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
+                if (stream == null)
+                    stream = File.Open(SetWorkingFile(), FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
 
 
-            stream.Position = address;
-            stream.Read(readBytes, 0, 1);
+                stream.Position = address;
+                stream.Read(readBytes, 0, 1);
 
-            //fs.Close();
+                //fs.Close();
 
-            return readBytes[0];
+                return readBytes[0];
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine($"IOException in FileInterface.PeekByte! {e.Message}\n{e.StackTrace}");
+                Exception _e = e.InnerException;
+                while (_e != null)
+                {
+                    Console.WriteLine($"InnerException {_e.Message}\n{_e.StackTrace}");
+                    _e = _e.InnerException;
+                }
+                return 0;
+            }
 
         }
 

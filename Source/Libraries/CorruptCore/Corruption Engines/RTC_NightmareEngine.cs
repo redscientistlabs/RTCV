@@ -83,120 +83,113 @@ namespace RTCV.CorruptCore
 		{
 			// Randomly selects a memory operation according to the selected algorithm
 
-			try
+			switch (Algo)
 			{
-				switch (Algo)
-				{
-					case NightmareAlgo.RANDOM: //RANDOM always sets a random value
-						type = NightmareType.SET;
-						break;
+				case NightmareAlgo.RANDOM: //RANDOM always sets a random value
+					type = NightmareType.SET;
+					break;
 
-					case NightmareAlgo.RANDOMTILT: //RANDOMTILT may add 1,substract 1 or set a random value
-						int result = RtcCore.RND.Next(1, 4);
-						switch (result)
-						{
-							case 1:
-								type = NightmareType.ADD;
-								break;
-							case 2:
-								type = NightmareType.SUBTRACT;
-								break;
-							case 3:
-								type = NightmareType.SET;
-								break;
-							default:
-								MessageBox.Show("Random returned an unexpected value (RTC_NightmareEngine switch(Algo) RANDOMTILT)");
-								return null;
-						}
-
-						break;
-
-					case NightmareAlgo.TILT: //TILT can either add 1 or substract 1
-						result = RtcCore.RND.Next(1, 3);
-						switch (result)
-						{
-							case 1:
-								type = NightmareType.ADD;
-								break;
-
-							case 2:
-								type = NightmareType.SUBTRACT;
-								break;
-
-							default:
-								MessageBox.Show("Random returned an unexpected value (RTC_NightmareEngine switch(Algo) TILT)");
-								return null;
-						}
-						break;
-				}
-
-
-				if (domain == null)
-					return null;
-				MemoryInterface mi = MemoryDomains.GetInterface(domain);
-
-				byte[] value = new byte[precision];
-
-				long safeAddress = address - (address % precision) + alignment;
-				if (safeAddress > mi.Size - precision)
-					safeAddress = mi.Size - (2*precision) + alignment; //If we're out of range, hit the last aligned address
-
-				if (type == NightmareType.SET)
-                {
-                    ulong randomValue = 0;
-
-                    bool def = false;
-					switch (precision)
+				case NightmareAlgo.RANDOMTILT: //RANDOMTILT may add 1,substract 1 or set a random value
+					int result = RtcCore.RND.Next(1, 4);
+					switch (result)
 					{
 						case 1:
-							randomValue = RtcCore.RND.RandomULong(MinValue8Bit, MaxValue8Bit);
+							type = NightmareType.ADD;
 							break;
 						case 2:
-							randomValue = RtcCore.RND.RandomULong(MinValue16Bit, MaxValue16Bit);
+							type = NightmareType.SUBTRACT;
 							break;
-                        case 4:
-                            randomValue = RtcCore.RND.RandomULong(MinValue32Bit, MaxValue32Bit);
-                            break;
-                        case 8:
-                            randomValue = RtcCore.RND.RandomULong(MinValue32Bit, MaxValue32Bit);
-                            break;
-                        default:
-                            def = true;
-                            break;
-                    }
+						case 3:
+							type = NightmareType.SET;
+							break;
+						default:
+							MessageBox.Show("Random returned an unexpected value (RTC_NightmareEngine switch(Algo) RANDOMTILT)");
+							return null;
+					}
 
-                    if (replacementValue == null)
-                    {
-                        if (def)
-                            for (int i = 0; i < precision; i++)
-                                value[i] = (byte)RtcCore.RND.Next();
-                        else
-                            value = CorruptCore_Extensions.GetByteArrayValue(precision, randomValue, true);
-                    }
-                    else
-                        value = replacementValue;
+					break;
 
-                    return new BlastUnit(value, domain, safeAddress, precision, mi.BigEndian, 0, 1);
-				}
-				BlastUnit bu = new BlastUnit(StoreType.ONCE, StoreTime.PREEXECUTE, domain, safeAddress, domain, safeAddress, precision, mi.BigEndian);
-				switch (type)
+				case NightmareAlgo.TILT: //TILT can either add 1 or substract 1
+					result = RtcCore.RND.Next(1, 3);
+					switch (result)
+					{
+						case 1:
+							type = NightmareType.ADD;
+							break;
+
+						case 2:
+							type = NightmareType.SUBTRACT;
+							break;
+
+						default:
+							MessageBox.Show("Random returned an unexpected value (RTC_NightmareEngine switch(Algo) TILT)");
+							return null;
+					}
+					break;
+			}
+
+
+			if (domain == null)
+				return null;
+			MemoryInterface mi = MemoryDomains.GetInterface(domain);
+
+			byte[] value = new byte[precision];
+
+			long safeAddress = address - (address % precision) + alignment;
+			if (safeAddress > mi.Size - precision)
+				safeAddress = mi.Size - (2*precision) + alignment; //If we're out of range, hit the last aligned address
+
+			if (type == NightmareType.SET)
+            {
+                ulong randomValue = 0;
+
+                bool def = false;
+				switch (precision)
 				{
-					case NightmareType.ADD:
-						bu.TiltValue = 1;
+					case 1:
+						randomValue = RtcCore.RND.RandomULong(MinValue8Bit, MaxValue8Bit);
 						break;
-					case NightmareType.SUBTRACT:
-						bu.TiltValue = -1;
+					case 2:
+						randomValue = RtcCore.RND.RandomULong(MinValue16Bit, MaxValue16Bit);
 						break;
-					default:
-						bu.TiltValue = 0;
-						break;
-				}
-				return bu;
+                    case 4:
+                        randomValue = RtcCore.RND.RandomULong(MinValue32Bit, MaxValue32Bit);
+                        break;
+                    case 8:
+                        randomValue = RtcCore.RND.RandomULong(MinValue32Bit, MaxValue32Bit);
+                        break;
+                    default:
+                        def = true;
+                        break;
+                }
+
+                if (replacementValue == null)
+                {
+                    if (def)
+                        for (int i = 0; i < precision; i++)
+                            value[i] = (byte)RtcCore.RND.Next();
+                    else
+                        value = CorruptCore_Extensions.GetByteArrayValue(precision, randomValue, true);
+                }
+                else
+                    value = replacementValue;
+
+                return new BlastUnit(value, domain, safeAddress, precision, mi.BigEndian, 0, 1);
 			}
-			catch (Exception ex)
+			BlastUnit bu = new BlastUnit(StoreType.ONCE, StoreTime.PREEXECUTE, domain, safeAddress, domain, safeAddress, precision, mi.BigEndian);
+			switch (type)
 			{
-				throw new Exception("Nightmare Engine GenerateUnit Threw Up", ex);
+				case NightmareType.ADD:
+					bu.TiltValue = 1;
+					break;
+				case NightmareType.SUBTRACT:
+					bu.TiltValue = -1;
+					break;
+				default:
+					bu.TiltValue = 0;
+					break;
 			}
+			return bu;
 		}
 	}
 }

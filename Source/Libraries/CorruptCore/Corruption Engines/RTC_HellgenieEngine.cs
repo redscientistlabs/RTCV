@@ -73,51 +73,47 @@ namespace RTCV.CorruptCore
 
 		public static BlastUnit GenerateUnit(string domain, long address, int precision, int alignment)
 		{
-			try
+			
+			
+			if (domain == null)
+				return null;
+			MemoryInterface mi = MemoryDomains.GetInterface(domain);
+
+			Byte[] value = new Byte[precision];
+
+			long safeAddress = address - (address % precision) + alignment;
+			if (safeAddress > mi.Size - precision)
+				safeAddress = mi.Size - (2 * precision) + alignment; //If we're out of range, hit the last aligned address
+
+            ulong randomValue = 0;
+            bool def = false;
+			switch (precision)
 			{
-				if (domain == null)
-					return null;
-				MemoryInterface mi = MemoryDomains.GetInterface(domain);
+				case 1:
+					randomValue = RtcCore.RND.RandomULong(MinValue8Bit, MaxValue8Bit);
+					break;
+				case 2:
+					randomValue = RtcCore.RND.RandomULong(MinValue16Bit, MaxValue16Bit);
+					break;
+                case 4:
+                    randomValue = RtcCore.RND.RandomULong(MinValue32Bit, MaxValue32Bit);
+                    break;
+                case 8:
+                    randomValue = RtcCore.RND.RandomULong(MinValue64Bit, MaxValue64Bit);
+                    break;
+                default:
+                    def = true;
+                    break;
+            }
 
-				Byte[] value = new Byte[precision];
+            if(def)
+                for (int i = 0; i < precision; i++)
+                    value[i] = (byte)RtcCore.RND.Next();
+            else
+				value = CorruptCore_Extensions.GetByteArrayValue(precision, randomValue, true);
 
-				long safeAddress = address - (address % precision) + alignment;
-				if (safeAddress > mi.Size - precision)
-					safeAddress = mi.Size - (2 * precision) + alignment; //If we're out of range, hit the last aligned address
-
-                ulong randomValue = 0;
-                bool def = false;
-				switch (precision)
-				{
-					case 1:
-						randomValue = RtcCore.RND.RandomULong(MinValue8Bit, MaxValue8Bit);
-						break;
-					case 2:
-						randomValue = RtcCore.RND.RandomULong(MinValue16Bit, MaxValue16Bit);
-						break;
-                    case 4:
-                        randomValue = RtcCore.RND.RandomULong(MinValue32Bit, MaxValue32Bit);
-                        break;
-                    case 8:
-                        randomValue = RtcCore.RND.RandomULong(MinValue64Bit, MaxValue64Bit);
-                        break;
-                    default:
-                        def = true;
-                        break;
-                }
-
-                if(def)
-                    for (int i = 0; i < precision; i++)
-                        value[i] = (byte)RtcCore.RND.Next();
-                else
-					value = CorruptCore_Extensions.GetByteArrayValue(precision, randomValue, true);
-
-                return new BlastUnit(value, domain, safeAddress, precision, mi.BigEndian, 0, 0);
-			}
-			catch (Exception ex)
-			{
-				throw new Exception("HellGenie Engine GenerateUnit Threw Up" + ex);
-			}
+            return new BlastUnit(value, domain, safeAddress, precision, mi.BigEndian, 0, 0);
+			
 		}
 
 	}

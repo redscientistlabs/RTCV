@@ -78,21 +78,33 @@ namespace RTCV.CorruptCore
 
         public static byte PeekByte(this byte[][] data, long Address)
         {
+            try
+            {
+                if (data == null)
+                    return 0;
 
+                long bank;
+                long relativeAddress = (Address % maxBankSize);
 
-            if (data == null)
+                if (Address < maxBankSize)
+                    bank = 0;
+                else
+                    bank = maxBankSize / (Address - (Address % maxBankSize));
+
+                byte result = data[bank][relativeAddress];
+                return result;
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine($"IOException in MemoryBanks.PeekByte! {e.Message}\n{e.StackTrace}");
+                Exception _e = e.InnerException;
+                while (_e != null)
+                {
+                    Console.WriteLine($"InnserException {_e.Message}\n{_e.StackTrace}");
+                    _e = _e.InnerException;
+                }
                 return 0;
-
-            long bank;
-            long relativeAddress = (Address % maxBankSize);
-
-            if (Address < maxBankSize)
-                bank = 0;
-            else
-                bank = maxBankSize / (Address - (Address % maxBankSize));
-
-            byte result = data[bank][relativeAddress];
-            return result;
+            }
         }
 
         public static byte[] PeekBytes(this byte[][] data, long startAddress, long length)
@@ -144,20 +156,32 @@ namespace RTCV.CorruptCore
 
         public static void PokeByte(this byte[][] data, long Address, byte value)
         {
+            try
+            {
+                if (data == null)
+                    return;
 
+                long bank;
+                long relativeAddress = (Address % maxBankSize);
 
-            if (data == null)
-                return;
+                if (Address < maxBankSize)
+                    bank = 0;
+                else
+                    bank = maxBankSize / (Address - (Address % maxBankSize));
 
-            long bank;
-            long relativeAddress = (Address % maxBankSize);
+                data[bank][relativeAddress] = value;
+            }
+            catch(IOException e)
+            {
+                Console.WriteLine($"IOException in MemoryBanks.PokeByte! {e.Message}\n{e.StackTrace}");
+                Exception _e = e.InnerException;
+                while (_e != null)
+                {
+                    Console.WriteLine($"InnserException {_e.Message}\n{_e.StackTrace}");
+                    _e = _e.InnerException;
+                }
+            }
 
-            if (Address < maxBankSize)
-                bank = 0;
-            else
-                bank = maxBankSize / (Address - (Address % maxBankSize));
-
-            data[bank][relativeAddress] = value;
         }
 
         public static void PokeBytes(this byte[][] data, long startAddress, byte[] values)
