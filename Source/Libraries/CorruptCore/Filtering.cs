@@ -246,13 +246,32 @@ namespace RTCV.CorruptCore
 			return false;
 		}
 
-		/// <summary>
-		/// Gets a random constant from a value list
-		/// </summary>
-		/// <param name="hash"></param>
-		/// <param name="precision"></param>
-		/// <returns></returns>
-		public static byte[] GetRandomConstant(string hash, int precision)
+        /// <summary>
+        /// Gets precision used in a list
+        /// </summary>
+        /// <param name="hash"></param>
+        /// <returns></returns>
+        public static int GetPrecisionFromHash(string hash)
+        {
+            if (Hash2ValueDico == null)
+                return -1;
+
+            if (!Hash2ValueDico.ContainsKey(hash))
+            {
+                return -1;
+            }
+
+            Byte[] value = Hash2ValueDico[hash][0];
+            return value.Length;
+        }
+
+        /// <summary>
+        /// Gets a random constant from a value list
+        /// </summary>
+        /// <param name="hash"></param>
+        /// <param name="precision"></param>
+        /// <returns></returns>
+        public static byte[] GetRandomConstant(string hash, int precision)
 		{
 			//If the value dico doesn't exist, return false
 			if (Hash2ValueDico == null)
