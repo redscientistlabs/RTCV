@@ -201,10 +201,10 @@ namespace RTCV.CorruptCore
                                 }
 
                                 if(def)
-                                    value = CorruptCore_Extensions.GetByteArrayValue(precision, randomValue, true);
-                                else
-                                    for (int i = 0; i < precision; i++)
+									for (int i = 0; i < precision; i++)
 										value[i] = (byte)RtcCore.RND.Next();
+                                else
+                                        value = CorruptCore_Extensions.GetByteArrayValue(precision, randomValue, true);
 							}
 							break;
 
