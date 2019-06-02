@@ -400,6 +400,32 @@ namespace RTCV.CorruptCore
 					break;
 				}
 
+                case REMOTE_LONGARRAY_FILTERDOMAIN:
+                    {
+                        string[] objValues = (advancedMessage.objectValue as string[]);
+                        string domain = objValues[0];
+                        string LimiterListHash = objValues[1];
+
+                        void a()
+                        {
+                            MemoryInterface mi = MemoryDomains.MemoryInterfaces[domain];
+                            List<long> allLegalAdresses = new List<long>();
+
+                            int listItemSize = Filtering.GetPrecisionFromHash(LimiterListHash);
+
+                            for (long i = 0; i < mi.Size; i += listItemSize)
+                                if (Filtering.LimiterPeekBytes(i, i + listItemSize, mi.Name, LimiterListHash, mi))
+                                    for (int j = 0; j < listItemSize; j++)
+                                        allLegalAdresses.Add(i + j);
+
+                            e.setReturnValue(allLegalAdresses.ToArray());
+                        }
+
+                        SyncObjectSingleton.EmuThreadExecute(a, false);
+                    }
+                    break;
+
+
                 case REMOTE_KEY_GETRAWBLASTLAYER:
                 {
                     void a()

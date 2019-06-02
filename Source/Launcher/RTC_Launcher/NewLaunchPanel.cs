@@ -10,24 +10,20 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace RTC_Launcher
+namespace RTCV.Launcher
 {
     public partial class NewLaunchPanel : Form
     {
-        string launcherAssetLocation;
-        string launcherConfLocation;
-        string batchFilesLocation;
-        string version;
+        LauncherConf lc;
 
         public NewLaunchPanel()
         {
             InitializeComponent();
             lbSelectedVersion.Visible = false;
 
-            version = MainForm.SelectedVersion;
-            launcherAssetLocation = MainForm.launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version + Path.DirectorySeparatorChar + "Launcher";
-            launcherConfLocation = launcherAssetLocation + Path.DirectorySeparatorChar + "launcher.ini";
-            batchFilesLocation = MainForm.launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version;
+            lc = new LauncherConf(MainForm.SelectedVersion);
+
+
         }
 
         public void DisplayVersion()
@@ -39,27 +35,12 @@ namespace RTC_Launcher
 
             Controls.Remove(btnDefaultSize);
 
-            if (!File.Exists(launcherConfLocation))
-            {
-                lbSelectedVersion.Text = "launcher.ini could not be found";
-                lbSelectedVersion.Visible = true;
-                return;
-            }
-
-            string[] launcherConf = File.ReadAllLines(launcherConfLocation);
-
             int maxHorizontal = 4;
             int positionX = 0;
             int positionY = 0;
 
-            foreach (string line in launcherConf)
+            foreach (LauncherConfItem lci in lc.items)
             {
-                string[] lineItems = line.Split('|');
-                string imageLocation = launcherAssetLocation + Path.DirectorySeparatorChar + "" + lineItems[0];
-                string batchLocation = batchFilesLocation + Path.DirectorySeparatorChar + "" + lineItems[1];
-                string folderName = lineItems[2];
-                string folderCheck = batchFilesLocation + Path.DirectorySeparatorChar + "" + folderName;
-                string downloadLocation = lineItems[3];
 
                 Button newButton = new Button();
                 newButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
@@ -70,7 +51,7 @@ namespace RTC_Launcher
 
 
                 Bitmap btnImage;
-                using (var bmpTemp = new Bitmap(imageLocation))
+                using (var bmpTemp = new Bitmap(lci.imageLocation))
                 {
                     btnImage = new Bitmap(bmpTemp);
                 }
@@ -93,7 +74,7 @@ namespace RTC_Launcher
                 newButton.Size = (Size)btnSize;
                 newButton.TabIndex = 134;
                 newButton.TabStop = false;
-                newButton.Tag = line;
+                newButton.Tag = lci.line;
                 newButton.Text = "";
                 newButton.UseVisualStyleBackColor = false;
                 newButton.Click += new System.EventHandler(this.btnBatchfile_Click);
@@ -101,12 +82,12 @@ namespace RTC_Launcher
 
 
 
-                bool isAddon = !string.IsNullOrWhiteSpace(downloadLocation);
+                bool isAddon = !string.IsNullOrWhiteSpace(lci.downloadVersion);
                 bool AddonInstalled = false;
 
                 if (isAddon)
                 {
-                    AddonInstalled = Directory.Exists(folderCheck);
+                    AddonInstalled = Directory.Exists(lci.folderLocation);
                     newButton.MouseDown += new MouseEventHandler((sender, e) =>
                     {
 
@@ -115,7 +96,7 @@ namespace RTC_Launcher
                             Point locate = new Point((sender as Control).Location.X + e.Location.X, (sender as Control).Location.Y + e.Location.Y);
 
                             ContextMenuStrip columnsMenu = new ContextMenuStrip();
-                            columnsMenu.Items.Add("Delete", null, new EventHandler((ob, ev) => { DeleteAddon(folderName); })).Enabled = AddonInstalled;
+                            columnsMenu.Items.Add("Delete", null, new EventHandler((ob, ev) => { DeleteAddon(lci.folderName); })).Enabled = AddonInstalled;
                             columnsMenu.Show(this, locate);
                         }
 
@@ -161,7 +142,7 @@ namespace RTC_Launcher
             }
             
 
-            lbSelectedVersion.Text = version;
+            lbSelectedVersion.Text = lc.version;
             lbSelectedVersion.Visible = true;
 
         }
@@ -170,7 +151,7 @@ namespace RTC_Launcher
         {
             try
             {
-                string targetFolder = MainForm.launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version + Path.DirectorySeparatorChar + "" + AddonFolderName;
+                string targetFolder = Path.Combine(MainForm.launcherDir, "VERSIONS", lc.version, AddonFolderName);
 
                 if (Directory.Exists(targetFolder))
                     Directory.Delete(targetFolder, true);
@@ -185,7 +166,8 @@ namespace RTC_Launcher
                 }
             }
 
-            MainForm.mf.RefreshInterface();
+            MainForm.mf.RefreshKeepSelectedVersion();
+            //MainForm.mf.RefreshInterface();
         }
 
         private void NewLaunchPanel_Load(object sender, EventArgs e)
@@ -198,31 +180,44 @@ namespace RTC_Launcher
             Button currentButton = (Button)sender;
 
             string line = (string)currentButton.Tag;
-            string[] lineItems = line.Split('|');
+            LauncherConfItem lci = new LauncherConfItem(lc, line);
 
-            string imageLocation = launcherAssetLocation + Path.DirectorySeparatorChar + "" + lineItems[0];
-            string batchName = lineItems[1];
-            string batchLocation = batchFilesLocation + Path.DirectorySeparatorChar + "" + batchName;
-            string folderName = lineItems[2];
-            string folderLocation = batchFilesLocation + Path.DirectorySeparatorChar + "" + folderName;
-            string downloadVersion = lineItems[3];
-
-            if(!Directory.Exists(folderLocation))
+            if(!Directory.Exists(lci.folderLocation))
             {
-                if(string.IsNullOrWhiteSpace(downloadVersion))
+                if(string.IsNullOrWhiteSpace(lci.downloadVersion))
                 {
-                    MessageBox.Show($"A required folder is missing: {lineItems[2]}\nNo download location was provided", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"A required folder is missing: {lci.downloadVersion}\nNo download location was provided", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                var result = MessageBox.Show($"The following component is missing: {lineItems[2]}\nDo you wish to download it?", "Additional download required", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                LauncherConf lcCandidateForPull = getFolderFromPreviousVersion(lci.downloadVersion);
+                if(lcCandidateForPull != null)
+                {
+
+                    var resultAskPull = MessageBox.Show($"The component {lci.folderName} could be imported from {lcCandidateForPull.version}\nDo you wish import it?", "Import candidate found", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if(resultAskPull == DialogResult.Yes)
+                    {
+                        LauncherConfItem candidate = lcCandidateForPull.items.FirstOrDefault(it => it.downloadVersion == lci.downloadVersion);
+                        //handle it here
+                        Directory.Move(candidate.folderLocation, lci.folderLocation);
+                        MainForm.mf.RefreshKeepSelectedVersion();
+                        return;
+                    }
+
+                }
+
+
+
+
+                var result = MessageBox.Show($"The following component is missing: {lci.folderName}\nDo you wish to download it?", "Additional download required", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if(result == DialogResult.Yes)
                 {
 
-                    string downloadUrl = $"{MainForm.webRessourceDomain}/rtc/addons/" + downloadVersion + ".zip";
-                    string downloadedFile = MainForm.launcherDir + Path.DirectorySeparatorChar + "PACKAGES" + Path.DirectorySeparatorChar + downloadVersion + ".zip";
-                    string extractDirectory = folderLocation;
+                    string downloadUrl = $"{MainForm.webRessourceDomain}/rtc/addons/" + lci.downloadVersion + ".zip";
+                    string downloadedFile = Path.Combine(MainForm.launcherDir, "PACKAGES", lci.downloadVersion + ".zip");
+                    string extractDirectory = lci.folderLocation;
 
                     MainForm.mf.DownloadFile(downloadUrl, downloadedFile, extractDirectory);
 
@@ -231,16 +226,37 @@ namespace RTC_Launcher
                 return;
             }
 
-            if(batchLocation.Contains("http"))
+            if(lci.batchLocation.Contains("http"))
             {
-                Process.Start(batchName);
+                Process.Start(lci.batchName);
                 return;
             }
 
             ProcessStartInfo psi = new ProcessStartInfo();
-            psi.FileName = Path.GetFileName(batchLocation);
-            psi.WorkingDirectory = Path.GetDirectoryName(batchLocation);
+            psi.FileName = Path.GetFileName(lci.batchLocation);
+            psi.WorkingDirectory = Path.GetDirectoryName(lci.batchLocation);
             Process.Start(psi);
+        }
+
+        private LauncherConf getFolderFromPreviousVersion(string downloadVersion)
+        {
+            foreach(string ver in MainForm.mf.lbVersions.Items.Cast<string>())
+            {
+                if (downloadVersion == ver)
+                    continue;
+
+                var lc = new LauncherConf(ver);
+
+                LauncherConfItem lci = lc.items.FirstOrDefault(it => it.downloadVersion == downloadVersion);
+                if (lci != null)
+                {
+                    if (Directory.Exists(lci.folderLocation))
+                        return lc;
+                }
+
+            }
+
+            return null;
         }
     }
 }

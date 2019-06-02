@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace RTC_Launcher
+namespace RTCV.Launcher
 {
     public partial class VesionSelectPanel : Form
     {

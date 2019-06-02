@@ -1,4 +1,4 @@
-﻿namespace RTC_Launcher
+﻿namespace RTCV.Launcher
 {
     partial class NewLaunchPanel
     {

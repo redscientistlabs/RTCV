@@ -1,4 +1,4 @@
-﻿namespace RTC_Launcher
+﻿namespace RTCV.Launcher
 {
     partial class MainForm
     {
@@ -135,8 +135,8 @@
             // pbNewVersionNotification
             // 
             this.pbNewVersionNotification.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.pbNewVersionNotification.Image = global::RTC_Launcher.Properties.Resources.notificationBadge;
-            this.pbNewVersionNotification.InitialImage = global::RTC_Launcher.Properties.Resources.notificationBadge;
+            this.pbNewVersionNotification.Image = global::RTCV.Launcher.Properties.Resources.notificationBadge;
+            this.pbNewVersionNotification.InitialImage = global::RTCV.Launcher.Properties.Resources.notificationBadge;
             this.pbNewVersionNotification.Location = new System.Drawing.Point(118, 409);
             this.pbNewVersionNotification.Name = "pbNewVersionNotification";
             this.pbNewVersionNotification.Size = new System.Drawing.Size(14, 14);
@@ -178,7 +178,7 @@
             // pnTopPanel
             // 
             this.pnTopPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))));
-            this.pnTopPanel.BackgroundImage = global::RTC_Launcher.Properties.Resources.LauncherBack;
+            this.pnTopPanel.BackgroundImage = global::RTCV.Launcher.Properties.Resources.LauncherBack;
             this.pnTopPanel.Controls.Add(this.btnDiscord);
             this.pnTopPanel.Controls.Add(this.btnMinimize);
             this.pnTopPanel.Controls.Add(this.btnQuit);
@@ -199,7 +199,7 @@
             this.btnDiscord.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDiscord.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
             this.btnDiscord.ForeColor = System.Drawing.Color.White;
-            this.btnDiscord.Image = global::RTC_Launcher.Properties.Resources.discord;
+            this.btnDiscord.Image = global::RTCV.Launcher.Properties.Resources.discord;
             this.btnDiscord.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnDiscord.Location = new System.Drawing.Point(896, 8);
             this.btnDiscord.Name = "btnDiscord";
@@ -258,7 +258,7 @@
             this.btnOnlineGuide.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOnlineGuide.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
             this.btnOnlineGuide.ForeColor = System.Drawing.Color.White;
-            this.btnOnlineGuide.Image = global::RTC_Launcher.Properties.Resources.corruptwiki;
+            this.btnOnlineGuide.Image = global::RTCV.Launcher.Properties.Resources.corruptwiki;
             this.btnOnlineGuide.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnOnlineGuide.Location = new System.Drawing.Point(975, 8);
             this.btnOnlineGuide.Name = "btnOnlineGuide";
