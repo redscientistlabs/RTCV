@@ -1310,6 +1310,8 @@ namespace RTCV.UI
 		private void sanitizeDuplicatesToolStripMenuItem_Click(object sender, EventArgs e)
 		{
             currentSK.BlastLayer.SanitizeDuplicates();
+            dgvBlastEditor.Refresh();
+            UpdateBottom();
 
 		}
 
