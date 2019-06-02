@@ -328,10 +328,6 @@ namespace RTCV.UI
 
 		private void cbCustomPrecision_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			//Deselect the updown boxes so they commit if they're selected.
-			//As you can use the scroll wheel over the combobox while the textbox is focused, this is required
-			cbCustomPrecision.Focus();
-
 			if (cbCustomPrecision.SelectedIndex != -1)
 			{
 
