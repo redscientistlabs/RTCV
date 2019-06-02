@@ -1600,8 +1600,8 @@ namespace RTCV.CorruptCore
 				CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref value, TiltValue, this.BigEndian);
 
 			//Flip it if it's big endian
-			if (this.BigEndian)
-				value.FlipBytes();
+			//if (this.BigEndian)
+			//	value.FlipBytes();
 
 			//Enqueue it
 			Working.StoreData.Enqueue(value);
