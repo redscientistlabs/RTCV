@@ -323,8 +323,6 @@ namespace RTCV.UI
 
 		public void UpdateMinMaxBoxes(int precision)
 		{
-			if (DontUpdateSpec)
-				return;
 			updatingMinMax = true;
 			switch (precision)
 			{
