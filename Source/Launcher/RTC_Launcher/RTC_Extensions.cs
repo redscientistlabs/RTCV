@@ -8,7 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Windows.Forms;
 
-namespace RTC_Launcher
+namespace RTCV.Launcher
 {
     public static class RTC_Extensions
     {

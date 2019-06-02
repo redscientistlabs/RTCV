@@ -90,6 +90,7 @@
     <Compile Include="NewLaunchPanel.Designer.cs">
       <DependentUpon>NewLaunchPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Objects.cs" />
     <Compile Include="OldLaunchPanel.cs">
       <SubType>Form</SubType>
     </Compile>

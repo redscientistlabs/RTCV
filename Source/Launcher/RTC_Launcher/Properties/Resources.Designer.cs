@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace RTC_Launcher.Properties {
+namespace RTCV.Launcher.Properties {
     using System;
     
     

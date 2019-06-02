@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace RTC_Launcher
+namespace RTCV.Launcher
 {
     static class Programd
     {
