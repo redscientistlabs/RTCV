@@ -62,7 +62,7 @@
             this.label17 = new System.Windows.Forms.Label();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.btnResyncDistortionEngine = new System.Windows.Forms.Button();
-            this.nmDistortionDelay = new System.Windows.Forms.NumericUpDown();
+            this.nmDistortionDelay = new RTCV.UI.Components.Controls.MultiUpDown();
             this.label7 = new System.Windows.Forms.Label();
             this.gbFreezeEngine = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -76,17 +76,17 @@
             this.label26 = new System.Windows.Forms.Label();
             this.updownMaxCheats = new RTCV.UI.Components.Controls.MultiUpDown();
             this.label27 = new System.Windows.Forms.Label();
-            this.nmMaxValueHellgenie = new RTCV.UI.NumericUpDownHexFix();
+            this.nmMaxValueHellgenie = new RTCV.UI.Components.Controls.MultiUpDown();
             this.label16 = new System.Windows.Forms.Label();
-            this.nmMinValueHellgenie = new RTCV.UI.NumericUpDownHexFix();
+            this.nmMinValueHellgenie = new RTCV.UI.Components.Controls.MultiUpDown();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.cbClearCheatsOnRewind = new System.Windows.Forms.CheckBox();
             this.btnClearCheats = new System.Windows.Forms.Button();
             this.gbNightmareEngine = new System.Windows.Forms.GroupBox();
             this.label24 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
-            this.nmMaxValueNightmare = new RTCV.UI.NumericUpDownHexFix();
-            this.nmMinValueNightmare = new RTCV.UI.NumericUpDownHexFix();
+            this.nmMaxValueNightmare = new RTCV.UI.Components.Controls.MultiUpDown();
+            this.nmMinValueNightmare = new RTCV.UI.Components.Controls.MultiUpDown();
             this.label15 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.cbBlastType = new System.Windows.Forms.ComboBox();
@@ -105,14 +105,9 @@
             this.pnLimiterList.SuspendLayout();
             this.gbPipeEngine.SuspendLayout();
             this.gbDistortionEngine.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nmDistortionDelay)).BeginInit();
             this.gbFreezeEngine.SuspendLayout();
             this.gbHellgenieEngine.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nmMaxValueHellgenie)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nmMinValueHellgenie)).BeginInit();
             this.gbNightmareEngine.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nmMaxValueNightmare)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nmMinValueNightmare)).BeginInit();
             this.gbCustomEngine.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -643,7 +638,7 @@
             0,
             0,
             0});
-            this.nmDistortionDelay.ValueChanged += new System.EventHandler(this.nmDistortionDelay_ValueChanged);
+            this.nmDistortionDelay.ValueChanged += this.nmDistortionDelay_ValueChanged;
             this.nmDistortionDelay.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // label7
@@ -868,7 +863,7 @@
             0,
             0,
             0});
-            this.nmMaxValueHellgenie.ValueChanged += new System.EventHandler(this.nmMaxValueHellgenie_ValueChanged);
+            this.nmMaxValueHellgenie.ValueChanged += this.nmMaxValueHellgenie_ValueChanged;
             this.nmMaxValueHellgenie.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // label16
@@ -893,7 +888,7 @@
             this.nmMinValueHellgenie.Size = new System.Drawing.Size(70, 20);
             this.nmMinValueHellgenie.TabIndex = 145;
             this.nmMinValueHellgenie.Tag = "color:normal";
-            this.nmMinValueHellgenie.ValueChanged += new System.EventHandler(this.nmMinValueHellgenie_ValueChanged);
+            this.nmMinValueHellgenie.ValueChanged += this.nmMinValueHellgenie_ValueChanged;
             this.nmMinValueHellgenie.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // comboBox2
@@ -1002,7 +997,7 @@
             0,
             0,
             0});
-            this.nmMaxValueNightmare.ValueChanged += new System.EventHandler(this.nmMaxValueNightmare_ValueChanged);
+            this.nmMaxValueNightmare.ValueChanged += this.nmMaxValueNightmare_ValueChanged;
             this.nmMaxValueNightmare.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // nmMinValueNightmare
@@ -1016,7 +1011,7 @@
             this.nmMinValueNightmare.Size = new System.Drawing.Size(70, 20);
             this.nmMinValueNightmare.TabIndex = 141;
             this.nmMinValueNightmare.Tag = "color:normal";
-            this.nmMinValueNightmare.ValueChanged += new System.EventHandler(this.nmMinValueNightmare_ValueChanged);
+            this.nmMinValueNightmare.ValueChanged += this.nmMinValueNightmare_ValueChanged;
             this.nmMinValueNightmare.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // label15
@@ -1224,17 +1219,12 @@
             this.gbPipeEngine.PerformLayout();
             this.gbDistortionEngine.ResumeLayout(false);
             this.gbDistortionEngine.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nmDistortionDelay)).EndInit();
             this.gbFreezeEngine.ResumeLayout(false);
             this.gbFreezeEngine.PerformLayout();
             this.gbHellgenieEngine.ResumeLayout(false);
             this.gbHellgenieEngine.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nmMaxValueHellgenie)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nmMinValueHellgenie)).EndInit();
             this.gbNightmareEngine.ResumeLayout(false);
             this.gbNightmareEngine.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nmMaxValueNightmare)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nmMinValueNightmare)).EndInit();
             this.gbCustomEngine.ResumeLayout(false);
             this.gbCustomEngine.PerformLayout();
             this.ResumeLayout(false);
@@ -1273,7 +1263,7 @@
 		private System.Windows.Forms.Label label17;
 		public System.Windows.Forms.ComboBox comboBox3;
 		private System.Windows.Forms.Button btnResyncDistortionEngine;
-		public System.Windows.Forms.NumericUpDown nmDistortionDelay;
+        public RTCV.UI.Components.Controls.MultiUpDown nmDistortionDelay;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.GroupBox gbFreezeEngine;
 		private System.Windows.Forms.Label label20;
@@ -1283,17 +1273,17 @@
 		private System.Windows.Forms.GroupBox gbHellgenieEngine;
 		private System.Windows.Forms.Label label26;
 		private System.Windows.Forms.Label label27;
-		public NumericUpDownHexFix nmMaxValueHellgenie;
+		public RTCV.UI.Components.Controls.MultiUpDown nmMaxValueHellgenie;
 		private System.Windows.Forms.Label label16;
-		public NumericUpDownHexFix nmMinValueHellgenie;
+		public RTCV.UI.Components.Controls.MultiUpDown nmMinValueHellgenie;
 		public System.Windows.Forms.ComboBox comboBox2;
 		public System.Windows.Forms.CheckBox cbClearCheatsOnRewind;
 		private System.Windows.Forms.Button btnClearCheats;
 		private System.Windows.Forms.GroupBox gbNightmareEngine;
 		private System.Windows.Forms.Label label24;
 		private System.Windows.Forms.Label label23;
-		public NumericUpDownHexFix nmMaxValueNightmare;
-		public NumericUpDownHexFix nmMinValueNightmare;
+		public RTCV.UI.Components.Controls.MultiUpDown nmMaxValueNightmare;
+		public RTCV.UI.Components.Controls.MultiUpDown nmMinValueNightmare;
 		private System.Windows.Forms.Label label15;
 		public System.Windows.Forms.ComboBox comboBox1;
 		public System.Windows.Forms.ComboBox cbBlastType;

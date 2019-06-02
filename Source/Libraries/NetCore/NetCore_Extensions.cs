@@ -4,10 +4,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -411,4 +414,88 @@ namespace RTCV.NetCore
 		}
 
 	}
+
+    //https://stackoverflow.com/a/47744757/10923568
+    public static class StackFrameHelper
+    {
+        private delegate object DGetStackFrameHelper();
+
+        private static DGetStackFrameHelper _getStackFrameHelper = null;
+
+        private static FieldInfo _frameCount = null;
+        private static volatile bool initialized = false;
+
+        public static void OneTimeSetup()
+        {
+            if (initialized)
+                return;
+            try
+            {
+                Type stackFrameHelperType =
+                                 typeof(object).Assembly.GetType("System.Diagnostics.StackFrameHelper");
+
+                // ReSharper disable once PossibleNullReferenceException
+                MethodInfo getStackFramesInternal =
+                   Type.GetType("System.Diagnostics.StackTrace, mscorlib").GetMethod(
+                                "GetStackFramesInternal", BindingFlags.Static | BindingFlags.NonPublic);
+                if (getStackFramesInternal == null)
+                    return;  // Unknown mscorlib implementation
+
+                DynamicMethod dynamicMethod = new DynamicMethod(
+                          "GetStackFrameHelper", typeof(object), new Type[0], typeof(StackTrace), true);
+
+                ILGenerator generator = dynamicMethod.GetILGenerator();
+                generator.DeclareLocal(stackFrameHelperType);
+
+                bool newDotNet = false;
+
+                ConstructorInfo constructorInfo =
+                         stackFrameHelperType.GetConstructor(new Type[] { typeof(bool), typeof(Thread) });
+                if (constructorInfo != null)
+                    generator.Emit(OpCodes.Ldc_I4_0);
+                else
+                {
+                    constructorInfo = stackFrameHelperType.GetConstructor(new Type[] { typeof(Thread) });
+                    if (constructorInfo == null)
+                        return; // Unknown mscorlib implementation
+                    newDotNet = true;
+                }
+
+                generator.Emit(OpCodes.Ldnull);
+                generator.Emit(OpCodes.Newobj, constructorInfo);
+                generator.Emit(OpCodes.Stloc_0);
+                generator.Emit(OpCodes.Ldloc_0);
+                generator.Emit(OpCodes.Ldc_I4_0);
+
+                if (newDotNet)
+                    generator.Emit(OpCodes.Ldc_I4_0);  // Extra parameter
+
+                generator.Emit(OpCodes.Ldnull);
+                generator.Emit(OpCodes.Call, getStackFramesInternal);
+                generator.Emit(OpCodes.Ldloc_0);
+                generator.Emit(OpCodes.Ret);
+
+                _getStackFrameHelper =
+                      (DGetStackFrameHelper)dynamicMethod.CreateDelegate(typeof(DGetStackFrameHelper));
+
+                _frameCount = stackFrameHelperType.GetField("iFrameCount",
+                                                        BindingFlags.NonPublic | BindingFlags.Instance);
+                initialized = true;
+            }
+            catch
+            { }  // _frameCount remains null, indicating unknown mscorlib implementation
+        }
+
+
+        public static int GetCallStackDepth()
+        {
+            if (!initialized)
+                OneTimeSetup();
+
+            if (_frameCount == null)
+                return 0;  // Unknown mscorlib implementation
+            return (int)_frameCount.GetValue(_getStackFrameHelper());
+        }
+
+    }
 }

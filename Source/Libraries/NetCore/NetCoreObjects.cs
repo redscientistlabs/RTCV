@@ -150,7 +150,7 @@ namespace RTCV.NetCore
 
     public class ConsoleEx
     {
-        public static volatile bool ShowDebug = true; // for debugging purposes, put this to true in order to see BOOP and EVENT commands in the console
+        public static volatile bool ShowDebug = false; // for debugging purposes, put this to true in order to see BOOP and EVENT commands in the console
 
         public static ConsoleEx singularity
         {

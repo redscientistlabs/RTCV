@@ -54,11 +54,6 @@ namespace RTCV.NetCore
 
             while (!SyncReturns.ContainsKey(WatchedGuid))
             {
-                attemptsAtReading++;
-
-				if (attemptsAtReading % 5 == 0)
-					System.Windows.Forms.Application.DoEvents(); //prevents the forms to freeze (not responding)
-
                 if (KillReturnWatch)
                 {
                     //Stops waiting and returns null
@@ -69,6 +64,20 @@ namespace RTCV.NetCore
                     //spec.OnSyncedMessageEnd(null);
                     spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{EVENT_SYNCEDMESSAGEEND}"));
                     return null;
+                }
+
+
+                attemptsAtReading++;
+                if (attemptsAtReading % 10 == 0)
+                {
+                    //If we're this deep, something went really wrong so we just emergency abort
+                    if (StackFrameHelper.GetCallStackDepth() > 2000)
+                    {
+                        KillReturnWatch = true;
+                        throw new CustomException("A fatal error has occurred. Please send this to the devs. You should save your Stockpile then restart the RTC.", Environment.StackTrace);
+                    }
+                        
+                    System.Windows.Forms.Application.DoEvents(); //This is a horrible hack we need due to the fact we have synchronous calls that invoke the main thread
                 }
 
                 Thread.Sleep(spec.messageReadTimerDelay);
