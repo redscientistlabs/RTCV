@@ -166,7 +166,8 @@ namespace RTCV.Launcher
                 }
             }
 
-            MainForm.mf.RefreshInterface();
+            MainForm.mf.RefreshKeepSelectedVersion();
+            //MainForm.mf.RefreshInterface();
         }
 
         private void NewLaunchPanel_Load(object sender, EventArgs e)
@@ -180,26 +181,36 @@ namespace RTCV.Launcher
 
             string line = (string)currentButton.Tag;
             LauncherConfItem lci = new LauncherConfItem(lc, line);
-            string[] lineItems = line.Split('|');
-
-            /*
-            string imageLocation = Path.Combine(lc.launcherAssetLocation, lineItems[0]);
-            string batchName = lineItems[1];
-            string batchLocation = Path.Combine(lc.batchFilesLocation, batchName);
-            string folderName = lineItems[2];
-            string folderLocation = Path.Combine(lc.batchFilesLocation, folderName);
-            string downloadVersion = lineItems[3];
-            */
 
             if(!Directory.Exists(lci.folderLocation))
             {
                 if(string.IsNullOrWhiteSpace(lci.downloadVersion))
                 {
-                    MessageBox.Show($"A required folder is missing: {lineItems[2]}\nNo download location was provided", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"A required folder is missing: {lci.downloadVersion}\nNo download location was provided", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                var result = MessageBox.Show($"The following component is missing: {lineItems[2]}\nDo you wish to download it?", "Additional download required", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                LauncherConf lcCandidateForPull = getFolderFromPreviousVersion(lci.downloadVersion);
+                if(lcCandidateForPull != null)
+                {
+
+                    var resultAskPull = MessageBox.Show($"The component {lci.folderName} could be imported from {lcCandidateForPull.version}\nDo you wish import it?", "Import candidate found", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if(resultAskPull == DialogResult.Yes)
+                    {
+                        LauncherConfItem candidate = lcCandidateForPull.items.FirstOrDefault(it => it.downloadVersion == lci.downloadVersion);
+                        //handle it here
+                        Directory.Move(candidate.folderLocation, lci.folderLocation);
+                        MainForm.mf.RefreshKeepSelectedVersion();
+                        return;
+                    }
+
+                }
+
+
+
+
+                var result = MessageBox.Show($"The following component is missing: {lci.folderName}\nDo you wish to download it?", "Additional download required", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if(result == DialogResult.Yes)
                 {
@@ -225,6 +236,27 @@ namespace RTCV.Launcher
             psi.FileName = Path.GetFileName(lci.batchLocation);
             psi.WorkingDirectory = Path.GetDirectoryName(lci.batchLocation);
             Process.Start(psi);
+        }
+
+        private LauncherConf getFolderFromPreviousVersion(string downloadVersion)
+        {
+            foreach(string ver in MainForm.mf.lbVersions.Items.Cast<string>())
+            {
+                if (downloadVersion == ver)
+                    continue;
+
+                var lc = new LauncherConf(ver);
+
+                LauncherConfItem lci = lc.items.FirstOrDefault(it => it.downloadVersion == downloadVersion);
+                if (lci != null)
+                {
+                    if (Directory.Exists(lci.folderLocation))
+                        return lc;
+                }
+
+            }
+
+            return null;
         }
     }
 }

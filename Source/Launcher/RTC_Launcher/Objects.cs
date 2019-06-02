@@ -16,7 +16,7 @@ namespace RTCV.Launcher
         public string batchFilesLocation;
         public string version;
 
-        public LauncherConfItem[] items;
+        public LauncherConfItem[] items = new LauncherConfItem[] { };
 
         public LauncherConf(string _version)
         {
@@ -26,10 +26,7 @@ namespace RTCV.Launcher
             batchFilesLocation = Path.Combine(MainForm.launcherDir, "VERSIONS", version);
 
             if (!File.Exists(launcherConfLocation))
-            {
-                MessageBox.Show("launcher.ini could not be found");
                 return;
-            }
 
             string[] confLines = File.ReadAllLines(launcherConfLocation);
 

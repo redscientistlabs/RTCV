@@ -278,10 +278,16 @@ namespace RTCV.Launcher
             dForm.Close();
             dForm = null;
 
-            if(lastSelectedVersion != null)
+            RefreshKeepSelectedVersion();
+
+        }
+
+        public void RefreshKeepSelectedVersion()
+        {
+            if (lastSelectedVersion != null)
             {
                 int index = -1;
-                for( int i=0; i < lbVersions.Items.Count; i++)
+                for (int i = 0; i < lbVersions.Items.Count; i++)
                 {
                     var item = lbVersions.Items[i];
                     if (item.ToString() == lastSelectedVersion)
@@ -291,9 +297,9 @@ namespace RTCV.Launcher
                     }
                 }
 
+                lbVersions.SelectedIndex = -1;
                 lbVersions.SelectedIndex = index;
             }
-
         }
 
         public void DeleteSelected()
