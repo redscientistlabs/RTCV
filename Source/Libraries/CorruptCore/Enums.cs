@@ -124,6 +124,15 @@
 		DEFAULTVALUE
 	}
 
+    public enum ExecuteState
+    {
+        EXECUTED,
+        NOTEXECUTED,
+        ERROR,
+        HANDLEDERROR,
+        SILENTERROR,
+    }
+
 	public static class RTCSPEC
 	{
 		public static readonly string RTCDIR = "RTCDIR";

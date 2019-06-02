@@ -878,22 +878,18 @@ namespace RTCV.CorruptCore
                 }
                 try
                 {
-                    using (Stream stream = new FileStream(Filename, FileMode.Open))
+                    using (Stream stream = new FileStream(Filename, FileMode.Open, FileAccess.ReadWrite))
                     {
-
                         Console.Write(stream.Length);
                     }
                 }
                 catch (IOException ex)
                 {
-                    if (ex is FileLoadException)
-                    {
-                        throw new Exception($"FileInterface failed to load something because the file is (probably) in use \n" + "Culprit file: " + Filename + "\n" + ex.Message);
-                    }
                     if (ex is PathTooLongException)
                     {
                         throw new Exception($"FileInterface failed to load something because the path is too long. Try moving it closer to root \n" + "Culprit file: " + Filename + "\n" + ex.Message);
                     }
+                    throw new Exception($"FileInterface failed to load something because the file is (probably) in use \n" + "Culprit file: " + Filename + "\n",ex);
                 }
 
 
@@ -968,7 +964,7 @@ namespace RTCV.CorruptCore
                 jsonFilePath = RtcCore.EmuDir;
 
             JsonSerializer serializer = new JsonSerializer();
-            var folder = Path.Combine(jsonFilePath, "TEMP", "filemap.json");
+            var folder = Path.Combine(jsonFilePath, "TEMP");
 
             if (!Directory.Exists(folder))
                 Directory.CreateDirectory(folder);
@@ -1213,6 +1209,7 @@ namespace RTCV.CorruptCore
                     Console.WriteLine($"InnerException {_e.Message}\n{_e.StackTrace}");
                     _e = _e.InnerException;
                 }
+                throw;
             }
 
             if (cacheEnabled)

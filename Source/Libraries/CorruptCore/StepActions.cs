@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using RTCV.NetCore;
 
 namespace RTCV.CorruptCore
@@ -303,9 +304,25 @@ namespace RTCV.CorruptCore
 			List<List<BlastUnit>> itemsToRemove = new List<List<BlastUnit>>();
 			foreach (List<BlastUnit> buList in appliedLifetime)
 			{
-				foreach (BlastUnit bu in buList)
-					bu.Execute();
-
+                foreach (BlastUnit bu in buList)
+                {
+                    var result = bu.Execute();
+                    if (result == ExecuteState.ERROR)
+                    {
+                        var dr = MessageBox.Show(
+                            "Something went horribly wrong during BlastUnit execute. Aborting. Would you like to send this to the devs?",
+                            "A fatal error occurred", MessageBoxButtons.YesNo);
+                        isRunning = false;
+                        if (dr == DialogResult.Yes)
+                            throw new CustomException("BlastUnit appliedLifetime Execute threw up. Check the log for more info.", Environment.StackTrace);
+                        return;
+                    }
+                    if (result == ExecuteState.HANDLEDERROR)
+                    {
+                        isRunning = false;
+                        return;
+                    }
+                }
 				if (buList[0].Working.LastFrame == currentFrame)
 					itemsToRemove.Add(buList);
 			}
@@ -313,7 +330,24 @@ namespace RTCV.CorruptCore
             //Execute all infinite lifetime units
             foreach (List<BlastUnit> buList in appliedInfinite)
                 foreach (BlastUnit bu in buList)
-                    bu.Execute();
+                {
+                    var result = bu.Execute();
+                    if (result == ExecuteState.ERROR)
+                    {
+                        var dr = MessageBox.Show(
+                            "Something went horribly wrong during BlastUnit execute. Aborting. Would you like to send this to the devs?",
+                            "A fatal error occurred", MessageBoxButtons.YesNo);
+                        isRunning = false;
+                        if (dr == DialogResult.Yes)
+                            throw new CustomException("BlastUnit appliedInfinite Execute threw up. Check the log for more info.", Environment.StackTrace);
+                        return;
+                    }
+                    if (result == ExecuteState.HANDLEDERROR)
+                    {
+                        isRunning = false;
+                        return;
+                    }
+                }
 
             bool needsRefilter = false;
 

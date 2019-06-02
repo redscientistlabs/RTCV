@@ -1476,91 +1476,101 @@ namespace RTCV.CorruptCore
 		/// <summary>
 		/// Executes (applies) a blastunit. This shouldn't be called manually.
 		/// If you want to execute a blastunit, add it to the execution pool using Apply()
+		/// Returns false 
 		/// </summary>
-		public void Execute(bool UseRealtime = true)
+		public ExecuteState Execute(bool UseRealtime = true)
 		{
 			if (!IsEnabled)
-				return;
+				return ExecuteState.NOTEXECUTED;
 
-			try
-			{
-				//Get our memory interface
-				MemoryInterface mi = MemoryDomains.GetInterface(Domain);
-				if (mi == null)
-					return;
+            try
+            {
+                //Get our memory interface
+                MemoryInterface mi = MemoryDomains.GetInterface(Domain);
+                if (mi == null)
+                    return ExecuteState.NOTEXECUTED;
 
-				//Limiter handling
-				if (LimiterListHash != null && LimiterTime == LimiterTime.EXECUTE)
-				{
-					if (!LimiterCheck(mi))
-						return;
-				}
+                //Limiter handling
+                if (LimiterListHash != null && LimiterTime == LimiterTime.EXECUTE)
+                {
+                    if (!LimiterCheck(mi))
+                        return ExecuteState.SILENTERROR;
+                }
 
 
-				switch (Source)
-				{
-					case (BlastUnitSource.STORE):
+                switch (Source)
+                {
+                    case (BlastUnitSource.STORE):
+                    {
+                        if (Working == null)
                         {
-                            if (Working == null)
-                            {   
-                                Console.WriteLine("WORKING WAS NULL");
-                                return;
-                            }
-                            if (Working.StoreData == null)
-                            {
-                                Console.WriteLine("STOREDATA WAS NULL");
-                                return;
-                            }
-							//If there's no stored data, return out.
-							if (Working.StoreData.Count == 0)
-								return;
+                            Console.WriteLine("WORKING WAS NULL");
+                            return ExecuteState.SILENTERROR;
+                        }
 
-                            //Apply the value we have stored
-                            Working.ApplyValue = Working.StoreData.Peek();
+                        if (Working.StoreData == null)
+                        {
+                            Console.WriteLine("STOREDATA WAS NULL");
+                            return ExecuteState.SILENTERROR;
+                        }
 
-							//Remove it from the store pool if it's a continuous backup
-							if (StoreType == StoreType.CONTINUOUS)
-								Working.StoreData.Dequeue();
+                        //If there's no stored data, return out.
+                        if (Working.StoreData.Count == 0)
+                            return ExecuteState.NOTEXECUTED;
 
-							//All the data is already handled by GetStoreBackup, so we can just poke
-							for (int i = 0; i < Precision; i++)
-							{
-								mi.PokeByte(Address + i, Working.ApplyValue[i]);
-							}
-						}
-						break;
-					case (BlastUnitSource.VALUE):
-						{
-							//We only calculate it once for Value and then store it in ApplyValue.
-							//If the length has changed (blast editor) we gotta recalc it
-							if (Working.ApplyValue == null)
-							{
-								//We don't want to modify the original array
-								Working.ApplyValue = (byte[])Value.Clone();
+                        //Apply the value we have stored
+                        Working.ApplyValue = Working.StoreData.Peek();
 
-								//Calculate the actual value to apply
-								CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref Working.ApplyValue, TiltValue, this.BigEndian);
+                        //Remove it from the store pool if it's a continuous backup
+                        if (StoreType == StoreType.CONTINUOUS)
+                            Working.StoreData.Dequeue();
 
-								//Flip it if it's big endian
-								if (this.BigEndian)
-									Working.ApplyValue.FlipBytes();
-							}
-							//Poke the memory
-							for (int i = 0; i < Precision; i++)
-							{
-                                mi.PokeByte(Address + i, Working.ApplyValue[i]);
-                            }
+                        //All the data is already handled by GetStoreBackup, so we can just poke
+                        for (int i = 0; i < Precision; i++)
+                        {
+                            mi.PokeByte(Address + i, Working.ApplyValue[i]);
+                        }
+                        break;
+                    }
+                    case (BlastUnitSource.VALUE):
+                    {
+                        //We only calculate it once for Value and then store it in ApplyValue.
+                        //If the length has changed (blast editor) we gotta recalc it
+                        if (Working.ApplyValue == null)
+                        {
+                            //We don't want to modify the original array
+                            Working.ApplyValue = (byte[]) Value.Clone();
 
-							break;
-						}
-				}
-			}
-			catch (Exception ex)
-			{
-				throw new CustomException("The BlastUnit apply() function threw up. \n" + ex.Message, ex.StackTrace);
-			}
+                            //Calculate the actual value to apply
+                            CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref Working.ApplyValue, TiltValue,
+                                this.BigEndian);
 
-			return;
+                            //Flip it if it's big endian
+                            if (this.BigEndian)
+                                Working.ApplyValue.FlipBytes();
+                        }
+
+                        //Poke the memory
+                        for (int i = 0; i < Precision; i++)
+                        {
+                            mi.PokeByte(Address + i, Working.ApplyValue[i]);
+                        }
+                        break;
+                    }
+                }
+            }
+            catch (IOException e)
+            {
+                var dr = MessageBox.Show(
+                    "An IOException occured during Execute().\nThis probably means whatever is being corrupted can't be accessed.\nIf you're corrupting a file, close any program that might be using it.\n\nAborting corrupt.\nSend this error to the devs?",
+                    "IOException during Execute()", MessageBoxButtons.YesNo);
+                if (dr == DialogResult.Yes)
+                {
+                    throw;
+                }
+                return ExecuteState.HANDLEDERROR;
+            }
+			return ExecuteState.EXECUTED;
 		}
 
 		/// <summary>
