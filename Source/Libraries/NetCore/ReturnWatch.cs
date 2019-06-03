@@ -52,6 +52,13 @@ namespace RTCV.NetCore
 
             attemptsAtReading = 0;
 
+            //If we're this deep, something went really wrong so we just emergency abort
+            if (StackFrameHelper.GetCallStackDepth() > 2000)
+            {
+                KillReturnWatch = true;
+                throw new CustomException("A fatal error has occurred. Please send this to the devs. You should save your Stockpile then restart the RTC.", Environment.StackTrace);
+            }
+
             while (!SyncReturns.ContainsKey(WatchedGuid))
             {
                 if (KillReturnWatch)
@@ -66,17 +73,9 @@ namespace RTCV.NetCore
                     return null;
                 }
 
-
                 attemptsAtReading++;
-                if (attemptsAtReading % 10 == 0)
+                if (attemptsAtReading % 5 == 0)
                 {
-                    //If we're this deep, something went really wrong so we just emergency abort
-                    if (StackFrameHelper.GetCallStackDepth() > 2000)
-                    {
-                        KillReturnWatch = true;
-                        throw new CustomException("A fatal error has occurred. Please send this to the devs. You should save your Stockpile then restart the RTC.", Environment.StackTrace);
-                    }
-                        
                     System.Windows.Forms.Application.DoEvents(); //This is a horrible hack we need due to the fact we have synchronous calls that invoke the main thread
                 }
 
