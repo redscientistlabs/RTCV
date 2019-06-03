@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{BD376BB2-17EC-4FB0-A9FE-6B1BBF4AF3E3}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>UI</RootNamespace>
+    <RootNamespace>RTCV.UI</RootNamespace>
     <AssemblyName>UI</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

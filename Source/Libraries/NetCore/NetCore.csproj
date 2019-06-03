@@ -7,7 +7,7 @@
     <ProjectGuid>{7E106AEC-5614-4206-9E4D-25759C90E8AE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NetCore</RootNamespace>
+    <RootNamespace>RTCV.NetCore</RootNamespace>
     <AssemblyName>NetCore</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
