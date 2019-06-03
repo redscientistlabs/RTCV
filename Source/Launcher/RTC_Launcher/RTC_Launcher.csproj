@@ -7,7 +7,7 @@
     <ProjectGuid>{AF5FFA87-1BEC-4083-8C81-07D1B52FDF3A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RTC_Launcher</RootNamespace>
+    <RootNamespace>RTCV.Launcher</RootNamespace>
     <AssemblyName>RTC_Launcher</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
