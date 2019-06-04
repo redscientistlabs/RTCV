@@ -249,6 +249,7 @@
         public static readonly string OVERRIDE_DEFAULTMAXINTENSITY = "OVERRIDE_DEFAULTMAXINTENSITY";
         public static readonly string CONFIG_PATHS = "CONFIG_PATHS";
         public static readonly string REPLACE_MANUALBLAST_WITH_GHCORRUPT = "REPLACE_MANUALBLAST_WITH_GHCORRUPT";
+        public static readonly string LOADSTATE_USES_CALLBACKS = "LOADSTATE_USES_CALLBACKS";
     }
     public enum UISPEC
 	{

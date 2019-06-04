@@ -28,6 +28,14 @@ namespace RTCV.NetCore
             else
                 a.Invoke(null, null);
         }
+        public static void FormExecute(Action a)
+        {
+            if (SyncObject.InvokeRequired)
+                SyncObject.Invoke(new MethodInvoker(a.Invoke));
+            else
+                a.DynamicInvoke();
+        }
+
         public static void FormExecute(Delegate a)
         {
             if (SyncObject.InvokeRequired)
