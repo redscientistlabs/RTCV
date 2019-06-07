@@ -30,8 +30,13 @@ namespace RTCV.NetCore
 	{
 		public bool Attached = false;
 		public event EventHandler<NetCoreEventArgs> MessageReceived;
-		public virtual void OnMessageReceived(NetCoreEventArgs e) => MessageReceived.Invoke(this, e);
-	}
+		public virtual void OnMessageReceived(NetCoreEventArgs e)
+        {
+            if (MessageReceived == null)
+                throw new Exception ("No registered handler for MessageReceived!");
+            MessageReceived.Invoke(this, e);
+        }
+    }
 
 	[Serializable()]
 	[Ceras.MemberConfig(TargetMember.All)]
