@@ -155,7 +155,8 @@ namespace RTCV.CorruptCore
 
                         void a()
                         {
-                            if (UseSavestates && loadBeforeCorrupt) StockpileManager_EmuSide.LoadState_NET(sk, false);
+                            if (UseSavestates && loadBeforeCorrupt)
+                                StockpileManager_EmuSide.LoadState_NET(sk, false);
 
                             //We pull the domains here because if the syncsettings changed, there's a chance the domains changed
                             string[] domains = (string[])AllSpec.UISpec["SELECTEDDOMAINS"];

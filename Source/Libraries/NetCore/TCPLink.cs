@@ -140,7 +140,7 @@ namespace RTCV.NetCore
 
                 }
 
-                networkStream.ReadTimeout = int.MaxValue;   //We don't put a timeout because we can detect broken links
+                networkStream.ReadTimeout = 20;
                 networkStream.WriteTimeout = int.MaxValue;  //Using {BOOP} commands routed through UDP/TCP
 
                 if (spec.Side == NetworkSide.CLIENT)
