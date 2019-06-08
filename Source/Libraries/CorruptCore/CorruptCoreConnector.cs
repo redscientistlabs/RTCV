@@ -164,7 +164,7 @@ namespace RTCV.CorruptCore
 
                             var cpus = Environment.ProcessorCount;
 
-                            if (cpus == 1 || AllSpec.VanguardSpec[VSPEC.SUPPORTS_MULTITHREAD] == null)
+                            if (cpus == 1 || ((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_MULTITHREAD] ?? true))
                             {
                                 bl = RtcCore.GenerateBlastLayer(domains);
                             }
