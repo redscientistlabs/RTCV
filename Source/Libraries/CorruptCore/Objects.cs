@@ -1435,8 +1435,8 @@ namespace RTCV.CorruptCore
 
                 if (MemoryDomains.VmdPool[sourceDomain] is VirtualMemoryDomain vmd)
                 {
-                    Domain = vmd.GetRealDomain(sourceAddress);
-                    Address = vmd.GetRealAddress(sourceAddress);
+                    SourceDomain = vmd.GetRealDomain(sourceAddress);
+                    SourceAddress = vmd.GetRealAddress(sourceAddress);
                 }
                 else
                 {
