@@ -317,13 +317,11 @@ namespace RTCV.CorruptCore
                         {
                             returnValue = StockpileManager_EmuSide.LoadState_NET(sk, runBlastLayer);
                         }
-                        //If the emulator uses callbacks, we load the state from the main thread
+                        //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
                         if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
                         {
-                            SyncObjectSingleton.FormExecute((o, ea) =>
-                            {
-                                returnValue = StockpileManager_EmuSide.LoadState_NET(sk, runBlastLayer);
-                            });
+                            SyncObjectSingleton.FormExecute(a);
+                            e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
                         }
                         else //We're loading on the emulator thread which'll block
                         {
