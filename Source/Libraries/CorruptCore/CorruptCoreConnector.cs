@@ -273,8 +273,6 @@ namespace RTCV.CorruptCore
 					List<BlastGeneratorProto> blastGeneratorProtos = (List<BlastGeneratorProto>)(advancedMessage.objectValue as object[])[1];
 					bool loadBeforeCorrupt = (bool)(advancedMessage.objectValue as object[])[2];
 					bool applyAfterCorrupt = (bool)(advancedMessage.objectValue as object[])[3];
-
-
                     void a()
                     {
                         returnList = BlastTools.GenerateBlastLayersFromBlastGeneratorProtos(blastGeneratorProtos, sk, loadBeforeCorrupt);
@@ -288,8 +286,16 @@ namespace RTCV.CorruptCore
                             bl.Apply(true);
                         }
                     }
-                    SyncObjectSingleton.EmuThreadExecute(a, false);
-					e.setReturnValue(returnList);
+                    //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
+                    if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
+                    {
+                        SyncObjectSingleton.FormExecute(a);
+                        e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
+                    }
+                    else
+                        SyncObjectSingleton.EmuThreadExecute(a, false);
+                    e.setReturnValue(returnList);
+
 					break;
 				}
 
