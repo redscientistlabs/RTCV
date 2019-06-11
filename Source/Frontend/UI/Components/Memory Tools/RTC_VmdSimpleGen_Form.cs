@@ -64,8 +64,11 @@ namespace RTCV.UI
 
             if(mtbStartAddress.Value > fullRange)
                 mtbStartAddress.Value = fullRange;
-			if(mtbStartAddress.Maximum != fullRange)
+			if (mtbStartAddress.Maximum != fullRange)
 				mtbStartAddress.Maximum = fullRange;
+
+			if (mtbRange.Maximum != fullRange)
+				mtbRange.Maximum = fullRange;
 
             mtbStartAddress.Enabled = true;
             mtbRange.Enabled = true;
