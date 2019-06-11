@@ -24,10 +24,6 @@ namespace RTCV.UI
 			InitializeComponent();
 		}
 
-		private void numericUpDown2_ValueChanged(object sender, EventArgs e)
-		{
-		}
-
 		private void btnSelectAll_Click(object sender, EventArgs e)
 		{
 			S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected();
@@ -68,7 +64,8 @@ namespace RTCV.UI
 
             if(mtbStartAddress.Value > fullRange)
                 mtbStartAddress.Value = fullRange;
-            mtbStartAddress.Maximum = fullRange;
+			if(mtbStartAddress.Maximum != fullRange)
+				mtbStartAddress.Maximum = fullRange;
 
             mtbStartAddress.Enabled = true;
             mtbRange.Enabled = true;
@@ -280,18 +277,7 @@ pointer spacer parameter");
 
         private void MtbStartAddress_ValueChanged(object sender, Components.Controls.MultiTrackBar.ValueUpdateEventArgs e)
         {
-
-            var AdressRangeLeft = mtbStartAddress.Maximum - mtbStartAddress.Value;
-            /*
-            if (mtbRange.Value > AdressRangeLeft)
-            {
-                mtbRange.Value = AdressRangeLeft;
-            }
-            */
-            mtbRange.Maximum = AdressRangeLeft;
-
             ComputeRangeExpression();
-
         }
 
         private void MtbRange_CheckChanged(object sender, EventArgs e) => ComputeRangeExpression();
@@ -301,14 +287,12 @@ pointer spacer parameter");
             long maxAddress = mtbStartAddress.Maximum;
             long startAddress = mtbStartAddress.Value;
             long range = mtbRange.Value;
-            long addressPlusRange = startAddress + range;
+            long addressPlusRange = (startAddress + range > mtbStartAddress.Maximum) ? mtbStartAddress.Maximum : startAddress + range;
             bool rangeUsed = mtbRange.Checked;
 
             string generatedExpression = $"{startAddress.ToHexString()}-{(rangeUsed ? addressPlusRange.ToHexString() : maxAddress.ToHexString())}";
+			tbRangeExpression.Text = generatedExpression;
 
-                tbRangeExpression.Text = generatedExpression;
-
-
-        }
+		}
     }
 }
