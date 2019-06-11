@@ -441,26 +441,25 @@ namespace RTCV.CorruptCore
 						bigIntValue = Mod(maxValue, bigIntValue); //% means remainder in c#
 
 					byte[] added = bigIntValue.ToByteArray();
-					byte[] outArray = new byte[value.Length];
 
 					var length = 0;
 					//So with BigInteger, it returns a signed value. That means there's a chance we get a fun 0 appended at the end of added[]
 					//There's also a chance we get a value with less bytes than we put in. If this is the case, we want to copy it over left to right still
 					//So that means if added is larger we want that & if added is smaller we want added's Length
-					if (added.Length > outArray.Length)
-						length = outArray.Length;
+					if (added.Length > value.Length)
+						length = value.Length;
 					else
 						length = added.Length;
 
 					//Don't use copyto as we actually want to copy a trimmed array out (left aligned)
 					for (int i = 0; i < length; i++)
-						outArray[i] = added[i];
+						value[i] = added[i];
 
 
 					if (isInputBigEndian)
-						Array.Reverse(outArray);
+						Array.Reverse(value);
 
-					return outArray;
+					return value;
 				}
 			}
 
