@@ -35,7 +35,8 @@ namespace RTCV.UI
 
 		public static void RestartServer()
 		{
-			connector.Kill();
+			connector?.Kill();
+			connector?.netConn?.Kill();
 			connector = null;
 			StartServer();
 		}
