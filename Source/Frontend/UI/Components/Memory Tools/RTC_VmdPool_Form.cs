@@ -54,8 +54,21 @@ namespace RTCV.UI
 				{
 					bu.RasterizeVMDs();
 				}
+				//Go through the stash history and rasterize
+				foreach (StashKey sk in S.GET<RTC_StashHistory_Form>().lbStashHistory.Items)
+				{
+					foreach (var bu in sk.BlastLayer.Layer.Where(x=> x.Domain == VmdName || x.SourceDomain == VmdName))
+					{
+						bu.RasterizeVMDs();
+					}
+				}
+                //CurrentStashKey can be separate
+				foreach (var bu in StockpileManager_UISide.CurrentStashkey.BlastLayer.Layer.Where(x => x.Domain == VmdName || x.SourceDomain == VmdName))
+				{
+					bu.RasterizeVMDs();
+				}
 
-				MemoryDomains.RemoveVMD(VmdName);
+                MemoryDomains.RemoveVMD(VmdName);
 			}
 			RefreshVMDs();
 		}
@@ -96,7 +109,35 @@ namespace RTCV.UI
 			VMD.Name = name;
 			VMD.Proto.VmdName = name;
 			MemoryDomains.AddVMD(VMD);
-		}
+
+
+			foreach (BlastUnit bu in StepActions.GetRawBlastLayer().Layer)
+			{
+				if (bu.Domain == vmdName)
+					bu.Domain = name;
+				if (bu.SourceDomain == vmdName)
+					bu.SourceDomain = name;
+            }
+            //Go through the stash history and update any references 
+            foreach (StashKey sk in S.GET<RTC_StashHistory_Form>().lbStashHistory.Items)
+			{
+				foreach (var bu in sk.BlastLayer.Layer)
+				{
+					if (bu.Domain == vmdName)
+						bu.Domain = name;
+					if (bu.SourceDomain == vmdName)
+						bu.SourceDomain = name;
+                }
+            }
+			//CurrentStashKey can be separate
+			foreach (var bu in StockpileManager_UISide.CurrentStashkey.BlastLayer.Layer.Where(x => x.Domain == vmdName || x.SourceDomain == vmdName))
+			{
+				if (bu.Domain == vmdName)
+					bu.Domain = name;
+				if (bu.SourceDomain == vmdName)
+					bu.SourceDomain = name;
+            }
+        }
 
 		private void RTC_VmdPool_Form_Load(object sender, EventArgs e)
 		{
