@@ -284,10 +284,11 @@ namespace RTCV.UI.Components.Controls
                     int indexToReplace = controlList.IndexOf(selectedHolder) + _DataSource.Position;
                     if (sk != null)
                     {
+                        var oldpos = _DataSource.Position; //We do this to prevent weird shifts when you insert over the something at the top of the last page
                         _DataSource.RemoveAt(indexToReplace);
                         _DataSource.Insert(indexToReplace, new SaveStateKey(sk, ""));
-						_DataSource.Position = _DataSource.Position - 1;
-					}
+                        _DataSource.Position = oldpos;
+                    }
 
                 }
                 //Otherwise add to the last box
