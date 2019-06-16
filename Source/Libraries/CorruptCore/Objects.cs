@@ -1616,8 +1616,6 @@ namespace RTCV.CorruptCore
 			if (!IsEnabled)
 				return null;
 
-			try
-			{
 				//Grab our mi
 				MemoryInterface mi = MemoryDomains.GetInterface(Domain);
 				if (mi == null)
@@ -1632,12 +1630,6 @@ namespace RTCV.CorruptCore
 				//Return a new unit
                 //Note the false on bigEndian. That's because when reading from memory we're always reading from left to right and we don't want to flip the bytes twice
 				return new BlastUnit(_value, Domain, Address, Precision, false, 0, 1, Note, IsEnabled, IsLocked);
-
-			}
-			catch (Exception ex)
-			{
-				throw new CustomException("The BlastUnit GetBakedUnit() function threw up. \n" + ex.Message, ex.StackTrace);
-			}
 		}
 
 		private bool ReturnFalseAndDequeueIfContinuousStore()
