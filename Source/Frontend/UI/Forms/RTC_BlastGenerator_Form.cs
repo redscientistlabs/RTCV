@@ -371,7 +371,8 @@ namespace RTCV.UI
 					newSk.SystemCore = psk.SystemCore;
 					newSk.GameName = psk.GameName;
 					newSk.SyncSettings = psk.SyncSettings;
-				}
+					newSk.StateLocation = psk.StateLocation;
+                }
 				else
 				{
 					newSk = (StashKey)sk.Clone();

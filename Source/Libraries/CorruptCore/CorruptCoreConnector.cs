@@ -279,7 +279,7 @@ namespace RTCV.CorruptCore
                         if (applyAfterCorrupt)
                         {
                             BlastLayer bl = new BlastLayer();
-                            foreach (var p in returnList)
+                            foreach (var p in returnList.Where(x => x != null))
                             {
                                 bl.Layer.AddRange(p.bl.Layer);
                             }
