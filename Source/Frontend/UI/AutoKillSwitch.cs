@@ -46,7 +46,7 @@ namespace RTCV.UI
 
 		public static void PlayCrashSound(bool forcePlay = false)
 		{
-			if (LoadedSounds != null )
+			if (LoadedSounds?.Length != 0 )
 				LoadedSounds[CorruptCore.RtcCore.RND.Next(LoadedSounds.Length)].Play();
 		}
 
