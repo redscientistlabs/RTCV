@@ -20,6 +20,7 @@ namespace RTCV.UI
 	public static class UI_VanguardImplementation
 	{
 		public static UIConnector connector = null;
+		private static string lastVanguardClient = "";
 
 		public static void StartServer()
 		{
@@ -56,7 +57,7 @@ namespace RTCV.UI
 							if (!CorruptCore.RtcCore.Attached)
 								RTCV.NetCore.AllSpec.VanguardSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !CorruptCore.RtcCore.Attached);
 
-                            e.setReturnValue(true);
+							e.setReturnValue(true);
 
 						    //Push the UI and CorruptCore spec (since we're master)
 						    LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHUISPEC, RTCV.NetCore.AllSpec.UISpec.GetPartialSpec(), true);
@@ -79,7 +80,8 @@ namespace RTCV.UI
 						{
 							S.GET<UI_CoreForm>().Show();
                             if (UICore.FirstConnect)
-                            {
+							{
+								lastVanguardClient = (string) RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
                                 UICore.FirstConnect = false;
 
                                 Panel sidebar = S.GET<UI_CoreForm>().pnSideBar;
@@ -97,6 +99,13 @@ namespace RTCV.UI
                             }
                             else
                             {
+								var clientName = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
+								if (clientName != lastVanguardClient)
+								{
+									MessageBox.Show($"Error: Found {clientName} when previously connected to {lastVanguardClient}.\nPlease restart the RTC to swap clients.");
+                                    return;
+								}
+
                                 //Push the VMDs since we store them out of spec
                                 var vmdProtos = MemoryDomains.VmdPool.Values.Cast<VirtualMemoryDomain>().Select(x => x.Proto).ToArray();
                                 LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHVMDPROTOS, vmdProtos, true);

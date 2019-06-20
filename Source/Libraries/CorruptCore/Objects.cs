@@ -28,7 +28,8 @@ namespace RTCV.CorruptCore
 		public string Filename;
 		public string ShortFilename;
 		public string RtcVersion;
-		public bool MissingLimiter;
+		public string VanguardImplementation;
+        public bool MissingLimiter;
 
 		public Stockpile(DataGridView dgvStockpile)
 		{
@@ -109,8 +110,10 @@ namespace RTCV.CorruptCore
 
             //Watermarking RTC Version
             sks.RtcVersion = RtcCore.RtcVersion;
+			sks.VanguardImplementation = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "ERROR";
 
-			List<string> allRoms = new List<string>();
+
+            List<string> allRoms = new List<string>();
 
             if (includeReferencedFiles)
             {
@@ -384,7 +387,11 @@ namespace RTCV.CorruptCore
 				return false;
 			}
 
-			if (import)
+            //Check version/implementation compatibility
+            if (!CheckCompatibility(sks))
+                return false;
+
+            if (import)
 			{
 				var allCopied = new List<string>();
 				//Copy from temp to sks
@@ -451,8 +458,6 @@ namespace RTCV.CorruptCore
 			foreach (StashKey key in sks.StashKeys)
 				dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.Note);
 
-			//Check version compatibility
-			CheckCompatibility(sks);
 
 			//Load the limiter lists into the dictionary and UI
 			Filtering.LoadStockpileLists(sks);
@@ -476,10 +481,18 @@ namespace RTCV.CorruptCore
 		/// Checks a stockpile for compatibility with the current version of the RTC
 		/// </summary>
 		/// <param name="sks"></param>
-		public static void CheckCompatibility(Stockpile sks)
+		public static bool CheckCompatibility(Stockpile sks)
 		{
+            bool fatal = false;
 			List<string> errorMessages = new List<string>();
 
+
+			var i = (string) RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.SYSTEM] ?? "ERROR";
+            if (sks.VanguardImplementation != String.Empty && sks.VanguardImplementation != i && sks.VanguardImplementation != "ERROR")
+			{
+				errorMessages.Add($"The stockpile you loaded is for a different Vanguard implementation.\nThe Stockpile reported{sks.VanguardImplementation} but you're connected to {i}.\nThis is a fatal error. Aborting load.");
+                fatal = true;
+            }
 			if (sks.RtcVersion != RtcCore.RtcVersion)
 			{
 				if (sks.RtcVersion == null)
@@ -489,7 +502,7 @@ namespace RTCV.CorruptCore
 			}
 
 			if (errorMessages.Count == 0)
-				return;
+				return fatal;
 
 			string message = "The loaded stockpile returned the following errors:\n\n";
 
@@ -497,7 +510,8 @@ namespace RTCV.CorruptCore
 				message += $"•  {line} \n\n";
 
 			MessageBox.Show(message, "Compatibility Checker", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-		}
+			return fatal;
+        }
 
 		/// <summary>
 		/// Recursively deletes all files and folders within a directory
@@ -900,8 +914,14 @@ namespace RTCV.CorruptCore
     [Ceras.MemberConfig(TargetMember.All)]
     public class SaveStateKeys
     {
+		public String VanguardImplementation { get; set; }
         public List<StashKey> StashKeys = new List<StashKey>();
         public List<String> Text = new List<string>();
+
+		public SaveStateKeys()
+		{
+			VanguardImplementation = (string) RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.SYSTEM] ?? "ERROR";
+		}
     }
 
     [Serializable]
