@@ -962,11 +962,14 @@ namespace RTCV.CorruptCore
 
 		public void Apply(bool storeUncorruptBackup, bool followMaximums = false)
 		{
-			if (storeUncorruptBackup && this != StockpileManager_EmuSide.UnCorruptBL)
-				StockpileManager_EmuSide.UnCorruptBL = GetBackup();
+            if (storeUncorruptBackup && this != StockpileManager_EmuSide.UnCorruptBL)
+            {
+                StockpileManager_EmuSide.UnCorruptBL = GetBackup();
+                StockpileManager_EmuSide.CorruptBL = this;
+            }
+				
 
 			bool success;
-
             bool UseRealtime = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME];
 
 			try
