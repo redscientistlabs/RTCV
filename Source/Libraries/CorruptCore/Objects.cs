@@ -655,17 +655,16 @@ namespace RTCV.CorruptCore
 			else
 				return;
 
-			var notified = false;
             foreach (var path in configPaths)
 			{
 				var dir = Path.GetDirectoryName(path);
 				var backupFilename = Path.Combine(dir, "backup_" + Path.GetFileName(path));
-				if (!notified && File.Exists(backupFilename) && MessageBox.Show("Do you want to overwrite the previous config backup with the current config?", "WARNING", MessageBoxButtons.YesNo) == DialogResult.Yes)
+				if (File.Exists(backupFilename) && MessageBox.Show("Do you want to overwrite the previous config backup with the current config?", "WARNING", MessageBoxButtons.YesNo) == DialogResult.No)
 				{
-					File.Delete(backupFilename);
-					notified = true;
+                    return;
 				}
-				File.Copy(path, backupFilename);
+				File.Copy(path, backupFilename, true);
+				
             }
 
 			if (!Extract(filename, Path.Combine("WORKING", "TEMP"), "stockpile.json"))
