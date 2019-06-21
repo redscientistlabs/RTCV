@@ -1518,15 +1518,19 @@ namespace RTCV.CorruptCore
                 }
 
 
+                if (Working == null)
+                {
+                    if (Debugger.IsAttached)
+                        throw new Exception("wtf");
+                    Console.WriteLine("WORKING WAS NULL");
+                    Console.WriteLine(Environment.StackTrace);
+                    return ExecuteState.SILENTERROR;
+                }
                 switch (Source)
                 {
+
                     case (BlastUnitSource.STORE):
                     {
-                        if (Working == null)
-                        {
-                            Console.WriteLine("WORKING WAS NULL");
-                            return ExecuteState.SILENTERROR;
-                        }
 
                         if (Working.StoreData == null)
                         {

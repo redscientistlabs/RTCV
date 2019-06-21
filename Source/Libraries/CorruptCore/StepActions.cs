@@ -31,6 +31,7 @@ namespace RTCV.CorruptCore
 		private static int nextFrame = -1;
 
 		private static bool isRunning = false;
+        private static object executeLock = new object();
 
 
 
@@ -66,27 +67,30 @@ namespace RTCV.CorruptCore
 
 		public static void ClearStepBlastUnits()
 		{
-			//Clean out the working data to prevent memory leaks
-			foreach (List<BlastUnit> buList in appliedLifetime)
-			{
-				foreach (BlastUnit bu in buList)
-					bu.Working = null;
-			}
-			foreach (List<BlastUnit> buList in appliedInfinite)
-			{
-				foreach (BlastUnit bu in buList)
-					bu.Working = null;
-			}
+            lock (executeLock)
+            {
+                //Clean out the working data to prevent memory leaks
+                foreach (List<BlastUnit> buList in appliedLifetime)
+                {
+                    foreach (BlastUnit bu in buList)
+                        bu.Working = null;
+                }
+                foreach (List<BlastUnit> buList in appliedInfinite)
+                {
+                    foreach (BlastUnit bu in buList)
+                        bu.Working = null;
+                }
 
-			buListCollection = new List<List<BlastUnit>>();
-			queued = new LinkedList<List<BlastUnit>>();
-			appliedLifetime = new List<List<BlastUnit>>();
-			appliedInfinite = new List<List<BlastUnit>>();
-			StoreDataPool = new List<BlastUnit>();
+                buListCollection = new List<List<BlastUnit>>();
+                queued = new LinkedList<List<BlastUnit>>();
+                appliedLifetime = new List<List<BlastUnit>>();
+                appliedInfinite = new List<List<BlastUnit>>();
+                StoreDataPool = new List<BlastUnit>();
 
-			nextFrame = -1;
-			currentFrame = 0;
-			isRunning = false;
+                nextFrame = -1;
+                currentFrame = 0;
+                isRunning = false;
+            }
 		}
 
 		public static void RemoveExcessInfiniteStepUnits()
@@ -94,28 +98,32 @@ namespace RTCV.CorruptCore
 			if (LockExecution)
 				return;
 
-			while (appliedInfinite.Count > MaxInfiniteBlastUnits)
-				appliedInfinite.Remove(appliedInfinite[0]);
-		}
+            lock (executeLock)
+            {
+                while (appliedInfinite.Count > MaxInfiniteBlastUnits)
+                    appliedInfinite.Remove(appliedInfinite[0]);
+            }
+        }
 
 
 		public static BlastLayer GetRawBlastLayer()
 		{
-			BlastLayer bl = new BlastLayer();
-			var tempList = new List<List<BlastUnit>>();
-			tempList.AddRange(appliedInfinite);
-			tempList.AddRange(appliedLifetime);
+            lock (executeLock)
+            {
+                BlastLayer bl = new BlastLayer();
+                var tempList = new List<List<BlastUnit>>();
+                tempList.AddRange(appliedInfinite);
+                tempList.AddRange(appliedLifetime);
 
-			foreach (List<BlastUnit> buList in (buListCollection))
-			{
-				foreach (BlastUnit bu in buList)
-				{
-					bl.Layer.Add(bu);
-				}
-				
-			}
-
-			return bl;
+                foreach (List<BlastUnit> buList in (buListCollection))
+                {
+                    foreach (BlastUnit bu in buList)
+                    {
+                        bl.Layer.Add(bu);
+                    }
+                }
+                return bl;
+            }
 		}
 
 		/*
@@ -191,47 +199,53 @@ namespace RTCV.CorruptCore
 
 		public static void AddBlastUnit(BlastUnit bu)
 		{
-            bool UseRealtime = (AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME] as bool? ?? true);
-            if (!UseRealtime)
+            lock (executeLock)
             {
-                bu.Working.ExecuteFrameQueued = 0;
-                bu.Working.LastFrame = 1;
-            }
-            else
-            {
-                bu.Working.ExecuteFrameQueued = bu.ExecuteFrame + currentFrame;
-                //We subtract 1 here as we want lifetime to be exclusive. 1 means 1 apply, not applies 0 > applies 1 > done
-                bu.Working.LastFrame = bu.Working.ExecuteFrameQueued + bu.Lifetime - 1;
-            }
+                bool UseRealtime = (AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME] as bool? ?? true);
+                if (!UseRealtime)
+                {
+                    bu.Working.ExecuteFrameQueued = 0;
+                    bu.Working.LastFrame = 1;
+                }
+                else
+                {
+                    bu.Working.ExecuteFrameQueued = bu.ExecuteFrame + currentFrame;
+                    //We subtract 1 here as we want lifetime to be exclusive. 1 means 1 apply, not applies 0 > applies 1 > done
+                    bu.Working.LastFrame = bu.Working.ExecuteFrameQueued + bu.Lifetime - 1;
+                }
 
-			var collection = GetBatchedLayer(bu);
-			collection.Add(bu);
+                var collection = GetBatchedLayer(bu);
+                collection.Add(bu);
+            }
 		}
 
 		//TODO OPTIMIZE THIS TO INSERT RATHER THAN REBUILD
 		public static void FilterBuListCollection()
 		{
-			//Build up our list of buLists
-			foreach (List<BlastUnit> buList in queued)
-				buListCollection.Add(buList);
+            lock (executeLock)
+            {
+                //Build up our list of buLists
+                foreach (List<BlastUnit> buList in queued)
+                    buListCollection.Add(buList);
 
-			//Empty queued out
-			queued = new LinkedList<List<BlastUnit>>();
+                //Empty queued out
+                queued = new LinkedList<List<BlastUnit>>();
 
-			//buListCollection = buListCollection.OrderBy(it => it[0].Working.ExecuteFrameQueued).ToList();
-			//this didnt need to be stored since it is only being used in this one loop
-			foreach(List<BlastUnit> buList in buListCollection.OrderBy(it => it[0].Working.ExecuteFrameQueued).ToList())
-			{
-				queued.AddLast(buList);
-			}
+                //buListCollection = buListCollection.OrderBy(it => it[0].Working.ExecuteFrameQueued).ToList();
+                //this didnt need to be stored since it is only being used in this one loop
+                foreach (List<BlastUnit> buList in buListCollection.OrderBy(it => it[0].Working.ExecuteFrameQueued).ToList())
+                {
+                    queued.AddLast(buList);
+                }
 
-			//Nuke the list 
-			buListCollection = new List<List<BlastUnit>>();
+                //Nuke the list 
+                buListCollection = new List<List<BlastUnit>>();
 
-			//There's data so have the execute loop actually do something
-			nextFrame = (queued.First())[0].Working.ExecuteFrameQueued;
-			isRunning = true;			
-		}
+                //There's data so have the execute loop actually do something
+                nextFrame = (queued.First())[0].Working.ExecuteFrameQueued;
+                isRunning = true;
+            }
+        }
 
 		private static void GetStoreBackups()
 		{
@@ -294,94 +308,96 @@ namespace RTCV.CorruptCore
 			if (isRunning == false)
 				return;
 
-			//Queue everything up
-			CheckApply();
-
-            //Get the backups for any store units
-			GetStoreBackups();
-
-			//Execute all temp units
-			List<List<BlastUnit>> itemsToRemove = new List<List<BlastUnit>>();
-			foreach (List<BlastUnit> buList in appliedLifetime)
-			{
-                foreach (BlastUnit bu in buList)
-                {
-                    var result = bu.Execute();
-                    if (result == ExecuteState.ERROR)
-                    {
-                        var dr = MessageBox.Show(
-                            "Something went horribly wrong during BlastUnit execute. Aborting. Would you like to send this to the devs?",
-                            "A fatal error occurred", MessageBoxButtons.YesNo);
-                        isRunning = false;
-                        if (dr == DialogResult.Yes)
-                            throw new CustomException("BlastUnit appliedLifetime Execute threw up. Check the log for more info.", Environment.StackTrace);
-                        return;
-                    }
-                    if (result == ExecuteState.HANDLEDERROR)
-                    {
-                        isRunning = false;
-                        return;
-                    }
-                }
-				if (buList[0].Working.LastFrame == currentFrame)
-					itemsToRemove.Add(buList);
-			}
-
-            //Execute all infinite lifetime units
-            foreach (List<BlastUnit> buList in appliedInfinite)
-                foreach (BlastUnit bu in buList)
-                {
-                    var result = bu.Execute();
-                    if (result == ExecuteState.ERROR)
-                    {
-                        var dr = MessageBox.Show(
-                            "Something went horribly wrong during BlastUnit execute. Aborting. Would you like to send this to the devs?",
-                            "A fatal error occurred", MessageBoxButtons.YesNo);
-                        isRunning = false;
-                        if (dr == DialogResult.Yes)
-                            throw new CustomException("BlastUnit appliedInfinite Execute threw up. Check the log for more info.", Environment.StackTrace);
-                        return;
-                    }
-                    if (result == ExecuteState.HANDLEDERROR)
-                    {
-                        isRunning = false;
-                        return;
-                    }
-                }
-
             bool needsRefilter = false;
+            lock (executeLock)
+            {
+                //Queue everything up
+                CheckApply();
 
-			//Increment the frame
-			currentFrame++;
+                //Get the backups for any store units
+                GetStoreBackups();
 
-			//Remove any temp units that have expired
-			foreach (List<BlastUnit> buList in itemsToRemove)
-			{
-				//Remove it
-				appliedLifetime.Remove(buList);
+                //Execute all temp units
+                List<List<BlastUnit>> itemsToRemove = new List<List<BlastUnit>>();
+                foreach (List<BlastUnit> buList in appliedLifetime)
+                {
+                    foreach (BlastUnit bu in buList)
+                    {
+                        var result = bu.Execute();
+                        if (result == ExecuteState.ERROR)
+                        {
+                            var dr = MessageBox.Show(
+                                "Something went horribly wrong during BlastUnit execute. Aborting. Would you like to send this to the devs?",
+                                "A fatal error occurred", MessageBoxButtons.YesNo);
+                            isRunning = false;
+                            if (dr == DialogResult.Yes)
+                                throw new CustomException("BlastUnit appliedLifetime Execute threw up. Check the log for more info.", Environment.StackTrace);
+                            return;
+                        }
+                        if (result == ExecuteState.HANDLEDERROR)
+                        {
+                            isRunning = false;
+                            return;
+                        }
+                    }
+                    if (buList[0].Working.LastFrame == currentFrame)
+                        itemsToRemove.Add(buList);
+                }
 
-				foreach (BlastUnit bu in buList)
-				{
-					bu.Working = null;
-					//Remove it from the store pool
-					if (bu.Source == BlastUnitSource.STORE)
-						StoreDataPool.Remove(bu);
-				}
+                //Execute all infinite lifetime units
+                foreach (List<BlastUnit> buList in appliedInfinite)
+                    foreach (BlastUnit bu in buList)
+                    {
+                        var result = bu.Execute();
+                        if (result == ExecuteState.ERROR)
+                        {
+                            var dr = MessageBox.Show(
+                                "Something went horribly wrong during BlastUnit execute. Aborting. Would you like to send this to the devs?",
+                                "A fatal error occurred", MessageBoxButtons.YesNo);
+                            isRunning = false;
+                            if (dr == DialogResult.Yes)
+                                throw new CustomException("BlastUnit appliedInfinite Execute threw up. Check the log for more info.", Environment.StackTrace);
+                            return;
+                        }
+                        if (result == ExecuteState.HANDLEDERROR)
+                        {
+                            isRunning = false;
+                            return;
+                        }
+                    }
 
-				//If there's a loop, re-apply all the units
-				if (buList[0].Loop)
-				{
-					needsRefilter = true;
-					foreach (BlastUnit bu in buList)
-					{
-						bu.Apply();
-					}
-				}
-			}
-			//We only call this if there's a loop
-			if(needsRefilter)
-				FilterBuListCollection();
 
-		}
+                //Increment the frame
+                currentFrame++;
+
+                //Remove any temp units that have expired
+                foreach (List<BlastUnit> buList in itemsToRemove)
+                {
+                    //Remove it
+                    appliedLifetime.Remove(buList);
+
+                    foreach (BlastUnit bu in buList)
+                    {
+                        bu.Working = null;
+                        //Remove it from the store pool
+                        if (bu.Source == BlastUnitSource.STORE)
+                            StoreDataPool.Remove(bu);
+                    }
+
+                    //If there's a loop, re-apply all the units
+                    if (buList[0].Loop)
+                    {
+                        needsRefilter = true;
+                        foreach (BlastUnit bu in buList)
+                        {
+                            bu.Apply();
+                        }
+                    }
+                }
+            }
+            //We only call this if there's a loop
+            if (needsRefilter)
+                    FilterBuListCollection();
+        }
 	}
 }
