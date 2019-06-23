@@ -501,7 +501,7 @@ namespace RTCV.UI
 				{
 					foreach (int address in ActiveTableGenerated)
 					{
-						int safeaddress = (address - (address % 4));
+						int safeaddress = (address - (address % mi.WordSize));
 						if (safeaddress != lastaddress)
 						{
 							lastaddress = safeaddress;
@@ -521,7 +521,7 @@ namespace RTCV.UI
 				}
 
 				VMD = proto.Generate();
-				if (VMD.PointerAddresses.Count == 0)
+				if (VMD.Compacted ? VMD.CompactPointerAddresses.Length == 0 : VMD.PointerAddresses.Count == 0)
 				{
 					MessageBox.Show("The resulting VMD had no pointers so the operation got cancelled.");
 					return;
