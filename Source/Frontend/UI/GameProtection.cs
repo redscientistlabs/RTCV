@@ -45,7 +45,7 @@ namespace RTCV.UI
             if (reset)
             {
                 //If the states are too large this could take forever so do it async
-                Task.Run(ClearAllBackups);
+                Task.Run(() => ClearAllBackups());
             }
 
             t?.Stop();
