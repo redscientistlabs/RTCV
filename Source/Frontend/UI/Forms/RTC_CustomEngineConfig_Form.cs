@@ -137,7 +137,7 @@ namespace RTCV.UI
 				RTC_CustomEngine.StoreTime = StoreTime.IMMEDIATE;
 
 			else if (rbStoreFirstExecute.Checked)
-				RTC_CustomEngine.StoreTime = StoreTime.PREEXECUTE;
+				RTC_CustomEngine.StoreTime = StoreTime.FIRSTEXECUTE;
 		}
 		
 		private void storeAddress_CheckedChanged(object sender, EventArgs e)
@@ -274,7 +274,7 @@ namespace RTCV.UI
 				RTC_CustomEngine.LimiterTime = LimiterTime.GENERATE;
 
 			else if (rbLimiterFirstExecute.Checked)
-				RTC_CustomEngine.LimiterTime = LimiterTime.PREEXECUTE;
+				RTC_CustomEngine.LimiterTime = LimiterTime.FIRSTEXECUTE;
 
 			else if (rbLimiterExecute.Checked)
 				RTC_CustomEngine.LimiterTime = LimiterTime.EXECUTE;
@@ -481,7 +481,7 @@ namespace RTCV.UI
 					case (StoreTime.IMMEDIATE):
 						rbStoreImmediate.Checked = true;
 						break;
-					case (StoreTime.PREEXECUTE):
+					case (StoreTime.FIRSTEXECUTE):
 						rbStoreFirstExecute.Checked = true;
 						break;
 				}
@@ -514,7 +514,7 @@ namespace RTCV.UI
 					case (LimiterTime.GENERATE):
 						rbLimiterGenerate.Checked = true;
 						break;
-					case (LimiterTime.PREEXECUTE):
+					case (LimiterTime.FIRSTEXECUTE):
 						rbLimiterFirstExecute.Checked = true;
 						break;
 					case (LimiterTime.EXECUTE):

@@ -22,13 +22,13 @@
 	public enum StoreTime
 	{
 		IMMEDIATE,  //Frame 0 for the blastunit. Right when it's applied. Used for Distortion
-		PREEXECUTE, //For when you want it to happen right before the first step
+		FIRSTEXECUTE, //For when you want it to happen right before the first step
 	}
 	public enum LimiterTime
 	{
 		NONE,       //For when something will never happen
 		GENERATE,  //Generate
-		PREEXECUTE, //For when you want it to happen right before the first step
+		FIRSTEXECUTE, //For when you want it to happen right before the first step
 		EXECUTE     //For when you want it to happen every step
 	}
 	public enum StoreType

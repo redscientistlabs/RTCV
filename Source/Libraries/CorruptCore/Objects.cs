@@ -1881,7 +1881,7 @@ namespace RTCV.CorruptCore
 				return false;
 
 			//If it's a store unit, store the backup
-			if (Source == BlastUnitSource.STORE && StoreTime == StoreTime.PREEXECUTE)
+			if (Source == BlastUnitSource.STORE && StoreTime == StoreTime.FIRSTEXECUTE)
 			{
 				//One off store vs execution pool
 				if (StoreType == StoreType.ONCE)
@@ -1891,7 +1891,7 @@ namespace RTCV.CorruptCore
 
 			}
 			//Limiter handling. Normal operation is to not do anything if it doesn't match the limiter. Inverted is to only continue if it doesn't match
-			if (LimiterTime == LimiterTime.PREEXECUTE)
+			if (LimiterTime == LimiterTime.FIRSTEXECUTE)
 			{
 				if (!LimiterCheck(mi))
 					return false;

@@ -80,7 +80,7 @@ namespace RTCV.CorruptCore
 				if (destAddress >= mi.Size)
 					return null;
 
-				var bu = new BlastUnit(storeType, StoreTime.PREEXECUTE, domain, destAddress, domain, address, precision, mi.BigEndian, executeFrame, lifetime, note)
+				var bu = new BlastUnit(storeType, StoreTime.FIRSTEXECUTE, domain, destAddress, domain, address, precision, mi.BigEndian, executeFrame, lifetime, note)
 				{
 					Loop = loop
 				};
