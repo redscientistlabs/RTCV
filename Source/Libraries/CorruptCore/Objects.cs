@@ -919,7 +919,7 @@ namespace RTCV.CorruptCore
 
 		public SaveStateKeys()
 		{
-			VanguardImplementation = (string) RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.SYSTEM] ?? "ERROR";
+			VanguardImplementation = (string) RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "ERROR";
 		}
     }
 
