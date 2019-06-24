@@ -186,11 +186,19 @@ namespace RTCV.UI.Components.Controls
         {
             if (_DataSource.Position + NumPerPage <= _DataSource.Count)
                 _DataSource.Position = _DataSource.Position + NumPerPage;
+
+            selectedHolder?.SetSelected(false);
+            selectedHolder = controlList.First();
+            selectedHolder.SetSelected(true);
         }
 
         private void BtnBack_Click(object sender, EventArgs e)
         {
             _DataSource.Position = _DataSource.Position - NumPerPage;
+
+            selectedHolder?.SetSelected(false);
+            selectedHolder = controlList.First();
+            selectedHolder.SetSelected(true);
         }
 
         public StashKey GetSelectedStashkey()
