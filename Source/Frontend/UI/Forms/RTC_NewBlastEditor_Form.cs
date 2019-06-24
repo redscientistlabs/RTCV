@@ -1826,7 +1826,8 @@ namespace RTCV.UI
                 if (currentSK?.BlastLayer?.Layer == null)
                     return;
 
-                switch(lastAnswer)
+                dgvBlastEditor.ClearSelection();
+                switch (lastAnswer)
                 {
                     case DialogResult.Ignore:
                         break;
@@ -1841,6 +1842,7 @@ namespace RTCV.UI
                         return;
                 }
 
+                dgvBlastEditor.ClearSelection();
                 btnDisable50_Click(null, null);
                 btnLoadCorrupt_Click(null, null);
 
