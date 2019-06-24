@@ -112,10 +112,10 @@ namespace RTCV.UI
                 return;
             }
 
-			var s = (string) RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.SYSTEM] ?? "ERROR";
+			var s = (string) RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "ERROR";
 			if (ssk.VanguardImplementation != String.Empty && ssk.VanguardImplementation != s && ssk.VanguardImplementation != "ERROR")
 			{
-				MessageBox.Show($"The ssk you loaded is for a different Vanguard implementation.\nThe ssk reported{ssk.VanguardImplementation} but you're connected to {s}.\nThis is a fatal error. Aborting load.");
+				MessageBox.Show($"The ssk you loaded is for a different Vanguard implementation.\nThe ssk reported {ssk.VanguardImplementation} but you're connected to {s}.\nThis is a fatal error. Aborting load.");
 				return;
 			}
 			

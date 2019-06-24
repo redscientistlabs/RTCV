@@ -388,7 +388,7 @@ namespace RTCV.CorruptCore
 			}
 
             //Check version/implementation compatibility
-            if (!CheckCompatibility(sks))
+            if (CheckCompatibility(sks))
                 return false;
 
             if (import)
@@ -490,7 +490,7 @@ namespace RTCV.CorruptCore
 			var i = (string) RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "ERROR";
             if (sks.VanguardImplementation != String.Empty && sks.VanguardImplementation != i && sks.VanguardImplementation != "ERROR")
 			{
-				errorMessages.Add($"The stockpile you loaded is for a different Vanguard implementation.\nThe Stockpile reported{sks.VanguardImplementation} but you're connected to {i}.\nThis is a fatal error. Aborting load.");
+				errorMessages.Add($"The stockpile you loaded is for a different Vanguard implementation.\nThe Stockpile reported {sks.VanguardImplementation} but you're connected to {i}.\nThis is a fatal error. Aborting load.");
                 fatal = true;
             }
 			if (sks.RtcVersion != RtcCore.RtcVersion)
