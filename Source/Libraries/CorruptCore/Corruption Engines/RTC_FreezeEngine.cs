@@ -13,7 +13,7 @@ namespace RTCV.CorruptCore
 			long safeAddress = address - (address % precision) + alignment;
 			if (safeAddress > mi.Size - precision)
 				safeAddress = mi.Size - (2 * precision) + alignment; //If we're out of range, hit the last aligned address
-            return new BlastUnit(StoreType.ONCE, StoreTime.PREEXECUTE, domain, safeAddress, domain, safeAddress, precision, mi.BigEndian, 0, 0);
+            return new BlastUnit(StoreType.ONCE, StoreTime.FIRSTEXECUTE, domain, safeAddress, domain, safeAddress, precision, mi.BigEndian, 0, 0);
 		}
 	}
 }

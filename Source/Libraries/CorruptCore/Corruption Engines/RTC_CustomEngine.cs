@@ -522,7 +522,7 @@ namespace RTCV.CorruptCore
 			pSpec[RTCSPEC.CUSTOM_SOURCE.ToString()] = BlastUnitSource.STORE;
 
 			pSpec[RTCSPEC.CUSTOM_STOREADDRESS.ToString()] = CustomStoreAddress.SAME;
-			pSpec[RTCSPEC.CUSTOM_STORETIME.ToString()] = StoreTime.PREEXECUTE;
+			pSpec[RTCSPEC.CUSTOM_STORETIME.ToString()] = StoreTime.FIRSTEXECUTE;
 			pSpec[RTCSPEC.CUSTOM_STORETYPE.ToString()] = StoreType.ONCE;
 			return pSpec;
 		}
@@ -558,7 +558,7 @@ namespace RTCV.CorruptCore
 			pSpec[RTCSPEC.CUSTOM_SOURCE.ToString()] = BlastUnitSource.STORE;
 
 			pSpec[RTCSPEC.CUSTOM_STOREADDRESS.ToString()] = CustomStoreAddress.RANDOM;
-			pSpec[RTCSPEC.CUSTOM_STORETIME.ToString()] = StoreTime.PREEXECUTE;
+			pSpec[RTCSPEC.CUSTOM_STORETIME.ToString()] = StoreTime.FIRSTEXECUTE;
 			pSpec[RTCSPEC.CUSTOM_STORETYPE.ToString()] = StoreType.CONTINUOUS;
 			return pSpec;
 
