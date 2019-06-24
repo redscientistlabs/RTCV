@@ -488,7 +488,7 @@ namespace RTCV.CorruptCore
 
 
 			var s = (string) RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "ERROR";
-            if (sks.VanguardImplementation != String.Empty && sks.VanguardImplementation.Equals(s, StringComparison.OrdinalIgnoreCase) && sks.VanguardImplementation != "ERROR")
+            if (sks.VanguardImplementation != String.Empty && !sks.VanguardImplementation.Equals(s, StringComparison.OrdinalIgnoreCase) && sks.VanguardImplementation != "ERROR")
 			{
 				errorMessages.Add($"The stockpile you loaded is for a different Vanguard implementation.\nThe Stockpile reported {sks.VanguardImplementation} but you're connected to {s}.\nThis is a fatal error. Aborting load.");
                 fatal = true;
