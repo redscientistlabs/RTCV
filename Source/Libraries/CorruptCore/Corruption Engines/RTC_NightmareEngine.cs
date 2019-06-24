@@ -176,7 +176,7 @@ namespace RTCV.CorruptCore
 
                 return new BlastUnit(value, domain, safeAddress, precision, mi.BigEndian, 0, 1);
 			}
-			BlastUnit bu = new BlastUnit(StoreType.ONCE, StoreTime.FIRSTEXECUTE, domain, safeAddress, domain, safeAddress, precision, mi.BigEndian);
+			BlastUnit bu = new BlastUnit(StoreType.ONCE, StoreTime.PREEXECUTE, domain, safeAddress, domain, safeAddress, precision, mi.BigEndian);
 			switch (type)
 			{
 				case NightmareType.ADD:

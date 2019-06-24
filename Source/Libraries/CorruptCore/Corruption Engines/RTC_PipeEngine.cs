@@ -26,7 +26,7 @@ namespace RTCV.CorruptCore
 			if (safePipeStartAddress > startmi.Size - precision)
 				safePipeStartAddress = startmi.Size - (2 * precision) + alignment; //If we're out of range, hit the last aligned address
 
-            return new BlastUnit(StoreType.CONTINUOUS, StoreTime.FIRSTEXECUTE, domain, safeAddress, pipeStart.Domain, safePipeStartAddress, precision, mi.BigEndian, 0, 0);
+            return new BlastUnit(StoreType.CONTINUOUS, StoreTime.PREEXECUTE, domain, safeAddress, pipeStart.Domain, safePipeStartAddress, precision, mi.BigEndian, 0, 0);
 		}
 	}
 }
