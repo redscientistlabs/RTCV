@@ -124,9 +124,9 @@ namespace RTCV.UI
 			proto.Padding = 0;
 
             var legalAdresses = LocalNetCoreRouter.QueryRoute<long[]>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_LONGARRAY_FILTERDOMAIN, new string[] { mi.Name, LimiterListHash });
+            if (legalAdresses == null)
+                return false;
             proto.AddSingles.AddRange(legalAdresses);
-
-
 
             if (proto.AddRanges.Count == 0 && proto.AddSingles.Count == 0)
 			{
