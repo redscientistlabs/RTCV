@@ -197,14 +197,14 @@ namespace RTCV.UI.Components.Controls
 			((HandledMouseEventArgs)e).Handled = true;//disable default mouse wheel
 			if (e.Delta > 0)
 			{
-				if (tbControlValue.Value < tbControlValue.Maximum)
+				if (tbControlValue.Value  + e.Delta <= tbControlValue.Maximum)
 				{
 					tbControlValue.Value += e.Delta;
 				}
 			}
 			else
 			{
-				if (tbControlValue.Value > tbControlValue.Minimum)
+				if (tbControlValue.Value - e.Delta >= tbControlValue.Minimum)
 				{
 					tbControlValue.Value += e.Delta;
 				}
