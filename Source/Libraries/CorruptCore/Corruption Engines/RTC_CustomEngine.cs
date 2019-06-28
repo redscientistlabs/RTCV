@@ -160,8 +160,8 @@ namespace RTCV.CorruptCore
 
 				byte[] value = new byte[precision];
 				long safeAddress = address - (address % precision) + alignment;
-				if (safeAddress > mi.Size - precision)
-					safeAddress = mi.Size - (2*precision) + alignment; //If we're out of range, hit the last aligned address
+				if (safeAddress > mi.Size - precision && mi.Size > precision)
+                    safeAddress = mi.Size - (2*precision) + alignment; //If we're out of range, hit the last aligned address
 
                 BlastUnit bu = new BlastUnit();
 

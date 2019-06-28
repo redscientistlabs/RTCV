@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
 using RTCV.CorruptCore;
+using RTCV.NetCore;
 using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
 
@@ -46,27 +47,18 @@ namespace RTCV.UI
 			if (lbLoadedVmdList.SelectedIndex == -1)
 				return;
 
-			foreach (var item in lbLoadedVmdList.SelectedItems)
+            //Clear any active units to prevent bad things due to soon unloaded vmds
+            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_CLEARSTEPBLASTUNITS, null, true);
+            foreach (var item in lbLoadedVmdList.SelectedItems)
 			{
 				string VmdName = item.ToString();
-
-				foreach (BlastUnit bu in StepActions.GetRawBlastLayer().Layer)
-				{
-					bu.RasterizeVMDs();
-				}
 				//Go through the stash history and rasterize
 				foreach (StashKey sk in S.GET<RTC_StashHistory_Form>().lbStashHistory.Items)
-				{
-					foreach (var bu in sk.BlastLayer.Layer.Where(x=> x.Domain == VmdName || x.SourceDomain == VmdName))
-					{
-						bu.RasterizeVMDs();
-					}
-				}
+                {
+                    sk.BlastLayer.RasterizeVMDs(VmdName);
+                }
                 //CurrentStashKey can be separate
-				foreach (var bu in StockpileManager_UISide.CurrentStashkey.BlastLayer.Layer.Where(x => x.Domain == VmdName || x.SourceDomain == VmdName))
-				{
-					bu.RasterizeVMDs();
-				}
+                StockpileManager_UISide.CurrentStashkey.BlastLayer.RasterizeVMDs(VmdName);
 
                 MemoryDomains.RemoveVMD(VmdName);
 			}

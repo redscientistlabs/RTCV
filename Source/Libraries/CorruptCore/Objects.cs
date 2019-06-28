@@ -1037,10 +1037,26 @@ namespace RTCV.CorruptCore
 				bu.Reroll();
 		}
 
-		public void RasterizeVMDs()
-		{
-			foreach (BlastUnit bu in Layer)
-				bu.RasterizeVMDs();
+		public void RasterizeVMDs(string vmdToRasterize = null)
+        {
+            List<BlastUnit> unitsToReplace = new List<BlastUnit>();
+            List<List<BlastUnit>> unitsToReplaceWith = new List<List<BlastUnit>>();
+            foreach (BlastUnit bu in Layer)
+            {
+                var u = bu.GetRasterizedUnits(vmdToRasterize);
+                if (u.Count > 1)
+                {
+                    unitsToReplace.Add(bu);
+                    unitsToReplaceWith.Add(u);
+                }
+            }
+
+            for (int i = 0; i < unitsToReplace.Count; i++)
+            {
+                int indexToReplace = this.Layer.IndexOf(unitsToReplace[i]);
+                this.Layer.InsertRange(indexToReplace, unitsToReplaceWith[i]);
+                this.Layer.RemoveAt(indexToReplace + unitsToReplaceWith[i].Count);
+            }
 		}
 
 		private string shared = "[DIFFERENT]";
@@ -1429,20 +1445,69 @@ namespace RTCV.CorruptCore
 		}
 
         /// <summary>
-        /// Rasterizes VMDs to their underlying domain
+        /// Returns a blastunit that's a subunit of the current unit
         /// </summary>
-        public void RasterizeVMDs()
+        /// <param name="start">Where to start in the unit</param>
+        /// <param name="end">Where to end (INCLUSIVE)</param>
+        /// <returns></returns>
+        public BlastUnit GetSubUnit(int start, int end)
         {
+            BlastUnit bu = (BlastUnit)this.Clone();
+            bu.Precision = end - start;
+            bu.Address += start;
+            if (bu.Source == BlastUnitSource.STORE)
+            {
+                bu.SourceAddress += start;
+            }
+            else
+            {
+                for (int i = 0; i < bu.Precision; i++)
+                {
+                    bu.Value[i] = this.Value[start + i];
+                }
+            }
+            return bu;
+        }
+
+        /// <summary>
+        /// Rasterizes VMDs to their underlying domain
+        /// This returns a blastunit[] because if we have a non-contiguous vmd, we need to return multiple units
+        /// </summary>
+        public List<BlastUnit> GetRasterizedUnits(string vmdToRasterize = null)
+        {
+            if(vmdToRasterize == null)
+                vmdToRasterize = "[V]";
+            bool breakDown = false;
+			BlastLayer l = new BlastLayer();
             //Todo - Change this to a more unique marker than [V]?
-            if (Domain.Contains("[V]"))
+            if (Domain.Contains(vmdToRasterize))
             {
                 string domain = (string)Domain.Clone();
                 long address = Address;
 
                 if (MemoryDomains.VmdPool[domain] is VirtualMemoryDomain vmd)
                 {
-                    Domain = vmd.GetRealDomain(address);
-                    Address = vmd.GetRealAddress(address);
+                    long lastAddress = vmd.GetRealAddress(address);
+                    string lastDomain = vmd.GetRealDomain(address);
+                    for (int i = 1; i < this.Precision; i++)
+                    {
+                        var a = vmd.GetRealAddress(address + i);
+                        var d = vmd.GetRealDomain(address + i);
+                        if (a != lastAddress + 1 || d != lastDomain)
+                        {
+                            breakDown = true;
+                            break;
+                        }
+
+						lastAddress = a;
+						lastDomain = d;
+                    }
+                    if (!breakDown)
+                    {
+                        Domain = vmd.GetRealDomain(address);
+                        Address = vmd.GetRealAddress(address);
+                    }
+
                 }
                 else
                 {
@@ -1450,15 +1515,34 @@ namespace RTCV.CorruptCore
                     Address = -1;
                 }
             }
-            if (SourceDomain?.Contains("[V]") ?? false)
+            if (SourceDomain?.Contains(vmdToRasterize) ?? false)
             {
                 string sourceDomain = (string)SourceDomain.Clone();
                 long sourceAddress = SourceAddress;
 
                 if (MemoryDomains.VmdPool[sourceDomain] is VirtualMemoryDomain vmd)
                 {
-                    SourceDomain = vmd.GetRealDomain(sourceAddress);
-                    SourceAddress = vmd.GetRealAddress(sourceAddress);
+                    long lastAddress = vmd.GetRealAddress(sourceAddress);
+                    string lastDomain = vmd.GetRealDomain(sourceAddress);
+                    for (int i = 1; i < this.Precision; i++)
+                    {
+                        var a = vmd.GetRealAddress(sourceAddress + i);
+                        var d = vmd.GetRealDomain(sourceAddress + i);
+                        if (a != lastAddress + 1 || d != lastDomain)
+                        {
+                            breakDown = true;
+                            break;
+                        }
+                        lastAddress = a;
+                        lastDomain = d;
+                    }
+
+                    if (!breakDown)
+                    {
+                        SourceDomain = vmd.GetRealDomain(sourceAddress);
+                        SourceAddress = vmd.GetRealAddress(sourceAddress);
+                    }
+
                 }
                 else
                 {
@@ -1467,7 +1551,21 @@ namespace RTCV.CorruptCore
                 }
             }
 
-        }
+            if (breakDown)
+            {
+                for (int i = 0; i < this.Precision; i++)
+				{
+					var bu = this.GetSubUnit(i, i + 1);
+					l.Layer.Add(bu);
+                }
+                l.RasterizeVMDs(); //recursively do this
+            }
+            else
+                l.Layer.Add(this);
+
+			return l.Layer;
+
+		}
 		/// <summary>
 		/// Adds a blastunit to the execution pool
 		/// </summary>

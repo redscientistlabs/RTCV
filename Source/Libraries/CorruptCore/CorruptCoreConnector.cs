@@ -391,12 +391,9 @@ namespace RTCV.CorruptCore
 					break;
 
 				case REMOTE_DOMAIN_VMD_REMOVE:
-				{
-					foreach (BlastUnit bu in StepActions.GetRawBlastLayer().Layer)
-					{
-						bu.RasterizeVMDs();
-					}
-					MemoryDomains.RemoveVMD_NET((advancedMessage.objectValue as string));
+                {
+                    StepActions.ClearStepBlastUnits();
+                    MemoryDomains.RemoveVMD_NET((advancedMessage.objectValue as string));
 				}
 					break;
 

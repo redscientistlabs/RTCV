@@ -20,10 +20,10 @@ namespace RTCV.CorruptCore
             long safeAddress = address - (address % precision) + alignment;
 
 			long safePipeStartAddress = pipeStart.Address - (pipeStart.Address % precision) + alignment;
-			if (safeAddress > mi.Size - precision)
-				safeAddress = mi.Size - (2 * precision) + alignment; //If we're out of range, hit the last aligned address
+			if (safeAddress > mi.Size - precision && mi.Size > precision)
+                safeAddress = mi.Size - (2 * precision) + alignment; //If we're out of range, hit the last aligned address
 
-			if (safePipeStartAddress > startmi.Size - precision)
+			if (safePipeStartAddress > startmi.Size - precision && startmi.Size > precision)
 				safePipeStartAddress = startmi.Size - (2 * precision) + alignment; //If we're out of range, hit the last aligned address
 
             return new BlastUnit(StoreType.CONTINUOUS, StoreTime.PREEXECUTE, domain, safeAddress, pipeStart.Domain, safePipeStartAddress, precision, mi.BigEndian, 0, 0);

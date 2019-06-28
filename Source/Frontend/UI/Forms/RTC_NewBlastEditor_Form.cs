@@ -1316,13 +1316,18 @@ namespace RTCV.UI
 		}
 
 		private void rasterizeVMDsToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			foreach (BlastUnit bu in bs)
-			{
-				bu.RasterizeVMDs();
-			}
+        {
+            dgvBlastEditor.ClearSelection();
 
-			updateMaximum(dgvBlastEditor.Rows.Cast<DataGridViewRow>().ToList());
+            var oldBS = dgvBlastEditor.DataSource;
+            dgvBlastEditor.DataSource = null;
+
+			currentSK.BlastLayer.RasterizeVMDs();
+            bs = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
+			batchOperation = false;
+            dgvBlastEditor.DataSource = oldBS;
+
+            updateMaximum(dgvBlastEditor.Rows.Cast<DataGridViewRow>().ToList());
 			dgvBlastEditor.Refresh();
 			UpdateBottom();
 		}
