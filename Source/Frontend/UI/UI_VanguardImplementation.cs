@@ -76,12 +76,14 @@ namespace RTCV.UI
 
 
 					case REMOTE_ALLSPECSSENT:
-						SyncObjectSingleton.FormExecute((o, ea) =>
-						{
-							S.GET<UI_CoreForm>().Show();
+                        if(UICore.FirstConnect)
+                            UICore.Initialized.WaitOne();
+                        SyncObjectSingleton.FormExecute((o, ea) =>
+                        {
+                            S.GET<UI_CoreForm>().Show();
                             if (UICore.FirstConnect)
-							{
-								lastVanguardClient = (string) RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
+                            {
+                                lastVanguardClient = (string) RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
                                 UICore.FirstConnect = false;
 
                                 Panel sidebar = S.GET<UI_CoreForm>().pnSideBar;
@@ -99,7 +101,7 @@ namespace RTCV.UI
                             }
                             else
                             {
-								var clientName = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
+                                var clientName = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
 								if (clientName != lastVanguardClient)
 								{
 									MessageBox.Show($"Error: Found {clientName} when previously connected to {lastVanguardClient}.\nPlease restart the RTC to swap clients.");

@@ -32,6 +32,7 @@ namespace RTCV.UI
         public static Size NoteBoxSize;
 
         public static bool FirstConnect = true;
+        public static ManualResetEvent Initialized = new ManualResetEvent(false);
 
         public static System.Timers.Timer inputCheckTimer;
 
@@ -98,6 +99,7 @@ namespace RTCV.UI
 
             LoadRTCColor();
             S.GET<UI_CoreForm>().Show();
+            Initialized.Set();
         }
 
         private static void FormRegister_FormRegistered(object sender, NetCoreEventArgs e)
@@ -185,7 +187,6 @@ namespace RTCV.UI
             }
 
         }
-
         private static bool isAnyRTCFormFocused()
         {
             bool ExternalForm = Form.ActiveForm == null;
@@ -209,38 +210,46 @@ namespace RTCV.UI
 
         public static void LockInterface()
         {
-            interfaceLocked = true;
-            var cf = S.GET<UI_CoreForm>();
-            cf.LockSideBar();
+            if (interfaceLocked || lockPending)
+                return;
+            lockPending = true;
+            lock (lockObject)
+            {
+                interfaceLocked = true;
+                var cf = S.GET<UI_CoreForm>();
+                cf.LockSideBar();
 
-            S.GET<RTC_ConnectionStatus_Form>().pnBlockedButtons.Show();
+                S.GET<RTC_ConnectionStatus_Form>().pnBlockedButtons.Show();
 
-            //UI_CanvasForm.mainForm.BlockView();
-            UI_CanvasForm.extraForms.ForEach(it => it.BlockView());
+                //UI_CanvasForm.mainForm.BlockView();
+                UI_CanvasForm.extraForms.ForEach(it => it.BlockView());
 
-            var ifs = S.GETINTERFACES<IBlockable>();
+                var ifs = S.GETINTERFACES<IBlockable>();
 
-            foreach(var i in ifs)
-                i.BlockView();
+                foreach (var i in ifs)
+                    i.BlockView();
 
-            cf.Focus();
+                cf.Focus();
+            }
+            lockPending = false;
         }
 
         public static void UnlockInterface()
         {
-            interfaceLocked = false;
-            S.GET<UI_CoreForm>().UnlockSideBar();
+            if (lockPending)
+                lockPending = false;
+            lock (lockObject)
+            {
+                interfaceLocked = false;
+                S.GET<UI_CoreForm>().UnlockSideBar();
 
+                S.GET<RTC_ConnectionStatus_Form>().pnBlockedButtons.Hide();
 
-            S.GET<RTC_ConnectionStatus_Form>().pnBlockedButtons.Hide();
-
-            UI_CanvasForm.extraForms.ForEach(it => it.UnblockView());
-            var ifs = S.GETINTERFACES<IBlockable>();
-
-            foreach (var i in ifs)
-                i.UnblockView();
-
-            
+                UI_CanvasForm.extraForms.ForEach(it => it.UnblockView());
+                var ifs = S.GETINTERFACES<IBlockable>();
+                foreach (var i in ifs)
+                    i.UnblockView();
+            }
         }
 
 
@@ -329,6 +338,8 @@ namespace RTCV.UI
         public static Color Dark3Color;
         public static Color Dark4Color;
         private static bool interfaceLocked;
+        private static bool lockPending;
+        private static object lockObject = new object();
 
         public static void SetRTCColor(Color color, Control ctr = null)
 		{
