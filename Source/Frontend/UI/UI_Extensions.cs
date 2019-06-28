@@ -202,7 +202,8 @@ namespace RTCV.UI
                 {
                     p = p.Parent;
                 }
-                (p as Form).WindowState = FormWindowState.Normal;
+                if(p is Form _p)
+                    _p.WindowState = FormWindowState.Normal;
 				this.Size = this.Parent.Size;
 				this.Location = new Point(0, 0);
 
