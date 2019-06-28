@@ -151,13 +151,27 @@ namespace RTCV.UI
             allStashKeys.AddRange(StockpileManager_UISide.StashHistory);
             allStashKeys.AddRange(S.GET<RTC_NewBlastEditor_Form>().GetStashKeys());
             allStashKeys.AddRange(S.GET<RTC_BlastGenerator_Form>().GetStashKeys());
+            bool notified = false;
             foreach (var sk in allStashKeys.Where(x => x?.StateLocation == StashKeySavestateLocation.SSK))
             {
                 try
                 {
                     var stateName = sk.GameName + "." + sk.ParentKey + ".timejump.State"; // get savestate name
-                    File.Copy(Path.Combine(CorruptCore.RtcCore.workingDir, "SSK", stateName)
-                        , Path.Combine(CorruptCore.RtcCore.workingDir, "SESSION", stateName), true);
+                    if(File.Exists(Path.Combine(CorruptCore.RtcCore.workingDir, "SSK", stateName))) //it SHOULD be here. If it's not, let's hunt for it
+                        File.Copy(Path.Combine(CorruptCore.RtcCore.workingDir, "SSK", stateName), Path.Combine(CorruptCore.RtcCore.workingDir, "SESSION", stateName), true);
+                    else if (File.Exists(Path.Combine(CorruptCore.RtcCore.workingDir, "TEMP", stateName)))
+                        File.Copy(Path.Combine(CorruptCore.RtcCore.workingDir, "TEMP", stateName), Path.Combine(CorruptCore.RtcCore.workingDir, "SESSION", stateName), true);
+                    else if (File.Exists(Path.Combine(CorruptCore.RtcCore.workingDir, "SKS", stateName)))
+                        File.Copy(Path.Combine(CorruptCore.RtcCore.workingDir, "SKS", stateName), Path.Combine(CorruptCore.RtcCore.workingDir, "SESSION", stateName), true);
+                    else if (File.Exists(Path.Combine(CorruptCore.RtcCore.workingDir, "SESSION", stateName)))
+                        continue;
+                    else if (!notified)
+                    {
+                        MessageBox.Show($"Couldn't locate savestate {stateName}.\nIf you remember the course of actions that lead here, report to the RTC devs.\nSome of your non-stockpiled stashkeys may be broken.");
+                        notified = true;
+                    }
+                        
+
                     sk.StateLocation = StashKeySavestateLocation.SESSION;
                 }
                 catch (IOException e)
