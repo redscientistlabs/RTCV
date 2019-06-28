@@ -43,18 +43,25 @@ namespace RTCV.NetCore
 				btnContinue.Visible = canContinue;
 				btnContinue.Visible = true;
 			}
-
-			this.Focus();
-			this.BringToFront();
+            this.Shown += CloudDebug_Shown;
 		}
 
-		public DialogResult Start()
+        private void CloudDebug_Shown(object sender, EventArgs e)
+        {
+            this.TopMost = true;
+            this.Focus();
+            this.BringToFront();
+            this.TopMost = false;
+        }
+
+        public DialogResult Start()
 		{
 			if (ex is OperationAbortedException)
 				return DialogResult.Abort;
 			else
 				return this.ShowDialog();
 		}
+
 
 		public static string getRTCInfo()
 		{
