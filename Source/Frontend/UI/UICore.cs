@@ -824,7 +824,6 @@ namespace RTCV.UI
 
         public static void LoadLists()
         {
-            toggleLimiterBoxSource(false);
 
             string[] paths = System.IO.Directory.GetFiles(CorruptCore.RtcCore.listsDir);
 
@@ -834,6 +833,7 @@ namespace RTCV.UI
             for (int i = 0; i < hashes.Count; i++)
             {
                 string[] _paths = paths[i].Split('\\', '.');
+                toggleLimiterBoxSource(false);
                 CorruptCore.Filtering.RegisterListInUI(_paths[_paths.Length - 2], hashes[i]);
             }
             toggleLimiterBoxSource(true);

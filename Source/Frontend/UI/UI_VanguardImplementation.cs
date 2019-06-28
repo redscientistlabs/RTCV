@@ -77,7 +77,7 @@ namespace RTCV.UI
 
 					case REMOTE_ALLSPECSSENT:
                         if(UICore.FirstConnect)
-                            UICore.Initialized.WaitOne();
+                            UICore.Initialized.WaitOne(10000);
                         SyncObjectSingleton.FormExecute((o, ea) =>
                         {
                             S.GET<UI_CoreForm>().Show();
@@ -144,6 +144,8 @@ namespace RTCV.UI
                                 if (GameProtection.WasAutoCorruptRunning)
                                     S.GET<UI_CoreForm>().AutoCorrupt = true;
                             }
+
+                            S.GET<UI_CoreForm>().Show();
                         });
 						break;
 

@@ -197,7 +197,12 @@ namespace RTCV.UI
 				this.TopLevel = false;
 				this.TopMost = false;
 				pn.Controls.Add(this);
-
+                Control p = this;
+                while (p.Parent != null)
+                {
+                    p = p.Parent;
+                }
+                (p as Form).WindowState = FormWindowState.Normal;
 				this.Size = this.Parent.Size;
 				this.Location = new Point(0, 0);
 
