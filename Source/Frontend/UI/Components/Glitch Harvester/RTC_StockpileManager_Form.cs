@@ -47,9 +47,6 @@ namespace RTCV.UI
             }
         }
 
-        public bool CompressStockpiles = true;
-        public bool IncludeReferencedFiles = true;
-
         public RTC_StockpileManager_Form()
 		{
 			InitializeComponent();
@@ -383,7 +380,7 @@ namespace RTCV.UI
 
 
             Stockpile sks = new Stockpile(dgvStockpile);
-            if (Stockpile.Save(sks, IncludeReferencedFiles, false, CompressStockpiles))
+            if (Stockpile.Save(sks, RTCV.NetCore.Params.IsParamSet("INCLUDE_REFERENCED_FILES"), false, RTCV.NetCore.Params.IsParamSet("COMPRESS_STOCKPILE")))
             {
                 sendCurrentStockpileToSKS();
                 btnSaveStockpile.Enabled = true;
@@ -397,7 +394,7 @@ namespace RTCV.UI
         {
 
             Stockpile sks = new Stockpile(dgvStockpile);
-            if (Stockpile.Save(sks, IncludeReferencedFiles, true, CompressStockpiles))
+            if (Stockpile.Save(sks, RTCV.NetCore.Params.IsParamSet("INCLUDE_REFERENCED_FILES"), true, RTCV.NetCore.Params.IsParamSet("COMPRESS_STOCKPILE")))
                 sendCurrentStockpileToSKS();
 
             UnsavedEdits = false;
@@ -572,12 +569,22 @@ namespace RTCV.UI
             });
             
             ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Compress Stockpiles", null, new EventHandler((ob, ev) => {
-                CompressStockpiles = CompressStockpiles ^= true;
-            }))).Checked = CompressStockpiles;
 
-            ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Include referenced files", null, new EventHandler((ob, ev) => {
-                IncludeReferencedFiles = IncludeReferencedFiles ^= true;
-            }))).Checked = IncludeReferencedFiles;
+                if (RTCV.NetCore.Params.IsParamSet("COMPRESS_STOCKPILE"))
+                    RTCV.NetCore.Params.SetParam("COMPRESS_STOCKPILE");
+                else
+                    RTCV.NetCore.Params.RemoveParam("COMPRESS_STOCKPILE");
+
+            }))).Checked = RTCV.NetCore.Params.IsParamSet("COMPRESS_STOCKPILE");
+
+            ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Include referenced files", null, new EventHandler((ob, ev) =>
+            {
+                if (RTCV.NetCore.Params.IsParamSet("INCLUDE_REFERENCED_FILES"))
+                    RTCV.NetCore.Params.SetParam("INCLUDE_REFERENCED_FILES");
+                else
+                    RTCV.NetCore.Params.RemoveParam("INCLUDE_REFERENCED_FILES");
+
+            }))).Checked = RTCV.NetCore.Params.IsParamSet("INCLUDE_REFERENCED_FILES");
 
 
 
