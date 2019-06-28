@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Ceras;
 using RTCV.NetCore;
@@ -12,14 +14,14 @@ namespace RTCV.CorruptCore
 {
 	public static class Filtering
 	{
-		public static Dictionary<string, HashSet<byte[]>> Hash2LimiterDico
+		public static ConcurrentDictionary<string, HashSet<byte[]>> Hash2LimiterDico
 		{
-			get => (Dictionary<string, HashSet<byte[]>>)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2LIMITERDICO.ToString()];
+			get => (ConcurrentDictionary<string, HashSet<byte[]>>)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2LIMITERDICO.ToString()];
 			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.FILTERING_HASH2VALUEDICO.ToString(), value);
 		}
-		public static Dictionary<string, List<Byte[]>> Hash2ValueDico
+		public static ConcurrentDictionary<string, List<Byte[]>> Hash2ValueDico
 		{
-			get => (Dictionary<string, List<Byte[]>>) RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2VALUEDICO.ToString()];
+			get => (ConcurrentDictionary<string, List<Byte[]>>) RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2VALUEDICO.ToString()];
 			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.FILTERING_HASH2VALUEDICO.ToString(), value);
 		}
 
@@ -34,8 +36,8 @@ namespace RTCV.CorruptCore
 		public static PartialSpec getDefaultPartial()
 		{
 			var partial = new PartialSpec("RTCSpec");
-			partial[RTCSPEC.FILTERING_HASH2LIMITERDICO.ToString()] = new Dictionary<string, HashSet<byte[]>> ();
-			partial[RTCSPEC.FILTERING_HASH2VALUEDICO.ToString()] = new Dictionary<string, List<Byte[]>>();
+			partial[RTCSPEC.FILTERING_HASH2LIMITERDICO.ToString()] = new ConcurrentDictionary<string, HashSet<byte[]>> ();
+			partial[RTCSPEC.FILTERING_HASH2VALUEDICO.ToString()] = new ConcurrentDictionary<string, List<Byte[]>>();
 			partial[RTCSPEC.FILTERING_HASH2NAMEDICO.ToString()] = new Dictionary<string, string>();
 
 			return partial;
@@ -86,11 +88,11 @@ namespace RTCV.CorruptCore
 		{
 			List<string> md5s = new List<string>();
 
-			foreach (string path in paths)
-			{
-				//Load the lists and add their hashes to the returns
-				md5s.Add(loadListFromPath(path, false));
-			}
+            Parallel.ForEach(paths, (path) =>
+            {
+                //Load the lists and add their hashes to the returns
+                md5s.Add(loadListFromPath(path, false));
+            });
 
 			//We do this because we're adding to the lists not replacing them. It's a bit odd but it's needed for the spec system
 			PartialSpec update = new PartialSpec("RTCSpec");
