@@ -77,7 +77,7 @@
             this.btnLoadSavestateList.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnLoadSavestateList.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnLoadSavestateList.UseVisualStyleBackColor = false;
-            this.btnLoadSavestateList.Click += new System.EventHandler(this.btnLoadSavestateList_Click);
+            this.btnLoadSavestateList.MouseClick += this.btnLoadSavestateList_MouseClick;
             this.btnLoadSavestateList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnLoadSavestateList_MouseDown);
             // 
             // cbSavestateLoadOnClick
