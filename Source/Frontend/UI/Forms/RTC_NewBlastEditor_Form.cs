@@ -1307,25 +1307,30 @@ namespace RTCV.UI
 		}
 
 		private void sanitizeDuplicatesToolStripMenuItem_Click(object sender, EventArgs e)
-		{
+        {
+            dgvBlastEditor.ClearSelection();
+
+            dgvBlastEditor.DataSource = null;
+            batchOperation = true;
             currentSK.BlastLayer.SanitizeDuplicates();
+            bs = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
+            batchOperation = false;
+            dgvBlastEditor.DataSource = bs;
             dgvBlastEditor.Refresh();
             UpdateBottom();
-
 		}
 
 		private void rasterizeVMDsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             dgvBlastEditor.ClearSelection();
 
-            var oldBS = dgvBlastEditor.DataSource;
             dgvBlastEditor.DataSource = null;
-
-			currentSK.BlastLayer.RasterizeVMDs();
+            batchOperation = true;
+            currentSK.BlastLayer.RasterizeVMDs();
             bs = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
-			batchOperation = false;
-            dgvBlastEditor.DataSource = oldBS;
 
+            batchOperation = false;
+            dgvBlastEditor.DataSource = bs;
             updateMaximum(dgvBlastEditor.Rows.Cast<DataGridViewRow>().ToList());
 			dgvBlastEditor.Refresh();
 			UpdateBottom();
