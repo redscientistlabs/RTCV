@@ -80,7 +80,7 @@ namespace RTCV.CorruptCore
 							value[i] = (byte)rand.Next(0, 255);
 						break;
 					case BGValueModes.RANDOM_RANGE:
-						long temp = rand.RandomLong(param1, param2);
+						long temp = rand.NextLong(param1, param2);
 						value = CorruptCore_Extensions.GetByteArrayValue(precision, temp, true);
 						break;
 					case BGValueModes.REPLACE_X_WITH_Y:

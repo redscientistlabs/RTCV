@@ -824,73 +824,95 @@ namespace RTCV.CorruptCore
 		}
 	}
 
-	// Used code from this https://github.com/wasabii/Cogito/blob/master/Cogito.Core/RandomExtensions.cs
-	// MIT Licensed. thank you very much.
-	internal static class RandomExtensions
+    // https://stackoverflow.com/a/11640700/10923568
+    internal static class RandomExtensions
 	{
-        public static long RandomLong(this Random rnd)
+        //returns a uniformly random ulong between ulong.Min inclusive and ulong.Max inclusive
+        public static ulong NextULong(this Random rng)
         {
-            byte[] buffer = new byte[8];
-            rnd.NextBytes(buffer);
-            return BitConverter.ToInt64(buffer, 0);
-        }
-        public static ulong RandomULong(this Random rnd)
-        {
-            return (ulong)rnd.RandomLong();
+            byte[] buf = new byte[8];
+            rng.NextBytes(buf);
+            return BitConverter.ToUInt64(buf, 0);
         }
 
-        public static ulong RandomULong(this Random rnd, ulong min, ulong max)
+        //returns a uniformly random ulong between ulong.Min and Max without modulo bias
+        public static ulong NextULong(this Random rng, ulong max, bool inclusiveUpperBound = false)
         {
-            return (ulong)rnd.RandomLong((long)min, (long)max);
+            return rng.NextULong(ulong.MinValue, max, inclusiveUpperBound);
         }
 
-        public static long RandomLong(this Random rnd, long min, long max)
-		{
-			EnsureMinLEQMax(ref min, ref max);
-			long numbersInRange = unchecked(max - min + 1);
-			if (numbersInRange < 0)
-				throw new ArgumentException("Size of range between min and max must be less than or equal to Int64.MaxValue");
+        //returns a uniformly random ulong between Min and Max without modulo bias
+        public static ulong NextULong(this Random rng, ulong min, ulong max, bool inclusiveUpperBound = false)
+        {
+            ulong range = max - min;
 
-			long randomOffset = RandomLong(rnd);
-			if (IsModuloBiased(randomOffset, numbersInRange))
-				return RandomLong(rnd, min, max); // Try again
-			return min + PositiveModuloOrZero(randomOffset, numbersInRange);
-		}
+            if (inclusiveUpperBound)
+            {
+                if (range == ulong.MaxValue)
+                {
+                    return rng.NextULong();
+                }
 
-        
+                range++;
+            }
 
-		public static long RandomLong(this Random rnd, long max)
-		{
-			return rnd.RandomLong(0, max);
-		}
-		public static ulong RandomULong(this Random rnd, long max)
-		{
-			return (ulong)rnd.RandomLong(0, max);
-		}
+            if (range <= 0)
+            {
+                throw new ArgumentOutOfRangeException("Max must be greater than min when inclusiveUpperBound is false, and greater than or equal to when true", "max");
+            }
 
-		private static bool IsModuloBiased(long randomOffset, long numbersInRange)
-		{
-			long greatestCompleteRange = numbersInRange * (long.MaxValue / numbersInRange);
-			return randomOffset > greatestCompleteRange;
-		}
+            ulong limit = ulong.MaxValue - ulong.MaxValue % range;
+            ulong r;
+            do
+            {
+                r = rng.NextULong();
+            } while (r > limit);
 
-		private static long PositiveModuloOrZero(long dividend, long divisor)
-		{
-			Math.DivRem(dividend, divisor, out long mod);
-			if (mod < 0)
-				mod += divisor;
-			return mod;
-		}
+            return r % range + min;
+        }
 
-		private static void EnsureMinLEQMax(ref long min, ref long max)
-		{
-			if (min <= max)
-				return;
-			long temp = min;
-			min = max;
-			max = temp;
-		}
-	}
+        //returns a uniformly random long between long.Min inclusive and long.Max inclusive
+        public static long NextLong(this Random rng)
+        {
+            byte[] buf = new byte[8];
+            rng.NextBytes(buf);
+            return BitConverter.ToInt64(buf, 0);
+        }
+
+        //returns a uniformly random long between long.Min and Max without modulo bias
+        public static long NextLong(this Random rng, long max, bool inclusiveUpperBound = false)
+        {
+            return rng.NextLong(long.MinValue, max, inclusiveUpperBound);
+        }
+
+        //returns a uniformly random long between Min and Max without modulo bias
+        public static long NextLong(this Random rng, long min, long max, bool inclusiveUpperBound = false)
+        {
+            ulong range = (ulong)(max - min);
+
+            if (inclusiveUpperBound)
+            {
+                if (range == ulong.MaxValue)
+                {
+                    return rng.NextLong();
+                }
+                range++;
+            }
+
+            if (range <= 0)
+            {
+                throw new ArgumentOutOfRangeException("Max must be greater than min when inclusiveUpperBound is false, and greater than or equal to when true", "max");
+            }
+
+            ulong limit = ulong.MaxValue - ulong.MaxValue % range;
+            ulong r;
+            do
+            {
+                r = rng.NextULong();
+            } while (r > limit);
+            return (long)(r % range + (ulong)min);
+        }
+    }
 
 
     public static class ObjectCopier

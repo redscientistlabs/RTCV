@@ -1843,16 +1843,16 @@ namespace RTCV.CorruptCore
 							switch (Precision)
 							{
 								case (1):
-									randomValue = RtcCore.RND.RandomULong(RTC_CustomEngine.MinValue8Bit, RTC_CustomEngine.MaxValue8Bit);
+									randomValue = RtcCore.RND.NextULong(RTC_CustomEngine.MinValue8Bit, RTC_CustomEngine.MaxValue8Bit);
 									break;
 								case (2):
-									randomValue = RtcCore.RND.RandomULong(RTC_CustomEngine.MinValue16Bit, RTC_CustomEngine.MaxValue16Bit);
+									randomValue = RtcCore.RND.NextULong(RTC_CustomEngine.MinValue16Bit, RTC_CustomEngine.MaxValue16Bit);
 									break;
                                 case (4):
-                                    randomValue = RtcCore.RND.RandomULong(RTC_CustomEngine.MinValue32Bit, RTC_CustomEngine.MaxValue32Bit);
+                                    randomValue = RtcCore.RND.NextULong(RTC_CustomEngine.MinValue32Bit, RTC_CustomEngine.MaxValue32Bit);
                                     break;
                                 case (8):
-                                    randomValue = RtcCore.RND.RandomULong(RTC_CustomEngine.MinValue64Bit, RTC_CustomEngine.MaxValue64Bit);
+                                    randomValue = RtcCore.RND.NextULong(RTC_CustomEngine.MinValue64Bit, RTC_CustomEngine.MaxValue64Bit);
                                     break;
                                 //No limits if out of normal range
                                 default:
@@ -1867,16 +1867,16 @@ namespace RTCV.CorruptCore
 							switch (this.Precision)
 							{
 								case (1):
-									randomValue = RtcCore.RND.RandomULong(0, 0xFF);
+									randomValue = RtcCore.RND.NextULong(0, 0xFF);
 									break;
 								case (2):
-									randomValue = RtcCore.RND.RandomULong(0, 0xFFFF);
+									randomValue = RtcCore.RND.NextULong(0, 0xFFFF);
                                     break;
                                 case (4):
-                                    randomValue = RtcCore.RND.RandomLong(0, 0xFFFFFFFF);
+                                    randomValue = RtcCore.RND.NextLong(0, 0xFFFFFFFF);
                                     break;
                                 case (8):
-                                    randomValue = RtcCore.RND.RandomULong(0, 0xFFFFFFFFFFFFFFFF);
+                                    randomValue = RtcCore.RND.NextULong(0, 0xFFFFFFFFFFFFFFFF);
                                     break;
                                 //No limits if out of normal range
                                 default:
@@ -1900,16 +1900,16 @@ namespace RTCV.CorruptCore
 					switch (Precision)
 					{
 						case (1):
-							randomValue = RtcCore.RND.RandomULong(0, 0xFF);
+							randomValue = RtcCore.RND.NextULong(0, 0xFF);
 							break;
 						case (2):
-							randomValue = RtcCore.RND.RandomULong(0, 0xFFFF);
+							randomValue = RtcCore.RND.NextULong(0, 0xFFFF);
 							break;
                         case (4):
-                            randomValue = RtcCore.RND.RandomULong(0, 0xFFFFFFFF);
+                            randomValue = RtcCore.RND.NextULong(0, 0xFFFFFFFF);
                             break;
                         case (8):
-                            randomValue = RtcCore.RND.RandomULong(0, 0xFFFFFFFFFFFFFFFF);
+                            randomValue = RtcCore.RND.NextULong(0, 0xFFFFFFFFFFFFFFFF);
                             break;
                         //No limits if out of normal range
                         default:
@@ -1937,7 +1937,7 @@ namespace RTCV.CorruptCore
 				if (RtcCore.RerollSourceAddress)
 				{
 					long maxAddress = MemoryDomains.GetInterface(SourceDomain)?.Size ?? 1;
-					SourceAddress = RtcCore.RND.RandomLong(maxAddress - 1);
+					SourceAddress = RtcCore.RND.NextLong(maxAddress - 1);
 				}
 				
 				if (RtcCore.RerollDomain)
@@ -1947,7 +1947,7 @@ namespace RTCV.CorruptCore
 				if (RtcCore.RerollAddress)
 				{
 					long maxAddress = MemoryDomains.GetInterface(Domain)?.Size ?? 1;
-					Address = RtcCore.RND.RandomLong(maxAddress - 1);
+					Address = RtcCore.RND.NextLong(maxAddress - 1);
 				}
 			}
 		}
