@@ -305,7 +305,7 @@ namespace RTCV.CorruptCore
 		{
 			bool isCorruptionApplied = CurrentStashkey?.BlastLayer?.Layer?.Count > 0;
 
-			if (StashAfterOperation && _stashAfterOperation)
+			if (isCorruptionApplied && StashAfterOperation && _stashAfterOperation)
 			{
 				StashHistory.Add(CurrentStashkey);
 			}

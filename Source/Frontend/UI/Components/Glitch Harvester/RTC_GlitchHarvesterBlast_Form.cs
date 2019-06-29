@@ -337,23 +337,13 @@ namespace RTCV.UI
 				SetBlastButtonVisibility(false);
 
 
-                if (S.GET<RTC_StashHistory_Form>()
-					.lbStashHistory.SelectedIndex != -1)
+                if (S.GET<RTC_StashHistory_Form>().lbStashHistory.SelectedIndex != -1)
 				{
-					StockpileManager_UISide.CurrentStashkey = (StashKey) StockpileManager_UISide.StashHistory[S.GET<RTC_StashHistory_Form>()
-							.lbStashHistory.SelectedIndex]
-						.Clone();
+					StockpileManager_UISide.CurrentStashkey = (StashKey) StockpileManager_UISide.StashHistory[S.GET<RTC_StashHistory_Form>().lbStashHistory.SelectedIndex].Clone();
 				}
-				else if (S.GET<RTC_StockpileManager_Form>()
-					.dgvStockpile.SelectedRows.Count != 0 && S.GET<RTC_StockpileManager_Form>()
-					.dgvStockpile.SelectedRows[0]
-					.Cells[0]
-					.Value != null)
+				else if (S.GET<RTC_StockpileManager_Form>().dgvStockpile.SelectedRows.Count != 0 && S.GET<RTC_StockpileManager_Form>().dgvStockpile.SelectedRows[0].Cells[0].Value != null)
 				{
-					StockpileManager_UISide.CurrentStashkey = (StashKey) (S.GET<RTC_StockpileManager_Form>()
-						.dgvStockpile.SelectedRows[0]
-						.Cells[0]
-						.Value as StashKey)?.Clone();
+					StockpileManager_UISide.CurrentStashkey = (StashKey) (S.GET<RTC_StockpileManager_Form>().dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey)?.Clone();
 					//StockpileManager_UISide.unsavedEdits = true;
 				}
 				else
