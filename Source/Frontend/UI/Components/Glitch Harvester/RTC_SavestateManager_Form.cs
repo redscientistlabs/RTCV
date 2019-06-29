@@ -86,7 +86,7 @@ namespace RTCV.UI
                 savestateBindingSource.Clear();
             }
 
-            var extractFolder = import ? "TEMP" : "SKS";
+            var extractFolder = import ? "TEMP" : "SSK";
 
             //Extract the ssk
             if (!Stockpile.Extract(fileName, Path.Combine("WORKING", extractFolder), "keys.json"))
