@@ -55,10 +55,10 @@ namespace RTCV.UI
 				//Go through the stash history and rasterize
 				foreach (StashKey sk in S.GET<RTC_StashHistory_Form>().lbStashHistory.Items)
                 {
-                    sk.BlastLayer.RasterizeVMDs(VmdName);
+                    sk.BlastLayer?.RasterizeVMDs(VmdName);
                 }
                 //CurrentStashKey can be separate
-                StockpileManager_UISide.CurrentStashkey.BlastLayer.RasterizeVMDs(VmdName);
+                StockpileManager_UISide.CurrentStashkey?.BlastLayer?.RasterizeVMDs(VmdName);
 
                 MemoryDomains.RemoveVMD(VmdName);
 			}
