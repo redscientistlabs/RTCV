@@ -55,6 +55,17 @@ namespace RTCV.UI
 			pulseCount = MaxMissedPulses;
 		}
 
+        private static string _oldEmuDir = "";
+        private static string oldEmuDir
+        {
+            set
+            {
+                if (String.IsNullOrEmpty(value))
+                    return;
+                _oldEmuDir = value;
+            }
+            get { return _oldEmuDir; }
+        }
 		public static void KillEmulator(bool forceBypass = false)
 		{
 
@@ -79,7 +90,7 @@ namespace RTCV.UI
                 }
 
                 killswitchSpamPreventTimer = new Timer();
-                killswitchSpamPreventTimer.Interval = 6000;
+                killswitchSpamPreventTimer.Interval = 5000;
                 killswitchSpamPreventTimer.Tick += KillswitchSpamPreventTimer_Tick;
                 killswitchSpamPreventTimer.Start();
 
@@ -93,8 +104,9 @@ namespace RTCV.UI
                 }
             });
             var info = new ProcessStartInfo();
-            info.WorkingDirectory = CorruptCore.RtcCore.EmuDir;
-            info.FileName = Path.Combine(CorruptCore.RtcCore.EmuDir, "RESTARTDETACHEDRTC.bat");
+            oldEmuDir = CorruptCore.RtcCore.EmuDir;
+            info.WorkingDirectory = oldEmuDir;
+            info.FileName = Path.Combine(oldEmuDir, "RESTARTDETACHEDRTC.bat");
 			if (!File.Exists(info.FileName))
 			{
 				MessageBox.Show($"Couldn't find {info.FileName}! Killswitch will not work.");
