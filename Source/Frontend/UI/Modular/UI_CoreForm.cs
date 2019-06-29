@@ -131,6 +131,8 @@ This message only appears once.";
 
                 MessageBox.Show(disclaimer.Replace("[ver]", CorruptCore.RtcCore.RtcVersion), "RTC", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 NetCore.Params.SetParam("DISCLAIMER_READ");
+
+                NetCore.Params.SetParam("COMPRESS_STOCKPILE"); //Default param
             }
 
             CorruptCore.RtcCore.DownloadProblematicProcesses();

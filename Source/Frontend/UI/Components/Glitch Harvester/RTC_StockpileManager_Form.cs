@@ -571,18 +571,18 @@ namespace RTCV.UI
             ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Compress Stockpiles", null, new EventHandler((ob, ev) => {
 
                 if (RTCV.NetCore.Params.IsParamSet("COMPRESS_STOCKPILE"))
-                    RTCV.NetCore.Params.SetParam("COMPRESS_STOCKPILE");
-                else
                     RTCV.NetCore.Params.RemoveParam("COMPRESS_STOCKPILE");
+                else
+                    RTCV.NetCore.Params.SetParam("COMPRESS_STOCKPILE");
 
             }))).Checked = RTCV.NetCore.Params.IsParamSet("COMPRESS_STOCKPILE");
 
             ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Include referenced files", null, new EventHandler((ob, ev) =>
             {
                 if (RTCV.NetCore.Params.IsParamSet("INCLUDE_REFERENCED_FILES"))
-                    RTCV.NetCore.Params.SetParam("INCLUDE_REFERENCED_FILES");
-                else
                     RTCV.NetCore.Params.RemoveParam("INCLUDE_REFERENCED_FILES");
+                else
+                    RTCV.NetCore.Params.SetParam("INCLUDE_REFERENCED_FILES");
 
             }))).Checked = RTCV.NetCore.Params.IsParamSet("INCLUDE_REFERENCED_FILES");
 
