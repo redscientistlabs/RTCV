@@ -40,7 +40,7 @@ namespace RTCV.UI
 		}
 
 		private static volatile int pulseCount = MaxMissedPulses;
-		private static System.Timers.Timer BoopMonitoringTimer = null;
+		private static System.Windows.Forms.Timer BoopMonitoringTimer = null;
 
 		public static SoundPlayer[] LoadedSounds = null;
 
@@ -67,42 +67,41 @@ namespace RTCV.UI
             UI_VanguardImplementation.RestartServer();
 
             SyncObjectSingleton.FormExecute((o, ea) =>
-			{
-				//Stop the old timer and eat any exceptions
-				try
-				{
-					BoopMonitoringTimer?.Stop();
-					BoopMonitoringTimer?.Dispose();
-				}
-				catch { }
+            {
+                //Stop the old timer and eat any exceptions
+                try
+                {
+                    BoopMonitoringTimer?.Stop();
+                    BoopMonitoringTimer?.Dispose();
+                }
+                catch
+                {
+                }
 
-				killswitchSpamPreventTimer = new Timer();
-				killswitchSpamPreventTimer.Interval = 5000;
-				killswitchSpamPreventTimer.Tick += KillswitchSpamPreventTimer_Tick;
-				killswitchSpamPreventTimer.Start();
+                killswitchSpamPreventTimer = new Timer();
+                killswitchSpamPreventTimer.Interval = 6000;
+                killswitchSpamPreventTimer.Tick += KillswitchSpamPreventTimer_Tick;
+                killswitchSpamPreventTimer.Start();
 
 
-				PlayCrashSound(true);
+                PlayCrashSound(true);
 
-                var info = new ProcessStartInfo();
-
-                if(CorruptCore.RtcCore.EmuDir == null)
+                if (CorruptCore.RtcCore.EmuDir == null)
                 {
                     MessageBox.Show("Couldn't determine what emulator to start! Please start it manually.");
                     return;
                 }
-
-
-                info.WorkingDirectory = CorruptCore.RtcCore.EmuDir;
-                info.FileName = Path.Combine(CorruptCore.RtcCore.EmuDir, "RESTARTDETACHEDRTC.bat");
-				if (!File.Exists(info.FileName))
-				{
-					MessageBox.Show($"Couldn't find {info.FileName}! Killswitch will not work.");
-                    return;
-                }
-					
-				Process.Start(info);
             });
+            var info = new ProcessStartInfo();
+            info.WorkingDirectory = CorruptCore.RtcCore.EmuDir;
+            info.FileName = Path.Combine(CorruptCore.RtcCore.EmuDir, "RESTARTDETACHEDRTC.bat");
+			if (!File.Exists(info.FileName))
+			{
+				MessageBox.Show($"Couldn't find {info.FileName}! Killswitch will not work.");
+                return;
+            }
+				
+			Process.Start(info);
 		}
 		private static void KillswitchSpamPreventTimer_Tick(object sender, EventArgs e)
 		{
@@ -122,9 +121,9 @@ namespace RTCV.UI
 			}
 			catch { }
 
-			BoopMonitoringTimer = new System.Timers.Timer();
+			BoopMonitoringTimer = new System.Windows.Forms.Timer();
 			BoopMonitoringTimer.Interval = 500;
-			BoopMonitoringTimer.Elapsed += BoopMonitoringTimer_Tick;
+			BoopMonitoringTimer.Tick += BoopMonitoringTimer_Tick;
 			BoopMonitoringTimer.Start();
 		}
 
@@ -141,15 +140,9 @@ namespace RTCV.UI
 			pulseCount--;
 
 			if(pulseCount < MaxMissedPulses - 1)
-				SyncObjectSingleton.FormExecute((o, ea) =>
-				{
-					S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.PerformStep();
-				});
+                S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.PerformStep();
 			else if(S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value != 0)
-				SyncObjectSingleton.FormExecute((o, ea) =>
-				{
-					S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0;
-				});
+                S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0;
 
 			if (pulseCount == 0)
 			{
