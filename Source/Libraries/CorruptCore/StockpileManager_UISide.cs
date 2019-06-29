@@ -327,11 +327,14 @@ namespace RTCV.CorruptCore
             if (force || !File.Exists(psk.RomFilename))
                 if (DialogResult.OK == MessageBox.Show(message, title, MessageBoxButtons.OKCancel))
                 {
+                    var extension = Path.GetExtension(psk.RomFilename);
+                    if (String.IsNullOrEmpty(extension))
+                        extension = "*";
                     OpenFileDialog ofd = new OpenFileDialog
                     {
                         DefaultExt = "*",
                         Title = "Select Replacement File",
-                        Filter = "Any file|*.*",
+                        Filter = $"Any file|*.{extension}",
                         RestoreDirectory = true
                     };
                     if (ofd.ShowDialog() == DialogResult.OK)
