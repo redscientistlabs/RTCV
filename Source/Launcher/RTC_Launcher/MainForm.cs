@@ -35,7 +35,7 @@ namespace RTCV.Launcher
         public static DownloadForm dForm = null;
         public static Form lpForm = null;
 
-        public static int launcherVer = 7;
+        public static int launcherVer = 8;
 
 
         public static int devCounter = 0;
@@ -96,12 +96,21 @@ namespace RTCV.Launcher
 
             try
             {
-
-                var motdFile = GetFileViaHttp($"{MainForm.webRessourceDomain}/rtc/releases/MOTD.txt");
-                string motd = Encoding.UTF8.GetString(motdFile);
-
-                lbMOTD.Text = motd;
-
+                Action a = () =>
+                {
+                    var motdFile = GetFileViaHttp($"{MainForm.webRessourceDomain}/rt/releases/MOTD.txt");
+                    string motd = "";
+                    if (motdFile == null)
+                        motd = "Couldn't load the RTC MOTD from Redscientist.com";
+                    else
+                        motd = Encoding.UTF8.GetString(motdFile);
+                    
+                    this.Invoke(new MethodInvoker(() =>
+                    {
+                        lbMOTD.Text = motd;
+                    }));
+                };
+                Task.Run(a);
             }
             catch
             {
@@ -110,9 +119,7 @@ namespace RTCV.Launcher
             }
 
             lbMOTD.Visible = true;
-
             SetRTCColor(Color.FromArgb(120, 180, 155));
-
         }
 
         public void SetRTCColor(Color color, Form form = null)
@@ -162,10 +169,16 @@ namespace RTCV.Launcher
             lbVersions.Items.AddRange(versions.OrderByDescending(x => x).Select(it => getFilenameFromFullFilename(it)).ToArray<object>());
             SelectedVersion = null;
 
-            string latestVersion = VersionDownloadPanel.getLatestVersion();
-            pbNewVersionNotification.Visible = !versions.Select(it => it.Substring(it.LastIndexOf('\\') + 1)).Contains(latestVersion);
 
-
+            Action a = () =>
+            {
+                string latestVersion = VersionDownloadPanel.getLatestVersion();
+                this.Invoke(new MethodInvoker(() =>
+                {
+                    pbNewVersionNotification.Visible = !versions.Select(it => it.Substring(it.LastIndexOf('\\') + 1)).Contains(latestVersion);
+                }));
+            };
+            Task.Run(a);
         }
 
         public static byte[] GetFileViaHttp(string url)
@@ -175,7 +188,7 @@ namespace RTCV.Launcher
 
             using (HttpClient client = new HttpClient())
             {
-                client.Timeout = TimeSpan.FromMilliseconds(5000);
+                client.Timeout = TimeSpan.FromMilliseconds(12000);
                 byte[] b = null;
                 try
                 {

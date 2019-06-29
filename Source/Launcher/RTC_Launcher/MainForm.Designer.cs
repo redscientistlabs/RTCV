@@ -142,6 +142,7 @@
             this.pbNewVersionNotification.Size = new System.Drawing.Size(14, 14);
             this.pbNewVersionNotification.TabIndex = 0;
             this.pbNewVersionNotification.TabStop = false;
+            this.pbNewVersionNotification.Visible = false;
             // 
             // btnVersionDownloader
             // 
