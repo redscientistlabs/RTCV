@@ -81,12 +81,12 @@ namespace RTCV.UI
 
 		private void cbDisableBizhawkOSD_CheckedChanged(object sender, EventArgs e)
 		{
-			if (cbDisableBizhawkOSD.Checked)
-				RTCV.NetCore.Params.RemoveParam("ENABLE_BIZHAWK_OSD");
+			if (cbDisableEmulatorOSD.Checked)
+				RTCV.NetCore.Params.RemoveParam("ENABLE_EMULATOR_OSD");
 			else
-				RTCV.NetCore.Params.SetParam("ENABLE_BIZHAWK_OSD");
+				RTCV.NetCore.Params.SetParam("ENABLE_EMULATOR_OSD");
 
-			CorruptCore.RtcCore.BizhawkOsdDisabled = cbDisableBizhawkOSD.Checked;
+			CorruptCore.RtcCore.EmulatorOsdDisabled = cbDisableEmulatorOSD.Checked;
 		}
 
 		private void cbAllowCrossCoreCorruption_CheckedChanged(object sender, EventArgs e)

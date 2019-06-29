@@ -214,11 +214,16 @@ namespace RTCV.CorruptCore
 			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_EXTRACTBLASTLAYER.ToString(), value);
 		}
 
-		public static bool BizhawkOsdDisabled
+		public static bool EmulatorOsdDisabled
 		{
-			get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CORE_BIZHAWKOSDDISABLED.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_BIZHAWKOSDDISABLED.ToString(), value);
+			get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CORE_EMULATOROSDDISABLED.ToString()];
+			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_EMULATOROSDDISABLED.ToString(), value);
 		}
+
+        public static string VanguardImplementationName
+        {
+            get => (String)NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard Implementation";
+        }
 
 
         public static bool IsStandaloneUI;
@@ -363,7 +368,7 @@ namespace RTCV.CorruptCore
 				partial[RTCSPEC.CORE_EXTRACTBLASTLAYER.ToString()] = false;
 				partial[RTCSPEC.CORE_AUTOCORRUPT.ToString()] = false;
 
-				partial[RTCSPEC.CORE_BIZHAWKOSDDISABLED.ToString()] = true;
+				partial[RTCSPEC.CORE_EMULATOROSDDISABLED.ToString()] = true;
 				partial[RTCSPEC.CORE_DONTCLEANSAVESTATESONQUIT.ToString()] = false;
 				partial[RTCSPEC.CORE_SHOWCONSOLE.ToString()] = false;
 

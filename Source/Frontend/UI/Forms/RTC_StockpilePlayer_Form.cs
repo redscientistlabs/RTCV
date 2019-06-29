@@ -206,7 +206,7 @@ namespace RTCV.UI
 				}
 			}));
 
-			LoadMenuItems.Items.Add("Load Bizhawk settings from Stockpile", null, new EventHandler((ob, ev) =>
+			LoadMenuItems.Items.Add($"Load {RtcCore.VanguardImplementationName} settings from Stockpile", null, new EventHandler((ob, ev) =>
 			{
 				try
 				{
@@ -225,12 +225,12 @@ namespace RTCV.UI
 				}
 			}));
 
-			LoadMenuItems.Items.Add("Restore Bizhawk config Backup", null, new EventHandler((ob, ev) =>
+			LoadMenuItems.Items.Add($"Restore {RtcCore.VanguardImplementationName} config Backup", null, new EventHandler((ob, ev) =>
 			{
 				try
 				{
                     AutoKillSwitch.Enabled = false;
-                    Stockpile.RestoreBizhawkConfig();
+                    Stockpile.RestoreEmuConfig();
                     AutoKillSwitch.Enabled = true;
 				}
 				finally

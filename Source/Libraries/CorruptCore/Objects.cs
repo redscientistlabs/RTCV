@@ -498,7 +498,7 @@ namespace RTCV.CorruptCore
 				if (sks.RtcVersion == null)
 					errorMessages.Add("You have loaded a broken stockpile that didn't contain an RTC Version number\n. There is no reason to believe that these items will work.");
 				else
-					errorMessages.Add("You have loaded a stockpile created with RTC " + sks.RtcVersion + " using RTC " + RtcCore.RtcVersion + "\n" + "Items might not appear identical to how they when they were created or it is possible that they don't work if BizHawk was upgraded.");
+					errorMessages.Add("You have loaded a stockpile created with RTC " + sks.RtcVersion + " using RTC " + RtcCore.RtcVersion + "\n" + "Items might not appear identical to how they when they were created or it is possible that they won't work.");
 			}
 
 			if (errorMessages.Count == 0)
@@ -704,7 +704,7 @@ namespace RTCV.CorruptCore
 
 		}
 
-        public static void RestoreBizhawkConfig()
+        public static void RestoreEmuConfig()
 		{
 			if (((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_CONFIG_MANAGEMENT] ?? false) == false)
 			{

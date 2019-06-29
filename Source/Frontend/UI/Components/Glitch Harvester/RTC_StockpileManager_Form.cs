@@ -332,11 +332,11 @@ namespace RTCV.UI
             }));
 
 
-            loadMenuItems.Items.Add("Load Bizhawk settings from Stockpile", null, new EventHandler((ob, ev) =>
+            loadMenuItems.Items.Add($"Load {RtcCore.VanguardImplementationName} settings from Stockpile", null, new EventHandler((ob, ev) =>
             {
                 try
                 {
-                    if (UnsavedEdits && MessageBox.Show("You have unsaved edits in the Glitch Harvester Stockpile. \n\n This will restart Bizhawk. Are you sure you want to load without saving?",
+                    if (UnsavedEdits && MessageBox.Show($"You have unsaved edits in the Glitch Harvester Stockpile. \n\n This will restart {RtcCore.VanguardImplementationName}. Are you sure you want to load without saving?",
                         "Unsaved edits in Stockpile", MessageBoxButtons.YesNo) == DialogResult.No)
                     {
                         return;
@@ -350,16 +350,16 @@ namespace RTCV.UI
                 }
             }));
 
-            loadMenuItems.Items.Add("Restore Bizhawk config Backup", null, new EventHandler((ob, ev) =>
+            loadMenuItems.Items.Add($"Restore {RtcCore.VanguardImplementationName} config Backup", null, new EventHandler((ob, ev) =>
             {
                 try
                 {
                     if (UnsavedEdits && MessageBox.Show(
-                        "You have unsaved edits in the Glitch Harvester Stockpile. \n\n This will restart Bizhawk. Are you sure you want to load without saving?",
+                        $"You have unsaved edits in the Glitch Harvester Stockpile. \n\n This will restart {RtcCore.VanguardImplementationName}. Are you sure you want to load without saving?",
                         "Unsaved edits in Stockpile", MessageBoxButtons.YesNo) == DialogResult.No)
                         return;
                     AutoKillSwitch.Enabled = false;
-                    Stockpile.RestoreBizhawkConfig();
+                    Stockpile.RestoreEmuConfig();
                     AutoKillSwitch.Enabled = true;
                 }
                 finally

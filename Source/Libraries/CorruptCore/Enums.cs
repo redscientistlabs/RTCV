@@ -151,7 +151,7 @@
 		public static readonly string CORE_EXTRACTBLASTLAYER = "CORE_EXTRACTBLASTLAYER";
 		public static readonly string CORE_AUTOCORRUPT = "CORE_AUTOCORRUPT";
 		public static readonly string CORE_KILLSWITCHINTERVAL = "CORE_KILLSWITCHINTERVAL";
-		public static readonly string CORE_BIZHAWKOSDDISABLED = "CORE_BIZHAWKOSDDISABLED";
+		public static readonly string CORE_EMULATOROSDDISABLED = "CORE_EMULATOROSDDISABLED";
 		public static readonly string CORE_SHOWCONSOLE = "CORE_SHOWCONSOLE";
 		public static readonly string CORE_DONTCLEANSAVESTATESONQUIT = "CORE_DONTCLEANSAVESTATESONQUIT";
 		public static readonly string CORE_REROLLADDRESS = "CORE_REROLLADDRESS";

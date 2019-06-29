@@ -33,7 +33,7 @@
             this.cbUncapIntensity = new System.Windows.Forms.CheckBox();
             this.cbDontCleanAtQuit = new System.Windows.Forms.CheckBox();
             this.cbAllowCrossCoreCorruption = new System.Windows.Forms.CheckBox();
-            this.cbDisableBizhawkOSD = new System.Windows.Forms.CheckBox();
+            this.cbDisableEmulatorOSD = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.btnChangeRTCColor = new System.Windows.Forms.Button();
             this.btnOpenOnlineWiki = new System.Windows.Forms.Button();
@@ -46,7 +46,7 @@
             this.panel1.Controls.Add(this.cbUncapIntensity);
             this.panel1.Controls.Add(this.cbDontCleanAtQuit);
             this.panel1.Controls.Add(this.cbAllowCrossCoreCorruption);
-            this.panel1.Controls.Add(this.cbDisableBizhawkOSD);
+            this.panel1.Controls.Add(this.cbDisableEmulatorOSD);
             this.panel1.Location = new System.Drawing.Point(80, 198);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(250, 96);
@@ -92,20 +92,20 @@
             this.cbAllowCrossCoreCorruption.UseVisualStyleBackColor = true;
             this.cbAllowCrossCoreCorruption.CheckedChanged += new System.EventHandler(this.cbAllowCrossCoreCorruption_CheckedChanged);
             // 
-            // cbDisableBizhawkOSD
+            // cbDisableEmulatorOSD
             // 
-            this.cbDisableBizhawkOSD.AutoSize = true;
-            this.cbDisableBizhawkOSD.Checked = true;
-            this.cbDisableBizhawkOSD.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbDisableBizhawkOSD.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.cbDisableBizhawkOSD.ForeColor = System.Drawing.Color.White;
-            this.cbDisableBizhawkOSD.Location = new System.Drawing.Point(11, 10);
-            this.cbDisableBizhawkOSD.Name = "cbDisableBizhawkOSD";
-            this.cbDisableBizhawkOSD.Size = new System.Drawing.Size(194, 17);
-            this.cbDisableBizhawkOSD.TabIndex = 0;
-            this.cbDisableBizhawkOSD.Text = "Disable the BizHawk OSD system";
-            this.cbDisableBizhawkOSD.UseVisualStyleBackColor = true;
-            this.cbDisableBizhawkOSD.CheckedChanged += new System.EventHandler(this.cbDisableBizhawkOSD_CheckedChanged);
+            this.cbDisableEmulatorOSD.AutoSize = true;
+            this.cbDisableEmulatorOSD.Checked = true;
+            this.cbDisableEmulatorOSD.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbDisableEmulatorOSD.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.cbDisableEmulatorOSD.ForeColor = System.Drawing.Color.White;
+            this.cbDisableEmulatorOSD.Location = new System.Drawing.Point(11, 10);
+            this.cbDisableEmulatorOSD.Name = "cbDisableEmulatorOSD";
+            this.cbDisableEmulatorOSD.Size = new System.Drawing.Size(194, 17);
+            this.cbDisableEmulatorOSD.TabIndex = 0;
+            this.cbDisableEmulatorOSD.Text = "Disable the emulator OSD system";
+            this.cbDisableEmulatorOSD.UseVisualStyleBackColor = true;
+            this.cbDisableEmulatorOSD.CheckedChanged += new System.EventHandler(this.cbDisableBizhawkOSD_CheckedChanged);
             // 
             // label4
             // 
@@ -186,7 +186,7 @@
 		private System.Windows.Forms.Panel panel1;
 		public System.Windows.Forms.CheckBox cbDontCleanAtQuit;
 		public System.Windows.Forms.CheckBox cbAllowCrossCoreCorruption;
-		public System.Windows.Forms.CheckBox cbDisableBizhawkOSD;
+		public System.Windows.Forms.CheckBox cbDisableEmulatorOSD;
 		private System.Windows.Forms.Label label4;
 		public System.Windows.Forms.CheckBox cbUncapIntensity;
 	}
