@@ -1074,7 +1074,7 @@ namespace RTCV.UI
 		{
 			if (!RefreshDomains())
 			{
-				MessageBox.Show("Loading domains failed! Aborting load. Check to make sure the RTC and Bizhawk are connected.");
+				MessageBox.Show($"Loading domains failed! Aborting load. Check to make sure the RTC and {RtcCore.VanguardImplementationName} are connected.");
 				this.Close();
 				return;
 			}
@@ -1127,7 +1127,9 @@ namespace RTCV.UI
 			try
 			{
 				S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected();
-				DomainToMiDico.Clear();
+				DomainToMiDico?.Clear();
+                if (MemoryDomains.MemoryInterfaces == null)
+                    return false;
 				domains = MemoryDomains.MemoryInterfaces.Keys.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
 				foreach (string domain in domains)
 				{
@@ -1140,11 +1142,8 @@ namespace RTCV.UI
 			catch (Exception ex)
 			{
 				throw new Exception(
-							"An error occurred in RTC while refreshing the domains\n" +
-							"Are you sure you don't have an invalid domain selected?\n" +
-							"Make sure any VMDs are loaded and you have the correct core loaded in Bizhawk\n" +
-							ex.ToString()
-							);
+                    $"An error occurred in RTC while refreshing the domains\nAre you sure you don't have an invalid domain selected?\nMake sure any VMDs are loaded and you have the correct core loaded in {RtcCore.VanguardImplementationName}\n{ex}"
+                );
 			}
 		}
 

@@ -97,7 +97,7 @@ namespace RTCV.UI
 				SetMemoryDomainsSelectedDomains(temp);
 			}
 			//If we had old domains selected don't do anything
-			else if (temp.Length != 0)
+			else if (temp?.Length != 0)
 			{
 				RTCV.NetCore.AllSpec.UISpec.Update("SELECTEDDOMAINS", temp);
 				SetMemoryDomainsSelectedDomains(temp);
