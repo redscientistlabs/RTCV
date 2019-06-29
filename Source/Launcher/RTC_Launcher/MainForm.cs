@@ -7,9 +7,11 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace RTCV.Launcher
 {
@@ -104,6 +106,7 @@ namespace RTCV.Launcher
             catch
             {
                 lbMOTD.Text = "Couldn't load the RTC MOTD from Redscientist.com";
+                MessageBox.Show("Couldn't connect to the server.");
             }
 
             lbMOTD.Visible = true;
@@ -167,9 +170,22 @@ namespace RTCV.Launcher
 
         public static byte[] GetFileViaHttp(string url)
         {
-            using (WebClient client = new WebClient())
+			//Windows does the big dumb: part 11
+			WebRequest.DefaultWebProxy = null;
+
+            using (HttpClient client = new HttpClient())
             {
-                return client.DownloadData(url);
+                client.Timeout = TimeSpan.FromMilliseconds(5000);
+                byte[] b = null;
+                try
+                {
+                    b = client.GetByteArrayAsync(url).Result;
+                }
+                catch (AggregateException e)
+                {
+                    Console.WriteLine($"{url} timed out.");
+                }
+                return b;
             }
         }
 

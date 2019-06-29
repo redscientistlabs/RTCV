@@ -33,6 +33,9 @@ namespace RTCV.Launcher
         {
             try { 
                 var versionFile = MainForm.GetFileViaHttp($"{MainForm.webRessourceDomain}/rtc/releases/version.php");
+                if (versionFile == null)
+                    return null;
+
                 string str = Encoding.UTF8.GetString(versionFile);
                 List<string> onlineVersions = new List<string>(str.Split('|').Where(it => !it.Contains("Launcher")).ToArray());
 
@@ -47,6 +50,9 @@ namespace RTCV.Launcher
         public void refreshVersions()
         {
             var versionFile = MainForm.GetFileViaHttp($"{MainForm.webRessourceDomain}/rtc/releases/version.php");
+            if (versionFile == null)
+                return;
+
             string str = Encoding.UTF8.GetString(versionFile);
 
             //Ignores any build containing the word Launcher in it
