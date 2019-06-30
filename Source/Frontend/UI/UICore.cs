@@ -830,10 +830,10 @@ namespace RTCV.UI
             paths = paths.OrderBy(x => x).ToArray();
 
             List<string> hashes = Filtering.LoadListsFromPaths(paths);
+            toggleLimiterBoxSource(false);
             for (int i = 0; i < hashes.Count; i++)
             {
                 string[] _paths = paths[i].Split('\\', '.');
-                toggleLimiterBoxSource(false);
                 CorruptCore.Filtering.RegisterListInUI(_paths[_paths.Length - 2], hashes[i]);
             }
             toggleLimiterBoxSource(true);
