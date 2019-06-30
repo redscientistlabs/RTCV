@@ -1937,7 +1937,7 @@ namespace RTCV.CorruptCore
 				if (RtcCore.RerollSourceAddress)
 				{
 					long maxAddress = MemoryDomains.GetInterface(SourceDomain)?.Size ?? 1;
-					SourceAddress = RtcCore.RND.NextLong(maxAddress - 1);
+					SourceAddress = RtcCore.RND.NextLong(0, maxAddress - 1);
 				}
 				
 				if (RtcCore.RerollDomain)
@@ -1947,7 +1947,7 @@ namespace RTCV.CorruptCore
 				if (RtcCore.RerollAddress)
 				{
 					long maxAddress = MemoryDomains.GetInterface(Domain)?.Size ?? 1;
-					Address = RtcCore.RND.NextLong(maxAddress - 1);
+					Address = RtcCore.RND.NextLong(0, maxAddress - 1);
 				}
 			}
 		}

@@ -146,7 +146,7 @@ namespace RTCV.UI
 
 					while (DuplicateFound)
 					{
-						long queryAdress = tempActiveTable[CorruptCore.RtcCore.RND.NextLong(tempActiveTable.Length - 1)];
+						long queryAdress = tempActiveTable[CorruptCore.RtcCore.RND.NextLong(0, tempActiveTable.Length - 1)];
 
 						if (!cappedActiveTable.Contains(queryAdress))
 						{

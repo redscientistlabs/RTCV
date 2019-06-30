@@ -88,7 +88,7 @@ namespace RTCV.CorruptCore
 		{
 			List<string> md5s = new List<string>();
 
-            Parallel.ForEach(paths, (path) =>
+            Parallel.ForEach(paths.AsParallel().AsOrdered(), (path) =>
             {
                 //Load the lists and add their hashes to the returns
                 md5s.Add(loadListFromPath(path, false));
