@@ -39,15 +39,21 @@ namespace RTCV.UI
 		}
 		private void ColumnSelector_Closing(object sender, FormClosingEventArgs e)
 		{
-				List<String> temp = new List<String>();
-				StringBuilder sb = new StringBuilder();
-				foreach (CheckBox cb in tablePanel.Controls.Cast<CheckBox>().Where(item => item.Checked))
-				{
-					temp.Add(cb.Name);
+			if (tablePanel.Controls.Cast<CheckBox>().Count(item => item.Checked) == 0)
+			{
+				e.Cancel = true;
+				MessageBox.Show("Select at least one column");
+				return;
+            }
+            List<String> temp = new List<String>();
+			StringBuilder sb = new StringBuilder();
+			foreach (CheckBox cb in tablePanel.Controls.Cast<CheckBox>().Where(item => item.Checked))
+			{
+				temp.Add(cb.Name);
 
-					sb.Append(cb.Name);
-					sb.Append(",");
-				}
+				sb.Append(cb.Name);
+				sb.Append(",");
+			}
 			if (S.GET<RTC_NewBlastEditor_Form>() != null)
 			{
 				S.GET<RTC_NewBlastEditor_Form>().VisibleColumns = temp;
