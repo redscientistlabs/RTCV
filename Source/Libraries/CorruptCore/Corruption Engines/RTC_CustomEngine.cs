@@ -710,18 +710,23 @@ namespace RTCV.CorruptCore
 
 						var type = name2TypeDico[k];
 						if (t.GetType() != type)
-						{
-							//There's no typeconverter for bigint so we have to handle it manually. Convert it to a string then bigint it
-							if (type == typeof(BigInteger))
-							{
-								if (BigInteger.TryParse(t.ToString(), out BigInteger a))
-									t = a;
-								else
-									throw new Exception("Couldn't convert " + t.ToString() +
-										" to BigInteger! Something is wrong with your template.");
-							}
-							//handle the enums
-							else if (type.BaseType == typeof(Enum))
+                        {
+                            //There's no typeconverter for bigint so we have to handle it manually. Convert it to a string then bigint it
+                            if (type == typeof(BigInteger))
+                            {
+                                if (BigInteger.TryParse(t.ToString(), out BigInteger a))
+                                    t = a;
+                                else
+                                    throw new Exception("Couldn't convert " + t.ToString() +
+                                                        " to BigInteger! Something is wrong with your template.");
+                            }
+                            //ULong64 gets deserialized to bigint for some reason?????
+                            else if(t is BigInteger _t && _t <= ulong.MaxValue)
+                            {
+                                t = (ulong)(_t & ulong.MaxValue);
+                            }
+                            //handle the enums
+                            else if (type.BaseType == typeof(Enum))
 							{
 								//We can't use tryparse here so we have to catch the exception
 								try
