@@ -1762,14 +1762,14 @@ namespace RTCV.CorruptCore
 			return false;
 		}
 
-		public bool LimiterCheck(MemoryInterface mi)
+		public bool LimiterCheck(MemoryInterface destMI)
 		{
 			if (Source == BlastUnitSource.STORE)
 			{
 				if (StoreLimiterSource == StoreLimiterSource.ADDRESS || StoreLimiterSource == StoreLimiterSource.BOTH)
 				{
 					if (Filtering.LimiterPeekBytes(Address,
-						Address + Precision, Domain, LimiterListHash, mi))
+						Address + Precision, Domain, LimiterListHash, destMI))
 					{
 						if (InvertLimiter)
 							return ReturnFalseAndDequeueIfContinuousStore();
@@ -1778,8 +1778,13 @@ namespace RTCV.CorruptCore
 				}
 				if (StoreLimiterSource == StoreLimiterSource.SOURCEADDRESS || StoreLimiterSource == StoreLimiterSource.BOTH)
 				{
+					//We need an MI for the source domain. We pass a normal one around and pull this when needed
+					MemoryInterface sourceMI = MemoryDomains.GetInterface(SourceDomain);
+                    if (sourceMI == null)
+                        return false;
+
 					if (Filtering.LimiterPeekBytes(SourceAddress,
-						SourceAddress + Precision, Domain, LimiterListHash, mi))
+						SourceAddress + Precision, Domain, LimiterListHash, sourceMI))
 					{
 						if (InvertLimiter)
 							return ReturnFalseAndDequeueIfContinuousStore();
@@ -1790,7 +1795,7 @@ namespace RTCV.CorruptCore
 			else
 			{
 				if (Filtering.LimiterPeekBytes(Address,
-					Address + Precision, Domain, LimiterListHash, mi))
+					Address + Precision, Domain, LimiterListHash, destMI))
 				{
 					if (InvertLimiter)
 						return ReturnFalseAndDequeueIfContinuousStore();
