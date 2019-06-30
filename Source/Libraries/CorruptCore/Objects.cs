@@ -1843,16 +1843,16 @@ namespace RTCV.CorruptCore
 							switch (Precision)
 							{
 								case (1):
-									randomValue = RtcCore.RND.NextULong(RTC_CustomEngine.MinValue8Bit, RTC_CustomEngine.MaxValue8Bit);
+									randomValue = RtcCore.RND.NextULong(RTC_CustomEngine.MinValue8Bit, RTC_CustomEngine.MaxValue8Bit, true);
 									break;
 								case (2):
-									randomValue = RtcCore.RND.NextULong(RTC_CustomEngine.MinValue16Bit, RTC_CustomEngine.MaxValue16Bit);
+									randomValue = RtcCore.RND.NextULong(RTC_CustomEngine.MinValue16Bit, RTC_CustomEngine.MaxValue16Bit, true);
 									break;
                                 case (4):
-                                    randomValue = RtcCore.RND.NextULong(RTC_CustomEngine.MinValue32Bit, RTC_CustomEngine.MaxValue32Bit);
+                                    randomValue = RtcCore.RND.NextULong(RTC_CustomEngine.MinValue32Bit, RTC_CustomEngine.MaxValue32Bit, true);
                                     break;
                                 case (8):
-                                    randomValue = RtcCore.RND.NextULong(RTC_CustomEngine.MinValue64Bit, RTC_CustomEngine.MaxValue64Bit);
+                                    randomValue = RtcCore.RND.NextULong(RTC_CustomEngine.MinValue64Bit, RTC_CustomEngine.MaxValue64Bit, true);
                                     break;
                                 //No limits if out of normal range
                                 default:
@@ -1867,16 +1867,16 @@ namespace RTCV.CorruptCore
 							switch (this.Precision)
 							{
 								case (1):
-									randomValue = RtcCore.RND.NextULong(0, 0xFF);
+									randomValue = RtcCore.RND.NextULong(0, 0xFF, true);
 									break;
 								case (2):
-									randomValue = RtcCore.RND.NextULong(0, 0xFFFF);
+									randomValue = RtcCore.RND.NextULong(0, 0xFFFF, true);
                                     break;
                                 case (4):
-                                    randomValue = RtcCore.RND.NextLong(0, 0xFFFFFFFF);
+                                    randomValue = RtcCore.RND.NextULong(0, 0xFFFFFFFF, true);
                                     break;
                                 case (8):
-                                    randomValue = RtcCore.RND.NextULong(0, 0xFFFFFFFFFFFFFFFF);
+                                    randomValue = RtcCore.RND.NextULong(0, 0xFFFFFFFFFFFFFFFF, true);
                                     break;
                                 //No limits if out of normal range
                                 default:
@@ -1900,16 +1900,16 @@ namespace RTCV.CorruptCore
 					switch (Precision)
 					{
 						case (1):
-							randomValue = RtcCore.RND.NextULong(0, 0xFF);
+							randomValue = RtcCore.RND.NextULong(0, 0xFF, true);
 							break;
 						case (2):
-							randomValue = RtcCore.RND.NextULong(0, 0xFFFF);
+							randomValue = RtcCore.RND.NextULong(0, 0xFFFF, true);
 							break;
                         case (4):
-                            randomValue = RtcCore.RND.NextULong(0, 0xFFFFFFFF);
+                            randomValue = RtcCore.RND.NextULong(0, 0xFFFFFFFF, true);
                             break;
                         case (8):
-                            randomValue = RtcCore.RND.NextULong(0, 0xFFFFFFFFFFFFFFFF);
+                            randomValue = RtcCore.RND.NextULong(0, 0xFFFFFFFFFFFFFFFF, true);
                             break;
                         //No limits if out of normal range
                         default:

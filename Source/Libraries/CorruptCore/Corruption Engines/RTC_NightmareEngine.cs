@@ -147,16 +147,16 @@ namespace RTCV.CorruptCore
 				switch (precision)
 				{
 					case 1:
-						randomValue = RtcCore.RND.NextULong(MinValue8Bit, MaxValue8Bit);
+						randomValue = RtcCore.RND.NextULong(MinValue8Bit, MaxValue8Bit, true);
 						break;
 					case 2:
-						randomValue = RtcCore.RND.NextULong(MinValue16Bit, MaxValue16Bit);
+						randomValue = RtcCore.RND.NextULong(MinValue16Bit, MaxValue16Bit, true);
 						break;
                     case 4:
-                        randomValue = RtcCore.RND.NextULong(MinValue32Bit, MaxValue32Bit);
+                        randomValue = RtcCore.RND.NextULong(MinValue32Bit, MaxValue32Bit, true);
                         break;
                     case 8:
-                        randomValue = RtcCore.RND.NextULong(MinValue64Bit, MaxValue64Bit);
+                        randomValue = RtcCore.RND.NextULong(MinValue64Bit, MaxValue64Bit, true);
                         break;
                     default:
                         def = true;
