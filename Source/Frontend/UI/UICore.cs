@@ -831,11 +831,8 @@ namespace RTCV.UI
 
             List<string> hashes = Filtering.LoadListsFromPaths(paths);
             toggleLimiterBoxSource(false);
-            for (int i = 0; i < hashes.Count; i++)
-            {
-                string[] _paths = paths[i].Split('\\', '.');
-                CorruptCore.Filtering.RegisterListInUI(_paths[_paths.Length - 2], hashes[i]);
-            }
+            foreach(var hash in hashes)
+                Filtering.RegisterListInUI(Filtering.Hash2NameDico[hash], hash);
             toggleLimiterBoxSource(true);
         }
 

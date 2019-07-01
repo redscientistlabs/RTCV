@@ -86,12 +86,15 @@ namespace RTCV.CorruptCore
 		/// <returns>Hashes of the lists</returns>
 		public static List<string> LoadListsFromPaths(string[] paths)
 		{
-			List<string> md5s = new List<string>();
 
-            Parallel.ForEach(paths.AsParallel().AsOrdered(), (path) =>
+            ConcurrentDictionary<string, string> h = new ConcurrentDictionary<string, string>();
+
+            Parallel.ForEach(paths, (path) =>
             {
                 //Load the lists and add their hashes to the returns
-                md5s.Add(loadListFromPath(path, false));
+                var hash = loadListFromPath(path, false);
+                var name = Path.GetFileNameWithoutExtension(path);
+                h[hash] = name;
             });
 
 			//We do this because we're adding to the lists not replacing them. It's a bit odd but it's needed for the spec system
@@ -100,8 +103,8 @@ namespace RTCV.CorruptCore
 			update[RTCSPEC.FILTERING_HASH2VALUEDICO.ToString()] = Hash2ValueDico;
 			RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(update);
 
-			return md5s;
-		}
+            return h.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value).Keys.ToList(); //Return the hashes ordered by their name
+        }
 
 		/// <summary>
 		/// Loads a list from a path and registers it as a value and limiter list
