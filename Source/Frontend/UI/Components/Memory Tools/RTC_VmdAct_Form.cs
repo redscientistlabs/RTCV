@@ -283,7 +283,7 @@ namespace RTCV.UI
 			//Verify they want to continue if the domain size is larger than 32MB
 			if (memoryDomainSize > 0x2000000)
 			{
-				DialogResult result = MessageBox.Show("The domain you have selected is larger than 32MB\n The domain size is " + (memoryDomainSize / 1024) + "MB.\n Are you sure you want to continue?", "Large Domain Detected", MessageBoxButtons.YesNo);
+				DialogResult result = MessageBox.Show("The domain you have selected is larger than 32MB\n The domain size is " + (memoryDomainSize / (1024*1024)) + "MB.\n Are you sure you want to continue?", "Large Domain Detected", MessageBoxButtons.YesNo);
 				if (result == DialogResult.No)
 					return;
 			}

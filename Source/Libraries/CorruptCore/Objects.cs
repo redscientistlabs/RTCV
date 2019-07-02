@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Numerics;
 using System.ComponentModel;
 using System.Data;
+using System.Threading.Tasks;
 using Ceras;
 using Newtonsoft.Json.Converters;
 using RTCV.CorruptCore;
@@ -1039,24 +1040,14 @@ namespace RTCV.CorruptCore
 
 		public void RasterizeVMDs(string vmdToRasterize = null)
         {
-            List<BlastUnit> unitsToReplace = new List<BlastUnit>();
-            List<List<BlastUnit>> unitsToReplaceWith = new List<List<BlastUnit>>();
-            foreach (BlastUnit bu in Layer)
+            List<BlastUnit> l = new List<BlastUnit>();
+            //Inserting turned out to be WAY too cpu intensive, so just sacrifice the ram and rebuild the layer
+            foreach(var bu in Layer)
             {
                 var u = bu.GetRasterizedUnits(vmdToRasterize);
-                if (u.Count > 1)
-                {
-                    unitsToReplace.Add(bu);
-                    unitsToReplaceWith.Add(u);
-                }
+                l.AddRange(u);
             }
-
-            for (int i = 0; i < unitsToReplace.Count; i++)
-            {
-                int indexToReplace = this.Layer.IndexOf(unitsToReplace[i]);
-                this.Layer.InsertRange(indexToReplace, unitsToReplaceWith[i]);
-                this.Layer.RemoveAt(indexToReplace + unitsToReplaceWith[i].Count);
-            }
+           
 		}
 
 		private string shared = "[DIFFERENT]";

@@ -944,6 +944,11 @@ namespace RTCV.CorruptCore
     {
         public static T Clone<T>(T source)
         {
+            //Todo - Once ceras updates, replace this to be static and then just deal with clearing the memory after
+            CerasSerializer ser = new CerasSerializer(new SerializerConfig()
+            {
+                DefaultTargets = TargetMember.All
+            }); 
             if (!typeof(T).IsSerializable)
             {
                 throw new ArgumentException("The type must be serializable.", "source");
@@ -955,11 +960,9 @@ namespace RTCV.CorruptCore
                 return default(T);
             }
 
-            var config = new SerializerConfig();
-            config.DefaultTargets = TargetMember.All;
-            var s = new CerasSerializer(config);
-            return s.Deserialize<T>(s.Serialize(source));
+            return ser.Deserialize<T>(ser.Serialize(source));
         }
+
     }
 	//Export dgv to csv
 	public class CSVGenerator
