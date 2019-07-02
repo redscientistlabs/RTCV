@@ -185,6 +185,31 @@ namespace RTCV.UI
                     S.GET<RTC_StashHistory_Form>().RefreshStashHistory();
                 }))).Enabled = (dgvStockpile.SelectedRows.Count > 1);
 
+                ((ToolStripMenuItem)columnsMenu.Items.Add("Replace associated ROM", null, new EventHandler((ob, ev) =>
+                {
+                    List<StashKey> sks = new List<StashKey>();
+                    foreach (DataGridViewRow row in dgvStockpile.SelectedRows)
+                        sks.Add((StashKey)row.Cells[0].Value);
+
+                    OpenFileDialog ofd = new OpenFileDialog
+                    {
+                        DefaultExt = "*",
+                        Title = "Select Replacement File",
+                        Filter = "Any file|*.*",
+                        RestoreDirectory = true
+                    };
+                    if (ofd.ShowDialog() == DialogResult.OK)
+                    {
+                        string filename = ofd.FileName.ToString();
+                        string oldFilename = sks.First().RomFilename;
+                        foreach (var sk in sks.Where(x => x.RomFilename == oldFilename))
+                        {
+                            sk.RomFilename = filename;
+                            sk.RomShortFilename = Path.GetFileName(sk.RomFilename);
+                        }
+                    }
+                }))).Enabled = (dgvStockpile.SelectedRows.Count >= 1);
+
                 /*
 				if (!RTC_NetcoreImplementation.isStandaloneUI)
 				{
