@@ -35,7 +35,7 @@ namespace RTCV.Launcher
         public static DownloadForm dForm = null;
         public static Form lpForm = null;
 
-        public static int launcherVer = 8;
+        public static int launcherVer = 9;
 
 
         public static int devCounter = 0;
@@ -98,7 +98,7 @@ namespace RTCV.Launcher
             {
                 Action a = () =>
                 {
-                    var motdFile = GetFileViaHttp($"{MainForm.webRessourceDomain}/rt/releases/MOTD.txt");
+                    var motdFile = GetFileViaHttp($"{MainForm.webRessourceDomain}/rtc/releases/MOTD.txt");
                     string motd = "";
                     if (motdFile == null)
                         motd = "Couldn't load the RTC MOTD from Redscientist.com";
