@@ -12,6 +12,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using Microsoft.Win32;
 
 namespace RTCV.Launcher
 {
@@ -35,7 +36,7 @@ namespace RTCV.Launcher
         public static DownloadForm dForm = null;
         public static Form lpForm = null;
 
-        public static int launcherVer = 9;
+        public static int launcherVer = 10;
 
 
         public static int devCounter = 0;
@@ -90,10 +91,7 @@ namespace RTCV.Launcher
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-
             RefreshInstalledVersions();
-
-
             try
             {
                 Action a = () =>
@@ -216,8 +214,6 @@ namespace RTCV.Launcher
         private void lbVersions_SelectedIndexChanged(object sender, EventArgs e)
         {
             clearAnchorRight();
-
-
             if (lbVersions.SelectedIndex == -1)
             {
                 SelectedVersion = null;
@@ -229,8 +225,28 @@ namespace RTCV.Launcher
                 lastSelectedVersion = SelectedVersion;
             }
 
+            SystemRequirements r = new SystemRequirements(MainForm.SelectedVersion);
             if (Directory.Exists(MainForm.launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + SelectedVersion + Path.DirectorySeparatorChar + "Launcher"))
+            {
+                if (!Environment.Is64BitOperatingSystem && !r.supports32Bit)
+                {
+                    MessageBox.Show("The selected version doesn't support 32-bit operating systems.\nIf you need 32-bit support, you can try an older version.");
+                    SelectedVersion = null;
+                    return;
+                }
+                var dotNetVersion = GetDotNetVersion();
+                if (dotNetVersion < r.minDotNetVersion)
+                {
+                    if(MessageBox.Show($"The version of the .Net Framework installed {dotNetVersion} is less than the minimum supported version for this download {r.minDotNetVersion}.\nYou'll need to update to use this version of the RTC. If you're unable to update, you can try an older version.\n\nWould you like to open the download page for .Net {r.minDotNetVersion}?", "Unsupported .Net Version", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        System.Diagnostics.Process.Start(r.minDotNetVersionDownload);
+                    }
+                    SelectedVersion = null;
+                    return;
+                }
+
                 MainForm.lpForm = new NewLaunchPanel();
+            }
             else
                 MainForm.lpForm = new OldLaunchPanel();
 
@@ -257,7 +273,7 @@ namespace RTCV.Launcher
                 Directory.CreateDirectory(extractDirectory);
 
             try { 
-            System.IO.Compression.ZipFile.ExtractToDirectory(downloadedFile, extractDirectory);
+                System.IO.Compression.ZipFile.ExtractToDirectory(downloadedFile, extractDirectory);
             }
             catch(Exception ex)
             {
@@ -271,8 +287,7 @@ namespace RTCV.Launcher
             if (File.Exists(downloadedFile))
                 File.Delete(downloadedFile);
 
-
-            if(File.Exists(extractDirectory + Path.DirectorySeparatorChar + "Launcher\\ver.ini"))
+            if (File.Exists(extractDirectory + Path.DirectorySeparatorChar + "Launcher\\ver.ini"))
             {
                 int newVer = Convert.ToInt32(File.ReadAllText(extractDirectory + Path.DirectorySeparatorChar + "Launcher\\ver.ini"));
                 if(newVer > launcherVer)
@@ -470,5 +485,44 @@ namespace RTCV.Launcher
             Process.Start("https://discord.corrupt.wiki/");
         }
 
+        private static int GetDotNetVersion()
+        {
+            const string subkey = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\";
+
+            using (var ndpKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(subkey))
+            {
+                if (ndpKey != null && ndpKey.GetValue("Release") != null)
+                {
+                    return CheckFor45PlusVersion((int) ndpKey.GetValue("Release"));
+                }
+            }
+
+            // Checking the version using >= enables forward compatibility.
+            int CheckFor45PlusVersion(int releaseKey)
+            {
+                if (releaseKey >= 528040)
+                    return 480;
+                if (releaseKey >= 461808)
+                    return 472;
+                if (releaseKey >= 461308)
+                    return 471;
+                if (releaseKey >= 460798)
+                    return 470;
+                if (releaseKey >= 394802)
+                    return 462;
+                if (releaseKey >= 394254)
+                    return 461;
+                if (releaseKey >= 393295)
+                    return 460;
+                if (releaseKey >= 379893)
+                    return 452;
+                if (releaseKey >= 378675)
+                    return 451;
+                if (releaseKey >= 378389)
+                    return 450;
+                return Int32.MaxValue;
+            }
+            return Int32.MaxValue;
+        }
     }
 }
