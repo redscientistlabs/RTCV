@@ -1,4 +1,4 @@
-# RTCV
+# RTCV - Real-Time Corruptor Vanguard
 Real-Time Corruptor, Vanguard, CorruptCore, NetCore2, RTC Launcher
 
 Real-Time Corruptor Vanaguard is a Dynamic Corruptor for emulated games. It is a set of libraries that can be rigged up to various emulators and works by corrupting data into virtual memory chips of emulated systems. RTCV currently comes with implementations for [Bizhawk](https://github.com/ircluzar/Bizhawk-Vanguard), [Dolphin](https://github.com/NarryG/dolphin-vanguard/), [PCSX2](https://github.com/NarryG/pcsx2-Vanguard), and [melonDS](https://github.com/narryg/melonds-vanguard).
