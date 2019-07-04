@@ -78,7 +78,7 @@ namespace RTCV.UI
 
             //Loading RTC Params
 
-            S.GET<RTC_SettingsGeneral_Form>().cbDisableEmulatorOSD.Checked = !RTCV.NetCore.Params.IsParamSet("ENABLE_EMULATOR_OSD");
+            S.GET<RTC_SettingsGeneral_Form>().cbDisableEmulatorOSD.Checked = !RTCV.NetCore.Params.IsParamSet(RTCSPEC.CORE_EMULATOROSDDISABLED);
             S.GET<RTC_SettingsGeneral_Form>().cbAllowCrossCoreCorruption.Checked = RTCV.NetCore.Params.IsParamSet("ALLOW_CROSS_CORE_CORRUPTION");
             S.GET<RTC_SettingsGeneral_Form>().cbDontCleanAtQuit.Checked = RTCV.NetCore.Params.IsParamSet("DONT_CLEAN_SAVESTATES_AT_QUIT");
             S.GET<RTC_SettingsGeneral_Form>().cbUncapIntensity.Checked = RTCV.NetCore.Params.IsParamSet("UNCAP_INTENSITY");

@@ -93,7 +93,7 @@ namespace RTCV.NetCore
                     catch (Exception ex) { DiscardException(ex); }
 
                 }, null);
-                clientConnected.WaitOne();
+                clientConnected.WaitOne(10000);
 
                 return socket;
             }
