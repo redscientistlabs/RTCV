@@ -691,11 +691,21 @@ namespace RTCV.CorruptCore
                 return;
 			}
 
+            //There's no prmomise that the implementation will always have every file
+            //We delete existing files that line up with what the stockpile COULD contain as a non-existent config counts as a valid config.
 			foreach (var file in Directory.GetFiles(newConfigPath))
 			{
 				var name = Path.GetFileName(file);
-				if (name2filedico.ContainsKey(name))
-					File.Copy(file, RtcCore.EmuDir + name2filedico[name], true);
+                if (name2filedico.ContainsKey(name))
+                {
+                    //Nuke the old config if it exists
+                    if (File.Exists(RtcCore.EmuDir + name2filedico[name]))
+                        File.Delete(RtcCore.EmuDir + name2filedico[name]);
+
+                    //Bring in our new config.
+                    if(File.Exists(file))
+                        File.Copy(file, RtcCore.EmuDir + name2filedico[name], true);
+                }
 			}
 
 			ProcessStartInfo p = new ProcessStartInfo();
