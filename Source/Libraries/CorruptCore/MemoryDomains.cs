@@ -934,7 +934,7 @@ namespace RTCV.CorruptCore
                 jsonBaseDir = RtcCore.EmuDir;
 
             JsonSerializer serializer = new JsonSerializer();
-            var path = Path.Combine(jsonBaseDir, "TEMP","filemap.json");
+            var path = Path.Combine(jsonBaseDir, "SESSION", "filemap.json");
             if (!File.Exists(path))
             {
                 CompositeFilenameDico = new Dictionary<string, string>();
@@ -964,7 +964,7 @@ namespace RTCV.CorruptCore
                 jsonFilePath = RtcCore.EmuDir;
 
             JsonSerializer serializer = new JsonSerializer();
-            var folder = Path.Combine(jsonFilePath, "TEMP");
+            var folder = Path.Combine(jsonFilePath, "SESSION");
 
             if (!Directory.Exists(folder))
                 Directory.CreateDirectory(folder);
@@ -991,13 +991,13 @@ namespace RTCV.CorruptCore
         public string getCorruptFilename(bool overrideWriteCopyMode = false)
         {
             if (overrideWriteCopyMode || FileInterface.writeCopyMode)
-                return Path.Combine(RtcCore.EmuDir, "TEMP", getCompositeFilename("CORRUPT"));
+                return Path.Combine(RtcCore.EmuDir, "SESSION", getCompositeFilename("CORRUPT"));
             else
                 return Filename;
         }
         public string getBackupFilename()
         {
-            return Path.Combine(RtcCore.EmuDir, "TEMP", getCompositeFilename("BACKUP"));
+            return Path.Combine(RtcCore.EmuDir, "SESSION", getCompositeFilename("BACKUP"));
         }
 
         public override void ResetWorkingFile()
