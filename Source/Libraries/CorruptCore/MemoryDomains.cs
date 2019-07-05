@@ -253,7 +253,7 @@ namespace RTCV.CorruptCore
 					{
 						rp.PrimaryDomain = "CARTROM";
 
-						long filesize = new System.IO.FileInfo(romFilename).Length;
+						long filesize = new FileInfo(romFilename).Length;
 
 						if (filesize % 1024 != 0)
 							rp.SkipBytes = 512;
@@ -328,9 +328,7 @@ namespace RTCV.CorruptCore
 
 			return rp;
 		}
-
-
-	}
+    }
 
 	public class RomParts
 	{
@@ -785,7 +783,6 @@ namespace RTCV.CorruptCore
         public abstract void CloseStream();
         public abstract void getMemoryDump();
         public abstract void wipeMemoryDump();
-        public abstract bool dolphinSavestateVersion();
         public abstract byte[][] lastMemoryDump { get; set; }
         public abstract bool cacheEnabled { get; }
 
@@ -799,11 +796,11 @@ namespace RTCV.CorruptCore
         public abstract byte PeekByte(long address);
         public abstract byte[] PeekBytes(long address, int length);
 
-        public abstract void SetBackup();
-        public abstract void ResetBackup(bool askConfirmation = true);
-        public abstract void RestoreBackup(bool announce = true);
-        public abstract void ResetWorkingFile();
-        public abstract void ApplyWorkingFile();
+        public abstract bool SetBackup();
+        public abstract bool ResetBackup(bool askConfirmation = true);
+        public abstract bool RestoreBackup(bool announce = true);
+        public abstract bool ResetWorkingFile();
+        public abstract bool ApplyWorkingFile();
 
         public volatile System.IO.Stream stream = null;
     }
@@ -934,7 +931,7 @@ namespace RTCV.CorruptCore
                 jsonBaseDir = RtcCore.EmuDir;
 
             JsonSerializer serializer = new JsonSerializer();
-            var path = Path.Combine(jsonBaseDir, "SESSION", "filemap.json");
+            var path = Path.Combine(jsonBaseDir, "FILEBACKUPS", "filemap.json");
             if (!File.Exists(path))
             {
                 CompositeFilenameDico = new Dictionary<string, string>();
@@ -964,7 +961,7 @@ namespace RTCV.CorruptCore
                 jsonFilePath = RtcCore.EmuDir;
 
             JsonSerializer serializer = new JsonSerializer();
-            var folder = Path.Combine(jsonFilePath, "SESSION");
+            var folder = Path.Combine(jsonFilePath, "FILEBACKUPS");
 
             if (!Directory.Exists(folder))
                 Directory.CreateDirectory(folder);
@@ -991,18 +988,17 @@ namespace RTCV.CorruptCore
         public string getCorruptFilename(bool overrideWriteCopyMode = false)
         {
             if (overrideWriteCopyMode || FileInterface.writeCopyMode)
-                return Path.Combine(RtcCore.EmuDir, "SESSION", getCompositeFilename("CORRUPT"));
+                return Path.Combine(RtcCore.EmuDir, "FILEBACKUPS", getCompositeFilename("CORRUPT"));
             else
                 return Filename;
         }
         public string getBackupFilename()
         {
-            return Path.Combine(RtcCore.EmuDir, "SESSION", getCompositeFilename("BACKUP"));
+            return Path.Combine(RtcCore.EmuDir, "FILEBACKUPS", getCompositeFilename("BACKUP"));
         }
 
-        public override void ResetWorkingFile()
+        public override bool ResetWorkingFile()
         {
-
             try
             {
                 if (File.Exists(getCorruptFilename()))
@@ -1011,10 +1007,11 @@ namespace RTCV.CorruptCore
             catch
             {
                 MessageBox.Show($"Could not get access to {getCorruptFilename()}\n\nClose the file then try whatever you were doing again", "WARNING");
+                return false;
             }
 
-
             SetWorkingFile();
+            return true;
         }
 
         public string SetWorkingFile()
@@ -1029,14 +1026,12 @@ namespace RTCV.CorruptCore
             return corruptFilename;
         }
 
-        public override void ApplyWorkingFile()
+        public override bool ApplyWorkingFile()
         {
-
             CloseStream();
 
             if (FileInterface.writeCopyMode)
             {
-
                 try
                 {
                     if (File.Exists(Filename))
@@ -1048,36 +1043,62 @@ namespace RTCV.CorruptCore
                 catch
                 {
                     MessageBox.Show($"Could not get access to {Filename} because some other program is probably using it. \n\nClose the file then press OK to try again", "WARNING");
+                    return false;
                 }
 
             }
+            return true;
         }
 
-        public override void SetBackup()
+        public override bool SetBackup()
         {
-            if (!File.Exists(getBackupFilename()))
-                File.Copy(Filename, getBackupFilename(), true);
+            try
+            {
+                if (!File.Exists(getBackupFilename()))
+                    File.Copy(Filename, getBackupFilename(), true);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Couldn't set backup of {Filename}!");
+                return false;
+            }
+            return true;
         }
 
-        public override void ResetBackup(bool askConfirmation = true)
+        public override bool ResetBackup(bool askConfirmation = true)
         {
             if (askConfirmation && MessageBox.Show("Are you sure you want to reset the backup using the target file?", "WARNING", MessageBoxButtons.YesNo) == DialogResult.No)
-                return;
+                return false;
 
-            if (File.Exists(getBackupFilename()))
-                File.Delete(getBackupFilename());
+            try
+            {
+                if (File.Exists(getBackupFilename()))
+                    File.Delete(getBackupFilename());
 
-            SetBackup();
-
+                SetBackup();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Couldn't reset backup of {Filename}!");
+                return false;
+            }
+            return true;
         }
 
-        public override void RestoreBackup(bool announce = true)
+        public override bool RestoreBackup(bool announce = true)
         {
 
             if (File.Exists(getBackupFilename()))
             {
-                File.Delete(Filename);
-                File.Copy(getBackupFilename(), Filename, true);
+                try
+                {
+                    File.Copy(getBackupFilename(), Filename, true);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show($"Unable to restore backup of {Filename}!");
+                    return false;
+                }
 
                 if (announce)
                     MessageBox.Show("Backup of " + ShortFilename + " was restored");
@@ -1086,6 +1107,8 @@ namespace RTCV.CorruptCore
             {
                 MessageBox.Show("Couldn't find backup of " + ShortFilename);
             }
+
+            return true;
         }
 
         public override void wipeMemoryDump()
@@ -1122,45 +1145,7 @@ namespace RTCV.CorruptCore
                 lastMemorySize = lastRealMemorySize;
             }
 
-
-
-
             return (long)lastMemorySize;
-
-        }
-
-        public override bool dolphinSavestateVersion()
-        {
-            /*
-             * 0x20-0x32 = "Dolphin Narry's Mod"
-             * 0x35-0x39 = "X.Y.Z" - This is the version number
-             */
-
-            string a = "Dolphin Narry's Mod";
-            string b = Encoding.Default.GetString(PeekBytes(32, 19));
-
-            if (a == b)
-            {
-                //Change this if there's a new version that breaks things!!!
-                string earliestSupportedVersion = "0.1.3";
-                string savestateVersion = Encoding.Default.GetString(PeekBytes(53, 5));
-                string earliestSupportedVersionTrimmed = earliestSupportedVersion.Replace(".", "");
-                string savestateVersionTrimmed = savestateVersion.Replace(".", "");
-
-                if (Convert.ToInt32(savestateVersionTrimmed) >= Convert.ToInt32(earliestSupportedVersionTrimmed))
-                    return true;
-                else
-                {
-                    MessageBox.Show("You are trying to load a savestate from an old version of Dolphin Narry's Mod. The earliest supported version is version " + earliestSupportedVersion + ". This will not work properly.");
-                    return false;
-                }
-
-            }
-            else
-            {
-                MessageBox.Show("The currently loaded file is not a Dolphin Narry's Mod savestate");
-                return false;
-            }
 
         }
 
@@ -1392,11 +1377,18 @@ namespace RTCV.CorruptCore
             return string.Join("|", FileInterfaces.Select(it => it.getBackupFilename()));
         }
 
-        public override void ResetWorkingFile()
+        public override bool ResetWorkingFile()
         {
+            bool allSucceeded = true;
             foreach (var fi in FileInterfaces)
-                fi.ResetWorkingFile();
+            {
+                if(allSucceeded)
+                    allSucceeded = fi.ResetWorkingFile();
+                else
+                    fi.ResetWorkingFile();
+            }
 
+            return allSucceeded;
         }
 
         public string SetWorkingFile()
@@ -1405,44 +1397,69 @@ namespace RTCV.CorruptCore
 
         }
 
-        public override void ApplyWorkingFile()
+        public override bool ApplyWorkingFile()
         {
+            bool allSucceeded = true;
             foreach (var fi in FileInterfaces)
-                fi.ApplyWorkingFile();
+            {
+                if(allSucceeded)
+                    allSucceeded = fi.ApplyWorkingFile();
+                else
+                    fi.ApplyWorkingFile();
+            }
 
+            return allSucceeded;
         }
 
-        public override void SetBackup()
+        public override bool SetBackup()
         {
+            bool allSucceeded = true;
             foreach (var fi in FileInterfaces)
-                fi.SetBackup();
+            {
+                if (allSucceeded)
+                    allSucceeded = fi.SetBackup();
+                else
+                    fi.SetBackup();
+            }
 
+            return allSucceeded;
         }
 
-        public override void ResetBackup(bool askConfirmation = true)
+        public override bool ResetBackup(bool askConfirmation = true)
         {
+            bool allSucceeded = true;
             if (askConfirmation && MessageBox.Show("Are you sure you want to reset the backup using the target files?", "WARNING", MessageBoxButtons.YesNo) == DialogResult.No)
-                return;
+                return false;
 
             foreach (var fi in FileInterfaces)
-                fi.ResetBackup(false);
+            {
+                if (allSucceeded)
+                    allSucceeded = fi.ResetBackup(false);
+                else
+                    fi.ResetBackup(false);
+            }
+            return allSucceeded;
 
         }
 
-        public override void RestoreBackup(bool announce = true)
+        public override bool RestoreBackup(bool announce = true)
         {
-
+            bool allSucceeded = true;
             foreach (var fi in FileInterfaces)
-                fi.RestoreBackup(false);
-
+            {
+                if (allSucceeded)
+                    allSucceeded = fi.RestoreBackup(false);
+                else
+                    fi.RestoreBackup(false);
+            }
             if (announce)
                 MessageBox.Show("Backups of " + string.Join(",", FileInterfaces.Select(it => (it as FileInterface).ShortFilename)) + " were restored");
 
+            return allSucceeded;
         }
 
         public void setFilePositions()
         {
-
             long addressPad = 0;
 
             //find which fileInterface contains the file we want
@@ -1453,7 +1470,6 @@ namespace RTCV.CorruptCore
                 fi.MultiFilePositionCeiling = addressPad;
 
             }
-
         }
 
         public override void wipeMemoryDump()
@@ -1532,13 +1548,6 @@ namespace RTCV.CorruptCore
             return (long)lastMemorySize;
 
         }
-
-        public override bool dolphinSavestateVersion()
-        {
-            //Not supported for multiple files
-            return false;
-        }
-
         public override long? lastMemorySize { get; set; }
         public static bool LoadAnything { get; set; } = false;
 
