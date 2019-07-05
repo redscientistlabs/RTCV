@@ -94,7 +94,8 @@ namespace RTCV.CorruptCore
                 //Load the lists and add their hashes to the returns
                 var hash = loadListFromPath(path, false);
                 var name = Path.GetFileNameWithoutExtension(path);
-                h[hash] = name;
+                if(!String.IsNullOrEmpty(hash))
+                    h[hash] = name;
             });
 
 			//We do this because we're adding to the lists not replacing them. It's a bit odd but it's needed for the spec system
@@ -116,6 +117,9 @@ namespace RTCV.CorruptCore
 		{
 			//Load the list in
 			string[] temp = File.ReadAllLines(path);
+            if (temp.Length == 0)
+                return "";
+
 			//If the file is prefixed with '_', we assume it's stored as big endian and flip the bytes
 			bool flipBytes = Path.GetFileName(path).StartsWith("_");
 
@@ -128,14 +132,15 @@ namespace RTCV.CorruptCore
 				try
 				{
 					//Get the string as a byte array
-					bytes = CorruptCore_Extensions.StringToByteArray(t);
-				}
+                    if ((bytes = CorruptCore_Extensions.StringToByteArray(t)) == null)
+                        throw new Exception($"Error reading list {Path.GetFileName(path)}. Valid format is a list of raw hexidecimal values.\nLine{(i + 1)}.\nValue: {t}\n");
+                }
 				catch (Exception e)
 				{
                     Console.Write(e);
-					MessageBox.Show("Error reading list " + Path.GetFileName(path) + ". Error at line " + (i+1) + ".\nValue: " + t + "\n. Valid format is a list of raw byte values.");
-					break;
-				}
+                    MessageBox.Show(e.Message);
+                    return "";
+                }
 
 				//If it's big endian, flip it
 				if (flipBytes)
