@@ -92,14 +92,23 @@ namespace RTCV.UI
 			RefreshDomains(); //refresh and reload domains
 
 			if (overrideDomains != null)
-			{
-				RTCV.NetCore.AllSpec.UISpec.Update("SELECTEDDOMAINS", overrideDomains);
-				SetMemoryDomainsSelectedDomains(temp);
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach (var s in overrideDomains)
+                    sb.Append($"{s},");
+                Console.WriteLine($"RefreshDomainsAndKeepSelected override SELECTEDDOMAINS domains to {sb}");
+                RTCV.NetCore.AllSpec.UISpec.Update("SELECTEDDOMAINS", overrideDomains);
+				SetMemoryDomainsSelectedDomains(overrideDomains);
 			}
 			//If we had old domains selected don't do anything
 			else if (temp?.Length != 0)
-			{
-				RTCV.NetCore.AllSpec.UISpec.Update("SELECTEDDOMAINS", temp);
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach (var s in temp)
+                    sb.Append($"{s},");
+                Console.WriteLine($"RefreshDomainsAndKeepSelected temp Setting SELECTEDDOMAINS domains to {sb}");
+
+                RTCV.NetCore.AllSpec.UISpec.Update("SELECTEDDOMAINS", temp);
 				SetMemoryDomainsSelectedDomains(temp);
 			}
 			else
@@ -115,6 +124,10 @@ namespace RTCV.UI
 			if (lbMemoryDomains_DontExecute_SelectedIndexChanged)
 				return;
 
+            StringBuilder sb = new StringBuilder();
+            foreach (var s in lbMemoryDomains.SelectedItems.Cast<string>().ToArray())
+                sb.Append($"{s},");
+            Console.WriteLine($"lbIndexChanged Setting SELECTEDDOMAINS domains to {sb}");
 			RTCV.NetCore.AllSpec.UISpec.Update("SELECTEDDOMAINS", lbMemoryDomains.SelectedItems.Cast<string>().ToArray());
 
 
