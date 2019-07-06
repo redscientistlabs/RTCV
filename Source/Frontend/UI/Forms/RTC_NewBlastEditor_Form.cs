@@ -1567,8 +1567,9 @@ namespace RTCV.UI
 			}
 			dgvBlastEditor.DataSource = bs;
 			dgvBlastEditor.ResetBindings();
-			dgvBlastEditor.Refresh();
-		}
+			RefreshAllNoteIcons();
+            dgvBlastEditor.Refresh();
+        }
 
 		private void saveToFileblToolStripMenuItem_Click(object sender, EventArgs e)
 		{
