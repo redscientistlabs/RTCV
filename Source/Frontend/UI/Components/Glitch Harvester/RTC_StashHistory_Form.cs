@@ -267,7 +267,7 @@ namespace RTCV.UI
                 btnStashUP.Enabled = true;
                 btnStashDOWN.Enabled = true;
                 btnAddStashToStockpile.Enabled = true;
-                ((Control)sender).Focus();
+                //((Control)sender).Focus();
                 S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
             }
         }
