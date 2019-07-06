@@ -42,7 +42,7 @@ namespace RTCV.UI
 
 		private void NetCoreSpec_ServerConnectionLost(object sender, EventArgs e)
 		{
-			if(UICore.isClosing)
+			if(UICore.isClosing || UICore.FirstConnect)
 				return;
 
 			SyncObjectSingleton.FormExecute((o, ea) =>

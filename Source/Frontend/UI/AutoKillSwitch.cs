@@ -68,8 +68,7 @@ namespace RTCV.UI
         }
 		public static void KillEmulator(bool forceBypass = false)
 		{
-
-            if (!ShouldKillswitchFire || (!S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked && !forceBypass))
+            if (!ShouldKillswitchFire || (UICore.FirstConnect && !forceBypass) || (!S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked && !forceBypass))
                 return;
 
             ShouldKillswitchFire = false;
