@@ -1922,36 +1922,43 @@ namespace RTCV.CorruptCore
 					}
 				}
 				else
-				{
-					//Generate a random value based on our precision. 
-					//We use a BigInteger as we support arbitrary length, but we do use built in methods for 8,16,32 bit for performance reasons
-					BigInteger randomValue;
-					switch (Precision)
-					{
-						case (1):
-							randomValue = RtcCore.RND.NextULong(0, 0xFF, true);
-							break;
-						case (2):
-							randomValue = RtcCore.RND.NextULong(0, 0xFFFF, true);
-							break;
-                        case (4):
-                            randomValue = RtcCore.RND.NextULong(0, 0xFFFFFFFF, true);
-                            break;
-                        case (8):
-                            randomValue = RtcCore.RND.NextULong(0, 0xFFFFFFFFFFFFFFFF, true);
-                            break;
-                        //No limits if out of normal range
-                        default:
-							byte[] _randomValue = new byte[Precision];
-							RtcCore.RND.NextBytes(_randomValue);
-							randomValue = new BigInteger(_randomValue);
-							break;
-					}
+                {
+                    if (this.GeneratedUsingValueList && !RtcCore.RerollIgnoresOriginalSource)
+                    {
+                        Value = Filtering.GetRandomConstant(RTC_VectorEngine.ValueListHash, Precision);
+                    }
+                    else
+                    {
+                        //Generate a random value based on our precision. 
+                        //We use a BigInteger as we support arbitrary length, but we do use built in methods for 8,16,32 bit for performance reasons
+                        BigInteger randomValue;
+                        switch (Precision)
+                        {
+                            case (1):
+                                randomValue = RtcCore.RND.NextULong(0, 0xFF, true);
+                                break;
+                            case (2):
+                                randomValue = RtcCore.RND.NextULong(0, 0xFFFF, true);
+                                break;
+                            case (4):
+                                randomValue = RtcCore.RND.NextULong(0, 0xFFFFFFFF, true);
+                                break;
+                            case (8):
+                                randomValue = RtcCore.RND.NextULong(0, 0xFFFFFFFFFFFFFFFF, true);
+                                break;
+                            //No limits if out of normal range
+                            default:
+                                byte[] _randomValue = new byte[Precision];
+                                RtcCore.RND.NextBytes(_randomValue);
+                                randomValue = new BigInteger(_randomValue);
+                                break;
+                        }
 
-					byte[] temp = new byte[Precision];
-					//We use this as it properly handles the length for us
-					CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref temp, randomValue, false);
-					Value = temp;
+                        byte[] temp = new byte[Precision];
+                        //We use this as it properly handles the length for us
+                        CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref temp, randomValue, false);
+                        Value = temp;
+                    }
 				}
 			}
 			else if (Source == BlastUnitSource.STORE)
