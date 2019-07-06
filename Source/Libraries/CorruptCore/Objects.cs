@@ -1453,9 +1453,32 @@ namespace RTCV.CorruptCore
         /// <returns></returns>
         public BlastUnit GetSubUnit(int start, int end)
         {
-            BlastUnit bu = (BlastUnit)this.Clone();
-            bu.Precision = end - start;
-            bu.Address += start;
+            BlastUnit bu = new BlastUnit()
+            {
+
+                Precision = end - start,
+                Address = this.Address + start,
+                Domain = this.Domain,
+                SourceAddress = this.SourceAddress,
+                SourceDomain = this.SourceDomain,
+                Source = this.Source,
+                ExecuteFrame = this.ExecuteFrame,
+                Lifetime = this.Lifetime,
+                LimiterTime = this.LimiterTime,
+                Loop = this.Loop,
+                InvertLimiter = this.InvertLimiter,
+                TiltValue = this.TiltValue,
+                StoreLimiterSource = this.StoreLimiterSource,
+                GeneratedUsingValueList = this.GeneratedUsingValueList,
+                BigEndian = this.BigEndian,
+                IsLocked = this.IsLocked,
+                Note = this.Note,
+                StoreTime = this.StoreTime,
+                StoreType = this.StoreType,
+                IsEnabled = this.IsEnabled,
+                LimiterListHash = this.LimiterListHash
+            };
+
             if (bu.Source == BlastUnitSource.STORE)
             {
                 bu.SourceAddress += start;
