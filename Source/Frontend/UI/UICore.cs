@@ -632,7 +632,7 @@ namespace RTCV.UI
                     break;
 
                 case "Induce KS Crash":
-                    //
+                    AutoKillSwitch.KillEmulator(true);
                     break;
 
                 case "Blast+RawStash":
