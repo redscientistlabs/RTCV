@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -77,8 +78,7 @@ namespace RTCV.NetCore
 		}
 
 		public void Update(PartialSpec _partialSpec, bool propagate = true, bool synced = true)
-
-		{
+        {
 			if (name != _partialSpec.Name)
 				throw new Exception("Name mismatch between PartialSpec and FullSpec");
 
@@ -224,7 +224,7 @@ namespace RTCV.NetCore
 		{
 			get => version;
 		}
-		internal Dictionary<string, object> specDico { get; set; } = new Dictionary<string, object>();
+		internal ConcurrentDictionary<string, object> specDico { get; set; } = new ConcurrentDictionary<string, object>();
 
 		public object this[string key]
 		{
@@ -237,9 +237,9 @@ namespace RTCV.NetCore
 			{
 				if (value == null && !(this is PartialSpec))    // Partials can have null values
 				{                                               // A null value means a key removal in the Full Spec
-					if (specDico.ContainsKey(key))
-						specDico.Remove(key);
-				}
+                    specDico.TryRemove(key, out _);
+
+                }
 				else
 					specDico[key] = value;
 
