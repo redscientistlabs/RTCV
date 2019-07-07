@@ -86,7 +86,6 @@ namespace RTCV.CorruptCore
 		/// <returns>Hashes of the lists</returns>
 		public static List<string> LoadListsFromPaths(string[] paths)
 		{
-
             ConcurrentDictionary<string, string> h = new ConcurrentDictionary<string, string>();
 
             Parallel.ForEach(paths, (path) =>
@@ -133,7 +132,7 @@ namespace RTCV.CorruptCore
 				{
 					//Get the string as a byte array
                     if ((bytes = CorruptCore_Extensions.StringToByteArray(t)) == null)
-                        throw new Exception($"Error reading list {Path.GetFileName(path)}. Valid format is a list of raw hexidecimal values.\nLine{(i + 1)}.\nValue: {t}\n");
+                        throw new Exception($"Error reading list {Path.GetFileName(path)}. Valid format is a list of raw hexadecimal values.\nLine{(i + 1)}.\nValue: {t}\n");
                 }
 				catch (Exception e)
 				{
