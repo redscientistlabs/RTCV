@@ -454,7 +454,7 @@ namespace RTCV.CorruptCore
                         if (sk != null && ((bool?) AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false))
                         {
                             SyncObjectSingleton.FormExecute(a);
-                            e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
+                            LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true);
                         }
                         else //We can just do everything on the emulation thread as it'll block
                             SyncObjectSingleton.EmuThreadExecute(a, true);
