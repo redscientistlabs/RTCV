@@ -152,7 +152,7 @@ namespace RTCV.CorruptCore
 			}
 
 			var hash =  RegisterList(byteList.Distinct(new CorruptCore_Extensions.ByteArrayComparer()).ToList(), syncListViaNetcore);
-			var name = Path.GetFileName(path);
+			var name = Path.GetFileNameWithoutExtension(path);
 			Hash2NameDico[hash] = name;
 			return hash;
 		}
