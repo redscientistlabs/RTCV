@@ -284,6 +284,9 @@ namespace RTCV.UI
                 //clean temp folder
                 Stockpile.EmptyFolder(Path.Combine("WORKING", "TEMP"));
 
+                //Commit any states in use
+                commitUsedStatesToSession();
+
                 foreach(var key in ssk.StashKeys)
                 {
                     if (key == null)
