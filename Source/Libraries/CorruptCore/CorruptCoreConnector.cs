@@ -419,14 +419,7 @@ namespace RTCV.CorruptCore
                         e.setReturnValue(BlastTools.GetAppliedBackupLayer(bl, sk));
                     }
 
-                    //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
-                    if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
-                    {
-                        SyncObjectSingleton.FormExecute(a);
-                        e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
-                    }
-                    else //We can just do everything on the emulation thread as it'll block
-                        SyncObjectSingleton.EmuThreadExecute(a, true);
+                    SyncObjectSingleton.EmuThreadExecute(a, false);
 					break;
 				}
 
@@ -457,8 +450,8 @@ namespace RTCV.CorruptCore
                             e.setReturnValue(allLegalAdresses.ToArray());
                         }
 
-                        //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
-                        if ((bool?) AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
+                        //If the emulator uses callbacks and we're loading a state, we do everything on the main thread and once we're done, we unpause emulation
+                        if (sk != null && ((bool?) AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false))
                         {
                             SyncObjectSingleton.FormExecute(a);
                             e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
@@ -473,17 +466,8 @@ namespace RTCV.CorruptCore
                 case REMOTE_KEY_GETRAWBLASTLAYER:
                 {
                     void a()
-                    {
-                        e.setReturnValue(StockpileManager_EmuSide.GetRawBlastlayer());
-                    }
-                    //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
-                    if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
-                    {
-                        SyncObjectSingleton.FormExecute(a);
-                        e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
-                    }
-                    else //We can just do everything on the emulation thread as it'll block
-                        SyncObjectSingleton.EmuThreadExecute(a, true);
+                    {e.setReturnValue(StockpileManager_EmuSide.GetRawBlastlayer());}
+                    SyncObjectSingleton.EmuThreadExecute(a, false);
                 }
 				break;
 
@@ -494,7 +478,7 @@ namespace RTCV.CorruptCore
                     { e.setReturnValue(BlastDiff.GetBlastLayer(filename)); }
                     SyncObjectSingleton.EmuThreadExecute(a, false);
                 }
-                break;
+                 break;
                 
 
 
@@ -505,36 +489,23 @@ namespace RTCV.CorruptCore
                         if (StockpileManager_EmuSide.UnCorruptBL != null)
                             StockpileManager_EmuSide.UnCorruptBL.Apply(true);
                     }
-                    //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
-                    if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
-                    {
-                        SyncObjectSingleton.FormExecute(a);
-                        e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
-                    }
-                    else //We can just do everything on the emulation thread as it'll block
-                        SyncObjectSingleton.EmuThreadExecute(a, true);
+                    SyncObjectSingleton.EmuThreadExecute(a, false);
                 }
                 break;
 
                 case REMOTE_SET_APPLYCORRUPTBL:
                 {
+
                     void a()
                     {
                         if (StockpileManager_EmuSide.CorruptBL != null)
                             StockpileManager_EmuSide.CorruptBL.Apply(false);
                     }
-                    //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
-                    if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
-                    {
-                        SyncObjectSingleton.FormExecute(a);
-                        e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
-                    }
-                    else //We can just do everything on the emulation thread as it'll block
-                        SyncObjectSingleton.EmuThreadExecute(a, true);
+                    SyncObjectSingleton.EmuThreadExecute(a, false);
                 }
                 break;
 
-                case REMOTE_CLEARSTEPBLASTUNITS:
+                    case REMOTE_CLEARSTEPBLASTUNITS:
 					SyncObjectSingleton.FormExecute((o, ea) =>
 					{
 						StepActions.ClearStepBlastUnits();
