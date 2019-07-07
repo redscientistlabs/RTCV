@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace RTCV.NetCore
         //This makes inter-process calls able to block and wait for return values to keep code linearity
 
         private volatile NetCoreSpec spec;
-        private volatile Dictionary<Guid, object> SyncReturns = new Dictionary<Guid, object>();
+        private volatile ConcurrentDictionary<Guid, object> SyncReturns = new ConcurrentDictionary<Guid, object>();
         private volatile int attemptsAtReading = 0;
         private volatile bool KillReturnWatch = false;
 
@@ -29,9 +30,7 @@ namespace RTCV.NetCore
         public void Kill()
         {
             SyncReturns.Clear();
-
-            if (IsWaitingForReturn)
-                KillReturnWatch = true;
+            KillReturnWatch = true;
         }
 
         public void AddReturn(NetCoreAdvancedMessage message)
@@ -39,7 +38,7 @@ namespace RTCV.NetCore
 			if (!message.requestGuid.HasValue)
 				return;
 
-			SyncReturns.Add(message.requestGuid.Value, message.objectValue);
+			SyncReturns.TryAdd(message.requestGuid.Value, message.objectValue);
         }
 
         internal object GetValue(Guid WatchedGuid, string type)
@@ -83,9 +82,7 @@ namespace RTCV.NetCore
             }
 
             attemptsAtReading = 0;
-
-            object ret = SyncReturns[WatchedGuid];
-            SyncReturns.Remove(WatchedGuid);
+            SyncReturns.TryRemove(WatchedGuid, out object ret);
 
             ConsoleEx.WriteLine("GetValue:Returned -> " + type.ToString());
             //spec.OnSyncedMessageEnd(null);
