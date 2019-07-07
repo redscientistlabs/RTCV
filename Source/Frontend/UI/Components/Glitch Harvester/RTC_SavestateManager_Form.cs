@@ -26,6 +26,7 @@ namespace RTCV.UI
         private BindingSource savestateBindingSource = new BindingSource(new BindingList<SaveStateKey>(), null);
 
         private bool LoadSavestateOnClick = false;
+        public StashKey CurrentSaveStateStashKey => savestateList.CurrentSaveStateStashKey;
 
         public RTC_SavestateManager_Form()
 		{

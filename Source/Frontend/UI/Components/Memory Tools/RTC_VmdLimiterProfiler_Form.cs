@@ -123,7 +123,13 @@ namespace RTCV.UI
 			proto.WordSize = mi.WordSize;
 			proto.Padding = 0;
 
-            var legalAdresses = LocalNetCoreRouter.QueryRoute<long[]>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_LONGARRAY_FILTERDOMAIN, new string[] { mi.Name, LimiterListHash });
+            var sk = S.GET<RTC_SavestateManager_Form>().CurrentSaveStateStashKey;
+            if (sk == null && cbLoadBeforeGenerate.Checked && (AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] as bool? ?? false))
+            {
+                MessageBox.Show("Load before generate is checked but no Savestate is selected in the Glitch Harvester!");
+                return false;
+            }
+            var legalAdresses = LocalNetCoreRouter.QueryRoute<long[]>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_LONGARRAY_FILTERDOMAIN, new object[] { mi.Name, LimiterListHash, cbLoadBeforeGenerate.Checked ? sk : null});
             if (legalAdresses == null)
                 return false;
             proto.AddSingles.AddRange(legalAdresses);

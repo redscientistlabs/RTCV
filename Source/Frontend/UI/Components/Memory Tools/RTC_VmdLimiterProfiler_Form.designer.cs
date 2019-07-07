@@ -45,6 +45,7 @@
             this.label17 = new System.Windows.Forms.Label();
             this.btnLoadDomains = new System.Windows.Forms.Button();
             this.cbSelectedMemoryDomain = new System.Windows.Forms.ComboBox();
+            this.cbLoadBeforeGenerate = new System.Windows.Forms.CheckBox();
             this.pnLimiterList.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -201,7 +202,7 @@
             this.lbEndianTypeLabel.ForeColor = System.Drawing.Color.White;
             this.lbEndianTypeLabel.Location = new System.Drawing.Point(6, 54);
             this.lbEndianTypeLabel.Name = "lbEndianTypeLabel";
-            this.lbEndianTypeLabel.Size = new System.Drawing.Size(71, 13);
+            this.lbEndianTypeLabel.Size = new System.Drawing.Size(72, 13);
             this.lbEndianTypeLabel.TabIndex = 88;
             this.lbEndianTypeLabel.Text = "Endian Type:";
             this.lbEndianTypeLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
@@ -276,12 +277,25 @@
             this.cbSelectedMemoryDomain.SelectedIndexChanged += new System.EventHandler(this.cbSelectedMemoryDomain_SelectedIndexChanged);
             this.cbSelectedMemoryDomain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
+            // cbLoadBeforeGenerate
+            // 
+            this.cbLoadBeforeGenerate.AutoSize = true;
+            this.cbLoadBeforeGenerate.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.cbLoadBeforeGenerate.ForeColor = System.Drawing.Color.White;
+            this.cbLoadBeforeGenerate.Location = new System.Drawing.Point(6, 168);
+            this.cbLoadBeforeGenerate.Name = "cbLoadBeforeGenerate";
+            this.cbLoadBeforeGenerate.Size = new System.Drawing.Size(272, 17);
+            this.cbLoadBeforeGenerate.TabIndex = 136;
+            this.cbLoadBeforeGenerate.Text = "Load Glitch Harvester Savestate Before Generate";
+            this.cbLoadBeforeGenerate.UseVisualStyleBackColor = true;
+            // 
             // RTC_VmdLimiterProfiler_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(390, 250);
+            this.Controls.Add(this.cbLoadBeforeGenerate);
             this.Controls.Add(this.pnLimiterList);
             this.Controls.Add(this.tbVmdName);
             this.Controls.Add(this.label2);
@@ -326,5 +340,6 @@
         private System.Windows.Forms.Panel pnLimiterList;
         public System.Windows.Forms.ComboBox cbVectorLimiterList;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.CheckBox cbLoadBeforeGenerate;
     }
 }

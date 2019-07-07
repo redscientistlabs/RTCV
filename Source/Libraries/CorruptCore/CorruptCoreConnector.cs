@@ -348,35 +348,35 @@ namespace RTCV.CorruptCore
                     e.setReturnValue(sk);
 				}
 				break;
-                    case REMOTE_SAVESTATELESS:
+                case REMOTE_SAVESTATELESS:
+                    {
+                        StashKey sk = null;
+                        void a()
                         {
-                            StashKey sk = null;
-                            void a()
-                            {
-                                sk = StockpileManager_EmuSide.SaveStateLess_NET(advancedMessage.objectValue as StashKey); //Has to be nullable cast
-                            }
-                            SyncObjectSingleton.EmuThreadExecute(a, false);
-                            e.setReturnValue(sk);
+                            sk = StockpileManager_EmuSide.SaveStateLess_NET(advancedMessage.objectValue as StashKey); //Has to be nullable cast
                         }
-                        break;
+                        SyncObjectSingleton.EmuThreadExecute(a, false);
+                        e.setReturnValue(sk);
+                    }
+                    break;
 
-                    case REMOTE_BACKUPKEY_REQUEST:
+                case REMOTE_BACKUPKEY_REQUEST:
+				{
+					//We don't store this in the spec as it'd be horrible to push it to the UI and it doesn't care
+					//if (!LocalNetCoreRouter.QueryRoute<bool>(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_ISNORMALADVANCE))
+						//break;
+
+					StashKey sk = null;
+					//We send an unsynced command back
+					SyncObjectSingleton.FormExecute((o, ea) =>
 					{
-						//We don't store this in the spec as it'd be horrible to push it to the UI and it doesn't care
-						//if (!LocalNetCoreRouter.QueryRoute<bool>(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_ISNORMALADVANCE))
-							//break;
+						sk = StockpileManager_EmuSide.SaveState_NET();
+					});
 
-						StashKey sk = null;
-						//We send an unsynced command back
-						SyncObjectSingleton.FormExecute((o, ea) =>
-						{
-							sk = StockpileManager_EmuSide.SaveState_NET();
-						});
-
-                        if(sk != null)
-						    LocalNetCoreRouter.Route(NetcoreCommands.UI, REMOTE_BACKUPKEY_STASH, sk, false);
-						break;
-					}
+                    if(sk != null)
+					    LocalNetCoreRouter.Route(NetcoreCommands.UI, REMOTE_BACKUPKEY_STASH, sk, false);
+					break;
+				}
 				case REMOTE_DOMAIN_GETDOMAINS:
 					e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_DOMAIN_GETDOMAINS, true));
 					break;
@@ -419,18 +419,31 @@ namespace RTCV.CorruptCore
                         e.setReturnValue(BlastTools.GetAppliedBackupLayer(bl, sk));
                     }
 
-                    SyncObjectSingleton.EmuThreadExecute(a, false);
+                    //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
+                    if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
+                    {
+                        SyncObjectSingleton.FormExecute(a);
+                        e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
+                    }
+                    else //We can just do everything on the emulation thread as it'll block
+                        SyncObjectSingleton.EmuThreadExecute(a, true);
 					break;
 				}
 
                 case REMOTE_LONGARRAY_FILTERDOMAIN:
+                {
+                    lock (loadLock)
                     {
-                        string[] objValues = (advancedMessage.objectValue as string[]);
-                        string domain = objValues[0];
-                        string LimiterListHash = objValues[1];
+                        var objValues = (advancedMessage.objectValue as object[]);
+                        string domain = (string) objValues[0];
+                        string LimiterListHash = (string) objValues[1];
+                        StashKey sk = objValues[2] as StashKey; //Intentionally nullable
 
                         void a()
                         {
+                            if (sk != null) //If a stashkey was passed in, we want to load then profile
+                                StockpileManager_EmuSide.LoadState_NET(sk, false);
+
                             MemoryInterface mi = MemoryDomains.MemoryInterfaces[domain];
                             List<long> allLegalAdresses = new List<long>();
 
@@ -444,16 +457,33 @@ namespace RTCV.CorruptCore
                             e.setReturnValue(allLegalAdresses.ToArray());
                         }
 
-                        SyncObjectSingleton.EmuThreadExecute(a, false);
+                        //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
+                        if ((bool?) AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
+                        {
+                            SyncObjectSingleton.FormExecute(a);
+                            e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
+                        }
+                        else //We can just do everything on the emulation thread as it'll block
+                            SyncObjectSingleton.EmuThreadExecute(a, true);
                     }
-                    break;
+                }
+                break;
 
 
                 case REMOTE_KEY_GETRAWBLASTLAYER:
                 {
                     void a()
-                    {e.setReturnValue(StockpileManager_EmuSide.GetRawBlastlayer());}
-                    SyncObjectSingleton.EmuThreadExecute(a, false);
+                    {
+                        e.setReturnValue(StockpileManager_EmuSide.GetRawBlastlayer());
+                    }
+                    //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
+                    if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
+                    {
+                        SyncObjectSingleton.FormExecute(a);
+                        e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
+                    }
+                    else //We can just do everything on the emulation thread as it'll block
+                        SyncObjectSingleton.EmuThreadExecute(a, true);
                 }
 				break;
 
@@ -464,7 +494,7 @@ namespace RTCV.CorruptCore
                     { e.setReturnValue(BlastDiff.GetBlastLayer(filename)); }
                     SyncObjectSingleton.EmuThreadExecute(a, false);
                 }
-                 break;
+                break;
                 
 
 
@@ -475,23 +505,36 @@ namespace RTCV.CorruptCore
                         if (StockpileManager_EmuSide.UnCorruptBL != null)
                             StockpileManager_EmuSide.UnCorruptBL.Apply(true);
                     }
-                    SyncObjectSingleton.EmuThreadExecute(a, false);
+                    //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
+                    if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
+                    {
+                        SyncObjectSingleton.FormExecute(a);
+                        e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
+                    }
+                    else //We can just do everything on the emulation thread as it'll block
+                        SyncObjectSingleton.EmuThreadExecute(a, true);
                 }
                 break;
 
                 case REMOTE_SET_APPLYCORRUPTBL:
                 {
-
                     void a()
                     {
                         if (StockpileManager_EmuSide.CorruptBL != null)
                             StockpileManager_EmuSide.CorruptBL.Apply(false);
                     }
-                    SyncObjectSingleton.EmuThreadExecute(a, false);
+                    //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
+                    if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
+                    {
+                        SyncObjectSingleton.FormExecute(a);
+                        e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
+                    }
+                    else //We can just do everything on the emulation thread as it'll block
+                        SyncObjectSingleton.EmuThreadExecute(a, true);
                 }
                 break;
 
-                    case REMOTE_CLEARSTEPBLASTUNITS:
+                case REMOTE_CLEARSTEPBLASTUNITS:
 					SyncObjectSingleton.FormExecute((o, ea) =>
 					{
 						StepActions.ClearStepBlastUnits();

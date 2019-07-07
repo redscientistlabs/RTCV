@@ -354,7 +354,8 @@ namespace RTCV.UI
 					StockpileManager_UISide.CurrentStashkey.BlastLayer.Reroll();
 
 					if (StockpileManager_UISide.AddCurrentStashkeyToStash())
-					{
+                    {
+                        S.GET<RTC_StockpileManager_Form>().dgvStockpile.ClearSelection();
 						S.GET<RTC_StashHistory_Form>()
 							.RefreshStashHistory();
 						S.GET<RTC_StashHistory_Form>()
