@@ -82,7 +82,7 @@ namespace RTCV.NetCore
                     {
                         if (Listener == null)
                         {
-                            Listener = new UdpClient(port);
+                            Listener = new UdpClient(groupEP);
                             Listener.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, UdpReceiveTimeout);
                         }
                     }
