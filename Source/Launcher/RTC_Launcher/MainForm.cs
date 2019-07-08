@@ -36,7 +36,7 @@ namespace RTCV.Launcher
         public static DownloadForm dForm = null;
         public static Form lpForm = null;
 
-        public static int launcherVer = 10;
+        public static int launcherVer = 11;
 
 
         public static int devCounter = 0;
@@ -268,6 +268,15 @@ namespace RTCV.Launcher
             if (File.Exists(downloadedFile))
                 File.Delete(downloadedFile);
 
+
+            var preReqChecker = Path.Combine(extractDirectory, "Launcher", "PrereqChecker.exe");
+            if (File.Exists(preReqChecker))
+            {
+                ProcessStartInfo psi = new ProcessStartInfo();
+                psi.FileName = Path.GetFileName(preReqChecker);
+                psi.WorkingDirectory = Path.GetDirectoryName(preReqChecker);
+                Process.Start(psi).WaitForExit();
+            }
             if (File.Exists(extractDirectory + Path.DirectorySeparatorChar + "Launcher\\ver.ini"))
             {
                 int newVer = Convert.ToInt32(File.ReadAllText(extractDirectory + Path.DirectorySeparatorChar + "Launcher\\ver.ini"));

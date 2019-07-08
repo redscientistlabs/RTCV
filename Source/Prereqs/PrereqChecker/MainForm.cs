@@ -7,7 +7,6 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Security.Principal;
 using System.Text;
@@ -242,8 +241,16 @@ namespace RTCV.Prereqs
                         var fileName = Path.Combine(dir, name);
                         if (File.Exists(fileName))
                         {
-                            var p = new ProcessStartInfo { FileName = fileName };
-                            Process.Start(p)?.WaitForExit();
+                            this.Hide();
+                            try
+                            {
+                                var p = new ProcessStartInfo {FileName = fileName};
+                                Process.Start(p)?.WaitForExit();
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Something went wrong when launching the 64-bit installer. Send this error to the devs.\n" + ex);
+                            }
                         }
                     }
                 }
