@@ -34,6 +34,7 @@
             this.btnMinimize = new System.Windows.Forms.Button();
             this.btnQuit = new System.Windows.Forms.Button();
             this.pnTopPanel = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.pnTopPanel.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -42,7 +43,7 @@
             this.lbStatus.AutoSize = true;
             this.lbStatus.Font = new System.Drawing.Font("Segoe UI Semibold", 16F, System.Drawing.FontStyle.Bold);
             this.lbStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.lbStatus.Location = new System.Drawing.Point(11, 46);
+            this.lbStatus.Location = new System.Drawing.Point(11, 49);
             this.lbStatus.Name = "lbStatus";
             this.lbStatus.Size = new System.Drawing.Size(147, 30);
             this.lbStatus.TabIndex = 4;
@@ -52,7 +53,7 @@
             // 
             this.progressBar.Location = new System.Drawing.Point(9, 108);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(621, 35);
+            this.progressBar.Size = new System.Drawing.Size(638, 35);
             this.progressBar.TabIndex = 3;
             // 
             // lbDownloadProgress
@@ -60,7 +61,7 @@
             this.lbDownloadProgress.AutoSize = true;
             this.lbDownloadProgress.Font = new System.Drawing.Font("Consolas", 12F);
             this.lbDownloadProgress.ForeColor = System.Drawing.Color.White;
-            this.lbDownloadProgress.Location = new System.Drawing.Point(513, 77);
+            this.lbDownloadProgress.Location = new System.Drawing.Point(513, 80);
             this.lbDownloadProgress.Name = "lbDownloadProgress";
             this.lbDownloadProgress.Size = new System.Drawing.Size(36, 19);
             this.lbDownloadProgress.TabIndex = 5;
@@ -105,6 +106,7 @@
             // pnTopPanel
             // 
             this.pnTopPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))));
+            this.pnTopPanel.Controls.Add(this.label1);
             this.pnTopPanel.Controls.Add(this.btnMinimize);
             this.pnTopPanel.Controls.Add(this.btnQuit);
             this.pnTopPanel.Dock = System.Windows.Forms.DockStyle.Top;
@@ -113,12 +115,23 @@
             this.pnTopPanel.Size = new System.Drawing.Size(655, 41);
             this.pnTopPanel.TabIndex = 132;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 16F);
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(103)))), ((int)(((byte)(240)))));
+            this.label1.Location = new System.Drawing.Point(4, 5);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(414, 30);
+            this.label1.TabIndex = 132;
+            this.label1.Text = "Real-Time Corruptor Prerequisite Installer";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(639, 168);
+            this.ClientSize = new System.Drawing.Size(655, 156);
             this.ControlBox = false;
             this.Controls.Add(this.pnTopPanel);
             this.Controls.Add(this.lbStatus);
@@ -131,6 +144,7 @@
             this.Name = "MainForm";
             this.Text = "Prereq Downloader";
             this.pnTopPanel.ResumeLayout(false);
+            this.pnTopPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -144,5 +158,6 @@
         private System.Windows.Forms.Button btnMinimize;
         private System.Windows.Forms.Button btnQuit;
         private System.Windows.Forms.Panel pnTopPanel;
+        private System.Windows.Forms.Label label1;
     }
 }
