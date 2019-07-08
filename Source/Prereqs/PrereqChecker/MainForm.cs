@@ -1,0 +1,309 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Runtime.InteropServices;
+using System.Security.Principal;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using Microsoft.Win32;
+
+namespace RTCV.Prereqs
+{
+    public partial class MainForm : Form
+    {
+        WebClient webClient = new WebClient();
+        Queue<Dependency> downloadQueue = new Queue<Dependency>();
+        ProcessModule processModule;
+        private string dir;
+        private string redistDir;
+        public MainForm()
+        {
+            InitializeComponent();
+            this.Load += MainForm_Load;
+            this.btnQuit.MouseEnter += btnQuit_MouseEnter;
+            this.btnQuit.MouseLeave += btnQuit_MouseLeave;
+            pnTopPanel.MouseMove += PnTopPanel_MouseMove;
+
+            processModule = Process.GetCurrentProcess().MainModule;
+            dir = Path.GetDirectoryName(processModule.FileName);
+            redistDir = Path.Combine(dir, "REDISTS");
+
+
+            webClient.DownloadProgressChanged += (ov, ev) =>
+            {
+                this.InvokeUI(() =>
+                {
+                    this.progressBar.Value = ev.ProgressPercentage;
+                    lbDownloadProgress.Text = $"{String.Format("{0:0.##}", (Convert.ToDouble(ev.BytesReceived) / (1024d * 1024d)))}/{String.Format("{0:0.##}", (Convert.ToDouble(ev.TotalBytesToReceive) / (1024d * 1024d)))}MB";
+                });
+            };
+
+            webClient.DownloadFileCompleted += (ov, ev) =>
+            {
+                var d = (Dependency) ev.UserState;
+
+                this.InvokeUI(() => { lbStatus.Text = $"Installing {d.Name}"; });
+                while (d != null)
+                {
+                    ProcessStartInfo p = new ProcessStartInfo
+                    {
+                        Arguments = d.InstallString,
+                        FileName = d.ExecutableName
+                    };
+                    try
+                    {
+                        Process.Start(p).WaitForExit();
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show($"Something went wrong when launching {p}. Send this to the devs!\n{e.ToString()}");
+                    }
+                    d = d.RunAfter;
+                }
+
+                DownloadNext();
+            };
+
+
+        }
+
+        private void PnTopPanel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                Win32.ReleaseCapture();
+                Win32.SendMessage(Handle, Win32.WM_NCLBUTTONDOWN, Win32.HT_CAPTION, 0);
+            }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            this.RunCheck();
+        }
+
+        public  void InvokeUI(Action a)
+        {
+            this.BeginInvoke(new MethodInvoker(a));
+        }
+
+        private void RunCheck()
+        {
+            Directory.CreateDirectory(redistDir);
+
+            var d3dx9Setup = new Dependency("DirectX9 End-User Runtime", "", "", $"/silent", Path.Combine(redistDir, "DXSETUP.exe"));
+            var d3dx9 = new Dependency("DirectX9 End-User Runtime", "d3dx9_43.dll", "https://download.microsoft.com/download/8/4/A/84A35BF1-DAFE-4AE8-82AF-AD2AE20B6B14/directx_Jun2010_redist.exe", $"/Q /T:{redistDir}", "", d3dx9Setup);
+
+            var vc2015 = new Dependency("Visual C++ 2015-2019 x64", "msvcp140.dll", "https://download.visualstudio.microsoft.com/download/pr/9e04d214-5a9d-4515-9960-3d71398d98c3/1e1e62ab57bbb4bf5199e8ce88f040be/vc_redist.x64.exe",
+                "/install /passive /norestart");
+            var vc2015x86 = new Dependency("Visual C++ 2015-2019 x86", "msvcp140.dll", "https://download.visualstudio.microsoft.com/download/pr/c8edbb87-c7ec-4500-a461-71e8912d25e9/99ba493d660597490cbb8b3211d2cae4/vc_redist.x86.exe",
+                "/install /passive /norestart");
+            var vc2013 = new Dependency("Visual C++ 2013 x64", "msvcr120.dll", "https://download.microsoft.com/download/2/E/6/2E61CFA4-993B-4DD4-91DA-3737CD5CD6E3/vcredist_x64.exe", "/install /passive /norestart");
+            var vc2012 = new Dependency("Visual C++ 2012 x64", "msvcr110.dll", "https://download.microsoft.com/download/1/6/B/16B06F60-3B20-4FF2-B699-5E9B7962F9AE/VSU_4/vcredist_x64.exe", "/install /passive /norestart");
+            var vc2010 = new Dependency("Visual C++ 2010 x64", "msvcr100.dll", "https://download.microsoft.com/download/3/2/2/3224B87F-CFA0-4E70-BDA3-3DE650EFEBA5/vcredist_x64.exe", "/passive /norestart");
+            var dotNet471 = new Dependency(".Net Framework 4.7.1", "471", "https://download.visualstudio.microsoft.com/download/pr/7afca223-55d2-470a-8edc-6a1739ae3252/abd170b4b0ec15ad0222a809b761a036/ndp48-x86-x64-allos-enu.exe", "/install /x86 /x64 /passive /norestart");
+
+            if (Environment.Is64BitProcess)
+            {
+                if (Win32.LoadLibrary(d3dx9.CheckFile) == IntPtr.Zero)
+                    downloadQueue.Enqueue(d3dx9); //Bizhawk
+
+                if (Win32.LoadLibrary(vc2015.CheckFile) == IntPtr.Zero)
+                    downloadQueue.Enqueue(vc2015); //PCSX2, MelonDS, Dolphin
+
+                if (Win32.LoadLibrary(vc2013.CheckFile) == IntPtr.Zero)
+                    downloadQueue.Enqueue(vc2013); //Bizhawk
+
+                if (Win32.LoadLibrary(vc2012.CheckFile) == IntPtr.Zero)
+                    downloadQueue.Enqueue(vc2012); //Bizhawk
+
+                if (Win32.LoadLibrary(vc2010.CheckFile) == IntPtr.Zero)
+                    downloadQueue.Enqueue(vc2010); //Bizhawk and RTC (SlimDX)
+
+                if (GetDotNetVersion() < 471)
+                    downloadQueue.Enqueue(dotNet471);
+            }
+            else
+            {
+                if (Win32.LoadLibrary(vc2015x86.CheckFile) == IntPtr.Zero)
+                    downloadQueue.Enqueue(vc2015x86); //VC++2015 x86 for PCSX2
+            }
+
+
+            if (downloadQueue.Count > 0)
+            {
+                if (!IsAdministrator())
+                {
+                    StringBuilder sb = new StringBuilder();
+                    sb.AppendLine("You are missing the following dependencies: ");
+                    foreach (var d in downloadQueue)
+                        sb.AppendLine(d.Name);
+                    sb.AppendLine("");
+                    sb.AppendLine("Would you like to download and install them?");
+                    if (MessageBox.Show(sb.ToString(), "Missing dependencies", MessageBoxButtons.YesNo) == DialogResult.No)
+                    {
+                        MessageBox.Show("The RTC may not work properly without these dependencies.\nYou can always run this tool again via the RTC Launcher");
+                        Application.Exit();
+                    }
+
+                    // Restart program and run as admin
+                    var exeName = Process.GetCurrentProcess().MainModule.FileName;
+                    var startInfo = new ProcessStartInfo(exeName);
+                    startInfo.Verb = "runas";
+                    try
+                    {
+                        var p = Process.Start(startInfo);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Admin permissions are required to continue.\nThe RTC may not run properly until you re-run this from the launcher.");
+                    }
+                    Application.Exit();
+                }
+                this.Show();
+            }
+            DownloadNext();
+
+
+        }
+
+
+        private static bool IsAdministrator()
+        {
+            var identity = WindowsIdentity.GetCurrent();
+            var principal = new WindowsPrincipal(identity);
+            return principal.IsInRole(WindowsBuiltInRole.Administrator);
+        }
+
+        private static int GetDotNetVersion()
+        {
+            const string subkey = @"SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\";
+
+            using (var ndpKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(subkey))
+            {
+                if (ndpKey != null && ndpKey.GetValue("Release") != null) return CheckFor45PlusVersion((int)ndpKey.GetValue("Release"));
+            }
+
+            // Checking the version using >= enables forward compatibility.
+            int CheckFor45PlusVersion(int releaseKey)
+            {
+                if (releaseKey >= 528040)
+                    return 480;
+                if (releaseKey >= 461808)
+                    return 472;
+                if (releaseKey >= 461308)
+                    return 471;
+                if (releaseKey >= 460798)
+                    return 470;
+                if (releaseKey >= 394802)
+                    return 462;
+                if (releaseKey >= 394254)
+                    return 461;
+                if (releaseKey >= 393295)
+                    return 460;
+                if (releaseKey >= 379893)
+                    return 452;
+                if (releaseKey >= 378675)
+                    return 451;
+                if (releaseKey >= 378389)
+                    return 450;
+                return int.MaxValue;
+            }
+
+            return int.MaxValue;
+        }
+
+        private void DownloadNext()
+        {
+            if (downloadQueue.Count > 0)
+            {
+                var d = downloadQueue.Dequeue();
+                d.ExecutableName = Path.Combine(redistDir, d.DownloadLink.Split('/').Last());
+
+                this.InvokeUI(() => lbStatus.Text = $"Downloading {d.Name}...");
+                webClient.DownloadFileAsync(new Uri(d.DownloadLink), d.ExecutableName, d);
+            }
+            else
+            {
+                //Daisy chain x86 to x64
+                if (!Environment.Is64BitProcess)
+                {
+                    var name = Process.GetCurrentProcess().ProcessName + "64.exe";
+                    if (processModule != null)
+                    {
+                        var fileName = Path.Combine(dir, name);
+                        if (File.Exists(fileName))
+                        {
+                            var p = new ProcessStartInfo { FileName = fileName };
+                            Process.Start(p)?.WaitForExit();
+                        }
+                    }
+                }
+
+                Application.Exit();
+            }
+        }
+
+        private void BtnQuit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void BtnMinimize_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void btnQuit_MouseEnter(object sender, EventArgs e)
+        {
+            btnQuit.BackColor = Color.FromArgb(230, 46, 76);
+        }
+
+        private void btnQuit_MouseLeave(object sender, EventArgs e)
+        {
+            btnQuit.BackColor = Color.FromArgb(64, 64, 64);
+        }
+
+        private static class Win32
+        {
+            public const int WM_NCLBUTTONDOWN = 0xA1;
+            public const int HT_CAPTION = 0x2;
+            [DllImport("kernel32.dll")]
+            public static extern IntPtr LoadLibrary(string dllToLoad);
+
+            [DllImportAttribute("user32.dll")]
+            public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+            [DllImportAttribute("user32.dll")]
+            public static extern bool ReleaseCapture();
+        }
+
+        private class Dependency
+        {
+            public Dependency(string name, string checkFile, string downloadLink, string installString, string executableName = null, Dependency runAfter = null)
+            {
+                Name = name;
+                CheckFile = checkFile;
+                DownloadLink = downloadLink;
+                InstallString = installString;
+                RunAfter = runAfter;
+                ExecutableName = executableName;
+            }
+
+            public string Name { get; }
+            public string CheckFile { get; }
+            public string DownloadLink { get; }
+            public string InstallString { get; }
+            public Dependency RunAfter { get; }
+            public String ExecutableName { get; set; }
+        }
+
+    }
+}
