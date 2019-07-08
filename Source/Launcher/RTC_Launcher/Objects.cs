@@ -32,33 +32,6 @@ namespace RTCV.Launcher
             items = confLines.Select(it => new LauncherConfItem(this, it)).ToArray();
         }
     }
-    public class SystemRequirements
-    {
-        public bool supports32Bit;
-        public int minDotNetVersion;
-        public string minDotNetVersionDownload;
-
-        public SystemRequirements(string version)
-        {
-            string reqPath = Path.Combine(MainForm.launcherDir, "VERSIONS",version,"Launcher","requirements.ini");
-
-            if (!File.Exists(reqPath))
-                return;
-
-            string[] confLines = File.ReadAllLines(reqPath);
-
-            if (bool.TryParse(confLines[0], out bool b))
-            {
-                supports32Bit = b;
-            }
-            if (int.TryParse(confLines[1], out int v))
-            {
-                minDotNetVersion = v;
-            }
-
-            minDotNetVersionDownload = confLines[2];
-        }
-    }
 
     public class LauncherConfItem
     {
