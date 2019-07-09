@@ -143,8 +143,8 @@ namespace RTCV.Prereqs
                 {
                     if (MessageBox.Show("The RTC may not work properly without these dependencies.\nYou can always run this tool again via the RTC Launcher", "Warning", MessageBoxButtons.OK) != null) ;
                     {
-                        Application.Exit();
-                    }
+                        Environment.Exit(0);
+                    };
                 }
                 if (!IsAdministrator())
                 {
