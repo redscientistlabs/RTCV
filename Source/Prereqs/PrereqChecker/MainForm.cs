@@ -24,6 +24,7 @@ namespace RTCV.Prereqs
         ProcessModule processModule;
         private string dir;
         private string redistDir;
+        public bool skipPrompt = Environment.GetCommandLineArgs().Contains("-SKIPPROMPT");
         public MainForm()
         {
             InitializeComponent();
@@ -36,43 +37,36 @@ namespace RTCV.Prereqs
             dir = Path.GetDirectoryName(processModule.FileName);
             redistDir = Path.Combine(dir, "REDISTS");
 
+            webClient.DownloadProgressChanged += OnWebClientOnDownloadProgressChanged;
+            webClient.DownloadFileCompleted += OnWebClientOnDownloadFileCompleted;
+        }
 
-            webClient.DownloadProgressChanged += (ov, ev) =>
+        private void OnWebClientOnDownloadProgressChanged(object ov, DownloadProgressChangedEventArgs ev)
+        {
+            this.progressBar.Value = ev.ProgressPercentage;
+            lbDownloadProgress.Text = $"{String.Format("{0:0.##}", (Convert.ToDouble(ev.BytesReceived) / (1024d * 1024d)))}/{String.Format("{0:0.##}", (Convert.ToDouble(ev.TotalBytesToReceive) / (1024d * 1024d)))}MB";
+        }
+
+        private void OnWebClientOnDownloadFileCompleted(object ov, AsyncCompletedEventArgs ev)
+        {
+            var d = (Dependency) ev.UserState;
+            lbStatus.Text = $"Installing {d.Name}";
+            this.Refresh(); //Force this
+            while (d != null)
             {
-                this.InvokeUI(() =>
+                ProcessStartInfo p = new ProcessStartInfo(d.ExecutableName, d.InstallString);
+                try
                 {
-                    this.progressBar.Value = ev.ProgressPercentage;
-                    lbDownloadProgress.Text = $"{String.Format("{0:0.##}", (Convert.ToDouble(ev.BytesReceived) / (1024d * 1024d)))}/{String.Format("{0:0.##}", (Convert.ToDouble(ev.TotalBytesToReceive) / (1024d * 1024d)))}MB";
-                });
-            };
-
-            webClient.DownloadFileCompleted += (ov, ev) =>
-            {
-                var d = (Dependency) ev.UserState;
-
-                this.InvokeUI(() => { lbStatus.Text = $"Installing {d.Name}"; });
-                while (d != null)
+                    Process.Start(p).WaitForExit();
+                }
+                catch (Exception e)
                 {
-                    ProcessStartInfo p = new ProcessStartInfo
-                    {
-                        Arguments = d.InstallString,
-                        FileName = d.ExecutableName
-                    };
-                    try
-                    {
-                        Process.Start(p).WaitForExit();
-                    }
-                    catch (Exception e)
-                    {
-                        MessageBox.Show($"Something went wrong when launching {p}. Send this to the devs!\n{e.ToString()}");
-                    }
-                    d = d.RunAfter;
+                    MessageBox.Show($"Something went wrong when launching {p}. Send this to the devs!\n{e.ToString()}");
                 }
 
-                DownloadNext();
-            };
-
-
+                d = d.RunAfter;
+            }
+            DownloadNext();
         }
 
         private void PnTopPanel_MouseMove(object sender, MouseEventArgs e)
@@ -137,41 +131,42 @@ namespace RTCV.Prereqs
             }
 
 
-            if (downloadQueue.Count > 0)
+            if (downloadQueue.Count > 0 && !skipPrompt )
             {
-                if (!IsAdministrator())
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("You are missing the following dependencies: ");
+                foreach (var d in downloadQueue)
+                    sb.AppendLine(d.Name);
+                sb.AppendLine("");
+                sb.AppendLine("Would you like to download and install them?");
+                if (MessageBox.Show(sb.ToString(), "Missing dependencies", MessageBoxButtons.YesNo) == DialogResult.No)
                 {
-                    StringBuilder sb = new StringBuilder();
-                    sb.AppendLine("You are missing the following dependencies: ");
-                    foreach (var d in downloadQueue)
-                        sb.AppendLine(d.Name);
-                    sb.AppendLine("");
-                    sb.AppendLine("Would you like to download and install them?");
-                    if (MessageBox.Show(sb.ToString(), "Missing dependencies", MessageBoxButtons.YesNo) == DialogResult.No)
+                    if (MessageBox.Show("The RTC may not work properly without these dependencies.\nYou can always run this tool again via the RTC Launcher", "Warning", MessageBoxButtons.OK) != null) ;
                     {
-                        MessageBox.Show("The RTC may not work properly without these dependencies.\nYou can always run this tool again via the RTC Launcher");
                         Application.Exit();
                     }
+                }
+                if (!IsAdministrator())
+                {
 
                     // Restart program and run as admin
                     var exeName = Process.GetCurrentProcess().MainModule.FileName;
-                    var startInfo = new ProcessStartInfo(exeName);
+                    var startInfo = new ProcessStartInfo(exeName, "-SKIPPROMPT");
                     startInfo.Verb = "runas";
                     try
                     {
-                        var p = Process.Start(startInfo);
+                        Process.Start(startInfo).WaitForExit();
                     }
                     catch (Exception ex)
                     {
                         MessageBox.Show("Admin permissions are required to continue.\nThe RTC may not run properly until you re-run this from the launcher.");
                     }
+
                     Application.Exit();
                 }
                 this.Show();
             }
             DownloadNext();
-
-
         }
 
 
@@ -225,9 +220,10 @@ namespace RTCV.Prereqs
             if (downloadQueue.Count > 0)
             {
                 var d = downloadQueue.Dequeue();
-                d.ExecutableName = Path.Combine(redistDir, d.DownloadLink.Split('/').Last());
-
-                this.InvokeUI(() => lbStatus.Text = $"Downloading {d.Name}...");
+                d.ExecutableName = Path.Combine(redistDir, d.Name + ".exe");
+                lbStatus.Text = $"Downloading {d.Name}...";
+                if (File.Exists(d.ExecutableName))
+                    File.Delete(d.ExecutableName);
                 webClient.DownloadFileAsync(new Uri(d.DownloadLink), d.ExecutableName, d);
             }
             else
@@ -244,7 +240,7 @@ namespace RTCV.Prereqs
                             this.Hide();
                             try
                             {
-                                var p = new ProcessStartInfo {FileName = fileName};
+                                var p = new ProcessStartInfo(fileName);
                                 Process.Start(p)?.WaitForExit();
                             }
                             catch (Exception ex)
@@ -255,7 +251,11 @@ namespace RTCV.Prereqs
                     }
                 }
 
+                lbStatus.Text = "Done";
+                this.Refresh(); //Force this
+                Thread.Sleep(2000);
                 Application.Exit();
+
             }
         }
 
