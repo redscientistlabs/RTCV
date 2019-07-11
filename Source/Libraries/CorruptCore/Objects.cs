@@ -1057,7 +1057,7 @@ namespace RTCV.CorruptCore
                 var u = bu.GetRasterizedUnits(vmdToRasterize);
                 l.AddRange(u);
             }
-           
+            this.Layer = l;
 		}
 
 		private string shared = "[DIFFERENT]";
