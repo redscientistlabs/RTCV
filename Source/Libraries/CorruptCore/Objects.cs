@@ -183,6 +183,13 @@ namespace RTCV.CorruptCore
                     string rom = str;
                     string romTempfilename = Path.Combine(RtcCore.workingDir, "TEMP", Path.GetFileName(rom));
 
+                    if (!File.Exists(rom))
+                    {
+                        if (MessageBox.Show($"Include referenced files was set but we couldn't find {rom}. Continue saving? (You'll need to reassociate the file at runtime)", "Couldn't find file.", MessageBoxButtons.YesNo) == DialogResult.No)
+                            return false;s
+                    }
+                        
+
                     //If the file already exists, overwrite it.
                     if (File.Exists(romTempfilename))
                     {

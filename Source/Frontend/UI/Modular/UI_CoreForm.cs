@@ -133,6 +133,7 @@ This message only appears once.";
                 NetCore.Params.SetParam("DISCLAIMER_READ");
 
                 NetCore.Params.SetParam("COMPRESS_STOCKPILE"); //Default param
+                NetCore.Params.SetParam("INCLUDE_REFERENCED_FILES"); //Default param
             }
 
             CorruptCore.RtcCore.DownloadProblematicProcesses();
