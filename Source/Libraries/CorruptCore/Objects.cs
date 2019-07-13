@@ -186,7 +186,7 @@ namespace RTCV.CorruptCore
                     if (!File.Exists(rom))
                     {
                         if (MessageBox.Show($"Include referenced files was set but we couldn't find {rom}. Continue saving? (You'll need to reassociate the file at runtime)", "Couldn't find file.", MessageBoxButtons.YesNo) == DialogResult.No)
-                            return false;s
+                            return false;
                     }
                         
 
