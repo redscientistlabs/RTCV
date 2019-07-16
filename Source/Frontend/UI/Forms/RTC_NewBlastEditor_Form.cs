@@ -408,8 +408,8 @@ namespace RTCV.UI
 		private void CbSourceDomain_Validated(object sender, EventArgs e)
 		{
 			var value = cbSourceDomain.SelectedItem;
-			foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
-				row.Cells[BuProperty.SourceDomain.ToString()]
+            foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+                row.Cells[BuProperty.SourceDomain.ToString()]
 					.Value = value;
 			UpdateBottom();
 		}
@@ -417,34 +417,34 @@ namespace RTCV.UI
 		private void CbStoreType_Validated(object sender, EventArgs e)
 		{
 			var value = cbStoreType.SelectedItem;
-			foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
-				row.Cells[BuProperty.StoreType.ToString()].Value = value;
+            foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+                row.Cells[BuProperty.StoreType.ToString()].Value = value;
 			UpdateBottom();
 		}
 
 		private void CbStoreTime_Validated(object sender, EventArgs e)
 		{
 			var value = cbStoreTime.SelectedItem;
-			foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
-				row.Cells[BuProperty.StoreTime.ToString()].Value = value;
+            foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+                row.Cells[BuProperty.StoreTime.ToString()].Value = value;
 			UpdateBottom();
 		}
 
 		private void CbLimiterList_Validated(object sender, EventArgs e)
 		{
 			var value = ((ComboBoxItem<String>)(cbLimiterList?.SelectedItem))?.Value ?? null;
-			foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
-				row.Cells[BuProperty.LimiterListHash.ToString()].Value = value; // We gotta use the value
+            foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+                row.Cells[BuProperty.LimiterListHash.ToString()].Value = value; // We gotta use the value
 			UpdateBottom();
 		}
 
 		private void CbBigEndian_Validated(object sender, EventArgs e)
 		{
 			var value = cbBigEndian.Checked;
-			//Big Endian isn't available in the DGV so we operate on the actual BU then refresh
-			//Todo - change this?
-			foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
-			{
+            //Big Endian isn't available in the DGV so we operate on the actual BU then refresh
+            //Todo - change this?
+            foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+            {
 				((BlastUnit)row.DataBoundItem).BigEndian = value;
 			}
 			dgvBlastEditor.Refresh();
@@ -454,16 +454,16 @@ namespace RTCV.UI
 		private void TbValue_Validated(object sender, EventArgs e)
 		{
 			var value = tbValue.Text;
-			foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
-				row.Cells[BuProperty.ValueString.ToString()].Value = value;
+            foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+                row.Cells[BuProperty.ValueString.ToString()].Value = value;
 			UpdateBottom();
 		}
 
 		private void CbSource_Validated(object sender, EventArgs e)
 		{
 			var value = cbSource.SelectedItem;
-			foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
-				row.Cells[BuProperty.Source.ToString()].Value = value;
+            foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+                row.Cells[BuProperty.Source.ToString()].Value = value;
 			UpdateBottom();
 		}
 
@@ -472,9 +472,9 @@ namespace RTCV.UI
 			if (!BigInteger.TryParse(tbTiltValue.Text, out BigInteger value))
 				value = 0;
 
-			//Tilt isn't stored within the DGV so operate on the BUs. No validation neccesary as it's a bigint
-			foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
-			{
+            //Tilt isn't stored within the DGV so operate on the BUs. No validation neccesary as it's a bigint
+            foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+            {
 				(row.DataBoundItem as BlastUnit).TiltValue = value;
 			}
 			UpdateBottom();
@@ -484,8 +484,8 @@ namespace RTCV.UI
 			var value = upDownLifetime.Value;
 			if (value > Int32.MaxValue)
 				value = Int32.MaxValue;
-			foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
-				row.Cells[BuProperty.Lifetime.ToString()].Value = value;
+            foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+                row.Cells[BuProperty.Lifetime.ToString()].Value = value;
 
 			UpdateBottom();
 			dgvBlastEditor.Refresh();
@@ -495,8 +495,8 @@ namespace RTCV.UI
 			var value = upDownExecuteFrame.Value;
 			if (value > Int32.MaxValue)
 				value = Int32.MaxValue;
-			foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
-				row.Cells[BuProperty.ExecuteFrame.ToString()].Value = value;
+            foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+                row.Cells[BuProperty.ExecuteFrame.ToString()].Value = value;
 
 			UpdateBottom();
 			dgvBlastEditor.Refresh();
@@ -509,8 +509,8 @@ namespace RTCV.UI
 			if (value > Int32.MaxValue)
 				value = Int32.MaxValue;
 
-			foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
-				row.Cells[BuProperty.Precision.ToString()].Value = value;
+            foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+                row.Cells[BuProperty.Precision.ToString()].Value = value;
 			UpdateBottom();
 			dgvBlastEditor.Refresh();
 		}
@@ -520,8 +520,8 @@ namespace RTCV.UI
 			var value = upDownAddress.Value;
 			if (value > Int32.MaxValue)
 				value = Int32.MaxValue;
-			foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
-				row.Cells[BuProperty.Address.ToString()].Value = value;
+            foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+                row.Cells[BuProperty.Address.ToString()].Value = value;
 			UpdateBottom();
 		}
 
@@ -530,8 +530,8 @@ namespace RTCV.UI
 			var value = upDownSourceAddress.Value;
 			if (value > Int32.MaxValue)
 				value = Int32.MaxValue;
-			foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
-				row.Cells[BuProperty.SourceAddress.ToString()].Value = value;
+            foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+                row.Cells[BuProperty.SourceAddress.ToString()].Value = value;
 			UpdateBottom();
 		}
 
@@ -546,16 +546,16 @@ namespace RTCV.UI
 		private void CbLimiterTime_Validated(object sender, EventArgs e)
 		{
 			var value = cbLimiterTime.SelectedItem;
-			foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
-				row.Cells[BuProperty.LimiterTime.ToString()].Value = value;
+            foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+                row.Cells[BuProperty.LimiterTime.ToString()].Value = value;
 			UpdateBottom();
 		}
 		
 		private void cbStoreLimiterSource_Validated(object sender, EventArgs e)
 		{
 			var value = cbStoreLimiterSource.SelectedItem;
-			foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
-				row.Cells[BuProperty.StoreLimiterSource.ToString()].Value = value;
+            foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+                row.Cells[BuProperty.StoreLimiterSource.ToString()].Value = value;
 			UpdateBottom();
 		}
 
@@ -563,15 +563,15 @@ namespace RTCV.UI
 		private void CbInvertLimiter_Validated(object sender, EventArgs e)
 		{
 			var value = cbInvertLimiter.Checked;
-			foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
-				row.Cells[BuProperty.InvertLimiter.ToString()].Value = value;
+            foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+                row.Cells[BuProperty.InvertLimiter.ToString()].Value = value;
 			UpdateBottom();
 		}
 		private void cbEnabled_Validated(object sender, EventArgs e)
 		{
 			var value = cbEnabled.Checked;
-			foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
-				row.Cells[BuProperty.isEnabled.ToString()].Value = value;
+            foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+                row.Cells[BuProperty.isEnabled.ToString()].Value = value;
 			UpdateBottom();
 		}
 
@@ -581,8 +581,7 @@ namespace RTCV.UI
 
 			if (!domains.Contains(value))
 				return;
-
-				foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
+            foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
 				row.Cells[BuProperty.Domain.ToString()].Value = value;
 			UpdateBottom();
 		}
@@ -591,8 +590,8 @@ namespace RTCV.UI
 		private void CbLoop_Validated(object sender, EventArgs e)
 		{
 			var value = cbLoop.Checked;
-			foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
-				row.Cells[BuProperty.Loop.ToString()].Value = value;
+            foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+                row.Cells[BuProperty.Loop.ToString()].Value = value;
 			UpdateBottom();
 		}
 
@@ -1856,7 +1855,7 @@ namespace RTCV.UI
                 btnDisable50_Click(null, null);
                 btnLoadCorrupt_Click(null, null);
 
-                if (currentSK?.BlastLayer?.Layer?.Count == 1)
+                if (currentSK?.BlastLayer?.Layer?.Count(x => x.IsLocked == false) <= 1)
                     return;
 
                 lastAnswer = MessageBox.Show(@"Is the effect you are looking for still present?", "BlastLayer sanitization", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
