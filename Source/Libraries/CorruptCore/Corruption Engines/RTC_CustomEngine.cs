@@ -787,7 +787,7 @@ namespace RTCV.CorruptCore
 			else
 			{
 				path = CustomPath;
-				templateName = CustomPath;
+				templateName = Path.GetFileNameWithoutExtension(path);
 			}
 
 			pSpec[RTCSPEC.CUSTOM_NAME.ToString()] = templateName;
