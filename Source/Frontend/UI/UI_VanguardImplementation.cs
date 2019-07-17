@@ -64,7 +64,7 @@ namespace RTCV.UI
 							LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHCORRUPTCORESPEC, RTCV.NetCore.AllSpec.CorruptCoreSpec.GetPartialSpec(), true);
 
 
-                            SyncObjectSingleton.FormExecute((o, ea) =>
+                            SyncObjectSingleton.FormExecute(() =>
                             {
                                 S.GET<UI_CoreForm>().pnAutoKillSwitch.Visible = true;
                                 S.GET<UI_CoreForm>().pnCrashProtection.Visible = true;
@@ -78,7 +78,7 @@ namespace RTCV.UI
 					case REMOTE_ALLSPECSSENT:
                         if(UICore.FirstConnect)
                             UICore.Initialized.WaitOne(10000);
-                        SyncObjectSingleton.FormExecute((o, ea) =>
+                        SyncObjectSingleton.FormExecute(() =>
                         {
                             S.GET<UI_CoreForm>().Show();
                             if (UICore.FirstConnect)
@@ -150,7 +150,7 @@ namespace RTCV.UI
 						break;
 
 					case REMOTE_PUSHVANGUARDSPECUPDATE:
-						SyncObjectSingleton.FormExecute((o, ea) =>
+						SyncObjectSingleton.FormExecute(() =>
 						{
 							RTCV.NetCore.AllSpec.VanguardSpec?.Update((PartialSpec)advancedMessage.objectValue);
 						});
@@ -159,7 +159,7 @@ namespace RTCV.UI
 
 					//CorruptCore pushed its spec. Note the false on propogate (since we don't want a recursive loop)
 					case REMOTE_PUSHCORRUPTCORESPECUPDATE:
-						SyncObjectSingleton.FormExecute((o, ea) =>
+						SyncObjectSingleton.FormExecute(() =>
 						{
 							RTCV.NetCore.AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
 						});
@@ -168,7 +168,7 @@ namespace RTCV.UI
 
 					case REMOTE_EVENT_DOMAINSUPDATED:
 
-						SyncObjectSingleton.FormExecute((o, ea) =>
+						SyncObjectSingleton.FormExecute(() =>
 						{
 							S.GET<RTC_MemoryDomains_Form>().RefreshDomains();
 							S.GET<RTC_MemoryDomains_Form>().SetMemoryDomainsAllButSelectedDomains(RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] as string[] ?? new string[]{});
@@ -177,19 +177,19 @@ namespace RTCV.UI
 
 					case REMOTE_GETBLASTGENERATOR_LAYER:
 
-						SyncObjectSingleton.FormExecute((o, ea) =>
+						SyncObjectSingleton.FormExecute(() =>
 						{
 							e.setReturnValue(S.GET<RTC_BlastGenerator_Form>().GenerateBlastLayers(true));
 						});
 						break;
 					case ERROR_DISABLE_AUTOCORRUPT:
-						SyncObjectSingleton.FormExecute((o, ea) =>
+						SyncObjectSingleton.FormExecute(() =>
 						{
 							S.GET<UI_CoreForm>().AutoCorrupt = false;
 						});
 						break;
                     case REMOTE_RENDER_DISPLAY:
-                        SyncObjectSingleton.FormExecute((o, ea) =>
+                        SyncObjectSingleton.FormExecute(() =>
                         {
                             S.GET<RTC_GlitchHarvesterBlast_Form>().refreshRenderOutputButton();
                         });
@@ -199,7 +199,7 @@ namespace RTCV.UI
                         {
                             StockpileManager_UISide.BackupedState = sk;
                             GameProtection.AddBackupState(sk);
-                            SyncObjectSingleton.FormExecute((o, ea) =>
+                            SyncObjectSingleton.FormExecute(() =>
                             {
                                 S.GET<UI_CoreForm>().btnGpJumpBack.Visible = true;
                                 S.GET<UI_CoreForm>().btnGpJumpNow.Visible = true;
@@ -212,7 +212,7 @@ namespace RTCV.UI
                     case RESET_GAME_PROTECTION_IF_RUNNING:
                         if (GameProtection.isRunning)
                         {
-                            SyncObjectSingleton.FormExecute((o, ea) =>
+                            SyncObjectSingleton.FormExecute(() =>
                             {
                                 S.GET<UI_CoreForm>().cbUseGameProtection.Checked = false;
                                 S.GET<UI_CoreForm>().cbUseGameProtection.Checked = true;
@@ -221,7 +221,7 @@ namespace RTCV.UI
                         break;
 
                     case REMOTE_DISABLESAVESTATESUPPORT:
-                        SyncObjectSingleton.FormExecute((o, ea) =>
+                        SyncObjectSingleton.FormExecute(() =>
                         {
                         S.GET<RTC_SavestateManager_Form>().DisableFeature();
                         S.GET<UI_CoreForm>().pnCrashProtection.Visible = false;
@@ -229,14 +229,14 @@ namespace RTCV.UI
                         break;
 
                     case REMOTE_DISABLEGAMEPROTECTIONSUPPORT:
-                        SyncObjectSingleton.FormExecute((o, ea) =>
+                        SyncObjectSingleton.FormExecute(() =>
                         {
                             S.GET<UI_CoreForm>().pnCrashProtection.Visible = false;
                         });
                         break;
 
                     case REMOTE_DISABLEREALTIMESUPPORT:
-                        SyncObjectSingleton.FormExecute((o, ea) =>
+                        SyncObjectSingleton.FormExecute(() =>
                         {
                             Button btnManual = S.GET<UI_CoreForm>().btnManualBlast;
                             if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null)
@@ -259,7 +259,7 @@ namespace RTCV.UI
                         });
                         break;
                     case REMOTE_DISABLEKILLSWITCHSUPPORT:
-                        SyncObjectSingleton.FormExecute((o, ea) =>
+                        SyncObjectSingleton.FormExecute(() =>
                         {
                             S.GET<UI_CoreForm>().pnAutoKillSwitch.Visible = false;
                             S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked = false;

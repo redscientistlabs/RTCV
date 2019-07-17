@@ -12,12 +12,13 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace RTCV.NetCore
 {
-	public class NetCore_Extensions
+	public static class NetCore_Extensions
 	{  
 		public static class ObjectCopier
 		{
@@ -238,9 +239,31 @@ namespace RTCV.NetCore
 				}
 			}
 		}
-		
 
-		public static bool IsGDIEnhancedScalingAvailable()
+
+        //https://stackoverflow.com/a/56931457
+        public static object InvokeCorrectly(this Control control, Delegate method, params object[] args)
+        {
+            Exception failure = null;
+            var result = control.Invoke(new Func<object>(() => {
+                try
+                {
+                    return method.DynamicInvoke(args);
+                }
+                catch (TargetInvocationException ex)
+                {
+                    failure = ex.InnerException;
+                    return default;
+                }
+            }));
+            if (failure != null)
+            {
+                throw failure;
+            }
+            return result;
+        }
+
+        public static bool IsGDIEnhancedScalingAvailable()
 		{
 			return (Environment.OSVersion.Version.Major == 10 &
 					Environment.OSVersion.Version.Build >= 17763);
@@ -496,6 +519,5 @@ namespace RTCV.NetCore
                 return 0;  // Unknown mscorlib implementation
             return (int)_frameCount.GetValue(_getStackFrameHelper());
         }
-
     }
 }

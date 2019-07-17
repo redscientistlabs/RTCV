@@ -76,7 +76,7 @@ namespace RTCV.UI
             //Nuke netcore
             UI_VanguardImplementation.RestartServer();
 
-            SyncObjectSingleton.FormExecute((o, ea) =>
+            SyncObjectSingleton.FormExecute(() =>
             {
                 //Stop the old timer and eat any exceptions
                 try

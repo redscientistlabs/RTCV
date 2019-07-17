@@ -543,14 +543,14 @@ namespace RTCV.UI
                     break;
 
                 case "Auto-Corrupt":
-                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    SyncObjectSingleton.FormExecute(() =>
                     {
                         S.GET<UI_CoreForm>().btnAutoCorrupt_Click(null, null);
                     });
                     break;
 
                 case "Error Delay--":
-                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    SyncObjectSingleton.FormExecute(() =>
                     {
                         	if (S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value > 1)
                         		S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value--;
@@ -558,7 +558,7 @@ namespace RTCV.UI
                     break;
 
                 case "Error Delay++":
-                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    SyncObjectSingleton.FormExecute(() =>
                     {
                         	if (S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value < S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Maximum)
                         		S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value++;
@@ -566,7 +566,7 @@ namespace RTCV.UI
                     break;
 
                 case "Intensity--":
-                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    SyncObjectSingleton.FormExecute(() =>
                     {
                         	if (S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value > 1)
                         		S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value--;
@@ -574,7 +574,7 @@ namespace RTCV.UI
                     break;
 
                 case "Intensity++":
-                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    SyncObjectSingleton.FormExecute(() =>
                     {
                         	if (S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value < S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Maximum)
                         		S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value++;
@@ -582,7 +582,7 @@ namespace RTCV.UI
                     break;
 
                 case "Load and Corrupt":
-                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    SyncObjectSingleton.FormExecute(() =>
                     {
                         S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation = true;
                         S.GET<RTC_GlitchHarvesterBlast_Form>().btnCorrupt_Click(null, null);
@@ -592,7 +592,7 @@ namespace RTCV.UI
                 case "Just Corrupt":
                     RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(VSPEC.STEP_RUNBEFORE, true);
 
-                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    SyncObjectSingleton.FormExecute(() =>
                     {
                         bool isload = S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation;
                         S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation = false;
@@ -602,14 +602,14 @@ namespace RTCV.UI
                     break;
 
                 case "Reroll":
-                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    SyncObjectSingleton.FormExecute(() =>
                     {
                         S.GET<RTC_GlitchHarvesterBlast_Form>().btnRerollSelected_Click(null, null);
                     });
                     break;
 
                 case "Load":
-                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    SyncObjectSingleton.FormExecute(() =>
                     {
                         S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad.Text = "LOAD";
                         S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad_Click(null, null);
@@ -617,7 +617,7 @@ namespace RTCV.UI
                     break;
 
                 case "Save":
-                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    SyncObjectSingleton.FormExecute(() =>
                     {
                         S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad.Text = "SAVE";
                         S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad_Click(null, null);
@@ -625,7 +625,7 @@ namespace RTCV.UI
                     break;
 
                 case "Stash->Stockpile":
-                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    SyncObjectSingleton.FormExecute(() =>
                     {
                         S.GET<RTC_StashHistory_Form>().AddStashToStockpile(false);
                     });
@@ -636,7 +636,7 @@ namespace RTCV.UI
                     break;
 
                 case "Blast+RawStash":
-                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    SyncObjectSingleton.FormExecute(() =>
                     {
                         RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(VSPEC.STEP_RUNBEFORE, true);
                         LocalNetCoreRouter.Route(CORRUPTCORE, ASYNCBLAST, null, true);
@@ -646,21 +646,21 @@ namespace RTCV.UI
                     break;
 
                 case "Send Raw to Stash":
-                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    SyncObjectSingleton.FormExecute(() =>
                     {
                         S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw_Click(null, null);
                     });
                     break;
 
                 case "BlastLayer Toggle":
-                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    SyncObjectSingleton.FormExecute(() =>
                     {
                         S.GET<RTC_GlitchHarvesterBlast_Form>().btnBlastToggle_Click(null, null);
                     });
                     break;
 
                 case "BlastLayer Re-Blast":
-                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    SyncObjectSingleton.FormExecute(() =>
                     {
                         if (StockpileManager_UISide.CurrentStashkey == null || StockpileManager_UISide.CurrentStashkey.BlastLayer.Layer.Count == 0)
                         {
@@ -673,7 +673,7 @@ namespace RTCV.UI
                     break;
 
                 case "Game Protect Back":
-                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    SyncObjectSingleton.FormExecute(() =>
                     {
                         var f = S.GET<UI_CoreForm>();
                         var b = f.btnGpJumpBack;
@@ -683,7 +683,7 @@ namespace RTCV.UI
                     break;
 
                 case "Game Protect Now":
-                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    SyncObjectSingleton.FormExecute(() =>
                     {
                         var f = S.GET<UI_CoreForm>();
                         var b = f.btnGpJumpNow;
@@ -692,7 +692,7 @@ namespace RTCV.UI
                     });
                     break;
                 case "Disable 50":
-                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    SyncObjectSingleton.FormExecute(() =>
                     {
                         var bef = S.GET<RTC_NewBlastEditor_Form>();
                         if (bef != null && Form.ActiveForm == bef)
@@ -703,7 +703,7 @@ namespace RTCV.UI
                     break;
 
                 case "Remove Disabled":
-                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    SyncObjectSingleton.FormExecute(() =>
                     {
                         var bef = S.GET<RTC_NewBlastEditor_Form>();
                         if (bef != null && Form.ActiveForm == bef)
@@ -714,7 +714,7 @@ namespace RTCV.UI
                     break;
 
                 case "Invert Disabled":
-                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    SyncObjectSingleton.FormExecute(() =>
                     {
                         var bef = S.GET<RTC_NewBlastEditor_Form>();
                         if (bef != null && Form.ActiveForm == bef)
@@ -724,7 +724,7 @@ namespace RTCV.UI
                     });
                     break;
                 case "Shift Up":
-                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    SyncObjectSingleton.FormExecute(() =>
                     {
                         var bef = S.GET<RTC_NewBlastEditor_Form>();
                         if (bef != null && Form.ActiveForm == bef)
@@ -734,7 +734,7 @@ namespace RTCV.UI
                     });
                     break;
                 case "Shift Down":
-                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    SyncObjectSingleton.FormExecute(() =>
                     {
                         var bef = S.GET<RTC_NewBlastEditor_Form>();
                         if (bef != null && Form.ActiveForm == bef)
@@ -744,7 +744,7 @@ namespace RTCV.UI
                     });
                     break;
                 case "Load Corrupt":
-                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    SyncObjectSingleton.FormExecute(() =>
                     {
                         var bef = S.GET<RTC_NewBlastEditor_Form>();
                         if (bef != null && bef.Focused)
@@ -754,7 +754,7 @@ namespace RTCV.UI
                     });
                     break;
                 case "Apply":
-                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    SyncObjectSingleton.FormExecute(() =>
                     {
                         var bef = S.GET<RTC_NewBlastEditor_Form>();
                         if (bef != null && bef.Focused)
@@ -764,7 +764,7 @@ namespace RTCV.UI
                     });
                     break;
                 case "Send Stash":
-                    SyncObjectSingleton.FormExecute((o, ea) =>
+                    SyncObjectSingleton.FormExecute(() =>
                     {
                         var bef = S.GET<RTC_NewBlastEditor_Form>();
                         if (bef != null && Form.ActiveForm == bef)

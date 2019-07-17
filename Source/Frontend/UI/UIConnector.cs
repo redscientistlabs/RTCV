@@ -45,7 +45,7 @@ namespace RTCV.UI
 			if(UICore.isClosing || UICore.FirstConnect)
 				return;
 
-			SyncObjectSingleton.FormExecute((o, ea) =>
+			SyncObjectSingleton.FormExecute(() =>
 			{
 				if (S.GET<RTC_ConnectionStatus_Form>() != null && !S.GET<RTC_ConnectionStatus_Form>().IsDisposed)
 				{
@@ -67,7 +67,7 @@ namespace RTCV.UI
 
 		private static void Spec_ServerConnected(object sender, EventArgs e)
 		{
-			SyncObjectSingleton.FormExecute((o, ea) =>
+			SyncObjectSingleton.FormExecute(() =>
 			{
 				S.GET<RTC_ConnectionStatus_Form>().lbConnectionStatus.Text = $"Connected to { (string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard"}";
                 });

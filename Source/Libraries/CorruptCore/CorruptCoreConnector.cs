@@ -48,7 +48,7 @@ namespace RTCV.CorruptCore
 					break;
 				//UI sent its spec
 				case REMOTE_PUSHUISPEC:
-					SyncObjectSingleton.FormExecute((o, ea) =>
+					SyncObjectSingleton.FormExecute(() =>
 					{
 						RTCV.NetCore.AllSpec.UISpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
 					}); 
@@ -56,7 +56,7 @@ namespace RTCV.CorruptCore
 
 				//UI sent a spec update
 				case REMOTE_PUSHUISPECUPDATE:
-					SyncObjectSingleton.FormExecute((o, ea) =>
+					SyncObjectSingleton.FormExecute(() =>
 					{
 						RTCV.NetCore.AllSpec.UISpec?.Update((PartialSpec)advancedMessage.objectValue);
 					});
@@ -64,7 +64,7 @@ namespace RTCV.CorruptCore
 
 				//Vanguard sent a copy of its spec
 				case REMOTE_PUSHVANGUARDSPEC:
-					SyncObjectSingleton.FormExecute((o, ea) =>
+					SyncObjectSingleton.FormExecute(() =>
 					{
 						if(!RtcCore.Attached)
 							RTCV.NetCore.AllSpec.VanguardSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
@@ -78,7 +78,7 @@ namespace RTCV.CorruptCore
 
 				//UI sent a copy of the CorruptCore spec
 				case REMOTE_PUSHCORRUPTCORESPEC:
-					SyncObjectSingleton.FormExecute((o, ea) =>
+					SyncObjectSingleton.FormExecute(() =>
 					{
 						RTCV.NetCore.AllSpec.CorruptCoreSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
 						RTCV.NetCore.AllSpec.CorruptCoreSpec.SpecUpdated += (ob, eas) =>
@@ -93,7 +93,7 @@ namespace RTCV.CorruptCore
 
 				//UI sent an update of the CorruptCore spec
 				case REMOTE_PUSHCORRUPTCORESPECUPDATE:
-					SyncObjectSingleton.FormExecute((o, ea) =>
+					SyncObjectSingleton.FormExecute(() =>
 					{
 						RTCV.NetCore.AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
 					});
@@ -122,7 +122,7 @@ namespace RTCV.CorruptCore
 
                 case ASYNCBLAST:
 					{
-						SyncObjectSingleton.FormExecute((o, ea) =>
+						SyncObjectSingleton.FormExecute(() =>
 						{
 							RtcCore.ASyncGenerateAndBlast();
 						});
@@ -147,7 +147,7 @@ namespace RTCV.CorruptCore
                         //Load the game from the main thread
                         if (UseSavestates && loadBeforeCorrupt)
                         {
-                            SyncObjectSingleton.FormExecute((o, ea) =>
+                            SyncObjectSingleton.FormExecute(() =>
                             {
                                 StockpileManager_EmuSide.LoadRom_NET(sk);
                             });
@@ -314,7 +314,7 @@ namespace RTCV.CorruptCore
                         //Load the game from the main thread
                         if (reloadRom)
                         {
-                            SyncObjectSingleton.FormExecute((o, ea) =>
+                            SyncObjectSingleton.FormExecute(() =>
                             {
                                 StockpileManager_EmuSide.LoadRom_NET(sk);
                             });
@@ -368,7 +368,7 @@ namespace RTCV.CorruptCore
 
 					StashKey sk = null;
 					//We send an unsynced command back
-					SyncObjectSingleton.FormExecute((o, ea) =>
+					SyncObjectSingleton.FormExecute(() =>
 					{
 						sk = StockpileManager_EmuSide.SaveState_NET();
 					});
@@ -506,14 +506,14 @@ namespace RTCV.CorruptCore
                 break;
 
                     case REMOTE_CLEARSTEPBLASTUNITS:
-					SyncObjectSingleton.FormExecute((o, ea) =>
+					SyncObjectSingleton.FormExecute(() =>
 					{
 						StepActions.ClearStepBlastUnits();
 					});
 
 					break;
 				case REMOTE_REMOVEEXCESSINFINITESTEPUNITS:
-					SyncObjectSingleton.FormExecute((o, ea) =>
+					SyncObjectSingleton.FormExecute(() =>
 					{
 						StepActions.RemoveExcessInfiniteStepUnits();
 					});

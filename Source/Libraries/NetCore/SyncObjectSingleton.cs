@@ -22,25 +22,17 @@ namespace RTCV.NetCore
         public static bool EmuThreadIsMainThread = false;
 
 
-        public static void FormExecute(Action<object, EventArgs> a, object[] args = null)
-        {
-            if (SyncObject.InvokeRequired)
-                SyncObject.Invoke(new MethodInvoker(() => { a.Invoke(null, null); }));
-            else
-                a.Invoke(null, null);
-        }
-
         public static void FormExecute(Action a)
         {
             if (SyncObject.InvokeRequired)
-                SyncObject.Invoke(new MethodInvoker(a.Invoke));
+                SyncObject.InvokeCorrectly(new MethodInvoker(a.Invoke));
             else
                 a.Invoke();
         }
         public static void FormExecute<T>(Action<T> a, T b)
         {
             if (SyncObject.InvokeRequired)
-                SyncObject.Invoke(new MethodInvoker(() => { a.Invoke(b); }));
+                SyncObject.InvokeCorrectly(new MethodInvoker(() => { a.Invoke(b); }));
             else
                 a.Invoke(b);
         }
@@ -48,12 +40,13 @@ namespace RTCV.NetCore
         public static void FormExecute(Delegate a)
         {
             if (SyncObject.InvokeRequired)
-                SyncObject.Invoke(a);
+                SyncObject.InvokeCorrectly
+                    (a);
             else
                 a.DynamicInvoke();
         }
 
-        public static void EmuThreadExecute(Action a, bool fallBackToMainThread, object[] args = null)
+        public static void EmuThreadExecute(Action a, bool fallBackToMainThread)
         {
             if (UseQueue)
             {
@@ -66,19 +59,19 @@ namespace RTCV.NetCore
             //various emulators need this (Dolphin) and chaining delegates wasn't worth it
             if (EmuInvokeDelegate != null)
             {
-                FormExecute((o, ea) => { EmuInvokeDelegate.Invoke(a); });   
+                FormExecute(() => { EmuInvokeDelegate.Invoke(a); });   
             }
             //If there's no emuthread, fall back to the main thread if told to
             else if(fallBackToMainThread || EmuThreadIsMainThread)
             {
-                FormExecute((o, ea) => { a.Invoke(); });
+                FormExecute(() => { a.Invoke(); });
             }
         }
 
         public static void SyncObjectExecute(Form sync, Action<object, EventArgs> a, object[] args = null)
 		{
 			if (sync.InvokeRequired)
-				sync.Invoke(new MethodInvoker(() => { a.Invoke(null, null); }));
+				sync.InvokeCorrectly(new MethodInvoker(() => { a.Invoke(null, null); }));
 			else
 				a.Invoke(null, null);
 		}
