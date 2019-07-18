@@ -63,6 +63,10 @@ namespace RTCV.UI.Components.Controls
             GeneralUpdateFlag = true;
             if (setter != this || ignore)
             {
+                if (value > updown.Maximum)
+                    value = updown.Maximum;
+                else if (value < updown.Minimum)
+                        value = updown.Minimum;
                 updown.Value = value;
                 _Value = value;
 

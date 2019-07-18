@@ -31,10 +31,59 @@ namespace RTCV.UI
 			foreach (var k in CorruptCore.RTC_CustomEngine.Name2TemplateDico.Keys)
 				cbSelectedTemplate.Items.Add(k);
 			cbSelectedTemplate.SelectedIndex = 0;
+
+            cbCustomPrecision.SelectedIndexChanged += CbCustomPrecision_SelectedIndexChanged;
+            nmAlignment.ValueChanged += NmAlignment_ValueChanged;
 		}
 
+        private void NmAlignment_ValueChanged(object sender, Components.Controls.ValueUpdateEventArgs<decimal> e)
+        {
+            CorruptCore.RtcCore.Alignment = Convert.ToInt32(nmAlignment.Value);
+            S.GET<RTC_CorruptionEngine_Form>().nmAlignment.Value = nmAlignment.Value;
+        }
 
-		private void RTC_CustomEngineConfig_Form_Load(object sender, EventArgs e)
+        private void CbCustomPrecision_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            cbCustomPrecision.Enabled = false;
+            S.GET<RTC_CorruptionEngine_Form>().cbCustomPrecision.Enabled = false;
+            try
+            {
+                if (cbCustomPrecision.SelectedIndex != -1)
+                {
+                    int precision = 0;
+                    if (!DontUpdateSpec)
+                    {
+                        switch (cbCustomPrecision.SelectedIndex)
+                        {
+                            case 0:
+                                precision = 1;
+                                break;
+                            case 1:
+                                precision = 2;
+                                break;
+                            case 2:
+                                precision = 4;
+                                break;
+                            case 3:
+                                precision = 8;
+                                break;
+                        }
+                        CorruptCore.RtcCore.CurrentPrecision = precision;
+                    }
+
+                    UpdateMinMaxBoxes(precision);
+                    nmAlignment.Maximum = precision - 1;
+                    S.GET<RTC_CorruptionEngine_Form>().cbCustomPrecision.SelectedIndex = cbCustomPrecision.SelectedIndex;
+                }
+            }
+            finally
+            {
+                cbCustomPrecision.Enabled = true;
+                S.GET<RTC_CorruptionEngine_Form>().cbCustomPrecision.Enabled = true;
+            }
+        }
+
+        private void RTC_CustomEngineConfig_Form_Load(object sender, EventArgs e)
 		{
 			cbValueList.DisplayMember = "Name";
 			cbLimiterList.DisplayMember = "Name";
@@ -54,6 +103,8 @@ namespace RTCV.UI
 			{
 				cbLimiterList_SelectedIndexChanged(cbLimiterList, null);
 			}
+
+            cbCustomPrecision.SelectedIndex = 0;
 			setFlavorText();
 		}
 

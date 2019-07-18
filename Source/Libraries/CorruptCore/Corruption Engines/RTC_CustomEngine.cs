@@ -609,8 +609,9 @@ namespace RTCV.CorruptCore
 			pSpec[RTCSPEC.CUSTOM_NAME.ToString()] = pSpec[RTCSPEC.CUSTOM_NAME.ToString()];
 
 			pSpec[RTCSPEC.CORE_CURRENTPRECISION.ToString()] = RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CORE_CURRENTPRECISION.ToString()];
+            pSpec[RTCSPEC.CORE_CURRENTALIGNMENT.ToString()] = RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CORE_CURRENTALIGNMENT.ToString()];
 
-			pSpec[RTCSPEC.CUSTOM_DELAY.ToString()] = RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CUSTOM_DELAY.ToString()];
+            pSpec[RTCSPEC.CUSTOM_DELAY.ToString()] = RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CUSTOM_DELAY.ToString()];
 			pSpec[RTCSPEC.CUSTOM_LIFETIME.ToString()] = RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CUSTOM_LIFETIME.ToString()];
 			pSpec[RTCSPEC.CUSTOM_LOOP.ToString()] = RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CUSTOM_LOOP.ToString()];
 
@@ -793,6 +794,7 @@ namespace RTCV.CorruptCore
 			pSpec[RTCSPEC.CUSTOM_NAME.ToString()] = templateName;
 			pSpec[RTCSPEC.CUSTOM_PATH.ToString()] = path;
 			pSpec[RTCSPEC.CORE_CURRENTPRECISION] = RtcCore.CurrentPrecision;
+            pSpec[RTCSPEC.CORE_CURRENTALIGNMENT] = RtcCore.Alignment;
 
 
 			string jsonString = pSpec.GetSerializedDico();

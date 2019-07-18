@@ -61,7 +61,7 @@ namespace RTCV.UI
 			});
 			GameProtection.Stop(false);
 
-			if(S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked)
+			if(S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked && AllSpec.VanguardSpec != null)
 				AutoKillSwitch.KillEmulator();
 		}
 

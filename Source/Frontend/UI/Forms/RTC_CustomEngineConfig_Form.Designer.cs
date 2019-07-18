@@ -88,6 +88,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cbClearRewind = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.pnCustomPrecision = new System.Windows.Forms.Panel();
+            this.cbCustomPrecision = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.nmAlignment = new RTCV.UI.Components.Controls.MultiUpDown();
             this.gbUnitSource.SuspendLayout();
             this.gbValueList.SuspendLayout();
             this.gbValueSettings.SuspendLayout();
@@ -104,6 +109,7 @@
             this.pnTopBar.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.pnCustomPrecision.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnClearActive
@@ -473,7 +479,7 @@
             this.rbStoreModeBoth.ForeColor = System.Drawing.Color.White;
             this.rbStoreModeBoth.Location = new System.Drawing.Point(5, 46);
             this.rbStoreModeBoth.Name = "rbStoreModeBoth";
-            this.rbStoreModeBoth.Size = new System.Drawing.Size(50, 17);
+            this.rbStoreModeBoth.Size = new System.Drawing.Size(49, 17);
             this.rbStoreModeBoth.TabIndex = 194;
             this.rbStoreModeBoth.Text = "Both";
             this.rbStoreModeBoth.UseVisualStyleBackColor = true;
@@ -577,7 +583,7 @@
             this.label11.ForeColor = System.Drawing.Color.White;
             this.label11.Location = new System.Drawing.Point(5, 65);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(22, 13);
+            this.label11.Size = new System.Drawing.Size(23, 13);
             this.label11.TabIndex = 191;
             this.label11.Text = "Tilt";
             // 
@@ -922,7 +928,7 @@
             this.label2.ForeColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(9, 5);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(101, 13);
+            this.label2.Size = new System.Drawing.Size(102, 13);
             this.label2.TabIndex = 167;
             this.label2.Text = "Selected Template:";
             // 
@@ -1033,12 +1039,95 @@
             this.label3.Text = "RTCV";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // pnCustomPrecision
+            // 
+            this.pnCustomPrecision.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.pnCustomPrecision.Controls.Add(this.cbCustomPrecision);
+            this.pnCustomPrecision.Controls.Add(this.label5);
+            this.pnCustomPrecision.Controls.Add(this.label8);
+            this.pnCustomPrecision.Controls.Add(this.nmAlignment);
+            this.pnCustomPrecision.Location = new System.Drawing.Point(10, 427);
+            this.pnCustomPrecision.Name = "pnCustomPrecision";
+            this.pnCustomPrecision.Size = new System.Drawing.Size(441, 32);
+            this.pnCustomPrecision.TabIndex = 193;
+            this.pnCustomPrecision.Tag = "color:dark2";
+            // 
+            // cbCustomPrecision
+            // 
+            this.cbCustomPrecision.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
+            this.cbCustomPrecision.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbCustomPrecision.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbCustomPrecision.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.cbCustomPrecision.ForeColor = System.Drawing.Color.White;
+            this.cbCustomPrecision.FormattingEnabled = true;
+            this.cbCustomPrecision.Items.AddRange(new object[] {
+            "8-bit",
+            "16-bit",
+            "32-bit",
+            "64-bit"});
+            this.cbCustomPrecision.Location = new System.Drawing.Point(305, 5);
+            this.cbCustomPrecision.Name = "cbCustomPrecision";
+            this.cbCustomPrecision.Size = new System.Drawing.Size(121, 21);
+            this.cbCustomPrecision.TabIndex = 81;
+            this.cbCustomPrecision.Tag = "color:normal";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F);
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.Location = new System.Drawing.Point(204, 8);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(95, 13);
+            this.label5.TabIndex = 82;
+            this.label5.Text = "Engine Precision:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F);
+            this.label8.ForeColor = System.Drawing.Color.White;
+            this.label8.Location = new System.Drawing.Point(86, 8);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(63, 13);
+            this.label8.TabIndex = 149;
+            this.label8.Text = "Alignment:";
+            // 
+            // nmAlignment
+            // 
+            this.nmAlignment.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
+            this.nmAlignment.Font = new System.Drawing.Font("Segoe UI", 7F);
+            this.nmAlignment.ForeColor = System.Drawing.Color.White;
+            this.nmAlignment.Hexadecimal = false;
+            this.nmAlignment.Location = new System.Drawing.Point(154, 5);
+            this.nmAlignment.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.nmAlignment.Maximum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.nmAlignment.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.nmAlignment.Name = "nmAlignment";
+            this.nmAlignment.Size = new System.Drawing.Size(37, 21);
+            this.nmAlignment.TabIndex = 148;
+            this.nmAlignment.Tag = "color:normal";
+            this.nmAlignment.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            // 
             // RTC_CustomEngineConfig_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(459, 436);
+            this.ClientSize = new System.Drawing.Size(459, 466);
+            this.Controls.Add(this.pnCustomPrecision);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.pnTopBar);
             this.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F);
@@ -1046,8 +1135,8 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(475, 475);
-            this.MinimumSize = new System.Drawing.Size(475, 475);
+            this.MaximumSize = new System.Drawing.Size(475, 505);
+            this.MinimumSize = new System.Drawing.Size(475, 505);
             this.Name = "RTC_CustomEngineConfig_Form";
             this.Tag = "color:dark1";
             this.Text = "Custom Engine Config";
@@ -1081,6 +1170,8 @@
             this.panel1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.pnCustomPrecision.ResumeLayout(false);
+            this.pnCustomPrecision.PerformLayout();
             this.ResumeLayout(false);
 
 		}
@@ -1145,5 +1236,10 @@
         public Components.Controls.MultiUpDown nmMaxValue;
         public Components.Controls.MultiUpDown nmMinValue;
         public System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Panel pnCustomPrecision;
+        public System.Windows.Forms.ComboBox cbCustomPrecision;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label8;
+        public Components.Controls.MultiUpDown nmAlignment;
     }
 }

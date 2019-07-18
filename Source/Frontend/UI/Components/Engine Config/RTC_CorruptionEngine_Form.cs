@@ -34,7 +34,7 @@ namespace RTCV.UI
 
 		private void RTC_CorruptionEngine_Form_Load(object sender, EventArgs e)
 		{
-
+            nmAlignment.registerSlave(S.GET<RTC_CustomEngineConfig_Form>().nmAlignment);
 			gbNightmareEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
 			gbHellgenieEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
 			gbDistortionEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
@@ -259,7 +259,7 @@ namespace RTCV.UI
 			LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_CLEARSTEPBLASTUNITS, null, true);
 		}
 
-		private void updateMinMaxBoxes(int precision)
+		public void UpdateMinMaxBoxes(int precision)
 		{
 			updatingMinMax = true;
 			switch (precision)
@@ -328,30 +328,42 @@ namespace RTCV.UI
 
 		private void cbCustomPrecision_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (cbCustomPrecision.SelectedIndex != -1)
-			{
+            cbCustomPrecision.Enabled = false;
+            S.GET<RTC_CustomEngineConfig_Form>().cbCustomPrecision.Enabled = false;
+            try
+            {
+                if (cbCustomPrecision.SelectedIndex != -1)
+                {
+                    int precision = 0;
+                    switch (cbCustomPrecision.SelectedIndex)
+                    {
+                        case 0:
+                            precision = 1;
+                            break;
+                        case 1:
+                            precision = 2;
+                            break;
+                        case 2:
+                            precision = 4;
+                            break;
+                        case 3:
+                            precision = 8;
+                            break;
+                    }
+                    CorruptCore.RtcCore.CurrentPrecision = precision;
 
-				switch (cbCustomPrecision.SelectedIndex)
-				{
-					case 0:
-						CorruptCore.RtcCore.CurrentPrecision = 1;
-						break;
-					case 1:
-						CorruptCore.RtcCore.CurrentPrecision = 2;
-						break;
-                    case 2:
-                        CorruptCore.RtcCore.CurrentPrecision = 4;
-                        break;
-                    case 3:
-                        CorruptCore.RtcCore.CurrentPrecision = 8;
-                        break;
+                    UpdateMinMaxBoxes(precision);
+                    nmAlignment.Maximum = precision - 1;
+                    S.GET<RTC_CustomEngineConfig_Form>().cbCustomPrecision.SelectedIndex = cbCustomPrecision.SelectedIndex;
+                    S.GET<RTC_CustomEngineConfig_Form>().UpdateMinMaxBoxes(precision);
                 }
-				
-				updateMinMaxBoxes(CorruptCore.RtcCore.CurrentPrecision);
-                nmAlignment.Maximum = CorruptCore.RtcCore.CurrentPrecision - 1;
-                S.GET<RTC_CustomEngineConfig_Form>().UpdateMinMaxBoxes(CorruptCore.RtcCore.CurrentPrecision);
-			}
-		}
+            }
+            finally
+            {
+                cbCustomPrecision.Enabled = true;
+                S.GET<RTC_CustomEngineConfig_Form>().cbCustomPrecision.Enabled = true;
+            }
+        }
 
 
         private void nmAlignment_ValueChanged(object sender, EventArgs e)
