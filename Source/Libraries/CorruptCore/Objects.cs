@@ -254,7 +254,7 @@ namespace RTCV.CorruptCore
 			//Write them to a file
 			for (int i = 0; i < limiterLists?.Count; i++)
 			{
-				File.WriteAllLines(Path.Combine(RtcCore.workingDir, "TEMP" + i + ".limiter"), limiterLists[i]);
+				File.WriteAllLines(Path.Combine(RtcCore.workingDir, "TEMP", i + ".limiter"), limiterLists[i]);
 			}
 
 			//Update stashkey info 
