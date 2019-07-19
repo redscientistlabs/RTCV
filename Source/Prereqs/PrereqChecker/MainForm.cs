@@ -253,7 +253,9 @@ namespace RTCV.Prereqs
 
                 lbStatus.Text = "Done";
                 this.Refresh(); //Force this
-                Thread.Sleep(2000);
+                //Daisy chain x86 to x64
+                if (Environment.Is64BitProcess)
+                    MessageBox.Show("All prerequisites satisfied.");
                 Application.Exit();
 
             }
