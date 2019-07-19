@@ -234,7 +234,8 @@ This message only appears once.";
 
         public void UnlockSideBar()
         {
-            pnLockSidebar.Visible = false;
+            if(pnLockSidebar != null)
+                pnLockSidebar.Visible = false;
         }
 
         public void btnEngineConfig_Click(object sender, EventArgs e)

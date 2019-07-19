@@ -40,8 +40,7 @@ namespace RTCV.NetCore
         public static void FormExecute(Delegate a)
         {
             if (SyncObject.InvokeRequired)
-                SyncObject.InvokeCorrectly
-                    (a);
+                SyncObject.InvokeCorrectly(a);
             else
                 a.DynamicInvoke();
         }

@@ -253,7 +253,7 @@ namespace RTCV.NetCore
                 catch (TargetInvocationException ex)
                 {
                     failure = ex.InnerException;
-                    return default;
+                    throw failure;
                 }
             }));
             if (failure != null)

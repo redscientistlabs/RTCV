@@ -45,7 +45,6 @@ namespace RTCV.UI
 
         public static void Start(Form standaloneForm = null)
         {
-
             S.formRegister.FormRegistered += FormRegister_FormRegistered;
             //registerFormEvents(S.GET<RTC_Core_Form>());
 			registerFormEvents(S.GET<UI_CoreForm>());
