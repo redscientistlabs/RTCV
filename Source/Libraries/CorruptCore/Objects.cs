@@ -256,12 +256,6 @@ namespace RTCV.CorruptCore
 			{
 				File.WriteAllLines(Path.Combine(RtcCore.workingDir, "TEMP", i + ".limiter"), limiterLists[i]);
 			}
-
-			//Update stashkey info 
-			foreach (StashKey sk in sks.StashKeys)
-			{
-				sk.StateLocation = StashKeySavestateLocation.SKS;
-			}
 			//Create stockpile.xml to temp folder from stockpile object
 			using (FileStream fs = File.Open(Path.Combine(RtcCore.workingDir, "TEMP", "stockpile.json"), FileMode.OpenOrCreate))
 			{
@@ -327,7 +321,14 @@ namespace RTCV.CorruptCore
 						"If the file you're seeing here has changed since the stockpile was last saved (rom edited manually), you should probably reload your stockpile from the file.");
 				}
 
-			StockpileManager_UISide.CurrentStockpile = sks;
+
+            //Update savestate location info 
+            foreach (StashKey sk in sks.StashKeys)
+            {
+                sk.StateLocation = StashKeySavestateLocation.SKS;
+            }
+
+            StockpileManager_UISide.CurrentStockpile = sks;
 			return true;
 		}
 

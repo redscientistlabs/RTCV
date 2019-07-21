@@ -238,8 +238,9 @@ namespace RTCV.CorruptCore
 		{
 			RtcCore.RerollSourceAddress = true;
 			RtcCore.RerollSourceDomain = true;
-			RtcCore.RerollFollowsCustomEngine = true;
-		}
+            RtcCore.RerollFollowsCustomEngine = true;
+            RtcCore.EmulatorOsdDisabled = true;
+        }
 
 		public static void StartUISide()
 		{
