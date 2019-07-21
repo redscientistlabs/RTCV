@@ -30,7 +30,6 @@
 		{
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CloudDebug));
             this.lbError = new System.Windows.Forms.Label();
-            this.btnExit = new System.Windows.Forms.Button();
             this.btnContinue = new System.Windows.Forms.Button();
             this.btnSendDebug = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -53,27 +52,13 @@
             this.lbError.TabIndex = 1;
             this.lbError.Text = "An Error has occurred";
             // 
-            // btnExit
-            // 
-            this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExit.ForeColor = System.Drawing.Color.White;
-            this.btnExit.Location = new System.Drawing.Point(427, 37);
-            this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(82, 23);
-            this.btnExit.TabIndex = 2;
-            this.btnExit.Text = "Exit";
-            this.btnExit.UseVisualStyleBackColor = false;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
-            // 
             // btnContinue
             // 
             this.btnContinue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnContinue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnContinue.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnContinue.ForeColor = System.Drawing.Color.White;
-            this.btnContinue.Location = new System.Drawing.Point(427, 8);
+            this.btnContinue.Location = new System.Drawing.Point(425, 33);
             this.btnContinue.Name = "btnContinue";
             this.btnContinue.Size = new System.Drawing.Size(82, 23);
             this.btnContinue.TabIndex = 3;
@@ -121,7 +106,6 @@
             this.pnBottom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.pnBottom.Controls.Add(this.btnDebugInfo);
             this.pnBottom.Controls.Add(this.tbKey);
-            this.pnBottom.Controls.Add(this.btnExit);
             this.pnBottom.Controls.Add(this.btnSendDebug);
             this.pnBottom.Controls.Add(this.btnContinue);
             this.pnBottom.Controls.Add(this.label2);
@@ -195,7 +179,6 @@
 
 		#endregion
 		private System.Windows.Forms.Label lbError;
-		private System.Windows.Forms.Button btnExit;
 		private System.Windows.Forms.Button btnContinue;
 		private System.Windows.Forms.Button btnSendDebug;
 		private System.Windows.Forms.Label label2;
