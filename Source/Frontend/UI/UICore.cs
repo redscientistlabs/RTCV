@@ -821,9 +821,11 @@ namespace RTCV.UI
             }
         }
 
-        public static void LoadLists()
+        public static void LoadLists(string dir)
         {
-            string[] paths = System.IO.Directory.GetFiles(CorruptCore.RtcCore.listsDir).Where(x => x.EndsWith(".txt", StringComparison.OrdinalIgnoreCase)).ToArray();
+            if (!Directory.Exists(dir))
+                return;
+            string[] paths = System.IO.Directory.GetFiles(dir).Where(x => x.EndsWith(".txt", StringComparison.OrdinalIgnoreCase)).ToArray();
             paths = paths.OrderBy(x => x).ToArray();
 
             List<string> hashes = Filtering.LoadListsFromPaths(paths);

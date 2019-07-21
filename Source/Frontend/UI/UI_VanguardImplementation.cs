@@ -80,11 +80,15 @@ namespace RTCV.UI
                             UICore.Initialized.WaitOne(10000);
                         SyncObjectSingleton.FormExecute(() =>
                         {
-                            S.GET<UI_CoreForm>().Show();
                             if (UICore.FirstConnect)
                             {
                                 lastVanguardClient = (string) RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
                                 UICore.FirstConnect = false;
+
+                                S.GET<UI_CoreForm>().Show();
+
+                                //Pull any lists from the vanguard implementation
+                                UICore.LoadLists(Path.Combine(RtcCore.EmuDir, "LISTS"));
 
                                 Panel sidebar = S.GET<UI_CoreForm>().pnSideBar;
                                 foreach (Control c in sidebar.Controls)
@@ -96,6 +100,7 @@ namespace RTCV.UI
                                 if (File.Exists(customLayoutPath))
                                     S.GET<UI_CoreForm>().btnOpenCustomLayout.Visible = true;
 
+                                
                                 UI_DefaultGrids.engineConfig.LoadToMain();
                                 UI_DefaultGrids.glitchHarvester.LoadToNewWindow("Glitch Harvester", true);
                             }
@@ -111,6 +116,8 @@ namespace RTCV.UI
                                 //Push the VMDs since we store them out of spec
                                 var vmdProtos = MemoryDomains.VmdPool.Values.Cast<VirtualMemoryDomain>().Select(x => x.Proto).ToArray();
                                 LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHVMDPROTOS, vmdProtos, true);
+
+                                S.GET<UI_CoreForm>().Show();
 
                                 //Configure the UI based on the vanguard spec
                                 UICore.ConfigureUIFromVanguardSpec();
