@@ -901,7 +901,7 @@ namespace RTCV.CorruptCore
 
             if (range <= 0)
             {
-                throw new ArgumentOutOfRangeException("Max must be greater than min when inclusiveUpperBound is false, and greater than or equal to when true", "max");
+                return 0;
             }
 
             ulong limit = ulong.MaxValue - ulong.MaxValue % range;
