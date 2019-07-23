@@ -250,11 +250,13 @@ namespace RTCV.NetCore
                 {
                     return method.DynamicInvoke(args);
                 }
-                catch (TargetInvocationException ex)
+                catch (Exception ex)
                 {
                     failure = ex.InnerException;
-                    throw failure;
-                }
+					if(failure != null)
+						throw failure;
+					throw;
+				}
             }));
             if (failure != null)
             {

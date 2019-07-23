@@ -190,6 +190,7 @@
             // 
             this.cbValueList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.cbValueList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbValueList.DropDownWidth = 130;
             this.cbValueList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbValueList.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbValueList.ForeColor = System.Drawing.Color.White;
@@ -531,6 +532,7 @@
             // 
             this.cbLimiterList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.cbLimiterList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbLimiterList.DropDownWidth = 130;
             this.cbLimiterList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbLimiterList.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbLimiterList.ForeColor = System.Drawing.Color.White;

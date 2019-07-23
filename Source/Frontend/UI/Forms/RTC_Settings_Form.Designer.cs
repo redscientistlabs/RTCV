@@ -86,9 +86,10 @@
             this.btnCloseSettings.Size = new System.Drawing.Size(215, 29);
             this.btnCloseSettings.TabIndex = 127;
             this.btnCloseSettings.Tag = "color:light1";
-            this.btnCloseSettings.Text = " Close Settings";
+            this.btnCloseSettings.Text = " UNUSED";
             this.btnCloseSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCloseSettings.UseVisualStyleBackColor = false;
+            this.btnCloseSettings.Visible = false;
             this.btnCloseSettings.Click += new System.EventHandler(this.btnCloseSettings_Click);
             // 
             // pnListBoxForm

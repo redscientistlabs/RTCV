@@ -26,6 +26,8 @@ namespace RTCV.NetCore
 		{
 			InitializeComponent();
             ex = _ex;
+            if (ex is AbortEverythingException)
+                return;
 			if (!(ex is OperationAbortedException))
             {
                 lbException.Text = ex.Message;

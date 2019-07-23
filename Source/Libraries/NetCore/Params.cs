@@ -20,6 +20,15 @@ namespace RTCV.NetCore
                     return Path.Combine(rtcDir,"PARAMS");
                 }
 
+                //Check for the normal rtc dir
+                if (Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "..", "RTC", "PARAMS")))
+                {
+                    return Path.Combine(Directory.GetCurrentDirectory(), "..", "RTC", "PARAMS");
+                }
+
+                //Fall back to our current dir
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "RTC", "PARAMS");
+                Directory.CreateDirectory(path);
                 return Path.Combine(Directory.GetCurrentDirectory(),"RTC", "PARAMS");
             }
         }

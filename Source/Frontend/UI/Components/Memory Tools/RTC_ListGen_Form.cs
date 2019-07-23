@@ -176,9 +176,10 @@ namespace RTCV.UI
 		}
 
 		private void btnRefreshListsFromFile_Click(object sender, EventArgs e)
-		{
-			UICore.LoadLists();
-		}
+        {
+            UICore.LoadLists(RtcCore.listsDir);
+            UICore.LoadLists(Path.Combine(RtcCore.EmuDir, "LISTS"));
+        }
 
 		private void btnHelp_Click(object sender, EventArgs e)
 		{

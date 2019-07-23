@@ -19,7 +19,7 @@ namespace RTCV.CorruptCore
 	public static class RtcCore
 	{
 		//General RTC Values
-		public static string RtcVersion = "0.3.1";
+		public static string RtcVersion = "0.3.3";
 
         private static volatile int seed = DateTime.Now.Millisecond;
         public static int Seed => ++seed;
@@ -238,8 +238,9 @@ namespace RTCV.CorruptCore
 		{
 			RtcCore.RerollSourceAddress = true;
 			RtcCore.RerollSourceDomain = true;
-			RtcCore.RerollFollowsCustomEngine = true;
-		}
+            RtcCore.RerollFollowsCustomEngine = true;
+            RTCV.NetCore.Params.SetParam(RTCSPEC.CORE_EMULATOROSDDISABLED);
+        }
 
 		public static void StartUISide()
 		{
