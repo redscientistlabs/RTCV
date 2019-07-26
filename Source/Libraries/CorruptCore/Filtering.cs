@@ -319,11 +319,14 @@ namespace RTCV.CorruptCore
 		/// </summary>
 		/// <param name="sks"></param>
 		/// <returns></returns>
-		public static List<String[]> GetAllLimiterListsFromStockpile(Stockpile sks)
+		public static Dictionary<string, List<string>> GetAllLimiterListsFromStockpile(Stockpile sks)
 		{
 			sks.MissingLimiter = false;
-			List<String> hashList = new List<string>();
-			List<String[]> returnList = new List<String[]>();
+
+
+            var lists = new Dictionary<string, List<string>>();
+            var hashList = new List<string>();
+
 
 			//Build up a list of all the lists used by every blastunit
 			foreach (StashKey sk in sks.StashKeys)
@@ -356,7 +359,9 @@ namespace RTCV.CorruptCore
 						}
 						strList.Add(sb.ToString());
 					}
-					returnList.Add(strList.ToArray());
+                    var name = "UNKNOWN_" + s.Substring(0, 5); // Default name will use the first 5 chars of the hash 
+                    Hash2NameDico.TryGetValue(s, out name); //See if we can get the name
+                    lists["STOCKPILE_" + name] = strList;
 				}
 				//If we have a value but the dictionary didn't have it, pop that we couldn't find the list
 				else if(s != null)
@@ -375,7 +380,7 @@ namespace RTCV.CorruptCore
 				}
 			}
 
-			return returnList;
+			return lists;
 		}
 		public static bool RegisterListInUI(string name, string hash)
 		{
