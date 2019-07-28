@@ -118,9 +118,10 @@ namespace RTCV.UI
             //S.GET<RTC_GlitchHarvesterIntensity_Form>().Visible = true;
             S.GET<RTC_GeneralParameters_Form>().Show();
             S.GET<RTC_MemoryDomains_Form>().Show();
+            S.GET<RTC_GlitchHarvesterIntensity_Form>().Show();
 
 
-			switch (cbSelectedEngine.SelectedItem.ToString())
+            switch (cbSelectedEngine.SelectedItem.ToString())
 			{
 				case "Nightmare Engine":
 					CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.NIGHTMARE;
@@ -171,10 +172,9 @@ namespace RTCV.UI
 					S.GET<UI_CoreForm>().AutoCorrupt = false;
 					S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
                     S.GET<RTC_GeneralParameters_Form>().Hide();
-					S.GET<RTC_MemoryDomains_Form>().Hide();
-
-                    //S.GET<RTC_GlitchHarvesterIntensity_Form>().Visible = false;
-					break;
+                    S.GET<RTC_MemoryDomains_Form>().Hide();
+                    S.GET<RTC_GlitchHarvesterIntensity_Form>().Hide();
+                    break;
 
 				default:
 					break;
@@ -185,15 +185,17 @@ namespace RTCV.UI
 				S.GET<RTC_GeneralParameters_Form>().labelBlastRadius.Visible = false;
 				S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Visible = false;
 				S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Visible = false;
-				S.GET<RTC_GeneralParameters_Form>().cbBlastRadius.Visible = false;
-			}
+                S.GET<RTC_GeneralParameters_Form>().cbBlastRadius.Visible = false;
+                S.GET<RTC_MemoryDomains_Form>().lbMemoryDomains.Visible = false;
+            }
 			else
 			{
 				S.GET<RTC_GeneralParameters_Form>().labelBlastRadius.Visible = true;
 				S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Visible = true;
 				S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Visible = true;
 				S.GET<RTC_GeneralParameters_Form>().cbBlastRadius.Visible = true;
-			}
+                S.GET<RTC_MemoryDomains_Form>().lbMemoryDomains.Visible = true;
+            }
 
 			cbSelectedEngine.BringToFront();
 			pnCustomPrecision.BringToFront();

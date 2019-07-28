@@ -24,7 +24,7 @@ namespace RTCV.UI
 		public RTC_GlitchHarvesterIntensity_Form()
 		{
 			InitializeComponent();
-			popoutAllowed = false;
+			popoutAllowed = true;
 
             multiTB_Intensity.ValueChanged += (sender, args) => CorruptCore.RtcCore.Intensity = multiTB_Intensity.Value;
 
