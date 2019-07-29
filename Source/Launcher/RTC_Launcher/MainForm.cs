@@ -5,6 +5,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -264,6 +265,64 @@ namespace RTCV.Launcher
                     Directory.Delete(extractDirectory, true);
 
             }
+
+
+            //This checks every extracted files against the contents of the zip file
+            using (ZipArchive za = System.IO.Compression.ZipFile.OpenRead(downloadedFile))
+            {
+                bool foundLockBefore = false;   //this flag prompts a message to skip all 
+                bool skipLock = false;          //file locked messages and sents the flag below
+
+                foreach (var entry in za.Entries.Where(it=> !it.FullName.EndsWith("/")))
+                {
+                    string targetFile = Path.Combine(extractDirectory, entry.FullName.Replace("/","\\"));
+                    if(File.Exists(targetFile))
+                    {
+                        string ext = entry.FullName.ToUpper().Substring(entry.FullName.Length - 3);
+                        if (ext == "EXE" || ext == "DLL")
+                        {
+                            FileStream readCheck = null;
+                            try
+                            {
+                                readCheck = File.OpenRead(targetFile); //test if file can be read
+                                foundLockBefore = true;
+                            }
+                            catch
+                            {
+                                if (!skipLock)
+                                {
+                                    if (foundLockBefore)
+                                    {
+                                        if (MessageBox.Show($"An other file has been found locked.\nThere might be many more messages like this coming up.\n\nWould you like skip any remaining lock messages?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
+                                            skipLock = true;
+
+                                    }
+                                }
+
+                                if (!skipLock)
+                                {
+                                    MessageBox.Show($"An error occurred during extraction,\n\nThe file \"targetFile\" seems to have been locked by an external program. It might be caused by your antivirus.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                            }
+
+                            readCheck?.Close(); //close file immediately
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show($"An error occurred during extraction, rolling back changes.\n\nThe file \"targetFile\" could not be found. It might have been deleted by your antivirus.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        if (Directory.Exists(extractDirectory))
+                            Directory.Delete(extractDirectory, true);
+                    }
+
+
+                }
+            }
+
+            //check if files are all present here
+
+
 
             if (File.Exists(downloadedFile))
                 File.Delete(downloadedFile);
