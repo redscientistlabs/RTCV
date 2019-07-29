@@ -19,7 +19,7 @@ namespace RTCV.CorruptCore
 	public static class RtcCore
 	{
 		//General RTC Values
-		public static string RtcVersion = "0.3.3";
+		public static string RtcVersion = "5.0.1-b1";
 
         private static volatile int seed = DateTime.Now.Millisecond;
         public static int Seed => ++seed;
@@ -52,7 +52,7 @@ namespace RTCV.CorruptCore
 				//In attached mode we can just use the directory we're in.
 				//We do this as the EmuDir is not set in attached
 				if (Attached || EmuDirOverride)
-					return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+					return Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
                 return (string) AllSpec.VanguardSpec?[VSPEC.EMUDIR];
 			}
@@ -305,7 +305,7 @@ namespace RTCV.CorruptCore
 			PartialSpec rtcSpecTemplate = new PartialSpec("RTCSpec");
 			rtcSpecTemplate["RTCVERSION"] = RtcVersion;
 
-			rtcSpecTemplate[RTCSPEC.RTCDIR] = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "RTC");
+			rtcSpecTemplate[RTCSPEC.RTCDIR] = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "RTC");
 
             //Engine Settings
             rtcSpecTemplate.Insert(RtcCore.getDefaultPartial());
@@ -607,8 +607,7 @@ namespace RTCV.CorruptCore
 						if (bl == null)
 							//We return an empty blastlayer so when it goes to apply it, it doesn't find a null blastlayer and try and apply to the domains which aren't enabled resulting in an exception
 							return new BlastLayer();
-						else
-							return bl;
+                        return bl;
 					}
 
 					bl = new BlastLayer();

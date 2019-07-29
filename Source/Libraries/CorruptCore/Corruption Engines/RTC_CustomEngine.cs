@@ -379,9 +379,10 @@ namespace RTCV.CorruptCore
 
 			pSpec[RTCSPEC.CUSTOM_NAME.ToString()] = "Nightmare Engine";
 
-			pSpec[RTCSPEC.CORE_CURRENTPRECISION.ToString()] = 1;
+            pSpec[RTCSPEC.CORE_CURRENTPRECISION.ToString()] = 1;
+            pSpec[RTCSPEC.CORE_CURRENTALIGNMENT.ToString()] = 0;
 
-			pSpec[RTCSPEC.CUSTOM_DELAY.ToString()] = 0;
+            pSpec[RTCSPEC.CUSTOM_DELAY.ToString()] = 0;
 			pSpec[RTCSPEC.CUSTOM_LIFETIME.ToString()] = 1;
 			pSpec[RTCSPEC.CUSTOM_LOOP.ToString()] = false;
 
@@ -417,8 +418,9 @@ namespace RTCV.CorruptCore
 			pSpec[RTCSPEC.CUSTOM_NAME.ToString()] = "Hellgenie Engine";
 
 			pSpec[RTCSPEC.CORE_CURRENTPRECISION.ToString()] = 1;
+            pSpec[RTCSPEC.CORE_CURRENTALIGNMENT.ToString()] = 0;
 
-			pSpec[RTCSPEC.CUSTOM_DELAY.ToString()] = 0;
+            pSpec[RTCSPEC.CUSTOM_DELAY.ToString()] = 0;
 			pSpec[RTCSPEC.CUSTOM_LIFETIME.ToString()] = 0;
 			pSpec[RTCSPEC.CUSTOM_LOOP.ToString()] = false;
 
@@ -456,8 +458,9 @@ namespace RTCV.CorruptCore
 			pSpec[RTCSPEC.CUSTOM_NAME.ToString()] = "Distortion Engine";
 
 			pSpec[RTCSPEC.CORE_CURRENTPRECISION.ToString()] = 1;
+            pSpec[RTCSPEC.CORE_CURRENTALIGNMENT.ToString()] = 0;
 
-			pSpec[RTCSPEC.CUSTOM_DELAY.ToString()] = 50;
+            pSpec[RTCSPEC.CUSTOM_DELAY.ToString()] = 50;
 			pSpec[RTCSPEC.CUSTOM_LIFETIME.ToString()] = 1;
 			pSpec[RTCSPEC.CUSTOM_LOOP.ToString()] = false;
 
@@ -532,8 +535,9 @@ namespace RTCV.CorruptCore
 			pSpec[RTCSPEC.CUSTOM_NAME.ToString()] = "Pipe Engine";
 
 			pSpec[RTCSPEC.CORE_CURRENTPRECISION.ToString()] = 1;
+            pSpec[RTCSPEC.CORE_CURRENTALIGNMENT.ToString()] = 0;
 
-			pSpec[RTCSPEC.CUSTOM_DELAY.ToString()] = 0;
+            pSpec[RTCSPEC.CUSTOM_DELAY.ToString()] = 0;
 			pSpec[RTCSPEC.CUSTOM_LIFETIME.ToString()] = 0;
 			pSpec[RTCSPEC.CUSTOM_LOOP.ToString()] = false;
 
@@ -570,8 +574,9 @@ namespace RTCV.CorruptCore
 			pSpec[RTCSPEC.CUSTOM_NAME.ToString()] = "Vector Engine";
 
 			pSpec[RTCSPEC.CORE_CURRENTPRECISION.ToString()] = 4;
+            pSpec[RTCSPEC.CORE_CURRENTALIGNMENT.ToString()] = 0;
 
-			pSpec[RTCSPEC.CUSTOM_DELAY.ToString()] = 0;
+            pSpec[RTCSPEC.CUSTOM_DELAY.ToString()] = 0;
 			pSpec[RTCSPEC.CUSTOM_LIFETIME.ToString()] = 1;
 			pSpec[RTCSPEC.CUSTOM_LOOP.ToString()] = false;
 
@@ -722,7 +727,7 @@ namespace RTCV.CorruptCore
                                                         " to BigInteger! Something is wrong with your template.");
                             }
                             //ULong64 gets deserialized to bigint for some reason?????
-                            else if(t is BigInteger _t && _t <= ulong.MaxValue)
+                            else if (t is BigInteger _t && _t <= ulong.MaxValue)
                             {
                                 t = (ulong)(_t & ulong.MaxValue);
                             }

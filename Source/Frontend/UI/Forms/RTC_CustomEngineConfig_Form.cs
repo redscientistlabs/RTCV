@@ -599,10 +599,13 @@ namespace RTCV.UI
 					RTC_CustomEngine.TiltValue = (BigInteger)decimal.MaxValue;
 				nmTilt.Value = (Decimal)RTC_CustomEngine.TiltValue;
 				nmDelay.Value = RTC_CustomEngine.Delay;
-				nmLifetime.Value = RTC_CustomEngine.Lifetime;
+                nmLifetime.Value = RTC_CustomEngine.Lifetime;
 
 
-                UpdateMinMaxBoxes(CorruptCore.RtcCore.CurrentPrecision);
+                UpdateMinMaxBoxes(RtcCore.CurrentPrecision);
+
+                nmAlignment.Maximum = RtcCore.CurrentPrecision - 1;
+                nmAlignment.Value = RtcCore.Alignment;
 
                 //Todo - replace this and data-bind it
                 switch (CorruptCore.RtcCore.CurrentPrecision)

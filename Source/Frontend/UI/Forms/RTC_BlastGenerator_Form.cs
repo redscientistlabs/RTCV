@@ -451,7 +451,7 @@ namespace RTCV.UI
 		}
 
 
-		public BlastLayer GenerateBlastLayers(bool loadBeforeCorrupt = false, bool applyAfterCorrupt = false)
+		public BlastLayer GenerateBlastLayers(bool loadBeforeCorrupt = false, bool applyAfterCorrupt = false, bool resumeAfter = true)
 		{
             string saveStateWord = "Savestate";
 
@@ -517,7 +517,7 @@ namespace RTCV.UI
 
 				List<BlastGeneratorProto> returnList = new List<BlastGeneratorProto>();
 
-				returnList = NetCore.LocalNetCoreRouter.QueryRoute<List<BlastGeneratorProto>>(NetCore.NetcoreCommands.CORRUPTCORE, NetCore.NetcoreCommands.BLASTGENERATOR_BLAST, new object[] { newSk, protoList, loadBeforeCorrupt, applyAfterCorrupt }, true);
+				returnList = NetCore.LocalNetCoreRouter.QueryRoute<List<BlastGeneratorProto>>(NetCore.NetcoreCommands.CORRUPTCORE, NetCore.NetcoreCommands.BLASTGENERATOR_BLAST, new object[] { newSk, protoList, loadBeforeCorrupt, applyAfterCorrupt, resumeAfter }, true);
 
 				if (returnList == null)
 					return null;

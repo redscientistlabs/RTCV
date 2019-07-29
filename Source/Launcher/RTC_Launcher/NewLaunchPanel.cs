@@ -277,8 +277,15 @@ namespace RTCV.Launcher
                 RecursiveCopyNukeReadOnly(dir, target.CreateSubdirectory(dir.Name));
             foreach (FileInfo file in source.GetFiles())
             {
-                File.SetAttributes(file.FullName, FileAttributes.Normal);
-                file.CopyTo(Path.Combine(target.FullName, file.Name), true);
+                try
+                {
+                    file.CopyTo(Path.Combine(target.FullName, file.Name), true);
+                }catch(Exception e)
+                {
+                    File.SetAttributes(file.FullName, FileAttributes.Normal);
+                    file.CopyTo(Path.Combine(target.FullName, file.Name), true);
+                }
+
             }
                 
         }
@@ -287,11 +294,19 @@ namespace RTCV.Launcher
             foreach (DirectoryInfo dir in target.GetDirectories())
             {
                 RecursiveDeleteNukeReadOnly(dir);
+                dir.Delete();
             }
             foreach (FileInfo file in target.GetFiles())
             {
-                File.SetAttributes(file.FullName, FileAttributes.Normal);
-                File.Delete(file.FullName);
+                try
+                {
+                    File.Delete(file.FullName);
+                }
+                catch (Exception e)
+                {
+                    File.SetAttributes(file.FullName, FileAttributes.Normal);
+                    File.Delete(file.FullName);
+                }
             }
         }
     }

@@ -232,6 +232,7 @@ namespace RTCV.Prereqs
                 if (!Environment.Is64BitProcess)
                 {
                     var name = Process.GetCurrentProcess().ProcessName + "64.exe";
+                    var args = String.Join(" ", Environment.GetCommandLineArgs()); 
                     if (processModule != null)
                     {
                         var fileName = Path.Combine(dir, name);
@@ -240,7 +241,7 @@ namespace RTCV.Prereqs
                             this.Hide();
                             try
                             {
-                                var p = new ProcessStartInfo(fileName);
+                                var p = new ProcessStartInfo(fileName, args);
                                 Process.Start(p)?.WaitForExit();
                             }
                             catch (Exception ex)
@@ -254,7 +255,7 @@ namespace RTCV.Prereqs
                 lbStatus.Text = "Done";
                 this.Refresh(); //Force this
                 //Daisy chain x86 to x64
-                if (Environment.Is64BitProcess)
+                if (Environment.Is64BitProcess && Environment.GetCommandLineArgs().Contains("-NOTIFY"))
                     MessageBox.Show("All prerequisites satisfied.");
                 Application.Exit();
 

@@ -54,10 +54,10 @@
             this.label8.ForeColor = System.Drawing.Color.Silver;
             this.label8.Location = new System.Drawing.Point(8, 8);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(170, 13);
+            this.label8.Size = new System.Drawing.Size(178, 13);
             this.label8.TabIndex = 120;
             this.label8.Tag = "color:normal";
-            this.label8.Text = "Component is detached";
+            this.label8.Text = "Component is detached/unavailable";
             // 
             // cbSelectBox
             // 

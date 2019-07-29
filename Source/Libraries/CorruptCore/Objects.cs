@@ -247,14 +247,14 @@ namespace RTCV.CorruptCore
 					}
             }
 			//Get all the limiter lists
-			List<string[]> limiterLists = Filtering.GetAllLimiterListsFromStockpile(sks);
+			var limiterLists = Filtering.GetAllLimiterListsFromStockpile(sks);
             if (limiterLists == null)
                 return false;
 
 			//Write them to a file
-			for (int i = 0; i < limiterLists?.Count; i++)
+			foreach(var l in limiterLists.Keys)
 			{
-				File.WriteAllLines(Path.Combine(RtcCore.workingDir, "TEMP", i + ".limiter"), limiterLists[i]);
+				File.WriteAllLines(Path.Combine(RtcCore.workingDir, "TEMP", l + ".limiter"), limiterLists[l]);
 			}
 			//Create stockpile.xml to temp folder from stockpile object
 			using (FileStream fs = File.Open(Path.Combine(RtcCore.workingDir, "TEMP", "stockpile.json"), FileMode.OpenOrCreate))

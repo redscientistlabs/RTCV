@@ -24,8 +24,9 @@ namespace RTCV.UI
 		}
 
 		public void SetMemoryDomainsSelectedDomains(string[] _domains)
-		{
-			lbMemoryDomains_DontExecute_SelectedIndexChanged = true;
+        {
+            var oldState = this.Visible;
+            lbMemoryDomains_DontExecute_SelectedIndexChanged = true;
 
 			for (int i = 0; i < lbMemoryDomains.Items.Count; i++)
 				if (_domains.Contains(lbMemoryDomains.Items[i].ToString()))
@@ -35,11 +36,13 @@ namespace RTCV.UI
 
 			lbMemoryDomains_DontExecute_SelectedIndexChanged = false;
 			lbMemoryDomains_SelectedIndexChanged(null, null);
-		}
+            this.Visible = oldState;
+        }
 
 		public void SetMemoryDomainsAllButSelectedDomains(string[] _blacklistedDomains)
-		{
-			lbMemoryDomains_DontExecute_SelectedIndexChanged = true;
+        {
+            var oldState = this.Visible;
+            lbMemoryDomains_DontExecute_SelectedIndexChanged = true;
 
 			for (
 				int i = 0; i < lbMemoryDomains.Items.Count; i++)
@@ -50,7 +53,8 @@ namespace RTCV.UI
 
 			lbMemoryDomains_DontExecute_SelectedIndexChanged = false;
 			lbMemoryDomains_SelectedIndexChanged(null, null);
-		}
+            this.Visible = oldState;
+        }
 
 		private void btnSelectAll_Click(object sender, EventArgs e)
 		{
@@ -74,13 +78,16 @@ namespace RTCV.UI
 
 		public void RefreshDomains()
 		{
+            var oldState = this.Visible;
 			lbMemoryDomains.Items.Clear();
 			if (MemoryDomains.MemoryInterfaces != null)
 				lbMemoryDomains.Items.AddRange(MemoryDomains.MemoryInterfaces?.Keys.ToArray());
 
 			if (MemoryDomains.VmdPool.Count > 0)
 				lbMemoryDomains.Items.AddRange(MemoryDomains.VmdPool.Values.Select(it => it.ToString()).ToArray());
-		}
+
+            this.Visible = oldState;
+        }
 
 		public void RefreshDomainsAndKeepSelected(string[] overrideDomains = null)
 		{

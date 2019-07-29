@@ -181,25 +181,28 @@ namespace RTCV.CorruptCore
 			return bl;
 		}
 
-		public static List<BlastGeneratorProto> GenerateBlastLayersFromBlastGeneratorProtos(List<BlastGeneratorProto> blastLayers, StashKey sk, bool loadBeforeCorrupt)
+        /// <summary>
+        /// Call from emulator side only
+        /// </summary>
+        /// <param name="blastLayers"></param>
+        /// <param name="sk"></param>
+        /// <param name="loadBeforeCorrupt"></param>
+        /// <returns></returns>
+		public static List<BlastGeneratorProto> GenerateBlastLayersFromBlastGeneratorProtos(List<BlastGeneratorProto> blastLayers, StashKey sk)
 		{
-			//Load the game first for stuff like REPLACE_X_WITH_Y
-			if (loadBeforeCorrupt)
-				sk?.RunOriginal();
-			foreach (BlastGeneratorProto bgp in blastLayers)
-			{
-				//Only generate if there's no BlastLayer.
-				//A new proto is always generated if the cell is dirty which means no BlastLayer will exist
-				//Otherwise, we just return the existing BlastLayer
-				if (bgp != null && bgp.bl == null)
-				{
-					Console.Write("BGP was dirty. Generating BlastLayer\n");
-					bgp.bl = bgp.GenerateBlastLayer();
-				}
+            foreach (BlastGeneratorProto bgp in blastLayers)
+            {
+                //Only generate if there's no BlastLayer.
+                //A new proto is always generated if the cell is dirty which means no BlastLayer will exist
+                //Otherwise, we just return the existing BlastLayer
+                if (true || bgp != null && bgp.bl == null)
+                {
+                    Console.Write("BGP was dirty. Generating BlastLayer\n");
+                    bgp.bl = bgp.GenerateBlastLayer();
+                }
 
-			}
-
-			return blastLayers;
+            }
+            return blastLayers;
 		}
 	}
 }
