@@ -277,10 +277,23 @@ namespace RTCV.CorruptCore
 					StashKey sk = (StashKey)(advancedMessage.objectValue as object[])[0];
 					List<BlastGeneratorProto> blastGeneratorProtos = (List<BlastGeneratorProto>)(advancedMessage.objectValue as object[])[1];
 					bool loadBeforeCorrupt = (bool)(advancedMessage.objectValue as object[])[2];
-					bool applyAfterCorrupt = (bool)(advancedMessage.objectValue as object[])[3];
+                    bool applyAfterCorrupt = (bool)(advancedMessage.objectValue as object[])[3];
+                    bool resumeAfter = (bool)(advancedMessage.objectValue as object[])[4];
                     void a()
                     {
-                        returnList = BlastTools.GenerateBlastLayersFromBlastGeneratorProtos(blastGeneratorProtos, sk, loadBeforeCorrupt);
+                        //Load the game from the main thread
+                        if (loadBeforeCorrupt)
+                        {
+                            SyncObjectSingleton.FormExecute(() =>
+                            {
+                                StockpileManager_EmuSide.LoadRom_NET(sk);
+                            });
+                        }
+
+                        if (loadBeforeCorrupt)
+                            StockpileManager_EmuSide.LoadState_NET(sk, false);
+
+                        returnList = BlastTools.GenerateBlastLayersFromBlastGeneratorProtos(blastGeneratorProtos, sk);
                         if (applyAfterCorrupt)
                         {
                             BlastLayer bl = new BlastLayer();
@@ -295,7 +308,8 @@ namespace RTCV.CorruptCore
                     if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
                     {
                         SyncObjectSingleton.FormExecute(a);
-                        e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
+                        if(resumeAfter)
+                            e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
                     }
                     else
                         SyncObjectSingleton.EmuThreadExecute(a, false);

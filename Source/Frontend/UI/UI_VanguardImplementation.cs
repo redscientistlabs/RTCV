@@ -186,7 +186,7 @@ namespace RTCV.UI
 
 						SyncObjectSingleton.FormExecute(() =>
 						{
-							e.setReturnValue(S.GET<RTC_BlastGenerator_Form>().GenerateBlastLayers(true));
+							e.setReturnValue(S.GET<RTC_BlastGenerator_Form>().GenerateBlastLayers(true, true, false));
 						});
 						break;
 					case ERROR_DISABLE_AUTOCORRUPT:

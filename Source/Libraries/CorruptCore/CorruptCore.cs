@@ -19,7 +19,7 @@ namespace RTCV.CorruptCore
 	public static class RtcCore
 	{
 		//General RTC Values
-		public static string RtcVersion = "5.0.1";
+		public static string RtcVersion = "5.0.1-b1";
 
         private static volatile int seed = DateTime.Now.Millisecond;
         public static int Seed => ++seed;
@@ -607,8 +607,7 @@ namespace RTCV.CorruptCore
 						if (bl == null)
 							//We return an empty blastlayer so when it goes to apply it, it doesn't find a null blastlayer and try and apply to the domains which aren't enabled resulting in an exception
 							return new BlastLayer();
-						else
-							return bl;
+                        return bl;
 					}
 
 					bl = new BlastLayer();
