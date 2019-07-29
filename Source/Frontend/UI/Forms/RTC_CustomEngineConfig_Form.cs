@@ -51,25 +51,23 @@ namespace RTCV.UI
                 if (cbCustomPrecision.SelectedIndex != -1)
                 {
                     int precision = 0;
-                    if (!DontUpdateSpec)
+                    switch (cbCustomPrecision.SelectedIndex)
                     {
-                        switch (cbCustomPrecision.SelectedIndex)
-                        {
-                            case 0:
-                                precision = 1;
-                                break;
-                            case 1:
-                                precision = 2;
-                                break;
-                            case 2:
-                                precision = 4;
-                                break;
-                            case 3:
-                                precision = 8;
-                                break;
-                        }
-                        CorruptCore.RtcCore.CurrentPrecision = precision;
+                        case 0:
+                            precision = 1;
+                            break;
+                        case 1:
+                            precision = 2;
+                            break;
+                        case 2:
+                            precision = 4;
+                            break;
+                        case 3:
+                            precision = 8;
+                            break;
                     }
+					if (!DontUpdateSpec)
+						CorruptCore.RtcCore.CurrentPrecision = precision;
 
                     UpdateMinMaxBoxes(precision);
                     nmAlignment.Maximum = precision - 1;
