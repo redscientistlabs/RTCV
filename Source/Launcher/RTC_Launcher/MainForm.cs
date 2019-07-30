@@ -301,7 +301,7 @@ namespace RTCV.Launcher
 
                                 if (!skipLock)
                                 {
-                                    MessageBox.Show($"An error occurred during extraction,\n\nThe file \"targetFile\" seems to have been locked by an external program. It might be caused by your antivirus.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show($"An error occurred during extraction,\n\nThe file \"{targetFile}\" seems to have been locked by an external program. It might be caused by your antivirus.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                             }
 
@@ -310,10 +310,10 @@ namespace RTCV.Launcher
                     }
                     else
                     {
-                        MessageBox.Show($"An error occurred during extraction, rolling back changes.\n\nThe file \"targetFile\" could not be found. It might have been deleted by your antivirus.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show($"An error occurred during extraction, rolling back changes.\n\nThe file \"{targetFile}\" could not be found. It might have been deleted by your antivirus.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                         if (Directory.Exists(extractDirectory))
-                            Directory.Delete(extractDirectory, true);
+                            MainForm.RecursiveDeleteNukeReadOnly(new DirectoryInfo(extractDirectory));
                     }
 
 
@@ -406,10 +406,32 @@ namespace RTCV.Launcher
                 File.Delete(launcherDir + Path.DirectorySeparatorChar + "PACKAGES" + Path.DirectorySeparatorChar + version + ".zip");
 
             if (Directory.Exists((launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version)))
-                Directory.Delete(launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version, true);
+                MainForm.RecursiveDeleteNukeReadOnly(new DirectoryInfo((launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version)));
 
             RefreshInterface();
 
+        }
+
+
+        public static void RecursiveDeleteNukeReadOnly(DirectoryInfo target)
+        {
+            foreach (DirectoryInfo dir in target.GetDirectories())
+            {
+                RecursiveDeleteNukeReadOnly(dir);
+                dir.Delete();
+            }
+            foreach (FileInfo file in target.GetFiles())
+            {
+                try
+                {
+                    File.Delete(file.FullName);
+                }
+                catch (Exception e)
+                {
+                    File.SetAttributes(file.FullName, FileAttributes.Normal);
+                    File.Delete(file.FullName);
+                }
+            }
         }
 
         public void RefreshInterface()

@@ -199,7 +199,7 @@ namespace RTCV.Launcher
                         try
                         {
                             RecursiveCopyNukeReadOnly(new DirectoryInfo(candidate.folderLocation), new DirectoryInfo(lci.folderLocation));
-                            RecursiveDeleteNukeReadOnly(new DirectoryInfo(candidate.folderLocation));
+                            MainForm.RecursiveDeleteNukeReadOnly(new DirectoryInfo(candidate.folderLocation));
                             MainForm.mf.RefreshKeepSelectedVersion();
                         }
                         catch (Exception ex)
@@ -207,7 +207,7 @@ namespace RTCV.Launcher
                             MessageBox.Show($"Couldn't copy {candidate.folderLocation ?? "NULL"} to {lci.folderLocation}.\nIs the file in use?\nException:{ex.Message}");
                             try
                             {
-                                RecursiveDeleteNukeReadOnly(new DirectoryInfo(lci.folderLocation));
+                                MainForm.RecursiveDeleteNukeReadOnly(new DirectoryInfo(lci.folderLocation));
                             }
                             catch (Exception _ex) //f
                             {
@@ -289,25 +289,6 @@ namespace RTCV.Launcher
             }
                 
         }
-        public static void RecursiveDeleteNukeReadOnly(DirectoryInfo target)
-        {
-            foreach (DirectoryInfo dir in target.GetDirectories())
-            {
-                RecursiveDeleteNukeReadOnly(dir);
-                dir.Delete();
-            }
-            foreach (FileInfo file in target.GetFiles())
-            {
-                try
-                {
-                    File.Delete(file.FullName);
-                }
-                catch (Exception e)
-                {
-                    File.SetAttributes(file.FullName, FileAttributes.Normal);
-                    File.Delete(file.FullName);
-                }
-            }
-        }
+
     }
 }
