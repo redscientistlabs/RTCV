@@ -198,8 +198,8 @@ namespace RTCV.Launcher
                         //handle it here
                         try
                         {
-                            RecursiveCopyNukeReadOnly(new DirectoryInfo(candidate.folderLocation), new DirectoryInfo(lci.folderLocation));
-                            RecursiveDeleteNukeReadOnly(new DirectoryInfo(candidate.folderLocation));
+                            RTC_Extensions.RecursiveCopyNukeReadOnly(new DirectoryInfo(candidate.folderLocation), new DirectoryInfo(lci.folderLocation));
+                            RTC_Extensions.RecursiveDeleteNukeReadOnly(new DirectoryInfo(candidate.folderLocation));
                             MainForm.mf.RefreshKeepSelectedVersion();
                         }
                         catch (Exception ex)
@@ -207,7 +207,7 @@ namespace RTCV.Launcher
                             MessageBox.Show($"Couldn't copy {candidate.folderLocation ?? "NULL"} to {lci.folderLocation}.\nIs the file in use?\nException:{ex.Message}");
                             try
                             {
-                                RecursiveDeleteNukeReadOnly(new DirectoryInfo(lci.folderLocation));
+                                RTC_Extensions.RecursiveDeleteNukeReadOnly(new DirectoryInfo(lci.folderLocation));
                             }
                             catch (Exception _ex) //f
                             {
@@ -270,44 +270,6 @@ namespace RTCV.Launcher
             }
 
             return null;
-        }
-        public static void RecursiveCopyNukeReadOnly(DirectoryInfo source, DirectoryInfo target)
-        {
-            foreach (DirectoryInfo dir in source.GetDirectories())
-                RecursiveCopyNukeReadOnly(dir, target.CreateSubdirectory(dir.Name));
-            foreach (FileInfo file in source.GetFiles())
-            {
-                try
-                {
-                    file.CopyTo(Path.Combine(target.FullName, file.Name), true);
-                }catch(Exception e)
-                {
-                    File.SetAttributes(file.FullName, FileAttributes.Normal);
-                    file.CopyTo(Path.Combine(target.FullName, file.Name), true);
-                }
-
-            }
-                
-        }
-        public static void RecursiveDeleteNukeReadOnly(DirectoryInfo target)
-        {
-            foreach (DirectoryInfo dir in target.GetDirectories())
-            {
-                RecursiveDeleteNukeReadOnly(dir);
-                dir.Delete();
-            }
-            foreach (FileInfo file in target.GetFiles())
-            {
-                try
-                {
-                    File.Delete(file.FullName);
-                }
-                catch (Exception e)
-                {
-                    File.SetAttributes(file.FullName, FileAttributes.Normal);
-                    File.Delete(file.FullName);
-                }
-            }
         }
     }
 }

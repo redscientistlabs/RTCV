@@ -37,7 +37,7 @@ namespace RTCV.Launcher
         public static DownloadForm dForm = null;
         public static Form lpForm = null;
 
-        public static int launcherVer = 12;
+        public static int launcherVer = 13;
 
 
         public static int devCounter = 0;
@@ -262,7 +262,7 @@ namespace RTCV.Launcher
                 MessageBox.Show($"An error occurred during extraction, rolling back changes.\n\n{ex}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 if (Directory.Exists(extractDirectory))
-                    Directory.Delete(extractDirectory, true);
+                    RTC_Extensions.RecursiveDeleteNukeReadOnly(extractDirectory);
 
             }
 
@@ -293,15 +293,14 @@ namespace RTCV.Launcher
                                 {
                                     if (foundLockBefore)
                                     {
-                                        if (MessageBox.Show($"An other file has been found locked.\nThere might be many more messages like this coming up.\n\nWould you like skip any remaining lock messages?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
+                                        if (MessageBox.Show($"Another file has been found locked/inaccessible.\nThere might be many more messages like this coming up.\n\nWould you like skip any remaining lock messages?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
                                             skipLock = true;
-
                                     }
                                 }
 
                                 if (!skipLock)
                                 {
-                                    MessageBox.Show($"An error occurred during extraction,\n\nThe file \"targetFile\" seems to have been locked by an external program. It might be caused by your antivirus.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MessageBox.Show($"An error occurred during extraction,\n\nThe file \"targetFile\" seems to have been locked/made inaccessible by an external program. It might be caused by your antivirus.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
                             }
 
@@ -310,10 +309,10 @@ namespace RTCV.Launcher
                     }
                     else
                     {
-                        MessageBox.Show($"An error occurred during extraction, rolling back changes.\n\nThe file \"targetFile\" could not be found. It might have been deleted by your antivirus.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show($"An error occurred during extraction, rolling back changes.\n\nThe file \"{targetFile}\" could not be found. It might have been deleted by your antivirus.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                         if (Directory.Exists(extractDirectory))
-                            Directory.Delete(extractDirectory, true);
+                            RTC_Extensions.RecursiveDeleteNukeReadOnly(extractDirectory);
                     }
 
 
@@ -321,9 +320,7 @@ namespace RTCV.Launcher
             }
 
             //check if files are all present here
-
-
-
+            
             if (File.Exists(downloadedFile))
                 File.Delete(downloadedFile);
 
@@ -405,11 +402,18 @@ namespace RTCV.Launcher
             if (File.Exists(launcherDir + Path.DirectorySeparatorChar + "PACKAGES" + Path.DirectorySeparatorChar + version + ".zip"))
                 File.Delete(launcherDir + Path.DirectorySeparatorChar + "PACKAGES" + Path.DirectorySeparatorChar + version + ".zip");
 
-            if (Directory.Exists((launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version)))
-                Directory.Delete(launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version, true);
-
+            if (Directory.Exists((launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version))) { }
+            {
+                var failed = RTC_Extensions.RecursiveDeleteNukeReadOnly(launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version);
+                if(failed.Count > 0)
+                {
+                    StringBuilder sb = new StringBuilder();
+                    foreach (var l in failed)
+                        sb.AppendLine(l);
+                    MessageBox.Show($"Failed to delete some files! Something may be locking them (is the RTC still running?)\n\nList of failed files:\n{sb.ToString()}");
+                }
+            }
             RefreshInterface();
-
         }
 
         public void RefreshInterface()
@@ -427,8 +431,6 @@ namespace RTCV.Launcher
 
             if (Directory.Exists((launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version)))
                 Process.Start(launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version);
-
-
         }
 
         private void lbVersions_MouseDown(object sender, MouseEventArgs e)

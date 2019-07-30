@@ -144,6 +144,58 @@ namespace RTCV.Launcher
         }
 
         #endregion
+        public static void RecursiveCopyNukeReadOnly(DirectoryInfo source, DirectoryInfo target)
+        {
+            foreach (DirectoryInfo dir in source.GetDirectories())
+                RecursiveCopyNukeReadOnly(dir, target.CreateSubdirectory(dir.Name));
+            foreach (FileInfo file in source.GetFiles())
+            {
+                try
+                {
+                    file.CopyTo(Path.Combine(target.FullName, file.Name), true);
+                }
+                catch (Exception e)
+                {
+                    File.SetAttributes(file.FullName, FileAttributes.Normal);
+                    file.CopyTo(Path.Combine(target.FullName, file.Name), true);
+                }
+
+            }
+
+        }
+        public static List<string> RecursiveDeleteNukeReadOnly(string path)
+        {
+            return RecursiveDeleteNukeReadOnly(new DirectoryInfo(path));
+        }
+        public static List<string> RecursiveDeleteNukeReadOnly(DirectoryInfo target)
+        {
+            List<String> failedList = new List<string>();
+            foreach (DirectoryInfo dir in target.GetDirectories())
+            {
+                failedList.AddRange(RecursiveDeleteNukeReadOnly(dir));
+                if(dir.GetFiles().Length == 0)
+                    dir.Delete();
+            }
+            foreach (FileInfo file in target.GetFiles())
+            {
+                try
+                {
+                    File.Delete(file.FullName);
+                }
+                catch (Exception e)
+                {
+                    try
+                    {
+                        File.SetAttributes(file.FullName, FileAttributes.Normal);
+                        File.Delete(file.FullName);
+                    }catch(Exception ex)
+                    {
+                        failedList.Add(file.FullName);
+                    }
+                }
+            }
+            return failedList;
+        }
     }
 
     // Used code from this https://github.com/wasabii/Cogito/blob/master/Cogito.Core/RandomExtensions.cs
