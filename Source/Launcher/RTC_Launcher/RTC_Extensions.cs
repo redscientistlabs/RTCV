@@ -173,8 +173,6 @@ namespace RTCV.Launcher
             foreach (DirectoryInfo dir in target.GetDirectories())
             {
                 failedList.AddRange(RecursiveDeleteNukeReadOnly(dir));
-                if(dir.GetFiles().Length == 0)
-                    dir.Delete();
             }
             foreach (FileInfo file in target.GetFiles())
             {
@@ -194,6 +192,8 @@ namespace RTCV.Launcher
                     }
                 }
             }
+            if (target.GetFiles().Length == 0)
+                target.Delete();
             return failedList;
         }
     }

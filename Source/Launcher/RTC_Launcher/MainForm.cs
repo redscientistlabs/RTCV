@@ -103,7 +103,7 @@ namespace RTCV.Launcher
                         motd = "Couldn't load the RTC MOTD from Redscientist.com";
                     else
                         motd = Encoding.UTF8.GetString(motdFile);
-                    
+
                     this.Invoke(new MethodInvoker(() =>
                     {
                         lbMOTD.Text = motd;
@@ -182,8 +182,8 @@ namespace RTCV.Launcher
 
         public static byte[] GetFileViaHttp(string url)
         {
-			//Windows does the big dumb: part 11
-			WebRequest.DefaultWebProxy = null;
+            //Windows does the big dumb: part 11
+            WebRequest.DefaultWebProxy = null;
 
             using (HttpClient client = new HttpClient())
             {
@@ -251,128 +251,150 @@ namespace RTCV.Launcher
         public void DownloadComplete(string downloadedFile, string extractDirectory)
         {
 
-            if (!Directory.Exists(extractDirectory))
-                Directory.CreateDirectory(extractDirectory);
-
-            try { 
-                System.IO.Compression.ZipFile.ExtractToDirectory(downloadedFile, extractDirectory);
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show($"An error occurred during extraction, rolling back changes.\n\n{ex}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                if (Directory.Exists(extractDirectory))
-                    RTC_Extensions.RecursiveDeleteNukeReadOnly(extractDirectory);
-
-            }
-
-
-            //This checks every extracted files against the contents of the zip file
-            using (ZipArchive za = System.IO.Compression.ZipFile.OpenRead(downloadedFile))
-            {
-                bool foundLockBefore = false;   //this flag prompts a message to skip all 
-                bool skipLock = false;          //file locked messages and sents the flag below
-
-                foreach (var entry in za.Entries.Where(it=> !it.FullName.EndsWith("/")))
+            try
                 {
-                    string targetFile = Path.Combine(extractDirectory, entry.FullName.Replace("/","\\"));
-                    if(File.Exists(targetFile))
+                if (!Directory.Exists(extractDirectory))
+                    Directory.CreateDirectory(extractDirectory);
+
+                try {
+                    System.IO.Compression.ZipFile.ExtractToDirectory(downloadedFile, extractDirectory);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred during extraction, rolling back changes.\n\n{ex}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    if (Directory.Exists(extractDirectory))
+                        RTC_Extensions.RecursiveDeleteNukeReadOnly(extractDirectory);
+
+                }
+
+
+                //This checks every extracted files against the contents of the zip file
+                using (ZipArchive za = System.IO.Compression.ZipFile.OpenRead(downloadedFile))
+                {
+                    bool foundLockBefore = false;   //this flag prompts a message to skip all 
+                    bool skipLock = false;          //file locked messages and sents the flag below
+
+                    foreach (var entry in za.Entries.Where(it => !it.FullName.EndsWith("/")))
                     {
-                        string ext = entry.FullName.ToUpper().Substring(entry.FullName.Length - 3);
-                        if (ext == "EXE" || ext == "DLL")
+                        string targetFile = Path.Combine(extractDirectory, entry.FullName.Replace("/", "\\"));
+                        if (File.Exists(targetFile))
                         {
-                            FileStream readCheck = null;
-                            try
+                            string ext = entry.FullName.ToUpper().Substring(entry.FullName.Length - 3);
+                            if (ext == "EXE" || ext == "DLL")
                             {
-                                readCheck = File.OpenRead(targetFile); //test if file can be read
-                                foundLockBefore = true;
-                            }
-                            catch
-                            {
-                                if (!skipLock)
+                                FileStream readCheck = null;
+                                try
                                 {
-                                    if (foundLockBefore)
+                                    readCheck = File.OpenRead(targetFile); //test if file can be read
+                                    foundLockBefore = true;
+                                }
+                                catch
+                                {
+                                    if (!skipLock)
                                     {
-                                        if (MessageBox.Show($"Another file has been found locked/inaccessible.\nThere might be many more messages like this coming up.\n\nWould you like skip any remaining lock messages?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
-                                            skipLock = true;
+                                        if (foundLockBefore)
+                                        {
+                                            if (MessageBox.Show($"Another file has been found locked/inaccessible.\nThere might be many more messages like this coming up.\n\nWould you like skip any remaining lock messages?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
+                                                skipLock = true;
+                                        }
+                                    }
+
+                                    if (!skipLock)
+                                    {
+                                        MessageBox.Show($"An error occurred during extraction,\n\nThe file \"targetFile\" seems to have been locked/made inaccessible by an external program. It might be caused by your antivirus.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     }
                                 }
 
-                                if (!skipLock)
-                                {
-                                    MessageBox.Show($"An error occurred during extraction,\n\nThe file \"targetFile\" seems to have been locked/made inaccessible by an external program. It might be caused by your antivirus.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                }
+                                readCheck?.Close(); //close file immediately
                             }
+                        }
+                        else
+                        {
+                            MessageBox.Show($"An error occurred during extraction, rolling back changes.\n\nThe file \"{targetFile}\" could not be found. It might have been deleted by your antivirus.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                            readCheck?.Close(); //close file immediately
+                            if (Directory.Exists(extractDirectory))
+                                RTC_Extensions.RecursiveDeleteNukeReadOnly(extractDirectory);
+                        }
+
+
+                    }
+                }
+
+                //check if files are all present here
+
+                if (File.Exists(downloadedFile))
+                    File.Delete(downloadedFile);
+
+
+                var preReqChecker = Path.Combine(extractDirectory, "Launcher", "PrereqChecker.exe");
+                if (File.Exists(preReqChecker))
+                {
+                    ProcessStartInfo psi = new ProcessStartInfo();
+                    psi.FileName = Path.GetFileName(preReqChecker);
+                    psi.WorkingDirectory = Path.GetDirectoryName(preReqChecker);
+                    Process.Start(psi).WaitForExit();
+                }
+
+                //Force an update if launcher.json is found
+                if (File.Exists(extractDirectory + Path.DirectorySeparatorChar + "Launcher\\launcher.json"))
+                {
+                    if (MessageBox.Show("A mandatory launcher update is required to use this version. Click \"OK\" to update the launcher.", "Launcher update required", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.Cancel)
+                    {
+                        MessageBox.Show("Launcher update is required. Cancelling.");
+                        RTC_Extensions.RecursiveDeleteNukeReadOnly(extractDirectory);
+                        return;
+                    }
+                    string batchLocation = extractDirectory + Path.DirectorySeparatorChar + "Launcher\\update.bat";
+                    ProcessStartInfo psi = new ProcessStartInfo();
+                    psi.FileName = Path.GetFileName(batchLocation);
+                    psi.WorkingDirectory = Path.GetDirectoryName(batchLocation);
+                    Process.Start(psi);
+                    Application.Exit();
+                }
+                if (File.Exists(extractDirectory + Path.DirectorySeparatorChar + "Launcher\\ver.ini"))
+                {
+                    int newVer = Convert.ToInt32(File.ReadAllText(extractDirectory + Path.DirectorySeparatorChar + "Launcher\\ver.ini"));
+                    if (newVer > launcherVer)
+                    {
+                        var result = MessageBox.Show("The downloaded package contains a new launcher update.\n\nDo you want to update the Launcher?", "Launcher update", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (result == DialogResult.Yes)
+                        {
+                            string batchLocation = extractDirectory + Path.DirectorySeparatorChar + "Launcher\\update.bat";
+                            ProcessStartInfo psi = new ProcessStartInfo();
+                            psi.FileName = Path.GetFileName(batchLocation);
+                            psi.WorkingDirectory = Path.GetDirectoryName(batchLocation);
+                            Process.Start(psi);
+                            Application.Exit();
                         }
                     }
-                    else
-                    {
-                        MessageBox.Show($"An error occurred during extraction, rolling back changes.\n\nThe file \"{targetFile}\" could not be found. It might have been deleted by your antivirus.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                        if (Directory.Exists(extractDirectory))
-                            RTC_Extensions.RecursiveDeleteNukeReadOnly(extractDirectory);
-                    }
-
-
                 }
             }
-
-            //check if files are all present here
-            
-            if (File.Exists(downloadedFile))
-                File.Delete(downloadedFile);
-
-
-            var preReqChecker = Path.Combine(extractDirectory, "Launcher", "PrereqChecker.exe");
-            if (File.Exists(preReqChecker))
+            finally
             {
-                ProcessStartInfo psi = new ProcessStartInfo();
-                psi.FileName = Path.GetFileName(preReqChecker);
-                psi.WorkingDirectory = Path.GetDirectoryName(preReqChecker);
-                Process.Start(psi).WaitForExit();
-            }
-            if (File.Exists(extractDirectory + Path.DirectorySeparatorChar + "Launcher\\ver.ini"))
-            {
-                int newVer = Convert.ToInt32(File.ReadAllText(extractDirectory + Path.DirectorySeparatorChar + "Launcher\\ver.ini"));
-                if(newVer > launcherVer)
+
+                lbVersions.SelectedIndex = -1;
+
+                RefreshInstalledVersions();
+
+                MainForm.mf.pnLeftSide.Visible = true;
+
+                if (MainForm.vdppForm != null)
                 {
-                    var result = MessageBox.Show("The downloaded package contains a new launcher update.\n\nDo you want to update the Launcher?", "Launcher update", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if(result == DialogResult.Yes)
-                    {
-                        string batchLocation = extractDirectory + Path.DirectorySeparatorChar + "Launcher\\update.bat";
-                        ProcessStartInfo psi = new ProcessStartInfo();
-                        psi.FileName = Path.GetFileName(batchLocation);
-                        psi.WorkingDirectory = Path.GetDirectoryName(batchLocation);
-                        Process.Start(psi);
-                        Application.Exit();
-                    }
+                    MainForm.vdppForm.lbOnlineVersions.SelectedIndex = -1;
+                    MainForm.vdppForm.btnDownloadVersion.Visible = false;
                 }
+
+
+                dForm.Close();
+                dForm = null;
+
+                RefreshKeepSelectedVersion();
             }
-
-
-            lbVersions.SelectedIndex = -1;
-
-            RefreshInstalledVersions();
-
-            MainForm.mf.pnLeftSide.Visible = true;
-
-            if(MainForm.vdppForm != null)
-            {
-                MainForm.vdppForm.lbOnlineVersions.SelectedIndex = -1;
-                MainForm.vdppForm.btnDownloadVersion.Visible = false;
-            }
-            
-
-            dForm.Close();
-            dForm = null;
-
-            RefreshKeepSelectedVersion();
-
         }
 
-        public void RefreshKeepSelectedVersion()
+
+    public void RefreshKeepSelectedVersion()
         {
             if (lastSelectedVersion != null)
             {
@@ -409,8 +431,11 @@ namespace RTCV.Launcher
                 {
                     StringBuilder sb = new StringBuilder();
                     foreach (var l in failed)
-                        sb.AppendLine(l);
-                    MessageBox.Show($"Failed to delete some files! Something may be locking them (is the RTC still running?)\n\nList of failed files:\n{sb.ToString()}");
+                    {
+                        sb.AppendLine(Path.GetFileName(l));
+                    }
+                        
+                    MessageBox.Show($"Failed to delete some files!\nSomething may be locking them (is the RTC still running?)\n\nList of failed files:\n{sb.ToString()}");
                 }
             }
             RefreshInterface();
