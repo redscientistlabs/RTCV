@@ -361,7 +361,7 @@ namespace RTCV.CorruptCore
 					}
                     var name = "UNKNOWN_" + s.Substring(0, 5); // Default name will use the first 5 chars of the hash 
                     Hash2NameDico.TryGetValue(s, out name); //See if we can get the name
-                    lists["STOCKPILE_" + name] = strList;
+                    lists[(name.StartsWith("STOCKPILE_") ? "" : "STOCKPILE_") + name] = strList;
 				}
 				//If we have a value but the dictionary didn't have it, pop that we couldn't find the list
 				else if(s != null)
