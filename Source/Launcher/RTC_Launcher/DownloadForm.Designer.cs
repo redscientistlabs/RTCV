@@ -47,7 +47,7 @@
             // 
             this.lbStatus.AutoSize = true;
             this.lbStatus.Font = new System.Drawing.Font("Segoe UI Semibold", 24F, System.Drawing.FontStyle.Bold);
-            this.lbStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.lbStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(222)))));
             this.lbStatus.Location = new System.Drawing.Point(14, 12);
             this.lbStatus.Name = "lbStatus";
             this.lbStatus.Size = new System.Drawing.Size(214, 45);
@@ -67,7 +67,7 @@
             // 
             // pnDownloadBar
             // 
-            this.pnDownloadBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.pnDownloadBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.pnDownloadBar.Controls.Add(this.lbStatus);
             this.pnDownloadBar.Controls.Add(this.progressBar);
             this.pnDownloadBar.Controls.Add(this.lbDownloadProgress);
@@ -81,7 +81,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.ClientSize = new System.Drawing.Size(1136, 452);
             this.Controls.Add(this.pnDownloadBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

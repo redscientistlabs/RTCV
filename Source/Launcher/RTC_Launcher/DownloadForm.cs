@@ -39,6 +39,7 @@ namespace RTCV.Launcher
                 MainForm.mf.InvokeUI(() => {
                     lbDownloadProgress.Text = $"Uncompressing files...";
                     MainForm.mf.DownloadComplete(downloadedFile, extractDirectory); });
+                    MainForm.mf.btnVersionDownloader.Enabled = true;
             };
 
             if (File.Exists(downloadedFile))

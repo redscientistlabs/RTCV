@@ -48,9 +48,10 @@
             this.lbOnlineVersions.ItemHeight = 30;
             this.lbOnlineVersions.Location = new System.Drawing.Point(12, 34);
             this.lbOnlineVersions.Name = "lbOnlineVersions";
-            this.lbOnlineVersions.Size = new System.Drawing.Size(463, 192);
+            this.lbOnlineVersions.Size = new System.Drawing.Size(463, 185);
             this.lbOnlineVersions.TabIndex = 129;
             this.lbOnlineVersions.Tag = "color:normal";
+            this.lbOnlineVersions.SelectedIndexChanged += new System.EventHandler(this.LbOnlineVersions_SelectedIndexChanged_1);
             // 
             // label3
             // 
@@ -67,18 +68,19 @@
             // 
             this.btnDownloadVersion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDownloadVersion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnDownloadVersion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnDownloadVersion.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnDownloadVersion.FlatAppearance.BorderSize = 0;
             this.btnDownloadVersion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDownloadVersion.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
+            this.btnDownloadVersion.Font = new System.Drawing.Font("Segoe UI Light", 12.25F);
             this.btnDownloadVersion.ForeColor = System.Drawing.Color.White;
-            this.btnDownloadVersion.Location = new System.Drawing.Point(12, 234);
+            this.btnDownloadVersion.Location = new System.Drawing.Point(12, 224);
             this.btnDownloadVersion.Name = "btnDownloadVersion";
-            this.btnDownloadVersion.Size = new System.Drawing.Size(463, 24);
+            this.btnDownloadVersion.Size = new System.Drawing.Size(463, 34);
             this.btnDownloadVersion.TabIndex = 131;
             this.btnDownloadVersion.TabStop = false;
             this.btnDownloadVersion.Tag = "color:light";
-            this.btnDownloadVersion.Text = "Download";
+            this.btnDownloadVersion.Text = "Download selected version";
             this.btnDownloadVersion.UseVisualStyleBackColor = false;
             this.btnDownloadVersion.Click += new System.EventHandler(this.btnDownloadVersion_Click);
             // 
@@ -100,7 +102,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.ClientSize = new System.Drawing.Size(490, 268);
             this.Controls.Add(this.cbDevBuids);
             this.Controls.Add(this.lbOnlineVersions);
