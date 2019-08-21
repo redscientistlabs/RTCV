@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -140,10 +141,10 @@ namespace RTCV.Launcher
             {
                 if (!devOn)
                 {
-                    Console.Beep(220, 58);
-                    Console.Beep(300, 58);
-                    Console.Beep(400, 58);
-                    Console.Beep(520, 58);
+                    Console.Beep(220, 100);
+                    Console.Beep(300, 100);
+                    Console.Beep(400, 100);
+                    Console.Beep(520, 108);
 
                 }
 
