@@ -30,114 +30,43 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.pnBottomPanel = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.lbMOTD = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lbVersions = new System.Windows.Forms.ListBox();
-            this.pnLeftSide = new System.Windows.Forms.Panel();
             this.pbNewVersionNotification = new System.Windows.Forms.PictureBox();
             this.btnVersionDownloader = new System.Windows.Forms.Button();
-            this.pnAnchorRight = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.lbMOTD = new System.Windows.Forms.Label();
+            this.lbVersions = new System.Windows.Forms.ListBox();
+            this.pnLeftSide = new System.Windows.Forms.Panel();
             this.pnTopPanel = new System.Windows.Forms.Panel();
             this.btnDiscord = new System.Windows.Forms.Button();
             this.btnMinimize = new System.Windows.Forms.Button();
             this.btnQuit = new System.Windows.Forms.Button();
             this.btnOnlineGuide = new System.Windows.Forms.Button();
+            this.pnAnchorRight = new System.Windows.Forms.Panel();
             this.pnBottomPanel.SuspendLayout();
-            this.pnLeftSide.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbNewVersionNotification)).BeginInit();
+            this.pnLeftSide.SuspendLayout();
             this.pnTopPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnBottomPanel
             // 
             this.pnBottomPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))));
-            this.pnBottomPanel.Controls.Add(this.label5);
+            this.pnBottomPanel.Controls.Add(this.pbNewVersionNotification);
             this.pnBottomPanel.Controls.Add(this.lbMOTD);
+            this.pnBottomPanel.Controls.Add(this.btnVersionDownloader);
+            this.pnBottomPanel.Controls.Add(this.label5);
             this.pnBottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnBottomPanel.Location = new System.Drawing.Point(0, 492);
+            this.pnBottomPanel.Location = new System.Drawing.Point(0, 507);
             this.pnBottomPanel.Name = "pnBottomPanel";
-            this.pnBottomPanel.Size = new System.Drawing.Size(1138, 60);
+            this.pnBottomPanel.Size = new System.Drawing.Size(1138, 45);
             this.pnBottomPanel.TabIndex = 0;
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(15, 5);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(1111, 23);
-            this.label5.TabIndex = 132;
-            this.label5.Text = "RTC and WGH are developed by Redscientist Media, consult redscientist.com for mor" +
-    "e details";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lbMOTD
-            // 
-            this.lbMOTD.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbMOTD.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
-            this.lbMOTD.ForeColor = System.Drawing.Color.White;
-            this.lbMOTD.Location = new System.Drawing.Point(9, 30);
-            this.lbMOTD.Name = "lbMOTD";
-            this.lbMOTD.Size = new System.Drawing.Size(1119, 21);
-            this.lbMOTD.TabIndex = 125;
-            this.lbMOTD.Text = "...";
-            this.lbMOTD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.lbMOTD.Visible = false;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 10F, System.Drawing.FontStyle.Bold);
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(10, 12);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(110, 19);
-            this.label2.TabIndex = 83;
-            this.label2.Text = "Version Selector";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
-            // 
-            // lbVersions
-            // 
-            this.lbVersions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.lbVersions.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))));
-            this.lbVersions.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lbVersions.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbVersions.ForeColor = System.Drawing.Color.White;
-            this.lbVersions.FormattingEnabled = true;
-            this.lbVersions.IntegralHeight = false;
-            this.lbVersions.ItemHeight = 21;
-            this.lbVersions.Location = new System.Drawing.Point(12, 34);
-            this.lbVersions.Name = "lbVersions";
-            this.lbVersions.Size = new System.Drawing.Size(123, 375);
-            this.lbVersions.TabIndex = 82;
-            this.lbVersions.Tag = "";
-            this.lbVersions.SelectedIndexChanged += new System.EventHandler(this.lbVersions_SelectedIndexChanged);
-            this.lbVersions.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbVersions_MouseDown);
-            // 
-            // pnLeftSide
-            // 
-            this.pnLeftSide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.pnLeftSide.Controls.Add(this.pbNewVersionNotification);
-            this.pnLeftSide.Controls.Add(this.btnVersionDownloader);
-            this.pnLeftSide.Controls.Add(this.lbVersions);
-            this.pnLeftSide.Controls.Add(this.label2);
-            this.pnLeftSide.Dock = System.Windows.Forms.DockStyle.Left;
-            this.pnLeftSide.Location = new System.Drawing.Point(0, 41);
-            this.pnLeftSide.Name = "pnLeftSide";
-            this.pnLeftSide.Size = new System.Drawing.Size(138, 451);
-            this.pnLeftSide.TabIndex = 134;
             // 
             // pbNewVersionNotification
             // 
             this.pbNewVersionNotification.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.pbNewVersionNotification.Image = global::RTCV.Launcher.Properties.Resources.notificationBadge;
             this.pbNewVersionNotification.InitialImage = global::RTCV.Launcher.Properties.Resources.notificationBadge;
-            this.pbNewVersionNotification.Location = new System.Drawing.Point(118, 409);
+            this.pbNewVersionNotification.Location = new System.Drawing.Point(121, 4);
             this.pbNewVersionNotification.Name = "pbNewVersionNotification";
             this.pbNewVersionNotification.Size = new System.Drawing.Size(14, 14);
             this.pbNewVersionNotification.TabIndex = 0;
@@ -147,39 +76,82 @@
             // btnVersionDownloader
             // 
             this.btnVersionDownloader.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnVersionDownloader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnVersionDownloader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnVersionDownloader.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnVersionDownloader.FlatAppearance.BorderSize = 0;
             this.btnVersionDownloader.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnVersionDownloader.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
+            this.btnVersionDownloader.Font = new System.Drawing.Font("Segoe UI Light", 12.25F);
             this.btnVersionDownloader.ForeColor = System.Drawing.Color.White;
-            this.btnVersionDownloader.Location = new System.Drawing.Point(13, 417);
+            this.btnVersionDownloader.Location = new System.Drawing.Point(0, -1);
             this.btnVersionDownloader.Name = "btnVersionDownloader";
-            this.btnVersionDownloader.Size = new System.Drawing.Size(122, 24);
+            this.btnVersionDownloader.Size = new System.Drawing.Size(138, 46);
             this.btnVersionDownloader.TabIndex = 130;
             this.btnVersionDownloader.TabStop = false;
             this.btnVersionDownloader.Tag = "";
-            this.btnVersionDownloader.Text = "Version downloader";
+            this.btnVersionDownloader.Text = "Downloader";
             this.btnVersionDownloader.UseVisualStyleBackColor = false;
             this.btnVersionDownloader.Click += new System.EventHandler(this.btnVersionDownloader_Click);
             // 
-            // pnAnchorRight
+            // label5
             // 
-            this.pnAnchorRight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnAnchorRight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.pnAnchorRight.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pnAnchorRight.BackgroundImage")));
-            this.pnAnchorRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pnAnchorRight.Location = new System.Drawing.Point(138, 41);
-            this.pnAnchorRight.Name = "pnAnchorRight";
-            this.pnAnchorRight.Size = new System.Drawing.Size(1000, 451);
-            this.pnAnchorRight.TabIndex = 133;
-            this.pnAnchorRight.Paint += new System.Windows.Forms.PaintEventHandler(this.pnAnchorRight_Paint);
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 7F);
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.Location = new System.Drawing.Point(141, 2);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(985, 18);
+            this.label5.TabIndex = 132;
+            this.label5.Text = "RTC, emulator mods and stubs are developed by Redscientist Media, consult redscie" +
+    "ntist.com for more details";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lbMOTD
+            // 
+            this.lbMOTD.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbMOTD.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold);
+            this.lbMOTD.ForeColor = System.Drawing.Color.White;
+            this.lbMOTD.Location = new System.Drawing.Point(145, 20);
+            this.lbMOTD.Name = "lbMOTD";
+            this.lbMOTD.Size = new System.Drawing.Size(983, 18);
+            this.lbMOTD.TabIndex = 125;
+            this.lbMOTD.Text = "...";
+            this.lbMOTD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbMOTD.Visible = false;
+            // 
+            // lbVersions
+            // 
+            this.lbVersions.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))));
+            this.lbVersions.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lbVersions.Font = new System.Drawing.Font("Segoe UI Semibold", 13F, System.Drawing.FontStyle.Bold);
+            this.lbVersions.ForeColor = System.Drawing.Color.White;
+            this.lbVersions.FormattingEnabled = true;
+            this.lbVersions.IntegralHeight = false;
+            this.lbVersions.ItemHeight = 23;
+            this.lbVersions.Location = new System.Drawing.Point(10, 7);
+            this.lbVersions.Margin = new System.Windows.Forms.Padding(14, 3, 3, 3);
+            this.lbVersions.Name = "lbVersions";
+            this.lbVersions.Size = new System.Drawing.Size(119, 452);
+            this.lbVersions.TabIndex = 82;
+            this.lbVersions.Tag = "";
+            this.lbVersions.SelectedIndexChanged += new System.EventHandler(this.lbVersions_SelectedIndexChanged);
+            this.lbVersions.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbVersions_MouseDown);
+            // 
+            // pnLeftSide
+            // 
+            this.pnLeftSide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))));
+            this.pnLeftSide.Controls.Add(this.lbVersions);
+            this.pnLeftSide.Dock = System.Windows.Forms.DockStyle.Left;
+            this.pnLeftSide.Location = new System.Drawing.Point(0, 41);
+            this.pnLeftSide.Name = "pnLeftSide";
+            this.pnLeftSide.Size = new System.Drawing.Size(138, 466);
+            this.pnLeftSide.TabIndex = 134;
             // 
             // pnTopPanel
             // 
             this.pnTopPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))));
-            this.pnTopPanel.BackgroundImage = global::RTCV.Launcher.Properties.Resources.LauncherBack;
+            this.pnTopPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pnTopPanel.BackgroundImage")));
             this.pnTopPanel.Controls.Add(this.btnDiscord);
             this.pnTopPanel.Controls.Add(this.btnMinimize);
             this.pnTopPanel.Controls.Add(this.btnQuit);
@@ -194,7 +166,7 @@
             // btnDiscord
             // 
             this.btnDiscord.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDiscord.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnDiscord.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnDiscord.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnDiscord.FlatAppearance.BorderSize = 0;
             this.btnDiscord.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -216,7 +188,7 @@
             // btnMinimize
             // 
             this.btnMinimize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnMinimize.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnMinimize.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnMinimize.FlatAppearance.BorderSize = 0;
             this.btnMinimize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMinimize.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
@@ -234,7 +206,7 @@
             // btnQuit
             // 
             this.btnQuit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnQuit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnQuit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnQuit.FlatAppearance.BorderSize = 0;
             this.btnQuit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnQuit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
@@ -254,7 +226,7 @@
             // btnOnlineGuide
             // 
             this.btnOnlineGuide.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOnlineGuide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.btnOnlineGuide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnOnlineGuide.FlatAppearance.BorderSize = 0;
             this.btnOnlineGuide.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOnlineGuide.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
@@ -273,11 +245,21 @@
             this.btnOnlineGuide.UseVisualStyleBackColor = false;
             this.btnOnlineGuide.Click += new System.EventHandler(this.btnOnlineGuide_Click);
             // 
+            // pnAnchorRight
+            // 
+            this.pnAnchorRight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.pnAnchorRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pnAnchorRight.Location = new System.Drawing.Point(135, 41);
+            this.pnAnchorRight.Name = "pnAnchorRight";
+            this.pnAnchorRight.Size = new System.Drawing.Size(1003, 466);
+            this.pnAnchorRight.TabIndex = 133;
+            this.pnAnchorRight.Paint += new System.Windows.Forms.PaintEventHandler(this.pnAnchorRight_Paint);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.ClientSize = new System.Drawing.Size(1138, 552);
             this.Controls.Add(this.pnLeftSide);
             this.Controls.Add(this.pnAnchorRight);
@@ -292,9 +274,8 @@
             this.Text = "RTC Launcher";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.pnBottomPanel.ResumeLayout(false);
-            this.pnLeftSide.ResumeLayout(false);
-            this.pnLeftSide.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbNewVersionNotification)).EndInit();
+            this.pnLeftSide.ResumeLayout(false);
             this.pnTopPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -304,18 +285,17 @@
 
         private System.Windows.Forms.Panel pnBottomPanel;
         private System.Windows.Forms.Label lbMOTD;
-        private System.Windows.Forms.Label label2;
         public System.Windows.Forms.ListBox lbVersions;
         private System.Windows.Forms.Panel pnTopPanel;
         private System.Windows.Forms.Button btnOnlineGuide;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Panel pnAnchorRight;
-        private System.Windows.Forms.Button btnVersionDownloader;
+        public System.Windows.Forms.Button btnVersionDownloader;
         public System.Windows.Forms.Panel pnLeftSide;
         private System.Windows.Forms.PictureBox pbNewVersionNotification;
         private System.Windows.Forms.Button btnQuit;
         private System.Windows.Forms.Button btnMinimize;
         private System.Windows.Forms.Button btnDiscord;
+        private System.Windows.Forms.Panel pnAnchorRight;
     }
 }
 

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -15,6 +16,8 @@ namespace RTCV.Launcher
 {
     public partial class VersionDownloadPanel : Form
     {
+        public string latestVersionString = " (Latest version)";
+
         public VersionDownloadPanel()
         {
             InitializeComponent();
@@ -66,6 +69,11 @@ namespace RTCV.Launcher
                 this.Invoke(new MethodInvoker(() =>
                 {
                     lbOnlineVersions.Items.Clear();
+                    if (onlineVersions.Count > 0)
+                    {
+                        int latest = onlineVersions.Count - 1;
+                        onlineVersions[latest] += latestVersionString;
+                    }
                     lbOnlineVersions.Items.AddRange(onlineVersions.OrderByDescending(x => x).Select(it => it.Replace(".zip", "")).ToArray());
                 }));
             };
@@ -87,6 +95,7 @@ namespace RTCV.Launcher
                 return;
 
             string version = lbOnlineVersions.SelectedItem.ToString();
+            version = version.Replace(latestVersionString, "");
 
             if (Directory.Exists((MainForm.launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version)))
             {
@@ -118,12 +127,27 @@ namespace RTCV.Launcher
             if (!this.Visible)
                 return;
 
+            bool devOn = File.Exists(MainForm.launcherDir + Path.DirectorySeparatorChar + "PACKAGES\\dev.txt");
+
+            if (!devOn && devCounter % 2 == 0)
+                Console.Beep(220 + (20 * devCounter), 100);
 
             devCounter++;
-            bool devOn = File.Exists(MainForm.launcherDir + Path.DirectorySeparatorChar + "PACKAGES\\dev.txt");
+
+
+            
 
             if (devCounter >= 20 || devOn)
             {
+                if (!devOn)
+                {
+                    Console.Beep(220, 100);
+                    Console.Beep(300, 100);
+                    Console.Beep(400, 100);
+                    Console.Beep(520, 108);
+
+                }
+
                 if (!devOn && MessageBox.Show((File.Exists(MainForm.launcherDir + Path.DirectorySeparatorChar + "PACKAGES\\dev.txt") ? "Do you want to stay connected to the Dev Server?" : "Do you want to connect to the Dev Server?"), "Dev mode activation", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) == DialogResult.Yes)
                 {
                     File.WriteAllText(MainForm.launcherDir + Path.DirectorySeparatorChar + "PACKAGES\\dev.txt", "DEV MODE ACTIVATED");
@@ -150,6 +174,11 @@ namespace RTCV.Launcher
                 cbDevBuids.Checked = devOn;
             }
 
+        }
+
+        private void LbOnlineVersions_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            btnDownloadVersion_Click(sender, e);
         }
     }
 }

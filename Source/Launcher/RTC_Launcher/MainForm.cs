@@ -80,6 +80,7 @@ namespace RTCV.Launcher
 
             MainForm.mf.pnLeftSide.Visible = false;
 
+            MainForm.mf.btnVersionDownloader.Enabled = false;
 
             MainForm.dForm.TopLevel = false;
             MainForm.dForm.Location = new Point(0, 0);
