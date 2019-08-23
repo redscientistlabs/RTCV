@@ -43,7 +43,7 @@ namespace RTCV.UI
 
         private void RTC_SettingsHotkeyConfig_Form_GotFocus(object sender, EventArgs e)
         {
-            UICore.inputCheckTimer.Enabled = false;
+			UICore.SetHotkeyTimer(false);
             DoFocus();
         }
         private void RTC_SettingsHotkeyConfig_Form_LostFocus(object sender, EventArgs e)

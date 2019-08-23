@@ -84,49 +84,27 @@ namespace RTCV.UI
 
             }
         }
+		const int SRCCOPY = 0xCC0020;
+		[DllImport("gdi32.dll")]
+		static extern int BitBlt(IntPtr hdc, int x, int y, int cx, int cy,
+			IntPtr hdcSrc, int x1, int y1, int rop);
 
 
         public static Bitmap getFormScreenShot(this Control con)
         {
-            //recursively creates a screenshot of the form/panel and subcontrols
-
-            var bitmap = new Bitmap(con.Width, con.Height);
-            var rectSize = new Rectangle(0, 0, con.Width, con.Height);
-
-            con.DrawToBitmap(bitmap, rectSize);
-
-            foreach (Control c in con.Controls)
-            {
-                if (c is Form frm)
-                {
-
-                    var subBitmap = getFormScreenShot(frm);
-                    var subrect = new Rectangle(0, 0, frm.Width, frm.Height);
-                    //cf.DrawToBitmap(subBitmap, subrect);
-                    using (Graphics g = Graphics.FromImage(bitmap))
-                    {
-                        g.DrawImage(subBitmap, new Point(frm.Location.X, frm.Location.Y));
-                    }
-                }
-
-                if (c is Panel p)
-                {
-                    foreach (Control cp in p.Controls)
-                    {
-                        if (cp is Form f)
-                        {
-                            var subBitmap = getFormScreenShot(f);
-                            var subrect = new Rectangle(0, 0, f.Width, f.Height);
-                            using (Graphics g = Graphics.FromImage(bitmap))
-                            {
-                                g.DrawImage(subBitmap, new Point(p.Location.X + f.Location.X, p.Location.Y + f.Location.Y));
-                            }
-                        }
-                    }
-                }
-            }
-
-            return bitmap;
+			var bmp = new Bitmap(con.ClientRectangle.Width, con.ClientRectangle.Height);
+			using (var bmpGraphics = Graphics.FromImage(bmp))
+			{
+				var bmpDC = bmpGraphics.GetHdc();
+				using (Graphics formGraphics = Graphics.FromHwnd(con.Handle))
+				{
+					var formDC = formGraphics.GetHdc();
+					BitBlt(bmpDC, 0, 0, con.ClientRectangle.Width, con.ClientRectangle.Height, formDC, 0, 0, SRCCOPY);
+					formGraphics.ReleaseHdc(formDC);
+				}
+				bmpGraphics.ReleaseHdc(bmpDC);
+			}
+			return bmp;
         }
 
 

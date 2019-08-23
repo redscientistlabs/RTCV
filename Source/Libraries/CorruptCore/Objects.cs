@@ -19,7 +19,21 @@ using System.Xml.Serialization;
 
 namespace RTCV.CorruptCore
 {
-	[Serializable]
+
+    public delegate void ProgressBarEventHandler(object source, SaveProgressEventArgs e);
+    public class SaveProgressEventArgs : EventArgs
+    {
+        public string CurrentTask;
+        public decimal Progress;
+        public SaveProgressEventArgs(string text, decimal progress)
+        {
+            CurrentTask = text;
+            Progress = progress;
+            Console.WriteLine($"SaveProgressEventArgs: {text}");
+        }
+    }
+
+    [Serializable]
 	[Ceras.MemberConfig(TargetMember.All)]
 	public class Stockpile
 	{
@@ -31,6 +45,8 @@ namespace RTCV.CorruptCore
 		public string RtcVersion;
 		public string VanguardImplementation;
         public bool MissingLimiter;
+
+        public static event ProgressBarEventHandler SaveProgress;
 
 		public Stockpile(DataGridView dgvStockpile)
 		{
@@ -53,8 +69,10 @@ namespace RTCV.CorruptCore
 		}
 
 		public static bool Save(Stockpile sks, bool includeReferencedFiles = false, bool isQuickSave = false, bool compress = true)
-		{
-			if (sks.StashKeys.Count == 0)
+        {
+            decimal saveProgress = 0;
+            decimal percentPerFile = 0;
+            if (sks.StashKeys.Count == 0)
 			{
 				MessageBox.Show("Can't save because the Current Stockpile is empty");
 				return false;
@@ -100,8 +118,9 @@ namespace RTCV.CorruptCore
 
 			//clean temp folder
 			try
-			{
-				EmptyFolder(Path.Combine("WORKING", "TEMP"));
+            {
+                SaveProgress?.Invoke(sks, new SaveProgressEventArgs("Emptying TEMP", saveProgress+=2));
+                EmptyFolder(Path.Combine("WORKING", "TEMP"));
 			}
 			catch (Exception e)
 			{
@@ -115,11 +134,12 @@ namespace RTCV.CorruptCore
 
 
             List<string> allRoms = new List<string>();
-
             if (includeReferencedFiles)
             {
+                SaveProgress?.Invoke(sks, new SaveProgressEventArgs("Prepping referenced files", saveProgress += 2));
                 //populating Allroms array
                 foreach (StashKey key in sks.StashKeys)
+                {
                     if (!allRoms.Contains(key.RomFilename))
                     {
                         allRoms.Add(key.RomFilename);
@@ -160,7 +180,7 @@ namespace RTCV.CorruptCore
                             //Write our new cue
                             File.WriteAllLines(key.RomFilename, fixedCue);
 
-                            allRoms.AddRange(binFiles.Select(file => Path.Combine(cueFolder,file)));
+                            allRoms.AddRange(binFiles.Select(file => Path.Combine(cueFolder, file)));
                         }
 
                         if (key.RomFilename.ToUpper().Contains(".CCD"))
@@ -176,10 +196,13 @@ namespace RTCV.CorruptCore
                             allRoms.AddRange(binFiles);
                         }
                     }
+                }
 
+                percentPerFile = 20m / allRoms.Count;
                 //populating temp folder with roms
                 foreach (string str in allRoms)
                 {
+                    SaveProgress?.Invoke(sks, new SaveProgressEventArgs($"Copying {Path.GetFileNameWithoutExtension(str)} to stockpile", saveProgress += percentPerFile));
                     string rom = str;
                     string romTempfilename = Path.Combine(RtcCore.workingDir, "TEMP", Path.GetFileName(rom));
 
@@ -203,6 +226,7 @@ namespace RTCV.CorruptCore
                 }
 
                 //Update the paths
+                SaveProgress?.Invoke(sks, new SaveProgressEventArgs($"Fixing paths", saveProgress += 2));
                 foreach (var sk in sks.StashKeys)
                 {
                     sk.RomShortFilename = Path.GetFileName(sk.RomFilename);
@@ -225,11 +249,13 @@ namespace RTCV.CorruptCore
 
             if((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] ?? false)
             {
+                percentPerFile = (20m) / sks.StashKeys.Count;
                 //Copy all the savestates
                 foreach (StashKey key in sks.StashKeys)
                 {
                     // get savestate name
                     string stateFilename = key.GameName + "." + key.ParentKey + ".timejump.State";
+                    SaveProgress?.Invoke(sks, new SaveProgressEventArgs($"Copying {stateFilename} to stockpile", saveProgress += percentPerFile));
                     File.Copy(
                         Path.Combine(RtcCore.workingDir, key.StateLocation.ToString(), stateFilename), 
                         Path.Combine(RtcCore.workingDir, "TEMP", stateFilename), true); // copy savestates to temp folder
@@ -237,8 +263,9 @@ namespace RTCV.CorruptCore
             }
 
 			if ((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_CONFIG_MANAGEMENT] ?? false)
-			{
-				string[] configPaths = AllSpec.VanguardSpec[VSPEC.CONFIG_PATHS] as string[] ?? new string[]{};
+            {
+                SaveProgress?.Invoke(sks, new SaveProgressEventArgs($"Copying configs to stockpile", saveProgress += 2));
+                string[] configPaths = AllSpec.VanguardSpec[VSPEC.CONFIG_PATHS] as string[] ?? new string[]{};
 				foreach(var path in configPaths)
 					if (File.Exists(path))
 					{
@@ -253,13 +280,15 @@ namespace RTCV.CorruptCore
 
 			//Write them to a file
 			foreach(var l in limiterLists.Keys)
-			{
-				File.WriteAllLines(Path.Combine(RtcCore.workingDir, "TEMP", l + ".limiter"), limiterLists[l]);
+            {
+                SaveProgress?.Invoke(sks, new SaveProgressEventArgs($"Copying limiter lists to stockpile", saveProgress += 2));
+                File.WriteAllLines(Path.Combine(RtcCore.workingDir, "TEMP", l + ".limiter"), limiterLists[l]);
 			}
 			//Create stockpile.xml to temp folder from stockpile object
 			using (FileStream fs = File.Open(Path.Combine(RtcCore.workingDir, "TEMP", "stockpile.json"), FileMode.OpenOrCreate))
-			{
-				JsonHelper.Serialize(sks, fs, Formatting.Indented);
+            {
+                SaveProgress?.Invoke(sks, new SaveProgressEventArgs($"Creating stockpile.json", saveProgress += 2));
+                JsonHelper.Serialize(sks, fs, Formatting.Indented);
 				fs.Close();
 			}
 
@@ -279,13 +308,16 @@ namespace RTCV.CorruptCore
 			CompressionLevel comp = CompressionLevel.Fastest;
 			if (!compress)
 				comp = CompressionLevel.NoCompression;
-			//Create the file into temp
-			ZipFile.CreateFromDirectory(Path.Combine(RtcCore.workingDir, "TEMP"), tempFilename, comp, false);
 
-			//Remove the old stockpile
+            SaveProgress?.Invoke(sks, new SaveProgressEventArgs($"Creating SKS", saveProgress += 10));
+            //Create the file into temp
+            ZipFile.CreateFromDirectory(Path.Combine(RtcCore.workingDir, "TEMP"), tempFilename, comp, false);
+
+            //Remove the old stockpile
 			try
-			{
-				if (File.Exists(sks.Filename))
+            {
+                SaveProgress?.Invoke(sks, new SaveProgressEventArgs($"Removing old stockpile", saveProgress += 2));
+                if (File.Exists(sks.Filename))
 					File.Delete(sks.Filename);
 			}
 			catch (Exception ex)
@@ -294,42 +326,52 @@ namespace RTCV.CorruptCore
 				return false;
 			}
 
-			//Move us to the destination
-			File.Move(tempFilename, sks.Filename);
+            //Move us to the destination
+            SaveProgress?.Invoke(sks, new SaveProgressEventArgs($"Moving SKS to destination", saveProgress += 2));
+            File.Move(tempFilename, sks.Filename);
 
-			//Move all the files from temp into SKS
+			//Clean out SKS
 			try
 			{
-				EmptyFolder(Path.Combine("WORKING", "SKS"));
+                SaveProgress?.Invoke(sks, new SaveProgressEventArgs($"Emptying SKS", saveProgress += 2));
+                EmptyFolder(Path.Combine("WORKING", "SKS"));
 			}
 			catch(Exception e)
 			{
                 Console.Write(e);
 				MessageBox.Show("Unable to empty the stockpile folder. There's probably something locking a file inside it (iso based game loaded?)\n. Your stockpile is saved, but your current session is bunk.\nRe-load the file");
 			}
-			foreach (string file in Directory.GetFiles(Path.Combine(RtcCore.workingDir, "TEMP")))
-				try
-				{
-					File.Move(file, Path.Combine(RtcCore.workingDir,"SKS", Path.GetFileName(file)));
-				}
-				catch (Exception e)
-				{
-                    Console.Write(e);
-					MessageBox.Show("Unable to move " + Path.GetFileName(file) +
-						"to SKS. Your stockpile should be saved.\n" +
-						"If you're seeing this error, that means the file is probably in use. If it is, everything should technically be fine assuming it's the same file.\n" +
-						"If the file you're seeing here has changed since the stockpile was last saved (rom edited manually), you should probably reload your stockpile from the file.");
-				}
 
+            percentPerFile = (10m) / allRoms.Count;
+            foreach (string file in Directory.GetFiles(Path.Combine(RtcCore.workingDir, "TEMP")))
+            {
+                SaveProgress?.Invoke(sks, new SaveProgressEventArgs($"Copying limiter lists to stockpile", saveProgress += percentPerFile));
+                try
+                {
+                    File.Move(file, Path.Combine(RtcCore.workingDir, "SKS", Path.GetFileName(file)));
+                }
+                catch (Exception e)
+                {
+                    Console.Write(e);
+                    MessageBox.Show("Unable to move " + Path.GetFileName(file) +
+                                    "to SKS. Your stockpile should be saved.\n" +
+                                    "If you're seeing this error, that means the file is probably in use. If it is, everything should technically be fine assuming it's the same file.\n" +
+                                    "If the file you're seeing here has changed since the stockpile was last saved (rom edited manually), you should probably reload your stockpile from the file.");
+                }
+
+            }
 
             //Update savestate location info 
+            percentPerFile = (5m) / sks.StashKeys.Count;
             foreach (StashKey sk in sks.StashKeys)
             {
+                SaveProgress?.Invoke(sks, new SaveProgressEventArgs($"Updating StashKeySaveState Location for {sk.Alias}", saveProgress += percentPerFile));
                 sk.StateLocation = StashKeySavestateLocation.SKS;
             }
 
             StockpileManager_UISide.CurrentStockpile = sks;
-			return true;
+            SaveProgress?.Invoke(sks, new SaveProgressEventArgs($"Done", saveProgress = 100));
+            return true;
 		}
 
 		//Todo - get this out of the objects

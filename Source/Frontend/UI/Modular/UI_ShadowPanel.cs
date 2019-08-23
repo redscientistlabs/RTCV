@@ -15,10 +15,21 @@ namespace RTCV.UI
     {
         public UI_CanvasForm parentForm;
         public Form subForm = null;
+		public Form blockerForm = null;
 
         public UI_ShadowPanel(UI_CanvasForm _parentForm, Form reqForm)
         {
             InitializeComponent();
+			blockerForm = new Form
+			{
+				ControlBox = false,
+				MinimizeBox = false,
+				FormBorderStyle = System.Windows.Forms.FormBorderStyle.None,
+				Text = "",
+				Size = Size,
+				BackColor = Color.DarkSlateBlue,
+				Opacity = 0.2f
+			};
 
             UICore.SetRTCColor(UICore.GeneralColor, this);
 
@@ -90,7 +101,7 @@ namespace RTCV.UI
                 return;
 
             Bitmap bmp = parentForm.getFormScreenShot();
-            bmp.Tint(Color.FromArgb(0xCC, UICore.Dark4Color));
+            bmp.Tint(Color.FromArgb(0x7F, UICore.Dark4Color));
 
             this.Size = parentForm.Size;
             this.BackgroundImage = bmp;

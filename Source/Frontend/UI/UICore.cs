@@ -34,7 +34,7 @@ namespace RTCV.UI
         public static bool FirstConnect = true;
         public static ManualResetEvent Initialized = new ManualResetEvent(false);
 
-        public static System.Timers.Timer inputCheckTimer;
+        private static System.Timers.Timer inputCheckTimer;
 
         //RTC Main Forms
         //public static Color generalColor = Color.FromArgb(60, 45, 70);
@@ -207,7 +207,7 @@ namespace RTCV.UI
             return isAllowedForm;
         }
 
-        public static void LockInterface()
+        public static void LockInterface(bool focusCoreForm = true, bool blockMainForm = false)
         {
             if (interfaceLocked || lockPending)
                 return;
@@ -220,7 +220,9 @@ namespace RTCV.UI
 
                 S.GET<RTC_ConnectionStatus_Form>().pnBlockedButtons.Show();
 
-                //UI_CanvasForm.mainForm.BlockView();
+				if(blockMainForm)
+					UI_CanvasForm.mainForm.BlockView();
+
                 UI_CanvasForm.extraForms.ForEach(it => it.BlockView());
 
                 var ifs = S.GETINTERFACES<IBlockable>();
@@ -228,7 +230,11 @@ namespace RTCV.UI
                 foreach (var i in ifs)
                     i.BlockView();
 
-                cf.Focus();
+				if(focusCoreForm)
+					cf.Focus();
+
+                //Kill hotkeys while locked
+				SetHotkeyTimer(false);
             }
             lockPending = false;
         }
@@ -244,12 +250,21 @@ namespace RTCV.UI
 
                 S.GET<RTC_ConnectionStatus_Form>().pnBlockedButtons.Hide();
 
+				UI_CanvasForm.mainForm.UnblockView();
                 UI_CanvasForm.extraForms.ForEach(it => it.UnblockView());
                 var ifs = S.GETINTERFACES<IBlockable>();
                 foreach (var i in ifs)
                     i.UnblockView();
-            }
+                //Resume hotkeys
+				SetHotkeyTimer(true);
+			}
         }
+
+		public static void SetHotkeyTimer(bool enable)
+		{
+			inputCheckTimer.Enabled = enable;
+			Input.Input.Instance.ClearEvents();
+		}
 
 
         public static void BlockView(this IBlockable ib)
@@ -268,7 +283,7 @@ namespace RTCV.UI
                 ib.blockPanel.BringToFront();
 
                 var bmp = c.getFormScreenShot();
-                bmp.Tint(Color.FromArgb(0xEF, UICore.Dark4Color));
+                bmp.Tint(Color.FromArgb(0x7F, UICore.Dark4Color));
 
                 ib.blockPanel.BackgroundImage = bmp;
             }
@@ -476,58 +491,37 @@ namespace RTCV.UI
 			RTCV.NetCore.Params.SetParam("COLOR", color.R.ToString() + "," + color.G.ToString() + "," + color.B.ToString());
 		}
 
+		private static object inputLock = new object();
         //Borrowed from Bizhawk. Thanks guys
         private static void ProcessInputCheck(Object o, ElapsedEventArgs e)
         {
-            for (; ; )
-            {
-                Input.Input.Instance.Update();
-                // loop through all available events
-                var ie = Input.Input.Instance.DequeueEvent();
-                if (ie == null)
-                {
-                    break;
-                }
+			lock (inputLock)
+			{
+				while (true)
+				{
+					Input.Input.Instance.Update();
+					// loop through all available events
+					var ie = Input.Input.Instance.DequeueEvent();
+					if (ie == null)
+					{
+						break;
+					}
 
-                // useful debugging:
-                //Console.WriteLine(ie);
-
-
-                // look for hotkey bindings for this key
-                var triggers = Input.Bindings.SearchBindings(ie.LogicalButton.ToString());
-
-                bool handled = false;
-                if (ie.EventType == RTCV.UI.Input.Input.InputEventType.Press)
-                {
-                    triggers.Aggregate(handled, (current, trigger) => current | CheckHotkey(trigger));
-                }
-
-                /*
-                if (triggers.Count == 0)
-                {
-                    // Maybe it is a system alt-key which hasnt been overridden
-                    if (ie.EventType == Input.InputEventType.Press)
-                    {
-                        if (ie.LogicalButton.Alt && ie.LogicalButton.Button.Length == 1)
-                        {
-                            var c = ie.LogicalButton.Button.ToLower()[0];
-                            if ((c >= 'a' && c <= 'z') || c == ' ')
-                            {
-                                SendAltKeyChar(c);
-                            }
-                        }
-
-                        if (ie.LogicalButton.Alt && ie.LogicalButton.Button == "Space")
-                        {
-                            SendPlainAltKey(32);
-                        }
-                    }*/
-
-                // TODO - wonder what happens if we pop up something interactive as a response to one of these hotkeys? may need to purge further processing
+					// useful debugging:
+					//Console.WriteLine(ie);
 
 
-            } // foreach event
+					// look for hotkey bindings for this key
+					var triggers = Input.Bindings.SearchBindings(ie.LogicalButton.ToString());
 
+					bool handled = false;
+					if (ie.EventType == RTCV.UI.Input.Input.InputEventType.Press)
+					{
+						triggers.Aggregate(handled, (current, trigger) => current | CheckHotkey(trigger));
+					}
+
+				} // foreach event
+            }
         }
 
 

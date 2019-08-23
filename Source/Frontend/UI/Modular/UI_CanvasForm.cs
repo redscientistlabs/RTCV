@@ -114,6 +114,12 @@ namespace RTCV.UI
             loadedTileForms.Clear();
         }
 
+        public static UI_CanvasForm GetExtraForm(string windowTitle)
+        {
+            allExtraForms.TryGetValue(windowTitle, out UI_CanvasForm outForm);
+            return outForm;
+        }
+
         public void ResizeCanvas(UI_CanvasForm targetForm, CanvasGrid canvasGrid)
         {
             this.SetSize(getTilePos(canvasGrid.x), getTilePos(canvasGrid.y));
@@ -256,18 +262,18 @@ namespace RTCV.UI
 
             //See DummySubForm for example
 
-            if (lockSidebar && mainForm.Parent is UI_CoreForm c)
-                c.LockSideBar();
+            if (lockSidebar)
+				S.GET<UI_CoreForm>().LockSideBar();
 
             if (spForm != null)
                 CloseSubForm();
 
-            spForm = new UI_ShadowPanel(mainForm, reqForm);
+            spForm = new UI_ShadowPanel(this, reqForm);
             spForm.TopLevel = false;
-            mainForm.Controls.Add(spForm);
+            this.Controls.Add(spForm);
+
             spForm.Show();
             spForm.BringToFront();
-
 
         }
 
@@ -276,8 +282,7 @@ namespace RTCV.UI
             //Closes subform and exists SubForm mode.
             //is automatically called when Cancel/Ok is pressed in SubForm.
 
-            if (mainForm.Parent is UI_CoreForm c)
-                c.UnlockSideBar();
+			S.GET<UI_CoreForm>().UnlockSideBar();
 
             if (spForm != null)
             {
