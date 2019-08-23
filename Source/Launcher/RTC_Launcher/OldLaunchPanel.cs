@@ -68,10 +68,15 @@ namespace RTCV.Launcher
             if (startfilename != null)
                 batchFiles.Remove(startfilename);
 
-            btnStart.Visible = isDefaultStartPresent;
 
             foreach (Button btn in buttons)
                 btn.Visible = false;
+
+            if (batchFileNames.Count == 0)
+            {
+                lbError.Visible = true;
+                return;
+            }
 
             for (int i = 0; i < batchFileNames.Count; i++)
             {
@@ -79,7 +84,9 @@ namespace RTCV.Launcher
                 buttons[i].Text = batchFileNames[i];
                 buttons[i].Tag = (buttons[i].Tag as string) + ";" + batchFiles[i];
             }
+            btnStart.Visible = isDefaultStartPresent;
 
+                
             lbSelectedVersion.Text = version;
             lbSelectedVersion.Visible = true;
             pnVersionBatchFiles.Visible = true;

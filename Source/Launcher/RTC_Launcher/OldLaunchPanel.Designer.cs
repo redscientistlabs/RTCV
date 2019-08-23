@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.pnVersionBatchFiles = new System.Windows.Forms.Panel();
+            this.lbError = new System.Windows.Forms.Label();
             this.btnBatchfile10 = new System.Windows.Forms.Button();
             this.btnBatchfile09 = new System.Windows.Forms.Button();
             this.btnBatchfile08 = new System.Windows.Forms.Button();
@@ -50,6 +51,7 @@
             // pnVersionBatchFiles
             // 
             this.pnVersionBatchFiles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.pnVersionBatchFiles.Controls.Add(this.lbError);
             this.pnVersionBatchFiles.Controls.Add(this.btnBatchfile10);
             this.pnVersionBatchFiles.Controls.Add(this.btnBatchfile09);
             this.pnVersionBatchFiles.Controls.Add(this.btnBatchfile08);
@@ -67,6 +69,20 @@
             this.pnVersionBatchFiles.TabIndex = 131;
             this.pnVersionBatchFiles.Tag = "color:normal";
             this.pnVersionBatchFiles.Visible = false;
+            // 
+            // lbError
+            // 
+            this.lbError.AutoSize = true;
+            this.lbError.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.lbError.ForeColor = System.Drawing.Color.White;
+            this.lbError.Location = new System.Drawing.Point(0, 73);
+            this.lbError.Name = "lbError";
+            this.lbError.Size = new System.Drawing.Size(320, 217);
+            this.lbError.TabIndex = 130;
+            this.lbError.Text = "An error has occurred.\r\nPlease re-download this\r\nversion of the RTC.\r\n\r\nRight-cli" +
+    "ck the version\r\nin the sidebar and select\r\ndelete, then re-download.";
+            this.lbError.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbError.Visible = false;
             // 
             // btnBatchfile10
             // 
@@ -277,6 +293,14 @@
             this.btnStart.Visible = false;
             this.btnStart.Click += new System.EventHandler(this.btnBatchfile_Click);
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(100, 50);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -313,6 +337,7 @@
             this.Text = "OldLaunchPanel";
             this.Load += new System.EventHandler(this.OldLaunchPanel_Load);
             this.pnVersionBatchFiles.ResumeLayout(false);
+            this.pnVersionBatchFiles.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -336,5 +361,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.Label lbSelectedVersion;
+        private System.Windows.Forms.Label lbError;
     }
 }
