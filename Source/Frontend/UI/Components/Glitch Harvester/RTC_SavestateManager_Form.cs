@@ -55,6 +55,9 @@ namespace RTCV.UI
 
         private void loadSavestateList(bool import = false, string fileName = null)
         {
+            decimal currentProgress = 0;
+            decimal percentPerFile = 0;
+
             if (fileName == null)
             {
                 OpenFileDialog ofd = new OpenFileDialog
@@ -82,6 +85,7 @@ namespace RTCV.UI
 
             if (!import)
             {
+                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Committing used states to session", currentProgress += 5));
                 //Commit any used states to the SESSION folder
                 commitUsedStatesToSession();
                 savestateBindingSource.Clear();
@@ -90,12 +94,14 @@ namespace RTCV.UI
             var extractFolder = import ? "TEMP" : "SSK";
 
             //Extract the ssk
+            RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Extracting the SSK", currentProgress += 50));
             if (!Stockpile.Extract(fileName, Path.Combine("WORKING", extractFolder), "keys.json"))
                 return;
 
             //Read in the ssk
             try
             {
+                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Reading keys.json", currentProgress += 5));
                 using (FileStream fs = File.Open(Path.Combine(RtcCore.workingDir, extractFolder, "keys.json"), FileMode.OpenOrCreate))
                 {
                     ssk = CorruptCore.JsonHelper.Deserialize<SaveStateKeys>(fs);
@@ -106,7 +112,6 @@ namespace RTCV.UI
             catch (Exception ex)
             {
                 string additionalInfo = "The Savestate Keys file could not be loaded\n\n";
-
                 var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
 
                 if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
@@ -132,11 +137,14 @@ namespace RTCV.UI
             if (import)
             {
                 var allCopied = new List<string>();
+                var files = Directory.GetFiles(Path.Combine(RtcCore.workingDir, "TEMP"));
+                percentPerFile = 20m / files.Length;
                 //Copy from temp to sks
-                foreach (string file in Directory.GetFiles(Path.Combine(RtcCore.workingDir, "TEMP")))
+                foreach (string file in files)
                 {
                     if (!file.Contains(".ssk"))
                     {
+                        RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Copying {Path.GetFileName(file)} to SSK", currentProgress += percentPerFile));
                         try
                         {
                             string dest = Path.Combine(RtcCore.workingDir, "SSK", Path.GetFileName(file));
@@ -162,14 +170,18 @@ namespace RTCV.UI
                     }
                 }
 
+                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Emptying TEMP", currentProgress +=5));
                 Stockpile.EmptyFolder(Path.Combine("WORKING", "TEMP"));
             }
 
+            percentPerFile = 20m / ssk.StashKeys.Count;
             for (var i = 0; i < ssk.StashKeys.Count; i++)
             {
                 var key = ssk.StashKeys[i];
                 if (key == null)
                     continue;
+
+                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Fixing up {key.Alias}", currentProgress += percentPerFile));
 
                 //We have to set this first as we then change the other stuff
                 key.StateLocation = StashKeySavestateLocation.SSK;
@@ -182,6 +194,7 @@ namespace RTCV.UI
 
                 savestateBindingSource.Add(new SaveStateKey(key, ssk.Text[i]));
             }
+            RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Done", 100));
         }
 
         private void commitUsedStatesToSession()
@@ -252,6 +265,8 @@ namespace RTCV.UI
 
         private void btnSaveSavestateList_Click(object sender, EventArgs e)
         {
+            decimal currentProgress = 0;
+            decimal percentPerFile = 0;
             try
             {
                 SaveStateKeys ssk = new SaveStateKeys();
@@ -281,14 +296,18 @@ namespace RTCV.UI
                 else
                     return;
 
+                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Prepping TEMP", currentProgress += 5));
                 //clean temp folder
                 Stockpile.EmptyFolder(Path.Combine("WORKING", "TEMP"));
 
                 //Commit any states in use
+                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Committing used states", currentProgress += 5));
                 commitUsedStatesToSession();
 
+                percentPerFile = 30m / ssk.StashKeys.Count;
                 foreach(var key in ssk.StashKeys)
                 {
+                    RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Copying {key.GameName + "." + key.ParentKey + ".timejump.State"} to TEMP", currentProgress += percentPerFile));
                     if (key == null)
                         continue;
 
@@ -309,15 +328,18 @@ namespace RTCV.UI
 
                 }
 
+                percentPerFile = 10m / ssk.StashKeys.Count;
                 //Use two separate loops here in case the first one aborts. We don't want to update the StateLocation unless we know we're good
-                foreach(var key in ssk.StashKeys)
+                foreach (var key in ssk.StashKeys)
                 {
+                    RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Updating {key} location", currentProgress += percentPerFile));  
                     if (key == null)
                         continue;
                     key.StateLocation = StashKeySavestateLocation.SSK;
                 }
 
                 //Create keys.json
+                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Creating keys.json", currentProgress += 10));
                 using (FileStream fs = File.Open(Path.Combine(CorruptCore.RtcCore.workingDir, "TEMP", "keys.json"), FileMode.OpenOrCreate))
                 {
                     JsonHelper.Serialize(ssk, fs, Formatting.Indented);
@@ -338,21 +360,31 @@ namespace RTCV.UI
                 }
 
                 string tempFolderPath = Path.Combine(CorruptCore.RtcCore.workingDir, "TEMP");
+
+                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Creating SSK", currentProgress += 20));
                 System.IO.Compression.ZipFile.CreateFromDirectory(tempFolderPath, tempFilename, System.IO.Compression.CompressionLevel.Fastest, false);
 
                 if (File.Exists(Filename))
                     File.Delete(Filename);
 
+                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Moving SSK to destination", currentProgress += 5));
                 File.Move(tempFilename, Filename);
 
                 //Move all the files from temp into SSK
+                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Emptying SSK", currentProgress += 5));
                 Stockpile.EmptyFolder(Path.Combine("WORKING", "SSK"));
-                foreach (string file in Directory.GetFiles(tempFolderPath))
+
+                var files = Directory.GetFiles(tempFolderPath);
+                percentPerFile = 15m / files.Length;
+                foreach (string file in files)
+                {
+                    RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Moving {Path.GetFileName(file)} to SSK", currentProgress += percentPerFile));
                     File.Move(file, Path.Combine(CorruptCore.RtcCore.workingDir, "SSK", Path.GetFileName(file)));
+                }
+                    
             }
             catch (Exception ex)
             {
-
                 string additionalInfo = "The Savestate Keys file could not be saved\n\n";
 
                 var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);

@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using RTCV.CorruptCore;
 using Newtonsoft.Json;
 using RTCV.NetCore;
+using Timer = System.Windows.Forms.Timer;
 
 namespace RTCV.CorruptCore
 {
@@ -41,7 +42,7 @@ namespace RTCV.CorruptCore
 
 		public static List<ProblematicProcess> ProblematicProcesses;
 
-		public static System.Windows.Forms.Timer KillswitchTimer = new System.Windows.Forms.Timer();
+		public static Timer KillswitchTimer = new Timer();
 
         public static bool EmuDirOverride = false;
 
@@ -86,143 +87,144 @@ namespace RTCV.CorruptCore
 			get => Path.Combine(RtcDir,"ENGINETEMPLATES");
         }
 
+        public static event ProgressBarEventHandler ProgressBarHandler;
 
-		//This is for the UI only but needs to be in here as well
-		public static BindingList<ComboBoxItem<string>> LimiterListBindingSource = new BindingList<ComboBoxItem<string>>();
+        //This is for the UI only but needs to be in here as well
+        public static BindingList<ComboBoxItem<string>> LimiterListBindingSource = new BindingList<ComboBoxItem<string>>();
 		public static BindingList<ComboBoxItem<string>> ValueListBindingSource = new BindingList<ComboBoxItem<string>>();
 
 		public static bool AllowCrossCoreCorruption
 		{
-			get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CORE_ALLOWCROSSCORECORRUPTION.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_ALLOWCROSSCORECORRUPTION.ToString(), value);
+			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_ALLOWCROSSCORECORRUPTION.ToString()];
+			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_ALLOWCROSSCORECORRUPTION.ToString(), value);
 		}
 
 		public static CorruptionEngine SelectedEngine
 		{
-			get => (CorruptionEngine)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CORE_SELECTEDENGINE.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_SELECTEDENGINE.ToString(), value);
+			get => (CorruptionEngine)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_SELECTEDENGINE.ToString()];
+			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_SELECTEDENGINE.ToString(), value);
 		}
 
         public static int CurrentPrecision
         {
-            get => (int)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CORE_CURRENTPRECISION.ToString()];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_CURRENTPRECISION.ToString(), value);
+            get => (int)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_CURRENTPRECISION.ToString()];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_CURRENTPRECISION.ToString(), value);
         }
 
         public static int Alignment
         {
-            get => (int)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CORE_CURRENTALIGNMENT.ToString()];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_CURRENTALIGNMENT.ToString(), value);
+            get => (int)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_CURRENTALIGNMENT.ToString()];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_CURRENTALIGNMENT.ToString(), value);
         }
 
         public static long Intensity
 		{
-			get => (long)RTCV.NetCore.AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_INTENSITY.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_INTENSITY.ToString(), value);
+			get => (long)AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_INTENSITY.ToString()];
+			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_INTENSITY.ToString(), value);
 		}
 
 		public static long ErrorDelay
 		{
-			get => (long)RTCV.NetCore.AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_ERRORDELAY.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_ERRORDELAY.ToString(), value);
+			get => (long)AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_ERRORDELAY.ToString()];
+			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_ERRORDELAY.ToString(), value);
 		}
 
 		public static BlastRadius Radius
 		{
-			get => (BlastRadius)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CORE_RADIUS.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_RADIUS.ToString(), value);
+			get => (BlastRadius)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_RADIUS.ToString()];
+			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_RADIUS.ToString(), value);
 		}
 
 		public static bool AutoCorrupt
 		{
-			get => (bool)(RTCV.NetCore.AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_AUTOCORRUPT.ToString()] ?? false);
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_AUTOCORRUPT.ToString(), value);
+			get => (bool)(AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_AUTOCORRUPT.ToString()] ?? false);
+			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_AUTOCORRUPT.ToString(), value);
 		}
 
 		public static bool DontCleanSavestatesOnQuit
 		{
-			get => (bool)(RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CORE_DONTCLEANSAVESTATESONQUIT.ToString()] ?? false);
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_DONTCLEANSAVESTATESONQUIT.ToString(), value);
+			get => (bool)(AllSpec.CorruptCoreSpec[RTCSPEC.CORE_DONTCLEANSAVESTATESONQUIT.ToString()] ?? false);
+			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_DONTCLEANSAVESTATESONQUIT.ToString(), value);
 		}
 
 		public static bool ShowConsole
 		{
-			get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CORE_SHOWCONSOLE.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_SHOWCONSOLE.ToString(), value);
+			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_SHOWCONSOLE.ToString()];
+			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_SHOWCONSOLE.ToString(), value);
 		}
 
 		public static bool RerollAddress
 		{
-			get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLADDRESS.ToString()];
+			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLADDRESS.ToString()];
 			set
 			{
-				RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_REROLLADDRESS.ToString(), value);
-				RTCV.NetCore.Params.SetParam("REROLL_ADDRESS", value.ToString());
+				AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_REROLLADDRESS.ToString(), value);
+				Params.SetParam("REROLL_ADDRESS", value.ToString());
 			}
 		}
 
 		public static bool RerollSourceAddress
 		{
-			get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLSOURCEADDRESS.ToString()];
+			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLSOURCEADDRESS.ToString()];
 			set
 			{
-				RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_REROLLSOURCEADDRESS.ToString(), value);
-				RTCV.NetCore.Params.SetParam("REROLL_SOURCEADDRESS", value.ToString());
+				AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_REROLLSOURCEADDRESS.ToString(), value);
+				Params.SetParam("REROLL_SOURCEADDRESS", value.ToString());
 			}
 		}
 		public static bool RerollDomain
 		{
-			get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLDOMAIN.ToString()];
+			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLDOMAIN.ToString()];
 			set
 			{
-				RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_REROLLDOMAIN.ToString(), value);
-				RTCV.NetCore.Params.SetParam("REROLL_DOMAIN", value.ToString());
+				AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_REROLLDOMAIN.ToString(), value);
+				Params.SetParam("REROLL_DOMAIN", value.ToString());
 			}
 		}
 
 		public static bool RerollSourceDomain
 		{
-			get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLSOURCEDOMAIN.ToString()];
+			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLSOURCEDOMAIN.ToString()];
 			set
 			{
-				RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_REROLLSOURCEDOMAIN.ToString(), value);
-				RTCV.NetCore.Params.SetParam("REROLL_SOURCEDOMAIN", value.ToString());
+				AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_REROLLSOURCEDOMAIN.ToString(), value);
+				Params.SetParam("REROLL_SOURCEDOMAIN", value.ToString());
 			}
 		}
 		public static bool RerollIgnoresOriginalSource
 		{
-			get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE.ToString()];
+			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE.ToString()];
 			set
 			{
-				RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE.ToString(), value);
-				RTCV.NetCore.Params.SetParam("REROLL_IGNOREORIGINALSOURCE", value.ToString());
+				AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE.ToString(), value);
+				Params.SetParam("REROLL_IGNOREORIGINALSOURCE", value.ToString());
 			}
 		}
 		public static bool RerollFollowsCustomEngine
 		{
-			get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLFOLLOWENGINESETTINGS.ToString()];
+			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLFOLLOWENGINESETTINGS.ToString()];
 			set
 			{
-				RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_REROLLFOLLOWENGINESETTINGS.ToString(), value);
-				RTCV.NetCore.Params.SetParam("REROLL_FOLLOWSCUSTOMENGINE", value.ToString());
+				AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_REROLLFOLLOWENGINESETTINGS.ToString(), value);
+				Params.SetParam("REROLL_FOLLOWSCUSTOMENGINE", value.ToString());
 			}
 		}
 
 		public static bool ExtractBlastlayer
 		{
-			get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CORE_EXTRACTBLASTLAYER.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_EXTRACTBLASTLAYER.ToString(), value);
+			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_EXTRACTBLASTLAYER.ToString()];
+			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_EXTRACTBLASTLAYER.ToString(), value);
 		}
 
 		public static bool EmulatorOsdDisabled
 		{
-			get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CORE_EMULATOROSDDISABLED.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_EMULATOROSDDISABLED.ToString(), value);
+			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_EMULATOROSDDISABLED.ToString()];
+			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_EMULATOROSDDISABLED.ToString(), value);
 		}
 
         public static string VanguardImplementationName
         {
-            get => (String)NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard Implementation";
+            get => (String)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard Implementation";
         }
 
 
@@ -239,7 +241,7 @@ namespace RTCV.CorruptCore
 			RtcCore.RerollSourceAddress = true;
 			RtcCore.RerollSourceDomain = true;
             RtcCore.RerollFollowsCustomEngine = true;
-            RTCV.NetCore.Params.SetParam(RTCSPEC.CORE_EMULATOROSDDISABLED);
+            Params.SetParam(RTCSPEC.CORE_EMULATOROSDDISABLED);
         }
 
 		public static void StartUISide()
@@ -250,30 +252,30 @@ namespace RTCV.CorruptCore
 				RegisterCorruptcoreSpec();
 
                 CorruptCore_Extensions.DirectoryRequired(paths: new string[] {
-                    RTCV.CorruptCore.RtcCore.workingDir
-                    , Path.Combine(RTCV.CorruptCore.RtcCore.workingDir,"TEMP")
-                    , Path.Combine(RTCV.CorruptCore.RtcCore.workingDir, "SKS")
-                    , Path.Combine(RTCV.CorruptCore.RtcCore.workingDir, "SSK")
-                    , Path.Combine(RTCV.CorruptCore.RtcCore.workingDir, "SESSION")
-                    , Path.Combine(RTCV.CorruptCore.RtcCore.workingDir, "MEMORYDUMPS")
-                    , Path.Combine(RTCV.CorruptCore.RtcCore.workingDir, "MP")
-                    , Path.Combine(RTCV.CorruptCore.RtcCore.assetsDir, "CRASHSOUNDS")
-                    , Path.Combine(RTCV.CorruptCore.RtcCore.RtcDir, "PARAMS")
-                    , Path.Combine(RTCV.CorruptCore.RtcCore.RtcDir, "LISTS")
-                    , Path.Combine(RTCV.CorruptCore.RtcCore.RtcDir, "RENDEROUTPUT")
-                    , Path.Combine(RTCV.CorruptCore.RtcCore.RtcDir, "ENGINETEMPLATES")
-                    , Path.Combine(RTCV.CorruptCore.RtcCore.assetsDir, "PLATESHD")
+                    RtcCore.workingDir
+                    , Path.Combine(RtcCore.workingDir,"TEMP")
+                    , Path.Combine(RtcCore.workingDir, "SKS")
+                    , Path.Combine(RtcCore.workingDir, "SSK")
+                    , Path.Combine(RtcCore.workingDir, "SESSION")
+                    , Path.Combine(RtcCore.workingDir, "MEMORYDUMPS")
+                    , Path.Combine(RtcCore.workingDir, "MP")
+                    , Path.Combine(RtcCore.assetsDir, "CRASHSOUNDS")
+                    , Path.Combine(RtcCore.RtcDir, "PARAMS")
+                    , Path.Combine(RtcCore.RtcDir, "LISTS")
+                    , Path.Combine(RtcCore.RtcDir, "RENDEROUTPUT")
+                    , Path.Combine(RtcCore.RtcDir, "ENGINETEMPLATES")
+                    , Path.Combine(RtcCore.assetsDir, "PLATESHD")
                 });
 
-                if (!NetCore.Params.IsParamSet("DISCLAIMER_READ"))
+                if (!Params.IsParamSet("DISCLAIMER_READ"))
 					OneTimeSettingsInitialize();
 
 				IsStandaloneUI = true;
 			}
 			catch (Exception ex)
 			{
-				if (RTCV.NetCore.CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
-					throw new RTCV.NetCore.AbortEverythingException();
+				if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
+					throw new AbortEverythingException();
 			}
 		}
 		public static void StartEmuSide()
@@ -282,7 +284,7 @@ namespace RTCV.CorruptCore
 			{
 				Start();
 				if (KillswitchTimer == null)
-					KillswitchTimer = new System.Windows.Forms.Timer();
+					KillswitchTimer = new Timer();
 
 				KillswitchTimer.Interval = 250;
 				KillswitchTimer.Tick += KillswitchTimer_Tick;
@@ -324,10 +326,10 @@ namespace RTCV.CorruptCore
 			rtcSpecTemplate.Insert(Render.getDefaultPartial());
 
 
-			RTCV.NetCore.AllSpec.CorruptCoreSpec = new FullSpec(rtcSpecTemplate, !RtcCore.Attached); //You have to feed a partial spec as a template
+			AllSpec.CorruptCoreSpec = new FullSpec(rtcSpecTemplate, !RtcCore.Attached); //You have to feed a partial spec as a template
 
 
-			RTCV.NetCore.AllSpec.CorruptCoreSpec.SpecUpdated += (o, e) =>
+			AllSpec.CorruptCoreSpec.SpecUpdated += (o, e) =>
 			{
 				PartialSpec partial = e.partialSpec;
 				if(IsStandaloneUI)
@@ -345,8 +347,8 @@ namespace RTCV.CorruptCore
 			}
 			catch (Exception ex)
 			{
-				if (RTCV.NetCore.CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
-					throw new RTCV.NetCore.AbortEverythingException();
+				if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
+					throw new AbortEverythingException();
 			}
 		}
 
@@ -374,38 +376,38 @@ namespace RTCV.CorruptCore
 				partial[RTCSPEC.CORE_SHOWCONSOLE.ToString()] = false;
 
 
-				if (NetCore.Params.IsParamSet("ALLOW_CROSS_CORE_CORRUPTION"))
-					partial[RTCSPEC.CORE_ALLOWCROSSCORECORRUPTION] = (NetCore.Params.ReadParam("ALLOW_CROSS_CORE_CORRUPTION").ToUpper() == "TRUE");
+				if (Params.IsParamSet("ALLOW_CROSS_CORE_CORRUPTION"))
+					partial[RTCSPEC.CORE_ALLOWCROSSCORECORRUPTION] = (Params.ReadParam("ALLOW_CROSS_CORE_CORRUPTION").ToUpper() == "TRUE");
 				else
 					partial[RTCSPEC.CORE_ALLOWCROSSCORECORRUPTION.ToString()] = false;
 
-				if (NetCore.Params.IsParamSet("REROLL_SOURCEADDRESS"))
-					partial[RTCSPEC.CORE_REROLLSOURCEADDRESS.ToString()] = (NetCore.Params.ReadParam("REROLL_SOURCEADDRESS").ToUpper() == "TRUE");
+				if (Params.IsParamSet("REROLL_SOURCEADDRESS"))
+					partial[RTCSPEC.CORE_REROLLSOURCEADDRESS.ToString()] = (Params.ReadParam("REROLL_SOURCEADDRESS").ToUpper() == "TRUE");
 				else
 					partial[RTCSPEC.CORE_REROLLSOURCEADDRESS.ToString()] = false;
 
-				if (NetCore.Params.IsParamSet("REROLL_SOURCEDOMAIN"))
-					partial[RTCSPEC.CORE_REROLLSOURCEDOMAIN.ToString()] = (NetCore.Params.ReadParam("REROLL_SOURCEDOMAIN").ToUpper() == "TRUE");
+				if (Params.IsParamSet("REROLL_SOURCEDOMAIN"))
+					partial[RTCSPEC.CORE_REROLLSOURCEDOMAIN.ToString()] = (Params.ReadParam("REROLL_SOURCEDOMAIN").ToUpper() == "TRUE");
 				else
 					partial[RTCSPEC.CORE_REROLLSOURCEDOMAIN.ToString()] = false;
 
-				if (NetCore.Params.IsParamSet("REROLL_ADDRESS"))
-					partial[RTCSPEC.CORE_REROLLADDRESS.ToString()] = (NetCore.Params.ReadParam("REROLL_ADDRESS").ToUpper() == "TRUE");
+				if (Params.IsParamSet("REROLL_ADDRESS"))
+					partial[RTCSPEC.CORE_REROLLADDRESS.ToString()] = (Params.ReadParam("REROLL_ADDRESS").ToUpper() == "TRUE");
 				else
 					partial[RTCSPEC.CORE_REROLLADDRESS.ToString()] = false;
-				if (NetCore.Params.IsParamSet("REROLL_DOMAIN"))
-					partial[RTCSPEC.CORE_REROLLDOMAIN.ToString()] = (NetCore.Params.ReadParam("REROLL_DOMAIN").ToUpper() == "TRUE");
+				if (Params.IsParamSet("REROLL_DOMAIN"))
+					partial[RTCSPEC.CORE_REROLLDOMAIN.ToString()] = (Params.ReadParam("REROLL_DOMAIN").ToUpper() == "TRUE");
 				else
 					partial[RTCSPEC.CORE_REROLLDOMAIN.ToString()] = false;
 
 
-				if (NetCore.Params.IsParamSet("REROLL_FOLLOWSCUSTOMENGINE"))
-					partial[RTCSPEC.CORE_REROLLFOLLOWENGINESETTINGS.ToString()] = (NetCore.Params.ReadParam("REROLL_FOLLOWSCUSTOMENGINE").ToUpper() == "TRUE");
+				if (Params.IsParamSet("REROLL_FOLLOWSCUSTOMENGINE"))
+					partial[RTCSPEC.CORE_REROLLFOLLOWENGINESETTINGS.ToString()] = (Params.ReadParam("REROLL_FOLLOWSCUSTOMENGINE").ToUpper() == "TRUE");
 				else
 					partial[RTCSPEC.CORE_REROLLFOLLOWENGINESETTINGS.ToString()] = false;
 
-				if (NetCore.Params.IsParamSet("REROLL_USESVALUELIST"))
-					partial[RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE.ToString()] = (NetCore.Params.ReadParam("REROLL_USESVALUELIST").ToUpper() == "TRUE");
+				if (Params.IsParamSet("REROLL_USESVALUELIST"))
+					partial[RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE.ToString()] = (Params.ReadParam("REROLL_USESVALUELIST").ToUpper() == "TRUE");
 				else
 					partial[RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE.ToString()] = false;
 
@@ -414,8 +416,8 @@ namespace RTCV.CorruptCore
 			}
 			catch (Exception ex)
 			{
-				if (RTCV.NetCore.CloudDebug.ShowErrorDialog(ex) == DialogResult.Abort)
-					throw new RTCV.NetCore.AbortEverythingException();
+				if (CloudDebug.ShowErrorDialog(ex) == DialogResult.Abort)
+					throw new AbortEverythingException();
 
 				return null;
 			}
@@ -430,7 +432,7 @@ namespace RTCV.CorruptCore
 			//Do this on its own thread as downloading the json is slow
 			(new Thread(() =>
 			{
-				string LocalPath = Path.Combine(NetCore.Params.ParamsDir, "BADPROCESSES");
+				string LocalPath = Path.Combine(Params.ParamsDir, "BADPROCESSES");
 
 				string json = "";
 				try
@@ -524,8 +526,8 @@ namespace RTCV.CorruptCore
 			}
 			catch (Exception ex)
 			{
-				if (RTCV.NetCore.CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
-					throw new RTCV.NetCore.AbortEverythingException();
+				if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
+					throw new AbortEverythingException();
 
 				return;
 			}
@@ -576,8 +578,8 @@ namespace RTCV.CorruptCore
 			}
 			catch (Exception ex)
 			{
-				if (RTCV.NetCore.CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
-					throw new RTCV.NetCore.AbortEverythingException();
+				if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
+					throw new AbortEverythingException();
 
 				return null;
 			}
@@ -811,7 +813,7 @@ namespace RTCV.CorruptCore
 			catch (Exception ex)
 			{
 				var ex2 = new CustomException("Something went wrong in the RTC Core | " + ex.Message, (RtcCore.AutoCorrupt ? "Autocorrupt was turned off for your safety\n\n" : "") + ex.StackTrace);
-				var dr = RTCV.NetCore.CloudDebug.ShowErrorDialog(ex2, true);
+				var dr = CloudDebug.ShowErrorDialog(ex2, true);
 
 
 				if (RtcCore.AutoCorrupt)
@@ -821,7 +823,7 @@ namespace RTCV.CorruptCore
 				}
 
 				if (dr == DialogResult.Abort)
-					throw new RTCV.NetCore.AbortEverythingException();
+					throw new AbortEverythingException();
 
 				return null;
 			}
@@ -835,7 +837,7 @@ namespace RTCV.CorruptCore
 			long MaxAddress = -1;
 			long RandomAddress = -1;
 
-			string[] _selectedDomains = (string[])RTCV.NetCore.AllSpec.UISpec["SELECTEDDOMAINS"];
+			string[] _selectedDomains = (string[])AllSpec.UISpec["SELECTEDDOMAINS"];
 
 			Domain = _selectedDomains[RtcCore.RND.Next(_selectedDomains.Length)];
 
@@ -855,16 +857,21 @@ namespace RTCV.CorruptCore
 
 		public static void ASyncGenerateAndBlast()
 		{
-			BlastLayer bl = RtcCore.GenerateBlastLayer((string[])RTCV.NetCore.AllSpec.UISpec["SELECTEDDOMAINS"]);
+			BlastLayer bl = RtcCore.GenerateBlastLayer((string[])AllSpec.UISpec["SELECTEDDOMAINS"]);
 			if (bl != null)
 				bl.Apply(false, true);
 		}
 
-		/*
+        /*
 		public static void ApplyBlastLayer(BlastLayer bl)
 		{
 			if(bl.Layer != null)
 				bl.Apply();
 		}*/
-	}
+
+        public static void OnProgressBarUpdate(object sender, ProgressBarEventArgs e )
+        {
+            ProgressBarHandler?.Invoke(sender, e);
+        }
+    }
 }

@@ -23,7 +23,7 @@ namespace RTCV.UI
         {
             InitializeComponent();
 
-            Stockpile.SaveProgress += Stockpile_SaveProgress;
+            RtcCore.ProgressBarHandler += StockpileProgressBarHandler;
             this.Shown += RTC_SaveProgress_Form_Shown;
         }
 
@@ -33,7 +33,7 @@ namespace RTCV.UI
             pbSave.Value = 0;
         }
 
-        private void Stockpile_SaveProgress(object source, SaveProgressEventArgs e)
+        private void StockpileProgressBarHandler(object source, ProgressBarEventArgs e)
 		{
 			SyncObjectSingleton.FormExecute(() =>
 			{
