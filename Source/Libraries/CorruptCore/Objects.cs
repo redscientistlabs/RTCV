@@ -460,7 +460,8 @@ namespace RTCV.CorruptCore
 				StockpileManager_UISide.CurrentStockpile = sks;
 
 				//fill list controls
-				dgvStockpile.Rows.Clear();
+                SyncObjectSingleton.FormExecute(() => dgvStockpile.Rows.Clear());
+				
 
 				//Update the filename in case they renamed it
 				sks.Filename = Filename;

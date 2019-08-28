@@ -157,12 +157,6 @@
     <Compile Include="Components\Glitch Harvester\RTC_GlitchHarvesterBlast_Form.designer.cs">
       <DependentUpon>RTC_GlitchHarvesterBlast_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Glitch Harvester\RTC_SaveProgress_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Glitch Harvester\RTC_SaveProgress_Form.Designer.cs">
-      <DependentUpon>RTC_SaveProgress_Form.cs</DependentUpon>
-    </Compile>
     <Compile Include="Components\Glitch Harvester\RTC_SavestateManager_Form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -347,6 +341,12 @@
     </Compile>
     <Compile Include="Modular\UI_DefaultGrids.cs" />
     <Compile Include="Modular\UI_Objects.cs" />
+    <Compile Include="Modular\UI_SaveProgress_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Modular\UI_SaveProgress_Form.designer.cs">
+      <DependentUpon>UI_SaveProgress_Form.cs</DependentUpon>
+    </Compile>
     <Compile Include="Modular\UI_ShadowPanel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -396,9 +396,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Glitch Harvester\RTC_GlitchHarvesterBlast_Form.resx">
       <DependentUpon>RTC_GlitchHarvesterBlast_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Glitch Harvester\RTC_SaveProgress_Form.resx">
-      <DependentUpon>RTC_SaveProgress_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Glitch Harvester\RTC_SavestateManager_Form.resx">
       <DependentUpon>RTC_SavestateManager_Form.cs</DependentUpon>
@@ -486,6 +483,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Modular\UI_CoreForm.resx">
       <DependentUpon>UI_CoreForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modular\UI_SaveProgress_Form.resx">
+      <DependentUpon>UI_SaveProgress_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modular\UI_ShadowPanel.resx">
       <DependentUpon>UI_ShadowPanel.cs</DependentUpon>

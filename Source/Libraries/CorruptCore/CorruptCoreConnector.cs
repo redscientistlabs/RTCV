@@ -49,55 +49,58 @@ namespace RTCV.CorruptCore
 					break;
 				//UI sent its spec
 				case REMOTE_PUSHUISPEC:
-					SyncObjectSingleton.FormExecute(() =>
-					{
-						RTCV.NetCore.AllSpec.UISpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
-					}); 
-					break;
+				{
+						SyncObjectSingleton.FormExecute(() =>
+						{
+							RTCV.NetCore.AllSpec.UISpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
+						});
+						break;
+				}
 
 				//UI sent a spec update
 				case REMOTE_PUSHUISPECUPDATE:
-					SyncObjectSingleton.FormExecute(() =>
-					{
-						RTCV.NetCore.AllSpec.UISpec?.Update((PartialSpec)advancedMessage.objectValue);
-					});
-					break;
+						SyncObjectSingleton.FormExecute(() =>
+						{
+							RTCV.NetCore.AllSpec.UISpec?.Update((PartialSpec)advancedMessage.objectValue);
+						});
+						break;
 
 				//Vanguard sent a copy of its spec
 				case REMOTE_PUSHVANGUARDSPEC:
-					SyncObjectSingleton.FormExecute(() =>
-					{
-						if(!RtcCore.Attached)
-							RTCV.NetCore.AllSpec.VanguardSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
-					});
+
+						SyncObjectSingleton.FormExecute(() =>
+						{
+							if (!RtcCore.Attached)
+								RTCV.NetCore.AllSpec.VanguardSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
+						});
 					break;
 
 				//Vanguard sent a spec update
 				case REMOTE_PUSHVANGUARDSPECUPDATE:
-                    RTCV.NetCore.AllSpec.VanguardSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
-                break;
+						RTCV.NetCore.AllSpec.VanguardSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
+					break;
 
 				//UI sent a copy of the CorruptCore spec
 				case REMOTE_PUSHCORRUPTCORESPEC:
-					SyncObjectSingleton.FormExecute(() =>
-					{ 
-						RTCV.NetCore.AllSpec.CorruptCoreSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
-						RTCV.NetCore.AllSpec.CorruptCoreSpec.SpecUpdated += (ob, eas) =>
+						SyncObjectSingleton.FormExecute(() =>
 						{
-							PartialSpec partial = eas.partialSpec;
+							RTCV.NetCore.AllSpec.CorruptCoreSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
+							RTCV.NetCore.AllSpec.CorruptCoreSpec.SpecUpdated += (ob, eas) =>
+							{
+								PartialSpec partial = eas.partialSpec;
 
-							LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_PUSHCORRUPTCORESPECUPDATE, partial, true);
-						};
-					});
-					e.setReturnValue(true);
+								LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_PUSHCORRUPTCORESPECUPDATE, partial, true);
+							};
+						});
+						e.setReturnValue(true);
 					break;
 
 				//UI sent an update of the CorruptCore spec
 				case REMOTE_PUSHCORRUPTCORESPECUPDATE:
-					SyncObjectSingleton.FormExecute(() =>
-					{
-						RTCV.NetCore.AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
-					});
+						SyncObjectSingleton.FormExecute(() =>
+						{
+							RTCV.NetCore.AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
+						});
 					break;
 
 				case REMOTE_EVENT_DOMAINSUPDATED:

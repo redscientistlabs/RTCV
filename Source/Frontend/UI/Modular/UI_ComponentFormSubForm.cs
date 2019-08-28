@@ -36,9 +36,19 @@ namespace RTCV.UI
 
         }
 
+        public void OnShown()
+        {
+
+        }
+
+        public void OnHidden()
+        {
+
+        }
         private void UI_ComponentFormSubForm_Load(object sender, EventArgs e)
         {
         }
 
+        
     }
 }

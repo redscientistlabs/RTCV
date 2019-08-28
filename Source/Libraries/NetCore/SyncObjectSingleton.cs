@@ -19,7 +19,7 @@ namespace RTCV.NetCore
         public delegate void GenericDelegate();
         public static ActionDelegate EmuInvokeDelegate;
         public static bool UseQueue = false;
-        public static bool EmuThreadIsMainThread = false;
+		public static bool EmuThreadIsMainThread = false;
 
 
         public static void FormExecute(Action a)

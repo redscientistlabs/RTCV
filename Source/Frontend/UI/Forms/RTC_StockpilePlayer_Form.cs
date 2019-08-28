@@ -78,8 +78,8 @@ namespace RTCV.UI
 					dgvStockpile.Rows[CurrentSelectedIndex - 1].Selected = true;
 				}
 
-				dgvStockpile_CellClick(null, null);
-			}
+                dgvStockpile_CellClick(dgvStockpile, new DataGridViewCellEventArgs(0, dgvStockpile.SelectedRows[0].Index));
+            }
 			finally
 			{
 				btnPreviousItem.Visible = true;
@@ -108,7 +108,7 @@ namespace RTCV.UI
 					dgvStockpile.Rows[CurrentSelectedIndex + 1].Selected = true;
 				}
 
-				dgvStockpile_CellClick(null, null);
+				dgvStockpile_CellClick(dgvStockpile, new DataGridViewCellEventArgs(0, dgvStockpile.SelectedRows[0].Index));
 			}
 			finally
 			{
@@ -170,8 +170,7 @@ namespace RTCV.UI
 		}
 
 		private async void loadStockpile(string fileName)
-		{
-			var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
+        {
 			try
 			{
 
@@ -180,8 +179,8 @@ namespace RTCV.UI
 				SyncObjectSingleton.FormExecute(() =>
 				{
 					UICore.LockInterface(false, true);
-					S.GET<RTC_SaveProgress_Form>().Dock = DockStyle.Fill;
-					ghForm?.OpenSubForm(S.GET<RTC_SaveProgress_Form>());
+					S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
+                    UI_CoreForm.cfForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
 				});
 
 				await Task.Run(() =>
@@ -209,7 +208,7 @@ namespace RTCV.UI
 			{
 				SyncObjectSingleton.FormExecute(() =>
 				{
-					ghForm?.CloseSubForm();
+                    UI_CoreForm.cfForm?.CloseSubForm();
 					UICore.UnlockInterface();
 				});
 			}

@@ -21,6 +21,7 @@ namespace RTCV.UI
 		private static Timer killswitchSpamPreventTimer;
 		public static bool ShouldKillswitchFire = true;
 
+
 		public static bool Enabled
 		{
 			get

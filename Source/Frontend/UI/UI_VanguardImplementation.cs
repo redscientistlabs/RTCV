@@ -54,6 +54,7 @@ namespace RTCV.UI
 				{
 					case REMOTE_PUSHVANGUARDSPEC:
                         { 
+
 							if (!CorruptCore.RtcCore.Attached)
 								RTCV.NetCore.AllSpec.VanguardSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !CorruptCore.RtcCore.Attached);
 

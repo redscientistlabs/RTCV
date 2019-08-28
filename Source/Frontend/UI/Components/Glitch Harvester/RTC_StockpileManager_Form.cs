@@ -336,12 +336,12 @@ namespace RTCV.UI
 				SyncObjectSingleton.FormExecute(() =>
 				{
 					UICore.LockInterface(false, true);
-					S.GET<RTC_SaveProgress_Form>().Dock = DockStyle.Fill;
-					ghForm?.OpenSubForm(S.GET<RTC_SaveProgress_Form>());
+					S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
+					ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
 				});
 
                 await Task.Run(() =>
-				{
+                {
 					if (Stockpile.Load(dgvStockpile, filename))
 					{
 						SyncObjectSingleton.FormExecute(() =>
@@ -451,11 +451,14 @@ namespace RTCV.UI
 				SyncObjectSingleton.FormExecute(() =>
 				{
 					UICore.LockInterface(false, true);
-					S.GET<RTC_SaveProgress_Form>().Dock = DockStyle.Fill;
-					ghForm?.OpenSubForm(S.GET<RTC_SaveProgress_Form>());
+					S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
+					ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
 				});
 
-				await Task.Run(() => { saveStockpile(sks, false); });
+					await Task.Run(() =>
+                    {
+                       saveStockpile(sks, false);
+                    });
 			}
 			finally
 			{
@@ -489,8 +492,8 @@ namespace RTCV.UI
 				SyncObjectSingleton.FormExecute(() =>
 				{
 					UICore.LockInterface(false, true);
-					S.GET<RTC_SaveProgress_Form>().Dock = DockStyle.Fill;
-					ghForm?.OpenSubForm(S.GET<RTC_SaveProgress_Form>());
+					S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
+					ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
 				});
 
 				await Task.Run(() => { saveStockpile(sks, true); });

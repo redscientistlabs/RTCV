@@ -17,7 +17,7 @@ namespace RTCV.UI
         public Form subForm = null;
 		public Form blockerForm = null;
 
-        public UI_ShadowPanel(UI_CanvasForm _parentForm, Form reqForm)
+        public UI_ShadowPanel(UI_CanvasForm _parentForm, ISubForm reqForm)
         {
             InitializeComponent();
 			blockerForm = new Form
@@ -36,7 +36,7 @@ namespace RTCV.UI
             parentForm = _parentForm;
             UpdateBackground();
 
-            subForm = reqForm;
+            subForm = (Form)reqForm;
 
             UpdateSubForm();
 
@@ -67,6 +67,7 @@ namespace RTCV.UI
                 subForm.TopLevel = false;
                 pnContainer.Controls.Add(subForm);
                 subForm.Show();
+                ((ISubForm)subForm).OnShown();
             }
 
             if (subForm is ISubForm sf)
@@ -112,7 +113,7 @@ namespace RTCV.UI
 
         private void btnRight_Click(object sender, EventArgs e)
         {
-            //Fires SubForm_Ok() from Interface ISubForm then Exits SubForm Mode
+            //Fires SubForm_Ok() from Interface SubForm then Exits SubForm Mode
 
             if (subForm is ISubForm)
                 (subForm as ISubForm).SubForm_RightButton_Click();
@@ -122,7 +123,7 @@ namespace RTCV.UI
 
         private void btnLeft_Click(object sender, EventArgs e)
         {
-            //Fires SubForm_Cancel() from Interface ISubForm then Exits SubForm Mode
+            //Fires SubForm_Cancel() from Interface SubForm then Exits SubForm Mode
 
             if (subForm is ISubForm)
                 (subForm as ISubForm).SubForm_LeftButton_Click();

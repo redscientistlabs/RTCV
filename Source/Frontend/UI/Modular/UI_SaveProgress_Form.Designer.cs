@@ -1,6 +1,6 @@
 ﻿namespace RTCV.UI
 {
-    partial class RTC_SaveProgress_Form
+    partial class UI_SaveProgress_Form
     {
         /// <summary>
         /// Required designer variable.
@@ -52,7 +52,7 @@
             this.pbSave.Size = new System.Drawing.Size(446, 55);
             this.pbSave.TabIndex = 0;
             // 
-            // RTC_SaveProgress_Form
+            // UI_SaveProgress_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -64,7 +64,7 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MinimumSize = new System.Drawing.Size(470, 120);
-            this.Name = "RTC_SaveProgress_Form";
+            this.Name = "UI_SaveProgress_Form";
             this.Tag = "color:dark1";
             this.Text = "Save Progress";
             this.ResumeLayout(false);

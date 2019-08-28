@@ -16,22 +16,16 @@ using Newtonsoft.Json;
 
 namespace RTCV.UI
 {
-    public partial class RTC_SaveProgress_Form : Form, IAutoColorize, ISubForm
+    public partial class UI_SaveProgress_Form : Form, IAutoColorize, ISubForm
     {
-
-        public RTC_SaveProgress_Form()
+        public UI_SaveProgress_Form()
         {
             InitializeComponent();
 
             RtcCore.ProgressBarHandler += StockpileProgressBarHandler;
-            this.Shown += RTC_SaveProgress_Form_Shown;
         }
 
-        private void RTC_SaveProgress_Form_Shown(object sender, EventArgs e)
-        {
-            lbCurrentAction.Text = "Waiting";
-            pbSave.Value = 0;
-        }
+        
 
         private void StockpileProgressBarHandler(object source, ProgressBarEventArgs e)
 		{
@@ -57,5 +51,19 @@ namespace RTCV.UI
 		{
 			throw new NotImplementedException();
 		}
-	}
+
+        public void OnShown()
+        {
+            lbCurrentAction.Text = "Waiting";
+            pbSave.Value = 0;
+			UIConnector.ConnectionLostLockout.WaitOne();
+            Console.WriteLine("Thread id {0} got Mutex... (save)", AppDomain.GetCurrentThreadId());
+        }
+        public void OnHidden()
+        {
+			UIConnector.ConnectionLostLockout.ReleaseMutex();
+            Console.WriteLine("Thread id {0} released Mutex... (save)", AppDomain.GetCurrentThreadId());
+        }
+
+    }
 }
