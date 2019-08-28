@@ -361,7 +361,7 @@ namespace RTCV.CorruptCore
 		}
 
 		//Todo - get this out of the objects
-		public static bool Load(DataGridView dgvStockpile, string Filename = null, bool import = false)
+		public static bool Load(DataGridView dgvStockpile, string Filename, bool import = false)
         {
             decimal loadProgress = 0;
             decimal percentPerFile = 0;
@@ -378,23 +378,6 @@ namespace RTCV.CorruptCore
 				}
 			}
 
-			if (Filename == null)
-			{
-				OpenFileDialog ofd = new OpenFileDialog
-				{
-					DefaultExt = "sks",
-					Title = "Open Stockpile File",
-					Filter = "SKS files|*.sks",
-					RestoreDirectory = true
-				};
-				if (ofd.ShowDialog() == DialogResult.OK)
-				{
-					Filename = ofd.FileName;
-				}
-				else
-					return false;
-			}
-
 			if (!File.Exists(Filename))
 			{
 				MessageBox.Show("The Stockpile file wasn't found");
@@ -406,26 +389,27 @@ namespace RTCV.CorruptCore
 			var extractFolder = import ? "TEMP" : "SKS";
 
             //Extract the stockpile
-            RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs("Extracting Stockpile", loadProgress += 20));
+            RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs("Extracting Stockpile", loadProgress += 5));
             if (!Extract(Filename, Path.Combine("WORKING", extractFolder), "stockpile.json"))
 				return false;
 
 			//Read in the stockpile
 			try
-            {
-                RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs("Reading Stockpile", loadProgress += 20));
-                using (FileStream fs = File.Open(Path.Combine(RtcCore.workingDir, extractFolder, "stockpile.json"), FileMode.OpenOrCreate))
+			{
+				RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs("Reading Stockpile", loadProgress += 45));
+				using (FileStream fs = File.Open(Path.Combine(RtcCore.workingDir, extractFolder, "stockpile.json")
+					, FileMode.OpenOrCreate))
 				{
 					sks = JsonHelper.Deserialize<Stockpile>(fs);
 					fs.Close();
 				}
-
 			}
 			catch (Exception e)
 			{
 				MessageBox.Show("The Stockpile file could not be loaded" + e);
 				return false;
 			}
+
 
             RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs("Checking Compatibility", loadProgress += 5));
             //Check version/implementation compatibility
@@ -502,8 +486,11 @@ namespace RTCV.CorruptCore
             //Todo - Refactor this to get it out of the object
             //Populate the dgv
             RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Populating UI", loadProgress += 5));
-            foreach (StashKey key in sks.StashKeys)
-				dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.Note);
+			SyncObjectSingleton.FormExecute(() =>
+			{
+				foreach (StashKey key in sks.StashKeys)
+					dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.Note);
+            });
 
 
             RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Loading limiter lists", loadProgress += 5));

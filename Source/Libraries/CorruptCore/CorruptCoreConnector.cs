@@ -80,7 +80,7 @@ namespace RTCV.CorruptCore
 				//UI sent a copy of the CorruptCore spec
 				case REMOTE_PUSHCORRUPTCORESPEC:
 					SyncObjectSingleton.FormExecute(() =>
-					{
+					{ 
 						RTCV.NetCore.AllSpec.CorruptCoreSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
 						RTCV.NetCore.AllSpec.CorruptCoreSpec.SpecUpdated += (ob, eas) =>
 						{

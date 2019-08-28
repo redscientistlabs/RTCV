@@ -319,7 +319,7 @@ namespace RTCV.UI
             }
         }
 
-        private void LoadStockpile(string filename = null)
+        private async void LoadStockpile(string filename)
         {
             if (UnsavedEdits && MessageBox.Show("You have unsaved edits in the Glitch Harvester Stockpile. \n\n Are you sure you want to load without saving?",
                 "Unsaved edits in Stockpile", MessageBoxButtons.YesNo) == DialogResult.No)
@@ -327,18 +327,49 @@ namespace RTCV.UI
                 return;
             }
 
-            if (Stockpile.Load(dgvStockpile, filename))
-            {
-                btnSaveStockpile.Enabled = true;
-                RefreshNoteIcons();
-            }
+			var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
+			try
+			{
 
-            S.GET<RTC_StockpilePlayer_Form>().dgvStockpile.Rows.Clear();
+				//We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
+				//Thus, we want this to happen within the try block
+				SyncObjectSingleton.FormExecute(() =>
+				{
+					UICore.LockInterface(false, true);
+					S.GET<RTC_SaveProgress_Form>().Dock = DockStyle.Fill;
+					ghForm?.OpenSubForm(S.GET<RTC_SaveProgress_Form>());
+				});
 
-            dgvStockpile.ClearSelection();
-            StockpileManager_UISide.StockpileChanged();
+                await Task.Run(() =>
+				{
+					if (Stockpile.Load(dgvStockpile, filename))
+					{
+						SyncObjectSingleton.FormExecute(() =>
+						{
+							btnSaveStockpile.Enabled = true;
+							RefreshNoteIcons();
+						});
+					}
 
-            UnsavedEdits = false;
+					SyncObjectSingleton.FormExecute(() =>
+					{
+						S.GET<RTC_StockpilePlayer_Form>().dgvStockpile.Rows.Clear();
+
+						dgvStockpile.ClearSelection();
+						StockpileManager_UISide.StockpileChanged();
+
+						UnsavedEdits = false;
+					});
+				});
+			}
+			finally
+			{
+				SyncObjectSingleton.FormExecute(() =>
+				{
+					ghForm?.CloseSubForm();
+					UICore.UnlockInterface();
+				});
+			}
         }
 
         private void btnLoadStockpile_Click(object sender, MouseEventArgs e)
@@ -349,14 +380,20 @@ namespace RTCV.UI
 
             ContextMenuStrip loadMenuItems = new ContextMenuStrip();
             loadMenuItems.Items.Add("Load Stockpile", null, new EventHandler((ob, ev) =>
-            {
-                try
-                {
-                    LoadStockpile();
-                }
-                finally
-                {
-                }
+			{
+				string filename = "";
+				OpenFileDialog ofd = new OpenFileDialog
+				{
+					DefaultExt = "sks",
+					Title = "Open Stockpile File",
+					Filter = "SKS files|*.sks",
+					RestoreDirectory = true
+				};
+				if (ofd.ShowDialog() == DialogResult.OK)
+					filename = ofd.FileName;
+				else
+					return;
+                LoadStockpile(filename);
             }));
 
 
@@ -398,94 +435,74 @@ namespace RTCV.UI
             loadMenuItems.Show(this, locate);
         }
 
-        public void btnSaveStockpileAs_Click(object sender, EventArgs e)
+        public async void btnSaveStockpileAs_Click(object sender, EventArgs e)
         {
             if (dgvStockpile.Rows.Count == 0)
             {
                 MessageBox.Show("You cannot save the Stockpile because it is empty");
                 return;
             }
-
-
 			Stockpile sks = new Stockpile(dgvStockpile);
-			Task.Run(() =>
+			var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
+			try
 			{
-				var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
-				try
+				//We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
+				//Thus, we want this to happen within the try block
+				SyncObjectSingleton.FormExecute(() =>
 				{
-					var t = SaveAsync(sks, false);
+					UICore.LockInterface(false, true);
+					S.GET<RTC_SaveProgress_Form>().Dock = DockStyle.Fill;
+					ghForm?.OpenSubForm(S.GET<RTC_SaveProgress_Form>());
+				});
 
-					//We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
-					//Thus, we want this to happen within the try block
-					SyncObjectSingleton.FormExecute(() =>
-					{
-						UICore.LockInterface(false, true);
-						S.GET<RTC_SaveProgress_Form>().Dock = DockStyle.Fill;
-						ghForm?.OpenSubForm(S.GET<RTC_SaveProgress_Form>());
-					});
-
-					if (t.Result)
-					{
-						SyncObjectSingleton.FormExecute(() =>
-						{
-							sendCurrentStockpileToSKS();
-							UnsavedEdits = false;
-						});
-					}
-				}
-				finally
+				await Task.Run(() => { saveStockpile(sks, false); });
+			}
+			finally
+			{
+				SyncObjectSingleton.FormExecute(() =>
 				{
-					SyncObjectSingleton.FormExecute(() =>
-					{
-						ghForm?.CloseSubForm();
-						UICore.UnlockInterface();
-					});
-				}
-			});
+					ghForm?.CloseSubForm();
+					UICore.UnlockInterface();
+				});
+			}
 
         }
-		private async Task<bool> SaveAsync(Stockpile sks, bool isQuickSave)
-		{
-			return await Task.Run(() => Stockpile.Save(sks, RTCV.NetCore.Params.IsParamSet("INCLUDE_REFERENCED_FILES"), isQuickSave, RTCV.NetCore.Params.IsParamSet("COMPRESS_STOCKPILE")));
-		}
 
-        private void btnSaveStockpile_Click(object sender, EventArgs e)
+		private void saveStockpile(Stockpile sks, bool isQuickSave)
+		{
+			if (Stockpile.Save(sks, RTCV.NetCore.Params.IsParamSet("INCLUDE_REFERENCED_FILES"), isQuickSave, RTCV.NetCore.Params.IsParamSet("COMPRESS_STOCKPILE")))
+				SyncObjectSingleton.FormExecute(() =>
+				{
+					sendCurrentStockpileToSKS();
+					UnsavedEdits = false;
+				});
+        }
+
+        private async void btnSaveStockpile_Click(object sender, EventArgs e)
         {
 			Stockpile sks = new Stockpile(dgvStockpile);
-			Task.Run(() =>
-			{
-				var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
-                try
-                {
-                    var t = SaveAsync(sks, true);
-
-					//We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
-					//Thus, we want this to happen within the try block
-					SyncObjectSingleton.FormExecute(() =>
-					{
-						UICore.LockInterface(false, true);
-						S.GET<RTC_SaveProgress_Form>().Dock = DockStyle.Fill;
-						ghForm?.OpenSubForm(S.GET<RTC_SaveProgress_Form>());
-					});
-					
-                    if (t.Result)
-					{
-						SyncObjectSingleton.FormExecute(() =>
-						{
-							sendCurrentStockpileToSKS();
-							UnsavedEdits = false;
-						});
-					}
-				}
-				finally
+			var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
+            try
+            {
+				//We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
+				//Thus, we want this to happen within the try block
+				SyncObjectSingleton.FormExecute(() =>
 				{
-					SyncObjectSingleton.FormExecute(() =>
-					{
-						ghForm?.CloseSubForm();
-						UICore.UnlockInterface();
-                    });
-                }
-			});
+					UICore.LockInterface(false, true);
+					S.GET<RTC_SaveProgress_Form>().Dock = DockStyle.Fill;
+					ghForm?.OpenSubForm(S.GET<RTC_SaveProgress_Form>());
+				});
+
+				await Task.Run(() => { saveStockpile(sks, true); });
+			}
+			finally
+			{
+				SyncObjectSingleton.FormExecute(() =>
+				{
+					ghForm?.CloseSubForm();
+					UICore.UnlockInterface();
+                });
+            }
 		}
 
         private void sendCurrentStockpileToSKS()

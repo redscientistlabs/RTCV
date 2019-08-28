@@ -5,6 +5,7 @@ using System.IO;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
 using System.Linq;
+using System.Threading.Tasks;
 using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
 using RTCV.NetCore;
@@ -168,31 +169,80 @@ namespace RTCV.UI
 			}
 		}
 
+		private async void loadStockpile(string fileName)
+		{
+			var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
+			try
+			{
+
+				//We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
+				//Thus, we want this to happen within the try block
+				SyncObjectSingleton.FormExecute(() =>
+				{
+					UICore.LockInterface(false, true);
+					S.GET<RTC_SaveProgress_Form>().Dock = DockStyle.Fill;
+					ghForm?.OpenSubForm(S.GET<RTC_SaveProgress_Form>());
+				});
+
+				await Task.Run(() =>
+				{
+					if (Stockpile.Load(dgvStockpile, fileName))
+					{
+						SyncObjectSingleton.FormExecute(() => S.GET<RTC_StockpileManager_Form>().dgvStockpile.Rows.Clear());
+					}
+
+					SyncObjectSingleton.FormExecute(() =>
+					{
+
+						List<StashKey> keys = dgvStockpile.Rows.Cast<DataGridViewRow>().Select(x => (StashKey)x.Cells["Item"].Value).ToList();
+						foreach (var sk in keys)
+						{
+							StockpileManager_UISide.CheckAndFixMissingReference(sk, false, keys);
+						}
+
+						dgvStockpile.ClearSelection();
+						RefreshNoteIcons();
+                    });
+				});
+			}
+			finally
+			{
+				SyncObjectSingleton.FormExecute(() =>
+				{
+					ghForm?.CloseSubForm();
+					UICore.UnlockInterface();
+				});
+			}
+        }
+
 		private void btnLoadStockpile_MouseDown(object sender, MouseEventArgs e)
 		{
 			Point locate = new Point((sender as Control).Location.X + e.Location.X, (sender as Control).Location.Y + e.Location.Y);
 
 			ContextMenuStrip LoadMenuItems = new ContextMenuStrip();
-			LoadMenuItems.Items.Add("Load Stockpile", null, new EventHandler((ob, ev) =>
+			LoadMenuItems.Items.Add("Load Stockpile", null, new EventHandler(async (ob, ev)  => 
 			{
 				try
 				{
 					DontLoadSelectedStockpile = true;
 
-					if (Stockpile.Load(dgvStockpile))
+					string filename = "";
+					OpenFileDialog ofd = new OpenFileDialog
 					{
-                        S.GET<RTC_StockpileManager_Form>().dgvStockpile.Rows.Clear();
+						DefaultExt = "sks",
+						Title = "Open Stockpile File",
+						Filter = "SKS files|*.sks",
+						RestoreDirectory = true
+					};
+					if (ofd.ShowDialog() == DialogResult.OK)
+					{
+						filename = ofd.FileName;
 					}
+					else
+						return;
 
-                    List<StashKey> keys = dgvStockpile.Rows.Cast<DataGridViewRow>().Select(x => (StashKey) x.Cells["Item"].Value).ToList();
-                    foreach (var sk in keys)
-                    {
-                        StockpileManager_UISide.CheckAndFixMissingReference(sk, false, keys);
-                    }
-
-					dgvStockpile.ClearSelection();
-					RefreshNoteIcons();
-				}
+					await Task.Run(() => loadStockpile(filename));
+                }
 				catch (Exception ex)
 				{
 					string additionalInfo = "Loading Failure ->\n\n";

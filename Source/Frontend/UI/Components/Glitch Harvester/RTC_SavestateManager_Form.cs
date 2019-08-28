@@ -8,6 +8,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using RTCV.CorruptCore;
 using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
@@ -53,34 +54,10 @@ namespace RTCV.UI
 
         }
 
-        private void loadSavestateList(bool import = false, string fileName = null)
-        {
-            decimal currentProgress = 0;
-            decimal percentPerFile = 0;
-
-            if (fileName == null)
-            {
-                OpenFileDialog ofd = new OpenFileDialog
-                {
-                    DefaultExt = "ssk",
-                    Title = "Open Savestate Keys File",
-                    Filter = "SSK files|*.ssk",
-                    RestoreDirectory = true
-                };
-                if (ofd.ShowDialog() == DialogResult.OK)
-                {
-                    fileName = ofd.FileName;
-                }
-                else
-                    return;
-            }
-
-            if (!File.Exists(fileName))
-            {
-                MessageBox.Show("The Savestate Keys file wasn't found");
-                return;
-            }
-
+		private void loadSSK(bool import, string fileName)
+		{
+			decimal currentProgress = 0;
+			decimal percentPerFile = 0;
             SaveStateKeys ssk;
 
             if (!import)
@@ -127,7 +104,7 @@ namespace RTCV.UI
                 return;
             }
 
-            var s = (string) RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "ERROR";
+            var s = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "ERROR";
             if (!String.IsNullOrEmpty(ssk.VanguardImplementation) && !ssk.VanguardImplementation.Equals(s, StringComparison.OrdinalIgnoreCase) && ssk.VanguardImplementation != "ERROR")
             {
                 MessageBox.Show($"The ssk you loaded is for a different Vanguard implementation.\nThe ssk reported {ssk.VanguardImplementation} but you're connected to {s}.\nThis is a fatal error. Aborting load.");
@@ -170,7 +147,7 @@ namespace RTCV.UI
                     }
                 }
 
-                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Emptying TEMP", currentProgress +=5));
+                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Emptying TEMP", currentProgress += 5));
                 Stockpile.EmptyFolder(Path.Combine("WORKING", "TEMP"));
             }
 
@@ -191,10 +168,62 @@ namespace RTCV.UI
 
                 key.StateFilename = newStatePath;
                 key.StateShortFilename = Path.GetFileName(newStatePath);
-
-                savestateBindingSource.Add(new SaveStateKey(key, ssk.Text[i]));
+				
+				SyncObjectSingleton.FormExecute(() => savestateBindingSource.Add(new SaveStateKey(key, ssk.Text[i])));
+                
             }
             RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Done", 100));
+        }
+
+        private async void loadSavestateList(bool import = false, string fileName = null)
+        {
+            if (fileName == null)
+            {
+                OpenFileDialog ofd = new OpenFileDialog
+                {
+                    DefaultExt = "ssk",
+                    Title = "Open Savestate Keys File",
+                    Filter = "SSK files|*.ssk",
+                    RestoreDirectory = true
+                };
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    fileName = ofd.FileName;
+                }
+                else
+                    return;
+            }
+            if (!File.Exists(fileName))
+            {
+                MessageBox.Show("The Savestate Keys file wasn't found");
+                return;
+            }
+
+			var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
+			try
+			{
+				//We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
+				//Thus, we want this to happen within the try block
+				SyncObjectSingleton.FormExecute(() =>
+				{
+					UICore.LockInterface(false, true);
+					S.GET<RTC_SaveProgress_Form>().Dock = DockStyle.Fill;
+					ghForm?.OpenSubForm(S.GET<RTC_SaveProgress_Form>());
+				});
+
+				await Task.Run(() =>
+				{
+					loadSSK(import, fileName);
+				});
+			}
+			finally
+			{
+				SyncObjectSingleton.FormExecute(() =>
+				{
+					ghForm?.CloseSubForm();
+					UICore.UnlockInterface();
+				});
+			}
         }
 
         private void commitUsedStatesToSession()
@@ -263,39 +292,17 @@ namespace RTCV.UI
             }
         }
 
-        private void btnSaveSavestateList_Click(object sender, EventArgs e)
-        {
-            decimal currentProgress = 0;
-            decimal percentPerFile = 0;
-            try
-            {
+		private void saveSSK(string path)
+		{
+			decimal currentProgress = 0;
+			try
+			{
                 SaveStateKeys ssk = new SaveStateKeys();
-
                 foreach (SaveStateKey x in savestateBindingSource.List)
                 {
                     ssk.StashKeys.Add(x.StashKey);
                     ssk.Text.Add(x.Text);
                 }
-
-                string Filename;
-                string ShortFilename;
-
-                SaveFileDialog saveFileDialog1 = new SaveFileDialog
-                {
-                    DefaultExt = "ssk",
-                    Title = "Savestate Keys File",
-                    Filter = "SSK files|*.ssk",
-                    RestoreDirectory = true
-                };
-
-                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    Filename = saveFileDialog1.FileName;
-                    ShortFilename = Path.GetFileName(Filename);
-                }
-                else
-                    return;
-
                 RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Prepping TEMP", currentProgress += 5));
                 //clean temp folder
                 Stockpile.EmptyFolder(Path.Combine("WORKING", "TEMP"));
@@ -304,8 +311,8 @@ namespace RTCV.UI
                 RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Committing used states", currentProgress += 5));
                 commitUsedStatesToSession();
 
-                percentPerFile = 30m / ssk.StashKeys.Count;
-                foreach(var key in ssk.StashKeys)
+                var percentPerFile = 30m / ssk.StashKeys.Count;
+                foreach (var key in ssk.StashKeys)
                 {
                     RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Copying {key.GameName + "." + key.ParentKey + ".timejump.State"} to TEMP", currentProgress += percentPerFile));
                     if (key == null)
@@ -321,7 +328,7 @@ namespace RTCV.UI
                     else
                     {
 
-                        MessageBox.Show("Couldn't find savestate " + statePath + "!\n\n. This is savestate index " +  ssk.StashKeys.IndexOf(key) + 1 + ".\nAborting save");
+                        MessageBox.Show("Couldn't find savestate " + statePath + "!\n\n. This is savestate index " + ssk.StashKeys.IndexOf(key) + 1 + ".\nAborting save");
                         Stockpile.EmptyFolder(Path.Combine("WORKING", "TEMP"));
                         return;
                     }
@@ -332,7 +339,7 @@ namespace RTCV.UI
                 //Use two separate loops here in case the first one aborts. We don't want to update the StateLocation unless we know we're good
                 foreach (var key in ssk.StashKeys)
                 {
-                    RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Updating {key} location", currentProgress += percentPerFile));  
+                    RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Updating {key} location", currentProgress += percentPerFile));
                     if (key == null)
                         continue;
                     key.StateLocation = StashKeySavestateLocation.SSK;
@@ -346,7 +353,7 @@ namespace RTCV.UI
                     fs.Close();
                 }
 
-                string tempFilename = Filename + ".temp";
+                string tempFilename = path + ".temp";
                 //If there's already a temp file from a previous failed save, delete it
                 try
                 {
@@ -364,11 +371,11 @@ namespace RTCV.UI
                 RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Creating SSK", currentProgress += 20));
                 System.IO.Compression.ZipFile.CreateFromDirectory(tempFolderPath, tempFilename, System.IO.Compression.CompressionLevel.Fastest, false);
 
-                if (File.Exists(Filename))
-                    File.Delete(Filename);
+                if (File.Exists(path))
+                    File.Delete(path);
 
                 RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Moving SSK to destination", currentProgress += 5));
-                File.Move(tempFilename, Filename);
+                File.Move(tempFilename, path);
 
                 //Move all the files from temp into SSK
                 RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Emptying SSK", currentProgress += 5));
@@ -381,7 +388,7 @@ namespace RTCV.UI
                     RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Moving {Path.GetFileName(file)} to SSK", currentProgress += percentPerFile));
                     File.Move(file, Path.Combine(CorruptCore.RtcCore.workingDir, "SSK", Path.GetFileName(file)));
                 }
-                    
+
             }
             catch (Exception ex)
             {
@@ -394,9 +401,54 @@ namespace RTCV.UI
 
                 return;
             }
-        }
+		}
 
-        internal void DisableFeature()
+
+        private async void btnSaveSavestateList_Click(object sender, EventArgs e)
+		{
+			string filename;
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog
+			{
+				DefaultExt = "ssk",
+				Title = "Savestate Keys File",
+				Filter = "SSK files|*.ssk",
+				RestoreDirectory = true
+			};
+			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+			{
+				filename = saveFileDialog1.FileName;
+			}
+			else
+				return;
+
+			var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
+			try
+			{
+				//We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
+				//Thus, we want this to happen within the try block
+				SyncObjectSingleton.FormExecute(() =>
+				{
+					UICore.LockInterface(false, true);
+					S.GET<RTC_SaveProgress_Form>().Dock = DockStyle.Fill;
+					ghForm?.OpenSubForm(S.GET<RTC_SaveProgress_Form>());
+				});
+
+				await Task.Run(() =>
+				{
+					saveSSK(filename);
+                });
+			}
+			finally
+			{
+				SyncObjectSingleton.FormExecute(() =>
+				{
+					ghForm?.CloseSubForm();
+					UICore.UnlockInterface();
+				});
+			}
+		}
+
+		internal void DisableFeature()
         {
             Controls.Clear();
         }

@@ -391,9 +391,10 @@ namespace RTCV.CorruptCore
 
 			if (RtcCore.LimiterListBindingSource.Any(x => x.Name == name))
 				name = name + "_1";
-
-			RtcCore.LimiterListBindingSource.Add(new ComboBoxItem<String>(name, hash));
-			RtcCore.ValueListBindingSource.Add((new ComboBoxItem<String>(name, hash)));
+			SyncObjectSingleton.FormExecute(() =>
+			{RtcCore.LimiterListBindingSource.Add(new ComboBoxItem<String>(name, hash));
+				RtcCore.ValueListBindingSource.Add((new ComboBoxItem<String>(name, hash)));
+            });
 			return true;
 		}
 

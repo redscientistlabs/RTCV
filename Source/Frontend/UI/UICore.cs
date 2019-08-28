@@ -283,7 +283,7 @@ namespace RTCV.UI
                 ib.blockPanel.BringToFront();
 
                 var bmp = c.getFormScreenShot();
-                bmp.Tint(Color.FromArgb(0x7F, UICore.Dark4Color));
+                bmp.Tint(Color.FromArgb(0xCC, UICore.Dark4Color));
 
                 ib.blockPanel.BackgroundImage = bmp;
             }
