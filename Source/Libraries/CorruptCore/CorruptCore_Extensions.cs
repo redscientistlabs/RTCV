@@ -944,7 +944,6 @@ namespace RTCV.CorruptCore
     {
         public static T Clone<T>(T source)
         {
-            //Todo - Once ceras updates, replace this to be static and then just deal with clearing the memory after
             CerasSerializer ser = new CerasSerializer(new SerializerConfig()
             {
                 DefaultTargets = TargetMember.All
