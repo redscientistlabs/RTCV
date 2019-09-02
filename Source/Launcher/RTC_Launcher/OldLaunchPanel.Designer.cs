@@ -43,6 +43,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lbSelectedVersion = new System.Windows.Forms.Label();
+            this.lbError = new System.Windows.Forms.Label();
             this.pnVersionBatchFiles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -50,6 +51,7 @@
             // pnVersionBatchFiles
             // 
             this.pnVersionBatchFiles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.pnVersionBatchFiles.Controls.Add(this.lbError);
             this.pnVersionBatchFiles.Controls.Add(this.btnBatchfile10);
             this.pnVersionBatchFiles.Controls.Add(this.btnBatchfile09);
             this.pnVersionBatchFiles.Controls.Add(this.btnBatchfile08);
@@ -318,6 +320,18 @@
             this.lbSelectedVersion.Text = "Program Selector";
             this.lbSelectedVersion.Visible = false;
             // 
+            // lbError
+            // 
+            this.lbError.AutoSize = true;
+            this.lbError.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.lbError.ForeColor = System.Drawing.Color.White;
+            this.lbError.Location = new System.Drawing.Point(18, 162);
+            this.lbError.Name = "lbError";
+            this.lbError.Size = new System.Drawing.Size(291, 42);
+            this.lbError.TabIndex = 130;
+            this.lbError.Text = "RTC Files missing.\r\nPlease re-download the selected version.";
+            this.lbError.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
             // OldLaunchPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -331,6 +345,7 @@
             this.Text = "OldLaunchPanel";
             this.Load += new System.EventHandler(this.OldLaunchPanel_Load);
             this.pnVersionBatchFiles.ResumeLayout(false);
+            this.pnVersionBatchFiles.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -354,5 +369,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.Label lbSelectedVersion;
+        private System.Windows.Forms.Label lbError;
     }
 }
