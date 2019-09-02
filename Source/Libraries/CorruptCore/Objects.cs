@@ -389,7 +389,7 @@ namespace RTCV.CorruptCore
 			var extractFolder = import ? "TEMP" : "SKS";
 
             //Extract the stockpile
-            RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs("Extracting Stockpile", loadProgress += 5));
+            RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs("Extracting Stockpile (progress not reported during extraction)", loadProgress += 5));
             if (!Extract(Filename, Path.Combine("WORKING", extractFolder), "stockpile.json"))
 				return false;
 
