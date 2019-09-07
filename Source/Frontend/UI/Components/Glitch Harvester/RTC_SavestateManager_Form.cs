@@ -115,7 +115,7 @@ namespace RTCV.UI
             {
                 var allCopied = new List<string>();
                 var files = Directory.GetFiles(Path.Combine(RtcCore.workingDir, "TEMP"));
-                percentPerFile = 20m / files.Length;
+                percentPerFile = 20m / (files.Length + 1);
                 //Copy from temp to sks
                 foreach (string file in files)
                 {
@@ -151,7 +151,7 @@ namespace RTCV.UI
                 Stockpile.EmptyFolder(Path.Combine("WORKING", "TEMP"));
             }
 
-            percentPerFile = 20m / ssk.StashKeys.Count;
+            percentPerFile = 20m / (ssk.StashKeys.Count + 1);
             for (var i = 0; i < ssk.StashKeys.Count; i++)
             {
                 var key = ssk.StashKeys[i];
@@ -311,7 +311,7 @@ namespace RTCV.UI
                 RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Committing used states", currentProgress += 5));
                 commitUsedStatesToSession();
 
-                var percentPerFile = 30m / ssk.StashKeys.Count;
+                var percentPerFile = 30m / (ssk.StashKeys.Count + 1);
                 foreach (var key in ssk.StashKeys)
                 {
                     RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Copying {key.GameName + "." + key.ParentKey + ".timejump.State"} to TEMP", currentProgress += percentPerFile));
@@ -335,7 +335,7 @@ namespace RTCV.UI
 
                 }
 
-                percentPerFile = 10m / ssk.StashKeys.Count;
+                percentPerFile = 10m / (ssk.StashKeys.Count + 1);
                 //Use two separate loops here in case the first one aborts. We don't want to update the StateLocation unless we know we're good
                 foreach (var key in ssk.StashKeys)
                 {

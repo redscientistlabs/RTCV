@@ -159,7 +159,7 @@ namespace RTCV.CorruptCore
                     }
                 }
 
-                percentPerFile = 20m / allRoms.Count;
+                percentPerFile = 20m / (allRoms.Count + 1);
                 //populating temp folder with roms
                 foreach (string str in allRoms)
                 {
@@ -210,7 +210,7 @@ namespace RTCV.CorruptCore
 
             if((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] ?? false)
             {
-                percentPerFile = (20m) / sks.StashKeys.Count;
+                percentPerFile = (20m) / (sks.StashKeys.Count + 1);
                 //Copy all the savestates
                 foreach (StashKey key in sks.StashKeys)
                 {
@@ -303,8 +303,9 @@ namespace RTCV.CorruptCore
 				MessageBox.Show("Unable to empty the stockpile folder. There's probably something locking a file inside it (iso based game loaded?)\n. Your stockpile is saved, but your current session is bunk.\nRe-load the file");
 			}
 
-            percentPerFile = (10m) / allRoms.Count;
-            foreach (string file in Directory.GetFiles(Path.Combine(RtcCore.workingDir, "TEMP")))
+			var files = Directory.GetFiles(Path.Combine(RtcCore.workingDir, "TEMP"));
+            percentPerFile = (10m) / (files.Length + 1);
+            foreach (var file in files)
             {
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Copying limiter lists to stockpile", saveProgress += percentPerFile));
                 try
@@ -323,7 +324,7 @@ namespace RTCV.CorruptCore
             }
 
             //Update savestate location info 
-            percentPerFile = (5m) / sks.StashKeys.Count;
+            percentPerFile = (5m) / (sks.StashKeys.Count + 1);
             foreach (StashKey sk in sks.StashKeys)
             {
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Updating StashKeySaveState Location for {sk.Alias}", saveProgress += percentPerFile));
@@ -396,7 +397,7 @@ namespace RTCV.CorruptCore
 				var allCopied = new List<string>();
                 //Copy from temp to sks
                 var files = Directory.GetFiles(Path.Combine(RtcCore.workingDir, "TEMP"));
-                percentPerFile = 20m / files.Length;
+                percentPerFile = 20m / (files.Length + 1);
                 foreach (string file in files)
 				{
                     RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Merging {Path.GetFileNameWithoutExtension(file)} to stockpile", loadProgress += percentPerFile));
@@ -443,7 +444,7 @@ namespace RTCV.CorruptCore
 			}
 
             //Set up the correct paths
-            percentPerFile = 20m / sks.StashKeys.Count;
+            percentPerFile = 20m / (sks.StashKeys.Count + 1);
             foreach (StashKey t in sks.StashKeys)
 			{
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Fixing up paths for {t.Alias}", loadProgress += percentPerFile));
