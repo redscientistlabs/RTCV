@@ -513,7 +513,7 @@ namespace RTCV.UI
 					ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
 				});
 
-				await Task.Run(() => { saveStockpile(sks, sks.Filename); });
+				await Task.Run(() => { saveStockpile(sks, StockpileManager_UISide.CurrentStockpile.Filename); });
 			}
 			finally
 			{
