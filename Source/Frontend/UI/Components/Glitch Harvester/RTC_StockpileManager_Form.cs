@@ -472,10 +472,10 @@ namespace RTCV.UI
 					ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
 				});
 
-					await Task.Run(() =>
-                    {
-                       saveStockpile(sks, path);
-                    });
+				await Task.Run(() =>
+                {
+                   saveStockpile(sks, path);
+                });
 			}
 			finally
 			{
@@ -494,7 +494,8 @@ namespace RTCV.UI
 				{
 					sendCurrentStockpileToSKS();
 					UnsavedEdits = false;
-				});
+                    btnSaveStockpile.Enabled = true;
+                });
         }
 
         private async void btnSaveStockpile_Click(object sender, EventArgs e)
