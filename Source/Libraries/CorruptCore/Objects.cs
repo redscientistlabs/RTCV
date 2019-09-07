@@ -49,12 +49,7 @@ namespace RTCV.CorruptCore
 			return Name ?? string.Empty;
 		}
 
-		public void Save(bool isQuickSave = false)
-		{
-			Save(this, isQuickSave);
-		}
-
-		public static bool Save(Stockpile sks, bool includeReferencedFiles = false, bool isQuickSave = false, bool compress = true)
+		public static bool Save(Stockpile sks, string filename, bool includeReferencedFiles = false, bool compress = true)
         {
             decimal saveProgress = 0;
             decimal percentPerFile = 0;
@@ -77,33 +72,13 @@ namespace RTCV.CorruptCore
 				}
 			}
 
-			if (!isQuickSave)
-			{
-				SaveFileDialog saveFileDialog1 = new SaveFileDialog
-				{
-					DefaultExt = "sks",
-					Title = "Save Stockpile File",
-					Filter = "SKS files|*.sks",
-					RestoreDirectory = true
-				};
 
-				if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-				{
-					sks.Filename = saveFileDialog1.FileName;
-					sks.ShortFilename = Path.GetFileName(sks.Filename);
-				}
-				else
-					return false;
-			}
-			else
-			{
-				sks.Filename = StockpileManager_UISide.CurrentStockpile.Filename;
-				sks.ShortFilename = StockpileManager_UISide.CurrentStockpile.ShortFilename;
-			}
+			sks.Filename = filename;
+			sks.ShortFilename = Path.GetFileName(sks.Filename);
 
 
-			//clean temp folder
-			try
+            //clean temp folder
+            try
             {
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs("Emptying TEMP", saveProgress+=2));
                 EmptyFolder(Path.Combine("WORKING", "TEMP"));

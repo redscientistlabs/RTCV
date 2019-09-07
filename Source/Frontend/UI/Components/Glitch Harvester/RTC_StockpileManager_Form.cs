@@ -442,6 +442,23 @@ namespace RTCV.UI
                 MessageBox.Show("You cannot save the Stockpile because it is empty");
                 return;
             }
+
+			string path = "";
+			SaveFileDialog saveFileDialog1 = new SaveFileDialog
+			{
+				DefaultExt = "sks",
+				Title = "Save Stockpile File",
+				Filter = "SKS files|*.sks",
+				RestoreDirectory = true
+			};
+
+			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+			{
+				path = saveFileDialog1.FileName;
+			}
+			else
+				return;
+
 			Stockpile sks = new Stockpile(dgvStockpile);
 			var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
 			try
@@ -457,7 +474,7 @@ namespace RTCV.UI
 
 					await Task.Run(() =>
                     {
-                       saveStockpile(sks, false);
+                       saveStockpile(sks, path);
                     });
 			}
 			finally
@@ -470,10 +487,9 @@ namespace RTCV.UI
 			}
 
         }
-
-		private void saveStockpile(Stockpile sks, bool isQuickSave)
+		private void saveStockpile(Stockpile sks, string path)
 		{
-			if (Stockpile.Save(sks, RTCV.NetCore.Params.IsParamSet("INCLUDE_REFERENCED_FILES"), isQuickSave, RTCV.NetCore.Params.IsParamSet("COMPRESS_STOCKPILE")))
+			if (Stockpile.Save(sks, path, RTCV.NetCore.Params.IsParamSet("INCLUDE_REFERENCED_FILES"), RTCV.NetCore.Params.IsParamSet("COMPRESS_STOCKPILE")))
 				SyncObjectSingleton.FormExecute(() =>
 				{
 					sendCurrentStockpileToSKS();
@@ -496,7 +512,7 @@ namespace RTCV.UI
 					ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
 				});
 
-				await Task.Run(() => { saveStockpile(sks, true); });
+				await Task.Run(() => { saveStockpile(sks, sks.Filename); });
 			}
 			finally
 			{
