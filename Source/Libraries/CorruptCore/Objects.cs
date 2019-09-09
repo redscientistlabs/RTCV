@@ -195,18 +195,28 @@ namespace RTCV.CorruptCore
                 }
             }
 			else
-			{
-				// We need to handle if they aren't including referenced files but the file is within the working dir where they'll get deleted (temp, sks, etc)
-                foreach (StashKey key in sks.StashKeys)
-				{
-					string title = "Reference found in RTC dir";
-					string message = $"Can't save with file {key.RomFilename}\nGame name: {key.GameName}\n\nThis file appears to be in temporary storage (e.g. loaded from a stockpile).\nTo save without references, you will need to provide a replacement from outside the RTC's working directory.";
-                    while(CorruptCore_Extensions.IsOrIsSubDirectoryOf( Path.GetDirectoryName(key.RomFilename), RtcCore.workingDir)) // Make sure they don't give a new file within working
-						if (!StockpileManager_UISide.CheckAndFixMissingReference(key, true, sks.StashKeys, title, message))
-							return false;
-				}
-					
-			}
+            {
+                bool failure = false;
+                //Gotta do this on the UI thread.
+                SyncObjectSingleton.FormExecute(() =>
+                {
+                    // We need to handle if they aren't including referenced files but the file is within the working dir where they'll get deleted (temp, sks, etc)
+                    foreach (StashKey key in sks.StashKeys)
+                    {
+                        string title = "Reference found in RTC dir";
+                        string message = $"Can't save with file {key.RomFilename}\nGame name: {key.GameName}\n\nThis file appears to be in temporary storage (e.g. loaded from a stockpile).\nTo save without references, you will need to provide a replacement from outside the RTC's working directory.";
+                        while (CorruptCore_Extensions.IsOrIsSubDirectoryOf(Path.GetDirectoryName(key.RomFilename), RtcCore.workingDir)) // Make sure they don't give a new file within working
+                            if (!StockpileManager_UISide.CheckAndFixMissingReference(key, true, sks.StashKeys, title, message))
+                            {
+                                failure = true;
+                                return;
+                            }
+                    }
+                });
+
+                if (failure)
+                    return false;
+            }
 
             if((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] ?? false)
             {
