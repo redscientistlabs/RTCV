@@ -355,7 +355,7 @@ namespace RTCV.UI.Input
 
 					}
 
-                    bool allowInput = (bool?) RTCV.NetCore.AllSpec.UISpec[NetcoreCommands.RTC_INFOCUS] ?? true;
+                    bool allowInput = ((bool?)RTCV.NetCore.AllSpec.UISpec?[NetcoreCommands.RTC_INFOCUS] ?? true) || ((bool?)RTCV.NetCore.AllSpec.VanguardSpec?[NetcoreCommands.EMU_INFOCUS] ?? true);
 
                     bool swallow = !allowInput;
 

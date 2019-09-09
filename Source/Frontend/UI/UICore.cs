@@ -176,7 +176,7 @@ namespace RTCV.UI
 
             bool previousState = (bool?)RTCV.NetCore.AllSpec.UISpec[RTC_INFOCUS] ?? false;
             //bool currentState = forceSet ?? isAnyRTCFormFocused();
-            bool currentState = forceSet ?? true;   
+            bool currentState = (Form.ActiveForm != null && forceSet == null) || (forceSet ?? false);
 
             if (previousState != currentState)
 			{

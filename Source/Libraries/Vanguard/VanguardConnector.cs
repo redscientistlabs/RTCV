@@ -1,10 +1,7 @@
-﻿using RTCV.NetCore;
+﻿using RTCV.CorruptCore;
+using RTCV.NetCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using RTCV.CorruptCore;
-using System.Windows.Forms;
 using NetworkSide = RTCV.NetCore.NetworkSide;
 
 namespace RTCV.Vanguard
