@@ -24,7 +24,20 @@ namespace RTCV.CorruptCore
 
 		public static Dictionary<string, VirtualMemoryDomain> VmdPool = new Dictionary<string, VirtualMemoryDomain>();
 
-		public static PartialSpec getDefaultPartial()
+        public static Dictionary<string, MemoryInterface> AllMemoryInterfaces
+        {
+            get
+            {
+                var d = new Dictionary<string, MemoryInterface>();
+                foreach (var item in MemoryInterfaces)
+                    d[item.Key] = item.Value;
+
+                foreach (var item in VmdPool)
+                    d[item.Key] = item.Value;
+                return d;
+            }
+        }
+        public static PartialSpec getDefaultPartial()
 		{
 			var partial = new PartialSpec("RTCSpec");
 
@@ -355,7 +368,12 @@ namespace RTCV.CorruptCore
 
 		public abstract void PokeByte(long address, byte value);
 
-		public MemoryInterface()
+        private MemoryInterface this[string name]
+        {
+            get => this;
+        }
+
+        public MemoryInterface()
 		{
 
 		}
@@ -708,66 +726,108 @@ namespace RTCV.CorruptCore
 	}
 
 
-	[Serializable]
-	[Ceras.MemberConfig(TargetMember.All)]
-	public sealed class MemoryDomainProxy : MemoryInterface
-	{
-		[NonSerialized , Ceras.Exclude]
-		public IMemoryDomain MD = null;
-		public override long Size { get; set; }
-		public MemoryDomainProxy(IMemoryDomain _md)
-		{
-			MD = _md;
-			Size = MD.Size;
+    [Serializable]
+    [Ceras.MemberConfig(TargetMember.All)]
+    public sealed class MemoryDomainProxy : MemoryInterface
+    {
+        [NonSerialized, Ceras.Exclude]
+        public IMemoryDomain MD = null;
+        public override long Size { get; set; }
+        public MemoryDomainProxy(IMemoryDomain _md)
+        {
+            MD = _md;
+            Size = MD.Size;
 
-			Name = MD.ToString();
+            Name = MD.ToString();
 
 
-			WordSize = MD.WordSize;
-			Name = MD.ToString();
-			BigEndian = MD.BigEndian;
-		}
-		public MemoryDomainProxy()
-		{
-		}
-		public override string ToString()
-		{
-			return Name;
-		}
+            WordSize = MD.WordSize;
+            Name = MD.ToString();
+            BigEndian = MD.BigEndian;
+        }
+        public MemoryDomainProxy()
+        {
+        }
+        public override string ToString()
+        {
+            return Name;
+        }
 
-		public override byte[] GetDump()
-		{
-			return PeekBytes(0, Size);
-		}
+        public override byte[] GetDump()
+        {
+            return PeekBytes(0, Size);
+        }
 
-		public override byte[] PeekBytes(long startAddress, long endAddress, bool raw = true)
-		{
-			//endAddress is exclusive
-			List<byte> data = new List<byte>();
-			for (long i = startAddress; i < endAddress; i++)
-				data.Add(PeekByte(i));
+        public override byte[] PeekBytes(long startAddress, long endAddress, bool raw = true)
+        {
+            //endAddress is exclusive
+            List<byte> data = new List<byte>();
+            for (long i = startAddress; i < endAddress; i++)
+                data.Add(PeekByte(i));
 
-			if(raw || BigEndian)
-				return data.ToArray();
-			else
-				return data.ToArray().FlipBytes();
-		}
+            if (raw || BigEndian)
+                return data.ToArray();
+            else
+                return data.ToArray().FlipBytes();
+        }
 
-		public override byte PeekByte(long address)
-		{
-			if (address > Size - 1)
-				return 0;
-			return MD.PeekByte(address);
-		}
+        public override byte PeekByte(long address)
+        {
+            if (address > Size - 1)
+                return 0;
+            return MD.PeekByte(address);
+        }
 
-		public override void PokeByte(long address, byte value)
-		{
-			if (address > Size - 1)
-				return;
+        public override void PokeByte(long address, byte value)
+        {
+            if (address > Size - 1)
+                return;
 
-			MD.PokeByte(address, value);
-		}
-	}
+            MD.PokeByte(address, value);
+        }
+    }
+
+    [Serializable]
+    [Ceras.MemberConfig(TargetMember.All)]
+    public sealed class NullMemoryInterface : MemoryInterface
+    {
+        [Ceras.Exclude]
+        public override long Size { get; set; }
+
+        
+        public override string ToString()
+        {
+            return Name;
+        }
+
+        public override byte[] GetDump()
+        {
+            return null;
+        }
+
+        public override byte[] PeekBytes(long startAddress, long endAddress, bool raw = true)
+        {
+            return new byte[] {0};
+        }
+
+        public override byte PeekByte(long address)
+        {
+            return 0;
+        }
+
+        public override void PokeByte(long address, byte value)
+        {
+           
+        }
+
+        public NullMemoryInterface()
+        {
+            Size = 64;
+            Name = "NULL";
+            WordSize = 1;
+            BigEndian = false;
+        }
+    }
 
 
     [Serializable()]

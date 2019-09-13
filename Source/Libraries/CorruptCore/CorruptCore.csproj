@@ -97,6 +97,25 @@
     <Compile Include="StepActions.cs" />
     <Compile Include="StockpileManager_UISide.cs" />
     <Compile Include="StockpileManager_EmuSide.cs" />
+    <Compile Include="Tools\HexEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\HexEditor.Designer.cs">
+      <DependentUpon>HexEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\HexFind.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\HexFind.designer.cs">
+      <DependentUpon>HexFind.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\HexTextBox.cs" />
+    <Compile Include="Tools\InputPrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Tools\InputPrompt.designer.cs">
+      <DependentUpon>InputPrompt.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NetCore\NetCore.csproj">
@@ -118,6 +137,14 @@
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
       <Version>4.5.2</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Tools\HexEditor.resx">
+      <DependentUpon>HexEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tools\HexFind.resx">
+      <DependentUpon>HexFind.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

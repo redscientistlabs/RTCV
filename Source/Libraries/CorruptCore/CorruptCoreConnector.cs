@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
+using RTCV.NetCore.StaticTools;
 using static RTCV.NetCore.NetcoreCommands;
 
 namespace RTCV.CorruptCore
@@ -35,7 +36,15 @@ namespace RTCV.CorruptCore
 			switch (e.message.Type)
 			{
 
-				case "GETSPECDUMPS":
+                case "TEST":
+                {
+                    SyncObjectSingleton.FormExecute(() =>
+                    {
+                        S.GET<CorruptCore.Tools.HexEditor>().Show();
+                    });
+                }
+                    break;
+                case "GETSPECDUMPS":
 					StringBuilder sb = new StringBuilder();
 					sb.AppendLine("Spec Dump from CorruptCore");
 					sb.AppendLine();

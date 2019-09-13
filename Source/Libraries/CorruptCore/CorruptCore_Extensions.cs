@@ -38,6 +38,8 @@ namespace RTCV.CorruptCore
 				DirectoryRequired(path);
 		}
 
+
+
         #region ARRAY EXTENSIONS
 
         public static int IndexOf<T>(this T[] haystack, T[] needle)

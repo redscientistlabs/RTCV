@@ -83,7 +83,7 @@ namespace RTCV.UI
             this.cbSource = new System.Windows.Forms.ComboBox();
             this.panel6 = new System.Windows.Forms.Panel();
             this.label12 = new System.Windows.Forms.Label();
-            this.tbValue = new RTCV.UI.UI_Extensions.HexTextBox();
+            this.tbValue = new RTCV.CorruptCore.Tools.HexTextBox();
             this.panel7 = new System.Windows.Forms.Panel();
             this.cbSourceDomain = new System.Windows.Forms.ComboBox();
             this.upDownSourceAddress = new RTCV.UI.NumericUpDownHexFix();
@@ -1396,7 +1396,7 @@ namespace RTCV.UI
 		private NumericUpDownHexFix upDownAddress;
 		private System.Windows.Forms.Panel panel6;
 		private System.Windows.Forms.Label label12;
-		private UI_Extensions.HexTextBox tbValue;
+		private CorruptCore.Tools.HexTextBox tbValue;
 		private System.Windows.Forms.Panel panel7;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.ComboBox cbStoreType;

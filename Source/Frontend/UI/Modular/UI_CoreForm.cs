@@ -586,5 +586,10 @@ Environment.NewLine + "───█───▌────────▐▀─
                 columnsMenu.Show(this, locate);
             }
         }
+
+        private void BtnNetcoreTest_Click(object sender, EventArgs e)
+        {
+            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, "TEST");
+        }
     }
 }
