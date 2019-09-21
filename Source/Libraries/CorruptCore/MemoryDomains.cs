@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using RTCV.NetCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -10,6 +11,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using Jupiter;
 
 namespace RTCV.CorruptCore
 {
@@ -1620,6 +1622,108 @@ namespace RTCV.CorruptCore
 
         }
 
+    }
+
+
+    [Serializable()]
+    public class ProcessMemoryDomain : IMemoryDomain
+    {
+        public  string Name { get;  }
+        public bool BigEndian => false;
+        public long Size { get; }
+        IntPtr baseAddr { get; }
+        public int WordSize => 4;
+        private MemoryModule mem;
+
+        private int errCount = 0;
+        private int maxErrs = 5;
+
+        public override string ToString()
+        {
+            return Name;
+        }
+
+        public ProcessMemoryDomain(Process p, IntPtr baseAddress, long size)
+        {
+            try
+            {
+                if (p == null || p.HasExited)
+                {
+                    throw new Exception("Process doesn't exist or has exited");
+                }
+                
+                mem = new MemoryModule(p.Id);
+                Size = size;
+                baseAddr = baseAddress;
+
+                var path = ProcessExtensions.GetModuleFileNameExW(p.Handle, baseAddress);
+                if (!String.IsNullOrWhiteSpace(path))
+                    path = Path.GetFileName(path);
+                Name = $"{baseAddr.ToString("X8")} : {path}";
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Failed to create ProcessInterface!\nMessage: {e.Message}");
+            }
+        }
+
+
+        public void PokeByte(long address, byte data)
+        {
+            if (mem == null || errCount > maxErrs)
+                return;
+            try
+            {
+                var a = new IntPtr((long)baseAddr + address);
+                mem.ProtectVirtualMemory(a, 1, MemoryProtection.ReadWrite);
+                mem.WriteVirtualMemory(a, new[] {data});
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"ProcessInterface PokeByte failed!\n{e.Message}\n{e.StackTrace}");
+                errCount++;
+            }
+        }
+
+        public byte PeekByte(long address)
+        {
+            if (mem == null || errCount > maxErrs)
+                return 0;
+            try
+            {
+                var a = new IntPtr((long)baseAddr + address);
+                mem.ProtectVirtualMemory(a, 1, MemoryProtection.ReadWrite);
+                return mem.ReadVirtualMemory(a, 1)[0];
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"ProcessInterface PeekByte failed!\n{e.Message}\n{e.StackTrace}");
+                errCount++;
+            }
+            return 0;
+        }
+        public byte[] PeekBytes(long address, int length)
+        {
+            if (mem == null || errCount > maxErrs)
+                return null;
+            try
+            {
+                var start = new IntPtr((long)baseAddr + address);
+                mem.ProtectVirtualMemory(start, length, MemoryProtection.ReadWrite);
+                return mem.ReadVirtualMemory(start, length);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"ProcessInterface PeekBytes failed!\n{e.Message}");
+                errCount++;
+
+            }
+            return null;
+        }
+        public byte[] GetDump()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public enum FileInterfaceIdentity

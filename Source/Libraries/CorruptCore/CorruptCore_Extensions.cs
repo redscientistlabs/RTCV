@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Numerics;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
@@ -18,6 +19,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using Ceras;
+using Jupiter;
+using Microsoft.Win32.SafeHandles;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using RTCV.NetCore;
@@ -1260,6 +1263,79 @@ namespace RTCV.CorruptCore
 
 		[DllImport("kernel32.dll", ExactSpelling = true, SetLastError = true)]
 		public static extern bool CloseHandle(IntPtr handle);
-	}
+    }
+    //Lifted from Bizhawk https://github.com/TASVideos/BizHawk
+    public unsafe static class ProcessExtensions
+    {
+        public enum MemoryType
+        {
+            MEM_COMMIT = 0x00001000,
+            MEM_RESERVE = 0x00002000,
+            MEM_RESET = 0x00008000,
+            MEM_RESET_UNDO = 0x1000000,
+            MEM_LARGE_PAGES = 0x20000000,
+            MEM_PHYSICAL = 0x00400000,
+            MEM_TOP_DOWN = 0x00100000,
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct MemoryBasicInformation
+        {
+            public readonly IntPtr BaseAddress;
+
+            public readonly IntPtr AllocationBase;
+            public readonly uint AllocationProtect;
+
+            public readonly IntPtr RegionSize;
+
+            public readonly uint State;
+
+            public readonly MemoryProtection Protect;
+
+            public readonly uint Type;
+        }
+        [DllImport("kernel32.dll", SetLastError = true)]
+        internal static extern bool VirtualQueryEx(SafeProcessHandle processHandle, IntPtr baseAddress, out MemoryBasicInformation memoryInformation, int length);
+        [DllImport("psapi.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern int GetMappedFileNameW(IntPtr ProcessHandle, IntPtr Address, StringBuilder Buffer, int Size);
+
+        public static bool VirtualQueryEx(Process p, IntPtr baseAddress, out MemoryBasicInformation memoryBasicInformation)
+        {
+            SafeProcessHandle handle = new SafeProcessHandle(p.Handle, false);
+            if (!VirtualQueryEx(handle, baseAddress, out memoryBasicInformation, Marshal.SizeOf<MemoryBasicInformation>()))
+            {
+                Console.WriteLine("Failed to query a region of virtual memory in the remote process");
+                return false;
+            }
+
+            return true;
+        }
+
+        public static string GetModuleFileNameExW(IntPtr hProcess, IntPtr hModule)
+        {
+            StringBuilder fileName = new StringBuilder(255);
+            GetMappedFileNameW(hProcess, hModule, fileName, fileName.Capacity);
+            return fileName.ToString();
+        }
+        /// <summary>
+        /// Returns the process with additional checking on whether or not it exists
+        /// ALWAYS USE TRY CATCH AS THE PROCESS COULD DIE AT ANY POINT
+        /// </summary>
+        /// <returns></returns>
+        public static Process GetProcessSafe(Process process)
+        {
+            try
+            {
+                if (process?.HasExited ?? true)
+                    return null;
+                return process;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("GetProcessSafe FAILED!" + e.Message);
+                return null;
+            }
+        }
+    }
 
 }
