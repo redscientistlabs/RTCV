@@ -1656,7 +1656,7 @@ namespace RTCV.CorruptCore
                 Size = size;
                 baseAddr = baseAddress;
 
-                var path = ProcessExtensions.GetModuleFileNameExW(p.Handle, baseAddress);
+                var path = ProcessExtensions.GetMappedFileNameW(p.Handle, baseAddress);
                 if (!String.IsNullOrWhiteSpace(path))
                     path = Path.GetFileName(path);
                 Name = $"{baseAddr.ToString("X8")} : {path}";

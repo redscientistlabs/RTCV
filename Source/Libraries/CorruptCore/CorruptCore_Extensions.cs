@@ -1311,7 +1311,7 @@ namespace RTCV.CorruptCore
             return true;
         }
 
-        public static string GetModuleFileNameExW(IntPtr hProcess, IntPtr hModule)
+        public static string GetMappedFileNameW(IntPtr hProcess, IntPtr hModule)
         {
             StringBuilder fileName = new StringBuilder(255);
             GetMappedFileNameW(hProcess, hModule, fileName, fileName.Capacity);
