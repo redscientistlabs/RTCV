@@ -72,8 +72,8 @@ namespace RTCV.UI.Input
 
 		public static void Initialize()
         {
-            System.Threading.Tasks.Task.Run(() => { GamePad.Initialize(); }); //Once in a great while, dinput initialization will just hang for some mystery reason. Do this for safety.
-			KeyInput.Initialize();
+            GamePad.Initialize();
+            KeyInput.Initialize();
 			IPCKeyInput.Initialize();
 			GamePad360.Initialize();
 			Instance = new Input();
