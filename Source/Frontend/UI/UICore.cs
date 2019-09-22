@@ -25,8 +25,6 @@ namespace RTCV.UI
 {
     public static class UICore
     {
-
-
         //Note Box Settings
         public static Point NoteBoxPosition;
         public static Size NoteBoxSize;

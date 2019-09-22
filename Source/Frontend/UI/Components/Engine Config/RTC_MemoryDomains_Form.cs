@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
+using RTCV.NetCore;
 using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
 
@@ -71,8 +72,9 @@ namespace RTCV.UI
 		}
 
 		private void btnAutoSelectDomains_Click(object sender, EventArgs e)
-		{
-			RefreshDomains();
+        {
+            LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_DOMAIN_REFRESHDOMAINS, true);
+            RefreshDomains();
 			SetMemoryDomainsAllButSelectedDomains((string[])RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] ?? new string[] { });
 		}
 
