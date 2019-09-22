@@ -1675,7 +1675,7 @@ namespace RTCV.CorruptCore
             try
             {
                 var a = new IntPtr((long)baseAddr + address);
-                mem.ProtectVirtualMemory(a, 1, MemoryProtection.ReadWrite);
+                mem.ProtectVirtualMemory(a, 1, MemoryProtection.ExecuteReadWrite);
                 mem.WriteVirtualMemory(a, new[] {data});
             }
             catch (Exception e)
@@ -1692,7 +1692,7 @@ namespace RTCV.CorruptCore
             try
             {
                 var a = new IntPtr((long)baseAddr + address);
-                mem.ProtectVirtualMemory(a, 1, MemoryProtection.ReadWrite);
+                mem.ProtectVirtualMemory(a, 1, MemoryProtection.ExecuteReadWrite);
                 return mem.ReadVirtualMemory(a, 1)[0];
             }
             catch (Exception e)
@@ -1709,7 +1709,7 @@ namespace RTCV.CorruptCore
             try
             {
                 var start = new IntPtr((long)baseAddr + address);
-                mem.ProtectVirtualMemory(start, length, MemoryProtection.ReadWrite);
+                mem.ProtectVirtualMemory(start, length, MemoryProtection.ExecuteReadWrite);
                 return mem.ReadVirtualMemory(start, length);
             }
             catch (Exception e)
