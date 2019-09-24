@@ -1478,7 +1478,6 @@ namespace RTCV.CorruptCore
         {
             BlastUnit bu = new BlastUnit()
             {
-
                 Precision = end - start,
                 Address = this.Address + start,
                 Domain = this.Domain,

@@ -569,6 +569,14 @@ namespace RTCV.CorruptCore
 
         private int GetCompactedDomainIndexFromAddress(long address)
         {
+            long currentBankStartAddress = 0;
+			for (var i = 0; i < CompactPointerAddresses.Length; i++)
+			{
+				long[] addressBank = CompactPointerAddresses[i];
+				if (address < (currentBankStartAddress + addressBank.Length)) // are we in the right bank?
+					return i;
+				currentBankStartAddress += addressBank.Length;
+			}
             return 0;
         }
 		public string GetRealDomain(long address)
@@ -591,18 +599,12 @@ namespace RTCV.CorruptCore
             if (Compacted)
             {
                 long currentBankStartAddress = 0;
-
-
                 foreach (long[] addressBank in CompactPointerAddresses)
-                {
-
-                    if (address < (currentBankStartAddress + addressBank.Length)) // are we in the right bank?
+				{
+					if (address < (currentBankStartAddress + addressBank.Length)) // are we in the right bank?
                             return addressBank[address - currentBankStartAddress];
-                        else
-                            currentBankStartAddress += addressBank.Length;
-
-
-                }
+					currentBankStartAddress += addressBank.Length;
+				}
                 return 0; //failure
             }
             else
