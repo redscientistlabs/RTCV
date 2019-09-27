@@ -1634,6 +1634,7 @@ namespace RTCV.CorruptCore
         IntPtr baseAddr { get; }
         public int WordSize => 4;
         private MemoryModule mem;
+        private MemoryProtection mp;
 
         private int errCount = 0;
         private int maxErrs = 5;
@@ -1643,7 +1644,7 @@ namespace RTCV.CorruptCore
             return Name;
         }
 
-        public ProcessMemoryDomain(Process p, IntPtr baseAddress, long size)
+        public ProcessMemoryDomain(Process p, IntPtr baseAddress, long size, MemoryProtection _mp)
         {
             try
             {
@@ -1655,6 +1656,7 @@ namespace RTCV.CorruptCore
                 mem = new MemoryModule(p.Id);
                 Size = size;
                 baseAddr = baseAddress;
+                mp = _mp;
 
                 var path = ProcessExtensions.GetMappedFileNameW(p.Handle, baseAddress);
                 if (!String.IsNullOrWhiteSpace(path))
@@ -1677,6 +1679,7 @@ namespace RTCV.CorruptCore
                 var a = new IntPtr((long)baseAddr + address);
                 mem.ProtectVirtualMemory(a, 1, MemoryProtection.ExecuteReadWrite);
                 mem.WriteVirtualMemory(a, new[] {data});
+                mem.ProtectVirtualMemory(a, 1, mp);
             }
             catch (Exception e)
             {
@@ -1693,7 +1696,9 @@ namespace RTCV.CorruptCore
             {
                 var a = new IntPtr((long)baseAddr + address);
                 mem.ProtectVirtualMemory(a, 1, MemoryProtection.ExecuteReadWrite);
-                return mem.ReadVirtualMemory(a, 1)[0];
+                var b = mem.ReadVirtualMemory(a, 1)[0];
+                mem.ProtectVirtualMemory(a, 1, mp);
+                return b;
             }
             catch (Exception e)
             {
@@ -1710,13 +1715,14 @@ namespace RTCV.CorruptCore
             {
                 var start = new IntPtr((long)baseAddr + address);
                 mem.ProtectVirtualMemory(start, length, MemoryProtection.ExecuteReadWrite);
-                return mem.ReadVirtualMemory(start, length);
+                var b = mem.ReadVirtualMemory(start, length);;
+                mem.ProtectVirtualMemory(start, length, mp);
+                return b;
             }
             catch (Exception e)
             {
                 Console.WriteLine($"ProcessInterface PeekBytes failed!\n{e.Message}");
                 errCount++;
-
             }
             return null;
         }
