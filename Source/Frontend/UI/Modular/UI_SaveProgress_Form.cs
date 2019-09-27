@@ -57,12 +57,12 @@ namespace RTCV.UI
             lbCurrentAction.Text = "Waiting";
             pbSave.Value = 0;
 			UIConnector.ConnectionLostLockout.WaitOne();
-            Console.WriteLine("Thread id {0} got Mutex... (save)", AppDomain.GetCurrentThreadId());
+            Console.WriteLine("Thread id {0} got Mutex... (save)", System.Threading.Thread.CurrentThread.ManagedThreadId);
         }
         public void OnHidden()
         {
 			UIConnector.ConnectionLostLockout.ReleaseMutex();
-            Console.WriteLine("Thread id {0} released Mutex... (save)", AppDomain.GetCurrentThreadId());
+            Console.WriteLine("Thread id {0} released Mutex... (save)", System.Threading.Thread.CurrentThread.ManagedThreadId);
         }
 
     }
