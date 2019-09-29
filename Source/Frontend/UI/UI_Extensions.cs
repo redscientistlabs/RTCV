@@ -93,17 +93,20 @@ namespace RTCV.UI
         public static Bitmap getFormScreenShot(this Control con)
         {
 			var bmp = new Bitmap(con.ClientRectangle.Width, con.ClientRectangle.Height);
-			using (var bmpGraphics = Graphics.FromImage(bmp))
-			{
-				var bmpDC = bmpGraphics.GetHdc();
-				using (Graphics formGraphics = Graphics.FromHwnd(con.Handle))
-				{
-					var formDC = formGraphics.GetHdc();
-					BitBlt(bmpDC, 0, 0, con.ClientRectangle.Width, con.ClientRectangle.Height, formDC, 0, 0, SRCCOPY);
-					formGraphics.ReleaseHdc(formDC);
-				}
-				bmpGraphics.ReleaseHdc(bmpDC);
-			}
+            try
+            {
+                using (var bmpGraphics = Graphics.FromImage(bmp))
+                {
+                    var bmpDC = bmpGraphics.GetHdc();
+                    using (Graphics formGraphics = Graphics.FromHwnd(con.Handle))
+                    {
+                        var formDC = formGraphics.GetHdc();
+                        BitBlt(bmpDC, 0, 0, con.ClientRectangle.Width, con.ClientRectangle.Height, formDC, 0, 0, SRCCOPY);
+                        formGraphics.ReleaseHdc(formDC);
+                    }
+                    bmpGraphics.ReleaseHdc(bmpDC);
+                }
+            }catch(Exception ex) { Console.WriteLine("Failed to get form screenshot!" + ex); };
 			return bmp;
         }
 
