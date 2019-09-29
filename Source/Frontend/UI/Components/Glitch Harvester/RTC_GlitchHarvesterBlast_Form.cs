@@ -233,7 +233,7 @@ namespace RTCV.UI
 
         private void BlastRawStash()
         {
-            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.ASYNCBLAST, true);
+            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.MANUALBLAST, true);
             btnSendRaw_Click(null, null);
         }
 

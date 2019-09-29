@@ -1647,20 +1647,21 @@ namespace RTCV.CorruptCore
             return Name;
         }
 
-        public ProcessMemoryDomain(Process p, IntPtr baseAddress, long size)
+        public ProcessMemoryDomain(Process _p, IntPtr baseAddress, long size)
         {
             try
             {
-                if (p == null || p.HasExited)
+                if (_p == null || _p.HasExited)
                 {
                     throw new Exception("Process doesn't exist or has exited");
                 }
                 
-                mem = new MemoryModule(p.Id);
+                mem = new MemoryModule(_p.Id);
+                p = _p;
                 Size = size;
                 baseAddr = baseAddress;
 
-                var path = ProcessExtensions.GetMappedFileNameW(p.Handle, baseAddress);
+                var path = ProcessExtensions.GetMappedFileNameW(_p.Handle, baseAddress);
                 if (!String.IsNullOrWhiteSpace(path))
                     path = Path.GetFileName(path);
                 Name = $"{baseAddr.ToString("X8")} : {path}";

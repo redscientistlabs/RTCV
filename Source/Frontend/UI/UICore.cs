@@ -530,7 +530,7 @@ namespace RTCV.UI
             {
 
                 case "Manual Blast":
-                    LocalNetCoreRouter.Route(CORRUPTCORE, ASYNCBLAST);
+                    LocalNetCoreRouter.Route(CORRUPTCORE, MANUALBLAST);
                     break;
 
                 case "Auto-Corrupt":
@@ -630,7 +630,7 @@ namespace RTCV.UI
                     SyncObjectSingleton.FormExecute(() =>
                     {
                         RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(VSPEC.STEP_RUNBEFORE, true);
-                        LocalNetCoreRouter.Route(CORRUPTCORE, ASYNCBLAST, null, true);
+                        LocalNetCoreRouter.Route(CORRUPTCORE, MANUALBLAST, null, true);
 
                         S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw_Click(null, null);
                     });
