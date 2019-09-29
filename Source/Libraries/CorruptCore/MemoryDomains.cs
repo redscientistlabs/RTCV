@@ -1637,6 +1637,7 @@ namespace RTCV.CorruptCore
         public int WordSize => 4;
         private MemoryModule mem;
         private MemoryProtection mp;
+        private Process p;
 
         private int errCount = 0;
         private int maxErrs = 5;
@@ -1646,7 +1647,7 @@ namespace RTCV.CorruptCore
             return Name;
         }
 
-        public ProcessMemoryDomain(Process p, IntPtr baseAddress, long size, MemoryProtection _mp)
+        public ProcessMemoryDomain(Process p, IntPtr baseAddress, long size)
         {
             try
             {
@@ -1658,7 +1659,6 @@ namespace RTCV.CorruptCore
                 mem = new MemoryModule(p.Id);
                 Size = size;
                 baseAddr = baseAddress;
-                mp = _mp;
 
                 var path = ProcessExtensions.GetMappedFileNameW(p.Handle, baseAddress);
                 if (!String.IsNullOrWhiteSpace(path))
@@ -1678,10 +1678,7 @@ namespace RTCV.CorruptCore
                 return;
             try
             {
-                var a = new IntPtr((long)baseAddr + address);
-                mem.ProtectVirtualMemory(a, 1, MemoryProtection.ExecuteReadWrite);
-                mem.WriteVirtualMemory(a, new[] {data});
-                mem.ProtectVirtualMemory(a, 1, mp);
+                mem.WriteVirtualMemory(new IntPtr((long)baseAddr + address), new[] {data});
             }
             catch (Exception e)
             {
@@ -1696,11 +1693,7 @@ namespace RTCV.CorruptCore
                 return 0;
             try
             {
-                var a = new IntPtr((long)baseAddr + address);
-                mem.ProtectVirtualMemory(a, 1, MemoryProtection.ExecuteReadWrite);
-                var b = mem.ReadVirtualMemory(a, 1)[0];
-                mem.ProtectVirtualMemory(a, 1, mp);
-                return b;
+                return mem.ReadVirtualMemory(new IntPtr((long)baseAddr + address), 1)[0];
             }
             catch (Exception e)
             {
@@ -1715,11 +1708,7 @@ namespace RTCV.CorruptCore
                 return null;
             try
             {
-                var start = new IntPtr((long)baseAddr + address);
-                mem.ProtectVirtualMemory(start, length, MemoryProtection.ExecuteReadWrite);
-                var b = mem.ReadVirtualMemory(start, length);;
-                mem.ProtectVirtualMemory(start, length, mp);
-                return b;
+                return mem.ReadVirtualMemory(new IntPtr((long)baseAddr + address), length);
             }
             catch (Exception e)
             {
@@ -1731,6 +1720,15 @@ namespace RTCV.CorruptCore
         public byte[] GetDump()
         {
             throw new NotImplementedException();
+        }
+
+        public void SetMemoryProtection(MemoryProtection memoryProtection)
+        {
+            ProcessExtensions.VirtualProtectEx(p, baseAddr, new UIntPtr((ulong)Size), memoryProtection, out mp);
+        }
+        public void ResetMemoryProtection()
+        {
+            ProcessExtensions.VirtualProtectEx(p, baseAddr, new UIntPtr((ulong)Size), mp, out _);
         }
     }
 

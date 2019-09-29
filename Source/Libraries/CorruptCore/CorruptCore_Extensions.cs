@@ -1265,7 +1265,7 @@ namespace RTCV.CorruptCore
 		public static extern bool CloseHandle(IntPtr handle);
     }
     //Lifted from Bizhawk https://github.com/TASVideos/BizHawk
-    public unsafe static class ProcessExtensions
+    public static class ProcessExtensions
     {
         public enum MemoryType
         {
@@ -1294,8 +1294,35 @@ namespace RTCV.CorruptCore
 
             public readonly uint Type;
         }
+        [Flags]
+        public enum ThreadAccess : int
+        {
+            TERMINATE = (0x0001),
+            SUSPEND_RESUME = (0x0002),
+            GET_CONTEXT = (0x0008),
+            SET_CONTEXT = (0x0010),
+            SET_INFORMATION = (0x0020),
+            QUERY_INFORMATION = (0x0040),
+            SET_THREAD_TOKEN = (0x0080),
+            IMPERSONATE = (0x0100),
+            DIRECT_IMPERSONATION = (0x0200)
+        }
+
+        [DllImport("kernel32.dll")]
+        static extern IntPtr OpenThread(ThreadAccess dwDesiredAccess, bool bInheritHandle, uint dwThreadId);
+        [DllImport("kernel32.dll")]
+        static extern uint SuspendThread(IntPtr hThread);
+        [DllImport("kernel32.dll")]
+        static extern int ResumeThread(IntPtr hThread);
+        [DllImport("kernel32", CharSet = CharSet.Auto, SetLastError = true)]
+        static extern bool CloseHandle(IntPtr handle);
+
         [DllImport("kernel32.dll", SetLastError = true)]
-        internal static extern bool VirtualQueryEx(SafeProcessHandle processHandle, IntPtr baseAddress, out MemoryBasicInformation memoryInformation, int length);
+        private static extern bool VirtualQueryEx(SafeProcessHandle processHandle, IntPtr baseAddress, out MemoryBasicInformation memoryInformation, int length);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool VirtualProtectEx(SafeProcessHandle processHandle, IntPtr baseAddress, UIntPtr protectionSize, MemoryProtection protectionType, out MemoryProtection oldProtectionType);
+
         [DllImport("psapi.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern int GetMappedFileNameW(IntPtr ProcessHandle, IntPtr Address, StringBuilder Buffer, int Size);
         [DllImport("kernel32.dll", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
@@ -1322,6 +1349,19 @@ namespace RTCV.CorruptCore
 
             return true;
         }
+        public static bool VirtualProtectEx(Process p, IntPtr baseAddress, UIntPtr dwSize, MemoryProtection protType, out MemoryProtection oldProtType)
+        {
+            SafeProcessHandle handle = new SafeProcessHandle(p.Handle, false);
+            if (!VirtualProtectEx(handle, baseAddress, dwSize, protType, out oldProtType))
+            {
+                Console.WriteLine($"Failed to protect a region of virtual memory {baseAddress} + {dwSize} in the remote process");
+                return false;
+            }
+
+            return true;
+        }
+
+
 
         public static string GetMappedFileNameW(IntPtr hProcess, IntPtr hModule)
         {
@@ -1347,6 +1387,55 @@ namespace RTCV.CorruptCore
                 Console.WriteLine("GetProcessSafe FAILED!" + e.Message);
                 return null;
             }
+        }
+        public static bool Suspend(this Process process)
+        {
+            bool success = true;
+            foreach (ProcessThread thread in process.Threads)
+            {
+                try
+                {
+                    var pOpenThread = OpenThread(ThreadAccess.SUSPEND_RESUME, false, (uint) thread.Id);
+                    if (pOpenThread == IntPtr.Zero)
+                    {
+                        break;
+                    }
+
+                    SuspendThread(pOpenThread);
+                    CloseHandle(pOpenThread); 
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Failed to suspend thread {thread.Id}");
+                    success = false;
+                }
+            }
+            return success;
+        }
+        public static bool Resume(this Process process)
+        {
+            bool success = true;
+            foreach (ProcessThread thread in process.Threads)
+            {
+                try
+                {
+                    var pOpenThread = OpenThread(ThreadAccess.SUSPEND_RESUME, false, (uint) thread.Id);
+                    if (pOpenThread == IntPtr.Zero)
+                    {
+                        break;
+                    }
+
+                    ResumeThread(pOpenThread);
+                    CloseHandle(pOpenThread);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Failed to resume thread {thread.Id}");
+                    success = false;
+                }
+            }
+            return success;
+
         }
     }
 
