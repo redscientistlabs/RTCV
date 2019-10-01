@@ -761,7 +761,14 @@ namespace RTCV.CorruptCore
 		{
 			if (address > Size - 1)
 				return 0;
-			return MD.PeekByte(address);
+			try
+			{
+				return MD.PeekByte(address);
+			}
+			catch (Exception e)
+			{
+				throw new Exception($"{MD?.Name ?? "NULL"} {MD?.Size ?? -1} PeekByte {address} failed!", e);
+			}
 		}
 
 		public override void PokeByte(long address, byte value)
@@ -769,7 +776,14 @@ namespace RTCV.CorruptCore
 			if (address > Size - 1)
 				return;
 
-			MD.PokeByte(address, value);
+			try
+			{
+				MD.PokeByte(address, value);
+			}
+			catch (Exception e)
+			{
+				throw new Exception($"{MD?.Name ?? "NULL"} {MD?.Size ?? -1} PokeByte {address},{value} failed!", e);
+			}
 		}
 	}
 
