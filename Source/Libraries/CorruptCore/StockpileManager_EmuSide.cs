@@ -178,9 +178,9 @@ namespace RTCV.CorruptCore
 					byte[] corrupted = addData.ToArray();
 					byte[] original = File.ReadAllBytes(romFilename);
 
-					if (MemoryDomains.MemoryInterfaces.ContainsKey("32X FB")) //Flip 16-bit words on 32X rom
-						original = original.FlipWords(2);
-					else if (thisSystem.ToUpper() == "N64")
+					//if (MemoryDomains.MemoryInterfaces.ContainsKey("32X FB")) //Flip 16-bit words on 32X rom
+						//original = original.FlipWords(2);
+					if (thisSystem.ToUpper() == "N64")
 						original = MutateSwapN64(original);
 					else if (romFilename.ToUpper().Contains(".SMD"))
 						original = DeInterleaveSMD(original);
