@@ -37,7 +37,7 @@ namespace RTCV.Launcher
         public static DownloadForm dForm = null;
         public static Form lpForm = null;
 
-        public static int launcherVer = 14;
+        public static int launcherVer = 15;
 
 
         public static int devCounter = 0;

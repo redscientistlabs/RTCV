@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.pnVersionBatchFiles = new System.Windows.Forms.Panel();
+            this.lbError = new System.Windows.Forms.Label();
             this.btnBatchfile10 = new System.Windows.Forms.Button();
             this.btnBatchfile09 = new System.Windows.Forms.Button();
             this.btnBatchfile08 = new System.Windows.Forms.Button();
@@ -43,7 +44,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lbSelectedVersion = new System.Windows.Forms.Label();
-            this.lbError = new System.Windows.Forms.Label();
             this.pnVersionBatchFiles.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -69,6 +69,19 @@
             this.pnVersionBatchFiles.TabIndex = 131;
             this.pnVersionBatchFiles.Tag = "color:normal";
             this.pnVersionBatchFiles.Visible = false;
+            // 
+            // lbError
+            // 
+            this.lbError.AutoSize = true;
+            this.lbError.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.lbError.ForeColor = System.Drawing.Color.White;
+            this.lbError.Location = new System.Drawing.Point(18, 162);
+            this.lbError.Name = "lbError";
+            this.lbError.Size = new System.Drawing.Size(291, 42);
+            this.lbError.TabIndex = 130;
+            this.lbError.Text = "RTC Files missing.\r\nPlease re-download the selected version.";
+            this.lbError.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.lbError.Visible = false;
             // 
             // btnBatchfile10
             // 
@@ -319,18 +332,6 @@
             this.lbSelectedVersion.TabIndex = 132;
             this.lbSelectedVersion.Text = "Program Selector";
             this.lbSelectedVersion.Visible = false;
-            // 
-            // lbError
-            // 
-            this.lbError.AutoSize = true;
-            this.lbError.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.lbError.ForeColor = System.Drawing.Color.White;
-            this.lbError.Location = new System.Drawing.Point(18, 162);
-            this.lbError.Name = "lbError";
-            this.lbError.Size = new System.Drawing.Size(291, 42);
-            this.lbError.TabIndex = 130;
-            this.lbError.Text = "RTC Files missing.\r\nPlease re-download the selected version.";
-            this.lbError.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // OldLaunchPanel
             // 

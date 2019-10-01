@@ -77,6 +77,7 @@ namespace RTCV.Launcher
                 lbError.Visible = true;
                 return;
             }
+            lbError.Visible = false;
 
             for (int i = 0; i < batchFileNames.Count; i++)
             {
