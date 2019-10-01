@@ -767,7 +767,7 @@ namespace RTCV.CorruptCore
 			}
 			catch (Exception e)
 			{
-				throw new Exception($"{MD?.Name ?? "NULL"} {MD?.Size ?? -1} PeekByte {address} failed!", e);
+				throw new Exception($"{Name ?? "NULL"} {Size} PeekByte {address} failed! {(MD == null ? "MemoryDomain is NULL" : "")} ", e);
 			}
 		}
 
@@ -782,7 +782,7 @@ namespace RTCV.CorruptCore
 			}
 			catch (Exception e)
 			{
-				throw new Exception($"{MD?.Name ?? "NULL"} {MD?.Size ?? -1} PokeByte {address},{value} failed!", e);
+				throw new Exception($"{Name ?? "NULL"} {Size} PokeByte {address},{value} failed! {(MD == null ? "MemoryDomain is NULL" : "")}", e);
 			}
 		}
 	}
