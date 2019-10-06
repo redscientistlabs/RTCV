@@ -56,8 +56,15 @@ namespace RTCV.UI
         {
             lbCurrentAction.Text = "Waiting";
             pbSave.Value = 0;
-			UIConnector.ConnectionLostLockout.WaitOne();
-            Console.WriteLine("Thread id {0} got Mutex... (save)", System.Threading.Thread.CurrentThread.ManagedThreadId);
+			try
+			{
+				UIConnector.ConnectionLostLockout.WaitOne();
+				Console.WriteLine("Thread id {0} got Mutex... (save)", System.Threading.Thread.CurrentThread.ManagedThreadId);
+			}
+			catch (System.Threading.AbandonedMutexException)
+			{
+				Console.WriteLine("AbandonedMutexException! Thread id {0} got Mutex... (save)", System.Threading.Thread.CurrentThread.ManagedThreadId);
+            }
         }
         public void OnHidden()
         {
