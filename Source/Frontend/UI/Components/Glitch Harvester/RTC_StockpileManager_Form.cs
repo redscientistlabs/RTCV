@@ -443,29 +443,30 @@ namespace RTCV.UI
                 return;
             }
 
-			string path = "";
-			SaveFileDialog saveFileDialog1 = new SaveFileDialog
-			{
-				DefaultExt = "sks",
-				Title = "Save Stockpile File",
-				Filter = "SKS files|*.sks",
-				RestoreDirectory = true
-			};
-
-			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-			{
-				path = saveFileDialog1.FileName;
-			}
-			else
-				return;
-
-			Stockpile sks = new Stockpile(dgvStockpile);
 			var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
-			try
+            try
 			{
-				//We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
-				//Thus, we want this to happen within the try block
-				SyncObjectSingleton.FormExecute(() =>
+				UICore.SetHotkeyTimer(false);
+				string path = "";
+				SaveFileDialog saveFileDialog1 = new SaveFileDialog
+				{
+					DefaultExt = "sks",
+					Title = "Save Stockpile File",
+					Filter = "SKS files|*.sks",
+					RestoreDirectory = true
+				};
+
+				if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+				{
+					path = saveFileDialog1.FileName;
+				}
+				else
+					return;
+
+				Stockpile sks = new Stockpile(dgvStockpile);
+                //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
+                //Thus, we want this to happen within the try block
+                SyncObjectSingleton.FormExecute(() =>
 				{
 					UICore.LockInterface(false, true);
 					S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
@@ -483,7 +484,8 @@ namespace RTCV.UI
 				{
 					ghForm?.CloseSubForm();
 					UICore.UnlockInterface();
-				});
+					UICore.SetHotkeyTimer(true);
+                });
 			}
 
         }
@@ -504,9 +506,10 @@ namespace RTCV.UI
 			var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
             try
             {
-				//We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
-				//Thus, we want this to happen within the try block
-				SyncObjectSingleton.FormExecute(() =>
+				UICore.SetHotkeyTimer(false);
+                //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
+                //Thus, we want this to happen within the try block
+                SyncObjectSingleton.FormExecute(() =>
 				{
 					UICore.LockInterface(false, true);
 					S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
@@ -521,6 +524,7 @@ namespace RTCV.UI
 				{
 					ghForm?.CloseSubForm();
 					UICore.UnlockInterface();
+					UICore.SetHotkeyTimer(true);
                 });
             }
 		}
@@ -622,16 +626,50 @@ namespace RTCV.UI
             e.Effect = DragDropEffects.Link;
         }
 
-        private void btnImportStockpile_Click(object sender, EventArgs e)
-        {
-            if(Stockpile.Import(null, dgvStockpile))
-                UnsavedEdits = true;
+		private async void btnImportStockpile_Click(object sender, EventArgs e)
+		{
+			OpenFileDialog ofd = new OpenFileDialog
+			{
+				DefaultExt = "*", 
+				Title = "Select stockpile to import",
+				Filter = "Any file|*.sks",
+				RestoreDirectory = true
+			};
+			if (ofd.ShowDialog() == DialogResult.OK)
+			{
 
-            RefreshNoteIcons();
+				var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
+				try
+				{
+					UICore.SetHotkeyTimer(false);
+					//We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
+					//Thus, we want this to happen within the try block
+					SyncObjectSingleton.FormExecute(() =>
+					{
+						UICore.LockInterface(false, true);
+						S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
+						ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
+					});
 
-        }
-
-        private void btnStockpileUP_Click(object sender, EventArgs e)
+					await Task.Run(() =>
+					{
+						if (Stockpile.Import(null, dgvStockpile))
+							UnsavedEdits = true;
+					});
+				}
+				finally
+				{
+					SyncObjectSingleton.FormExecute(() =>
+					{
+						ghForm?.CloseSubForm();
+						UICore.UnlockInterface();
+						UICore.SetHotkeyTimer(true);
+						RefreshNoteIcons();
+					});
+				}
+			}
+		}
+		private void btnStockpileUP_Click(object sender, EventArgs e)
         {
 
             if (dgvStockpile.SelectedRows.Count == 0)
