@@ -1685,13 +1685,14 @@ namespace RTCV.UI
 			}
 			
 			StashKey newSk = (StashKey)currentSK.Clone();
-			newSk.Run();
+			S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = newSk.Run();
 		}
 
 		public void btnCorrupt_Click(object sender, EventArgs e)
 		{
 			StashKey newSk = (StashKey)currentSK.Clone();
-			StockpileManager_UISide.ApplyStashkey(newSk, false);
+			S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newSk, false);
+
 		}
 
 		public void RefreshNoteIcons(DataGridViewRowCollection rows)

@@ -537,7 +537,9 @@ namespace RTCV.UI
 						bl.Layer.AddRange(returnList[i].bl.Layer);
 					}
 				}
-				return bl;
+				S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = (applyAfterCorrupt && returnList.Count > 0);
+
+                return bl;
 			}
 			catch (Exception ex)
 			{
