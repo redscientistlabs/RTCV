@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
@@ -225,11 +226,24 @@ This message only appears once.";
         {
             PrepareLockSideBar();
 
-            Bitmap bmp = pnSideBar.getFormScreenShot();
-            bmp.Tint(Color.FromArgb(0xF0, UICore.Dark4Color));
-            pnLockSidebar.BackgroundImage = bmp;
-            pnLockSidebar.Visible = true;
-
+			if (pnSideBar == null)
+				MessageBox.Show("pnSidebar was null! Send this to Narry");
+			try
+			{
+				Bitmap bmp = pnSideBar.getFormScreenShot();
+				bmp.Tint(Color.FromArgb(0xF0, UICore.Dark4Color));
+				pnLockSidebar.BackgroundImage = bmp;
+				pnLockSidebar.Visible = true;
+            }
+			catch (Exception e)
+			{
+				if (pnSideBar != null)
+				{
+					var a = JsonConvert.SerializeObject(pnSideBar);
+					Console.WriteLine(a);
+                }
+				throw new Exception("getFormScreenShot returned an exception. Submit to devs please.", e);
+			}
         }
 
         public void UnlockSideBar()
