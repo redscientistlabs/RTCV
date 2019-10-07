@@ -637,7 +637,6 @@ namespace RTCV.UI
 			};
 			if (ofd.ShowDialog() == DialogResult.OK)
 			{
-
 				var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
 				try
 				{
@@ -653,7 +652,7 @@ namespace RTCV.UI
 
 					await Task.Run(() =>
 					{
-						if (Stockpile.Import(null, dgvStockpile))
+						if (Stockpile.Import(ofd.FileName, dgvStockpile))
 							UnsavedEdits = true;
 					});
 				}
