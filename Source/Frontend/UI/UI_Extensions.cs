@@ -90,24 +90,39 @@ namespace RTCV.UI
 			IntPtr hdcSrc, int x1, int y1, int rop);
 
 
+        public static bool gfssWarned = false;
         public static Bitmap getFormScreenShot(this Control con)
-        {
-			var bmp = new Bitmap(con.ClientRectangle.Width, con.ClientRectangle.Height);
-            try
-            {
-                using (var bmpGraphics = Graphics.FromImage(bmp))
-                {
-                    var bmpDC = bmpGraphics.GetHdc();
-                    using (Graphics formGraphics = Graphics.FromHwnd(con.Handle))
-                    {
-                        var formDC = formGraphics.GetHdc();
-                        BitBlt(bmpDC, 0, 0, con.ClientRectangle.Width, con.ClientRectangle.Height, formDC, 0, 0, SRCCOPY);
-                        formGraphics.ReleaseHdc(formDC);
-                    }
-                    bmpGraphics.ReleaseHdc(bmpDC);
-                }
-            }catch(Exception ex) { Console.WriteLine("Failed to get form screenshot!" + ex); };
-			return bmp;
+		{
+
+			Console.WriteLine($"getFormScreenShot ClientRectangle | Width: {con.ClientRectangle.Width} | Height: {con.ClientRectangle.Height} | X: {con.ClientRectangle.X} | Y: {con.ClientRectangle.Y}");
+			Console.WriteLine($"getFormScreenShot DisplayRectangle | Width: {con.DisplayRectangle.Width} | Height: {con.DisplayRectangle.Height} | X: {con.DisplayRectangle.X} | Y: {con.DisplayRectangle.Y}");
+
+			try
+			{
+				var bmp = new Bitmap(con.ClientRectangle.Width, con.ClientRectangle.Height);
+				using (var bmpGraphics = Graphics.FromImage(bmp))
+				{
+					var bmpDC = bmpGraphics.GetHdc();
+					using (Graphics formGraphics = Graphics.FromHwnd(con.Handle))
+					{
+						var formDC = formGraphics.GetHdc();
+						BitBlt(bmpDC, 0, 0, con.ClientRectangle.Width, con.ClientRectangle.Height, formDC, 0, 0, SRCCOPY);
+						formGraphics.ReleaseHdc(formDC);
+					}
+
+					bmpGraphics.ReleaseHdc(bmpDC);
+				}
+				return bmp;
+            }
+			catch (Exception ex)
+			{
+				if(!gfssWarned)
+					MessageBox.Show("getFormScreenshot failed. Send RTC_Log.txt to Narry.\nThis message will only appear once and any future failures will be silent.");
+				gfssWarned = true;
+				Console.WriteLine($"Failed to get form screenshot. {ex.Message}\n{ex.StackTrace}");
+				return new Bitmap(1, 1);
+				;
+			};
         }
 
 

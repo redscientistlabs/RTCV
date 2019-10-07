@@ -226,24 +226,10 @@ This message only appears once.";
         {
             PrepareLockSideBar();
 
-			if (pnSideBar == null)
-				MessageBox.Show("pnSidebar was null! Send this to Narry");
-			try
-			{
-				Bitmap bmp = pnSideBar.getFormScreenShot();
-				bmp.Tint(Color.FromArgb(0xF0, UICore.Dark4Color));
-				pnLockSidebar.BackgroundImage = bmp;
-				pnLockSidebar.Visible = true;
-            }
-			catch (Exception e)
-			{
-				if (pnSideBar != null)
-				{
-					var a = JsonConvert.SerializeObject(pnSideBar);
-					Console.WriteLine(a);
-                }
-				throw new Exception("getFormScreenShot returned an exception. Submit to devs please.", e);
-			}
+			Bitmap bmp = pnSideBar.getFormScreenShot();
+			bmp.Tint(Color.FromArgb(0xF0, UICore.Dark4Color));
+			pnLockSidebar.BackgroundImage = bmp;
+			pnLockSidebar.Visible = true;
         }
 
         public void UnlockSideBar()
