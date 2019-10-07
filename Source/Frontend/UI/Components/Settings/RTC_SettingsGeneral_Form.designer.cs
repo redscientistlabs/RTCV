@@ -37,6 +37,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btnChangeRTCColor = new System.Windows.Forms.Button();
             this.btnOpenOnlineWiki = new System.Windows.Forms.Button();
+            this.btnRefreshInputDevices = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,7 +48,7 @@
             this.panel1.Controls.Add(this.cbDontCleanAtQuit);
             this.panel1.Controls.Add(this.cbAllowCrossCoreCorruption);
             this.panel1.Controls.Add(this.cbDisableEmulatorOSD);
-            this.panel1.Location = new System.Drawing.Point(80, 198);
+            this.panel1.Location = new System.Drawing.Point(80, 228);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(250, 96);
             this.panel1.TabIndex = 138;
@@ -101,7 +102,7 @@
             this.cbDisableEmulatorOSD.ForeColor = System.Drawing.Color.White;
             this.cbDisableEmulatorOSD.Location = new System.Drawing.Point(11, 10);
             this.cbDisableEmulatorOSD.Name = "cbDisableEmulatorOSD";
-            this.cbDisableEmulatorOSD.Size = new System.Drawing.Size(194, 17);
+            this.cbDisableEmulatorOSD.Size = new System.Drawing.Size(196, 17);
             this.cbDisableEmulatorOSD.TabIndex = 0;
             this.cbDisableEmulatorOSD.Text = "Disable the emulator OSD system";
             this.cbDisableEmulatorOSD.UseVisualStyleBackColor = true;
@@ -112,7 +113,7 @@
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(77, 180);
+            this.label4.Location = new System.Drawing.Point(77, 210);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(117, 15);
             this.label4.TabIndex = 139;
@@ -156,12 +157,32 @@
             this.btnOpenOnlineWiki.UseVisualStyleBackColor = false;
             this.btnOpenOnlineWiki.Click += new System.EventHandler(this.btnOpenOnlineWiki_Click);
             // 
+            // btnRefreshInputDevices
+            // 
+            this.btnRefreshInputDevices.BackColor = System.Drawing.Color.Gray;
+            this.btnRefreshInputDevices.FlatAppearance.BorderSize = 0;
+            this.btnRefreshInputDevices.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRefreshInputDevices.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnRefreshInputDevices.ForeColor = System.Drawing.Color.White;
+            this.btnRefreshInputDevices.Image = ((System.Drawing.Image)(resources.GetObject("btnRefreshInputDevices.Image")));
+            this.btnRefreshInputDevices.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnRefreshInputDevices.Location = new System.Drawing.Point(80, 142);
+            this.btnRefreshInputDevices.Name = "btnRefreshInputDevices";
+            this.btnRefreshInputDevices.Size = new System.Drawing.Size(250, 45);
+            this.btnRefreshInputDevices.TabIndex = 140;
+            this.btnRefreshInputDevices.Tag = "color:light1";
+            this.btnRefreshInputDevices.Text = "   Refresh Input Devices";
+            this.btnRefreshInputDevices.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnRefreshInputDevices.UseVisualStyleBackColor = false;
+            this.btnRefreshInputDevices.Click += new System.EventHandler(this.btnRefreshInputDevices_Click);
+            // 
             // RTC_SettingsGeneral_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(412, 352);
+            this.Controls.Add(this.btnRefreshInputDevices);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.btnChangeRTCColor);
@@ -189,5 +210,6 @@
 		public System.Windows.Forms.CheckBox cbDisableEmulatorOSD;
 		private System.Windows.Forms.Label label4;
 		public System.Windows.Forms.CheckBox cbUncapIntensity;
-	}
+        public System.Windows.Forms.Button btnRefreshInputDevices;
+    }
 }

@@ -120,5 +120,10 @@ namespace RTCV.UI
 			S.GET<RTC_GlitchHarvesterIntensity_Form>().multiTB_Intensity.UncapNumericBox = cbUncapIntensity.Checked;
 
 		}
-	}
+
+        private void btnRefreshInputDevices_Click(object sender, EventArgs e)
+		{
+			Input.Input.Initialize();
+		}
+    }
 }

@@ -489,11 +489,11 @@ namespace RTCV.UI
 			RTCV.NetCore.Params.SetParam("COLOR", color.R.ToString() + "," + color.G.ToString() + "," + color.B.ToString());
 		}
 
-		private static object inputLock = new object();
+		public static object InputLock = new object();
         //Borrowed from Bizhawk. Thanks guys
         private static void ProcessInputCheck(Object o, ElapsedEventArgs e)
         {
-			lock (inputLock)
+			lock (InputLock)
 			{
 				while (true)
 				{

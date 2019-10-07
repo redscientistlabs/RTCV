@@ -72,18 +72,21 @@ namespace RTCV.UI.Input
 
 		public static void Initialize()
         {
-            GamePad.Initialize();
-            KeyInput.Initialize();
-			IPCKeyInput.Initialize();
-			GamePad360.Initialize();
-			Instance = new Input();
+			lock (UICore.InputLock)
+			{
+				GamePad.Initialize();
+				KeyInput.Initialize();
+				IPCKeyInput.Initialize();
+				GamePad360.Initialize();
+				Instance = new Input();
+            }
 		}
 
 		public static void Cleanup()
 		{
 			KeyInput.Cleanup();
 			GamePad.Cleanup();
-		}
+        }
 
 		public enum InputEventType
 		{
