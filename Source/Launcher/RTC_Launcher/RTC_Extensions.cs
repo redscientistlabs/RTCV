@@ -148,6 +148,8 @@ namespace RTCV.Launcher
         {
             foreach (DirectoryInfo dir in source.GetDirectories())
                 RecursiveCopyNukeReadOnly(dir, target.CreateSubdirectory(dir.Name));
+            if(!target.Exists)
+                target.Create();
             foreach (FileInfo file in source.GetFiles())
             {
                 try
