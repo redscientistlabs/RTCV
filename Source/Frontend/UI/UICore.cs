@@ -85,7 +85,8 @@ namespace RTCV.UI
             Input.Input.Initialize();
             inputCheckTimer = new System.Timers.Timer();
             inputCheckTimer.Elapsed += ProcessInputCheck;
-            inputCheckTimer.Interval = 16;
+            inputCheckTimer.AutoReset = false;
+            inputCheckTimer.Interval = 10;
             inputCheckTimer.Start();
 
 
@@ -493,32 +494,39 @@ namespace RTCV.UI
         //Borrowed from Bizhawk. Thanks guys
         private static void ProcessInputCheck(Object o, ElapsedEventArgs e)
         {
-			lock (InputLock)
+            try
 			{
-				while (true)
+				lock (InputLock)
 				{
-					Input.Input.Instance.Update();
-					// loop through all available events
-					var ie = Input.Input.Instance.DequeueEvent();
-					if (ie == null)
+					while (true)
 					{
-						break;
-					}
+						Input.Input.Instance.Update();
+						// loop through all available events
+						var ie = Input.Input.Instance.DequeueEvent();
+						if (ie == null)
+						{
+							break;
+						}
 
-					// useful debugging:
-					//Console.WriteLine(ie);
+						// useful debugging:
+						//Console.WriteLine(ie);
 
 
-					// look for hotkey bindings for this key
-					var triggers = Input.Bindings.SearchBindings(ie.LogicalButton.ToString());
+						// look for hotkey bindings for this key
+						var triggers = Input.Bindings.SearchBindings(ie.LogicalButton.ToString());
 
-					bool handled = false;
-					if (ie.EventType == RTCV.UI.Input.Input.InputEventType.Press)
-					{
-						triggers.Aggregate(handled, (current, trigger) => current | CheckHotkey(trigger));
-					}
+						bool handled = false;
+						if (ie.EventType == RTCV.UI.Input.Input.InputEventType.Press)
+						{
+							triggers.Aggregate(handled, (current, trigger) => current | CheckHotkey(trigger));
+						}
 
-				} // foreach event
+					} // foreach event
+				}
+			}
+			finally
+			{
+				inputCheckTimer.Start();
             }
         }
 
