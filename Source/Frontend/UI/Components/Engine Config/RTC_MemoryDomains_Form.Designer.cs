@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_MemoryDomains_Form));
-            this.lbMemoryDomains = new System.Windows.Forms.ListBox();
+            this.lbMemoryDomains = new RTCV.UI.Components.Controls.ListBoxExtended();
             this.btnAutoSelectDomains = new System.Windows.Forms.Button();
             this.btnRefreshDomains = new System.Windows.Forms.Button();
             this.btnSelectAll = new System.Windows.Forms.Button();
@@ -138,7 +138,7 @@
 
 		#endregion
 
-		public System.Windows.Forms.ListBox lbMemoryDomains;
+		public RTCV.UI.Components.Controls.ListBoxExtended lbMemoryDomains;
 		private System.Windows.Forms.Button btnAutoSelectDomains;
 		private System.Windows.Forms.Button btnRefreshDomains;
 		private System.Windows.Forms.Button btnSelectAll;

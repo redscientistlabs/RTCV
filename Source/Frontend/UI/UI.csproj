@@ -106,6 +106,9 @@
     <Compile Include="Components\Controls\InputWidget.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Components\Controls\ListBoxExtended.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Components\Controls\MultiTrackBar.cs">
       <SubType>UserControl</SubType>
     </Compile>
