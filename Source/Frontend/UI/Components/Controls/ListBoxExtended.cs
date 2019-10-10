@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -12,8 +13,8 @@ namespace RTCV.UI.Components.Controls
     {
         [DllImport("user32")]
         public static extern int GetMessagePos();
-
         private const int WM_LBUTTONDOWN = 0x201;
+        private int lastClicked = -1;
 
         protected override void WndProc(ref Message m)
         {
@@ -32,29 +33,39 @@ namespace RTCV.UI.Components.Controls
             var x = (short)(pos & 0xffff);
             var y = (short)((pos >> 16) & 0xffff);
 
-            int clicked = this.IndexFromPoint(this.PointToClient(new System.Drawing.Point(x, y)));
+            lastClicked = this.IndexFromPoint(this.PointToClient(new Point(x, y)));
 
             if (ModifierKeys.HasFlag(Keys.Shift) && this.SelectedIndices.Count != 0)
             {
                 int lastSelected = this.SelectedIndices[this.SelectedIndices.Count - 1];
 
-                if (lastSelected < clicked)
+                if (lastSelected < lastClicked)
                 {
-                    for (int i = lastSelected; i < clicked; i++)
+                    for (int i = lastSelected; i < lastClicked; i++)
                     {
                         this.SetSelected(i, true);
                     }
                 }
                 else
                 {
-                    for (int i = lastSelected; i > clicked; i--)
+                    for (int i = lastSelected; i > lastClicked; i--)
                     {
                         this.SetSelected(i, true);
                     }
 
                 }
             }
+
         }
 
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            if ((e.Button & MouseButtons.Left) != 0) //Attempt to prevent being triggered from slight accidental mouse movement when deselecting by having a buffer
+            {
+                int toSelect = this.IndexFromPoint(e.X, e.Y);
+                if(toSelect != -1 && toSelect != lastClicked)
+                    this.SetSelected(toSelect, true);
+            }
+        }
     }
 }

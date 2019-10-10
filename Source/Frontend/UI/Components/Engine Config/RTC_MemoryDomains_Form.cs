@@ -18,11 +18,20 @@ namespace RTCV.UI
 	{
 		public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
 		public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
-
+        private Timer updateTimer;
 		public RTC_MemoryDomains_Form()
 		{
 			InitializeComponent();
-		}
+            updateTimer = new Timer
+            {
+                Enabled = true, 
+                Interval = 300,
+            };
+            updateTimer.Tick += (sender, args) =>
+            {
+                AllSpec.UISpec.Update("SELECTEDDOMAINS", lbMemoryDomains.SelectedItems.Cast<string>().Distinct().ToArray());
+            };
+        }
 
 		public void SetMemoryDomainsSelectedDomains(string[] _domains)
         {
@@ -137,11 +146,13 @@ namespace RTCV.UI
             foreach (var s in lbMemoryDomains.SelectedItems.Cast<string>().ToArray())
                 sb.Append($"{s},");
             Console.WriteLine($"lbIndexChanged Setting SELECTEDDOMAINS domains to {sb}");
-			RTCV.NetCore.AllSpec.UISpec.Update("SELECTEDDOMAINS", lbMemoryDomains.SelectedItems.Cast<string>().ToArray());
 
+            updateTimer.Stop();
+            updateTimer.Start();
 
 			//RTC_Restore.SaveRestore();
 		}
+
 
 		private void btnRefreshDomains_Click(object sender, EventArgs e)
 		{
