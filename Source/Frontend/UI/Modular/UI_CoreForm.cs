@@ -273,7 +273,7 @@ This message only appears once.";
                 RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_RUNBEFORE.ToString(), true);
         }
 
-        private void btnManualBlast_Click(object sender, EventArgs e)
+        public void btnManualBlast_Click(object sender, EventArgs e)
         {
             if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null)
                 S.GET<RTC_GlitchHarvesterBlast_Form>().btnCorrupt_Click(sender, e);

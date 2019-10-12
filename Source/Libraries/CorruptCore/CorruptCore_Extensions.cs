@@ -19,7 +19,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using Ceras;
-using Jupiter;
 using Microsoft.Win32.SafeHandles;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -1294,6 +1293,49 @@ namespace RTCV.CorruptCore
 
             public readonly uint Type;
         }
+        /// <summary>
+        /// Defines the protection to be applied to a region of virtual memory
+        /// </summary>
+        [Flags]
+        public enum MemoryProtection
+        {
+            /// <summary>Disables all access to the region of virtual memory</summary>
+            ZeroAccess = 0,
+            /// <summary>Disables all access to the region of virtual memory</summary>
+            NoAccess = 1,
+            /// <summary>Marks the region of virtual memory as readable</summary>
+            ReadOnly = 2,
+            /// <summary>
+            /// Marks the region of virtual memory as readable and/or writable
+            /// </summary>
+            ReadWrite = 4,
+            /// <summary>
+            /// Marks the region of virtual memory as readable and/or copy on write
+            /// </summary>
+            WriteCopy = 8,
+            /// <summary>Marks the region of virtual memory as executable</summary>
+            Execute = 16, // 0x00000010
+            /// <summary>
+            /// Marks the region of virtual memory as readable and/or executable
+            /// </summary>
+            ExecuteRead = 32, // 0x00000020
+            /// <summary>
+            /// Marks the region of virtual memory as readable, writable and/or executable
+            /// </summary>
+            ExecuteReadWrite = 64, // 0x00000040
+            /// <summary>
+            /// Marks the region of virtual memory as readable, copy on write and/or executable
+            /// </summary>
+            ExecuteWriteCopy = 128, // 0x00000080
+            /// <summary>Marks the region of virtual memory as guarded</summary>
+            Guard = 256, // 0x00000100
+            /// <summary>
+            /// Marks the region of virtual memory as readable, writable and guarded
+            /// </summary>
+            ReadWriteGuard = Guard | ReadWrite, // 0x00000104
+            /// <summary>Marks the region of virtual memory as non-cacheable</summary>
+            NoCache = 512, // 0x00000200
+        }
         [Flags]
         public enum ThreadAccess : int
         {
@@ -1316,13 +1358,14 @@ namespace RTCV.CorruptCore
         static extern int ResumeThread(IntPtr hThread);
         [DllImport("kernel32", CharSet = CharSet.Auto, SetLastError = true)]
         static extern bool CloseHandle(IntPtr handle);
-
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern bool VirtualQueryEx(SafeProcessHandle processHandle, IntPtr baseAddress, out MemoryBasicInformation memoryInformation, int length);
-
         [DllImport("kernel32.dll", SetLastError = true)]
-        private static extern bool VirtualProtectEx(SafeProcessHandle processHandle, IntPtr baseAddress, UIntPtr protectionSize, MemoryProtection protectionType, out MemoryProtection oldProtectionType);
-
+        private static extern bool VirtualProtectEx(SafeProcessHandle processHandle, IntPtr baseAddress, IntPtr protectionSize, MemoryProtection protectionType, out MemoryProtection oldProtectionType);
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool ReadProcessMemory(SafeProcessHandle processHandle, IntPtr baseAddress, byte[] lpBuffer, IntPtr bytesToRead, IntPtr numberOfBytesReadBuffer);
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool WriteProcessMemory(SafeProcessHandle processHandle, IntPtr baseAddress, IntPtr bytesReadBuffer, IntPtr bytesToWrite, IntPtr numberOfBytesReadBuffer);
         [DllImport("psapi.dll", SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern int GetMappedFileNameW(IntPtr ProcessHandle, IntPtr Address, StringBuilder Buffer, int Size);
         [DllImport("kernel32.dll", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
@@ -1331,11 +1374,15 @@ namespace RTCV.CorruptCore
             [In] Microsoft.Win32.SafeHandles.SafeHandleZeroOrMinusOneIsInvalid hProcess,
             [Out, MarshalAs(UnmanagedType.Bool)] out bool wow64Process
         );
-
         [DllImport("kernel32.dll", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool IsWow64Process([In] IntPtr processHandle,
             [Out, MarshalAs(UnmanagedType.Bool)] out bool wow64Process);
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
+        [DllImport("Kernel32.dll")]
+        private static extern uint QueryFullProcessImageName([In] IntPtr hProcess, [In] uint dwFlags, [Out] StringBuilder lpExeName, [In, Out] ref uint lpdwSize);
+
 
 
         public static bool VirtualQueryEx(Process p, IntPtr baseAddress, out MemoryBasicInformation memoryBasicInformation)
@@ -1349,7 +1396,38 @@ namespace RTCV.CorruptCore
 
             return true;
         }
-        public static bool VirtualProtectEx(Process p, IntPtr baseAddress, UIntPtr dwSize, MemoryProtection protType, out MemoryProtection oldProtType)
+
+        public static byte[] ReadVirtualMemory(Process p, IntPtr baseAddress, int bytesToRead)
+        {
+            SafeProcessHandle handle = new SafeProcessHandle(p.Handle, false);
+            var bytesBuffer = new byte[bytesToRead];
+
+            if (!ReadProcessMemory(handle, baseAddress, bytesBuffer, new IntPtr(bytesToRead), IntPtr.Zero))
+            {
+                throw new Exception($"Failed to read from a region of virtual memory in the remote process. Error code: {Marshal.GetLastWin32Error()}");
+            }
+
+            //var bytesRead = new byte[bytesToRead];
+            //Marshal.Copy(bytesBuffer, bytesRead, 0, bytesToRead);
+            //Marshal.FreeHGlobal(bytesBuffer);
+
+            return bytesBuffer;
+        }
+
+        public static void WriteVirtualMemory(Process p, IntPtr baseAddress, byte[] bytesToWrite)
+        {
+            SafeProcessHandle handle = new SafeProcessHandle(p.Handle, false);
+            var bytesToWriteBufferHandle = GCHandle.Alloc(bytesToWrite, GCHandleType.Pinned);
+
+            if (!WriteProcessMemory(handle, baseAddress, bytesToWriteBufferHandle.AddrOfPinnedObject(), new IntPtr(bytesToWrite.Length), IntPtr.Zero))
+            {
+                throw new Exception($"Failed to read write a region  of virtual memory in the remote process. Error code: {Marshal.GetLastWin32Error()}");
+            }
+
+            bytesToWriteBufferHandle.Free();
+        }
+
+        public static bool VirtualProtectEx(Process p, IntPtr baseAddress, IntPtr dwSize, MemoryProtection protType, out MemoryProtection oldProtType)
         {
             SafeProcessHandle handle = new SafeProcessHandle(p.Handle, false);
             if (!VirtualProtectEx(handle, baseAddress, dwSize, protType, out oldProtType))
@@ -1361,7 +1439,42 @@ namespace RTCV.CorruptCore
             return true;
         }
 
+        /// <summary>
+        /// Much faster than Process.MainModule.Filename
+        /// </summary>
+        /// <param name="process"></param>
+        /// <param name="buffer"></param>
+        /// <returns></returns>
+        private static string GetMainModuleFileName(this Process process, int buffer = 1024)
+        {
+            var fileNameBuilder = new StringBuilder(buffer);
+            uint bufferLength = (uint)fileNameBuilder.Capacity + 1;
+            IntPtr h = OpenProcess(0x001F0FFF, false, process.Id);
+            try
+            {
+                if (h == (IntPtr) 0)
+                    return null;
+                return QueryFullProcessImageName(h, 0, fileNameBuilder, ref bufferLength) != 0 ? fileNameBuilder.ToString() : null;
+            }
+            finally
+            {
+                CloseHandle(h);
+            }
+        }
 
+        public static Icon GetIcon(this Process process)
+        {
+            try
+            {
+                string mainModuleFileName = process.GetMainModuleFileName();
+                return Icon.ExtractAssociatedIcon(mainModuleFileName);
+            }
+            catch
+            {
+                // Probably no access
+                return null;
+            }
+        }
 
         public static string GetMappedFileNameW(IntPtr hProcess, IntPtr hModule)
         {

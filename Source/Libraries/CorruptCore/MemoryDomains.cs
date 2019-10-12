@@ -11,7 +11,6 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using Jupiter;
 
 namespace RTCV.CorruptCore
 {
@@ -1649,8 +1648,7 @@ namespace RTCV.CorruptCore
         public long Size { get; }
         IntPtr baseAddr { get; }
         public int WordSize => 4;
-        private MemoryModule mem;
-        private MemoryProtection mp;
+        private ProcessExtensions.MemoryProtection mp;
         private Process p;
 
         private int errCount = 0;
@@ -1670,7 +1668,6 @@ namespace RTCV.CorruptCore
                     throw new Exception("Process doesn't exist or has exited");
                 }
                 
-                mem = new MemoryModule(_p.Id);
                 p = _p;
                 Size = size;
                 baseAddr = baseAddress;
@@ -1689,11 +1686,11 @@ namespace RTCV.CorruptCore
 
         public void PokeByte(long address, byte data)
         {
-            if (mem == null || errCount > maxErrs)
+            if (p == null || errCount > maxErrs)
                 return;
             try
             {
-                mem.WriteVirtualMemory(new IntPtr((long)baseAddr + address), new[] {data});
+                ProcessExtensions.WriteVirtualMemory(p, (IntPtr)((long)baseAddr + address), new[] {data});
             }
             catch (Exception e)
             {
@@ -1704,11 +1701,11 @@ namespace RTCV.CorruptCore
 
         public byte PeekByte(long address)
         {
-            if (mem == null || errCount > maxErrs)
+            if (p == null || errCount > maxErrs)
                 return 0;
             try
             {
-                return mem.ReadVirtualMemory(new IntPtr((long)baseAddr + address), 1)[0];
+                return ProcessExtensions.ReadVirtualMemory(p, (IntPtr)((long)baseAddr + address), 1)[0];
             }
             catch (Exception e)
             {
@@ -1719,11 +1716,11 @@ namespace RTCV.CorruptCore
         }
         public byte[] PeekBytes(long address, int length)
         {
-            if (mem == null || errCount > maxErrs)
+            if (p == null || errCount > maxErrs)
                 return null;
             try
             {
-                return mem.ReadVirtualMemory(new IntPtr((long)baseAddr + address), length);
+                return ProcessExtensions.ReadVirtualMemory(p, (IntPtr)((long)baseAddr + address), length);
             }
             catch (Exception e)
             {
@@ -1737,13 +1734,13 @@ namespace RTCV.CorruptCore
             throw new NotImplementedException();
         }
 
-        public void SetMemoryProtection(MemoryProtection memoryProtection)
+        public void SetMemoryProtection(ProcessExtensions.MemoryProtection memoryProtection)
         {
-            ProcessExtensions.VirtualProtectEx(p, baseAddr, new UIntPtr((ulong)Size), memoryProtection, out mp);
+            ProcessExtensions.VirtualProtectEx(p, baseAddr, (IntPtr)Size, memoryProtection, out mp);
         }
         public void ResetMemoryProtection()
         {
-            ProcessExtensions.VirtualProtectEx(p, baseAddr, new UIntPtr((ulong)Size), mp, out _);
+            ProcessExtensions.VirtualProtectEx(p, baseAddr, (IntPtr)Size, mp, out _);
         }
     }
 
