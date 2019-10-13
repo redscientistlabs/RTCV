@@ -91,7 +91,6 @@ namespace RTCV.UI
 
         public static Bitmap getFormScreenShot(this Control con)
 		{
-
 			Console.WriteLine($"getFormScreenShot ClientRectangle | Width: {con.ClientRectangle.Width} | Height: {con.ClientRectangle.Height} | X: {con.ClientRectangle.X} | Y: {con.ClientRectangle.Y}");
 			try
 			{
@@ -102,17 +101,7 @@ namespace RTCV.UI
 					using (Graphics formGraphics = Graphics.FromHwnd(con.Handle))
 					{
 						var formDC = formGraphics.GetHdc();
-
-
-                        //Once in a while, this will return -1 for some reason. If that happens, use a default size of 1x1
-                        var cx = con.ClientRectangle.Width;
-                        var cy = con.ClientRectangle.Height;
-                        if (cx == -1 || cx == 0)
-                            cx = 1;
-                        if (cy == -1 || cx == 0)
-                            cy = 1;
-
-                        BitBlt(bmpDC, 0, 0, cx, cy, formDC, 0, 0, SRCCOPY);
+                        BitBlt(bmpDC, 0, 0, con.ClientRectangle.Width, con.ClientRectangle.Height, formDC, 0, 0, SRCCOPY);
 						formGraphics.ReleaseHdc(formDC);
 					}
 
@@ -124,7 +113,6 @@ namespace RTCV.UI
 			{
 				Console.WriteLine($"Failed to get form screenshot. {ex.Message}\n{ex.StackTrace}");
 				return new Bitmap(1, 1);
-				;
 			};
         }
 
