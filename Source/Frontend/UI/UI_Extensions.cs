@@ -89,14 +89,10 @@ namespace RTCV.UI
 		static extern int BitBlt(IntPtr hdc, int x, int y, int cx, int cy,
 			IntPtr hdcSrc, int x1, int y1, int rop);
 
-
-        public static bool gfssWarned = false;
         public static Bitmap getFormScreenShot(this Control con)
 		{
 
 			Console.WriteLine($"getFormScreenShot ClientRectangle | Width: {con.ClientRectangle.Width} | Height: {con.ClientRectangle.Height} | X: {con.ClientRectangle.X} | Y: {con.ClientRectangle.Y}");
-			Console.WriteLine($"getFormScreenShot DisplayRectangle | Width: {con.DisplayRectangle.Width} | Height: {con.DisplayRectangle.Height} | X: {con.DisplayRectangle.X} | Y: {con.DisplayRectangle.Y}");
-
 			try
 			{
 				var bmp = new Bitmap(con.ClientRectangle.Width, con.ClientRectangle.Height);
@@ -106,7 +102,17 @@ namespace RTCV.UI
 					using (Graphics formGraphics = Graphics.FromHwnd(con.Handle))
 					{
 						var formDC = formGraphics.GetHdc();
-						BitBlt(bmpDC, 0, 0, con.ClientRectangle.Width, con.ClientRectangle.Height, formDC, 0, 0, SRCCOPY);
+
+
+                        //Once in a while, this will return -1 for some reason. If that happens, use a default size of 1x1
+                        var cx = con.ClientRectangle.Width;
+                        var cy = con.ClientRectangle.Height;
+                        if (cx == -1 || cx == 0)
+                            cx = 1;
+                        if (cy == -1 || cx == 0)
+                            cy = 1;
+
+                        BitBlt(bmpDC, 0, 0, cx, cy, formDC, 0, 0, SRCCOPY);
 						formGraphics.ReleaseHdc(formDC);
 					}
 
@@ -116,9 +122,6 @@ namespace RTCV.UI
             }
 			catch (Exception ex)
 			{
-				if(!gfssWarned)
-					MessageBox.Show("getFormScreenshot failed. Send RTC_Log.txt to Narry.\nThis message will only appear once and any future failures will be silent.");
-				gfssWarned = true;
 				Console.WriteLine($"Failed to get form screenshot. {ex.Message}\n{ex.StackTrace}");
 				return new Bitmap(1, 1);
 				;
