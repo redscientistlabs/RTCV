@@ -95,9 +95,9 @@ namespace RTCV.Prereqs
             var d3dx9Setup = new Dependency("DirectX9 End-User Runtime", "", "", $"/silent", Path.Combine(redistDir, "DXSETUP.exe"));
             var d3dx9 = new Dependency("DirectX9 End-User Runtime", "d3dx9_43.dll", "https://download.microsoft.com/download/8/4/A/84A35BF1-DAFE-4AE8-82AF-AD2AE20B6B14/directx_Jun2010_redist.exe", $"/Q /T:{redistDir}", "", d3dx9Setup);
 
-            var vc2015 = new Dependency("Visual C++ 2015-2019 x64", "msvcp140.dll", "https://download.visualstudio.microsoft.com/download/pr/9e04d214-5a9d-4515-9960-3d71398d98c3/1e1e62ab57bbb4bf5199e8ce88f040be/vc_redist.x64.exe",
+            var vc2015 = new Dependency("Visual C++ 2015-2019 x64", "msvcp140_1.dll", "https://download.visualstudio.microsoft.com/download/pr/9565895b-35a6-434b-a881-11a6f4beec76/EE84FED2552E018E854D4CD2496DF4DD516F30733A27901167B8A9882119E57C/VC_redist.x64.exe",
                 "/install /passive /norestart");
-            var vc2015x86 = new Dependency("Visual C++ 2015-2019 x86", "msvcp140.dll", "https://download.visualstudio.microsoft.com/download/pr/c8edbb87-c7ec-4500-a461-71e8912d25e9/99ba493d660597490cbb8b3211d2cae4/vc_redist.x86.exe",
+            var vc2015x86 = new Dependency("Visual C++ 2015-2019 x86", "msvcp140_1.dll", "https://download.visualstudio.microsoft.com/download/pr/9565895b-35a6-434b-a881-11a6f4beec76/4A8157B2FF422C259DDAA2D0E568C0C0AFAB940E1F6E0E482EF83E90DDBAD2D6/VC_redist.x86.exe",
                 "/install /passive /norestart");
             var vc2013 = new Dependency("Visual C++ 2013 x64", "msvcr120.dll", "https://download.microsoft.com/download/2/E/6/2E61CFA4-993B-4DD4-91DA-3737CD5CD6E3/vcredist_x64.exe", "/install /passive /norestart");
             var vc2012 = new Dependency("Visual C++ 2012 x64", "msvcr110.dll", "https://download.microsoft.com/download/1/6/B/16B06F60-3B20-4FF2-B699-5E9B7962F9AE/VSU_4/vcredist_x64.exe", "/install /passive /norestart");
