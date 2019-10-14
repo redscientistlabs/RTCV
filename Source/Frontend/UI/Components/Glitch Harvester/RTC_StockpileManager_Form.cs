@@ -64,6 +64,8 @@ namespace RTCV.UI
 
         private void dgvStockpile_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex == -1)
+                return;
             try
             {
                 S.GET<RTC_StashHistory_Form>().btnAddStashToStockpile.Enabled = false;
@@ -539,31 +541,26 @@ namespace RTCV.UI
 
         private void btnStockpileMoveSelectedUp_Click(object sender, EventArgs e)
         {
-            if (dgvStockpile.SelectedRows.Count == 0)
-                return;
-
-            int count = dgvStockpile.Rows.Count;
-
-            if (count < 2)
-                return;
-
-            int pos = dgvStockpile.SelectedRows[0].Index;
-            DataGridViewRow row = dgvStockpile.Rows[pos];
-
-            dgvStockpile.Rows.RemoveAt(pos);
-
-            if (pos == 0)
+            var selectedRows = dgvStockpile.SelectedRows.Cast<DataGridViewRow>().ToArray();
+            foreach (DataGridViewRow row in selectedRows)
             {
-                int newpos = dgvStockpile.Rows.Add(row);
-                dgvStockpile.ClearSelection();
-                dgvStockpile.Rows[newpos].Selected = true;
+                int pos = row.Index;
+                dgvStockpile.Rows.RemoveAt(pos);
+
+                if (pos == 0)
+                {
+                    dgvStockpile.Rows.Add(row);
+                }
+                else
+                {
+                    int newpos = pos - 1;
+                    dgvStockpile.Rows.Insert(newpos, row);
+                }
             }
-            else
+            dgvStockpile.ClearSelection();
+            foreach (DataGridViewRow row in selectedRows) //I don't know. Blame DGV
             {
-                int newpos = pos - 1;
-                dgvStockpile.Rows.Insert(newpos, row);
-                dgvStockpile.ClearSelection();
-                dgvStockpile.Rows[newpos].Selected = true;
+                row.Selected = true;
             }
 
             UnsavedEdits = true;
@@ -574,32 +571,28 @@ namespace RTCV.UI
 
         private void btnStockpileMoveSelectedDown_Click(object sender, EventArgs e)
         {
-            if (dgvStockpile.SelectedRows.Count == 0)
-                return;
-
-            int count = dgvStockpile.Rows.Count;
-
-            if (count < 2)
-                return;
-
-            int pos = dgvStockpile.SelectedRows[0].Index;
-            var row = dgvStockpile.Rows[pos];
-
-            dgvStockpile.Rows.RemoveAt(pos);
-
-            if (pos == count - 1)
+            var selectedRows = dgvStockpile.SelectedRows.Cast<DataGridViewRow>().ToArray();
+            foreach (DataGridViewRow row in selectedRows)
             {
-                int newpos = 0;
-                dgvStockpile.Rows.Insert(newpos, row);
-                dgvStockpile.ClearSelection();
-                dgvStockpile.Rows[newpos].Selected = true;
+                int pos = row.Index;
+                int count = dgvStockpile.Rows.Count;
+                dgvStockpile.Rows.RemoveAt(pos);
+                
+                if (pos == count - 1)
+                {
+                    int newpos = 0;
+                    dgvStockpile.Rows.Insert(newpos, row);
+                }
+                else
+                {
+                    int newpos = pos + 1;
+                    dgvStockpile.Rows.Insert(newpos, row);
+                }
             }
-            else
+            dgvStockpile.ClearSelection();
+            foreach (DataGridViewRow row in selectedRows) //I don't know. Blame DGV
             {
-                int newpos = pos + 1;
-                dgvStockpile.Rows.Insert(newpos, row);
-                dgvStockpile.ClearSelection();
-                dgvStockpile.Rows[newpos].Selected = true;
+                row.Selected = true;
             }
 
             UnsavedEdits = true;
