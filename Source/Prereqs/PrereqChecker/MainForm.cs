@@ -47,26 +47,33 @@ namespace RTCV.Prereqs
             lbDownloadProgress.Text = $"{String.Format("{0:0.##}", (Convert.ToDouble(ev.BytesReceived) / (1024d * 1024d)))}/{String.Format("{0:0.##}", (Convert.ToDouble(ev.TotalBytesToReceive) / (1024d * 1024d)))}MB";
         }
 
-        private void OnWebClientOnDownloadFileCompleted(object ov, AsyncCompletedEventArgs ev)
+        private async void OnWebClientOnDownloadFileCompleted(object ov, AsyncCompletedEventArgs ev)
         {
-            var d = (Dependency) ev.UserState;
+            var d = (Dependency)ev.UserState;
             lbStatus.Text = $"Installing {d.Name}";
             this.Refresh(); //Force this
-            while (d != null)
+            await Task.Run(() =>
             {
-                ProcessStartInfo p = new ProcessStartInfo(d.ExecutableName, d.InstallString);
-                try
+                while (d != null)
                 {
-                    Process.Start(p).WaitForExit();
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show($"Something went wrong when launching {p}. Send this to the devs!\n{e.ToString()}");
-                }
+                    ProcessStartInfo p = new ProcessStartInfo(d.ExecutableName, d.InstallString);
+                    try
+                    {
+                        Process.Start(p).WaitForExit();
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show($"Something went wrong when launching {p}. Send this to the devs!\n{e.ToString()}");
+                    }
 
-                d = d.RunAfter;
-            }
-            DownloadNext();
+                    d = d.RunAfter;
+                }
+            });
+
+            if (this.InvokeRequired)
+                this.Invoke((MethodInvoker) (() => DownloadNext()));
+            else
+                DownloadNext();
         }
 
         private void PnTopPanel_MouseMove(object sender, MouseEventArgs e)
@@ -83,10 +90,6 @@ namespace RTCV.Prereqs
             this.RunCheck();
         }
 
-        public  void InvokeUI(Action a)
-        {
-            this.BeginInvoke(new MethodInvoker(a));
-        }
 
         private void RunCheck()
         {
@@ -141,9 +144,9 @@ namespace RTCV.Prereqs
                     sb.AppendLine(d.Name);
                 sb.AppendLine("");
                 sb.AppendLine("Would you like to download and install them?");
-                if (MessageBox.Show(sb.ToString(), "Missing dependencies", MessageBoxButtons.YesNo) == DialogResult.No)
+                if (MessageBox.Show(sb.ToString(), "Missing dependencies", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly) == DialogResult.No)
                 {
-                    if (MessageBox.Show("The RTC may not work properly without these dependencies.\nYou can always run this tool again via the RTC Launcher", "Warning", MessageBoxButtons.OK) != null) ;
+                    if (MessageBox.Show("The RTC may not work properly without these dependencies.\nYou can always run this tool again via the RTC Launcher", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly) != null) ;
                     {
                         Environment.Exit(0);
                     };
@@ -254,6 +257,15 @@ namespace RTCV.Prereqs
                     }
                 }
 
+                if (Environment.Is64BitProcess)
+                {
+                    try
+                    {
+                        Thread.Sleep(300); //Hope the processes have actually released their resources
+                        Directory.Delete(redistDir, true);
+                    }
+                    catch { } //eat it
+                }
                 lbStatus.Text = "Done";
                 this.Refresh(); //Force this
                 //Daisy chain x86 to x64
