@@ -339,22 +339,6 @@ namespace RTCV.Launcher
                     Process.Start(psi)?.WaitForExit();
                 }
 
-                //Force an update if launcher.json is found
-                if (File.Exists(extractDirectory + Path.DirectorySeparatorChar + "Launcher\\launcher.json"))
-                {
-                    if (MessageBox.Show("A mandatory launcher update is required to use this version. Click \"OK\" to update the launcher.", "Launcher update required", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.Cancel)
-                    {
-                        MessageBox.Show("Launcher update is required. Cancelling.");
-                        RTC_Extensions.RecursiveDeleteNukeReadOnly(extractDirectory);
-                        return;
-                    }
-                    string batchLocation = extractDirectory + Path.DirectorySeparatorChar + "Launcher\\update.bat";
-                    ProcessStartInfo psi = new ProcessStartInfo();
-                    psi.FileName = Path.GetFileName(batchLocation);
-                    psi.WorkingDirectory = Path.GetDirectoryName(batchLocation);
-                    Process.Start(psi);
-                    Application.Exit();
-                }
                 if (File.Exists(Path.Combine(extractDirectory, "Launcher", "ver.ini")))
                 {
                     int newVer = Convert.ToInt32(File.ReadAllText(Path.Combine(extractDirectory, "Launcher", "ver.ini")));
