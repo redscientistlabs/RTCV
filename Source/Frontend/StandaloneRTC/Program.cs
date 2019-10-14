@@ -20,23 +20,24 @@ namespace StandaloneRTC
 		[STAThread]
 		static void Main(string[] args)
 		{
-			//Make sure we resolve our dlls
-			AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-			
-			//Remove any zone files on the dlls because Windows likes to append them
-			string dllDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-			WhackAllMOTW(dllDir);
+            using (Mutex mutex = new Mutex(true, "StandaloneRTC", out bool createdNew))
+            {
+                if (createdNew)
+                {
+                    //Make sure we resolve our dlls
+                    AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+                    //Remove any zone files on the dlls because Windows likes to append them
+                    string dllDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                    WhackAllMOTW(dllDir);
 
-			var processes = Process.GetProcesses().Select(it => $"{it.ProcessName.ToUpper()}").OrderBy(x => x).ToArray();
-
-			int nbInstances = processes.Count(prc => prc == "STANDALONERTC");
-
-			if (nbInstances > 1)
-			{
-				MessageBox.Show("RTC cannot run more than once at the time in Detached mode.\nLoading aborted", "StandaloneRTC.exe", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				return;
-			}
-			StartLoader(args);
+                    StartLoader(args);
+                }
+                else
+                {
+                    MessageBox.Show("RTC cannot run more than once at the time in Detached mode.\nLoading aborted", "StandaloneRTC.exe", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
 		}
 
 		/// <summary>
