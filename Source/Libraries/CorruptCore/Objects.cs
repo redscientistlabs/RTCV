@@ -534,7 +534,7 @@ namespace RTCV.CorruptCore
 			foreach (string line in errorMessages)
 				message += $"•  {line} \n\n";
 
-			MessageBox.Show(message, "Compatibility Checker", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			MessageBox.Show(message, "Compatibility Checker", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
 			return fatal;
         }
 

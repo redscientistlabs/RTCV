@@ -347,7 +347,7 @@ namespace RTCV.Launcher
                         if (File.Exists(Path.Combine(extractDirectory, "Launcher", "minver.ini")))
                         {
                             int minVer = Convert.ToInt32(File.ReadAllText(Path.Combine(extractDirectory, "Launcher", "minver.ini")));
-                            if (minVer > launcherVer && MessageBox.Show("A mandatory launcher update is required to use this version. Click \"OK\" to update the launcher.", "Launcher update required", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.Cancel)
+                            if (minVer > launcherVer && MessageBox.Show("A mandatory launcher update is required to use this version. Click \"OK\" to update the launcher.", "Launcher update required", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly) == DialogResult.Cancel)
                             {
                                 MessageBox.Show("Launcher update is required. Cancelling.");
                                 RTC_Extensions.RecursiveDeleteNukeReadOnly(extractDirectory);
