@@ -27,16 +27,17 @@ namespace RTCV.UI
                 Enabled = true, 
                 Interval = 300,
             };
-            updateTimer.Tick += (sender, args) =>
-            {
-                AllSpec.UISpec.Update("SELECTEDDOMAINS", lbMemoryDomains.SelectedItems.Cast<string>().Distinct().ToArray());
-            };
+            updateTimer.Tick += UpdateSelectedMemoryDomains;
         }
 
-		public void SetMemoryDomainsSelectedDomains(string[] _domains)
+        private void UpdateSelectedMemoryDomains(object sender, EventArgs args)
+        {
+            AllSpec.UISpec.Update("SELECTEDDOMAINS", lbMemoryDomains.SelectedItems.Cast<string>().Distinct().ToArray());
+        }
+
+        public void SetMemoryDomainsSelectedDomains(string[] _domains)
         {
             var oldState = this.Visible;
-            lbMemoryDomains_DontExecute_SelectedIndexChanged = true;
 
 			for (int i = 0; i < lbMemoryDomains.Items.Count; i++)
 				if (_domains.Contains(lbMemoryDomains.Items[i].ToString()))
@@ -44,15 +45,13 @@ namespace RTCV.UI
 				else
 					lbMemoryDomains.SetSelected(i, false);
 
-			lbMemoryDomains_DontExecute_SelectedIndexChanged = false;
-			lbMemoryDomains_SelectedIndexChanged(null, null);
+            UpdateSelectedMemoryDomains(null, null);
             this.Visible = oldState;
         }
 
 		public void SetMemoryDomainsAllButSelectedDomains(string[] _blacklistedDomains)
         {
             var oldState = this.Visible;
-            lbMemoryDomains_DontExecute_SelectedIndexChanged = true;
 
 			for (
 				int i = 0; i < lbMemoryDomains.Items.Count; i++)
@@ -61,8 +60,7 @@ namespace RTCV.UI
 				else
 					lbMemoryDomains.SetSelected(i, true);
 
-			lbMemoryDomains_DontExecute_SelectedIndexChanged = false;
-			lbMemoryDomains_SelectedIndexChanged(null, null);
+            UpdateSelectedMemoryDomains(null, null);
             this.Visible = oldState;
         }
 
@@ -70,15 +68,13 @@ namespace RTCV.UI
 		{
 			RefreshDomains();
 
-			lbMemoryDomains_DontExecute_SelectedIndexChanged = true;
 
 			for (int i = 0; i < lbMemoryDomains.Items.Count; i++)
 				lbMemoryDomains.SetSelected(i, true);
 
-			lbMemoryDomains_DontExecute_SelectedIndexChanged = false;
 
-			lbMemoryDomains_SelectedIndexChanged(null, null);
-		}
+            UpdateSelectedMemoryDomains(null, null);
+        }
 
 		private void btnAutoSelectDomains_Click(object sender, EventArgs e)
         {
@@ -135,13 +131,8 @@ namespace RTCV.UI
 			}
 		}
 
-		public bool lbMemoryDomains_DontExecute_SelectedIndexChanged = false;
-
 		private void lbMemoryDomains_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (lbMemoryDomains_DontExecute_SelectedIndexChanged)
-				return;
-
             StringBuilder sb = new StringBuilder();
             foreach (var s in lbMemoryDomains.SelectedItems.Cast<string>().ToArray())
                 sb.Append($"{s},");
