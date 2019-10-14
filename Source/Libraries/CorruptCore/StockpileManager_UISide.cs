@@ -339,6 +339,15 @@ namespace RTCV.CorruptCore
                     {
                         string filename = ofd.FileName.ToString();
                         string oldFilename = psk.RomFilename;
+                        if (Path.GetFileName(psk.RomFilename) != Path.GetFileName(filename))
+                        {
+                            if (DialogResult.Cancel == MessageBox.Show($"Selected file {Path.GetFileName(filename)} has a different name than the old file {Path.GetFileName(psk.RomFilename)}.\nIf you know this file is correct, you can ignore this warning.\nContinue?", title,
+                                    MessageBoxButtons.OKCancel))
+                            {
+                                return false;
+                            }
+                        }
+
                         foreach (var sk in keys.Where(x => x.RomFilename == oldFilename))
                         {
                             sk.RomFilename = filename;
