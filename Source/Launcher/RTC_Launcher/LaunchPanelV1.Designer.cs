@@ -1,6 +1,6 @@
 ﻿namespace RTCV.Launcher
 {
-    partial class OldLaunchPanel
+    partial class LaunchPanelV1
     {
         /// <summary>
         /// Required designer variable.
@@ -333,7 +333,7 @@
             this.lbSelectedVersion.Text = "Program Selector";
             this.lbSelectedVersion.Visible = false;
             // 
-            // OldLaunchPanel
+            // LaunchPanelV1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -342,8 +342,8 @@
             this.Controls.Add(this.pnVersionBatchFiles);
             this.Controls.Add(this.lbSelectedVersion);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "OldLaunchPanel";
-            this.Text = "OldLaunchPanel";
+            this.Name = "LaunchPanelV1";
+            this.Text = "LaunchPanelV1";
             this.Load += new System.EventHandler(this.OldLaunchPanel_Load);
             this.pnVersionBatchFiles.ResumeLayout(false);
             this.pnVersionBatchFiles.PerformLayout();

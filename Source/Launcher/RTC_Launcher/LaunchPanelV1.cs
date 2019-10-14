@@ -12,11 +12,11 @@ using System.Windows.Forms;
 
 namespace RTCV.Launcher
 {
-    public partial class OldLaunchPanel : Form
+    public partial class LaunchPanelV1 : Form
     {
         public Button[] buttons;
 
-        public OldLaunchPanel()
+        public LaunchPanelV1()
         {
             InitializeComponent();
 

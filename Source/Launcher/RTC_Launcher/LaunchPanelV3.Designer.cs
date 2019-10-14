@@ -1,6 +1,6 @@
 ﻿namespace RTCV.Launcher
 {
-    partial class NewLaunchPanel
+    partial class LaunchPanelV3
     {
         /// <summary>
         /// Required designer variable.
@@ -61,7 +61,7 @@
             this.btnDefaultSize.UseVisualStyleBackColor = false;
             this.btnDefaultSize.Visible = false;
             // 
-            // NewLaunchPanel
+            // LaunchPanelV2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -71,8 +71,8 @@
             this.Controls.Add(this.lbSelectedVersion);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "NewLaunchPanel";
-            this.Text = "NewLaunchPanel";
+            this.Name = "LaunchPanelV2";
+            this.Text = "LaunchPanelV2";
             this.Load += new System.EventHandler(this.NewLaunchPanel_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

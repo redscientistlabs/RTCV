@@ -12,11 +12,11 @@ using System.Windows.Forms;
 
 namespace RTCV.Launcher
 {
-    public partial class NewLaunchPanel : Form
+    public partial class LaunchPanelV2 : Form
     {
         LauncherConf lc;
 
-        public NewLaunchPanel()
+        public LaunchPanelV2()
         {
             InitializeComponent();
             lbSelectedVersion.Visible = false;

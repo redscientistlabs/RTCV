@@ -29,7 +29,7 @@ namespace RTCV.Launcher
 
 
 
-        public static string launcherDir = Directory.GetCurrentDirectory();
+        public static string launcherDir = Path.GetDirectoryName(Application.ExecutablePath);
         public static string webRessourceDomain = "http://redscientist.com/software";
 
         public static MainForm mf = null;
@@ -37,7 +37,7 @@ namespace RTCV.Launcher
         public static DownloadForm dForm = null;
         public static Form lpForm = null;
 
-        public static int launcherVer = 16;
+        public static int launcherVer = 15;
 
 
         public static int devCounter = 0;
@@ -226,12 +226,14 @@ namespace RTCV.Launcher
                 SelectedVersion = lbVersions.SelectedItem.ToString();
                 lastSelectedVersion = SelectedVersion;
             }
-            if (Directory.Exists(MainForm.launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + SelectedVersion + Path.DirectorySeparatorChar + "Launcher"))
-            {
-                MainForm.lpForm = new NewLaunchPanel();
-            }
+
+
+            if (File.Exists(Path.Combine(MainForm.launcherDir, "VERSIONS", SelectedVersion, "Launcher", "launcher.json")))
+                MainForm.lpForm = new LaunchPanelV3();
+            else if (File.Exists(Path.Combine(MainForm.launcherDir, "VERSIONS", SelectedVersion, "Launcher","launcher.ini")))
+                MainForm.lpForm = new LaunchPanelV2();
             else
-                MainForm.lpForm = new OldLaunchPanel();
+                MainForm.lpForm = new LaunchPanelV1();
 
 
             MainForm.lpForm.Size = pnAnchorRight.Size;
@@ -266,7 +268,7 @@ namespace RTCV.Launcher
 
                     if (Directory.Exists(extractDirectory))
                         RTC_Extensions.RecursiveDeleteNukeReadOnly(extractDirectory);
-
+                    return;
                 }
 
 
@@ -334,7 +336,7 @@ namespace RTCV.Launcher
                     ProcessStartInfo psi = new ProcessStartInfo();
                     psi.FileName = Path.GetFileName(preReqChecker);
                     psi.WorkingDirectory = Path.GetDirectoryName(preReqChecker);
-                    Process.Start(psi).WaitForExit();
+                    Process.Start(psi)?.WaitForExit();
                 }
 
                 //Force an update if launcher.json is found
@@ -353,13 +355,22 @@ namespace RTCV.Launcher
                     Process.Start(psi);
                     Application.Exit();
                 }
-                if (File.Exists(extractDirectory + Path.DirectorySeparatorChar + "Launcher\\ver.ini"))
+                if (File.Exists(Path.Combine(extractDirectory, "Launcher", "ver.ini")))
                 {
-                    int newVer = Convert.ToInt32(File.ReadAllText(extractDirectory + Path.DirectorySeparatorChar + "Launcher\\ver.ini"));
+                    int newVer = Convert.ToInt32(File.ReadAllText(Path.Combine(extractDirectory, "Launcher", "ver.ini")));
                     if (newVer > launcherVer)
                     {
-                        var result = MessageBox.Show("The downloaded package contains a new launcher update.\n\nDo you want to update the Launcher?", "Launcher update", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                        if (result == DialogResult.Yes)
+                        if (File.Exists(Path.Combine(extractDirectory, "Launcher", "minver.ini")))
+                        {
+                            int minVer = Convert.ToInt32(File.ReadAllText(Path.Combine(extractDirectory, "Launcher", "minver.ini")));
+                            if (minVer > launcherVer && MessageBox.Show("A mandatory launcher update is required to use this version. Click \"OK\" to update the launcher.", "Launcher update required", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.Cancel)
+                            {
+                                MessageBox.Show("Launcher update is required. Cancelling.");
+                                RTC_Extensions.RecursiveDeleteNukeReadOnly(extractDirectory);
+                                return;
+                            }
+                        }
+                        else if (MessageBox.Show("The downloaded package contains a new launcher update.\n\nDo you want to update the Launcher?", "Launcher update", MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==  DialogResult.Yes)
                         {
                             string batchLocation = extractDirectory + Path.DirectorySeparatorChar + "Launcher\\update.bat";
                             ProcessStartInfo psi = new ProcessStartInfo();
@@ -420,6 +431,7 @@ namespace RTCV.Launcher
             if (lbVersions.SelectedIndex == -1)
                 return;
 
+            Directory.SetCurrentDirectory(launcherDir); //Move our working dir back
             string version = lbVersions.SelectedItem.ToString();
 
             if (File.Exists(launcherDir + Path.DirectorySeparatorChar + "PACKAGES" + Path.DirectorySeparatorChar + version + ".zip"))
