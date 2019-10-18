@@ -176,9 +176,21 @@ namespace RTCV.Launcher
 
         }
 
-        private void LbOnlineVersions_SelectedIndexChanged_1(object sender, EventArgs e)
+        private void lbOnlineVersions_MouseDoubleClick_1(object sender, MouseEventArgs e)
         {
             btnDownloadVersion_Click(sender, e);
+        }
+
+        private void lbOnlineVersions_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                Point locate = new Point((sender as Control).Location.X + e.Location.X, (sender as Control).Location.Y + e.Location.Y);
+
+                ContextMenuStrip columnsMenu = new ContextMenuStrip();
+                columnsMenu.Items.Add("Download", null, new EventHandler((ob, ev) => { btnDownloadVersion_Click(sender, e); }));
+                columnsMenu.Show(this, locate);
+            }
         }
     }
 }

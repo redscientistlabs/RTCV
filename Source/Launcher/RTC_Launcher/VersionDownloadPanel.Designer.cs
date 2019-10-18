@@ -51,7 +51,8 @@
             this.lbOnlineVersions.Size = new System.Drawing.Size(463, 185);
             this.lbOnlineVersions.TabIndex = 129;
             this.lbOnlineVersions.Tag = "color:normal";
-            this.lbOnlineVersions.SelectedIndexChanged += new System.EventHandler(this.LbOnlineVersions_SelectedIndexChanged_1);
+            this.lbOnlineVersions.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbOnlineVersions_MouseDoubleClick_1);
+            this.lbOnlineVersions.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbOnlineVersions_MouseDown);
             // 
             // label3
             // 
@@ -115,6 +116,11 @@
             this.ResumeLayout(false);
             this.PerformLayout();
 
+        }
+
+        private void LbOnlineVersions_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            throw new System.NotImplementedException();
         }
 
         #endregion
