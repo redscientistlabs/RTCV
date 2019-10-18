@@ -173,6 +173,14 @@ namespace RTCV.UI
                     }
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
+                ((ToolStripMenuItem)columnsMenu.Items.Add("Manual Inject", null, new EventHandler((ob, ev) =>
+                {
+                    var sk = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
+                    StashKey newSk = (StashKey)sk.Clone();
+                    S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newSk, false);
+
+                }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
+
                 columnsMenu.Items.Add(new ToolStripSeparator());
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Generate VMD from Selected Item", null, new EventHandler((ob, ev) =>
                 {
