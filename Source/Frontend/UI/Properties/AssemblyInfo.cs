@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("UI")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("UI component of Real Time Corruptor Vanguard. https://github.com/ircluzar/RTCV")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("UI")]
-[assembly: AssemblyCopyright("Copyright ©  2019")]
+[assembly: AssemblyCompany("Redscientist Media")]
+[assembly: AssemblyProduct("RTCV")]
+[assembly: AssemblyCopyright("Redscientist Media")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

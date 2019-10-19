@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("NetCore")]
-[assembly: AssemblyDescription("Synchronous Inter-Process Net Library")]
+[assembly: AssemblyDescription("Synchronous Inter-Process Net Library. https://github.com/ircluzar/RTCV")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Redscientist Media")]
 [assembly: AssemblyProduct("NetCore")]
