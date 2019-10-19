@@ -52,6 +52,7 @@ namespace RTCV.Launcher
         }
 
 
+
         public void refreshVersions()
         {
             Action a = () =>
@@ -64,17 +65,15 @@ namespace RTCV.Launcher
                 string str = Encoding.UTF8.GetString(versionFile);
 
                 //Ignores any build containing the word Launcher in it
-                List<string> onlineVersions = new List<string>(str.Split('|').Where(it => !it.Contains("Launcher")).ToArray());
-
+                var onlineVersions = str.Split('|').Where(it => !it.Contains("Launcher")).OrderByNaturalDescending(x => x).Select(it => it.Replace(".zip", "")).ToArray();
                 this.Invoke(new MethodInvoker(() =>
                 {
                     lbOnlineVersions.Items.Clear();
-                    if (onlineVersions.Count > 0)
+                    if (onlineVersions.Length > 0)
                     {
-                        int latest = onlineVersions.Count - 1;
-                        onlineVersions[latest] += latestVersionString;
+                        onlineVersions[0] += latestVersionString;
                     }
-                    lbOnlineVersions.Items.AddRange(onlineVersions.OrderByDescending(x => x).Select(it => it.Replace(".zip", "")).ToArray());
+                    lbOnlineVersions.Items.AddRange(onlineVersions);
                 }));
             };
             Task.Run(a);
