@@ -37,7 +37,7 @@ namespace RTCV.Launcher
         public static DownloadForm dForm = null;
         public static Form lpForm = null;
 
-        public static int launcherVer = 17;
+        public static int launcherVer = 18;
 
 
         public static int devCounter = 0;
@@ -251,15 +251,26 @@ namespace RTCV.Launcher
             this.BeginInvoke(new MethodInvoker(a));
         }
 
+        private void Update(string extractDirectory)
+        {
+            string batchLocation = extractDirectory + Path.DirectorySeparatorChar + "Launcher\\update.bat";
+            ProcessStartInfo psi = new ProcessStartInfo();
+            psi.FileName = Path.GetFileName(batchLocation);
+            psi.WorkingDirectory = Path.GetDirectoryName(batchLocation);
+            Process.Start(psi);
+            Environment.Exit(0);
+        }
+
         public void DownloadComplete(string downloadedFile, string extractDirectory)
         {
 
             try
-                {
+            {
                 if (!Directory.Exists(extractDirectory))
                     Directory.CreateDirectory(extractDirectory);
 
-                try {
+                try
+                {
                     System.IO.Compression.ZipFile.ExtractToDirectory(downloadedFile, extractDirectory);
                 }
                 catch (Exception ex)
@@ -275,8 +286,8 @@ namespace RTCV.Launcher
                 //This checks every extracted files against the contents of the zip file
                 using (ZipArchive za = System.IO.Compression.ZipFile.OpenRead(downloadedFile))
                 {
-                    bool foundLockBefore = false;   //this flag prompts a message to skip all 
-                    bool skipLock = false;          //file locked messages and sents the flag below
+                    bool foundLockBefore = false; //this flag prompts a message to skip all 
+                    bool skipLock = false; //file locked messages and sents the flag below
 
                     foreach (var entry in za.Entries.Where(it => !it.FullName.EndsWith("/")))
                     {
@@ -298,14 +309,16 @@ namespace RTCV.Launcher
                                     {
                                         if (foundLockBefore)
                                         {
-                                            if (MessageBox.Show($"Another file has been found locked/inaccessible.\nThere might be many more messages like this coming up.\n\nWould you like skip any remaining lock messages?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
+                                            if (MessageBox.Show($"Another file has been found locked/inaccessible.\nThere might be many more messages like this coming up.\n\nWould you like skip any remaining lock messages?", "Error",
+                                                    MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
                                                 skipLock = true;
                                         }
                                     }
 
                                     if (!skipLock)
                                     {
-                                        MessageBox.Show($"An error occurred during extraction,\n\nThe file \"targetFile\" seems to have been locked/made inaccessible by an external program. It might be caused by your antivirus.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        MessageBox.Show($"An error occurred during extraction,\n\nThe file \"targetFile\" seems to have been locked/made inaccessible by an external program. It might be caused by your antivirus.", "Error",
+                                            MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     }
                                 }
 
@@ -314,7 +327,8 @@ namespace RTCV.Launcher
                         }
                         else
                         {
-                            MessageBox.Show($"An error occurred during extraction, rolling back changes.\n\nThe file \"{targetFile}\" could not be found. It might have been deleted by your antivirus.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show($"An error occurred during extraction, rolling back changes.\n\nThe file \"{targetFile}\" could not be found. It might have been deleted by your antivirus.", "Error", MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
 
                             if (Directory.Exists(extractDirectory))
                                 RTC_Extensions.RecursiveDeleteNukeReadOnly(extractDirectory);
@@ -344,24 +358,29 @@ namespace RTCV.Launcher
                     int newVer = Convert.ToInt32(File.ReadAllText(Path.Combine(extractDirectory, "Launcher", "ver.ini")));
                     if (newVer > launcherVer)
                     {
-                        if (File.Exists(Path.Combine(extractDirectory, "Launcher", "minver.ini")))
+                        
+                        if (File.Exists(Path.Combine(extractDirectory, "Launcher", "minver.ini")) && //Do we have minver
+                            Convert.ToInt32(File.ReadAllText(Path.Combine(extractDirectory, "Launcher", "minver.ini"))) > launcherVer) //Is minver > launcherVer
                         {
-                            int minVer = Convert.ToInt32(File.ReadAllText(Path.Combine(extractDirectory, "Launcher", "minver.ini")));
-                            if (minVer > launcherVer && MessageBox.Show("A mandatory launcher update is required to use this version. Click \"OK\" to update the launcher.", "Launcher update required", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly) == DialogResult.Cancel)
-                            {
-                                MessageBox.Show("Launcher update is required. Cancelling.");
-                                RTC_Extensions.RecursiveDeleteNukeReadOnly(extractDirectory);
-                                return;
-                            }
+                            if (MessageBox.Show("A mandatory launcher update is required to use this version. Click \"OK\" to update the launcher.", 
+                                    "Launcher update required",
+                                    MessageBoxButtons.OKCancel,
+                                    MessageBoxIcon.Exclamation,
+                                    MessageBoxDefaultButton.Button1,
+                                    MessageBoxOptions.DefaultDesktopOnly) == DialogResult.OK)
+                                {
+                                    Update();
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Launcher update is required. Cancelling.");
+                                    RTC_Extensions.RecursiveDeleteNukeReadOnly(extractDirectory);
+                                    return;
+                                }
                         }
-                        else if (MessageBox.Show("The downloaded package contains a new launcher update.\n\nDo you want to update the Launcher?", "Launcher update", MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==  DialogResult.Yes)
+                        if (MessageBox.Show("The downloaded package contains a new launcher update.\n\nDo you want to update the Launcher?", "Launcher update", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
-                            string batchLocation = extractDirectory + Path.DirectorySeparatorChar + "Launcher\\update.bat";
-                            ProcessStartInfo psi = new ProcessStartInfo();
-                            psi.FileName = Path.GetFileName(batchLocation);
-                            psi.WorkingDirectory = Path.GetDirectoryName(batchLocation);
-                            Process.Start(psi);
-                            Application.Exit();
+                            Update();
                         }
                     }
                 }
