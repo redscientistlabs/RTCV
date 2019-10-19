@@ -26,10 +26,7 @@ namespace StandaloneRTC
                 {
                     //Make sure we resolve our dlls
                     AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-                    //Remove any zone files on the dlls because Windows likes to append them
-                    string dllDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                    WhackAllMOTW(dllDir);
-
+                    
                     StartLoader(args);
                 }
                 else
@@ -114,7 +111,7 @@ namespace StandaloneRTC
 					}
 					
 					//it is important that we use LoadFile here and not load from a byte array; otherwise mixed (managed/unamanged) assemblies can't load
-					return Assembly.LoadFile(fname);
+					return Assembly.UnsafeLoadFrom(fname);
 				}
 			}catch(Exception e)
 			{
@@ -122,28 +119,4 @@ namespace StandaloneRTC
 				return null;
 			}
 		}
-
-		[DllImport("kernel32.dll", EntryPoint = "DeleteFileW", SetLastError = true, CharSet = CharSet.Unicode, ExactSpelling = true)]
-		static extern bool DeleteFileW([MarshalAs(UnmanagedType.LPWStr)]string lpFileName);
-		public static void RemoveMOTW(string path)
-		{
-			DeleteFileW(path + ":Zone.Identifier");
-		}
-		//Lifted from Bizhawk
-		static void WhackAllMOTW(string dllDir)
-		{
-            if (!Directory.Exists(dllDir))
-                return;
-			var todo = new Queue<DirectoryInfo>(new[] { new DirectoryInfo(dllDir) });
-			while (todo.Count > 0)
-			{
-				var di = todo.Dequeue();
-				foreach (var disub in di?.GetDirectories()) todo.Enqueue(disub);
-				foreach (var fi in di.GetFiles("*.dll"))
-					RemoveMOTW(fi.FullName);
-				foreach (var fi in di.GetFiles("*.exe"))
-					RemoveMOTW(fi.FullName);
-			}
-		}
-	}
 }
