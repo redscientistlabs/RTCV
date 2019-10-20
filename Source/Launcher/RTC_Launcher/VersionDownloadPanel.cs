@@ -43,7 +43,7 @@ namespace RTCV.Launcher
                 string str = Encoding.UTF8.GetString(versionFile);
                 List<string> onlineVersions = new List<string>(str.Split('|').Where(it => !it.Contains("Launcher")).ToArray());
 
-                return onlineVersions.OrderByDescending(x => x).Select(it => it.Replace(".zip", "")).ToArray()[0];
+                return onlineVersions.OrderByNaturalDescending(x => x).Select(it => it.Replace(".zip", "")).ToArray()[0];
             }
             catch
             {
