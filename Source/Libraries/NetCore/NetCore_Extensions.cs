@@ -173,7 +173,7 @@ namespace RTCV.NetCore
 					}
 					Console.SetOut(doubleWriter);
 					Console.SetError(doubleWriter);
-				}
+                }
 
 				public void Dispose()
 				{

@@ -18,25 +18,28 @@ namespace RTCV.UI
 	{
 		public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
 		public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
-        private Timer updateTimer;
+        private System.Timers.Timer updateTimer;
 		public RTC_MemoryDomains_Form()
 		{
 			InitializeComponent();
-            updateTimer = new Timer
+            updateTimer = new System.Timers.Timer
             {
-                Enabled = true, 
+                AutoReset = false,
                 Interval = 300,
             };
-            updateTimer.Tick += UpdateSelectedMemoryDomains;
+            updateTimer.Elapsed += UpdateSelectedMemoryDomains;
         }
 
         private void UpdateSelectedMemoryDomains(object sender, EventArgs args)
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (var s in lbMemoryDomains.SelectedItems.Cast<string>().ToArray())
-                sb.Append($"{s},");
-            Console.WriteLine($"UpdateSelectedMemoryDomains Setting SELECTEDDOMAINS domains to {sb}");
-            AllSpec.UISpec.Update("SELECTEDDOMAINS", lbMemoryDomains.SelectedItems.Cast<string>().Distinct().ToArray());
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach (var s in lbMemoryDomains.SelectedItems.Cast<string>().ToArray())
+                    sb.Append($"{s},");
+                Console.WriteLine($"UpdateSelectedMemoryDomains Setting SELECTEDDOMAINS domains to {sb}");
+                AllSpec.UISpec.Update("SELECTEDDOMAINS", lbMemoryDomains.SelectedItems.Cast<string>().Distinct().ToArray());
+            });
         }
 
         public void SetMemoryDomainsSelectedDomains(string[] _domains)
@@ -57,8 +60,7 @@ namespace RTCV.UI
         {
             var oldState = this.Visible;
 
-			for (
-				int i = 0; i < lbMemoryDomains.Items.Count; i++)
+			for (int i = 0; i < lbMemoryDomains.Items.Count; i++)
 				if (_blacklistedDomains?.Contains(lbMemoryDomains.Items[i].ToString()) ?? false)
 					lbMemoryDomains.SetSelected(i, false);
 				else
