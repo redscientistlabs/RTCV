@@ -32,6 +32,10 @@ namespace RTCV.UI
 
         private void UpdateSelectedMemoryDomains(object sender, EventArgs args)
         {
+            StringBuilder sb = new StringBuilder();
+            foreach (var s in lbMemoryDomains.SelectedItems.Cast<string>().ToArray())
+                sb.Append($"{s},");
+            Console.WriteLine($"UpdateSelectedMemoryDomains Setting SELECTEDDOMAINS domains to {sb}");
             AllSpec.UISpec.Update("SELECTEDDOMAINS", lbMemoryDomains.SelectedItems.Cast<string>().Distinct().ToArray());
         }
 
@@ -133,11 +137,6 @@ namespace RTCV.UI
 
 		private void lbMemoryDomains_SelectedIndexChanged(object sender, EventArgs e)
 		{
-            StringBuilder sb = new StringBuilder();
-            foreach (var s in lbMemoryDomains.SelectedItems.Cast<string>().ToArray())
-                sb.Append($"{s},");
-            Console.WriteLine($"lbIndexChanged Setting SELECTEDDOMAINS domains to {sb}");
-
             updateTimer.Stop();
             updateTimer.Start();
 
