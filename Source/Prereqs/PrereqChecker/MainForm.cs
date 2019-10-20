@@ -98,7 +98,7 @@ namespace RTCV.Prereqs
             var d3dx9Setup = new Dependency("DirectX9 End-User Runtime", "", "", $"/silent", Path.Combine(redistDir, "DXSETUP.exe"));
             var d3dx9 = new Dependency("DirectX9 End-User Runtime", "d3dx9_43.dll", "https://download.microsoft.com/download/8/4/A/84A35BF1-DAFE-4AE8-82AF-AD2AE20B6B14/directx_Jun2010_redist.exe", $"/Q /T:{redistDir}", "", d3dx9Setup);
 
-            var vc2019 = new Dependency("Visual C++ 2019 x64", "vcruntime140.dll", "https://download.visualstudio.microsoft.com/download/pr/9565895b-35a6-434b-a881-11a6f4beec76/EE84FED2552E018E854D4CD2496DF4DD516F30733A27901167B8A9882119E57C/VC_redist.x64.exe",
+            var vc2019 = new Dependency("Visual C++ 2019 x64", "vcruntime140_1.dll", "https://download.visualstudio.microsoft.com/download/pr/9565895b-35a6-434b-a881-11a6f4beec76/EE84FED2552E018E854D4CD2496DF4DD516F30733A27901167B8A9882119E57C/VC_redist.x64.exe",
                 "/install /passive /norestart");
            
             var vc2015x86 = new Dependency("Visual C++ 2015-2019 x86", "msvcp140.dll", "https://download.visualstudio.microsoft.com/download/pr/9565895b-35a6-434b-a881-11a6f4beec76/4A8157B2FF422C259DDAA2D0E568C0C0AFAB940E1F6E0E482EF83E90DDBAD2D6/VC_redist.x86.exe",
