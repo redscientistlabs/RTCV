@@ -166,7 +166,7 @@ namespace RTCV.Launcher
         {
             lbVersions.Items.Clear();
             List<string> versions = new List<string>(Directory.GetDirectories(launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar));
-            lbVersions.Items.AddRange(versions.OrderByDescending(x => x).Select(it => getFilenameFromFullFilename(it)).ToArray<object>());
+            lbVersions.Items.AddRange(versions.OrderByNaturalDescending(x => x).Select(it => getFilenameFromFullFilename(it)).ToArray<object>());
             SelectedVersion = null;
 
 
