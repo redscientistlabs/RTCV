@@ -105,10 +105,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.ClientSize = new System.Drawing.Size(490, 268);
+            this.Controls.Add(this.btnDownloadVersion);
             this.Controls.Add(this.cbDevBuids);
             this.Controls.Add(this.lbOnlineVersions);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.btnDownloadVersion);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "VersionDownloadPanel";
             this.Text = "VersionDownloadPanel";

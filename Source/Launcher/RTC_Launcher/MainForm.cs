@@ -19,11 +19,23 @@ namespace RTCV.Launcher
 {
     public partial class MainForm : Form
     {
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        public const int HT_CAPTION = 0x2;
+        private const int WM_NCLBUTTONDOWN = 0xA1;
+        private const int
+            HT_CAPTION = 0x2,
+            HT_LEFT = 0xA,
+            HT_RIGHT = 0xB,
+            HT_TOP = 0xC,
+            HT_TOPLEFT = 0xD,
+            HT_TOPRIGHT = 0xE,
+            HT_BOTTOM = 0xF,
+            HT_BOTTOMLEFT = 0x10,
+            HT_BOTTOMRIGHT = 0x11;
+        
+
 
         [DllImportAttribute("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
 
@@ -37,7 +49,7 @@ namespace RTCV.Launcher
         public static DownloadForm dForm = null;
         public static Form lpForm = null;
 
-        public static int launcherVer = 19;
+        public static int launcherVer = 20;
 
 
         public static int devCounter = 0;
@@ -49,6 +61,9 @@ namespace RTCV.Launcher
             InitializeComponent();
 
             mf = this;
+            lbVersions.AutoSize = true;
+            RewireMouseMove();
+
 
             //creating default folders
             if (!Directory.Exists(launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar))
@@ -70,6 +85,19 @@ namespace RTCV.Launcher
                     File.Delete(launcherDir + Path.DirectorySeparatorChar + "PACKAGES" + Path.DirectorySeparatorChar + "Update_Launcher.zip");
             }
 
+        }
+
+        private void RewireMouseMove()
+        {
+            foreach (Control control in Controls)
+            {
+                control.MouseMove -= RedirectMouseMove;
+                control.MouseMove += RedirectMouseMove;
+            }
+                
+
+            this.MouseMove -= MainForm_MouseMove;
+            this.MouseMove += MainForm_MouseMove;
         }
 
         public void DownloadFile(string downloadURL, string downloadedFile, string extractDirectory)
@@ -105,10 +133,7 @@ namespace RTCV.Launcher
                     else
                         motd = Encoding.UTF8.GetString(motdFile);
 
-                    this.Invoke(new MethodInvoker(() =>
-                    {
-                        lbMOTD.Text = motd;
-                    }));
+                    this.Invoke(new MethodInvoker(() => { lbMOTD.Text = motd; }));
                 };
                 Task.Run(a);
             }
@@ -167,16 +192,14 @@ namespace RTCV.Launcher
             lbVersions.Items.Clear();
             List<string> versions = new List<string>(Directory.GetDirectories(launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar));
             lbVersions.Items.AddRange(versions.OrderByNaturalDescending(x => x).Select(it => getFilenameFromFullFilename(it)).ToArray<object>());
+            this.PerformLayout();
             SelectedVersion = null;
 
 
             Action a = () =>
             {
                 string latestVersion = VersionDownloadPanel.getLatestVersion();
-                this.Invoke(new MethodInvoker(() =>
-                {
-                    pbNewVersionNotification.Visible = !versions.Select(it => it.Substring(it.LastIndexOf('\\') + 1)).Contains(latestVersion);
-                }));
+                this.Invoke(new MethodInvoker(() => { pbNewVersionNotification.Visible = !versions.Select(it => it.Substring(it.LastIndexOf('\\') + 1)).Contains(latestVersion); }));
             };
             Task.Run(a);
         }
@@ -198,6 +221,7 @@ namespace RTCV.Launcher
                 {
                     Console.WriteLine($"{url} timed out.");
                 }
+
                 return b;
             }
         }
@@ -230,7 +254,7 @@ namespace RTCV.Launcher
 
             if (File.Exists(Path.Combine(MainForm.launcherDir, "VERSIONS", SelectedVersion, "Launcher", "launcher.json")))
                 MainForm.lpForm = new LaunchPanelV3();
-            else if (File.Exists(Path.Combine(MainForm.launcherDir, "VERSIONS", SelectedVersion, "Launcher","launcher.ini")))
+            else if (File.Exists(Path.Combine(MainForm.launcherDir, "VERSIONS", SelectedVersion, "Launcher", "launcher.ini")))
                 MainForm.lpForm = new LaunchPanelV2();
             else
                 MainForm.lpForm = new LaunchPanelV1();
@@ -239,6 +263,9 @@ namespace RTCV.Launcher
             MainForm.lpForm.Size = pnAnchorRight.Size;
             MainForm.lpForm.TopLevel = false;
             pnAnchorRight.Controls.Add(MainForm.lpForm);
+            foreach (Control c in MainForm.lpForm.Controls)
+                c.MouseMove += MainForm_MouseMove;
+            MainForm.lpForm.MouseMove += MainForm_MouseMove;
 
             MainForm.lpForm.Dock = DockStyle.Fill;
             MainForm.lpForm.Show();
@@ -358,26 +385,27 @@ namespace RTCV.Launcher
                     int newVer = Convert.ToInt32(File.ReadAllText(Path.Combine(extractDirectory, "Launcher", "ver.ini")));
                     if (newVer > launcherVer)
                     {
-                        
+
                         if (File.Exists(Path.Combine(extractDirectory, "Launcher", "minver.ini")) && //Do we have minver
                             Convert.ToInt32(File.ReadAllText(Path.Combine(extractDirectory, "Launcher", "minver.ini"))) > launcherVer) //Is minver > launcherVer
                         {
-                            if (MessageBox.Show("A mandatory launcher update is required to use this version. Click \"OK\" to update the launcher.", 
+                            if (MessageBox.Show("A mandatory launcher update is required to use this version. Click \"OK\" to update the launcher.",
                                     "Launcher update required",
                                     MessageBoxButtons.OKCancel,
                                     MessageBoxIcon.Exclamation,
                                     MessageBoxDefaultButton.Button1,
                                     MessageBoxOptions.DefaultDesktopOnly) == DialogResult.OK)
-                                {
-                                    Update();
-                                }
-                                else
-                                {
-                                    MessageBox.Show("Launcher update is required. Cancelling.");
-                                    RTC_Extensions.RecursiveDeleteNukeReadOnly(extractDirectory);
-                                    return;
-                                }
+                            {
+                                Update();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Launcher update is required. Cancelling.");
+                                RTC_Extensions.RecursiveDeleteNukeReadOnly(extractDirectory);
+                                return;
+                            }
                         }
+
                         if (MessageBox.Show("The downloaded package contains a new launcher update.\n\nDo you want to update the Launcher?", "Launcher update", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
                             Update();
@@ -409,7 +437,7 @@ namespace RTCV.Launcher
         }
 
 
-    public void RefreshKeepSelectedVersion()
+        public void RefreshKeepSelectedVersion()
         {
             if (lastSelectedVersion != null)
             {
@@ -440,17 +468,20 @@ namespace RTCV.Launcher
             if (File.Exists(launcherDir + Path.DirectorySeparatorChar + "PACKAGES" + Path.DirectorySeparatorChar + version + ".zip"))
                 File.Delete(launcherDir + Path.DirectorySeparatorChar + "PACKAGES" + Path.DirectorySeparatorChar + version + ".zip");
 
-            if (Directory.Exists((launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version))) { }
+            if (Directory.Exists((launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version)))
+            {
+            }
+
             {
                 var failed = RTC_Extensions.RecursiveDeleteNukeReadOnly(launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version);
-                if(failed.Count > 0)
+                if (failed.Count > 0)
                 {
                     StringBuilder sb = new StringBuilder();
                     foreach (var l in failed)
                     {
                         sb.AppendLine(Path.GetFileName(l));
                     }
-                        
+
                     MessageBox.Show($"Failed to delete some files!\nSomething may be locking them (is the RTC still running?)\n\nList of failed files:\n{sb.ToString()}");
                 }
             }
@@ -534,14 +565,6 @@ namespace RTCV.Launcher
 
         }
 
-        private void panel2_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-            }
-        }
 
         private void btnQuit_Click(object sender, EventArgs e)
         {
@@ -575,6 +598,91 @@ namespace RTCV.Launcher
         private void btnDiscord_Click(object sender, EventArgs e)
         {
             Process.Start("https://discord.corrupt.wiki/");
+        }
+
+        const int _ = 10; // you can rename this variable if you like
+
+        Rectangle Top => new Rectangle(0, 0, this.ClientSize.Width, _);
+        Rectangle Left => new Rectangle(0, 0, _, this.ClientSize.Height);
+        Rectangle Bottom => new Rectangle(0, this.ClientSize.Height - _, this.ClientSize.Width, _);
+        Rectangle Right => new Rectangle(this.ClientSize.Width - _, 0, _, this.ClientSize.Height);
+        Rectangle TopLeft => new Rectangle(0, 0, _, _);
+        Rectangle TopRight => new Rectangle(this.ClientSize.Width - _, 0, _, _);
+        Rectangle BottomLeft => new Rectangle(0, this.ClientSize.Height - _, _, _);
+        Rectangle BottomRight => new Rectangle(this.ClientSize.Width - _, this.ClientSize.Height - _, _, _);
+
+
+
+        private void ResizeWindow(MouseEventArgs e, int wParam)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, wParam, 0);
+            }
+        }
+        private void RedirectMouseMove(object sender, MouseEventArgs e)
+        {
+            Control control = (Control)sender;
+            Point screenPoint = control.PointToScreen(new Point(e.X, e.Y));
+            Point formPoint = PointToClient(screenPoint);
+            MouseEventArgs args = new MouseEventArgs(e.Button, e.Clicks,
+                formPoint.X, formPoint.Y, e.Delta);
+            OnMouseMove(args);
+        }
+
+        private void MainForm_MouseMove(object sender, MouseEventArgs e)
+        {
+            Cursor.Current = Cursors.Default;
+            var cursor = this.PointToClient(Cursor.Position);
+            if (TopLeft.Contains(cursor))
+            {
+                Cursor.Current = Cursors.SizeNWSE;
+                ResizeWindow(e, HT_TOPLEFT);
+            }
+            else if (TopRight.Contains(cursor))
+            {
+                Cursor.Current = Cursors.SizeNESW;
+                ResizeWindow(e, HT_TOPRIGHT);
+            }
+            else if (BottomLeft.Contains(cursor))
+            {
+                Cursor.Current = Cursors.SizeNESW;
+                ResizeWindow(e, HT_BOTTOMLEFT);
+            }
+            else if (BottomRight.Contains(cursor))
+            {
+                Cursor.Current = Cursors.SizeNWSE;
+                ResizeWindow(e, HT_BOTTOMRIGHT);
+            }
+            else if (Top.Contains(cursor))
+            {
+                Cursor.Current = Cursors.SizeNS;
+                ResizeWindow(e, HT_TOP);
+            }
+            else if (Left.Contains(cursor))
+            {
+                Cursor.Current = Cursors.SizeWE;
+                ResizeWindow(e, HT_LEFT);
+            }
+            else if (Right.Contains(cursor))
+            {
+                Cursor.Current = Cursors.SizeWE;
+                ResizeWindow(e, HT_RIGHT);
+            }
+            else if (Bottom.Contains(cursor))
+            {
+                Cursor.Current = Cursors.SizeNS;
+                ResizeWindow(e, HT_BOTTOM);
+            }
+            else if (pnTopPanel.ClientRectangle.Contains(cursor))
+            {
+                if (e.Button == MouseButtons.Left)
+                {
+                    ReleaseCapture();
+                    SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                }
+            }
         }
     }
 }
