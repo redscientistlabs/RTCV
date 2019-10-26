@@ -227,5 +227,33 @@ namespace RTCV.UI
         {
             lbSteps.SelectedIndex = -1;
         }
+
+        private void RTC_SanitizeTool_Form_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason != CloseReason.UserClosing)
+                return;
+
+            Form frm = (sender as Form);
+            Button check = (frm?.ActiveControl as Button);
+
+            if(check == null && lbSteps.Items.Count > 1)
+            {
+                DialogResult dr = MessageBox.Show("Would you like to restore the Original BlastLayer?", "Leaving Sanitize Tool", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+                switch(dr)
+                {
+                    case DialogResult.Yes:
+                        S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(originalBlastLayer);
+                        break;
+                    case DialogResult.No:
+                        break;
+                    case DialogResult.Cancel:
+                    default:
+                        e.Cancel = true;
+                        break;
+                }
+            }
+
+        }
     }
 }

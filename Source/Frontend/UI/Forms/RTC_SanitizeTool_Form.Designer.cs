@@ -159,7 +159,7 @@ namespace RTCV.UI
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(16, 108);
+            this.label2.Location = new System.Drawing.Point(16, 105);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(122, 13);
             this.label2.TabIndex = 186;
@@ -189,9 +189,9 @@ namespace RTCV.UI
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(369, 15);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(77, 13);
+            this.label6.Size = new System.Drawing.Size(99, 13);
             this.label6.TabIndex = 193;
-            this.label6.Text = "Sanitize steps";
+            this.label6.Text = "Sanitization Steps";
             // 
             // panel6
             // 
@@ -317,6 +317,7 @@ namespace RTCV.UI
             this.Name = "RTC_SanitizeTool_Form";
             this.Tag = "color:dark1";
             this.Text = "Sanitize Tool";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RTC_SanitizeTool_Form_FormClosing);
             this.Load += new System.EventHandler(this.RTC_NewBlastEditorForm_Load);
             this.pnBlastLayerSanitization.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
