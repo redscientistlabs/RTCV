@@ -280,6 +280,12 @@
     <Compile Include="Forms\RTC_CustomEngineConfig_Form.Designer.cs">
       <DependentUpon>RTC_CustomEngineConfig_Form.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\RTC_SanitizeTool_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RTC_SanitizeTool_Form.Designer.cs">
+      <DependentUpon>RTC_SanitizeTool_Form.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\RTC_NewBlastEditor_Form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -459,6 +465,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RTC_CustomEngineConfig_Form.resx">
       <DependentUpon>RTC_CustomEngineConfig_Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RTC_SanitizeTool_Form.resx">
+      <DependentUpon>RTC_SanitizeTool_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RTC_NewBlastEditor_Form.resx">
       <DependentUpon>RTC_NewBlastEditor_Form.cs</DependentUpon>

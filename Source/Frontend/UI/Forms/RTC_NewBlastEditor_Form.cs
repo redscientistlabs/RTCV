@@ -1066,7 +1066,7 @@ namespace RTCV.UI
         */
 
 		StashKey originalSK = null;
-		StashKey currentSK = null;
+		internal StashKey currentSK = null;
 		BindingSource bs = null;
 		BindingSource _bs = null;
 		public void LoadStashkey(StashKey sk)
@@ -1559,14 +1559,19 @@ namespace RTCV.UI
 		{
 
 			BlastLayer temp = BlastTools.LoadBlastLayerFromFile();
-			if (temp != null)
-			{
-				currentSK.BlastLayer = temp;
-				bs = new BindingSource {DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer)};
-			}
-			dgvBlastEditor.DataSource = bs;
-			dgvBlastEditor.ResetBindings();
-			RefreshAllNoteIcons();
+            LoadBlastlayer(temp);
+        }
+
+        public void LoadBlastlayer(BlastLayer bl)
+        {
+            if (bl != null)
+            {
+                currentSK.BlastLayer = bl;
+                bs = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
+            }
+            dgvBlastEditor.DataSource = bs;
+            dgvBlastEditor.ResetBindings();
+            RefreshAllNoteIcons();
             dgvBlastEditor.Refresh();
         }
 
@@ -1827,8 +1832,16 @@ namespace RTCV.UI
 			lbBlastLayerSize.Text = "Size: " + currentSK.BlastLayer.Layer.Count;
 		}
 
-        private void btnSanitize_Click(object sender, EventArgs e)
+        private void btnSanitizeTool_Click(object sender, EventArgs e)
         {
+            if (currentSK?.BlastLayer?.Layer == null)
+                return;
+
+            RTC_SanitizeTool_Form.OpenSanitizeTool(currentSK?.BlastLayer);
+
+
+
+            /*
             DialogResult lastAnswer = DialogResult.Ignore;
 
             while(lastAnswer != DialogResult.Cancel && currentSK?.BlastLayer?.Layer?.Count > 1)
@@ -1861,6 +1874,9 @@ namespace RTCV.UI
 
                 lastAnswer = MessageBox.Show(@"Is the effect you are looking for still present?", "BlastLayer sanitization", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             }
+            */
+
+
 
         }
 

@@ -34,7 +34,7 @@ namespace RTCV.UI
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_NewBlastEditor_Form));
             this.dgvBlastEditor = new System.Windows.Forms.DataGridView();
             this.panelSidebar = new System.Windows.Forms.Panel();
-            this.btnSanitize = new System.Windows.Forms.Button();
+            this.btnSanitizeTool = new System.Windows.Forms.Button();
             this.btnAddRow = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.cbShiftBlastlayer = new System.Windows.Forms.ComboBox();
@@ -106,6 +106,7 @@ namespace RTCV.UI
             this.cbEnabled = new System.Windows.Forms.CheckBox();
             this.menuStripEx1 = new System.Windows.Forms.MenuStrip();
             this.blastLayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadFromFileblToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveToFileblToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToFileblToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -127,7 +128,6 @@ namespace RTCV.UI
             this.rasterizeVMDsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bakeBlastunitsToVALUEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openBlastGeneratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBlastEditor)).BeginInit();
             this.panelSidebar.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -172,7 +172,7 @@ namespace RTCV.UI
             // panelSidebar
             // 
             this.panelSidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.panelSidebar.Controls.Add(this.btnSanitize);
+            this.panelSidebar.Controls.Add(this.btnSanitizeTool);
             this.panelSidebar.Controls.Add(this.btnAddRow);
             this.panelSidebar.Controls.Add(this.panel1);
             this.panelSidebar.Controls.Add(this.pnMemoryTargetting);
@@ -196,22 +196,22 @@ namespace RTCV.UI
             this.panelSidebar.TabIndex = 146;
             this.panelSidebar.Tag = "color:dark1";
             // 
-            // btnSanitize
+            // btnSanitizeTool
             // 
-            this.btnSanitize.BackColor = System.Drawing.Color.Gray;
-            this.btnSanitize.FlatAppearance.BorderSize = 0;
-            this.btnSanitize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSanitize.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.btnSanitize.ForeColor = System.Drawing.Color.White;
-            this.btnSanitize.Location = new System.Drawing.Point(15, 212);
-            this.btnSanitize.Name = "btnSanitize";
-            this.btnSanitize.Size = new System.Drawing.Size(135, 23);
-            this.btnSanitize.TabIndex = 178;
-            this.btnSanitize.TabStop = false;
-            this.btnSanitize.Tag = "color:light1";
-            this.btnSanitize.Text = "Sanitize";
-            this.btnSanitize.UseVisualStyleBackColor = false;
-            this.btnSanitize.Click += new System.EventHandler(this.btnSanitize_Click);
+            this.btnSanitizeTool.BackColor = System.Drawing.Color.Gray;
+            this.btnSanitizeTool.FlatAppearance.BorderSize = 0;
+            this.btnSanitizeTool.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSanitizeTool.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnSanitizeTool.ForeColor = System.Drawing.Color.White;
+            this.btnSanitizeTool.Location = new System.Drawing.Point(15, 212);
+            this.btnSanitizeTool.Name = "btnSanitizeTool";
+            this.btnSanitizeTool.Size = new System.Drawing.Size(135, 23);
+            this.btnSanitizeTool.TabIndex = 178;
+            this.btnSanitizeTool.TabStop = false;
+            this.btnSanitizeTool.Tag = "color:light1";
+            this.btnSanitizeTool.Text = "Sanitize Tool";
+            this.btnSanitizeTool.UseVisualStyleBackColor = false;
+            this.btnSanitizeTool.Click += new System.EventHandler(this.btnSanitizeTool_Click);
             // 
             // btnAddRow
             // 
@@ -1119,45 +1119,52 @@ namespace RTCV.UI
             this.blastLayerToolStripMenuItem.Tag = "";
             this.blastLayerToolStripMenuItem.Text = "BlastLayer";
             // 
+            // newToolStripMenuItem
+            // 
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
+            this.newToolStripMenuItem.Text = "&New";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.NewToolStripMenuItem_Click);
+            // 
             // loadFromFileblToolStripMenuItem
             // 
             this.loadFromFileblToolStripMenuItem.Name = "loadFromFileblToolStripMenuItem";
-            this.loadFromFileblToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
+            this.loadFromFileblToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
             this.loadFromFileblToolStripMenuItem.Text = "&Load From File (.bl)";
             this.loadFromFileblToolStripMenuItem.Click += new System.EventHandler(this.loadFromFileblToolStripMenuItem_Click);
             // 
             // saveToFileblToolStripMenuItem
             // 
             this.saveToFileblToolStripMenuItem.Name = "saveToFileblToolStripMenuItem";
-            this.saveToFileblToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
+            this.saveToFileblToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
             this.saveToFileblToolStripMenuItem.Text = "&Save to File (.bl)";
             this.saveToFileblToolStripMenuItem.Click += new System.EventHandler(this.saveToFileblToolStripMenuItem_Click);
             // 
             // saveAsToFileblToolStripMenuItem
             // 
             this.saveAsToFileblToolStripMenuItem.Name = "saveAsToFileblToolStripMenuItem";
-            this.saveAsToFileblToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
+            this.saveAsToFileblToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
             this.saveAsToFileblToolStripMenuItem.Text = "&Save As to File (.bl)";
             this.saveAsToFileblToolStripMenuItem.Click += new System.EventHandler(this.saveAsToFileblToolStripMenuItem_Click);
             // 
             // importBlastlayerblToolStripMenuItem
             // 
             this.importBlastlayerblToolStripMenuItem.Name = "importBlastlayerblToolStripMenuItem";
-            this.importBlastlayerblToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
+            this.importBlastlayerblToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
             this.importBlastlayerblToolStripMenuItem.Text = "&Import Blastlayer (.bl)";
             this.importBlastlayerblToolStripMenuItem.Click += new System.EventHandler(this.importBlastlayerblToolStripMenuItem_Click);
             // 
             // exportToCSVToolStripMenuItem
             // 
             this.exportToCSVToolStripMenuItem.Name = "exportToCSVToolStripMenuItem";
-            this.exportToCSVToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
+            this.exportToCSVToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
             this.exportToCSVToolStripMenuItem.Text = "&Export to CSV";
             this.exportToCSVToolStripMenuItem.Click += new System.EventHandler(this.exportToCSVToolStripMenuItem_Click);
             // 
-            // importBlastLayerFromCorruptedFileToolStripMenuItem
+            // importBlastlayerFromCorruptedFileToolStripMenuItem
             // 
             this.importBlastlayerFromCorruptedFileToolStripMenuItem.Name = "importBlastlayerFromCorruptedFileToolStripMenuItem";
-            this.importBlastlayerFromCorruptedFileToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
+            this.importBlastlayerFromCorruptedFileToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
             this.importBlastlayerFromCorruptedFileToolStripMenuItem.Text = "Import Blastlayer From Corrupted &File";
             this.importBlastlayerFromCorruptedFileToolStripMenuItem.Click += new System.EventHandler(this.ImportBlastlayerFromCorruptedFileToolStripMenuItem_Click);
             // 
@@ -1280,13 +1287,6 @@ namespace RTCV.UI
             this.openBlastGeneratorToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
             this.openBlastGeneratorToolStripMenuItem.Text = "Open Blast Generator";
             this.openBlastGeneratorToolStripMenuItem.Click += new System.EventHandler(this.OpenBlastGeneratorToolStripMenuItem_Click);
-            // 
-            // newToolStripMenuItem
-            // 
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
-            this.newToolStripMenuItem.Text = "&New";
-            this.newToolStripMenuItem.Click += new System.EventHandler(this.NewToolStripMenuItem_Click);
             // 
             // RTC_NewBlastEditor_Form
             // 
@@ -1433,7 +1433,7 @@ namespace RTCV.UI
 		private Label label17;
 		private ToolStripMenuItem openBlastGeneratorToolStripMenuItem;
 		private Button btnAddRow;
-        private Button btnSanitize;
+        private Button btnSanitizeTool;
         private ToolStripMenuItem importBlastlayerFromCorruptedFileToolStripMenuItem;
         private ToolStripMenuItem newToolStripMenuItem;
     }
