@@ -560,7 +560,7 @@ namespace RTCV.CorruptCore
 				for (int i = 0; i < bu.Precision; i++)
 				{ 
                     PointerDomains.Add(bu.Domain);
-                    PointerAddresses.Add(bu.Address);
+                    PointerAddresses.Add(bu.Address + i);
 				}
 					
 			}
