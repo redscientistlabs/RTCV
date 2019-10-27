@@ -84,6 +84,23 @@ namespace RTCV.UI.Modular
             }
         }
 
+        private static CanvasGrid _simpleMode = null;
+
+        public static CanvasGrid simpleMode
+        {
+            get
+            {
+                if (_simpleMode == null)
+                {
+                    var smGrid = new CanvasGrid(15, 12, "Simple Mode");
+                    Form smForm = S.GET<RTC_SimpleMode_Form>();
+                    smGrid.SetTileForm(smForm, 0, 0, 15, 12, false);
+                    _simpleMode = smGrid;
+                }
+                return _simpleMode;
+            }
+        }
+
         private static CanvasGrid _settings = null;
         public static CanvasGrid settings
         {

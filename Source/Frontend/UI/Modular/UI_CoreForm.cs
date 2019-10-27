@@ -286,8 +286,24 @@ This message only appears once.";
             Point locate = e.GetMouseLocation(sender);
 
             ContextMenuStrip easyButtonMenu = new ContextMenuStrip();
+            easyButtonMenu.Items.Add("Switch to Simple Mode", null, new EventHandler((ob, ev) => { 
 
-            (easyButtonMenu.Items.Add("Start with Recommended Settings", null, new EventHandler(((ob, ev) => { S.GET<UI_CoreForm>().StartEasyMode(true); })))).Enabled = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] == true;
+                UI_DefaultGrids.simpleMode.LoadToMain();
+                RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
+
+
+
+                RTC_GlitchHarvesterIntensity_Form ghiForm = S.GET<RTC_GlitchHarvesterIntensity_Form>();
+                ghiForm.AnchorToPanel(smForm.pnIntensity);
+                btnEngineConfig.Visible = false;
+                btnGlitchHarvester.Visible = false;
+                btnStockpilePlayer.Visible = false;
+                btnManualBlast.Visible = false;
+                btnAutoCorrupt.Visible = false;
+
+
+            }));
+            (easyButtonMenu.Items.Add("Start Auto-Corrupt with Recommended Settings for loaded game", null, new EventHandler(((ob, ev) => { S.GET<UI_CoreForm>().StartEasyMode(true); })))).Enabled = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] == true;
             easyButtonMenu.Items.Add(new ToolStripSeparator());
             //EasyButtonMenu.Items.Add("Watch a tutorial video", null, new EventHandler((ob,ev) => Process.Start("https://www.youtube.com/watch?v=sIELpn4-Umw"))).Enabled = false;
             easyButtonMenu.Items.Add("Open the online wiki", null, new EventHandler((ob, ev) => Process.Start("https://corrupt.wiki/")));
