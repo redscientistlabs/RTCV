@@ -75,7 +75,7 @@ namespace RTCV.UI
             btnAutoCorrupt.Text = S.GET<UI_CoreForm>().btnAutoCorrupt.Text;
         }
 
-        private void btnSaveSavestateList_Click(object sender, EventArgs e)
+        private void btnCreateGhSavestate_Click(object sender, EventArgs e)
         {
             //Generate object sender and MouseEventArgs e data for the button click
             SavestateHolder holder = (SavestateHolder)S.GET<RTC_SavestateManager_Form>().savestateList.flowPanel.Controls[0];
@@ -350,6 +350,24 @@ and 2d games made for 3d-era consoles.";
         private void btnSwitchNormalMode_Click(object sender, EventArgs e)
         {
             LeavingSimpleMode();
+        }
+
+        private void btnLoadGhSavestate_Click(object sender, EventArgs e)
+        {
+            //Generate object sender and MouseEventArgs e data for the button click
+            SavestateHolder holder = (SavestateHolder)S.GET<RTC_SavestateManager_Form>().savestateList.flowPanel.Controls[0];
+            Button _sender = holder.btnSavestate;
+            MouseEventArgs _e = new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0);
+
+            //Click first GH Savestate
+            S.GET<RTC_SavestateManager_Form>().savestateList.BtnSavestate_MouseDown(_sender, _e);
+
+            //Switch to Save
+            S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad.Text = "LOAD";
+            S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad.ForeColor = Color.FromArgb(192, 255, 192);
+
+            //Trigger Save button
+            S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad_Click(null, null);
         }
     }
 

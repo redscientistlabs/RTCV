@@ -31,8 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_SimpleMode_Form));
             this.btnSwitchNormalMode = new System.Windows.Forms.Button();
             this.gbSimpleGlitchHarvester = new System.Windows.Forms.GroupBox();
+            this.btnLoadGhSavestate = new System.Windows.Forms.Button();
             this.lbSimpleGlitchHarvesterHelp = new System.Windows.Forms.Label();
-            this.btnSaveSavestateList = new System.Windows.Forms.Button();
+            this.btnCreateGhSavestate = new System.Windows.Forms.Button();
             this.btnGlitchHarvesterCorrupt = new System.Windows.Forms.Button();
             this.gbRealTimeCorruption = new System.Windows.Forms.GroupBox();
             this.lbIntensityHelp = new System.Windows.Forms.Label();
@@ -82,8 +83,9 @@
             // 
             this.gbSimpleGlitchHarvester.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbSimpleGlitchHarvester.Controls.Add(this.btnLoadGhSavestate);
             this.gbSimpleGlitchHarvester.Controls.Add(this.lbSimpleGlitchHarvesterHelp);
-            this.gbSimpleGlitchHarvester.Controls.Add(this.btnSaveSavestateList);
+            this.gbSimpleGlitchHarvester.Controls.Add(this.btnCreateGhSavestate);
             this.gbSimpleGlitchHarvester.Controls.Add(this.btnGlitchHarvesterCorrupt);
             this.gbSimpleGlitchHarvester.ForeColor = System.Drawing.Color.White;
             this.gbSimpleGlitchHarvester.Location = new System.Drawing.Point(14, 391);
@@ -93,6 +95,28 @@
             this.gbSimpleGlitchHarvester.TabStop = false;
             this.gbSimpleGlitchHarvester.Text = "Simple Glitch Harvester";
             this.gbSimpleGlitchHarvester.Visible = false;
+            // 
+            // btnLoadGhSavestate
+            // 
+            this.btnLoadGhSavestate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnLoadGhSavestate.FlatAppearance.BorderSize = 0;
+            this.btnLoadGhSavestate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLoadGhSavestate.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.btnLoadGhSavestate.ForeColor = System.Drawing.Color.White;
+            this.btnLoadGhSavestate.Image = ((System.Drawing.Image)(resources.GetObject("btnLoadGhSavestate.Image")));
+            this.btnLoadGhSavestate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLoadGhSavestate.Location = new System.Drawing.Point(11, 63);
+            this.btnLoadGhSavestate.Name = "btnLoadGhSavestate";
+            this.btnLoadGhSavestate.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.btnLoadGhSavestate.Size = new System.Drawing.Size(156, 32);
+            this.btnLoadGhSavestate.TabIndex = 170;
+            this.btnLoadGhSavestate.TabStop = false;
+            this.btnLoadGhSavestate.Tag = "color:dark2";
+            this.btnLoadGhSavestate.Text = "  Load Savestate";
+            this.btnLoadGhSavestate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLoadGhSavestate.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnLoadGhSavestate.UseVisualStyleBackColor = false;
+            this.btnLoadGhSavestate.Click += new System.EventHandler(this.btnLoadGhSavestate_Click);
             // 
             // lbSimpleGlitchHarvesterHelp
             // 
@@ -107,29 +131,29 @@
             this.lbSimpleGlitchHarvesterHelp.Text = "This is a very simplified version of RTC\'s Glitch Harvester. It allows you to cre" +
     "ate a savestate and then corrupt it as many times you want.";
             // 
-            // btnSaveSavestateList
+            // btnCreateGhSavestate
             // 
-            this.btnSaveSavestateList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.btnCreateGhSavestate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSaveSavestateList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnSaveSavestateList.FlatAppearance.BorderSize = 0;
-            this.btnSaveSavestateList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSaveSavestateList.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.btnSaveSavestateList.ForeColor = System.Drawing.Color.White;
-            this.btnSaveSavestateList.Image = ((System.Drawing.Image)(resources.GetObject("btnSaveSavestateList.Image")));
-            this.btnSaveSavestateList.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSaveSavestateList.Location = new System.Drawing.Point(11, 22);
-            this.btnSaveSavestateList.Name = "btnSaveSavestateList";
-            this.btnSaveSavestateList.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
-            this.btnSaveSavestateList.Size = new System.Drawing.Size(364, 32);
-            this.btnSaveSavestateList.TabIndex = 169;
-            this.btnSaveSavestateList.TabStop = false;
-            this.btnSaveSavestateList.Tag = "color:dark2";
-            this.btnSaveSavestateList.Text = "  Create and select a Glitch Harvester savestate";
-            this.btnSaveSavestateList.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnSaveSavestateList.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnSaveSavestateList.UseVisualStyleBackColor = false;
-            this.btnSaveSavestateList.Click += new System.EventHandler(this.btnSaveSavestateList_Click);
+            this.btnCreateGhSavestate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnCreateGhSavestate.FlatAppearance.BorderSize = 0;
+            this.btnCreateGhSavestate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCreateGhSavestate.Font = new System.Drawing.Font("Segoe UI", 12F);
+            this.btnCreateGhSavestate.ForeColor = System.Drawing.Color.White;
+            this.btnCreateGhSavestate.Image = ((System.Drawing.Image)(resources.GetObject("btnCreateGhSavestate.Image")));
+            this.btnCreateGhSavestate.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCreateGhSavestate.Location = new System.Drawing.Point(11, 22);
+            this.btnCreateGhSavestate.Name = "btnCreateGhSavestate";
+            this.btnCreateGhSavestate.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.btnCreateGhSavestate.Size = new System.Drawing.Size(364, 32);
+            this.btnCreateGhSavestate.TabIndex = 169;
+            this.btnCreateGhSavestate.TabStop = false;
+            this.btnCreateGhSavestate.Tag = "color:dark2";
+            this.btnCreateGhSavestate.Text = "  Create and select a Glitch Harvester savestate";
+            this.btnCreateGhSavestate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCreateGhSavestate.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnCreateGhSavestate.UseVisualStyleBackColor = false;
+            this.btnCreateGhSavestate.Click += new System.EventHandler(this.btnCreateGhSavestate_Click);
             // 
             // btnGlitchHarvesterCorrupt
             // 
@@ -143,14 +167,14 @@
             this.btnGlitchHarvesterCorrupt.ForeColor = System.Drawing.Color.OrangeRed;
             this.btnGlitchHarvesterCorrupt.Image = ((System.Drawing.Image)(resources.GetObject("btnGlitchHarvesterCorrupt.Image")));
             this.btnGlitchHarvesterCorrupt.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnGlitchHarvesterCorrupt.Location = new System.Drawing.Point(12, 62);
+            this.btnGlitchHarvesterCorrupt.Location = new System.Drawing.Point(201, 62);
             this.btnGlitchHarvesterCorrupt.Name = "btnGlitchHarvesterCorrupt";
             this.btnGlitchHarvesterCorrupt.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
-            this.btnGlitchHarvesterCorrupt.Size = new System.Drawing.Size(363, 32);
+            this.btnGlitchHarvesterCorrupt.Size = new System.Drawing.Size(174, 32);
             this.btnGlitchHarvesterCorrupt.TabIndex = 138;
             this.btnGlitchHarvesterCorrupt.TabStop = false;
             this.btnGlitchHarvesterCorrupt.Tag = "color:dark2";
-            this.btnGlitchHarvesterCorrupt.Text = "  Load the savestate and Corrupt the game";
+            this.btnGlitchHarvesterCorrupt.Text = "  Load and Corrupt";
             this.btnGlitchHarvesterCorrupt.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnGlitchHarvesterCorrupt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnGlitchHarvesterCorrupt.UseVisualStyleBackColor = false;
@@ -498,9 +522,10 @@
         public System.Windows.Forms.Label lbIntensityHelp;
         public System.Windows.Forms.Button btnGlitchHarvesterCorrupt;
         public System.Windows.Forms.Label lbSimpleGlitchHarvesterHelp;
-        private System.Windows.Forms.Button btnSaveSavestateList;
+        private System.Windows.Forms.Button btnCreateGhSavestate;
         public System.Windows.Forms.Panel pnIntensity;
         public System.Windows.Forms.Button btnSwitchNormalMode;
         public System.Windows.Forms.Button btnHelp;
+        private System.Windows.Forms.Button btnLoadGhSavestate;
     }
 }
