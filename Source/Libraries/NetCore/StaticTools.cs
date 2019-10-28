@@ -88,11 +88,13 @@ namespace RTCV.NetCore.StaticTools
         //returns all singletons that implements a certain type
         public static T[] GETINTERFACES<T>()
         {
+            lock (lockObject)
+            {
                 return instances.Values
                     .OfType<T>()
                     .ToArray();
+            }
         }
-
 
         public static object GET(Type typ)
         {
