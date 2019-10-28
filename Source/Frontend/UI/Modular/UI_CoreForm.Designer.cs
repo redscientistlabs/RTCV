@@ -516,9 +516,9 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button btnEngineConfig;
+        public System.Windows.Forms.Button btnEngineConfig;
         public System.Windows.Forms.Button btnEasyMode;
-        private System.Windows.Forms.Button btnStockpilePlayer;
+        public System.Windows.Forms.Button btnStockpilePlayer;
         public System.Windows.Forms.Button btnGlitchHarvester;
         public System.Windows.Forms.Button btnManualBlast;
         public System.Windows.Forms.Button btnAutoCorrupt;

@@ -288,18 +288,17 @@ This message only appears once.";
             ContextMenuStrip easyButtonMenu = new ContextMenuStrip();
             easyButtonMenu.Items.Add("Switch to Simple Mode", null, new EventHandler((ob, ev) => { 
 
+                if((AllSpec.VanguardSpec[VSPEC.NAME] as string)?.ToUpper().Contains("SPEC") ?? false)
+                {
+                    MessageBox.Show("Simple Mode is currently only supported on Vanguard implementations.");
+                    return;
+                }
+
+
                 UI_DefaultGrids.simpleMode.LoadToMain();
                 RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
 
-
-
-                RTC_GlitchHarvesterIntensity_Form ghiForm = S.GET<RTC_GlitchHarvesterIntensity_Form>();
-                ghiForm.AnchorToPanel(smForm.pnIntensity);
-                btnEngineConfig.Visible = false;
-                btnGlitchHarvester.Visible = false;
-                btnStockpilePlayer.Visible = false;
-                btnManualBlast.Visible = false;
-                btnAutoCorrupt.Visible = false;
+                smForm.EnteringSimpleMode();
 
 
             }));

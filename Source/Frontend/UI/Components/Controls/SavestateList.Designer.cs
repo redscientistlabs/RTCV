@@ -155,13 +155,12 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.FlowLayoutPanel flowPanel;
         private System.Windows.Forms.Panel pnBackForwardPage;
         private System.Windows.Forms.Button btnBack;
         private System.Windows.Forms.Button btnForward;
         private System.Windows.Forms.Panel pnChangeLoadSave;
         private System.Windows.Forms.Button btnToggleSaveLoad;
         public System.Windows.Forms.Button btnSaveLoad;
+        public System.Windows.Forms.FlowLayoutPanel flowPanel;
     }
 }

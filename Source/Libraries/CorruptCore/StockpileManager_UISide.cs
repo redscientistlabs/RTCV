@@ -124,7 +124,12 @@ namespace RTCV.CorruptCore
 			return isCorruptionApplied;
 		}
 
-		public static bool InjectFromStashkey(StashKey sk, bool _loadBeforeOperation = true)
+        public static void RemoveFirstStashItem()
+        {
+            StashHistory.RemoveAt(0);
+        }
+
+        public static bool InjectFromStashkey(StashKey sk, bool _loadBeforeOperation = true)
 		{
             string saveStateWord = "Savestate";
 
