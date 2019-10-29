@@ -43,9 +43,15 @@ namespace RTCV.UI
             set
             {
                 if (value)
+                {
                     btnAutoCorrupt.Text = " Stop Auto-Corrupt";
+                    S.GET<RTC_SimpleMode_Form>().btnAutoCorrupt.Text = " Stop Auto-Corrupt";
+                }
                 else
+                {
                     btnAutoCorrupt.Text = " Start Auto-Corrupt";
+                    S.GET<RTC_SimpleMode_Form>().btnAutoCorrupt.Text = " Start Auto-Corrupt";
+                }
 
                 CorruptCore.RtcCore.AutoCorrupt = value;
             }
@@ -283,10 +289,12 @@ This message only appears once.";
 
         private void btnEasyMode_MouseDown(object sender, MouseEventArgs e)
         {
+            bool simpleModeVisible = S.GET<RTC_SimpleMode_Form>().Visible;
+
             Point locate = e.GetMouseLocation(sender);
 
             ContextMenuStrip easyButtonMenu = new ContextMenuStrip();
-            easyButtonMenu.Items.Add("Switch to Simple Mode", null, new EventHandler((ob, ev) => { 
+            (easyButtonMenu.Items.Add("Switch to Simple Mode", null, new EventHandler((ob, ev) => { 
 
                 if((AllSpec.VanguardSpec[VSPEC.NAME] as string)?.ToUpper().Contains("SPEC") ?? false)
                 {
@@ -300,13 +308,13 @@ This message only appears once.";
 
                 smForm.EnteringSimpleMode();
 
-
-            }));
-            (easyButtonMenu.Items.Add("Start Auto-Corrupt with Recommended Settings for loaded game", null, new EventHandler(((ob, ev) => { S.GET<UI_CoreForm>().StartEasyMode(true); })))).Enabled = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] == true;
+            }))).Enabled = !simpleModeVisible;
+            (easyButtonMenu.Items.Add("Start Auto-Corrupt with Recommended Settings for loaded game", null, new EventHandler(((ob, ev) => { S.GET<UI_CoreForm>().StartEasyMode(true); })))).Enabled = ((bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] == true) && !simpleModeVisible;
             easyButtonMenu.Items.Add(new ToolStripSeparator());
             //EasyButtonMenu.Items.Add("Watch a tutorial video", null, new EventHandler((ob,ev) => Process.Start("https://www.youtube.com/watch?v=sIELpn4-Umw"))).Enabled = false;
             easyButtonMenu.Items.Add("Open the online wiki", null, new EventHandler((ob, ev) => Process.Start("https://corrupt.wiki/")));
             easyButtonMenu.Show(this, locate);
+
         }
 
         private void btnStockpilePlayer_Click(object sender, EventArgs e)

@@ -37,6 +37,12 @@ namespace RTCV.UI
             S.GET<UI_CoreForm>().btnStockpilePlayer.Visible = false;
             S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
             S.GET<UI_CoreForm>().btnManualBlast.Visible = false;
+
+            if (rbClassicPlatforms.Checked)
+                rbClassicPlatforms_CheckedChanged(null, null);
+
+            if (rbModernPlatforms.Checked)
+                rbModernPlatforms_CheckedChanged(null, null);
         }
 
         public void LeavingSimpleMode()
@@ -72,18 +78,25 @@ namespace RTCV.UI
         private void btnAutoCorrupt_Click(object sender, EventArgs e)
         {
             S.GET<UI_CoreForm>().btnAutoCorrupt_Click(sender, e);
-            btnAutoCorrupt.Text = S.GET<UI_CoreForm>().btnAutoCorrupt.Text;
+            //btnAutoCorrupt.Text = S.GET<UI_CoreForm>().btnAutoCorrupt.Text;
         }
 
         private void btnCreateGhSavestate_Click(object sender, EventArgs e)
         {
-            //Generate object sender and MouseEventArgs e data for the button click
-            SavestateHolder holder = (SavestateHolder)S.GET<RTC_SavestateManager_Form>().savestateList.flowPanel.Controls[0];
-            Button _sender = holder.btnSavestate;
-            MouseEventArgs _e = new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0);
 
-            //Click first GH Savestate
-            S.GET<RTC_SavestateManager_Form>().savestateList.BtnSavestate_MouseDown(_sender, _e);
+            //Select first savestate slot if none is selected
+            var selectedHolder = S.GET<RTC_SavestateManager_Form>().savestateList.selectedHolder;
+            if (selectedHolder == null)
+            {
+
+                //Generate object sender and MouseEventArgs e data for the button click
+                SavestateHolder holder = (SavestateHolder)S.GET<RTC_SavestateManager_Form>().savestateList.flowPanel.Controls[0];
+                Button _sender = holder.btnSavestate;
+                MouseEventArgs _e = new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0);
+
+                //Click first GH Savestate
+                S.GET<RTC_SavestateManager_Form>().savestateList.BtnSavestate_MouseDown(_sender, _e);
+            }
 
             //Switch to Save
             S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad.Text = "SAVE";
@@ -350,17 +363,24 @@ and 2d games made for 3d-era consoles.";
         private void btnSwitchNormalMode_Click(object sender, EventArgs e)
         {
             LeavingSimpleMode();
+            this.Hide();
         }
 
         private void btnLoadGhSavestate_Click(object sender, EventArgs e)
         {
-            //Generate object sender and MouseEventArgs e data for the button click
-            SavestateHolder holder = (SavestateHolder)S.GET<RTC_SavestateManager_Form>().savestateList.flowPanel.Controls[0];
-            Button _sender = holder.btnSavestate;
-            MouseEventArgs _e = new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0);
+            //Select first savestate slot if none is selected
+            var selectedHolder = S.GET<RTC_SavestateManager_Form>().savestateList.selectedHolder;
+            if (selectedHolder == null)
+            {
 
-            //Click first GH Savestate
-            S.GET<RTC_SavestateManager_Form>().savestateList.BtnSavestate_MouseDown(_sender, _e);
+                //Generate object sender and MouseEventArgs e data for the button click
+                SavestateHolder holder = (SavestateHolder)S.GET<RTC_SavestateManager_Form>().savestateList.flowPanel.Controls[0];
+                Button _sender = holder.btnSavestate;
+                MouseEventArgs _e = new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0);
+
+                //Click first GH Savestate
+                S.GET<RTC_SavestateManager_Form>().savestateList.BtnSavestate_MouseDown(_sender, _e);
+            }
 
             //Switch to Save
             S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad.Text = "LOAD";
@@ -368,6 +388,11 @@ and 2d games made for 3d-era consoles.";
 
             //Trigger Save button
             S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad_Click(null, null);
+        }
+
+        private void RTC_SimpleMode_Form_Load(object sender, EventArgs e)
+        {
+
         }
     }
 

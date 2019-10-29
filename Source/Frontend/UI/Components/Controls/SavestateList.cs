@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
+using RTCV.NetCore.StaticTools;
 
 namespace RTCV.UI.Components.Controls
 {
@@ -20,7 +21,7 @@ namespace RTCV.UI.Components.Controls
         private SavestateHolder _selectedHolder;
         private string saveStateWord = "Savestate";
 
-        private SavestateHolder selectedHolder
+        public SavestateHolder selectedHolder
         {
             get => _selectedHolder;
             set
@@ -272,6 +273,8 @@ namespace RTCV.UI.Components.Controls
             if (btnSaveLoad.Text == "LOAD")
             {
                 LoadCurrentState();
+                StockpileManager_UISide.CurrentStashkey = null;
+                S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = false;
             }
             else
             {
