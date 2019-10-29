@@ -27,13 +27,6 @@ namespace RTCV.Launcher
         public void DisplayVersion()
         {
             Size? btnSize = null;
-            Point btnLocation = btnDefaultSize.Location;
-
-            Controls.Remove(btnDefaultSize);
-
-            int maxHorizontal = 4;
-            int positionX = 0;
-            int positionY = 0;
 
             foreach (var lcji in lc.Items)
             {
@@ -41,19 +34,8 @@ namespace RTCV.Launcher
                 using (var bmpTemp = new Bitmap(Path.Combine(lc.LauncherAssetLocation, lcji.ImageName)))
                 {
                     btnImage = new Bitmap(bmpTemp);
-                }
-
-                if (btnSize == null)
-                {
-                    //The first image sets the parameters for display
-                    btnSize = new Size(btnImage.Width + 1, btnImage.Height + 1);
-
-                    //Checks how many fit horizontally
-                    double screenspace = (this.Width - btnLocation.X); ;
-                    double fullsizeItem = ((Size)btnSize).Width + btnLocation.X;
-                    double howmanyfit = screenspace / fullsizeItem;
-                    maxHorizontal = Convert.ToInt32(Math.Floor(howmanyfit));
-
+                    if(btnSize == null)
+                        btnSize = new Size(btnImage.Width + 1, btnImage.Height + 1);
                 }
 
                 Button newButton = new Button();
@@ -62,7 +44,7 @@ namespace RTCV.Launcher
                 newButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
                 newButton.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
                 newButton.ForeColor = System.Drawing.Color.Black;
-                newButton.Name = "btnDefaultSize";
+                newButton.Name = lcji.FolderName;
                 newButton.Size = (Size)btnSize;
                 newButton.TabIndex = 134;
                 newButton.TabStop = false;
@@ -114,16 +96,9 @@ namespace RTCV.Launcher
 
 
                 newButton.Image = btnImage;
-                newButton.Location = new Point(btnLocation.X + (((Size)btnSize).Width * positionX + btnLocation.X * positionX), btnLocation.Y + (((Size)btnSize).Height * positionY + btnLocation.X * positionY));
                 newButton.Visible = true;
-                Controls.Add(newButton);
+                flowLayoutPanel1.Controls.Add(newButton);
 
-                positionX++;
-                if (positionX >= maxHorizontal)
-                {
-                    positionX = 0;
-                    positionY++;
-                }
             }
             
 

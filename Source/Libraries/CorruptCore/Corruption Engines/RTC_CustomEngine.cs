@@ -135,13 +135,13 @@ namespace RTCV.CorruptCore
 		public static string LimiterListHash
 		{
 			//Intentionally nullable cast
-			get => RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CUSTOM_LIMITERLISTHASH.ToString()] as string;
+			get => RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CUSTOM_LIMITERLISTHASH.ToString()] as string ?? "";
 			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CUSTOM_LIMITERLISTHASH.ToString(), value);
 		}
 		public static string ValueListHash
 		{
 			//Intentionally nullable cast
-			get => RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CUSTOM_VALUELISTHASH.ToString()] as string;
+			get => RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CUSTOM_VALUELISTHASH.ToString()] as string ?? "";
 			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CUSTOM_VALUELISTHASH.ToString(), value);
 		}
 		

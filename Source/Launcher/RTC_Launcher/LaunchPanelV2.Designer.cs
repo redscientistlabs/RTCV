@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.lbSelectedVersion = new System.Windows.Forms.Label();
-            this.btnDefaultSize = new System.Windows.Forms.Button();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.SuspendLayout();
             // 
             // lbSelectedVersion
@@ -44,30 +44,26 @@
             this.lbSelectedVersion.Text = "Program Selector";
             this.lbSelectedVersion.Visible = false;
             // 
-            // btnDefaultSize
+            // flowLayoutPanel1
             // 
-            this.btnDefaultSize.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.btnDefaultSize.FlatAppearance.BorderSize = 0;
-            this.btnDefaultSize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnDefaultSize.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
-            this.btnDefaultSize.ForeColor = System.Drawing.Color.Black;
-            this.btnDefaultSize.Location = new System.Drawing.Point(12, 33);
-            this.btnDefaultSize.Name = "btnDefaultSize";
-            this.btnDefaultSize.Size = new System.Drawing.Size(92, 65);
-            this.btnDefaultSize.TabIndex = 134;
-            this.btnDefaultSize.TabStop = false;
-            this.btnDefaultSize.Tag = "color:light";
-            this.btnDefaultSize.Text = "...";
-            this.btnDefaultSize.UseVisualStyleBackColor = false;
-            this.btnDefaultSize.Visible = false;
+            this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.flowLayoutPanel1.AutoScroll = true;
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 35);
+            this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(8);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(4);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(986, 500);
+            this.flowLayoutPanel1.TabIndex = 134;
             // 
-            // LaunchPanelV2
+            // LaunchPanelV3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.ClientSize = new System.Drawing.Size(990, 548);
-            this.Controls.Add(this.btnDefaultSize);
+            this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.lbSelectedVersion);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -82,6 +78,6 @@
         #endregion
 
         public System.Windows.Forms.Label lbSelectedVersion;
-        private System.Windows.Forms.Button btnDefaultSize;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
     }
 }
