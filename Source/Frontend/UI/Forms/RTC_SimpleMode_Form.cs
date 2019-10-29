@@ -32,7 +32,8 @@ namespace RTCV.UI
         {
             RTC_GlitchHarvesterIntensity_Form ghiForm = S.GET<RTC_GlitchHarvesterIntensity_Form>();
             ghiForm.AnchorToPanel(pnIntensity);
-            S.GET<UI_CoreForm>().btnEngineConfig.Visible = false;
+            //S.GET<UI_CoreForm>().btnEngineConfig.Visible = false;
+            S.GET<UI_CoreForm>().btnEngineConfig.Text = " Simple Mode";
             S.GET<UI_CoreForm>().btnGlitchHarvester.Visible = false;
             S.GET<UI_CoreForm>().btnStockpilePlayer.Visible = false;
             S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
@@ -43,17 +44,24 @@ namespace RTCV.UI
 
             if (rbModernPlatforms.Checked)
                 rbModernPlatforms_CheckedChanged(null, null);
+
+            NetCore.Params.SetParam("SIMPLE_MODE"); //Set RTC in Simple Mode
         }
 
         public void LeavingSimpleMode()
         {
-            S.GET<UI_CoreForm>().btnEngineConfig.Visible = true;
+            NetCore.Params.RemoveParam("SIMPLE_MODE"); //Set RTC in Normal Mode
+
+            //S.GET<UI_CoreForm>().btnEngineConfig.Visible = true;
+            S.GET<UI_CoreForm>().btnEngineConfig.Text = " Engine Config";
             S.GET<UI_CoreForm>().btnGlitchHarvester.Visible = true;
             S.GET<UI_CoreForm>().btnStockpilePlayer.Visible = true;
             S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = true;
             S.GET<UI_CoreForm>().btnManualBlast.Visible = true;
 
             S.GET<UI_CoreForm>().btnEngineConfig_Click(null, null);
+
+            
         }
 
 		private void RTC_SimpleMode_Form_FormClosing(object sender, FormClosingEventArgs e)
@@ -390,10 +398,6 @@ and 2d games made for 3d-era consoles.";
             S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad_Click(null, null);
         }
 
-        private void RTC_SimpleMode_Form_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 
     public enum PlatformType { CLASSIC, MODERN }

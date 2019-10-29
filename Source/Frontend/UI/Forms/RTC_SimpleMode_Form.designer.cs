@@ -489,7 +489,6 @@
             this.Tag = "color:dark1";
             this.Text = "Stockpile Player";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RTC_SimpleMode_Form_FormClosing);
-            this.Load += new System.EventHandler(this.RTC_SimpleMode_Form_Load);
             this.gbSimpleGlitchHarvester.ResumeLayout(false);
             this.gbRealTimeCorruption.ResumeLayout(false);
             this.gbEngineParameters.ResumeLayout(false);

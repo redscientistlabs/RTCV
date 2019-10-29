@@ -102,9 +102,13 @@ namespace RTCV.UI
                                 if (File.Exists(customLayoutPath))
                                     S.GET<UI_CoreForm>().btnOpenCustomLayout.Visible = true;
 
-                                
                                 UI_DefaultGrids.engineConfig.LoadToMain();
+
+
                                 UI_DefaultGrids.glitchHarvester.LoadToNewWindow("Glitch Harvester", true);
+
+
+
                             }
                             else
                             {
@@ -155,6 +159,24 @@ namespace RTCV.UI
                             }
 
                             S.GET<UI_CoreForm>().Show();
+
+
+                            if (NetCore.Params.IsParamSet("SIMPLE_MODE"))
+                            {
+                                bool isSpec = (AllSpec.VanguardSpec[VSPEC.NAME] as string)?.ToUpper().Contains("SPEC") ?? false;
+
+                                if (isSpec) //Simple Mode cannot run on Stubs
+                                {
+                                    MessageBox.Show("Unfortunately, Simple Mode is not compatible with Stubs. RTC will now switch to Normal Mode.");
+                                    NetCore.Params.RemoveParam("SIMPLE_MODE");
+                                }
+                                else
+                                {
+                                    UI_DefaultGrids.simpleMode.LoadToMain();
+                                    RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
+                                    smForm.EnteringSimpleMode();
+                                }
+                            }
                         });
 						break;
 

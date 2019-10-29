@@ -136,8 +136,13 @@ This message only appears once.";
                 if (File.Exists(disclaimerPath))
                     disclaimer = File.ReadAllText(disclaimerPath);
 
-                MessageBox.Show(disclaimer.Replace("[ver]", CorruptCore.RtcCore.RtcVersion), "RTC", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                S.GET<RTC_Intro_Form>().DisplayRtcvDisclaimer(disclaimer.Replace("[ver]", CorruptCore.RtcCore.RtcVersion));
+                //MessageBox.Show(disclaimer.Replace("[ver]", CorruptCore.RtcCore.RtcVersion), "RTC", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
                 NetCore.Params.SetParam("DISCLAIMER_READ");
+
+                if(S.GET<RTC_Intro_Form>().selection == IntroAction.SIMPLEMODE)
+                    NetCore.Params.SetParam("SIMPLE_MODE"); //Set RTC in Simple Mode
 
                 NetCore.Params.SetParam("COMPRESS_STOCKPILE"); //Default param
                 NetCore.Params.SetParam("INCLUDE_REFERENCED_FILES"); //Default param
@@ -246,7 +251,15 @@ This message only appears once.";
 
         public void btnEngineConfig_Click(object sender, EventArgs e)
         {
-            UI_DefaultGrids.engineConfig.LoadToMain();
+            
+            if (NetCore.Params.IsParamSet("SIMPLE_MODE"))
+            {
+                UI_DefaultGrids.simpleMode.LoadToMain();
+                RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
+                smForm.EnteringSimpleMode();
+            }
+            else
+                UI_DefaultGrids.engineConfig.LoadToMain();
         }
 
         private void pnAutoKillSwitch_MouseHover(object sender, EventArgs e)
