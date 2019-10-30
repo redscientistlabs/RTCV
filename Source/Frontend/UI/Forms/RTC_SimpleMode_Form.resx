@@ -118,6 +118,17 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnSwitchNormalMode.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
+        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25z
+        IEF0dHJpYnV0aW9uIE5vbi1Db21tZXJjaWFsIE5vIERlcml2YXRpdmVze92woAAAANlJREFUOE+1z42J
+        g0AQBeAp4UpICZaQElJKOkkJV8qVkAJEFERQVFb8AfGHl1kzLEMw2QshDz5c5+0I0lcD4GDJ63tZluW0
+        rqux+Bzw84/BPuXK80zTdJ7nGYphsZxff2Acx1+GF/Y/0Pf9zzAMVwaP2N6VtXvatg26rosZ/snYnW3Z
+        GHNsmsYwvIlXzYnqusYnqCzLC8OjqqqO2t4ddtl+oyiKIM9zaFuh8tjbHanuybIMmoxdfD2laQpNxi6+
+        npIkgSZjF19PURRBk7GLr6cwDKHJ2GW/J7oBReglbr4XX54AAAAASUVORK5CYII=
+</value>
+  </data>
   <data name="btnLoadGhSavestate.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAACH

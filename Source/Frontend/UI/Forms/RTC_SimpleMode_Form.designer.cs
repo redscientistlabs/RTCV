@@ -69,13 +69,17 @@
             this.btnSwitchNormalMode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSwitchNormalMode.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
             this.btnSwitchNormalMode.ForeColor = System.Drawing.Color.White;
-            this.btnSwitchNormalMode.Location = new System.Drawing.Point(482, 512);
+            this.btnSwitchNormalMode.Image = ((System.Drawing.Image)(resources.GetObject("btnSwitchNormalMode.Image")));
+            this.btnSwitchNormalMode.Location = new System.Drawing.Point(499, 512);
             this.btnSwitchNormalMode.Name = "btnSwitchNormalMode";
-            this.btnSwitchNormalMode.Size = new System.Drawing.Size(209, 32);
+            this.btnSwitchNormalMode.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.btnSwitchNormalMode.Size = new System.Drawing.Size(192, 32);
             this.btnSwitchNormalMode.TabIndex = 183;
             this.btnSwitchNormalMode.TabStop = false;
             this.btnSwitchNormalMode.Tag = "color:dark2";
-            this.btnSwitchNormalMode.Text = "Switch to Normal Mode";
+            this.btnSwitchNormalMode.Text = "  Switch to Normal Mode";
+            this.btnSwitchNormalMode.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnSwitchNormalMode.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSwitchNormalMode.UseVisualStyleBackColor = false;
             this.btnSwitchNormalMode.Click += new System.EventHandler(this.btnSwitchNormalMode_Click);
             // 
@@ -417,7 +421,7 @@
             this.btnBlastToggle.ForeColor = System.Drawing.Color.White;
             this.btnBlastToggle.Location = new System.Drawing.Point(14, 512);
             this.btnBlastToggle.Name = "btnBlastToggle";
-            this.btnBlastToggle.Size = new System.Drawing.Size(453, 32);
+            this.btnBlastToggle.Size = new System.Drawing.Size(471, 32);
             this.btnBlastToggle.TabIndex = 131;
             this.btnBlastToggle.TabStop = false;
             this.btnBlastToggle.Tag = "color:dark2";
