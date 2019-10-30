@@ -141,8 +141,18 @@ This message only appears once.";
                 
                 NetCore.Params.SetParam("DISCLAIMER_READ");
 
-                if(S.GET<RTC_Intro_Form>().selection == IntroAction.SIMPLEMODE)
+                if (S.GET<RTC_Intro_Form>().selection == IntroAction.SIMPLEMODE)
+                {
                     NetCore.Params.SetParam("SIMPLE_MODE"); //Set RTC in Simple Mode
+
+                    if (UI_VanguardImplementation.connector.netConn.status == NetworkStatus.CONNECTED)
+                    {
+                        UI_DefaultGrids.simpleMode.LoadToMain();
+                        RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
+                        smForm.EnteringSimpleMode();
+                    }
+
+                }
 
                 NetCore.Params.SetParam("COMPRESS_STOCKPILE"); //Default param
                 NetCore.Params.SetParam("INCLUDE_REFERENCED_FILES"); //Default param

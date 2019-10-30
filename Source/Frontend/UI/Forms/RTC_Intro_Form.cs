@@ -52,13 +52,21 @@ namespace RTCV.UI
                 return;
 
             if (selection == IntroAction.EXIT)
+            {
+                if(UI_VanguardImplementation.connector.netConn.status == NetworkStatus.CONNECTED)
+                {
+                    LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_EVENT_CLOSEEMULATOR);
+                }
+
                 Environment.Exit(0);
+            }
 
         }
 
         private void btnExit_Click(object sender, EventArgs e)
         {
-            Environment.Exit(0);
+            selection = IntroAction.EXIT;
+            this.Close();
         }
 
         private void btnSimpleMode_Click(object sender, EventArgs e)
