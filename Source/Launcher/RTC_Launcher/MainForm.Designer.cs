@@ -56,7 +56,7 @@
             this.pnBottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnBottomPanel.Location = new System.Drawing.Point(139, 505);
             this.pnBottomPanel.Name = "pnBottomPanel";
-            this.pnBottomPanel.Size = new System.Drawing.Size(1001, 45);
+            this.pnBottomPanel.Size = new System.Drawing.Size(1006, 45);
             this.pnBottomPanel.TabIndex = 0;
             // 
             // lbMOTD
@@ -67,7 +67,7 @@
             this.lbMOTD.ForeColor = System.Drawing.Color.White;
             this.lbMOTD.Location = new System.Drawing.Point(2, 21);
             this.lbMOTD.Name = "lbMOTD";
-            this.lbMOTD.Size = new System.Drawing.Size(993, 18);
+            this.lbMOTD.Size = new System.Drawing.Size(998, 18);
             this.lbMOTD.TabIndex = 125;
             this.lbMOTD.Text = "...";
             this.lbMOTD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -81,7 +81,7 @@
             this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(2, 3);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(993, 18);
+            this.label5.Size = new System.Drawing.Size(998, 18);
             this.label5.TabIndex = 132;
             this.label5.Text = "RTC, emulator mods and stubs are developed by Redscientist Media, consult redscie" +
     "ntist.com for more details";
@@ -164,7 +164,7 @@
             this.pnTopPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnTopPanel.Location = new System.Drawing.Point(0, 0);
             this.pnTopPanel.Name = "pnTopPanel";
-            this.pnTopPanel.Size = new System.Drawing.Size(1140, 41);
+            this.pnTopPanel.Size = new System.Drawing.Size(1145, 41);
             this.pnTopPanel.TabIndex = 131;
             // 
             // btnDiscord
@@ -178,7 +178,7 @@
             this.btnDiscord.ForeColor = System.Drawing.Color.White;
             this.btnDiscord.Image = global::RTCV.Launcher.Properties.Resources.discord;
             this.btnDiscord.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnDiscord.Location = new System.Drawing.Point(898, 8);
+            this.btnDiscord.Location = new System.Drawing.Point(903, 8);
             this.btnDiscord.Name = "btnDiscord";
             this.btnDiscord.Size = new System.Drawing.Size(73, 24);
             this.btnDiscord.TabIndex = 131;
@@ -197,7 +197,7 @@
             this.btnMinimize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMinimize.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
             this.btnMinimize.ForeColor = System.Drawing.Color.White;
-            this.btnMinimize.Location = new System.Drawing.Point(1082, 8);
+            this.btnMinimize.Location = new System.Drawing.Point(1087, 8);
             this.btnMinimize.Name = "btnMinimize";
             this.btnMinimize.Size = new System.Drawing.Size(22, 24);
             this.btnMinimize.TabIndex = 131;
@@ -215,7 +215,7 @@
             this.btnQuit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnQuit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
             this.btnQuit.ForeColor = System.Drawing.Color.White;
-            this.btnQuit.Location = new System.Drawing.Point(1110, 8);
+            this.btnQuit.Location = new System.Drawing.Point(1115, 8);
             this.btnQuit.Name = "btnQuit";
             this.btnQuit.Size = new System.Drawing.Size(22, 24);
             this.btnQuit.TabIndex = 130;
@@ -237,7 +237,7 @@
             this.btnOnlineGuide.ForeColor = System.Drawing.Color.White;
             this.btnOnlineGuide.Image = global::RTCV.Launcher.Properties.Resources.corruptwiki;
             this.btnOnlineGuide.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnOnlineGuide.Location = new System.Drawing.Point(977, 8);
+            this.btnOnlineGuide.Location = new System.Drawing.Point(982, 8);
             this.btnOnlineGuide.Name = "btnOnlineGuide";
             this.btnOnlineGuide.Size = new System.Drawing.Size(99, 24);
             this.btnOnlineGuide.TabIndex = 129;
@@ -257,7 +257,7 @@
             this.pnAnchorRight.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnAnchorRight.Location = new System.Drawing.Point(139, 41);
             this.pnAnchorRight.Name = "pnAnchorRight";
-            this.pnAnchorRight.Size = new System.Drawing.Size(1001, 464);
+            this.pnAnchorRight.Size = new System.Drawing.Size(1006, 464);
             this.pnAnchorRight.TabIndex = 133;
             this.pnAnchorRight.Paint += new System.Windows.Forms.PaintEventHandler(this.pnAnchorRight_Paint);
             // 
@@ -266,7 +266,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.ClientSize = new System.Drawing.Size(1140, 550);
+            this.ClientSize = new System.Drawing.Size(1145, 550);
             this.Controls.Add(this.pnAnchorRight);
             this.Controls.Add(this.pnBottomPanel);
             this.Controls.Add(this.pnLeftSide);

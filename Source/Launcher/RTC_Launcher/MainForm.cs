@@ -49,7 +49,7 @@ namespace RTCV.Launcher
         public static DownloadForm dForm = null;
         public static Form lpForm = null;
 
-        public static int launcherVer = 20;
+        public static int launcherVer = 21;
 
 
         public static int devCounter = 0;
@@ -278,7 +278,7 @@ namespace RTCV.Launcher
             this.BeginInvoke(new MethodInvoker(a));
         }
 
-        private void Update(string extractDirectory)
+        private void UpdateLauncher(string extractDirectory)
         {
             string batchLocation = extractDirectory + Path.DirectorySeparatorChar + "Launcher\\update.bat";
             ProcessStartInfo psi = new ProcessStartInfo();
@@ -396,7 +396,7 @@ namespace RTCV.Launcher
                                     MessageBoxDefaultButton.Button1,
                                     MessageBoxOptions.DefaultDesktopOnly) == DialogResult.OK)
                             {
-                                Update();
+                                UpdateLauncher(extractDirectory);
                             }
                             else
                             {
@@ -408,7 +408,7 @@ namespace RTCV.Launcher
 
                         if (MessageBox.Show("The downloaded package contains a new launcher update.\n\nDo you want to update the Launcher?", "Launcher update", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
-                            Update();
+                            UpdateLauncher(extractDirectory);
                         }
                     }
                 }
