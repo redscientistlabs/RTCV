@@ -107,13 +107,13 @@ namespace RTCV.UI
 		public void SetRewindBoxes(bool enabled)
 		{
 			DontUpdateSpec = true;
-			cbClearStepUnitsOnRewind.Checked = true;
+			cbClearStepUnitsOnRewind.Checked = enabled;
 			DontUpdateSpec = false;
 		}
 		public void SetLockBoxes(bool enabled)
 		{
 			DontUpdateSpec = true;
-			cbLockUnits.Checked = true;
+			cbLockUnits.Checked = enabled;
 			DontUpdateSpec = false;
 		}
 
@@ -125,8 +125,9 @@ namespace RTCV.UI
 
 			S.GET<RTC_CorruptionEngine_Form>().SetRewindBoxes(cbClearStepUnitsOnRewind.Checked);
 			S.GET<RTC_CustomEngineConfig_Form>().SetRewindBoxes(cbClearStepUnitsOnRewind.Checked);
+            S.GET<RTC_SimpleMode_Form>().SetRewindBoxes(cbClearStepUnitsOnRewind.Checked);
 
-			StepActions.ClearStepActionsOnRewind = cbClearStepUnitsOnRewind.Checked;
+            StepActions.ClearStepActionsOnRewind = cbClearStepUnitsOnRewind.Checked;
 		}
 
 		private void CbLockUnits_CheckedChanged(object sender, EventArgs e)

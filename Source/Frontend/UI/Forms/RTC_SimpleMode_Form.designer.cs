@@ -300,7 +300,7 @@
             this.updownMaxInfiniteUnits.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.updownMaxInfiniteUnits.ForeColor = System.Drawing.Color.White;
             this.updownMaxInfiniteUnits.Hexadecimal = false;
-            this.updownMaxInfiniteUnits.Location = new System.Drawing.Point(451, 77);
+            this.updownMaxInfiniteUnits.Location = new System.Drawing.Point(447, 77);
             this.updownMaxInfiniteUnits.Maximum = new decimal(new int[] {
             65536,
             0,
@@ -325,7 +325,7 @@
             // lbMaxUnits
             // 
             this.lbMaxUnits.AutoSize = true;
-            this.lbMaxUnits.Location = new System.Drawing.Point(382, 82);
+            this.lbMaxUnits.Location = new System.Drawing.Point(378, 82);
             this.lbMaxUnits.Name = "lbMaxUnits";
             this.lbMaxUnits.Size = new System.Drawing.Size(63, 13);
             this.lbMaxUnits.TabIndex = 197;
@@ -338,11 +338,11 @@
             this.cbClearRewind.BackColor = System.Drawing.Color.Transparent;
             this.cbClearRewind.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbClearRewind.ForeColor = System.Drawing.Color.White;
-            this.cbClearRewind.Location = new System.Drawing.Point(385, 57);
+            this.cbClearRewind.Location = new System.Drawing.Point(377, 54);
             this.cbClearRewind.Name = "cbClearRewind";
-            this.cbClearRewind.Size = new System.Drawing.Size(141, 17);
+            this.cbClearRewind.Size = new System.Drawing.Size(167, 17);
             this.cbClearRewind.TabIndex = 195;
-            this.cbClearRewind.Text = "Clear Units on Rewind";
+            this.cbClearRewind.Text = "Clear Step Units on Rewind";
             this.cbClearRewind.UseVisualStyleBackColor = false;
             this.cbClearRewind.Visible = false;
             this.cbClearRewind.CheckedChanged += new System.EventHandler(this.CbClearRewind_CheckedChanged);
@@ -355,9 +355,9 @@
             this.btnClearInfiniteUnits.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClearInfiniteUnits.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.btnClearInfiniteUnits.ForeColor = System.Drawing.Color.White;
-            this.btnClearInfiniteUnits.Location = new System.Drawing.Point(532, 51);
+            this.btnClearInfiniteUnits.Location = new System.Drawing.Point(546, 51);
             this.btnClearInfiniteUnits.Name = "btnClearInfiniteUnits";
-            this.btnClearInfiniteUnits.Size = new System.Drawing.Size(131, 23);
+            this.btnClearInfiniteUnits.Size = new System.Drawing.Size(117, 23);
             this.btnClearInfiniteUnits.TabIndex = 180;
             this.btnClearInfiniteUnits.TabStop = false;
             this.btnClearInfiniteUnits.Tag = "color:light1";

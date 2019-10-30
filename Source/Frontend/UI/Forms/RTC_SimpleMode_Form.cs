@@ -150,6 +150,10 @@ namespace RTCV.UI
                     break;
             }
 
+
+            S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
+            S.GET<UI_CoreForm>().btnManualBlast.Visible = false;
+
             platform = pt;
 
             gbEngineParameters.Visible = true;
@@ -157,9 +161,6 @@ namespace RTCV.UI
             gbSimpleGlitchHarvester.Visible = true;
 
             btnBlastToggle.Visible = true;
-
-            S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
-            S.GET<UI_CoreForm>().btnManualBlast.Visible = false;
         }
 
         public void Shuffle()
@@ -216,11 +217,11 @@ namespace RTCV.UI
             string limiter = S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.Text;
             string value = S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.Text;
 
-            lbEngineDescription.Text = $@"Auto-Selected Engine: Vector Engine
-Parameters: Limiter:{limiter} , Value:{value}
-
-This engine is made for corrupting 3d games
-and 2d games made for 3d-era consoles.";
+            lbEngineDescription.Text = $"Auto-Selected Engine: Vector Engine\n" +
+                                       $"Parameters: Limiter:{limiter} , Value:{value}\n" +
+                                       $"\n" +
+                                       $"This engine is made for corrupting 3d games\n" +
+                                       $"and 2d games made for 3d-era consoles.";
 
         }
 
@@ -269,12 +270,11 @@ and 2d games made for 3d-era consoles.";
             SelectEngineByName("Nightmare Engine");
             SetInfiniteUnitVisibility(false);
 
-            lbEngineDescription.Text = $@"Auto-Selected Engine: Nightmare Engine
-
-This engine is made for corrupting 2d games.
-It generates garbage data and writes it 
-to the game's memory.
-";
+            lbEngineDescription.Text = $"Auto-Selected Engine: Nightmare Engine\n" +
+                                       $"\n" +
+                                       $"This engine is made for corrupting 2d games.\n" +
+                                       $"It generates garbage data and writes it \n" +
+                                       $"to the game's memory.";
 
         }
 
@@ -284,11 +284,10 @@ to the game's memory.
             SelectEngineByName("Hellgenie Engine");
             SetInfiniteUnitVisibility(true);
 
-            lbEngineDescription.Text = $@"Auto-Selected Engine: Hellgenie Engine
-
-This engine generates garbage data and then
-continuously writes it to the game's memory.
-";
+            lbEngineDescription.Text =$"Auto-Selected Engine: Hellgenie Engine\n" +
+                                      $"\n" +
+                                      $"This engine generates garbage data and then\n" +
+                                      $"continuously writes it to the game's memory.";
 
         }
 
@@ -298,11 +297,10 @@ continuously writes it to the game's memory.
             SelectEngineByName("Freeze Engine");
             SetInfiniteUnitVisibility(true);
 
-            lbEngineDescription.Text = $@"Auto-Selected Engine: Freeze Engine
-
-This engine randomly selects addresses and then
-freezes their value in place.
-";
+            lbEngineDescription.Text = $"Auto-Selected Engine: Freeze Engine\n" +
+                                       $"\n" +
+                                       $"This engine randomly selects addresses and then\n" +
+                                       $"freezes their value in place.";
         }
 
         public void SelectDistortionEngine()
@@ -311,12 +309,11 @@ freezes their value in place.
             SelectEngineByName("Distortion Engine");
             SetInfiniteUnitVisibility(false);
 
-            lbEngineDescription.Text = $@"Auto-Selected Engine: Distortion Engine
-
-This engine randomly selects addresses and then
-backups their current value. It will then restore
-these values later to corrupt the game.
-";
+            lbEngineDescription.Text = $"Auto-Selected Engine: Distortion Engine\n" +
+                                       $"\n" +
+                                       $"This engine randomly selects addresses and then\n" +
+                                       $"backups their current value. It will then restore\n" +
+                                       $"these values later to corrupt the game.";
         }
 
         public void SelectPipeEngine()
@@ -325,11 +322,10 @@ these values later to corrupt the game.
             SelectEngineByName("Pipe Engine");
             SetInfiniteUnitVisibility(true);
 
-            lbEngineDescription.Text = $@"Auto-Selected Engine: Pipe Engine
-
-This engine randomly links memory adresses together,
-transporting the value of one to another.
-";
+            lbEngineDescription.Text = $"Auto-Selected Engine: Pipe Engine\n" +
+                                       $"\n" +
+                                       $"This engine randomly links memory adresses together,\n" +
+                                       $"transporting the value of one to another.";
 
         }
 
@@ -350,12 +346,11 @@ transporting the value of one to another.
             string limiter = S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.Text;
             string value = S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.Text;
 
-            lbEngineDescription.Text = $@"Auto-Selected Engine: Vector Engine
-Parameters: Limiter:{limiter} , Value:{value}
-
-This engine is made for corrupting 3d games
-and 2d games made for 3d-era consoles.";
-
+            lbEngineDescription.Text = $"Auto-Selected Engine: Vector Engine\n" +
+                                       $"Parameters: Limiter:{limiter} , Value:{value}\n" +
+                                       $"\n" +
+                                       $"This engine is made for corrupting 3d games\n" +
+                                       $"and 2d games made for 3d-era consoles (excluding PSX).";
         }
 
         public void SetInfiniteUnitVisibility(bool visible)
