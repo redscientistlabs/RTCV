@@ -283,8 +283,9 @@ namespace RTCV.UI
 			if (DontUpdateSpec)
 				return;
 			S.GET<RTC_CorruptionEngine_Form>().SetRewindBoxes(cbClearRewind.Checked);
+            S.GET<RTC_SimpleMode_Form>().SetRewindBoxes(cbClearRewind.Checked);
 
-			StepActions.ClearStepActionsOnRewind = cbClearRewind.Checked;
+            StepActions.ClearStepActionsOnRewind = cbClearRewind.Checked;
 		}
 
 		private void cbLoopUnit_CheckedChanged(object sender, EventArgs e)

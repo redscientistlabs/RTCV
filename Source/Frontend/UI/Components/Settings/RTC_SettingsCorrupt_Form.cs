@@ -34,6 +34,7 @@ namespace RTCV.UI
             nmMaxInfiniteStepUnits.registerSlave(S.GET<RTC_CorruptionEngine_Form>().updownMaxFreeze, handler);
             nmMaxInfiniteStepUnits.registerSlave(S.GET<RTC_CorruptionEngine_Form>().updownMaxPipes, handler);
             nmMaxInfiniteStepUnits.registerSlave(S.GET<RTC_CustomEngineConfig_Form>().updownMaxInfiniteUnits, handler);
+            nmMaxInfiniteStepUnits.registerSlave(S.GET<RTC_SimpleMode_Form>().updownMaxInfiniteUnits, handler);
 
 
             cbRerollAddress.Checked = CorruptCore.RtcCore.RerollAddress;

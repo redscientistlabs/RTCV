@@ -41,6 +41,9 @@
             this.btnManualBlast = new System.Windows.Forms.Button();
             this.btnAutoCorrupt = new System.Windows.Forms.Button();
             this.gbEngineParameters = new System.Windows.Forms.GroupBox();
+            this.updownMaxInfiniteUnits = new RTCV.UI.Components.Controls.MultiUpDown();
+            this.lbMaxUnits = new System.Windows.Forms.Label();
+            this.cbClearRewind = new System.Windows.Forms.CheckBox();
             this.btnClearInfiniteUnits = new System.Windows.Forms.Button();
             this.lbEngineDescription = new System.Windows.Forms.Label();
             this.btnShuffleAlgorithm = new System.Windows.Forms.Button();
@@ -193,7 +196,7 @@
             this.gbRealTimeCorruption.Controls.Add(this.btnManualBlast);
             this.gbRealTimeCorruption.Controls.Add(this.btnAutoCorrupt);
             this.gbRealTimeCorruption.ForeColor = System.Drawing.Color.White;
-            this.gbRealTimeCorruption.Location = new System.Drawing.Point(13, 260);
+            this.gbRealTimeCorruption.Location = new System.Drawing.Point(13, 266);
             this.gbRealTimeCorruption.Name = "gbRealTimeCorruption";
             this.gbRealTimeCorruption.Size = new System.Drawing.Size(678, 119);
             this.gbRealTimeCorruption.TabIndex = 181;
@@ -276,17 +279,73 @@
             // 
             this.gbEngineParameters.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbEngineParameters.Controls.Add(this.updownMaxInfiniteUnits);
+            this.gbEngineParameters.Controls.Add(this.lbMaxUnits);
+            this.gbEngineParameters.Controls.Add(this.cbClearRewind);
             this.gbEngineParameters.Controls.Add(this.btnClearInfiniteUnits);
             this.gbEngineParameters.Controls.Add(this.lbEngineDescription);
             this.gbEngineParameters.Controls.Add(this.btnShuffleAlgorithm);
             this.gbEngineParameters.ForeColor = System.Drawing.Color.White;
-            this.gbEngineParameters.Location = new System.Drawing.Point(13, 155);
+            this.gbEngineParameters.Location = new System.Drawing.Point(13, 149);
             this.gbEngineParameters.Name = "gbEngineParameters";
-            this.gbEngineParameters.Size = new System.Drawing.Size(678, 92);
+            this.gbEngineParameters.Size = new System.Drawing.Size(678, 110);
             this.gbEngineParameters.TabIndex = 133;
             this.gbEngineParameters.TabStop = false;
             this.gbEngineParameters.Text = "Engine Parameters";
             this.gbEngineParameters.Visible = false;
+            // 
+            // updownMaxInfiniteUnits
+            // 
+            this.updownMaxInfiniteUnits.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.updownMaxInfiniteUnits.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.updownMaxInfiniteUnits.ForeColor = System.Drawing.Color.White;
+            this.updownMaxInfiniteUnits.Hexadecimal = false;
+            this.updownMaxInfiniteUnits.Location = new System.Drawing.Point(451, 77);
+            this.updownMaxInfiniteUnits.Maximum = new decimal(new int[] {
+            65536,
+            0,
+            0,
+            0});
+            this.updownMaxInfiniteUnits.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.updownMaxInfiniteUnits.Name = "updownMaxInfiniteUnits";
+            this.updownMaxInfiniteUnits.Size = new System.Drawing.Size(70, 22);
+            this.updownMaxInfiniteUnits.TabIndex = 196;
+            this.updownMaxInfiniteUnits.Tag = "color:dark1";
+            this.updownMaxInfiniteUnits.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.updownMaxInfiniteUnits.Visible = false;
+            // 
+            // lbMaxUnits
+            // 
+            this.lbMaxUnits.AutoSize = true;
+            this.lbMaxUnits.Location = new System.Drawing.Point(382, 82);
+            this.lbMaxUnits.Name = "lbMaxUnits";
+            this.lbMaxUnits.Size = new System.Drawing.Size(63, 13);
+            this.lbMaxUnits.TabIndex = 197;
+            this.lbMaxUnits.Text = "Max ∞ Units";
+            this.lbMaxUnits.Visible = false;
+            // 
+            // cbClearRewind
+            // 
+            this.cbClearRewind.AutoSize = true;
+            this.cbClearRewind.BackColor = System.Drawing.Color.Transparent;
+            this.cbClearRewind.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.cbClearRewind.ForeColor = System.Drawing.Color.White;
+            this.cbClearRewind.Location = new System.Drawing.Point(385, 57);
+            this.cbClearRewind.Name = "cbClearRewind";
+            this.cbClearRewind.Size = new System.Drawing.Size(141, 17);
+            this.cbClearRewind.TabIndex = 195;
+            this.cbClearRewind.Text = "Clear Units on Rewind";
+            this.cbClearRewind.UseVisualStyleBackColor = false;
+            this.cbClearRewind.Visible = false;
+            this.cbClearRewind.CheckedChanged += new System.EventHandler(this.CbClearRewind_CheckedChanged);
             // 
             // btnClearInfiniteUnits
             // 
@@ -296,9 +355,9 @@
             this.btnClearInfiniteUnits.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnClearInfiniteUnits.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.btnClearInfiniteUnits.ForeColor = System.Drawing.Color.White;
-            this.btnClearInfiniteUnits.Location = new System.Drawing.Point(457, 51);
+            this.btnClearInfiniteUnits.Location = new System.Drawing.Point(532, 51);
             this.btnClearInfiniteUnits.Name = "btnClearInfiniteUnits";
-            this.btnClearInfiniteUnits.Size = new System.Drawing.Size(206, 23);
+            this.btnClearInfiniteUnits.Size = new System.Drawing.Size(131, 23);
             this.btnClearInfiniteUnits.TabIndex = 180;
             this.btnClearInfiniteUnits.TabStop = false;
             this.btnClearInfiniteUnits.Tag = "color:light1";
@@ -313,7 +372,7 @@
             this.lbEngineDescription.BackColor = System.Drawing.Color.Transparent;
             this.lbEngineDescription.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lbEngineDescription.ForeColor = System.Drawing.Color.White;
-            this.lbEngineDescription.Location = new System.Drawing.Point(9, 17);
+            this.lbEngineDescription.Location = new System.Drawing.Point(9, 26);
             this.lbEngineDescription.Name = "lbEngineDescription";
             this.lbEngineDescription.Size = new System.Drawing.Size(240, 65);
             this.lbEngineDescription.TabIndex = 5;
@@ -328,9 +387,9 @@
             this.btnShuffleAlgorithm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnShuffleAlgorithm.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.btnShuffleAlgorithm.ForeColor = System.Drawing.Color.White;
-            this.btnShuffleAlgorithm.Location = new System.Drawing.Point(457, 22);
+            this.btnShuffleAlgorithm.Location = new System.Drawing.Point(377, 22);
             this.btnShuffleAlgorithm.Name = "btnShuffleAlgorithm";
-            this.btnShuffleAlgorithm.Size = new System.Drawing.Size(206, 23);
+            this.btnShuffleAlgorithm.Size = new System.Drawing.Size(286, 23);
             this.btnShuffleAlgorithm.TabIndex = 179;
             this.btnShuffleAlgorithm.TabStop = false;
             this.btnShuffleAlgorithm.Tag = "color:light1";
@@ -531,5 +590,8 @@
         public System.Windows.Forms.Button btnSwitchNormalMode;
         public System.Windows.Forms.Button btnHelp;
         private System.Windows.Forms.Button btnLoadGhSavestate;
+        public Components.Controls.MultiUpDown updownMaxInfiniteUnits;
+        private System.Windows.Forms.Label lbMaxUnits;
+        public System.Windows.Forms.CheckBox cbClearRewind;
     }
 }

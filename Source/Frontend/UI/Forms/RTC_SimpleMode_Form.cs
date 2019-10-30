@@ -23,7 +23,9 @@ namespace RTCV.UI
 
         PlatformType platform = PlatformType.CLASSIC;
 
-		public RTC_SimpleMode_Form()
+        public bool DontUpdateSpec = false;
+
+        public RTC_SimpleMode_Form()
 		{
 			InitializeComponent();
         }
@@ -265,7 +267,7 @@ and 2d games made for 3d-era consoles.";
         {
             ResetSession();
             SelectEngineByName("Nightmare Engine");
-            btnClearInfiniteUnits.Visible = false;
+            SetInfiniteUnitVisibility(false);
 
             lbEngineDescription.Text = $@"Auto-Selected Engine: Nightmare Engine
 
@@ -280,7 +282,7 @@ to the game's memory.
         {
             ResetSession();
             SelectEngineByName("Hellgenie Engine");
-            btnClearInfiniteUnits.Visible = true;
+            SetInfiniteUnitVisibility(true);
 
             lbEngineDescription.Text = $@"Auto-Selected Engine: Hellgenie Engine
 
@@ -294,7 +296,7 @@ continuously writes it to the game's memory.
         {
             ResetSession();
             SelectEngineByName("Freeze Engine");
-            btnClearInfiniteUnits.Visible = true;
+            SetInfiniteUnitVisibility(true);
 
             lbEngineDescription.Text = $@"Auto-Selected Engine: Freeze Engine
 
@@ -307,7 +309,7 @@ freezes their value in place.
         {
             ResetSession();
             SelectEngineByName("Distortion Engine");
-            btnClearInfiniteUnits.Visible = false;
+            SetInfiniteUnitVisibility(false);
 
             lbEngineDescription.Text = $@"Auto-Selected Engine: Distortion Engine
 
@@ -321,7 +323,7 @@ these values later to corrupt the game.
         {
             ResetSession();
             SelectEngineByName("Pipe Engine");
-            btnClearInfiniteUnits.Visible = true;
+            SetInfiniteUnitVisibility(true);
 
             lbEngineDescription.Text = $@"Auto-Selected Engine: Pipe Engine
 
@@ -335,7 +337,7 @@ transporting the value of one to another.
         {
             ResetSession();
             SelectEngineByName("Vector Engine");
-            btnClearInfiniteUnits.Visible = false;
+            SetInfiniteUnitVisibility(false);
 
             if (S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.Items.Count > 0)
             {
@@ -356,7 +358,13 @@ and 2d games made for 3d-era consoles.";
 
         }
 
-
+        public void SetInfiniteUnitVisibility(bool visible)
+        {
+            btnClearInfiniteUnits.Visible = visible;
+            cbClearRewind.Visible = visible;
+            lbMaxUnits.Visible = visible;
+            updownMaxInfiniteUnits.Visible = visible;
+        }
 
         private void btnShuffleAlgorithm_Click(object sender, EventArgs e)
         {
@@ -398,6 +406,27 @@ and 2d games made for 3d-era consoles.";
             S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad_Click(null, null);
         }
 
+        public void SetRewindBoxes(bool enabled)
+        {
+            DontUpdateSpec = true;
+            cbClearRewind.Checked = enabled;
+            DontUpdateSpec = false;
+        }
+
+        private void CbClearRewind_CheckedChanged(object sender, EventArgs e)
+        {
+            if (DontUpdateSpec)
+                return;
+            S.GET<RTC_CorruptionEngine_Form>().SetRewindBoxes(cbClearRewind.Checked);
+            S.GET<RTC_CustomEngineConfig_Form>().SetRewindBoxes(cbClearRewind.Checked);
+
+            StepActions.ClearStepActionsOnRewind = cbClearRewind.Checked;
+        }
+
+        private void cbClearRewind_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 
     public enum PlatformType { CLASSIC, MODERN }
