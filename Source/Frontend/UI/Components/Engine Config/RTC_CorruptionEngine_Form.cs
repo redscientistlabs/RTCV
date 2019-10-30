@@ -99,8 +99,7 @@ namespace RTCV.UI
             nmAlignment.Maximum = CorruptCore.RtcCore.CurrentPrecision - 1;
 
 
-            object realtime = AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME];
-            if (realtime != null && ((bool)realtime))
+            if ((AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME] as bool?) ?? false)
             {
                 S.GET<UI_CoreForm>().btnManualBlast.Visible = true;
                 S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = true;
