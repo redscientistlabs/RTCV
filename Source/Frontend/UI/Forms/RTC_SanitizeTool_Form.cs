@@ -227,11 +227,6 @@ namespace RTCV.UI
             S.GET<RTC_NewBlastEditor_Form>().btnLoadCorrupt_Click(null, null);
         }
 
-        private void lbSteps_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            lbSteps.SelectedIndex = -1;
-        }
-
         private void RTC_SanitizeTool_Form_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason != CloseReason.UserClosing)

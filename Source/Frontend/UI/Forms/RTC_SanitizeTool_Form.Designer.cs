@@ -286,11 +286,10 @@ namespace RTCV.UI
             this.lbSteps.Margin = new System.Windows.Forms.Padding(5);
             this.lbSteps.Name = "lbSteps";
             this.lbSteps.ScrollAlwaysVisible = true;
-            this.lbSteps.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+            this.lbSteps.SelectionMode = System.Windows.Forms.SelectionMode.None;
             this.lbSteps.Size = new System.Drawing.Size(181, 222);
             this.lbSteps.TabIndex = 191;
             this.lbSteps.Tag = "color:dark2";
-            this.lbSteps.SelectedIndexChanged += new System.EventHandler(this.lbSteps_SelectedIndexChanged);
             // 
             // RTC_SanitizeTool_Form
             // 
