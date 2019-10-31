@@ -119,12 +119,13 @@ namespace RTCV.UI
 
         private void btnGlitchHarvesterCorrupt_Click(object sender, EventArgs e)
         {
+            if(S.GET<RTC_StashHistory_Form>().lbStashHistory.Items.Count >= 20)
+            {
+                S.GET<RTC_StashHistory_Form>().RemoveFirstStashHistoryItem();
+            }
+
             S.GET<RTC_GlitchHarvesterBlast_Form>().btnCorrupt_Click(null, null);
 
-            if(S.GET<RTC_StashHistory_Form>().lbStashHistory.Items.Count > 20)
-            {
-                StockpileManager_UISide.RemoveFirstStashItem();
-            }
         }
 
         private void rbClassicPlatforms_CheckedChanged(object sender, EventArgs e)
