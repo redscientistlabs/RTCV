@@ -51,6 +51,12 @@ namespace RTCV.UI
             if (bl == null)
                 return;
 
+            if (bl.Layer.Count == 1)
+            {
+                MessageBox.Show("Sanitize Tool cannot sanitize BlastLayers that only have one unit.");
+                return;
+            }
+
             BlastLayer clone = (BlastLayer)bl.Clone();
 
             stf.lbOriginalLayerSize.Text = $"Original Layer size: {clone.Layer.Count}"; 
@@ -61,6 +67,7 @@ namespace RTCV.UI
             stf.lbSteps.Items.Add(new { Text = $"Original Layer [{clone.Layer.Count} Units]", Value = clone });
 
             stf.originalBlastLayer = clone;
+
             stf.ShowDialog();
         }
 
