@@ -51,6 +51,12 @@ namespace RTCV.UI
             if (bl == null)
                 return;
 
+            if (bl.Layer.Count == 0)
+            {
+                MessageBox.Show("Sanitize Tool cannot sanitize BlastLayers that don't have any units.");
+                return;
+            }
+
             if (bl.Layer.Count == 1)
             {
                 MessageBox.Show("Sanitize Tool cannot sanitize BlastLayers that only have one unit.");
