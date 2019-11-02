@@ -40,6 +40,7 @@ namespace RTCV.NetCore
         public const string REMOTE_PUSHRTCSPEC = nameof(REMOTE_PUSHRTCSPEC);
         public const string REMOTE_PUSHRTCSPECUPDATE = nameof(REMOTE_PUSHRTCSPECUPDATE);
         public const string REMOTE_PUSHVMDPROTOS = nameof(REMOTE_PUSHVMDPROTOS);
+        public const string REMOTE_GENERATEVMDTEXT = nameof(REMOTE_GENERATEVMDTEXT);
         public const string BLASTGENERATOR_BLAST = nameof(BLASTGENERATOR_BLAST);
         public const string REMOTE_LOADSTATE = nameof(REMOTE_LOADSTATE);
         public const string REMOTE_SAVESTATE = nameof(REMOTE_SAVESTATE);
