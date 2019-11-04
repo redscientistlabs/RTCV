@@ -782,7 +782,20 @@ namespace RTCV.UI
         /// </summary>
 		public static void ConfigureUIFromVanguardSpec()
 		{
-            //S.GET<RTC_GlitchHarvester_Form>().pnRender.Visible = false;
+			if ((AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME] as bool?) ?? false)
+			{
+				S.GET<UI_CoreForm>().btnManualBlast.Visible = true;
+				S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = true;
+			}
+			else
+            {
+				if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] == null)
+					S.GET<UI_CoreForm>().btnManualBlast.Visible = false;
+				else
+					S.GET<UI_CoreForm>().btnManualBlast.Visible = true;
+
+				S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
+			}
 
         }
 

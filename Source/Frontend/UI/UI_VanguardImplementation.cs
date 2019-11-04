@@ -86,6 +86,9 @@ namespace RTCV.UI
                                 lastVanguardClient = (string) RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
                                 UICore.FirstConnect = false;
 
+								//Configure the UI based on the vanguard spec
+								UICore.ConfigureUIFromVanguardSpec();
+
                                 S.GET<UI_CoreForm>().Show();
 
                                 //Pull any lists from the vanguard implementation
