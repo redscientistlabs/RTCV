@@ -197,7 +197,47 @@ namespace RTCV.UI
 						e.setReturnValue(true);
 						break;
 
-					case REMOTE_EVENT_DOMAINSUPDATED:
+                    case REMOTE_GENERATEVMDTEXT:
+                        SyncObjectSingleton.FormExecute(() =>
+                        {
+                            object[] objs = (object[])advancedMessage.objectValue;
+                            string domain = (string)objs[0];
+                            string text = (string)objs[1];
+
+                            var vmdgenerator = S.GET<RTC_VmdGen_Form>();
+
+                            vmdgenerator.btnSelectAll_Click(null, null);
+
+                            var cbitems = vmdgenerator.cbSelectedMemoryDomain.Items;
+                            object domainFound = null;
+                            for(int i = 0; i< cbitems.Count;i++)
+                            {
+                                var item = cbitems[i];
+
+                                if(item.ToString() == domain)
+                                {
+                                    domainFound = item;
+                                    vmdgenerator.cbSelectedMemoryDomain.SelectedIndex = i;
+                                    break;
+                                }
+                            }
+
+                            if(domainFound == null)
+                            {
+                                throw new Exception($"Domain {domain} could not be selected in the VMD Generator. Aborting procedure.");
+                                //return;
+                            }
+
+                            vmdgenerator.tbCustomAddresses.Text = text;
+
+                            vmdgenerator.btnGenerateVMD_Click(null, null);
+
+                        });
+                        e.setReturnValue(true);
+                        break;
+
+
+                    case REMOTE_EVENT_DOMAINSUPDATED:
 
 						SyncObjectSingleton.FormExecute(() =>
 						{

@@ -94,6 +94,15 @@ namespace RTCV.UI
 
 		private void btnGenerateVMD_Click(object sender, EventArgs e) => GenerateVMD();
 
+        public bool GenerateVMD(string textBoxContent)
+        {
+            if (textBoxContent == null)
+                throw new Exception("Can't generate a vmd without text");
+
+            tbRangeExpression.Text = textBoxContent;
+
+            return GenerateVMD();
+        }
 		private bool GenerateVMD()
         {
             if (string.IsNullOrWhiteSpace(cbSelectedMemoryDomain.SelectedItem?.ToString()) || !MemoryDomains.MemoryInterfaces.ContainsKey(cbSelectedMemoryDomain.SelectedItem.ToString()))

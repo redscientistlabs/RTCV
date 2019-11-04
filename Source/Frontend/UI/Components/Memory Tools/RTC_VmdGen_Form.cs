@@ -27,7 +27,7 @@ namespace RTCV.UI
 		{
 		}
 
-		private void btnSelectAll_Click(object sender, EventArgs e)
+		public void btnSelectAll_Click(object sender, EventArgs e)
 		{
 			S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected();
 
@@ -74,7 +74,7 @@ namespace RTCV.UI
 			}
 		}
 
-		private void btnGenerateVMD_Click(object sender, EventArgs e) => GenerateVMD();
+		public void btnGenerateVMD_Click(object sender, EventArgs e) => GenerateVMD();
 
 		private bool GenerateVMD()
         {
