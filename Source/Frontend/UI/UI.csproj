@@ -286,10 +286,10 @@
     <Compile Include="Forms\RTC_Intro_Form.Designer.cs">
       <DependentUpon>RTC_Intro_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\RTC_SanitizeTool_Form.cs">
+    <Compile Include="Components\Blast Editor\RTC_SanitizeTool_Form.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\RTC_SanitizeTool_Form.Designer.cs">
+    <Compile Include="Components\Blast Editor\RTC_SanitizeTool_Form.Designer.cs">
       <DependentUpon>RTC_SanitizeTool_Form.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\RTC_NewBlastEditor_Form.cs">
@@ -481,7 +481,7 @@
     <EmbeddedResource Include="Forms\RTC_Intro_Form.resx">
       <DependentUpon>RTC_Intro_Form.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RTC_SanitizeTool_Form.resx">
+    <EmbeddedResource Include="Components\Blast Editor\RTC_SanitizeTool_Form.resx">
       <DependentUpon>RTC_SanitizeTool_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RTC_NewBlastEditor_Form.resx">
