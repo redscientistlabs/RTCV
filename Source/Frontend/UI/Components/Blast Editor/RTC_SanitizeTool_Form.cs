@@ -153,18 +153,27 @@ namespace RTCV.UI
             BlastLayer changes = (BlastLayer)S.GET<RTC_NewBlastEditor_Form>().currentSK.BlastLayer.Clone();
             BlastLayer modified = (BlastLayer)originalBlastLayer.Clone();
 
-            if (changes.Layer.Count != modified.Layer.Count)
-            {   //If both layers have the same amount of units, assume no changes needed
+            foreach (var unit in changes.Layer)
+            {
+                var TargetUnit = modified.Layer.FirstOrDefault(it =>
+                it.Address == unit.Address &&
+                it.Domain == unit.Domain &&
+                it.ExecuteFrame == unit.ExecuteFrame &&
+                it.GeneratedUsingValueList == unit.GeneratedUsingValueList &&
+                it.InvertLimiter == unit.InvertLimiter &&
+                it.SourceAddress == unit.SourceAddress &&
+                it.SourceDomain == unit.SourceDomain &&
+                it.StoreLimiterSource == unit.StoreLimiterSource &&
+                it.StoreTime == unit.StoreTime &&
+                it.StoreType == unit.StoreType &&
+                it.TiltValue == unit.TiltValue &&
+                it.ValueString == unit.ValueString
+                );
 
-                foreach (var unit in changes.Layer)
-                {
-                    var TargetUnit = modified.Layer.FirstOrDefault(it =>UI_Extensions.PublicInstancePropertiesEqual(it, unit));
 
-
-                    if (TargetUnit != null)
-                        modified.Layer.Remove(TargetUnit);
-                }
-            }
+                if (TargetUnit != null)
+                    modified.Layer.Remove(TargetUnit);
+			}
 
             S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(modified);
 
