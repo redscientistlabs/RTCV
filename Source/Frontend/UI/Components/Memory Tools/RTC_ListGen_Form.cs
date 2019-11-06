@@ -167,7 +167,7 @@ namespace RTCV.UI
 				byte[] bytes = CorruptCore_Extensions.StringToByteArray(t);
 				byteList.Add(bytes);
 			}
-			string hash = Filtering.RegisterList(byteList, true);
+			string hash = Filtering.RegisterList(byteList, filename, true);
 
 			//Register the list in the ui
 			CorruptCore.Filtering.RegisterListInUI(filename, hash);

@@ -143,6 +143,19 @@ namespace RTCV.UI
             DontLoadSelectedStash = false;
         }
 
+        public void RemoveFirstStashHistoryItem()
+        {
+            DontLoadSelectedStash = true;
+            lbStashHistory.DataSource = null;
+            lbStashHistory.SelectedIndex = -1;
+
+            DontLoadSelectedStash = true;
+            //lbStashHistory.BeginUpdate();
+            StockpileManager_UISide.RemoveFirstStashItem();
+            lbStashHistory.DataSource = StockpileManager_UISide.StashHistory;
+            DontLoadSelectedStash = false;
+        }
+
         private void lbStashHistory_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)

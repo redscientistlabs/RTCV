@@ -43,13 +43,14 @@ namespace RTCV.Launcher
                 string str = Encoding.UTF8.GetString(versionFile);
                 List<string> onlineVersions = new List<string>(str.Split('|').Where(it => !it.Contains("Launcher")).ToArray());
 
-                return onlineVersions.OrderByDescending(x => x).Select(it => it.Replace(".zip", "")).ToArray()[0];
+                return onlineVersions.OrderByNaturalDescending(x => x).Select(it => it.Replace(".zip", "")).ToArray()[0];
             }
             catch
             {
                 return null;
             }
         }
+
 
 
         public void refreshVersions()
@@ -64,17 +65,15 @@ namespace RTCV.Launcher
                 string str = Encoding.UTF8.GetString(versionFile);
 
                 //Ignores any build containing the word Launcher in it
-                List<string> onlineVersions = new List<string>(str.Split('|').Where(it => !it.Contains("Launcher")).ToArray());
-
+                var onlineVersions = str.Split('|').Where(it => !it.Contains("Launcher")).OrderByNaturalDescending(x => x).Select(it => it.Replace(".zip", "")).ToArray();
                 this.Invoke(new MethodInvoker(() =>
                 {
                     lbOnlineVersions.Items.Clear();
-                    if (onlineVersions.Count > 0)
+                    if (onlineVersions.Length > 0)
                     {
-                        int latest = onlineVersions.Count - 1;
-                        onlineVersions[latest] += latestVersionString;
+                        onlineVersions[0] += latestVersionString;
                     }
-                    lbOnlineVersions.Items.AddRange(onlineVersions.OrderByDescending(x => x).Select(it => it.Replace(".zip", "")).ToArray());
+                    lbOnlineVersions.Items.AddRange(onlineVersions);
                 }));
             };
             Task.Run(a);
@@ -176,9 +175,21 @@ namespace RTCV.Launcher
 
         }
 
-        private void LbOnlineVersions_SelectedIndexChanged_1(object sender, EventArgs e)
+        private void lbOnlineVersions_MouseDoubleClick_1(object sender, MouseEventArgs e)
         {
             btnDownloadVersion_Click(sender, e);
+        }
+
+        private void lbOnlineVersions_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                Point locate = new Point((sender as Control).Location.X + e.Location.X, (sender as Control).Location.Y + e.Location.Y);
+
+                ContextMenuStrip columnsMenu = new ContextMenuStrip();
+                columnsMenu.Items.Add("Download", null, new EventHandler((ob, ev) => { btnDownloadVersion_Click(sender, e); }));
+                columnsMenu.Show(this, locate);
+            }
         }
     }
 }

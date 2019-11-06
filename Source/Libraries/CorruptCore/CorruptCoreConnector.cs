@@ -133,14 +133,11 @@ namespace RTCV.CorruptCore
                         break;
 
 
-                case ASYNCBLAST:
-					{
-						SyncObjectSingleton.FormExecute(() =>
-						{
-							RtcCore.ASyncGenerateAndBlast();
-						});
-					}
-					break;
+                case MANUALBLAST:
+                {
+                    RtcCore.GenerateAndBlast();
+                }
+				break;
 
 				case GENERATEBLASTLAYER:
                 {

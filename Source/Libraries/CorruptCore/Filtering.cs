@@ -68,7 +68,6 @@ namespace RTCV.CorruptCore
 				else
 				{
 					RegisterListInUI("SK_" + StockpileListCount, list);
-					Hash2NameDico[list] = "SK_" + StockpileListCount;
 					StockpileListCount++;
 				}
 			}
@@ -150,9 +149,8 @@ namespace RTCV.CorruptCore
 				byteList.Add(bytes);
 			}
 
-			var hash =  RegisterList(byteList.Distinct(new CorruptCore_Extensions.ByteArrayComparer()).ToList(), syncListViaNetcore);
 			var name = Path.GetFileNameWithoutExtension(path);
-			Hash2NameDico[hash] = name;
+            var hash =  RegisterList(byteList.Distinct(new CorruptCore_Extensions.ByteArrayComparer()).ToList(), name, syncListViaNetcore);
 			return hash;
 		}
 
@@ -162,7 +160,7 @@ namespace RTCV.CorruptCore
 		/// <param name="list"></param>
 		/// <param name="syncListsViaNetcore"></param>
 		/// <returns>The hash of the list being registereds</returns>
-		public static string RegisterList(List<Byte[]> list, bool syncListsViaNetcore)
+		public static string RegisterList(List<Byte[]> list, string name, bool syncListsViaNetcore)
 		{
 			List<byte> bList = new List<byte>();
 			foreach (byte[] line in list)
@@ -180,14 +178,16 @@ namespace RTCV.CorruptCore
 				Hash2ValueDico[hashStr] = list;
 			if (!Hash2LimiterDico?.ContainsKey(hashStr) ?? false)
 				Hash2LimiterDico[hashStr] = new HashSet<byte[]>(list, new CorruptCore_Extensions.ByteArrayComparer());
+			if (!Hash2NameDico?.ContainsKey(name) ?? false)
+				Hash2NameDico[hashStr] = name;
 
-			//Push it over netcore if we need to
-			if (syncListsViaNetcore)
+            //Push it over netcore if we need to
+            if (syncListsViaNetcore)
 			{
 				PartialSpec update = new PartialSpec("RTCSpec");
-				update[RTCSPEC.FILTERING_HASH2LIMITERDICO.ToString()] = Hash2LimiterDico;
-				update[RTCSPEC.FILTERING_HASH2VALUEDICO.ToString()] = Hash2ValueDico;
-				update[RTCSPEC.FILTERING_HASH2NAMEDICO.ToString()] = Hash2NameDico;
+				update[RTCSPEC.FILTERING_HASH2LIMITERDICO] = Hash2LimiterDico;
+				update[RTCSPEC.FILTERING_HASH2VALUEDICO] = Hash2ValueDico;
+				update[RTCSPEC.FILTERING_HASH2NAMEDICO] = Hash2NameDico;
 				RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(update);
 			}
 
@@ -359,8 +359,10 @@ namespace RTCV.CorruptCore
 						}
 						strList.Add(sb.ToString());
 					}
-                    var name = "UNKNOWN_" + s.Substring(0, 5); // Default name will use the first 5 chars of the hash 
-                    Hash2NameDico.TryGetValue(s, out name); //See if we can get the name
+					Hash2NameDico.TryGetValue(s, out string name); //See if we can get the name
+                    if(String.IsNullOrWhiteSpace(name))
+						name = "UNKNOWN_" + s.Substring(0, 5); // Default name will use the first 5 chars of the hash 
+
                     lists[(name.StartsWith("STOCKPILE_") ? "" : "STOCKPILE_") + name] = strList;
 				}
 				//If we have a value but the dictionary didn't have it, pop that we couldn't find the list

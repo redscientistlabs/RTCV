@@ -99,21 +99,7 @@ namespace RTCV.UI
             nmAlignment.Maximum = CorruptCore.RtcCore.CurrentPrecision - 1;
 
 
-            object realtime = AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME];
-            if (realtime != null && ((bool)realtime))
-            {
-                S.GET<UI_CoreForm>().btnManualBlast.Visible = true;
-                S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = true;
-            }
-            else
-            {
-                if(AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] == null)
-                    S.GET<UI_CoreForm>().btnManualBlast.Visible = false;
-                else
-                    S.GET<UI_CoreForm>().btnManualBlast.Visible = true;
 
-                S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
-            }
 
             //S.GET<RTC_GlitchHarvesterIntensity_Form>().Visible = true;
             S.GET<RTC_GeneralParameters_Form>().Show();
@@ -226,8 +212,9 @@ namespace RTCV.UI
 			SetRewindBoxes(((CheckBox)sender).Checked);
 
 			S.GET<RTC_CustomEngineConfig_Form>().SetRewindBoxes(((CheckBox)sender).Checked);
+            S.GET<RTC_SimpleMode_Form>().SetRewindBoxes(((CheckBox)sender).Checked);
 
-			StepActions.ClearStepActionsOnRewind = cbClearFreezesOnRewind.Checked;
+            StepActions.ClearStepActionsOnRewind = cbClearFreezesOnRewind.Checked;
 		}
 
 		private void btnClearPipes_Click(object sender, EventArgs e)

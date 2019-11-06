@@ -60,8 +60,9 @@ namespace RTCV.CorruptCore
 			}
 
 			if ((AllSpec.VanguardSpec[VSPEC.CORE_DISKBASED] as bool? ?? false) && ((AllSpec.VanguardSpec[VSPEC.GAMENAME] as string ?? "DEFAULT") != ""))
-			{
-				var dr = MessageBox.Show("The currently loaded game is disk based and needs to be closed before saving. Press OK to close the game and continue saving.", "Saving requires closing game", MessageBoxButtons.OKCancel);
+            {
+                var dr = MessageBox.Show("The currently loaded game is disk based and needs to be closed before saving. Press OK to close the game and continue saving.", "Saving requires closing game", MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
 				if (dr == DialogResult.OK)
 				{
 					LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_CLOSEGAME, true);
@@ -204,7 +205,7 @@ namespace RTCV.CorruptCore
                     foreach (StashKey key in sks.StashKeys)
                     {
                         string title = "Reference found in RTC dir";
-                        string message = $"Can't save with file {key.RomFilename}\nGame name: {key.GameName}\n\nThis file appears to be in temporary storage (e.g. loaded from a stockpile).\nTo save without references, you will need to provide a replacement from outside the RTC's working directory.";
+                        string message = $"Can't save with file {key.RomFilename}\nGame name: {key.GameName}\n\nThis file appears to be in temporary storage (e.g. loaded from a stockpile).\nTo save without references, you will need to provide a replacement from outside the RTC's working directory.\n\nPlease provide a new path to the file in question.";
                         while (CorruptCore_Extensions.IsOrIsSubDirectoryOf(Path.GetDirectoryName(key.RomFilename), RtcCore.workingDir)) // Make sure they don't give a new file within working
                             if (!StockpileManager_UISide.CheckAndFixMissingReference(key, true, sks.StashKeys, title, message))
                             {
@@ -244,8 +245,9 @@ namespace RTCV.CorruptCore
 						File.Copy(path, Path.Combine(RtcCore.workingDir, "TEMP", "CONFIGS", Path.GetFileName(path)));
 					}
             }
-			//Get all the limiter lists
-			var limiterLists = Filtering.GetAllLimiterListsFromStockpile(sks);
+            //Get all the limiter lists
+            RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Finding limiter lists to copy", saveProgress += 5));
+            var limiterLists = Filtering.GetAllLimiterListsFromStockpile(sks);
             if (limiterLists == null)
                 return false;
 
@@ -353,7 +355,8 @@ namespace RTCV.CorruptCore
             decimal percentPerFile = 0;
             if ((AllSpec.VanguardSpec[VSPEC.CORE_DISKBASED] as bool? ?? false) && ((AllSpec.VanguardSpec[VSPEC.GAMENAME] as string ?? "DEFAULT") != ""))
             {
-                var dr = MessageBox.Show($"The currently loaded game is disk based and needs to be closed before {(import ? "importing" : "loading")}. Press OK to close the game and continue loading.", "Loading requires closing game", MessageBoxButtons.OKCancel);
+                var dr = MessageBox.Show($"The currently loaded game is disk based and needs to be closed before {(import ? "importing" : "loading")}. Press OK to close the game and continue loading.", "Loading requires closing game",
+                    MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
 				if (dr == DialogResult.OK)
 				{
 					LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_CLOSEGAME, true);
@@ -533,7 +536,7 @@ namespace RTCV.CorruptCore
 			foreach (string line in errorMessages)
 				message += $"•  {line} \n\n";
 
-			MessageBox.Show(message, "Compatibility Checker", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+			MessageBox.Show(message, "Compatibility Checker", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
 			return fatal;
         }
 
@@ -1478,7 +1481,6 @@ namespace RTCV.CorruptCore
         {
             BlastUnit bu = new BlastUnit()
             {
-
                 Precision = end - start,
                 Address = this.Address + start,
                 Domain = this.Domain,

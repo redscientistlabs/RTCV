@@ -315,16 +315,13 @@ namespace RTCV.UI
                 foreach (var key in ssk.StashKeys)
                 {
                     RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Copying {key.GameName + "." + key.ParentKey + ".timejump.State"} to TEMP", currentProgress += percentPerFile));
-                    if (key == null)
-                        continue;
-
                     string stateFilename = key.GameName + "." + key.ParentKey + ".timejump.State"; // get savestate name
 
                     string statePath = Path.Combine(CorruptCore.RtcCore.workingDir, key.StateLocation.ToString(), stateFilename);
                     string tempPath = Path.Combine(CorruptCore.RtcCore.workingDir, "TEMP", stateFilename);
 
                     if (File.Exists(statePath))
-                        File.Copy(statePath, tempPath); // copy savestates to temp folder
+                        File.Copy(statePath, tempPath, true); // copy savestates to temp folder
                     else
                     {
 

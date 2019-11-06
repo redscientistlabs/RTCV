@@ -64,6 +64,8 @@ namespace RTCV.UI
 
         private void dgvStockpile_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex == -1)
+                return;
             try
             {
                 S.GET<RTC_StashHistory_Form>().btnAddStashToStockpile.Enabled = false;
@@ -169,6 +171,14 @@ namespace RTCV.UI
                         var sk = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
                         RTC_NewBlastEditor_Form.OpenBlastEditor(sk);
                     }
+                }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
+
+                ((ToolStripMenuItem)columnsMenu.Items.Add("Manual Inject", null, new EventHandler((ob, ev) =>
+                {
+                    var sk = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
+                    StashKey newSk = (StashKey)sk.Clone();
+                    S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newSk, false);
+
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
                 columnsMenu.Items.Add(new ToolStripSeparator());
@@ -443,29 +453,30 @@ namespace RTCV.UI
                 return;
             }
 
-			string path = "";
-			SaveFileDialog saveFileDialog1 = new SaveFileDialog
-			{
-				DefaultExt = "sks",
-				Title = "Save Stockpile File",
-				Filter = "SKS files|*.sks",
-				RestoreDirectory = true
-			};
-
-			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-			{
-				path = saveFileDialog1.FileName;
-			}
-			else
-				return;
-
-			Stockpile sks = new Stockpile(dgvStockpile);
 			var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
-			try
+            try
 			{
-				//We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
-				//Thus, we want this to happen within the try block
-				SyncObjectSingleton.FormExecute(() =>
+				UICore.SetHotkeyTimer(false);
+				string path = "";
+				SaveFileDialog saveFileDialog1 = new SaveFileDialog
+				{
+					DefaultExt = "sks",
+					Title = "Save Stockpile File",
+					Filter = "SKS files|*.sks",
+					RestoreDirectory = true
+				};
+
+				if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+				{
+					path = saveFileDialog1.FileName;
+				}
+				else
+					return;
+
+				Stockpile sks = new Stockpile(dgvStockpile);
+                //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
+                //Thus, we want this to happen within the try block
+                SyncObjectSingleton.FormExecute(() =>
 				{
 					UICore.LockInterface(false, true);
 					S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
@@ -483,7 +494,8 @@ namespace RTCV.UI
 				{
 					ghForm?.CloseSubForm();
 					UICore.UnlockInterface();
-				});
+					UICore.SetHotkeyTimer(true);
+                });
 			}
 
         }
@@ -504,9 +516,10 @@ namespace RTCV.UI
 			var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
             try
             {
-				//We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
-				//Thus, we want this to happen within the try block
-				SyncObjectSingleton.FormExecute(() =>
+				UICore.SetHotkeyTimer(false);
+                //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
+                //Thus, we want this to happen within the try block
+                SyncObjectSingleton.FormExecute(() =>
 				{
 					UICore.LockInterface(false, true);
 					S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
@@ -521,6 +534,7 @@ namespace RTCV.UI
 				{
 					ghForm?.CloseSubForm();
 					UICore.UnlockInterface();
+					UICore.SetHotkeyTimer(true);
                 });
             }
 		}
@@ -535,31 +549,26 @@ namespace RTCV.UI
 
         private void btnStockpileMoveSelectedUp_Click(object sender, EventArgs e)
         {
-            if (dgvStockpile.SelectedRows.Count == 0)
-                return;
-
-            int count = dgvStockpile.Rows.Count;
-
-            if (count < 2)
-                return;
-
-            int pos = dgvStockpile.SelectedRows[0].Index;
-            DataGridViewRow row = dgvStockpile.Rows[pos];
-
-            dgvStockpile.Rows.RemoveAt(pos);
-
-            if (pos == 0)
+            var selectedRows = dgvStockpile.SelectedRows.Cast<DataGridViewRow>().ToArray();
+            foreach (DataGridViewRow row in selectedRows)
             {
-                int newpos = dgvStockpile.Rows.Add(row);
-                dgvStockpile.ClearSelection();
-                dgvStockpile.Rows[newpos].Selected = true;
+                int pos = row.Index;
+                dgvStockpile.Rows.RemoveAt(pos);
+
+                if (pos == 0)
+                {
+                    dgvStockpile.Rows.Add(row);
+                }
+                else
+                {
+                    int newpos = pos - 1;
+                    dgvStockpile.Rows.Insert(newpos, row);
+                }
             }
-            else
+            dgvStockpile.ClearSelection();
+            foreach (DataGridViewRow row in selectedRows) //I don't know. Blame DGV
             {
-                int newpos = pos - 1;
-                dgvStockpile.Rows.Insert(newpos, row);
-                dgvStockpile.ClearSelection();
-                dgvStockpile.Rows[newpos].Selected = true;
+                row.Selected = true;
             }
 
             UnsavedEdits = true;
@@ -570,32 +579,28 @@ namespace RTCV.UI
 
         private void btnStockpileMoveSelectedDown_Click(object sender, EventArgs e)
         {
-            if (dgvStockpile.SelectedRows.Count == 0)
-                return;
-
-            int count = dgvStockpile.Rows.Count;
-
-            if (count < 2)
-                return;
-
-            int pos = dgvStockpile.SelectedRows[0].Index;
-            var row = dgvStockpile.Rows[pos];
-
-            dgvStockpile.Rows.RemoveAt(pos);
-
-            if (pos == count - 1)
+            var selectedRows = dgvStockpile.SelectedRows.Cast<DataGridViewRow>().ToArray();
+            foreach (DataGridViewRow row in selectedRows)
             {
-                int newpos = 0;
-                dgvStockpile.Rows.Insert(newpos, row);
-                dgvStockpile.ClearSelection();
-                dgvStockpile.Rows[newpos].Selected = true;
+                int pos = row.Index;
+                int count = dgvStockpile.Rows.Count;
+                dgvStockpile.Rows.RemoveAt(pos);
+                
+                if (pos == count - 1)
+                {
+                    int newpos = 0;
+                    dgvStockpile.Rows.Insert(newpos, row);
+                }
+                else
+                {
+                    int newpos = pos + 1;
+                    dgvStockpile.Rows.Insert(newpos, row);
+                }
             }
-            else
+            dgvStockpile.ClearSelection();
+            foreach (DataGridViewRow row in selectedRows) //I don't know. Blame DGV
             {
-                int newpos = pos + 1;
-                dgvStockpile.Rows.Insert(newpos, row);
-                dgvStockpile.ClearSelection();
-                dgvStockpile.Rows[newpos].Selected = true;
+                row.Selected = true;
             }
 
             UnsavedEdits = true;
@@ -622,16 +627,49 @@ namespace RTCV.UI
             e.Effect = DragDropEffects.Link;
         }
 
-        private void btnImportStockpile_Click(object sender, EventArgs e)
-        {
-            if(Stockpile.Import(null, dgvStockpile))
-                UnsavedEdits = true;
+		private async void btnImportStockpile_Click(object sender, EventArgs e)
+		{
+			OpenFileDialog ofd = new OpenFileDialog
+			{
+				DefaultExt = "*", 
+				Title = "Select stockpile to import",
+				Filter = "Any file|*.sks",
+				RestoreDirectory = true
+			};
+			if (ofd.ShowDialog() == DialogResult.OK)
+			{
+				var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
+				try
+				{
+					UICore.SetHotkeyTimer(false);
+					//We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
+					//Thus, we want this to happen within the try block
+					SyncObjectSingleton.FormExecute(() =>
+					{
+						UICore.LockInterface(false, true);
+						S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
+						ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
+					});
 
-            RefreshNoteIcons();
-
-        }
-
-        private void btnStockpileUP_Click(object sender, EventArgs e)
+					await Task.Run(() =>
+					{
+						if (Stockpile.Import(ofd.FileName, dgvStockpile))
+							UnsavedEdits = true;
+					});
+				}
+				finally
+				{
+					SyncObjectSingleton.FormExecute(() =>
+					{
+						ghForm?.CloseSubForm();
+						UICore.UnlockInterface();
+						UICore.SetHotkeyTimer(true);
+						RefreshNoteIcons();
+					});
+				}
+			}
+		}
+		private void btnStockpileUP_Click(object sender, EventArgs e)
         {
 
             if (dgvStockpile.SelectedRows.Count == 0)

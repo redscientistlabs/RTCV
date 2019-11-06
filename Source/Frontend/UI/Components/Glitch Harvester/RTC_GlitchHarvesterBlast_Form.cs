@@ -46,6 +46,10 @@ namespace RTCV.UI
                     S.GET<RTC_StockpilePlayer_Form>().btnBlastToggle.BackColor = Color.FromArgb(224, 128, 128);
                     S.GET<RTC_StockpilePlayer_Form>().btnBlastToggle.ForeColor = Color.Black;
                     S.GET<RTC_StockpilePlayer_Form>().btnBlastToggle.Text = "BlastLayer : ON     (Attempts to uncorrupt/recorrupt in real-time)";
+
+                    S.GET<RTC_SimpleMode_Form>().btnBlastToggle.BackColor = Color.FromArgb(224, 128, 128);
+                    S.GET<RTC_SimpleMode_Form>().btnBlastToggle.ForeColor = Color.Black;
+                    S.GET<RTC_SimpleMode_Form>().btnBlastToggle.Text = "BlastLayer : ON     (Attempts to uncorrupt/recorrupt in real-time)";
                 }
                 else
                 {
@@ -56,6 +60,10 @@ namespace RTCV.UI
                     S.GET<RTC_StockpilePlayer_Form>().btnBlastToggle.BackColor = S.GET<UI_CoreForm>().btnLogo.BackColor;
                     S.GET<RTC_StockpilePlayer_Form>().btnBlastToggle.ForeColor = Color.White;
                     S.GET<RTC_StockpilePlayer_Form>().btnBlastToggle.Text = "BlastLayer : OFF    (Attempts to uncorrupt/recorrupt in real-time)";
+
+                    S.GET<RTC_SimpleMode_Form>().btnBlastToggle.BackColor = S.GET<UI_CoreForm>().btnLogo.BackColor;
+                    S.GET<RTC_SimpleMode_Form>().btnBlastToggle.ForeColor = Color.White;
+                    S.GET<RTC_SimpleMode_Form>().btnBlastToggle.Text = "BlastLayer : OFF    (Attempts to uncorrupt/recorrupt in real-time)";
                 }
 
                 isCorruptionApplied = value;
@@ -138,9 +146,11 @@ namespace RTCV.UI
         {
             Console.WriteLine("btnCorrupt Clicked");
 
-            if (!(btnCorrupt.Visible  || AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null && S.GET<UI_CoreForm>().btnManualBlast.Visible))
-                return;
-
+            if (sender != null)
+            {
+                if (!(btnCorrupt.Visible || AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null && S.GET<UI_CoreForm>().btnManualBlast.Visible))
+                    return;
+            }
 
             try
             {
@@ -233,7 +243,7 @@ namespace RTCV.UI
 
         private void BlastRawStash()
         {
-            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.ASYNCBLAST, true);
+            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.MANUALBLAST, true);
             btnSendRaw_Click(null, null);
         }
 

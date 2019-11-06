@@ -67,11 +67,12 @@
             // 
             // pnDownloadBar
             // 
+            this.pnDownloadBar.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pnDownloadBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.pnDownloadBar.Controls.Add(this.lbStatus);
             this.pnDownloadBar.Controls.Add(this.progressBar);
             this.pnDownloadBar.Controls.Add(this.lbDownloadProgress);
-            this.pnDownloadBar.Location = new System.Drawing.Point(24, 22);
+            this.pnDownloadBar.Location = new System.Drawing.Point(0, 0);
             this.pnDownloadBar.Name = "pnDownloadBar";
             this.pnDownloadBar.Size = new System.Drawing.Size(500, 120);
             this.pnDownloadBar.TabIndex = 3;
@@ -82,7 +83,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.ClientSize = new System.Drawing.Size(1136, 452);
+            this.ClientSize = new System.Drawing.Size(500, 120);
             this.Controls.Add(this.pnDownloadBar);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

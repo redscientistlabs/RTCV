@@ -11,16 +11,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
+using RTCV.NetCore.StaticTools;
 
 namespace RTCV.UI.Components.Controls
 {
     public partial class SavestateList : UserControl
     {
-        private List<SavestateHolder> controlList;
+        public List<SavestateHolder> controlList;
         private SavestateHolder _selectedHolder;
         private string saveStateWord = "Savestate";
 
-        private SavestateHolder selectedHolder
+        public SavestateHolder selectedHolder
         {
             get => _selectedHolder;
             set
@@ -133,7 +134,7 @@ namespace RTCV.UI.Components.Controls
             }
         }
 
-        private void BtnSavestate_MouseDown(object sender, MouseEventArgs e)
+        public void BtnSavestate_MouseDown(object sender, MouseEventArgs e)
         {
             Point locate = new Point(((Control)sender).Location.X + e.Location.X, ((Control)sender).Location.Y + e.Location.Y);
 
@@ -272,6 +273,8 @@ namespace RTCV.UI.Components.Controls
             if (btnSaveLoad.Text == "LOAD")
             {
                 LoadCurrentState();
+                StockpileManager_UISide.CurrentStashkey = null;
+                S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = false;
             }
             else
             {

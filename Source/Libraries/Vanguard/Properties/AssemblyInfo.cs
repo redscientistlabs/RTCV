@@ -5,14 +5,15 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("RTC_Connector")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Vanguard")]
+[assembly: AssemblyDescription("Component of Real Time Corruptor Vanguard. https://github.com/ircluzar/RTCV")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("RTC_Connector")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCompany("Redscientist Media")]
+[assembly: AssemblyProduct("RTCV")]
+[assembly: AssemblyCopyright("Redscientist Media")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 

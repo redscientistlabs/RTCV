@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
+using RTCV.NetCore;
 using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
 
@@ -17,16 +18,33 @@ namespace RTCV.UI
 	{
 		public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
 		public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
-
+        private System.Timers.Timer updateTimer;
 		public RTC_MemoryDomains_Form()
 		{
 			InitializeComponent();
-		}
+            updateTimer = new System.Timers.Timer
+            {
+                AutoReset = false,
+                Interval = 300,
+            };
+            updateTimer.Elapsed += UpdateSelectedMemoryDomains;
+        }
 
-		public void SetMemoryDomainsSelectedDomains(string[] _domains)
+        private void UpdateSelectedMemoryDomains(object sender, EventArgs args)
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach (var s in lbMemoryDomains.SelectedItems.Cast<string>().ToArray())
+                    sb.Append($"{s},");
+                Console.WriteLine($"UpdateSelectedMemoryDomains Setting SELECTEDDOMAINS domains to {sb}");
+                AllSpec.UISpec.Update("SELECTEDDOMAINS", lbMemoryDomains.SelectedItems.Cast<string>().Distinct().ToArray());
+            });
+        }
+
+        public void SetMemoryDomainsSelectedDomains(string[] _domains)
         {
             var oldState = this.Visible;
-            lbMemoryDomains_DontExecute_SelectedIndexChanged = true;
 
 			for (int i = 0; i < lbMemoryDomains.Items.Count; i++)
 				if (_domains.Contains(lbMemoryDomains.Items[i].ToString()))
@@ -34,25 +52,21 @@ namespace RTCV.UI
 				else
 					lbMemoryDomains.SetSelected(i, false);
 
-			lbMemoryDomains_DontExecute_SelectedIndexChanged = false;
-			lbMemoryDomains_SelectedIndexChanged(null, null);
+            UpdateSelectedMemoryDomains(null, null);
             this.Visible = oldState;
         }
 
 		public void SetMemoryDomainsAllButSelectedDomains(string[] _blacklistedDomains)
         {
             var oldState = this.Visible;
-            lbMemoryDomains_DontExecute_SelectedIndexChanged = true;
 
-			for (
-				int i = 0; i < lbMemoryDomains.Items.Count; i++)
+			for (int i = 0; i < lbMemoryDomains.Items.Count; i++)
 				if (_blacklistedDomains?.Contains(lbMemoryDomains.Items[i].ToString()) ?? false)
 					lbMemoryDomains.SetSelected(i, false);
 				else
 					lbMemoryDomains.SetSelected(i, true);
 
-			lbMemoryDomains_DontExecute_SelectedIndexChanged = false;
-			lbMemoryDomains_SelectedIndexChanged(null, null);
+            UpdateSelectedMemoryDomains(null, null);
             this.Visible = oldState;
         }
 
@@ -60,19 +74,18 @@ namespace RTCV.UI
 		{
 			RefreshDomains();
 
-			lbMemoryDomains_DontExecute_SelectedIndexChanged = true;
 
 			for (int i = 0; i < lbMemoryDomains.Items.Count; i++)
 				lbMemoryDomains.SetSelected(i, true);
 
-			lbMemoryDomains_DontExecute_SelectedIndexChanged = false;
 
-			lbMemoryDomains_SelectedIndexChanged(null, null);
-		}
+            UpdateSelectedMemoryDomains(null, null);
+        }
 
 		private void btnAutoSelectDomains_Click(object sender, EventArgs e)
-		{
-			RefreshDomains();
+        {
+            LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_DOMAIN_REFRESHDOMAINS, true);
+            RefreshDomains();
 			SetMemoryDomainsAllButSelectedDomains((string[])RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] ?? new string[] { });
 		}
 
@@ -124,22 +137,14 @@ namespace RTCV.UI
 			}
 		}
 
-		public bool lbMemoryDomains_DontExecute_SelectedIndexChanged = false;
-
 		private void lbMemoryDomains_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (lbMemoryDomains_DontExecute_SelectedIndexChanged)
-				return;
-
-            StringBuilder sb = new StringBuilder();
-            foreach (var s in lbMemoryDomains.SelectedItems.Cast<string>().ToArray())
-                sb.Append($"{s},");
-            Console.WriteLine($"lbIndexChanged Setting SELECTEDDOMAINS domains to {sb}");
-			RTCV.NetCore.AllSpec.UISpec.Update("SELECTEDDOMAINS", lbMemoryDomains.SelectedItems.Cast<string>().ToArray());
-
+            updateTimer.Stop();
+            updateTimer.Start();
 
 			//RTC_Restore.SaveRestore();
 		}
+
 
 		private void btnRefreshDomains_Click(object sender, EventArgs e)
 		{

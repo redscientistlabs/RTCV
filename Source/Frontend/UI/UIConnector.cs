@@ -51,7 +51,7 @@ namespace RTCV.UI
 		private void NetCoreSpec_ServerConnectionLost(object sender, EventArgs e)
 		{
 			UIConnector.ConnectionLostLockout.WaitOne();
-            Console.WriteLine("Thread id {0} got Mutex...  (specconnectionlost)", AppDomain.GetCurrentThreadId());
+            Console.WriteLine("Thread id {0} got Mutex...  (specconnectionlost)", System.Threading.Thread.CurrentThread.ManagedThreadId);
 
             if (UICore.isClosing || UICore.FirstConnect)
 					return;
@@ -71,8 +71,7 @@ namespace RTCV.UI
 				S.GET<RTC_VmdAct_Form>()
 					.cbAutoAddDump.Checked = false;
 				GameProtection.WasAutoCorruptRunning = CorruptCore.RtcCore.AutoCorrupt;
-				S.GET<UI_CoreForm>()
-					.AutoCorrupt = false;
+				S.GET<UI_CoreForm>().AutoCorrupt = false;
 			});
 			GameProtection.Stop(false);
 
@@ -81,20 +80,20 @@ namespace RTCV.UI
 				AutoKillSwitch.KillEmulator();
 
 			UIConnector.ConnectionLostLockout.ReleaseMutex();
-            Console.WriteLine("Thread id {0} released Mutex (specconnectionlost)...", AppDomain.GetCurrentThreadId());
+            Console.WriteLine("Thread id {0} released Mutex (specconnectionlost)...", Thread.CurrentThread.ManagedThreadId);
         }
 
 		private static void Spec_ServerConnected(object sender, EventArgs e)
 		{
 			UIConnector.ConnectionLostLockout.WaitOne();
-			Console.WriteLine("Thread id {0} got Mutex (ServerConnected)...", AppDomain.GetCurrentThreadId());
+			Console.WriteLine("Thread id {0} got Mutex (ServerConnected)...", Thread.CurrentThread.ManagedThreadId);
             SyncObjectSingleton.FormExecute(() =>
 				{
 					S.GET<RTC_ConnectionStatus_Form>().lbConnectionStatus.Text =
 						$"Connected to {(string) AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard"}";
 				});
 			UIConnector.ConnectionLostLockout.ReleaseMutex();
-			Console.WriteLine("Thread id {0} released Mutex (ServerConnected)...", AppDomain.GetCurrentThreadId());
+			Console.WriteLine("Thread id {0} released Mutex (ServerConnected)...",Thread.CurrentThread.ManagedThreadId);
 		}
 
 		public void OnMessageReceivedProxy(object sender, NetCoreEventArgs e) => OnMessageReceived(sender, e);

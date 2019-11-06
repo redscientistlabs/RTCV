@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
@@ -42,9 +43,15 @@ namespace RTCV.UI
             set
             {
                 if (value)
+                {
                     btnAutoCorrupt.Text = " Stop Auto-Corrupt";
+                    S.GET<RTC_SimpleMode_Form>().btnAutoCorrupt.Text = " Stop Auto-Corrupt";
+                }
                 else
+                {
                     btnAutoCorrupt.Text = " Start Auto-Corrupt";
+                    S.GET<RTC_SimpleMode_Form>().btnAutoCorrupt.Text = " Start Auto-Corrupt";
+                }
 
                 CorruptCore.RtcCore.AutoCorrupt = value;
             }
@@ -129,8 +136,23 @@ This message only appears once.";
                 if (File.Exists(disclaimerPath))
                     disclaimer = File.ReadAllText(disclaimerPath);
 
-                MessageBox.Show(disclaimer.Replace("[ver]", CorruptCore.RtcCore.RtcVersion), "RTC", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                S.GET<RTC_Intro_Form>().DisplayRtcvDisclaimer(disclaimer.Replace("[ver]", CorruptCore.RtcCore.RtcVersion));
+                //MessageBox.Show(disclaimer.Replace("[ver]", CorruptCore.RtcCore.RtcVersion), "RTC", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                
                 NetCore.Params.SetParam("DISCLAIMER_READ");
+
+                if (S.GET<RTC_Intro_Form>().selection == IntroAction.SIMPLEMODE)
+                {
+                    NetCore.Params.SetParam("SIMPLE_MODE"); //Set RTC in Simple Mode
+
+                    if (UI_VanguardImplementation.connector.netConn.status == NetworkStatus.CONNECTED)
+                    {
+                        UI_DefaultGrids.simpleMode.LoadToMain();
+                        RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
+                        smForm.EnteringSimpleMode();
+                    }
+
+                }
 
                 NetCore.Params.SetParam("COMPRESS_STOCKPILE"); //Default param
                 NetCore.Params.SetParam("INCLUDE_REFERENCED_FILES"); //Default param
@@ -225,11 +247,10 @@ This message only appears once.";
         {
             PrepareLockSideBar();
 
-            Bitmap bmp = pnSideBar.getFormScreenShot();
-            bmp.Tint(Color.FromArgb(0xF0, UICore.Dark4Color));
-            pnLockSidebar.BackgroundImage = bmp;
-            pnLockSidebar.Visible = true;
-
+			Bitmap bmp = pnSideBar.getFormScreenShot();
+			bmp.Tint(Color.FromArgb(0xF0, UICore.Dark4Color));
+			pnLockSidebar.BackgroundImage = bmp;
+			pnLockSidebar.Visible = true;
         }
 
         public void UnlockSideBar()
@@ -240,7 +261,15 @@ This message only appears once.";
 
         public void btnEngineConfig_Click(object sender, EventArgs e)
         {
-            UI_DefaultGrids.engineConfig.LoadToMain();
+            
+            if (NetCore.Params.IsParamSet("SIMPLE_MODE"))
+            {
+                UI_DefaultGrids.simpleMode.LoadToMain();
+                RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
+                smForm.EnteringSimpleMode();
+            }
+            else
+                UI_DefaultGrids.engineConfig.LoadToMain();
         }
 
         private void pnAutoKillSwitch_MouseHover(object sender, EventArgs e)
@@ -273,25 +302,42 @@ This message only appears once.";
                 RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_RUNBEFORE.ToString(), true);
         }
 
-        private void btnManualBlast_Click(object sender, EventArgs e)
+        public void btnManualBlast_Click(object sender, EventArgs e)
         {
             if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null)
                 S.GET<RTC_GlitchHarvesterBlast_Form>().btnCorrupt_Click(sender, e);
             else
-                LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.ASYNCBLAST, true);
+                LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.MANUALBLAST, true);
         }
 
         private void btnEasyMode_MouseDown(object sender, MouseEventArgs e)
         {
+            bool simpleModeVisible = S.GET<RTC_SimpleMode_Form>().Visible;
+
             Point locate = e.GetMouseLocation(sender);
 
             ContextMenuStrip easyButtonMenu = new ContextMenuStrip();
+            (easyButtonMenu.Items.Add("Switch to Simple Mode", null, new EventHandler((ob, ev) => { 
 
-            (easyButtonMenu.Items.Add("Start with Recommended Settings", null, new EventHandler(((ob, ev) => { S.GET<UI_CoreForm>().StartEasyMode(true); })))).Enabled = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] == true;
+                if((AllSpec.VanguardSpec[VSPEC.NAME] as string)?.ToUpper().Contains("SPEC") ?? false)
+                {
+                    MessageBox.Show("Simple Mode is currently only supported on Vanguard implementations.");
+                    return;
+                }
+
+
+                UI_DefaultGrids.simpleMode.LoadToMain();
+                RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
+
+                smForm.EnteringSimpleMode();
+
+            }))).Enabled = !simpleModeVisible;
+            (easyButtonMenu.Items.Add("Start Auto-Corrupt with Recommended Settings for loaded game", null, new EventHandler(((ob, ev) => { S.GET<UI_CoreForm>().StartEasyMode(true); })))).Enabled = ((bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] == true) && !simpleModeVisible;
             easyButtonMenu.Items.Add(new ToolStripSeparator());
             //EasyButtonMenu.Items.Add("Watch a tutorial video", null, new EventHandler((ob,ev) => Process.Start("https://www.youtube.com/watch?v=sIELpn4-Umw"))).Enabled = false;
             easyButtonMenu.Items.Add("Open the online wiki", null, new EventHandler((ob, ev) => Process.Start("https://corrupt.wiki/")));
             easyButtonMenu.Show(this, locate);
+
         }
 
         private void btnStockpilePlayer_Click(object sender, EventArgs e)
@@ -516,7 +562,7 @@ This message only appears once.";
         }
         private void BlastRawStash()
         {
-            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.ASYNCBLAST, true);
+            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.MANUALBLAST, true);
             S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw_Click(null, null);
         }
 

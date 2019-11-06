@@ -25,8 +25,6 @@ namespace RTCV.UI
 {
     public static class UICore
     {
-
-
         //Note Box Settings
         public static Point NoteBoxPosition;
         public static Size NoteBoxSize;
@@ -87,7 +85,8 @@ namespace RTCV.UI
             Input.Input.Initialize();
             inputCheckTimer = new System.Timers.Timer();
             inputCheckTimer.Elapsed += ProcessInputCheck;
-            inputCheckTimer.Interval = 16;
+            inputCheckTimer.AutoReset = false;
+            inputCheckTimer.Interval = 10;
             inputCheckTimer.Start();
 
 
@@ -491,36 +490,43 @@ namespace RTCV.UI
 			RTCV.NetCore.Params.SetParam("COLOR", color.R.ToString() + "," + color.G.ToString() + "," + color.B.ToString());
 		}
 
-		private static object inputLock = new object();
+		public static object InputLock = new object();
         //Borrowed from Bizhawk. Thanks guys
         private static void ProcessInputCheck(Object o, ElapsedEventArgs e)
         {
-			lock (inputLock)
+            try
 			{
-				while (true)
+				lock (InputLock)
 				{
-					Input.Input.Instance.Update();
-					// loop through all available events
-					var ie = Input.Input.Instance.DequeueEvent();
-					if (ie == null)
+					while (true)
 					{
-						break;
-					}
+						Input.Input.Instance.Update();
+						// loop through all available events
+						var ie = Input.Input.Instance.DequeueEvent();
+						if (ie == null)
+						{
+							break;
+						}
 
-					// useful debugging:
-					//Console.WriteLine(ie);
+						// useful debugging:
+						//Console.WriteLine(ie);
 
 
-					// look for hotkey bindings for this key
-					var triggers = Input.Bindings.SearchBindings(ie.LogicalButton.ToString());
+						// look for hotkey bindings for this key
+						var triggers = Input.Bindings.SearchBindings(ie.LogicalButton.ToString());
 
-					bool handled = false;
-					if (ie.EventType == RTCV.UI.Input.Input.InputEventType.Press)
-					{
-						triggers.Aggregate(handled, (current, trigger) => current | CheckHotkey(trigger));
-					}
+						bool handled = false;
+						if (ie.EventType == RTCV.UI.Input.Input.InputEventType.Press)
+						{
+							triggers.Aggregate(handled, (current, trigger) => current | CheckHotkey(trigger));
+						}
 
-				} // foreach event
+					} // foreach event
+				}
+			}
+			finally
+			{
+				inputCheckTimer.Start();
             }
         }
 
@@ -532,7 +538,7 @@ namespace RTCV.UI
             {
 
                 case "Manual Blast":
-                    LocalNetCoreRouter.Route(CORRUPTCORE, ASYNCBLAST);
+                    S.GET<UI_CoreForm>().btnManualBlast_Click(null, null);
                     break;
 
                 case "Auto-Corrupt":
@@ -632,8 +638,7 @@ namespace RTCV.UI
                     SyncObjectSingleton.FormExecute(() =>
                     {
                         RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(VSPEC.STEP_RUNBEFORE, true);
-                        LocalNetCoreRouter.Route(CORRUPTCORE, ASYNCBLAST, null, true);
-
+                        S.GET<UI_CoreForm>().btnManualBlast_Click(null, null);
                         S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw_Click(null, null);
                     });
                     break;
@@ -777,7 +782,20 @@ namespace RTCV.UI
         /// </summary>
 		public static void ConfigureUIFromVanguardSpec()
 		{
-            //S.GET<RTC_GlitchHarvester_Form>().pnRender.Visible = false;
+			if ((AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME] as bool?) ?? false)
+			{
+				S.GET<UI_CoreForm>().btnManualBlast.Visible = true;
+				S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = true;
+			}
+			else
+            {
+				if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] == null)
+					S.GET<UI_CoreForm>().btnManualBlast.Visible = false;
+				else
+					S.GET<UI_CoreForm>().btnManualBlast.Visible = true;
+
+				S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
+			}
 
         }
 

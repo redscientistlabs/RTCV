@@ -19,17 +19,29 @@ namespace RTCV.Launcher
 {
     public partial class MainForm : Form
     {
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        public const int HT_CAPTION = 0x2;
+        private const int WM_NCLBUTTONDOWN = 0xA1;
+        private const int
+            HT_CAPTION = 0x2,
+            HT_LEFT = 0xA,
+            HT_RIGHT = 0xB,
+            HT_TOP = 0xC,
+            HT_TOPLEFT = 0xD,
+            HT_TOPRIGHT = 0xE,
+            HT_BOTTOM = 0xF,
+            HT_BOTTOMLEFT = 0x10,
+            HT_BOTTOMRIGHT = 0x11;
+        
+
 
         [DllImportAttribute("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
 
 
 
-        public static string launcherDir = Directory.GetCurrentDirectory();
+        public static string launcherDir = Path.GetDirectoryName(Application.ExecutablePath);
         public static string webRessourceDomain = "http://redscientist.com/software";
 
         public static MainForm mf = null;
@@ -37,7 +49,7 @@ namespace RTCV.Launcher
         public static DownloadForm dForm = null;
         public static Form lpForm = null;
 
-        public static int launcherVer = 14;
+        public static int launcherVer = 21;
 
 
         public static int devCounter = 0;
@@ -49,6 +61,9 @@ namespace RTCV.Launcher
             InitializeComponent();
 
             mf = this;
+            lbVersions.AutoSize = true;
+            RewireMouseMove();
+
 
             //creating default folders
             if (!Directory.Exists(launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar))
@@ -70,6 +85,19 @@ namespace RTCV.Launcher
                     File.Delete(launcherDir + Path.DirectorySeparatorChar + "PACKAGES" + Path.DirectorySeparatorChar + "Update_Launcher.zip");
             }
 
+        }
+
+        private void RewireMouseMove()
+        {
+            foreach (Control control in Controls)
+            {
+                control.MouseMove -= RedirectMouseMove;
+                control.MouseMove += RedirectMouseMove;
+            }
+                
+
+            this.MouseMove -= MainForm_MouseMove;
+            this.MouseMove += MainForm_MouseMove;
         }
 
         public void DownloadFile(string downloadURL, string downloadedFile, string extractDirectory)
@@ -105,10 +133,7 @@ namespace RTCV.Launcher
                     else
                         motd = Encoding.UTF8.GetString(motdFile);
 
-                    this.Invoke(new MethodInvoker(() =>
-                    {
-                        lbMOTD.Text = motd;
-                    }));
+                    this.Invoke(new MethodInvoker(() => { lbMOTD.Text = motd; }));
                 };
                 Task.Run(a);
             }
@@ -166,17 +191,15 @@ namespace RTCV.Launcher
         {
             lbVersions.Items.Clear();
             List<string> versions = new List<string>(Directory.GetDirectories(launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar));
-            lbVersions.Items.AddRange(versions.OrderByDescending(x => x).Select(it => getFilenameFromFullFilename(it)).ToArray<object>());
+            lbVersions.Items.AddRange(versions.OrderByNaturalDescending(x => x).Select(it => getFilenameFromFullFilename(it)).ToArray<object>());
+            this.PerformLayout();
             SelectedVersion = null;
 
 
             Action a = () =>
             {
                 string latestVersion = VersionDownloadPanel.getLatestVersion();
-                this.Invoke(new MethodInvoker(() =>
-                {
-                    pbNewVersionNotification.Visible = !versions.Select(it => it.Substring(it.LastIndexOf('\\') + 1)).Contains(latestVersion);
-                }));
+                this.Invoke(new MethodInvoker(() => { pbNewVersionNotification.Visible = !versions.Select(it => it.Substring(it.LastIndexOf('\\') + 1)).Contains(latestVersion); }));
             };
             Task.Run(a);
         }
@@ -198,6 +221,7 @@ namespace RTCV.Launcher
                 {
                     Console.WriteLine($"{url} timed out.");
                 }
+
                 return b;
             }
         }
@@ -226,17 +250,22 @@ namespace RTCV.Launcher
                 SelectedVersion = lbVersions.SelectedItem.ToString();
                 lastSelectedVersion = SelectedVersion;
             }
-            if (Directory.Exists(MainForm.launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + SelectedVersion + Path.DirectorySeparatorChar + "Launcher"))
-            {
-                MainForm.lpForm = new NewLaunchPanel();
-            }
+
+
+            if (File.Exists(Path.Combine(MainForm.launcherDir, "VERSIONS", SelectedVersion, "Launcher", "launcher.json")))
+                MainForm.lpForm = new LaunchPanelV3();
+            else if (File.Exists(Path.Combine(MainForm.launcherDir, "VERSIONS", SelectedVersion, "Launcher", "launcher.ini")))
+                MainForm.lpForm = new LaunchPanelV2();
             else
-                MainForm.lpForm = new OldLaunchPanel();
+                MainForm.lpForm = new LaunchPanelV1();
 
 
             MainForm.lpForm.Size = pnAnchorRight.Size;
             MainForm.lpForm.TopLevel = false;
             pnAnchorRight.Controls.Add(MainForm.lpForm);
+            foreach (Control c in MainForm.lpForm.Controls)
+                c.MouseMove += MainForm_MouseMove;
+            MainForm.lpForm.MouseMove += MainForm_MouseMove;
 
             MainForm.lpForm.Dock = DockStyle.Fill;
             MainForm.lpForm.Show();
@@ -249,15 +278,26 @@ namespace RTCV.Launcher
             this.BeginInvoke(new MethodInvoker(a));
         }
 
+        private void UpdateLauncher(string extractDirectory)
+        {
+            string batchLocation = extractDirectory + Path.DirectorySeparatorChar + "Launcher\\update.bat";
+            ProcessStartInfo psi = new ProcessStartInfo();
+            psi.FileName = Path.GetFileName(batchLocation);
+            psi.WorkingDirectory = Path.GetDirectoryName(batchLocation);
+            Process.Start(psi);
+            Environment.Exit(0);
+        }
+
         public void DownloadComplete(string downloadedFile, string extractDirectory)
         {
 
             try
-                {
+            {
                 if (!Directory.Exists(extractDirectory))
                     Directory.CreateDirectory(extractDirectory);
 
-                try {
+                try
+                {
                     System.IO.Compression.ZipFile.ExtractToDirectory(downloadedFile, extractDirectory);
                 }
                 catch (Exception ex)
@@ -266,15 +306,15 @@ namespace RTCV.Launcher
 
                     if (Directory.Exists(extractDirectory))
                         RTC_Extensions.RecursiveDeleteNukeReadOnly(extractDirectory);
-
+                    return;
                 }
 
 
                 //This checks every extracted files against the contents of the zip file
                 using (ZipArchive za = System.IO.Compression.ZipFile.OpenRead(downloadedFile))
                 {
-                    bool foundLockBefore = false;   //this flag prompts a message to skip all 
-                    bool skipLock = false;          //file locked messages and sents the flag below
+                    bool foundLockBefore = false; //this flag prompts a message to skip all 
+                    bool skipLock = false; //file locked messages and sents the flag below
 
                     foreach (var entry in za.Entries.Where(it => !it.FullName.EndsWith("/")))
                     {
@@ -296,14 +336,16 @@ namespace RTCV.Launcher
                                     {
                                         if (foundLockBefore)
                                         {
-                                            if (MessageBox.Show($"Another file has been found locked/inaccessible.\nThere might be many more messages like this coming up.\n\nWould you like skip any remaining lock messages?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
+                                            if (MessageBox.Show($"Another file has been found locked/inaccessible.\nThere might be many more messages like this coming up.\n\nWould you like skip any remaining lock messages?", "Error",
+                                                    MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
                                                 skipLock = true;
                                         }
                                     }
 
                                     if (!skipLock)
                                     {
-                                        MessageBox.Show($"An error occurred during extraction,\n\nThe file \"targetFile\" seems to have been locked/made inaccessible by an external program. It might be caused by your antivirus.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        MessageBox.Show($"An error occurred during extraction,\n\nThe file \"targetFile\" seems to have been locked/made inaccessible by an external program. It might be caused by your antivirus.", "Error",
+                                            MessageBoxButtons.OK, MessageBoxIcon.Error);
                                     }
                                 }
 
@@ -312,7 +354,8 @@ namespace RTCV.Launcher
                         }
                         else
                         {
-                            MessageBox.Show($"An error occurred during extraction, rolling back changes.\n\nThe file \"{targetFile}\" could not be found. It might have been deleted by your antivirus.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show($"An error occurred during extraction, rolling back changes.\n\nThe file \"{targetFile}\" could not be found. It might have been deleted by your antivirus.", "Error", MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
 
                             if (Directory.Exists(extractDirectory))
                                 RTC_Extensions.RecursiveDeleteNukeReadOnly(extractDirectory);
@@ -334,39 +377,38 @@ namespace RTCV.Launcher
                     ProcessStartInfo psi = new ProcessStartInfo();
                     psi.FileName = Path.GetFileName(preReqChecker);
                     psi.WorkingDirectory = Path.GetDirectoryName(preReqChecker);
-                    Process.Start(psi).WaitForExit();
+                    Process.Start(psi)?.WaitForExit();
                 }
 
-                //Force an update if launcher.json is found
-                if (File.Exists(extractDirectory + Path.DirectorySeparatorChar + "Launcher\\launcher.json"))
+                if (File.Exists(Path.Combine(extractDirectory, "Launcher", "ver.ini")))
                 {
-                    if (MessageBox.Show("A mandatory launcher update is required to use this version. Click \"OK\" to update the launcher.", "Launcher update required", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.Cancel)
-                    {
-                        MessageBox.Show("Launcher update is required. Cancelling.");
-                        RTC_Extensions.RecursiveDeleteNukeReadOnly(extractDirectory);
-                        return;
-                    }
-                    string batchLocation = extractDirectory + Path.DirectorySeparatorChar + "Launcher\\update.bat";
-                    ProcessStartInfo psi = new ProcessStartInfo();
-                    psi.FileName = Path.GetFileName(batchLocation);
-                    psi.WorkingDirectory = Path.GetDirectoryName(batchLocation);
-                    Process.Start(psi);
-                    Application.Exit();
-                }
-                if (File.Exists(extractDirectory + Path.DirectorySeparatorChar + "Launcher\\ver.ini"))
-                {
-                    int newVer = Convert.ToInt32(File.ReadAllText(extractDirectory + Path.DirectorySeparatorChar + "Launcher\\ver.ini"));
+                    int newVer = Convert.ToInt32(File.ReadAllText(Path.Combine(extractDirectory, "Launcher", "ver.ini")));
                     if (newVer > launcherVer)
                     {
-                        var result = MessageBox.Show("The downloaded package contains a new launcher update.\n\nDo you want to update the Launcher?", "Launcher update", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                        if (result == DialogResult.Yes)
+
+                        if (File.Exists(Path.Combine(extractDirectory, "Launcher", "minver.ini")) && //Do we have minver
+                            Convert.ToInt32(File.ReadAllText(Path.Combine(extractDirectory, "Launcher", "minver.ini"))) > launcherVer) //Is minver > launcherVer
                         {
-                            string batchLocation = extractDirectory + Path.DirectorySeparatorChar + "Launcher\\update.bat";
-                            ProcessStartInfo psi = new ProcessStartInfo();
-                            psi.FileName = Path.GetFileName(batchLocation);
-                            psi.WorkingDirectory = Path.GetDirectoryName(batchLocation);
-                            Process.Start(psi);
-                            Application.Exit();
+                            if (MessageBox.Show("A mandatory launcher update is required to use this version. Click \"OK\" to update the launcher.",
+                                    "Launcher update required",
+                                    MessageBoxButtons.OKCancel,
+                                    MessageBoxIcon.Exclamation,
+                                    MessageBoxDefaultButton.Button1,
+                                    MessageBoxOptions.DefaultDesktopOnly) == DialogResult.OK)
+                            {
+                                UpdateLauncher(extractDirectory);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Launcher update is required. Cancelling.");
+                                RTC_Extensions.RecursiveDeleteNukeReadOnly(extractDirectory);
+                                return;
+                            }
+                        }
+
+                        if (MessageBox.Show("The downloaded package contains a new launcher update.\n\nDo you want to update the Launcher?", "Launcher update", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            UpdateLauncher(extractDirectory);
                         }
                     }
                 }
@@ -395,7 +437,7 @@ namespace RTCV.Launcher
         }
 
 
-    public void RefreshKeepSelectedVersion()
+        public void RefreshKeepSelectedVersion()
         {
             if (lastSelectedVersion != null)
             {
@@ -420,22 +462,26 @@ namespace RTCV.Launcher
             if (lbVersions.SelectedIndex == -1)
                 return;
 
+            Directory.SetCurrentDirectory(launcherDir); //Move our working dir back
             string version = lbVersions.SelectedItem.ToString();
 
             if (File.Exists(launcherDir + Path.DirectorySeparatorChar + "PACKAGES" + Path.DirectorySeparatorChar + version + ".zip"))
                 File.Delete(launcherDir + Path.DirectorySeparatorChar + "PACKAGES" + Path.DirectorySeparatorChar + version + ".zip");
 
-            if (Directory.Exists((launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version))) { }
+            if (Directory.Exists((launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version)))
+            {
+            }
+
             {
                 var failed = RTC_Extensions.RecursiveDeleteNukeReadOnly(launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version);
-                if(failed.Count > 0)
+                if (failed.Count > 0)
                 {
                     StringBuilder sb = new StringBuilder();
                     foreach (var l in failed)
                     {
                         sb.AppendLine(Path.GetFileName(l));
                     }
-                        
+
                     MessageBox.Show($"Failed to delete some files!\nSomething may be locking them (is the RTC still running?)\n\nList of failed files:\n{sb.ToString()}");
                 }
             }
@@ -519,14 +565,6 @@ namespace RTCV.Launcher
 
         }
 
-        private void panel2_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-            }
-        }
 
         private void btnQuit_Click(object sender, EventArgs e)
         {
@@ -560,6 +598,91 @@ namespace RTCV.Launcher
         private void btnDiscord_Click(object sender, EventArgs e)
         {
             Process.Start("https://discord.corrupt.wiki/");
+        }
+
+        const int _ = 10; // you can rename this variable if you like
+
+        Rectangle Top => new Rectangle(0, 0, this.ClientSize.Width, _);
+        Rectangle Left => new Rectangle(0, 0, _, this.ClientSize.Height);
+        Rectangle Bottom => new Rectangle(0, this.ClientSize.Height - _, this.ClientSize.Width, _);
+        Rectangle Right => new Rectangle(this.ClientSize.Width - _, 0, _, this.ClientSize.Height);
+        Rectangle TopLeft => new Rectangle(0, 0, _, _);
+        Rectangle TopRight => new Rectangle(this.ClientSize.Width - _, 0, _, _);
+        Rectangle BottomLeft => new Rectangle(0, this.ClientSize.Height - _, _, _);
+        Rectangle BottomRight => new Rectangle(this.ClientSize.Width - _, this.ClientSize.Height - _, _, _);
+
+
+
+        private void ResizeWindow(MouseEventArgs e, int wParam)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, wParam, 0);
+            }
+        }
+        private void RedirectMouseMove(object sender, MouseEventArgs e)
+        {
+            Control control = (Control)sender;
+            Point screenPoint = control.PointToScreen(new Point(e.X, e.Y));
+            Point formPoint = PointToClient(screenPoint);
+            MouseEventArgs args = new MouseEventArgs(e.Button, e.Clicks,
+                formPoint.X, formPoint.Y, e.Delta);
+            OnMouseMove(args);
+        }
+
+        private void MainForm_MouseMove(object sender, MouseEventArgs e)
+        {
+            Cursor.Current = Cursors.Default;
+            var cursor = this.PointToClient(Cursor.Position);
+            if (TopLeft.Contains(cursor))
+            {
+                Cursor.Current = Cursors.SizeNWSE;
+                ResizeWindow(e, HT_TOPLEFT);
+            }
+            else if (TopRight.Contains(cursor))
+            {
+                Cursor.Current = Cursors.SizeNESW;
+                ResizeWindow(e, HT_TOPRIGHT);
+            }
+            else if (BottomLeft.Contains(cursor))
+            {
+                Cursor.Current = Cursors.SizeNESW;
+                ResizeWindow(e, HT_BOTTOMLEFT);
+            }
+            else if (BottomRight.Contains(cursor))
+            {
+                Cursor.Current = Cursors.SizeNWSE;
+                ResizeWindow(e, HT_BOTTOMRIGHT);
+            }
+            else if (Top.Contains(cursor))
+            {
+                Cursor.Current = Cursors.SizeNS;
+                ResizeWindow(e, HT_TOP);
+            }
+            else if (Left.Contains(cursor))
+            {
+                Cursor.Current = Cursors.SizeWE;
+                ResizeWindow(e, HT_LEFT);
+            }
+            else if (Right.Contains(cursor))
+            {
+                Cursor.Current = Cursors.SizeWE;
+                ResizeWindow(e, HT_RIGHT);
+            }
+            else if (Bottom.Contains(cursor))
+            {
+                Cursor.Current = Cursors.SizeNS;
+                ResizeWindow(e, HT_BOTTOM);
+            }
+            else if (pnTopPanel.ClientRectangle.Contains(cursor))
+            {
+                if (e.Button == MouseButtons.Left)
+                {
+                    ReleaseCapture();
+                    SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+                }
+            }
         }
     }
 }

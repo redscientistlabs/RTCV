@@ -106,6 +106,9 @@
     <Compile Include="Components\Controls\InputWidget.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Components\Controls\ListBoxExtended.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Components\Controls\MultiTrackBar.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -277,6 +280,18 @@
     <Compile Include="Forms\RTC_CustomEngineConfig_Form.Designer.cs">
       <DependentUpon>RTC_CustomEngineConfig_Form.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\RTC_Intro_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RTC_Intro_Form.Designer.cs">
+      <DependentUpon>RTC_Intro_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Blast Editor\RTC_SanitizeTool_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Components\Blast Editor\RTC_SanitizeTool_Form.Designer.cs">
+      <DependentUpon>RTC_SanitizeTool_Form.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\RTC_NewBlastEditor_Form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -294,6 +309,12 @@
     </Compile>
     <Compile Include="Forms\RTC_Settings_Form.Designer.cs">
       <DependentUpon>RTC_Settings_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\RTC_SimpleMode_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RTC_SimpleMode_Form.designer.cs">
+      <DependentUpon>RTC_SimpleMode_Form.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\RTC_StockpilePlayer_Form.cs">
       <SubType>Form</SubType>
@@ -457,6 +478,12 @@
     <EmbeddedResource Include="Forms\RTC_CustomEngineConfig_Form.resx">
       <DependentUpon>RTC_CustomEngineConfig_Form.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RTC_Intro_Form.resx">
+      <DependentUpon>RTC_Intro_Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Blast Editor\RTC_SanitizeTool_Form.resx">
+      <DependentUpon>RTC_SanitizeTool_Form.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\RTC_NewBlastEditor_Form.resx">
       <DependentUpon>RTC_NewBlastEditor_Form.cs</DependentUpon>
     </EmbeddedResource>
@@ -465,6 +492,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RTC_Settings_Form.resx">
       <DependentUpon>RTC_Settings_Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RTC_SimpleMode_Form.resx">
+      <DependentUpon>RTC_SimpleMode_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RTC_StockpilePlayer_Form.resx">
       <DependentUpon>RTC_StockpilePlayer_Form.cs</DependentUpon>

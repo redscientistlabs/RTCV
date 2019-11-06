@@ -84,8 +84,9 @@ namespace RTCV.CorruptCore
 				return false;
 			}
 
-			string currentGame = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.GAMENAME.ToString()];
-			if (UseSavestates && (currentGame == null || psk.GameName != currentGame)) 
+			string currentGame = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.GAMENAME];
+			string currentCore = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.SYSTEMCORE];
+            if (UseSavestates && (currentGame == null || psk.GameName != currentGame || psk.SystemCore != currentCore)) 
 			{
 				LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_LOADROM, psk.RomFilename, true);
 			}
@@ -123,7 +124,12 @@ namespace RTCV.CorruptCore
 			return isCorruptionApplied;
 		}
 
-		public static bool InjectFromStashkey(StashKey sk, bool _loadBeforeOperation = true)
+        public static void RemoveFirstStashItem()
+        {
+            StashHistory.RemoveAt(0);
+        }
+
+        public static bool InjectFromStashkey(StashKey sk, bool _loadBeforeOperation = true)
 		{
             string saveStateWord = "Savestate";
 
@@ -338,6 +344,15 @@ namespace RTCV.CorruptCore
                     {
                         string filename = ofd.FileName.ToString();
                         string oldFilename = psk.RomFilename;
+                        if (Path.GetFileName(psk.RomFilename) != Path.GetFileName(filename))
+                        {
+                            if (DialogResult.Cancel == MessageBox.Show($"Selected file {Path.GetFileName(filename)} has a different name than the old file {Path.GetFileName(psk.RomFilename)}.\nIf you know this file is correct, you can ignore this warning.\nContinue?", title,
+                                    MessageBoxButtons.OKCancel))
+                            {
+                                return false;
+                            }
+                        }
+
                         foreach (var sk in keys.Where(x => x.RomFilename == oldFilename))
                         {
                             sk.RomFilename = filename;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -17,9 +18,9 @@ namespace RTCV.NetCore.StaticTools
 	//Call or create a singleton using class type
 	public static class S
 	{
-		static readonly Dictionary<Type, object> instances = new Dictionary<Type, object>();
-
+		static readonly ConcurrentDictionary<Type, object> instances = new ConcurrentDictionary<Type, object>();
 		public static FormRegister formRegister = new FormRegister();
+        private static object lockObject = new object();
 
 
         [ThreadStatic]
@@ -58,62 +59,81 @@ namespace RTCV.NetCore.StaticTools
 
 		public static bool ISNULL<T>()
 		{
-			Type typ = typeof(T);
-			return instances.ContainsKey(typ);
+            Type typ = typeof(T);
+            return instances.ContainsKey(typ);
 		}
 
 		public static T GET<T>()
-		{
-			Type typ = typeof(T);
-
-			if (!instances.ContainsKey(typ))
-			{
-				instances[typ] = Activator.CreateInstance(typ);
-
-				if (typ.IsSubclassOf(typeof(System.Windows.Forms.Form)))
-					formRegister.OnFormRegistered(new NetCoreEventArgs("FORMREGISTER", instances[typ]));
-			}
-
-			return (T)instances[typ];
-		}
+        {
+            Type typ = typeof(T);
+            
+            if (!instances.TryGetValue(typ, out object o))
+            {
+                lock(lockObject)
+                {
+                    //Check again in case we had stacked threads
+                    if(!instances.TryGetValue(typ, out o))
+                    {
+                        o = Activator.CreateInstance(typ);
+                        instances[typ] = o;
+            
+                        if (typ.IsSubclassOf(typeof(System.Windows.Forms.Form)))
+                            formRegister.OnFormRegistered(new NetCoreEventArgs("FORMREGISTER", instances[typ]));
+                    }
+                }
+            }
+            return (T)o;
+        }
 
         //returns all singletons that implements a certain type
-        public static T[] GETINTERFACES<T>() => instances.Values
-            .Where(it => it is T)
-            .Select(it => (T)it)
-            .ToArray();
-        
+        public static T[] GETINTERFACES<T>()
+        {
+            lock (lockObject)
+            {
+                return instances.Values
+                    .OfType<T>()
+                    .ToArray();
+            }
+        }
 
         public static object GET(Type typ)
-		{
-			//Type typ = typeof(T);
+        {
+            if (!instances.TryGetValue(typ, out object o))
+            {
+                lock (lockObject)
+                {
+                    //Check again in case we had stacked threads
+                    if (!instances.TryGetValue(typ, out o))
+                    {
+                        o = Activator.CreateInstance(typ);
+                        instances[typ] = o;
 
-			if (!instances.ContainsKey(typ))
-			{
-				instances[typ] = Activator.CreateInstance(typ);
-
-				if (typ.IsSubclassOf(typeof(System.Windows.Forms.Form)))
-					formRegister.OnFormRegistered(new NetCoreEventArgs("FORMREGISTER", instances[typ]));
-			}
-
-			return instances[typ];
-		}
-
-		public static void SET<T>(T newTyp)
-		{
-			Type typ = typeof(T);
-
-			if (newTyp is Nullable && newTyp == null)
-				instances.Remove(typ);
-			else
-				instances[typ] = newTyp;
-
-			if (typ.IsSubclassOf(typeof(System.Windows.Forms.Form)))
-				formRegister.OnFormRegistered(new NetCoreEventArgs("FORMREGISTER", instances[typ]));
-		}
+                        if (typ.IsSubclassOf(typeof(System.Windows.Forms.Form)))
+                            formRegister.OnFormRegistered(new NetCoreEventArgs("FORMREGISTER", instances[typ]));
+                    }
+                }
+            }
+            return o;
+        }
 
 
-	}
+        public static void SET<T>(T newTyp)
+        {
+            lock (lockObject)
+            {
+                Type typ = typeof(T);
+                if (newTyp == null)
+                    instances.TryRemove(typ, out _);
+                else
+                    instances[typ] = newTyp;
+
+                if (typ.IsSubclassOf(typeof(System.Windows.Forms.Form)))
+                    formRegister.OnFormRegistered(new NetCoreEventArgs("FORMREGISTER", instances[typ]));
+            }
+        }
+
+
+    }
 
 	public class FormRegister
 	{

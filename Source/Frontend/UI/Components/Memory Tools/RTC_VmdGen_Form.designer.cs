@@ -302,7 +302,7 @@
             this.lbEndianTypeLabel.ForeColor = System.Drawing.Color.White;
             this.lbEndianTypeLabel.Location = new System.Drawing.Point(7, 55);
             this.lbEndianTypeLabel.Name = "lbEndianTypeLabel";
-            this.lbEndianTypeLabel.Size = new System.Drawing.Size(71, 13);
+            this.lbEndianTypeLabel.Size = new System.Drawing.Size(72, 13);
             this.lbEndianTypeLabel.TabIndex = 88;
             this.lbEndianTypeLabel.Text = "Endian Type:";
             this.lbEndianTypeLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
@@ -432,7 +432,6 @@
         private System.Windows.Forms.Label label4;
         public System.Windows.Forms.Label lbEndianTypeValue;
         public System.Windows.Forms.Label lbWordSizeValue;
-        private System.Windows.Forms.TextBox tbCustomAddresses;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tbVmdName;
@@ -440,5 +439,6 @@
 		private System.Windows.Forms.Label label1;
 		public System.Windows.Forms.NumericUpDown nmPadding;
 		public System.Windows.Forms.CheckBox cbUsePadding;
-	}
+        public System.Windows.Forms.TextBox tbCustomAddresses;
+    }
 }

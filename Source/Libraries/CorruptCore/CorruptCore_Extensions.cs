@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Numerics;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
@@ -18,6 +19,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using Ceras;
+using Microsoft.Win32.SafeHandles;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using RTCV.NetCore;
@@ -26,7 +28,6 @@ namespace RTCV.CorruptCore
 {
 	public static class CorruptCore_Extensions
 	{
-
 		public static void DirectoryRequired(string path)
 		{
 			if (!Directory.Exists(path))
@@ -1186,7 +1187,7 @@ namespace RTCV.CorruptCore
 
 	}
 	//Lifted from Bizhawk https://github.com/TASVideos/BizHawk
-	public unsafe static class Win32
+	public static class Win32
 	{
 
 
@@ -1262,6 +1263,6 @@ namespace RTCV.CorruptCore
 
 		[DllImport("kernel32.dll", ExactSpelling = true, SetLastError = true)]
 		public static extern bool CloseHandle(IntPtr handle);
-	}
+    }
 
 }

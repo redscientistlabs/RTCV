@@ -32,7 +32,7 @@ namespace RTCV.UI.Input
 		}
 
         readonly HashSet<System.Windows.Forms.Control> WantingMouseFocus = new HashSet<System.Windows.Forms.Control>();
-
+		
 		[Flags]
 		public enum ModifierKey
 		{
@@ -59,8 +59,9 @@ namespace RTCV.UI.Input
 
 		public static Input Instance { get; private set; }
 		readonly Thread UpdateThread;
+		private bool KillUpdateThread = false;
 
-		private Input()
+        private Input()
 		{
 			UpdateThread = new Thread(UpdateThreadProc)
 			{
@@ -72,18 +73,28 @@ namespace RTCV.UI.Input
 
 		public static void Initialize()
         {
-            System.Threading.Tasks.Task.Run(() => { GamePad.Initialize(); }); //Once in a great while, dinput initialization will just hang for some mystery reason. Do this for safety.
-			KeyInput.Initialize();
-			IPCKeyInput.Initialize();
-			GamePad360.Initialize();
-			Instance = new Input();
+			lock (UICore.InputLock)
+			{
+                Cleanup();
+                GamePad.Initialize();
+				KeyInput.Initialize();
+				//IPCKeyInput.Initialize();
+				GamePad360.Initialize();
+				Instance = new Input();
+            }
 		}
 
 		public static void Cleanup()
 		{
-			KeyInput.Cleanup();
+			if (Instance?.UpdateThread?.IsAlive ?? false)
+			{
+				Instance.KillUpdateThread = true;
+				Instance.UpdateThread.Join();
+            }
+
+            KeyInput.Cleanup();
 			GamePad.Cleanup();
-		}
+        }
 
 		public enum InputEventType
 		{
@@ -116,7 +127,7 @@ namespace RTCV.UI.Input
 			{
 				var other = (LogicalButton)obj;
 				return other == this;
-			}
+			} 
 			public override int GetHashCode()
 			{
 				return Button.GetHashCode() ^ Modifiers.GetHashCode();
@@ -269,7 +280,10 @@ namespace RTCV.UI.Input
 		{
 			for (; ; )
 			{
-				var keyEvents = KeyInput.Update().Concat(IPCKeyInput.Update());
+                if (KillUpdateThread)
+                    return;
+
+				var keyEvents = KeyInput.Update();
 				GamePad.UpdateAll();
 				GamePad360.UpdateAll();
 

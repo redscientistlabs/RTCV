@@ -149,6 +149,7 @@ namespace RTCV.UI
                         targetForm.Controls.Add(tileForm);
                         tileForm.Location = getTileLocation(x, y);
 
+                        tileForm.Anchor = tileForm.childForm.Anchor;
 
                         tileForm.Show();
                     }

@@ -154,7 +154,18 @@ namespace RTCV.UI
 				(columnsMenu.Items.Add("Clear Cheats/Freezes on Rewind", null, new EventHandler((ob, ev) => { S.GET<RTC_CorruptionEngine_Form>().cbClearCheatsOnRewind.Checked ^= true; })) as ToolStripMenuItem).Checked = S.GET<RTC_CorruptionEngine_Form>().cbClearCheatsOnRewind.Checked;
 				(columnsMenu.Items.Add("Clear Pipes on Rewind", null, new EventHandler((ob, ev) => { S.GET<RTC_CorruptionEngine_Form>().cbClearPipesOnRewind.Checked ^= true; })) as ToolStripMenuItem).Checked = S.GET<RTC_CorruptionEngine_Form>().cbClearPipesOnRewind.Checked;
 
-				columnsMenu.Show(this, locate);
+                columnsMenu.Items.Add(stripSeparator);
+
+                ((ToolStripMenuItem)columnsMenu.Items.Add("Manual Inject", null, new EventHandler((ob, ev) =>
+                {
+                    var sk = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
+                    StashKey newSk = (StashKey)sk.Clone();
+                    S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newSk, false);
+
+                }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
+
+
+                columnsMenu.Show(this, locate);
 			}
 		}
 

@@ -47,26 +47,33 @@ namespace RTCV.Prereqs
             lbDownloadProgress.Text = $"{String.Format("{0:0.##}", (Convert.ToDouble(ev.BytesReceived) / (1024d * 1024d)))}/{String.Format("{0:0.##}", (Convert.ToDouble(ev.TotalBytesToReceive) / (1024d * 1024d)))}MB";
         }
 
-        private void OnWebClientOnDownloadFileCompleted(object ov, AsyncCompletedEventArgs ev)
+        private async void OnWebClientOnDownloadFileCompleted(object ov, AsyncCompletedEventArgs ev)
         {
-            var d = (Dependency) ev.UserState;
+            var d = (Dependency)ev.UserState;
             lbStatus.Text = $"Installing {d.Name}";
             this.Refresh(); //Force this
-            while (d != null)
+            await Task.Run(() =>
             {
-                ProcessStartInfo p = new ProcessStartInfo(d.ExecutableName, d.InstallString);
-                try
+                while (d != null)
                 {
-                    Process.Start(p).WaitForExit();
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show($"Something went wrong when launching {p}. Send this to the devs!\n{e.ToString()}");
-                }
+                    ProcessStartInfo p = new ProcessStartInfo(d.ExecutableName, d.InstallString);
+                    try
+                    {
+                        Process.Start(p).WaitForExit();
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show($"Something went wrong when launching {p}. Send this to the devs!\n{e.ToString()}");
+                    }
 
-                d = d.RunAfter;
-            }
-            DownloadNext();
+                    d = d.RunAfter;
+                }
+            });
+
+            if (this.InvokeRequired)
+                this.Invoke((MethodInvoker) (() => DownloadNext()));
+            else
+                DownloadNext();
         }
 
         private void PnTopPanel_MouseMove(object sender, MouseEventArgs e)
@@ -83,10 +90,6 @@ namespace RTCV.Prereqs
             this.RunCheck();
         }
 
-        public  void InvokeUI(Action a)
-        {
-            this.BeginInvoke(new MethodInvoker(a));
-        }
 
         private void RunCheck()
         {
@@ -95,10 +98,12 @@ namespace RTCV.Prereqs
             var d3dx9Setup = new Dependency("DirectX9 End-User Runtime", "", "", $"/silent", Path.Combine(redistDir, "DXSETUP.exe"));
             var d3dx9 = new Dependency("DirectX9 End-User Runtime", "d3dx9_43.dll", "https://download.microsoft.com/download/8/4/A/84A35BF1-DAFE-4AE8-82AF-AD2AE20B6B14/directx_Jun2010_redist.exe", $"/Q /T:{redistDir}", "", d3dx9Setup);
 
-            var vc2015 = new Dependency("Visual C++ 2015-2019 x64", "msvcp140.dll", "https://download.visualstudio.microsoft.com/download/pr/9e04d214-5a9d-4515-9960-3d71398d98c3/1e1e62ab57bbb4bf5199e8ce88f040be/vc_redist.x64.exe",
+            var vc2019 = new Dependency("Visual C++ 2019 x64", "vcruntime140_1.dll", "https://download.visualstudio.microsoft.com/download/pr/9565895b-35a6-434b-a881-11a6f4beec76/EE84FED2552E018E854D4CD2496DF4DD516F30733A27901167B8A9882119E57C/VC_redist.x64.exe",
                 "/install /passive /norestart");
-            var vc2015x86 = new Dependency("Visual C++ 2015-2019 x86", "msvcp140.dll", "https://download.visualstudio.microsoft.com/download/pr/c8edbb87-c7ec-4500-a461-71e8912d25e9/99ba493d660597490cbb8b3211d2cae4/vc_redist.x86.exe",
+           
+            var vc2015x86 = new Dependency("Visual C++ 2015-2019 x86", "msvcp140.dll", "https://download.visualstudio.microsoft.com/download/pr/9565895b-35a6-434b-a881-11a6f4beec76/4A8157B2FF422C259DDAA2D0E568C0C0AFAB940E1F6E0E482EF83E90DDBAD2D6/VC_redist.x86.exe",
                 "/install /passive /norestart");
+
             var vc2013 = new Dependency("Visual C++ 2013 x64", "msvcr120.dll", "https://download.microsoft.com/download/2/E/6/2E61CFA4-993B-4DD4-91DA-3737CD5CD6E3/vcredist_x64.exe", "/install /passive /norestart");
             var vc2012 = new Dependency("Visual C++ 2012 x64", "msvcr110.dll", "https://download.microsoft.com/download/1/6/B/16B06F60-3B20-4FF2-B699-5E9B7962F9AE/VSU_4/vcredist_x64.exe", "/install /passive /norestart");
             var vc2010 = new Dependency("Visual C++ 2010 x64", "msvcr100.dll", "https://download.microsoft.com/download/3/2/2/3224B87F-CFA0-4E70-BDA3-3DE650EFEBA5/vcredist_x64.exe", "/passive /norestart");
@@ -109,8 +114,8 @@ namespace RTCV.Prereqs
                 if (Win32.LoadLibrary(d3dx9.CheckFile) == IntPtr.Zero)
                     downloadQueue.Enqueue(d3dx9); //Bizhawk
 
-                if (Win32.LoadLibrary(vc2015.CheckFile) == IntPtr.Zero)
-                    downloadQueue.Enqueue(vc2015); //PCSX2, MelonDS, Dolphin
+                if (Win32.LoadLibrary(vc2019.CheckFile) == IntPtr.Zero)
+                    downloadQueue.Enqueue(vc2019); //PCSX2, MelonDS, Dolphin
 
                 if (Win32.LoadLibrary(vc2013.CheckFile) == IntPtr.Zero)
                     downloadQueue.Enqueue(vc2013); //Bizhawk
@@ -139,9 +144,9 @@ namespace RTCV.Prereqs
                     sb.AppendLine(d.Name);
                 sb.AppendLine("");
                 sb.AppendLine("Would you like to download and install them?");
-                if (MessageBox.Show(sb.ToString(), "Missing dependencies", MessageBoxButtons.YesNo) == DialogResult.No)
+                if (MessageBox.Show(sb.ToString(), "Missing dependencies", MessageBoxButtons.YesNo, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly) == DialogResult.No)
                 {
-                    if (MessageBox.Show("The RTC may not work properly without these dependencies.\nYou can always run this tool again via the RTC Launcher", "Warning", MessageBoxButtons.OK) != null) ;
+                    if (MessageBox.Show("The RTC may not work properly without these dependencies.\nYou can always run this tool again via the RTC Launcher", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly) != null) ;
                     {
                         Environment.Exit(0);
                     };
@@ -252,6 +257,15 @@ namespace RTCV.Prereqs
                     }
                 }
 
+                if (Environment.Is64BitProcess)
+                {
+                    try
+                    {
+                        Thread.Sleep(300); //Hope the processes have actually released their resources
+                        Directory.Delete(redistDir, true);
+                    }
+                    catch { } //eat it
+                }
                 lbStatus.Text = "Done";
                 this.Refresh(); //Force this
                 //Daisy chain x86 to x64
