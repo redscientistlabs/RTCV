@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
+using RTCV.CorruptCore.Tools;
 using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
 using RTCV.UI.Components.Controls;

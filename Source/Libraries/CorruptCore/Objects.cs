@@ -1015,7 +1015,7 @@ namespace RTCV.CorruptCore
                     if (bb == null) //BlastCheat getBackup() always returns null so they can happen and they are valid
                         success = true;
                     else 
-                        success = bb.Apply();
+                        success = bb.Apply(true);
 
 					if (!success)
 						throw new Exception(
@@ -1619,7 +1619,7 @@ namespace RTCV.CorruptCore
 		/// Adds a blastunit to the execution pool
 		/// </summary>
 		/// <returns></returns>
-		public bool Apply()
+		public bool Apply(bool dontFilter)
 		{
 			if (!IsEnabled)
 				return true;
@@ -1639,6 +1639,11 @@ namespace RTCV.CorruptCore
 			}
 			//Add it to the execution pool
 			StepActions.AddBlastUnit(this);
+
+            if(dontFilter)
+				return true;
+			StepActions.FilterBuListCollection();
+
 			return true;
 		}
 

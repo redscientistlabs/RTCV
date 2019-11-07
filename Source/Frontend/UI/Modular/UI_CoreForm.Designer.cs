@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UI_CoreForm));
             this.pnSideBar = new System.Windows.Forms.Panel();
+            this.btnNetcoreTest = new System.Windows.Forms.Button();
             this.btnTestLockdown = new System.Windows.Forms.Button();
             this.pnGlitchHarvesterOpen = new System.Windows.Forms.Panel();
             this.pnCrashProtection = new System.Windows.Forms.Panel();
@@ -59,6 +60,7 @@
             // pnSideBar
             // 
             this.pnSideBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.pnSideBar.Controls.Add(this.btnNetcoreTest);
             this.pnSideBar.Controls.Add(this.btnTestLockdown);
             this.pnSideBar.Controls.Add(this.pnGlitchHarvesterOpen);
             this.pnSideBar.Controls.Add(this.pnCrashProtection);
@@ -79,6 +81,28 @@
             this.pnSideBar.Size = new System.Drawing.Size(150, 581);
             this.pnSideBar.TabIndex = 7;
             this.pnSideBar.Tag = "color:dark3";
+            // 
+            // btnNetcoreTest
+            // 
+            this.btnNetcoreTest.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.btnNetcoreTest.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnNetcoreTest.FlatAppearance.BorderSize = 0;
+            this.btnNetcoreTest.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNetcoreTest.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            this.btnNetcoreTest.ForeColor = System.Drawing.Color.White;
+            this.btnNetcoreTest.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnNetcoreTest.Location = new System.Drawing.Point(0, 321);
+            this.btnNetcoreTest.Name = "btnNetcoreTest";
+            this.btnNetcoreTest.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.btnNetcoreTest.Size = new System.Drawing.Size(150, 33);
+            this.btnNetcoreTest.TabIndex = 130;
+            this.btnNetcoreTest.TabStop = false;
+            this.btnNetcoreTest.Tag = "color:dark3";
+            this.btnNetcoreTest.Text = "Test Command";
+            this.btnNetcoreTest.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnNetcoreTest.UseVisualStyleBackColor = false;
+            this.btnNetcoreTest.Visible = false;
+            this.btnNetcoreTest.Click += new System.EventHandler(this.BtnNetcoreTest_Click);
             // 
             // btnTestLockdown
             // 
@@ -538,6 +562,7 @@
         public System.Windows.Forms.Panel pnAutoKillSwitch;
         public System.Windows.Forms.Panel pnSideBar;
         public System.Windows.Forms.Button btnOpenCustomLayout;
+        private System.Windows.Forms.Button btnNetcoreTest;
     }
 }
 

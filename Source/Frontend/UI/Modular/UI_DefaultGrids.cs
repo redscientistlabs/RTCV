@@ -36,7 +36,6 @@ namespace RTCV.UI.Modular
                 {
 
                     var ecGrid = new CanvasGrid(15, 12, "Engine Config");
-
                    
 
                     Form gpForm = S.GET<RTC_GeneralParameters_Form>();
@@ -51,6 +50,7 @@ namespace RTCV.UI.Modular
                         S.GET<RTC_VmdAct_Form>(),
                         S.GET<RTC_ListGen_Form>(),
                         S.GET<RTC_VmdLimiterProfiler_Form>(),
+						S.GET<RTC_OpenTools_Form>(),
                         })
                     {
                         popoutAllowed = false,

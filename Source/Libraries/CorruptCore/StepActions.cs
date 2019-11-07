@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RTCV.NetCore;
+using RTCV.NetCore.StaticTools;
 
 namespace RTCV.CorruptCore
 {
@@ -105,8 +106,35 @@ namespace RTCV.CorruptCore
             }
         }
 
+		public static bool TryRemoveInfiniteStepUnits(string domain, long address)
+		{
+			lock (executeLock)
+			{
+				return appliedInfinite.RemoveAll(x => x.Exists(y => y.Lifetime == 0 &&
+					y.Domain == domain &&
+					y.Address == address)) > 0;
+            }
+		}
 
-		public static BlastLayer GetRawBlastLayer()
+		public static bool InfiniteUnitExists(string domain, long address)
+		{
+			lock (executeLock)
+			{
+				return appliedInfinite.Any(x => x.Exists(y => y.Lifetime == 0 && 
+					y.Domain == domain &&
+					y.Address == address));
+			}
+		}
+
+		public static BlastLayer GetAppliedInfiniteUnits()
+		{
+			lock (executeLock)
+			{
+				return new BlastLayer(appliedInfinite.SelectMany(x => x.Select(y => y)).ToList());
+			}
+		}
+
+        public static BlastLayer GetRawBlastLayer()
 		{
             lock (executeLock)
             {
@@ -306,99 +334,102 @@ namespace RTCV.CorruptCore
 		}
 		public static void Execute()
 		{
-			if (isRunning == false)
-				return;
-
-            bool needsRefilter = false;
-            lock (executeLock)
+			if (isRunning)
             {
-                //Queue everything up
-                CheckApply();
-
-                //Get the backups for any store units
-                GetStoreBackups();
-
-                //Execute all temp units
-                List<List<BlastUnit>> itemsToRemove = new List<List<BlastUnit>>();
-                foreach (List<BlastUnit> buList in appliedLifetime)
+                bool needsRefilter = false;
+                lock (executeLock)
                 {
-                    foreach (BlastUnit bu in buList)
+                    //Queue everything up
+                    CheckApply();
+
+                    //Get the backups for any store units
+                    GetStoreBackups();
+
+                    //Execute all temp units
+                    List<List<BlastUnit>> itemsToRemove = new List<List<BlastUnit>>();
+                    foreach (List<BlastUnit> buList in appliedLifetime)
                     {
-                        var result = bu.Execute();
-                        if (result == ExecuteState.ERROR)
-                        {
-                            var dr = MessageBox.Show(
-                                "Something went horribly wrong during BlastUnit execute. Aborting. Would you like to send this to the devs?",
-                                "A fatal error occurred", MessageBoxButtons.YesNo);
-                            isRunning = false;
-                            if (dr == DialogResult.Yes)
-                                throw new CustomException("BlastUnit appliedLifetime Execute threw up. Check the log for more info.", Environment.StackTrace);
-                            return;
-                        }
-                        if (result == ExecuteState.HANDLEDERROR)
-                        {
-                            isRunning = false;
-                            return;
-                        }
-                    }
-                    if (buList[0].Working.LastFrame == currentFrame)
-                        itemsToRemove.Add(buList);
-                }
-
-                //Execute all infinite lifetime units
-                foreach (List<BlastUnit> buList in appliedInfinite)
-                    foreach (BlastUnit bu in buList)
-                    {
-                        var result = bu.Execute();
-                        if (result == ExecuteState.ERROR)
-                        {
-                            var dr = MessageBox.Show(
-                                "Something went horribly wrong during BlastUnit execute. Aborting. Would you like to send this to the devs?",
-                                "A fatal error occurred", MessageBoxButtons.YesNo);
-                            isRunning = false;
-                            if (dr == DialogResult.Yes)
-                                throw new CustomException("BlastUnit appliedInfinite Execute threw up. Check the log for more info.", Environment.StackTrace);
-                            return;
-                        }
-                        if (result == ExecuteState.HANDLEDERROR)
-                        {
-                            isRunning = false;
-                            return;
-                        }
-                    }
-
-
-                //Increment the frame
-                currentFrame++;
-
-                //Remove any temp units that have expired
-                foreach (List<BlastUnit> buList in itemsToRemove)
-                {
-                    //Remove it
-                    appliedLifetime.Remove(buList);
-
-                    foreach (BlastUnit bu in buList)
-                    {
-                        bu.Working = null;
-                        //Remove it from the store pool
-                        if (bu.Source == BlastUnitSource.STORE)
-                            StoreDataPool.Remove(bu);
-                    }
-
-                    //If there's a loop, re-apply all the units
-                    if (buList[0].Loop)
-                    {
-                        needsRefilter = true;
                         foreach (BlastUnit bu in buList)
                         {
-                            bu.Apply();
+                            var result = bu.Execute();
+                            if (result == ExecuteState.ERROR)
+                            {
+                                var dr = MessageBox.Show(
+                                    "Something went horribly wrong during BlastUnit execute. Aborting. Would you like to send this to the devs?",
+                                    "A fatal error occurred", MessageBoxButtons.YesNo);
+                                isRunning = false;
+                                if (dr == DialogResult.Yes)
+                                    throw new CustomException("BlastUnit appliedLifetime Execute threw up. Check the log for more info.", Environment.StackTrace);
+                                return;
+                            }
+                            if (result == ExecuteState.HANDLEDERROR)
+                            {
+                                isRunning = false;
+                                return;
+                            }
+                        }
+                        if (buList[0].Working.LastFrame == currentFrame)
+                            itemsToRemove.Add(buList);
+                    }
+
+                    //Execute all infinite lifetime units
+                    foreach (List<BlastUnit> buList in appliedInfinite)
+                        foreach (BlastUnit bu in buList)
+                        {
+                            var result = bu.Execute();
+                            if (result == ExecuteState.ERROR)
+                            {
+                                var dr = MessageBox.Show(
+                                    "Something went horribly wrong during BlastUnit execute. Aborting. Would you like to send this to the devs?",
+                                    "A fatal error occurred", MessageBoxButtons.YesNo);
+                                isRunning = false;
+                                if (dr == DialogResult.Yes)
+                                    throw new CustomException("BlastUnit appliedInfinite Execute threw up. Check the log for more info.", Environment.StackTrace);
+                                return;
+                            }
+                            if (result == ExecuteState.HANDLEDERROR)
+                            {
+                                isRunning = false;
+                                return;
+                            }
+                        }
+
+
+                    //Increment the frame
+                    currentFrame++;
+
+                    //Remove any temp units that have expired
+                    foreach (List<BlastUnit> buList in itemsToRemove)
+                    {
+                        //Remove it
+                        appliedLifetime.Remove(buList);
+
+                        foreach (BlastUnit bu in buList)
+                        {
+                            bu.Working = null;
+                            //Remove it from the store pool
+                            if (bu.Source == BlastUnitSource.STORE)
+                                StoreDataPool.Remove(bu);
+                        }
+
+                        //If there's a loop, re-apply all the units
+                        if (buList[0].Loop)
+                        {
+                            needsRefilter = true;
+                            foreach (BlastUnit bu in buList)
+                            {
+                                bu.Apply(true);
+                            }
                         }
                     }
                 }
-            }
-            //We only call this if there's a loop
-            if (needsRefilter)
+                //We only call this if there's a loop
+                if (needsRefilter)
                     FilterBuListCollection();
+            }
+            //Update any tools
+            if (S.GET<CorruptCore.Tools.HexEditor>().Visible && S.GET<CorruptCore.Tools.HexEditor>().UpdateOnStep)
+				S.GET<CorruptCore.Tools.HexEditor>().UpdateValues();
         }
 	}
 }
