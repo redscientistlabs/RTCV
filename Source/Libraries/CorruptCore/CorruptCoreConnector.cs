@@ -131,8 +131,27 @@ namespace RTCV.CorruptCore
 					{
 						S.GET<CorruptCore.Tools.HexEditor>().Show();
 					});
-				}
+				} break;
+
+				case EMU_OPEN_HEXEDITOR_ADDRESS:
+				{
+					var temp = advancedMessage.objectValue as object[];
+					string domain = (string)temp[0];
+					long address = (long)temp[1];
+
+					MemoryDomainProxy mdp = MemoryDomains.GetProxy(domain, address);
+					long realAddress = MemoryDomains.GetRealAddress(domain, address);
+
+					SyncObjectSingleton.FormExecute(() =>
+					{
+						S.GET<CorruptCore.Tools.HexEditor>().Show();
+                        S.GET<CorruptCore.Tools.HexEditor>().SetDomain(mdp);
+						S.GET<CorruptCore.Tools.HexEditor>().GoToAddress(address);
+						
+                    });
+
 					break;
+				}
 
 				case MANUALBLAST:
                 {

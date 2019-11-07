@@ -359,9 +359,9 @@ namespace RTCV.CorruptCore
 	[Ceras.MemberConfig(TargetMember.All)]
 	public abstract class MemoryInterface
 	{
-		public abstract long Size { get; set; }
+		public virtual long Size { get; set; }
 		public int WordSize { get; set; }
-		public string Name { get; set; }
+		public virtual string Name { get; set; }
 		public bool BigEndian { get; set; }
 
 		public abstract byte[] GetDump();
@@ -569,6 +569,13 @@ namespace RTCV.CorruptCore
             set{ }
         }
 
+		private string name;
+		public override string Name
+		{
+			get { return "[V]" + name; }
+			set { name = value; }
+		}
+
 		public void AddFromBlastLayer(BlastLayer bl)
 		{
 			if (bl == null)
@@ -681,7 +688,7 @@ namespace RTCV.CorruptCore
 		public override string ToString()
 		{
 			//Virtual Memory Domains always start with [V]
-			return "[V]" + Name;
+			return Name;
 		}
 
 		public override byte[] GetDump()

@@ -382,10 +382,10 @@ namespace RTCV.UI
 			{
 				BlastUnit bu = (BlastUnit)dgvBlastEditor.Rows[cell.RowIndex].DataBoundItem;
 				if (cell.OwningColumn == dgvBlastEditor.Columns[BuProperty.Address.ToString()])
-					LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.EMU_OPEN_HEXEDITOR_ADDRESS, new object[] { bu.Domain, bu.Address });
+					LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.EMU_OPEN_HEXEDITOR_ADDRESS, new object[] { bu.Domain, bu.Address });
 
 				if (cell.OwningColumn == dgvBlastEditor.Columns[BuProperty.SourceAddress.ToString()])
-					LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.EMU_OPEN_HEXEDITOR_ADDRESS, new object[] { bu.SourceDomain, bu.SourceAddress });
+					LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.EMU_OPEN_HEXEDITOR_ADDRESS, new object[] { bu.SourceDomain, bu.SourceAddress });
 			}))).Enabled = true;
 		}
 

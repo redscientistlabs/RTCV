@@ -170,11 +170,16 @@ namespace RTCV.CorruptCore.Tools
 
                 _maxRow = _domain.Size / 2;
 
+
                 // Don't reset scroll bar if restarting the same rom
                 if (_lastRom != (string)(AllSpec.VanguardSpec?[VSPEC.NAME] ?? "UNKNOWN"))
                 {
                     _lastRom = (string)(AllSpec.VanguardSpec?[VSPEC.NAME] ?? "UNKNOWN");
                     ResetScrollBar();
+                }
+                else
+                {
+                    SetUpScrollBar();
                 }
 
                 SetDataSize(DataSize);
@@ -552,6 +557,11 @@ namespace RTCV.CorruptCore.Tools
             return _domain.PeekByte(address);
         }
 
+		public void SetDomain(MemoryInterface mi)
+		{
+			SetMemoryDomain(mi.Name);
+		}
+
         private void SetMemoryDomain(string name)
         {
 			if (!AllDomains.TryGetValue(name, out _domain))
@@ -599,7 +609,6 @@ namespace RTCV.CorruptCore.Tools
             }
         }
 
-        //RTC_HIJACK Make public
         public void GoToAddress(long address)
         {
             if (address < 0)
@@ -892,18 +901,72 @@ namespace RTCV.CorruptCore.Tools
             }
         }
 
+
+		private void CreateVMDFromSelectedMenuItem_Click(object sender, EventArgs e)
+		{
+			if (HighlightedAddress == null) return;
+
+			List<long> allAddresses = new List<long>() { HighlightedAddress.Value };
+			allAddresses.AddRange(_secondaryHighlightedAddresses);
+			CreateVmdFromSelected(_domain.Name, allAddresses);
+
+			MemoryViewerBox.Refresh();
+		}
+
+        public static void CreateVmdFromSelected(string domain, List<long> allAddresses)
+		{
+
+			var ordered = allAddresses.OrderBy(it => it);
+			bool contiguous = true;
+			long? lastAddress = null;
+			int i = 0;
+
+			foreach (long item in ordered)
+			{
+				if (lastAddress != null) //not the first one
+					if (i != (ordered.Count() - 1)) //not the last one
+						if (item != lastAddress.Value + 1) //checks expected address
+							contiguous = false;
+
+				lastAddress = item;
+				i++;
+			}
+
+			string ToHexString(long n)
+			{
+				return $"{n:X}";
+			}
+
+			string text;
+			if (contiguous)
+			{
+				var listOrdered = ordered.ToList();
+				text = $"{ToHexString(listOrdered[0])}-{ToHexString(listOrdered[listOrdered.Count - 1])}";
+			}
+			else
+			{
+				text = String.Join("\n", ordered.Select(it => ToHexString(it)));
+			}
+			CreateVmdText(domain, text);
+		}
+
+		internal static void CreateVmdText(string domain, string text)
+		{   //Sends text to the VMD Generator and trigger generation
+			LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_GENERATEVMDTEXT, new object[] { domain, text }, true);
+		}
+
         private void IncrementAddress(long address)
         {
             var bytes = _domain.PeekBytes(address, address + DataSize, false);
             CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref bytes, 1, _domain.BigEndian);
-			_domain.PokeBytes(address, bytes, false);
+			_domain.PokeBytes(address, bytes, _domain.BigEndian);
         }
 
         private void DecrementAddress(long address)
         {
             var bytes = _domain.PeekBytes(address, address + DataSize, false);
             CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref bytes, -1, _domain.BigEndian);
-			_domain.PokeBytes(address, bytes, false);
+			_domain.PokeBytes(address, bytes, _domain.BigEndian);
         }
 
 
@@ -1044,11 +1107,10 @@ namespace RTCV.CorruptCore.Tools
                 {
                     long start = addresses[i];
                     long end = addresses[i] + DataSize - 1;
-                    for (long a = start; a <= end; a++)
-                    {
-
-                        var bytes = _domain.PeekBytes(1, a, _domain.BigEndian);
-                        sb.Append(CorruptCore_Extensions.BytesToHexString(bytes));
+					for (long a = start; a <= end; a++)
+					{
+						MakeValue(1, a, out int val);
+						sb.AppendFormat("{0:X2}", val);
                     }
                 }
             }

@@ -58,6 +58,7 @@
             this.FreezeAddressMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.UnfreezeAllMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PokeAddressMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.CreateVMDMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MemoryDomainsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nULLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataSizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -385,7 +386,8 @@
             this.DecrementContextItem,
             this.ContextSeparator2,
             this.GoToContextItem,
-            this.toolStripMenuItem1});
+            this.toolStripMenuItem1,
+			this.CreateVMDMenuItem});
             this.ViewerContextMenuStrip.Name = "ViewerContextMenuStrip";
             this.ViewerContextMenuStrip.Size = new System.Drawing.Size(200, 198);
             this.ViewerContextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.ViewerContextMenuStrip_Opening);
@@ -428,6 +430,15 @@
             this.UnfreezeAllContextItem.Size = new System.Drawing.Size(199, 22);
             this.UnfreezeAllContextItem.Text = "&Unfreeze All";
             this.UnfreezeAllContextItem.Click += new System.EventHandler(this.UnfreezeAllMenuItem_Click);
+
+			// 
+			// CreateVMDMenuItem //RTC_HIJACK
+			// 
+			this.CreateVMDMenuItem.Name = "Create VMDMenuItem";
+			this.CreateVMDMenuItem.Size = new System.Drawing.Size(221, 22);
+			this.CreateVMDMenuItem.Text = "&Create VMD from Selected Addresses";
+			this.CreateVMDMenuItem.Click += new System.EventHandler(this.CreateVMDFromSelectedMenuItem_Click);
+
             // 
             // ContextSeparator1
             // 
@@ -602,6 +613,7 @@
         private System.Windows.Forms.ToolStripMenuItem FindPrevMenuItem;
         private System.Windows.Forms.ToolStripMenuItem SaveMenuItem;
         private System.Windows.Forms.ToolStripMenuItem PokeAddressMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem CreateVMDMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem LoadTableFileMenuItem;
         private System.Windows.Forms.ToolStripMenuItem CloseTableFileMenuItem;
