@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using RTCV.CorruptCore;
 using Newtonsoft.Json;
 using RTCV.NetCore;
+using RTCV.NetCore.StaticTools;
 using Timer = System.Windows.Forms.Timer;
 
 namespace RTCV.CorruptCore
@@ -922,6 +923,17 @@ namespace RTCV.CorruptCore
         public static void OnProgressBarUpdate(object sender, ProgressBarEventArgs e )
         {
             ProgressBarHandler?.Invoke(sender, e);
+        }
+
+        public static void LOAD_GAME_DONE()
+        {
+            if (S.GET<CorruptCore.Tools.HexEditor>().Visible)
+                S.GET<CorruptCore.Tools.HexEditor>().Restart();
+        }
+        public static void GAME_CLOSED()
+        {
+            if (S.GET<CorruptCore.Tools.HexEditor>().Visible)
+                S.GET<CorruptCore.Tools.HexEditor>().Restart();
         }
     }
 }

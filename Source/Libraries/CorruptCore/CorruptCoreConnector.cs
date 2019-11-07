@@ -35,16 +35,7 @@ namespace RTCV.CorruptCore
 
 			switch (e.message.Type)
 			{
-
-                case "TEST":
-                {
-                    SyncObjectSingleton.FormExecute(() =>
-                    {
-                        S.GET<CorruptCore.Tools.HexEditor>().Show();
-                    });
-                }
-                    break;
-                case "GETSPECDUMPS":
+				case "GETSPECDUMPS":
 					StringBuilder sb = new StringBuilder();
 					sb.AppendLine("Spec Dump from CorruptCore");
 					sb.AppendLine();
@@ -117,23 +108,33 @@ namespace RTCV.CorruptCore
 					MemoryDomains.RefreshDomains(domainsChanged);
 					break;
 
-                case REMOTE_EVENT_RESTRICTFEATURES:
-                        if(!RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_SAVESTATES) ?? true)
-                            LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_DISABLESAVESTATESUPPORT);
+				case REMOTE_EVENT_RESTRICTFEATURES:
+				{
+					if (!RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_SAVESTATES) ?? true)
+						LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_DISABLESAVESTATESUPPORT);
 
-                        if (!RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true)
-                            LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_DISABLEREALTIMESUPPORT);
+					if (!RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true)
+						LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_DISABLEREALTIMESUPPORT);
 
-                        if (!RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_KILLSWITCH) ?? true)
-                            LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_DISABLEKILLSWITCHSUPPORT);
+					if (!RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_KILLSWITCH) ?? true)
+						LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_DISABLEKILLSWITCHSUPPORT);
 
-                        if (!RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_GAMEPROTECTION) ?? true)
-                            LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_DISABLEGAMEPROTECTIONSUPPORT);
+					if (!RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_GAMEPROTECTION) ?? true)
+						LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_DISABLEGAMEPROTECTIONSUPPORT);
 
-                        break;
+					break;
+				}
 
+				case REMOTE_OPENHEXEDITOR:
+				{
+					SyncObjectSingleton.FormExecute(() =>
+					{
+						S.GET<CorruptCore.Tools.HexEditor>().Show();
+					});
+				}
+					break;
 
-                case MANUALBLAST:
+				case MANUALBLAST:
                 {
                     RtcCore.GenerateAndBlast();
                 }

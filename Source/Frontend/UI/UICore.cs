@@ -48,7 +48,8 @@ namespace RTCV.UI
 			registerFormEvents(S.GET<UI_CoreForm>());
 			registerHotkeyBlacklistControls(S.GET<UI_CoreForm>());
 
-            S.SET<RTC_Standalone_Form>((RTC_Standalone_Form)standaloneForm);
+            if(!RtcCore.Attached)
+				S.SET((RTC_Standalone_Form)standaloneForm);
 
             Form dummy = new Form();
             IntPtr Handle = dummy.Handle;

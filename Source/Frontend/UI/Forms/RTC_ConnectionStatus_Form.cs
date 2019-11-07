@@ -27,15 +27,16 @@ namespace RTCV.UI
             "Fun flavor text goes here",
             "The V probably stands for Vanguard",
             "What are naming conventions",
-            "Over 35,000 lines of code to make Mario do the funny",
-            "We love circular dependencies",
+            "Over 45,000 lines of code to make Mario do the funny",
+            "We love circular references",
             "Don't show this to your epileptic friends",
             "Clown vomit, spikes and needles",
             "My mom says to blow in the cartridge so it works best",
             "The Vanguard of unreliable sloshy behavior r&&d innovation for the thrill of gamers",
             "Where are all these plates coming from anyway",
             "Preparing more plates, please standby",
-            "Unpredictable and profoundly cursed",
+			"Unpredictable and profoundly cursed",
+			"Violates every design paradigm in the book",
         };
 
 		private void RTC_ConnectionStatus_Form_Load(object sender, EventArgs e)

@@ -184,6 +184,12 @@
     <Compile Include="Components\Glitch Harvester\RTC_StockpileManager_Form.designer.cs">
       <DependentUpon>RTC_StockpileManager_Form.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\Memory Tools\RTC_OpenTools_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Components\Memory Tools\RTC_OpenTools_Form.designer.cs">
+      <DependentUpon>RTC_OpenTools_Form.cs</DependentUpon>
+    </Compile>
     <Compile Include="Components\Memory Tools\RTC_VmdLimiterProfiler_Form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -429,6 +435,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Glitch Harvester\RTC_StockpileManager_Form.resx">
       <DependentUpon>RTC_StockpileManager_Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Memory Tools\RTC_OpenTools_Form.resx">
+      <DependentUpon>RTC_OpenTools_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Memory Tools\RTC_VmdLimiterProfiler_Form.resx">
       <DependentUpon>RTC_VmdLimiterProfiler_Form.cs</DependentUpon>
