@@ -320,7 +320,8 @@
             this.MemoryDomainsMenuItem.Name = "MemoryDomainsMenuItem";
             this.MemoryDomainsMenuItem.Size = new System.Drawing.Size(114, 20);
             this.MemoryDomainsMenuItem.Text = "Memory Domains";
-			this.MemoryDomainsMenuItem.Click += MemoryDomainsMenuItem_Click;
+			this.MemoryDomainsMenuItem.MouseDown += MemoryDomainsMenuItem_MouseDown;
+			this.MemoryDomainsMenuItem.DropDownOpened += MemoryDomainsMenuItem_DropDown;
             // 
             // nULLToolStripMenuItem
             // 

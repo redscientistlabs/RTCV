@@ -27,7 +27,13 @@ namespace RTCV.UI
 
 		private void btnOpenHexEditor_Click(object sender, EventArgs e)
 		{
-			LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_OPENHEXEDITOR);
+			bool UseRealtime = (bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME] ?? false;
+            if(UseRealtime)
+				LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_OPENHEXEDITOR);
+			else
+			{
+				MessageBox.Show("Hex editor only works with real-time systems");
+			}
         }
 	}
 }

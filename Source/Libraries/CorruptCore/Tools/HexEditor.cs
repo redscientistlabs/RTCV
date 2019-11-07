@@ -137,8 +137,11 @@ namespace RTCV.CorruptCore.Tools
 
         public void UpdateValues()
         {
-            AddressesLabel.Text = GenerateMemoryViewString(true);
-            AddressLabel.Text = GenerateAddressString();
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                AddressesLabel.Text = GenerateMemoryViewString(true);
+                AddressLabel.Text = GenerateAddressString();
+            });
         }
 
 
@@ -146,38 +149,41 @@ namespace RTCV.CorruptCore.Tools
 
         public void Restart()
         {
-			if (AllDomains.Count == 0)
-			{
-				_domain = new NullMemoryInterface();
-			}
-			else if (AllDomains.Any(x => x.Value.Name == _domain.Name))
+            SyncObjectSingleton.FormExecute(() =>
             {
-                _domain = AllDomains[_domain.Name];
-            }
-            else
-            {
-                _domain = AllDomains.Values.First();
-            }
+                if (AllDomains.Count == 0)
+                {
+                    _domain = new NullMemoryInterface();
+                }
+                else if (AllDomains.Any(x => x.Value.Name == _domain.Name))
+                {
+                    _domain = AllDomains[_domain.Name];
+                }
+                else
+                {
+                    _domain = AllDomains.Values.First();
+                }
 
-            SwapBytes = false;
-            BigEndian = _domain.BigEndian;
-			DataSize = _domain.WordSize;
+                SwapBytes = false;
+                BigEndian = _domain.BigEndian;
+                DataSize = _domain.WordSize;
 
-            _maxRow = _domain.Size / 2;
+                _maxRow = _domain.Size / 2;
 
-            // Don't reset scroll bar if restarting the same rom
-            if (_lastRom != (string)(AllSpec.VanguardSpec?[VSPEC.NAME] ?? "UNKNOWN"))
-            {
-                _lastRom = (string)(AllSpec.VanguardSpec?[VSPEC.NAME] ?? "UNKNOWN");
-                ResetScrollBar();
-            }
+                // Don't reset scroll bar if restarting the same rom
+                if (_lastRom != (string)(AllSpec.VanguardSpec?[VSPEC.NAME] ?? "UNKNOWN"))
+                {
+                    _lastRom = (string)(AllSpec.VanguardSpec?[VSPEC.NAME] ?? "UNKNOWN");
+                    ResetScrollBar();
+                }
 
-            SetDataSize(DataSize);
-            SetHeader();
+                SetDataSize(DataSize);
+                SetHeader();
 
-            UpdateValues();
-            AddressLabel.Text = GenerateAddressString();
-            this.Refresh();
+                UpdateValues();
+                AddressLabel.Text = GenerateAddressString();
+                this.Refresh();
+            });
         }
 
         public byte[] ConvertTextToBytes(string str)
@@ -445,28 +451,32 @@ namespace RTCV.CorruptCore.Tools
             return addrStr.ToString();
         }
 
-		private int MakeValue(int dataSize, long address)
+		private bool MakeValue(int dataSize, long address, out int value)
         {
-			try
+            value = 0;
+            try
 			{
 				switch (dataSize)
 				{
 					case 1:
-						return _domain.PeekByte(address);
+                        value = _domain.PeekByte(address);
+                        break;
 					case 2:
-						return BitConverter.ToInt16(_domain.PeekBytes(address, address + 2, !SwapBytes), 0);
-					case 4:
-						return BitConverter.ToInt16(_domain.PeekBytes(address, address + 4, !SwapBytes), 0);
-				}
+                        value =  BitConverter.ToInt16(_domain.PeekBytes(address, address + 2, !SwapBytes), 0);
+                        break;
+                    case 4:
+                        value = BitConverter.ToInt16(_domain.PeekBytes(address, address + 4, !SwapBytes), 0);
+                        break;
+                }
 			}
 			catch (Exception ex)
 			{
                 Console.WriteLine(ex);
-				return 0;
-			}
+                return false;
+            }
 
-			return 0;
-		}
+            return true;
+        }
 
         private string GenerateMemoryViewString(bool forWindow)
         {
@@ -490,7 +500,10 @@ namespace RTCV.CorruptCore.Tools
                         for (int k = 0; k < DataSize; k++)
                         {
 
-							t_next = MakeValue(1, _addr + j + k);
+                            if (!MakeValue(1, _addr + j + k, out t_next))
+                            {
+                                return "ERROR";
+                            }
 
                             if (SwapBytes)
                             {
@@ -1150,14 +1163,23 @@ namespace RTCV.CorruptCore.Tools
             return item;
         }
 
-        private void MemoryDomainsMenuItem_Click(object sender, EventArgs e)
-        {
-            MemoryDomainsMenuItem.DropDownItems.Clear();
-            foreach (var k in AllDomains.Values)
-            {
-                MemoryDomainsMenuItem.DropDownItems.Add(GetMenuItem(k, SetMemoryDomain, _domain.Name));
+		private void MemoryDomainsMenuItem_MouseDown(object sender, MouseEventArgs e)
+		{
+			if (MemoryDomainsMenuItem.DropDownItems.Count == 0)
+			{
+				MemoryDomainsMenuItem.DropDownItems.Add(GetMenuItem(new NullMemoryInterface(), SetMemoryDomain, _domain.Name));
+                MemoryDomainsMenuItem.ShowDropDown();
             }
+				
         }
+		private void MemoryDomainsMenuItem_DropDown(object sender, EventArgs e)
+		{
+			MemoryDomainsMenuItem.DropDownItems.Clear();
+			foreach (var k in AllDomains.Values)
+			{
+				MemoryDomainsMenuItem.DropDownItems.Add(GetMenuItem(k, SetMemoryDomain, _domain.Name));
+			}
+		}
 
         private void DataSizeByteMenuItem_Click(object sender, EventArgs e)
         {
