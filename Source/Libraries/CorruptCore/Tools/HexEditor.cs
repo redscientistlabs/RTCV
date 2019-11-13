@@ -1797,7 +1797,7 @@ namespace RTCV.CorruptCore.Tools
                 var textX = (int)GetTextX(_addressHighlighted);
                 var textpoint = new Point(textX, point.Y);
 
-                var rect = new Rectangle(point, new Size(fontWidth * 2 * DataSize + (NeedsExtra(_addressHighlighted) ? fontWidth : 0) + 2, fontHeight));
+                var rect = new Rectangle(point, new Size(fontWidth * 2 * DataSize + (NeedsExtra(_addressHighlighted) ? fontWidth : 0) + 3, fontHeight));
                 e.Graphics.DrawRectangle(new Pen(Brushes.Black), rect);
 
                 var textrect = new Rectangle(textpoint, new Size(fontWidth * DataSize, fontHeight));
@@ -1822,7 +1822,7 @@ namespace RTCV.CorruptCore.Tools
                     var textX = (int)GetTextX(address);
                     var textpoint = new Point(textX, point.Y);
 
-                    var rect = new Rectangle(point, new Size(fontWidth * 2 * DataSize + 2, fontHeight));
+                    var rect = new Rectangle(point, new Size(fontWidth * 2 * DataSize + 3, fontHeight));
                     e.Graphics.DrawRectangle(new Pen(Brushes.Black), rect);
 
                     var textrect = new Rectangle(textpoint, new Size(fontWidth * DataSize, fontHeight));

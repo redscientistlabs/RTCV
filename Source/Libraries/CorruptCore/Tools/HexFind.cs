@@ -56,7 +56,7 @@ namespace RTCV.CorruptCore.Tools
 				return FindBox.Text;
 			}
 
-			var bytes = CorruptCore_Extensions.StringToByteArray(FindBox.Text);
+			var bytes = S.GET<HexEditor>().ConvertTextToBytes(FindBox.Text);
 
 			var bytestring = new StringBuilder();
 			foreach (var b in bytes)

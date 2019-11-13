@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
+using RTCV.CorruptCore.Tools;
 using RTCV.NetCore;
 using RTCV.NetCore.StaticTools;
 using static RTCV.NetCore.NetcoreCommands;
@@ -432,18 +433,21 @@ namespace RTCV.CorruptCore
 					MemoryDomains.VmdPool.Clear();
 					foreach (var proto in (advancedMessage.objectValue as VmdPrototype[]))
 						MemoryDomains.AddVMD(proto);
+                    S.GET<HexEditor>().Restart();
 					break;
 
 				case REMOTE_DOMAIN_VMD_ADD:
 					MemoryDomains.AddVMD_NET((advancedMessage.objectValue as VmdPrototype));
-					break;
+                    S.GET<HexEditor>().Restart();
+                    break;
 
 				case REMOTE_DOMAIN_VMD_REMOVE:
                 {
                     StepActions.ClearStepBlastUnits();
                     MemoryDomains.RemoveVMD_NET((advancedMessage.objectValue as string));
+                    S.GET<HexEditor>().Restart();
 				}
-					break;
+				break;
 
                 case REMOTE_DOMAIN_ACTIVETABLE_MAKEDUMP:
                 {

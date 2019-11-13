@@ -120,9 +120,12 @@ namespace RTCV.CorruptCore
 		{
 			lock (executeLock)
 			{
-				return appliedInfinite.Any(x => x.Exists(y => y.Lifetime == 0 && 
-					y.Domain == domain &&
-					y.Address == address));
+				return appliedInfinite.Any(x => x.Exists(y =>
+                {
+                    return y.Lifetime == 0 &&
+                           y.Domain == domain &&
+                           y.Address == address;
+                }));
 			}
 		}
 
