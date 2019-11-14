@@ -1610,8 +1610,8 @@ namespace RTCV.UI
 						import.Add(bu);
 					else
 					{
-                        //If we've already warned them 
-						if (warned.Contains(bu.Domain) && (!String.IsNullOrEmpty(bu.SourceDomain) || warned.Contains(bu.SourceDomain)))
+                        //If we've already warned them about the specific domain, don't warn them again.
+						if (warned.Contains(bu.Domain) && (String.IsNullOrEmpty(bu.SourceDomain) || warned.Contains(bu.SourceDomain)))
                             continue;
 
 						if (MessageBox.Show($"Imported blastlayer references an invalid domain.\n" +
