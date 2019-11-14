@@ -1602,12 +1602,37 @@ namespace RTCV.UI
 		{
 			if (bl != null)
 			{
+                var warned = new List<string>();
+				var import = new List<BlastUnit>();
 				foreach (BlastUnit bu in bl.Layer)
 				{
-					if (domains.Contains(bu.Domain) &&
-                        (String.IsNullOrWhiteSpace(bu.SourceDomain) || domains.Contains(bu.SourceDomain))) 
-						bs.Add(bu);
+					if (domains.Contains(bu.Domain) && (String.IsNullOrWhiteSpace(bu.SourceDomain) || domains.Contains(bu.SourceDomain))) 
+						import.Add(bu);
+					else
+					{
+                        //If we've already warned them 
+						if (warned.Contains(bu.Domain) && (!String.IsNullOrEmpty(bu.SourceDomain) || warned.Contains(bu.SourceDomain)))
+                            continue;
+
+						if (MessageBox.Show($"Imported blastlayer references an invalid domain.\n" +
+							$"The current unit being imported has the following parameters.\n" +
+							$"Domain: {bu.Domain}" +
+							$"SourceDomain {bu.SourceDomain ?? "EMPTY"}\n\n" +
+							$"Silence warning & continue importing valid units?", "Invalid Domain in Imported Unit"
+							, MessageBoxButtons.OKCancel) == DialogResult.OK)
+						{
+							warned.Add(bu.Domain);
+							if(!String.IsNullOrWhiteSpace(bu.SourceDomain))
+								warned.Add(bu.SourceDomain);
+						}
+						else
+						{
+							return;
+						}
+					}
 				}
+				foreach (var bu in import)
+					bs.Add(bu);
 			}
 			dgvBlastEditor.ResetBindings();
 			RefreshAllNoteIcons();
