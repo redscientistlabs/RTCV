@@ -377,7 +377,7 @@ namespace RTCV.UI
 							.lbStashHistory.Items.Count - 1;
 					}
 
-					StockpileManager_UISide.ApplyStashkey(StockpileManager_UISide.CurrentStashkey);
+					IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(StockpileManager_UISide.CurrentStashkey);
 				}
 			}
 			finally
