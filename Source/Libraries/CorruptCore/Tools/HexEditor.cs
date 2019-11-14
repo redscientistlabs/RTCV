@@ -135,13 +135,20 @@ namespace RTCV.CorruptCore.Tools
             return true;
         }
 
-        public void UpdateValues()
+        public async void UpdateValues()
         {
-            SyncObjectSingleton.FormExecute(() =>
+            await Task.Run(() => SyncObjectSingleton.FormExecute(() =>
             {
-                AddressesLabel.Text = GenerateMemoryViewString(true);
-                AddressLabel.Text = GenerateAddressString();
-            });
+                try
+                {
+                    AddressesLabel.Text = GenerateMemoryViewString(true);
+                    AddressLabel.Text = GenerateAddressString();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Failed to UpdateValues() in hex editor.{e}");
+                }
+            }));
         }
 
 

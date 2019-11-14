@@ -336,12 +336,12 @@ namespace RTCV.CorruptCore
 			}
 		}
 		public static void Execute()
-		{
-			if (isRunning)
+        {
+            lock (executeLock)
             {
-                bool needsRefilter = false;
-                lock (executeLock)
+                if (isRunning)
                 {
+                    bool needsRefilter = false;
                     //Queue everything up
                     CheckApply();
 
@@ -425,14 +425,14 @@ namespace RTCV.CorruptCore
                             }
                         }
                     }
+                    //We only call this if there's a loop
+                    if (needsRefilter)
+                        FilterBuListCollection();
                 }
-                //We only call this if there's a loop
-                if (needsRefilter)
-                    FilterBuListCollection();
+                //Update any tools
+                if (S.GET<CorruptCore.Tools.HexEditor>().Visible && S.GET<CorruptCore.Tools.HexEditor>().UpdateOnStep)
+				    S.GET<CorruptCore.Tools.HexEditor>().UpdateValues();
             }
-            //Update any tools
-            if (S.GET<CorruptCore.Tools.HexEditor>().Visible && S.GET<CorruptCore.Tools.HexEditor>().UpdateOnStep)
-				S.GET<CorruptCore.Tools.HexEditor>().UpdateValues();
         }
 	}
 }
