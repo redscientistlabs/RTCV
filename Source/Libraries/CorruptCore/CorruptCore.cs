@@ -930,10 +930,15 @@ namespace RTCV.CorruptCore
             if (S.GET<CorruptCore.Tools.HexEditor>().Visible)
                 S.GET<CorruptCore.Tools.HexEditor>().Restart();
         }
-        public static void GAME_CLOSED()
+        public static void GAME_CLOSED(bool closeHexEditor = false)
         {
-            if (S.GET<CorruptCore.Tools.HexEditor>().Visible)
-                S.GET<CorruptCore.Tools.HexEditor>().Restart();
+			if(closeHexEditor)
+                S.GET<CorruptCore.Tools.HexEditor>().Close();
+            else
+            {
+                if (S.GET<CorruptCore.Tools.HexEditor>().Visible)
+                    S.GET<CorruptCore.Tools.HexEditor>().Restart();
+			}
         }
     }
 }
