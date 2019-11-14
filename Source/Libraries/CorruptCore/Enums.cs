@@ -242,6 +242,7 @@
         public static readonly string SUPPORTS_MIXED_STOCKPILE = nameof(SUPPORTS_MIXED_STOCKPILE);
         public static readonly string SUPPORTS_KILLSWITCH = nameof(SUPPORTS_KILLSWITCH);
         public static readonly string SUPPORTS_CONFIG_HANDOFF = nameof(SUPPORTS_CONFIG_HANDOFF);
+		public static readonly string USE_INTEGRATED_HEXEDITOR = nameof(USE_INTEGRATED_HEXEDITOR);
         public static readonly string RENAME_SAVESTATE = nameof(RENAME_SAVESTATE);
         public static readonly string OVERRIDE_DEFAULTMAXINTENSITY = nameof(OVERRIDE_DEFAULTMAXINTENSITY);
         public static readonly string CONFIG_PATHS = nameof(CONFIG_PATHS);

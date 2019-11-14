@@ -128,29 +128,39 @@ namespace RTCV.CorruptCore
 
 				case REMOTE_OPENHEXEDITOR:
 				{
-					SyncObjectSingleton.FormExecute(() =>
+                    if((bool?)AllSpec.VanguardSpec[VSPEC.USE_INTEGRATED_HEXEDITOR] ?? false)
+						LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_OPENHEXEDITOR, true);
+					else
 					{
-						S.GET<CorruptCore.Tools.HexEditor>().Show();
-					});
+						SyncObjectSingleton.FormExecute(() =>
+						{
+							S.GET<CorruptCore.Tools.HexEditor>().Show();
+						});
+					}
+
 				} break;
 
 				case EMU_OPEN_HEXEDITOR_ADDRESS:
 				{
-					var temp = advancedMessage.objectValue as object[];
-					string domain = (string)temp[0];
-					long address = (long)temp[1];
-
-					MemoryDomainProxy mdp = MemoryDomains.GetProxy(domain, address);
-					long realAddress = MemoryDomains.GetRealAddress(domain, address);
-
-					SyncObjectSingleton.FormExecute(() =>
+                    if((bool?)AllSpec.VanguardSpec[VSPEC.USE_INTEGRATED_HEXEDITOR] ?? false)
+						LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.EMU_OPEN_HEXEDITOR_ADDRESS, advancedMessage.objectValue, true);
+					else
 					{
-						S.GET<CorruptCore.Tools.HexEditor>().Show();
-                        S.GET<CorruptCore.Tools.HexEditor>().SetDomain(mdp);
-						S.GET<CorruptCore.Tools.HexEditor>().GoToAddress(address);
-						
-                    });
+						var temp = advancedMessage.objectValue as object[];
+						string domain = (string)temp[0];
+						long address = (long)temp[1];
 
+						MemoryDomainProxy mdp = MemoryDomains.GetProxy(domain, address);
+						long realAddress = MemoryDomains.GetRealAddress(domain, address);
+
+						SyncObjectSingleton.FormExecute(() =>
+						{
+							S.GET<CorruptCore.Tools.HexEditor>().Show();
+							S.GET<CorruptCore.Tools.HexEditor>().SetDomain(mdp);
+							S.GET<CorruptCore.Tools.HexEditor>().GoToAddress(address);
+
+						});
+					}
 					break;
 				}
 
