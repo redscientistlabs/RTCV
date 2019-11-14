@@ -1603,7 +1603,11 @@ namespace RTCV.UI
 			if (bl != null)
 			{
 				foreach (BlastUnit bu in bl.Layer)
-					bs.Add(bu);
+				{
+					if (domains.Contains(bu.Domain) &&
+                        (String.IsNullOrWhiteSpace(bu.SourceDomain) || domains.Contains(bu.SourceDomain))) 
+						bs.Add(bu);
+				}
 			}
 			dgvBlastEditor.ResetBindings();
 			RefreshAllNoteIcons();
