@@ -122,13 +122,16 @@ namespace RTCV.UI
                 }
             }
 			//CurrentStashKey can be separate
-			foreach (var bu in StockpileManager_UISide.CurrentStashkey.BlastLayer.Layer.Where(x => x.Domain == vmdName || x.SourceDomain == vmdName))
+			if (StockpileManager_UISide.CurrentStashkey != null)
 			{
-				if (bu.Domain == vmdName)
-					bu.Domain = name;
-				if (bu.SourceDomain == vmdName)
-					bu.SourceDomain = name;
-            }
+				foreach (var bu in StockpileManager_UISide.CurrentStashkey.BlastLayer.Layer.Where(x => x.Domain == vmdName || x.SourceDomain == vmdName))
+				{
+					if (bu.Domain == vmdName)
+						bu.Domain = name;
+					if (bu.SourceDomain == vmdName)
+						bu.SourceDomain = name;
+				}
+			}
         }
 
 		private void RTC_VmdPool_Form_Load(object sender, EventArgs e)
