@@ -59,11 +59,18 @@ namespace RTCV.Prereqs
                     ProcessStartInfo p = new ProcessStartInfo(d.ExecutableName, d.InstallString);
                     try
                     {
-                        Process.Start(p).WaitForExit();
+                        Process _p = Process.Start(p);
+                        _p.WaitForExit();
                     }
                     catch (Exception e)
                     {
-                        MessageBox.Show($"Something went wrong when launching {p}. Send this to the devs!\n{e.ToString()}");
+                        MessageBox.Show($"Something went wrong when launching {p}.\n" +
+                                        $"If the RTC fails to run, try running the pre-requisite installer from the launcher manually.\n" +
+                                        $"If this error persists, poke the devs.");
+                        Console.WriteLine(e);
+                        Console.WriteLine(e.StackTrace);
+
+                        return;
                     }
 
                     d = d.RunAfter;
