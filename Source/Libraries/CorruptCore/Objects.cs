@@ -343,13 +343,11 @@ namespace RTCV.CorruptCore
                 sk.StateLocation = StashKeySavestateLocation.SKS;
             }
 
-            StockpileManager_UISide.CurrentStockpile = sks;
             RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Done", saveProgress = 100));
             return true;
 		}
 
-		//Todo - get this out of the objects
-		public static bool Load(DataGridView dgvStockpile, string Filename, bool import = false)
+		public static Stockpile Load(string filename, bool import = false)
         {
             decimal loadProgress = 0;
             decimal percentPerFile = 0;
@@ -362,16 +360,15 @@ namespace RTCV.CorruptCore
 					LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_CLOSEGAME, true);
 				}
 				else
-				{
-					return false;
-				}
+                {
+                    throw new OperationCanceledException("Operation cancelled by user");
+                }
 			}
 
-			if (!File.Exists(Filename))
-			{
-				MessageBox.Show("The Stockpile file wasn't found");
-				return false;
-			}
+			if (!File.Exists(filename))
+            {
+                throw new OperationCanceledException("The stockpile wasn't found");
+            }
 
 
 			Stockpile sks;
@@ -379,8 +376,8 @@ namespace RTCV.CorruptCore
 
             //Extract the stockpile
             RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs("Extracting Stockpile (progress not reported during extraction)", loadProgress += 5));
-            if (!Extract(Filename, Path.Combine("WORKING", extractFolder), "stockpile.json"))
-				return false;
+            if (!Extract(filename, Path.Combine("WORKING", extractFolder), "stockpile.json"))
+                throw new OperationCanceledException("Extracting the stockpile failed.");
 
 			//Read in the stockpile
 			try
@@ -395,17 +392,16 @@ namespace RTCV.CorruptCore
 			}
 			catch (Exception e)
 			{
-				MessageBox.Show("The Stockpile file could not be loaded" + e);
-				return false;
+                throw new OperationCanceledException("Failed to load the stockpile", e);
 			}
 
 
             RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs("Checking Compatibility", loadProgress += 5));
             //Check version/implementation compatibility
             if (CheckCompatibility(sks))
-                return false;
-            
-            if (import)
+                throw new OperationCanceledException("Failed to load the stockpile");
+
+			if (import)
 			{
 				var allCopied = new List<string>();
                 //Copy from temp to sks
@@ -453,7 +449,7 @@ namespace RTCV.CorruptCore
 				
 
 				//Update the filename in case they renamed it
-				sks.Filename = Filename;
+				sks.Filename = filename;
 			}
 
             //Set up the correct paths
@@ -502,13 +498,12 @@ namespace RTCV.CorruptCore
 		public static bool Import(string filename, DataGridView dgvStockpile)
 		{
             return Load(dgvStockpile, filename, true);
-                
         }
 		/// <summary>
 		/// Checks a stockpile for compatibility with the current version of the RTC
 		/// </summary>
 		/// <param name="sks"></param>
-		public static bool CheckCompatibility(Stockpile sks)
+		public static bool CheckCompatibility(Stockpile sks, out List<string> errorMessages)
 		{
             bool fatal = false;
 			List<string> errorMessages = new List<string>();

@@ -294,25 +294,29 @@ namespace RTCV.NetCore
 		}
 	}
 
+    public class SilentException : Exception
+    {
 
+    }
 	public class CustomException : Exception
 	{
-
-		private string replacementStacktrace;
-
-		public CustomException(string message, string stackTrace) : base(message)
+        private readonly string _additionalInfo = "";
+		
+		public CustomException(string message, string additionalInfo) : base(message)
 		{
-			this.replacementStacktrace = stackTrace;
+			this._additionalInfo = additionalInfo;
+		}
+        public CustomException(string message, Exception innerException) : base(message, innerException)
+        {
+
+		}
+		public CustomException(string message, string additionalInfo, Exception innerException) : base(message, innerException)
+        {
+            this._additionalInfo = additionalInfo;
 		}
 
-		public override string StackTrace
-		{
-			get
-			{
-				return this.replacementStacktrace;
-			}
-		}
-	}
+		public override string StackTrace => (String.IsNullOrEmpty(_additionalInfo) ? _additionalInfo + "/n" : "") + base.StackTrace;
+    }
 
 	public class AbortEverythingException : Exception
 	{
