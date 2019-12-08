@@ -9,10 +9,11 @@ namespace RTCV.NetCore
 {
     public class ReturnWatch
     {
-        //This is a component that allows to freeze the thread that asked for a value from a Synced Message
-        //This makes inter-process calls able to block and wait for return values to keep code linearity
+		//This is a component that allows to freeze the thread that asked for a value from a Synced Message
+		//This makes inter-process calls able to block and wait for return values to keep code linearity
 
-        private volatile NetCoreSpec spec;
+		private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+		private volatile NetCoreSpec spec;
         private volatile ConcurrentDictionary<Guid, object> SyncReturns = new ConcurrentDictionary<Guid, object>();
         private volatile int attemptsAtReading = 0;
         private volatile bool KillReturnWatch = false;
@@ -47,7 +48,7 @@ namespace RTCV.NetCore
 
 			using (new TimePeriod(1))
 			{
-				ConsoleEx.WriteLine("GetValue:Awaiting -> " + type.ToString());
+				logger.Info("GetValue:Awaiting -> " + type.ToString());
 				//spec.OnSyncedMessageStart(null);
 				spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{EVENT_SYNCEDMESSAGESTART}"));
 
@@ -68,7 +69,7 @@ namespace RTCV.NetCore
 						KillReturnWatch = false;
 						attemptsAtReading = 0;
 
-						ConsoleEx.WriteLine("GetValue:Killed -> " + type.ToString());
+                        logger.Warn("GetValue:Killed -> " + type.ToString());
 						//spec.OnSyncedMessageEnd(null);
 						spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{EVENT_SYNCEDMESSAGEEND}"));
 						return null;
@@ -86,7 +87,7 @@ namespace RTCV.NetCore
 				attemptsAtReading = 0;
 				SyncReturns.TryRemove(WatchedGuid, out object ret);
 
-				ConsoleEx.WriteLine("GetValue:Returned -> " + type.ToString());
+				logger.Info("GetValue:Returned -> " + type.ToString());
 				//spec.OnSyncedMessageEnd(null);
 				spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{EVENT_SYNCEDMESSAGEEND}"));
 				return ret;

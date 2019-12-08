@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using NLog;
 
 namespace RTCV.NetCore
 {
 	public static class LocalNetCoreRouter
 	{
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 		private static Dictionary<string, IRoutable> endpoints = new Dictionary<string, IRoutable>();
 		public static bool HasEndpoints { get { return endpoints.Count > 0; } }
 
@@ -16,7 +18,7 @@ namespace RTCV.NetCore
 			if (endpoint is IRoutable)
 				endpoints[name] = (IRoutable)endpoint;
 			else
-				ConsoleEx.WriteLine($"Error while registering object {endpoint} in Netcore Local Router, does not implement IRoutable");
+                logger.Fatal($"Error while registering object {endpoint} in Netcore Local Router, does not implement IRoutable");
 
 			return endpoint;
 		}

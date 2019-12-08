@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using NLog;
 
 namespace RTCV.NetCore
 {
@@ -523,8 +524,9 @@ namespace RTCV.NetCore
         }
     }
     internal sealed class TimePeriod : IDisposable
-    {
-        private const string WINMM = "winmm.dll";
+	{
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+		private const string WINMM = "winmm.dll";
 
         private static TIMECAPS timeCapabilities;
 
@@ -557,19 +559,19 @@ namespace RTCV.NetCore
             if (Interlocked.Increment(ref inTimePeriod) != 1)
             {
                 Interlocked.Decrement(ref inTimePeriod);
-				Console.WriteLine("The process is already within a time period. Nested time periods are not supported.");
+				//Console.WriteLine("The process is already within a time period. Nested time periods are not supported.");
 				return;
             }
 
             if (period < timeCapabilities.wPeriodMin || period > timeCapabilities.wPeriodMax)
             {
-				Console.WriteLine("The request to begin a time period was not completed because the resolution specified is out of range.");
+				logger.Error("The request to begin a time period was not completed because the resolution specified is out of range.");
             }
 
             int result = timeBeginPeriod(period);
             if (result != 0)
             {
-                Console.WriteLine("The request to begin a time period was not completed because an unexpected error with code " + result + " occured.");
+                logger.Error("The request to begin a time period was not completed because an unexpected error with code " + result + " occured.");
             }
 
             this.period = period;
