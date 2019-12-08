@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using NLog;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
 using static RTCV.UI.UI_Extensions;
@@ -312,16 +313,9 @@ namespace RTCV.UI
             {
                 dgvStockpile.Rows.Clear();
 
-                if (StockpileManager_UISide.CurrentStockpile != null)
-                {
-                    StockpileManager_UISide.CurrentStockpile.Filename = null;
-                    StockpileManager_UISide.CurrentStockpile.ShortFilename = null;
-                }
+                StockpileManager_UISide.ClearCurrentStockpile();
 
                 btnSaveStockpile.Enabled = false;
-
-                StockpileManager_UISide.StockpileChanged();
-
                 UnsavedEdits = false;
 
                 S.GET <RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
@@ -352,16 +346,33 @@ namespace RTCV.UI
 
                 await Task.Run(() =>
                 {
-					if (Stockpile.Load(dgvStockpile, filename))
-					{
-						SyncObjectSingleton.FormExecute(() =>
-						{
-							btnSaveStockpile.Enabled = true;
-							RefreshNoteIcons();
-						});
-					}
+                    var r = Stockpile.Load(filename);
+                    if (r.Failed)
+                    {
+                        MessageBox.Show($"Loading the stockpile failed!\n" +
+                                        $"{r.GetErrorsFormatted()}");
+                    }
+                    else
+                    {
+                        var sks = r.Result;
+                        //Update the current stockpile to this one
+                        StockpileManager_UISide.SetCurrentStockpile(sks);
 
-					SyncObjectSingleton.FormExecute(() =>
+                        SyncObjectSingleton.FormExecute(() =>
+                        {
+                            foreach (StashKey key in sks.StashKeys)
+                                dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.Note);
+
+                            btnSaveStockpile.Enabled = true;
+                            RefreshNoteIcons();
+
+                            MessageBox.Show($"The stockpile gave the following warnings:\n" +
+                                            $"{r.GetWarningsFormatted()}");
+                        });
+                        
+                    }
+
+                    SyncObjectSingleton.FormExecute(() =>
 					{
 						S.GET<RTC_StockpilePlayer_Form>().dgvStockpile.Rows.Clear();
 
@@ -526,7 +537,7 @@ namespace RTCV.UI
 					ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
 				});
 
-				await Task.Run(() => { saveStockpile(sks, StockpileManager_UISide.CurrentStockpile.Filename); });
+				await Task.Run(() => { saveStockpile(sks, StockpileManager_UISide.GetCurrentStockpilePath()); });
 			}
 			finally
 			{
@@ -653,8 +664,21 @@ namespace RTCV.UI
 
 					await Task.Run(() =>
 					{
-						if (Stockpile.Import(ofd.FileName, dgvStockpile))
-							UnsavedEdits = true;
+                        if (Stockpile.Import(ofd.FileName) is {Failed: false} r)
+                        {
+                            var sks = r.Result;
+                            //Todo - Refactor this to get it out of the object
+                            //Populate the dgv
+                            RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Populating UI", 95));
+                            SyncObjectSingleton.FormExecute(() =>
+                            {
+                                foreach (StashKey key in sks.StashKeys)
+                                    dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.Note);
+                                UnsavedEdits = true;
+                            });
+                            RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Done", 100));
+                        }
+							
 					});
 				}
 				finally
