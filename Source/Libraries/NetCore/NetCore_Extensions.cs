@@ -48,12 +48,12 @@ namespace RTCV.NetCore
 
 		public static class ConsoleHelper
 		{
-			public static ConsoleCopy con;
+			//public static ConsoleCopy con;
 			public static void CreateConsole(string path)
 			{
 				ReleaseConsole();
 				AllocConsole();
-				con = new ConsoleCopy(path);
+				//con = new ConsoleCopy(path);
 
 				//Disable the X button on the console window
 				EnableMenuItem(GetSystemMenu(GetConsoleWindow(), false), SC_CLOSE, MF_DISABLED);
@@ -112,7 +112,7 @@ namespace RTCV.NetCore
 			public static extern IntPtr GetSystemMenu(IntPtr HWNDValue, bool isRevert);
 			[DllImport("user32.dll")]
 			public static extern int EnableMenuItem(IntPtr tMenu, int targetItem, int targetStatus);
-			public class ConsoleCopy : IDisposable
+			/*public class ConsoleCopy : IDisposable
 			{
 				FileStream fileStream;
 				public StreamWriter FileWriter;
@@ -191,7 +191,7 @@ namespace RTCV.NetCore
 						fileStream = null;
 					}
 				}
-			}
+			}*/
 		}
 
 

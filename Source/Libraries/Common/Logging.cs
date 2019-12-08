@@ -19,8 +19,8 @@ namespace RTCV.Common
             var logconsole = new NLog.Targets.ColoredConsoleTarget("logconsole");
 
             // Rules for mapping loggers to targets            
-            config.AddRule(LogLevel.Info, LogLevel.Fatal, logconsole);
-            config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
+            config.AddRule(LogLevel.Trace, LogLevel.Fatal, logconsole);
+            config.AddRule(LogLevel.Trace, LogLevel.Fatal, logfile);
             
             // Apply config           
             NLog.LogManager.Configuration = config;

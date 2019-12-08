@@ -320,7 +320,7 @@ namespace RTCV.NetCore
         private void DiscardException(Exception ex)
         {
             //Discarded exception but write it in console
-            logger.Warn("{spec.Side}:{status} -> Supposed to be connected -> {supposedToBeConnected} \n expectingsomeone -> {expectingSomeone} \n status -> {status}", spec.Side, status, supposedToBeConnected, expectingSomeone, status);
+            logger.Warn("{spec.Side}:{status} -> Supposed to be connected -> {supposedToBeConnected} expectingsomeone -> {expectingSomeone} status -> {status}", spec.Side, status, supposedToBeConnected, expectingSomeone, status);
         }
 
         internal void Kill()
@@ -611,8 +611,8 @@ namespace RTCV.NetCore
             else
                 message = new NetCoreAdvancedMessage(_message.Type); // promote message to Advanced if simple ({BOOP} command goes through UDP Link)
 
-            if(!message.Type.StartsWith("{EVENT_") || ConsoleEx.ShowDebug)
-                logger.Trace(spec.Side.ToString() + ":Process advanced message -> " + message.Type.ToString());
+            if((!message.Type.StartsWith("{EVENT_") && message.Type != "{BOOP}") || ConsoleEx.ShowDebug)
+                logger.Info("{side} Process advanced message -> {message}", spec.Side, message.Type);
 
             switch (message.Type)
             {
@@ -742,8 +742,8 @@ namespace RTCV.NetCore
                 else
                     PeerMessageQueue.AddLast(message);
             }
-
-            logger.Info("{side} -> Sent advanced message \"{Type}\", priority:{Priority}", spec.Side, message.Type, priority);
+            if(ConsoleEx.ShowDebug)
+                logger.Trace("side} -> Sent advanced message \"{Type}\", priority:{Priority}", spec.Side, message.Type, priority);
 
         }
 
@@ -764,7 +764,7 @@ namespace RTCV.NetCore
                     PeerMessageQueue.AddLast(message);
             }
 
-            logger.Info("{side} -> Sent advanced message \"{Type}\", priority:{Priority}", spec.Side, message.Type, priority);
+            logger.Info("{side} -> Sent advanced message {Type}, priority:{Priority}", spec.Side, message.Type, priority);
 
             return spec.Connector.watch.GetValue((Guid)message.requestGuid, message.Type); //This will lock here until value is returned from peer
         }
