@@ -837,6 +837,10 @@ namespace RTCV.CorruptCore
     [Serializable()]
     public abstract class FileMemoryInterface : IMemoryDomain
     {
+        [NonSerialized]
+        [Ceras.Exclude]
+		internal static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         public abstract string Name { get; }
 
         public abstract long Size { get; }
@@ -1296,13 +1300,13 @@ namespace RTCV.CorruptCore
 
             catch (IOException e)
             {
-                Console.WriteLine($"IOException in FileInterface.PokeByte! {e.Message}\n{e.StackTrace}");
-                Exception _e = e.InnerException;
-                while (_e != null)
-                {
-                    Console.WriteLine($"InnerException {_e.Message}\n{_e.StackTrace}");
-                    _e = _e.InnerException;
-                }
+				logger.Error(e, "IOException in FileInterface.PeekByte!");
+				Exception _e = e.InnerException;
+				while (_e != null)
+				{
+					logger.Error(e, "InnerException in FileInterface.PeekByte!");
+					_e = _e.InnerException;
+				}
                 throw;
             }
 
@@ -1337,13 +1341,13 @@ namespace RTCV.CorruptCore
             }
             catch (IOException e)
             {
-                Console.WriteLine($"IOException in FileInterface.PeekByte! {e.Message}\n{e.StackTrace}");
-                Exception _e = e.InnerException;
-                while (_e != null)
-                {
-                    Console.WriteLine($"InnerException {_e.Message}\n{_e.StackTrace}");
-                    _e = _e.InnerException;
-                }
+				logger.Error(e, "IOException in FileInterface.PeekByte!");
+				Exception _e = e.InnerException;
+				while (_e != null)
+				{
+					logger.Error(e, "InnerException in FileInterface.PeekByte!");
+					_e = _e.InnerException;
+				}
                 return 0;
             }
 

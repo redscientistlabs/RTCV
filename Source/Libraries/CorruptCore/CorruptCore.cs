@@ -21,8 +21,9 @@ namespace RTCV.CorruptCore
 {
 	public static class RtcCore
 	{
-        //General RTC Values
-        public const string RtcVersion = "5.0.3";
+		private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+		//General RTC Values
+		public const string RtcVersion = "5.0.3";
 
         private static volatile int seed = DateTime.Now.Millisecond;
         public static int Seed => ++seed;
@@ -465,7 +466,7 @@ namespace RTCV.CorruptCore
 					if (ex is WebException)
 					{
 						//Couldn't download the new one so just fall back to the old one if it's there
-						Console.WriteLine(ex.ToString());
+						logger.Error(ex, "Failed to download ProblematicProcesses");
 						if (File.Exists(LocalPath))
 						{
 							try
@@ -474,7 +475,7 @@ namespace RTCV.CorruptCore
 							}
 							catch (Exception _ex)
 							{
-								Console.WriteLine("Couldn't read BADPROCESSES\n\n" + _ex.ToString());
+								logger.Error(_ex, "Couldn't read BADPROCESSES");
 								return;
 							}
 						}
@@ -483,7 +484,7 @@ namespace RTCV.CorruptCore
 					}
 					else
 					{
-						Console.WriteLine(ex.ToString());
+						logger.Error(ex, "Unknown exception when downloading ProblematicProcesses");
 					}
 				}
 
@@ -494,10 +495,10 @@ namespace RTCV.CorruptCore
 				}
 				catch (Exception ex)
 				{
-					Console.WriteLine(ex.ToString());
+					logger.Error(ex);
 					if (File.Exists(LocalPath))
 						File.Delete(LocalPath);
-					throw ex;
+					throw;
 				}
 			})).Start();
 		}
@@ -506,7 +507,7 @@ namespace RTCV.CorruptCore
 		public static bool Warned = false;
 		public static void CheckForProblematicProcesses()
 		{
-			Console.WriteLine(DateTime.Now + "Entering CheckForProblematicProcesses");
+			logger.Info("Entering CheckForProblematicProcesses");
 			if (Warned || ProblematicProcesses == null)
 				return;
 
@@ -535,7 +536,7 @@ namespace RTCV.CorruptCore
 			}
 			finally
 			{
-				Console.WriteLine(DateTime.Now + "Exiting CheckForProblematicProcesses");
+				logger.Info("Exiting CheckForProblematicProcesses");
 			}
 		}
 

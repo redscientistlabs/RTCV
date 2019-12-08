@@ -726,6 +726,10 @@ namespace RTCV.CorruptCore
 	[Ceras.MemberConfig(TargetMember.AllPublic)]
 	public class StashKey : ICloneable, INote
 	{
+		[NonSerialized]
+		[Ceras.Exclude]
+		private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
 		public string RomFilename { get; set; }
 		public string RomShortFilename { get; set; }
 		public byte[] RomData { get; set; }
@@ -857,18 +861,18 @@ namespace RTCV.CorruptCore
 			List<String> knownListKeys = new List<string>();
             foreach (var bu in BlastLayer.Layer.Where(x => x.LimiterListHash != null))
 			{
-				Console.WriteLine($"Looking for knownlist {bu.LimiterListHash}");
+				logger.Trace("Looking for knownlist {bu.LimiterListHash}", bu.LimiterListHash);
 				if (knownListKeys.Contains(bu.LimiterListHash))
 				{
-					Console.WriteLine($"knownListKeys already contains {bu.LimiterListHash}");
-					Console.WriteLine("Done\n");
+					logger.Trace("knownListKeys already contains {bu.LimiterListHash}", bu.LimiterListHash);
+					logger.Trace("Done\n");
                     continue;
                 }
 
-				Console.WriteLine($"Adding {bu.LimiterListHash} to knownListKeys");
+				logger.Trace("Adding {bu.LimiterListHash} to knownListKeys", bu.LimiterListHash);
                 knownListKeys.Add(bu.LimiterListHash);
 
-				Console.WriteLine($"Getting name of {bu.LimiterListHash} from Hash2NameDico");
+				logger.Trace("Getting name of {bu.LimiterListHash} from Hash2NameDico", bu.LimiterListHash);
                 Filtering.Hash2NameDico.TryGetValue(bu.LimiterListHash, out string name);
 
 				if (name == null)
@@ -876,9 +880,9 @@ namespace RTCV.CorruptCore
 				else
 					name = Path.GetFileNameWithoutExtension(name);
 
-                Console.WriteLine($"Setting KnownLists[{bu.LimiterListHash}] to {name}");
+                logger.Trace("Setting KnownLists[{bu.LimiterListHash}] to {name}", bu.LimiterListHash, name);
 				this.KnownLists[bu.LimiterListHash] = name;
-				Console.WriteLine("Done\n");
+				logger.Trace("Done");
 			}
 		}
 
@@ -1627,9 +1631,8 @@ namespace RTCV.CorruptCore
                 {
                     if (Debugger.IsAttached)
                         throw new Exception("wtf");
-                    Console.WriteLine("WORKING WAS NULL");
-                    Console.WriteLine(Environment.StackTrace);
-                    return ExecuteState.SILENTERROR;
+                    RTCV.Common.Logging.GlobalLogger.Error("Blastunit: WORKING WAS NULL {this}", this);
+					return ExecuteState.SILENTERROR;
                 }
                 switch (Source)
                 {
@@ -1639,7 +1642,7 @@ namespace RTCV.CorruptCore
 
                         if (Working.StoreData == null)
                         {
-                            Console.WriteLine("STOREDATA WAS NULL");
+							RTCV.Common.Logging.GlobalLogger.Error("Blastunit: STOREDATA WAS NULL {this}", this);
                             return ExecuteState.SILENTERROR;
                         }
 
