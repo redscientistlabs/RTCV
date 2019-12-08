@@ -155,6 +155,7 @@ namespace RTCV.UI
 		public class ComponentForm : Form, IBlockable
 		{
 
+			protected NLog.Logger Logger { get; private set; }
 			Panel defaultPanel = null;
 			Panel previousPanel = null;
 
@@ -163,6 +164,11 @@ namespace RTCV.UI
 			public bool undockedSizable = true;
 			public bool popoutAllowed = true;
             public UI_ComponentFormTile ParentComponentFormTitle = null;
+
+            protected ComponentForm() : base()
+            {
+                Logger = NLog.LogManager.GetCurrentClassLogger();
+			}
 
             public void AnchorToPanel(Panel pn)
 			{

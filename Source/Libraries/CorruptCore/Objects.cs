@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
@@ -9,6 +10,7 @@ using System.Windows.Forms;
 using System.Numerics;
 using System.ComponentModel;
 using System.Data;
+using System.Text;
 using System.Threading.Tasks;
 using Ceras;
 using Newtonsoft.Json.Converters;
@@ -16,6 +18,7 @@ using RTCV.CorruptCore;
 using RTCV.NetCore;
 using Exception = System.Exception;
 using System.Xml.Serialization;
+using RTCV.Common.Objects;
 
 namespace RTCV.CorruptCore
 {
@@ -347,9 +350,12 @@ namespace RTCV.CorruptCore
             return true;
 		}
 
-		public static Stockpile Load(string filename, bool import = false)
+		public static OperationResults<Stockpile> Load(string filename, bool import = false)
         {
-            decimal loadProgress = 0;
+			var results = new OperationResults<Stockpile>();
+            Stockpile sks;
+
+			decimal loadProgress = 0;
             decimal percentPerFile = 0;
             if ((AllSpec.VanguardSpec[VSPEC.CORE_DISKBASED] as bool? ?? false) && ((AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME] as string ?? "DEFAULT") != ""))
             {
@@ -361,47 +367,55 @@ namespace RTCV.CorruptCore
 				}
 				else
                 {
-                    throw new OperationCanceledException("Operation cancelled by user");
+                    results.AddError("Operation cancelled by user");
+					return results;
                 }
 			}
 
 			if (!File.Exists(filename))
             {
-                throw new OperationCanceledException("The stockpile wasn't found");
+                results.AddError("The selected stockpile was not found.");
+				return results;
             }
 
 
-			Stockpile sks;
 			var extractFolder = import ? "TEMP" : "SKS";
 
             //Extract the stockpile
             RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs("Extracting Stockpile (progress not reported during extraction)", loadProgress += 5));
             if (!Extract(filename, Path.Combine("WORKING", extractFolder), "stockpile.json"))
-                throw new OperationCanceledException("Extracting the stockpile failed.");
+            {
+                results.AddError("Extracting the stockpile failed.");
+				return results;
+            }
+                
 
 			//Read in the stockpile
 			try
 			{
 				RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs("Reading Stockpile", loadProgress += 45));
-				using (FileStream fs = File.Open(Path.Combine(RtcCore.workingDir, extractFolder, "stockpile.json")
-					, FileMode.OpenOrCreate))
+				using (FileStream fs = File.Open(Path.Combine(RtcCore.workingDir, extractFolder, "stockpile.json"), FileMode.OpenOrCreate))
 				{
 					sks = JsonHelper.Deserialize<Stockpile>(fs);
 					fs.Close();
 				}
 			}
 			catch (Exception e)
-			{
-                throw new OperationCanceledException("Failed to load the stockpile", e);
+            {
+                results.AddError("Failed to read the stockpile", e);
+                return results;
 			}
 
 
             RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs("Checking Compatibility", loadProgress += 5));
             //Check version/implementation compatibility
-            if (CheckCompatibility(sks))
-                throw new OperationCanceledException("Failed to load the stockpile");
 
-			if (import)
+            var c = CheckCompatibility(sks);
+            results.AddResults(c);
+			if (c.Failed)
+				return results;
+
+            if (import)
 			{
 				var allCopied = new List<string>();
                 //Copy from temp to sks
@@ -427,13 +441,16 @@ namespace RTCV.CorruptCore
 						}
 						catch (Exception ex)
 						{
-							MessageBox.Show("Unable to copy a file from temp to sks. The culprit is " + file + ".\nCancelling operation.\n " + ex.ToString());
-							//Attempt to cleanup
-							foreach (var f in allCopied)
-								File.Delete(f);
-							return false;
+							try
+							{
+								foreach (var f in allCopied)
+									File.Delete(f);
+							}
+							catch { }
 
-						}
+                            results.AddError($"Unable to copy a file from temp to sks. The culprit is " + file + ".\nCancelling operation.\n ", ex);
+							return results;
+                        }
 					}
 
 				}
@@ -441,13 +458,6 @@ namespace RTCV.CorruptCore
             }
 			else
 			{
-				//Update the current stockpile to this one
-				StockpileManager_UISide.CurrentStockpile = sks;
-
-				//fill list controls
-                SyncObjectSingleton.FormExecute(() => dgvStockpile.Rows.Clear());
-				
-
 				//Update the filename in case they renamed it
 				sks.Filename = filename;
 			}
@@ -469,14 +479,6 @@ namespace RTCV.CorruptCore
 			}
 
 
-            //Todo - Refactor this to get it out of the object
-            //Populate the dgv
-            RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Populating UI", loadProgress += 5));
-			SyncObjectSingleton.FormExecute(() =>
-			{
-				foreach (StashKey key in sks.StashKeys)
-					dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.Note);
-            });
 
 
             RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Loading limiter lists", loadProgress += 5));
@@ -486,53 +488,42 @@ namespace RTCV.CorruptCore
 
 			//If there's a limiter missing, pop a message
 			if (sks.MissingLimiter)
-				MessageBox.Show(
+				results.AddWarning(
 					"This stockpile is missing a limiter list used by some blastunits.\n" +
 					"Some corruptions probably won't work properly.\n" +
 					"If the limiter list is found next time you save, it'll automatically be packed in.");
 
-            RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Done", loadProgress = 100));
-            return true;
+            RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Done", 100));
+
+			results.Result = sks;
+			return results;
 		}
 
-		public static bool Import(string filename, DataGridView dgvStockpile)
+		public static OperationResults<Stockpile> Import(string filename)
 		{
-            return Load(dgvStockpile, filename, true);
+            return Load(filename, true);
         }
 		/// <summary>
 		/// Checks a stockpile for compatibility with the current version of the RTC
 		/// </summary>
 		/// <param name="sks"></param>
-		public static bool CheckCompatibility(Stockpile sks, out List<string> errorMessages)
+		public static OperationResults CheckCompatibility(Stockpile sks)
 		{
-            bool fatal = false;
-			List<string> errorMessages = new List<string>();
-
+            var results = new OperationResults();
 
 			var s = (string) RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "ERROR";
             if (!string.IsNullOrEmpty(sks.VanguardImplementation) && !sks.VanguardImplementation.Equals(s, StringComparison.OrdinalIgnoreCase) && sks.VanguardImplementation != "ERROR")
 			{
-				errorMessages.Add($"The stockpile you loaded is for a different Vanguard implementation.\nThe Stockpile reported {sks.VanguardImplementation} but you're connected to {s}.\nThis is a fatal error. Aborting load.");
-                fatal = true;
+                results.AddError($"The stockpile you loaded is for a different Vanguard implementation.\nThe Stockpile reported {sks.VanguardImplementation} but you're connected to {s}.\nThis is a fatal error. Aborting load.");
             }
 			if (sks.RtcVersion != RtcCore.RtcVersion)
 			{
 				if (sks.RtcVersion == null)
-					errorMessages.Add("You have loaded a broken stockpile that didn't contain an RTC Version number\n. There is no reason to believe that these items will work.");
+                    results.AddError("You have loaded a broken stockpile that didn't contain an RTC Version number\n. There is no reason to believe that these items will work.");
 				else
-					errorMessages.Add("You have loaded a stockpile created with RTC " + sks.RtcVersion + " using RTC " + RtcCore.RtcVersion + "\n" + "Items might not appear identical to how they when they were created or it is possible that they won't work.");
+                    results.AddWarning("You have loaded a stockpile created with RTC " + sks.RtcVersion + " using RTC " + RtcCore.RtcVersion + "\n" + "Items might not appear identical to how they when they were created or it is possible that they won't work.");
 			}
-
-			if (errorMessages.Count == 0)
-				return fatal;
-
-			string message = "The loaded stockpile returned the following errors:\n\n";
-
-			foreach (string line in errorMessages)
-				message += $"•  {line} \n\n";
-
-			MessageBox.Show(message, "Compatibility Checker", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
-			return fatal;
+			return results;
         }
 
 		/// <summary>
@@ -551,7 +542,7 @@ namespace RTCV.CorruptCore
 			baseDir.Delete(true);
 		}
 
-		public static void EmptyFolder(string folder)
+        public static void EmptyFolder(string folder)
 		{
 			try
 			{
@@ -573,7 +564,7 @@ namespace RTCV.CorruptCore
 			}
 		}
 
-		/// <summary>
+        /// <summary>
 		/// Extracts a stockpile into a folder and ensures a master file exists
 		/// </summary>
 		/// <param name="filename"></param>
@@ -612,42 +603,7 @@ namespace RTCV.CorruptCore
 			}
 		}
 
-		//Todo- Rewrite? Not sure if this is worth doing in vanguard
-		/*
-		public static void LoadBizhawkKeyBindsFromIni(string Filename = null)
-		{
-			if (Filename == null)
-			{
-				OpenFileDialog ofd = new OpenFileDialog
-				{
-					DefaultExt = "ini",
-					Title = "Open ini File",
-					Filter = "Bizhawk config file|*.ini",
-					RestoreDirectory = true
-				};
-				if (ofd.ShowDialog() == DialogResult.OK)
-				{
-					Filename = ofd.FileName.ToString();
-				}
-				else
-					return;
-			}
-
-			if (File.Exists(CorruptCore.EmuDir + Path.DirectorySeparatorChar + "import_config.ini"))
-				File.Delete(CorruptCore.EmuDir + Path.DirectorySeparatorChar + "import_config.ini");
-			File.Copy(Filename, CorruptCore.EmuDir + Path.DirectorySeparatorChar + "import_config.ini");
-
-			if (File.Exists(CorruptCore.EmuDir + Path.DirectorySeparatorChar + "stockpile_config.ini"))
-				File.Delete(CorruptCore.EmuDir + Path.DirectorySeparatorChar + "stockpile_config.ini");
-			File.Copy(CorruptCore.EmuDir + Path.DirectorySeparatorChar + "config.ini", CorruptCore.EmuDir + Path.DirectorySeparatorChar + "stockpile_config.ini");
-
-
-			LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_IMPORTKEYBINDS);
-			Process.Start(CorruptCore.EmuDir + Path.DirectorySeparatorChar + $"StockpileConfig.bat");
-
-		}
-		*/
-		public static void LoadConfigFromStockpile()
+        public static void LoadConfigFromStockpile()
 		{
             if(((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_CONFIG_MANAGEMENT] ?? false) == false)
             {
@@ -2163,13 +2119,14 @@ namespace RTCV.CorruptCore
     public delegate void ProgressBarEventHandler(object source, ProgressBarEventArgs e);
     public class ProgressBarEventArgs : EventArgs
     {
-        public string CurrentTask;
+		public string CurrentTask;
         public decimal Progress;
         public ProgressBarEventArgs(string text, decimal progress)
         {
             CurrentTask = text;
             Progress = progress;
-            Console.WriteLine($"ProgressBarEventArgs: {text}");
+			
+            RTCV.Common.Logging.GlobalLogger.Log(NLog.LogLevel.Info, $"ProgressBarEventArgs: {text}");
         }
     }
 }
