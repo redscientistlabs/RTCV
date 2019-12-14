@@ -173,7 +173,6 @@ namespace RTCV.UI
                     }
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
-                columnsMenu.Items.Add(new ToolStripSeparator());
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Sanitize", null, new EventHandler((ob, ev) =>
                 {
                     if (S.GET<RTC_NewBlastEditor_Form>() != null)
@@ -183,6 +182,8 @@ namespace RTCV.UI
                         S.GET<RTC_NewBlastEditor_Form>().btnSanitizeTool_Click(null, null);
                     }
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
+
+                columnsMenu.Items.Add(new ToolStripSeparator());
 
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Manual Inject", null, new EventHandler((ob, ev) =>
                 {
