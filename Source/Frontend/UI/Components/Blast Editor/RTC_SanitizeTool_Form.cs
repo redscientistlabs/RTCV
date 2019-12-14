@@ -83,6 +83,21 @@ namespace RTCV.UI
 
 		}
 
+        private void btnReroll_Click(object sender, EventArgs e)
+        {
+            pnBlastLayerSanitization.Visible = false;
+
+            S.GET<RTC_NewBlastEditor_Form>().dgvBlastEditor.ClearSelection();
+            S.GET<RTC_NewBlastEditor_Form>().btnDisable50_Click(null, null);
+            S.GET<RTC_NewBlastEditor_Form>().btnLoadCorrupt_Click(null, null);
+
+            BlastLayer bl = (BlastLayer)S.GET<RTC_NewBlastEditor_Form>().currentSK.BlastLayer.Clone();
+
+            lbCurrentLayerSize.Text = $"Current Layer size: {bl.Layer.Count}";
+
+            pnBlastLayerSanitization.Visible = true;
+        }
+
         private void btnYesEffect_Click(object sender, EventArgs e)
         {
             pnBlastLayerSanitization.Visible = false;
@@ -263,5 +278,6 @@ namespace RTCV.UI
             }
 
         }
+
     }
 }
