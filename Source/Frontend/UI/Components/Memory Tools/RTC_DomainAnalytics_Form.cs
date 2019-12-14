@@ -81,7 +81,7 @@ namespace RTCV.UI
 				FirstInit = true;
 				btnActiveTableDumpsReset.Text = "Reset";
 
-				btnActiveTableAddDump.Font = new Font("Segoe UI", 10);
+				btnActiveTableAddDump.Font = new Font("Segoe UI", 8);
 				btnActiveTableAddDump.Enabled = true;
 				cbAutoAddDump.Enabled = true;
 			}
@@ -139,7 +139,7 @@ namespace RTCV.UI
 
 			RefreshDomains();
 			btnActiveTableDumpsReset.Enabled = true;
-			btnActiveTableDumpsReset.Font = new Font("Segoe UI", 10);
+			btnActiveTableDumpsReset.Font = new Font("Segoe UI", 8);
 			btnLoadDomains.Text = "Refresh Domains";
 		}
 

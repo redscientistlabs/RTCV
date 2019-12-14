@@ -52,7 +52,7 @@
             this.btnSendToAnalytics.ForeColor = System.Drawing.Color.White;
             this.btnSendToAnalytics.Location = new System.Drawing.Point(23, 196);
             this.btnSendToAnalytics.Name = "btnSendToAnalytics";
-            this.btnSendToAnalytics.Size = new System.Drawing.Size(353, 35);
+            this.btnSendToAnalytics.Size = new System.Drawing.Size(399, 35);
             this.btnSendToAnalytics.TabIndex = 127;
             this.btnSendToAnalytics.Tag = "color:light1";
             this.btnSendToAnalytics.Text = "Send dumps to analytics";
@@ -103,7 +103,7 @@
             this.btnActiveTableDumpsReset.ForeColor = System.Drawing.Color.White;
             this.btnActiveTableDumpsReset.Location = new System.Drawing.Point(209, 20);
             this.btnActiveTableDumpsReset.Name = "btnActiveTableDumpsReset";
-            this.btnActiveTableDumpsReset.Size = new System.Drawing.Size(167, 25);
+            this.btnActiveTableDumpsReset.Size = new System.Drawing.Size(213, 25);
             this.btnActiveTableDumpsReset.TabIndex = 83;
             this.btnActiveTableDumpsReset.Tag = "color:light1";
             this.btnActiveTableDumpsReset.Text = "Initialize Dump Collection";
@@ -183,7 +183,7 @@
             this.btnActiveTableAddDump.ForeColor = System.Drawing.Color.White;
             this.btnActiveTableAddDump.Location = new System.Drawing.Point(209, 56);
             this.btnActiveTableAddDump.Name = "btnActiveTableAddDump";
-            this.btnActiveTableAddDump.Size = new System.Drawing.Size(167, 25);
+            this.btnActiveTableAddDump.Size = new System.Drawing.Size(213, 25);
             this.btnActiveTableAddDump.TabIndex = 121;
             this.btnActiveTableAddDump.Tag = "color:light1";
             this.btnActiveTableAddDump.Text = "Add domain dump";
@@ -208,7 +208,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(390, 250);
+            this.ClientSize = new System.Drawing.Size(434, 250);
             this.Controls.Add(this.btnSendToAnalytics);
             this.Controls.Add(this.btnLoadDomains);
             this.Controls.Add(this.cbSelectedMemoryDomain);

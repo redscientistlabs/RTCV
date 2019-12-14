@@ -50,7 +50,8 @@ namespace RTCV.UI.Modular
                         S.GET<RTC_VmdAct_Form>(),
                         S.GET<RTC_ListGen_Form>(),
                         S.GET<RTC_VmdLimiterProfiler_Form>(),
-						S.GET<RTC_OpenTools_Form>(),
+                        S.GET<RTC_DomainAnalytics_Form>(),
+                        S.GET<RTC_OpenTools_Form>(),
                         })
                     {
                         popoutAllowed = false,

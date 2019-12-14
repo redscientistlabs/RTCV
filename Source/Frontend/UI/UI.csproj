@@ -184,6 +184,12 @@
     <Compile Include="Components\Glitch Harvester\RTC_StockpileManager_Form.designer.cs">
       <DependentUpon>RTC_StockpileManager_Form.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\Memory Tools\RTC_DomainAnalytics_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Components\Memory Tools\RTC_DomainAnalytics_Form.designer.cs">
+      <DependentUpon>RTC_DomainAnalytics_Form.cs</DependentUpon>
+    </Compile>
     <Compile Include="Components\Memory Tools\RTC_OpenTools_Form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -267,6 +273,12 @@
     </Compile>
     <Compile Include="Components\Settings\RTC_SettingsHotkeyConfig_Form.designer.cs">
       <DependentUpon>RTC_SettingsHotkeyConfig_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\RTC_AnalyticsTool_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RTC_AnalyticsTool_Form.Designer.cs">
+      <DependentUpon>RTC_AnalyticsTool_Form.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\RTC_BlastGenerator_Form.cs">
       <SubType>Form</SubType>
@@ -436,6 +448,9 @@
     <EmbeddedResource Include="Components\Glitch Harvester\RTC_StockpileManager_Form.resx">
       <DependentUpon>RTC_StockpileManager_Form.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Components\Memory Tools\RTC_DomainAnalytics_Form.resx">
+      <DependentUpon>RTC_DomainAnalytics_Form.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Components\Memory Tools\RTC_OpenTools_Form.resx">
       <DependentUpon>RTC_OpenTools_Form.cs</DependentUpon>
     </EmbeddedResource>
@@ -477,6 +492,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Settings\RTC_SettingsNetCore_Form.resx">
       <DependentUpon>RTC_SettingsNetCore_Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RTC_AnalyticsTool_Form.resx">
+      <DependentUpon>RTC_AnalyticsTool_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RTC_BlastGenerator_Form.resx">
       <DependentUpon>RTC_BlastGenerator_Form.cs</DependentUpon>
