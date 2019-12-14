@@ -48,8 +48,8 @@ namespace RTCV.UI
             this.btnLeaveSubstractChanges = new System.Windows.Forms.Button();
             this.btnLeaveWithoutChanges = new System.Windows.Forms.Button();
             this.btnStartSanitizing = new System.Windows.Forms.Button();
-            this.lbSteps = new RTCV.UI.Components.Controls.ListBoxExtended();
             this.btnReroll = new System.Windows.Forms.Button();
+            this.lbSteps = new RTCV.UI.Components.Controls.ListBoxExtended();
             this.pnBlastLayerSanitization.SuspendLayout();
             this.panel6.SuspendLayout();
             this.SuspendLayout();
@@ -273,6 +273,24 @@ namespace RTCV.UI
             this.btnStartSanitizing.UseVisualStyleBackColor = false;
             this.btnStartSanitizing.Click += new System.EventHandler(this.btnStartSanitizing_Click);
             // 
+            // btnReroll
+            // 
+            this.btnReroll.BackColor = System.Drawing.Color.Gray;
+            this.btnReroll.FlatAppearance.BorderSize = 0;
+            this.btnReroll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReroll.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnReroll.ForeColor = System.Drawing.Color.White;
+            this.btnReroll.Location = new System.Drawing.Point(16, 74);
+            this.btnReroll.MinimumSize = new System.Drawing.Size(141, 23);
+            this.btnReroll.Name = "btnReroll";
+            this.btnReroll.Size = new System.Drawing.Size(141, 23);
+            this.btnReroll.TabIndex = 189;
+            this.btnReroll.TabStop = false;
+            this.btnReroll.Tag = "color:light1";
+            this.btnReroll.Text = "Reroll sanitize step";
+            this.btnReroll.UseVisualStyleBackColor = false;
+            this.btnReroll.Click += new System.EventHandler(this.btnReroll_Click);
+            // 
             // lbSteps
             // 
             this.lbSteps.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -292,24 +310,6 @@ namespace RTCV.UI
             this.lbSteps.Size = new System.Drawing.Size(181, 253);
             this.lbSteps.TabIndex = 191;
             this.lbSteps.Tag = "color:dark2";
-            // 
-            // btnReroll
-            // 
-            this.btnReroll.BackColor = System.Drawing.Color.Gray;
-            this.btnReroll.FlatAppearance.BorderSize = 0;
-            this.btnReroll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReroll.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.btnReroll.ForeColor = System.Drawing.Color.White;
-            this.btnReroll.Location = new System.Drawing.Point(16, 74);
-            this.btnReroll.MinimumSize = new System.Drawing.Size(141, 23);
-            this.btnReroll.Name = "btnReroll";
-            this.btnReroll.Size = new System.Drawing.Size(141, 23);
-            this.btnReroll.TabIndex = 189;
-            this.btnReroll.TabStop = false;
-            this.btnReroll.Tag = "color:light1";
-            this.btnReroll.Text = "Reroll Sanitize Step";
-            this.btnReroll.UseVisualStyleBackColor = false;
-            this.btnReroll.Click += new System.EventHandler(this.btnReroll_Click);
             // 
             // RTC_SanitizeTool_Form
             // 

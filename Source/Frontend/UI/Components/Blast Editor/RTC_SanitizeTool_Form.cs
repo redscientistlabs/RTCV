@@ -118,6 +118,7 @@ namespace RTCV.UI
                 lbSanitizationText.Text = "1 Unit remaining, sanitization complete.";
                 btnYesEffect.Visible = false;
                 btnNoEffect.Visible = false;
+                btnReroll.Visible = false;
             }
 
             pnBlastLayerSanitization.Visible = true;
@@ -142,6 +143,7 @@ namespace RTCV.UI
                 lbSanitizationText.Text = "1 Unit remaining, sanitization complete.";
                 btnYesEffect.Visible = false;
                 btnNoEffect.Visible = false;
+                btnReroll.Visible = false;
             }
 
             pnBlastLayerSanitization.Visible = true;
@@ -224,8 +226,9 @@ namespace RTCV.UI
             lbSanitizationText.Text = "Is the effect you are looking for still present?";
             btnYesEffect.Visible = true;
             btnNoEffect.Visible = true;
+            btnReroll.Visible = true;
 
-            if(lbSteps.Items.Count == 1)
+            if (lbSteps.Items.Count == 1)
             {
                 pnBlastLayerSanitization.Visible = false;
                 btnStartSanitizing.Visible = true;
