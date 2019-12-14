@@ -36,7 +36,7 @@
             this.btnPreviousItem = new System.Windows.Forms.Button();
             this.btnLoadStockpile = new System.Windows.Forms.Button();
             this.btnBlastToggle = new System.Windows.Forms.Button();
-            this.dgvStockpile = new System.Windows.Forms.DataGridView();
+            this.dgvStockpile = new DataGridViewDraggable();
             this.Item = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.GameName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SystemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -309,7 +309,7 @@
 		private System.Windows.Forms.Button btnReloadItem;
 		private System.Windows.Forms.Button btnPreviousItem;
 		public System.Windows.Forms.Button btnBlastToggle;
-		public System.Windows.Forms.DataGridView dgvStockpile;
+		public DataGridViewDraggable dgvStockpile;
 		private System.Windows.Forms.RichTextBox tbNoteBox;
 		private System.Windows.Forms.DataGridViewTextBoxColumn Item;
 		private System.Windows.Forms.DataGridViewTextBoxColumn GameName;
