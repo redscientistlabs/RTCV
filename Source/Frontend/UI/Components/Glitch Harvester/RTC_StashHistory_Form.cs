@@ -173,6 +173,16 @@ namespace RTCV.UI
                     }
                 }))).Enabled = lbStashHistory.SelectedIndex != -1;
 
+                ((ToolStripMenuItem)columnsMenu.Items.Add("Sanitize", null, new EventHandler((ob, ev) =>
+                {
+                    if (S.GET<RTC_NewBlastEditor_Form>() != null)
+                    {
+                        StashKey sk = StockpileManager_UISide.StashHistory[lbStashHistory.SelectedIndex];
+                        RTC_NewBlastEditor_Form.OpenBlastEditor(sk);
+                        S.GET<RTC_NewBlastEditor_Form>().btnSanitizeTool_Click(null, null);
+                    }
+                }))).Enabled = lbStashHistory.SelectedIndex != -1;
+
                 columnsMenu.Items.Add(new ToolStripSeparator());
 
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Rename selected item", null, new EventHandler((ob, ev) =>

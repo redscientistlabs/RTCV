@@ -1861,7 +1861,7 @@ namespace RTCV.UI
 			lbBlastLayerSize.Text = "Size: " + currentSK.BlastLayer.Layer.Count;
 		}
 
-        private void btnSanitizeTool_Click(object sender, EventArgs e)
+        public void btnSanitizeTool_Click(object sender, EventArgs e)
         {
             if (currentSK?.BlastLayer?.Layer == null)
                 return;
@@ -1947,5 +1947,11 @@ namespace RTCV.UI
             RefreshAllNoteIcons();
             dgvBlastEditor.Refresh();
         }
-    }
+
+		private void btnAddStashToStockpile_Click(object sender, EventArgs e)
+		{
+			btnSendToStash_Click(sender, e);
+			S.GET<RTC_StashHistory_Form>().btnAddStashToStockpile_Click(sender, e);
+		}
+	}
 }
