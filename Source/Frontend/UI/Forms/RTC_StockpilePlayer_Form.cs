@@ -29,6 +29,10 @@ namespace RTCV.UI
 			{
 				RefreshNoteIcons();
 			};
+			dgvStockpile.ColumnHeaderMouseClick += (o, e) =>
+			{
+				RefreshNoteIcons();
+			};
 		}
 
 		private void dgvStockpile_DragEnter(object sender, DragEventArgs e)
