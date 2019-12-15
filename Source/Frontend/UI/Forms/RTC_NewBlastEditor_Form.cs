@@ -644,6 +644,8 @@ namespace RTCV.UI
 
 				headerStrip.Show(MousePosition);
 			}
+
+			RefreshAllNoteIcons();
 		}
 
 
