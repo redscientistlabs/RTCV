@@ -2058,7 +2058,47 @@ namespace RTCV.CorruptCore
 
 			return true;
 		}
-	}
+
+        public BlastUnit[] GetBreakdown()
+        {
+			BlastUnit[] brokenUnits = new BlastUnit[precision];
+
+			if (precision == 1)
+			{
+				brokenUnits[0] = this;
+				return brokenUnits;
+			}
+
+			for(int i = 0; i<precision; i++)
+			{
+				BlastUnit newBU = (BlastUnit)this.Clone();
+				newBU.precision = 1;
+				newBU.Address += i;
+				newBU.SourceAddress += i;
+
+
+				
+
+				if (!BigEndian)
+					newBU.Value = new byte[1] { Value[i] };
+				else
+					newBU.Value = new byte[1] { Value[(precision - 1) - i] };
+
+				if (!BigEndian && i == (precision-1))
+					newBU.TiltValue = TiltValue;
+				else if (BigEndian && i == 0)
+					newBU.TiltValue = TiltValue;
+				else
+					newBU.TiltValue = 0;
+
+
+				brokenUnits[i] = newBU;
+			}
+
+			return brokenUnits;
+
+		}
+    }
 
 	[Serializable]
 	public class ActiveTableObject

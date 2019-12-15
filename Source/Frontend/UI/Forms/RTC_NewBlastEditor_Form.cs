@@ -374,6 +374,41 @@ namespace RTCV.UI
 				dgvBlastEditor.Refresh();
 				UpdateBottom();
 			}))).Enabled = true;
+
+			((ToolStripMenuItem)cms.Items.Add("Break Down Selected Unit(s)", null, new EventHandler((ob, ev) =>
+			{
+				breakDownUnits(true);
+			}))).Enabled = dgvBlastEditor.SelectedRows.Count > 0;
+
+			((ToolStripMenuItem)cms.Items.Add("Bake Selected Unit(s) to VALUE", null, new EventHandler((ob, ev) =>
+			{
+				BakeBlastUnitsToValue(true);
+			}))).Enabled = dgvBlastEditor.SelectedRows.Count > 0;
+		}
+
+		private void breakDownUnits(bool breakSelected = false)
+		{
+			IEnumerable<DataGridViewRow> targetRows;
+
+			if (breakSelected)
+				targetRows = dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>();
+			else
+				targetRows = dgvBlastEditor.Rows.Cast<DataGridViewRow>();
+
+			foreach (DataGridViewRow row in targetRows)
+			{
+				BlastUnit bu = (BlastUnit)row.DataBoundItem;
+				BlastUnit[] brokenUnits = bu.GetBreakdown();
+
+				if (brokenUnits == null || brokenUnits.Length < 2)
+					continue;
+
+				foreach (BlastUnit unit in brokenUnits)
+					bs.Add(unit);
+
+			}
+			dgvBlastEditor.Refresh();
+			UpdateBottom();
 		}
 
 		private void PopulateAddressContextMenu(DataGridViewCell cell)
@@ -1667,13 +1702,24 @@ namespace RTCV.UI
 			CSVGenerator csv = new CSVGenerator();
 			File.WriteAllText(filename, csv.GenerateFromDGV(dgvBlastEditor), Encoding.UTF8);
 		}
-
 		private void bakeBlastunitsToVALUEToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			BakeBlastUnitsToValue();
+		}
+		private void BakeBlastUnitsToValue(bool bakeSelected = false)
 		{
 			try
 			{
 				//Generate a blastlayer from the current selected rows
 				BlastLayer bl = new BlastLayer();
+
+				IEnumerable<DataGridViewRow> targetRows;
+
+				if(bakeSelected)
+					targetRows = dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>();
+				else
+					targetRows = dgvBlastEditor.Rows.Cast<DataGridViewRow>();
+
 				foreach (DataGridViewRow selected in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>()
 					.Where((item => ((BlastUnit)item.DataBoundItem).IsLocked == false)))
 				{
@@ -1952,6 +1998,11 @@ namespace RTCV.UI
 		{
 			btnSendToStash_Click(sender, e);
 			S.GET<RTC_StashHistory_Form>().btnAddStashToStockpile_Click(sender, e);
+		}
+
+		private void breakDownAllBlastunitsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			breakDownUnits();
 		}
 	}
 }

@@ -915,15 +915,27 @@ namespace RTCV.CorruptCore.Tools
 
 			List<long> allAddresses = new List<long>() { HighlightedAddress.Value };
 			allAddresses.AddRange(_secondaryHighlightedAddresses);
-			CreateVmdFromSelected(_domain.Name, allAddresses);
+			CreateVmdFromSelected(_domain.Name, allAddresses, DataSize);
 
 			MemoryViewerBox.Refresh();
 		}
 
-        public static void CreateVmdFromSelected(string domain, List<long> allAddresses)
+        public static void CreateVmdFromSelected(string domain, List<long> allAddresses, int wordSize)
 		{
 
-			var ordered = allAddresses.OrderBy(it => it);
+            int allAddrCount = allAddresses.Count;
+            if (wordSize > 1) //fills the gap caused by address spacing
+                for (int addrPos = 0; addrPos < allAddrCount; addrPos++)
+                    for (int addedCount = 1; addedCount < wordSize; addedCount++)
+                    {
+                        long newAddr = allAddresses[addrPos] + addedCount;
+                        allAddresses.Add(newAddr);
+                    }
+
+
+            var ordered = allAddresses.OrderBy(it => it);
+
+
 			bool contiguous = true;
 			long? lastAddress = null;
 			int i = 0;

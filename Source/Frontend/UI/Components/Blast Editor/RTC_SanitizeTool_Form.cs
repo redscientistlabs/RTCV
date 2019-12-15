@@ -188,7 +188,7 @@ namespace RTCV.UI
                 );
 
 
-                if (TargetUnit != null)
+                if (TargetUnit != null && !TargetUnit.IsLocked)
                     modified.Layer.Remove(TargetUnit);
 			}
 

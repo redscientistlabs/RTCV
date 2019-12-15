@@ -129,6 +129,7 @@ namespace RTCV.UI
             this.rasterizeVMDsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bakeBlastunitsToVALUEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openBlastGeneratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.breakDownAllBlastunitsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBlastEditor)).BeginInit();
             this.panelSidebar.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -1276,6 +1277,7 @@ namespace RTCV.UI
             this.sanitizeDuplicatesToolStripMenuItem,
             this.rasterizeVMDsToolStripMenuItem,
             this.bakeBlastunitsToVALUEToolStripMenuItem,
+            this.breakDownAllBlastunitsToolStripMenuItem,
             this.openBlastGeneratorToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
@@ -1285,30 +1287,37 @@ namespace RTCV.UI
             // sanitizeDuplicatesToolStripMenuItem
             // 
             this.sanitizeDuplicatesToolStripMenuItem.Name = "sanitizeDuplicatesToolStripMenuItem";
-            this.sanitizeDuplicatesToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
+            this.sanitizeDuplicatesToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.sanitizeDuplicatesToolStripMenuItem.Text = "Sanitize Duplicates";
             this.sanitizeDuplicatesToolStripMenuItem.Click += new System.EventHandler(this.sanitizeDuplicatesToolStripMenuItem_Click);
             // 
             // rasterizeVMDsToolStripMenuItem
             // 
             this.rasterizeVMDsToolStripMenuItem.Name = "rasterizeVMDsToolStripMenuItem";
-            this.rasterizeVMDsToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
+            this.rasterizeVMDsToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.rasterizeVMDsToolStripMenuItem.Text = "Rasterize VMDs";
             this.rasterizeVMDsToolStripMenuItem.Click += new System.EventHandler(this.rasterizeVMDsToolStripMenuItem_Click);
             // 
             // bakeBlastunitsToVALUEToolStripMenuItem
             // 
             this.bakeBlastunitsToVALUEToolStripMenuItem.Name = "bakeBlastunitsToVALUEToolStripMenuItem";
-            this.bakeBlastunitsToVALUEToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
-            this.bakeBlastunitsToVALUEToolStripMenuItem.Text = "Bake Selected Blastunits to VALUE";
+            this.bakeBlastunitsToVALUEToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.bakeBlastunitsToVALUEToolStripMenuItem.Text = "Bake All Blastunits to VALUE";
             this.bakeBlastunitsToVALUEToolStripMenuItem.Click += new System.EventHandler(this.bakeBlastunitsToVALUEToolStripMenuItem_Click);
             // 
             // openBlastGeneratorToolStripMenuItem
             // 
             this.openBlastGeneratorToolStripMenuItem.Name = "openBlastGeneratorToolStripMenuItem";
-            this.openBlastGeneratorToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
+            this.openBlastGeneratorToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.openBlastGeneratorToolStripMenuItem.Text = "Open Blast Generator";
             this.openBlastGeneratorToolStripMenuItem.Click += new System.EventHandler(this.OpenBlastGeneratorToolStripMenuItem_Click);
+            // 
+            // breakDownAllBlastunitsToolStripMenuItem
+            // 
+            this.breakDownAllBlastunitsToolStripMenuItem.Name = "breakDownAllBlastunitsToolStripMenuItem";
+            this.breakDownAllBlastunitsToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.breakDownAllBlastunitsToolStripMenuItem.Text = "Break Down All Blastunits";
+            this.breakDownAllBlastunitsToolStripMenuItem.Click += new System.EventHandler(this.breakDownAllBlastunitsToolStripMenuItem_Click);
             // 
             // RTC_NewBlastEditor_Form
             // 
@@ -1460,5 +1469,6 @@ namespace RTCV.UI
         private ToolStripMenuItem newToolStripMenuItem;
         private Button btnSanitizeTool;
         public Button btnAddStashToStockpile;
+        private ToolStripMenuItem breakDownAllBlastunitsToolStripMenuItem;
     }
 }
