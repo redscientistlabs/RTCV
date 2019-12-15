@@ -144,7 +144,7 @@ namespace RTCV.UI
 
         public void btnCorrupt_Click(object sender, EventArgs e)
         {
-            Console.WriteLine("btnCorrupt Clicked");
+            logger.Trace("btnCorrupt Clicked");
 
             if (sender != null)
             {
@@ -226,7 +226,7 @@ namespace RTCV.UI
                 else
                     Render.StopRender();
 
-                Console.WriteLine("Blast done");
+                 logger.Trace("Blast done");
             }
             finally
             {

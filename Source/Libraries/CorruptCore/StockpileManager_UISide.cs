@@ -12,7 +12,7 @@ namespace RTCV.CorruptCore
 	public static class StockpileManager_UISide
 	{
 		//Object references
-		public static Stockpile CurrentStockpile { get; set; }
+		private static Stockpile CurrentStockpile { get; set; }
 		public static StashKey CurrentStashkey { get; set; }
         public static StashKey CurrentSavestateStashKey { get; set; }
 		public static volatile StashKey BackupedState;
@@ -367,6 +367,20 @@ namespace RTCV.CorruptCore
 			return true;
         }
 
+        public static void ClearCurrentStockpile()
+        {
+            CurrentStockpile = new Stockpile();
+            StockpileChanged();
+		}
+		public static string GetCurrentStockpilePath()
+        {
+            return CurrentStockpile?.Filename ?? "";
+        }
 
-    }
+        public static void SetCurrentStockpile(Stockpile sks)
+        {
+			CurrentStockpile = sks;
+			StockpileChanged();
+		}
+	}
 }

@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using NLog;
 
 namespace RTCV.NetCore
 {   
     public class NetCoreConnector : IRoutable
     {
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         public NetCoreSpec spec = null;
 
         internal UDPLink udp = null;
@@ -27,20 +29,20 @@ namespace RTCV.NetCore
 
         public NetCoreConnector(NetCoreSpec _spec)
         {
-            ConsoleEx.WriteLine($"NetCore Initialization");
+            logger.Debug( $"NetCore Initialization");
 
             spec = _spec;
             spec.Connector = this;
             Initialize();
 
-            ConsoleEx.WriteLine($"NetCore Started");
+            logger.Debug($"NetCore Started");
         }
 
         private void Initialize()
         {
             if(spec.Side == NetworkSide.NONE)
             {
-                ConsoleEx.WriteLine("Could not initialize connector : Side was not set");
+                logger.Debug( "Could not initialize connector : Side was not set");
                 return;
             }
 
@@ -119,7 +121,7 @@ namespace RTCV.NetCore
             hub?.Kill();
             watch?.Kill();
 
-            ConsoleEx.WriteLine($"NetCore {(force ? "Killed" : "Stopped")}");
+            logger.Debug( $"NetCore {(force ? "Killed" : "Stopped")}");
         }
 
         public void Kill()

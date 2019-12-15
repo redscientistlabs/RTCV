@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using NLog;
 
 namespace RTCV.NetCore
 {
@@ -47,12 +48,12 @@ namespace RTCV.NetCore
 
 		public static class ConsoleHelper
 		{
-			public static ConsoleCopy con;
+			//public static ConsoleCopy con;
 			public static void CreateConsole(string path)
 			{
 				ReleaseConsole();
 				AllocConsole();
-				con = new ConsoleCopy(path);
+				//con = new ConsoleCopy(path);
 
 				//Disable the X button on the console window
 				EnableMenuItem(GetSystemMenu(GetConsoleWindow(), false), SC_CLOSE, MF_DISABLED);
@@ -111,7 +112,7 @@ namespace RTCV.NetCore
 			public static extern IntPtr GetSystemMenu(IntPtr HWNDValue, bool isRevert);
 			[DllImport("user32.dll")]
 			public static extern int EnableMenuItem(IntPtr tMenu, int targetItem, int targetStatus);
-			public class ConsoleCopy : IDisposable
+			/*public class ConsoleCopy : IDisposable
 			{
 				FileStream fileStream;
 				public StreamWriter FileWriter;
@@ -190,7 +191,7 @@ namespace RTCV.NetCore
 						fileStream = null;
 					}
 				}
-			}
+			}*/
 		}
 
 
@@ -523,8 +524,9 @@ namespace RTCV.NetCore
         }
     }
     internal sealed class TimePeriod : IDisposable
-    {
-        private const string WINMM = "winmm.dll";
+	{
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+		private const string WINMM = "winmm.dll";
 
         private static TIMECAPS timeCapabilities;
 
@@ -548,7 +550,7 @@ namespace RTCV.NetCore
             int result = timeGetDevCaps(ref timeCapabilities, Marshal.SizeOf(typeof(TIMECAPS)));
             if (result != 0)
             {
-				Console.WriteLine("The request to get time capabilities was not completed because an unexpected error with code " + result + " occured.");
+				logger.Error("The request to get time capabilities was not completed because an unexpected error with code {result} occured.", result);
             }
         }
 
@@ -557,19 +559,19 @@ namespace RTCV.NetCore
             if (Interlocked.Increment(ref inTimePeriod) != 1)
             {
                 Interlocked.Decrement(ref inTimePeriod);
-				Console.WriteLine("The process is already within a time period. Nested time periods are not supported.");
+				logger.Trace("The process is already within a time period. Nested time periods are not supported.");
 				return;
             }
 
             if (period < timeCapabilities.wPeriodMin || period > timeCapabilities.wPeriodMax)
             {
-				Console.WriteLine("The request to begin a time period was not completed because the resolution specified is out of range.");
+				logger.Error("The request to begin a time period was not completed because the resolution specified is out of range.");
             }
 
             int result = timeBeginPeriod(period);
             if (result != 0)
             {
-                Console.WriteLine("The request to begin a time period was not completed because an unexpected error with code " + result + " occured.");
+                logger.Error("The request to begin a time period was not completed because an unexpected error with code " + result + " occured.");
             }
 
             this.period = period;

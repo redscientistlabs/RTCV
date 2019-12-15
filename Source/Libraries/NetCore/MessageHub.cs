@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Timers;
+using NLog;
 
 namespace RTCV.NetCore
 {
     public class MessageHub
     {
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private NetCoreSpec spec;
 
         private Timer hubTimer;
@@ -56,8 +58,7 @@ namespace RTCV.NetCore
                 {
                     //We don't want to leave the scope here because if the code after the OnMessageReceive() call isn't
                     //executed, the other side could be left hanging forever if it's waiting for synced message response.
-
-                    ConsoleEx.WriteLine(ex.ToString());
+                    logger.Error(ex);
                 }
 
                 if (message is NetCoreAdvancedMessage)
@@ -144,7 +145,7 @@ namespace RTCV.NetCore
             var message = new NetCoreAdvancedMessage("{RETURNVALUE}") { objectValue = _objectValue };
 
             if (returnMessage != null)
-                ConsoleEx.WriteLine($"ReturnValue was already set but was overriden with another value");
+                RTCV.Common.Logging.GlobalLogger.Warn($"NetCoreEventArgs: ReturnValue was already set but was overriden with another value");
 
             _returnMessage = message;
         }

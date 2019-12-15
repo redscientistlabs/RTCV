@@ -46,7 +46,13 @@ namespace RTCV.UI
 			if (files.Length > 0 && files[0]
 				.Contains(".sks"))
 			{
-				Stockpile.Load(dgvStockpile, files[0]);
+                if (Stockpile.Load(files[0]) is {Failed: false} r)
+                {
+                    var sks = r.Result;
+
+                    foreach (StashKey key in sks.StashKeys)
+                        dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.Note);
+				}
 			}
 
 		}
@@ -200,14 +206,27 @@ namespace RTCV.UI
 
 				await Task.Run(() =>
 				{
-					if (Stockpile.Load(dgvStockpile, fileName))
-					{
-						SyncObjectSingleton.FormExecute(() => S.GET<RTC_StockpileManager_Form>().dgvStockpile.Rows.Clear());
+
+                    var r = Stockpile.Load(fileName);
+                    if (r.Failed)
+                    {
+							MessageBox.Show($"Loading the stockpile failed!\n" +
+											$"{r.GetErrorsFormatted()}");
+                    }
+					else
+                    {
+                        var sks = r.Result;
+                        SyncObjectSingleton.FormExecute(() =>
+                        {
+                            S.GET<RTC_StockpileManager_Form>().dgvStockpile.Rows.Clear(); // Clear the stockpile manager
+
+							foreach (StashKey key in sks.StashKeys) //Populate the dgv
+                                dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.Note);
+						});
 					}
 
 					SyncObjectSingleton.FormExecute(() =>
 					{
-
 						List<StashKey> keys = dgvStockpile.Rows.Cast<DataGridViewRow>().Select(x => (StashKey)x.Cells["Item"].Value).ToList();
 						foreach (var sk in keys)
 						{

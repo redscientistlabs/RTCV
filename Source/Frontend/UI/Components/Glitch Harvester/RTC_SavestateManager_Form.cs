@@ -72,7 +72,7 @@ namespace RTCV.UI
 
             //Extract the ssk
             RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Extracting the SSK", currentProgress += 50));
-            if (!Stockpile.Extract(fileName, Path.Combine("WORKING", extractFolder), "keys.json"))
+            if (Stockpile.Extract(fileName, Path.Combine("WORKING", extractFolder), "keys.json") is {Failed:true})
                 return;
 
             //Read in the ssk

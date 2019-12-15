@@ -37,7 +37,7 @@ namespace RTCV.UI
                 StringBuilder sb = new StringBuilder();
                 foreach (var s in lbMemoryDomains.SelectedItems.Cast<string>().ToArray())
                     sb.Append($"{s},");
-                Console.WriteLine($"UpdateSelectedMemoryDomains Setting SELECTEDDOMAINS domains to {sb}");
+                logger.Trace("UpdateSelectedMemoryDomains Setting SELECTEDDOMAINS domains to {domains}", sb);
                 AllSpec.UISpec.Update("SELECTEDDOMAINS", lbMemoryDomains.SelectedItems.Cast<string>().Distinct().ToArray());
             });
         }
@@ -116,7 +116,7 @@ namespace RTCV.UI
                 StringBuilder sb = new StringBuilder();
                 foreach (var s in overrideDomains)
                     sb.Append($"{s},");
-                Console.WriteLine($"RefreshDomainsAndKeepSelected override SELECTEDDOMAINS domains to {sb}");
+                logger.Trace("RefreshDomainsAndKeepSelected override SELECTEDDOMAINS domains to {domains}", sb);
                 RTCV.NetCore.AllSpec.UISpec.Update("SELECTEDDOMAINS", overrideDomains);
 				SetMemoryDomainsSelectedDomains(overrideDomains);
 			}
@@ -126,7 +126,7 @@ namespace RTCV.UI
                 StringBuilder sb = new StringBuilder();
                 foreach (var s in temp)
                     sb.Append($"{s},");
-                Console.WriteLine($"RefreshDomainsAndKeepSelected temp Setting SELECTEDDOMAINS domains to {sb}");
+                logger.Trace("RefreshDomainsAndKeepSelected temp Setting SELECTEDDOMAINS domains to {domains}",sb);
 
                 RTCV.NetCore.AllSpec.UISpec.Update("SELECTEDDOMAINS", temp);
 				SetMemoryDomainsSelectedDomains(temp);

@@ -31,6 +31,7 @@ namespace RTCV.UI
 
         public static bool FirstConnect = true;
         public static ManualResetEvent Initialized = new ManualResetEvent(false);
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private static System.Timers.Timer inputCheckTimer;
 
@@ -180,7 +181,7 @@ namespace RTCV.UI
 
             if (previousState != currentState)
 			{
-				Console.WriteLine($"Swapping focus state {previousState} => {currentState}");
+                logger.Trace($"Swapping focus state {previousState} => {currentState}");
 				//This is a non-synced spec update to prevent jittering. Shouldn't have any other noticeable impact
                 RTCV.NetCore.AllSpec.UISpec.Update(RTC_INFOCUS, currentState, true, false);
             }
@@ -534,7 +535,7 @@ namespace RTCV.UI
 
         private static bool CheckHotkey(string trigger)
         {
-            Console.WriteLine(trigger);
+            logger.Info("Hotkey {trigger} pressed", trigger);
             switch (trigger)
             {
 

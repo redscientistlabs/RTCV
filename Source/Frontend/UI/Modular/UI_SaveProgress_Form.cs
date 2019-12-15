@@ -16,7 +16,7 @@ using Newtonsoft.Json;
 
 namespace RTCV.UI
 {
-    public partial class UI_SaveProgress_Form : Form, IAutoColorize, ISubForm
+    public partial class UI_SaveProgress_Form : ComponentForm, IAutoColorize, ISubForm
     {
         public UI_SaveProgress_Form()
         {
@@ -59,17 +59,17 @@ namespace RTCV.UI
 			try
 			{
 				UIConnector.ConnectionLostLockout.WaitOne();
-				Console.WriteLine("Thread id {0} got Mutex... (save)", System.Threading.Thread.CurrentThread.ManagedThreadId);
+				logger.Trace("Thread id {0} got Mutex... (save)", System.Threading.Thread.CurrentThread.ManagedThreadId);
 			}
 			catch (System.Threading.AbandonedMutexException)
 			{
-				Console.WriteLine("AbandonedMutexException! Thread id {0} got Mutex... (save)", System.Threading.Thread.CurrentThread.ManagedThreadId);
+                logger.Trace("AbandonedMutexException! Thread id {0} got Mutex... (save)", System.Threading.Thread.CurrentThread.ManagedThreadId);
             }
         }
         public void OnHidden()
         {
 			UIConnector.ConnectionLostLockout.ReleaseMutex();
-            Console.WriteLine("Thread id {0} released Mutex... (save)", System.Threading.Thread.CurrentThread.ManagedThreadId);
+            logger.Trace("Thread id {0} released Mutex... (save)", System.Threading.Thread.CurrentThread.ManagedThreadId);
         }
 
     }
