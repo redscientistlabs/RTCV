@@ -14,6 +14,7 @@ namespace RTCV.CorruptCore
 {
 	public static class Filtering
 	{
+		private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 		public static ConcurrentDictionary<string, HashSet<byte[]>> Hash2LimiterDico
 		{
 			get => (ConcurrentDictionary<string, HashSet<byte[]>>)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2LIMITERDICO.ToString()];
@@ -135,7 +136,7 @@ namespace RTCV.CorruptCore
                 }
 				catch (Exception e)
 				{
-                    Console.Write(e);
+					logger.Error(e, "Error in loadListFromPath");
                     MessageBox.Show(e.Message);
                     return "";
                 }
@@ -232,17 +233,17 @@ namespace RTCV.CorruptCore
 			//Specifically log if any of these are null
 			if (Hash2LimiterDico == null)
 			{
-				Console.WriteLine("Hash2LimiterDico null");
+				logger.Error("Hash2LimiterDico null");
 				return false;
 			}
 			if (bytes == null)
 			{
-				Console.WriteLine("Bytes null");
+				logger.Error("Bytes null");
 				return false;
 			}
 			if (hash == null)
 			{
-				Console.WriteLine("Hash null");
+				logger.Error("Hash null");
 				return false;
 			}
 

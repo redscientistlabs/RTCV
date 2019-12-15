@@ -9,6 +9,7 @@ namespace RTCV.CorruptCore
 {
     public static class MemoryBanks
     {
+		private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         public static int maxBankSize = 1073741824;
 
         public static byte[][] ReadFile(string path)
@@ -119,11 +120,11 @@ namespace RTCV.CorruptCore
             }
             catch (IOException e)
             {
-                Console.WriteLine($"IOException in MemoryBanks.PeekByte! {e.Message}\n{e.StackTrace}");
+                logger.Error(e, "IOException in MemoryBanks.PeekByte!");
                 Exception _e = e.InnerException;
                 while (_e != null)
                 {
-                    Console.WriteLine($"InnserException {_e.Message}\n{_e.StackTrace}");
+					logger.Error(e, "InnerException in MemoryBanks.PeekByte!");
                     _e = _e.InnerException;
                 }
                 return 0;
@@ -196,13 +197,13 @@ namespace RTCV.CorruptCore
             }
             catch(IOException e)
             {
-                Console.WriteLine($"IOException in MemoryBanks.PokeByte! {e.Message}\n{e.StackTrace}");
-                Exception _e = e.InnerException;
-                while (_e != null)
-                {
-                    Console.WriteLine($"InnserException {_e.Message}\n{_e.StackTrace}");
-                    _e = _e.InnerException;
-                }
+				logger.Error(e, "IOException in MemoryBanks.PokeByte!");
+				Exception _e = e.InnerException;
+				while (_e != null)
+				{
+					logger.Error(e, "InnerException in MemoryBanks.PokeByte!");
+					_e = _e.InnerException;
+				}
             }
 
         }

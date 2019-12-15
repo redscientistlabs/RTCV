@@ -152,22 +152,22 @@ namespace RTCV.NetCore
 				{
 					string rtcLog = Path.Combine(rtcdir, "RTC_LOG.txt");
 					string rtcLogOutput = Path.Combine(tempdebugdir, "RTC_LOG.txt");
-                    lock (NetCore_Extensions.ConsoleHelper.con.FileWriter)
-                    {
+                    //lock (NetCore_Extensions.ConsoleHelper.con.FileWriter)
+                    //{
                         if (File.Exists(rtcLog))
                             File.Copy(rtcLog, rtcLogOutput, true);
-					}
+					//}
                 }
 
 				if (AllSpec.VanguardSpec?["EMUDIR"] is string emudir)
 				{
 					string emuLog = Path.Combine(emudir, "EMU_LOG.txt");
 					string emuLogOutput = Path.Combine(tempdebugdir, "EMU_LOG.txt");
-					lock (NetCore_Extensions.ConsoleHelper.con.FileWriter)
-					{
+					//lock (NetCore_Extensions.ConsoleHelper.con.FileWriter)
+					//{
                         if(File.Exists(emuLog))
 						    File.Copy(emuLog, emuLogOutput, true);
-					}
+					//}
 				}
 
 				//Copying the log files
@@ -294,25 +294,29 @@ namespace RTCV.NetCore
 		}
 	}
 
+    public class SilentException : Exception
+    {
 
+    }
 	public class CustomException : Exception
 	{
-
-		private string replacementStacktrace;
-
-		public CustomException(string message, string stackTrace) : base(message)
+        private readonly string _additionalInfo = "";
+		
+		public CustomException(string message, string additionalInfo) : base(message)
 		{
-			this.replacementStacktrace = stackTrace;
+			this._additionalInfo = additionalInfo;
+		}
+        public CustomException(string message, Exception innerException) : base(message, innerException)
+        {
+
+		}
+		public CustomException(string message, string additionalInfo, Exception innerException) : base(message, innerException)
+        {
+            this._additionalInfo = additionalInfo;
 		}
 
-		public override string StackTrace
-		{
-			get
-			{
-				return this.replacementStacktrace;
-			}
-		}
-	}
+		public override string StackTrace => (String.IsNullOrEmpty(_additionalInfo) ? _additionalInfo + "/n" : "") + base.StackTrace;
+    }
 
 	public class AbortEverythingException : Exception
 	{

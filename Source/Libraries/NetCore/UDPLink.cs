@@ -13,6 +13,8 @@ namespace RTCV.NetCore
 
     public class UDPLink
     {
+
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private NetCoreSpec spec;
         private string IP { get { return spec.IP; } }
         private int PortServer{ get { return spec.Port; } }
@@ -28,7 +30,7 @@ namespace RTCV.NetCore
 
             int port = (spec.Side == NetworkSide.SERVER ? PortServer : PortClient);
             Sender = new UdpClient(IP, port);
-            ConsoleEx.WriteLine($"UDP Client sending at {IP}:{port}");
+            logger.Info("UDP Client sending at {IP}:{port}", IP, port);
             ReaderThread = new Thread(new ThreadStart(ListenToReader));
             ReaderThread.IsBackground = true;
             ReaderThread.Name = "UDP READER";
@@ -58,7 +60,7 @@ namespace RTCV.NetCore
                 Sender.Send(sdata, sdata.Length);
 				//Todo - Refactor this into a way to blacklist specific commands 
 				if(message.Type != "UI|KILLSWITCH_PULSE" || ConsoleEx.ShowDebug)
-					ConsoleEx.WriteLine($"UDP : Sent simple message \"{message.Type}\"");
+					logger.Info("UDP : Sent simple message \"{type}\"", message.Type);
             }
         }
 
@@ -73,7 +75,7 @@ namespace RTCV.NetCore
             try
             {
                 Running = true;
-                ConsoleEx.WriteLine($"UDP Server listening on Port {port}");
+                logger.Info("UDP Server listening on Port {port}", port);
 
                 while (Running)
                 {
@@ -90,18 +92,18 @@ namespace RTCV.NetCore
                     {
                         if(ex.SocketErrorCode == SocketError.AddressAlreadyInUse)
                         {
-                            ConsoleEx.WriteLine("UDP Socket Port Collision");
+                            logger.Error("UDP Socket Port Collision");
                         }
                         else
                         {
-                            ConsoleEx.WriteLine(ex.ToString());
+                            logger.Error(ex, "Error when opening socket.");
                         }
                         
                         return;
                     }
                     catch (Exception ex)
                     {
-                        ConsoleEx.WriteLine(ex.ToString());
+                        logger.Error(ex, "Unknown error.");
                         return;
                     }
 
@@ -135,11 +137,11 @@ namespace RTCV.NetCore
             }
             catch (ThreadAbortException)
             {
-                ConsoleEx.WriteLine("Ongoing UDPLink Thread Killed");
+                logger.Debug("Ongoing UDPLink Thread Killed");
             }
             catch (Exception e)
             {
-                ConsoleEx.WriteLine(e.ToString());
+                logger.Debug(e, "Exception in ListenToReader");
             }
             finally
             {

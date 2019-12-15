@@ -54,6 +54,7 @@ namespace RTCV.UI
 			DgvNoteButton
 		}
 
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 		public static BlastLayer CurrentBlastLayer = null;
 		public bool OpenedFromBlastEditor = false;
 		private StashKey sk = null;
@@ -746,7 +747,7 @@ namespace RTCV.UI
                 MessageBox.Show("An error occurred in RTC while refreshing the domains\n" +
                                 "Are you sure you don't have an invalid domain selected?\n" +
                                 "Make sure any VMDs are loaded and you have the correct system loaded.\n");
-                Console.WriteLine("Blast generator domains null! " + e + "\n" + e.StackTrace);
+                logger.Error(e,"Blast generator domains null!");
                 return false;
             }
 		}
@@ -789,9 +790,9 @@ namespace RTCV.UI
 
 				}
 				catch (Exception ex)
-				{
-					Console.WriteLine(ex);
-				}
+                {
+                    logger.Error(ex, "Error saving DataGridView");
+                }
 			}
 		}
 
