@@ -26,6 +26,7 @@ namespace RTCV.UI
 {
 	public static class UI_Extensions
 	{
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 		public static DialogResult GetInputBox(string title, string promptText, ref string value)
 		{
 			
@@ -92,7 +93,7 @@ namespace RTCV.UI
 
         public static Bitmap getFormScreenShot(this Control con)
 		{
-			Console.WriteLine($"getFormScreenShot ClientRectangle | Width: {con.ClientRectangle.Width} | Height: {con.ClientRectangle.Height} | X: {con.ClientRectangle.X} | Y: {con.ClientRectangle.Y}");
+			logger.Trace($"getFormScreenShot ClientRectangle | Width: {con.ClientRectangle.Width} | Height: {con.ClientRectangle.Height} | X: {con.ClientRectangle.X} | Y: {con.ClientRectangle.Y}");
 			try
 			{
 				var bmp = new Bitmap(con.ClientRectangle.Width, con.ClientRectangle.Height);
@@ -111,8 +112,8 @@ namespace RTCV.UI
 				return bmp;
             }
 			catch (Exception ex)
-			{
-				Console.WriteLine($"Failed to get form screenshot. {ex.Message}\n{ex.StackTrace}");
+            {
+                logger.Error(ex, $"Failed to get form screenshot.");
 				return new Bitmap(1, 1);
 			};
         }
@@ -153,9 +154,9 @@ namespace RTCV.UI
 		public class RTC_Standalone_Form : Form { }
 
 		public class ComponentForm : Form, IBlockable
-		{
+        {
 
-			protected NLog.Logger Logger { get; private set; }
+            private protected static NLog.Logger logger;
 			Panel defaultPanel = null;
 			Panel previousPanel = null;
 
@@ -167,7 +168,7 @@ namespace RTCV.UI
 
             protected ComponentForm() : base()
             {
-                Logger = NLog.LogManager.GetCurrentClassLogger();
+                logger = NLog.LogManager.GetCurrentClassLogger();
 			}
 
             public void AnchorToPanel(Panel pn)

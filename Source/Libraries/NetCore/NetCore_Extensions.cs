@@ -550,7 +550,7 @@ namespace RTCV.NetCore
             int result = timeGetDevCaps(ref timeCapabilities, Marshal.SizeOf(typeof(TIMECAPS)));
             if (result != 0)
             {
-				Console.WriteLine("The request to get time capabilities was not completed because an unexpected error with code " + result + " occured.");
+				logger.Error("The request to get time capabilities was not completed because an unexpected error with code {result} occured.", result);
             }
         }
 
@@ -559,7 +559,7 @@ namespace RTCV.NetCore
             if (Interlocked.Increment(ref inTimePeriod) != 1)
             {
                 Interlocked.Decrement(ref inTimePeriod);
-				//Console.WriteLine("The process is already within a time period. Nested time periods are not supported.");
+				logger.Trace("The process is already within a time period. Nested time periods are not supported.");
 				return;
             }
 

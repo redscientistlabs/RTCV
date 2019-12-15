@@ -46,11 +46,18 @@ namespace RTCV.Common.Objects
         public void AddResults(OperationResults results) => messages.AddRange(results.Messages);
 
         public void AddWarning(string warning) => messages.Add(new OperationResult(warning, NLog.LogLevel.Warn));
-        public void AddWarning(string warning, NLog.Logger logger) => messages.Add(new OperationResult(warning, NLog.LogLevel.Warn, logger));
+        public void AddWarning(string warning, NLog.Logger logger)
+        {
+            messages.Add(new OperationResult(warning, NLog.LogLevel.Warn, logger));
+            logger.Warn(warning);
+        }
 
         public void AddError(string error, Exception e = null) => messages.Add(new OperationResult(error, NLog.LogLevel.Error, e));
-        public void AddError(string error, NLog.Logger logger, Exception e = null) => messages.Add(new OperationResult(error, NLog.LogLevel.Error, logger, e));
-
+        public void AddError(string error, NLog.Logger logger, Exception e = null)
+        {
+            messages.Add(new OperationResult(error, NLog.LogLevel.Error, logger, e));
+            logger.Error(e, error);
+        }
 
 
         public bool HasErrors() => Errors.Count > 0;

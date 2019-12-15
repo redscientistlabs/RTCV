@@ -18,6 +18,8 @@ namespace RTCV.UI
 		public static bool isRunning = false;
         public static bool WasAutoCorruptRunning = false;
         private const int maxStates = 20;
+
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private static readonly LinkedList<StashKey> AllBackupStates = new LinkedList<StashKey>();
         public static bool HasBackedUpStates => AllBackupStates?.Count > 0;
         public static void Start(bool reset = true)
@@ -102,7 +104,7 @@ namespace RTCV.UI
             }
             catch (Exception e)
             {
-                Console.WriteLine("Unable to remove backup " + sk + " from queue!\n\n" + e.ToString());
+                logger.Error(e, "Unable to remove backup {stashkey} from queue!", sk);
             }
         }
 

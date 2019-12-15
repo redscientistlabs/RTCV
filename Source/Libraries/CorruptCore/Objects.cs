@@ -28,6 +28,10 @@ namespace RTCV.CorruptCore
 	[Ceras.MemberConfig(TargetMember.All)]
 	public class Stockpile
 	{
+		[NonSerialized]
+        [Ceras.Exclude]
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
 		public List<StashKey> StashKeys = new List<StashKey>();
 
 		public string Name;
@@ -383,10 +387,10 @@ namespace RTCV.CorruptCore
 
             //Extract the stockpile
             RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs("Extracting Stockpile (progress not reported during extraction)", loadProgress += 5));
-            if (!Extract(filename, Path.Combine("WORKING", extractFolder), "stockpile.json"))
+            if (Extract(filename, Path.Combine("WORKING", extractFolder), "stockpile.json") is {Failed:true} r)
             {
-                results.AddError("Extracting the stockpile failed.");
-				return results;
+                results.AddResults(r);
+                return results;
             }
                 
 
@@ -571,8 +575,9 @@ namespace RTCV.CorruptCore
 		/// <param name="folder"></param>
 		/// <param name="masterFile"></param>
 		/// <returns></returns>
-		public static bool Extract(string filename, string folder, string masterFile)
-		{
+		public static OperationResults<bool> Extract(string filename, string folder, string masterFile)
+        {
+            var r = new OperationResults<bool>();
 			try
 			{
 				EmptyFolder(folder);
@@ -581,26 +586,25 @@ namespace RTCV.CorruptCore
 				if (!File.Exists(Path.Combine(RtcCore.RtcDir, folder, masterFile)))
 				{
 					if (File.Exists(Path.Combine(RtcCore.RtcDir, folder, "stockpile.xml")))
-						MessageBox.Show("Legacy stockpile found. This stockpile isn't supported by this version of the RTC.");
+						r.AddError("Legacy stockpile found. This stockpile isn't supported by this version of the RTC.");
 					else if (File.Exists(Path.Combine(RtcCore.RtcDir, folder, "keys.xml")))
-						MessageBox.Show("Legacy SSK found. This SSK isn't supported by this version of the RTC.");
+                        r.AddError("Legacy SSK found. This SSK isn't supported by this version of the RTC.");
 					else
-						MessageBox.Show("The file could not be read properly");
+                        r.AddError("The file could not be read properly");
 
 					EmptyFolder(folder);
-					return false;
+					return r;
 				}
 
-				return true;
+				return r;
 			}
 			catch (Exception e)
 			{
 				//If it errors out, empty the folder
 				EmptyFolder(folder);
-				throw new CustomException("The file could not be read properly", e.Message + "\n" + e.StackTrace);
-
-                //return false; this code can never be reached
-			}
+				r.AddError("The file could not be read properly.", logger, e);
+                return r;
+            }
 		}
 
         public static void LoadConfigFromStockpile()
@@ -645,8 +649,9 @@ namespace RTCV.CorruptCore
 				
             }
 
-			if (!Extract(filename, Path.Combine("WORKING", "TEMP"), "stockpile.json"))
-				return;
+            if (Extract(filename, Path.Combine("WORKING", "TEMP"), "stockpile.json") is {Failed: true})
+                return;
+				
 
 			//Configs are stored in the "configs" folder within the stockpile
 			//Build up a filename map and use that when copying back in

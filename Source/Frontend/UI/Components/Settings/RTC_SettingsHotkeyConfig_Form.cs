@@ -84,7 +84,7 @@ namespace RTCV.UI
                 catch (Exception e)
                 {
                     MessageBox.Show("Something went wrong when loading your hotkeys. Deleting old hotkeys and contining");
-                    Console.WriteLine(e + "\n" + e.StackTrace);
+                    logger.Error(e, "Error loading hotkeys");
                     NetCore.Params.RemoveParam("HOTKEYS");
                 }
             }
