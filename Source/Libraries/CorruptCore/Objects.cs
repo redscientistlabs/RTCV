@@ -103,7 +103,7 @@ namespace RTCV.CorruptCore
 
 
             List<string> allRoms = new List<string>();
-            if (includeReferencedFiles)
+            if (includeReferencedFiles && ((bool?)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.SUPPORTS_REFERENCES] ?? false))
             {
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs("Prepping referenced files", saveProgress += 2));
                 //populating Allroms array
@@ -179,20 +179,21 @@ namespace RTCV.CorruptCore
                     {
                         if (MessageBox.Show($"Include referenced files was set but we couldn't find {rom}. Continue saving? (You'll need to reassociate the file at runtime)", "Couldn't find file.", MessageBoxButtons.YesNo) == DialogResult.No)
                             return false;
-                    }
-                        
-
-                    //If the file already exists, overwrite it.
-                    if (File.Exists(romTempfilename))
-                    {
-                        //Whack the attributes in case a rom is readonly 
-                        File.SetAttributes(romTempfilename, FileAttributes.Normal);
-                        File.Delete(romTempfilename);
-                        File.Copy(rom, romTempfilename);
-                    }
+					}
                     else
-                        File.Copy(rom, romTempfilename);
-                }
+                    {
+                        //If the file already exists, overwrite it.
+                        if (File.Exists(romTempfilename))
+                        {
+                            //Whack the attributes in case a rom is readonly 
+                            File.SetAttributes(romTempfilename, FileAttributes.Normal);
+                            File.Delete(romTempfilename);
+                            File.Copy(rom, romTempfilename);
+                        }
+                        else
+                            File.Copy(rom, romTempfilename);
+					}
+				}
 
                 //Update the paths
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Fixing paths", saveProgress += 2));
