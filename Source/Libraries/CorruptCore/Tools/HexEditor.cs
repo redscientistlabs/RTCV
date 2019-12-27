@@ -933,7 +933,7 @@ namespace RTCV.CorruptCore.Tools
                     }
 
 
-            var ordered = allAddresses.OrderBy(it => it);
+            var ordered = allAddresses.OrderBy(it => it).ToArray();
 
 
 			bool contiguous = true;
@@ -943,7 +943,7 @@ namespace RTCV.CorruptCore.Tools
 			foreach (long item in ordered)
 			{
 				if (lastAddress != null) //not the first one
-					if (i != (ordered.Count() - 1)) //not the last one
+					if (i != (ordered.Length - 1)) //not the last one
 						if (item != lastAddress.Value + 1) //checks expected address
 							contiguous = false;
 
@@ -959,8 +959,7 @@ namespace RTCV.CorruptCore.Tools
 			string text;
 			if (contiguous)
 			{
-				var listOrdered = ordered.ToList();
-				text = $"{ToHexString(listOrdered[0])}-{ToHexString(listOrdered[listOrdered.Count - 1])}";
+				text = $"{ToHexString(ordered[0])}-{ToHexString(ordered[ordered.Length - 1])}";
 			}
 			else
 			{
@@ -971,7 +970,7 @@ namespace RTCV.CorruptCore.Tools
 
 		internal static void CreateVmdText(string domain, string text)
 		{   //Sends text to the VMD Generator and trigger generation
-			LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_GENERATEVMDTEXT, new object[] { domain, text }, true);
+			LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_GENERATEVMDTEXT, new object[] { domain, text }, false);
 		}
 
         private void IncrementAddress(long address)
