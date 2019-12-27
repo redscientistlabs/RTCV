@@ -1082,12 +1082,12 @@ namespace RTCV.CorruptCore
 
             
             List<BlastUnit> bul = new List<BlastUnit>(Layer.ToArray().Reverse());
-            List<long> usedAddresses = new List<long>();
+            List<ValueTuple<string, long>> usedAddresses = new List<ValueTuple<string, long>>();
 
             foreach (BlastUnit bu in bul)
             {
-                if (!usedAddresses.Contains(bu.Address) && !bu.IsLocked)
-                    usedAddresses.Add(bu.Address);
+                if (!usedAddresses.Contains(new ValueTuple<string,long>(bu.Domain, bu.Address)) && !bu.IsLocked)
+                    usedAddresses.Add(new ValueTuple<string, long>(bu.Domain, bu.Address));
                 else
                 {
                     Layer.Remove(bu);
@@ -2034,15 +2034,19 @@ namespace RTCV.CorruptCore
 				BlastUnit newBU = (BlastUnit)this.Clone();
 				newBU.precision = 1;
 				newBU.Address += i;
-				newBU.SourceAddress += i;
+				if(newBU.Source == BlastUnitSource.STORE)
+				    newBU.SourceAddress += i;
 
 
-				
 
-				if (!BigEndian)
-					newBU.Value = new byte[1] { Value[i] };
-				else
-					newBU.Value = new byte[1] { Value[(precision - 1) - i] };
+
+                if (newBU.Source == BlastUnitSource.VALUE)
+                {
+                    if (!BigEndian)
+                        newBU.Value = new byte[1] { Value[i] };
+                    else
+                        newBU.Value = new byte[1] { Value[(precision - 1) - i] };
+				}
 
 				if (!BigEndian && i == (precision-1))
 					newBU.TiltValue = TiltValue;
