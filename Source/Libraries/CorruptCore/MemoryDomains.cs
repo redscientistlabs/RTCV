@@ -15,30 +15,64 @@ using System.Xml.Serialization;
 namespace RTCV.CorruptCore
 {
     public static class MemoryDomains
-	{
+    {
+        private static object miLock = new object();
 
-		public static Dictionary<string, MemoryDomainProxy> MemoryInterfaces
-		{
-			get => RTCV.NetCore.AllSpec.CorruptCoreSpec?["MEMORYINTERFACES"] as Dictionary<string, MemoryDomainProxy>;
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update("MEMORYINTERFACES", value);
-		}
+        public static Dictionary<string, MemoryDomainProxy> MemoryInterfaces
+        {
+            get
+            {
+                lock (miLock)
+                {
+                    return RTCV.NetCore.AllSpec.CorruptCoreSpec?["MEMORYINTERFACES"] as Dictionary<string, MemoryDomainProxy>;
+                }
+            }
+            set
+            {
+                lock (miLock)
+                {
+                    RTCV.NetCore.AllSpec.CorruptCoreSpec.Update("MEMORYINTERFACES", value);
+                }
+            }
+        }
 
-		public static Dictionary<string, VirtualMemoryDomain> VmdPool = new Dictionary<string, VirtualMemoryDomain>();
+        private static Dictionary<string, VirtualMemoryDomain> vmdPool = new Dictionary<string, VirtualMemoryDomain>();
+
+        public static Dictionary<string, VirtualMemoryDomain> VmdPool
+        {
+            get
+            {
+                lock (miLock)
+                {
+                    return vmdPool;
+                }
+            }
+            set
+            {
+                lock (miLock)
+                {
+                    vmdPool = value;
+                }
+            }
+        }
 
         public static Dictionary<string, MemoryInterface> AllMemoryInterfaces
         {
             get
             {
-                var d = new Dictionary<string, MemoryInterface>();
-                if(MemoryInterfaces != null)
-					foreach (var item in MemoryInterfaces)
-						d[item.Key] = item.Value;
+                lock (miLock)
+                {
+                    var d = new Dictionary<string, MemoryInterface>();
+                    if (MemoryInterfaces != null)
+                        foreach (var item in MemoryInterfaces)
+                            d[item.Key] = item.Value;
 
-				if (VmdPool != null)
-                    foreach (var item in VmdPool)
-						d[item.Key] = item.Value;
+                    if (VmdPool != null)
+                        foreach (var item in VmdPool)
+                            d[item.Key] = item.Value;
 
-                return d;
+                    return d;
+                }
             }
         }
         public static PartialSpec getDefaultPartial()
