@@ -88,7 +88,10 @@ namespace RTCV.CorruptCore
 		public static void RefreshDomains(bool domainsChanged = false)
 		{
 			var temp = new Dictionary<string, MemoryDomainProxy>();
-			var mdps = (MemoryDomainProxy[])RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_INTERFACES];
+			var mdps = RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.MEMORYDOMAINS_INTERFACES] as MemoryDomainProxy[];
+            if (mdps == null)
+                return;
+
 			foreach (MemoryDomainProxy mdp in mdps)
 				temp.Add(mdp.ToString(), mdp);
 			MemoryInterfaces = temp;
