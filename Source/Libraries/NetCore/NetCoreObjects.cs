@@ -91,8 +91,8 @@ namespace RTCV.NetCore
         public NetCoreConnector Connector = null;
         public NetworkSide Side = NetworkSide.NONE;
         public bool AutoReconnect = true;
-        public int ClientReconnectDelay = 2000;
-		public int DefaultBoopMonitoringCounter = System.Diagnostics.Debugger.IsAttached ? 1500 : 25;
+        public int ClientReconnectDelay = 1500;
+		public int DefaultBoopMonitoringCounter = System.Diagnostics.Debugger.IsAttached ? 1500 : 20;
 
 		public bool Attached = true;
 		public bool Loopback = true;
