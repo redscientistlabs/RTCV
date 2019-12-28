@@ -13,7 +13,7 @@ using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
-	public partial class RTC_ListBox_Form : ComponentForm
+	public partial class RTC_ListBox_Form : ComponentForm, IBlockable
 	{
 		ComponentForm[] childForms;
 

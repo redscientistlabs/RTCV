@@ -18,6 +18,7 @@ namespace RTCV.UI
 {
     public partial class UI_SaveProgress_Form : ComponentForm, IAutoColorize, ISubForm
     {
+		
         public UI_SaveProgress_Form()
         {
             InitializeComponent();

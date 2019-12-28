@@ -153,7 +153,7 @@ namespace RTCV.UI
 
 		public class RTC_Standalone_Form : Form { }
 
-		public class ComponentForm : Form, IBlockable
+		public class ComponentForm : Form
         {
 
             private protected static NLog.Logger logger;

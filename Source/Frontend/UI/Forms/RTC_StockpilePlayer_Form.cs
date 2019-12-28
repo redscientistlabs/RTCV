@@ -12,8 +12,8 @@ using RTCV.NetCore;
 
 namespace RTCV.UI
 {
-	public partial class RTC_StockpilePlayer_Form : ComponentForm, IAutoColorize
-    {
+	public partial class RTC_StockpilePlayer_Form : ComponentForm, IAutoColorize, IBlockable
+	{
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
