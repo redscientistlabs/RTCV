@@ -527,8 +527,9 @@ namespace RTCV.UI
 			if (Stockpile.Save(sks, path, RTCV.NetCore.Params.IsParamSet("INCLUDE_REFERENCED_FILES"), RTCV.NetCore.Params.IsParamSet("COMPRESS_STOCKPILE")))
 				SyncObjectSingleton.FormExecute(() =>
 				{
-					sendCurrentStockpileToSKS();
-					UnsavedEdits = false;
+                    StockpileManager_UISide.SetCurrentStockpile(sks);
+                    sendCurrentStockpileToSKS();
+                    UnsavedEdits = false;
                     btnSaveStockpile.Enabled = true;
                 });
         }
