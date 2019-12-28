@@ -35,9 +35,9 @@
             this.btnMinimize = new System.Windows.Forms.Button();
             this.btnQuit = new System.Windows.Forms.Button();
             this.pnTopPanel = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pnTopPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -121,6 +121,16 @@
             this.pnTopPanel.Size = new System.Drawing.Size(655, 41);
             this.pnTopPanel.TabIndex = 132;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(16, 12);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(16, 16);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 134;
+            this.pictureBox1.TabStop = false;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -139,21 +149,11 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Segoe UI Semilight", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(177)))), ((int)(((byte)(165)))), ((int)(((byte)(212)))));
-            this.label2.Location = new System.Drawing.Point(95, 12);
+            this.label2.Location = new System.Drawing.Point(100, 12);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(175, 25);
             this.label2.TabIndex = 133;
             this.label2.Text = "Prerequisite Installer";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(16, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(16, 16);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 134;
-            this.pictureBox1.TabStop = false;
             // 
             // MainForm
             // 
