@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -254,15 +255,13 @@ namespace RTCV.NetCore
                 catch (Exception ex)
                 {
                     failure = ex.InnerException;
-					if(failure != null)
-						throw failure;
-					throw;
+					return failure;
 				}
             }));
             if (failure != null)
             {
-                throw failure;
-            }
+                ExceptionDispatchInfo.Capture(failure).Throw();
+			}
             return result;
         }
 

@@ -315,7 +315,7 @@ namespace RTCV.NetCore
             this._additionalInfo = additionalInfo;
 		}
 
-		public override string StackTrace => (String.IsNullOrEmpty(_additionalInfo) ? _additionalInfo + "/n" : "") + base.StackTrace;
+		public override string StackTrace => (String.IsNullOrEmpty(_additionalInfo) ? "" : $"{_additionalInfo}\n") + base.StackTrace;
     }
 
 	public class AbortEverythingException : Exception
