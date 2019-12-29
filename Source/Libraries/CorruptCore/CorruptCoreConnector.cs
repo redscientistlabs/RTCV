@@ -158,13 +158,12 @@ namespace RTCV.CorruptCore
 						string domain = (string)temp[0];
 						long address = (long)temp[1];
 
-						MemoryDomainProxy mdp = MemoryDomains.GetProxy(domain, address);
-						long realAddress = MemoryDomains.GetRealAddress(domain, address);
+                        MemoryInterface mi = MemoryDomains.GetInterface(domain);
 
-						SyncObjectSingleton.FormExecute(() =>
+                        SyncObjectSingleton.FormExecute(() =>
 						{
 							S.GET<CorruptCore.Tools.HexEditor>().Show();
-							S.GET<CorruptCore.Tools.HexEditor>().SetDomain(mdp);
+							S.GET<CorruptCore.Tools.HexEditor>().SetDomain(mi);
 							S.GET<CorruptCore.Tools.HexEditor>().GoToAddress(address);
 
 						});
