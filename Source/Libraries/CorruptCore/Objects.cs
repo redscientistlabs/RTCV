@@ -388,7 +388,7 @@ namespace RTCV.CorruptCore
 
             //Extract the stockpile
             RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs("Extracting Stockpile (progress not reported during extraction)", loadProgress += 5));
-            if (Extract(filename, Path.Combine("WORKING", extractFolder), "stockpile.json") is {Failed:true} r)
+            if (Extract(filename, Path.Combine("WORKING", extractFolder), "stockpile.json") is OperationResults<bool> r && r.Failed)
             {
                 results.AddResults(r);
                 return results;
@@ -650,7 +650,7 @@ namespace RTCV.CorruptCore
 				
             }
 
-            if (Extract(filename, Path.Combine("WORKING", "TEMP"), "stockpile.json") is {Failed: true})
+            if (Extract(filename, Path.Combine("WORKING", "TEMP"), "stockpile.json") is OperationResults<bool> r && r.Failed)
                 return;
 				
 
