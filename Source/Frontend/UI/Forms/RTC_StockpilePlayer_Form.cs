@@ -161,8 +161,8 @@ namespace RTCV.UI
 				(columnsMenu.Items.Add("Show Note", null, new EventHandler((ob, ev) => { dgvStockpile.Columns["Note"].Visible ^= true; })) as ToolStripMenuItem).Checked = dgvStockpile.Columns["Note"].Visible;
 				columnsMenu.Items.Add(stripSeparator);
 				(columnsMenu.Items.Add("Load on Select", null, new EventHandler((ob, ev) => { S.GET<RTC_GlitchHarvesterBlast_Form>().LoadOnSelect ^= true; })) as ToolStripMenuItem).Checked = S.GET<RTC_GlitchHarvesterBlast_Form>().LoadOnSelect;
-				(columnsMenu.Items.Add("Clear Cheats/Freezes on Rewind", null, new EventHandler((ob, ev) => { S.GET<RTC_CorruptionEngine_Form>().cbClearCheatsOnRewind.Checked ^= true; })) as ToolStripMenuItem).Checked = S.GET<RTC_CorruptionEngine_Form>().cbClearCheatsOnRewind.Checked;
-				(columnsMenu.Items.Add("Clear Pipes on Rewind", null, new EventHandler((ob, ev) => { S.GET<RTC_CorruptionEngine_Form>().cbClearPipesOnRewind.Checked ^= true; })) as ToolStripMenuItem).Checked = S.GET<RTC_CorruptionEngine_Form>().cbClearPipesOnRewind.Checked;
+				(columnsMenu.Items.Add("Clear Infinite Units on Rewind", null, new EventHandler((ob, ev) => { S.GET<RTC_CorruptionEngine_Form>().cbClearCheatsOnRewind.Checked ^= true; })) as ToolStripMenuItem).Checked = S.GET<RTC_CorruptionEngine_Form>().cbClearCheatsOnRewind.Checked;
+				
 
                 columnsMenu.Items.Add(stripSeparator);
 
@@ -325,7 +325,7 @@ namespace RTCV.UI
 
 		private void dgvStockpile_CellClick(object sender, DataGridViewCellEventArgs e)
 		{
-			if (currentlyLoading || e?.RowIndex == -1)
+			if (currentlyLoading || !S.GET<RTC_GlitchHarvesterBlast_Form>().LoadOnSelect || e?.RowIndex == -1)
 				return;
    			try
 			{
