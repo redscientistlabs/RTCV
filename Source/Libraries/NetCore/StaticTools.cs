@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,129 +11,97 @@ using System.Threading.Tasks;
 namespace RTCV.NetCore.StaticTools
 {
 
-
 	// Implementing this interface causes auto-coloration.
 	public interface IAutoColorize { }
 
-	//Static singleton manager
-	//Call or create a singleton using class type
-	public static class S
-	{
-		static readonly ConcurrentDictionary<Type, object> instances = new ConcurrentDictionary<Type, object>();
-		public static FormRegister formRegister = new FormRegister();
-        private static object lockObject = new object();
-
-
-        [ThreadStatic]
-        public static volatile Dictionary<int,List<string>> InvokeStackTraces = new Dictionary<int, List<string>>();
-        static readonly object dicoLock = new object();
-        public static void InvokeLog(this ISynchronizeInvoke si, Delegate method, object[] args)
+    class LazyConcurrentDictionary<TKey, TValue> : ConcurrentDictionary<TKey, Lazy<TValue>>
+    {
+        public TValue AddOrUpdate(TKey key, Func<TKey, TValue> addValueFactory, Func<TKey, TValue, TValue> updateValueFactory)
         {
-            int pid = Thread.CurrentThread.ManagedThreadId;
+            var result = base.AddOrUpdate(key,
+                k => new Lazy<TValue>(() => addValueFactory(k), LazyThreadSafetyMode.ExecutionAndPublication),
+                (k2, old) => new Lazy<TValue>(() => updateValueFactory(k2, old.Value), LazyThreadSafetyMode.ExecutionAndPublication));
 
-            List<string> IST = null;
-            bool listExists;
-
-            lock (dicoLock)
-                listExists = InvokeStackTraces.TryGetValue(32, out IST);
-
-            if (listExists)
-            {
-                IST = new List<string>();
-
-                lock (dicoLock)
-                    InvokeStackTraces.Add(pid, IST);
-            }
-            IST.Add(Environment.StackTrace);
-
-            var iar = si.BeginInvoke(method, args);
-            si.EndInvoke(iar);
-
-            lock (dicoLock)
-            {
-                InvokeStackTraces.Remove(InvokeStackTraces.Count - 1);
-                if (InvokeStackTraces.Count == 0)
-                    InvokeStackTraces.Remove(pid);
-            }
+            return result.Value;
         }
+
+        public TValue GetOrAdd(TKey key, Func<TKey, TValue> valueFactory)
+        {
+            var lazyResult = base.GetOrAdd(key, k => new Lazy<TValue>(() => valueFactory(k), LazyThreadSafetyMode.ExecutionAndPublication));
+
+            return lazyResult.Value;
+        }
+    }
+
+    //Static singleton manager
+    //Call or create a singleton using class type
+    public static class S
+	{
+		private static readonly LazyConcurrentDictionary<Type, object> instances = new LazyConcurrentDictionary<Type, object>();
+        public static FormRegister formRegister = new FormRegister();
 
 
 		public static bool ISNULL<T>()
 		{
             Type typ = typeof(T);
             return instances.ContainsKey(typ);
-		}
-
-		public static T GET<T>()
-        {
-            Type typ = typeof(T);
-            
-            if (!instances.TryGetValue(typ, out object o))
-            {
-                lock(lockObject)
-                {
-                    //Check again in case we had stacked threads
-                    if(!instances.TryGetValue(typ, out o))
-                    {
-                        o = Activator.CreateInstance(typ);
-                        instances[typ] = o;
-            
-                        if (typ.IsSubclassOf(typeof(System.Windows.Forms.Form)))
-                            formRegister.OnFormRegistered(new NetCoreEventArgs("FORMREGISTER", instances[typ]));
-                    }
-                }
-            }
-            return (T)o;
         }
 
         //returns all singletons that implements a certain type
         public static T[] GETINTERFACES<T>()
         {
-            lock (lockObject)
+            return instances.Values.OfType<T>().ToArray();
+        }
+
+        public static T GET<T>() where T : class, new()
+        {
+            Type typ = typeof(T);
+            var r = instances.GetOrAdd(typ, key => new Lazy<object>(valueFactory: () =>
             {
-                return instances.Values
-                    .OfType<T>()
-                    .ToArray();
-            }
+                var t = new T();
+                if (typ.IsSubclassOf(typeof(System.Windows.Forms.Form)))
+                    formRegister.OnFormRegistered(new NetCoreEventArgs("FORMREGISTER", t));
+                return t; 
+            }, LazyThreadSafetyMode.PublicationOnly));
+
+            return (T)((Lazy<object>) r).Value;
         }
 
         public static object GET(Type typ)
         {
-            if (!instances.TryGetValue(typ, out object o))
-            {
-                lock (lockObject)
-                {
-                    //Check again in case we had stacked threads
-                    if (!instances.TryGetValue(typ, out o))
-                    {
-                        o = Activator.CreateInstance(typ);
-                        instances[typ] = o;
+            var constructor = typ.GetConstructor(new Type[0]);
+            if (constructor == null)
+                throw new Exception("GET requires a parameterless constructor");
 
-                        if (typ.IsSubclassOf(typeof(System.Windows.Forms.Form)))
-                            formRegister.OnFormRegistered(new NetCoreEventArgs("FORMREGISTER", instances[typ]));
-                    }
-                }
-            }
-            return o;
+            var r = instances.GetOrAdd(typ, key => new Lazy<object>(() =>
+            {
+                var t= constructor.Invoke(new object[0]);
+                if (typ.IsSubclassOf(typeof(System.Windows.Forms.Form)))
+                    formRegister.OnFormRegistered(new NetCoreEventArgs("FORMREGISTER", t));
+                return t;
+            }, LazyThreadSafetyMode.PublicationOnly));
+            var info = r.GetType().GetProperty("Value");
+
+            return info.GetValue(r);
         }
 
-
+        
         public static void SET<T>(T newTyp)
         {
-            lock (lockObject)
+            Func<Type, Object> addFunc = (key) => new Lazy<T>(() => newTyp, LazyThreadSafetyMode.PublicationOnly);
+            Func<Type, Object, Object> updateFunc = (key, key2) =>
             {
-                Type typ = typeof(T);
                 if (newTyp == null)
-                    instances.TryRemove(typ, out _);
-                else
-                    instances[typ] = newTyp;
-
-                if (typ.IsSubclassOf(typeof(System.Windows.Forms.Form)))
-                    formRegister.OnFormRegistered(new NetCoreEventArgs("FORMREGISTER", instances[typ]));
-            }
+                    return null;
+                return new Lazy<object>(() =>
+                {
+                    if (newTyp.GetType().IsSubclassOf(typeof(System.Windows.Forms.Form)))
+                        formRegister.OnFormRegistered(new NetCoreEventArgs("FORMREGISTER", newTyp));
+                    return newTyp;
+                }, LazyThreadSafetyMode.PublicationOnly);
+            };
+            instances.AddOrUpdate(newTyp.GetType(), addFunc, updateFunc);
         }
-
-
     }
 
 	public class FormRegister
