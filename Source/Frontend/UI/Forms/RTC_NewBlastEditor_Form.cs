@@ -388,16 +388,21 @@ namespace RTCV.UI
 
 		private void breakDownUnits(bool breakSelected = false)
 		{
-			IEnumerable<DataGridViewRow> targetRows;
+			List<DataGridViewRow> targetRows;
 
 			if (breakSelected)
-				targetRows = dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>();
+				targetRows = dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().ToList();
 			else
-				targetRows = dgvBlastEditor.Rows.Cast<DataGridViewRow>();
+				targetRows = dgvBlastEditor.Rows.Cast<DataGridViewRow>().ToList();
 
-			foreach (DataGridViewRow row in targetRows)
+			//Important we ToArray() this or else the ienumerable will become invalidated
+			var blastUnits = targetRows.Select(x => (BlastUnit) x.DataBoundItem).ToArray(); 
+
+			dgvBlastEditor.DataSource = null;
+			batchOperation = true;
+
+			foreach (var bu in blastUnits)
 			{
-				BlastUnit bu = (BlastUnit)row.DataBoundItem;
 				BlastUnit[] brokenUnits = bu.GetBreakdown();
 
 				if (brokenUnits == null || brokenUnits.Length < 2)
@@ -405,8 +410,12 @@ namespace RTCV.UI
 
 				foreach (BlastUnit unit in brokenUnits)
 					bs.Add(unit);
-
 			}
+
+			bs = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
+			batchOperation = false;
+			dgvBlastEditor.DataSource = bs;
+			updateMaximum(dgvBlastEditor.Rows.Cast<DataGridViewRow>().ToList());
 			dgvBlastEditor.Refresh();
 			UpdateBottom();
 		}

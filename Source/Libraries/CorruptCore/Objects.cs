@@ -1453,7 +1453,6 @@ namespace RTCV.CorruptCore
                 LimiterTime = this.LimiterTime,
                 Loop = this.Loop,
                 InvertLimiter = this.InvertLimiter,
-                TiltValue = this.TiltValue,
                 StoreLimiterSource = this.StoreLimiterSource,
                 GeneratedUsingValueList = this.GeneratedUsingValueList,
                 BigEndian = this.BigEndian,
@@ -1462,21 +1461,50 @@ namespace RTCV.CorruptCore
                 StoreTime = this.StoreTime,
                 StoreType = this.StoreType,
                 IsEnabled = this.IsEnabled,
-                LimiterListHash = this.LimiterListHash
-            };
+                LimiterListHash = this.LimiterListHash,
+			};
 
             if (bu.Source == BlastUnitSource.STORE)
             {
                 bu.SourceAddress += start;
-            }
-            else
-            {
-                for (int i = 0; i < bu.Precision; i++)
-                {
-                    bu.Value[i] = this.Value[start + i];
-                }
-            }
-            return bu;
+
+				if (BigEndian && start == (precision - 1))
+					bu.TiltValue = TiltValue;
+				else if (!BigEndian && start == 0)
+					bu.TiltValue = TiltValue;
+				else
+					bu.TiltValue = 0;
+			}
+			else
+			{
+				bu.Value = new byte[bu.precision];
+				for (int i = 0; i < bu.precision; i++)
+				{
+					if (BigEndian)
+						bu.Value[i] = Value[end - i];
+					else
+						bu.Value[i] = Value[start + i];
+
+					//If we have a tilt, calculate it and bake it into the value
+					if (this.TiltValue != 0)
+					{
+						unchecked
+						{
+							if (BigEndian)
+								bu.Value[i] += (TiltValue.ToByteArray().PadLeft(this.precision))[end - i];
+							else
+								bu.Value[i] += (TiltValue.ToByteArray().PadLeft(this.precision).FlipBytes())[start + i];
+						}
+					}
+					else
+						bu.TiltValue = 0;
+
+				}
+			}
+
+
+
+			return bu;
         }
 
         /// <summary>
@@ -2029,34 +2057,10 @@ namespace RTCV.CorruptCore
 				return brokenUnits;
 			}
 
-			for(int i = 0; i<precision; i++)
+			for (int i = 0; i < this.Precision; i++)
 			{
-				BlastUnit newBU = (BlastUnit)this.Clone();
-				newBU.precision = 1;
-				newBU.Address += i;
-				if(newBU.Source == BlastUnitSource.STORE)
-				    newBU.SourceAddress += i;
-
-
-
-
-                if (newBU.Source == BlastUnitSource.VALUE)
-                {
-                    if (!BigEndian)
-                        newBU.Value = new byte[1] { Value[i] };
-                    else
-                        newBU.Value = new byte[1] { Value[(precision - 1) - i] };
-				}
-
-				if (!BigEndian && i == (precision-1))
-					newBU.TiltValue = TiltValue;
-				else if (BigEndian && i == 0)
-					newBU.TiltValue = TiltValue;
-				else
-					newBU.TiltValue = 0;
-
-
-				brokenUnits[i] = newBU;
+				var bu = this.GetSubUnit(i, i + 1);
+				brokenUnits[i] = bu;
 			}
 
 			return brokenUnits;
