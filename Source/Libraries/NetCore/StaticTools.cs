@@ -88,7 +88,7 @@ namespace RTCV.NetCore.StaticTools
         
         public static void SET<T>(T newTyp)
         {
-            Func<Type, Object> addFunc = (key) => new Lazy<T>(() => newTyp, LazyThreadSafetyMode.PublicationOnly);
+            Func<Type, Object> addFunc = (key) => new Lazy<object>(() => newTyp, LazyThreadSafetyMode.PublicationOnly);
             Func<Type, Object, Object> updateFunc = (key, key2) =>
             {
                 if (newTyp == null)
