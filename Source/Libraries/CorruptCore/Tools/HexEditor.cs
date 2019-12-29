@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RTCV.NetCore;
@@ -57,7 +58,8 @@ namespace RTCV.CorruptCore.Tools
         {
             get => MemoryDomains.AllMemoryInterfaces;
         }
-		public bool UpdateOnStep = true;
+        public bool UpdateOnStep = true;
+        public bool HideOnClose = true;
 
         public HexEditor()
         {
@@ -105,9 +107,12 @@ namespace RTCV.CorruptCore.Tools
 
         private void HexEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
-			this.Hide();
-			_domain = new NullMemoryInterface();
-			e.Cancel = true;
+            if (HideOnClose)
+            {
+                this.Hide();
+                _domain = new NullMemoryInterface();
+                e.Cancel = true;
+            }
 		}
 
         private long? HighlightedAddress
@@ -135,20 +140,21 @@ namespace RTCV.CorruptCore.Tools
             return true;
         }
 
+		private volatile object updateValuesSyncObject = new object();
         public async void UpdateValues()
         {
-            await Task.Run(() => SyncObjectSingleton.FormExecute(() =>
-            {
-                try
-                {
-                    AddressesLabel.Text = GenerateMemoryViewString(true);
-                    AddressLabel.Text = GenerateAddressString();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Failed to UpdateValues() in hex editor.{e}");
-                }
-            }));
+		    await Task.Run(() => SyncObjectSingleton.FormExecute(() =>
+		    {
+		    	try
+		    	{
+		    		AddressesLabel.Text = GenerateMemoryViewString(true);
+		    		AddressLabel.Text = GenerateAddressString();
+		    	}
+		    	catch (Exception e)
+		    	{
+		    		Console.WriteLine($"Failed to UpdateValues() in hex editor.{e}");
+		    	}
+		    }));
         }
 
 
