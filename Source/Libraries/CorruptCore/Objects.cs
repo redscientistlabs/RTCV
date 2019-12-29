@@ -591,7 +591,7 @@ namespace RTCV.CorruptCore
 					else if (File.Exists(Path.Combine(RtcCore.RtcDir, folder, "keys.xml")))
                         r.AddError("Legacy SSK found. This SSK isn't supported by this version of the RTC.");
 					else
-                        r.AddError("The file could not be read properly");
+                        r.AddError("The file could not be read properly. Master file missing");
 
 					EmptyFolder(folder);
 					return r;
@@ -603,7 +603,7 @@ namespace RTCV.CorruptCore
 			{
 				//If it errors out, empty the folder
 				EmptyFolder(folder);
-				r.AddError("The file could not be read properly.", logger, e);
+				r.AddError($"The file could not be read properly (an error occurred, check the log file for more details)", logger, e);
                 return r;
             }
 		}

@@ -100,6 +100,7 @@ namespace RTCV.UI
             LoadRTCColor();
             S.GET<UI_CoreForm>().Show();
             Initialized.Set();
+            LoadRTCColor();
         }
 
         private static void FormRegister_FormRegistered(object sender, NetCoreEventArgs e)
