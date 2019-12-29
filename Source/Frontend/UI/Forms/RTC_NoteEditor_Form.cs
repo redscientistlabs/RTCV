@@ -14,15 +14,9 @@ namespace RTCV.UI
 	public partial class RTC_NoteEditor_Form : Form
 	{
 		private INote note;
+
 		private List<DataGridViewCell> cells;
 
-
-		public RTC_NoteEditor_Form()
-		{
-            KeyDown += RTC_NE_Form_KeyDown;
-            note = new NoteItem("");
-            InitializeComponent();
-		}
 
 		public RTC_NoteEditor_Form(INote noteObject, DataGridViewCell _cell)
 		{
