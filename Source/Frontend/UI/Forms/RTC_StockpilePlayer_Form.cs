@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using RTCV.CorruptCore;
 using System.Linq;
 using System.Threading.Tasks;
+using RTCV.Common.Objects;
 using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
 using RTCV.NetCore;
@@ -190,64 +191,57 @@ namespace RTCV.UI
 			}
 		}
 
-		private async void loadStockpile(string fileName)
+		private async void LoadStockpile(string fileName)
         {
 			try
 			{
+                //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
+                //Thus, we want this to happen within the try block
+                UICore.SetHotkeyTimer(false);
+                UICore.LockInterface(false, true);
+                S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
+				UI_CoreForm.cfForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
 
-				//We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
-				//Thus, we want this to happen within the try block
-				SyncObjectSingleton.FormExecute(() =>
+                StockpileManager_UISide.ClearCurrentStockpile();
+
+				//Clear out the DGVs
+				S.GET<RTC_StockpileManager_Form>().dgvStockpile.Rows.Clear(); // Clear the stockpile manager
+                dgvStockpile.Rows.Clear(); // Clear the stockpile player
+
+
+                var r = await Task.Run(() => Stockpile.Load(fileName));
+
+				if (r.Failed)
 				{
-					UICore.LockInterface(false, true);
-					S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
-                    UI_CoreForm.cfForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
-				});
-
-				await Task.Run(() =>
+				    MessageBox.Show($"Loading the stockpile failed!\n" +
+				                    $"{r.GetErrorsFormatted()}");
+				}
+				else
 				{
-
-                    var r = Stockpile.Load(fileName);
-                    if (r.Failed)
-                    {
-							MessageBox.Show($"Loading the stockpile failed!\n" +
-											$"{r.GetErrorsFormatted()}");
-                    }
-					else
-                    {
-                        var sks = r.Result;
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            S.GET<RTC_StockpileManager_Form>().dgvStockpile.Rows.Clear(); // Clear the stockpile manager
-							dgvStockpile.Rows.Clear(); // Clear the stockpile player
-
-							foreach (StashKey key in sks.StashKeys) //Populate the dgv
-                                dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.Note);
-						});
-					}
-
-					SyncObjectSingleton.FormExecute(() =>
-					{
-						List<StashKey> keys = dgvStockpile.Rows.Cast<DataGridViewRow>().Select(x => (StashKey)x.Cells["Item"].Value).ToList();
-						foreach (var sk in keys)
-						{
-							StockpileManager_UISide.CheckAndFixMissingReference(sk, false, keys);
-						}
-
-						dgvStockpile.ClearSelection();
-						RefreshNoteIcons();
-                    });
-				});
+				    var sks = r.Result;
+				    SyncObjectSingleton.FormExecute(() =>
+				    {
+				        foreach (StashKey key in sks.StashKeys) //Populate the dgv
+				            dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.Note);
+				    });
+				}
+				
+				List<StashKey> keys = dgvStockpile.Rows.Cast<DataGridViewRow>().Select(x => (StashKey)x.Cells["Item"].Value).ToList();
+				foreach (var sk in keys)
+				{
+					StockpileManager_UISide.CheckAndFixMissingReference(sk, false, keys);
+				}
+				
+				dgvStockpile.ClearSelection();
+				RefreshNoteIcons();
 			}
-			finally
+            finally
 			{
-				SyncObjectSingleton.FormExecute(() =>
-				{
-                    UI_CoreForm.cfForm?.CloseSubForm();
-					UICore.UnlockInterface();
-				});
+				UI_CoreForm.cfForm?.CloseSubForm();
+                UICore.UnlockInterface();
+                UICore.SetHotkeyTimer(true);
 			}
-        }
+		}
 
 		private void btnLoadStockpile_MouseDown(object sender, MouseEventArgs e)
 		{
@@ -275,7 +269,7 @@ namespace RTCV.UI
 					else
 						return;
 
-					await Task.Run(() => loadStockpile(filename));
+                    LoadStockpile(filename);
                 }
 				catch (Exception ex)
 				{
