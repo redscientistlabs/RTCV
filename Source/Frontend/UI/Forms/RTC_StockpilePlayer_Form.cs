@@ -219,6 +219,7 @@ namespace RTCV.UI
                         SyncObjectSingleton.FormExecute(() =>
                         {
                             S.GET<RTC_StockpileManager_Form>().dgvStockpile.Rows.Clear(); // Clear the stockpile manager
+							dgvStockpile.Rows.Clear(); // Clear the stockpile player
 
 							foreach (StashKey key in sks.StashKeys) //Populate the dgv
                                 dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.Note);
