@@ -58,8 +58,8 @@ namespace RTCV.CorruptCore.Tools
         {
             get => MemoryDomains.AllMemoryInterfaces;
         }
-        public bool UpdateOnStep = true;
-        public bool HideOnClose = true;
+        public volatile bool UpdateOnStep = true;
+        public volatile bool HideOnClose = true;
 
         public HexEditor()
         {
@@ -75,6 +75,9 @@ namespace RTCV.CorruptCore.Tools
             fontHeight = fontSize1.Height;
 
             InitializeComponent();
+            this.FormClosing += HexEditor_FormClosing;
+            this.VisibleChanged += HexEditor_VisibleChanged;
+
             AddressesLabel.BackColor = Color.Transparent;
             //LoadConfigSettings();
             SetHeader();
@@ -86,8 +89,6 @@ namespace RTCV.CorruptCore.Tools
 
             Restart();
 
-            this.FormClosing += HexEditor_FormClosing;
-            this.VisibleChanged += HexEditor_VisibleChanged;
 
         }
 
