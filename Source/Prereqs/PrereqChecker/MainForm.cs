@@ -113,7 +113,7 @@ namespace RTCV.Prereqs
 
             var vc2013 = new Dependency("Visual C++ 2013 x64", "msvcr120.dll", "https://download.microsoft.com/download/2/E/6/2E61CFA4-993B-4DD4-91DA-3737CD5CD6E3/vcredist_x64.exe", "/install /passive /norestart");
             var vc2012 = new Dependency("Visual C++ 2012 x64", "msvcr110.dll", "https://download.microsoft.com/download/1/6/B/16B06F60-3B20-4FF2-B699-5E9B7962F9AE/VSU_4/vcredist_x64.exe", "/install /passive /norestart");
-            var vc2010 = new Dependency("Visual C++ 2010 x64", "msvcr100.dll", "https://download.microsoft.com/download/3/2/2/3224B87F-CFA0-4E70-BDA3-3DE650EFEBA5/vcredist_x64.exe", "/passive /norestart");
+            var vc2010 = new Dependency("Visual C++ 2010 x64", "msvcr100.dll", "https://download.microsoft.com/download/A/8/0/A80747C3-41BD-45DF-B505-E9710D2744E0/vcredist_x64.exe", "/passive /norestart");
             var dotNet471 = new Dependency(".Net Framework 4.7.1", "471", "https://download.visualstudio.microsoft.com/download/pr/014120d7-d689-4305-befd-3cb711108212/0fd66638cde16859462a6243a4629a50/ndp48-x86-x64-allos-enu.exe", "/install /x86 /x64 /passive /norestart");
 
             if (Environment.Is64BitProcess)
