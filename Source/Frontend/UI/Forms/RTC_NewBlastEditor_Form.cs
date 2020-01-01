@@ -1113,7 +1113,17 @@ namespace RTCV.UI
         */
 
 		StashKey originalSK = null;
-		internal StashKey currentSK = null;
+
+        private StashKey _currentSK = null;
+        internal StashKey currentSK
+        {
+            get => _currentSK;
+            set
+            {
+                _currentSK = value;
+				this.Name = "Blast Editor - " + value?.Alias ?? "Unnamed";
+			}
+        }
 		BindingSource bs = null;
 		BindingSource _bs = null;
 		public void LoadStashkey(StashKey sk)
@@ -1162,7 +1172,6 @@ namespace RTCV.UI
 			dgvBlastEditor.DataSource = bs;
 			InitializeDGV();
 			InitializeBottom();
-			this.Name = "Blast Editor - " + sk.Alias;
 			this.Show();
 			this.BringToFront();
 			RefreshAllNoteIcons();
