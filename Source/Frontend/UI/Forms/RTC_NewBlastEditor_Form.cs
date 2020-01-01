@@ -1162,6 +1162,7 @@ namespace RTCV.UI
 			dgvBlastEditor.DataSource = bs;
 			InitializeDGV();
 			InitializeBottom();
+			this.Name = "Blast Editor - " + sk.Alias;
 			this.Show();
 			this.BringToFront();
 			RefreshAllNoteIcons();
