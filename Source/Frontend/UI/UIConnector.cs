@@ -18,10 +18,6 @@ namespace RTCV.UI
 	{
 		NetCoreReceiver receiver;
 		public NetCoreConnector netConn;
-		/// <summary>
-		/// This is an object that locks out OnConnectionLost so in case you really don't want netcore to go into listening mode for some reason
-		/// </summary>
-		public static Mutex ConnectionLostLockout = new Mutex();
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
 
@@ -50,50 +46,40 @@ namespace RTCV.UI
 
 		private void NetCoreSpec_ServerConnectionLost(object sender, EventArgs e)
 		{
-			UIConnector.ConnectionLostLockout.WaitOne();
-            logger.Trace("Thread id {0} got Mutex...  (specconnectionlost)", System.Threading.Thread.CurrentThread.ManagedThreadId);
-
             if (UICore.isClosing || UICore.FirstConnect)
-					return;
-			SyncObjectSingleton.FormExecute(() =>
-			{
-				if (S.GET<RTC_ConnectionStatus_Form>() != null && !S.GET<RTC_ConnectionStatus_Form>()
-					.IsDisposed)
-				{
-					S.GET<RTC_ConnectionStatus_Form>()
-							.lbConnectionStatus.Text =
-						$"{(string) AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard"} connection timed out";
+                return;
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                if (S.GET<RTC_ConnectionStatus_Form>() != null && !S.GET<RTC_ConnectionStatus_Form>()
+                        .IsDisposed)
+                {
+                    S.GET<RTC_ConnectionStatus_Form>()
+                            .lbConnectionStatus.Text =
+                        $"{(string) AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard"} connection timed out";
 
-					UICore.LockInterface();
-					UI_DefaultGrids.connectionStatus.LoadToMain();
-				}
+                    UICore.LockInterface();
+                    UI_DefaultGrids.connectionStatus.LoadToMain();
+                }
 
-				S.GET<RTC_VmdAct_Form>()
-					.cbAutoAddDump.Checked = false;
-				GameProtection.WasAutoCorruptRunning = CorruptCore.RtcCore.AutoCorrupt;
-				S.GET<UI_CoreForm>().AutoCorrupt = false;
-			});
-			GameProtection.Stop(false);
+                S.GET<RTC_VmdAct_Form>()
+                    .cbAutoAddDump.Checked = false;
+                GameProtection.WasAutoCorruptRunning = CorruptCore.RtcCore.AutoCorrupt;
+                S.GET<UI_CoreForm>().AutoCorrupt = false;
+            });
+            GameProtection.Stop(false);
 
-			if (S.GET<UI_CoreForm>()
-				.cbUseAutoKillSwitch.Checked && AllSpec.VanguardSpec != null)
-				AutoKillSwitch.KillEmulator();
-
-			UIConnector.ConnectionLostLockout.ReleaseMutex();
-            logger.Trace("Thread id {0} released Mutex (specconnectionlost)...", Thread.CurrentThread.ManagedThreadId);
+            if (S.GET<UI_CoreForm>()
+                    .cbUseAutoKillSwitch.Checked && AllSpec.VanguardSpec != null)
+                AutoKillSwitch.KillEmulator();
         }
 
 		private static void Spec_ServerConnected(object sender, EventArgs e)
 		{
-			UIConnector.ConnectionLostLockout.WaitOne();
-            logger.Trace("Thread id {0} got Mutex (ServerConnected)...", Thread.CurrentThread.ManagedThreadId);
             SyncObjectSingleton.FormExecute(() =>
-				{
-					S.GET<RTC_ConnectionStatus_Form>().lbConnectionStatus.Text =
-						$"Connected to {(string) AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard"}";
-				});
-			UIConnector.ConnectionLostLockout.ReleaseMutex();
-            logger.Trace("Thread id {0} released Mutex (ServerConnected)...",Thread.CurrentThread.ManagedThreadId);
+            {
+                S.GET<RTC_ConnectionStatus_Form>().lbConnectionStatus.Text =
+                    $"Connected to {(string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard"}";
+            });
 		}
 
 		public void OnMessageReceivedProxy(object sender, NetCoreEventArgs e) => OnMessageReceived(sender, e);

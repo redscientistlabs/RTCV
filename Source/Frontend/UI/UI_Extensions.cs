@@ -168,8 +168,8 @@ namespace RTCV.UI
 
             protected ComponentForm() : base()
             {
-                logger = NLog.LogManager.GetCurrentClassLogger();
-			}
+                logger = NLog.LogManager.GetLogger(this.GetType().ToString());
+            }
 
             public void AnchorToPanel(Panel pn)
 			{

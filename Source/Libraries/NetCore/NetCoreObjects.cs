@@ -4,8 +4,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using Ceras;
+using NLog;
 
 namespace RTCV.NetCore
 {
@@ -100,6 +102,9 @@ namespace RTCV.NetCore
         public int Port = 42069;
 
         public int messageReadTimerDelay = 5; //represents how often the messages are read (ms) (15ms = ~66fps)
+        private Mutex StatusEventLockout = new Mutex();
+        private bool locked = true;
+        private protected static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public ISynchronizeInvoke syncObject
         {
@@ -117,31 +122,319 @@ namespace RTCV.NetCore
         public virtual void OnMessageReceived(NetCoreEventArgs e) => MessageReceived?.Invoke(this, e);
 
         public event EventHandler ClientConnecting;
-        internal virtual void OnClientConnecting(EventArgs e) => ClientConnecting?.Invoke(this, e);
+        internal virtual void OnClientConnecting(EventArgs e)
+        {
+            logger.Trace("Thread id {0} requesting StatusEventLockout Mutex.", Thread.CurrentThread.ManagedThreadId);
+            try
+            {
+                try
+                {
+                    StatusEventLockout.WaitOne();
+                    logger.Trace("Thread id {0} obtained StatusEventLockout Mutex.",
+                        Thread.CurrentThread.ManagedThreadId);
+                }
+                catch (AbandonedMutexException ame)
+                {
+                    logger.Trace("Thread id {0} obtained StatusEventLockout Mutex (AbandonedMutexException) {1}.",
+                        Thread.CurrentThread.ManagedThreadId, ame);
+                }
+                catch (Exception ex)
+                {
+                    logger.Trace(ex, "Exception occurred");
+                    throw;
+                }
+
+                ClientConnecting?.Invoke(this, e);
+            }
+            finally
+            {
+                logger.Trace("Thread id {0} releasing StatusEventLockout Mutex.",
+                    Thread.CurrentThread.ManagedThreadId);
+                StatusEventLockout.ReleaseMutex();
+                logger.Trace("Thread id {0} released StatusEventLockout Mutex.",
+                    Thread.CurrentThread.ManagedThreadId);
+            }
+        }
 
         public event EventHandler ClientConnectingFailed;
-        internal virtual void OnClientConnectingFailed(EventArgs e) => ClientConnectingFailed?.Invoke(this, e);
+        internal virtual void OnClientConnectingFailed(EventArgs e)
+        {
+            logger.Trace("Thread id {0} requesting StatusEventLockout Mutex.", Thread.CurrentThread.ManagedThreadId);
+            try
+            {
+                try
+                {
+                    StatusEventLockout.WaitOne();
+                    logger.Trace("Thread id {0} obtained StatusEventLockout Mutex.",
+                        Thread.CurrentThread.ManagedThreadId);
+                }
+                catch (AbandonedMutexException ame)
+                {
+                    logger.Trace("Thread id {0} obtained StatusEventLockout Mutex (AbandonedMutexException) {1}.",
+                        Thread.CurrentThread.ManagedThreadId, ame);
+                }
+                catch (Exception ex)
+                {
+                    logger.Trace(ex, "Exception occurred");
+                    throw;
+                }
+
+                ClientConnectingFailed?.Invoke(this, e);
+            }
+            finally
+            {
+                logger.Trace("Thread id {0} releasing StatusEventLockout Mutex.",
+                    Thread.CurrentThread.ManagedThreadId);
+                StatusEventLockout.ReleaseMutex();
+                logger.Trace("Thread id {0} released StatusEventLockout Mutex.",
+                    Thread.CurrentThread.ManagedThreadId);
+            }
+        }
 
         public event EventHandler ClientConnected;
-        internal virtual void OnClientConnected(EventArgs e) => ClientConnected?.Invoke(this, e);
+        internal virtual void OnClientConnected(EventArgs e)
+        {
+            logger.Trace("Thread id {0} requesting StatusEventLockout Mutex.", Thread.CurrentThread.ManagedThreadId);
+            try
+            {
+                try
+                {
+                    StatusEventLockout.WaitOne();
+                    logger.Trace("Thread id {0} obtained StatusEventLockout Mutex.",
+                        Thread.CurrentThread.ManagedThreadId);
+                }
+                catch (AbandonedMutexException ame)
+                {
+                    logger.Trace("Thread id {0} obtained StatusEventLockout Mutex (AbandonedMutexException) {1}.",
+                        Thread.CurrentThread.ManagedThreadId, ame);
+                }
+                catch (Exception ex)
+                {
+                    logger.Trace(ex, "Exception occurred");
+                    throw;
+                }
+
+                ClientConnected?.Invoke(this, e);
+            }
+            finally
+            {
+                logger.Trace("Thread id {0} releasing StatusEventLockout Mutex.",
+                    Thread.CurrentThread.ManagedThreadId);
+                StatusEventLockout.ReleaseMutex();
+                logger.Trace("Thread id {0} released StatusEventLockout Mutex.",
+                    Thread.CurrentThread.ManagedThreadId);
+            }
+        }
 
         public event EventHandler ClientDisconnected;
-        internal virtual void OnClientDisconnected(EventArgs e) => ClientDisconnected?.Invoke(this, e);
+        internal virtual void OnClientDisconnected(EventArgs e)
+        {
+            logger.Trace("Thread id {0} requesting StatusEventLockout Mutex.", Thread.CurrentThread.ManagedThreadId);
+            try
+            {
+                try
+                {
+                    StatusEventLockout.WaitOne();
+                    logger.Trace("Thread id {0} obtained StatusEventLockout Mutex.",
+                        Thread.CurrentThread.ManagedThreadId);
+                }
+                catch (AbandonedMutexException ame)
+                {
+                    logger.Trace("Thread id {0} obtained StatusEventLockout Mutex (AbandonedMutexException) {1}.",
+                        Thread.CurrentThread.ManagedThreadId, ame);
+                }
+                catch (Exception ex)
+                {
+                    logger.Trace(ex, "Exception occurred");
+                    throw;
+                }
+
+                ClientDisconnected?.Invoke(this, e);
+            }
+            finally
+            {
+                logger.Trace("Thread id {0} releasing StatusEventLockout Mutex.",
+                    Thread.CurrentThread.ManagedThreadId);
+                StatusEventLockout.ReleaseMutex();
+                logger.Trace("Thread id {0} released StatusEventLockout Mutex.",
+                    Thread.CurrentThread.ManagedThreadId);
+            }
+        }
 
         public event EventHandler ClientConnectionLost;
-        internal virtual void OnClientConnectionLost(EventArgs e) => ClientConnectionLost?.Invoke(this, e);
+        internal virtual void OnClientConnectionLost(EventArgs e)
+        {
+            logger.Trace("Thread id {0} requesting StatusEventLockout Mutex.", Thread.CurrentThread.ManagedThreadId);
+            try
+            {
+                try
+                {
+                    StatusEventLockout.WaitOne();
+                    logger.Trace("Thread id {0} obtained StatusEventLockout Mutex.",
+                        Thread.CurrentThread.ManagedThreadId);
+                }
+                catch (AbandonedMutexException ame)
+                {
+                    logger.Trace("Thread id {0} obtained StatusEventLockout Mutex (AbandonedMutexException) {1}.",
+                        Thread.CurrentThread.ManagedThreadId, ame);
+                }
+                catch (Exception ex)
+                {
+                    logger.Trace(ex, "Exception occurred");
+                    throw;
+                }
+
+                ClientConnectionLost?.Invoke(this, e);
+            }
+            finally
+            {
+                logger.Trace("Thread id {0} releasing StatusEventLockout Mutex.",
+                    Thread.CurrentThread.ManagedThreadId);
+                StatusEventLockout.ReleaseMutex();
+                logger.Trace("Thread id {0} released StatusEventLockout Mutex.",
+                    Thread.CurrentThread.ManagedThreadId);
+            }
+        }
 
         public event EventHandler ServerListening;
-        internal virtual void OnServerListening(EventArgs e) => ServerListening?.Invoke(this, e);
+        internal virtual void OnServerListening(EventArgs e)
+        {
+            logger.Trace("Thread id {0} requesting StatusEventLockout Mutex.", Thread.CurrentThread.ManagedThreadId);
+            try
+            {
+                try
+                {
+                    StatusEventLockout.WaitOne();
+                    logger.Trace("Thread id {0} obtained StatusEventLockout Mutex.",
+                        Thread.CurrentThread.ManagedThreadId);
+                }
+                catch (AbandonedMutexException ame)
+                {
+                    logger.Trace("Thread id {0} obtained StatusEventLockout Mutex (AbandonedMutexException) {1}.",
+                        Thread.CurrentThread.ManagedThreadId, ame);
+                }
+                catch (Exception ex)
+                {
+                    logger.Trace(ex, "Exception occurred");
+                    throw;
+                }
+
+                ServerListening?.Invoke(this, e);
+            }
+            finally
+            {
+                logger.Trace("Thread id {0} releasing StatusEventLockout Mutex.",
+                    Thread.CurrentThread.ManagedThreadId);
+                StatusEventLockout.ReleaseMutex();
+                logger.Trace("Thread id {0} released StatusEventLockout Mutex.",
+                    Thread.CurrentThread.ManagedThreadId);
+            }
+        }
 
         public event EventHandler ServerConnected;
-        internal virtual void OnServerConnected(EventArgs e) => ServerConnected?.Invoke(this, e);
+        internal virtual void OnServerConnected(EventArgs e)
+        {
+            logger.Trace("Thread id {0} requesting StatusEventLockout Mutex.", Thread.CurrentThread.ManagedThreadId);
+            try
+            {
+                try
+                {
+                    StatusEventLockout.WaitOne();
+                    logger.Trace("Thread id {0} obtained StatusEventLockout Mutex.",
+                        Thread.CurrentThread.ManagedThreadId);
+                }
+                catch (AbandonedMutexException ame)
+                {
+                    logger.Trace("Thread id {0} obtained StatusEventLockout Mutex (AbandonedMutexException) {1}.",
+                        Thread.CurrentThread.ManagedThreadId, ame);
+                }
+                catch (Exception ex)
+                {
+                    logger.Trace(ex, "Exception occurred");
+                    throw;
+                }
+
+                ServerConnected?.Invoke(this, e);
+            }
+            finally
+            {
+                logger.Trace("Thread id {0} releasing StatusEventLockout Mutex.",
+                    Thread.CurrentThread.ManagedThreadId);
+                StatusEventLockout.ReleaseMutex();
+                logger.Trace("Thread id {0} released StatusEventLockout Mutex.",
+                    Thread.CurrentThread.ManagedThreadId);
+            }
+        }
 
         public event EventHandler ServerDisconnected;
-        internal virtual void OnServerDisconnected(EventArgs e) => ServerDisconnected?.Invoke(this, e);
+        internal virtual void OnServerDisconnected(EventArgs e)
+        {
+            logger.Trace("Thread id {0} requesting StatusEventLockout Mutex.", Thread.CurrentThread.ManagedThreadId);
+            try
+            {
+                try
+                {
+                    StatusEventLockout.WaitOne();
+                    logger.Trace("Thread id {0} obtained StatusEventLockout Mutex.",
+                        Thread.CurrentThread.ManagedThreadId);
+                }
+                catch (AbandonedMutexException ame)
+                {
+                    logger.Trace("Thread id {0} obtained StatusEventLockout Mutex (AbandonedMutexException) {1}.",
+                        Thread.CurrentThread.ManagedThreadId, ame);
+                }
+                catch (Exception ex)
+                {
+                    logger.Trace(ex, "Exception occurred");
+                    throw;
+                }
+
+                ServerDisconnected?.Invoke(this, e);
+            }
+            finally
+            {
+                logger.Trace("Thread id {0} releasing StatusEventLockout Mutex.",
+                    Thread.CurrentThread.ManagedThreadId);
+                StatusEventLockout.ReleaseMutex();
+                logger.Trace("Thread id {0} released StatusEventLockout Mutex.",
+                    Thread.CurrentThread.ManagedThreadId);
+            }
+        }
 
         public event EventHandler ServerConnectionLost;
-        internal virtual void OnServerConnectionLost(EventArgs e) => ServerConnectionLost?.Invoke(this, e);
+        internal virtual void OnServerConnectionLost(EventArgs e)
+        {
+            logger.Trace("Thread id {0} requesting StatusEventLockout Mutex.", Thread.CurrentThread.ManagedThreadId);
+            try
+            {
+                try
+                {
+                    StatusEventLockout.WaitOne();
+                    logger.Trace("Thread id {0} obtained StatusEventLockout Mutex.",
+                        Thread.CurrentThread.ManagedThreadId);
+                }
+                catch (AbandonedMutexException ame)
+                {
+                    logger.Trace("Thread id {0} obtained StatusEventLockout Mutex (AbandonedMutexException) {1}.",
+                        Thread.CurrentThread.ManagedThreadId, ame);
+                }
+                catch (Exception ex)
+                {
+                    logger.Trace(ex, "Exception occurred");
+                    throw;
+                }
+
+                ServerConnectionLost?.Invoke(this, e);
+            }
+            finally
+            {
+                logger.Trace("Thread id {0} releasing StatusEventLockout Mutex.",
+                    Thread.CurrentThread.ManagedThreadId);
+                StatusEventLockout.ReleaseMutex();
+                logger.Trace("Thread id {0} released StatusEventLockout Mutex.",
+                    Thread.CurrentThread.ManagedThreadId);
+            }
+        }
 
         public event EventHandler SyncedMessageStart;
         internal virtual void OnSyncedMessageStart(EventArgs e) => SyncedMessageStart?.Invoke(this, e);
@@ -150,6 +443,42 @@ namespace RTCV.NetCore
         internal virtual void OnSyncedMessageEnd(EventArgs e) => SyncedMessageEnd?.Invoke(this, e);
 
         #endregion
+
+        public bool LockStatusEventLockout(int timeout = Int32.MaxValue)
+        {
+            bool s = false;
+            logger.Trace("Thread id {0} requested Lock StatusEventLockout Mutex.", Thread.CurrentThread.ManagedThreadId);
+            try
+            {
+                s = StatusEventLockout.WaitOne(timeout);
+                logger.Trace("Thread id {0} got StatusEventLockout Mutex.", Thread.CurrentThread.ManagedThreadId);
+            }
+            catch (AbandonedMutexException ame)
+            {
+                logger.Trace("Thread id {0} got StatusEventLockout Mutex (AbandonedMutexException).",
+                    Thread.CurrentThread.ManagedThreadId);
+            }
+            catch (Exception ex)
+            {
+                logger.Trace(ex, "Exception!");
+            }
+            
+            return s;
+        }
+        public void UnlockLockStatusEventLockout()
+        {
+            bool s = false;
+            logger.Trace("Thread id {0} requested Unlock StatusEventLockout Mutex.", Thread.CurrentThread.ManagedThreadId);
+            try
+            {
+                StatusEventLockout.ReleaseMutex();
+                logger.Trace("Thread id {0} Unlocked StatusEventLockout Mutex.", Thread.CurrentThread.ManagedThreadId);
+            }
+            catch (Exception ex)
+            {
+                logger.Trace(ex, "Exception!");
+            }
+        }
 
     }
 

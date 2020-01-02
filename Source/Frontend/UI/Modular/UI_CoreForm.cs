@@ -160,7 +160,6 @@ This message only appears once.";
 
             CorruptCore.RtcCore.DownloadProblematicProcesses();
 
-            UICore.LoadLists(CorruptCore.RtcCore.listsDir);
             //UI_DefaultGrids.engineConfig.LoadToMain();
         }
 

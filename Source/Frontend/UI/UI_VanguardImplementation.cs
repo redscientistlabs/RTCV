@@ -91,9 +91,12 @@ namespace RTCV.UI
 
                                 S.GET<UI_CoreForm>().Show();
 
+
                                 //Pull any lists from the vanguard implementation
                                 if(RtcCore.EmuDir != null)
                                     UICore.LoadLists(Path.Combine(RtcCore.EmuDir, "LISTS"));
+
+                                UICore.LoadLists(CorruptCore.RtcCore.listsDir);
 
                                 Panel sidebar = S.GET<UI_CoreForm>().pnSideBar;
                                 foreach (Control c in sidebar.Controls)

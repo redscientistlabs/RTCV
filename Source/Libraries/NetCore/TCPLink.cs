@@ -49,6 +49,7 @@ namespace RTCV.NetCore
         private volatile NetworkStream clientStream;
 
         private object PeerMessageQueueLock = new object();
+        private object serializationLock = new object();
         private LinkedList<NetCoreAdvancedMessage> PeerMessageQueue = new LinkedList<NetCoreAdvancedMessage>();
 
         private volatile Thread streamReadingThread = null;
@@ -180,7 +181,11 @@ namespace RTCV.NetCore
 
                                 //cmd = (RTC_Command)binaryFormatter.Deserialize(ms);
                                 var temp = ms.ToArray();
-                                message = serializer.Deserialize<NetCoreAdvancedMessage>(temp);
+                                lock (serializationLock)
+                                {
+                                    message = serializer.Deserialize<NetCoreAdvancedMessage>(temp);
+                                }
+                                
 
                                 sw.Stop();
 								if(message.Type != "{BOOP}" && sw.ElapsedMilliseconds > 50)
@@ -213,8 +218,17 @@ namespace RTCV.NetCore
                             Stopwatch sw = new Stopwatch();
                             sw.Start();
                             //Write the length of the command to the first four bytes
-                            byte[] buf = serializer.Serialize(pendingMessage);
-
+                            byte[] buf;
+                            lock (serializationLock)
+                            {
+                                if (pendingMessage is NetCoreAdvancedMessage am && am.objectValue != null)
+                                {
+                                    lock (am.objectValue)
+                                       buf = serializer.Serialize(pendingMessage);
+                                }
+                                else
+                                    buf = serializer.Serialize(pendingMessage);
+                            }
                             //Write the length of the incoming object to the NetworkStream
                             byte[] length = BitConverter.GetBytes(buf.Length);
                             networkStream.Write(length, 0, length.Length);
@@ -260,15 +274,17 @@ namespace RTCV.NetCore
                 }
                 else if (ex.InnerException != null && ex.InnerException is SocketException)
                 {
-                    logger.Warn("Ongoing TCPLink Socket Closed during use");
+                    logger.Warn(ex, "Ongoing TCPLink Socket Closed during use");
+                    logger.Debug(ex.StackTrace);
                 }
                 else if (ex is SerializationException)
                 {
-                    logger.Warn("Ongoing TCPLink Closed during Serialization operation");
+                    logger.Warn(ex, "Ongoing TCPLink Closed during Serialization operation");
+                    logger.Debug(ex.StackTrace);
                 }
                 else if (ex is ObjectDisposedException)
                 {
-                    logger.Warn("Ongoing TCPLink Closed during Socket acceptance");
+                    logger.Warn(ex, "Ongoing TCPLink Closed during Socket acceptance");
                 }
                 else
                 {
@@ -320,7 +336,7 @@ namespace RTCV.NetCore
         private void DiscardException(Exception ex)
         {
             //Discarded exception but write it in console
-            logger.Warn("{spec.Side}:{status} -> Supposed to be connected -> {supposedToBeConnected} expectingsomeone -> {expectingSomeone} status -> {status}", spec.Side, status, supposedToBeConnected, expectingSomeone, status);
+            logger.Warn(ex, "DiscardException: {spec.Side}:{status} -> Supposed to be connected -> {supposedToBeConnected} expectingsomeone -> {expectingSomeone} status -> {status}\n{stacktrace}", spec.Side, status, supposedToBeConnected, expectingSomeone, status, ex.StackTrace);
         }
 
         internal void Kill()
@@ -331,8 +347,6 @@ namespace RTCV.NetCore
 
         private void KillConnections(TcpClient clientRef)
         {
-
-
             try
             {
                 streamReadingThread?.Abort();

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 using NLog;
 using RTCV.CorruptCore;
@@ -336,6 +337,7 @@ namespace RTCV.UI
         }
         private async void LoadStockpile(string filename)
         {
+            logger.Trace("Entered LoadStockpile {0}", Thread.CurrentThread.ManagedThreadId);
             if (UnsavedEdits && MessageBox.Show("You have unsaved edits in the Glitch Harvester Stockpile. \n\n Are you sure you want to load without saving?",
                 "Unsaved edits in Stockpile", MessageBoxButtons.YesNo) == DialogResult.No)
             {
@@ -344,32 +346,41 @@ namespace RTCV.UI
 
 			var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
 			try
-			{
+            {
                 //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
                 //Thus, we want this to happen within the try block
                 UICore.SetHotkeyTimer(false);
+                
+                logger.Trace("Blocking UI");
                 UICore.LockInterface(false, true);
+                logger.Trace("UI Blocked");
+
+                logger.Trace("Opening SaveProgress Form");
                 S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
 				ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
 
+                logger.Trace("Clearing Current Stockpile");
                 StockpileManager_UISide.ClearCurrentStockpile();
                 dgvStockpile.Rows.Clear();
 
                 S.GET<RTC_StockpilePlayer_Form>().dgvStockpile.Rows.Clear();
-
+                logger.Trace("Starting Load Task");
                 var r = await Task.Run(() => Stockpile.Load(filename));
-
+                logger.Trace("Load Task Done");
                 if (r.Failed)
                 {
+                    logger.Trace("Load Task Failed");
                     MessageBox.Show($"Loading the stockpile failed!\n" +
                                     $"{r.GetErrorsFormatted()}");
                 }
                 else
                 {
+                    logger.Trace("Load Task Success");
                     var sks = r.Result;
                     //Update the current stockpile to this one
                     StockpileManager_UISide.SetCurrentStockpile(sks);
 
+                    logger.Trace("Populating DGV");
                     foreach (StashKey key in sks.StashKeys)
                         dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.Note);
 
@@ -389,9 +400,12 @@ namespace RTCV.UI
 			}
 			finally
             {
+                logger.Trace("Closing Save form");
                 ghForm?.CloseSubForm();
                 UICore.SetHotkeyTimer(true);
+                logger.Trace("Unlocking Interface");
                 UICore.UnlockInterface();
+                logger.Trace("Load done");
             }
         }
         private async void ImportStockpile(string filename)
@@ -430,6 +444,7 @@ namespace RTCV.UI
         }
         private async void SaveStockpile(Stockpile sks, string path)
         {
+            logger.Trace("Entering SaveStockpile {0}\n{1}", System.Threading.Thread.CurrentThread.ManagedThreadId, Environment.StackTrace);
             var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
             try
             {
@@ -460,6 +475,7 @@ namespace RTCV.UI
 
         private void btnLoadStockpile_Click(object sender, MouseEventArgs e)
         {
+            logger.Trace("Entering LoadStockpile {0}\n{1}", System.Threading.Thread.CurrentThread.ManagedThreadId, Environment.StackTrace);
             CorruptCore.RtcCore.CheckForProblematicProcesses();
 
             Point locate = new Point(((Control)sender).Location.X + e.Location.X, ((Control)sender).Location.Y + e.Location.Y);
