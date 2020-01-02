@@ -244,7 +244,7 @@ namespace RTCV.Prereqs
                 if (!Environment.Is64BitProcess)
                 {
                     var name = Process.GetCurrentProcess().ProcessName + "64.exe";
-                    var args = String.Join(" ", Environment.GetCommandLineArgs()); 
+                    //var args = String.Join(" ", Environment.GetCommandLineArgs()); 
                     if (processModule != null)
                     {
                         var fileName = Path.Combine(dir, name);
@@ -253,7 +253,7 @@ namespace RTCV.Prereqs
                             this.Hide();
                             try
                             {
-                                var p = new ProcessStartInfo(fileName, args);
+                                var p = new ProcessStartInfo(fileName);
                                 Process.Start(p)?.WaitForExit();
                             }
                             catch (Exception ex)
