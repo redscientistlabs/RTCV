@@ -268,7 +268,7 @@ namespace RTCV.UI
 
         public void renameStashKey(StashKey sk)
         {
-            string value = "";
+            string value = sk.Alias;
 
             if (GetInputBox("Glitch Harvester", "Enter the new Stash name:", ref value) == DialogResult.OK && !String.IsNullOrWhiteSpace(value))
             {
