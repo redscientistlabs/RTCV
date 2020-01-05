@@ -7,6 +7,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RTCV.NetCore;
@@ -57,7 +58,8 @@ namespace RTCV.CorruptCore.Tools
         {
             get => MemoryDomains.AllMemoryInterfaces;
         }
-		public bool UpdateOnStep = true;
+        public volatile bool UpdateOnStep = true;
+        public volatile bool HideOnClose = true;
 
         public HexEditor()
         {
@@ -73,6 +75,9 @@ namespace RTCV.CorruptCore.Tools
             fontHeight = fontSize1.Height;
 
             InitializeComponent();
+            this.FormClosing += HexEditor_FormClosing;
+            this.VisibleChanged += HexEditor_VisibleChanged;
+
             AddressesLabel.BackColor = Color.Transparent;
             //LoadConfigSettings();
             SetHeader();
@@ -84,8 +89,6 @@ namespace RTCV.CorruptCore.Tools
 
             Restart();
 
-            this.FormClosing += HexEditor_FormClosing;
-            this.VisibleChanged += HexEditor_VisibleChanged;
 
         }
 
@@ -105,9 +108,12 @@ namespace RTCV.CorruptCore.Tools
 
         private void HexEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
-			this.Hide();
-			_domain = new NullMemoryInterface();
-			e.Cancel = true;
+            if (HideOnClose)
+            {
+                this.Hide();
+                _domain = new NullMemoryInterface();
+                e.Cancel = true;
+            }
 		}
 
         private long? HighlightedAddress
@@ -135,20 +141,21 @@ namespace RTCV.CorruptCore.Tools
             return true;
         }
 
+		private volatile object updateValuesSyncObject = new object();
         public async void UpdateValues()
         {
-            await Task.Run(() => SyncObjectSingleton.FormExecute(() =>
-            {
-                try
-                {
-                    AddressesLabel.Text = GenerateMemoryViewString(true);
-                    AddressLabel.Text = GenerateAddressString();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Failed to UpdateValues() in hex editor.{e}");
-                }
-            }));
+		    await Task.Run(() => SyncObjectSingleton.FormExecute(() =>
+		    {
+		    	try
+		    	{
+		    		AddressesLabel.Text = GenerateMemoryViewString(true);
+		    		AddressLabel.Text = GenerateAddressString();
+		    	}
+		    	catch (Exception e)
+		    	{
+		    		Console.WriteLine($"Failed to UpdateValues() in hex editor.{e}");
+		    	}
+		    }));
         }
 
 
@@ -933,7 +940,7 @@ namespace RTCV.CorruptCore.Tools
                     }
 
 
-            var ordered = allAddresses.OrderBy(it => it);
+            var ordered = allAddresses.OrderBy(it => it).ToArray();
 
 
 			bool contiguous = true;
@@ -943,7 +950,7 @@ namespace RTCV.CorruptCore.Tools
 			foreach (long item in ordered)
 			{
 				if (lastAddress != null) //not the first one
-					if (i != (ordered.Count() - 1)) //not the last one
+					if (i != (ordered.Length - 1)) //not the last one
 						if (item != lastAddress.Value + 1) //checks expected address
 							contiguous = false;
 
@@ -959,8 +966,7 @@ namespace RTCV.CorruptCore.Tools
 			string text;
 			if (contiguous)
 			{
-				var listOrdered = ordered.ToList();
-				text = $"{ToHexString(listOrdered[0])}-{ToHexString(listOrdered[listOrdered.Count - 1])}";
+				text = $"{ToHexString(ordered[0])}-{ToHexString(ordered[ordered.Length - 1])}";
 			}
 			else
 			{
@@ -971,7 +977,7 @@ namespace RTCV.CorruptCore.Tools
 
 		internal static void CreateVmdText(string domain, string text)
 		{   //Sends text to the VMD Generator and trigger generation
-			LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_GENERATEVMDTEXT, new object[] { domain, text }, true);
+			LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_GENERATEVMDTEXT, new object[] { domain, text }, false);
 		}
 
         private void IncrementAddress(long address)

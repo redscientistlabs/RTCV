@@ -236,7 +236,8 @@
         public static readonly string SUPPORTS_RENDERING = nameof(SUPPORTS_RENDERING);
         public static readonly string SUPPORTS_CONFIG_MANAGEMENT = nameof(SUPPORTS_CONFIG_MANAGEMENT);
         public static readonly string SUPPORTS_SAVESTATES = nameof(SUPPORTS_SAVESTATES);
-        public static readonly string SUPPORTS_GAMEPROTECTION = nameof(SUPPORTS_GAMEPROTECTION);
+        public static readonly string SUPPORTS_REFERENCES = nameof(SUPPORTS_REFERENCES);
+		public static readonly string SUPPORTS_GAMEPROTECTION = nameof(SUPPORTS_GAMEPROTECTION);
         public static readonly string SUPPORTS_REALTIME = nameof(SUPPORTS_REALTIME);
         public static readonly string SUPPORTS_MULTITHREAD = nameof(SUPPORTS_MULTITHREAD);
         public static readonly string SUPPORTS_MIXED_STOCKPILE = nameof(SUPPORTS_MIXED_STOCKPILE);

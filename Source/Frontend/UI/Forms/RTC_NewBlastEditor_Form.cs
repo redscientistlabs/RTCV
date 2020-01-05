@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -388,16 +389,21 @@ namespace RTCV.UI
 
 		private void breakDownUnits(bool breakSelected = false)
 		{
-			IEnumerable<DataGridViewRow> targetRows;
+			List<DataGridViewRow> targetRows;
 
 			if (breakSelected)
-				targetRows = dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>();
+				targetRows = dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().ToList();
 			else
-				targetRows = dgvBlastEditor.Rows.Cast<DataGridViewRow>();
+				targetRows = dgvBlastEditor.Rows.Cast<DataGridViewRow>().ToList();
 
-			foreach (DataGridViewRow row in targetRows)
+			//Important we ToArray() this or else the ienumerable will become invalidated
+			var blastUnits = targetRows.Select(x => (BlastUnit) x.DataBoundItem).ToArray(); 
+
+			dgvBlastEditor.DataSource = null;
+			batchOperation = true;
+
+			foreach (var bu in blastUnits)
 			{
-				BlastUnit bu = (BlastUnit)row.DataBoundItem;
 				BlastUnit[] brokenUnits = bu.GetBreakdown();
 
 				if (brokenUnits == null || brokenUnits.Length < 2)
@@ -405,8 +411,12 @@ namespace RTCV.UI
 
 				foreach (BlastUnit unit in brokenUnits)
 					bs.Add(unit);
-
 			}
+
+			bs = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
+			batchOperation = false;
+			dgvBlastEditor.DataSource = bs;
+			updateMaximum(dgvBlastEditor.Rows.Cast<DataGridViewRow>().ToList());
 			dgvBlastEditor.Refresh();
 			UpdateBottom();
 		}
@@ -1103,7 +1113,17 @@ namespace RTCV.UI
         */
 
 		StashKey originalSK = null;
-		internal StashKey currentSK = null;
+
+        private StashKey _currentSK = null;
+        internal StashKey currentSK
+        {
+            get => _currentSK;
+            set
+            {
+                _currentSK = value;
+				this.Name = "Blast Editor - " + value?.Alias ?? "Unnamed";
+			}
+        }
 		BindingSource bs = null;
 		BindingSource _bs = null;
 		public void LoadStashkey(StashKey sk)
@@ -1148,6 +1168,8 @@ namespace RTCV.UI
 						h.Handled = true;
 				}
 			};
+
+			this.Text = $"Blast Editor - {sk.Alias}";
 
 			dgvBlastEditor.DataSource = bs;
 			InitializeDGV();
@@ -1592,25 +1614,6 @@ namespace RTCV.UI
 			File.Copy(currentSK.GetSavestateFullPath(), filename, true);
 		}
 
-		private void loadFromFileblToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-
-			BlastLayer temp = BlastTools.LoadBlastLayerFromFile();
-            LoadBlastlayer(temp);
-        }
-
-        public void LoadBlastlayer(BlastLayer bl)
-        {
-            if (bl != null)
-            {
-                currentSK.BlastLayer = bl;
-                bs = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
-            }
-            dgvBlastEditor.DataSource = bs;
-            dgvBlastEditor.ResetBindings();
-            RefreshAllNoteIcons();
-            dgvBlastEditor.Refresh();
-        }
 
 		private void saveToFileblToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -1635,50 +1638,76 @@ namespace RTCV.UI
 			ImportBlastLayer(temp);
 		}
 
-		public void ImportBlastLayer(BlastLayer bl)
+        private void loadFromFileblToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            BlastLayer temp = BlastTools.LoadBlastLayerFromFile();
+            LoadBlastlayer(temp);
+        }
+
+        public void LoadBlastlayer(BlastLayer bl, bool import = false)
 		{
-			if (bl != null)
+
+            List<BlastUnit> checkUnits()
 			{
-                var warned = new List<string>();
-				var import = new List<BlastUnit>();
+				var warned = new List<string>();
+                var unitsToLoad = new List<BlastUnit>();
 				foreach (BlastUnit bu in bl.Layer)
-				{
-					if (domains.Contains(bu.Domain) && (String.IsNullOrWhiteSpace(bu.SourceDomain) || domains.Contains(bu.SourceDomain))) 
-						import.Add(bu);
-					else
-					{
+                {
+                    if (domains.Contains(bu.Domain) &&
+                        (String.IsNullOrWhiteSpace(bu.SourceDomain) || domains.Contains(bu.SourceDomain)))
+                        unitsToLoad.Add(bu);
+                    else
+                    {
                         //If we've already warned them about the specific domain, don't warn them again.
-						if (warned.Contains(bu.Domain) && (String.IsNullOrEmpty(bu.SourceDomain) || warned.Contains(bu.SourceDomain)))
+                        if (warned.Contains(bu.Domain) &&
+                            (String.IsNullOrEmpty(bu.SourceDomain) || warned.Contains(bu.SourceDomain)))
                             continue;
 
-						if (MessageBox.Show($"Imported blastlayer references an invalid domain.\n" +
-							$"The current unit being imported has the following parameters.\n" +
-							$"Domain: {bu.Domain}" +
-							$"SourceDomain {bu.SourceDomain ?? "EMPTY"}\n\n" +
-							$"Silence warning & continue importing valid units?", "Invalid Domain in Imported Unit"
-							, MessageBoxButtons.OKCancel) == DialogResult.OK)
-						{
-							warned.Add(bu.Domain);
-							if(!String.IsNullOrWhiteSpace(bu.SourceDomain))
-								warned.Add(bu.SourceDomain);
-						}
-						else
-						{
-							return;
-						}
-					}
-				}
-				foreach (var bu in import)
-					bs.Add(bu);
+                        if (MessageBox.Show($"Imported blastlayer references an invalid domain.\n" +
+                                            $"The current unit being imported has the following parameters.\n" +
+                                            $"Domain: {bu.Domain}" +
+                                            $"SourceDomain {bu.SourceDomain ?? "EMPTY"}\n\n" +
+                                            $"Silence warning & continue importing valid units?",
+                                "Invalid Domain in Imported Unit"
+                                , MessageBoxButtons.OKCancel) == DialogResult.OK)
+                        {
+                            warned.Add(bu.Domain);
+                            if (!String.IsNullOrWhiteSpace(bu.SourceDomain))
+                                warned.Add(bu.SourceDomain);
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+                return unitsToLoad;
+            }
+
+            var l = checkUnits();
+            if (l == null)
+                return;
+			if (import)
+			{
+				foreach (var bu in l)
+                    bs.Add(bu);
 			}
-			dgvBlastEditor.ResetBindings();
-			RefreshAllNoteIcons();
-			dgvBlastEditor.Refresh();
-		}
+            else
+			{
+				currentSK.BlastLayer = new BlastLayer(l);
+                bs = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
+                dgvBlastEditor.DataSource = bs;
+		    }
+            dgvBlastEditor.ResetBindings();
+            RefreshAllNoteIcons();
+            dgvBlastEditor.Refresh();
+        }
 
-		private void exportToCSVToolStripMenuItem_Click(object sender, EventArgs e)
+		public void ImportBlastLayer(BlastLayer bl) => LoadBlastlayer(bl, true);
+
+        private void exportToCSVToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-
 			string filename;
 
 			if (currentSK.BlastLayer.Layer.Count == 0)
@@ -1717,12 +1746,11 @@ namespace RTCV.UI
 
 				IEnumerable<DataGridViewRow> targetRows;
 
-				if(bakeSelected)
-					targetRows = dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>();
-				else
-					targetRows = dgvBlastEditor.Rows.Cast<DataGridViewRow>();
+				targetRows = bakeSelected ? 
+                    dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>() : 
+                    dgvBlastEditor.Rows.Cast<DataGridViewRow>();
 
-				foreach (DataGridViewRow selected in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>()
+				foreach (DataGridViewRow selected in targetRows
 					.Where((item => ((BlastUnit)item.DataBoundItem).IsLocked == false)))
 				{
 					BlastUnit bu = (BlastUnit)selected.DataBoundItem;

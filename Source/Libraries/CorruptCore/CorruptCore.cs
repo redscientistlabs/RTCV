@@ -22,7 +22,7 @@ namespace RTCV.CorruptCore
 	public static class RtcCore
 	{
         //General RTC Values
-        public const string RtcVersion = "5.0.4-b2";
+        public const string RtcVersion = "5.0.4-b7";
 		private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private static volatile int seed = DateTime.Now.Millisecond;
@@ -930,16 +930,21 @@ namespace RTCV.CorruptCore
         {
             if (S.GET<CorruptCore.Tools.HexEditor>().Visible)
                 S.GET<CorruptCore.Tools.HexEditor>().Restart();
-        }
-        public static void GAME_CLOSED(bool closeHexEditor = false)
+		}
+		public static void GAME_CLOSED(bool closeHexEditor = false)
         {
-			if(closeHexEditor)
+            if (closeHexEditor)
                 S.GET<CorruptCore.Tools.HexEditor>().Close();
             else
             {
                 if (S.GET<CorruptCore.Tools.HexEditor>().Visible)
                     S.GET<CorruptCore.Tools.HexEditor>().Restart();
-			}
-        }
-    }
+            }
+		}
+		public static void KILL_HEX_EDITOR()
+        {
+            S.GET<CorruptCore.Tools.HexEditor>().HideOnClose = false;
+            S.GET<CorruptCore.Tools.HexEditor>().Close();
+		}
+	}
 }

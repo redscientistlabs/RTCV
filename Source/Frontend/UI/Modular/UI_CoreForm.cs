@@ -160,7 +160,6 @@ This message only appears once.";
 
             CorruptCore.RtcCore.DownloadProblematicProcesses();
 
-            UICore.LoadLists(CorruptCore.RtcCore.listsDir);
             //UI_DefaultGrids.engineConfig.LoadToMain();
         }
 
@@ -587,17 +586,31 @@ This message only appears once.";
         public static void ForceCloudDebug()
         {
             //SECRET CRASH DONT TELL ANYONE
-            //Trigger: Hold Manual Blast for 7 seconds
             //Purpose: Testing debug window
-            var ex = new CustomException("SECRET CRASH DONT TELL ANYONE",
-"───────▄▀▀▀▀▀▀▀▀▀▀▄▄" + Environment.NewLine + "────▄▀▀─────────────▀▄" + Environment.NewLine + "──▄▀──────────────────▀▄" + Environment.NewLine +
-"──█─────────────────────▀▄" + Environment.NewLine + "─▐▌────────▄▄▄▄▄▄▄───────▐▌" + Environment.NewLine + "─█───────────▄▄▄▄──▀▀▀▀▀──█" + Environment.NewLine +
-"▐▌───────▀▀▀▀─────▀▀▀▀▀───▐▌" + Environment.NewLine + "█─────────▄▄▀▀▀▀▀────▀▀▀▀▄─█" + Environment.NewLine + "█────────────────▀───▐─────▐▌" +
-Environment.NewLine + "▐▌─────────▐▀▀██▄──────▄▄▄─▐▌" + Environment.NewLine + "─█───────────▀▀▀──────▀▀██──█" + Environment.NewLine + "─▐▌────▄─────────────▌──────█" + Environment.NewLine + "──▐▌──▐──────────────▀▄─────█" +
-Environment.NewLine + "───█───▌────────▐▀────▄▀───▐▌" + Environment.NewLine + "───▐▌──▀▄────────▀─▀─▀▀───▄▀" + Environment.NewLine + "───▐▌──▐▀▄────────────────█" + Environment.NewLine + "───▐▌───▌─▀▄────▀▀▀▀▀▀───█" + Environment.NewLine +
-"───█───▀────▀▄──────────▄▀" + Environment.NewLine + "──▐▌──────────▀▄──────▄▀" + Environment.NewLine +
-"─▄▀───▄▀────────▀▀▀▀█▀" + Environment.NewLine + "▀───▄▀──────────▀───▀▀▀▀▄▄▄▄▄"
-            );
+            var image = @"
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣿⣿⣿⠟⠋⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⢿⣿⣿⣿⣿⣿⣿⣿⣿⠟⣿⣿⣿⣿⢻⣿⣿⣿⣯⣤⣶⣿⣿⡿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⣄⣙⣿⣿⣿⣿⣿⣿⣿⣦⣿⣿⣿⠁⢸⣿⣿⡿⣿⣿⣿⣿⣿⣿⣦⡀⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣍⡉⢻⣿⣿⣿⡿⠃⠀⡞⣹⡿⠁⠙⣿⣿⣿⣿⣿⣿⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣌⠻⡛⠉⠙⠛⠚⠉⠉⣽⠁⠀⢠⣷⡏⠀⠀⠀⠹⣿⡿⠿⢛⣫⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠻⣿⣿⣿⡾⡄⠈⠳⠴⠒⠛⠛⠉⠁⠀⠀⠈⠙⠓⢤⡀⠀⠀⠘⣶⣿⡿⠿⠟⠛⢛⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣿⣿⣿⣿⣿⡘⣄⠀⠀⣤⣄⠀⠀⠀⠀⠀⢀⡤⠀⠀⠈⠉⠉⠉⠁⠀⠀⠀⣠⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣭⣽⡷⠁⠀⣰⣿⣿⣏⡳⠀⢀⣴⣿⣧⠀⠀⠀⠀⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣭⣍⣉⠉⠉⠉⠉⠉⠁⠀⠀⠉⠉⠉⢉⣁⣀⠉⠉⠉⠉⠀⠀⠀⠀⠀⡤⠚⢻⣿⠟⢻⣿⣟⠿⢿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣶⠤⣄⠀⠀⠀⠀⠀⠙⠁⠀⠀⠀⠀⠀⠀⢀⡤⠋⠀⣠⠜⠁⠀⠈⣿⣿⣴⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⠉⠁⠀⣿⡏⠀⣾⠀⣠⡆⠀⠀⠀⣀⡀⠀⠀⢠⣶⣿⣧⣤⣤⣴⠁⢀⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⢟⣁⡤⠀⠀⠀⢀⣿⣷⣶⣧⡞⠁⢣⠀⣀⠜⠁⠱⡀⢀⢮⣾⣿⣿⠟⠉⢹⠀⣾⡄⢠⣧⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣷⣿⣿⢁⣴⠇⢠⣿⣿⠿⣿⣿⣿⣶⣾⣜⣡⣴⠆⠀⢻⣿⡿⠟⠉⠀⠀⢀⣼⣼⣙⡇⣼⣿⣧⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣧⣿⣿⢠⣾⣿⣿⣾⣿⣿⣿⣿⡿⠻⡇⠀⣀⣀⠤⣤⢶⣄⡀⢀⣴⣿⣿⣿⣿⣿⣿⣷⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣛⣉⣤⣴⣶⣿⡀⠙⠦⡰⠃⠀⠀⠉⢻⡿⣿⣿⣿⣿⣿⣿⣟⠛⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣿⣿⣷⣤⣶⣄⣀⠀⠀⠀⠈⢿⣿⣿⣿⡘⠿⣿⣿⣷⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣏⠉⠀⣰⣿⣿⣿⣿⣋⣀⣉⣛⠻⠆⠀⠀⠀⠻⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣼⣿⣿⣿⡿⢿⣿⣿⣿⣿⣿⣷⣶⣶⣦⣤⣤⣤⣭⣿⣿⣿⣿⣿⢿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⣽⣿⣿⣿⣿⣦⣰⣿⣿⣿⣿⣿⡿⠻⣿⣿⣿⣿⣶⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿";
+
+            var ex = new CustomException("SECRET CRASH DONT TELL ANYONE",image);
 
             Form error = new RTCV.NetCore.CloudDebug(ex, true);
             var result = error.ShowDialog();

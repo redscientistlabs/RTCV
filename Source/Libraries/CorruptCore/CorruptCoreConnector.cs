@@ -85,14 +85,22 @@ namespace RTCV.CorruptCore
 				case REMOTE_PUSHCORRUPTCORESPEC:
 						SyncObjectSingleton.FormExecute(() =>
 						{
-							RTCV.NetCore.AllSpec.CorruptCoreSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
-							RTCV.NetCore.AllSpec.CorruptCoreSpec.SpecUpdated += (ob, eas) =>
+							//So here's the deal. The UI doesn't actually have the full memory domains (md isn't sent across) so if we take them from it, it results in them going null
+							//Instead, we stick with what we have, then tell the UI to use that.
+
+                            var temp = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
+
+                            //Stick with what we have if it exists to prevent any exceptions if autocorrupt was on or something, then call refresh
+							temp.Update("MEMORYINTERFACES", AllSpec.CorruptCoreSpec?["MEMORYINTERFACES"] ?? new Dictionary<string,MemoryDomainProxy>()); 
+							
+                            RTCV.NetCore.AllSpec.CorruptCoreSpec = new FullSpec(temp.GetPartialSpec(), !RtcCore.Attached);
+                            RTCV.NetCore.AllSpec.CorruptCoreSpec.SpecUpdated += (ob, eas) =>
 							{
 								PartialSpec partial = eas.partialSpec;
-
-								LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_PUSHCORRUPTCORESPECUPDATE, partial, true);
+                                LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_PUSHCORRUPTCORESPECUPDATE, partial, true);
 							};
-						});
+                            RTCV.CorruptCore.MemoryDomains.RefreshDomains();
+                        });
 						e.setReturnValue(true);
 					break;
 
@@ -150,13 +158,12 @@ namespace RTCV.CorruptCore
 						string domain = (string)temp[0];
 						long address = (long)temp[1];
 
-						MemoryDomainProxy mdp = MemoryDomains.GetProxy(domain, address);
-						long realAddress = MemoryDomains.GetRealAddress(domain, address);
+                        MemoryInterface mi = MemoryDomains.GetInterface(domain);
 
-						SyncObjectSingleton.FormExecute(() =>
+                        SyncObjectSingleton.FormExecute(() =>
 						{
 							S.GET<CorruptCore.Tools.HexEditor>().Show();
-							S.GET<CorruptCore.Tools.HexEditor>().SetDomain(mdp);
+							S.GET<CorruptCore.Tools.HexEditor>().SetDomain(mi);
 							S.GET<CorruptCore.Tools.HexEditor>().GoToAddress(address);
 
 						});

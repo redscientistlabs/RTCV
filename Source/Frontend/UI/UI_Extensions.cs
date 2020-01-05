@@ -153,7 +153,7 @@ namespace RTCV.UI
 
 		public class RTC_Standalone_Form : Form { }
 
-		public class ComponentForm : Form, IBlockable
+		public class ComponentForm : Form
         {
 
             private protected static NLog.Logger logger;
@@ -168,8 +168,8 @@ namespace RTCV.UI
 
             protected ComponentForm() : base()
             {
-                logger = NLog.LogManager.GetCurrentClassLogger();
-			}
+                logger = NLog.LogManager.GetLogger(this.GetType().ToString());
+            }
 
             public void AnchorToPanel(Panel pn)
 			{

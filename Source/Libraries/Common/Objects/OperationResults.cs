@@ -62,6 +62,7 @@ namespace RTCV.Common.Objects
 
         public bool HasErrors() => Errors.Count > 0;
         public bool HasWarnings() => Warnings.Count > 0;
+        public bool HasMessages() => Warnings.Count > 0 || Errors.Count > 0;
         public bool Failed => HasErrors();
 
 

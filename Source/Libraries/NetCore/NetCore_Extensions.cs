@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -48,12 +49,13 @@ namespace RTCV.NetCore
 
 		public static class ConsoleHelper
 		{
-			//public static ConsoleCopy con;
-			public static void CreateConsole(string path)
+			public static ConsoleCopy con;
+			public static void CreateConsole(string path = null)
 			{
 				ReleaseConsole();
 				AllocConsole();
-				//con = new ConsoleCopy(path);
+				if(!String.IsNullOrEmpty(path))
+				    con = new ConsoleCopy(path);
 
 				//Disable the X button on the console window
 				EnableMenuItem(GetSystemMenu(GetConsoleWindow(), false), SC_CLOSE, MF_DISABLED);
@@ -112,7 +114,7 @@ namespace RTCV.NetCore
 			public static extern IntPtr GetSystemMenu(IntPtr HWNDValue, bool isRevert);
 			[DllImport("user32.dll")]
 			public static extern int EnableMenuItem(IntPtr tMenu, int targetItem, int targetStatus);
-			/*public class ConsoleCopy : IDisposable
+			public class ConsoleCopy : IDisposable
 			{
 				FileStream fileStream;
 				public StreamWriter FileWriter;
@@ -191,7 +193,7 @@ namespace RTCV.NetCore
 						fileStream = null;
 					}
 				}
-			}*/
+			}
 		}
 
 
@@ -254,15 +256,13 @@ namespace RTCV.NetCore
                 catch (Exception ex)
                 {
                     failure = ex.InnerException;
-					if(failure != null)
-						throw failure;
-					throw;
+					return failure;
 				}
             }));
             if (failure != null)
             {
-                throw failure;
-            }
+                ExceptionDispatchInfo.Capture(failure).Throw();
+			}
             return result;
         }
 
@@ -559,7 +559,7 @@ namespace RTCV.NetCore
             if (Interlocked.Increment(ref inTimePeriod) != 1)
             {
                 Interlocked.Decrement(ref inTimePeriod);
-				logger.Trace("The process is already within a time period. Nested time periods are not supported.");
+				//logger.Trace("The process is already within a time period. Nested time periods are not supported.");
 				return;
             }
 

@@ -275,6 +275,7 @@ namespace RTCV.UI
 
             spForm.Show();
             spForm.BringToFront();
+            spForm.Refresh();
 
         }
 

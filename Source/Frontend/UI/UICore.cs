@@ -100,6 +100,7 @@ namespace RTCV.UI
             LoadRTCColor();
             S.GET<UI_CoreForm>().Show();
             Initialized.Set();
+            LoadRTCColor();
         }
 
         private static void FormRegister_FormRegistered(object sender, NetCoreEventArgs e)
@@ -215,6 +216,9 @@ namespace RTCV.UI
             lockPending = true;
             lock (lockObject)
             {
+                //Kill hotkeys while locked
+                SetHotkeyTimer(false);
+
                 interfaceLocked = true;
                 var cf = S.GET<UI_CoreForm>();
                 cf.LockSideBar();
@@ -234,8 +238,6 @@ namespace RTCV.UI
 				if(focusCoreForm)
 					cf.Focus();
 
-                //Kill hotkeys while locked
-				SetHotkeyTimer(false);
             }
             lockPending = false;
         }
@@ -256,6 +258,7 @@ namespace RTCV.UI
                 var ifs = S.GETINTERFACES<IBlockable>();
                 foreach (var i in ifs)
                     i.UnblockView();
+
                 //Resume hotkeys
 				SetHotkeyTimer(true);
 			}

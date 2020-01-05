@@ -18,6 +18,7 @@ namespace RTCV.UI
 {
     public partial class UI_SaveProgress_Form : ComponentForm, IAutoColorize, ISubForm
     {
+		
         public UI_SaveProgress_Form()
         {
             InitializeComponent();
@@ -53,12 +54,13 @@ namespace RTCV.UI
 		}
 
         public void OnShown()
-        {
-            lbCurrentAction.Text = "Waiting";
+		{
+			logger.Trace("Entering OnShown() {0}\n{1}", System.Threading.Thread.CurrentThread.ManagedThreadId, Environment.StackTrace);
+			lbCurrentAction.Text = "Waiting";
             pbSave.Value = 0;
 			try
 			{
-				UIConnector.ConnectionLostLockout.WaitOne();
+                UI_VanguardImplementation.connector.netConn.spec.LockStatusEventLockout();
 				logger.Trace("Thread id {0} got Mutex... (save)", System.Threading.Thread.CurrentThread.ManagedThreadId);
 			}
 			catch (System.Threading.AbandonedMutexException)
@@ -67,8 +69,9 @@ namespace RTCV.UI
             }
         }
         public void OnHidden()
-        {
-			UIConnector.ConnectionLostLockout.ReleaseMutex();
+		{
+            logger.Trace("Entering OnHidden() {0}\n{1}", System.Threading.Thread.CurrentThread.ManagedThreadId, Environment.StackTrace);
+            UI_VanguardImplementation.connector.netConn.spec.UnlockLockStatusEventLockout();
             logger.Trace("Thread id {0} released Mutex... (save)", System.Threading.Thread.CurrentThread.ManagedThreadId);
         }
 

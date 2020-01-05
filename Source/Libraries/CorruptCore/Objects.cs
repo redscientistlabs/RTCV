@@ -103,7 +103,7 @@ namespace RTCV.CorruptCore
 
 
             List<string> allRoms = new List<string>();
-            if (includeReferencedFiles)
+            if (includeReferencedFiles && ((bool?)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.SUPPORTS_REFERENCES] ?? false))
             {
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs("Prepping referenced files", saveProgress += 2));
                 //populating Allroms array
@@ -179,20 +179,21 @@ namespace RTCV.CorruptCore
                     {
                         if (MessageBox.Show($"Include referenced files was set but we couldn't find {rom}. Continue saving? (You'll need to reassociate the file at runtime)", "Couldn't find file.", MessageBoxButtons.YesNo) == DialogResult.No)
                             return false;
-                    }
-                        
-
-                    //If the file already exists, overwrite it.
-                    if (File.Exists(romTempfilename))
-                    {
-                        //Whack the attributes in case a rom is readonly 
-                        File.SetAttributes(romTempfilename, FileAttributes.Normal);
-                        File.Delete(romTempfilename);
-                        File.Copy(rom, romTempfilename);
-                    }
+					}
                     else
-                        File.Copy(rom, romTempfilename);
-                }
+                    {
+                        //If the file already exists, overwrite it.
+                        if (File.Exists(romTempfilename))
+                        {
+                            //Whack the attributes in case a rom is readonly 
+                            File.SetAttributes(romTempfilename, FileAttributes.Normal);
+                            File.Delete(romTempfilename);
+                            File.Copy(rom, romTempfilename);
+                        }
+                        else
+                            File.Copy(rom, romTempfilename);
+					}
+				}
 
                 //Update the paths
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Fixing paths", saveProgress += 2));
@@ -387,7 +388,7 @@ namespace RTCV.CorruptCore
 
             //Extract the stockpile
             RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs("Extracting Stockpile (progress not reported during extraction)", loadProgress += 5));
-            if (Extract(filename, Path.Combine("WORKING", extractFolder), "stockpile.json") is {Failed:true} r)
+            if (Extract(filename, Path.Combine("WORKING", extractFolder), "stockpile.json") is OperationResults<bool> r && r.Failed)
             {
                 results.AddResults(r);
                 return results;
@@ -590,7 +591,7 @@ namespace RTCV.CorruptCore
 					else if (File.Exists(Path.Combine(RtcCore.RtcDir, folder, "keys.xml")))
                         r.AddError("Legacy SSK found. This SSK isn't supported by this version of the RTC.");
 					else
-                        r.AddError("The file could not be read properly");
+                        r.AddError("The file could not be read properly. Master file missing");
 
 					EmptyFolder(folder);
 					return r;
@@ -602,7 +603,7 @@ namespace RTCV.CorruptCore
 			{
 				//If it errors out, empty the folder
 				EmptyFolder(folder);
-				r.AddError("The file could not be read properly.", logger, e);
+				r.AddError($"The file could not be read properly (an error occurred, check the log file for more details)", logger, e);
                 return r;
             }
 		}
@@ -649,7 +650,7 @@ namespace RTCV.CorruptCore
 				
             }
 
-            if (Extract(filename, Path.Combine("WORKING", "TEMP"), "stockpile.json") is {Failed: true})
+            if (Extract(filename, Path.Combine("WORKING", "TEMP"), "stockpile.json") is OperationResults<bool> r && r.Failed)
                 return;
 				
 
@@ -1081,12 +1082,12 @@ namespace RTCV.CorruptCore
 
             
             List<BlastUnit> bul = new List<BlastUnit>(Layer.ToArray().Reverse());
-            List<long> usedAddresses = new List<long>();
+            List<ValueTuple<string, long>> usedAddresses = new List<ValueTuple<string, long>>();
 
             foreach (BlastUnit bu in bul)
             {
-                if (!usedAddresses.Contains(bu.Address) && !bu.IsLocked)
-                    usedAddresses.Add(bu.Address);
+                if (!usedAddresses.Contains(new ValueTuple<string,long>(bu.Domain, bu.Address)) && !bu.IsLocked)
+                    usedAddresses.Add(new ValueTuple<string, long>(bu.Domain, bu.Address));
                 else
                 {
                     Layer.Remove(bu);
@@ -1452,7 +1453,6 @@ namespace RTCV.CorruptCore
                 LimiterTime = this.LimiterTime,
                 Loop = this.Loop,
                 InvertLimiter = this.InvertLimiter,
-                TiltValue = this.TiltValue,
                 StoreLimiterSource = this.StoreLimiterSource,
                 GeneratedUsingValueList = this.GeneratedUsingValueList,
                 BigEndian = this.BigEndian,
@@ -1461,21 +1461,50 @@ namespace RTCV.CorruptCore
                 StoreTime = this.StoreTime,
                 StoreType = this.StoreType,
                 IsEnabled = this.IsEnabled,
-                LimiterListHash = this.LimiterListHash
-            };
+                LimiterListHash = this.LimiterListHash,
+			};
 
             if (bu.Source == BlastUnitSource.STORE)
             {
                 bu.SourceAddress += start;
-            }
-            else
-            {
-                for (int i = 0; i < bu.Precision; i++)
-                {
-                    bu.Value[i] = this.Value[start + i];
-                }
-            }
-            return bu;
+
+				if (BigEndian && start == (precision - 1))
+					bu.TiltValue = TiltValue;
+				else if (!BigEndian && start == 0)
+					bu.TiltValue = TiltValue;
+				else
+					bu.TiltValue = 0;
+			}
+			else
+			{
+				bu.Value = new byte[bu.precision];
+				for (int i = 0; i < bu.precision; i++)
+				{
+					if (BigEndian)
+						bu.Value[i] = Value[end - i];
+					else
+						bu.Value[i] = Value[start + i];
+
+					//If we have a tilt, calculate it and bake it into the value
+					if (this.TiltValue != 0)
+					{
+						unchecked
+						{
+							if (BigEndian)
+								bu.Value[i] += (TiltValue.ToByteArray().PadLeft(this.precision))[end - i];
+							else
+								bu.Value[i] += (TiltValue.ToByteArray().PadLeft(this.precision).FlipBytes())[start + i];
+						}
+					}
+					else
+						bu.TiltValue = 0;
+
+				}
+			}
+
+
+
+			return bu;
         }
 
         /// <summary>
@@ -2028,30 +2057,10 @@ namespace RTCV.CorruptCore
 				return brokenUnits;
 			}
 
-			for(int i = 0; i<precision; i++)
+			for (int i = 0; i < this.Precision; i++)
 			{
-				BlastUnit newBU = (BlastUnit)this.Clone();
-				newBU.precision = 1;
-				newBU.Address += i;
-				newBU.SourceAddress += i;
-
-
-				
-
-				if (!BigEndian)
-					newBU.Value = new byte[1] { Value[i] };
-				else
-					newBU.Value = new byte[1] { Value[(precision - 1) - i] };
-
-				if (!BigEndian && i == (precision-1))
-					newBU.TiltValue = TiltValue;
-				else if (BigEndian && i == 0)
-					newBU.TiltValue = TiltValue;
-				else
-					newBU.TiltValue = 0;
-
-
-				brokenUnits[i] = newBU;
+				var bu = this.GetSubUnit(i, i + 1);
+				brokenUnits[i] = bu;
 			}
 
 			return brokenUnits;

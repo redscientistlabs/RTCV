@@ -11,7 +11,7 @@ using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
-    public partial class UI_ComponentFormSubForm : ComponentForm, ISubForm
+    public partial class UI_ComponentFormSubForm : ComponentForm, ISubForm, IBlockable
     {
         public UI_ComponentFormSubForm()
         {

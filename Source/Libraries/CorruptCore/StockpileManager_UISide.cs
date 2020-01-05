@@ -327,6 +327,9 @@ namespace RTCV.CorruptCore
         /// <returns></returns>
         public static bool CheckAndFixMissingReference(StashKey psk, bool force = false, List<StashKey> keys = null, string customTitle = null, string customMessage = null)
 		{
+			if (!(bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_REFERENCES] ?? false)
+				return true;
+
 			string message = customMessage ?? $"Can't find file {psk.RomFilename}\nGame name: {psk.GameName}\nSystem name: {psk.SystemName}\n\n To continue loading, provide a new file for replacement.";
 			string title = customTitle ?? "Error: File not found";
 

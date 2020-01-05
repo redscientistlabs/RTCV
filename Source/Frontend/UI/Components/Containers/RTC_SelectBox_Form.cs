@@ -13,7 +13,7 @@ using System.Collections;
 
 namespace RTCV.UI
 {
-	public partial class RTC_SelectBox_Form : ComponentForm
+	public partial class RTC_SelectBox_Form : ComponentForm, IBlockable
 	{
 		public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
 		public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);

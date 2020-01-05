@@ -91,9 +91,12 @@ namespace RTCV.UI
 
                                 S.GET<UI_CoreForm>().Show();
 
+
                                 //Pull any lists from the vanguard implementation
                                 if(RtcCore.EmuDir != null)
                                     UICore.LoadLists(Path.Combine(RtcCore.EmuDir, "LISTS"));
+
+                                UICore.LoadLists(CorruptCore.RtcCore.listsDir);
 
                                 Panel sidebar = S.GET<UI_CoreForm>().pnSideBar;
                                 foreach (Control c in sidebar.Controls)
@@ -232,6 +235,13 @@ namespace RTCV.UI
                             }
 
                             vmdgenerator.tbCustomAddresses.Text = text;
+
+                            string value = "";
+
+                            if (RTCV.UI.UI_Extensions.GetInputBox("VMD Generation", "Enter the new VMD name:", ref value) == DialogResult.OK && !String.IsNullOrWhiteSpace(value))
+                            {
+                                vmdgenerator.tbVmdName.Text = value.Trim();
+                            }
 
                             vmdgenerator.btnGenerateVMD_Click(null, null);
 
