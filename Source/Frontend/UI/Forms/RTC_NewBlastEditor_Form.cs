@@ -1169,6 +1169,8 @@ namespace RTCV.UI
 				}
 			};
 
+			this.Text = $"Blast Editor - {sk.Alias}";
+
 			dgvBlastEditor.DataSource = bs;
 			InitializeDGV();
 			InitializeBottom();
