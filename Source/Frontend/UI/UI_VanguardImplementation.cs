@@ -236,6 +236,13 @@ namespace RTCV.UI
 
                             vmdgenerator.tbCustomAddresses.Text = text;
 
+                            string value = "";
+
+                            if (RTCV.UI.UI_Extensions.GetInputBox("VMD Generation", "Enter the new VMD name:", ref value) == DialogResult.OK && !String.IsNullOrWhiteSpace(value))
+                            {
+                                vmdgenerator.tbVmdName.Text = value.Trim();
+                            }
+
                             vmdgenerator.btnGenerateVMD_Click(null, null);
 
                         });
