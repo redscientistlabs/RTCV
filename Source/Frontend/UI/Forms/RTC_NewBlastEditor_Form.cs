@@ -234,10 +234,10 @@ namespace RTCV.UI
 	
 		private void DgvBlastEditor_MouseWheel(object sender, MouseEventArgs e)
 		{
-			var owningRow = dgvBlastEditor.CurrentCell.OwningRow;
+			var owningRow = dgvBlastEditor.CurrentCell?.OwningRow;
 
 
-			if (dgvBlastEditor.CurrentCell == owningRow.Cells[BuProperty.ValueString.ToString()] && dgvBlastEditor.IsCurrentCellInEditMode)
+			if (dgvBlastEditor.CurrentCell == owningRow?.Cells[BuProperty.ValueString.ToString()] && dgvBlastEditor.IsCurrentCellInEditMode)
 			{
 				int precision = (int)dgvBlastEditor.CurrentCell.OwningRow.Cells[BuProperty.Precision.ToString()].Value;
 				dgvCellValueScroll(dgvBlastEditor.EditingControl, e, precision);
