@@ -48,7 +48,7 @@ namespace RTCV.NetCore
 
 			using (new TimePeriod(1))
 			{
-				logger.Info("GetValue:Awaiting -> " + type.ToString());
+				logger.Info("GetValue:Awaiting -> " + type);
 				//spec.OnSyncedMessageStart(null);
 				spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{EVENT_SYNCEDMESSAGESTART}"));
 
@@ -69,7 +69,7 @@ namespace RTCV.NetCore
 						KillReturnWatch = false;
 						attemptsAtReading = 0;
 
-                        logger.Warn("GetValue:Killed -> " + type.ToString());
+                        logger.Warn("GetValue:Killed -> " + type);
 						//spec.OnSyncedMessageEnd(null);
 						spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{EVENT_SYNCEDMESSAGEEND}"));
 						return null;
@@ -87,7 +87,7 @@ namespace RTCV.NetCore
 				attemptsAtReading = 0;
 				SyncReturns.TryRemove(WatchedGuid, out object ret);
 
-				logger.Info("GetValue:Returned -> " + type.ToString());
+				logger.Info("GetValue:Returned -> " + type);
 				//spec.OnSyncedMessageEnd(null);
 				spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{EVENT_SYNCEDMESSAGEEND}"));
 				return ret;

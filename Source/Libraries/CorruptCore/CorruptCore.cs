@@ -98,131 +98,131 @@ namespace RTCV.CorruptCore
 
 		public static bool AllowCrossCoreCorruption
 		{
-			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_ALLOWCROSSCORECORRUPTION.ToString()];
-			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_ALLOWCROSSCORECORRUPTION.ToString(), value);
+			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_ALLOWCROSSCORECORRUPTION];
+			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_ALLOWCROSSCORECORRUPTION, value);
 		}
 
 		public static CorruptionEngine SelectedEngine
 		{
-			get => (CorruptionEngine)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_SELECTEDENGINE.ToString()];
-			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_SELECTEDENGINE.ToString(), value);
+			get => (CorruptionEngine)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_SELECTEDENGINE];
+			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_SELECTEDENGINE, value);
 		}
 
         public static int CurrentPrecision
         {
-            get => (int)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_CURRENTPRECISION.ToString()];
-            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_CURRENTPRECISION.ToString(), value);
+            get => (int)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_CURRENTPRECISION];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_CURRENTPRECISION, value);
         }
 
         public static int Alignment
         {
-            get => (int)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_CURRENTALIGNMENT.ToString()];
-            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_CURRENTALIGNMENT.ToString(), value);
+            get => (int)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_CURRENTALIGNMENT];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_CURRENTALIGNMENT, value);
         }
 
         public static long Intensity
 		{
-			get => (long)AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_INTENSITY.ToString()];
-			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_INTENSITY.ToString(), value);
+			get => (long)AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_INTENSITY];
+			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_INTENSITY, value);
 		}
 
 		public static long ErrorDelay
 		{
-			get => (long)AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_ERRORDELAY.ToString()];
-			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_ERRORDELAY.ToString(), value);
+			get => (long)AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_ERRORDELAY];
+			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_ERRORDELAY, value);
 		}
 
 		public static BlastRadius Radius
 		{
-			get => (BlastRadius)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_RADIUS.ToString()];
-			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_RADIUS.ToString(), value);
+			get => (BlastRadius)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_RADIUS];
+			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_RADIUS, value);
 		}
 
 		public static bool AutoCorrupt
 		{
-			get => (bool)(AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_AUTOCORRUPT.ToString()] ?? false);
-			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_AUTOCORRUPT.ToString(), value);
+			get => (bool)(AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_AUTOCORRUPT] ?? false);
+			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_AUTOCORRUPT, value);
 		}
 
 		public static bool DontCleanSavestatesOnQuit
 		{
-			get => (bool)(AllSpec.CorruptCoreSpec[RTCSPEC.CORE_DONTCLEANSAVESTATESONQUIT.ToString()] ?? false);
-			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_DONTCLEANSAVESTATESONQUIT.ToString(), value);
+			get => (bool)(AllSpec.CorruptCoreSpec[RTCSPEC.CORE_DONTCLEANSAVESTATESONQUIT] ?? false);
+			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_DONTCLEANSAVESTATESONQUIT, value);
 		}
 
 		public static bool ShowConsole
 		{
-			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_SHOWCONSOLE.ToString()];
-			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_SHOWCONSOLE.ToString(), value);
+			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_SHOWCONSOLE];
+			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_SHOWCONSOLE, value);
 		}
 
 		public static bool RerollAddress
 		{
-			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLADDRESS.ToString()];
+			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLADDRESS];
 			set
 			{
-				AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_REROLLADDRESS.ToString(), value);
+				AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_REROLLADDRESS, value);
 				Params.SetParam("REROLL_ADDRESS", value.ToString());
 			}
 		}
 
 		public static bool RerollSourceAddress
 		{
-			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLSOURCEADDRESS.ToString()];
+			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLSOURCEADDRESS];
 			set
 			{
-				AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_REROLLSOURCEADDRESS.ToString(), value);
+				AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_REROLLSOURCEADDRESS, value);
 				Params.SetParam("REROLL_SOURCEADDRESS", value.ToString());
 			}
 		}
 		public static bool RerollDomain
 		{
-			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLDOMAIN.ToString()];
+			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLDOMAIN];
 			set
 			{
-				AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_REROLLDOMAIN.ToString(), value);
+				AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_REROLLDOMAIN, value);
 				Params.SetParam("REROLL_DOMAIN", value.ToString());
 			}
 		}
 
 		public static bool RerollSourceDomain
 		{
-			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLSOURCEDOMAIN.ToString()];
+			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLSOURCEDOMAIN];
 			set
 			{
-				AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_REROLLSOURCEDOMAIN.ToString(), value);
+				AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_REROLLSOURCEDOMAIN, value);
 				Params.SetParam("REROLL_SOURCEDOMAIN", value.ToString());
 			}
 		}
 		public static bool RerollIgnoresOriginalSource
 		{
-			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE.ToString()];
+			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE];
 			set
 			{
-				AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE.ToString(), value);
+				AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE, value);
 				Params.SetParam("REROLL_IGNOREORIGINALSOURCE", value.ToString());
 			}
 		}
 		public static bool RerollFollowsCustomEngine
 		{
-			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLFOLLOWENGINESETTINGS.ToString()];
+			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLFOLLOWENGINESETTINGS];
 			set
 			{
-				AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_REROLLFOLLOWENGINESETTINGS.ToString(), value);
+				AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_REROLLFOLLOWENGINESETTINGS, value);
 				Params.SetParam("REROLL_FOLLOWSCUSTOMENGINE", value.ToString());
 			}
 		}
 
 		public static bool ExtractBlastlayer
 		{
-			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_EXTRACTBLASTLAYER.ToString()];
-			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_EXTRACTBLASTLAYER.ToString(), value);
+			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_EXTRACTBLASTLAYER];
+			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_EXTRACTBLASTLAYER, value);
 		}
 
 		public static bool EmulatorOsdDisabled
 		{
-			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_EMULATOROSDDISABLED.ToString()];
-			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_EMULATOROSDDISABLED.ToString(), value);
+			get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_EMULATOROSDDISABLED];
+			set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_EMULATOROSDDISABLED, value);
 		}
 
         public static string VanguardImplementationName
@@ -363,56 +363,56 @@ namespace RTCV.CorruptCore
 
 
 
-				partial[RTCSPEC.CORE_SELECTEDENGINE.ToString()] = CorruptionEngine.NIGHTMARE;
+				partial[RTCSPEC.CORE_SELECTEDENGINE] = CorruptionEngine.NIGHTMARE;
 
-                partial[RTCSPEC.CORE_CURRENTPRECISION.ToString()] = 1;
-                partial[RTCSPEC.CORE_CURRENTALIGNMENT.ToString()] = 0;
-                partial[RTCSPEC.CORE_INTENSITY.ToString()] = 1L;
-				partial[RTCSPEC.CORE_ERRORDELAY.ToString()] = 1L;
-				partial[RTCSPEC.CORE_RADIUS.ToString()] = BlastRadius.SPREAD;
+                partial[RTCSPEC.CORE_CURRENTPRECISION] = 1;
+                partial[RTCSPEC.CORE_CURRENTALIGNMENT] = 0;
+                partial[RTCSPEC.CORE_INTENSITY] = 1L;
+				partial[RTCSPEC.CORE_ERRORDELAY] = 1L;
+				partial[RTCSPEC.CORE_RADIUS] = BlastRadius.SPREAD;
 
-				partial[RTCSPEC.CORE_EXTRACTBLASTLAYER.ToString()] = false;
-				partial[RTCSPEC.CORE_AUTOCORRUPT.ToString()] = false;
+				partial[RTCSPEC.CORE_EXTRACTBLASTLAYER] = false;
+				partial[RTCSPEC.CORE_AUTOCORRUPT] = false;
 
-				partial[RTCSPEC.CORE_EMULATOROSDDISABLED.ToString()] = true;
-				partial[RTCSPEC.CORE_DONTCLEANSAVESTATESONQUIT.ToString()] = false;
-				partial[RTCSPEC.CORE_SHOWCONSOLE.ToString()] = false;
+				partial[RTCSPEC.CORE_EMULATOROSDDISABLED] = true;
+				partial[RTCSPEC.CORE_DONTCLEANSAVESTATESONQUIT] = false;
+				partial[RTCSPEC.CORE_SHOWCONSOLE] = false;
 
 
 				if (Params.IsParamSet("ALLOW_CROSS_CORE_CORRUPTION"))
 					partial[RTCSPEC.CORE_ALLOWCROSSCORECORRUPTION] = (Params.ReadParam("ALLOW_CROSS_CORE_CORRUPTION").ToUpper() == "TRUE");
 				else
-					partial[RTCSPEC.CORE_ALLOWCROSSCORECORRUPTION.ToString()] = false;
+					partial[RTCSPEC.CORE_ALLOWCROSSCORECORRUPTION] = false;
 
 				if (Params.IsParamSet("REROLL_SOURCEADDRESS"))
-					partial[RTCSPEC.CORE_REROLLSOURCEADDRESS.ToString()] = (Params.ReadParam("REROLL_SOURCEADDRESS").ToUpper() == "TRUE");
+					partial[RTCSPEC.CORE_REROLLSOURCEADDRESS] = (Params.ReadParam("REROLL_SOURCEADDRESS").ToUpper() == "TRUE");
 				else
-					partial[RTCSPEC.CORE_REROLLSOURCEADDRESS.ToString()] = false;
+					partial[RTCSPEC.CORE_REROLLSOURCEADDRESS] = false;
 
 				if (Params.IsParamSet("REROLL_SOURCEDOMAIN"))
-					partial[RTCSPEC.CORE_REROLLSOURCEDOMAIN.ToString()] = (Params.ReadParam("REROLL_SOURCEDOMAIN").ToUpper() == "TRUE");
+					partial[RTCSPEC.CORE_REROLLSOURCEDOMAIN] = (Params.ReadParam("REROLL_SOURCEDOMAIN").ToUpper() == "TRUE");
 				else
-					partial[RTCSPEC.CORE_REROLLSOURCEDOMAIN.ToString()] = false;
+					partial[RTCSPEC.CORE_REROLLSOURCEDOMAIN] = false;
 
 				if (Params.IsParamSet("REROLL_ADDRESS"))
-					partial[RTCSPEC.CORE_REROLLADDRESS.ToString()] = (Params.ReadParam("REROLL_ADDRESS").ToUpper() == "TRUE");
+					partial[RTCSPEC.CORE_REROLLADDRESS] = (Params.ReadParam("REROLL_ADDRESS").ToUpper() == "TRUE");
 				else
-					partial[RTCSPEC.CORE_REROLLADDRESS.ToString()] = false;
+					partial[RTCSPEC.CORE_REROLLADDRESS] = false;
 				if (Params.IsParamSet("REROLL_DOMAIN"))
-					partial[RTCSPEC.CORE_REROLLDOMAIN.ToString()] = (Params.ReadParam("REROLL_DOMAIN").ToUpper() == "TRUE");
+					partial[RTCSPEC.CORE_REROLLDOMAIN] = (Params.ReadParam("REROLL_DOMAIN").ToUpper() == "TRUE");
 				else
-					partial[RTCSPEC.CORE_REROLLDOMAIN.ToString()] = false;
+					partial[RTCSPEC.CORE_REROLLDOMAIN] = false;
 
 
 				if (Params.IsParamSet("REROLL_FOLLOWSCUSTOMENGINE"))
-					partial[RTCSPEC.CORE_REROLLFOLLOWENGINESETTINGS.ToString()] = (Params.ReadParam("REROLL_FOLLOWSCUSTOMENGINE").ToUpper() == "TRUE");
+					partial[RTCSPEC.CORE_REROLLFOLLOWENGINESETTINGS] = (Params.ReadParam("REROLL_FOLLOWSCUSTOMENGINE").ToUpper() == "TRUE");
 				else
-					partial[RTCSPEC.CORE_REROLLFOLLOWENGINESETTINGS.ToString()] = false;
+					partial[RTCSPEC.CORE_REROLLFOLLOWENGINESETTINGS] = false;
 
 				if (Params.IsParamSet("REROLL_USESVALUELIST"))
-					partial[RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE.ToString()] = (Params.ReadParam("REROLL_USESVALUELIST").ToUpper() == "TRUE");
+					partial[RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE] = (Params.ReadParam("REROLL_USESVALUELIST").ToUpper() == "TRUE");
 				else
-					partial[RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE.ToString()] = false;
+					partial[RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE] = false;
 
 
 				return partial;

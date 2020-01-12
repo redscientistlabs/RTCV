@@ -234,10 +234,10 @@ namespace RTCV.UI
 	
 		private void DgvBlastEditor_MouseWheel(object sender, MouseEventArgs e)
 		{
-			var owningRow = dgvBlastEditor.CurrentCell.OwningRow;
+			var owningRow = dgvBlastEditor.CurrentCell?.OwningRow;
 
 
-			if (dgvBlastEditor.CurrentCell == owningRow.Cells[BuProperty.ValueString.ToString()] && dgvBlastEditor.IsCurrentCellInEditMode)
+			if (dgvBlastEditor.CurrentCell == owningRow?.Cells[BuProperty.ValueString.ToString()] && dgvBlastEditor.IsCurrentCellInEditMode)
 			{
 				int precision = (int)dgvBlastEditor.CurrentCell.OwningRow.Cells[BuProperty.Precision.ToString()].Value;
 				dgvCellValueScroll(dgvBlastEditor.EditingControl, e, precision);
@@ -425,7 +425,9 @@ namespace RTCV.UI
 		{
 			((ToolStripMenuItem)cms.Items.Add("Open Selected Address in Hex Editor", null, new EventHandler((ob, ev) =>
 			{
-				BlastUnit bu = (BlastUnit)dgvBlastEditor.Rows[cell.RowIndex].DataBoundItem;
+				BlastUnit bu = dgvBlastEditor.Rows[cell.RowIndex]?.DataBoundItem as BlastUnit;
+				if (bu == null)
+					return;
 				if (cell.OwningColumn == dgvBlastEditor.Columns[BuProperty.Address.ToString()])
 					LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.EMU_OPEN_HEXEDITOR_ADDRESS, new object[] { bu.Domain, bu.Address });
 
@@ -1434,7 +1436,7 @@ namespace RTCV.UI
 				};
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					filename = ofd.FileName.ToString();
+					filename = ofd.FileName;
 				}
 				else
 					return;
@@ -1470,7 +1472,7 @@ namespace RTCV.UI
             };
 
             if (sfd.ShowDialog() == DialogResult.OK)
-				filename = sfd.FileName.ToString();
+				filename = sfd.FileName;
 			else
 				return;
 			RomParts rp = MemoryDomains.GetRomParts(currentSK.SystemName, currentSK.RomFilename);
@@ -1564,7 +1566,7 @@ namespace RTCV.UI
 			};
 			if (ofd.ShowDialog() == DialogResult.OK)
 			{
-				filename = ofd.FileName.ToString();
+				filename = ofd.FileName;
 			}
 			else
 				return;

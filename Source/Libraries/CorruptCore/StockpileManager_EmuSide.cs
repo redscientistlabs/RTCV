@@ -17,7 +17,7 @@ namespace RTCV.CorruptCore
 		public static PartialSpec getDefaultPartial()
 		{
 			var partial = new PartialSpec("RTCSpec");
-			partial[RTCSPEC.RENDER_AT_LOAD.ToString()] = false;
+			partial[RTCSPEC.RENDER_AT_LOAD] = false;
 			return partial;
 		}
 
@@ -29,7 +29,7 @@ namespace RTCV.CorruptCore
 			StashKey.SetCore(sk);
             LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_LOADROM, sk.RomFilename, true);
 
-			string ss = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.SYNCSETTINGS.ToString()];
+			string ss = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.SYNCSETTINGS];
             //If the syncsettings are different, update them and load it again. Otheriwse, leave as is
             if (sk.SyncSettings != ss && sk.SyncSettings != null)
             {
@@ -153,8 +153,8 @@ namespace RTCV.CorruptCore
 
 			bl.Layer.AddRange(StepActions.GetRawBlastLayer().Layer);
 
-			string thisSystem = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.SYSTEM.ToString()];
-			string romFilename = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME.ToString()];
+			string thisSystem = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.SYSTEM];
+			string romFilename = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME];
 
 			var rp = MemoryDomains.GetRomParts(thisSystem, romFilename);
 

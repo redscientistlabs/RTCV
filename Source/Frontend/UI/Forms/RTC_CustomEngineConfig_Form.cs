@@ -464,13 +464,13 @@ namespace RTCV.UI
 
 			if (spec == null)
 				return;
-            RTC_CustomEngine.Name2TemplateDico[spec[RTCSPEC.CUSTOM_NAME.ToString()].ToString()] = spec;
+            RTC_CustomEngine.Name2TemplateDico[spec[RTCSPEC.CUSTOM_NAME].ToString()] = spec;
             RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(spec);
 			RestoreUIStateFromSpec();
 			Refresh();
-			if (!cbSelectedTemplate.Items.Contains(spec[RTCSPEC.CUSTOM_NAME.ToString()].ToString()))
-				cbSelectedTemplate.Items.Add(spec[RTCSPEC.CUSTOM_NAME.ToString()].ToString());
-			cbSelectedTemplate.SelectedItem = spec[RTCSPEC.CUSTOM_NAME.ToString()].ToString();
+			if (!cbSelectedTemplate.Items.Contains(spec[RTCSPEC.CUSTOM_NAME].ToString()))
+				cbSelectedTemplate.Items.Add(spec[RTCSPEC.CUSTOM_NAME].ToString());
+			cbSelectedTemplate.SelectedItem = spec[RTCSPEC.CUSTOM_NAME].ToString();
 		}
 
 		private void btnCustomTemplateSaveAs_Click(object sender, EventArgs e)

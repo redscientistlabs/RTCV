@@ -238,7 +238,7 @@ namespace RTCV.UI.Components.Controls
                     };
                     if (ofd.ShowDialog() == DialogResult.OK)
                     {
-                        string filename = ofd.FileName.ToString();
+                        string filename = ofd.FileName;
                         string oldFilename = psk.RomFilename;
                         foreach (var item in _DataSource.List.OfType<SaveStateKey>().Where(x => x.StashKey.RomFilename == oldFilename))
                         {

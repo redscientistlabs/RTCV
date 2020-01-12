@@ -66,7 +66,7 @@ namespace RTCV.UI
 
         private void dgvStockpile_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex == -1)
+            if (e == null || e.RowIndex == -1)
                 return;
             try
             {
@@ -227,7 +227,7 @@ namespace RTCV.UI
                     };
                     if (ofd.ShowDialog() == DialogResult.OK)
                     {
-                        string filename = ofd.FileName.ToString();
+                        string filename = ofd.FileName;
                         string oldFilename = sks.First().RomFilename;
                         foreach (var sk in sks.Where(x => x.RomFilename == oldFilename))
                         {
