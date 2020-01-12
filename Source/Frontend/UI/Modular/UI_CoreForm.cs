@@ -611,7 +611,7 @@ This message only appears once.";
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⣽⣿⣿⣿⣿⣦⣰⣿⣿⣿⣿⣿⡿⠻⣿⣿⣿⣿⣶⣿⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿";
 
-            var ex = new CustomException("SECRET CRASH DONT TELL ANYONE", image);
+            var ex = new CustomException("SECRET CRASH DONT TELL ANYONE\n"+image , Environment.StackTrace);
 
             Form error = new RTCV.NetCore.CloudDebug(ex, true);
             var result = error.ShowDialog();

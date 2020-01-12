@@ -140,10 +140,11 @@ namespace RTCV.UI
             }
             finally
             {
-                S.GET<RTC_StashHistory_Form>().btnAddStashToStockpile.Enabled = true;
+                logger.Trace("Stockpile Manager load done, unlocking UI");
                 dgvStockpile.Enabled = true;
                 btnStockpileUP.Enabled = true;
                 btnStockpileDOWN.Enabled = true;
+                S.GET<RTC_StashHistory_Form>().btnAddStashToStockpile.Enabled = true;
             }
 
             S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
