@@ -345,7 +345,7 @@ namespace RTCV.CorruptCore
                     };
                     if (ofd.ShowDialog() == DialogResult.OK)
                     {
-                        string filename = ofd.FileName.ToString();
+                        string filename = ofd.FileName;
                         string oldFilename = psk.RomFilename;
                         if (Path.GetFileName(psk.RomFilename) != Path.GetFileName(filename))
                         {

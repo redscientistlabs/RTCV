@@ -8,46 +8,46 @@ namespace RTCV.CorruptCore
 	{
 		public static ulong MinValue8Bit
 		{
-			get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.HELLGENIE_MINVALUE8BIT.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.HELLGENIE_MINVALUE8BIT.ToString(), value);
+			get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.HELLGENIE_MINVALUE8BIT];
+			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.HELLGENIE_MINVALUE8BIT, value);
 		}
 		public static ulong MaxValue8Bit
 		{
-			get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.HELLGENIE_MAXVALUE8BIT.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.HELLGENIE_MAXVALUE8BIT.ToString(), value);
+			get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.HELLGENIE_MAXVALUE8BIT];
+			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.HELLGENIE_MAXVALUE8BIT, value);
 		}
 
 		public static ulong MinValue16Bit
 		{
-			get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.HELLGENIE_MINVALUE16BIT.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.HELLGENIE_MINVALUE16BIT.ToString(), value);
+			get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.HELLGENIE_MINVALUE16BIT];
+			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.HELLGENIE_MINVALUE16BIT, value);
 		}
 		public static ulong MaxValue16Bit
 		{
-			get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.HELLGENIE_MAXVALUE16BIT.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.HELLGENIE_MAXVALUE16BIT.ToString(), value);
+			get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.HELLGENIE_MAXVALUE16BIT];
+			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.HELLGENIE_MAXVALUE16BIT, value);
 		}
 
         public static ulong MinValue32Bit
         {
-            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.HELLGENIE_MINVALUE32BIT.ToString()];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.HELLGENIE_MINVALUE32BIT.ToString(), value);
+            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.HELLGENIE_MINVALUE32BIT];
+            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.HELLGENIE_MINVALUE32BIT, value);
         }
         public static ulong MaxValue32Bit
         {
-            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.HELLGENIE_MAXVALUE32BIT.ToString()];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.HELLGENIE_MAXVALUE32BIT.ToString(), value);
+            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.HELLGENIE_MAXVALUE32BIT];
+            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.HELLGENIE_MAXVALUE32BIT, value);
         }
 
         public static ulong MinValue64Bit
         {
-            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.HELLGENIE_MINVALUE64BIT.ToString()];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.HELLGENIE_MINVALUE64BIT.ToString(), value);
+            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.HELLGENIE_MINVALUE64BIT];
+            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.HELLGENIE_MINVALUE64BIT, value);
         }
         public static ulong MaxValue64Bit
         {
-            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.HELLGENIE_MAXVALUE64BIT.ToString()];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.HELLGENIE_MAXVALUE64BIT.ToString(), value);
+            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.HELLGENIE_MAXVALUE64BIT];
+            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.HELLGENIE_MAXVALUE64BIT, value);
         }
 
         public static PartialSpec getDefaultPartial()
@@ -55,17 +55,17 @@ namespace RTCV.CorruptCore
 			var partial = new PartialSpec("RTCSpec");
 
 
-			partial[RTCSPEC.HELLGENIE_MINVALUE8BIT.ToString()] = 0UL;
-			partial[RTCSPEC.HELLGENIE_MAXVALUE8BIT.ToString()] = 0xFFUL;
+			partial[RTCSPEC.HELLGENIE_MINVALUE8BIT] = 0UL;
+			partial[RTCSPEC.HELLGENIE_MAXVALUE8BIT] = 0xFFUL;
 
-			partial[RTCSPEC.HELLGENIE_MINVALUE16BIT.ToString()] = 0UL;
-			partial[RTCSPEC.HELLGENIE_MAXVALUE16BIT.ToString()] = 0xFFFFUL;
+			partial[RTCSPEC.HELLGENIE_MINVALUE16BIT] = 0UL;
+			partial[RTCSPEC.HELLGENIE_MAXVALUE16BIT] = 0xFFFFUL;
 
-            partial[RTCSPEC.HELLGENIE_MINVALUE32BIT.ToString()] = 0UL;
-            partial[RTCSPEC.HELLGENIE_MAXVALUE32BIT.ToString()] = 0xFFFFFFFFUL;
+            partial[RTCSPEC.HELLGENIE_MINVALUE32BIT] = 0UL;
+            partial[RTCSPEC.HELLGENIE_MAXVALUE32BIT] = 0xFFFFFFFFUL;
 
-            partial[RTCSPEC.HELLGENIE_MINVALUE64BIT.ToString()] = 0UL;
-            partial[RTCSPEC.HELLGENIE_MAXVALUE64BIT.ToString()] = 0xFFFFFFFFFFFFFFFFUL;
+            partial[RTCSPEC.HELLGENIE_MINVALUE64BIT] = 0UL;
+            partial[RTCSPEC.HELLGENIE_MAXVALUE64BIT] = 0xFFFFFFFFFFFFFFFFUL;
 
 
             return partial;

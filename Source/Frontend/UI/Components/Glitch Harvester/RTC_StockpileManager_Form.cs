@@ -227,7 +227,7 @@ namespace RTCV.UI
                     };
                     if (ofd.ShowDialog() == DialogResult.OK)
                     {
-                        string filename = ofd.FileName.ToString();
+                        string filename = ofd.FileName;
                         string oldFilename = sks.First().RomFilename;
                         foreach (var sk in sks.Where(x => x.RomFilename == oldFilename))
                         {

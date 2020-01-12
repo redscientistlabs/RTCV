@@ -67,7 +67,7 @@ namespace RTCV.CorruptCore
 				};
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					filename = ofd.FileName.ToString();
+					filename = ofd.FileName;
 				}
 				else
 					return null;
@@ -145,8 +145,8 @@ namespace RTCV.CorruptCore
 		{
 			BlastLayer bl = new BlastLayer();
 
-			string thisSystem = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.SYSTEM.ToString()];
-			string romFilename = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME.ToString()];
+			string thisSystem = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.SYSTEM];
+			string romFilename = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME];
 
 			var rp = MemoryDomains.GetRomParts(thisSystem, romFilename);
 

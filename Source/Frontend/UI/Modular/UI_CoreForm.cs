@@ -298,7 +298,7 @@ This message only appears once.";
 
             AutoCorrupt = !AutoCorrupt;
             if (AutoCorrupt)
-                RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_RUNBEFORE.ToString(), true);
+                RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_RUNBEFORE, true);
         }
 
         public void btnManualBlast_Click(object sender, EventArgs e)

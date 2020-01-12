@@ -14,31 +14,31 @@ namespace RTCV.CorruptCore
 	{
         public static bool RenderAtLoad
         {
-            get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.RENDER_AT_LOAD.ToString()];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_AT_LOAD.ToString(), value);
+            get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.RENDER_AT_LOAD];
+            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_AT_LOAD, value);
         }
 
         public static bool IsRendering
 		{
-			get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.RENDER_ISRENDERING.ToString()];
+			get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.RENDER_ISRENDERING];
 			set
             {
-                RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_ISRENDERING.ToString(), value);
+                RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_ISRENDERING, value);
                 LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_RENDER_DISPLAY);
             }
 		}
 		
 		public static RENDERTYPE RenderType
 		{
-			get => (RENDERTYPE)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.RENDER_RENDERTYPE.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_RENDERTYPE.ToString(), value);
+			get => (RENDERTYPE)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.RENDER_RENDERTYPE];
+			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_RENDERTYPE, value);
 		}
 
 		public static PartialSpec getDefaultPartial()
 		{
 			var partial = new PartialSpec("RTCSpec");
-			partial[RTCSPEC.RENDER_ISRENDERING.ToString()] = false;
-			partial[RTCSPEC.RENDER_RENDERTYPE.ToString()] = RENDERTYPE.WAV;
+			partial[RTCSPEC.RENDER_ISRENDERING] = false;
+			partial[RTCSPEC.RENDER_RENDERTYPE] = RENDERTYPE.WAV;
 			return partial;
 		}
 

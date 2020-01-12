@@ -9,13 +9,13 @@ namespace RTCV.CorruptCore
 	{
 		public static int Delay
 		{
-			get => (int)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.DISTORTION_DELAY.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.DISTORTION_DELAY.ToString(), value);
+			get => (int)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.DISTORTION_DELAY];
+			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.DISTORTION_DELAY, value);
 		}
 		public static PartialSpec getDefaultPartial()
 		{
 			var partial = new PartialSpec("RTCSpec");
-			partial[RTCSPEC.DISTORTION_DELAY.ToString()] = 50;
+			partial[RTCSPEC.DISTORTION_DELAY] = 50;
 
 			return partial;
 		}

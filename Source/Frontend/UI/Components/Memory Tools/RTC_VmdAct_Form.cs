@@ -315,7 +315,7 @@ namespace RTCV.UI
 				OpenFileDialog1.RestoreDirectory = true;
 				if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
 				{
-					currentFilename = OpenFileDialog1.FileName.ToString();
+					currentFilename = OpenFileDialog1.FileName;
 				}
 				else
 				{
@@ -357,7 +357,7 @@ namespace RTCV.UI
 			OpenFileDialog1.RestoreDirectory = true;
 			if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
 			{
-				tempFilename = OpenFileDialog1.FileName.ToString();
+				tempFilename = OpenFileDialog1.FileName;
 			}
 			else
 				return;
@@ -396,7 +396,7 @@ namespace RTCV.UI
 				OpenFileDialog1.RestoreDirectory = true;
 				if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
 				{
-					tempFilename = OpenFileDialog1.FileName.ToString();
+					tempFilename = OpenFileDialog1.FileName;
 				}
 				else
 					return;

@@ -1436,7 +1436,7 @@ namespace RTCV.UI
 				};
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					filename = ofd.FileName.ToString();
+					filename = ofd.FileName;
 				}
 				else
 					return;
@@ -1472,7 +1472,7 @@ namespace RTCV.UI
             };
 
             if (sfd.ShowDialog() == DialogResult.OK)
-				filename = sfd.FileName.ToString();
+				filename = sfd.FileName;
 			else
 				return;
 			RomParts rp = MemoryDomains.GetRomParts(currentSK.SystemName, currentSK.RomFilename);
@@ -1566,7 +1566,7 @@ namespace RTCV.UI
 			};
 			if (ofd.ShowDialog() == DialogResult.OK)
 			{
-				filename = ofd.FileName.ToString();
+				filename = ofd.FileName;
 			}
 			else
 				return;

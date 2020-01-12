@@ -633,7 +633,7 @@ namespace RTCV.CorruptCore
 			};
 			if (ofd.ShowDialog() == DialogResult.OK)
 			{
-				filename = ofd.FileName.ToString();
+				filename = ofd.FileName;
 			}
 			else
 				return;

@@ -8,50 +8,50 @@ namespace RTCV.CorruptCore
 	{
 		public static NightmareAlgo Algo
 		{
-			get => (NightmareAlgo)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_ALGO.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_ALGO.ToString(), value);
+			get => (NightmareAlgo)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_ALGO];
+			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_ALGO, value);
 		}
 		public static ulong MinValue8Bit
 		{
-			get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MINVALUE8BIT.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MINVALUE8BIT.ToString(), value);
+			get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MINVALUE8BIT];
+			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MINVALUE8BIT, value);
 		}
 		public static ulong MaxValue8Bit
 		{
-			get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MAXVALUE8BIT.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MAXVALUE8BIT.ToString(), value);
+			get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MAXVALUE8BIT];
+			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MAXVALUE8BIT, value);
 		}
 
 		public static ulong MinValue16Bit
 		{
-			get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MINVALUE16BIT.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MINVALUE16BIT.ToString(), value);
+			get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MINVALUE16BIT];
+			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MINVALUE16BIT, value);
 		}
 		public static ulong MaxValue16Bit
 		{
-			get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MAXVALUE16BIT.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MAXVALUE16BIT.ToString(), value);
+			get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MAXVALUE16BIT];
+			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MAXVALUE16BIT, value);
 		}
 
         public static ulong MinValue32Bit
         {
-            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MINVALUE32BIT.ToString()];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MINVALUE32BIT.ToString(), value);
+            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MINVALUE32BIT];
+            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MINVALUE32BIT, value);
         }
         public static ulong MaxValue32Bit
         {
-            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MAXVALUE32BIT.ToString()];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MAXVALUE32BIT.ToString(), value);
+            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MAXVALUE32BIT];
+            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MAXVALUE32BIT, value);
         }
         public static ulong MinValue64Bit
         {
-            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MINVALUE64BIT.ToString()];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MINVALUE64BIT.ToString(), value);
+            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MINVALUE64BIT];
+            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MINVALUE64BIT, value);
         }
         public static ulong MaxValue64Bit
         {
-            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MAXVALUE64BIT.ToString()];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MAXVALUE64BIT.ToString(), value);
+            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MAXVALUE64BIT];
+            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MAXVALUE64BIT, value);
         }
 
 
@@ -60,19 +60,19 @@ namespace RTCV.CorruptCore
 			var partial = new PartialSpec("RTCSpec");
 
 
-			partial[RTCSPEC.NIGHTMARE_MINVALUE8BIT.ToString()] = 0UL;
-			partial[RTCSPEC.NIGHTMARE_MAXVALUE8BIT.ToString()] = 0xFFUL;
+			partial[RTCSPEC.NIGHTMARE_MINVALUE8BIT] = 0UL;
+			partial[RTCSPEC.NIGHTMARE_MAXVALUE8BIT] = 0xFFUL;
 
-			partial[RTCSPEC.NIGHTMARE_MINVALUE16BIT.ToString()] = 0UL;
-			partial[RTCSPEC.NIGHTMARE_MAXVALUE16BIT.ToString()] = 0xFFFFUL;
+			partial[RTCSPEC.NIGHTMARE_MINVALUE16BIT] = 0UL;
+			partial[RTCSPEC.NIGHTMARE_MAXVALUE16BIT] = 0xFFFFUL;
 
-            partial[RTCSPEC.NIGHTMARE_MINVALUE32BIT.ToString()] = 0UL;
-            partial[RTCSPEC.NIGHTMARE_MAXVALUE32BIT.ToString()] = 0xFFFFFFFFUL;
+            partial[RTCSPEC.NIGHTMARE_MINVALUE32BIT] = 0UL;
+            partial[RTCSPEC.NIGHTMARE_MAXVALUE32BIT] = 0xFFFFFFFFUL;
 
-            partial[RTCSPEC.NIGHTMARE_MINVALUE64BIT.ToString()] = 0UL;
-            partial[RTCSPEC.NIGHTMARE_MAXVALUE64BIT.ToString()] = 0xFFFFFFFFFFFFFFFFUL;
+            partial[RTCSPEC.NIGHTMARE_MINVALUE64BIT] = 0UL;
+            partial[RTCSPEC.NIGHTMARE_MAXVALUE64BIT] = 0xFFFFFFFFFFFFFFFFUL;
 
-            partial[RTCSPEC.NIGHTMARE_ALGO.ToString()] = NightmareAlgo.RANDOM;
+            partial[RTCSPEC.NIGHTMARE_ALGO] = NightmareAlgo.RANDOM;
 
 			return partial;
 		}

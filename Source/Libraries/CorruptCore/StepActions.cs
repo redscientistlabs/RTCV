@@ -38,29 +38,29 @@ namespace RTCV.CorruptCore
 
 		public static int MaxInfiniteBlastUnits
 		{
-			get { return (int)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.STEP_MAXINFINITEBLASTUNITS.ToString()]; }
-			set { RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_MAXINFINITEBLASTUNITS.ToString(), value); }
+			get { return (int)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.STEP_MAXINFINITEBLASTUNITS]; }
+			set { RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_MAXINFINITEBLASTUNITS, value); }
 		}
 
 		public static bool LockExecution
 		{
-			get { return (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.STEP_LOCKEXECUTION.ToString()]; }
-			set { RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_LOCKEXECUTION.ToString(), value); }
+			get { return (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.STEP_LOCKEXECUTION]; }
+			set { RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_LOCKEXECUTION, value); }
 		}
 
 		public static bool ClearStepActionsOnRewind
 		{
-			get { return (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.STEP_CLEARSTEPACTIONSONREWIND.ToString()]; }
-			set { RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_CLEARSTEPACTIONSONREWIND.ToString(), value); }
+			get { return (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.STEP_CLEARSTEPACTIONSONREWIND]; }
+			set { RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_CLEARSTEPACTIONSONREWIND, value); }
 		}
 
 		public static PartialSpec getDefaultPartial()
 		{
 			var partial = new PartialSpec("CorruptCore");
 
-			partial[RTCSPEC.STEP_MAXINFINITEBLASTUNITS.ToString()] = 50;
-			partial[RTCSPEC.STEP_LOCKEXECUTION.ToString()] = false;
-			partial[RTCSPEC.STEP_CLEARSTEPACTIONSONREWIND.ToString()] = false;
+			partial[RTCSPEC.STEP_MAXINFINITEBLASTUNITS] = 50;
+			partial[RTCSPEC.STEP_LOCKEXECUTION] = false;
+			partial[RTCSPEC.STEP_CLEARSTEPACTIONSONREWIND] = false;
 
 			return partial;
 		}
