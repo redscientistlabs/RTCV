@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace RTCV.Common.Objects
 {
@@ -43,9 +42,11 @@ namespace RTCV.Common.Objects
         }
 
         public void AddResult(OperationResult result) => messages.Add(result);
+
         public void AddResults(OperationResults results) => messages.AddRange(results.Messages);
 
         public void AddWarning(string warning) => messages.Add(new OperationResult(warning, NLog.LogLevel.Warn));
+
         public void AddWarning(string warning, NLog.Logger logger)
         {
             messages.Add(new OperationResult(warning, NLog.LogLevel.Warn, logger));
@@ -53,6 +54,7 @@ namespace RTCV.Common.Objects
         }
 
         public void AddError(string error, Exception e = null) => messages.Add(new OperationResult(error, NLog.LogLevel.Error, e));
+
         public void AddError(string error, NLog.Logger logger, Exception e = null)
         {
             messages.Add(new OperationResult(error, NLog.LogLevel.Error, logger, e));
@@ -61,12 +63,16 @@ namespace RTCV.Common.Objects
 
 
         public bool HasErrors() => Errors.Count > 0;
+
         public bool HasWarnings() => Warnings.Count > 0;
+
         public bool HasMessages() => Warnings.Count > 0 || Errors.Count > 0;
+
         public bool Failed => HasErrors();
 
 
         public string GetWarningsFormatted() => getMessagesFormatted(NLog.LogLevel.Warn);
+
         public string GetErrorsFormatted(bool includeException = false) => getMessagesFormatted(NLog.LogLevel.Error, includeException);
 
         private string getMessagesFormatted(NLog.LogLevel severity, bool includeException = false)
