@@ -28,6 +28,7 @@ namespace RTCV.UI
         {
             e.Effect = DragDropEffects.Link;
         }
+
         private void RTC_VmdPool_Form_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);

@@ -42,16 +42,19 @@ namespace RTCV.UI
             string regex = "^[0(x|X)]+[0-9A-Fa-f]+$";
             return Regex.IsMatch(str, regex);
         }
+
         private bool isWholeNumber(string str)
         {
             string regex = "^[0-9]+$";
             return Regex.IsMatch(str, regex);
         }
+
         private bool isDecimalNumber(string str)
         {
             string regex = "^(\\d*\\.){1}\\d+$";
             return Regex.IsMatch(str, regex);
         }
+
         public static T Convert<T>(string input)
         {
             var converter = TypeDescriptor.GetConverter(typeof(T));

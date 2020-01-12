@@ -47,6 +47,7 @@ namespace RTCV.NetCore
         public static class ConsoleHelper
         {
             public static ConsoleCopy con;
+
             public static void CreateConsole(string path = null)
             {
                 ReleaseConsole();
@@ -61,6 +62,7 @@ namespace RTCV.NetCore
             }
 
             private static bool ConsoleVisible = true;
+
             public static void ShowConsole()
             {
                 var handle = GetConsoleWindow();
@@ -86,6 +88,7 @@ namespace RTCV.NetCore
                     ShowConsole();
                 }
             }
+
             public static void ReleaseConsole()
             {
                 var handle = GetConsoleWindow();
@@ -101,22 +104,31 @@ namespace RTCV.NetCore
             internal const int MF_DISABLED = 0x00000002;    //disabled button status
 
             private const uint StdOutputHandle = 0xFFFFFFF5;
+
             [DllImport("kernel32.dll")]
             private static extern IntPtr GetStdHandle(uint nStdHandle);
+
             [DllImport("kernel32.dll", ExactSpelling = true, SetLastError = true)]
             public static extern bool CloseHandle(IntPtr handle);
+
             [DllImport("kernel32.dll")]
             private static extern void SetStdHandle(uint nStdHandle, IntPtr handle);
+
             [DllImport("kernel32")]
             private static extern bool AllocConsole();
+
             [DllImport("kernel32.dll", SetLastError = true)]
             public static extern IntPtr GetConsoleWindow();
+
             [DllImport("user32.dll")]
             public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
             [DllImport("user32.dll")]
             public static extern IntPtr GetSystemMenu(IntPtr HWNDValue, bool isRevert);
+
             [DllImport("user32.dll")]
             public static extern int EnableMenuItem(IntPtr tMenu, int targetItem, int targetStatus);
+
             public class ConsoleCopy : IDisposable
             {
                 private FileStream fileStream;
@@ -540,6 +552,7 @@ namespace RTCV.NetCore
             return (int)_frameCount.GetValue(_getStackFrameHelper());
         }
     }
+
     internal sealed class TimePeriod : IDisposable
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();

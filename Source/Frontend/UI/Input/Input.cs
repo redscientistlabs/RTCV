@@ -100,6 +100,7 @@ namespace RTCV.UI.Input
         {
             Press, Release
         }
+
         public struct LogicalButton
         {
             public LogicalButton(string button, ModifierKey modifiers)
@@ -107,6 +108,7 @@ namespace RTCV.UI.Input
                 Button = button;
                 Modifiers = modifiers;
             }
+
             public readonly string Button;
             public readonly ModifierKey Modifiers;
 
@@ -123,28 +125,34 @@ namespace RTCV.UI.Input
                 ret += Button;
                 return ret;
             }
+
             public override bool Equals(object obj)
             {
                 var other = (LogicalButton)obj;
                 return other == this;
             }
+
             public override int GetHashCode()
             {
                 return Button.GetHashCode() ^ Modifiers.GetHashCode();
             }
+
             public static bool operator ==(LogicalButton lhs, LogicalButton rhs)
             {
                 return lhs.Button == rhs.Button && lhs.Modifiers == rhs.Modifiers;
             }
+
             public static bool operator !=(LogicalButton lhs, LogicalButton rhs)
             {
                 return !(lhs == rhs);
             }
         }
+
         public class InputEvent
         {
             public LogicalButton LogicalButton;
             public InputEventType EventType;
+
             public override string ToString()
             {
                 return string.Format("{0}:{1}", EventType.ToString(), LogicalButton.ToString());
@@ -248,6 +256,7 @@ namespace RTCV.UI.Input
         }
 
         private readonly Queue<InputEvent> InputEvents = new Queue<InputEvent>();
+
         public InputEvent DequeueEvent()
         {
             lock (this)
@@ -256,6 +265,7 @@ namespace RTCV.UI.Input
                 else return InputEvents.Dequeue();
             }
         }
+
         void EnqueueEvent(InputEvent ie)
         {
             lock (this)

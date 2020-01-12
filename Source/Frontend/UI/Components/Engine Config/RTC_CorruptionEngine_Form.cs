@@ -177,6 +177,7 @@ namespace RTCV.UI
             cbLockPipes.Checked = enabled;
             dontUpdate = false;
         }
+
         public void SetRewindBoxes(bool enabled)
         {
             dontUpdate = true;
@@ -186,7 +187,9 @@ namespace RTCV.UI
             cbClearPipesOnRewind.Checked = enabled;
             dontUpdate = false;
         }
+
         public bool dontUpdate = false;
+
         private void cbClearRewind_CheckedChanged(object sender, EventArgs e)
         {
             if (dontUpdate)

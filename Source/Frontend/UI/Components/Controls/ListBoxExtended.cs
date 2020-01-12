@@ -8,6 +8,7 @@ namespace RTCV.UI.Components.Controls
     {
         [DllImport("user32")]
         public static extern int GetMessagePos();
+
         private const int WM_LBUTTONDOWN = 0x201;
         private int lastClicked = -1;
 
@@ -21,6 +22,7 @@ namespace RTCV.UI.Components.Controls
             }
             base.WndProc(ref m);
         }
+
         protected void OnPreSelect()
         {
             int pos = GetMessagePos();

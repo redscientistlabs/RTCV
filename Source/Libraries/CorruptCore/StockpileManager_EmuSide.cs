@@ -110,6 +110,7 @@ namespace RTCV.CorruptCore
 
             return sk;
         }
+
         public static StashKey SaveState_NET(StashKey _sk = null, bool threadSave = false)
         {
             string Key;

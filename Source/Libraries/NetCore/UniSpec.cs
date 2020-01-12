@@ -137,6 +137,7 @@ namespace RTCV.NetCore
             p.version = base.version;
             return p;
         }
+
         public void FullUpdate() => Update(GetPartialSpec());
 
         public List<string> GetDump()
@@ -207,6 +208,7 @@ namespace RTCV.NetCore
     public class PartialSpec : BaseSpec
     {
         public string Name;
+
         public PartialSpec(string _name)
         {
             Name = _name;
@@ -275,6 +277,7 @@ namespace RTCV.NetCore
         }
 
         public List<string> GetKeys() => specDico.Keys.ToList();
+
         public string GetSerializedDico()
         {
             var jsonSerializerSettings = new JsonSerializerSettings()

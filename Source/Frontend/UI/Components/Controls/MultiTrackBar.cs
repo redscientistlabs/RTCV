@@ -331,6 +331,7 @@ namespace RTCV.UI.Components.Controls
 
             PropagateValue(nmValue, tbValue, nmControlValue);
         }
+
         private void cbControlName_CheckedChanged(object sender, EventArgs e)
         {
             if (DisplayCheckbox)

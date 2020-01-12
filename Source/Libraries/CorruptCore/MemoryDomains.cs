@@ -82,6 +82,7 @@ namespace RTCV.CorruptCore
                 }
             }
         }
+
         public static PartialSpec getDefaultPartial()
         {
             var partial = new PartialSpec("RTCSpec");
@@ -218,6 +219,7 @@ namespace RTCV.CorruptCore
             proto.SuppliedBlastLayer = bl;
             return proto;
         }
+
         public static void GenerateVmdFromStashkey(StashKey sk)
         {
             VmdPrototype proto = GetVmdPrototypeFromBlastlayer(sk.BlastLayer);
@@ -725,6 +727,7 @@ namespace RTCV.CorruptCore
             }
             return 0;
         }
+
         public string GetRealDomain(long address)
         {
             if (Compacted)
@@ -853,6 +856,7 @@ namespace RTCV.CorruptCore
                 PokeByte(startAddress + i, value[i]);
             }
         }
+
         public override byte PeekByte(long address)
         {
             if (address < this.Proto.Padding)
@@ -900,7 +904,9 @@ namespace RTCV.CorruptCore
     {
         [NonSerialized, Ceras.Exclude]
         public IMemoryDomain MD = null;
+
         public override long Size { get; set; }
+
         public MemoryDomainProxy(IMemoryDomain _md)
         {
             MD = _md;
@@ -912,9 +918,11 @@ namespace RTCV.CorruptCore
             Name = MD.ToString();
             BigEndian = MD.BigEndian;
         }
+
         public MemoryDomainProxy()
         {
         }
+
         public override string ToString()
         {
             return Name;
@@ -943,6 +951,7 @@ namespace RTCV.CorruptCore
                 return data.ToArray().FlipBytes();
             }
         }
+
         public override void PokeBytes(long startAddress, byte[] value, bool raw = true)
         {
             if (!raw || !BigEndian)
@@ -1029,6 +1038,7 @@ namespace RTCV.CorruptCore
 
         public volatile System.IO.Stream stream = null;
     }
+
     [Serializable]
     [Ceras.MemberConfig(TargetMember.All)]
     public sealed class NullMemoryInterface : MemoryInterface
@@ -1268,6 +1278,7 @@ namespace RTCV.CorruptCore
                 return Filename;
             }
         }
+
         public string getBackupFilename()
         {
             return Path.Combine(RtcCore.EmuDir, "FILEBACKUPS", getCompositeFilename("BACKUP"));
@@ -1673,6 +1684,7 @@ namespace RTCV.CorruptCore
         {
             return "Multiple Files";
         }
+
         public string getCompositeFilename(string prefix)
         {
             return string.Join("|", FileInterfaces.Select(it => it.getCompositeFilename(prefix)));
@@ -1857,6 +1869,7 @@ namespace RTCV.CorruptCore
             //return lastMemoryDump;
 
         }
+
         public override byte[][] lastMemoryDump
         {
             get => throw new Exception("FORBIDDEN USE OF LASTMEMORYDUMP ON MULTIPLEFILEINTERFACE");
@@ -1877,6 +1890,7 @@ namespace RTCV.CorruptCore
             lastMemorySize = size;
             return (long)lastMemorySize;
         }
+
         public override long? lastMemorySize { get; set; }
         public static bool LoadAnything { get; set; } = false;
 

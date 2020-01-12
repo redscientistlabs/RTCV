@@ -32,6 +32,7 @@ namespace RTCV.UI
             }
             this.Show();
         }
+
         private void ColumnSelector_Closing(object sender, FormClosingEventArgs e)
         {
             if (tablePanel.Controls.Cast<CheckBox>().Count(item => item.Checked) == 0)

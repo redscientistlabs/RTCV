@@ -70,6 +70,7 @@ namespace RTCV.UI
             }
             get => _oldEmuDir;
         }
+
         public static void KillEmulator(bool forceBypass = false)
         {
             if (!ShouldKillswitchFire || (UICore.FirstConnect && !forceBypass) || (!S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked && !forceBypass))
@@ -121,6 +122,7 @@ namespace RTCV.UI
 
             Process.Start(info);
         }
+
         private static void KillswitchSpamPreventTimer_Tick(object sender, EventArgs e)
         {
             ShouldKillswitchFire = true;

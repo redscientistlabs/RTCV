@@ -9,6 +9,7 @@ namespace RTCV.CorruptCore
             get => (int)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.DISTORTION_DELAY];
             set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.DISTORTION_DELAY, value);
         }
+
         public static PartialSpec getDefaultPartial()
         {
             var partial = new PartialSpec("RTCSpec");

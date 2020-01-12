@@ -20,7 +20,9 @@ namespace RTCV.NetCore.StaticTools
 
         [ThreadStatic]
         public static volatile Dictionary<int, List<string>> InvokeStackTraces = new Dictionary<int, List<string>>();
+
         private static readonly object dicoLock = new object();
+
         public static void InvokeLog(this ISynchronizeInvoke si, Delegate method, object[] args)
         {
             int pid = Thread.CurrentThread.ManagedThreadId;

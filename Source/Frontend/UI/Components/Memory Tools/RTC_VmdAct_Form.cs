@@ -618,6 +618,7 @@ namespace RTCV.UI
 
             btnActiveTableGenerate.Enabled = true;
         }
+
         private void RefreshDomains()
         {
             S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected();

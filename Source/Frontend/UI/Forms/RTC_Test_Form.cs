@@ -20,6 +20,7 @@ namespace RTCV.UI
     public class TestClass
     {
         public List<long[]> ListLongArr { get; set; } = new List<long[]>();
+
         public TestClass()
         {
         }

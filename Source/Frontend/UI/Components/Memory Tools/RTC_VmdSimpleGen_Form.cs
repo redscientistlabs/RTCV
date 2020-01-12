@@ -120,6 +120,7 @@ namespace RTCV.UI
 
             return GenerateVMD();
         }
+
         private bool GenerateVMD()
         {
             if (string.IsNullOrWhiteSpace(cbSelectedMemoryDomain.SelectedItem?.ToString()) || !MemoryDomains.MemoryInterfaces.ContainsKey(cbSelectedMemoryDomain.SelectedItem.ToString()))

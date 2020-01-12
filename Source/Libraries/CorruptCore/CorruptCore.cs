@@ -72,6 +72,7 @@ namespace RTCV.CorruptCore
             get => (string)AllSpec.CorruptCoreSpec[RTCSPEC.RTCDIR];
             set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.RTCDIR, value);
         }
+
         public static string workingDir => Path.Combine(RtcDir, "WORKING");
         public static string assetsDir => Path.Combine(RtcDir, "ASSETS");
         public static string listsDir => Path.Combine(RtcDir, "LISTS");
@@ -162,6 +163,7 @@ namespace RTCV.CorruptCore
                 Params.SetParam("REROLL_SOURCEADDRESS", value.ToString());
             }
         }
+
         public static bool RerollDomain
         {
             get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLDOMAIN];
@@ -181,6 +183,7 @@ namespace RTCV.CorruptCore
                 Params.SetParam("REROLL_SOURCEDOMAIN", value.ToString());
             }
         }
+
         public static bool RerollIgnoresOriginalSource
         {
             get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE];
@@ -190,6 +193,7 @@ namespace RTCV.CorruptCore
                 Params.SetParam("REROLL_IGNOREORIGINALSOURCE", value.ToString());
             }
         }
+
         public static bool RerollFollowsCustomEngine
         {
             get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_REROLLFOLLOWENGINESETTINGS];
@@ -267,6 +271,7 @@ namespace RTCV.CorruptCore
                 }
             }
         }
+
         public static void StartEmuSide()
         {
             if (!Attached)
@@ -995,6 +1000,7 @@ namespace RTCV.CorruptCore
                 S.GET<CorruptCore.Tools.HexEditor>().Restart();
             }
         }
+
         public static void GAME_CLOSED(bool closeHexEditor = false)
         {
             if (closeHexEditor)
@@ -1009,6 +1015,7 @@ namespace RTCV.CorruptCore
                 }
             }
         }
+
         public static void KILL_HEX_EDITOR()
         {
             S.GET<CorruptCore.Tools.HexEditor>().HideOnClose = false;

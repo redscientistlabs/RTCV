@@ -93,6 +93,7 @@ namespace RTCV.UI
                 allControls.Add(c);
             }
         }
+
         public void LoadNoStashKey()
         {
             if (!RefreshDomains())
@@ -990,6 +991,7 @@ namespace RTCV.UI
                 }
             }
         }
+
         public void RefreshNoteIcons()
         {
             foreach (DataGridViewRow row in dgvBlastGenerator.Rows)
@@ -1040,10 +1042,12 @@ namespace RTCV.UI
     internal class NoteItem : INote
     {
         public string Note { get; set; }
+
         public NoteItem(string note)
         {
             Note = note;
         }
+
         public override string ToString()
         {
             return Note;

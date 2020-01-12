@@ -204,10 +204,12 @@ namespace RTCV.UI
             dgvBlastEditor.AllowUserToOrderColumns = true;
             SetDisplayOrder();
         }
+
         private void RTC_NewBlastEditorForm_Closing(object sender, FormClosingEventArgs e)
         {
             SaveDisplayOrder();
         }
+
         private void RTC_NewBlastEditorForm_Close(object sender, FormClosedEventArgs e)
         {
             //Clean up
@@ -255,6 +257,7 @@ namespace RTCV.UI
                 tb.Text = getShiftedHexString(tb.Text, scrollBy, precision);
             }
         }
+
         private void tbValueScroll(object sender, MouseEventArgs e)
         {
             if (sender is TextBox tb)
@@ -562,6 +565,7 @@ namespace RTCV.UI
             }
             UpdateBottom();
         }
+
         private void UpDownLifetime_Validated(object sender, EventArgs e)
         {
             var value = upDownLifetime.Value;
@@ -578,6 +582,7 @@ namespace RTCV.UI
             UpdateBottom();
             dgvBlastEditor.Refresh();
         }
+
         private void UpDownExecuteFrame_Validated(object sender, EventArgs e)
         {
             var value = upDownExecuteFrame.Value;
@@ -688,6 +693,7 @@ namespace RTCV.UI
 
             UpdateBottom();
         }
+
         private void cbEnabled_Validated(object sender, EventArgs e)
         {
             var value = cbEnabled.Checked;
@@ -1220,6 +1226,7 @@ namespace RTCV.UI
 
         private BindingSource bs = null;
         private BindingSource _bs = null;
+
         public void LoadStashkey(StashKey sk)
         {
             if (!RefreshDomains())
@@ -1869,10 +1876,12 @@ namespace RTCV.UI
             CSVGenerator csv = new CSVGenerator();
             File.WriteAllText(filename, csv.GenerateFromDGV(dgvBlastEditor), Encoding.UTF8);
         }
+
         private void bakeBlastunitsToVALUEToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BakeBlastUnitsToValue();
         }
+
         private void BakeBlastUnitsToValue(bool bakeSelected = false)
         {
             try
@@ -1947,6 +1956,7 @@ namespace RTCV.UI
                 buttonCell.Value = string.IsNullOrWhiteSpace((row.DataBoundItem as BlastUnit)?.Note) ? string.Empty : "📝";
             }
         }
+
         public void RefreshAllNoteIcons()
         {
             RefreshNoteIcons(dgvBlastEditor.Rows);

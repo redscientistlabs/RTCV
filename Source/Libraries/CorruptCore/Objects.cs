@@ -522,6 +522,7 @@ namespace RTCV.CorruptCore
         {
             return Load(filename, true);
         }
+
         /// <summary>
         /// Checks a stockpile for compatibility with the current version of the RTC
         /// </summary>
@@ -779,6 +780,7 @@ namespace RTCV.CorruptCore
         public string StateShortFilename { get; set; }
         public string StateFilename { get; set; }
         public byte[] StateData { get; set; }
+
         [JsonConverter(typeof(StringEnumConverter))]
         public StashKeySavestateLocation StateLocation { get; set; } = StashKeySavestateLocation.SESSION;
 
@@ -862,6 +864,7 @@ namespace RTCV.CorruptCore
             StockpileManager_UISide.CurrentStashkey = this;
             return StockpileManager_UISide.ApplyStashkey(this);
         }
+
         /// <summary>
         /// Can be called from UI Side
         /// </summary>
@@ -962,6 +965,7 @@ namespace RTCV.CorruptCore
             Text = text;
         }
     }
+
     [Serializable]
     [Ceras.MemberConfig(TargetMember.All)]
     public class SaveStateKeys
@@ -1286,6 +1290,7 @@ namespace RTCV.CorruptCore
         }
 
         private BlastUnitSource source;
+
         [Category("Source")]
         [Description("The source for the value for this unit for STORE mode")]
         [DisplayName("Source")]
@@ -1678,6 +1683,7 @@ namespace RTCV.CorruptCore
 
             return l.Layer;
         }
+
         /// <summary>
         /// Adds a blastunit to the execution pool
         /// </summary>
@@ -2211,6 +2217,7 @@ namespace RTCV.CorruptCore
             Data = data;
         }
     }
+
     [Serializable]
     [Ceras.MemberConfig(TargetMember.AllPublic)]
     public class BlastGeneratorProto : INote
@@ -2297,16 +2304,19 @@ namespace RTCV.CorruptCore
             Name = name;
             Value = value;
         }
+
         public ComboBoxItem()
         {
         }
     }
 
     public delegate void ProgressBarEventHandler(object source, ProgressBarEventArgs e);
+
     public class ProgressBarEventArgs : EventArgs
     {
         public string CurrentTask;
         public decimal Progress;
+
         public ProgressBarEventArgs(string text, decimal progress)
         {
             CurrentTask = text;

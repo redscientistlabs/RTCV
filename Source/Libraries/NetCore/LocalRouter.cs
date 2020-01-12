@@ -23,6 +23,7 @@ namespace RTCV.NetCore
 
             return endpoint;
         }
+
         public static IRoutable getEndpoint(string name)
         {
             try
@@ -32,6 +33,7 @@ namespace RTCV.NetCore
             }
             catch { return null; }
         }
+
         public static bool hasEndpoint(string name) => endpoints.TryGetValue(name, out IRoutable chosen);
 
         public static object Route(string endpointName, string messageType, object objectValue) => Route(endpointName, messageType, objectValue, false);
@@ -41,6 +43,7 @@ namespace RTCV.NetCore
             (ncea.message as NetCoreAdvancedMessage).requestGuid = (synced ? (Guid?)Guid.NewGuid() : null);
             return Route(endpointName, ncea);
         }
+
         public static T QueryRoute<T>(string endpointName, string messageType, object objectValue, bool synced = true)
         {
             NetCoreEventArgs ncea = new NetCoreEventArgs(messageType, objectValue);

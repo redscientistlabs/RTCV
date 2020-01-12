@@ -9,6 +9,7 @@ namespace RTCV.CorruptCore
             get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.HELLGENIE_MINVALUE8BIT];
             set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.HELLGENIE_MINVALUE8BIT, value);
         }
+
         public static ulong MaxValue8Bit
         {
             get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.HELLGENIE_MAXVALUE8BIT];
@@ -20,6 +21,7 @@ namespace RTCV.CorruptCore
             get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.HELLGENIE_MINVALUE16BIT];
             set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.HELLGENIE_MINVALUE16BIT, value);
         }
+
         public static ulong MaxValue16Bit
         {
             get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.HELLGENIE_MAXVALUE16BIT];
@@ -31,6 +33,7 @@ namespace RTCV.CorruptCore
             get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.HELLGENIE_MINVALUE32BIT];
             set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.HELLGENIE_MINVALUE32BIT, value);
         }
+
         public static ulong MaxValue32Bit
         {
             get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.HELLGENIE_MAXVALUE32BIT];
@@ -42,6 +45,7 @@ namespace RTCV.CorruptCore
             get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.HELLGENIE_MINVALUE64BIT];
             set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.HELLGENIE_MINVALUE64BIT, value);
         }
+
         public static ulong MaxValue64Bit
         {
             get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.HELLGENIE_MAXVALUE64BIT];

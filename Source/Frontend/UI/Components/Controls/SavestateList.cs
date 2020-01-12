@@ -273,6 +273,7 @@ namespace RTCV.UI.Components.Controls
                 MessageBox.Show($"{saveStateWord} box is empty");
             }
         }
+
         public void btnSaveLoad_Click(object sender, EventArgs e)
         {
             object renameSaveStateWord = AllSpec.VanguardSpec[VSPEC.RENAME_SAVESTATE];

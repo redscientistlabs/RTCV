@@ -16,11 +16,13 @@
         VALUE,
         STORE
     }
+
     public enum StoreTime
     {
         IMMEDIATE,  //Frame 0 for the blastunit. Right when it's applied. Used for Distortion
         PREEXECUTE, //For when you want it to happen right before the first step
     }
+
     public enum LimiterTime
     {
         NONE,       //For when something will never happen
@@ -28,6 +30,7 @@
         PREEXECUTE, //For when you want it to happen right before the first step
         EXECUTE     //For when you want it to happen every step
     }
+
     public enum StoreType
     {
         ONCE,
@@ -47,6 +50,7 @@
         VALUELIST,
         RANGE
     }
+
     public enum CustomStoreAddress
     {
         SAME,
@@ -59,6 +63,7 @@
         RANDOMTILT,
         TILT
     }
+
     public enum NightmareType
     {
         SET,
@@ -78,6 +83,7 @@
         CUSTOM,
         NONE
     }
+
     public enum BGValueModes
     {
         SET,
@@ -112,6 +118,7 @@
         PROCESS,
         ASSEMBLY
     }
+
     public enum StashKeySavestateLocation
     {
         SKS,
@@ -247,6 +254,7 @@
         public static readonly string REPLACE_MANUALBLAST_WITH_GHCORRUPT = nameof(REPLACE_MANUALBLAST_WITH_GHCORRUPT);
         public static readonly string LOADSTATE_USES_CALLBACKS = nameof(LOADSTATE_USES_CALLBACKS);
     }
+
     public enum UISPEC
     {
     }

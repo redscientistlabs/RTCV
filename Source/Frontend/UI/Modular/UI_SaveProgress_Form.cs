@@ -33,6 +33,7 @@ namespace RTCV.UI
         public bool SubForm_HasRightButton => false;
         public string SubForm_LeftButtonText { get; }
         public string SubForm_RightButtonText { get; }
+
         public void SubForm_LeftButton_Click()
         {
             throw new NotImplementedException();
@@ -58,6 +59,7 @@ namespace RTCV.UI
                 logger.Trace("AbandonedMutexException! Thread id {0} got Mutex... (save)", System.Threading.Thread.CurrentThread.ManagedThreadId);
             }
         }
+
         public void OnHidden()
         {
             logger.Trace("Entering OnHidden() {0}\n{1}", System.Threading.Thread.CurrentThread.ManagedThreadId, Environment.StackTrace);

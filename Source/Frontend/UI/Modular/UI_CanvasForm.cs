@@ -76,6 +76,7 @@ namespace RTCV.UI
         {
             return (gridPos * tileSize) + (gridPos * spacerSize) + spacerSize;
         }
+
         public static Point getTileLocation(int x, int y)
         {
             return new Point(getTilePos(x), getTilePos(y));

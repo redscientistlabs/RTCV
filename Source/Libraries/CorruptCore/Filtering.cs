@@ -14,11 +14,13 @@ namespace RTCV.CorruptCore
     public static class Filtering
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         public static ConcurrentDictionary<string, HashSet<byte[]>> Hash2LimiterDico
         {
             get => (ConcurrentDictionary<string, HashSet<byte[]>>)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2LIMITERDICO];
             set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.FILTERING_HASH2VALUEDICO, value);
         }
+
         public static ConcurrentDictionary<string, List<byte[]>> Hash2ValueDico
         {
             get => (ConcurrentDictionary<string, List<byte[]>>)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2VALUEDICO];
@@ -419,6 +421,7 @@ namespace RTCV.CorruptCore
 
             return lists;
         }
+
         public static bool RegisterListInUI(string name, string hash)
         {
             //Don't double-register the same name. For now, just iterate over the limiter lists and pull the names out.

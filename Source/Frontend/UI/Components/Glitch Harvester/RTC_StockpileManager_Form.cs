@@ -357,6 +357,7 @@ namespace RTCV.UI
                 S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
             }
         }
+
         private async void LoadStockpile(string filename)
         {
             logger.Trace("Entered LoadStockpile {0}", Thread.CurrentThread.ManagedThreadId);
@@ -433,6 +434,7 @@ namespace RTCV.UI
                 logger.Trace("Load done");
             }
         }
+
         private async void ImportStockpile(string filename)
         {
             var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
@@ -470,6 +472,7 @@ namespace RTCV.UI
                 RefreshNoteIcons();
             }
         }
+
         private async void SaveStockpile(Stockpile sks, string path)
         {
             logger.Trace("Entering SaveStockpile {0}\n{1}", System.Threading.Thread.CurrentThread.ManagedThreadId, Environment.StackTrace);
@@ -711,6 +714,7 @@ namespace RTCV.UI
                 ImportStockpile(ofd.FileName);
             }
         }
+
         private void btnStockpileUP_Click(object sender, EventArgs e)
         {
             if (dgvStockpile.SelectedRows.Count == 0)

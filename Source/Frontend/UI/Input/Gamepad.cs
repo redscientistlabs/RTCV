@@ -146,10 +146,12 @@ namespace RTCV.UI.Input
         {
             return names[index];
         }
+
         public bool Pressed(int index)
         {
             return actions[index]();
         }
+
         public int NumButtons { get; private set; }
 
         private readonly List<string> names = new List<string>();

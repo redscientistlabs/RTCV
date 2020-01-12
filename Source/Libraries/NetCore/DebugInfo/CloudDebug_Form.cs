@@ -308,6 +308,7 @@ namespace RTCV.NetCore
     public class SilentException : Exception
     {
     }
+
     public class CustomException : Exception
     {
         private readonly string _additionalInfo = "";
@@ -316,9 +317,11 @@ namespace RTCV.NetCore
         {
             this._additionalInfo = additionalInfo;
         }
+
         public CustomException(string message, Exception innerException) : base(message, innerException)
         {
         }
+
         public CustomException(string message, string additionalInfo, Exception innerException) : base(message, innerException)
         {
             this._additionalInfo = additionalInfo;

@@ -18,6 +18,7 @@ namespace RTCV.Common.Objects
             this.Severity = severity;
             this.Exception = e;
         }
+
         public OperationResult(string message, NLog.LogLevel severity, NLog.Logger logger, Exception e = null)
         {
             this.Message = message;
@@ -93,12 +94,15 @@ namespace RTCV.Common.Objects
             return sb.ToString();
         }
     }
+
     public class OperationResults<T> : OperationResults
     {
         public T Result;
+
         public OperationResults() : base()
         {
         }
+
         public OperationResults(T result)
         {
             Result = result;

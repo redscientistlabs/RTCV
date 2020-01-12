@@ -131,6 +131,7 @@ namespace RTCV.CorruptCore.Tools
         }
 
         private volatile object updateValuesSyncObject = new object();
+
         public async void UpdateValues()
         {
             await Task.Run(() => SyncObjectSingleton.FormExecute(() =>
@@ -1191,6 +1192,7 @@ namespace RTCV.CorruptCore.Tools
         }
 
         private bool _lastSearchWasText = false;
+
         private void SearchTypeChanged(bool isText)
         {
             _lastSearchWasText = isText;
@@ -1266,6 +1268,7 @@ namespace RTCV.CorruptCore.Tools
                 MemoryDomainsMenuItem.ShowDropDown();
             }
         }
+
         private void MemoryDomainsMenuItem_DropDown(object sender, EventArgs e)
         {
             MemoryDomainsMenuItem.DropDownItems.Clear();
@@ -1339,6 +1342,7 @@ namespace RTCV.CorruptCore.Tools
 
             MemoryViewerBox.Refresh();
         }
+
         private void UnfreezeAllMenuItem_Click(object sender, EventArgs e)
         {
             StepActions.ClearStepBlastUnits();
@@ -1931,6 +1935,7 @@ namespace RTCV.CorruptCore.Tools
         }
 
         private bool _programmaticallyChangingValue = false;
+
         private void HexScrollBar_ValueChanged(object sender, EventArgs e)
         {
             if (!_programmaticallyChangingValue)
@@ -1972,6 +1977,7 @@ namespace RTCV.CorruptCore.Tools
             BlastUnit bu = new BlastUnit(StoreType.ONCE, StoreTime.IMMEDIATE, _domain.Name, address, _domain.Name, address, DataSize, _domain.BigEndian, 0, 0); ;
             bu.Apply(false);
         }
+
         private void FreezeSecondaries()
         {
             foreach (var x in _secondaryHighlightedAddresses)

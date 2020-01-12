@@ -28,6 +28,7 @@ namespace RTCV.NetCore
                 a.Invoke();
             }
         }
+
         public static void FormExecute<T>(Action<T> a, T b)
         {
             if (SyncObject.InvokeRequired)
@@ -86,6 +87,7 @@ namespace RTCV.NetCore
             }
         }
     }
+
     public static class ActionDistributor
     {
         private static Dictionary<string, LinkedList<Action>> ActionDico = new Dictionary<string, LinkedList<Action>>();

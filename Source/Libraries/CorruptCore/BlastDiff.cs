@@ -83,6 +83,7 @@ namespace RTCV.CorruptCore
 
             return null;
         }
+
         private static byte[] getBytefromIMemoryDomainArray(IMemoryDomain[] bank, long address, int precision)
         {
             if (bank == null | bank.Length == 0)

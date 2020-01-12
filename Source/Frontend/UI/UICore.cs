@@ -178,6 +178,7 @@ namespace RTCV.UI
                 RTCV.NetCore.AllSpec.UISpec.Update(RTC_INFOCUS, currentState, true, false);
             }
         }
+
         private static bool isAnyRTCFormFocused()
         {
             bool ExternalForm = Form.ActiveForm == null;

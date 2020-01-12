@@ -176,6 +176,7 @@ This message only appears once.";
         }
 
         private FormWindowState? LastWindowState = null;
+
         private void UI_CoreForm_Resize(object sender, EventArgs e)
         {
             // When window state changes
@@ -341,6 +342,7 @@ This message only appears once.";
 
         private int settingsRightClickTimer = 0;
         private System.Windows.Forms.Timer testErrorTimer = null;
+
         public void btnSettings_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -398,6 +400,7 @@ This message only appears once.";
         {
             cbUseGameProtection.Checked = !cbUseGameProtection.Checked;
         }
+
         private void cbUseGameProtection_CheckedChanged(object sender, EventArgs e)
         {
             if (cbUseGameProtection.Checked)
@@ -558,6 +561,7 @@ This message only appears once.";
                 }
             }
         }
+
         private void BlastRawStash()
         {
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.MANUALBLAST, true);

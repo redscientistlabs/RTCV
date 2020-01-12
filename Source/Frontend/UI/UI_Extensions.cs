@@ -22,6 +22,7 @@ namespace RTCV.UI
     public static class UI_Extensions
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         public static DialogResult GetInputBox(string title, string promptText, ref string value)
         {
             Form form = new Form();
@@ -80,6 +81,7 @@ namespace RTCV.UI
         }
 
         private const int SRCCOPY = 0xCC0020;
+
         [DllImport("gdi32.dll")]
         private static extern int BitBlt(IntPtr hdc, int x, int y, int cx, int cy, IntPtr hdcSrc, int x1, int y1, int rop);
 
@@ -652,6 +654,7 @@ namespace RTCV.UI
             return val;
         }
     }
+
     /// <summary>
     /// Reference Article https://msdn.microsoft.com/en-us/library/aa730881(v=vs.80).aspx
     /// Custom column type dedicated to the DataGridViewNumericUpDownCell cell type.
@@ -2177,6 +2180,7 @@ namespace RTCV.UI
     public class NumericUpDownHexFix : NumericUpDown
     {
         private bool currentValueChanged = false;
+
         public NumericUpDownHexFix()
         {
             base.Minimum = 0;
@@ -2195,6 +2199,7 @@ namespace RTCV.UI
         {
             currentValueChanged = true;
         }
+
         protected override void OnMouseWheel(MouseEventArgs e)
         {
             HandledMouseEventArgs hme = e as HandledMouseEventArgs;
@@ -2341,6 +2346,7 @@ namespace RTCV.UI
                 }
             }
         }
+
         protected override void OnMouseDown(MouseEventArgs e)
         {
             var rowIndex = base.HitTest(e.X, e.Y).RowIndex;
@@ -2370,6 +2376,7 @@ namespace RTCV.UI
                 }
             }
         }
+
         protected override void OnMouseUp(MouseEventArgs e)
         {
             // Perform the delayed mouse down before the mouse up
@@ -2381,6 +2388,7 @@ namespace RTCV.UI
 
             base.OnMouseUp(e);
         }
+
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
@@ -2465,6 +2473,7 @@ namespace RTCV.UI
                 }
             }
         }
+
         private new void DragOver(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Move;

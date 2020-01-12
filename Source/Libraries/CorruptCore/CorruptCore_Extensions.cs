@@ -28,6 +28,7 @@ namespace RTCV.CorruptCore
                 Directory.CreateDirectory(path);
             }
         }
+
         public static void DirectoryRequired(string[] paths)
         {
             foreach (string path in paths)
@@ -1091,6 +1092,7 @@ namespace RTCV.CorruptCore
                 jsonWriter.Flush();
             }
         }
+
         public static T Deserialize<T>(Stream s, SafeJsonTypeSerialization.JsonKnownTypesBinder binder = null)
         {
             using (StreamReader reader = new StreamReader(s))
@@ -1109,6 +1111,7 @@ namespace RTCV.CorruptCore
         {
             return JsonConvert.SerializeObject(value);
         }
+
         public static T Deserialize<T>(string str)
         {
             return JsonConvert.DeserializeObject<T>(str);
@@ -1184,6 +1187,7 @@ namespace RTCV.CorruptCore
         private static bool hasConsole;
         private static bool attachedConsole;
         private static bool shouldRedirectStdout;
+
         public static void CreateConsole()
         {
             //(see desmume for the basis of some of this logic)

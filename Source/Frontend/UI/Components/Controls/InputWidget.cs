@@ -84,6 +84,7 @@ namespace RTCV.UI.Components.Controls
         }
 
         private Color oldColor = Color.White;
+
         protected override void OnEnter(EventArgs e)
         {
             _timer.Start();

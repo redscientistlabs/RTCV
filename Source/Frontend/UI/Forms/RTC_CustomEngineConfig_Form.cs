@@ -118,6 +118,7 @@ namespace RTCV.UI
             Random rnd = new Random();
             lbFlavorText.Text = text[rnd.Next(0, text.Length)];
         }
+
         private void RTC_CustomEngineConfig_Form_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason != CloseReason.FormOwnerClosing)
@@ -334,6 +335,7 @@ namespace RTCV.UI
 
             RTC_CustomEngine.ValueListHash = (string)cbValueList.SelectedValue;
         }
+
         private void cbLimiterList_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (DontUpdateSpec)

@@ -21,6 +21,7 @@ namespace RTCV.UI
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private static readonly LinkedList<StashKey> AllBackupStates = new LinkedList<StashKey>();
         public static bool HasBackedUpStates => AllBackupStates?.Count > 0;
+
         public static void Start(bool reset = true)
         {
             if (reset)

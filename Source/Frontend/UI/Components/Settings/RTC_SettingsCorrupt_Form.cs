@@ -100,6 +100,7 @@ namespace RTCV.UI
             cbClearStepUnitsOnRewind.Checked = enabled;
             DontUpdateSpec = false;
         }
+
         public void SetLockBoxes(bool enabled)
         {
             DontUpdateSpec = true;
@@ -108,6 +109,7 @@ namespace RTCV.UI
         }
 
         public bool DontUpdateSpec;
+
         private void CbClearStepUnitsOnRewind_CheckedChanged(object sender, EventArgs e)
         {
             if (DontUpdateSpec)

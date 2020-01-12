@@ -17,6 +17,7 @@ namespace RTCV.NetCore
         private TCPLinkWatch linkWatch = null;
 
         private volatile NetworkStatus _status = NetworkStatus.DISCONNECTED;
+
         internal NetworkStatus status
         {
             get => _status;

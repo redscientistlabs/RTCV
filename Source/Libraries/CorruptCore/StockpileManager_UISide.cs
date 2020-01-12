@@ -400,6 +400,7 @@ namespace RTCV.CorruptCore
             CurrentStockpile = new Stockpile();
             StockpileChanged();
         }
+
         public static string GetCurrentStockpilePath()
         {
             return CurrentStockpile?.Filename ?? "";
