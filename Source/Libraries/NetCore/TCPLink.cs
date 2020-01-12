@@ -439,7 +439,6 @@ namespace RTCV.NetCore
             lock (PeerMessageQueueLock)
                 PeerMessageQueue.Clear();
 
-
             KillConnections(clientRef);
 
             spec.Connector.watch.Kill(); //Kills the ReturnWatch if waiting for a value
@@ -659,7 +658,6 @@ namespace RTCV.NetCore
                     }
 
 
-
                     break;
 
                 case "{BYE}": // End of disconnect
@@ -671,7 +669,6 @@ namespace RTCV.NetCore
                                 // or is jammed waiting for a return, these will still go through
                     BoopMonitoringCounter = DefaultBoopMonitoringCounter;
                     break;
-
 
                 //THREADSAFE EVENT FIRING
                 case "{EVENT_CLIENTCONNECTING}":

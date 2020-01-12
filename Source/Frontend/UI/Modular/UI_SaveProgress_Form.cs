@@ -27,7 +27,6 @@ namespace RTCV.UI
         }
 
 
-
         private void StockpileProgressBarHandler(object source, ProgressBarEventArgs e)
         {
             SyncObjectSingleton.FormExecute(() =>

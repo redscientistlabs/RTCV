@@ -449,7 +449,6 @@ namespace RTCV.UI
 
             ghSettingsMenu.Show(this, locate);
 
-
         }
 
         private void btnRenderOutput_MouseDown(object sender, MouseEventArgs e)
@@ -508,7 +507,6 @@ namespace RTCV.UI
             {
                 Render.RenderAtLoad = Render.RenderAtLoad ^= true;
             }))).Checked = Render.RenderAtLoad;
-
 
 
 

@@ -63,7 +63,6 @@ namespace RTCV.UI
 
             S.GET<UI_CoreForm>().btnEngineConfig_Click(null, null);
 
-
         }
 
         private void RTC_SimpleMode_Form_FormClosing(object sender, FormClosingEventArgs e)

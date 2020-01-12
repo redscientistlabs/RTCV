@@ -25,6 +25,5 @@ namespace RTCV.UI
             popoutAllowed = false;
         }
 
-
     }
 }

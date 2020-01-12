@@ -35,7 +35,6 @@ namespace RTCV.UI
         }
 
 
-
         //Guid? errorDelayToken = null;
         //Guid? intensityToken = null;
 

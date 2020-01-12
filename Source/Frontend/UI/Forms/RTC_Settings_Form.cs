@@ -63,7 +63,6 @@ namespace RTCV.UI
 				S.GET<RTC_Core_Form>().ShowPanelForm(S.GET<RTC_Core_Form>().previousForm, false);
              */
 
-
             MessageBox.Show("is this even needed anymore?");
         }
 

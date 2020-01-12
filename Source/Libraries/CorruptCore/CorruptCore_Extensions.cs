@@ -800,7 +800,6 @@ namespace RTCV.CorruptCore
 
         #endregion
 
-
         [Serializable]
         public class ByteArrayComparer : IEqualityComparer<byte[]>
         {

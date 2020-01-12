@@ -124,7 +124,6 @@ namespace RTCV.CorruptCore
                 byte[] corruptBytes = Corrupt.PeekBytes(i, precision);
 
 
-
                 if (!originalBytes.SequenceEqual(corruptBytes) && i >= skipBytes)
                 {
                     if (Original[0].BigEndian)

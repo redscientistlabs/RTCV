@@ -1473,7 +1473,6 @@ namespace RTCV.CorruptCore
                 Filename = "MultipleFiles";
                 ShortFilename = "MultipleFiles";
 
-
                 if (_useAutomaticFileBackups)
                     SetBackup();
 

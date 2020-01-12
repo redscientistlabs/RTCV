@@ -1080,7 +1080,6 @@ namespace RTCV.CorruptCore
               .ToList();
               */
 
-
             List<BlastUnit> bul = new List<BlastUnit>(Layer.ToArray().Reverse());
             List<ValueTuple<string, long>> usedAddresses = new List<ValueTuple<string, long>>();
 

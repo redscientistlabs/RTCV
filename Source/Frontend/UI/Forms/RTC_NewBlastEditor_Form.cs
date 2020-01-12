@@ -906,7 +906,6 @@ namespace RTCV.UI
 
 
 
-
             DataGridViewNumericUpDownColumn precision = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.Precision.ToString(), BuProperty.Precision.ToString(), "Precision", new DataGridViewNumericUpDownColumn());
             precision.Minimum = 1;
             precision.Maximum = Int32.MaxValue;
