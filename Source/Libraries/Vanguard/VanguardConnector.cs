@@ -1,7 +1,7 @@
-﻿using RTCV.CorruptCore;
-using RTCV.NetCore;
-using System;
+﻿using System;
 using System.Linq;
+using RTCV.CorruptCore;
+using RTCV.NetCore;
 using NetworkSide = RTCV.NetCore.NetworkSide;
 
 namespace RTCV.Vanguard
@@ -30,8 +30,10 @@ namespace RTCV.Vanguard
                 return;
             }
 
-            var netCoreSpec = new NetCoreSpec();
-            netCoreSpec.Side = NetworkSide.CLIENT;
+            var netCoreSpec = new NetCoreSpec
+            {
+                Side = NetworkSide.CLIENT
+            };
             netCoreSpec.MessageReceived += OnMessageReceivedProxy;
             netCoreSpec.ClientConnected += NetCoreSpec_ClientConnected;
             netConn = new NetCoreConnector(netCoreSpec);
@@ -74,27 +76,18 @@ namespace RTCV.Vanguard
         //Ship everything to netcore, any needed routing will be handled in there
         public void SendMessage(string message) => netConn.SendMessage(message);
         public void SendMessage(string message, object value) => netConn.SendMessage(message, value);
-        public object SendSyncedMessage(string message) { return netConn.SendSyncedMessage(message); }
-        public object SendSyncedMessage(string message, object value) { return netConn.SendSyncedMessage(message, value); }
+        public object SendSyncedMessage(string message) => netConn.SendSyncedMessage(message);
+        public object SendSyncedMessage(string message, object value) => netConn.SendSyncedMessage(message, value);
 
         public void Kill()
         {
 
         }
 
-        public static void PushVanguardSpecRef(FullSpec spec)
-        {
-            RTCV.NetCore.AllSpec.VanguardSpec = spec;
-        }
+        public static void PushVanguardSpecRef(FullSpec spec) => RTCV.NetCore.AllSpec.VanguardSpec = spec;
 
-        public static bool IsUIForm()
-        {
-            return (bool?)RTCV.NetCore.AllSpec.UISpec?[NetcoreCommands.RTC_INFOCUS] ?? false;
-        }
+        public static bool IsUIForm() => (bool?)RTCV.NetCore.AllSpec.UISpec?[NetcoreCommands.RTC_INFOCUS] ?? false;
 
-        public void KillNetcore()
-        {
-            netConn.Kill();
-        }
+        public void KillNetcore() => netConn.Kill();
     }
 }
