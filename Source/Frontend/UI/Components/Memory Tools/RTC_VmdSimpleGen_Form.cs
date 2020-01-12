@@ -1,15 +1,12 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
-using RTCV.CorruptCore.Tools;
-using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
 using RTCV.UI.Components.Controls;
+using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
@@ -18,7 +15,7 @@ namespace RTCV.UI
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        long currentDomainSize = 0;
+        private long currentDomainSize = 0;
 
         public RTC_VmdSimpleGen_Form()
         {
@@ -32,10 +29,14 @@ namespace RTCV.UI
             cbSelectedMemoryDomain.Items.Clear();
             var domains = MemoryDomains.MemoryInterfaces?.Keys.Where(it => !it.Contains("[V]")).ToArray();
             if (domains?.Length > 0)
+            {
                 cbSelectedMemoryDomain.Items.AddRange(domains);
+            }
 
             if (cbSelectedMemoryDomain.Items.Count > 0)
+            {
                 cbSelectedMemoryDomain.SelectedIndex = 0;
+            }
         }
 
         private void cbSelectedMemoryDomain_SelectedIndexChanged(object sender, EventArgs e)
@@ -64,12 +65,19 @@ namespace RTCV.UI
             long fullRange = mi.Size;
 
             if (mtbStartAddress.Value > fullRange)
+            {
                 mtbStartAddress.Value = fullRange;
+            }
+
             if (mtbStartAddress.Maximum != fullRange)
+            {
                 mtbStartAddress.Maximum = fullRange;
+            }
 
             if (mtbRange.Maximum != fullRange)
+            {
                 mtbRange.Maximum = fullRange;
+            }
 
             mtbStartAddress.Enabled = true;
             mtbRange.Enabled = true;
@@ -81,9 +89,13 @@ namespace RTCV.UI
             try
             {
                 if (input.IndexOf("0X", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
                     return long.Parse(input.Substring(2), NumberStyles.HexNumber);
+                }
                 else
+                {
                     return long.Parse(input, NumberStyles.HexNumber);
+                }
             }
             catch (FormatException e)
             {
@@ -92,12 +104,17 @@ namespace RTCV.UI
             }
         }
 
-        private void btnGenerateVMD_Click(object sender, EventArgs e) => GenerateVMD();
+        private void btnGenerateVMD_Click(object sender, EventArgs e)
+        {
+            GenerateVMD();
+        }
 
         public bool GenerateVMD(string textBoxContent)
         {
             if (textBoxContent == null)
+            {
                 throw new Exception("Can't generate a vmd without text");
+            }
 
             tbRangeExpression.Text = textBoxContent;
 
@@ -119,14 +136,19 @@ namespace RTCV.UI
 
             MemoryInterface mi = MemoryDomains.MemoryInterfaces[cbSelectedMemoryDomain.SelectedItem.ToString()];
             VirtualMemoryDomain VMD = new VirtualMemoryDomain();
-            VmdPrototype proto = new VmdPrototype();
-
-            proto.GenDomain = cbSelectedMemoryDomain.SelectedItem.ToString();
+            VmdPrototype proto = new VmdPrototype
+            {
+                GenDomain = cbSelectedMemoryDomain.SelectedItem.ToString()
+            };
 
             if (string.IsNullOrWhiteSpace(tbVmdName.Text))
+            {
                 proto.VmdName = CorruptCore.RtcCore.GetRandomKey();
+            }
             else
+            {
                 proto.VmdName = tbVmdName.Text;
+            }
 
             proto.BigEndian = mi.BigEndian;
             proto.WordSize = mi.WordSize;
@@ -135,7 +157,9 @@ namespace RTCV.UI
             foreach (string line in tbRangeExpression.Lines)
             {
                 if (string.IsNullOrWhiteSpace(line))
+                {
                     continue;
+                }
 
                 string trimmedLine = line.Trim();
 
@@ -155,15 +179,23 @@ namespace RTCV.UI
                     long end = SafeStringToLong(lineParts[1]);
 
                     if (end < start)
+                    {
                         continue;
+                    }
 
                     if (end >= currentDomainSize)
+                    {
                         end = Convert.ToInt64(currentDomainSize - 1);
+                    }
 
                     if (remove)
+                    {
                         proto.RemoveRanges.Add(new long[] { start, end });
+                    }
                     else
+                    {
                         proto.AddRanges.Add(new long[] { start, end });
+                    }
                 }
                 else
                 {
@@ -172,9 +204,13 @@ namespace RTCV.UI
                     if (address > 0 && address < currentDomainSize)
                     {
                         if (remove)
+                        {
                             proto.RemoveSingles.Add(address);
+                        }
                         else
+                        {
                             proto.AddSingles.Add(address);
+                        }
                     }
 
                 }
@@ -191,7 +227,10 @@ namespace RTCV.UI
             //Ignore the fact that addranges and subtractranges can overlap. Only account for add
             long size = 0;
             foreach (var v in proto.AddSingles)
+            {
                 size++;
+            }
+
             foreach (var v in proto.AddRanges)
             {
                 long x = v[1] - v[0];
@@ -206,7 +245,10 @@ namespace RTCV.UI
             }
 
             foreach (var v in proto.RemoveSingles)
+            {
                 size--;
+            }
+
             foreach (var v in proto.RemoveRanges)
             {
                 long x = v[1] - v[0];
@@ -219,7 +261,9 @@ namespace RTCV.UI
             {
                 DialogResult result = MessageBox.Show("The VMD you're trying to generate is larger than 32MB\n The VMD size is " + ((size / 1024 / 1024) + 1) + " MB (" + size / 1024f / 1024f / 1024f + " GB).\n Are you sure you want to continue?", "VMD Detected", MessageBoxButtons.YesNo);
                 if (result == DialogResult.No)
+                {
                     return false;
+                }
             }
 
             VMD = proto.Generate();
@@ -250,12 +294,13 @@ namespace RTCV.UI
 
             //Selects back the VMD Pool menu
             foreach (var item in UICore.mtForm.cbSelectBox.Items)
+            {
                 if (((dynamic)item).value is RTC_VmdPool_Form)
                 {
                     UICore.mtForm.cbSelectBox.SelectedItem = item;
                     break;
                 }
-
+            }
 
             return true;
         }
@@ -292,8 +337,16 @@ pointer spacer parameter");
             ComputeRangeExpression();
         }
 
-        private void MtbRange_CheckChanged(object sender, EventArgs e) => ComputeRangeExpression();
-        private void MtbRange_ValueChanged(object sender, MultiTrackBar.ValueUpdateEventArgs e) => ComputeRangeExpression();
+        private void MtbRange_CheckChanged(object sender, EventArgs e)
+        {
+            ComputeRangeExpression();
+        }
+
+        private void MtbRange_ValueChanged(object sender, MultiTrackBar.ValueUpdateEventArgs e)
+        {
+            ComputeRangeExpression();
+        }
+
         private void ComputeRangeExpression()
         {
             long maxAddress = mtbStartAddress.Maximum;

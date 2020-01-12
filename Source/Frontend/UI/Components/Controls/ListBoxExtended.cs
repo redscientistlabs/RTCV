@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
+﻿using System.Drawing;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RTCV.UI.Components.Controls
@@ -63,11 +58,15 @@ namespace RTCV.UI.Components.Controls
             if ((e.Button & MouseButtons.Left) != 0) //Attempt to prevent being triggered from slight accidental mouse movement when deselecting by having a buffer
             {
                 if (SelectionMode == SelectionMode.None)
+                {
                     return;
+                }
 
                 int toSelect = this.IndexFromPoint(e.X, e.Y);
                 if (toSelect != -1 && toSelect != lastClicked)
+                {
                     this.SetSelected(toSelect, true);
+                }
             }
         }
     }

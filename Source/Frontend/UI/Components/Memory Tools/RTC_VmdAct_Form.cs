@@ -8,9 +8,8 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
-using RTCV.UI;
-using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
+using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
@@ -32,10 +31,7 @@ namespace RTCV.UI
 
         public bool ActiveTableReady
         {
-            get
-            {
-                return _activeTableReady;
-            }
+            get => _activeTableReady;
             set
             {
                 if (value)
@@ -57,9 +53,13 @@ namespace RTCV.UI
                 }
 
                 if (ActiveTableGenerated != null && ActiveTableGenerated.Length > 0)
+                {
                     _activeTableReady = value;
+                }
                 else
+                {
                     _activeTableReady = false;
+                }
             }
         }
 
@@ -73,7 +73,7 @@ namespace RTCV.UI
 
         public string currentFilename
         {
-            get { return _currentFilename; }
+            get => _currentFilename;
             set
             {
                 if (value == null)
@@ -94,16 +94,22 @@ namespace RTCV.UI
         {
             if (!IsQuickSave)
             {
-                SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-                saveFileDialog1.DefaultExt = "act";
-                saveFileDialog1.Title = "Save ActiveTable File";
-                saveFileDialog1.Filter = "ACT files|*.act";
-                saveFileDialog1.RestoreDirectory = true;
+                SaveFileDialog saveFileDialog1 = new SaveFileDialog
+                {
+                    DefaultExt = "act",
+                    Title = "Save ActiveTable File",
+                    Filter = "ACT files|*.act",
+                    RestoreDirectory = true
+                };
 
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
                     currentFilename = saveFileDialog1.FileName;
+                }
                 else
+                {
                     return;
+                }
             }
 
             ActiveTableObject act = new ActiveTableObject(ActiveTableGenerated);
@@ -154,7 +160,9 @@ namespace RTCV.UI
                             cappedActiveTable.Add(queryAdress);
                         }
                         else
+                        {
                             DuplicateFound = true;
+                        }
                     }
                 }
             }
@@ -216,7 +224,9 @@ namespace RTCV.UI
                 for (int j = 0; j < ActiveTableActivity.Length; j++)
                 {
                     if (lastDump[j] != currentDump[j])
+                    {
                         ActiveTableActivity[j]++;
+                    }
                 }
             }
 
@@ -230,7 +240,9 @@ namespace RTCV.UI
                 return ActiveTableGenerated[CorruptCore.RtcCore.RND.Next(ActiveTableGenerated.Length - 1)];
             }
             else
+            {
                 return 0;
+            }
         }
 
         private void btnActiveTableAddDump_Click(object sender, EventArgs e)
@@ -241,7 +253,9 @@ namespace RTCV.UI
                 return;
             }
             if (ActiveTableDumps == null)
+            {
                 return;
+            }
 
             string key = CorruptCore.RtcCore.GetRandomKey();
 
@@ -284,7 +298,9 @@ namespace RTCV.UI
             {
                 DialogResult result = MessageBox.Show("The domain you have selected is larger than 32MB\n The domain size is " + (memoryDomainSize / (1024 * 1024)) + "MB.\n Are you sure you want to continue?", "Large Domain Detected", MessageBoxButtons.YesNo);
                 if (result == DialogResult.No)
+                {
                     return;
+                }
             }
 
             lbDomainAddressSize.Text = "Domain size: 0x" + mi.Size.ToString("X");
@@ -297,7 +313,9 @@ namespace RTCV.UI
             ActiveTableDumps = new List<string>();
 
             foreach (string file in Directory.GetFiles(Path.Combine(CorruptCore.RtcCore.workingDir, "MEMORYDUMPS")))
+            {
                 File.Delete(file);
+            }
 
             currentFilename = null;
         }
@@ -307,11 +325,13 @@ namespace RTCV.UI
 
             try
             {
-                OpenFileDialog OpenFileDialog1 = new OpenFileDialog();
-                OpenFileDialog1.DefaultExt = "act";
-                OpenFileDialog1.Title = "Open ActiveTable File";
-                OpenFileDialog1.Filter = "ACT files|*.act";
-                OpenFileDialog1.RestoreDirectory = true;
+                OpenFileDialog OpenFileDialog1 = new OpenFileDialog
+                {
+                    DefaultExt = "act",
+                    Title = "Open ActiveTable File",
+                    Filter = "ACT files|*.act",
+                    RestoreDirectory = true
+                };
                 if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
                 {
                     currentFilename = OpenFileDialog1.FileName;
@@ -339,9 +359,13 @@ namespace RTCV.UI
         private void btnActiveTableQuickSave_Click(object sender, EventArgs e)
         {
             if (currentFilename == null)
+            {
                 SaveActiveTable(false);
+            }
             else
+            {
                 SaveActiveTable(true);
+            }
         }
 
         private void btnActiveTableSubtractFile_Click(object sender, EventArgs e)
@@ -349,17 +373,22 @@ namespace RTCV.UI
 
             string tempFilename;
 
-            OpenFileDialog OpenFileDialog1 = new OpenFileDialog();
-            OpenFileDialog1.DefaultExt = "act";
-            OpenFileDialog1.Title = "Open ActiveTable File";
-            OpenFileDialog1.Filter = "ACT files|*.act";
-            OpenFileDialog1.RestoreDirectory = true;
+            OpenFileDialog OpenFileDialog1 = new OpenFileDialog
+            {
+                DefaultExt = "act",
+                Title = "Open ActiveTable File",
+                Filter = "ACT files|*.act",
+                RestoreDirectory = true
+            };
             if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 tempFilename = OpenFileDialog1.FileName;
             }
             else
+            {
                 return;
+            }
+
             ActiveTableObject act = null;
             using (FileStream FS = File.Open(tempFilename, FileMode.OpenOrCreate))
             {
@@ -373,8 +402,12 @@ namespace RTCV.UI
 
 
             foreach (long item in ActiveTableGenerated)
+            {
                 if (!subtractiveActiveTable.Contains(item))
+                {
                     newActiveTable.Add(item);
+                }
+            }
 
             ActiveTableGenerated = newActiveTable.ToArray();
             lbActiveTableSize.Text = "Active table size (0x" + ActiveTableGenerated.Length.ToString("X") + ")";
@@ -388,17 +421,21 @@ namespace RTCV.UI
 
                 string tempFilename;
 
-                OpenFileDialog OpenFileDialog1 = new OpenFileDialog();
-                OpenFileDialog1.DefaultExt = "act";
-                OpenFileDialog1.Title = "Open ActiveTable File";
-                OpenFileDialog1.Filter = "ACT files|*.act";
-                OpenFileDialog1.RestoreDirectory = true;
+                OpenFileDialog OpenFileDialog1 = new OpenFileDialog
+                {
+                    DefaultExt = "act",
+                    Title = "Open ActiveTable File",
+                    Filter = "ACT files|*.act",
+                    RestoreDirectory = true
+                };
                 if (OpenFileDialog1.ShowDialog() == DialogResult.OK)
                 {
                     tempFilename = OpenFileDialog1.FileName;
                 }
                 else
+                {
                     return;
+                }
 
                 ActiveTableObject act = null;
 
@@ -414,8 +451,12 @@ namespace RTCV.UI
 
 
                 foreach (long item in ActiveTableGenerated)
+                {
                     if (additiveActiveTable.Contains(item))
+                    {
                         newActiveTable.Add(item);
+                    }
+                }
 
                 ActiveTableGenerated = newActiveTable.ToArray();
                 lbActiveTableSize.Text = "Active table size (0x" + ActiveTableGenerated.Length.ToString("X") + ")";
@@ -433,24 +474,32 @@ namespace RTCV.UI
             try
             {
                 if (!ComputeActiveTableActivity())
+                {
                     return false; //exit generation if activity computation failed
+                }
 
                 List<long> newActiveTable = new List<long>();
-                double computedThreshold = (double)ActiveTableDumps.Count * (ActivityThreshold / 100d) + 1d;
+                double computedThreshold = ActiveTableDumps.Count * (ActivityThreshold / 100d) + 1d;
                 bool ExcludeEverchanging = cbActiveTableExclude100percent.Checked;
 
                 for (int i = 0; i < ActiveTableActivity.Length; i++)
                 {
-                    if ((double)ActiveTableActivity[i] >= computedThreshold && (!ExcludeEverchanging || ActiveTableActivity[i] != ((long)ActiveTableDumps.Count - 1)))
+                    if (ActiveTableActivity[i] >= computedThreshold && (!ExcludeEverchanging || ActiveTableActivity[i] != ((long)ActiveTableDumps.Count - 1)))
+                    {
                         newActiveTable.Add(i);
+                    }
                 }
 
                 long[] tempActiveTable = newActiveTable.ToArray();
 
                 if (cbActiveTableCapSize.Checked && nmActiveTableCapSize.Value < tempActiveTable.Length)
+                {
                     ActiveTableGenerated = CapActiveTable(tempActiveTable);
+                }
                 else
+                {
                     ActiveTableGenerated = tempActiveTable;
+                }
 
                 lbActiveTableSize.Text = "Active table size: " + ActiveTableGenerated.Length.ToString();
 
@@ -466,7 +515,9 @@ namespace RTCV.UI
                 var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
 
                 if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                {
                     throw new RTCV.NetCore.AbortEverythingException();
+                }
 
                 return false;
             }
@@ -478,7 +529,9 @@ namespace RTCV.UI
         private void generateVMD()
         {
             if (ActiveTableGenerated == null || ActiveTableGenerated.Length == 0)
+            {
                 return;
+            }
 
             try
             {
@@ -514,7 +567,9 @@ namespace RTCV.UI
                 else
                 {
                     foreach (int address in ActiveTableGenerated)
+                    {
                         proto.AddSingles.Add(address);
+                    }
                 }
 
                 VMD = proto.Generate();
@@ -538,7 +593,9 @@ namespace RTCV.UI
                 var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
 
                 if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                {
                     throw new RTCV.NetCore.AbortEverythingException();
+                }
 
                 return;
             }
@@ -561,10 +618,14 @@ namespace RTCV.UI
             if (!ActLoadedFromFile)
             {
                 if (generateActiveTable())
+                {
                     generateVMD();
+                }
             }
             else
+            {
                 generateVMD();
+            }
 
             btnActiveTableGenerate.Enabled = true;
         }
@@ -576,13 +637,18 @@ namespace RTCV.UI
             cbSelectedMemoryDomain.Items.Clear();
             var domains = MemoryDomains.MemoryInterfaces?.Keys.Where(it => !it.Contains("[V]")).ToArray();
             if (domains?.Length > 0)
+            {
                 cbSelectedMemoryDomain.Items.AddRange(domains);
-
+            }
 
             if (temp != null && cbSelectedMemoryDomain.Items.Contains(temp))
+            {
                 cbSelectedMemoryDomain.SelectedItem = temp;
+            }
             else if (cbSelectedMemoryDomain.Items.Count > 0)
+            {
                 cbSelectedMemoryDomain.SelectedIndex = 0;
+            }
         }
 
         private void btnLoadDomains_Click(object sender, EventArgs e)
@@ -596,7 +662,9 @@ namespace RTCV.UI
         private void nmActiveTableActivityThreshold_ValueChanged(object sender, EventArgs e)
         {
             if (Convert.ToInt32(track_ActiveTableActivityThreshold.Value) == Convert.ToInt32(nmActiveTableActivityThreshold.Value * 100))
+            {
                 return;
+            }
 
             track_ActiveTableActivityThreshold.Value = Convert.ToInt32(nmActiveTableActivityThreshold.Value * 100);
             ActivityThreshold = Convert.ToDouble(nmActiveTableActivityThreshold.Value);
@@ -605,7 +673,9 @@ namespace RTCV.UI
         private void track_ActiveTableActivityThreshold_Scroll(object sender, EventArgs e)
         {
             if (Convert.ToInt32(track_ActiveTableActivityThreshold.Value) == Convert.ToInt32(nmActiveTableActivityThreshold.Value * 100))
+            {
                 return;
+            }
 
             nmActiveTableActivityThreshold.Value = Convert.ToDecimal((double)track_ActiveTableActivityThreshold.Value / 100);
             ActivityThreshold = Convert.ToDouble(nmActiveTableActivityThreshold.Value);
@@ -621,8 +691,10 @@ namespace RTCV.UI
 
             if (cbAutoAddDump.Checked)
             {
-                ActiveTableAutodump = new Timer();
-                ActiveTableAutodump.Interval = Convert.ToInt32(nmAutoAddSec.Value) * 1000;
+                ActiveTableAutodump = new Timer
+                {
+                    Interval = Convert.ToInt32(nmAutoAddSec.Value) * 1000
+                };
                 ActiveTableAutodump.Tick += new EventHandler(btnActiveTableAddDump_Click);
                 ActiveTableAutodump.Start();
             }
@@ -631,7 +703,9 @@ namespace RTCV.UI
         private void nmAutoAddSec_ValueChanged(object sender, EventArgs e)
         {
             if (ActiveTableAutodump != null)
+            {
                 ActiveTableAutodump.Interval = Convert.ToInt32(nmAutoAddSec.Value) * 1000;
+            }
         }
 
         private void cbUseCorePrecision_CheckedChanged(object sender, EventArgs e)

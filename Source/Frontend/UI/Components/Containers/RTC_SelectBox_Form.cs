@@ -1,15 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Windows.Forms;
-using System.Xml.Serialization;
-using System.Runtime.InteropServices;
-using RTCV.CorruptCore;
 using static RTCV.UI.UI_Extensions;
-using System.Collections;
 
 namespace RTCV.UI
 {
@@ -18,7 +9,7 @@ namespace RTCV.UI
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        ComponentForm[] childForms;
+        private ComponentForm[] childForms;
 
         public RTC_SelectBox_Form(ComponentForm[] _childForms)
         {
@@ -32,8 +23,9 @@ namespace RTCV.UI
             cbSelectBox.ValueMember = "value";
 
             foreach (var item in childForms)
+            {
                 cbSelectBox.Items.Add(new { text = item.Text, value = item });
-
+            }
         }
 
         private void cbSelectBox_SelectedIndexChanged(object sender, EventArgs e)

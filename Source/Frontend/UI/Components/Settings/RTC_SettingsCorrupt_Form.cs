@@ -1,16 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Windows.Forms;
-using System.Xml.Serialization;
-using System.Runtime.InteropServices;
-using System.Diagnostics;
 using RTCV.CorruptCore;
-using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
+using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
@@ -121,7 +113,9 @@ namespace RTCV.UI
         private void CbClearStepUnitsOnRewind_CheckedChanged(object sender, EventArgs e)
         {
             if (DontUpdateSpec)
+            {
                 return;
+            }
 
             S.GET<RTC_CorruptionEngine_Form>().SetRewindBoxes(cbClearStepUnitsOnRewind.Checked);
             S.GET<RTC_CustomEngineConfig_Form>().SetRewindBoxes(cbClearStepUnitsOnRewind.Checked);
@@ -133,7 +127,9 @@ namespace RTCV.UI
         private void CbLockUnits_CheckedChanged(object sender, EventArgs e)
         {
             if (DontUpdateSpec)
+            {
                 return;
+            }
 
             S.GET<RTC_CorruptionEngine_Form>().SetLockBoxes(cbLockUnits.Checked);
 

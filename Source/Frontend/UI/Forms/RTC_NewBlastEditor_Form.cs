@@ -2,17 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json.Serialization;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
-using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
 
 /**
@@ -59,25 +55,26 @@ namespace RTCV.UI
 {
     public partial class RTC_NewBlastEditor_Form : Form, IAutoColorize
     {
+        private static Dictionary<string, MemoryInterface> _domainToMiDico;
 
-        static Dictionary<string, MemoryInterface> _domainToMiDico;
-        static Dictionary<string, MemoryInterface> DomainToMiDico
+        private static Dictionary<string, MemoryInterface> DomainToMiDico
         {
             get => _domainToMiDico ?? (_domainToMiDico = new Dictionary<string, MemoryInterface>());
             set => _domainToMiDico = value;
         }
-        string[] domains = null;
-        public List<String> VisibleColumns;
-        string CurrentBlastLayerFile = "";
-        bool batchOperation = false;
-        ContextMenuStrip headerStrip;
-        ContextMenuStrip cms;
-        Dictionary<String, Control> property2ControlDico;
-        const int buttonFillWeight = 20;
-        const int checkBoxFillWeight = 25;
-        const int comboBoxFillWeight = 40;
-        const int textBoxFillWeight = 30;
-        const int numericUpDownFillWeight = 35;
+
+        private string[] domains = null;
+        public List<string> VisibleColumns;
+        private string CurrentBlastLayerFile = "";
+        private bool batchOperation = false;
+        private ContextMenuStrip headerStrip;
+        private ContextMenuStrip cms;
+        private Dictionary<string, Control> property2ControlDico;
+        private const int buttonFillWeight = 20;
+        private const int checkBoxFillWeight = 25;
+        private const int comboBoxFillWeight = 40;
+        private const int textBoxFillWeight = 30;
+        private const int numericUpDownFillWeight = 35;
 
         private enum BuProperty
         {
@@ -157,11 +154,11 @@ namespace RTCV.UI
 
 
                 //On today's episode of "why is the designer overriding these values every time I build"
-                upDownExecuteFrame.Maximum = Int32.MaxValue;
+                upDownExecuteFrame.Maximum = int.MaxValue;
                 upDownPrecision.Maximum = 16348; //Textbox doesn't like more than ~20k
-                upDownLifetime.Maximum = Int32.MaxValue;
-                upDownSourceAddress.Maximum = Int32.MaxValue;
-                upDownAddress.Maximum = Int32.MaxValue;
+                upDownLifetime.Maximum = int.MaxValue;
+                upDownSourceAddress.Maximum = int.MaxValue;
+                upDownAddress.Maximum = int.MaxValue;
 
                 this.FormClosed += RTC_NewBlastEditorForm_Close;
                 this.FormClosing += RTC_NewBlastEditorForm_Closing;
@@ -174,8 +171,9 @@ namespace RTCV.UI
                 var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
 
                 if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                {
                     throw new RTCV.NetCore.AbortEverythingException();
-
+                }
             }
         }
 
@@ -185,15 +183,21 @@ namespace RTCV.UI
             S.SET(new RTC_NewBlastEditor_Form());
 
             if (sk == null)
+            {
                 sk = new StashKey();
+            }
 
             //If the blastlayer is big, prompt them before opening it. Let's go with 5k for now.
 
             //TODO
             if (sk.BlastLayer.Layer.Count > 5000 && (DialogResult.Yes == MessageBox.Show($"You're trying to open a blastlayer of size " + sk.BlastLayer.Layer.Count + ". This could take a while. Are you sure you want to continue?", "Opening a large BlastLayer", MessageBoxButtons.YesNo)))
+            {
                 S.GET<RTC_NewBlastEditor_Form>().LoadStashkey(sk);
+            }
             else if (sk.BlastLayer.Layer.Count <= 5000)
+            {
                 S.GET<RTC_NewBlastEditor_Form>().LoadStashkey(sk);
+            }
         }
 
 
@@ -254,7 +258,10 @@ namespace RTCV.UI
                 var negative = (e.Delta < 0);
                 var scrollBy = 1;
                 if (negative)
+                {
                     scrollBy *= -1;
+                }
+
                 tb.Text = getShiftedHexString(tb.Text, scrollBy, precision);
             }
         }
@@ -270,7 +277,9 @@ namespace RTCV.UI
         private void SetDisplayOrder()
         {
             if (!Params.IsParamSet("BLASTEDITOR_COLUMN_ORDER"))
+            {
                 return;
+            }
             //Names split with commas
             var s = Params.ReadParam("BLASTEDITOR_COLUMN_ORDER");
             var order = s.Split(',');
@@ -292,7 +301,10 @@ namespace RTCV.UI
             var cols = dgvBlastEditor.Columns.Cast<DataGridViewColumn>().OrderBy(x => x.DisplayIndex);
             StringBuilder sb = new StringBuilder();
             foreach (var c in cols)
+            {
                 sb.Append(c.Name + ",");
+            }
+
             Params.SetParam("BLASTEDITOR_COLUMN_ORDER", sb.ToString());
         }
 
@@ -302,8 +314,9 @@ namespace RTCV.UI
             var ht = dgvBlastEditor.HitTest(e.X, e.Y);
 
             if (ht.Type != DataGridViewHitTestType.Cell)
+            {
                 dgvBlastEditor.EndEdit();
-
+            }
         }
 
         private void dgvBlastEditor_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -392,9 +405,13 @@ namespace RTCV.UI
             List<DataGridViewRow> targetRows;
 
             if (breakSelected)
+            {
                 targetRows = dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().ToList();
+            }
             else
+            {
                 targetRows = dgvBlastEditor.Rows.Cast<DataGridViewRow>().ToList();
+            }
 
             //Important we ToArray() this or else the ienumerable will become invalidated
             var blastUnits = targetRows.Select(x => (BlastUnit)x.DataBoundItem).ToArray();
@@ -407,10 +424,14 @@ namespace RTCV.UI
                 BlastUnit[] brokenUnits = bu.GetBreakdown();
 
                 if (brokenUnits == null || brokenUnits.Length < 2)
+                {
                     continue;
+                }
 
                 foreach (BlastUnit unit in brokenUnits)
+                {
                     bs.Add(unit);
+                }
             }
 
             bs = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
@@ -427,12 +448,19 @@ namespace RTCV.UI
             {
                 BlastUnit bu = dgvBlastEditor.Rows[cell.RowIndex]?.DataBoundItem as BlastUnit;
                 if (bu == null)
+                {
                     return;
+                }
+
                 if (cell.OwningColumn == dgvBlastEditor.Columns[BuProperty.Address.ToString()])
+                {
                     LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.EMU_OPEN_HEXEDITOR_ADDRESS, new object[] { bu.Domain, bu.Address });
+                }
 
                 if (cell.OwningColumn == dgvBlastEditor.Columns[BuProperty.SourceAddress.ToString()])
+                {
                     LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.EMU_OPEN_HEXEDITOR_ADDRESS, new object[] { bu.SourceDomain, bu.SourceAddress });
+                }
             }))).Enabled = true;
         }
 
@@ -456,8 +484,11 @@ namespace RTCV.UI
         {
             var value = cbSourceDomain.SelectedItem;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+            {
                 row.Cells[BuProperty.SourceDomain.ToString()]
                     .Value = value;
+            }
+
             UpdateBottom();
         }
 
@@ -465,7 +496,10 @@ namespace RTCV.UI
         {
             var value = cbStoreType.SelectedItem;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+            {
                 row.Cells[BuProperty.StoreType.ToString()].Value = value;
+            }
+
             UpdateBottom();
         }
 
@@ -473,15 +507,21 @@ namespace RTCV.UI
         {
             var value = cbStoreTime.SelectedItem;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+            {
                 row.Cells[BuProperty.StoreTime.ToString()].Value = value;
+            }
+
             UpdateBottom();
         }
 
         private void CbLimiterList_Validated(object sender, EventArgs e)
         {
-            var value = ((ComboBoxItem<String>)(cbLimiterList?.SelectedItem))?.Value ?? null;
+            var value = ((ComboBoxItem<string>)(cbLimiterList?.SelectedItem))?.Value ?? null;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+            {
                 row.Cells[BuProperty.LimiterListHash.ToString()].Value = value; // We gotta use the value
+            }
+
             UpdateBottom();
         }
 
@@ -502,7 +542,10 @@ namespace RTCV.UI
         {
             var value = tbValue.Text;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+            {
                 row.Cells[BuProperty.ValueString.ToString()].Value = value;
+            }
+
             UpdateBottom();
         }
 
@@ -510,14 +553,19 @@ namespace RTCV.UI
         {
             var value = cbSource.SelectedItem;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+            {
                 row.Cells[BuProperty.Source.ToString()].Value = value;
+            }
+
             UpdateBottom();
         }
 
         private void TbTiltValue_Validated(object sender, EventArgs e)
         {
             if (!BigInteger.TryParse(tbTiltValue.Text, out BigInteger value))
+            {
                 value = 0;
+            }
 
             //Tilt isn't stored within the DGV so operate on the BUs. No validation neccesary as it's a bigint
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
@@ -529,10 +577,15 @@ namespace RTCV.UI
         private void UpDownLifetime_Validated(object sender, EventArgs e)
         {
             var value = upDownLifetime.Value;
-            if (value > Int32.MaxValue)
-                value = Int32.MaxValue;
+            if (value > int.MaxValue)
+            {
+                value = int.MaxValue;
+            }
+
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+            {
                 row.Cells[BuProperty.Lifetime.ToString()].Value = value;
+            }
 
             UpdateBottom();
             dgvBlastEditor.Refresh();
@@ -540,10 +593,15 @@ namespace RTCV.UI
         private void UpDownExecuteFrame_Validated(object sender, EventArgs e)
         {
             var value = upDownExecuteFrame.Value;
-            if (value > Int32.MaxValue)
-                value = Int32.MaxValue;
+            if (value > int.MaxValue)
+            {
+                value = int.MaxValue;
+            }
+
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+            {
                 row.Cells[BuProperty.ExecuteFrame.ToString()].Value = value;
+            }
 
             UpdateBottom();
             dgvBlastEditor.Refresh();
@@ -553,11 +611,16 @@ namespace RTCV.UI
         {
             var value = upDownPrecision.Value;
 
-            if (value > Int32.MaxValue)
-                value = Int32.MaxValue;
+            if (value > int.MaxValue)
+            {
+                value = int.MaxValue;
+            }
 
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+            {
                 row.Cells[BuProperty.Precision.ToString()].Value = value;
+            }
+
             UpdateBottom();
             dgvBlastEditor.Refresh();
         }
@@ -565,20 +628,32 @@ namespace RTCV.UI
         private void UpDownAddress_Validated(object sender, EventArgs e)
         {
             var value = upDownAddress.Value;
-            if (value > Int32.MaxValue)
-                value = Int32.MaxValue;
+            if (value > int.MaxValue)
+            {
+                value = int.MaxValue;
+            }
+
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+            {
                 row.Cells[BuProperty.Address.ToString()].Value = value;
+            }
+
             UpdateBottom();
         }
 
         private void UpDownSourceAddress_Validated(object sender, EventArgs e)
         {
             var value = upDownSourceAddress.Value;
-            if (value > Int32.MaxValue)
-                value = Int32.MaxValue;
+            if (value > int.MaxValue)
+            {
+                value = int.MaxValue;
+            }
+
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+            {
                 row.Cells[BuProperty.SourceAddress.ToString()].Value = value;
+            }
+
             UpdateBottom();
         }
 
@@ -586,7 +661,10 @@ namespace RTCV.UI
         {
             var value = cbLocked.Checked;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
+            {
                 row.Cells[BuProperty.isLocked.ToString()].Value = value;
+            }
+
             UpdateBottom();
         }
 
@@ -594,7 +672,10 @@ namespace RTCV.UI
         {
             var value = cbLimiterTime.SelectedItem;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+            {
                 row.Cells[BuProperty.LimiterTime.ToString()].Value = value;
+            }
+
             UpdateBottom();
         }
 
@@ -602,7 +683,10 @@ namespace RTCV.UI
         {
             var value = cbStoreLimiterSource.SelectedItem;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+            {
                 row.Cells[BuProperty.StoreLimiterSource.ToString()].Value = value;
+            }
+
             UpdateBottom();
         }
 
@@ -611,14 +695,20 @@ namespace RTCV.UI
         {
             var value = cbInvertLimiter.Checked;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+            {
                 row.Cells[BuProperty.InvertLimiter.ToString()].Value = value;
+            }
+
             UpdateBottom();
         }
         private void cbEnabled_Validated(object sender, EventArgs e)
         {
             var value = cbEnabled.Checked;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+            {
                 row.Cells[BuProperty.isEnabled.ToString()].Value = value;
+            }
+
             UpdateBottom();
         }
 
@@ -627,9 +717,15 @@ namespace RTCV.UI
             var value = cbDomain.SelectedItem;
 
             if (!domains.Contains(value))
+            {
                 return;
+            }
+
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+            {
                 row.Cells[BuProperty.Domain.ToString()].Value = value;
+            }
+
             UpdateBottom();
         }
 
@@ -638,7 +734,10 @@ namespace RTCV.UI
         {
             var value = cbLoop.Checked;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+            {
                 row.Cells[BuProperty.Loop.ToString()].Value = value;
+            }
+
             UpdateBottom();
         }
 
@@ -671,19 +770,27 @@ namespace RTCV.UI
 
 
                 if (domain != null && DomainToMiDico.ContainsKey(bu.Domain ?? ""))
+                {
                     (row.Cells[BuProperty.Address.ToString()] as DataGridViewNumericUpDownCell).Maximum = DomainToMiDico[domain].Size - 1;
+                }
+
                 if (sourceDomain != null && DomainToMiDico.ContainsKey(bu.SourceDomain ?? ""))
+                {
                     (row.Cells[BuProperty.SourceAddress.ToString()] as DataGridViewNumericUpDownCell).Maximum = DomainToMiDico[sourceDomain].Size - 1;
+                }
             }
         }
 
-        private void updateMaximum(DataGridViewNumericUpDownCell cell, String domain)
+        private void updateMaximum(DataGridViewNumericUpDownCell cell, string domain)
         {
             if (DomainToMiDico.ContainsKey(domain))
+            {
                 cell.Maximum = DomainToMiDico[domain].Size - 1;
+            }
             else
-                cell.Maximum = Int32.MaxValue;
-
+            {
+                cell.Maximum = int.MaxValue;
+            }
         }
 
         private void UpdateBottom()
@@ -716,16 +823,23 @@ namespace RTCV.UI
 
 
 
-                if (DomainToMiDico.ContainsKey(bu.Domain ?? String.Empty))
+                if (DomainToMiDico.ContainsKey(bu.Domain ?? string.Empty))
+                {
                     upDownAddress.Maximum = DomainToMiDico[bu.Domain].Size - 1;
+                }
                 else
-                    upDownAddress.Maximum = Int32.MaxValue;
+                {
+                    upDownAddress.Maximum = int.MaxValue;
+                }
 
-                if (DomainToMiDico.ContainsKey(bu.SourceDomain ?? String.Empty))
+                if (DomainToMiDico.ContainsKey(bu.SourceDomain ?? string.Empty))
+                {
                     upDownSourceAddress.Maximum = DomainToMiDico[bu.SourceDomain].Size - 1;
+                }
                 else
-                    upDownSourceAddress.Maximum = Int32.MaxValue;
-
+                {
+                    upDownSourceAddress.Maximum = int.MaxValue;
+                }
 
                 cbDomain.SelectedItem = bu.Domain;
                 cbEnabled.Checked = bu.IsEnabled;
@@ -763,7 +877,9 @@ namespace RTCV.UI
             List<DataGridViewRow> col = new List<DataGridViewRow>();
             //For some reason DataGridViewRowCollection and DataGridViewSelectedRowCollection aren't directly compatible???
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
+            {
                 col.Add(row);
+            }
 
             //Rather than setting all these values at load, we set it on the fly
             updateMaximum(col);
@@ -787,12 +903,14 @@ namespace RTCV.UI
             }
 
 
-            string value = ((ComboBoxItem<String>)cbFilterColumn?.SelectedItem)?.Value;
+            string value = ((ComboBoxItem<string>)cbFilterColumn?.SelectedItem)?.Value;
             if (value == null)
+            {
                 return;
+            }
 
             _bs = new BindingSource();
-            switch (((ComboBoxItem<String>)cbFilterColumn.SelectedItem).Value)
+            switch (((ComboBoxItem<string>)cbFilterColumn.SelectedItem).Value)
             {
                 //If it's an address or a source address we want decimal
                 case "Address":
@@ -888,7 +1006,10 @@ namespace RTCV.UI
             //Do this one separately as we need to populate the Combobox
             DataGridViewComboBoxColumn source = CreateColumn(BuProperty.Source.ToString(), BuProperty.Source.ToString(), "Source", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
             foreach (var item in blastUnitSource)
+            {
                 source.Items.Add(item);
+            }
+
             dgvBlastEditor.Columns.Add(source);
 
             //Do this one separately as we need to populate the Combobox
@@ -908,7 +1029,7 @@ namespace RTCV.UI
 
             DataGridViewNumericUpDownColumn precision = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.Precision.ToString(), BuProperty.Precision.ToString(), "Precision", new DataGridViewNumericUpDownColumn());
             precision.Minimum = 1;
-            precision.Maximum = Int32.MaxValue;
+            precision.Maximum = int.MaxValue;
             precision.SortMode = DataGridViewColumnSortMode.Automatic;
             dgvBlastEditor.Columns.Add(precision);
 
@@ -924,13 +1045,13 @@ namespace RTCV.UI
             var executeFrame = CreateColumn(BuProperty.ExecuteFrame.ToString(), BuProperty.ExecuteFrame.ToString()
                 , "Execute Frame", new DataGridViewNumericUpDownColumn());
             executeFrame.SortMode = DataGridViewColumnSortMode.Automatic;
-            ((DataGridViewNumericUpDownColumn)(executeFrame)).Maximum = Int32.MaxValue;
+            ((DataGridViewNumericUpDownColumn)(executeFrame)).Maximum = int.MaxValue;
             dgvBlastEditor.Columns.Add(executeFrame);
 
             var lifetime = CreateColumn(BuProperty.Lifetime.ToString(), BuProperty.Lifetime.ToString(), "Lifetime"
                 , new DataGridViewNumericUpDownColumn());
             lifetime.SortMode = DataGridViewColumnSortMode.Automatic;
-            ((DataGridViewNumericUpDownColumn)(lifetime)).Maximum = Int32.MaxValue;
+            ((DataGridViewNumericUpDownColumn)(lifetime)).Maximum = int.MaxValue;
             dgvBlastEditor.Columns.Add(lifetime);
 
             var loop = CreateColumn(BuProperty.Loop.ToString(), BuProperty.Loop.ToString(), "Loop"
@@ -941,7 +1062,10 @@ namespace RTCV.UI
 
             DataGridViewComboBoxColumn limiterTime = CreateColumn(BuProperty.LimiterTime.ToString(), BuProperty.LimiterTime.ToString(), "Limiter Time", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
             foreach (var item in Enum.GetValues(typeof(LimiterTime)))
+            {
                 limiterTime.Items.Add(item);
+            }
+
             dgvBlastEditor.Columns.Add(limiterTime);
 
             DataGridViewComboBoxColumn limiterHash = CreateColumn(BuProperty.LimiterListHash.ToString(), BuProperty.LimiterListHash.ToString(), "Limiter List", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
@@ -953,7 +1077,10 @@ namespace RTCV.UI
 
             DataGridViewComboBoxColumn storeLimiterSource = CreateColumn(BuProperty.StoreLimiterSource.ToString(), BuProperty.StoreLimiterSource.ToString(), "Store Limiter Source", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
             foreach (var item in Enum.GetValues(typeof(StoreLimiterSource)))
+            {
                 storeLimiterSource.Items.Add(item);
+            }
+
             dgvBlastEditor.Columns.Add(storeLimiterSource);
 
             dgvBlastEditor.Columns.Add(CreateColumn(BuProperty.InvertLimiter.ToString(), BuProperty.InvertLimiter.ToString(), "Invert Limiter", new DataGridViewCheckBoxColumn()));
@@ -961,7 +1088,10 @@ namespace RTCV.UI
 
             DataGridViewComboBoxColumn storeTime = CreateColumn(BuProperty.StoreTime.ToString(), BuProperty.StoreTime.ToString(), "Store Time", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
             foreach (var item in Enum.GetValues(typeof(StoreTime)))
+            {
                 storeTime.Items.Add(item);
+            }
+
             storeTime.SortMode = DataGridViewColumnSortMode.Automatic;
             dgvBlastEditor.Columns.Add(storeTime);
 
@@ -1028,7 +1158,9 @@ namespace RTCV.UI
             {
                 //Exclude button and checkbox
                 if (!(column is DataGridViewCheckBoxColumn || column is DataGridViewButtonColumn))// && column.Visible)
-                    cbFilterColumn.Items.Add(new ComboBoxItem<String>(column.HeaderText, column.Name));
+                {
+                    cbFilterColumn.Items.Add(new ComboBoxItem<string>(column.HeaderText, column.Name));
+                }
             }
             cbFilterColumn.SelectedIndex = 0;
         }
@@ -1042,11 +1174,11 @@ namespace RTCV.UI
             cbShiftBlastlayer.DisplayMember = "Name";
             cbShiftBlastlayer.ValueMember = "Value";
 
-            cbShiftBlastlayer.Items.Add(new ComboBoxItem<String>(BuProperty.Address.ToString(), BuProperty.Address.ToString()));
-            cbShiftBlastlayer.Items.Add(new ComboBoxItem<String>("Source Address", BuProperty.SourceAddress.ToString()));
-            cbShiftBlastlayer.Items.Add(new ComboBoxItem<String>("Value", BuProperty.ValueString.ToString()));
-            cbShiftBlastlayer.Items.Add(new ComboBoxItem<String>(BuProperty.Lifetime.ToString(), BuProperty.Lifetime.ToString()));
-            cbShiftBlastlayer.Items.Add(new ComboBoxItem<String>("Execute Frame", BuProperty.ExecuteFrame.ToString()));
+            cbShiftBlastlayer.Items.Add(new ComboBoxItem<string>(BuProperty.Address.ToString(), BuProperty.Address.ToString()));
+            cbShiftBlastlayer.Items.Add(new ComboBoxItem<string>("Source Address", BuProperty.SourceAddress.ToString()));
+            cbShiftBlastlayer.Items.Add(new ComboBoxItem<string>("Value", BuProperty.ValueString.ToString()));
+            cbShiftBlastlayer.Items.Add(new ComboBoxItem<string>(BuProperty.Lifetime.ToString(), BuProperty.Lifetime.ToString()));
+            cbShiftBlastlayer.Items.Add(new ComboBoxItem<string>("Execute Frame", BuProperty.ExecuteFrame.ToString()));
             cbShiftBlastlayer.SelectedIndex = 0;
         }
 
@@ -1056,9 +1188,13 @@ namespace RTCV.UI
             foreach (DataGridViewColumn column in dgvBlastEditor.Columns)
             {
                 if (VisibleColumns.Contains(column.Name))
+                {
                     column.Visible = true;
+                }
                 else
+                {
                     column.Visible = false;
+                }
             }
             dgvBlastEditor.Refresh();
         }
@@ -1113,7 +1249,7 @@ namespace RTCV.UI
 		}
         */
 
-        StashKey originalSK = null;
+        private StashKey originalSK = null;
 
         private StashKey _currentSK = null;
         internal StashKey currentSK
@@ -1125,8 +1261,9 @@ namespace RTCV.UI
                 this.Name = "Blast Editor - " + value?.Alias ?? "Unnamed";
             }
         }
-        BindingSource bs = null;
-        BindingSource _bs = null;
+
+        private BindingSource bs = null;
+        private BindingSource _bs = null;
         public void LoadStashkey(StashKey sk)
         {
             if (!RefreshDomains())
@@ -1135,19 +1272,26 @@ namespace RTCV.UI
                 this.Close();
                 return;
             }
-            List<String> buDomains = new List<String>();
+            List<String> buDomains = new List<string>();
             foreach (var bu in sk.BlastLayer.Layer)
             {
                 if (!buDomains.Contains(bu.Domain))
+                {
                     buDomains.Add(bu.Domain);
+                }
+
                 if (bu.SourceDomain != null && !buDomains.Contains(bu.SourceDomain))
+                {
                     buDomains.Add(bu.SourceDomain);
+                }
             }
 
             foreach (string domain in buDomains)
             {
                 if (DomainToMiDico.ContainsKey(domain))
+                {
                     continue;
+                }
 
                 MessageBox.Show("This blastlayer references domain " + domain + " which couldn't be found!\nAre you sure you have the correct core loaded?");
                 this.Hide();
@@ -1166,7 +1310,9 @@ namespace RTCV.UI
                 if (batchOperation)
                 {
                     if (e is HandledEventArgs h)
+                    {
                         h.Handled = true;
+                    }
                 }
             };
 
@@ -1188,14 +1334,20 @@ namespace RTCV.UI
                 S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected();
                 DomainToMiDico?.Clear();
                 if (MemoryDomains.MemoryInterfaces == null)
+                {
                     return false;
+                }
+
                 domains = MemoryDomains.MemoryInterfaces.Keys.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
                 foreach (string domain in domains)
                 {
                     DomainToMiDico.Add(domain, MemoryDomains.GetInterface(domain));
                 }
                 if (DomainToMiDico.Keys.Count > 0)
+                {
                     return true;
+                }
+
                 return false;
             }
             catch (Exception ex)
@@ -1260,7 +1412,9 @@ namespace RTCV.UI
             {
                 bs.Remove(bu);
                 if (_bs != null && _bs.Contains(bu))
+                {
                     _bs.Remove(bu);
+                }
             }
             batchOperation = false;
             dgvBlastEditor.DataSource = oldBS;
@@ -1300,7 +1454,9 @@ namespace RTCV.UI
                     bs.Remove(bu);
                     //Todo replace how this works
                     if (_bs != null && _bs.Contains(bu))
+                    {
                         bs.Remove(bu);
+                    }
                 }
             }
         }
@@ -1308,7 +1464,9 @@ namespace RTCV.UI
         private void btnDuplicateSelected_Click(object sender, EventArgs e)
         {
             if (dgvBlastEditor.SelectedRows.Count == 0)
+            {
                 return;
+            }
 
             var reversed = dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Reverse()?.ToArray();
             foreach (DataGridViewRow row in reversed)
@@ -1438,7 +1596,9 @@ namespace RTCV.UI
                     filename = ofd.FileName;
                 }
                 else
+                {
                     return;
+                }
 
                 LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_LOADROM, filename, true);
 
@@ -1471,9 +1631,14 @@ namespace RTCV.UI
             };
 
             if (sfd.ShowDialog() == DialogResult.OK)
+            {
                 filename = sfd.FileName;
+            }
             else
+            {
                 return;
+            }
+
             RomParts rp = MemoryDomains.GetRomParts(currentSK.SystemName, currentSK.RomFilename);
 
             File.Copy(currentSK.RomFilename, filename, true);
@@ -1488,7 +1653,9 @@ namespace RTCV.UI
                         CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref outvalue, bu.TiltValue, bu.BigEndian);
                         //Flip it if it's big endian
                         if (bu.BigEndian)
+                        {
                             outvalue.FlipBytes();
+                        }
 
                         if (bu.Domain == rp.PrimaryDomain)
                         {
@@ -1568,7 +1735,9 @@ namespace RTCV.UI
                 filename = ofd.FileName;
             }
             else
+            {
                 return;
+            }
 
             string oldKey = currentSK.ParentKey;
             string oldSS = currentSK.SyncSettings;
@@ -1610,7 +1779,9 @@ namespace RTCV.UI
                 filename = ofd.FileName;
             }
             else
+            {
                 return;
+            }
 
             File.Copy(currentSK.GetSavestateFullPath(), filename, true);
         }
@@ -1620,9 +1791,13 @@ namespace RTCV.UI
         {
             //If there's no blastlayer file already set, don't quicksave
             if (CurrentBlastLayerFile == "")
+            {
                 BlastTools.SaveBlastLayerToFile(currentSK.BlastLayer);
+            }
             else
+            {
                 BlastTools.SaveBlastLayerToFile(currentSK.BlastLayer, CurrentBlastLayerFile);
+            }
 
             CurrentBlastLayerFile = BlastTools.LastBlastLayerSavePath;
         }
@@ -1656,14 +1831,18 @@ namespace RTCV.UI
                 foreach (BlastUnit bu in bl.Layer)
                 {
                     if (domains.Contains(bu.Domain) &&
-                        (String.IsNullOrWhiteSpace(bu.SourceDomain) || domains.Contains(bu.SourceDomain)))
+                        (string.IsNullOrWhiteSpace(bu.SourceDomain) || domains.Contains(bu.SourceDomain)))
+                    {
                         unitsToLoad.Add(bu);
+                    }
                     else
                     {
                         //If we've already warned them about the specific domain, don't warn them again.
                         if (warned.Contains(bu.Domain) &&
-                            (String.IsNullOrEmpty(bu.SourceDomain) || warned.Contains(bu.SourceDomain)))
+                            (string.IsNullOrEmpty(bu.SourceDomain) || warned.Contains(bu.SourceDomain)))
+                        {
                             continue;
+                        }
 
                         if (MessageBox.Show($"Imported blastlayer references an invalid domain.\n" +
                                             $"The current unit being imported has the following parameters.\n" +
@@ -1674,8 +1853,10 @@ namespace RTCV.UI
                                 , MessageBoxButtons.OKCancel) == DialogResult.OK)
                         {
                             warned.Add(bu.Domain);
-                            if (!String.IsNullOrWhiteSpace(bu.SourceDomain))
+                            if (!string.IsNullOrWhiteSpace(bu.SourceDomain))
+                            {
                                 warned.Add(bu.SourceDomain);
+                            }
                         }
                         else
                         {
@@ -1688,11 +1869,16 @@ namespace RTCV.UI
 
             var l = checkUnits();
             if (l == null)
+            {
                 return;
+            }
+
             if (import)
             {
                 foreach (var bu in l)
+                {
                     bs.Add(bu);
+                }
             }
             else
             {
@@ -1705,7 +1891,10 @@ namespace RTCV.UI
             dgvBlastEditor.Refresh();
         }
 
-        public void ImportBlastLayer(BlastLayer bl) => LoadBlastlayer(bl, true);
+        public void ImportBlastLayer(BlastLayer bl)
+        {
+            LoadBlastlayer(bl, true);
+        }
 
         private void exportToCSVToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1730,7 +1919,10 @@ namespace RTCV.UI
                 filename = saveFileDialog1.FileName;
             }
             else
+            {
                 return;
+            }
+
             CSVGenerator csv = new CSVGenerator();
             File.WriteAllText(filename, csv.GenerateFromDGV(dgvBlastEditor), Encoding.UTF8);
         }
@@ -1834,10 +2026,12 @@ namespace RTCV.UI
         public void btnShiftBlastLayerDown_Click(object sender, EventArgs e)
         {
             var amount = updownShiftBlastLayerAmount.Value;
-            var column = ((ComboBoxItem<String>)cbShiftBlastlayer?.SelectedItem)?.Value;
+            var column = ((ComboBoxItem<string>)cbShiftBlastlayer?.SelectedItem)?.Value;
 
             if (column == null)
+            {
                 return;
+            }
 
             var rows = dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>()
                 .Where((item => ((BlastUnit)item.DataBoundItem).IsLocked == false))
@@ -1848,10 +2042,12 @@ namespace RTCV.UI
         public void btnShiftBlastLayerUp_Click(object sender, EventArgs e)
         {
             var amount = updownShiftBlastLayerAmount.Value;
-            var column = ((ComboBoxItem<String>)cbShiftBlastlayer?.SelectedItem)?.Value;
+            var column = ((ComboBoxItem<string>)cbShiftBlastlayer?.SelectedItem)?.Value;
 
             if (column == null)
+            {
                 return;
+            }
 
             var rows = dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>()
                 .Where((item => ((BlastUnit)item.DataBoundItem).IsLocked == false))
@@ -1872,16 +2068,24 @@ namespace RTCV.UI
                     if (shiftDown)
                     {
                         if ((Convert.ToInt64(u.Value) - amount) >= 0)
+                        {
                             u.Value = Convert.ToInt64(u.Value) - amount;
+                        }
                         else
+                        {
                             u.Value = 0;
+                        }
                     }
                     else
                     {
                         if ((Convert.ToInt64(u.Value) + amount) <= u.Maximum)
+                        {
                             u.Value = Convert.ToInt64(u.Value) + amount;
+                        }
                         else
+                        {
                             u.Value = u.Maximum;
+                        }
                     }
                 }
                 else if (cell.OwningColumn.Name == BuProperty.ValueString.ToString())
@@ -1905,7 +2109,10 @@ namespace RTCV.UI
             //Convert the string we have into a byte array
             var valueBytes = CorruptCore_Extensions.StringToByteArrayPadLeft(value, precision);
             if (valueBytes == null)
+            {
                 return value;
+            }
+
             CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref valueBytes, new BigInteger(amount), true);
             return BitConverter.ToString(valueBytes).Replace("-", string.Empty);
         }
@@ -1919,7 +2126,9 @@ namespace RTCV.UI
         private void OpenBlastGeneratorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (S.GET<RTC_BlastGenerator_Form>() != null)
+            {
                 S.GET<RTC_BlastGenerator_Form>().Close();
+            }
 
             S.SET(new RTC_BlastGenerator_Form());
 
@@ -1941,7 +2150,9 @@ namespace RTCV.UI
         public void btnSanitizeTool_Click(object sender, EventArgs e)
         {
             if (currentSK?.BlastLayer?.Layer == null)
+            {
                 return;
+            }
 
             RTC_SanitizeTool_Form.OpenSanitizeTool(currentSK?.BlastLayer);
 
@@ -2009,7 +2220,9 @@ namespace RTCV.UI
                     filename = ofd.FileName;
                 }
                 else
+                {
                     return;
+                }
             }
 
             var bl = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_BL_GETDIFFBLASTLAYER, filename);

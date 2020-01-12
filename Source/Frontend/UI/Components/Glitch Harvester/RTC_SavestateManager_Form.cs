@@ -5,15 +5,13 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using RTCV.CorruptCore;
-using static RTCV.UI.UI_Extensions;
-using RTCV.NetCore.StaticTools;
-using RTCV.NetCore;
+using System.Windows.Forms;
 using Newtonsoft.Json;
+using RTCV.CorruptCore;
+using RTCV.NetCore;
+using RTCV.NetCore.StaticTools;
+using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
@@ -23,7 +21,7 @@ namespace RTCV.UI
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
 
-        Dictionary<string, TextBox> StateBoxes = new Dictionary<string, TextBox>();
+        private Dictionary<string, TextBox> StateBoxes = new Dictionary<string, TextBox>();
         private BindingSource savestateBindingSource = new BindingSource(new BindingList<SaveStateKey>(), null);
 
         private bool LoadSavestateOnClick = false;
@@ -42,7 +40,9 @@ namespace RTCV.UI
         private void btnLoadSavestateList_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
+            {
                 loadSavestateList();
+            }
         }
 
 
@@ -73,7 +73,9 @@ namespace RTCV.UI
             //Extract the ssk
             RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Extracting the SSK", currentProgress += 50));
             if (Stockpile.Extract(fileName, Path.Combine("WORKING", extractFolder), "keys.json") is { Failed: true })
+            {
                 return;
+            }
 
             //Read in the ssk
             try
@@ -92,7 +94,9 @@ namespace RTCV.UI
                 var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
 
                 if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                {
                     throw new RTCV.NetCore.AbortEverythingException();
+                }
 
                 return;
             }
@@ -105,7 +109,7 @@ namespace RTCV.UI
             }
 
             var s = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "ERROR";
-            if (!String.IsNullOrEmpty(ssk.VanguardImplementation) && !ssk.VanguardImplementation.Equals(s, StringComparison.OrdinalIgnoreCase) && ssk.VanguardImplementation != "ERROR")
+            if (!string.IsNullOrEmpty(ssk.VanguardImplementation) && !ssk.VanguardImplementation.Equals(s, StringComparison.OrdinalIgnoreCase) && ssk.VanguardImplementation != "ERROR")
             {
                 MessageBox.Show($"The ssk you loaded is for a different Vanguard implementation.\nThe ssk reported {ssk.VanguardImplementation} but you're connected to {s}.\nThis is a fatal error. Aborting load.");
                 return;
@@ -140,7 +144,10 @@ namespace RTCV.UI
                             MessageBox.Show("Unable to copy a file from temp to ssk. The culprit is " + file + ".\nCancelling operation.\n " + ex.ToString());
                             //Attempt to cleanup
                             foreach (var f in allCopied)
+                            {
                                 File.Delete(f);
+                            }
+
                             return;
 
                         }
@@ -156,7 +163,9 @@ namespace RTCV.UI
             {
                 var key = ssk.StashKeys[i];
                 if (key == null)
+                {
                     continue;
+                }
 
                 RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Fixing up {key.Alias}", currentProgress += percentPerFile));
 
@@ -191,7 +200,9 @@ namespace RTCV.UI
                     fileName = ofd.FileName;
                 }
                 else
+                {
                     return;
+                }
             }
             if (!File.Exists(fileName))
             {
@@ -233,7 +244,9 @@ namespace RTCV.UI
             foreach (var row in S.GET<RTC_StockpileManager_Form>().dgvStockpile.Rows.Cast<DataGridViewRow>().ToList())
             {
                 if (row.Cells[0].Value is StashKey sk)
+                {
                     allStashKeys.Add(sk);
+                }
             }
             allStashKeys.AddRange(StockpileManager_UISide.StashHistory);
             allStashKeys.AddRange(S.GET<RTC_NewBlastEditor_Form>().GetStashKeys());
@@ -245,13 +258,21 @@ namespace RTCV.UI
                 {
                     var stateName = sk.GameName + "." + sk.ParentKey + ".timejump.State"; // get savestate name
                     if (File.Exists(Path.Combine(CorruptCore.RtcCore.workingDir, "SSK", stateName))) //it SHOULD be here. If it's not, let's hunt for it
+                    {
                         File.Copy(Path.Combine(CorruptCore.RtcCore.workingDir, "SSK", stateName), Path.Combine(CorruptCore.RtcCore.workingDir, "SESSION", stateName), true);
+                    }
                     else if (File.Exists(Path.Combine(CorruptCore.RtcCore.workingDir, "TEMP", stateName)))
+                    {
                         File.Copy(Path.Combine(CorruptCore.RtcCore.workingDir, "TEMP", stateName), Path.Combine(CorruptCore.RtcCore.workingDir, "SESSION", stateName), true);
+                    }
                     else if (File.Exists(Path.Combine(CorruptCore.RtcCore.workingDir, "SKS", stateName)))
+                    {
                         File.Copy(Path.Combine(CorruptCore.RtcCore.workingDir, "SKS", stateName), Path.Combine(CorruptCore.RtcCore.workingDir, "SESSION", stateName), true);
+                    }
                     else if (File.Exists(Path.Combine(CorruptCore.RtcCore.workingDir, "SESSION", stateName)))
+                    {
                         continue;
+                    }
                     else if (!notified)
                     {
                         MessageBox.Show($"Couldn't locate savestate {stateName}.\nIf you remember the course of actions that lead here, report to the RTC devs.\nSome of your non-stockpiled stashkeys may be broken.");
@@ -321,7 +342,9 @@ namespace RTCV.UI
                     string tempPath = Path.Combine(CorruptCore.RtcCore.workingDir, "TEMP", stateFilename);
 
                     if (File.Exists(statePath))
+                    {
                         File.Copy(statePath, tempPath, true); // copy savestates to temp folder
+                    }
                     else
                     {
 
@@ -338,7 +361,10 @@ namespace RTCV.UI
                 {
                     RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Updating {key} location", currentProgress += percentPerFile));
                     if (key == null)
+                    {
                         continue;
+                    }
+
                     key.StateLocation = StashKeySavestateLocation.SSK;
                 }
 
@@ -355,7 +381,9 @@ namespace RTCV.UI
                 try
                 {
                     if (File.Exists(tempFilename))
+                    {
                         File.Delete(tempFilename);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -369,7 +397,9 @@ namespace RTCV.UI
                 System.IO.Compression.ZipFile.CreateFromDirectory(tempFolderPath, tempFilename, System.IO.Compression.CompressionLevel.Fastest, false);
 
                 if (File.Exists(path))
+                {
                     File.Delete(path);
+                }
 
                 RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Moving SSK to destination", currentProgress += 5));
                 File.Move(tempFilename, path);
@@ -394,7 +424,9 @@ namespace RTCV.UI
                 var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
 
                 if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                {
                     throw new RTCV.NetCore.AbortEverythingException();
+                }
 
                 return;
             }
@@ -416,7 +448,9 @@ namespace RTCV.UI
                 filename = saveFileDialog1.FileName;
             }
             else
+            {
                 return;
+            }
 
             var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
             try

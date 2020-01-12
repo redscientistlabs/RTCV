@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
-using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
+using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
@@ -29,9 +26,13 @@ namespace RTCV.UI
         private ulong safeStringToULongHex(string input)
         {
             if (input.IndexOf("0X", StringComparison.OrdinalIgnoreCase) >= 0)
+            {
                 return ulong.Parse(input.Substring(2), NumberStyles.HexNumber);
+            }
             else
+            {
                 return ulong.Parse(input, NumberStyles.HexNumber);
+            }
         }
 
         private bool isHex(string str)
@@ -78,7 +79,9 @@ namespace RTCV.UI
             foreach (string line in tbListValues.Lines)
             {
                 if (string.IsNullOrWhiteSpace(line))
+                {
                     continue;
+                }
 
                 string trimmedLine = line.Trim();
 
@@ -146,7 +149,7 @@ namespace RTCV.UI
             //Handle saving the list to a file
             if (cbSaveFile.Checked)
             {
-                if (!String.IsNullOrWhiteSpace(filename))
+                if (!string.IsNullOrWhiteSpace(filename))
                 {
                     File.WriteAllLines(Path.Combine(CorruptCore.RtcCore.RtcDir, "LISTS", filename + ".txt"), newList);
                 }
@@ -157,8 +160,10 @@ namespace RTCV.UI
             }
 
             //If there's no name just generate one
-            if (String.IsNullOrWhiteSpace(filename))
+            if (string.IsNullOrWhiteSpace(filename))
+            {
                 filename = CorruptCore.RtcCore.GetRandomKey();
+            }
 
             //Register the list and update netcore
             List<Byte[]> byteList = new List<byte[]>();

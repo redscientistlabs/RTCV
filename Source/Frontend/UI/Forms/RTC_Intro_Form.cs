@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Numerics;
-using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json.Serialization;
-using RTCV.CorruptCore;
 using RTCV.NetCore;
-using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
 
 
@@ -35,8 +24,9 @@ namespace RTCV.UI
                 var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
 
                 if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                {
                     throw new RTCV.NetCore.AbortEverythingException();
-
+                }
             }
         }
 
@@ -49,7 +39,9 @@ namespace RTCV.UI
         private void RTC_Intro_Form_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason != CloseReason.UserClosing)
+            {
                 return;
+            }
 
             if (selection == IntroAction.EXIT)
             {

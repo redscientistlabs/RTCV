@@ -1,11 +1,8 @@
-﻿using RTCV.NetCore.StaticTools;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+using RTCV.NetCore.StaticTools;
 
 namespace RTCV.UI
 {
@@ -72,13 +69,17 @@ namespace RTCV.UI
         {
             //removes tileForm position if already exists
             for (int _x = 0; _x < x; _x++)
+            {
                 for (int _y = 0; _y < y; _y++)
+                {
                     if (gridComponent[_x, _y] == componentForm)
                     {
                         gridComponent[_x, _y] = null;
                         gridComponentSize[_x, _y] = null;
                         gridComponentDisplayHeader[_x, _y] = null;
                     }
+                }
+            }
 
             //place tileForm if within grid space
             if (tilePosX < x && tilePosY < y)
@@ -119,7 +120,9 @@ namespace RTCV.UI
 
 
                 if (line == "" || line.StartsWith("//"))
+                {
                     continue;
+                }
 
                 if (line.Contains("//"))
                 {
@@ -175,14 +178,20 @@ namespace RTCV.UI
                             AnchorStyles formGridAnchor = (AnchorStyles.Top | AnchorStyles.Left);
 
                             if (subData.Length > 5)
+                            {
                                 formGridAnchor = (AnchorStyles)Convert.ToInt32(subData[5].Trim());
+                            }
 
                             Form tileForm = null;
 
                             if (formName == "MemoryTools")
+                            {
                                 tileForm = UICore.mtForm;
+                            }
                             else
+                            {
                                 tileForm = (Form)S.GET(Type.GetType("RTCV.UI." + formName));
+                            }
 
                             cuGrid.SetTileForm(tileForm, formGridPosX, formGridPosY, formGridSizeX, formGridSizeY, true, formGridAnchor);
 
@@ -191,9 +200,13 @@ namespace RTCV.UI
                     case "LoadTo":
                         {
                             if (data == "Main")
+                            {
                                 cuGrid.LoadToMain();
+                            }
                             else
+                            {
                                 cuGrid.LoadToNewWindow("External");
+                            }
 
                             break;
                         }

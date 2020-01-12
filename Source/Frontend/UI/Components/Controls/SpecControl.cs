@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RTCV.UI.Components.Controls
@@ -22,7 +17,10 @@ namespace RTCV.UI.Components.Controls
         internal SpecControl<T> _parent = null;
 
         public event EventHandler<ValueUpdateEventArgs<T>> ValueChanged;
-        public virtual void OnValueChanged(ValueUpdateEventArgs<T> e) => ValueChanged?.Invoke(this, e);
+        public virtual void OnValueChanged(ValueUpdateEventArgs<T> e)
+        {
+            ValueChanged?.Invoke(this, e);
+        }
 
         internal T _Value;
 
@@ -30,19 +28,23 @@ namespace RTCV.UI.Components.Controls
         [Description("Net value of the control"), Category("Data")]
         public T Value
         {
-            get { return _Value; }
+            get => _Value;
             set
             {
                 _Value = value;
                 if (!GeneralUpdateFlag)
+                {
                     UpdateAllControls(value, null);
+                }
             }
         }
 
         public SpecControl()
         {
-            updater = new Timer();
-            updater.Interval = updateThreshold;
+            updater = new Timer
+            {
+                Interval = updateThreshold
+            };
             updater.Tick += Updater_Tick;
             this.Load += SpecControl_Load;
         }

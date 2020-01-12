@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using RTCV.UI.Components.Controls;
 
 namespace RTCV.UI.Components.Controls
 {
@@ -64,18 +58,26 @@ namespace RTCV.UI.Components.Controls
             if (setter != this || ignore)
             {
                 if (value > updown.Maximum)
+                {
                     value = updown.Maximum;
+                }
                 else if (value < updown.Minimum)
+                {
                     value = updown.Minimum;
+                }
+
                 updown.Value = value;
                 _Value = value;
 
                 foreach (var slave in slaveComps)
+                {
                     slave.UpdateAllControls(value, this);
+                }
 
                 if (_parent != null)
+                {
                     _parent.UpdateAllControls(value, setter);
-
+                }
             }
 
             GeneralUpdateFlag = false;
@@ -88,14 +90,19 @@ namespace RTCV.UI.Components.Controls
             comp.Value = this.Value;
 
             if (valueChangedHandler != null)
+            {
                 comp.ValueChanged += valueChangedHandler;
+            }
+
             base.registerSlave(comp);
         }
 
         private void updown_ValueChanged(object sender, EventArgs e)
         {
             if (GeneralUpdateFlag)
+            {
                 return;
+            }
 
             PropagateValue(updown.Value, updown);
         }

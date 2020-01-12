@@ -1,16 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Windows.Forms;
-using System.Xml.Serialization;
-using System.Runtime.InteropServices;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
-using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
+using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
@@ -37,9 +32,13 @@ namespace RTCV.UI
         public void btnAddStashToStockpile_Click(object sender, EventArgs e)
         {
             if (StockpileManager_UISide.CurrentStashkey != null && StockpileManager_UISide.CurrentStashkey.Alias != StockpileManager_UISide.CurrentStashkey.Key)
+            {
                 AddStashToStockpile(false);
+            }
             else
+            {
                 AddStashToStockpile(true);
+            }
         }
 
         public void AddStashToStockpile(bool askForName = true)
@@ -84,14 +83,18 @@ namespace RTCV.UI
                 }
             }
             else
+            {
                 Name = StockpileManager_UISide.CurrentStashkey.Alias;
+            }
 
-
-            if (String.IsNullOrWhiteSpace(Name))
+            if (string.IsNullOrWhiteSpace(Name))
+            {
                 StockpileManager_UISide.CurrentStashkey.Alias = StockpileManager_UISide.CurrentStashkey.Key;
+            }
             else
+            {
                 StockpileManager_UISide.CurrentStashkey.Alias = Name;
-
+            }
 
             sk.BlastLayer.RasterizeVMDs();
 
@@ -138,7 +141,9 @@ namespace RTCV.UI
 
             DontLoadSelectedStash = true;
             if (lastSelect < lbStashHistory.Items.Count)
+            {
                 lbStashHistory.SelectedIndex = lastSelect;
+            }
 
             DontLoadSelectedStash = false;
         }
@@ -206,7 +211,9 @@ namespace RTCV.UI
                 {
                     List<StashKey> sks = new List<StashKey>();
                     foreach (StashKey sk in lbStashHistory.SelectedItems)
-                        sks.Add((StashKey)sk);
+                    {
+                        sks.Add(sk);
+                    }
 
                     StockpileManager_UISide.MergeStashkeys(sks);
 
@@ -270,17 +277,25 @@ namespace RTCV.UI
                     S.GET<RTC_StockpileManager_Form>().btnRemoveSelectedStockpile.Text = "  Remove Item";
 
                     if (blastForm.ghMode == GlitchHarvesterMode.CORRUPT)
+                    {
                         blastForm.btnCorrupt.Text = "  Corrupt";
+                    }
                     else if (blastForm.ghMode == GlitchHarvesterMode.INJECT)
+                    {
                         blastForm.btnCorrupt.Text = "  Inject";
+                    }
                     else if (blastForm.ghMode == GlitchHarvesterMode.ORIGINAL)
+                    {
                         blastForm.btnCorrupt.Text = "  Original";
+                    }
                 }
 
                 StockpileManager_UISide.CurrentStashkey = StockpileManager_UISide.StashHistory[lbStashHistory.SelectedIndex];
 
                 if (!blastForm.LoadOnSelect)
+                {
                     return;
+                }
 
                 blastForm.OneTimeExecute();
             }
@@ -318,7 +333,9 @@ namespace RTCV.UI
         private void btnStashUP_Click(object sender, EventArgs e)
         {
             if (lbStashHistory.SelectedIndex == -1)
+            {
                 return;
+            }
 
             if (lbStashHistory.SelectedIndex == 0)
             {
@@ -339,8 +356,9 @@ namespace RTCV.UI
         {
 
             if (lbStashHistory.SelectedIndex == -1)
+            {
                 return;
-
+            }
 
             if (lbStashHistory.SelectedIndex == lbStashHistory.Items.Count - 1)
             {

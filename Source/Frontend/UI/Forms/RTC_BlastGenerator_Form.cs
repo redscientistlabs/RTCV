@@ -1,13 +1,13 @@
-﻿using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.NetCore.StaticTools;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using RTCV.CorruptCore;
+using RTCV.NetCore;
+using RTCV.NetCore.StaticTools;
 
 namespace RTCV.UI
 {
@@ -96,7 +96,10 @@ namespace RTCV.UI
         public void LoadNoStashKey()
         {
             if (!RefreshDomains())
+            {
                 return;
+            }
+
             AddDefaultRow();
             PopulateModeCombobox(dgvBlastGenerator.Rows[0]);
             OpenedFromBlastEditor = false;
@@ -110,10 +113,14 @@ namespace RTCV.UI
         public void LoadStashkey(StashKey _sk)
         {
             if (_sk == null)
+            {
                 return;
+            }
 
             if (!RefreshDomains())
+            {
                 return;
+            }
 
             sk = (StashKey)_sk.Clone();
             sk.BlastLayer = new BlastLayer();
@@ -150,13 +157,13 @@ namespace RTCV.UI
 
 
                 //We need to make the rows type decimal as the NumericUpDown is formatted as string by default (due to the potential for commas)
-                dgvBlastGenerator.Rows[lastrow].Cells["dgvStartAddress"].ValueType = typeof(System.Decimal);
-                dgvBlastGenerator.Rows[lastrow].Cells["dgvEndAddress"].ValueType = typeof(System.Decimal);
-                dgvBlastGenerator.Rows[lastrow].Cells["dgvParam1"].ValueType = typeof(System.Decimal);
-                dgvBlastGenerator.Rows[lastrow].Cells["dgvParam2"].ValueType = typeof(System.Decimal);
-                dgvBlastGenerator.Rows[lastrow].Cells["dgvLifetime"].ValueType = typeof(System.Decimal);
-                dgvBlastGenerator.Rows[lastrow].Cells["dgvExecuteFrame"].ValueType = typeof(System.Decimal);
-                dgvBlastGenerator.Rows[lastrow].Cells["dgvSeed"].ValueType = typeof(System.Decimal);
+                dgvBlastGenerator.Rows[lastrow].Cells["dgvStartAddress"].ValueType = typeof(decimal);
+                dgvBlastGenerator.Rows[lastrow].Cells["dgvEndAddress"].ValueType = typeof(decimal);
+                dgvBlastGenerator.Rows[lastrow].Cells["dgvParam1"].ValueType = typeof(decimal);
+                dgvBlastGenerator.Rows[lastrow].Cells["dgvParam2"].ValueType = typeof(decimal);
+                dgvBlastGenerator.Rows[lastrow].Cells["dgvLifetime"].ValueType = typeof(decimal);
+                dgvBlastGenerator.Rows[lastrow].Cells["dgvExecuteFrame"].ValueType = typeof(decimal);
+                dgvBlastGenerator.Rows[lastrow].Cells["dgvSeed"].ValueType = typeof(decimal);
 
 
                 //These can't be null or else things go bad when trying to save and load them from a file. Include an M as they NEED to be decimal.
@@ -208,12 +215,17 @@ namespace RTCV.UI
 
 
                     if (currentValue != null && cell.Items.Contains(currentValue))
+                    {
                         cell.Value = currentValue;
+                    }
                     else if (cell.Items.Count > 0)
+                    {
                         cell.Value = cell.Items[0];
+                    }
                     else
+                    {
                         cell.Value = null;
-
+                    }
                 }
 
                 UpdateAddressRange(row);
@@ -230,7 +242,9 @@ namespace RTCV.UI
         private static void UpdateAddressRange(DataGridViewRow row)
         {
             if (row.Cells["dgvDomain"].Value == null)
+            {
                 return;
+            }
 
             if (!domainToMiDico.ContainsKey(row.Cells["dgvDomain"]
                 .Value.ToString()))
@@ -302,8 +316,10 @@ namespace RTCV.UI
             string saveStateWord = "Savestate";
 
             object renameSaveStateWord = AllSpec.VanguardSpec[VSPEC.RENAME_SAVESTATE];
-            if (renameSaveStateWord != null && renameSaveStateWord is String s)
+            if (renameSaveStateWord != null && renameSaveStateWord is string s)
+            {
                 saveStateWord = s;
+            }
 
             try
             {
@@ -334,11 +350,16 @@ namespace RTCV.UI
                     };
                 }
                 else
+                {
                     newSk = (StashKey)sk.Clone();
+                }
 
                 BlastLayer bl = GenerateBlastLayers(true, true);
                 if (bl == null)
+                {
                     return;
+                }
+
                 newSk.BlastLayer = bl;
             }
             finally
@@ -354,8 +375,10 @@ namespace RTCV.UI
             string saveStateWord = "Savestate";
 
             object renameSaveStateWord = AllSpec.VanguardSpec[VSPEC.RENAME_SAVESTATE];
-            if (renameSaveStateWord != null && renameSaveStateWord is String s)
+            if (renameSaveStateWord != null && renameSaveStateWord is string s)
+            {
                 saveStateWord = s;
+            }
 
             btnLoadCorrupt.Enabled = false;
             btnSendTo.Enabled = false;
@@ -371,13 +394,15 @@ namespace RTCV.UI
                         MessageBox.Show($"Could not perform the CORRUPT action\n\nEither no {saveStateWord} Box was selected in the {saveStateWord} Manager\nor the {saveStateWord} Box itself is empty.");
                         return;
                     }
-                    newSk = new StashKey(CorruptCore.RtcCore.GetRandomKey(), psk.ParentKey, null);
-                    newSk.RomFilename = psk.RomFilename;
-                    newSk.SystemName = psk.SystemName;
-                    newSk.SystemCore = psk.SystemCore;
-                    newSk.GameName = psk.GameName;
-                    newSk.SyncSettings = psk.SyncSettings;
-                    newSk.StateLocation = psk.StateLocation;
+                    newSk = new StashKey(CorruptCore.RtcCore.GetRandomKey(), psk.ParentKey, null)
+                    {
+                        RomFilename = psk.RomFilename,
+                        SystemName = psk.SystemName,
+                        SystemCore = psk.SystemCore,
+                        GameName = psk.GameName,
+                        SyncSettings = psk.SyncSettings,
+                        StateLocation = psk.StateLocation
+                    };
                 }
                 else
                 {
@@ -386,7 +411,10 @@ namespace RTCV.UI
 
                 BlastLayer bl = GenerateBlastLayers(true);
                 if (bl == null)
+                {
                     return;
+                }
+
                 newSk.BlastLayer = bl;
                 if (OpenedFromBlastEditor)
                 {
@@ -396,7 +424,10 @@ namespace RTCV.UI
                         S.GET<RTC_NewBlastEditor_Form>().LoadStashkey((StashKey)newSk.Clone());
                     }
                     else
+                    {
                         S.GET<RTC_NewBlastEditor_Form>().ImportBlastLayer(newSk.BlastLayer);
+                    }
+
                     {
 
                     }
@@ -426,10 +457,14 @@ namespace RTCV.UI
         private void dgvBlastGenerator_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             if (!initialized || dgvBlastGenerator == null)
+            {
                 return;
+            }
 
             if (e.ColumnIndex != (int)BlastGeneratorColumn.DgvRowDirty)
+            {
                 dgvBlastGenerator.Rows[e.RowIndex].Cells["dgvRowDirty"].Value = true;
+            }
 
             if ((BlastGeneratorColumn)e.ColumnIndex == BlastGeneratorColumn.DgvType)
             {
@@ -462,9 +497,10 @@ namespace RTCV.UI
             string saveStateWord = "Savestate";
 
             object renameSaveStateWord = AllSpec.VanguardSpec[VSPEC.RENAME_SAVESTATE];
-            if (renameSaveStateWord != null && renameSaveStateWord is String s)
+            if (renameSaveStateWord != null && renameSaveStateWord is string s)
+            {
                 saveStateWord = s;
-
+            }
 
             StashKey newSk = null;
             try
@@ -485,16 +521,20 @@ namespace RTCV.UI
                                 $"The Blast Generator could not perform the CORRUPT action\n\nEither no {saveStateWord} Box was selected in the {saveStateWord} Manager\nor the {saveStateWord} Box itself is empty.");
                             return null;
                         }
-                        newSk = new StashKey(CorruptCore.RtcCore.GetRandomKey(), psk.ParentKey, bl);
-                        newSk.RomFilename = psk.RomFilename;
-                        newSk.SystemName = psk.SystemName;
-                        newSk.SystemCore = psk.SystemCore;
-                        newSk.GameName = psk.GameName;
-                        newSk.StateLocation = psk.StateLocation;
-                        newSk.SyncSettings = psk.SyncSettings;
+                        newSk = new StashKey(CorruptCore.RtcCore.GetRandomKey(), psk.ParentKey, bl)
+                        {
+                            RomFilename = psk.RomFilename,
+                            SystemName = psk.SystemName,
+                            SystemCore = psk.SystemCore,
+                            GameName = psk.GameName,
+                            StateLocation = psk.StateLocation,
+                            SyncSettings = psk.SyncSettings
+                        };
                     }
                     else
+                    {
                         newSk = (StashKey)sk.Clone();
+                    }
                 }
 
                 List<BlastGeneratorProto> protoList = new List<BlastGeneratorProto>();
@@ -510,7 +550,9 @@ namespace RTCV.UI
                         {
                             proto = CreateProtoFromRow(row);
                             if (proto != null)
+                            {
                                 row.Cells["dgvBlastProtoReference"].Value = proto;
+                            }
                         }
                         else
                         {
@@ -526,10 +568,14 @@ namespace RTCV.UI
                 returnList = NetCore.LocalNetCoreRouter.QueryRoute<List<BlastGeneratorProto>>(NetCore.NetcoreCommands.CORRUPTCORE, NetCore.NetcoreCommands.BLASTGENERATOR_BLAST, new object[] { newSk, protoList, loadBeforeCorrupt, applyAfterCorrupt, resumeAfter }, true);
 
                 if (returnList == null)
+                {
                     return null;
+                }
 
                 if (returnList.Count != protoList.Count)
+                {
                     throw (new Exception("Got less protos back compared to protos sent. Aborting!"));
+                }
 
                 //The return list is in the same order as the original list so we can go by index here
                 for (int i = 0; i < dgvBlastGenerator.RowCount; i++)
@@ -574,13 +620,18 @@ namespace RTCV.UI
                 {
                     var value = row.Cells["dgvNoteText"].Value;
                     if (value != null)
+                    {
                         note = value.ToString();
+                    }
                     else
-                        note = String.Empty;
+                    {
+                        note = string.Empty;
+                    }
                 }
                 else
-                    note = String.Empty;
-
+                {
+                    note = string.Empty;
+                }
 
                 string domain = row.Cells["dgvDomain"].Value.ToString();
                 string type = row.Cells["dgvType"].Value.ToString();
@@ -695,14 +746,19 @@ namespace RTCV.UI
         private void NudgeParams(string column, decimal amount, bool shiftDown = false)
         {
             if (shiftDown)
+            {
                 foreach (DataGridViewRow selected in dgvBlastGenerator.SelectedRows)
                 {
                     if ((Convert.ToDecimal(selected.Cells[column].Value) - amount) >= 0)
-
+                    {
                         selected.Cells[column].Value = Convert.ToDecimal(selected.Cells[column].Value) - amount;
+                    }
                     else
+                    {
                         selected.Cells[column].Value = 0;
+                    }
                 }
+            }
             else
             {
                 foreach (DataGridViewRow selected in dgvBlastGenerator.SelectedRows)
@@ -710,9 +766,13 @@ namespace RTCV.UI
                     decimal max = ((DataGridViewNumericUpDownCell)selected.Cells[column]).Maximum;
 
                     if ((Convert.ToDecimal(selected.Cells[column].Value) - amount) <= max)
+                    {
                         selected.Cells[column].Value = Convert.ToDecimal(selected.Cells[column].Value) + amount;
+                    }
                     else
+                    {
                         selected.Cells[column].Value = max;
+                    }
                 }
             }
         }
@@ -744,7 +804,10 @@ namespace RTCV.UI
                 }
 
                 foreach (DataGridViewRow row in dgvBlastGenerator.Rows)
+                {
                     PopulateDomainCombobox(row);
+                }
+
                 return true;
             }
             catch (NullReferenceException e)
@@ -780,8 +843,10 @@ namespace RTCV.UI
                 dt.Rows.Add(cellValues);
             }
 
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.Filter = "bg|*.bg";
+            SaveFileDialog sfd = new SaveFileDialog
+            {
+                Filter = "bg|*.bg"
+            };
             if (sfd.ShowDialog() == DialogResult.OK)
             {
                 try
@@ -834,7 +899,9 @@ namespace RTCV.UI
                     };
                     dt = JsonConvert.DeserializeObject<DataTable>(File.ReadAllText(ofd.FileName), settings);
                     if (!import)
+                    {
                         dgv.Rows.Clear();
+                    }
 
                     foreach (DataRow row in dt.Rows)
                     {
@@ -862,10 +929,13 @@ namespace RTCV.UI
                         {
                             var item = row.ItemArray[i];
                             if (item is DBNull)
+                            {
                                 dgv.Rows[lastrow].Cells[i].Value = GetDefault(dgv.Rows[lastrow].Cells[i].ValueType);
+                            }
                             else
+                            {
                                 dgv.Rows[lastrow].Cells[i].Value = item;
-
+                            }
                         }
                         //Override these two
                         dgv[(int)BlastGeneratorColumn.dgvBlastProtoReference, lastrow].Value = null;
@@ -960,14 +1030,19 @@ namespace RTCV.UI
         public bool IsUserEditing()
         {
             if (dgvBlastGenerator.IsCurrentCellInEditMode)
+            {
                 return true;
+            }
+
             foreach (var control in allControls)
             {
                 //We assume focus on a TB or UpDown is edit mode
                 if (control is TextBox || control is NumericUpDown)
                 {
                     if (control.Focused)
+                    {
                         return true;
+                    }
                 }
             }
             return false;
@@ -978,7 +1053,8 @@ namespace RTCV.UI
             return new[] { sk };
         }
     }
-    class NoteItem : INote
+
+    internal class NoteItem : INote
     {
         public string Note { get; set; }
         public NoteItem(string note)

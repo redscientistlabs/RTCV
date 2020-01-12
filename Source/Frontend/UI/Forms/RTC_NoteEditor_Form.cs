@@ -1,13 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using System.Collections.Generic;
-using System.Text;
 using RTCV.CorruptCore;
 using RTCV.NetCore.StaticTools;
-using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
@@ -43,7 +41,9 @@ namespace RTCV.UI
         private void RTC_NE_Form_Load(object sender, EventArgs e)
         {
             if (note.Note != null)
+            {
                 tbNote.Text = note.Note.Replace("\n", Environment.NewLine);
+            }
 
             // Set window location
             if (UICore.NoteBoxPosition != new Point(0, 0))
@@ -77,23 +77,33 @@ namespace RTCV.UI
             string cleanText = string.Join("\n", tbNote.Lines.Select(it => it.Trim()));
 
             if (cleanText == "[DIFFERENT]")
+            {
                 return;
+            }
 
             var oldText = note.Note;
 
-            if (String.IsNullOrEmpty(cleanText))
+            if (string.IsNullOrEmpty(cleanText))
             {
-                note.Note = String.Empty;
+                note.Note = string.Empty;
                 if (cells != null)
+                {
                     foreach (DataGridViewCell cell in cells)
-                        cell.Value = String.Empty;
+                    {
+                        cell.Value = string.Empty;
+                    }
+                }
             }
             else
             {
                 note.Note = cleanText;
                 if (cells != null)
+                {
                     foreach (DataGridViewCell cell in cells)
+                    {
                         cell.Value = "📝";
+                    }
+                }
             }
 
             //If our cell comes from the GH's dgv and the text changed, prompt unsavededits

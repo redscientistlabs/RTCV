@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-using System.Runtime.InteropServices;
 using System.Media;
-using System.Diagnostics;
-using RTCV.CorruptCore;
-using static RTCV.UI.UI_Extensions;
+using System.Windows.Forms;
 using RTCV.NetCore.StaticTools;
+using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
@@ -49,17 +43,28 @@ namespace RTCV.UI
             RTCV.NetCore.Params.SetParam("CRASHSOUND", cbCrashSoundEffect.SelectedIndex.ToString());
         }
 
-        private void nmGameProtectionDelay_ValueChanged(object sender, KeyPressEventArgs e) => UpdateGameProtectionDelay();
+        private void nmGameProtectionDelay_ValueChanged(object sender, KeyPressEventArgs e)
+        {
+            UpdateGameProtectionDelay();
+        }
 
-        private void nmGameProtectionDelay_ValueChanged(object sender, KeyEventArgs e) => UpdateGameProtectionDelay();
+        private void nmGameProtectionDelay_ValueChanged(object sender, KeyEventArgs e)
+        {
+            UpdateGameProtectionDelay();
+        }
 
-        private void nmGameProtectionDelay_ValueChanged(object sender, EventArgs e) => UpdateGameProtectionDelay();
+        private void nmGameProtectionDelay_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateGameProtectionDelay();
+        }
 
         public void UpdateGameProtectionDelay()
         {
             GameProtection.BackupInterval = Convert.ToInt32(S.GET<RTC_SettingsNetCore_Form>().nmGameProtectionDelay.Value);
             if (GameProtection.isRunning)
+            {
                 GameProtection.Reset(false);
+            }
         }
 
         private void RTC_SettingsNetCore_Form_Load(object sender, EventArgs e)

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -13,7 +12,7 @@ namespace RTCV.UI
     //Todo, rebuild this?
     public static class GameProtection
     {
-        static Timer t;
+        private static Timer t;
         public static int BackupInterval = 5;
         public static bool isRunning = false;
         public static bool WasAutoCorruptRunning = false;
@@ -70,7 +69,9 @@ namespace RTCV.UI
                     var _sk = AllBackupStates.First.Value;
                     AllBackupStates.RemoveFirst();
                     if (_sk != null)
+                    {
                         Task.Run(() => RemoveBackup(_sk)); //Do this async to prevent hangs from a slow drive
+                    }
                 }
 
                 AllBackupStates.AddLast(sk);
@@ -91,7 +92,9 @@ namespace RTCV.UI
             sk?.Run();
             //Don't delete it if it's also our "current" state
             if (sk != CorruptCore.StockpileManager_UISide.BackupedState)
+            {
                 Task.Run(() => RemoveBackup(sk)); //Don't wait on the hdd operations
+            }
         }
 
 
@@ -100,7 +103,9 @@ namespace RTCV.UI
             try
             {
                 if (File.Exists(sk.StateFilename))
+                {
                     File.Delete(sk.StateFilename);
+                }
             }
             catch (Exception e)
             {

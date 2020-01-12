@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
 
@@ -14,7 +8,7 @@ namespace RTCV.UI.Components.Controls
     public partial class SavestateHolder : UserControl
     {
         private StashKey _sk = null;
-        public StashKey sk { get => _sk; }
+        public StashKey sk => _sk;
 
         private SaveStateKey ssk = null;
 
@@ -31,7 +25,9 @@ namespace RTCV.UI.Components.Controls
             ssk = key;
             _sk = key?.StashKey;
             if (key?.Text == null)
+            {
                 tbSavestate.Visible = false;
+            }
             else
             {
                 tbSavestate.Text = key.Text;

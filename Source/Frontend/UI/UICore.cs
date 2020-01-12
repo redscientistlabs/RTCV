@@ -1,25 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Media;
-using System.Net;
 using System.Reflection;
 using System.Threading;
 using System.Timers;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
-using RTCV.UI;
-using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
 using RTCV.UI.Input;
-using static RTCV.NetCore.NetcoreCommands;
 using RTCV.UI.Modular;
+using static RTCV.NetCore.NetcoreCommands;
+using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
@@ -50,7 +44,9 @@ namespace RTCV.UI
             registerHotkeyBlacklistControls(S.GET<UI_CoreForm>());
 
             if (!RtcCore.Attached)
+            {
                 S.SET((RTC_Standalone_Form)standaloneForm);
+            }
 
             Form dummy = new Form();
             IntPtr Handle = dummy.Handle;
@@ -174,7 +170,9 @@ namespace RTCV.UI
         public static void UpdateFormFocusStatus(bool? forceSet = null)
         {
             if (RTCV.NetCore.AllSpec.UISpec == null)
+            {
                 return;
+            }
 
             bool previousState = (bool?)RTCV.NetCore.AllSpec.UISpec[RTC_INFOCUS] ?? false;
             //bool currentState = forceSet ?? isAnyRTCFormFocused();
@@ -193,7 +191,9 @@ namespace RTCV.UI
             bool ExternalForm = Form.ActiveForm == null;
 
             if (ExternalForm)
+            {
                 return false;
+            }
 
             var form = Form.ActiveForm;
             var t = form.GetType();
@@ -212,7 +212,10 @@ namespace RTCV.UI
         public static void LockInterface(bool focusCoreForm = true, bool blockMainForm = false)
         {
             if (interfaceLocked || lockPending)
+            {
                 return;
+            }
+
             lockPending = true;
             lock (lockObject)
             {
@@ -226,18 +229,23 @@ namespace RTCV.UI
                 S.GET<RTC_ConnectionStatus_Form>().pnBlockedButtons.Show();
 
                 if (blockMainForm)
+                {
                     UI_CanvasForm.mainForm.BlockView();
+                }
 
                 UI_CanvasForm.extraForms.ForEach(it => it.BlockView());
 
                 var ifs = S.GETINTERFACES<IBlockable>();
 
                 foreach (var i in ifs)
+                {
                     i.BlockView();
+                }
 
                 if (focusCoreForm)
+                {
                     cf.Focus();
-
+                }
             }
             lockPending = false;
         }
@@ -245,7 +253,10 @@ namespace RTCV.UI
         public static void UnlockInterface()
         {
             if (lockPending)
+            {
                 lockPending = false;
+            }
+
             lock (lockObject)
             {
                 interfaceLocked = false;
@@ -257,7 +268,9 @@ namespace RTCV.UI
                 UI_CanvasForm.extraForms.ForEach(it => it.UnblockView());
                 var ifs = S.GETINTERFACES<IBlockable>();
                 foreach (var i in ifs)
+                {
                     i.UnblockView();
+                }
 
                 //Resume hotkeys
                 SetHotkeyTimer(true);
@@ -274,10 +287,14 @@ namespace RTCV.UI
         public static void BlockView(this IBlockable ib)
         {
             if (ib is RTC_ConnectionStatus_Form)
+            {
                 return;
+            }
 
             if (ib.blockPanel == null)
+            {
                 ib.blockPanel = new Panel();
+            }
 
             if (ib is Control c)
             {
@@ -298,10 +315,14 @@ namespace RTCV.UI
         public static void UnblockView(this IBlockable ib)
         {
             if (ib is RTC_ConnectionStatus_Form)
+            {
                 return;
+            }
 
             if (ib.blockPanel != null)
+            {
                 ib.blockPanel.Visible = false;
+            }
         }
 
         //All RTC forms
@@ -309,13 +330,20 @@ namespace RTCV.UI
         {
 
             if (baseType == null)
+            {
                 baseType = typeof(RTCV.UI.UI_CoreForm);
+            }
             //This fetches all singletons interface IAutoColorized
 
             List<Form> all = new List<Form>();
             foreach (Type t in Assembly.GetAssembly(baseType).GetTypes())
+            {
                 if (typeof(IAutoColorize).IsAssignableFrom(t) && t != typeof(IAutoColorize))
+                {
                     all.Add((Form)S.GET(Type.GetType(t.ToString())));
+                }
+            }
+
             return all.ToArray();
         }
 
@@ -325,18 +353,24 @@ namespace RTCV.UI
         public static void CloseAllRtcForms() //This allows every form to get closed to prevent RTC from hanging
         {
             if (isClosing)
+            {
                 return;
+            }
 
             isClosing = true;
 
             foreach (Form frm in UICore.AllColorizedSingletons())
             {
                 if (frm != null)
+                {
                     frm.Close();
+                }
             }
 
             if (S.GET<RTC_Standalone_Form>() != null)
+            {
                 S.GET<RTC_Standalone_Form>().Close();
+            }
 
             //Clean out the working folders
             if (!CorruptCore.RtcCore.DontCleanSavestatesOnQuit)
@@ -418,39 +452,53 @@ namespace RTCV.UI
             Dark3Color = color.ChangeColorBrightness(dark3);
             Dark4Color = color.ChangeColorBrightness(dark4);
 
-            var tag2ColorDico = new Dictionary<string, Color>();
-            tag2ColorDico.Add("color:light2", Light2Color);
-            tag2ColorDico.Add("color:light1", Light1Color);
-            tag2ColorDico.Add("color:normal", NormalColor);
-            tag2ColorDico.Add("color:dark1", Dark1Color);
-            tag2ColorDico.Add("color:dark2", Dark2Color);
-            tag2ColorDico.Add("color:dark3", Dark3Color);
-            tag2ColorDico.Add("color:dark4", Dark4Color);
+            var tag2ColorDico = new Dictionary<string, Color>
+            {
+                { "color:light2", Light2Color },
+                { "color:light1", Light1Color },
+                { "color:normal", NormalColor },
+                { "color:dark1", Dark1Color },
+                { "color:dark2", Dark2Color },
+                { "color:dark3", Dark3Color },
+                { "color:dark4", Dark4Color }
+            };
 
             foreach (var c in allControls)
             {
                 var tag = c.Tag?.ToString().Split(' ');
 
                 if (tag == null || tag.Length == 0)
+                {
                     continue;
+                }
 
                 //Snag the tag and look for the color.
                 var ctag = tag.FirstOrDefault(x => x.Contains("color:"));
 
                 //We didn't find a valid color
                 if (ctag == null || !tag2ColorDico.TryGetValue(ctag, out Color _color))
+                {
                     continue;
+                }
 
                 if (c is Label l && l.BackColor != Color.FromArgb(30, 31, 32))
+                {
                     c.ForeColor = _color;
+                }
                 else
+                {
                     c.BackColor = _color;
+                }
 
                 if (c is Button btn)
+                {
                     btn.FlatAppearance.BorderColor = _color;
+                }
 
                 if (c is DataGridView dgv)
+                {
                     dgv.BackgroundColor = _color;
+                }
 
                 c.Invalidate();
             }
@@ -469,7 +517,9 @@ namespace RTCV.UI
                 color = cd.Color;
             }
             else
+            {
                 return;
+            }
 
             GeneralColor = color;
             SetRTCColor(color);
@@ -485,7 +535,9 @@ namespace RTCV.UI
                 UICore.GeneralColor = Color.FromArgb(Convert.ToByte(bytes[0]), Convert.ToByte(bytes[1]), Convert.ToByte(bytes[2]));
             }
             else
+            {
                 UICore.GeneralColor = Color.FromArgb(110, 150, 193);
+            }
 
             UICore.SetRTCColor(UICore.GeneralColor);
         }
@@ -497,7 +549,7 @@ namespace RTCV.UI
 
         public static object InputLock = new object();
         //Borrowed from Bizhawk. Thanks guys
-        private static void ProcessInputCheck(Object o, ElapsedEventArgs e)
+        private static void ProcessInputCheck(object o, ElapsedEventArgs e)
         {
             try
             {
@@ -557,7 +609,9 @@ namespace RTCV.UI
                     SyncObjectSingleton.FormExecute(() =>
                     {
                         if (S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value > 1)
+                        {
                             S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value--;
+                        }
                     });
                     break;
 
@@ -565,7 +619,9 @@ namespace RTCV.UI
                     SyncObjectSingleton.FormExecute(() =>
                     {
                         if (S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value < S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Maximum)
+                        {
                             S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value++;
+                        }
                     });
                     break;
 
@@ -573,7 +629,9 @@ namespace RTCV.UI
                     SyncObjectSingleton.FormExecute(() =>
                     {
                         if (S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value > 1)
+                        {
                             S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value--;
+                        }
                     });
                     break;
 
@@ -581,7 +639,9 @@ namespace RTCV.UI
                     SyncObjectSingleton.FormExecute(() =>
                     {
                         if (S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value < S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Maximum)
+                        {
                             S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value++;
+                        }
                     });
                     break;
 
@@ -681,7 +741,9 @@ namespace RTCV.UI
                         var f = S.GET<UI_CoreForm>();
                         var b = f.btnGpJumpBack;
                         if (b.Visible && b.Enabled)
+                        {
                             f.btnGpJumpBack_Click(null, null);
+                        }
                     });
                     break;
 
@@ -691,7 +753,9 @@ namespace RTCV.UI
                         var f = S.GET<UI_CoreForm>();
                         var b = f.btnGpJumpNow;
                         if (b.Visible && b.Enabled)
+                        {
                             f.btnGpJumpNow_Click(null, null);
+                        }
                     });
                     break;
                 case "Disable 50":
@@ -795,9 +859,13 @@ namespace RTCV.UI
             else
             {
                 if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] == null)
+                {
                     S.GET<UI_CoreForm>().btnManualBlast.Visible = false;
+                }
                 else
+                {
                     S.GET<UI_CoreForm>().btnManualBlast.Visible = true;
+                }
 
                 S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
             }
@@ -841,14 +909,20 @@ namespace RTCV.UI
         public static void LoadLists(string dir)
         {
             if (!Directory.Exists(dir))
+            {
                 return;
+            }
+
             string[] paths = System.IO.Directory.GetFiles(dir).Where(x => x.EndsWith(".txt", StringComparison.OrdinalIgnoreCase)).ToArray();
             paths = paths.OrderBy(x => x).ToArray();
 
             List<string> hashes = Filtering.LoadListsFromPaths(paths);
             toggleLimiterBoxSource(false);
             foreach (var hash in hashes)
+            {
                 Filtering.RegisterListInUI(Filtering.Hash2NameDico[hash], hash);
+            }
+
             toggleLimiterBoxSource(true);
         }
 

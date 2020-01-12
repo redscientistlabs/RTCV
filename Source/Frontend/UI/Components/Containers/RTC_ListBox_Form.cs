@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using System.Xml.Serialization;
-using System.Runtime.InteropServices;
-using System.ComponentModel;
 using RTCV.CorruptCore;
 using static RTCV.UI.UI_Extensions;
 
@@ -15,7 +9,7 @@ namespace RTCV.UI
 {
     public partial class RTC_ListBox_Form : ComponentForm, IBlockable
     {
-        ComponentForm[] childForms;
+        private ComponentForm[] childForms;
 
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
@@ -33,7 +27,9 @@ namespace RTCV.UI
             lbComponentForms.ValueMember = "Value";
 
             foreach (var item in childForms)
+            {
                 lbComponentForms.Items.Add(new ComboBoxItem<Form>(item.Text, item));
+            }
         }
 
         private void lbComponentForms_SelectedIndexChanged(object sender, EventArgs e)

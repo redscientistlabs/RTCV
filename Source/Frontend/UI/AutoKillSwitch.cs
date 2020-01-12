@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
+using System.IO;
 using System.Media;
-using System.Text;
 using System.Windows.Forms;
 using RTCV.NetCore;
 using RTCV.NetCore.StaticTools;
-using RTCV.CorruptCore;
-using RTCV.UI;
-using static RTCV.UI.UI_Extensions;
-using System.IO;
 
 namespace RTCV.UI
 {
@@ -27,16 +21,22 @@ namespace RTCV.UI
             get
             {
                 if (BoopMonitoringTimer == null)
+                {
                     return false;
+                }
+
                 return BoopMonitoringTimer.Enabled;
             }
             set
             {
                 if (value)
+                {
                     Start();
+                }
                 else
+                {
                     Stop();
-
+                }
             }
         }
 
@@ -48,7 +48,9 @@ namespace RTCV.UI
         public static void PlayCrashSound(bool forcePlay = false)
         {
             if (LoadedSounds?.Length != 0)
+            {
                 LoadedSounds[CorruptCore.RtcCore.RND.Next(LoadedSounds.Length)].Play();
+            }
         }
 
         public static void Pulse()
@@ -61,16 +63,21 @@ namespace RTCV.UI
         {
             set
             {
-                if (String.IsNullOrEmpty(value))
+                if (string.IsNullOrEmpty(value))
+                {
                     return;
+                }
+
                 _oldEmuDir = value;
             }
-            get { return _oldEmuDir; }
+            get => _oldEmuDir;
         }
         public static void KillEmulator(bool forceBypass = false)
         {
             if (!ShouldKillswitchFire || (UICore.FirstConnect && !forceBypass) || (!S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked && !forceBypass))
+            {
                 return;
+            }
 
             ShouldKillswitchFire = false;
 
@@ -89,8 +96,10 @@ namespace RTCV.UI
                 {
                 }
 
-                killswitchSpamPreventTimer = new Timer();
-                killswitchSpamPreventTimer.Interval = 5000;
+                killswitchSpamPreventTimer = new Timer
+                {
+                    Interval = 5000
+                };
                 killswitchSpamPreventTimer.Tick += KillswitchSpamPreventTimer_Tick;
                 killswitchSpamPreventTimer.Start();
 
@@ -133,8 +142,10 @@ namespace RTCV.UI
             }
             catch { }
 
-            BoopMonitoringTimer = new System.Windows.Forms.Timer();
-            BoopMonitoringTimer.Interval = 500;
+            BoopMonitoringTimer = new System.Windows.Forms.Timer
+            {
+                Interval = 500
+            };
             BoopMonitoringTimer.Tick += BoopMonitoringTimer_Tick;
             BoopMonitoringTimer.Start();
         }
@@ -147,14 +158,20 @@ namespace RTCV.UI
         private static void BoopMonitoringTimer_Tick(object sender, EventArgs e)
         {
             if (!Enabled || (UI_VanguardImplementation.connector?.netConn?.status != NetCore.NetworkStatus.CONNECTED))
+            {
                 return;
+            }
 
             pulseCount--;
 
             if (pulseCount < MaxMissedPulses - 1)
+            {
                 S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.PerformStep();
+            }
             else if (S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value != 0)
+            {
                 S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0;
+            }
 
             if (pulseCount == 0)
             {

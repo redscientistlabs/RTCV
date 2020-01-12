@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using RTCV.CorruptCore;
-using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
 
 namespace RTCV.UI
@@ -45,7 +40,7 @@ namespace RTCV.UI
                 MessageBox.Show("Select at least one column");
                 return;
             }
-            List<String> temp = new List<String>();
+            List<String> temp = new List<string>();
             StringBuilder sb = new StringBuilder();
             foreach (CheckBox cb in tablePanel.Controls.Cast<CheckBox>().Where(item => item.Checked))
             {

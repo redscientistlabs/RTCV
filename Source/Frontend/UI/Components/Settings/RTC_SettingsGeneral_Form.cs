@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.Windows.Forms;
 using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.UI;
-using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
+using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
@@ -82,9 +73,13 @@ namespace RTCV.UI
         private void cbDisableBizhawkOSD_CheckedChanged(object sender, EventArgs e)
         {
             if (cbDisableEmulatorOSD.Checked)
+            {
                 RTCV.NetCore.Params.SetParam(RTCSPEC.CORE_EMULATOROSDDISABLED);
+            }
             else
+            {
                 RTCV.NetCore.Params.RemoveParam(RTCSPEC.CORE_EMULATOROSDDISABLED);
+            }
 
             CorruptCore.RtcCore.EmulatorOsdDisabled = cbDisableEmulatorOSD.Checked;
         }
@@ -92,9 +87,13 @@ namespace RTCV.UI
         private void cbAllowCrossCoreCorruption_CheckedChanged(object sender, EventArgs e)
         {
             if (cbAllowCrossCoreCorruption.Checked)
+            {
                 RTCV.NetCore.Params.SetParam("ALLOW_CROSS_CORE_CORRUPTION");
+            }
             else
+            {
                 RTCV.NetCore.Params.RemoveParam("ALLOW_CROSS_CORE_CORRUPTION");
+            }
 
             CorruptCore.RtcCore.AllowCrossCoreCorruption = cbAllowCrossCoreCorruption.Checked;
         }
@@ -102,9 +101,13 @@ namespace RTCV.UI
         private void cbDontCleanAtQuit_CheckedChanged(object sender, EventArgs e)
         {
             if (cbDontCleanAtQuit.Checked)
+            {
                 RTCV.NetCore.Params.SetParam("DONT_CLEAN_SAVESTATES_AT_QUIT");
+            }
             else
+            {
                 RTCV.NetCore.Params.RemoveParam("DONT_CLEAN_SAVESTATES_AT_QUIT");
+            }
 
             CorruptCore.RtcCore.DontCleanSavestatesOnQuit = cbDontCleanAtQuit.Checked;
         }
@@ -112,9 +115,13 @@ namespace RTCV.UI
         private void CbUncapIntensity_CheckedChanged(object sender, EventArgs e)
         {
             if (cbUncapIntensity.Checked)
+            {
                 RTCV.NetCore.Params.SetParam("UNCAP_INTENSITY");
+            }
             else
+            {
                 RTCV.NetCore.Params.RemoveParam("UNCAP_INTENSITY");
+            }
 
             S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.UncapNumericBox = cbUncapIntensity.Checked;
             S.GET<RTC_GlitchHarvesterIntensity_Form>().multiTB_Intensity.UncapNumericBox = cbUncapIntensity.Checked;

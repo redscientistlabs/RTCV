@@ -1,19 +1,12 @@
-﻿using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.NetCore.StaticTools;
-using RTCV.UI.Modular;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json;
-using static RTCV.UI.UI_Extensions;
+using RTCV.CorruptCore;
+using RTCV.NetCore;
+using RTCV.NetCore.StaticTools;
+using RTCV.UI.Modular;
 
 namespace RTCV.UI
 {
@@ -36,10 +29,7 @@ namespace RTCV.UI
 
         public bool AutoCorrupt
         {
-            get
-            {
-                return CorruptCore.RtcCore.AutoCorrupt;
-            }
+            get => CorruptCore.RtcCore.AutoCorrupt;
             set
             {
                 if (value)
@@ -134,7 +124,9 @@ This message only appears once.";
 
                 //Use the text file if it exists
                 if (File.Exists(disclaimerPath))
+                {
                     disclaimer = File.ReadAllText(disclaimerPath);
+                }
 
                 S.GET<RTC_Intro_Form>().DisplayRtcvDisclaimer(disclaimer.Replace("[ver]", CorruptCore.RtcCore.RtcVersion));
                 //MessageBox.Show(disclaimer.Replace("[ver]", CorruptCore.RtcCore.RtcVersion), "RTC", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -173,8 +165,9 @@ This message only appears once.";
         {
             //Sends event to SubForm 
             if (cfForm.spForm != null)
+            {
                 cfForm.spForm.Parent_ResizeBegin();
-
+            }
         }
 
 
@@ -182,10 +175,12 @@ This message only appears once.";
         {
             //Sends event to SubForm
             if (cfForm.spForm != null)
+            {
                 cfForm.spForm?.Parent_ResizeEnd();
+            }
         }
 
-        FormWindowState? LastWindowState = null;
+        private FormWindowState? LastWindowState = null;
         private void UI_CoreForm_Resize(object sender, EventArgs e)
         {
             // When window state changes
@@ -203,7 +198,9 @@ This message only appears once.";
                 */
 
                 if (cfForm.spForm != null)
+                {
                     cfForm.spForm?.Parent_ResizeEnd();
+                }
 
                 LastWindowState = WindowState;
             }
@@ -255,7 +252,9 @@ This message only appears once.";
         public void UnlockSideBar()
         {
             if (pnLockSidebar != null)
+            {
                 pnLockSidebar.Visible = false;
+            }
         }
 
         public void btnEngineConfig_Click(object sender, EventArgs e)
@@ -268,7 +267,9 @@ This message only appears once.";
                 smForm.EnteringSimpleMode();
             }
             else
+            {
                 UI_DefaultGrids.engineConfig.LoadToMain();
+            }
         }
 
         private void pnAutoKillSwitch_MouseHover(object sender, EventArgs e)
@@ -294,19 +295,27 @@ This message only appears once.";
         public void btnAutoCorrupt_Click(object sender, EventArgs e)
         {
             if (btnAutoCorrupt.ForeColor == Color.Silver)
+            {
                 return;
+            }
 
             AutoCorrupt = !AutoCorrupt;
             if (AutoCorrupt)
+            {
                 RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_RUNBEFORE, true);
+            }
         }
 
         public void btnManualBlast_Click(object sender, EventArgs e)
         {
             if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null)
+            {
                 S.GET<RTC_GlitchHarvesterBlast_Form>().btnCorrupt_Click(sender, e);
+            }
             else
+            {
                 LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.MANUALBLAST, true);
+            }
         }
 
         private void btnEasyMode_MouseDown(object sender, MouseEventArgs e)
@@ -345,18 +354,18 @@ This message only appears once.";
             UI_DefaultGrids.stockpilePlayer.LoadToMain();
         }
 
-
-
-        int settingsRightClickTimer = 0;
-        System.Windows.Forms.Timer testErrorTimer = null;
+        private int settingsRightClickTimer = 0;
+        private System.Windows.Forms.Timer testErrorTimer = null;
         public void btnSettings_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
                 if (testErrorTimer == null && !RTCV.NetCore.Params.IsParamSet("DEBUG_FETCHMODE"))
                 {
-                    testErrorTimer = new System.Windows.Forms.Timer();
-                    testErrorTimer.Interval = 3000;
+                    testErrorTimer = new System.Windows.Forms.Timer
+                    {
+                        Interval = 3000
+                    };
                     testErrorTimer.Tick += TestErrorTimer_Tick;
                     testErrorTimer.Start();
                 }
@@ -425,7 +434,9 @@ This message only appears once.";
                 btnGpJumpBack.Visible = false;
 
                 if (!GameProtection.HasBackedUpStates)
+                {
                     return;
+                }
 
                 GameProtection.PopAndRunBackupState();
                 GameProtection.Reset(false);
@@ -433,7 +444,9 @@ This message only appears once.";
             finally
             {
                 if (GameProtection.HasBackedUpStates)
+                {
                     btnGpJumpBack.Visible = true;
+                }
             }
         }
 
@@ -554,11 +567,13 @@ This message only appears once.";
             //Selects an engine from a given string name
 
             for (int i = 0; i < S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Count; i++)
+            {
                 if (S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items[i].ToString() == name)
                 {
                     S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.SelectedIndex = i;
                     break;
                 }
+            }
         }
         private void BlastRawStash()
         {

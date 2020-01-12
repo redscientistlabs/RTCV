@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RTCV.UI.Components.Controls
@@ -25,13 +20,15 @@ namespace RTCV.UI.Components.Controls
         [Description("Net value of the control (displayed in numeric box)"), Category("Data")]
         public long Value
         {
-            get { return _Value; }
+            get => _Value;
             set
             {
                 _Value = value;
                 var tbValue = nmValueToTbValueQuadScale(value);
                 if (!GeneralUpdateFlag)
+                {
                     UpdateAllControls(value, tbValue, null);
+                }
             }
         }
 
@@ -46,10 +43,7 @@ namespace RTCV.UI.Components.Controls
         [Description("Display a checkbox before the label"), Category("Data")]
         public bool DisplayCheckbox
         {
-            get
-            {
-                return _DisplayCheckbox;
-            }
+            get => _DisplayCheckbox;
             set
             {
                 _DisplayCheckbox = value;
@@ -80,32 +74,30 @@ namespace RTCV.UI.Components.Controls
         [Description("Minimum value of the control"), Category("Data")]
         public long Minimum
         {
-            get
-            {
-                return _Minimum;
-            }
+            get => _Minimum;
             set
             {
                 _Minimum = value;
                 nmControlValue.Minimum = value;
                 tbControlValue.Minimum = Convert.ToInt32(value);
                 if (FirstLoadDone)
+                {
                     tbControlValue_ValueChanged(null, null);
+                }
             }
         }
         private long _Maximum = 65535;
         [Description("Maximum value of the control"), Category("Data")]
         public long Maximum
         {
-            get
-            {
-                return _Maximum;
-            }
+            get => _Maximum;
             set
             {
                 _Maximum = value;
                 if (FirstLoadDone)
+                {
                     tbControlValue_ValueChanged(null, null);
+                }
             }
         }
 
@@ -113,7 +105,7 @@ namespace RTCV.UI.Components.Controls
         [Description("Displayed label of the control"), Category("Data")]
         public string Label
         {
-            get { return name; }
+            get => name;
             set
             {
                 name = value;
@@ -139,8 +131,10 @@ namespace RTCV.UI.Components.Controls
             cbControlName.Location = lbControlName.Location;
             tbControlValue.MouseWheel += TbControlValue_MouseWheel;
 
-            updater = new Timer();
-            updater.Interval = updateThreshold;
+            updater = new Timer
+            {
+                Interval = updateThreshold
+            };
             updater.Tick += Updater_Tick;
 
             //Calculate A for quadratic function
@@ -180,7 +174,9 @@ namespace RTCV.UI.Components.Controls
             decimal X = Maximum;
 
             if (A != 0) // fixes divisions by 0
+            {
                 X = DecSqrt(Y / A);
+            }
 
             decimal Floored_X = Math.Floor(X);
             return Convert.ToInt32(Floored_X);
@@ -243,31 +239,42 @@ namespace RTCV.UI.Components.Controls
                 if (setter != tbControlValue)
                 {
                     if (tbValue > 65536)
+                    {
                         tbControlValue.Value = Convert.ToInt32(65536);
+                    }
                     else if (tbValue < tbControlValue.Minimum)
                     {
                         tbControlValue.Value = Convert.ToInt32(Minimum);
                     }
                     else
+                    {
                         tbControlValue.Value = Convert.ToInt32(tbValue);
+                    }
                 }
 
                 if (setter != nmControlValue)
                 {
                     if (nmValue > Maximum && !UncapNumericBox)
+                    {
                         nmValue = Convert.ToInt32(Maximum);
+                    }
                     else if (nmValue < Minimum)
+                    {
                         nmValue = Convert.ToInt32(Minimum);
+                    }
 
                     nmControlValue.Value = nmValue;
                 }
 
                 foreach (var slave in slaveComps)
+                {
                     slave.UpdateAllControls(nmValue, tbValue, this);
+                }
 
                 if (_parent != null)
+                {
                     _parent.UpdateAllControls(nmValue, tbValue, setter);
-
+                }
             }
 
             GeneralUpdateFlag = false;
@@ -278,9 +285,14 @@ namespace RTCV.UI.Components.Controls
             UpdateAllControls(nmValue, tbValue, setter);
 
             if (nmValue > Maximum && !UncapNumericBox)
+            {
                 nmValue = Convert.ToInt32(Maximum);
+            }
+
             if (nmValue < Minimum)
+            {
                 nmValue = Convert.ToInt32(Minimum);
+            }
 
             Value = nmValue;
             updater.Stop();
@@ -290,12 +302,16 @@ namespace RTCV.UI.Components.Controls
         private void tbControlValue_ValueChanged(object sender, EventArgs e)
         {
             if (GeneralUpdateFlag)
+            {
                 return;
+            }
 
             int tbValue = tbControlValue.Value;
             long nmValue = tbValueToNmValueQuadScale(tbValue);
             if (nmValue < _Minimum)
+            {
                 nmValue = _Minimum;
+            }
 
             PropagateValue(nmValue, tbValue, tbControlValue);
         }
@@ -303,12 +319,14 @@ namespace RTCV.UI.Components.Controls
         private void nmControlValue_ValueChanged(object sender, EventArgs e)
         {
             if (GeneralUpdateFlag)
+            {
                 return;
+            }
 
-            if (nmControlValue.Value > Int32.MaxValue)
+            if (nmControlValue.Value > int.MaxValue)
             {
                 GeneralUpdateFlag = true;
-                nmControlValue.Value = Int32.MaxValue;
+                nmControlValue.Value = int.MaxValue;
                 GeneralUpdateFlag = false;
             }
 
@@ -332,7 +350,9 @@ namespace RTCV.UI.Components.Controls
         private void nmControlValue_KeyUp(object sender, KeyEventArgs e)
         {
             if (GeneralUpdateFlag)
+            {
                 return;
+            }
 
             long nmValue = Convert.ToInt64(nmControlValue.Value);
             int tbValue = nmValueToTbValueQuadScale(nmControlValue.Value);
@@ -359,7 +379,7 @@ namespace RTCV.UI.Components.Controls
     internal class NoFocusTrackBar : System.Windows.Forms.TrackBar
     {
         [System.Runtime.InteropServices.DllImport("user32.dll")]
-        public extern static int SendMessage(IntPtr hWnd, uint msg, int wParam, int lParam);
+        public static extern int SendMessage(IntPtr hWnd, uint msg, int wParam, int lParam);
 
         private static int MakeParam(int loWord, int hiWord)
         {

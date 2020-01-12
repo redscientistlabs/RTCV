@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace RTCV.UI
@@ -60,7 +53,9 @@ namespace RTCV.UI
             //Makes Cancel Button appear if needed
 
             if (subForm == null)
+            {
                 return;
+            }
 
             if (!pnContainer.Contains(subForm))
             {
@@ -82,10 +77,14 @@ namespace RTCV.UI
                 }
 
                 if (sf.SubForm_LeftButtonText != null)
+                {
                     btnLeft.Text = sf.SubForm_LeftButtonText;
+                }
 
                 if (sf.SubForm_RightButtonText != null)
+                {
                     btnRight.Text = sf.SubForm_RightButtonText;
+                }
             }
 
         }
@@ -99,7 +98,9 @@ namespace RTCV.UI
             //Then, repositions flating box in the center of the window.
 
             if (parentForm.Width == 0 || parentForm.Height == 0)
+            {
                 return;
+            }
 
             Bitmap bmp = parentForm.getFormScreenShot();
             bmp.Tint(Color.FromArgb(0x7F, UICore.Dark4Color));
@@ -116,7 +117,9 @@ namespace RTCV.UI
             //Fires SubForm_Ok() from Interface SubForm then Exits SubForm Mode
 
             if (subForm is ISubForm)
+            {
                 (subForm as ISubForm).SubForm_RightButton_Click();
+            }
 
             parentForm.CloseSubForm();
         }
@@ -126,7 +129,9 @@ namespace RTCV.UI
             //Fires SubForm_Cancel() from Interface SubForm then Exits SubForm Mode
 
             if (subForm is ISubForm)
+            {
                 (subForm as ISubForm).SubForm_LeftButton_Click();
+            }
 
             parentForm.CloseSubForm();
         }

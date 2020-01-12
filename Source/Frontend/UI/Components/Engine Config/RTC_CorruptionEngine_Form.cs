@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
-using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
-using RTCV.UI.Modular;
+using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
@@ -208,7 +200,10 @@ namespace RTCV.UI
         private void cbClearRewind_CheckedChanged(object sender, EventArgs e)
         {
             if (dontUpdate)
+            {
                 return;
+            }
+
             SetRewindBoxes(((CheckBox)sender).Checked);
 
             S.GET<RTC_CustomEngineConfig_Form>().SetRewindBoxes(((CheckBox)sender).Checked);
@@ -233,14 +228,18 @@ namespace RTCV.UI
         {
             ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
             if (item != null)
+            {
                 RTC_VectorEngine.LimiterListHash = item.Value;
+            }
         }
 
         private void cbVectorValueList_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
             if (item != null)
+            {
                 RTC_VectorEngine.ValueListHash = item.Value;
+            }
         }
 
         private void btnClearCheats_Click(object sender, EventArgs e)
@@ -270,11 +269,11 @@ namespace RTCV.UI
                     break;
 
                 case 2:
-                    nmMinValueNightmare.Maximum = UInt16.MaxValue;
-                    nmMaxValueNightmare.Maximum = UInt16.MaxValue;
+                    nmMinValueNightmare.Maximum = ushort.MaxValue;
+                    nmMaxValueNightmare.Maximum = ushort.MaxValue;
 
-                    nmMinValueHellgenie.Maximum = UInt16.MaxValue;
-                    nmMaxValueHellgenie.Maximum = UInt16.MaxValue;
+                    nmMinValueHellgenie.Maximum = ushort.MaxValue;
+                    nmMaxValueHellgenie.Maximum = ushort.MaxValue;
 
                     nmMinValueNightmare.Value = RTC_NightmareEngine.MinValue16Bit;
                     nmMaxValueNightmare.Value = RTC_NightmareEngine.MaxValue16Bit;
@@ -284,11 +283,11 @@ namespace RTCV.UI
 
                     break;
                 case 4:
-                    nmMinValueNightmare.Maximum = UInt32.MaxValue;
-                    nmMaxValueNightmare.Maximum = UInt32.MaxValue;
+                    nmMinValueNightmare.Maximum = uint.MaxValue;
+                    nmMaxValueNightmare.Maximum = uint.MaxValue;
 
-                    nmMinValueHellgenie.Maximum = UInt32.MaxValue;
-                    nmMaxValueHellgenie.Maximum = UInt32.MaxValue;
+                    nmMinValueHellgenie.Maximum = uint.MaxValue;
+                    nmMaxValueHellgenie.Maximum = uint.MaxValue;
 
                     nmMinValueNightmare.Value = RTC_NightmareEngine.MinValue32Bit;
                     nmMaxValueNightmare.Value = RTC_NightmareEngine.MaxValue32Bit;
@@ -298,11 +297,11 @@ namespace RTCV.UI
 
                     break;
                 case 8:
-                    nmMinValueNightmare.Maximum = UInt64.MaxValue;
-                    nmMaxValueNightmare.Maximum = UInt64.MaxValue;
+                    nmMinValueNightmare.Maximum = ulong.MaxValue;
+                    nmMaxValueNightmare.Maximum = ulong.MaxValue;
 
-                    nmMinValueHellgenie.Maximum = UInt64.MaxValue;
-                    nmMaxValueHellgenie.Maximum = UInt64.MaxValue;
+                    nmMinValueHellgenie.Maximum = ulong.MaxValue;
+                    nmMaxValueHellgenie.Maximum = ulong.MaxValue;
 
                     nmMinValueNightmare.Value = RTC_NightmareEngine.MinValue64Bit;
                     nmMaxValueNightmare.Value = RTC_NightmareEngine.MaxValue64Bit;
@@ -364,7 +363,10 @@ namespace RTCV.UI
         private void btnOpenBlastGenerator_Click(object sender, EventArgs e)
         {
             if (S.GET<RTC_BlastGenerator_Form>() != null)
+            {
                 S.GET<RTC_BlastGenerator_Form>().Close();
+            }
+
             S.SET(new RTC_BlastGenerator_Form());
             S.GET<RTC_BlastGenerator_Form>().LoadNoStashKey();
         }
@@ -374,7 +376,9 @@ namespace RTCV.UI
         {
             //We don't want to trigger this if it caps when stepping downwards
             if (updatingMinMax)
+            {
                 return;
+            }
 
             ulong value = Convert.ToUInt64(nmMinValueNightmare.Value);
 
@@ -401,7 +405,10 @@ namespace RTCV.UI
         {
             //We don't want to trigger this if it caps when stepping downwards
             if (updatingMinMax)
+            {
                 return;
+            }
+
             ulong value = Convert.ToUInt64(nmMaxValueNightmare.Value);
 
 
@@ -426,7 +433,10 @@ namespace RTCV.UI
         {
             //We don't want to trigger this if it caps when stepping downwards
             if (updatingMinMax)
+            {
                 return;
+            }
+
             ulong value = Convert.ToUInt64(nmMinValueHellgenie.Value);
 
             switch (CorruptCore.RtcCore.CurrentPrecision)
@@ -450,7 +460,9 @@ namespace RTCV.UI
         {
             //We don't want to trigger this if it caps when stepping downwards
             if (updatingMinMax)
+            {
                 return;
+            }
 
             ulong value = Convert.ToUInt64(nmMaxValueHellgenie.Value);
 

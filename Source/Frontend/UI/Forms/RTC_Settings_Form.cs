@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Media;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
-using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
+using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
@@ -49,8 +44,9 @@ namespace RTCV.UI
         private void RTC_Settings_Form_Load(object sender, EventArgs e)
         {
             if (Debugger.IsAttached)
+            {
                 btnTestForm.Show();
-
+            }
         }
 
         private void btnCloseSettings_Click(object sender, EventArgs e)

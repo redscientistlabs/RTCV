@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Windows.Forms;
-using RTCV.CorruptCore;
 using System.Linq;
 using System.Threading.Tasks;
-using RTCV.Common.Objects;
-using static RTCV.UI.UI_Extensions;
-using RTCV.NetCore.StaticTools;
+using System.Windows.Forms;
+using RTCV.CorruptCore;
 using RTCV.NetCore;
+using RTCV.NetCore.StaticTools;
+using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
@@ -52,7 +51,9 @@ namespace RTCV.UI
                     var sks = r.Result;
 
                     foreach (StashKey key in sks.StashKeys)
+                    {
                         dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.Note);
+                    }
                 }
             }
 
@@ -74,7 +75,9 @@ namespace RTCV.UI
                 btnPreviousItem.Visible = false;
 
                 if (dgvStockpile.SelectedRows.Count == 0)
+                {
                     return;
+                }
 
                 int CurrentSelectedIndex = dgvStockpile.SelectedRows[0].Index;
 
@@ -104,7 +107,9 @@ namespace RTCV.UI
                 btnNextItem.Visible = false;
 
                 if (dgvStockpile.SelectedRows.Count == 0)
+                {
                     return;
+                }
 
                 int CurrentSelectedIndex = dgvStockpile.SelectedRows[0].Index;
 
@@ -222,7 +227,9 @@ namespace RTCV.UI
                     SyncObjectSingleton.FormExecute(() =>
                     {
                         foreach (StashKey key in sks.StashKeys) //Populate the dgv
+                        {
                             dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.Note);
+                        }
                     });
                 }
 
@@ -267,7 +274,9 @@ namespace RTCV.UI
                         filename = ofd.FileName;
                     }
                     else
+                    {
                         return;
+                    }
 
                     LoadStockpile(filename);
                 }
@@ -278,8 +287,9 @@ namespace RTCV.UI
                     var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
 
                     if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                    {
                         throw new RTCV.NetCore.AbortEverythingException();
-
+                    }
                 }
             }));
 
@@ -298,7 +308,9 @@ namespace RTCV.UI
                     var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
 
                     if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                    {
                         throw new RTCV.NetCore.AbortEverythingException();
+                    }
                 }
             }));
 
@@ -321,7 +333,10 @@ namespace RTCV.UI
         private void dgvStockpile_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (currentlyLoading || !S.GET<RTC_GlitchHarvesterBlast_Form>().LoadOnSelect || e?.RowIndex == -1)
+            {
                 return;
+            }
+
             try
             {
                 //dgvStockpile.Enabled = false;
@@ -334,9 +349,13 @@ namespace RTCV.UI
                     StashKey sk = (StashKey)senderGrid.Rows[e.RowIndex].Cells["Item"].Value;
 
                     if (sk.Note != null)
+                    {
                         tbNoteBox.Text = sk.Note.Replace("\n", Environment.NewLine);
+                    }
                     else
+                    {
                         tbNoteBox.Text = "";
+                    }
 
                     if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                         e.RowIndex >= 0)
@@ -375,10 +394,13 @@ namespace RTCV.UI
             {
                 StashKey sk = (StashKey)dataRow.Cells["Item"].Value;
                 if (sk == null)
-                    continue;
-                if (String.IsNullOrWhiteSpace(sk.Note))
                 {
-                    dataRow.Cells["Note"].Value = String.Empty;
+                    continue;
+                }
+
+                if (string.IsNullOrWhiteSpace(sk.Note))
+                {
+                    dataRow.Cells["Note"].Value = string.Empty;
                 }
                 else
                 {

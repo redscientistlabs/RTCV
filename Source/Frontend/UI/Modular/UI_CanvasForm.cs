@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using RTCV.NetCore.StaticTools;
-using RTCV.UI;
 
 namespace RTCV.UI
 {
@@ -22,19 +17,17 @@ namespace RTCV.UI
 
         public static int spacerSize;
         public static int tileSize;
-
-        static Dictionary<Form, UI_ComponentFormTile> loadedTileForms = new Dictionary<Form, UI_ComponentFormTile>();
+        private static Dictionary<Form, UI_ComponentFormTile> loadedTileForms = new Dictionary<Form, UI_ComponentFormTile>();
 
         public bool SubFormMode
         {
-            get
-            {
-                return (spForm != null);
-            }
+            get => (spForm != null);
             set
             {
                 if (value == false && spForm != null)
+                {
                     CloseSubForm();
+                }
             }
         }
 
@@ -63,7 +56,9 @@ namespace RTCV.UI
                 loadedTileForms[componentForm] = newForm;
 
                 if (newSizeX != null && newSizeY != null)
+                {
                     newForm.SetCompoentForm(componentForm, newSizeX.Value, newSizeY.Value, DisplayHeader);
+                }
             }
             else
             {
@@ -128,9 +123,13 @@ namespace RTCV.UI
         public void SetSize(int x, int y)
         {
             if (this.TopLevel)
+            {
                 this.Size = new Size(x + UI_CoreForm.xPadding, y + UI_CoreForm.yPadding);
+            }
             else
+            {
                 UI_CoreForm.thisForm.SetSize(x, y);
+            }
         }
 
         public static void loadTileForm(UI_CanvasForm targetForm, CanvasGrid canvasGrid)
@@ -138,7 +137,9 @@ namespace RTCV.UI
             targetForm.ResizeCanvas(targetForm, canvasGrid);
 
             for (int x = 0; x < canvasGrid.x; x++)
+            {
                 for (int y = 0; y < canvasGrid.y; y++)
+                {
                     if (canvasGrid.gridComponent[x, y] != null)
                     {
                         targetForm.Text = canvasGrid.GridName;
@@ -153,6 +154,8 @@ namespace RTCV.UI
 
                         tileForm.Show();
                     }
+                }
+            }
 
             targetForm.MinimumSize = targetForm.Size;
 
@@ -264,13 +267,19 @@ namespace RTCV.UI
             //See DummySubForm for example
 
             if (lockSidebar)
+            {
                 S.GET<UI_CoreForm>().LockSideBar();
+            }
 
             if (spForm != null)
+            {
                 CloseSubForm();
+            }
 
-            spForm = new UI_ShadowPanel(this, reqForm);
-            spForm.TopLevel = false;
+            spForm = new UI_ShadowPanel(this, reqForm)
+            {
+                TopLevel = false
+            };
             this.Controls.Add(spForm);
 
             spForm.Show();
@@ -307,7 +316,9 @@ namespace RTCV.UI
                 //S.GET<RTC_Core_Form>().btnGlitchHarvester.Text = S.GET<RTC_Core_Form>().btnGlitchHarvester.Text.Replace("○ ", "");
 
                 if (this.Text == "Glitch Harvester")
+                {
                     S.GET<UI_CoreForm>().pnGlitchHarvesterOpen.Visible = false;
+                }
 
                 e.Cancel = true;
                 this.Hide();

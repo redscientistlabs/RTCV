@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using System.Drawing;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
-using RTCV.UI;
-using static RTCV.NetCore.NetcoreCommands;
 using RTCV.NetCore.StaticTools;
 using RTCV.UI.Modular;
-using System.Drawing;
-using System.IO;
+using static RTCV.NetCore.NetcoreCommands;
 
 namespace RTCV.UI
 {
@@ -56,7 +50,9 @@ namespace RTCV.UI
                         {
 
                             if (!CorruptCore.RtcCore.Attached)
+                            {
                                 RTCV.NetCore.AllSpec.VanguardSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !CorruptCore.RtcCore.Attached);
+                            }
 
                             e.setReturnValue(true);
 
@@ -78,7 +74,10 @@ namespace RTCV.UI
 
                     case REMOTE_ALLSPECSSENT:
                         if (UICore.FirstConnect)
+                        {
                             UICore.Initialized.WaitOne(10000);
+                        }
+
                         SyncObjectSingleton.FormExecute(() =>
                         {
                             if (UICore.FirstConnect)
@@ -94,19 +93,29 @@ namespace RTCV.UI
 
                                 //Pull any lists from the vanguard implementation
                                 if (RtcCore.EmuDir != null)
+                                {
                                     UICore.LoadLists(Path.Combine(RtcCore.EmuDir, "LISTS"));
+                                }
 
                                 UICore.LoadLists(CorruptCore.RtcCore.listsDir);
 
                                 Panel sidebar = S.GET<UI_CoreForm>().pnSideBar;
                                 foreach (Control c in sidebar.Controls)
+                                {
                                     if (c is Button b)
+                                    {
                                         if (!b.Text.Contains("Test") && !b.Text.Contains("Custom Layout") && b.ForeColor != Color.OrangeRed)
+                                        {
                                             b.Visible = true;
+                                        }
+                                    }
+                                }
 
                                 string customLayoutPath = Path.Combine(RTCV.CorruptCore.RtcCore.RtcDir, "CustomLayout.txt");
                                 if (File.Exists(customLayoutPath))
+                                {
                                     S.GET<UI_CoreForm>().btnOpenCustomLayout.Visible = true;
+                                }
 
                                 UI_DefaultGrids.engineConfig.LoadToMain();
 
@@ -139,7 +148,9 @@ namespace RTCV.UI
 
                                 //Return to the main form. If the form is null for some reason, default to engineconfig
                                 if (S.GET<UI_CoreForm>().previousGrid == null)
+                                {
                                     S.GET<UI_CoreForm>().previousGrid = UI_DefaultGrids.engineConfig;
+                                }
 
                                 UICore.UnlockInterface();
                                 S.GET<UI_CoreForm>().previousGrid.LoadToMain();
@@ -148,20 +159,28 @@ namespace RTCV.UI
                             S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0;//remove this once core form is dead
 
                             if (!CorruptCore.RtcCore.Attached)
+                            {
                                 AutoKillSwitch.Enabled = true;
+                            }
 
                             //Restart game protection
                             if (S.GET<UI_CoreForm>().cbUseGameProtection.Checked)
                             {
                                 if (CorruptCore.StockpileManager_UISide.BackupedState != null)
+                                {
                                     CorruptCore.StockpileManager_UISide.BackupedState.Run();
+                                }
 
                                 if (CorruptCore.StockpileManager_UISide.BackupedState != null)
+                                {
                                     S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected(CorruptCore.StockpileManager_UISide.BackupedState.SelectedDomains.ToArray());
+                                }
 
                                 GameProtection.Start();
                                 if (GameProtection.WasAutoCorruptRunning)
+                                {
                                     S.GET<UI_CoreForm>().AutoCorrupt = true;
+                                }
                             }
 
                             S.GET<UI_CoreForm>().Show();
@@ -238,7 +257,7 @@ namespace RTCV.UI
 
                             string value = "";
 
-                            if (RTCV.UI.UI_Extensions.GetInputBox("VMD Generation", "Enter the new VMD name:", ref value) == DialogResult.OK && !String.IsNullOrWhiteSpace(value))
+                            if (RTCV.UI.UI_Extensions.GetInputBox("VMD Generation", "Enter the new VMD name:", ref value) == DialogResult.OK && !string.IsNullOrWhiteSpace(value))
                             {
                                 vmdgenerator.tbVmdName.Text = value.Trim();
                             }
@@ -328,7 +347,9 @@ namespace RTCV.UI
                                 btnManual.Text = "  Corrupt";
                             }
                             else
+                            {
                                 btnManual.Visible = false;
+                            }
 
                             S.GET<UI_CoreForm>().btnAutoCorrupt.Enabled = false;
                             S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
@@ -356,7 +377,9 @@ namespace RTCV.UI
             catch (Exception ex)
             {
                 if (CloudDebug.ShowErrorDialog(ex) == DialogResult.Abort)
+                {
                     throw new RTCV.NetCore.AbortEverythingException();
+                }
 
                 return;
             }

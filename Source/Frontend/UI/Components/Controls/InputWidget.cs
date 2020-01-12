@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using RTCV.UI.Input;
 
 namespace RTCV.UI.Components.Controls
 {
@@ -53,10 +52,7 @@ namespace RTCV.UI.Components.Controls
 
         public string Bindings
         {
-            get
-            {
-                return Text;
-            }
+            get => Text;
 
             set
             {

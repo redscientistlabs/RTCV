@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -7,19 +6,12 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Numerics;
-using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
-using System.Security.Permissions;
 using System.Text;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 using Newtonsoft.Json;
 using RTCV.CorruptCore.Tools;
-using RTCV.UI;
 using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
@@ -86,9 +78,10 @@ namespace RTCV.UI
 
             }
         }
-        const int SRCCOPY = 0xCC0020;
+
+        private const int SRCCOPY = 0xCC0020;
         [DllImport("gdi32.dll")]
-        static extern int BitBlt(IntPtr hdc, int x, int y, int cx, int cy,
+        private static int BitBlt(IntPtr hdc, int x, int y, int cx, int cy,
             IntPtr hdcSrc, int x1, int y1, int rop);
 
         public static Bitmap getFormScreenShot(this Control con)
@@ -128,10 +121,14 @@ namespace RTCV.UI
             foreach (Control c in controls)
             {
                 if (c.Tag != null)
+                {
                     allControls.Add(c);
+                }
 
                 if (c.HasChildren)
+                {
                     allControls.AddRange(c.Controls.getControlsWithTag()); //Recursively check all children controls as well; ie groupboxes or tabpages
+                }
             }
 
             return allControls;
@@ -157,8 +154,8 @@ namespace RTCV.UI
         {
 
             private protected static NLog.Logger logger;
-            Panel defaultPanel = null;
-            Panel previousPanel = null;
+            private Panel defaultPanel = null;
+            private Panel previousPanel = null;
 
             public Panel blockPanel { get; set; } = null;
 
@@ -175,7 +172,9 @@ namespace RTCV.UI
             {
 
                 if (defaultPanel == null)
+                {
                     defaultPanel = pn;
+                }
 
                 previousPanel = pn;
 
@@ -187,7 +186,9 @@ namespace RTCV.UI
                 //Remove ComponentForm from target panel if required
                 ComponentForm componentFormInTargetPanel = (pn?.Controls.Cast<Control>().FirstOrDefault(it => it is ComponentForm) as ComponentForm);
                 if (componentFormInTargetPanel != null && componentFormInTargetPanel != this)
+                {
                     pn.Controls.Remove(componentFormInTargetPanel);
+                }
 
                 this.TopLevel = false;
                 this.TopMost = false;
@@ -198,7 +199,10 @@ namespace RTCV.UI
                     p = p.Parent;
                 }
                 if (p is Form _p)
+                {
                     _p.WindowState = FormWindowState.Normal;
+                }
+
                 this.Size = this.Parent.Size;
                 this.Location = new Point(0, 0);
 
@@ -233,18 +237,26 @@ namespace RTCV.UI
             {
                 //We don't care about redocking on quit and depending on what's open, exceptions may occur otherwise
                 if (UICore.isClosing)
+                {
                     return;
+                }
 
                 if (defaultPanel == null)
+                {
                     throw new Exception("Default panel unset");
+                }
 
                 Panel targetPanel;
 
                 //We select which panel we want to restore the ComponentForm to
                 if (previousPanel?.Parent?.Visible ?? false)
+                {
                     targetPanel = previousPanel;
+                }
                 else                            //If the ComponentForm was moved to another panel than the default one
+                {
                     targetPanel = defaultPanel; //and that panel was hidden, then we move it back to the original panel.
+                }
 
                 //Restore the state since we don't want it maximized or minimized
                 this.WindowState = FormWindowState.Normal;
@@ -252,9 +264,13 @@ namespace RTCV.UI
                 //This searches for a ComponentForm in the target Panel
                 ComponentForm componentFormInTargetPanel = (targetPanel?.Controls.Cast<Control>().FirstOrDefault(it => it is ComponentForm) as ComponentForm);
                 if (componentFormInTargetPanel != null && componentFormInTargetPanel != this)
+                {
                     this.Hide();                //If the target panel hosts another ComponentForm, we won't override it
+                }
                 else                            //This is most likely going to happen if a VMD ComponentForm was changed to a window, 
+                {
                     AnchorToPanel(targetPanel); //then another VMD tool was selected and that window was closed
+                }
             }
 
 
@@ -271,7 +287,9 @@ namespace RTCV.UI
             public void HandleMouseDown(object sender, MouseEventArgs e)
             {
                 if (sender is NumericUpDown || sender is TextBox)
+                {
                     return;
+                }
 
                 while (!(sender is ComponentForm))
                 {
@@ -324,7 +342,7 @@ namespace RTCV.UI
 
                 string keyInput = e.KeyChar.ToString();
 
-                if (Char.IsDigit(e.KeyChar))
+                if (char.IsDigit(e.KeyChar))
                 {
                     // Digits are OK
                 }
@@ -360,9 +378,9 @@ namespace RTCV.UI
                 }
             }
 
-            public int IntValue => Int32.Parse(Text);
+            public int IntValue => int.Parse(Text);
 
-            public decimal DecimalValue => Decimal.Parse(Text);
+            public decimal DecimalValue => decimal.Parse(Text);
 
             public bool AllowSpace { get; set; }
 
@@ -382,7 +400,7 @@ namespace RTCV.UI
                 CharacterCasing = CharacterCasing.Upper;
             }
 
-            public bool Nullable { get { return _nullable; } set { _nullable = value; } }
+            public bool Nullable { get => _nullable; set => _nullable = value; }
 
             protected override void OnKeyPress(KeyPressEventArgs e)
             {
@@ -409,7 +427,7 @@ namespace RTCV.UI
                     if (Text.IsHex())
                     {
                         var val = (uint)ToRawInt();
-                        if (val == UInt32.MaxValue)
+                        if (val == uint.MaxValue)
                         {
                             val = 0;
                         }
@@ -429,7 +447,7 @@ namespace RTCV.UI
 
                         if (val == 0)
                         {
-                            val = UInt32.MaxValue;
+                            val = uint.MaxValue;
                         }
                         else
                         {
@@ -447,7 +465,7 @@ namespace RTCV.UI
 
             protected override void OnTextChanged(EventArgs e)
             {
-                if (String.IsNullOrWhiteSpace(Text) || !Text.IsHex())
+                if (string.IsNullOrWhiteSpace(Text) || !Text.IsHex())
                 {
                     ResetText();
                     SelectAll();
@@ -459,7 +477,7 @@ namespace RTCV.UI
 
             public int? ToRawInt()
             {
-                if (String.IsNullOrWhiteSpace(Text) || !Text.IsHex())
+                if (string.IsNullOrWhiteSpace(Text) || !Text.IsHex())
                 {
                     if (Nullable)
                     {
@@ -469,7 +487,7 @@ namespace RTCV.UI
                     return 0;
                 }
 
-                return (int)UInt32.Parse(Text);
+                return (int)uint.Parse(Text);
             }
 
             public void SetFromRawInt(int? val)
@@ -487,7 +505,9 @@ namespace RTCV.UI
         {
             Control ctr = (sender as Control);
             if (ctr == null)
+            {
                 return new Point(e.Location.X, e.Location.Y);
+            }
 
             int x = e.Location.X;
             int y = e.Location.Y;
@@ -667,10 +687,7 @@ namespace RTCV.UI
         ]
         public override DataGridViewCell CellTemplate
         {
-            get
-            {
-                return base.CellTemplate;
-            }
+            get => base.CellTemplate;
             set
             {
                 DataGridViewNumericUpDownCell dataGridViewNumericUpDownCell = value as DataGridViewNumericUpDownCell;
@@ -738,7 +755,7 @@ namespace RTCV.UI
             Category("Data"),
             Description("Indicates the amount to increment or decrement on each button click.")
         ]
-        public Decimal Increment
+        public decimal Increment
         {
             get
             {
@@ -785,7 +802,7 @@ namespace RTCV.UI
             Description("Indicates the maximum value for the numeric up-down cells."),
             RefreshProperties(RefreshProperties.All)
         ]
-        public Decimal Maximum
+        public decimal Maximum
         {
             get
             {
@@ -836,7 +853,7 @@ namespace RTCV.UI
             Description("Indicates the minimum value for the numeric up-down cells."),
             RefreshProperties(RefreshProperties.All)
         ]
-        public Decimal Minimum
+        public decimal Minimum
         {
             get
             {
@@ -980,13 +997,7 @@ namespace RTCV.UI
         /// <summary>
         /// Small utility function that returns the template cell as a DataGridViewNumericUpDownCell
         /// </summary>
-        private DataGridViewNumericUpDownCell NumericUpDownCellTemplate
-        {
-            get
-            {
-                return (DataGridViewNumericUpDownCell)this.CellTemplate;
-            }
-        }
+        private DataGridViewNumericUpDownCell NumericUpDownCellTemplate => (DataGridViewNumericUpDownCell)this.CellTemplate;
 
         /// <summary>
         /// Returns a standard compact string representation of the column.
@@ -1031,13 +1042,13 @@ namespace RTCV.UI
         internal const int DATAGRIDVIEWNUMERICUPDOWNCELL_defaultDecimalPlaces = 0;
 
         // Default value of the Increment property
-        internal const Decimal DATAGRIDVIEWNUMERICUPDOWNCELL_defaultIncrement = Decimal.One;
+        internal const decimal DATAGRIDVIEWNUMERICUPDOWNCELL_defaultIncrement = decimal.One;
 
         // Default value of the Maximum property
-        internal const Decimal DATAGRIDVIEWNUMERICUPDOWNCELL_defaultMaximum = (Decimal)100.0;
+        internal const decimal DATAGRIDVIEWNUMERICUPDOWNCELL_defaultMaximum = (decimal)100.0;
 
         // Default value of the Minimum property
-        internal const Decimal DATAGRIDVIEWNUMERICUPDOWNCELL_defaultMinimum = Decimal.Zero;
+        internal const decimal DATAGRIDVIEWNUMERICUPDOWNCELL_defaultMinimum = decimal.Zero;
 
         // Default value of the ThousandsSeparator property
         internal const bool DATAGRIDVIEWNUMERICUPDOWNCELL_defaultThousandsSeparator = false;
@@ -1048,7 +1059,7 @@ namespace RTCV.UI
         private static Type defaultEditType = typeof(DataGridViewNumericUpDownEditingControl);
 
         // Type of this cell's value. The formatted value type is string, the same as the base class DataGridViewTextBoxCell
-        private static Type defaultValueType = typeof(System.String);
+        private static Type defaultValueType = typeof(string);
 
         // The bitmap used to paint the non-edited cells via a call to NumericUpDown.DrawToBitmap
         [ThreadStatic]
@@ -1059,9 +1070,9 @@ namespace RTCV.UI
         private NumericUpDownHexFix paintingNumericUpDown;
 
         private int decimalPlaces;       // Caches the value of the DecimalPlaces property
-        private Decimal increment;       // Caches the value of the Increment property
-        private Decimal minimum;         // Caches the value of the Minimum property
-        private Decimal maximum;         // Caches the value of the Maximum property
+        private decimal increment;       // Caches the value of the Increment property
+        private decimal minimum;         // Caches the value of the Minimum property
+        private decimal maximum;         // Caches the value of the Maximum property
         private bool thousandsSeparator; // Caches the value of the ThousandsSeparator property
         private bool hexadecimal;
 
@@ -1083,8 +1094,8 @@ namespace RTCV.UI
                 {
                     // Some properties only need to be set once for the lifetime of the control:
                     BorderStyle = BorderStyle.None,
-                    Maximum = Decimal.MaxValue / 10,
-                    Minimum = Decimal.MinValue / 10,
+                    Maximum = decimal.MaxValue / 10,
+                    Minimum = decimal.MinValue / 10,
                     Hexadecimal = DATAGRIDVIEWNUMERICUPDOWNCELL_defaultHexadecimal
                 };
                 //paintingNumericUpDown.DoubleBuffered(true);
@@ -1107,10 +1118,7 @@ namespace RTCV.UI
         ]
         public int DecimalPlaces
         {
-            get
-            {
-                return this.decimalPlaces;
-            }
+            get => this.decimalPlaces;
 
             set
             {
@@ -1129,38 +1137,23 @@ namespace RTCV.UI
         /// <summary>
         /// Returns the current DataGridView EditingControl as a DataGridViewNumericUpDownEditingControl control
         /// </summary>
-        private DataGridViewNumericUpDownEditingControl EditingNumericUpDown
-        {
-            get
-            {
-                return this.DataGridView.EditingControl as DataGridViewNumericUpDownEditingControl;
-            }
-        }
+        private DataGridViewNumericUpDownEditingControl EditingNumericUpDown => this.DataGridView.EditingControl as DataGridViewNumericUpDownEditingControl;
 
         /// <summary>
         /// Define the type of the cell's editing control
         /// </summary>
-        public override Type EditType
-        {
-            get
-            {
-                return defaultEditType; // the type is DataGridViewNumericUpDownEditingControl
-            }
-        }
+        public override Type EditType => defaultEditType; // the type is DataGridViewNumericUpDownEditingControl
 
         /// <summary>
         /// The Increment property replicates the one from the NumericUpDown control
         /// </summary>
-        public Decimal Increment
+        public decimal Increment
         {
-            get
-            {
-                return this.increment;
-            }
+            get => this.increment;
 
             set
             {
-                if (value < (Decimal)0.0)
+                if (value < (decimal)0.0)
                 {
                     throw new ArgumentOutOfRangeException("The Increment property cannot be smaller than 0.");
                 }
@@ -1172,12 +1165,9 @@ namespace RTCV.UI
         /// <summary>
         /// The Maximum property replicates the one from the NumericUpDown control
         /// </summary>
-        public Decimal Maximum
+        public decimal Maximum
         {
-            get
-            {
-                return this.maximum;
-            }
+            get => this.maximum;
 
             set
             {
@@ -1192,12 +1182,9 @@ namespace RTCV.UI
         /// <summary>
         /// The Minimum property replicates the one from the NumericUpDown control
         /// </summary>
-        public Decimal Minimum
+        public decimal Minimum
         {
-            get
-            {
-                return this.minimum;
-            }
+            get => this.minimum;
 
             set
             {
@@ -1217,10 +1204,7 @@ namespace RTCV.UI
         ]
         public bool ThousandsSeparator
         {
-            get
-            {
-                return this.thousandsSeparator;
-            }
+            get => this.thousandsSeparator;
 
             set
             {
@@ -1237,10 +1221,7 @@ namespace RTCV.UI
         ]
         public bool Hexadecimal
         {
-            get
-            {
-                return this.hexadecimal;
-            }
+            get => this.hexadecimal;
 
             set
             {
@@ -1289,7 +1270,7 @@ namespace RTCV.UI
         /// <summary>
         /// Returns the provided value constrained to be within the min and max.
         /// </summary>
-        private Decimal Constrain(Decimal value)
+        private decimal Constrain(decimal value)
         {
             Debug.Assert(this.minimum <= this.maximum);
             if (value < this.minimum)
@@ -1741,9 +1722,9 @@ namespace RTCV.UI
         /// Utility function that sets a new value for the Increment property of the cell. This function is used by
         /// the cell and column Increment property. A row index needs to be provided as a parameter because
         /// this cell may be shared among multiple rows.
-        internal void SetIncrement(int rowIndex, Decimal value)
+        internal void SetIncrement(int rowIndex, decimal value)
         {
-            Debug.Assert(value >= (Decimal)0.0);
+            Debug.Assert(value >= (decimal)0.0);
             this.increment = value;
             if (OwnsEditingNumericUpDown(rowIndex))
             {
@@ -1756,7 +1737,7 @@ namespace RTCV.UI
         /// property for performance reasons. This way the column can invalidate the entire column at once instead of
         /// invalidating each cell of the column individually. A row index needs to be provided as a parameter because
         /// this cell may be shared among multiple rows.
-        internal void SetMaximum(int rowIndex, Decimal value)
+        internal void SetMaximum(int rowIndex, decimal value)
         {
             this.maximum = value;
             if (this.minimum > this.maximum)
@@ -1785,7 +1766,7 @@ namespace RTCV.UI
         /// property for performance reasons. This way the column can invalidate the entire column at once instead of
         /// invalidating each cell of the column individually. A row index needs to be provided as a parameter because
         /// this cell may be shared among multiple rows.
-        internal void SetMinimum(int rowIndex, Decimal value)
+        internal void SetMinimum(int rowIndex, decimal value)
         {
             this.minimum = value;
             if (this.minimum > this.maximum)
@@ -1908,14 +1889,8 @@ namespace RTCV.UI
         /// </summary>
         public virtual DataGridView EditingControlDataGridView
         {
-            get
-            {
-                return this.dataGridView;
-            }
-            set
-            {
-                this.dataGridView = value;
-            }
+            get => this.dataGridView;
+            set => this.dataGridView = value;
         }
 
         /// <summary>
@@ -1923,14 +1898,8 @@ namespace RTCV.UI
         /// </summary>
         public virtual object EditingControlFormattedValue
         {
-            get
-            {
-                return GetEditingControlFormattedValue(DataGridViewDataErrorContexts.Formatting);
-            }
-            set
-            {
-                this.Text = (string)value;
-            }
+            get => GetEditingControlFormattedValue(DataGridViewDataErrorContexts.Formatting);
+            set => this.Text = (string)value;
         }
 
         /// <summary>
@@ -1938,14 +1907,8 @@ namespace RTCV.UI
         /// </summary>
         public virtual int EditingControlRowIndex
         {
-            get
-            {
-                return this.rowIndex;
-            }
-            set
-            {
-                this.rowIndex = value;
-            }
+            get => this.rowIndex;
+            set => this.rowIndex = value;
         }
 
         /// <summary>
@@ -1953,39 +1916,21 @@ namespace RTCV.UI
         /// </summary>
         public virtual bool EditingControlValueChanged
         {
-            get
-            {
-                return this.valueChanged;
-            }
-            set
-            {
-                this.valueChanged = value;
-            }
+            get => this.valueChanged;
+            set => this.valueChanged = value;
         }
 
         /// <summary>
         /// Property which determines which cursor must be used for the editing panel,
         /// i.e. the parent of the editing control.
         /// </summary>
-        public virtual Cursor EditingPanelCursor
-        {
-            get
-            {
-                return Cursors.Default;
-            }
-        }
+        public virtual Cursor EditingPanelCursor => Cursors.Default;
 
         /// <summary>
         /// Property which indicates whether the editing control needs to be repositioned
         /// when its value changes.
         /// </summary>
-        public virtual bool RepositionEditingControlOnValueChange
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public virtual bool RepositionEditingControlOnValueChange => false;
 
         /// <summary>
         /// Method called by the grid before the editing control is shown so it can adapt to the
@@ -2246,19 +2191,19 @@ namespace RTCV.UI
     //Fixes microsoft's numericupdown hex issues. Thanks microsoft
     public class NumericUpDownHexFix : NumericUpDown
     {
-        bool currentValueChanged = false;
+        private bool currentValueChanged = false;
         public NumericUpDownHexFix()
         {
             base.Minimum = 0;
-            base.Maximum = UInt64.MaxValue;
+            base.Maximum = ulong.MaxValue;
             this.ValueChanged += OnValueChanged;
         }
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new decimal Maximum
         {    // Doesn't serialize properly
-            get { return base.Maximum; }
-            set { base.Maximum = value; }
+            get => base.Maximum;
+            set => base.Maximum = value;
         }
 
         private void OnValueChanged(object sender, EventArgs e)
@@ -2269,21 +2214,34 @@ namespace RTCV.UI
         {
             HandledMouseEventArgs hme = e as HandledMouseEventArgs;
             if (hme != null)
+            {
                 hme.Handled = true;
+            }
 
             if (e.Delta > 0 && this.Value < this.Maximum)
+            {
                 this.Value += this.Increment;
+            }
             else if (e.Delta < 0 && this.Value > this.Minimum)
+            {
                 this.Value -= this.Increment;
+            }
         }
 
         protected override void UpdateEditText()
         {
             if (UserEdit)
+            {
                 if (base.Hexadecimal)
+                {
                     HexParseEditText();
+                }
                 else
+                {
                     ParseEditText();
+                }
+            }
+
             if (currentValueChanged || (!string.IsNullOrEmpty(Text) && !(Text.Length == 1 && Text == "-")))
             {
                 currentValueChanged = false;
@@ -2300,9 +2258,14 @@ namespace RTCV.UI
         protected override void ValidateEditText()
         {
             if (base.Hexadecimal)
+            {
                 HexParseEditText();
+            }
             else
+            {
                 ParseEditText();
+            }
+
             UpdateEditText();
         }
 
@@ -2338,7 +2301,9 @@ namespace RTCV.UI
                     }
 
                     if (!string.IsNullOrEmpty(base.Text))
+                    {
                         this.Value = val;
+                    }
                 }
             }
             catch { }
@@ -2378,12 +2343,18 @@ namespace RTCV.UI
 
                 // Select previously selected rows, if control is down or the clicked row was already selected
                 if ((Control.ModifierKeys & Keys.Control) != 0 || clickedRowSelected)
+                {
                     selectedRows.ForEach(row => row.Selected = true);
+                }
 
                 // Select a range of new rows, if shift key is down
                 if ((Control.ModifierKeys & Keys.Shift) != 0)
+                {
                     for (int i = currentRow; i != e.RowIndex; i += Math.Sign(e.RowIndex - currentRow))
+                    {
                         this.Rows[i].Selected = true;
+                    }
+                }
             }
         }
         protected override void OnMouseDown(MouseEventArgs e)
@@ -2409,8 +2380,10 @@ namespace RTCV.UI
                         new Point(e.X - (dragSize.Width / 4), e.Y - (dragSize.Height / 4)), dragSize);
                 }
                 else
+                {
                     // Reset the rectangle if the mouse is not over an item in the datagridview.
                     _dragBoxFromMouseDown = Rectangle.Empty;
+                }
             }
         }
         protected override void OnMouseUp(MouseEventArgs e)
@@ -2436,7 +2409,9 @@ namespace RTCV.UI
                 {
                     _delayedMouseDown = false;
                     if ((ModifierKeys & Keys.Control) > 0)
+                    {
                         base.OnMouseDown(e);
+                    }
                 }
 
                 // Proceed with the drag and drop, passing in the drag data
@@ -2478,12 +2453,16 @@ namespace RTCV.UI
                     {
                         //Do a global hittest to figure out if we're on the header since you get -1 on both the header and the area below
                         if (clientPoint.Y <= this.ColumnHeadersHeight)
+                        {
                             rowIndexOfItemUnderMouseToDrop = 0;
+                        }
                         else
                         {
                             int temp = this.Rows.Count;
                             if (temp >= 0)
+                            {
                                 rowIndexOfItemUnderMouseToDrop = temp;
+                            }
                             else
                             {
                                 rowIndexOfItemUnderMouseToDrop = 0;
@@ -2677,34 +2656,22 @@ public class SortableBindingList<T> : BindingList<T> where T : class
     /// <summary>
     /// Gets a value indicating whether the list supports sorting.
     /// </summary>
-    protected override bool SupportsSortingCore
-    {
-        get { return true; }
-    }
+    protected override bool SupportsSortingCore => true;
 
     /// <summary>
     /// Gets a value indicating whether the list is sorted.
     /// </summary>
-    protected override bool IsSortedCore
-    {
-        get { return _isSorted; }
-    }
+    protected override bool IsSortedCore => _isSorted;
 
     /// <summary>
     /// Gets the direction the list is sorted.
     /// </summary>
-    protected override ListSortDirection SortDirectionCore
-    {
-        get { return _sortDirection; }
-    }
+    protected override ListSortDirection SortDirectionCore => _sortDirection;
 
     /// <summary>
     /// Gets the property descriptor that is used for sorting the list if sorting is implemented in a derived class; otherwise, returns null
     /// </summary>
-    protected override PropertyDescriptor SortPropertyCore
-    {
-        get { return _sortProperty; }
-    }
+    protected override PropertyDescriptor SortPropertyCore => _sortProperty;
 
     /// <summary>
     /// Removes any sort applied with ApplySortCore if sorting is implemented
@@ -2727,7 +2694,10 @@ public class SortableBindingList<T> : BindingList<T> where T : class
         _sortDirection = direction;
 
         List<T> list = Items as List<T>;
-        if (list == null) return;
+        if (list == null)
+        {
+            return;
+        }
 
         list.Sort(Compare);
 
@@ -2742,7 +2712,10 @@ public class SortableBindingList<T> : BindingList<T> where T : class
         var result = OnComparison(lhs, rhs);
         //invert if descending
         if (_sortDirection == ListSortDirection.Descending)
+        {
             result = -result;
+        }
+
         return result;
     }
 
@@ -2784,8 +2757,7 @@ public class WorkingDictionary<K, V> : Dictionary<K, V> where V : new()
     {
         get
         {
-            V temp;
-            if (!TryGetValue(key, out temp))
+            if (!TryGetValue(key, out V temp))
             {
                 temp = this[key] = new V();
             }
@@ -2793,10 +2765,7 @@ public class WorkingDictionary<K, V> : Dictionary<K, V> where V : new()
             return temp;
         }
 
-        set
-        {
-            base[key] = value;
-        }
+        set => base[key] = value;
     }
 
     public WorkingDictionary() { }

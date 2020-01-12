@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
-using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
+using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
@@ -36,7 +32,10 @@ namespace RTCV.UI
             {
                 StringBuilder sb = new StringBuilder();
                 foreach (var s in lbMemoryDomains.SelectedItems.Cast<string>().ToArray())
+                {
                     sb.Append($"{s},");
+                }
+
                 logger.Trace("UpdateSelectedMemoryDomains Setting SELECTEDDOMAINS domains to {domains}", sb);
                 AllSpec.UISpec.Update("SELECTEDDOMAINS", lbMemoryDomains.SelectedItems.Cast<string>().Distinct().ToArray());
             });
@@ -47,10 +46,16 @@ namespace RTCV.UI
             var oldState = this.Visible;
 
             for (int i = 0; i < lbMemoryDomains.Items.Count; i++)
+            {
                 if (_domains.Contains(lbMemoryDomains.Items[i].ToString()))
+                {
                     lbMemoryDomains.SetSelected(i, true);
+                }
                 else
+                {
                     lbMemoryDomains.SetSelected(i, false);
+                }
+            }
 
             UpdateSelectedMemoryDomains(null, null);
             this.Visible = oldState;
@@ -61,10 +66,16 @@ namespace RTCV.UI
             var oldState = this.Visible;
 
             for (int i = 0; i < lbMemoryDomains.Items.Count; i++)
+            {
                 if (_blacklistedDomains?.Contains(lbMemoryDomains.Items[i].ToString()) ?? false)
+                {
                     lbMemoryDomains.SetSelected(i, false);
+                }
                 else
+                {
                     lbMemoryDomains.SetSelected(i, true);
+                }
+            }
 
             UpdateSelectedMemoryDomains(null, null);
             this.Visible = oldState;
@@ -76,8 +87,9 @@ namespace RTCV.UI
 
 
             for (int i = 0; i < lbMemoryDomains.Items.Count; i++)
+            {
                 lbMemoryDomains.SetSelected(i, true);
-
+            }
 
             UpdateSelectedMemoryDomains(null, null);
         }
@@ -94,10 +106,14 @@ namespace RTCV.UI
             var oldState = this.Visible;
             lbMemoryDomains.Items.Clear();
             if (MemoryDomains.MemoryInterfaces != null)
+            {
                 lbMemoryDomains.Items.AddRange(MemoryDomains.MemoryInterfaces?.Keys.ToArray());
+            }
 
             if (MemoryDomains.VmdPool.Count > 0)
+            {
                 lbMemoryDomains.Items.AddRange(MemoryDomains.VmdPool.Values.Select(it => it.ToString()).ToArray());
+            }
 
             this.Visible = oldState;
         }
@@ -115,7 +131,10 @@ namespace RTCV.UI
             {
                 StringBuilder sb = new StringBuilder();
                 foreach (var s in overrideDomains)
+                {
                     sb.Append($"{s},");
+                }
+
                 logger.Trace("RefreshDomainsAndKeepSelected override SELECTEDDOMAINS domains to {domains}", sb);
                 RTCV.NetCore.AllSpec.UISpec.Update("SELECTEDDOMAINS", overrideDomains);
                 SetMemoryDomainsSelectedDomains(overrideDomains);
@@ -125,7 +144,10 @@ namespace RTCV.UI
             {
                 StringBuilder sb = new StringBuilder();
                 foreach (var s in temp)
+                {
                     sb.Append($"{s},");
+                }
+
                 logger.Trace("RefreshDomainsAndKeepSelected temp Setting SELECTEDDOMAINS domains to {domains}", sb);
 
                 RTCV.NetCore.AllSpec.UISpec.Update("SELECTEDDOMAINS", temp);

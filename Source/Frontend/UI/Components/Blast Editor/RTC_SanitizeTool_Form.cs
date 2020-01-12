@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Numerics;
-using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json.Serialization;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
-using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
 
 
@@ -37,8 +28,9 @@ namespace RTCV.UI
                 var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
 
                 if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                {
                     throw new RTCV.NetCore.AbortEverythingException();
-
+                }
             }
         }
 
@@ -49,7 +41,9 @@ namespace RTCV.UI
             S.SET(stf);
 
             if (bl == null)
+            {
                 return;
+            }
 
             if (bl.Layer.Count == 0)
             {
@@ -189,7 +183,9 @@ namespace RTCV.UI
 
 
                 if (TargetUnit != null && !TargetUnit.IsLocked)
+                {
                     modified.Layer.Remove(TargetUnit);
+                }
             }
 
             S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(modified);
@@ -208,7 +204,9 @@ namespace RTCV.UI
             var lastItem = lbSteps.Items[lbSteps.Items.Count - 1];
 
             if (lbSteps.Items.Count > 1)
+            {
                 lastItem = lbSteps.Items[lbSteps.Items.Count - 2];
+            }
 
             T Cast<T>(object obj, T type) { return (T)obj; }
             var modified = Cast(lastItem, new { Text = "", Value = new BlastLayer() }); ;
@@ -219,7 +217,9 @@ namespace RTCV.UI
             lbCurrentLayerSize.Text = $"Current Layer size: {bl.Layer.Count}";
 
             if (lbSteps.Items.Count > 1)
+            {
                 lbSteps.Items.RemoveAt(lbSteps.Items.Count - 1);
+            }
 
             S.GET<RTC_NewBlastEditor_Form>().btnLoadCorrupt_Click(null, null);
 
@@ -257,7 +257,9 @@ namespace RTCV.UI
         private void RTC_SanitizeTool_Form_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason != CloseReason.UserClosing)
+            {
                 return;
+            }
 
             Form frm = (sender as Form);
             Button check = (frm?.ActiveControl as Button);

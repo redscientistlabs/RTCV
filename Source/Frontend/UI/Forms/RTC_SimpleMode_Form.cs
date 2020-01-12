@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
-using System.Linq;
-using System.Threading.Tasks;
-using static RTCV.UI.UI_Extensions;
-using RTCV.NetCore.StaticTools;
 using RTCV.NetCore;
+using RTCV.NetCore.StaticTools;
 using RTCV.UI.Components.Controls;
+using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
@@ -20,8 +16,7 @@ namespace RTCV.UI
 
         public bool DontLoadSelectedStockpile = false;
         private bool currentlyLoading = false;
-
-        PlatformType platform = PlatformType.CLASSIC;
+        private PlatformType platform = PlatformType.CLASSIC;
 
         public bool DontUpdateSpec = false;
 
@@ -42,10 +37,14 @@ namespace RTCV.UI
             S.GET<UI_CoreForm>().btnManualBlast.Visible = false;
 
             if (rbClassicPlatforms.Checked)
+            {
                 rbClassicPlatforms_CheckedChanged(null, null);
+            }
 
             if (rbModernPlatforms.Checked)
+            {
                 rbModernPlatforms_CheckedChanged(null, null);
+            }
 
             NetCore.Params.SetParam("SIMPLE_MODE"); //Set RTC in Simple Mode
         }
@@ -166,10 +165,13 @@ namespace RTCV.UI
         public void Shuffle()
         {
             if (platform == PlatformType.CLASSIC)
+            {
                 ShuffleClassic();
+            }
             else if (platform == PlatformType.MODERN)
+            {
                 ShuffleModern();
-
+            }
         }
 
         public void ShuffleClassic()
@@ -203,7 +205,9 @@ namespace RTCV.UI
             }
 
             if (originalText == lbEngineDescription.Text)
+            {
                 ShuffleClassic();
+            }
 
             S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
             S.GET<UI_CoreForm>().btnManualBlast.Visible = false;
@@ -249,7 +253,9 @@ namespace RTCV.UI
             }
 
             if (selectedEngineIndex == -1)
+            {
                 throw new Exception($"Could not load {name}");
+            }
 
             cb.SelectedIndex = selectedEngineIndex;
 
@@ -259,7 +265,9 @@ namespace RTCV.UI
         {
             var ui = S.GET<UI_CoreForm>();
             if (ui.AutoCorrupt)
+            {
                 btnAutoCorrupt_Click(null, null);
+            }
 
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_CLEARSTEPBLASTUNITS, null, true);
         }
@@ -341,7 +349,9 @@ namespace RTCV.UI
                 S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.SelectedIndex = 0;
             }
             else
+            {
                 throw new Exception("No vector lists could be found. Your RTCV installation might be broken.");
+            }
 
             string limiter = S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.Text;
             string value = S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.Text;
@@ -411,7 +421,10 @@ namespace RTCV.UI
         private void CbClearRewind_CheckedChanged(object sender, EventArgs e)
         {
             if (DontUpdateSpec)
+            {
                 return;
+            }
+
             S.GET<RTC_CorruptionEngine_Form>().SetRewindBoxes(cbClearRewind.Checked);
             S.GET<RTC_CustomEngineConfig_Form>().SetRewindBoxes(cbClearRewind.Checked);
 

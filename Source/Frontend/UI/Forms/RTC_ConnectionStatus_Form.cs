@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
-using RTCV.CorruptCore;
-using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
+using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
@@ -44,7 +41,9 @@ namespace RTCV.UI
             int crashSound = 0;
 
             if (NetCore.Params.IsParamSet("CRASHSOUND"))
+            {
                 crashSound = Convert.ToInt32(NetCore.Params.ReadParam("CRASHSOUND"));
+            }
 
             S.GET<RTC_SettingsNetCore_Form>().cbCrashSoundEffect.SelectedIndex = crashSound;
         }

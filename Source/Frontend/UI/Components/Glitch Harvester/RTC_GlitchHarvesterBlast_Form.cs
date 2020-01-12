@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using System.Xml.Serialization;
-using System.Runtime.InteropServices;
 using RTCV.CorruptCore;
-using static RTCV.UI.UI_Extensions;
-using RTCV.NetCore.StaticTools;
 using RTCV.NetCore;
-using System.Diagnostics;
+using RTCV.NetCore.StaticTools;
+using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
@@ -31,10 +29,7 @@ namespace RTCV.UI
         private bool isCorruptionApplied;
         public bool IsCorruptionApplied
         {
-            get
-            {
-                return isCorruptionApplied;
-            }
+            get => isCorruptionApplied;
             set
             {
                 if (value)
@@ -86,19 +81,27 @@ namespace RTCV.UI
             S.GET<UI_CoreForm>().AutoCorrupt = false;
 
             if (ghMode == GlitchHarvesterMode.CORRUPT)
+            {
                 IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(StockpileManager_UISide.CurrentStashkey, loadBeforeOperation);
+            }
             else if (ghMode == GlitchHarvesterMode.INJECT)
             {
                 IsCorruptionApplied = StockpileManager_UISide.InjectFromStashkey(StockpileManager_UISide.CurrentStashkey, loadBeforeOperation);
                 S.GET<RTC_StashHistory_Form>().RefreshStashHistory();
             }
             else if (ghMode == GlitchHarvesterMode.ORIGINAL)
+            {
                 IsCorruptionApplied = StockpileManager_UISide.OriginalFromStashkey(StockpileManager_UISide.CurrentStashkey);
+            }
 
             if (Render.RenderAtLoad && loadBeforeOperation)
+            {
                 Render.StartRender();
+            }
             else
+            {
                 Render.StopRender();
+            }
         }
 
         public void RedrawActionUI()
@@ -118,11 +121,17 @@ namespace RTCV.UI
                 S.GET<RTC_StockpileManager_Form>().btnRemoveSelectedStockpile.Text = "  Remove Item";
 
                 if (ghMode == GlitchHarvesterMode.CORRUPT)
+                {
                     btnCorrupt.Text = "  Corrupt";
+                }
                 else if (ghMode == GlitchHarvesterMode.INJECT)
+                {
                     btnCorrupt.Text = "  Inject";
+                }
                 else if (ghMode == GlitchHarvesterMode.ORIGINAL)
+                {
                     btnCorrupt.Text = "  Original";
+                }
             }
         }
 
@@ -131,14 +140,18 @@ namespace RTCV.UI
             if (Render.IsRendering)
             {
                 if (originalRenderOutputButtonColor == null)
+                {
                     originalRenderOutputButtonColor = btnRenderOutput.BackColor;
+                }
 
                 btnRenderOutput.BackColor = Color.LimeGreen;
             }
             else
             {
                 if (originalRenderOutputButtonColor != null)
+                {
                     btnRenderOutput.BackColor = originalRenderOutputButtonColor.Value;
+                }
             }
         }
 
@@ -149,7 +162,9 @@ namespace RTCV.UI
             if (sender != null)
             {
                 if (!(btnCorrupt.Visible || AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null && S.GET<UI_CoreForm>().btnManualBlast.Visible))
+                {
                     return;
+                }
             }
 
             try
@@ -166,7 +181,9 @@ namespace RTCV.UI
                 //Shut off autocorrupt if it's on.
                 //Leave this check here so we don't wastefully update the spec
                 if (S.GET<UI_CoreForm>().AutoCorrupt)
+                {
                     S.GET<UI_CoreForm>().AutoCorrupt = false;
+                }
 
                 StashKey psk = StockpileManager_UISide.CurrentSavestateStashKey;
 
@@ -177,7 +194,9 @@ namespace RTCV.UI
                     //Reverse before merging because DataGridView selectedrows is backwards for some odd reason
                     var reversed = S.GET<RTC_StockpileManager_Form>().dgvStockpile.SelectedRows.Cast<DataGridViewRow>().Reverse();
                     foreach (DataGridViewRow row in reversed)
+                    {
                         sks.Add((StashKey)row.Cells[0].Value);
+                    }
 
                     IsCorruptionApplied = StockpileManager_UISide.MergeStashkeys(sks);
 
@@ -205,7 +224,9 @@ namespace RTCV.UI
                 else if (ghMode == GlitchHarvesterMode.INJECT)
                 {
                     if (StockpileManager_UISide.CurrentStashkey == null)
+                    {
                         throw new CustomException("CurrentStashkey in inject was somehow null! Report this to the devs and tell them how you caused this.", Environment.StackTrace);
+                    }
 
                     S.GET<RTC_StashHistory_Form>().DontLoadSelectedStash = true;
 
@@ -215,16 +236,22 @@ namespace RTCV.UI
                 else if (ghMode == GlitchHarvesterMode.ORIGINAL)
                 {
                     if (StockpileManager_UISide.CurrentStashkey == null)
+                    {
                         throw new CustomException("CurrentStashkey in original was somehow null! Report this to the devs and tell them how you caused this.", Environment.StackTrace);
+                    }
 
                     S.GET<RTC_StashHistory_Form>().DontLoadSelectedStash = true;
                     IsCorruptionApplied = StockpileManager_UISide.OriginalFromStashkey(StockpileManager_UISide.CurrentStashkey);
                 }
 
                 if (Render.RenderAtLoad && loadBeforeOperation)
+                {
                     Render.StartRender();
+                }
                 else
+                {
                     Render.StopRender();
+                }
 
                 logger.Trace("Blast done");
             }
@@ -265,14 +292,20 @@ namespace RTCV.UI
         public void btnSendRaw_Click(object sender, EventArgs e)
         {
             if (!btnSendRaw.Visible)
+            {
                 return;
+            }
+
             try
             {
                 SetBlastButtonVisibility(false);
 
                 string romFilename = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME];
                 if (romFilename == null)
+                {
                     return;
+                }
+
                 if (romFilename.Contains("|"))
                 {
                     MessageBox.Show($"The Glitch Harvester attempted to corrupt a game bound to the following file:\n{romFilename}\n\nIt cannot be processed because the rom seems to be inside a Zip Archive\n(Bizhawk returned a filename with the chracter | in it)");
@@ -340,7 +373,9 @@ namespace RTCV.UI
         public void btnRerollSelected_Click(object sender, EventArgs e)
         {
             if (!btnRerollSelected.Visible)
+            {
                 return;
+            }
 
             try
             {
@@ -357,7 +392,9 @@ namespace RTCV.UI
                     //StockpileManager_UISide.unsavedEdits = true;
                 }
                 else
+                {
                     return;
+                }
 
                 if (StockpileManager_UISide.CurrentStashkey != null)
                 {
@@ -394,8 +431,9 @@ namespace RTCV.UI
             btnSendRaw.Visible = visible;
 
             if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null)
+            {
                 S.GET<UI_CoreForm>().btnManualBlast.Visible = visible;
-
+            }
         }
 
         private void btnGlitchHarvesterSettings_MouseDown(object sender, MouseEventArgs e)
@@ -465,10 +503,13 @@ namespace RTCV.UI
             {
 
                 if (Render.IsRendering)
+                {
                     Render.StopRender();
+                }
                 else
+                {
                     Render.StartRender();
-
+                }
             }))).Checked = Render.IsRendering;
 
             ghSettingsMenu.Items.Add("Open RENDEROUTPUT Folder", null, new EventHandler((ob, ev) =>

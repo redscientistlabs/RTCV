@@ -2,17 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using System.Xml.Serialization;
-using System.Runtime.InteropServices;
-using System.Text;
 using Newtonsoft.Json;
-using RTCV.CorruptCore;
-using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
 using RTCV.UI.Components.Controls;
+using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {

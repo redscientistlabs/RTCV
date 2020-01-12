@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Windows.Forms;
-using System.Xml.Serialization;
-using System.Runtime.InteropServices;
 using RTCV.CorruptCore;
-using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
+using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
@@ -29,7 +22,7 @@ namespace RTCV.UI
         {
             lbVersion.Text += CorruptCore.RtcCore.RtcVersion;
             lbProcess.Text += (CorruptCore.RtcCore.Attached ? "Attached mode" : "Detached mode");
-            lbConnectedTo.Text += (String)NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Not Connected";
+            lbConnectedTo.Text += (string)NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Not Connected";
         }
 
         private void LbSourceCode_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

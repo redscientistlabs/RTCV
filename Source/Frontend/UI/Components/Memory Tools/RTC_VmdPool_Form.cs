@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using System.Xml;
 using System.Xml.Serialization;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
-using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
+using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
@@ -36,7 +34,9 @@ namespace RTCV.UI
             foreach (var f in files)
             {
                 if (f.Contains(".vmd"))
+                {
                     loadVmd(f, false);
+                }
             }
             RefreshVMDs();
         }
@@ -45,7 +45,9 @@ namespace RTCV.UI
         private void btnUnloadVMD_Click(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
+            {
                 return;
+            }
 
             //Clear any active units to prevent bad things due to soon unloaded vmds
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_CLEARSTEPBLASTUNITS, null, true);
@@ -74,12 +76,17 @@ namespace RTCV.UI
             lbVmdSizeValue.Text = "#####";
         }
 
-        private static void RenameVMD(VirtualMemoryDomain VMD) => RenameVMD(VMD.ToString());
+        private static void RenameVMD(VirtualMemoryDomain VMD)
+        {
+            RenameVMD(VMD.ToString());
+        }
 
         private static void RenameVMD(string vmdName)
         {
             if (!MemoryDomains.VmdPool.ContainsKey(vmdName))
+            {
                 return;
+            }
 
             string name = "";
             string value = "";
@@ -93,9 +100,11 @@ namespace RTCV.UI
             }
 
             if (string.IsNullOrWhiteSpace(name))
+            {
                 name = CorruptCore.RtcCore.GetRandomKey();
+            }
 
-            VirtualMemoryDomain VMD = (VirtualMemoryDomain)MemoryDomains.VmdPool[vmdName];
+            VirtualMemoryDomain VMD = MemoryDomains.VmdPool[vmdName];
 
             MemoryDomains.RemoveVMD(VMD);
             VMD.Name = name;
@@ -106,9 +115,14 @@ namespace RTCV.UI
             foreach (BlastUnit bu in StepActions.GetRawBlastLayer().Layer)
             {
                 if (bu.Domain == vmdName)
+                {
                     bu.Domain = name;
+                }
+
                 if (bu.SourceDomain == vmdName)
+                {
                     bu.SourceDomain = name;
+                }
             }
             //Go through the stash history and update any references 
             foreach (StashKey sk in S.GET<RTC_StashHistory_Form>().lbStashHistory.Items)
@@ -116,9 +130,14 @@ namespace RTCV.UI
                 foreach (var bu in sk.BlastLayer.Layer)
                 {
                     if (bu.Domain == vmdName)
+                    {
                         bu.Domain = name;
+                    }
+
                     if (bu.SourceDomain == vmdName)
+                    {
                         bu.SourceDomain = name;
+                    }
                 }
             }
             //CurrentStashKey can be separate
@@ -127,9 +146,14 @@ namespace RTCV.UI
                 foreach (var bu in StockpileManager_UISide.CurrentStashkey.BlastLayer.Layer.Where(x => x.Domain == vmdName || x.SourceDomain == vmdName))
                 {
                     if (bu.Domain == vmdName)
+                    {
                         bu.Domain = name;
+                    }
+
                     if (bu.SourceDomain == vmdName)
+                    {
                         bu.SourceDomain = name;
+                    }
                 }
             }
         }
@@ -141,7 +165,9 @@ namespace RTCV.UI
         private void lbLoadedVmdList_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedItem == null)
+            {
                 return;
+            }
 
             string vmdName = lbLoadedVmdList.SelectedItem.ToString();
             MemoryInterface mi = MemoryDomains.VmdPool[vmdName];
@@ -157,19 +183,25 @@ namespace RTCV.UI
             else
             {
                 if (vmd.PointerDomains.Distinct().Count() > 1)
+                {
                     lbRealDomainValue.Text = "Hybrid";
+                }
                 else
+                {
                     lbRealDomainValue.Text = vmd.PointerDomains.FirstOrDefault();
+                }
             }
         }
 
         private void btnSaveVmd_Click(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
+            {
                 return;
+            }
 
             string vmdName = lbLoadedVmdList.SelectedItem.ToString();
-            VirtualMemoryDomain vmd = (VirtualMemoryDomain)MemoryDomains.VmdPool[vmdName];
+            VirtualMemoryDomain vmd = MemoryDomains.VmdPool[vmdName];
 
             SaveFileDialog saveFileDialog1 = new SaveFileDialog
             {
@@ -202,7 +234,9 @@ namespace RTCV.UI
             }
 
             if (refreshvmds)
+            {
                 RefreshVMDs();
+            }
         }
 
         private void loadLegacyVmd(string path)
@@ -270,13 +304,17 @@ namespace RTCV.UI
                 RefreshVMDs();
             }
             else
+            {
                 return;
+            }
         }
 
         private void btnRenameVMD_Click(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
+            {
                 return;
+            }
 
             string vmdName = lbLoadedVmdList.SelectedItem.ToString();
 

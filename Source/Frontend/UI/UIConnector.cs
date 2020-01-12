@@ -1,14 +1,7 @@
-﻿using RTCV.NetCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System;
 using System.Linq;
-using System.Security.AccessControl;
-using System.Text;
-using System.Threading;
-using System.Windows.Forms;
 using RTCV.CorruptCore;
-using static RTCV.UI.UI_Extensions;
+using RTCV.NetCore;
 using RTCV.NetCore.StaticTools;
 using RTCV.UI.Modular;
 
@@ -16,7 +9,7 @@ namespace RTCV.UI
 {
     public class UIConnector : IRoutable
     {
-        NetCoreReceiver receiver;
+        private NetCoreReceiver receiver;
         public NetCoreConnector netConn;
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
@@ -28,12 +21,16 @@ namespace RTCV.UI
             LocalNetCoreRouter.registerEndpoint(this, NetcoreCommands.UI);
 
             if (receiver.Attached)
+            {
                 return;
+            }
 
-            var netCoreSpec = new NetCore.NetCoreSpec();
-            netCoreSpec.Side = NetCore.NetworkSide.SERVER;
-            netCoreSpec.Attached = receiver.Attached;
-            netCoreSpec.Loopback = true;
+            var netCoreSpec = new NetCore.NetCoreSpec
+            {
+                Side = NetCore.NetworkSide.SERVER,
+                Attached = receiver.Attached,
+                Loopback = true
+            };
             netCoreSpec.MessageReceived += OnMessageReceivedProxy;
             netCoreSpec.ServerConnected += Spec_ServerConnected;
             netCoreSpec.ServerConnectionLost += NetCoreSpec_ServerConnectionLost;
@@ -47,7 +44,10 @@ namespace RTCV.UI
         private void NetCoreSpec_ServerConnectionLost(object sender, EventArgs e)
         {
             if (UICore.isClosing || UICore.FirstConnect)
+            {
                 return;
+            }
+
             SyncObjectSingleton.FormExecute(() =>
             {
                 if (S.GET<RTC_ConnectionStatus_Form>() != null && !S.GET<RTC_ConnectionStatus_Form>()
@@ -70,7 +70,9 @@ namespace RTCV.UI
 
             if (S.GET<UI_CoreForm>()
                     .cbUseAutoKillSwitch.Checked && AllSpec.VanguardSpec != null)
+            {
                 AutoKillSwitch.KillEmulator();
+            }
         }
 
         private static void Spec_ServerConnected(object sender, EventArgs e)
@@ -82,7 +84,11 @@ namespace RTCV.UI
             });
         }
 
-        public void OnMessageReceivedProxy(object sender, NetCoreEventArgs e) => OnMessageReceived(sender, e);
+        public void OnMessageReceivedProxy(object sender, NetCoreEventArgs e)
+        {
+            OnMessageReceived(sender, e);
+        }
+
         public object OnMessageReceived(object sender, NetCoreEventArgs e)
         {
             //No implementation here, we simply route and return
@@ -105,8 +111,16 @@ namespace RTCV.UI
         }
 
         //Ship everything to netcore, any needed routing will be handled in there
-        public void SendMessage(string message) => netConn.SendMessage(message);
-        public void SendMessage(string message, object value) => netConn.SendMessage(message, value);
+        public void SendMessage(string message)
+        {
+            netConn.SendMessage(message);
+        }
+
+        public void SendMessage(string message, object value)
+        {
+            netConn.SendMessage(message, value);
+        }
+
         public object SendSyncedMessage(string message) { return netConn.SendSyncedMessage(message); }
         public object SendSyncedMessage(string message, object value) { return netConn.SendSyncedMessage(message, value); }
 
