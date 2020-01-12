@@ -57,127 +57,127 @@ Applies for Value & should be editable
 
 namespace RTCV.UI
 {
-	public partial class RTC_NewBlastEditor_Form : Form, IAutoColorize
-	{
+    public partial class RTC_NewBlastEditor_Form : Form, IAutoColorize
+    {
 
-		static Dictionary<string, MemoryInterface> _domainToMiDico;
-		static Dictionary<string, MemoryInterface> DomainToMiDico
-		{
-			get => _domainToMiDico ?? (_domainToMiDico = new Dictionary<string, MemoryInterface>());
-			set => _domainToMiDico = value;
-		}
-		string[] domains = null;
-		public List<String> VisibleColumns;
-		string CurrentBlastLayerFile = "";
-		bool batchOperation = false;
-		ContextMenuStrip headerStrip;
-		ContextMenuStrip cms;
-		Dictionary<String, Control> property2ControlDico;
-		const int buttonFillWeight = 20;
-		const int checkBoxFillWeight = 25;
-		const int comboBoxFillWeight = 40;
-		const int textBoxFillWeight = 30;
-		const int numericUpDownFillWeight = 35;
+        static Dictionary<string, MemoryInterface> _domainToMiDico;
+        static Dictionary<string, MemoryInterface> DomainToMiDico
+        {
+            get => _domainToMiDico ?? (_domainToMiDico = new Dictionary<string, MemoryInterface>());
+            set => _domainToMiDico = value;
+        }
+        string[] domains = null;
+        public List<String> VisibleColumns;
+        string CurrentBlastLayerFile = "";
+        bool batchOperation = false;
+        ContextMenuStrip headerStrip;
+        ContextMenuStrip cms;
+        Dictionary<String, Control> property2ControlDico;
+        const int buttonFillWeight = 20;
+        const int checkBoxFillWeight = 25;
+        const int comboBoxFillWeight = 40;
+        const int textBoxFillWeight = 30;
+        const int numericUpDownFillWeight = 35;
 
         private enum BuProperty
-		{
-			isEnabled,
-			isLocked,
-			Domain,
-			Address,
-			Precision,
-			ValueString,
-			Source,
-			ExecuteFrame,
-			Lifetime,
-			Loop,
-			LimiterTime,
-			LimiterListHash,
-			InvertLimiter,
-			StoreTime,
-			StoreLimiterSource,
-			StoreType,
-			SourceDomain,
-			SourceAddress,
-			Note
-		}
-		//We gotta cache this stuff outside of the scope of InitializeDGV
-		//	private object actionTimeValues = 
+        {
+            isEnabled,
+            isLocked,
+            Domain,
+            Address,
+            Precision,
+            ValueString,
+            Source,
+            ExecuteFrame,
+            Lifetime,
+            Loop,
+            LimiterTime,
+            LimiterListHash,
+            InvertLimiter,
+            StoreTime,
+            StoreLimiterSource,
+            StoreType,
+            SourceDomain,
+            SourceAddress,
+            Note
+        }
+        //We gotta cache this stuff outside of the scope of InitializeDGV
+        //	private object actionTimeValues = 
 
 
-		public RTC_NewBlastEditor_Form()
-		{
-			try
-			{
-				InitializeComponent();
+        public RTC_NewBlastEditor_Form()
+        {
+            try
+            {
+                InitializeComponent();
 
-				dgvBlastEditor.DataError += dgvBlastLayer_DataError;
-				dgvBlastEditor.AutoGenerateColumns = false;
-				dgvBlastEditor.SelectionChanged += dgvBlastEditor_SelectionChanged;
-				dgvBlastEditor.ColumnHeaderMouseClick += dgvBlastEditor_ColumnHeaderMouseClick;
-				dgvBlastEditor.CellValueChanged += dgvBlastEditor_CellValueChanged;
-				dgvBlastEditor.CellMouseClick += dgvBlastEditor_CellMouseClick;
-				dgvBlastEditor.CellMouseDoubleClick += dgvBlastEditor_CellMouseDoubleClick;
-				dgvBlastEditor.RowsAdded += DgvBlastEditor_RowsAdded;
-				dgvBlastEditor.RowsRemoved += DgvBlastEditor_RowsRemoved;
-				dgvBlastEditor.CellFormatting += DgvBlastEditor_CellFormatting;
-				dgvBlastEditor.MouseClick += DgvBlastEditor_Click;
+                dgvBlastEditor.DataError += dgvBlastLayer_DataError;
+                dgvBlastEditor.AutoGenerateColumns = false;
+                dgvBlastEditor.SelectionChanged += dgvBlastEditor_SelectionChanged;
+                dgvBlastEditor.ColumnHeaderMouseClick += dgvBlastEditor_ColumnHeaderMouseClick;
+                dgvBlastEditor.CellValueChanged += dgvBlastEditor_CellValueChanged;
+                dgvBlastEditor.CellMouseClick += dgvBlastEditor_CellMouseClick;
+                dgvBlastEditor.CellMouseDoubleClick += dgvBlastEditor_CellMouseDoubleClick;
+                dgvBlastEditor.RowsAdded += DgvBlastEditor_RowsAdded;
+                dgvBlastEditor.RowsRemoved += DgvBlastEditor_RowsRemoved;
+                dgvBlastEditor.CellFormatting += DgvBlastEditor_CellFormatting;
+                dgvBlastEditor.MouseClick += DgvBlastEditor_Click;
 
-				cbFilterColumn.SelectedValueChanged += (o, e) => { tbFilter_TextChanged(null, null); };
-				tbFilter.TextChanged += tbFilter_TextChanged;
+                cbFilterColumn.SelectedValueChanged += (o, e) => { tbFilter_TextChanged(null, null); };
+                tbFilter.TextChanged += tbFilter_TextChanged;
 
-				cbEnabled.Validated += cbEnabled_Validated;
-				cbLocked.Validated += CbLocked_Validated;
-				cbBigEndian.Validated += CbBigEndian_Validated;
-				cbLoop.Validated += CbLoop_Validated;
+                cbEnabled.Validated += cbEnabled_Validated;
+                cbLocked.Validated += CbLocked_Validated;
+                cbBigEndian.Validated += CbBigEndian_Validated;
+                cbLoop.Validated += CbLoop_Validated;
 
-				cbDomain.Validated += cbDomain_Validated;
-				upDownAddress.Validated += UpDownAddress_Validated;
-				upDownPrecision.Validated += UpDownPrecision_Validated;
-				tbTiltValue.Validated += TbTiltValue_Validated;
-
-
-				upDownExecuteFrame.Validated += UpDownExecuteFrame_Validated;
-				upDownLifetime.Validated += UpDownLifetime_Validated;
-
-				cbSource.Validated += CbSource_Validated;
-				tbValue.Validated += TbValue_Validated;
-
-				cbInvertLimiter.Validated += CbInvertLimiter_Validated;
-				cbLimiterTime.Validated += CbLimiterTime_Validated;
-				cbStoreLimiterSource.Validated += cbStoreLimiterSource_Validated;
-				cbLimiterList.Validated += CbLimiterList_Validated;
-
-				upDownSourceAddress.Validated += UpDownSourceAddress_Validated;
-				cbStoreTime.Validated += CbStoreTime_Validated;
-				cbStoreType.Validated += CbStoreType_Validated;
-				cbSourceDomain.Validated += CbSourceDomain_Validated;
-
-				registerValueStringScrollEvents();
+                cbDomain.Validated += cbDomain_Validated;
+                upDownAddress.Validated += UpDownAddress_Validated;
+                upDownPrecision.Validated += UpDownPrecision_Validated;
+                tbTiltValue.Validated += TbTiltValue_Validated;
 
 
-				//On today's episode of "why is the designer overriding these values every time I build"
-				upDownExecuteFrame.Maximum = Int32.MaxValue;
-				upDownPrecision.Maximum = 16348; //Textbox doesn't like more than ~20k
-				upDownLifetime.Maximum = Int32.MaxValue;
-				upDownSourceAddress.Maximum = Int32.MaxValue;
-				upDownAddress.Maximum = Int32.MaxValue;
+                upDownExecuteFrame.Validated += UpDownExecuteFrame_Validated;
+                upDownLifetime.Validated += UpDownLifetime_Validated;
 
-				this.FormClosed += RTC_NewBlastEditorForm_Close;
-				this.FormClosing += RTC_NewBlastEditorForm_Closing;
+                cbSource.Validated += CbSource_Validated;
+                tbValue.Validated += TbValue_Validated;
 
-			}
-			catch(Exception ex)
-			{
-				string additionalInfo = "An error occurred while opening the BlastEditor Form\n\n";
+                cbInvertLimiter.Validated += CbInvertLimiter_Validated;
+                cbLimiterTime.Validated += CbLimiterTime_Validated;
+                cbStoreLimiterSource.Validated += cbStoreLimiterSource_Validated;
+                cbLimiterList.Validated += CbLimiterList_Validated;
 
-				var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
+                upDownSourceAddress.Validated += UpDownSourceAddress_Validated;
+                cbStoreTime.Validated += CbStoreTime_Validated;
+                cbStoreType.Validated += CbStoreType_Validated;
+                cbSourceDomain.Validated += CbSourceDomain_Validated;
 
-				if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
-					throw new RTCV.NetCore.AbortEverythingException();
+                registerValueStringScrollEvents();
 
-			}
-		}
+
+                //On today's episode of "why is the designer overriding these values every time I build"
+                upDownExecuteFrame.Maximum = Int32.MaxValue;
+                upDownPrecision.Maximum = 16348; //Textbox doesn't like more than ~20k
+                upDownLifetime.Maximum = Int32.MaxValue;
+                upDownSourceAddress.Maximum = Int32.MaxValue;
+                upDownAddress.Maximum = Int32.MaxValue;
+
+                this.FormClosed += RTC_NewBlastEditorForm_Close;
+                this.FormClosing += RTC_NewBlastEditorForm_Closing;
+
+            }
+            catch (Exception ex)
+            {
+                string additionalInfo = "An error occurred while opening the BlastEditor Form\n\n";
+
+                var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
+
+                if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                    throw new RTCV.NetCore.AbortEverythingException();
+
+            }
+        }
 
         public static void OpenBlastEditor(StashKey sk = null)
         {
@@ -198,501 +198,501 @@ namespace RTCV.UI
 
 
         private void RTC_NewBlastEditorForm_Load(object sender, EventArgs e)
-		{
-			UICore.SetRTCColor(UICore.GeneralColor, this);
+        {
+            UICore.SetRTCColor(UICore.GeneralColor, this);
             domains = MemoryDomains.MemoryInterfaces?.Keys?.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
 
 
-			dgvBlastEditor.AllowUserToOrderColumns = true;
-			SetDisplayOrder();
-		}
-		private void RTC_NewBlastEditorForm_Closing(object sender, FormClosingEventArgs e)
-		{
-			SaveDisplayOrder();
-		}
-		private void RTC_NewBlastEditorForm_Close(object sender, FormClosedEventArgs e)
-		{
-			//Clean up
-			bs = null;
-			_bs = null;
-			currentSK = null;
-			originalSK = null;
-			DomainToMiDico = null;
-			//Force cleanup
-			GC.Collect();
-			GC.WaitForPendingFinalizers();
-			this.Dispose();
-		}
+            dgvBlastEditor.AllowUserToOrderColumns = true;
+            SetDisplayOrder();
+        }
+        private void RTC_NewBlastEditorForm_Closing(object sender, FormClosingEventArgs e)
+        {
+            SaveDisplayOrder();
+        }
+        private void RTC_NewBlastEditorForm_Close(object sender, FormClosedEventArgs e)
+        {
+            //Clean up
+            bs = null;
+            _bs = null;
+            currentSK = null;
+            originalSK = null;
+            DomainToMiDico = null;
+            //Force cleanup
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            this.Dispose();
+        }
 
 
 
-		private void registerValueStringScrollEvents()
-		{
-			tbValue.MouseWheel += tbValueScroll;
-			dgvBlastEditor.MouseWheel += DgvBlastEditor_MouseWheel;
-		}
-	
-		private void DgvBlastEditor_MouseWheel(object sender, MouseEventArgs e)
-		{
-			var owningRow = dgvBlastEditor.CurrentCell?.OwningRow;
+        private void registerValueStringScrollEvents()
+        {
+            tbValue.MouseWheel += tbValueScroll;
+            dgvBlastEditor.MouseWheel += DgvBlastEditor_MouseWheel;
+        }
+
+        private void DgvBlastEditor_MouseWheel(object sender, MouseEventArgs e)
+        {
+            var owningRow = dgvBlastEditor.CurrentCell?.OwningRow;
 
 
-			if (dgvBlastEditor.CurrentCell == owningRow?.Cells[BuProperty.ValueString.ToString()] && dgvBlastEditor.IsCurrentCellInEditMode)
-			{
-				int precision = (int)dgvBlastEditor.CurrentCell.OwningRow.Cells[BuProperty.Precision.ToString()].Value;
-				dgvCellValueScroll(dgvBlastEditor.EditingControl, e, precision);
+            if (dgvBlastEditor.CurrentCell == owningRow?.Cells[BuProperty.ValueString.ToString()] && dgvBlastEditor.IsCurrentCellInEditMode)
+            {
+                int precision = (int)dgvBlastEditor.CurrentCell.OwningRow.Cells[BuProperty.Precision.ToString()].Value;
+                dgvCellValueScroll(dgvBlastEditor.EditingControl, e, precision);
 
-				((HandledMouseEventArgs)e).Handled = true;
-			}
+                ((HandledMouseEventArgs)e).Handled = true;
+            }
 
-		}
+        }
 
-		private void dgvCellValueScroll(object sender, MouseEventArgs e, int precision)
-		{
-			if (sender is TextBox tb)
-			{
-				var negative = (e.Delta < 0);
-				var scrollBy = 1;
-				if (negative)
-					scrollBy *= -1;
-				tb.Text = getShiftedHexString(tb.Text, scrollBy, precision);
-			}
-		}
-		private void tbValueScroll(object sender, MouseEventArgs e)
-		{
-			if (sender is TextBox tb)
-			{
-				tb.Text = getShiftedHexString(tb.Text, e.Delta / SystemInformation.MouseWheelScrollDelta, Convert.ToInt32(upDownPrecision.Value));
-			}
-		}
+        private void dgvCellValueScroll(object sender, MouseEventArgs e, int precision)
+        {
+            if (sender is TextBox tb)
+            {
+                var negative = (e.Delta < 0);
+                var scrollBy = 1;
+                if (negative)
+                    scrollBy *= -1;
+                tb.Text = getShiftedHexString(tb.Text, scrollBy, precision);
+            }
+        }
+        private void tbValueScroll(object sender, MouseEventArgs e)
+        {
+            if (sender is TextBox tb)
+            {
+                tb.Text = getShiftedHexString(tb.Text, e.Delta / SystemInformation.MouseWheelScrollDelta, Convert.ToInt32(upDownPrecision.Value));
+            }
+        }
 
 
-		private void SetDisplayOrder()
-		{
-			if (!Params.IsParamSet("BLASTEDITOR_COLUMN_ORDER"))
-				return;
-			//Names split with commas
-			var s = Params.ReadParam("BLASTEDITOR_COLUMN_ORDER");
-			var order = s.Split(',');
+        private void SetDisplayOrder()
+        {
+            if (!Params.IsParamSet("BLASTEDITOR_COLUMN_ORDER"))
+                return;
+            //Names split with commas
+            var s = Params.ReadParam("BLASTEDITOR_COLUMN_ORDER");
+            var order = s.Split(',');
 
-			//Use a foreach and keep track in-case the number of entries changes
-			int i = 0;
-			foreach (var c in order)
-			{
-				if (dgvBlastEditor.Columns.Cast<DataGridViewColumn>().Any(x => x.Name == c))
-				{
-					dgvBlastEditor.Columns[c].DisplayIndex = i;
-					i++;
-				}
-			}
-		}
+            //Use a foreach and keep track in-case the number of entries changes
+            int i = 0;
+            foreach (var c in order)
+            {
+                if (dgvBlastEditor.Columns.Cast<DataGridViewColumn>().Any(x => x.Name == c))
+                {
+                    dgvBlastEditor.Columns[c].DisplayIndex = i;
+                    i++;
+                }
+            }
+        }
 
-		private void SaveDisplayOrder()
-		{
-			var cols = dgvBlastEditor.Columns.Cast<DataGridViewColumn>().OrderBy(x => x.DisplayIndex);
-			StringBuilder sb = new StringBuilder();
-			foreach (var c in cols)
-				sb.Append(c.Name + ",");
-			Params.SetParam("BLASTEDITOR_COLUMN_ORDER", sb.ToString());
-		}
+        private void SaveDisplayOrder()
+        {
+            var cols = dgvBlastEditor.Columns.Cast<DataGridViewColumn>().OrderBy(x => x.DisplayIndex);
+            StringBuilder sb = new StringBuilder();
+            foreach (var c in cols)
+                sb.Append(c.Name + ",");
+            Params.SetParam("BLASTEDITOR_COLUMN_ORDER", sb.ToString());
+        }
 
-		private void DgvBlastEditor_Click(object sender, MouseEventArgs e)
-		{
-			//Exit edit mode if you click away from a cell
-			var ht = dgvBlastEditor.HitTest(e.X, e.Y);
+        private void DgvBlastEditor_Click(object sender, MouseEventArgs e)
+        {
+            //Exit edit mode if you click away from a cell
+            var ht = dgvBlastEditor.HitTest(e.X, e.Y);
 
-			if (ht.Type != DataGridViewHitTestType.Cell)
-				dgvBlastEditor.EndEdit();
+            if (ht.Type != DataGridViewHitTestType.Cell)
+                dgvBlastEditor.EndEdit();
 
-		}
+        }
 
-		private void dgvBlastEditor_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-		{
-			// Note handling
-			if (e != null && e.RowIndex != -1)
-			{
-				if (e.ColumnIndex == dgvBlastEditor.Columns[BuProperty.Note.ToString()]?.Index)
-				{
+        private void dgvBlastEditor_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            // Note handling
+            if (e != null && e.RowIndex != -1)
+            {
+                if (e.ColumnIndex == dgvBlastEditor.Columns[BuProperty.Note.ToString()]?.Index)
+                {
                     if (dgvBlastEditor.Rows[e.RowIndex].DataBoundItem is BlastUnit bu)
                     {
                         S.SET(new RTC_NoteEditor_Form(bu, dgvBlastEditor[e.ColumnIndex, e.RowIndex]));
                         S.GET<RTC_NoteEditor_Form>().Show();
                     }
                 }
-			}
+            }
 
-			if (e.Button == MouseButtons.Left)
-			{
-				if (e.RowIndex == -1)
-				{
-					dgvBlastEditor.EndEdit();
-					dgvBlastEditor.ClearSelection();
-				}
-			}
-			else if (e.Button == MouseButtons.Right)
-			{
-				//End the edit if they're right clicking somewhere else
-				if (dgvBlastEditor.CurrentCell.ColumnIndex != e.ColumnIndex)
-				{
-					dgvBlastEditor.EndEdit();
-				}
+            if (e.Button == MouseButtons.Left)
+            {
+                if (e.RowIndex == -1)
+                {
+                    dgvBlastEditor.EndEdit();
+                    dgvBlastEditor.ClearSelection();
+                }
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                //End the edit if they're right clicking somewhere else
+                if (dgvBlastEditor.CurrentCell.ColumnIndex != e.ColumnIndex)
+                {
+                    dgvBlastEditor.EndEdit();
+                }
 
-				cms = new ContextMenuStrip();
+                cms = new ContextMenuStrip();
 
-				if (e.RowIndex != -1 && e.ColumnIndex != -1)
-				{
-					PopulateGenericContextMenu();
-					//Can't use a switch statement because dynamic
-					if (dgvBlastEditor.Columns[e.ColumnIndex] == dgvBlastEditor.Columns[BuProperty.Address.ToString()] ||
-						dgvBlastEditor.Columns[e.ColumnIndex] == dgvBlastEditor.Columns[BuProperty.SourceAddress.ToString()])
-					{
-						cms.Items.Add(new ToolStripSeparator());
-						PopulateAddressContextMenu(dgvBlastEditor[e.ColumnIndex, e.RowIndex]);
-					}
-					cms.Show(dgvBlastEditor, dgvBlastEditor.PointToClient(Cursor.Position));
-				}
-			}
-		}
+                if (e.RowIndex != -1 && e.ColumnIndex != -1)
+                {
+                    PopulateGenericContextMenu();
+                    //Can't use a switch statement because dynamic
+                    if (dgvBlastEditor.Columns[e.ColumnIndex] == dgvBlastEditor.Columns[BuProperty.Address.ToString()] ||
+                        dgvBlastEditor.Columns[e.ColumnIndex] == dgvBlastEditor.Columns[BuProperty.SourceAddress.ToString()])
+                    {
+                        cms.Items.Add(new ToolStripSeparator());
+                        PopulateAddressContextMenu(dgvBlastEditor[e.ColumnIndex, e.RowIndex]);
+                    }
+                    cms.Show(dgvBlastEditor, dgvBlastEditor.PointToClient(Cursor.Position));
+                }
+            }
+        }
 
-		private void dgvBlastEditor_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Left)
-			{
-				dgvBlastEditor.BeginEdit(false);
-			}
-		}
+        private void dgvBlastEditor_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                dgvBlastEditor.BeginEdit(false);
+            }
+        }
 
 
-		private void PopulateGenericContextMenu()
-		{
-			((ToolStripMenuItem)cms.Items.Add("Re-roll Selected Row(s)", null, new EventHandler((ob, ev) =>
-			{
-				foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
-				{
-					BlastUnit bu = (BlastUnit)row.DataBoundItem;
-					bu.Reroll();
-				}
-				dgvBlastEditor.Refresh();
-				UpdateBottom();
-			}))).Enabled = true;
+        private void PopulateGenericContextMenu()
+        {
+            ((ToolStripMenuItem)cms.Items.Add("Re-roll Selected Row(s)", null, new EventHandler((ob, ev) =>
+            {
+                foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
+                {
+                    BlastUnit bu = (BlastUnit)row.DataBoundItem;
+                    bu.Reroll();
+                }
+                dgvBlastEditor.Refresh();
+                UpdateBottom();
+            }))).Enabled = true;
 
-			((ToolStripMenuItem)cms.Items.Add("Break Down Selected Unit(s)", null, new EventHandler((ob, ev) =>
-			{
-				breakDownUnits(true);
-			}))).Enabled = dgvBlastEditor.SelectedRows.Count > 0;
+            ((ToolStripMenuItem)cms.Items.Add("Break Down Selected Unit(s)", null, new EventHandler((ob, ev) =>
+            {
+                breakDownUnits(true);
+            }))).Enabled = dgvBlastEditor.SelectedRows.Count > 0;
 
-			((ToolStripMenuItem)cms.Items.Add("Bake Selected Unit(s) to VALUE", null, new EventHandler((ob, ev) =>
-			{
-				BakeBlastUnitsToValue(true);
-			}))).Enabled = dgvBlastEditor.SelectedRows.Count > 0;
-		}
+            ((ToolStripMenuItem)cms.Items.Add("Bake Selected Unit(s) to VALUE", null, new EventHandler((ob, ev) =>
+            {
+                BakeBlastUnitsToValue(true);
+            }))).Enabled = dgvBlastEditor.SelectedRows.Count > 0;
+        }
 
-		private void breakDownUnits(bool breakSelected = false)
-		{
-			List<DataGridViewRow> targetRows;
+        private void breakDownUnits(bool breakSelected = false)
+        {
+            List<DataGridViewRow> targetRows;
 
-			if (breakSelected)
-				targetRows = dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().ToList();
-			else
-				targetRows = dgvBlastEditor.Rows.Cast<DataGridViewRow>().ToList();
+            if (breakSelected)
+                targetRows = dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().ToList();
+            else
+                targetRows = dgvBlastEditor.Rows.Cast<DataGridViewRow>().ToList();
 
-			//Important we ToArray() this or else the ienumerable will become invalidated
-			var blastUnits = targetRows.Select(x => (BlastUnit) x.DataBoundItem).ToArray(); 
+            //Important we ToArray() this or else the ienumerable will become invalidated
+            var blastUnits = targetRows.Select(x => (BlastUnit)x.DataBoundItem).ToArray();
 
-			dgvBlastEditor.DataSource = null;
-			batchOperation = true;
+            dgvBlastEditor.DataSource = null;
+            batchOperation = true;
 
-			foreach (var bu in blastUnits)
-			{
-				BlastUnit[] brokenUnits = bu.GetBreakdown();
+            foreach (var bu in blastUnits)
+            {
+                BlastUnit[] brokenUnits = bu.GetBreakdown();
 
-				if (brokenUnits == null || brokenUnits.Length < 2)
-					continue;
+                if (brokenUnits == null || brokenUnits.Length < 2)
+                    continue;
 
-				foreach (BlastUnit unit in brokenUnits)
-					bs.Add(unit);
-			}
+                foreach (BlastUnit unit in brokenUnits)
+                    bs.Add(unit);
+            }
 
-			bs = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
-			batchOperation = false;
-			dgvBlastEditor.DataSource = bs;
-			updateMaximum(dgvBlastEditor.Rows.Cast<DataGridViewRow>().ToList());
-			dgvBlastEditor.Refresh();
-			UpdateBottom();
-		}
+            bs = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
+            batchOperation = false;
+            dgvBlastEditor.DataSource = bs;
+            updateMaximum(dgvBlastEditor.Rows.Cast<DataGridViewRow>().ToList());
+            dgvBlastEditor.Refresh();
+            UpdateBottom();
+        }
 
-		private void PopulateAddressContextMenu(DataGridViewCell cell)
-		{
-			((ToolStripMenuItem)cms.Items.Add("Open Selected Address in Hex Editor", null, new EventHandler((ob, ev) =>
-			{
-				BlastUnit bu = dgvBlastEditor.Rows[cell.RowIndex]?.DataBoundItem as BlastUnit;
-				if (bu == null)
-					return;
-				if (cell.OwningColumn == dgvBlastEditor.Columns[BuProperty.Address.ToString()])
-					LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.EMU_OPEN_HEXEDITOR_ADDRESS, new object[] { bu.Domain, bu.Address });
+        private void PopulateAddressContextMenu(DataGridViewCell cell)
+        {
+            ((ToolStripMenuItem)cms.Items.Add("Open Selected Address in Hex Editor", null, new EventHandler((ob, ev) =>
+            {
+                BlastUnit bu = dgvBlastEditor.Rows[cell.RowIndex]?.DataBoundItem as BlastUnit;
+                if (bu == null)
+                    return;
+                if (cell.OwningColumn == dgvBlastEditor.Columns[BuProperty.Address.ToString()])
+                    LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.EMU_OPEN_HEXEDITOR_ADDRESS, new object[] { bu.Domain, bu.Address });
 
-				if (cell.OwningColumn == dgvBlastEditor.Columns[BuProperty.SourceAddress.ToString()])
-					LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.EMU_OPEN_HEXEDITOR_ADDRESS, new object[] { bu.SourceDomain, bu.SourceAddress });
-			}))).Enabled = true;
-		}
+                if (cell.OwningColumn == dgvBlastEditor.Columns[BuProperty.SourceAddress.ToString()])
+                    LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.EMU_OPEN_HEXEDITOR_ADDRESS, new object[] { bu.SourceDomain, bu.SourceAddress });
+            }))).Enabled = true;
+        }
 
-		private void dgvBlastEditor_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-		{
-			DataGridViewColumn changedColumn = dgvBlastEditor.Columns[e.ColumnIndex];
+        private void dgvBlastEditor_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridViewColumn changedColumn = dgvBlastEditor.Columns[e.ColumnIndex];
 
-			//If the Domain or SourceDomain changed update the Maximum Value
-			if (changedColumn.Name == BuProperty.Domain.ToString())
-			{
-				updateMaximum(dgvBlastEditor.Rows[e.RowIndex].Cells[BuProperty.Address.ToString()] as DataGridViewNumericUpDownCell, dgvBlastEditor.Rows[e.RowIndex].Cells[BuProperty.Domain.ToString()].Value.ToString());
-			}
-			else if (changedColumn.Name == BuProperty.SourceDomain.ToString())
-			{
-				updateMaximum(dgvBlastEditor.Rows[e.RowIndex].Cells[BuProperty.SourceAddress.ToString()] as DataGridViewNumericUpDownCell, dgvBlastEditor.Rows[e.RowIndex].Cells[BuProperty.SourceDomain.ToString()].Value.ToString());
-			}
-			UpdateBottom();
-		}
+            //If the Domain or SourceDomain changed update the Maximum Value
+            if (changedColumn.Name == BuProperty.Domain.ToString())
+            {
+                updateMaximum(dgvBlastEditor.Rows[e.RowIndex].Cells[BuProperty.Address.ToString()] as DataGridViewNumericUpDownCell, dgvBlastEditor.Rows[e.RowIndex].Cells[BuProperty.Domain.ToString()].Value.ToString());
+            }
+            else if (changedColumn.Name == BuProperty.SourceDomain.ToString())
+            {
+                updateMaximum(dgvBlastEditor.Rows[e.RowIndex].Cells[BuProperty.SourceAddress.ToString()] as DataGridViewNumericUpDownCell, dgvBlastEditor.Rows[e.RowIndex].Cells[BuProperty.SourceDomain.ToString()].Value.ToString());
+            }
+            UpdateBottom();
+        }
 
-		private void CbSourceDomain_Validated(object sender, EventArgs e)
-		{
-			var value = cbSourceDomain.SelectedItem;
+        private void CbSourceDomain_Validated(object sender, EventArgs e)
+        {
+            var value = cbSourceDomain.SelectedItem;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
                 row.Cells[BuProperty.SourceDomain.ToString()]
-					.Value = value;
-			UpdateBottom();
-		}
+                    .Value = value;
+            UpdateBottom();
+        }
 
-		private void CbStoreType_Validated(object sender, EventArgs e)
-		{
-			var value = cbStoreType.SelectedItem;
+        private void CbStoreType_Validated(object sender, EventArgs e)
+        {
+            var value = cbStoreType.SelectedItem;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
                 row.Cells[BuProperty.StoreType.ToString()].Value = value;
-			UpdateBottom();
-		}
+            UpdateBottom();
+        }
 
-		private void CbStoreTime_Validated(object sender, EventArgs e)
-		{
-			var value = cbStoreTime.SelectedItem;
+        private void CbStoreTime_Validated(object sender, EventArgs e)
+        {
+            var value = cbStoreTime.SelectedItem;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
                 row.Cells[BuProperty.StoreTime.ToString()].Value = value;
-			UpdateBottom();
-		}
+            UpdateBottom();
+        }
 
-		private void CbLimiterList_Validated(object sender, EventArgs e)
-		{
-			var value = ((ComboBoxItem<String>)(cbLimiterList?.SelectedItem))?.Value ?? null;
+        private void CbLimiterList_Validated(object sender, EventArgs e)
+        {
+            var value = ((ComboBoxItem<String>)(cbLimiterList?.SelectedItem))?.Value ?? null;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
                 row.Cells[BuProperty.LimiterListHash.ToString()].Value = value; // We gotta use the value
-			UpdateBottom();
-		}
+            UpdateBottom();
+        }
 
-		private void CbBigEndian_Validated(object sender, EventArgs e)
-		{
-			var value = cbBigEndian.Checked;
+        private void CbBigEndian_Validated(object sender, EventArgs e)
+        {
+            var value = cbBigEndian.Checked;
             //Big Endian isn't available in the DGV so we operate on the actual BU then refresh
             //Todo - change this?
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
             {
-				((BlastUnit)row.DataBoundItem).BigEndian = value;
-			}
-			dgvBlastEditor.Refresh();
-			UpdateBottom();
-		}
+                ((BlastUnit)row.DataBoundItem).BigEndian = value;
+            }
+            dgvBlastEditor.Refresh();
+            UpdateBottom();
+        }
 
-		private void TbValue_Validated(object sender, EventArgs e)
-		{
-			var value = tbValue.Text;
+        private void TbValue_Validated(object sender, EventArgs e)
+        {
+            var value = tbValue.Text;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
                 row.Cells[BuProperty.ValueString.ToString()].Value = value;
-			UpdateBottom();
-		}
+            UpdateBottom();
+        }
 
-		private void CbSource_Validated(object sender, EventArgs e)
-		{
-			var value = cbSource.SelectedItem;
+        private void CbSource_Validated(object sender, EventArgs e)
+        {
+            var value = cbSource.SelectedItem;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
                 row.Cells[BuProperty.Source.ToString()].Value = value;
-			UpdateBottom();
-		}
+            UpdateBottom();
+        }
 
-		private void TbTiltValue_Validated(object sender, EventArgs e)
-		{
-			if (!BigInteger.TryParse(tbTiltValue.Text, out BigInteger value))
-				value = 0;
+        private void TbTiltValue_Validated(object sender, EventArgs e)
+        {
+            if (!BigInteger.TryParse(tbTiltValue.Text, out BigInteger value))
+                value = 0;
 
             //Tilt isn't stored within the DGV so operate on the BUs. No validation neccesary as it's a bigint
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
             {
-				(row.DataBoundItem as BlastUnit).TiltValue = value;
-			}
-			UpdateBottom();
-		}
-		private void UpDownLifetime_Validated(object sender, EventArgs e)
-		{
-			var value = upDownLifetime.Value;
-			if (value > Int32.MaxValue)
-				value = Int32.MaxValue;
+                (row.DataBoundItem as BlastUnit).TiltValue = value;
+            }
+            UpdateBottom();
+        }
+        private void UpDownLifetime_Validated(object sender, EventArgs e)
+        {
+            var value = upDownLifetime.Value;
+            if (value > Int32.MaxValue)
+                value = Int32.MaxValue;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
                 row.Cells[BuProperty.Lifetime.ToString()].Value = value;
 
-			UpdateBottom();
-			dgvBlastEditor.Refresh();
-		}
-		private void UpDownExecuteFrame_Validated(object sender, EventArgs e)
-		{
-			var value = upDownExecuteFrame.Value;
-			if (value > Int32.MaxValue)
-				value = Int32.MaxValue;
+            UpdateBottom();
+            dgvBlastEditor.Refresh();
+        }
+        private void UpDownExecuteFrame_Validated(object sender, EventArgs e)
+        {
+            var value = upDownExecuteFrame.Value;
+            if (value > Int32.MaxValue)
+                value = Int32.MaxValue;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
                 row.Cells[BuProperty.ExecuteFrame.ToString()].Value = value;
 
-			UpdateBottom();
-			dgvBlastEditor.Refresh();
-		}
+            UpdateBottom();
+            dgvBlastEditor.Refresh();
+        }
 
-		private void UpDownPrecision_Validated(object sender, EventArgs e)
-		{
-			var value = upDownPrecision.Value;
+        private void UpDownPrecision_Validated(object sender, EventArgs e)
+        {
+            var value = upDownPrecision.Value;
 
-			if (value > Int32.MaxValue)
-				value = Int32.MaxValue;
+            if (value > Int32.MaxValue)
+                value = Int32.MaxValue;
 
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
                 row.Cells[BuProperty.Precision.ToString()].Value = value;
-			UpdateBottom();
-			dgvBlastEditor.Refresh();
-		}
+            UpdateBottom();
+            dgvBlastEditor.Refresh();
+        }
 
-		private void UpDownAddress_Validated(object sender, EventArgs e)
-		{
-			var value = upDownAddress.Value;
-			if (value > Int32.MaxValue)
-				value = Int32.MaxValue;
+        private void UpDownAddress_Validated(object sender, EventArgs e)
+        {
+            var value = upDownAddress.Value;
+            if (value > Int32.MaxValue)
+                value = Int32.MaxValue;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
                 row.Cells[BuProperty.Address.ToString()].Value = value;
-			UpdateBottom();
-		}
+            UpdateBottom();
+        }
 
-		private void UpDownSourceAddress_Validated(object sender, EventArgs e)
-		{
-			var value = upDownSourceAddress.Value;
-			if (value > Int32.MaxValue)
-				value = Int32.MaxValue;
+        private void UpDownSourceAddress_Validated(object sender, EventArgs e)
+        {
+            var value = upDownSourceAddress.Value;
+            if (value > Int32.MaxValue)
+                value = Int32.MaxValue;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
                 row.Cells[BuProperty.SourceAddress.ToString()].Value = value;
-			UpdateBottom();
-		}
+            UpdateBottom();
+        }
 
-		private void CbLocked_Validated(object sender, EventArgs e)
-		{
-			var value = cbLocked.Checked;
-			foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
-				row.Cells[BuProperty.isLocked.ToString()].Value = value;
-			UpdateBottom();
-		}
+        private void CbLocked_Validated(object sender, EventArgs e)
+        {
+            var value = cbLocked.Checked;
+            foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
+                row.Cells[BuProperty.isLocked.ToString()].Value = value;
+            UpdateBottom();
+        }
 
-		private void CbLimiterTime_Validated(object sender, EventArgs e)
-		{
-			var value = cbLimiterTime.SelectedItem;
+        private void CbLimiterTime_Validated(object sender, EventArgs e)
+        {
+            var value = cbLimiterTime.SelectedItem;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
                 row.Cells[BuProperty.LimiterTime.ToString()].Value = value;
-			UpdateBottom();
-		}
-		
-		private void cbStoreLimiterSource_Validated(object sender, EventArgs e)
-		{
-			var value = cbStoreLimiterSource.SelectedItem;
+            UpdateBottom();
+        }
+
+        private void cbStoreLimiterSource_Validated(object sender, EventArgs e)
+        {
+            var value = cbStoreLimiterSource.SelectedItem;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
                 row.Cells[BuProperty.StoreLimiterSource.ToString()].Value = value;
-			UpdateBottom();
-		}
+            UpdateBottom();
+        }
 
 
-		private void CbInvertLimiter_Validated(object sender, EventArgs e)
-		{
-			var value = cbInvertLimiter.Checked;
+        private void CbInvertLimiter_Validated(object sender, EventArgs e)
+        {
+            var value = cbInvertLimiter.Checked;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
                 row.Cells[BuProperty.InvertLimiter.ToString()].Value = value;
-			UpdateBottom();
-		}
-		private void cbEnabled_Validated(object sender, EventArgs e)
-		{
-			var value = cbEnabled.Checked;
+            UpdateBottom();
+        }
+        private void cbEnabled_Validated(object sender, EventArgs e)
+        {
+            var value = cbEnabled.Checked;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
                 row.Cells[BuProperty.isEnabled.ToString()].Value = value;
-			UpdateBottom();
-		}
+            UpdateBottom();
+        }
 
-		private void cbDomain_Validated(object sender, EventArgs e)
-		{
-			var value = cbDomain.SelectedItem;
+        private void cbDomain_Validated(object sender, EventArgs e)
+        {
+            var value = cbDomain.SelectedItem;
 
-			if (!domains.Contains(value))
-				return;
+            if (!domains.Contains(value))
+                return;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
-				row.Cells[BuProperty.Domain.ToString()].Value = value;
-			UpdateBottom();
-		}
+                row.Cells[BuProperty.Domain.ToString()].Value = value;
+            UpdateBottom();
+        }
 
 
-		private void CbLoop_Validated(object sender, EventArgs e)
-		{
-			var value = cbLoop.Checked;
+        private void CbLoop_Validated(object sender, EventArgs e)
+        {
+            var value = cbLoop.Checked;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
                 row.Cells[BuProperty.Loop.ToString()].Value = value;
-			UpdateBottom();
-		}
+            UpdateBottom();
+        }
 
 
-		private void dgvBlastEditor_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-		{
-			if(e.Button == MouseButtons.Right)
-			{
-				headerStrip = new ContextMenuStrip();
-				headerStrip.Items.Add("Select columns to show", null, new EventHandler((ob, ev) =>
-				{
-					ColumnSelector cs = new ColumnSelector();
-					cs.LoadColumnSelector(dgvBlastEditor.Columns);
-				}));
+        private void dgvBlastEditor_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                headerStrip = new ContextMenuStrip();
+                headerStrip.Items.Add("Select columns to show", null, new EventHandler((ob, ev) =>
+                {
+                    ColumnSelector cs = new ColumnSelector();
+                    cs.LoadColumnSelector(dgvBlastEditor.Columns);
+                }));
 
-				headerStrip.Show(MousePosition);
-			}
+                headerStrip.Show(MousePosition);
+            }
 
-			RefreshAllNoteIcons();
-		}
+            RefreshAllNoteIcons();
+        }
 
 
-		private void updateMaximum(List<DataGridViewRow> rows)
-		{
-			foreach (DataGridViewRow row in rows)
-			{
-				BlastUnit bu = row.DataBoundItem as BlastUnit;
-				string domain = bu.Domain;
-				string sourceDomain = bu.SourceDomain;
-				
+        private void updateMaximum(List<DataGridViewRow> rows)
+        {
+            foreach (DataGridViewRow row in rows)
+            {
+                BlastUnit bu = row.DataBoundItem as BlastUnit;
+                string domain = bu.Domain;
+                string sourceDomain = bu.SourceDomain;
 
-				if(domain != null && DomainToMiDico.ContainsKey(bu.Domain ?? ""))
-					(row.Cells[BuProperty.Address.ToString()] as DataGridViewNumericUpDownCell).Maximum = DomainToMiDico[domain].Size - 1;
-				if(sourceDomain != null && DomainToMiDico.ContainsKey(bu.SourceDomain ?? ""))
-					(row.Cells[BuProperty.SourceAddress.ToString()] as DataGridViewNumericUpDownCell).Maximum = DomainToMiDico[sourceDomain].Size - 1;
-			}
-		}
 
-		private void updateMaximum(DataGridViewNumericUpDownCell cell, String domain)
-		{
-			if (DomainToMiDico.ContainsKey(domain))
-				cell.Maximum = DomainToMiDico[domain].Size - 1;
-			else
-				cell.Maximum = Int32.MaxValue;
+                if (domain != null && DomainToMiDico.ContainsKey(bu.Domain ?? ""))
+                    (row.Cells[BuProperty.Address.ToString()] as DataGridViewNumericUpDownCell).Maximum = DomainToMiDico[domain].Size - 1;
+                if (sourceDomain != null && DomainToMiDico.ContainsKey(bu.SourceDomain ?? ""))
+                    (row.Cells[BuProperty.SourceAddress.ToString()] as DataGridViewNumericUpDownCell).Maximum = DomainToMiDico[sourceDomain].Size - 1;
+            }
+        }
 
-		}
-		
-		private void UpdateBottom()
-		{
-			if (dgvBlastEditor.SelectedRows.Count > 0)
-			{
-				var lastRow = dgvBlastEditor.SelectedRows[dgvBlastEditor.SelectedRows.Count - 1];
+        private void updateMaximum(DataGridViewNumericUpDownCell cell, String domain)
+        {
+            if (DomainToMiDico.ContainsKey(domain))
+                cell.Maximum = DomainToMiDico[domain].Size - 1;
+            else
+                cell.Maximum = Int32.MaxValue;
 
-				/*
+        }
+
+        private void UpdateBottom()
+        {
+            if (dgvBlastEditor.SelectedRows.Count > 0)
+            {
+                var lastRow = dgvBlastEditor.SelectedRows[dgvBlastEditor.SelectedRows.Count - 1];
+
+                /*
 				cbDomain.SelectedItem = (String)(lastRow.Cells[buProperty.Domain.ToString()].Value);
 				cbEnabled.Checked = (bool)(lastRow.Cells[buProperty.isEnabled.ToString()].Value);
 				cbLocked.Checked = (bool)(lastRow.Cells[buProperty.isLocked.ToString()].Value);
@@ -712,399 +712,399 @@ namespace RTCV.UI
 				upDownSourceAddress.Value = (long)(lastRow.Cells[buProperty.SourceAddress.ToString()].Value);
 
 				tbTiltValue.Text = (lastRow.DataBoundItem as BlastUnit).TiltValue.ToString();*/
-				BlastUnit bu = (BlastUnit)lastRow.DataBoundItem;
+                BlastUnit bu = (BlastUnit)lastRow.DataBoundItem;
 
 
 
-				if (DomainToMiDico.ContainsKey(bu.Domain ?? String.Empty))
-					upDownAddress.Maximum = DomainToMiDico[bu.Domain].Size -1;
-				else
-					upDownAddress.Maximum = Int32.MaxValue;
+                if (DomainToMiDico.ContainsKey(bu.Domain ?? String.Empty))
+                    upDownAddress.Maximum = DomainToMiDico[bu.Domain].Size - 1;
+                else
+                    upDownAddress.Maximum = Int32.MaxValue;
 
-				if (DomainToMiDico.ContainsKey(bu.SourceDomain ?? String.Empty))
-					upDownSourceAddress.Maximum = DomainToMiDico[bu.SourceDomain].Size -1;
-				else
-					upDownSourceAddress.Maximum = Int32.MaxValue;
-
-
-				cbDomain.SelectedItem = bu.Domain;
-				cbEnabled.Checked = bu.IsEnabled;
-				cbLocked.Checked = bu.IsLocked;
-				cbBigEndian.Checked = bu.BigEndian;
-
-				upDownAddress.Value = bu.Address;
-				upDownPrecision.Value = bu.Precision;
-				tbValue.Text = bu.ValueString;
-				upDownExecuteFrame.Value = bu.ExecuteFrame;
-				upDownLifetime.Value = bu.Lifetime;
-				cbLoop.Checked = bu.Loop;
-				cbLimiterTime.SelectedItem = bu.LimiterTime;
-				cbStoreLimiterSource.SelectedItem = bu.StoreLimiterSource;
-
-				cbLimiterList.SelectedItem = CorruptCore.RtcCore.LimiterListBindingSource.FirstOrDefault(x => x.Value == bu.LimiterListHash);
-
-				cbInvertLimiter.Checked = bu.InvertLimiter;
-				cbStoreTime.SelectedItem = bu.StoreTime;
-				cbStoreType.SelectedItem = bu.StoreType;
-				cbSourceDomain.SelectedItem = bu.SourceDomain;
-				cbSource.SelectedItem = bu.Source;
-				upDownSourceAddress.Value = bu.SourceAddress;
+                if (DomainToMiDico.ContainsKey(bu.SourceDomain ?? String.Empty))
+                    upDownSourceAddress.Maximum = DomainToMiDico[bu.SourceDomain].Size - 1;
+                else
+                    upDownSourceAddress.Maximum = Int32.MaxValue;
 
 
-				tbTiltValue.Text = bu.TiltValue.ToString();
+                cbDomain.SelectedItem = bu.Domain;
+                cbEnabled.Checked = bu.IsEnabled;
+                cbLocked.Checked = bu.IsLocked;
+                cbBigEndian.Checked = bu.BigEndian;
 
-			}
-		}
+                upDownAddress.Value = bu.Address;
+                upDownPrecision.Value = bu.Precision;
+                tbValue.Text = bu.ValueString;
+                upDownExecuteFrame.Value = bu.ExecuteFrame;
+                upDownLifetime.Value = bu.Lifetime;
+                cbLoop.Checked = bu.Loop;
+                cbLimiterTime.SelectedItem = bu.LimiterTime;
+                cbStoreLimiterSource.SelectedItem = bu.StoreLimiterSource;
 
-		private void dgvBlastEditor_SelectionChanged(object sender, EventArgs e)
-		{
-			UpdateBottom();
+                cbLimiterList.SelectedItem = CorruptCore.RtcCore.LimiterListBindingSource.FirstOrDefault(x => x.Value == bu.LimiterListHash);
 
-			List<DataGridViewRow> col = new List<DataGridViewRow>();
-			//For some reason DataGridViewRowCollection and DataGridViewSelectedRowCollection aren't directly compatible???
-			foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
-				col.Add(row);
+                cbInvertLimiter.Checked = bu.InvertLimiter;
+                cbStoreTime.SelectedItem = bu.StoreTime;
+                cbStoreType.SelectedItem = bu.StoreType;
+                cbSourceDomain.SelectedItem = bu.SourceDomain;
+                cbSource.SelectedItem = bu.Source;
+                upDownSourceAddress.Value = bu.SourceAddress;
 
-			//Rather than setting all these values at load, we set it on the fly
-			updateMaximum(col);
-		}
 
-		private void DgvBlastEditor_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-		{
+                tbTiltValue.Text = bu.TiltValue.ToString();
+
+            }
+        }
+
+        private void dgvBlastEditor_SelectionChanged(object sender, EventArgs e)
+        {
+            UpdateBottom();
+
+            List<DataGridViewRow> col = new List<DataGridViewRow>();
+            //For some reason DataGridViewRowCollection and DataGridViewSelectedRowCollection aren't directly compatible???
+            foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
+                col.Add(row);
+
+            //Rather than setting all these values at load, we set it on the fly
+            updateMaximum(col);
+        }
+
+        private void DgvBlastEditor_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
             //Bug in DGV. If you don't read the value back, it goes into edit mode on first click if you read the selectedrow within SelectionChanged. Why? No idea.
             _ = dgvBlastEditor.Rows[e.RowIndex].Cells[0].Value;
         }
 
-		private void tbFilter_TextChanged(object sender, EventArgs e)
-		{
+        private void tbFilter_TextChanged(object sender, EventArgs e)
+        {
 
-			if (tbFilter.Text.Length == 0)
-			{
-				dgvBlastEditor.DataSource = bs;
-				_bs = null;
-				RefreshAllNoteIcons();
-				return;
-			}
-				
-
-			string value = ((ComboBoxItem<String>)cbFilterColumn?.SelectedItem)?.Value;
-			if (value == null)
-				return;
-
-			_bs = new BindingSource();
-			switch (((ComboBoxItem<String>)cbFilterColumn.SelectedItem).Value)
-			{
-				//If it's an address or a source address we want decimal
-				case "Address":
-					_bs.DataSource = currentSK.BlastLayer.Layer.Where(x => x.Address.ToString("X").ToUpper().Substring(0, tbFilter.Text.Length.Clamp(0, x.Address.ToString("X").Length)) == tbFilter.Text.ToUpper()).ToList();
-					break;
-				case "SourceAddress":
-					_bs.DataSource = currentSK.BlastLayer.Layer.Where(x => x.SourceAddress.ToString("X").ToUpper().Substring(0, tbFilter.Text.Length.Clamp(0, x.SourceAddress.ToString("X").Length)) == tbFilter.Text.ToUpper()).ToList();
-					break;
-				default: //Otherwise just use reflection and dig it out
-					_bs.DataSource = currentSK.BlastLayer.Layer.Where(x => x?.GetType()?.GetProperty(value)?.GetValue(x) != null && (x.GetType()?.GetProperty(value)?.GetValue(x).ToString().ToUpper().Substring(0, tbFilter.Text.Length) == tbFilter.Text.ToUpper())).ToList();
-					break;
-			}
-			dgvBlastEditor.DataSource = _bs;
-			RefreshAllNoteIcons();
-		}
-	
-		private void InitializeBottom()
-		{
-			property2ControlDico = new Dictionary<string, Control>();
-
-			var storeType = Enum.GetValues(typeof(StoreType));
-			var blastUnitSource = Enum.GetValues(typeof(BlastUnitSource));
-
-			cbDomain.BindingContext = new BindingContext();
-			cbDomain.DataSource = domains;
-
-			cbSourceDomain.BindingContext = new BindingContext();
-			cbSourceDomain.DataSource = domains;
-
-			foreach (var item in Enum.GetValues(typeof(LimiterTime)))
-			{
-				cbLimiterTime.Items.Add(item);
-			}
-			foreach (var item in Enum.GetValues(typeof(StoreLimiterSource)))
-			{
-				cbStoreLimiterSource.Items.Add(item);
-			}
-			foreach (var item in Enum.GetValues(typeof(StoreTime)))
-			{
-				cbStoreTime.Items.Add(item);
-			}
-			foreach (var item in blastUnitSource)
-			{
-				cbSource.Items.Add(item);
-			}
-
-			cbLimiterList.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
-			cbLimiterList.DisplayMember = "Name";
-			cbLimiterList.ValueMember = "Value";
-
-			cbStoreType.DataSource = storeType;
-
-			property2ControlDico.Add(BuProperty.Address.ToString(), upDownAddress);
-			property2ControlDico.Add(BuProperty.Domain.ToString(), cbDomain);
-			property2ControlDico.Add(BuProperty.Source.ToString(), cbSource);
-			property2ControlDico.Add(BuProperty.ExecuteFrame.ToString(), upDownExecuteFrame);
-			property2ControlDico.Add(BuProperty.InvertLimiter.ToString(), cbInvertLimiter);
-			property2ControlDico.Add(BuProperty.isEnabled.ToString(), cbEnabled);
-			property2ControlDico.Add(BuProperty.isLocked.ToString(), cbLocked);
-			property2ControlDico.Add(BuProperty.Lifetime.ToString(), upDownLifetime);
-			property2ControlDico.Add(BuProperty.LimiterListHash.ToString(), cbLimiterList);
-			property2ControlDico.Add(BuProperty.LimiterTime.ToString(), cbLimiterTime);
-			property2ControlDico.Add(BuProperty.Loop.ToString(), cbLoop);
-			property2ControlDico.Add(BuProperty.Note.ToString(), btnNote);
-			property2ControlDico.Add(BuProperty.Precision.ToString(), upDownPrecision);
-			property2ControlDico.Add(BuProperty.SourceAddress.ToString(), upDownSourceAddress);
-			property2ControlDico.Add(BuProperty.SourceDomain.ToString(), cbSourceDomain);
-			property2ControlDico.Add(BuProperty.StoreTime.ToString(), cbStoreTime);
-			property2ControlDico.Add(BuProperty.StoreLimiterSource.ToString(), cbStoreTime);
-			property2ControlDico.Add(BuProperty.StoreType.ToString(), cbStoreType);
-			property2ControlDico.Add(BuProperty.ValueString.ToString(), tbValue);
-		}
+            if (tbFilter.Text.Length == 0)
+            {
+                dgvBlastEditor.DataSource = bs;
+                _bs = null;
+                RefreshAllNoteIcons();
+                return;
+            }
 
 
+            string value = ((ComboBoxItem<String>)cbFilterColumn?.SelectedItem)?.Value;
+            if (value == null)
+                return;
 
-		private void InitializeDGV()
-		{
+            _bs = new BindingSource();
+            switch (((ComboBoxItem<String>)cbFilterColumn.SelectedItem).Value)
+            {
+                //If it's an address or a source address we want decimal
+                case "Address":
+                    _bs.DataSource = currentSK.BlastLayer.Layer.Where(x => x.Address.ToString("X").ToUpper().Substring(0, tbFilter.Text.Length.Clamp(0, x.Address.ToString("X").Length)) == tbFilter.Text.ToUpper()).ToList();
+                    break;
+                case "SourceAddress":
+                    _bs.DataSource = currentSK.BlastLayer.Layer.Where(x => x.SourceAddress.ToString("X").ToUpper().Substring(0, tbFilter.Text.Length.Clamp(0, x.SourceAddress.ToString("X").Length)) == tbFilter.Text.ToUpper()).ToList();
+                    break;
+                default: //Otherwise just use reflection and dig it out
+                    _bs.DataSource = currentSK.BlastLayer.Layer.Where(x => x?.GetType()?.GetProperty(value)?.GetValue(x) != null && (x.GetType()?.GetProperty(value)?.GetValue(x).ToString().ToUpper().Substring(0, tbFilter.Text.Length) == tbFilter.Text.ToUpper())).ToList();
+                    break;
+            }
+            dgvBlastEditor.DataSource = _bs;
+            RefreshAllNoteIcons();
+        }
 
-			VisibleColumns = new List<string>();
-			var blastUnitSource = Enum.GetValues(typeof(BlastUnitSource));
+        private void InitializeBottom()
+        {
+            property2ControlDico = new Dictionary<string, Control>();
 
+            var storeType = Enum.GetValues(typeof(StoreType));
+            var blastUnitSource = Enum.GetValues(typeof(BlastUnitSource));
 
-			var enabled = CreateColumn(BuProperty.isEnabled.ToString(), BuProperty.isEnabled.ToString(), "Enabled"
-				, new DataGridViewCheckBoxColumn());
-			enabled.SortMode = DataGridViewColumnSortMode.Automatic;
-			dgvBlastEditor.Columns.Add(enabled);
+            cbDomain.BindingContext = new BindingContext();
+            cbDomain.DataSource = domains;
 
-			var locked = CreateColumn(BuProperty.isLocked.ToString(), BuProperty.isLocked.ToString(), "Locked"
-				, new DataGridViewCheckBoxColumn());
-			locked.SortMode = DataGridViewColumnSortMode.Automatic;
-			dgvBlastEditor.Columns.Add(locked);
+            cbSourceDomain.BindingContext = new BindingContext();
+            cbSourceDomain.DataSource = domains;
 
-			//Do this one separately as we need to populate the Combobox
-			DataGridViewComboBoxColumn source = CreateColumn(BuProperty.Source.ToString(), BuProperty.Source.ToString(), "Source", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
-			foreach (var item in blastUnitSource)
-				source.Items.Add(item);
-			dgvBlastEditor.Columns.Add(source);
+            foreach (var item in Enum.GetValues(typeof(LimiterTime)))
+            {
+                cbLimiterTime.Items.Add(item);
+            }
+            foreach (var item in Enum.GetValues(typeof(StoreLimiterSource)))
+            {
+                cbStoreLimiterSource.Items.Add(item);
+            }
+            foreach (var item in Enum.GetValues(typeof(StoreTime)))
+            {
+                cbStoreTime.Items.Add(item);
+            }
+            foreach (var item in blastUnitSource)
+            {
+                cbSource.Items.Add(item);
+            }
 
-			//Do this one separately as we need to populate the Combobox
-			DataGridViewComboBoxColumn domain = CreateColumn(BuProperty.Domain.ToString(), BuProperty.Domain.ToString(), "Domain", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
-			domain.DataSource = domains;
-			domain.SortMode = DataGridViewColumnSortMode.Automatic;
-			dgvBlastEditor.Columns.Add(domain);
+            cbLimiterList.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
+            cbLimiterList.DisplayMember = "Name";
+            cbLimiterList.ValueMember = "Value";
 
-			DataGridViewNumericUpDownColumn address = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.Address.ToString(), BuProperty.Address.ToString(), "Address", new DataGridViewNumericUpDownColumn());
-			address.Hexadecimal = true;
-			address.SortMode = DataGridViewColumnSortMode.Automatic;
-			address.Increment = 1;
-			dgvBlastEditor.Columns.Add(address);
+            cbStoreType.DataSource = storeType;
+
+            property2ControlDico.Add(BuProperty.Address.ToString(), upDownAddress);
+            property2ControlDico.Add(BuProperty.Domain.ToString(), cbDomain);
+            property2ControlDico.Add(BuProperty.Source.ToString(), cbSource);
+            property2ControlDico.Add(BuProperty.ExecuteFrame.ToString(), upDownExecuteFrame);
+            property2ControlDico.Add(BuProperty.InvertLimiter.ToString(), cbInvertLimiter);
+            property2ControlDico.Add(BuProperty.isEnabled.ToString(), cbEnabled);
+            property2ControlDico.Add(BuProperty.isLocked.ToString(), cbLocked);
+            property2ControlDico.Add(BuProperty.Lifetime.ToString(), upDownLifetime);
+            property2ControlDico.Add(BuProperty.LimiterListHash.ToString(), cbLimiterList);
+            property2ControlDico.Add(BuProperty.LimiterTime.ToString(), cbLimiterTime);
+            property2ControlDico.Add(BuProperty.Loop.ToString(), cbLoop);
+            property2ControlDico.Add(BuProperty.Note.ToString(), btnNote);
+            property2ControlDico.Add(BuProperty.Precision.ToString(), upDownPrecision);
+            property2ControlDico.Add(BuProperty.SourceAddress.ToString(), upDownSourceAddress);
+            property2ControlDico.Add(BuProperty.SourceDomain.ToString(), cbSourceDomain);
+            property2ControlDico.Add(BuProperty.StoreTime.ToString(), cbStoreTime);
+            property2ControlDico.Add(BuProperty.StoreLimiterSource.ToString(), cbStoreTime);
+            property2ControlDico.Add(BuProperty.StoreType.ToString(), cbStoreType);
+            property2ControlDico.Add(BuProperty.ValueString.ToString(), tbValue);
+        }
 
 
 
-			
-			
-			DataGridViewNumericUpDownColumn precision = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.Precision.ToString(), BuProperty.Precision.ToString(), "Precision", new DataGridViewNumericUpDownColumn());
-			precision.Minimum = 1;
-			precision.Maximum = Int32.MaxValue;
-			precision.SortMode = DataGridViewColumnSortMode.Automatic;
-			dgvBlastEditor.Columns.Add(precision);
+        private void InitializeDGV()
+        {
+
+            VisibleColumns = new List<string>();
+            var blastUnitSource = Enum.GetValues(typeof(BlastUnitSource));
 
 
-			var valuestring = CreateColumn(BuProperty.ValueString.ToString(), BuProperty.ValueString.ToString(), "Value"
-				, new DataGridViewTextBoxColumn());
-			valuestring.DefaultCellStyle.Tag = "numeric";
-			valuestring.SortMode = DataGridViewColumnSortMode.Automatic;
-			((DataGridViewTextBoxColumn)valuestring).MaxInputLength = 16348; //textbox doesn't like larger than ~20k
-			dgvBlastEditor.Columns.Add(valuestring);
+            var enabled = CreateColumn(BuProperty.isEnabled.ToString(), BuProperty.isEnabled.ToString(), "Enabled"
+                , new DataGridViewCheckBoxColumn());
+            enabled.SortMode = DataGridViewColumnSortMode.Automatic;
+            dgvBlastEditor.Columns.Add(enabled);
 
+            var locked = CreateColumn(BuProperty.isLocked.ToString(), BuProperty.isLocked.ToString(), "Locked"
+                , new DataGridViewCheckBoxColumn());
+            locked.SortMode = DataGridViewColumnSortMode.Automatic;
+            dgvBlastEditor.Columns.Add(locked);
 
-			var executeFrame = CreateColumn(BuProperty.ExecuteFrame.ToString(), BuProperty.ExecuteFrame.ToString()
-				, "Execute Frame", new DataGridViewNumericUpDownColumn());
-			executeFrame.SortMode = DataGridViewColumnSortMode.Automatic;
-			((DataGridViewNumericUpDownColumn)(executeFrame)).Maximum = Int32.MaxValue;
-			dgvBlastEditor.Columns.Add(executeFrame);
+            //Do this one separately as we need to populate the Combobox
+            DataGridViewComboBoxColumn source = CreateColumn(BuProperty.Source.ToString(), BuProperty.Source.ToString(), "Source", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
+            foreach (var item in blastUnitSource)
+                source.Items.Add(item);
+            dgvBlastEditor.Columns.Add(source);
 
-			var lifetime = CreateColumn(BuProperty.Lifetime.ToString(), BuProperty.Lifetime.ToString(), "Lifetime"
-				, new DataGridViewNumericUpDownColumn());
-			lifetime.SortMode = DataGridViewColumnSortMode.Automatic;
-			((DataGridViewNumericUpDownColumn)(lifetime)).Maximum = Int32.MaxValue;
-			dgvBlastEditor.Columns.Add(lifetime);
+            //Do this one separately as we need to populate the Combobox
+            DataGridViewComboBoxColumn domain = CreateColumn(BuProperty.Domain.ToString(), BuProperty.Domain.ToString(), "Domain", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
+            domain.DataSource = domains;
+            domain.SortMode = DataGridViewColumnSortMode.Automatic;
+            dgvBlastEditor.Columns.Add(domain);
 
-			var loop = CreateColumn(BuProperty.Loop.ToString(), BuProperty.Loop.ToString(), "Loop"
-				, new DataGridViewCheckBoxColumn());
-			loop.SortMode = DataGridViewColumnSortMode.Automatic;
-			dgvBlastEditor.Columns.Add(loop);
-
-
-			DataGridViewComboBoxColumn limiterTime = CreateColumn(BuProperty.LimiterTime.ToString(), BuProperty.LimiterTime.ToString(), "Limiter Time", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
-			foreach (var item in Enum.GetValues(typeof(LimiterTime)))
-				limiterTime.Items.Add(item);
-			dgvBlastEditor.Columns.Add(limiterTime);
-
-			DataGridViewComboBoxColumn limiterHash = CreateColumn(BuProperty.LimiterListHash.ToString(), BuProperty.LimiterListHash.ToString(), "Limiter List", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
-			limiterHash.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
-			limiterHash.DisplayMember = "Name";
-			limiterHash.ValueMember = "Value";
-			limiterHash.MaxDropDownItems = 15;
-			dgvBlastEditor.Columns.Add(limiterHash);
-
-			DataGridViewComboBoxColumn storeLimiterSource = CreateColumn(BuProperty.StoreLimiterSource.ToString(), BuProperty.StoreLimiterSource.ToString(), "Store Limiter Source", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
-			foreach (var item in Enum.GetValues(typeof(StoreLimiterSource)))
-				storeLimiterSource.Items.Add(item);
-			dgvBlastEditor.Columns.Add(storeLimiterSource);
-
-			dgvBlastEditor.Columns.Add(CreateColumn(BuProperty.InvertLimiter.ToString(), BuProperty.InvertLimiter.ToString(), "Invert Limiter", new DataGridViewCheckBoxColumn()));
-
-
-			DataGridViewComboBoxColumn storeTime = CreateColumn(BuProperty.StoreTime.ToString(), BuProperty.StoreTime.ToString(), "Store Time", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
-			foreach (var item in Enum.GetValues(typeof(StoreTime)))
-				storeTime.Items.Add(item);
-			storeTime.SortMode = DataGridViewColumnSortMode.Automatic;
-			dgvBlastEditor.Columns.Add(storeTime);
-			
-			DataGridViewComboBoxColumn storeType = CreateColumn(BuProperty.StoreType.ToString(), BuProperty.StoreType.ToString(), "Store Type", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
-			storeType.DataSource = Enum.GetValues(typeof(StoreType));
-			storeType.SortMode = DataGridViewColumnSortMode.Automatic;
-			dgvBlastEditor.Columns.Add(storeType);
-
-			//Do this one separately as we need to populate the Combobox
-			DataGridViewComboBoxColumn sourceDomain = CreateColumn(BuProperty.SourceDomain.ToString(), BuProperty.SourceDomain.ToString(), "Source Domain", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
-			sourceDomain.DataSource = domains;
-			sourceDomain.SortMode = DataGridViewColumnSortMode.Automatic;
-			dgvBlastEditor.Columns.Add(sourceDomain);
-
-			DataGridViewNumericUpDownColumn sourceAddress = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.SourceAddress.ToString(), BuProperty.SourceAddress.ToString(), "Source Address", new DataGridViewNumericUpDownColumn());
-			sourceAddress.Hexadecimal = true;
-			sourceAddress.SortMode = DataGridViewColumnSortMode.Automatic;
-			sourceAddress.Increment = 1;
-			dgvBlastEditor.Columns.Add(sourceAddress);
-
-
-			dgvBlastEditor.Columns.Add(CreateColumn("", BuProperty.Note.ToString(), "Note", new DataGridViewButtonColumn()));
+            DataGridViewNumericUpDownColumn address = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.Address.ToString(), BuProperty.Address.ToString(), "Address", new DataGridViewNumericUpDownColumn());
+            address.Hexadecimal = true;
+            address.SortMode = DataGridViewColumnSortMode.Automatic;
+            address.Increment = 1;
+            dgvBlastEditor.Columns.Add(address);
 
 
 
-			if (RTCV.NetCore.Params.IsParamSet("BLASTEDITOR_VISIBLECOLUMNS"))
-			{
-				string str = RTCV.NetCore.Params.ReadParam("BLASTEDITOR_VISIBLECOLUMNS");
-				string[] columns = str.Split(',');
-				foreach (string column in columns)
-				{
-					VisibleColumns.Add(column);
-				}
-			}
-			else
-			{
-				VisibleColumns.Add(BuProperty.isEnabled.ToString());
-				VisibleColumns.Add(BuProperty.isLocked.ToString());
-				VisibleColumns.Add(BuProperty.Source.ToString());
-				VisibleColumns.Add(BuProperty.Domain.ToString());
-				VisibleColumns.Add(BuProperty.Address.ToString());
-				VisibleColumns.Add(BuProperty.Address.ToString());
-				VisibleColumns.Add(BuProperty.Precision.ToString());
-				VisibleColumns.Add(BuProperty.ValueString.ToString());
-				VisibleColumns.Add(BuProperty.Note.ToString());
-			}
-
-			RefreshVisibleColumns();
-
-			PopulateFilterCombobox();
-			PopulateShiftCombobox();
-		}
 
 
-		private void PopulateFilterCombobox()
-		{
-			cbFilterColumn.SelectedItem = null;
-			cbFilterColumn.Items.Clear();
-
-			//Populate the filter ComboBox
-			cbFilterColumn.DisplayMember = "Name";
-			cbFilterColumn.ValueMember = "Value";
-			foreach (DataGridViewColumn column in dgvBlastEditor.Columns)
-			{
-				//Exclude button and checkbox
-				if (!(column is DataGridViewCheckBoxColumn || column is DataGridViewButtonColumn))// && column.Visible)
-					cbFilterColumn.Items.Add(new ComboBoxItem<String>(column.HeaderText, column.Name));
-			}
-			cbFilterColumn.SelectedIndex = 0;
-		}
-
-		private void PopulateShiftCombobox()
-		{
-			cbShiftBlastlayer.SelectedItem = null;
-			cbShiftBlastlayer.Items.Clear();
-
-			//Populate the filter ComboBox
-			cbShiftBlastlayer.DisplayMember = "Name";
-			cbShiftBlastlayer.ValueMember = "Value";
-
-			cbShiftBlastlayer.Items.Add(new ComboBoxItem<String>(BuProperty.Address.ToString(), BuProperty.Address.ToString()));
-			cbShiftBlastlayer.Items.Add(new ComboBoxItem<String>("Source Address", BuProperty.SourceAddress.ToString()));
-			cbShiftBlastlayer.Items.Add(new ComboBoxItem<String>("Value", BuProperty.ValueString.ToString()));
-			cbShiftBlastlayer.Items.Add(new ComboBoxItem<String>(BuProperty.Lifetime.ToString(), BuProperty.Lifetime.ToString()));
-			cbShiftBlastlayer.Items.Add(new ComboBoxItem<String>("Execute Frame", BuProperty.ExecuteFrame.ToString()));
-			cbShiftBlastlayer.SelectedIndex = 0;
-		}
+            DataGridViewNumericUpDownColumn precision = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.Precision.ToString(), BuProperty.Precision.ToString(), "Precision", new DataGridViewNumericUpDownColumn());
+            precision.Minimum = 1;
+            precision.Maximum = Int32.MaxValue;
+            precision.SortMode = DataGridViewColumnSortMode.Automatic;
+            dgvBlastEditor.Columns.Add(precision);
 
 
-		public void RefreshVisibleColumns()
-		{	
-			foreach (DataGridViewColumn column in dgvBlastEditor.Columns)
-			{
-				if (VisibleColumns.Contains(column.Name))
-					column.Visible = true;
-				else
-					column.Visible = false;
-			}
-			dgvBlastEditor.Refresh();
-		}
+            var valuestring = CreateColumn(BuProperty.ValueString.ToString(), BuProperty.ValueString.ToString(), "Value"
+                , new DataGridViewTextBoxColumn());
+            valuestring.DefaultCellStyle.Tag = "numeric";
+            valuestring.SortMode = DataGridViewColumnSortMode.Automatic;
+            ((DataGridViewTextBoxColumn)valuestring).MaxInputLength = 16348; //textbox doesn't like larger than ~20k
+            dgvBlastEditor.Columns.Add(valuestring);
+
+
+            var executeFrame = CreateColumn(BuProperty.ExecuteFrame.ToString(), BuProperty.ExecuteFrame.ToString()
+                , "Execute Frame", new DataGridViewNumericUpDownColumn());
+            executeFrame.SortMode = DataGridViewColumnSortMode.Automatic;
+            ((DataGridViewNumericUpDownColumn)(executeFrame)).Maximum = Int32.MaxValue;
+            dgvBlastEditor.Columns.Add(executeFrame);
+
+            var lifetime = CreateColumn(BuProperty.Lifetime.ToString(), BuProperty.Lifetime.ToString(), "Lifetime"
+                , new DataGridViewNumericUpDownColumn());
+            lifetime.SortMode = DataGridViewColumnSortMode.Automatic;
+            ((DataGridViewNumericUpDownColumn)(lifetime)).Maximum = Int32.MaxValue;
+            dgvBlastEditor.Columns.Add(lifetime);
+
+            var loop = CreateColumn(BuProperty.Loop.ToString(), BuProperty.Loop.ToString(), "Loop"
+                , new DataGridViewCheckBoxColumn());
+            loop.SortMode = DataGridViewColumnSortMode.Automatic;
+            dgvBlastEditor.Columns.Add(loop);
+
+
+            DataGridViewComboBoxColumn limiterTime = CreateColumn(BuProperty.LimiterTime.ToString(), BuProperty.LimiterTime.ToString(), "Limiter Time", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
+            foreach (var item in Enum.GetValues(typeof(LimiterTime)))
+                limiterTime.Items.Add(item);
+            dgvBlastEditor.Columns.Add(limiterTime);
+
+            DataGridViewComboBoxColumn limiterHash = CreateColumn(BuProperty.LimiterListHash.ToString(), BuProperty.LimiterListHash.ToString(), "Limiter List", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
+            limiterHash.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
+            limiterHash.DisplayMember = "Name";
+            limiterHash.ValueMember = "Value";
+            limiterHash.MaxDropDownItems = 15;
+            dgvBlastEditor.Columns.Add(limiterHash);
+
+            DataGridViewComboBoxColumn storeLimiterSource = CreateColumn(BuProperty.StoreLimiterSource.ToString(), BuProperty.StoreLimiterSource.ToString(), "Store Limiter Source", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
+            foreach (var item in Enum.GetValues(typeof(StoreLimiterSource)))
+                storeLimiterSource.Items.Add(item);
+            dgvBlastEditor.Columns.Add(storeLimiterSource);
+
+            dgvBlastEditor.Columns.Add(CreateColumn(BuProperty.InvertLimiter.ToString(), BuProperty.InvertLimiter.ToString(), "Invert Limiter", new DataGridViewCheckBoxColumn()));
+
+
+            DataGridViewComboBoxColumn storeTime = CreateColumn(BuProperty.StoreTime.ToString(), BuProperty.StoreTime.ToString(), "Store Time", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
+            foreach (var item in Enum.GetValues(typeof(StoreTime)))
+                storeTime.Items.Add(item);
+            storeTime.SortMode = DataGridViewColumnSortMode.Automatic;
+            dgvBlastEditor.Columns.Add(storeTime);
+
+            DataGridViewComboBoxColumn storeType = CreateColumn(BuProperty.StoreType.ToString(), BuProperty.StoreType.ToString(), "Store Type", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
+            storeType.DataSource = Enum.GetValues(typeof(StoreType));
+            storeType.SortMode = DataGridViewColumnSortMode.Automatic;
+            dgvBlastEditor.Columns.Add(storeType);
+
+            //Do this one separately as we need to populate the Combobox
+            DataGridViewComboBoxColumn sourceDomain = CreateColumn(BuProperty.SourceDomain.ToString(), BuProperty.SourceDomain.ToString(), "Source Domain", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
+            sourceDomain.DataSource = domains;
+            sourceDomain.SortMode = DataGridViewColumnSortMode.Automatic;
+            dgvBlastEditor.Columns.Add(sourceDomain);
+
+            DataGridViewNumericUpDownColumn sourceAddress = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.SourceAddress.ToString(), BuProperty.SourceAddress.ToString(), "Source Address", new DataGridViewNumericUpDownColumn());
+            sourceAddress.Hexadecimal = true;
+            sourceAddress.SortMode = DataGridViewColumnSortMode.Automatic;
+            sourceAddress.Increment = 1;
+            dgvBlastEditor.Columns.Add(sourceAddress);
+
+
+            dgvBlastEditor.Columns.Add(CreateColumn("", BuProperty.Note.ToString(), "Note", new DataGridViewButtonColumn()));
 
 
 
-		private DataGridViewColumn CreateColumn(string dataPropertyName, string columnName, string displayName,
-			DataGridViewColumn column, int fillWeight = -1)
-		{
+            if (RTCV.NetCore.Params.IsParamSet("BLASTEDITOR_VISIBLECOLUMNS"))
+            {
+                string str = RTCV.NetCore.Params.ReadParam("BLASTEDITOR_VISIBLECOLUMNS");
+                string[] columns = str.Split(',');
+                foreach (string column in columns)
+                {
+                    VisibleColumns.Add(column);
+                }
+            }
+            else
+            {
+                VisibleColumns.Add(BuProperty.isEnabled.ToString());
+                VisibleColumns.Add(BuProperty.isLocked.ToString());
+                VisibleColumns.Add(BuProperty.Source.ToString());
+                VisibleColumns.Add(BuProperty.Domain.ToString());
+                VisibleColumns.Add(BuProperty.Address.ToString());
+                VisibleColumns.Add(BuProperty.Address.ToString());
+                VisibleColumns.Add(BuProperty.Precision.ToString());
+                VisibleColumns.Add(BuProperty.ValueString.ToString());
+                VisibleColumns.Add(BuProperty.Note.ToString());
+            }
 
-			if(fillWeight == -1)
-			{
+            RefreshVisibleColumns();
 
-				switch (column)
-				{
-					case DataGridViewButtonColumn s:
-						s.FillWeight = buttonFillWeight;
-						break;
-					case DataGridViewCheckBoxColumn s:
-						s.FillWeight = checkBoxFillWeight;
-						break;
-					case DataGridViewComboBoxColumn s:
-						s.FillWeight = comboBoxFillWeight;
-						break;
-					case DataGridViewTextBoxColumn s:
-						s.FillWeight = textBoxFillWeight;
-						break;
-					case DataGridViewNumericUpDownColumn s:
-						s.FillWeight = numericUpDownFillWeight;
-						break;
-				}
-			}
-			else
-			{
-				column.FillWeight = fillWeight;
-			}
+            PopulateFilterCombobox();
+            PopulateShiftCombobox();
+        }
 
 
-			column.DataPropertyName = dataPropertyName;
-			column.Name = columnName;
+        private void PopulateFilterCombobox()
+        {
+            cbFilterColumn.SelectedItem = null;
+            cbFilterColumn.Items.Clear();
 
-			column.HeaderText = displayName;
+            //Populate the filter ComboBox
+            cbFilterColumn.DisplayMember = "Name";
+            cbFilterColumn.ValueMember = "Value";
+            foreach (DataGridViewColumn column in dgvBlastEditor.Columns)
+            {
+                //Exclude button and checkbox
+                if (!(column is DataGridViewCheckBoxColumn || column is DataGridViewButtonColumn))// && column.Visible)
+                    cbFilterColumn.Items.Add(new ComboBoxItem<String>(column.HeaderText, column.Name));
+            }
+            cbFilterColumn.SelectedIndex = 0;
+        }
 
-			return column;
-		}
+        private void PopulateShiftCombobox()
+        {
+            cbShiftBlastlayer.SelectedItem = null;
+            cbShiftBlastlayer.Items.Clear();
+
+            //Populate the filter ComboBox
+            cbShiftBlastlayer.DisplayMember = "Name";
+            cbShiftBlastlayer.ValueMember = "Value";
+
+            cbShiftBlastlayer.Items.Add(new ComboBoxItem<String>(BuProperty.Address.ToString(), BuProperty.Address.ToString()));
+            cbShiftBlastlayer.Items.Add(new ComboBoxItem<String>("Source Address", BuProperty.SourceAddress.ToString()));
+            cbShiftBlastlayer.Items.Add(new ComboBoxItem<String>("Value", BuProperty.ValueString.ToString()));
+            cbShiftBlastlayer.Items.Add(new ComboBoxItem<String>(BuProperty.Lifetime.ToString(), BuProperty.Lifetime.ToString()));
+            cbShiftBlastlayer.Items.Add(new ComboBoxItem<String>("Execute Frame", BuProperty.ExecuteFrame.ToString()));
+            cbShiftBlastlayer.SelectedIndex = 0;
+        }
+
+
+        public void RefreshVisibleColumns()
+        {
+            foreach (DataGridViewColumn column in dgvBlastEditor.Columns)
+            {
+                if (VisibleColumns.Contains(column.Name))
+                    column.Visible = true;
+                else
+                    column.Visible = false;
+            }
+            dgvBlastEditor.Refresh();
+        }
+
+
+
+        private DataGridViewColumn CreateColumn(string dataPropertyName, string columnName, string displayName,
+            DataGridViewColumn column, int fillWeight = -1)
+        {
+
+            if (fillWeight == -1)
+            {
+
+                switch (column)
+                {
+                    case DataGridViewButtonColumn s:
+                        s.FillWeight = buttonFillWeight;
+                        break;
+                    case DataGridViewCheckBoxColumn s:
+                        s.FillWeight = checkBoxFillWeight;
+                        break;
+                    case DataGridViewComboBoxColumn s:
+                        s.FillWeight = comboBoxFillWeight;
+                        break;
+                    case DataGridViewTextBoxColumn s:
+                        s.FillWeight = textBoxFillWeight;
+                        break;
+                    case DataGridViewNumericUpDownColumn s:
+                        s.FillWeight = numericUpDownFillWeight;
+                        break;
+                }
+            }
+            else
+            {
+                column.FillWeight = fillWeight;
+            }
+
+
+            column.DataPropertyName = dataPropertyName;
+            column.Name = columnName;
+
+            column.HeaderText = displayName;
+
+            return column;
+        }
 
         /*
 		private DataGridViewColumn CreateColumnUnbound(string columnName, string displayName,
@@ -1114,7 +1114,7 @@ namespace RTCV.UI
 		}
         */
 
-		StashKey originalSK = null;
+        StashKey originalSK = null;
 
         private StashKey _currentSK = null;
         internal StashKey currentSK
@@ -1123,250 +1123,250 @@ namespace RTCV.UI
             set
             {
                 _currentSK = value;
-				this.Name = "Blast Editor - " + value?.Alias ?? "Unnamed";
-			}
+                this.Name = "Blast Editor - " + value?.Alias ?? "Unnamed";
+            }
         }
-		BindingSource bs = null;
-		BindingSource _bs = null;
-		public void LoadStashkey(StashKey sk)
-		{
-			if (!RefreshDomains())
-			{
-				MessageBox.Show($"Loading domains failed! Aborting load. Check to make sure the RTC and {RtcCore.VanguardImplementationName} are connected.");
-				this.Close();
-				return;
-			}
-			List<String> buDomains = new List<String>();
-			foreach (var bu in sk.BlastLayer.Layer)
-			{
-				if (!buDomains.Contains(bu.Domain))
-					buDomains.Add(bu.Domain);
-				if (bu.SourceDomain != null && !buDomains.Contains(bu.SourceDomain))
-					buDomains.Add(bu.SourceDomain);
-			}
+        BindingSource bs = null;
+        BindingSource _bs = null;
+        public void LoadStashkey(StashKey sk)
+        {
+            if (!RefreshDomains())
+            {
+                MessageBox.Show($"Loading domains failed! Aborting load. Check to make sure the RTC and {RtcCore.VanguardImplementationName} are connected.");
+                this.Close();
+                return;
+            }
+            List<String> buDomains = new List<String>();
+            foreach (var bu in sk.BlastLayer.Layer)
+            {
+                if (!buDomains.Contains(bu.Domain))
+                    buDomains.Add(bu.Domain);
+                if (bu.SourceDomain != null && !buDomains.Contains(bu.SourceDomain))
+                    buDomains.Add(bu.SourceDomain);
+            }
 
-			foreach (string domain in buDomains)
-			{
-				if (DomainToMiDico.ContainsKey(domain))
-					continue;
+            foreach (string domain in buDomains)
+            {
+                if (DomainToMiDico.ContainsKey(domain))
+                    continue;
 
-				MessageBox.Show("This blastlayer references domain " + domain + " which couldn't be found!\nAre you sure you have the correct core loaded?");
-				this.Hide();
-				return;
-			}
+                MessageBox.Show("This blastlayer references domain " + domain + " which couldn't be found!\nAre you sure you have the correct core loaded?");
+                this.Hide();
+                return;
+            }
 
-			originalSK = sk;
-			currentSK = sk.Clone() as StashKey;
-
-
-
-			bs = new BindingSource {DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer)};
-
-			bs.CurrentChanged += (o, e) =>
-			{
-				if (batchOperation)
-				{
-					if(e is HandledEventArgs h)
-						h.Handled = true;
-				}
-			};
-
-			this.Text = $"Blast Editor - {sk.Alias}";
-
-			dgvBlastEditor.DataSource = bs;
-			InitializeDGV();
-			InitializeBottom();
-			this.Show();
-			this.BringToFront();
-			RefreshAllNoteIcons();
-		}
+            originalSK = sk;
+            currentSK = sk.Clone() as StashKey;
 
 
-		private bool RefreshDomains()
-		{
-			try
-			{
-				S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected();
-				DomainToMiDico?.Clear();
+
+            bs = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
+
+            bs.CurrentChanged += (o, e) =>
+            {
+                if (batchOperation)
+                {
+                    if (e is HandledEventArgs h)
+                        h.Handled = true;
+                }
+            };
+
+            this.Text = $"Blast Editor - {sk.Alias}";
+
+            dgvBlastEditor.DataSource = bs;
+            InitializeDGV();
+            InitializeBottom();
+            this.Show();
+            this.BringToFront();
+            RefreshAllNoteIcons();
+        }
+
+
+        private bool RefreshDomains()
+        {
+            try
+            {
+                S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected();
+                DomainToMiDico?.Clear();
                 if (MemoryDomains.MemoryInterfaces == null)
                     return false;
-				domains = MemoryDomains.MemoryInterfaces.Keys.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
-				foreach (string domain in domains)
-				{
-					DomainToMiDico.Add(domain, MemoryDomains.GetInterface(domain));
-				}
-				if(DomainToMiDico.Keys.Count > 0)
-					return true;
-				return false;
-			}
-			catch (Exception ex)
-			{
-				throw new Exception(
+                domains = MemoryDomains.MemoryInterfaces.Keys.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
+                foreach (string domain in domains)
+                {
+                    DomainToMiDico.Add(domain, MemoryDomains.GetInterface(domain));
+                }
+                if (DomainToMiDico.Keys.Count > 0)
+                    return true;
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(
                     $"An error occurred in RTC while refreshing the domains\nAre you sure you don't have an invalid domain selected?\nMake sure any VMDs are loaded and you have the correct core loaded in {RtcCore.VanguardImplementationName}\n{ex}"
                 );
-			}
-		}
+            }
+        }
 
-		private void dgvBlastLayer_DataError(object sender, DataGridViewDataErrorEventArgs e)
-		{
+        private void dgvBlastLayer_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
 
-			MessageBox.Show(e.Exception.ToString() + "\nRow:" + e.RowIndex + "\nColumn" + e.ColumnIndex + "\n" + e.Context + "\n" + dgvBlastEditor[e.ColumnIndex, e.RowIndex].Value?.ToString());
-		}
+            MessageBox.Show(e.Exception.ToString() + "\nRow:" + e.RowIndex + "\nColumn" + e.ColumnIndex + "\n" + e.Context + "\n" + dgvBlastEditor[e.ColumnIndex, e.RowIndex].Value?.ToString());
+        }
 
-		public void btnDisable50_Click(object sender, EventArgs e)
-		{
-			foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
-				Where(x => x.IsLocked == false))
-			{
-				bu.IsEnabled = true;
-			}
+        public void btnDisable50_Click(object sender, EventArgs e)
+        {
+            foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
+                Where(x => x.IsLocked == false))
+            {
+                bu.IsEnabled = true;
+            }
 
-			foreach (BlastUnit bu in currentSK.BlastLayer.Layer
-				.Where(x => x.IsLocked == false)
-				.OrderBy(x => CorruptCore.RtcCore.RND.Next())
-				.Take(currentSK.BlastLayer.Layer.Count / 2))
-			{
-				bu.IsEnabled = false;
-			}
-			dgvBlastEditor.Refresh();
-		}
+            foreach (BlastUnit bu in currentSK.BlastLayer.Layer
+                .Where(x => x.IsLocked == false)
+                .OrderBy(x => CorruptCore.RtcCore.RND.Next())
+                .Take(currentSK.BlastLayer.Layer.Count / 2))
+            {
+                bu.IsEnabled = false;
+            }
+            dgvBlastEditor.Refresh();
+        }
 
-		public void btnInvertDisabled_Click(object sender, EventArgs e)
-		{
-			foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
-				Where(x => x.IsLocked == false))
-			{
-				bu.IsEnabled = !bu.IsEnabled;
-			}
-			dgvBlastEditor.Refresh();
-		}
+        public void btnInvertDisabled_Click(object sender, EventArgs e)
+        {
+            foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
+                Where(x => x.IsLocked == false))
+            {
+                bu.IsEnabled = !bu.IsEnabled;
+            }
+            dgvBlastEditor.Refresh();
+        }
 
-		public void btnRemoveDisabled_Click(object sender, EventArgs e)
-		{
-			List<BlastUnit> buToRemove = new List<BlastUnit>();
+        public void btnRemoveDisabled_Click(object sender, EventArgs e)
+        {
+            List<BlastUnit> buToRemove = new List<BlastUnit>();
 
-			dgvBlastEditor.SuspendLayout();
-			batchOperation = true;
-			var oldBS = dgvBlastEditor.DataSource;
-			dgvBlastEditor.DataSource = null;
-			foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
-				Where(x => 
-				x.IsLocked == false &&
-				x.IsEnabled == false))
-			{
-				buToRemove.Add(bu);
-			}
+            dgvBlastEditor.SuspendLayout();
+            batchOperation = true;
+            var oldBS = dgvBlastEditor.DataSource;
+            dgvBlastEditor.DataSource = null;
+            foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
+                Where(x =>
+                x.IsLocked == false &&
+                x.IsEnabled == false))
+            {
+                buToRemove.Add(bu);
+            }
 
-			foreach (BlastUnit bu in buToRemove)
-			{
-				bs.Remove(bu);
-				if (_bs != null && _bs.Contains(bu))
-					_bs.Remove(bu);
-			}
-			batchOperation = false;
-			dgvBlastEditor.DataSource = oldBS;
-			RefreshAllNoteIcons();
-			dgvBlastEditor.ResumeLayout();
-		}
+            foreach (BlastUnit bu in buToRemove)
+            {
+                bs.Remove(bu);
+                if (_bs != null && _bs.Contains(bu))
+                    _bs.Remove(bu);
+            }
+            batchOperation = false;
+            dgvBlastEditor.DataSource = oldBS;
+            RefreshAllNoteIcons();
+            dgvBlastEditor.ResumeLayout();
+        }
 
-		private void btnDisableEverything_Click(object sender, EventArgs e)
-		{
-			foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
-				Where(x =>
-				x.IsLocked == false))
-			{
-				bu.IsEnabled = false;
-			}
-			dgvBlastEditor.Refresh();
-		}
+        private void btnDisableEverything_Click(object sender, EventArgs e)
+        {
+            foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
+                Where(x =>
+                x.IsLocked == false))
+            {
+                bu.IsEnabled = false;
+            }
+            dgvBlastEditor.Refresh();
+        }
 
-		private void btnEnableEverything_Click(object sender, EventArgs e)
-		{
-			foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
-				Where(x =>
-				x.IsLocked == false))
-			{
-				bu.IsEnabled = true;
-			}
-			dgvBlastEditor.Refresh();
-		}
+        private void btnEnableEverything_Click(object sender, EventArgs e)
+        {
+            foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
+                Where(x =>
+                x.IsLocked == false))
+            {
+                bu.IsEnabled = true;
+            }
+            dgvBlastEditor.Refresh();
+        }
 
-		public void btnRemoveSelected_Click(object sender, EventArgs e)
-		{
-			foreach(DataGridViewRow row in dgvBlastEditor.SelectedRows)
-			{
-				if ((row.DataBoundItem as BlastUnit).IsLocked == false)
-				{
-					var bu = row.DataBoundItem as BlastUnit;
-					bs.Remove(bu);
-					//Todo replace how this works
-					if (_bs != null && _bs.Contains(bu))
-						bs.Remove(bu);
-				}		
-			}
-		}
+        public void btnRemoveSelected_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
+            {
+                if ((row.DataBoundItem as BlastUnit).IsLocked == false)
+                {
+                    var bu = row.DataBoundItem as BlastUnit;
+                    bs.Remove(bu);
+                    //Todo replace how this works
+                    if (_bs != null && _bs.Contains(bu))
+                        bs.Remove(bu);
+                }
+            }
+        }
 
-		private void btnDuplicateSelected_Click(object sender, EventArgs e)
-		{
-			if (dgvBlastEditor.SelectedRows.Count == 0)
-				return;
+        private void btnDuplicateSelected_Click(object sender, EventArgs e)
+        {
+            if (dgvBlastEditor.SelectedRows.Count == 0)
+                return;
 
-			var reversed = dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Reverse()?.ToArray();
-			foreach (DataGridViewRow row in reversed)
-			{
-				if ((row.DataBoundItem as BlastUnit).IsLocked == false)
-				{
-					BlastUnit bu = ((row.DataBoundItem as BlastUnit).Clone() as BlastUnit);
-					bs.Add(bu);
-				}
-			}
-			RefreshAllNoteIcons();
-		}
+            var reversed = dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Reverse()?.ToArray();
+            foreach (DataGridViewRow row in reversed)
+            {
+                if ((row.DataBoundItem as BlastUnit).IsLocked == false)
+                {
+                    BlastUnit bu = ((row.DataBoundItem as BlastUnit).Clone() as BlastUnit);
+                    bs.Add(bu);
+                }
+            }
+            RefreshAllNoteIcons();
+        }
 
-		public void btnSendToStash_Click(object sender, EventArgs e)
-		{
-			if (currentSK.ParentKey == null)
-			{
-				MessageBox.Show("There's no savestate associated with this Stashkey!\nAssociate one in the menu to send this to the stash.");
-				return;
-			}
-			StashKey newSk = (StashKey)currentSK.Clone();
-			//newSk.Key = RTC_Core.GetRandomKey();
-			//newSk.Alias = null;
+        public void btnSendToStash_Click(object sender, EventArgs e)
+        {
+            if (currentSK.ParentKey == null)
+            {
+                MessageBox.Show("There's no savestate associated with this Stashkey!\nAssociate one in the menu to send this to the stash.");
+                return;
+            }
+            StashKey newSk = (StashKey)currentSK.Clone();
+            //newSk.Key = RTC_Core.GetRandomKey();
+            //newSk.Alias = null;
 
-			StockpileManager_UISide.StashHistory.Add(newSk);
+            StockpileManager_UISide.StashHistory.Add(newSk);
 
-			S.GET<RTC_StashHistory_Form>().RefreshStashHistory();
-			S.GET<RTC_StockpileManager_Form>().dgvStockpile.ClearSelection();
-			S.GET<RTC_StashHistory_Form>().lbStashHistory.ClearSelected();
+            S.GET<RTC_StashHistory_Form>().RefreshStashHistory();
+            S.GET<RTC_StockpileManager_Form>().dgvStockpile.ClearSelection();
+            S.GET<RTC_StashHistory_Form>().lbStashHistory.ClearSelected();
 
-			S.GET<RTC_StashHistory_Form>().DontLoadSelectedStash = true;
-			S.GET<RTC_StashHistory_Form>().lbStashHistory.SelectedIndex = S.GET<RTC_StashHistory_Form>().lbStashHistory.Items.Count - 1;
-			StockpileManager_UISide.CurrentStashkey = StockpileManager_UISide.StashHistory[S.GET<RTC_StashHistory_Form>().lbStashHistory.SelectedIndex];
+            S.GET<RTC_StashHistory_Form>().DontLoadSelectedStash = true;
+            S.GET<RTC_StashHistory_Form>().lbStashHistory.SelectedIndex = S.GET<RTC_StashHistory_Form>().lbStashHistory.Items.Count - 1;
+            StockpileManager_UISide.CurrentStashkey = StockpileManager_UISide.StashHistory[S.GET<RTC_StashHistory_Form>().lbStashHistory.SelectedIndex];
 
-		}
+        }
 
-		private void btnNote_Click(object sender, EventArgs e)
-		{
-			if (dgvBlastEditor.SelectedRows.Count > 0)
-			{
-				BlastLayer temp = new BlastLayer();
-				List<DataGridViewCell> cellList = new List<DataGridViewCell>();
-				foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
-				{
-					if (row.DataBoundItem is BlastUnit bu)
-					{
-						temp.Layer.Add(bu);
-						cellList.Add(row.Cells[BuProperty.Note.ToString()]);
-					}					
-				}
+        private void btnNote_Click(object sender, EventArgs e)
+        {
+            if (dgvBlastEditor.SelectedRows.Count > 0)
+            {
+                BlastLayer temp = new BlastLayer();
+                List<DataGridViewCell> cellList = new List<DataGridViewCell>();
+                foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
+                {
+                    if (row.DataBoundItem is BlastUnit bu)
+                    {
+                        temp.Layer.Add(bu);
+                        cellList.Add(row.Cells[BuProperty.Note.ToString()]);
+                    }
+                }
 
-				S.SET(new RTC_NoteEditor_Form(temp, cellList));
-				S.GET<RTC_NoteEditor_Form>().Show();
-			}
-		}
+                S.SET(new RTC_NoteEditor_Form(temp, cellList));
+                S.GET<RTC_NoteEditor_Form>().Show();
+            }
+        }
 
-		private void sanitizeDuplicatesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void sanitizeDuplicatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             dgvBlastEditor.ClearSelection();
 
@@ -1378,9 +1378,9 @@ namespace RTCV.UI
             dgvBlastEditor.DataSource = bs;
             dgvBlastEditor.Refresh();
             UpdateBottom();
-		}
+        }
 
-		private void rasterizeVMDsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void rasterizeVMDsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             dgvBlastEditor.ClearSelection();
 
@@ -1392,76 +1392,76 @@ namespace RTCV.UI
             batchOperation = false;
             dgvBlastEditor.DataSource = bs;
             updateMaximum(dgvBlastEditor.Rows.Cast<DataGridViewRow>().ToList());
-			dgvBlastEditor.Refresh();
-			UpdateBottom();
-		}
+            dgvBlastEditor.Refresh();
+            UpdateBottom();
+        }
 
-		private void runRomWithoutBlastlayerToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			currentSK.RunOriginal();
-		}
+        private void runRomWithoutBlastlayerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            currentSK.RunOriginal();
+        }
 
-		private void replaceRomFromGHToolStripMenuItem_Click(object sender, EventArgs e)
+        private void replaceRomFromGHToolStripMenuItem_Click(object sender, EventArgs e)
         {
             StashKey temp = StockpileManager_UISide.CurrentSavestateStashKey;
 
 
             if (temp == null)
-			{
-				MessageBox.Show("There is no savestate selected in the Glitch Harvester, or the current selected box is empty");
-				return;
-			}
-			currentSK.ParentKey = null;
-			currentSK.RomFilename = temp.RomFilename;
-			currentSK.RomData = temp.RomData;
-			currentSK.GameName = temp.GameName;
-			currentSK.SystemName = temp.SystemName;
-			currentSK.SystemDeepName = temp.SystemDeepName;
-			currentSK.SystemCore = temp.SystemCore;
-			currentSK.SyncSettings = temp.SyncSettings;
-		}
+            {
+                MessageBox.Show("There is no savestate selected in the Glitch Harvester, or the current selected box is empty");
+                return;
+            }
+            currentSK.ParentKey = null;
+            currentSK.RomFilename = temp.RomFilename;
+            currentSK.RomData = temp.RomData;
+            currentSK.GameName = temp.GameName;
+            currentSK.SystemName = temp.SystemName;
+            currentSK.SystemDeepName = temp.SystemDeepName;
+            currentSK.SystemCore = temp.SystemCore;
+            currentSK.SyncSettings = temp.SyncSettings;
+        }
 
-		private void replaceRomFromFileToolStripMenuItem_Click(object sender, EventArgs e)
-		{
+        private void replaceRomFromFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
 
-			DialogResult dialogResult = MessageBox.Show("Loading this rom will invalidate the associated savestate. You'll need to set a new savestate for the Blastlayer. Continue?", "Invalidate State?", MessageBoxButtons.YesNo);
-			if (dialogResult == DialogResult.Yes)
-			{
-				string filename;
-				OpenFileDialog ofd = new OpenFileDialog
-				{
-					Title = "Open ROM File",
-					Filter = "any file|*.*",
-					RestoreDirectory = true
-				};
-				if (ofd.ShowDialog() == DialogResult.OK)
-				{
-					filename = ofd.FileName;
-				}
-				else
-					return;
+            DialogResult dialogResult = MessageBox.Show("Loading this rom will invalidate the associated savestate. You'll need to set a new savestate for the Blastlayer. Continue?", "Invalidate State?", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                string filename;
+                OpenFileDialog ofd = new OpenFileDialog
+                {
+                    Title = "Open ROM File",
+                    Filter = "any file|*.*",
+                    RestoreDirectory = true
+                };
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    filename = ofd.FileName;
+                }
+                else
+                    return;
 
-				LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_LOADROM, filename, true);
+                LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_LOADROM, filename, true);
 
-				StashKey temp = new StashKey(CorruptCore.RtcCore.GetRandomKey(), currentSK.ParentKey, currentSK.BlastLayer);
+                StashKey temp = new StashKey(CorruptCore.RtcCore.GetRandomKey(), currentSK.ParentKey, currentSK.BlastLayer);
 
-				// We have to null this as to properly create a stashkey, we need to use it in the constructor,
-				// but then the user needs to provide a savestate
-				currentSK.ParentKey = null;
-				
-				currentSK.RomFilename = temp.RomFilename;
-				currentSK.GameName = temp.GameName;
-				currentSK.SystemName = temp.SystemName;
-				currentSK.SystemDeepName = temp.SystemDeepName;
-				currentSK.SystemCore = temp.SystemCore;
-				currentSK.SyncSettings = temp.SyncSettings;
-			}
-		}
+                // We have to null this as to properly create a stashkey, we need to use it in the constructor,
+                // but then the user needs to provide a savestate
+                currentSK.ParentKey = null;
 
-		private void bakeROMBlastunitsToFileToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			string[] originalFilename = currentSK.RomFilename.Split('\\');
-			string filename;
+                currentSK.RomFilename = temp.RomFilename;
+                currentSK.GameName = temp.GameName;
+                currentSK.SystemName = temp.SystemName;
+                currentSK.SystemDeepName = temp.SystemDeepName;
+                currentSK.SystemCore = temp.SystemCore;
+                currentSK.SyncSettings = temp.SyncSettings;
+            }
+        }
+
+        private void bakeROMBlastunitsToFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string[] originalFilename = currentSK.RomFilename.Split('\\');
+            string filename;
             SaveFileDialog sfd = new SaveFileDialog
             {
                 //DefaultExt = "rom";
@@ -1472,173 +1472,173 @@ namespace RTCV.UI
             };
 
             if (sfd.ShowDialog() == DialogResult.OK)
-				filename = sfd.FileName;
-			else
-				return;
-			RomParts rp = MemoryDomains.GetRomParts(currentSK.SystemName, currentSK.RomFilename);
+                filename = sfd.FileName;
+            else
+                return;
+            RomParts rp = MemoryDomains.GetRomParts(currentSK.SystemName, currentSK.RomFilename);
 
-			File.Copy(currentSK.RomFilename, filename, true);
-			using (FileStream output = new FileStream(filename, FileMode.Open))
-			{
-				foreach (BlastUnit bu in currentSK.BlastLayer.Layer)
-				{
-					if (bu.Source == BlastUnitSource.VALUE)
-					{
-						//We don't want to modify the original
-						byte[] outvalue = (byte[])bu.Value.Clone();
-						CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref outvalue, bu.TiltValue, bu.BigEndian);
-						//Flip it if it's big endian
-						if (bu.BigEndian)
-							outvalue.FlipBytes();
+            File.Copy(currentSK.RomFilename, filename, true);
+            using (FileStream output = new FileStream(filename, FileMode.Open))
+            {
+                foreach (BlastUnit bu in currentSK.BlastLayer.Layer)
+                {
+                    if (bu.Source == BlastUnitSource.VALUE)
+                    {
+                        //We don't want to modify the original
+                        byte[] outvalue = (byte[])bu.Value.Clone();
+                        CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref outvalue, bu.TiltValue, bu.BigEndian);
+                        //Flip it if it's big endian
+                        if (bu.BigEndian)
+                            outvalue.FlipBytes();
 
-						if (bu.Domain == rp.PrimaryDomain)
-						{
-							output.Position = bu.Address + rp.SkipBytes;
-							output.Write(outvalue, 0, outvalue.Length);
-						}
-						else if (bu.Domain == rp.SecondDomain)
-						{
-							output.Position = bu.Address + MemoryDomains.MemoryInterfaces[rp.SecondDomain].Size + rp.SkipBytes;
-							output.Write(outvalue, 0, outvalue.Length);
-						}
-					}
-				}
-			}
-		}
+                        if (bu.Domain == rp.PrimaryDomain)
+                        {
+                            output.Position = bu.Address + rp.SkipBytes;
+                            output.Write(outvalue, 0, outvalue.Length);
+                        }
+                        else if (bu.Domain == rp.SecondDomain)
+                        {
+                            output.Position = bu.Address + MemoryDomains.MemoryInterfaces[rp.SecondDomain].Size + rp.SkipBytes;
+                            output.Write(outvalue, 0, outvalue.Length);
+                        }
+                    }
+                }
+            }
+        }
 
-		private void runOriginalSavestateToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			originalSK.RunOriginal();
-		}
+        private void runOriginalSavestateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            originalSK.RunOriginal();
+        }
 
-		private void replaceSavestateFromGHToolStripMenuItem_Click(object sender, EventArgs e)
-		{
+        private void replaceSavestateFromGHToolStripMenuItem_Click(object sender, EventArgs e)
+        {
 
-			StashKey temp = StockpileManager_UISide.CurrentSavestateStashKey;
+            StashKey temp = StockpileManager_UISide.CurrentSavestateStashKey;
             if (temp == null)
-			{
-				MessageBox.Show("There is no savestate selected in the glitch harvester, or the current selected box is empty");
-				return;
-			}
+            {
+                MessageBox.Show("There is no savestate selected in the glitch harvester, or the current selected box is empty");
+                return;
+            }
 
-			//If the core doesn't match, abort
-			if (currentSK.SystemCore != temp.SystemCore)
-			{
-				MessageBox.Show("The core associated with the current ROM and the core associated with the selected savestate don't match. Aborting!");
-				return;
-			}
+            //If the core doesn't match, abort
+            if (currentSK.SystemCore != temp.SystemCore)
+            {
+                MessageBox.Show("The core associated with the current ROM and the core associated with the selected savestate don't match. Aborting!");
+                return;
+            }
 
-			//If the game name differs, make sure they know what they're doing
-			//There are times it'd be fine with a differing name yet savestates would still work (romhacks)
-			if (currentSK.GameName != temp.GameName)
-			{
-				DialogResult dialogResult = MessageBox.Show(
-					"You're attempting to replace a savestate associated with " +
-					currentSK.GameName +
-					" with a savestate associated with " +
-					temp.GameName + ".\n" +
-					"This probably won't work unless you also update the ROM.\n" +
-					"Updating the ROM will invalidate the savestate, so if you're changing both ROM and state, do that first.\n\n" +
-					"Are you sure you want to continue?", "Game mismatch", MessageBoxButtons.YesNo);
-				if (dialogResult == DialogResult.No)
-				{
-					return;
-				}
-			}
+            //If the game name differs, make sure they know what they're doing
+            //There are times it'd be fine with a differing name yet savestates would still work (romhacks)
+            if (currentSK.GameName != temp.GameName)
+            {
+                DialogResult dialogResult = MessageBox.Show(
+                    "You're attempting to replace a savestate associated with " +
+                    currentSK.GameName +
+                    " with a savestate associated with " +
+                    temp.GameName + ".\n" +
+                    "This probably won't work unless you also update the ROM.\n" +
+                    "Updating the ROM will invalidate the savestate, so if you're changing both ROM and state, do that first.\n\n" +
+                    "Are you sure you want to continue?", "Game mismatch", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.No)
+                {
+                    return;
+                }
+            }
 
-			//We only need the ParentKey and the SyncSettings here as everything else will match
-			currentSK.ParentKey = temp.ParentKey;
-			currentSK.SyncSettings = temp.SyncSettings;
-			currentSK.StateLocation = temp.StateLocation;
-		}
+            //We only need the ParentKey and the SyncSettings here as everything else will match
+            currentSK.ParentKey = temp.ParentKey;
+            currentSK.SyncSettings = temp.SyncSettings;
+            currentSK.StateLocation = temp.StateLocation;
+        }
 
-		private void replaceSavestateFromFileToolStripMenuItem_Click(object sender, EventArgs e)
-		{
+        private void replaceSavestateFromFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
 
-			string filename;
+            string filename;
 
-			OpenFileDialog ofd = new OpenFileDialog
-			{
-				DefaultExt = "state",
-				Title = "Open Savestate File",
-				Filter = "state files|*.state",
-				RestoreDirectory = true
-			};
-			if (ofd.ShowDialog() == DialogResult.OK)
-			{
-				filename = ofd.FileName;
-			}
-			else
-				return;
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                DefaultExt = "state",
+                Title = "Open Savestate File",
+                Filter = "state files|*.state",
+                RestoreDirectory = true
+            };
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                filename = ofd.FileName;
+            }
+            else
+                return;
 
-			string oldKey = currentSK.ParentKey;
-			string oldSS = currentSK.SyncSettings;
+            string oldKey = currentSK.ParentKey;
+            string oldSS = currentSK.SyncSettings;
 
-			//Get a new key
-			currentSK.ParentKey = CorruptCore.RtcCore.GetRandomKey();
-			//Null the syncsettings out
-			currentSK.SyncSettings = null;
+            //Get a new key
+            currentSK.ParentKey = CorruptCore.RtcCore.GetRandomKey();
+            //Null the syncsettings out
+            currentSK.SyncSettings = null;
 
-			//Let's hope the game name is correct!
-			File.Copy(filename, currentSK.GetSavestateFullPath(), true);
+            //Let's hope the game name is correct!
+            File.Copy(filename, currentSK.GetSavestateFullPath(), true);
 
-			//Attempt to load and if it fails, don't let them update it.
-			if (!StockpileManager_UISide.LoadState(currentSK))
-			{
-				currentSK.ParentKey = oldKey;
-				currentSK.SyncSettings = oldSS;
-				return;
-			}
+            //Attempt to load and if it fails, don't let them update it.
+            if (!StockpileManager_UISide.LoadState(currentSK))
+            {
+                currentSK.ParentKey = oldKey;
+                currentSK.SyncSettings = oldSS;
+                return;
+            }
 
-			//Grab the syncsettings
-			StashKey temp = new StashKey(CorruptCore.RtcCore.GetRandomKey(), currentSK.ParentKey, currentSK.BlastLayer);
-			currentSK.SyncSettings = temp.SyncSettings;
-		}
+            //Grab the syncsettings
+            StashKey temp = new StashKey(CorruptCore.RtcCore.GetRandomKey(), currentSK.ParentKey, currentSK.BlastLayer);
+            currentSK.SyncSettings = temp.SyncSettings;
+        }
 
-		private void saveSavestateToToolStripMenuItem_Click(object sender, EventArgs e)
-		{
+        private void saveSavestateToToolStripMenuItem_Click(object sender, EventArgs e)
+        {
 
-			string filename;
-			SaveFileDialog ofd = new SaveFileDialog
-			{
-				DefaultExt = "state",
-				Title = "Save Savestate File",
-				Filter = "state files|*.state",
-				RestoreDirectory = true
-			};
-			if (ofd.ShowDialog() == DialogResult.OK)
-			{
-				filename = ofd.FileName;
-			}
-			else
-				return;
+            string filename;
+            SaveFileDialog ofd = new SaveFileDialog
+            {
+                DefaultExt = "state",
+                Title = "Save Savestate File",
+                Filter = "state files|*.state",
+                RestoreDirectory = true
+            };
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                filename = ofd.FileName;
+            }
+            else
+                return;
 
-			File.Copy(currentSK.GetSavestateFullPath(), filename, true);
-		}
+            File.Copy(currentSK.GetSavestateFullPath(), filename, true);
+        }
 
 
-		private void saveToFileblToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			//If there's no blastlayer file already set, don't quicksave
-			if (CurrentBlastLayerFile == "")
-				BlastTools.SaveBlastLayerToFile(currentSK.BlastLayer);
-			else
-				BlastTools.SaveBlastLayerToFile(currentSK.BlastLayer, CurrentBlastLayerFile);
+        private void saveToFileblToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //If there's no blastlayer file already set, don't quicksave
+            if (CurrentBlastLayerFile == "")
+                BlastTools.SaveBlastLayerToFile(currentSK.BlastLayer);
+            else
+                BlastTools.SaveBlastLayerToFile(currentSK.BlastLayer, CurrentBlastLayerFile);
 
-			CurrentBlastLayerFile = BlastTools.LastBlastLayerSavePath;
-		}
+            CurrentBlastLayerFile = BlastTools.LastBlastLayerSavePath;
+        }
 
-		private void saveAsToFileblToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			BlastTools.SaveBlastLayerToFile(currentSK.BlastLayer);
-			CurrentBlastLayerFile = BlastTools.LastBlastLayerSavePath;
-		}
+        private void saveAsToFileblToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BlastTools.SaveBlastLayerToFile(currentSK.BlastLayer);
+            CurrentBlastLayerFile = BlastTools.LastBlastLayerSavePath;
+        }
 
-		private void importBlastlayerblToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			BlastLayer temp = BlastTools.LoadBlastLayerFromFile();
-			ImportBlastLayer(temp);
-		}
+        private void importBlastlayerblToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BlastLayer temp = BlastTools.LoadBlastLayerFromFile();
+            ImportBlastLayer(temp);
+        }
 
         private void loadFromFileblToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1648,13 +1648,13 @@ namespace RTCV.UI
         }
 
         public void LoadBlastlayer(BlastLayer bl, bool import = false)
-		{
+        {
 
             List<BlastUnit> checkUnits()
-			{
-				var warned = new List<string>();
+            {
+                var warned = new List<string>();
                 var unitsToLoad = new List<BlastUnit>();
-				foreach (BlastUnit bu in bl.Layer)
+                foreach (BlastUnit bu in bl.Layer)
                 {
                     if (domains.Contains(bu.Domain) &&
                         (String.IsNullOrWhiteSpace(bu.SourceDomain) || domains.Contains(bu.SourceDomain)))
@@ -1690,175 +1690,175 @@ namespace RTCV.UI
             var l = checkUnits();
             if (l == null)
                 return;
-			if (import)
-			{
-				foreach (var bu in l)
+            if (import)
+            {
+                foreach (var bu in l)
                     bs.Add(bu);
-			}
+            }
             else
-			{
-				currentSK.BlastLayer = new BlastLayer(l);
+            {
+                currentSK.BlastLayer = new BlastLayer(l);
                 bs = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
                 dgvBlastEditor.DataSource = bs;
-		    }
+            }
             dgvBlastEditor.ResetBindings();
             RefreshAllNoteIcons();
             dgvBlastEditor.Refresh();
         }
 
-		public void ImportBlastLayer(BlastLayer bl) => LoadBlastlayer(bl, true);
+        public void ImportBlastLayer(BlastLayer bl) => LoadBlastlayer(bl, true);
 
         private void exportToCSVToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			string filename;
+        {
+            string filename;
 
-			if (currentSK.BlastLayer.Layer.Count == 0)
-			{
-				MessageBox.Show("Can't save because the provided blastlayer is empty.");
-				return;
-			}
+            if (currentSK.BlastLayer.Layer.Count == 0)
+            {
+                MessageBox.Show("Can't save because the provided blastlayer is empty.");
+                return;
+            }
 
-			SaveFileDialog saveFileDialog1 = new SaveFileDialog
-			{
-				DefaultExt = "csv",
-				Title = "Export to csv",
-				Filter = "csv files|*.csv",
-				RestoreDirectory = true
-			};
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog
+            {
+                DefaultExt = "csv",
+                Title = "Export to csv",
+                Filter = "csv files|*.csv",
+                RestoreDirectory = true
+            };
 
-			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-			{
-				filename = saveFileDialog1.FileName;
-			}
-			else
-				return;
-			CSVGenerator csv = new CSVGenerator();
-			File.WriteAllText(filename, csv.GenerateFromDGV(dgvBlastEditor), Encoding.UTF8);
-		}
-		private void bakeBlastunitsToVALUEToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			BakeBlastUnitsToValue();
-		}
-		private void BakeBlastUnitsToValue(bool bakeSelected = false)
-		{
-			try
-			{
-				//Generate a blastlayer from the current selected rows
-				BlastLayer bl = new BlastLayer();
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                filename = saveFileDialog1.FileName;
+            }
+            else
+                return;
+            CSVGenerator csv = new CSVGenerator();
+            File.WriteAllText(filename, csv.GenerateFromDGV(dgvBlastEditor), Encoding.UTF8);
+        }
+        private void bakeBlastunitsToVALUEToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BakeBlastUnitsToValue();
+        }
+        private void BakeBlastUnitsToValue(bool bakeSelected = false)
+        {
+            try
+            {
+                //Generate a blastlayer from the current selected rows
+                BlastLayer bl = new BlastLayer();
 
-				IEnumerable<DataGridViewRow> targetRows;
+                IEnumerable<DataGridViewRow> targetRows;
 
-				targetRows = bakeSelected ? 
-                    dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>() : 
+                targetRows = bakeSelected ?
+                    dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>() :
                     dgvBlastEditor.Rows.Cast<DataGridViewRow>();
 
-				foreach (DataGridViewRow selected in targetRows
-					.Where((item => ((BlastUnit)item.DataBoundItem).IsLocked == false)))
-				{
-					BlastUnit bu = (BlastUnit)selected.DataBoundItem;
-					
-					//They have to be enabled to get a backup
-					bu.IsEnabled = true;
-					bl.Layer.Add(bu);
-				}
+                foreach (DataGridViewRow selected in targetRows
+                    .Where((item => ((BlastUnit)item.DataBoundItem).IsLocked == false)))
+                {
+                    BlastUnit bu = (BlastUnit)selected.DataBoundItem;
 
-				//Bake them
-				BlastLayer newBlastLayer = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_BLASTTOOLS_GETAPPLIEDBACKUPLAYER, new object[] {bl, currentSK}, true);
+                    //They have to be enabled to get a backup
+                    bu.IsEnabled = true;
+                    bl.Layer.Add(bu);
+                }
 
-				int i = 0;
-				//Insert the new one where the old row was, then remove the old row.
-				foreach (DataGridViewRow selected in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>()
-					.Where((item => ((BlastUnit)item.DataBoundItem).IsLocked == false)))
-				{
-					bs.Insert(selected.Index, newBlastLayer.Layer[i]);
-					i++;
-					bs.Remove((BlastUnit)selected.DataBoundItem);
-				}
-			}
-			catch (Exception ex)
-			{
-				throw new System.Exception("Something went wrong in when baking to VALUE.\n" +
-				                           "Your blast editor session may be broke depending on when it failed.\n" +
-				                           "You should probably send a copy of this error and what you did to cause it to the RTC devs.\n\n" +
-				                           ex.ToString());
-			}
-			finally
-			{
-			}
-		}
+                //Bake them
+                BlastLayer newBlastLayer = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_BLASTTOOLS_GETAPPLIEDBACKUPLAYER, new object[] { bl, currentSK }, true);
 
-		public void btnLoadCorrupt_Click(object sender, EventArgs e)
-		{
+                int i = 0;
+                //Insert the new one where the old row was, then remove the old row.
+                foreach (DataGridViewRow selected in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>()
+                    .Where((item => ((BlastUnit)item.DataBoundItem).IsLocked == false)))
+                {
+                    bs.Insert(selected.Index, newBlastLayer.Layer[i]);
+                    i++;
+                    bs.Remove((BlastUnit)selected.DataBoundItem);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new System.Exception("Something went wrong in when baking to VALUE.\n" +
+                                           "Your blast editor session may be broke depending on when it failed.\n" +
+                                           "You should probably send a copy of this error and what you did to cause it to the RTC devs.\n\n" +
+                                           ex.ToString());
+            }
+            finally
+            {
+            }
+        }
 
-			if (currentSK.ParentKey == null)
-			{
-				MessageBox.Show("There's no savestate associated with this Stashkey!\nAssociate one in the menu to be able to load.");
-				return;
-			}
-			
-			StashKey newSk = (StashKey)currentSK.Clone();
-			S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = newSk.Run();
-		}
+        public void btnLoadCorrupt_Click(object sender, EventArgs e)
+        {
 
-		public void btnCorrupt_Click(object sender, EventArgs e)
-		{
-			StashKey newSk = (StashKey)currentSK.Clone();
-			S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newSk, false);
+            if (currentSK.ParentKey == null)
+            {
+                MessageBox.Show("There's no savestate associated with this Stashkey!\nAssociate one in the menu to be able to load.");
+                return;
+            }
 
-		}
+            StashKey newSk = (StashKey)currentSK.Clone();
+            S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = newSk.Run();
+        }
 
-		public void RefreshNoteIcons(DataGridViewRowCollection rows)
-		{
-			foreach(DataGridViewRow row in rows)
-			{
-				DataGridViewCell buttonCell = row.Cells[BuProperty.Note.ToString()];
-				buttonCell.Value = string.IsNullOrWhiteSpace((row.DataBoundItem as BlastUnit)?.Note) ? string.Empty : "📝";
-			}
-		}
-		public void RefreshAllNoteIcons()
-		{
-			RefreshNoteIcons(dgvBlastEditor.Rows);
-		}
+        public void btnCorrupt_Click(object sender, EventArgs e)
+        {
+            StashKey newSk = (StashKey)currentSK.Clone();
+            S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newSk, false);
 
+        }
 
-		private void DgvBlastEditor_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
-		{
-			UpdateLayerSize();
-		}
-
-		private void DgvBlastEditor_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-		{
-			UpdateLayerSize();
-		}
+        public void RefreshNoteIcons(DataGridViewRowCollection rows)
+        {
+            foreach (DataGridViewRow row in rows)
+            {
+                DataGridViewCell buttonCell = row.Cells[BuProperty.Note.ToString()];
+                buttonCell.Value = string.IsNullOrWhiteSpace((row.DataBoundItem as BlastUnit)?.Note) ? string.Empty : "📝";
+            }
+        }
+        public void RefreshAllNoteIcons()
+        {
+            RefreshNoteIcons(dgvBlastEditor.Rows);
+        }
 
 
-		public void btnShiftBlastLayerDown_Click(object sender, EventArgs e)
-		{
-			var amount = updownShiftBlastLayerAmount.Value;
-			var column = ((ComboBoxItem<String>)cbShiftBlastlayer?.SelectedItem)?.Value;
+        private void DgvBlastEditor_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            UpdateLayerSize();
+        }
 
-			if (column == null)
-				return;
+        private void DgvBlastEditor_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            UpdateLayerSize();
+        }
 
-			var rows = dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>()
-				.Where((item => ((BlastUnit)item.DataBoundItem).IsLocked == false))
-				.ToList();
-			ShiftBlastLayer(amount, column, rows, true);
-		}
 
-		public void btnShiftBlastLayerUp_Click(object sender, EventArgs e)
-		{
-			var amount = updownShiftBlastLayerAmount.Value;
-			var column = ((ComboBoxItem<String>)cbShiftBlastlayer?.SelectedItem)?.Value;
+        public void btnShiftBlastLayerDown_Click(object sender, EventArgs e)
+        {
+            var amount = updownShiftBlastLayerAmount.Value;
+            var column = ((ComboBoxItem<String>)cbShiftBlastlayer?.SelectedItem)?.Value;
 
-			if (column == null)
-				return;
+            if (column == null)
+                return;
 
-			var rows = dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>()
-				.Where((item => ((BlastUnit) item.DataBoundItem).IsLocked == false))
-				.ToList();
-			ShiftBlastLayer(amount, column, rows, false);
-		}
+            var rows = dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>()
+                .Where((item => ((BlastUnit)item.DataBoundItem).IsLocked == false))
+                .ToList();
+            ShiftBlastLayer(amount, column, rows, true);
+        }
+
+        public void btnShiftBlastLayerUp_Click(object sender, EventArgs e)
+        {
+            var amount = updownShiftBlastLayerAmount.Value;
+            var column = ((ComboBoxItem<String>)cbShiftBlastlayer?.SelectedItem)?.Value;
+
+            if (column == null)
+                return;
+
+            var rows = dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>()
+                .Where((item => ((BlastUnit)item.DataBoundItem).IsLocked == false))
+                .ToList();
+            ShiftBlastLayer(amount, column, rows, false);
+        }
 
 
         private void ShiftBlastLayer(decimal amount, string column, List<DataGridViewRow> rows, bool shiftDown)
@@ -1902,42 +1902,42 @@ namespace RTCV.UI
         }
 
         private string getShiftedHexString(string value, decimal amount, int precision)
-		{
-			//Convert the string we have into a byte array
-			var valueBytes= CorruptCore_Extensions.StringToByteArrayPadLeft(value, precision);
-			if (valueBytes == null)
-				return value;
-			CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref valueBytes, new BigInteger(amount), true);
-			return BitConverter.ToString(valueBytes).Replace("-", string.Empty);
-		}
+        {
+            //Convert the string we have into a byte array
+            var valueBytes = CorruptCore_Extensions.StringToByteArrayPadLeft(value, precision);
+            if (valueBytes == null)
+                return value;
+            CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref valueBytes, new BigInteger(amount), true);
+            return BitConverter.ToString(valueBytes).Replace("-", string.Empty);
+        }
 
-		private void btnHelp_Click(object sender, EventArgs e)
-		{
-			System.Diagnostics.ProcessStartInfo sInfo = new System.Diagnostics.ProcessStartInfo("https://corrupt.wiki/corruptors/rtc-real-time-corruptor/blast-editor.html");
-			System.Diagnostics.Process.Start(sInfo);
-		}
+        private void btnHelp_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.ProcessStartInfo sInfo = new System.Diagnostics.ProcessStartInfo("https://corrupt.wiki/corruptors/rtc-real-time-corruptor/blast-editor.html");
+            System.Diagnostics.Process.Start(sInfo);
+        }
 
-		private void OpenBlastGeneratorToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			if (S.GET<RTC_BlastGenerator_Form>() != null)
-				S.GET<RTC_BlastGenerator_Form>().Close();
+        private void OpenBlastGeneratorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (S.GET<RTC_BlastGenerator_Form>() != null)
+                S.GET<RTC_BlastGenerator_Form>().Close();
 
-			S.SET(new RTC_BlastGenerator_Form());
+            S.SET(new RTC_BlastGenerator_Form());
 
-			var bgForm = S.GET<RTC_BlastGenerator_Form>();
-			bgForm.LoadStashkey(currentSK);
-		}
+            var bgForm = S.GET<RTC_BlastGenerator_Form>();
+            bgForm.LoadStashkey(currentSK);
+        }
 
-		private void BtnAddRow_Click(object sender, EventArgs e)
-		{
-			BlastUnit bu = new BlastUnit(new byte[] {0}, domains[0], 0, 1, MemoryDomains.GetInterface(domains[0]).BigEndian);
-			bs.Add(bu);
-		}
+        private void BtnAddRow_Click(object sender, EventArgs e)
+        {
+            BlastUnit bu = new BlastUnit(new byte[] { 0 }, domains[0], 0, 1, MemoryDomains.GetInterface(domains[0]).BigEndian);
+            bs.Add(bu);
+        }
 
-		private void UpdateLayerSize()
-		{
-			lbBlastLayerSize.Text = "Size: " + currentSK.BlastLayer.Layer.Count;
-		}
+        private void UpdateLayerSize()
+        {
+            lbBlastLayerSize.Text = "Size: " + currentSK.BlastLayer.Layer.Count;
+        }
 
         public void btnSanitizeTool_Click(object sender, EventArgs e)
         {
@@ -1988,9 +1988,9 @@ namespace RTCV.UI
         }
 
         public StashKey[] GetStashKeys()
-		{
-			return new[] {currentSK, originalSK};
-		}
+        {
+            return new[] { currentSK, originalSK };
+        }
 
         private void ImportBlastlayerFromCorruptedFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -2026,15 +2026,15 @@ namespace RTCV.UI
             dgvBlastEditor.Refresh();
         }
 
-		private void btnAddStashToStockpile_Click(object sender, EventArgs e)
-		{
-			btnSendToStash_Click(sender, e);
-			S.GET<RTC_StashHistory_Form>().btnAddStashToStockpile_Click(sender, e);
-		}
+        private void btnAddStashToStockpile_Click(object sender, EventArgs e)
+        {
+            btnSendToStash_Click(sender, e);
+            S.GET<RTC_StashHistory_Form>().btnAddStashToStockpile_Click(sender, e);
+        }
 
-		private void breakDownAllBlastunitsToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			breakDownUnits();
-		}
-	}
+        private void breakDownAllBlastunitsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            breakDownUnits();
+        }
+    }
 }

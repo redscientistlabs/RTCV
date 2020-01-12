@@ -17,8 +17,8 @@ namespace RTCV.NetCore
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private NetCoreSpec spec;
         private string IP { get { return spec.IP; } }
-        private int PortServer{ get { return spec.Port; } }
-        private int PortClient{get{return spec.Port + (spec.Loopback ? 1 : 0 );}} //If running on loopback, will use port+1 for client
+        private int PortServer { get { return spec.Port; } }
+        private int PortClient { get { return spec.Port + (spec.Loopback ? 1 : 0); } } //If running on loopback, will use port+1 for client
 
         private Thread ReaderThread;
         private UdpClient Sender = null;
@@ -43,7 +43,8 @@ namespace RTCV.NetCore
             Running = false;
 
             try { ReaderThread.Abort(); } catch { }
-            while (ReaderThread != null && ReaderThread.IsAlive) {
+            while (ReaderThread != null && ReaderThread.IsAlive)
+            {
                 System.Windows.Forms.Application.DoEvents();
                 Thread.Sleep(10);
             } //Lets wait for the thread to die
@@ -54,13 +55,13 @@ namespace RTCV.NetCore
 
         internal void SendMessage(NetCoreSimpleMessage message)
         {
-            if(Running)
+            if (Running)
             {
                 Byte[] sdata = Encoding.ASCII.GetBytes(message.Type);
                 Sender.Send(sdata, sdata.Length);
-				//Todo - Refactor this into a way to blacklist specific commands 
-				if(message.Type != "UI|KILLSWITCH_PULSE" || ConsoleEx.ShowDebug)
-					logger.Info("UDP : Sent simple message \"{type}\"", message.Type);
+                //Todo - Refactor this into a way to blacklist specific commands 
+                if (message.Type != "UI|KILLSWITCH_PULSE" || ConsoleEx.ShowDebug)
+                    logger.Info("UDP : Sent simple message \"{type}\"", message.Type);
             }
         }
 
@@ -90,7 +91,7 @@ namespace RTCV.NetCore
                     }
                     catch (SocketException ex)
                     {
-                        if(ex.SocketErrorCode == SocketError.AddressAlreadyInUse)
+                        if (ex.SocketErrorCode == SocketError.AddressAlreadyInUse)
                         {
                             logger.Error("UDP Socket Port Collision");
                         }
@@ -98,7 +99,7 @@ namespace RTCV.NetCore
                         {
                             logger.Error(ex, "Error when opening socket.");
                         }
-                        
+
                         return;
                     }
                     catch (Exception ex)
@@ -111,8 +112,8 @@ namespace RTCV.NetCore
 
                     try
                     {
-						if(Listener.Available > 0)
-						    bytes = Listener.Receive(ref groupEP);
+                        if (Listener.Available > 0)
+                            bytes = Listener.Receive(ref groupEP);
                     }
                     catch (SocketException ex)
                     {
@@ -126,8 +127,8 @@ namespace RTCV.NetCore
                         else
                             throw ex;
                     }
-					if(bytes != null)
-						spec.Connector.hub.QueueMessage(new NetCoreSimpleMessage(Encoding.ASCII.GetString(bytes, 0, bytes.Length)));
+                    if (bytes != null)
+                        spec.Connector.hub.QueueMessage(new NetCoreSimpleMessage(Encoding.ASCII.GetString(bytes, 0, bytes.Length)));
 
                     //Sleep if there's no more data
                     if (Listener.Available == 0)

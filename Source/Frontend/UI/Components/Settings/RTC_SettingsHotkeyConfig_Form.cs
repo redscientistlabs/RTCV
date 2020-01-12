@@ -16,14 +16,14 @@ using RTCV.UI.Components.Controls;
 
 namespace RTCV.UI
 {
-	public partial class RTC_SettingsHotkeyConfig_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class RTC_SettingsHotkeyConfig_Form : ComponentForm, IAutoColorize, IBlockable
     {
-		public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-		public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-		public RTC_SettingsHotkeyConfig_Form()
-		{
-			InitializeComponent();
+        public RTC_SettingsHotkeyConfig_Form()
+        {
+            InitializeComponent();
 
             LoadHotkeys();
 
@@ -43,7 +43,7 @@ namespace RTCV.UI
 
         private void RTC_SettingsHotkeyConfig_Form_GotFocus(object sender, EventArgs e)
         {
-			UICore.SetHotkeyTimer(false);
+            UICore.SetHotkeyTimer(false);
             DoFocus();
         }
         private void RTC_SettingsHotkeyConfig_Form_LostFocus(object sender, EventArgs e)

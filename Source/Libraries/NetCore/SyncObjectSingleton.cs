@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace RTCV.NetCore
 {
-	public static class SyncObjectSingleton
-	{
-		public static Form SyncObject;
+    public static class SyncObjectSingleton
+    {
+        public static Form SyncObject;
         public static volatile bool executing;
         public static volatile Queue<Action> ActionQueue = new Queue<Action>();
         public delegate void ActionDelegate(Action a);
@@ -19,7 +19,7 @@ namespace RTCV.NetCore
         public delegate void GenericDelegate();
         public static ActionDelegate EmuInvokeDelegate;
         public static bool UseQueue = false;
-		public static bool EmuThreadIsMainThread = false;
+        public static bool EmuThreadIsMainThread = false;
 
 
         public static void FormExecute(Action a)
@@ -58,23 +58,23 @@ namespace RTCV.NetCore
             //various emulators need this (Dolphin) and chaining delegates wasn't worth it
             if (EmuInvokeDelegate != null)
             {
-                FormExecute(() => { EmuInvokeDelegate.Invoke(a); });   
+                FormExecute(() => { EmuInvokeDelegate.Invoke(a); });
             }
             //If there's no emuthread, fall back to the main thread if told to
-            else if(fallBackToMainThread || EmuThreadIsMainThread)
+            else if (fallBackToMainThread || EmuThreadIsMainThread)
             {
                 FormExecute(() => { a.Invoke(); });
             }
         }
 
         public static void SyncObjectExecute(Form sync, Action<object, EventArgs> a, object[] args = null)
-		{
-			if (sync.InvokeRequired)
-				sync.InvokeCorrectly(new MethodInvoker(() => { a.Invoke(null, null); }));
-			else
-				a.Invoke(null, null);
-		}
-	}
+        {
+            if (sync.InvokeRequired)
+                sync.InvokeCorrectly(new MethodInvoker(() => { a.Invoke(null, null); }));
+            else
+                a.Invoke(null, null);
+        }
+    }
     public static class ActionDistributor
     {
         static volatile Dictionary<string, LinkedList<Action>> ActionDico = new Dictionary<string, LinkedList<Action>>();

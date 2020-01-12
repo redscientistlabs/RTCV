@@ -49,14 +49,14 @@ namespace RTCV.Common
             }
 
             SimpleLayout layout = defaultLayout;
-            if(minLevel == LogLevel.Trace)
+            if (minLevel == LogLevel.Trace)
                 layout = traceLayout;
 
             if (minLevel == LogLevel.Trace)
                 layout = traceLayout;
-            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = filename , Layout = layout };
-            var logconsole = new NLog.Targets.ColoredConsoleTarget("logconsole") {Layout = layout };
-            
+            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = filename, Layout = layout };
+            var logconsole = new NLog.Targets.ColoredConsoleTarget("logconsole") { Layout = layout };
+
 
             // Rules for mapping loggers to targets            
             config.AddRule(LogLevel.Trace, LogLevel.Fatal, logconsole);

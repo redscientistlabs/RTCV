@@ -17,30 +17,30 @@ using RTCV.NetCore.StaticTools;
 
 namespace RTCV.UI
 {
-	public partial class RTC_SanitizeTool_Form : Form, IAutoColorize
-	{
+    public partial class RTC_SanitizeTool_Form : Form, IAutoColorize
+    {
 
         public BlastLayer originalBlastLayer = null;
 
 
-		public RTC_SanitizeTool_Form()
-		{
-			try
-			{
-				InitializeComponent();
+        public RTC_SanitizeTool_Form()
+        {
+            try
+            {
+                InitializeComponent();
 
-			}
-			catch(Exception ex)
-			{
-				string additionalInfo = "An error occurred while opening the SanitizeTool Form\n\n";
+            }
+            catch (Exception ex)
+            {
+                string additionalInfo = "An error occurred while opening the SanitizeTool Form\n\n";
 
-				var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
+                var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
 
-				if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
-					throw new RTCV.NetCore.AbortEverythingException();
+                if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                    throw new RTCV.NetCore.AbortEverythingException();
 
-			}
-		}
+            }
+        }
 
         public static void OpenSanitizeTool(BlastLayer bl = null)
         {
@@ -65,8 +65,8 @@ namespace RTCV.UI
 
             BlastLayer clone = (BlastLayer)bl.Clone();
 
-            stf.lbOriginalLayerSize.Text = $"Original Layer size: {clone.Layer.Count}"; 
-            stf.lbCurrentLayerSize.Text = $"Current Layer size: {clone.Layer.Count}"; 
+            stf.lbOriginalLayerSize.Text = $"Original Layer size: {clone.Layer.Count}";
+            stf.lbCurrentLayerSize.Text = $"Current Layer size: {clone.Layer.Count}";
 
             stf.lbSteps.DisplayMember = "Text";
             stf.lbSteps.ValueMember = "Value";
@@ -78,10 +78,10 @@ namespace RTCV.UI
         }
 
         private void RTC_NewBlastEditorForm_Load(object sender, EventArgs e)
-		{
-			UICore.SetRTCColor(UICore.GeneralColor, this);
+        {
+            UICore.SetRTCColor(UICore.GeneralColor, this);
 
-		}
+        }
 
         private void btnReroll_Click(object sender, EventArgs e)
         {
@@ -113,7 +113,7 @@ namespace RTCV.UI
 
             lbCurrentLayerSize.Text = $"Current Layer size: {bl.Layer.Count}";
 
-            if(bl.Layer.Count == 1)
+            if (bl.Layer.Count == 1)
             {
                 lbSanitizationText.Text = "1 Unit remaining, sanitization complete.";
                 btnYesEffect.Visible = false;
@@ -190,7 +190,7 @@ namespace RTCV.UI
 
                 if (TargetUnit != null && !TargetUnit.IsLocked)
                     modified.Layer.Remove(TargetUnit);
-			}
+            }
 
             S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(modified);
 
@@ -205,9 +205,9 @@ namespace RTCV.UI
 
         private void btnBackPrevState_Click(object sender, EventArgs e)
         {
-            var lastItem = lbSteps.Items[lbSteps.Items.Count -1];
+            var lastItem = lbSteps.Items[lbSteps.Items.Count - 1];
 
-            if(lbSteps.Items.Count > 1)
+            if (lbSteps.Items.Count > 1)
                 lastItem = lbSteps.Items[lbSteps.Items.Count - 2];
 
             T Cast<T>(object obj, T type) { return (T)obj; }
@@ -218,7 +218,7 @@ namespace RTCV.UI
 
             lbCurrentLayerSize.Text = $"Current Layer size: {bl.Layer.Count}";
 
-            if(lbSteps.Items.Count>1)
+            if (lbSteps.Items.Count > 1)
                 lbSteps.Items.RemoveAt(lbSteps.Items.Count - 1);
 
             S.GET<RTC_NewBlastEditor_Form>().btnLoadCorrupt_Click(null, null);
@@ -262,11 +262,11 @@ namespace RTCV.UI
             Form frm = (sender as Form);
             Button check = (frm?.ActiveControl as Button);
 
-            if(check == null && lbSteps.Items.Count > 1)
+            if (check == null && lbSteps.Items.Count > 1)
             {
                 DialogResult dr = MessageBox.Show("Would you like to restore the Original BlastLayer?", "Leaving Sanitize Tool", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
-                switch(dr)
+                switch (dr)
                 {
                     case DialogResult.Yes:
                         S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(originalBlastLayer);

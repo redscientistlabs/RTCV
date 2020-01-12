@@ -66,7 +66,7 @@ namespace RTCV.UI.Components.Controls
                 if (value > updown.Maximum)
                     value = updown.Maximum;
                 else if (value < updown.Minimum)
-                        value = updown.Minimum;
+                    value = updown.Minimum;
                 updown.Value = value;
                 _Value = value;
 

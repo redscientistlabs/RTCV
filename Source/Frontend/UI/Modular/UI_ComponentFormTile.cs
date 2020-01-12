@@ -29,7 +29,7 @@ namespace RTCV.UI
             SizeY = _sizeY;
 
 
-            
+
 
 
             this.Size = new Size(

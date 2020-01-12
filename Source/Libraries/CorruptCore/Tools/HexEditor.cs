@@ -36,7 +36,7 @@ namespace RTCV.CorruptCore.Tools
         private long _addressOver = -1;
 
         private long _maxRow;
-		
+
 
         private MemoryInterface _domain = new NullMemoryInterface();
 
@@ -44,7 +44,7 @@ namespace RTCV.CorruptCore.Tools
         private long _addr;
         private string _findStr = "";
         private bool _mouseIsDown;
-		private HexFind _hexFind = new HexFind();
+        private HexFind _hexFind = new HexFind();
 
         private string LastDomain { get; set; }
 
@@ -93,18 +93,18 @@ namespace RTCV.CorruptCore.Tools
         }
 
         private void HexEditor_VisibleChanged(object sender, EventArgs e)
-		{
-			if (Visible)
-			{
-				Restart();
-				this.BringToFront();
-				this.Activate();
+        {
+            if (Visible)
+            {
+                Restart();
+                this.BringToFront();
+                this.Activate();
             }
-			else
-			{
-				_domain = new NullMemoryInterface();
-			}
-		}
+            else
+            {
+                _domain = new NullMemoryInterface();
+            }
+        }
 
         private void HexEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -114,7 +114,7 @@ namespace RTCV.CorruptCore.Tools
                 _domain = new NullMemoryInterface();
                 e.Cancel = true;
             }
-		}
+        }
 
         private long? HighlightedAddress
         {
@@ -141,21 +141,21 @@ namespace RTCV.CorruptCore.Tools
             return true;
         }
 
-		private volatile object updateValuesSyncObject = new object();
+        private volatile object updateValuesSyncObject = new object();
         public async void UpdateValues()
         {
-		    await Task.Run(() => SyncObjectSingleton.FormExecute(() =>
-		    {
-		    	try
-		    	{
-		    		AddressesLabel.Text = GenerateMemoryViewString(true);
-		    		AddressLabel.Text = GenerateAddressString();
-		    	}
-		    	catch (Exception e)
-		    	{
-		    		Console.WriteLine($"Failed to UpdateValues() in hex editor.{e}");
-		    	}
-		    }));
+            await Task.Run(() => SyncObjectSingleton.FormExecute(() =>
+            {
+                try
+                {
+                    AddressesLabel.Text = GenerateMemoryViewString(true);
+                    AddressLabel.Text = GenerateAddressString();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Failed to UpdateValues() in hex editor.{e}");
+                }
+            }));
         }
 
 
@@ -470,26 +470,26 @@ namespace RTCV.CorruptCore.Tools
             return addrStr.ToString();
         }
 
-		private bool MakeValue(int dataSize, long address, out int value)
+        private bool MakeValue(int dataSize, long address, out int value)
         {
             value = 0;
             try
-			{
-				switch (dataSize)
-				{
-					case 1:
+            {
+                switch (dataSize)
+                {
+                    case 1:
                         value = _domain.PeekByte(address);
                         break;
-					case 2:
-                        value =  BitConverter.ToInt16(_domain.PeekBytes(address, address + 2, !SwapBytes), 0);
+                    case 2:
+                        value = BitConverter.ToInt16(_domain.PeekBytes(address, address + 2, !SwapBytes), 0);
                         break;
                     case 4:
                         value = BitConverter.ToInt16(_domain.PeekBytes(address, address + 4, !SwapBytes), 0);
                         break;
                 }
-			}
-			catch (Exception ex)
-			{
+            }
+            catch (Exception ex)
+            {
                 Console.WriteLine(ex);
                 return false;
             }
@@ -571,17 +571,17 @@ namespace RTCV.CorruptCore.Tools
             return _domain.PeekByte(address);
         }
 
-		public void SetDomain(MemoryInterface mi)
-		{
-			SetMemoryDomain(mi.Name);
-		}
+        public void SetDomain(MemoryInterface mi)
+        {
+            SetMemoryDomain(mi.Name);
+        }
 
         private void SetMemoryDomain(string name)
         {
-			if (!AllDomains.TryGetValue(name, out _domain))
-			{
-				_domain = new NullMemoryInterface();
-			}
+            if (!AllDomains.TryGetValue(name, out _domain))
+            {
+                _domain = new NullMemoryInterface();
+            }
 
             SwapBytes = false;
             BigEndian = _domain.BigEndian;
@@ -916,19 +916,19 @@ namespace RTCV.CorruptCore.Tools
         }
 
 
-		private void CreateVMDFromSelectedMenuItem_Click(object sender, EventArgs e)
-		{
-			if (HighlightedAddress == null) return;
+        private void CreateVMDFromSelectedMenuItem_Click(object sender, EventArgs e)
+        {
+            if (HighlightedAddress == null) return;
 
-			List<long> allAddresses = new List<long>() { HighlightedAddress.Value };
-			allAddresses.AddRange(_secondaryHighlightedAddresses);
-			CreateVmdFromSelected(_domain.Name, allAddresses, DataSize);
+            List<long> allAddresses = new List<long>() { HighlightedAddress.Value };
+            allAddresses.AddRange(_secondaryHighlightedAddresses);
+            CreateVmdFromSelected(_domain.Name, allAddresses, DataSize);
 
-			MemoryViewerBox.Refresh();
-		}
+            MemoryViewerBox.Refresh();
+        }
 
         public static void CreateVmdFromSelected(string domain, List<long> allAddresses, int wordSize)
-		{
+        {
 
             int allAddrCount = allAddresses.Count;
             if (wordSize > 1) //fills the gap caused by address spacing
@@ -943,55 +943,55 @@ namespace RTCV.CorruptCore.Tools
             var ordered = allAddresses.OrderBy(it => it).ToArray();
 
 
-			bool contiguous = true;
-			long? lastAddress = null;
-			int i = 0;
+            bool contiguous = true;
+            long? lastAddress = null;
+            int i = 0;
 
-			foreach (long item in ordered)
-			{
-				if (lastAddress != null) //not the first one
-					if (i != (ordered.Length - 1)) //not the last one
-						if (item != lastAddress.Value + 1) //checks expected address
-							contiguous = false;
+            foreach (long item in ordered)
+            {
+                if (lastAddress != null) //not the first one
+                    if (i != (ordered.Length - 1)) //not the last one
+                        if (item != lastAddress.Value + 1) //checks expected address
+                            contiguous = false;
 
-				lastAddress = item;
-				i++;
-			}
+                lastAddress = item;
+                i++;
+            }
 
-			string ToHexString(long n)
-			{
-				return $"{n:X}";
-			}
+            string ToHexString(long n)
+            {
+                return $"{n:X}";
+            }
 
-			string text;
-			if (contiguous)
-			{
-				text = $"{ToHexString(ordered[0])}-{ToHexString(ordered[ordered.Length - 1])}";
-			}
-			else
-			{
-				text = String.Join("\n", ordered.Select(it => ToHexString(it)));
-			}
-			CreateVmdText(domain, text);
-		}
+            string text;
+            if (contiguous)
+            {
+                text = $"{ToHexString(ordered[0])}-{ToHexString(ordered[ordered.Length - 1])}";
+            }
+            else
+            {
+                text = String.Join("\n", ordered.Select(it => ToHexString(it)));
+            }
+            CreateVmdText(domain, text);
+        }
 
-		internal static void CreateVmdText(string domain, string text)
-		{   //Sends text to the VMD Generator and trigger generation
-			LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_GENERATEVMDTEXT, new object[] { domain, text }, false);
-		}
+        internal static void CreateVmdText(string domain, string text)
+        {   //Sends text to the VMD Generator and trigger generation
+            LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_GENERATEVMDTEXT, new object[] { domain, text }, false);
+        }
 
         private void IncrementAddress(long address)
         {
             var bytes = _domain.PeekBytes(address, address + DataSize, false);
             CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref bytes, 1, _domain.BigEndian);
-			_domain.PokeBytes(address, bytes, _domain.BigEndian);
+            _domain.PokeBytes(address, bytes, _domain.BigEndian);
         }
 
         private void DecrementAddress(long address)
         {
             var bytes = _domain.PeekBytes(address, address + DataSize, false);
             CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref bytes, -1, _domain.BigEndian);
-			_domain.PokeBytes(address, bytes, _domain.BigEndian);
+            _domain.PokeBytes(address, bytes, _domain.BigEndian);
         }
 
 
@@ -1132,10 +1132,10 @@ namespace RTCV.CorruptCore.Tools
                 {
                     long start = addresses[i];
                     long end = addresses[i] + DataSize - 1;
-					for (long a = start; a <= end; a++)
-					{
-						MakeValue(1, a, out int val);
-						sb.AppendFormat("{0:X2}", val);
+                    for (long a = start; a <= end; a++)
+                    {
+                        MakeValue(1, a, out int val);
+                        sb.AppendFormat("{0:X2}", val);
                     }
                 }
             }
@@ -1230,12 +1230,12 @@ namespace RTCV.CorruptCore.Tools
             PokeAddressMenuItem.Enabled = true;
         }
 
-		private void dataSizeToolStripMenuItem_DropDownOpened(object sender, EventArgs e)
-		{
-			DataSizeByteMenuItem.Checked = DataSize == 1;
-			DataSizeWordMenuItem.Checked = DataSize == 2;
-			DataSizeDWordMenuItem.Checked = DataSize == 4;
-		}
+        private void dataSizeToolStripMenuItem_DropDownOpened(object sender, EventArgs e)
+        {
+            DataSizeByteMenuItem.Checked = DataSize == 1;
+            DataSizeWordMenuItem.Checked = DataSize == 2;
+            DataSizeDWordMenuItem.Checked = DataSize == 4;
+        }
 
         private ToolStripItem GetMenuItem(MemoryInterface domain, Action<string> setCallback, string selected = "", int? maxSize = null)
         {
@@ -1250,23 +1250,23 @@ namespace RTCV.CorruptCore.Tools
             return item;
         }
 
-		private void MemoryDomainsMenuItem_MouseDown(object sender, MouseEventArgs e)
-		{
-			if (MemoryDomainsMenuItem.DropDownItems.Count == 0)
-			{
-				MemoryDomainsMenuItem.DropDownItems.Add(GetMenuItem(new NullMemoryInterface(), SetMemoryDomain, _domain.Name));
+        private void MemoryDomainsMenuItem_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (MemoryDomainsMenuItem.DropDownItems.Count == 0)
+            {
+                MemoryDomainsMenuItem.DropDownItems.Add(GetMenuItem(new NullMemoryInterface(), SetMemoryDomain, _domain.Name));
                 MemoryDomainsMenuItem.ShowDropDown();
             }
-				
+
         }
-		private void MemoryDomainsMenuItem_DropDown(object sender, EventArgs e)
-		{
-			MemoryDomainsMenuItem.DropDownItems.Clear();
-			foreach (var k in AllDomains.Values)
-			{
-				MemoryDomainsMenuItem.DropDownItems.Add(GetMenuItem(k, SetMemoryDomain, _domain.Name));
-			}
-		}
+        private void MemoryDomainsMenuItem_DropDown(object sender, EventArgs e)
+        {
+            MemoryDomainsMenuItem.DropDownItems.Clear();
+            foreach (var k in AllDomains.Values)
+            {
+                MemoryDomainsMenuItem.DropDownItems.Add(GetMenuItem(k, SetMemoryDomain, _domain.Name));
+            }
+        }
 
         private void DataSizeByteMenuItem_Click(object sender, EventArgs e)
         {
@@ -1314,24 +1314,24 @@ namespace RTCV.CorruptCore.Tools
             AddressLabel.Text = GenerateAddressString();
         }
 
-		private void FreezeContextItem_Click(object sender, EventArgs e)
-		{
-			if (HighlightedAddress.HasValue)
-			{
-				if (IsFrozen(HighlightedAddress.Value))
-				{
-					UnFreezeAddress(HighlightedAddress.Value);
-					UnfreezeSecondaries();
-				}
-				else
-				{
-					FreezeAddress(HighlightedAddress.Value);
-					FreezeSecondaries();
-				}
-			}
+        private void FreezeContextItem_Click(object sender, EventArgs e)
+        {
+            if (HighlightedAddress.HasValue)
+            {
+                if (IsFrozen(HighlightedAddress.Value))
+                {
+                    UnFreezeAddress(HighlightedAddress.Value);
+                    UnfreezeSecondaries();
+                }
+                else
+                {
+                    FreezeAddress(HighlightedAddress.Value);
+                    FreezeSecondaries();
+                }
+            }
 
-			MemoryViewerBox.Refresh();
-		}
+            MemoryViewerBox.Refresh();
+        }
         private void UnfreezeAllMenuItem_Click(object sender, EventArgs e)
         {
             StepActions.ClearStepBlastUnits();
@@ -1706,27 +1706,27 @@ namespace RTCV.CorruptCore.Tools
         {
             var data = Clipboard.GetDataObject();
 
-			FreezeContextItem.Visible = false;
+            FreezeContextItem.Visible = false;
 
             CopyContextItem.Visible =
                 HighlightedAddress.HasValue || _secondaryHighlightedAddresses.Any();
-			FreezeContextItem.Visible =
-				IncrementContextItem.Visible =
-					DecrementContextItem.Visible =
-						ContextSeparator2.Visible =
-							(HighlightedAddress.HasValue || _secondaryHighlightedAddresses.Any());
+            FreezeContextItem.Visible =
+                IncrementContextItem.Visible =
+                    DecrementContextItem.Visible =
+                        ContextSeparator2.Visible =
+                            (HighlightedAddress.HasValue || _secondaryHighlightedAddresses.Any());
 
 
             PasteContextItem.Visible = data != null && data.GetDataPresent(DataFormats.Text);
 
-			if (HighlightedAddress.HasValue && IsFrozen(HighlightedAddress.Value))
-			{
-				FreezeContextItem.Text = "Un&freeze";
-			}
-			else
-			{
-				FreezeContextItem.Text = "&Freeze";
-			}
+            if (HighlightedAddress.HasValue && IsFrozen(HighlightedAddress.Value))
+            {
+                FreezeContextItem.Text = "Un&freeze";
+            }
+            else
+            {
+                FreezeContextItem.Text = "&Freeze";
+            }
         }
 
         private void IncrementContextItem_Click(object sender, EventArgs e)
@@ -1789,31 +1789,31 @@ namespace RTCV.CorruptCore.Tools
         }
 
         private void MemoryViewerBox_Paint(object sender, PaintEventArgs e)
-		{
-			var infiniteUnits = StepActions.GetAppliedInfiniteUnits();
-			foreach (var bu in infiniteUnits.Layer)
-			{
-				if (IsVisible(bu.Address))
-				{
-					if (_domain.ToString() == bu.Domain)
-					{
-						var gaps = (int)bu.Precision - (int)DataSize;
+        {
+            var infiniteUnits = StepActions.GetAppliedInfiniteUnits();
+            foreach (var bu in infiniteUnits.Layer)
+            {
+                if (IsVisible(bu.Address))
+                {
+                    if (_domain.ToString() == bu.Domain)
+                    {
+                        var gaps = (int)bu.Precision - (int)DataSize;
 
-						if (bu.Precision == 4 && DataSize == 2)
-						{
-							gaps -= 1;
-						}
+                        if (bu.Precision == 4 && DataSize == 2)
+                        {
+                            gaps -= 1;
+                        }
 
-						if (gaps < 0) { gaps = 0; }
+                        if (gaps < 0) { gaps = 0; }
 
-						var width = (fontWidth * 2 * (int)bu.Precision) + (gaps * fontWidth);
+                        var width = (fontWidth * 2 * (int)bu.Precision) + (gaps * fontWidth);
 
-						var rect = new Rectangle(GetAddressCoordinates(bu.Address), new Size(width, fontHeight));
-						e.Graphics.DrawRectangle(new Pen(Brushes.Black), rect);
-						e.Graphics.FillRectangle(new SolidBrush(Color.Cyan), rect);
-					}
-				}
-			}
+                        var rect = new Rectangle(GetAddressCoordinates(bu.Address), new Size(width, fontHeight));
+                        e.Graphics.DrawRectangle(new Pen(Brushes.Black), rect);
+                        e.Graphics.FillRectangle(new SolidBrush(Color.Cyan), rect);
+                    }
+                }
+            }
 
             if (_addressHighlighted >= 0 && IsVisible(_addressHighlighted))
             {
@@ -1827,15 +1827,15 @@ namespace RTCV.CorruptCore.Tools
 
                 var textrect = new Rectangle(textpoint, new Size(fontWidth * DataSize, fontHeight));
 
-				if (CorruptCore.StepActions.InfiniteUnitExists(_domain.Name, _addressHighlighted))
-				{
-					e.Graphics.FillRectangle(new SolidBrush(Color.Cyan), rect);
-					e.Graphics.FillRectangle(new SolidBrush(Color.Cyan), textrect);
-				}
-				else
-				{
-					e.Graphics.FillRectangle(new SolidBrush(Color.LightPink), rect);
-					e.Graphics.FillRectangle(new SolidBrush(Color.LightPink), textrect);
+                if (CorruptCore.StepActions.InfiniteUnitExists(_domain.Name, _addressHighlighted))
+                {
+                    e.Graphics.FillRectangle(new SolidBrush(Color.Cyan), rect);
+                    e.Graphics.FillRectangle(new SolidBrush(Color.Cyan), textrect);
+                }
+                else
+                {
+                    e.Graphics.FillRectangle(new SolidBrush(Color.LightPink), rect);
+                    e.Graphics.FillRectangle(new SolidBrush(Color.LightPink), textrect);
                 }
             }
 
@@ -1852,8 +1852,8 @@ namespace RTCV.CorruptCore.Tools
 
                     var textrect = new Rectangle(textpoint, new Size(fontWidth * DataSize, fontHeight));
 
-                     e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(0x44, Color.LightPink)), rect);
-                     e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(0x44, Color.LightPink)), textrect);
+                    e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(0x44, Color.LightPink)), rect);
+                    e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(0x44, Color.LightPink)), textrect);
 
                 }
             }
@@ -1952,37 +1952,37 @@ namespace RTCV.CorruptCore.Tools
 
         #endregion
 
-		private void UnFreezeAddress(long address)
-		{
-			StepActions.TryRemoveInfiniteStepUnits(_domain.Name, address);
-		}
+        private void UnFreezeAddress(long address)
+        {
+            StepActions.TryRemoveInfiniteStepUnits(_domain.Name, address);
+        }
 
-		private void UnfreezeSecondaries()
-		{
-			foreach (var x in _secondaryHighlightedAddresses)
-			{
-				UnFreezeAddress(x);
-			}
-		}
+        private void UnfreezeSecondaries()
+        {
+            foreach (var x in _secondaryHighlightedAddresses)
+            {
+                UnFreezeAddress(x);
+            }
+        }
 
         private void FreezeAddress(long address)
-		{
-            BlastUnit bu = new BlastUnit(StoreType.ONCE, StoreTime.IMMEDIATE, _domain.Name, address, _domain.Name, address, DataSize, _domain.BigEndian, 0, 0);;
-			bu.Apply(false);
-		}
-		private void FreezeSecondaries()
-		{
-			foreach (var x in _secondaryHighlightedAddresses)
-			{
-				FreezeAddress(x);
-			}
-		}
+        {
+            BlastUnit bu = new BlastUnit(StoreType.ONCE, StoreTime.IMMEDIATE, _domain.Name, address, _domain.Name, address, DataSize, _domain.BigEndian, 0, 0); ;
+            bu.Apply(false);
+        }
+        private void FreezeSecondaries()
+        {
+            foreach (var x in _secondaryHighlightedAddresses)
+            {
+                FreezeAddress(x);
+            }
+        }
 
 
         private bool IsFrozen(long address)
-		{
-			return StepActions.InfiniteUnitExists(_domain.Name, address);
-		}
+        {
+            return StepActions.InfiniteUnitExists(_domain.Name, address);
+        }
 
         private void OptionsSubMenu_Click(object sender, EventArgs e)
         {

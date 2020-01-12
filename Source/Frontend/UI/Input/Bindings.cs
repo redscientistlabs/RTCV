@@ -20,10 +20,10 @@ namespace RTCV.UI.Input
         {
             List<string> list = new List<string>();
             foreach (KeyValuePair<string, List<string>> kvp in _bindings)
-            foreach (var boundButton in kvp.Value)
-            {
-                if (boundButton == button) list.Add(kvp.Key);
-            }
+                foreach (var boundButton in kvp.Value)
+                {
+                    if (boundButton == button) list.Add(kvp.Key);
+                }
 
             return list;
         }

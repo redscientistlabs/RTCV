@@ -13,21 +13,21 @@ using RTCV.UI.Components.Controls;
 
 namespace RTCV.UI
 {
-	public partial class RTC_SimpleMode_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class RTC_SimpleMode_Form : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         public bool DontLoadSelectedStockpile = false;
-		private bool currentlyLoading = false;
+        private bool currentlyLoading = false;
 
         PlatformType platform = PlatformType.CLASSIC;
 
         public bool DontUpdateSpec = false;
 
         public RTC_SimpleMode_Form()
-		{
-			InitializeComponent();
+        {
+            InitializeComponent();
         }
 
         public void EnteringSimpleMode()
@@ -63,22 +63,22 @@ namespace RTCV.UI
 
             S.GET<UI_CoreForm>().btnEngineConfig_Click(null, null);
 
-            
+
         }
 
-		private void RTC_SimpleMode_Form_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			if (e.CloseReason != CloseReason.FormOwnerClosing)
-			{
-				e.Cancel = true;
-				this.Hide();
-			}
-		}
+        private void RTC_SimpleMode_Form_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason != CloseReason.FormOwnerClosing)
+            {
+                e.Cancel = true;
+                this.Hide();
+            }
+        }
 
-		private void btnBlastToggle_Click(object sender, EventArgs e)
-		{
-			S.GET<RTC_GlitchHarvesterBlast_Form>().btnBlastToggle_Click(null, null);
-		}
+        private void btnBlastToggle_Click(object sender, EventArgs e)
+        {
+            S.GET<RTC_GlitchHarvesterBlast_Form>().btnBlastToggle_Click(null, null);
+        }
 
         private void btnManualBlast_Click(object sender, EventArgs e)
         {
@@ -119,7 +119,7 @@ namespace RTCV.UI
 
         private void btnGlitchHarvesterCorrupt_Click(object sender, EventArgs e)
         {
-            if(S.GET<RTC_StashHistory_Form>().lbStashHistory.Items.Count >= 20)
+            if (S.GET<RTC_StashHistory_Form>().lbStashHistory.Items.Count >= 20)
             {
                 S.GET<RTC_StashHistory_Form>().RemoveFirstStashHistoryItem();
             }
@@ -140,7 +140,7 @@ namespace RTCV.UI
 
         public void SwitchPlatformType(PlatformType pt)
         {
-            switch(pt)
+            switch (pt)
             {
                 case PlatformType.CLASSIC:
                     SelectNightmareEngine();
@@ -184,7 +184,7 @@ namespace RTCV.UI
             Random RND = new Random((int)DateTime.Now.Ticks);
             int engineSelect = RND.Next(1, 5);
 
-            switch(engineSelect)
+            switch (engineSelect)
             {
                 case 1:
                     SelectNightmareEngine();
@@ -230,7 +230,7 @@ namespace RTCV.UI
         {
             Random RND = new Random((int)DateTime.Now.Ticks);
             int nbItems = cb.Items.Count;
-            int SelectIndex = RND.Next(0, nbItems -1);
+            int SelectIndex = RND.Next(0, nbItems - 1);
             cb.SelectedIndex = SelectIndex;
         }
 
@@ -285,7 +285,7 @@ namespace RTCV.UI
             SelectEngineByName("Hellgenie Engine");
             SetInfiniteUnitVisibility(true);
 
-            lbEngineDescription.Text =$"Auto-Selected Engine: Hellgenie Engine\n" +
+            lbEngineDescription.Text = $"Auto-Selected Engine: Hellgenie Engine\n" +
                                       $"\n" +
                                       $"This engine generates garbage data and then\n" +
                                       $"continuously writes it to the game's memory.";

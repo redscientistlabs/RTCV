@@ -17,30 +17,30 @@ using RTCV.NetCore.StaticTools;
 
 namespace RTCV.UI
 {
-	public partial class RTC_AnalyticsTool_Form : Form, IAutoColorize
-	{
+    public partial class RTC_AnalyticsTool_Form : Form, IAutoColorize
+    {
 
         public BlastLayer originalBlastLayer = null;
 
 
-		public RTC_AnalyticsTool_Form()
-		{
-			try
-			{
-				InitializeComponent();
+        public RTC_AnalyticsTool_Form()
+        {
+            try
+            {
+                InitializeComponent();
 
-			}
-			catch(Exception ex)
-			{
-				string additionalInfo = "An error occurred while opening the SanitizeTool Form\n\n";
+            }
+            catch (Exception ex)
+            {
+                string additionalInfo = "An error occurred while opening the SanitizeTool Form\n\n";
 
-				var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
+                var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
 
-				if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
-					throw new RTCV.NetCore.AbortEverythingException();
+                if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                    throw new RTCV.NetCore.AbortEverythingException();
 
-			}
-		}
+            }
+        }
 
         public static void OpenAnalyticsTool(BlastLayer bl = null)
         {
@@ -75,10 +75,10 @@ namespace RTCV.UI
         }
 
         private void RTC_AnalyticsToolForm_Load(object sender, EventArgs e)
-		{
-			UICore.SetRTCColor(UICore.GeneralColor, this);
+        {
+            UICore.SetRTCColor(UICore.GeneralColor, this);
 
-		}
+        }
 
         private void RTC_SanitizeTool_Form_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -88,7 +88,7 @@ namespace RTCV.UI
             Form frm = (sender as Form);
             Button check = (frm?.ActiveControl as Button);
 
-            if(check == null && lbDumps.Items.Count > 1)
+            if (check == null && lbDumps.Items.Count > 1)
             {
 
             }

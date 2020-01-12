@@ -20,9 +20,9 @@ namespace RTCV.UI
 
 		long currentDomainSize = 0;
 
-        private string LimiterListHash;
+		private string LimiterListHash;
 
-        public RTC_VmdLimiterProfiler_Form()
+		public RTC_VmdLimiterProfiler_Form()
 		{
 			InitializeComponent();
 		}
@@ -33,11 +33,11 @@ namespace RTCV.UI
 
 			cbSelectedMemoryDomain.Items.Clear();
 			var domains = MemoryDomains.MemoryInterfaces?.Keys.Where(it => !it.Contains("[V]")).ToArray();
-			if(domains?.Length > 0)
+			if (domains?.Length > 0)
 				cbSelectedMemoryDomain.Items.AddRange(domains);
 
-            if(cbSelectedMemoryDomain.Items.Count > 0)
-                cbSelectedMemoryDomain.SelectedIndex = 0;
+			if (cbSelectedMemoryDomain.Items.Count > 0)
+				cbSelectedMemoryDomain.SelectedIndex = 0;
 		}
 
 		private void cbSelectedMemoryDomain_SelectedIndexChanged(object sender, EventArgs e)
@@ -56,47 +56,46 @@ namespace RTCV.UI
 
 			currentDomainSize = Convert.ToInt64(mi.Size);
 
-            updateInterface();
+			updateInterface();
 		}
 
-        private void updateInterface()
-        {
-            MemoryInterface mi = MemoryDomains.MemoryInterfaces[cbSelectedMemoryDomain.SelectedItem.ToString()];
+		private void updateInterface()
+		{
+			MemoryInterface mi = MemoryDomains.MemoryInterfaces[cbSelectedMemoryDomain.SelectedItem.ToString()];
 
-            long fullRange = mi.Size;
+			long fullRange = mi.Size;
 
-            btnGenerateVMD.Enabled = true;
-        }
+			btnGenerateVMD.Enabled = true;
+		}
 
-        public long SafeStringToLong(string input)
+		public long SafeStringToLong(string input)
 		{
 			try
 			{
-				if (input.ToUpper()
-					.Contains("0X"))
+				if (input.IndexOf("0X", StringComparison.OrdinalIgnoreCase) >= 0)
 					return long.Parse(input.Substring(2), NumberStyles.HexNumber);
 				else
 					return long.Parse(input, NumberStyles.HexNumber);
 			}
 			catch (FormatException e)
 			{
-                Console.Write(e);
-                return -1;
+				Console.Write(e);
+				return -1;
 			}
 		}
 
 
-        public void ProfileDomain()
-        {
+		public void ProfileDomain()
+		{
 
-        }
+		}
 
 		private void btnGenerateVMD_Click(object sender, EventArgs e) => GenerateVMD();
 
 
 		private bool GenerateVMD()
-        {
-            if (string.IsNullOrWhiteSpace(cbSelectedMemoryDomain.SelectedItem?.ToString()) || !MemoryDomains.MemoryInterfaces.ContainsKey(cbSelectedMemoryDomain.SelectedItem.ToString()))
+		{
+			if (string.IsNullOrWhiteSpace(cbSelectedMemoryDomain.SelectedItem?.ToString()) || !MemoryDomains.MemoryInterfaces.ContainsKey(cbSelectedMemoryDomain.SelectedItem.ToString()))
 			{
 				cbSelectedMemoryDomain.Items.Clear();
 				return false;
@@ -108,7 +107,7 @@ namespace RTCV.UI
 				return false;
 			}
 
-            MemoryInterface mi = MemoryDomains.MemoryInterfaces[cbSelectedMemoryDomain.SelectedItem.ToString()];
+			MemoryInterface mi = MemoryDomains.MemoryInterfaces[cbSelectedMemoryDomain.SelectedItem.ToString()];
 			VirtualMemoryDomain VMD = new VirtualMemoryDomain();
 			VmdPrototype proto = new VmdPrototype();
 
@@ -123,18 +122,18 @@ namespace RTCV.UI
 			proto.WordSize = mi.WordSize;
 			proto.Padding = 0;
 
-            var sk = S.GET<RTC_SavestateManager_Form>().CurrentSaveStateStashKey;
-            if (sk == null && cbLoadBeforeGenerate.Checked && (AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] as bool? ?? false))
-            {
-                MessageBox.Show("Load before generate is checked but no Savestate is selected in the Glitch Harvester!");
-                return false;
-            }
-            var legalAdresses = LocalNetCoreRouter.QueryRoute<long[]>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_LONGARRAY_FILTERDOMAIN, new object[] { mi.Name, LimiterListHash, cbLoadBeforeGenerate.Checked ? sk : null});
-            if (legalAdresses == null)
-                return false;
-            proto.AddSingles.AddRange(legalAdresses);
+			var sk = S.GET<RTC_SavestateManager_Form>().CurrentSaveStateStashKey;
+			if (sk == null && cbLoadBeforeGenerate.Checked && (AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] as bool? ?? false))
+			{
+				MessageBox.Show("Load before generate is checked but no Savestate is selected in the Glitch Harvester!");
+				return false;
+			}
+			var legalAdresses = LocalNetCoreRouter.QueryRoute<long[]>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_LONGARRAY_FILTERDOMAIN, new object[] { mi.Name, LimiterListHash, cbLoadBeforeGenerate.Checked ? sk : null });
+			if (legalAdresses == null)
+				return false;
+			proto.AddSingles.AddRange(legalAdresses);
 
-            if (proto.AddRanges.Count == 0 && proto.AddSingles.Count == 0)
+			if (proto.AddRanges.Count == 0 && proto.AddSingles.Count == 0)
 			{
 				//No add range was specified, use entire domain
 				proto.AddRanges.Add(new long[] { 0, (currentDomainSize > long.MaxValue ? long.MaxValue : Convert.ToInt64(currentDomainSize)) });
@@ -158,7 +157,7 @@ namespace RTCV.UI
 			{
 				size = currentDomainSize;
 			}
-				
+
 			foreach (var v in proto.RemoveSingles)
 				size--;
 			foreach (var v in proto.RemoveRanges)
@@ -171,18 +170,18 @@ namespace RTCV.UI
 			//Verify they want to continue if the domain is larger than 32MB and they didn't manually set ranges
 			if (size > 0x2000000)
 			{
-				DialogResult result = MessageBox.Show("The VMD you're trying to generate is larger than 32MB\n The VMD size is " + ((size / 1024 / 1024) + 1) + " MB (" + size/1024f/1024f/1024f + " GB).\n Are you sure you want to continue?", "VMD Detected", MessageBoxButtons.YesNo);
+				DialogResult result = MessageBox.Show("The VMD you're trying to generate is larger than 32MB\n The VMD size is " + ((size / 1024 / 1024) + 1) + " MB (" + size / 1024f / 1024f / 1024f + " GB).\n Are you sure you want to continue?", "VMD Detected", MessageBoxButtons.YesNo);
 				if (result == DialogResult.No)
 					return false;
 			}
 
 			VMD = proto.Generate();
 
-            if (VMD.Size == 0)
-            {
-                MessageBox.Show("The resulting VMD had no pointers so the operation got cancelled.");
-                return false;
-            }
+			if (VMD.Size == 0)
+			{
+				MessageBox.Show("The resulting VMD had no pointers so the operation got cancelled.");
+				return false;
+			}
 
 
 			MemoryDomains.AddVMD(VMD);
@@ -201,8 +200,8 @@ namespace RTCV.UI
 			S.GET<RTC_VmdPool_Form>().RefreshVMDs();
 
 			//Selects back the VMD Pool menu
-			foreach(var item in UICore.mtForm.cbSelectBox.Items)
-				if(((dynamic)item).value is RTC_VmdPool_Form)
+			foreach (var item in UICore.mtForm.cbSelectBox.Items)
+				if (((dynamic)item).value is RTC_VmdPool_Form)
 				{
 					UICore.mtForm.cbSelectBox.SelectedItem = item;
 					break;
@@ -212,26 +211,26 @@ namespace RTCV.UI
 			return true;
 		}
 
-        private void RTC_VmdLimiterProfiler_Form_Load(object sender, EventArgs e)
-        {
-            cbVectorLimiterList.DataSource = null;
-            cbVectorLimiterList.DisplayMember = "Name";
-            cbVectorLimiterList.ValueMember = "Value";
+		private void RTC_VmdLimiterProfiler_Form_Load(object sender, EventArgs e)
+		{
+			cbVectorLimiterList.DataSource = null;
+			cbVectorLimiterList.DisplayMember = "Name";
+			cbVectorLimiterList.ValueMember = "Value";
 
-            //Do this here as if it's stuck into the designer, it keeps defaulting out
-            cbVectorLimiterList.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
+			//Do this here as if it's stuck into the designer, it keeps defaulting out
+			cbVectorLimiterList.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
 
-            if (CorruptCore.RtcCore.LimiterListBindingSource.Count > 0)
-            {
-                CbVectorLimiterList_SelectedIndexChanged(cbVectorLimiterList, null);
-            }
-        }
+			if (CorruptCore.RtcCore.LimiterListBindingSource.Count > 0)
+			{
+				CbVectorLimiterList_SelectedIndexChanged(cbVectorLimiterList, null);
+			}
+		}
 
-        private void CbVectorLimiterList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
-            if (item != null)
-                LimiterListHash = item.Value;
-        }
-    }
+		private void CbVectorLimiterList_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
+			if (item != null)
+				LimiterListHash = item.Value;
+		}
+	}
 }

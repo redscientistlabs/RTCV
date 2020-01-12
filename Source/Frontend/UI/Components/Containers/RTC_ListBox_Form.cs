@@ -13,42 +13,42 @@ using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
-	public partial class RTC_ListBox_Form : ComponentForm, IBlockable
-	{
-		ComponentForm[] childForms;
+    public partial class RTC_ListBox_Form : ComponentForm, IBlockable
+    {
+        ComponentForm[] childForms;
 
-		public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-		public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-		public RTC_ListBox_Form(ComponentForm[] _childForms)
-		{
-			InitializeComponent();
+        public RTC_ListBox_Form(ComponentForm[] _childForms)
+        {
+            InitializeComponent();
 
-			this.undockedSizable = false;
+            this.undockedSizable = false;
 
-			childForms = _childForms;
+            childForms = _childForms;
 
-			//Populate the filter ComboBox
-			lbComponentForms.DisplayMember = "Name";
-			lbComponentForms.ValueMember = "Value";
+            //Populate the filter ComboBox
+            lbComponentForms.DisplayMember = "Name";
+            lbComponentForms.ValueMember = "Value";
 
-			foreach (var item in childForms)
-				lbComponentForms.Items.Add(new ComboBoxItem<Form>(item.Text, item));
-		}
+            foreach (var item in childForms)
+                lbComponentForms.Items.Add(new ComboBoxItem<Form>(item.Text, item));
+        }
 
-		private void lbComponentForms_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			((lbComponentForms.SelectedItem as ComboBoxItem<Form>)?.Value as ComponentForm)?.AnchorToPanel(pnTargetComponentForm);
-		}
+        private void lbComponentForms_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ((lbComponentForms.SelectedItem as ComboBoxItem<Form>)?.Value as ComponentForm)?.AnchorToPanel(pnTargetComponentForm);
+        }
 
-		private void RTC_ListBox_Form_Load(object sender, EventArgs e)
-		{
-			lbComponentForms.SelectedIndex = 0;
-		}
+        private void RTC_ListBox_Form_Load(object sender, EventArgs e)
+        {
+            lbComponentForms.SelectedIndex = 0;
+        }
 
-		public void SetFocusedForm(ComponentForm form)
-		{
-			lbComponentForms.SelectedItem = lbComponentForms.Items.Cast<ComboBoxItem<Form>>().FirstOrDefault(x => x.Value == form);
-		}
-	}
+        public void SetFocusedForm(ComponentForm form)
+        {
+            lbComponentForms.SelectedItem = lbComponentForms.Items.Cast<ComboBoxItem<Form>>().FirstOrDefault(x => x.Value == form);
+        }
+    }
 }

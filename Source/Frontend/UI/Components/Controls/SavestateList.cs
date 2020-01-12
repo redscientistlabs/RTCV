@@ -98,13 +98,13 @@ namespace RTCV.UI.Components.Controls
                 }
             }
 
-			RefreshForwardBackwardButtons();
-		}
+            RefreshForwardBackwardButtons();
+        }
 
         void _DataSource_ListChanged(object sender, ListChangedEventArgs e)
         {
-			//Just refresh as it's cleaner and we're not dealing with so many that it causes perf problems
-			_DataSource_PositionChanged(null, null);
+            //Just refresh as it's cleaner and we're not dealing with so many that it causes perf problems
+            _DataSource_PositionChanged(null, null);
         }
 
         public SavestateList()
@@ -114,8 +114,8 @@ namespace RTCV.UI.Components.Controls
 
         private void InitializeSavestateHolder()
         {
-			//Nuke any old holder if it exists
-			selectedHolder?.SetSelected(false);
+            //Nuke any old holder if it exists
+            selectedHolder?.SetSelected(false);
             selectedHolder = null;
 
             int ssHeight = 22;
@@ -180,11 +180,11 @@ namespace RTCV.UI.Components.Controls
             }
         }
 
-		private void RefreshForwardBackwardButtons()
-		{
-			btnForward.Enabled = _DataSource.Count >= _DataSource.Position + NumPerPage;
-			btnBack.Enabled = _DataSource.Position > 0;
-		}
+        private void RefreshForwardBackwardButtons()
+        {
+            btnForward.Enabled = _DataSource.Count >= _DataSource.Position + NumPerPage;
+            btnBack.Enabled = _DataSource.Position > 0;
+        }
 
         private void BtnForward_Click(object sender, EventArgs e)
         {
@@ -286,7 +286,7 @@ namespace RTCV.UI.Components.Controls
 
                 StashKey sk = StockpileManager_UISide.SaveState();
 
-                if(sk == null)
+                if (sk == null)
                 {
                     btnSaveLoad.Text = "LOAD";
                     btnSaveLoad.ForeColor = Color.FromArgb(192, 255, 192);

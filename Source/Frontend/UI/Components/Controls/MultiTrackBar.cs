@@ -16,24 +16,24 @@ namespace RTCV.UI.Components.Controls
         public virtual void OnValueChanged(ValueUpdateEventArgs e) => ValueChanged?.Invoke(this, e);
 
 
-		public event EventHandler<EventArgs> CheckChanged;
-		public virtual void OnCheckChanged(object sender, EventArgs e) => CheckChanged?.Invoke(sender, e);
+        public event EventHandler<EventArgs> CheckChanged;
+        public virtual void OnCheckChanged(object sender, EventArgs e) => CheckChanged?.Invoke(sender, e);
 
-		private bool GeneralUpdateFlag = false; //makes other events ignore firing
+        private bool GeneralUpdateFlag = false; //makes other events ignore firing
 
-		private long _Value;
+        private long _Value;
         [Description("Net value of the control (displayed in numeric box)"), Category("Data")]
-		public long Value
-		{
-			get { return _Value; }
-			set
+        public long Value
+        {
+            get { return _Value; }
+            set
             {
                 _Value = value;
                 var tbValue = nmValueToTbValueQuadScale(value);
                 if (!GeneralUpdateFlag)
                     UpdateAllControls(value, tbValue, null);
             }
-		}
+        }
 
         [Description("Whether or not the NumericUpDown should use hex"), Category("Data")]
         public bool Hexadecimal
@@ -43,28 +43,28 @@ namespace RTCV.UI.Components.Controls
         }
 
         private bool _DisplayCheckbox = false;
-		[Description("Display a checkbox before the label"), Category("Data")]
-		public bool DisplayCheckbox
-		{
-			get
-			{
-				return _DisplayCheckbox;
-			}
-			set
-			{
-				_DisplayCheckbox = value;
-				if (value)
-				{
-					lbControlName.Visible = false;
-					cbControlName.Visible = true;
-				}
-				else
-				{
-					lbControlName.Visible = true;
-					cbControlName.Visible = false;
-				}
-			}
-		}
+        [Description("Display a checkbox before the label"), Category("Data")]
+        public bool DisplayCheckbox
+        {
+            get
+            {
+                return _DisplayCheckbox;
+            }
+            set
+            {
+                _DisplayCheckbox = value;
+                if (value)
+                {
+                    lbControlName.Visible = false;
+                    cbControlName.Visible = true;
+                }
+                else
+                {
+                    lbControlName.Visible = true;
+                    cbControlName.Visible = false;
+                }
+            }
+        }
 
 
         [Description("Value of the checkbox"), Category("Data")]
@@ -76,24 +76,24 @@ namespace RTCV.UI.Components.Controls
 
         public bool FirstLoadDone = false;
 
-		private long _Minimum = 0;
-		[Description("Minimum value of the control"), Category("Data")]
-		public long Minimum
-		{
-			get
-			{
-				return _Minimum;
-			}
-			set
-			{
-				_Minimum = value;
-				nmControlValue.Minimum = value;
-				tbControlValue.Minimum = Convert.ToInt32(value);
-				if (FirstLoadDone)
-					tbControlValue_ValueChanged(null, null);
-			}
-		}
-		private long _Maximum = 65535;
+        private long _Minimum = 0;
+        [Description("Minimum value of the control"), Category("Data")]
+        public long Minimum
+        {
+            get
+            {
+                return _Minimum;
+            }
+            set
+            {
+                _Minimum = value;
+                nmControlValue.Minimum = value;
+                tbControlValue.Minimum = Convert.ToInt32(value);
+                if (FirstLoadDone)
+                    tbControlValue_ValueChanged(null, null);
+            }
+        }
+        private long _Maximum = 65535;
         [Description("Maximum value of the control"), Category("Data")]
         public long Maximum
         {
@@ -109,18 +109,18 @@ namespace RTCV.UI.Components.Controls
             }
         }
 
-		private string name = "Name";
+        private string name = "Name";
         [Description("Displayed label of the control"), Category("Data")]
-		public string Label
-		{
-			get { return name; }
-			set
-			{
-				name = value;
-				lbControlName.Text = value;
-				cbControlName.Text = value;
-			}
-		}
+        public string Label
+        {
+            get { return name; }
+            set
+            {
+                name = value;
+                lbControlName.Text = value;
+                cbControlName.Text = value;
+            }
+        }
 
         [Description("Let the NumericBox override the maximum value"), Category("Data")]
         public bool UncapNumericBox { get; set; } = false;
@@ -136,10 +136,10 @@ namespace RTCV.UI.Components.Controls
         public MultiTrackBar()
         {
             InitializeComponent();
-			cbControlName.Location = lbControlName.Location;
-			tbControlValue.MouseWheel += TbControlValue_MouseWheel;
+            cbControlName.Location = lbControlName.Location;
+            tbControlValue.MouseWheel += TbControlValue_MouseWheel;
 
-			updater = new Timer();
+            updater = new Timer();
             updater.Interval = updateThreshold;
             updater.Tick += Updater_Tick;
 
@@ -180,7 +180,7 @@ namespace RTCV.UI.Components.Controls
             decimal X = Maximum;
 
             if (A != 0) // fixes divisions by 0
-            X = DecSqrt(Y / A);
+                X = DecSqrt(Y / A);
 
             decimal Floored_X = Math.Floor(X);
             return Convert.ToInt32(Floored_X);
@@ -192,26 +192,26 @@ namespace RTCV.UI.Components.Controls
             return (decimal)Math.Sqrt((double)x);
         }
 
-		private void TbControlValue_MouseWheel(object sender, MouseEventArgs e)
-		{
-			((HandledMouseEventArgs)e).Handled = true;//disable default mouse wheel
-			if (e.Delta > 0)
-			{
-				if (tbControlValue.Value  + e.Delta <= tbControlValue.Maximum)
-				{
-					tbControlValue.Value += e.Delta;
-				}
-			}
-			else
-			{
-				if (tbControlValue.Value - e.Delta >= tbControlValue.Minimum)
-				{
-					tbControlValue.Value += e.Delta;
-				}
-			}
-		}
+        private void TbControlValue_MouseWheel(object sender, MouseEventArgs e)
+        {
+            ((HandledMouseEventArgs)e).Handled = true;//disable default mouse wheel
+            if (e.Delta > 0)
+            {
+                if (tbControlValue.Value + e.Delta <= tbControlValue.Maximum)
+                {
+                    tbControlValue.Value += e.Delta;
+                }
+            }
+            else
+            {
+                if (tbControlValue.Value - e.Delta >= tbControlValue.Minimum)
+                {
+                    tbControlValue.Value += e.Delta;
+                }
+            }
+        }
 
-		private void Updater_Tick(object sender, EventArgs e)
+        private void Updater_Tick(object sender, EventArgs e)
         {
             updater.Stop();
             OnValueChanged(new ValueUpdateEventArgs(Value));
@@ -227,7 +227,7 @@ namespace RTCV.UI.Components.Controls
         {
             FirstLoadDone = true;
 
-            if(DisplayCheckbox && !cbControlName.Checked)
+            if (DisplayCheckbox && !cbControlName.Checked)
             {
                 nmControlValue.Enabled = false;
                 tbControlValue.Enabled = false;
@@ -244,23 +244,23 @@ namespace RTCV.UI.Components.Controls
                 {
                     if (tbValue > 65536)
                         tbControlValue.Value = Convert.ToInt32(65536);
-					else if (tbValue < tbControlValue.Minimum)
-					{
-						tbControlValue.Value = Convert.ToInt32(Minimum);
-					}
+                    else if (tbValue < tbControlValue.Minimum)
+                    {
+                        tbControlValue.Value = Convert.ToInt32(Minimum);
+                    }
                     else
                         tbControlValue.Value = Convert.ToInt32(tbValue);
                 }
 
-				if (setter != nmControlValue)
-				{
-					if (nmValue > Maximum && !UncapNumericBox)
-						nmValue = Convert.ToInt32(Maximum);
-					else if (nmValue < Minimum)
-						nmValue = Convert.ToInt32(Minimum);
+                if (setter != nmControlValue)
+                {
+                    if (nmValue > Maximum && !UncapNumericBox)
+                        nmValue = Convert.ToInt32(Maximum);
+                    else if (nmValue < Minimum)
+                        nmValue = Convert.ToInt32(Minimum);
 
-					nmControlValue.Value = nmValue;
-				}
+                    nmControlValue.Value = nmValue;
+                }
 
                 foreach (var slave in slaveComps)
                     slave.UpdateAllControls(nmValue, tbValue, this);
@@ -277,12 +277,12 @@ namespace RTCV.UI.Components.Controls
         {
             UpdateAllControls(nmValue, tbValue, setter);
 
-			if (nmValue > Maximum && !UncapNumericBox)
-				nmValue = Convert.ToInt32(Maximum);
-			if (nmValue < Minimum)
-				nmValue = Convert.ToInt32(Minimum);
+            if (nmValue > Maximum && !UncapNumericBox)
+                nmValue = Convert.ToInt32(Maximum);
+            if (nmValue < Minimum)
+                nmValue = Convert.ToInt32(Minimum);
 
-			Value = nmValue;
+            Value = nmValue;
             updater.Stop();
             updater.Start();
         }
@@ -294,8 +294,8 @@ namespace RTCV.UI.Components.Controls
 
             int tbValue = tbControlValue.Value;
             long nmValue = tbValueToNmValueQuadScale(tbValue);
-			if(nmValue < _Minimum)
-				nmValue = _Minimum;
+            if (nmValue < _Minimum)
+                nmValue = _Minimum;
 
             PropagateValue(nmValue, tbValue, tbControlValue);
         }
@@ -305,20 +305,20 @@ namespace RTCV.UI.Components.Controls
             if (GeneralUpdateFlag)
                 return;
 
-			if (nmControlValue.Value > Int32.MaxValue)
-			{
-				GeneralUpdateFlag = true;
-				nmControlValue.Value = Int32.MaxValue;
-				GeneralUpdateFlag = false;
-			}
+            if (nmControlValue.Value > Int32.MaxValue)
+            {
+                GeneralUpdateFlag = true;
+                nmControlValue.Value = Int32.MaxValue;
+                GeneralUpdateFlag = false;
+            }
 
             long nmValue = Convert.ToInt64(nmControlValue.Value);
             int tbValue = nmValueToTbValueQuadScale(nmControlValue.Value);
 
             PropagateValue(nmValue, tbValue, nmControlValue);
         }
-		private void cbControlName_CheckedChanged(object sender, EventArgs e)
-		{
+        private void cbControlName_CheckedChanged(object sender, EventArgs e)
+        {
             if (DisplayCheckbox)
             {
                 nmControlValue.Enabled = cbControlName.Checked;
@@ -327,28 +327,28 @@ namespace RTCV.UI.Components.Controls
 
             OnCheckChanged(sender, e);
 
-		}
-
-		private void nmControlValue_KeyUp(object sender, KeyEventArgs e)
-		{
-			if (GeneralUpdateFlag)
-				return;
-
-			long nmValue = Convert.ToInt64(nmControlValue.Value);
-			int tbValue = nmValueToTbValueQuadScale(nmControlValue.Value);
-
-			PropagateValue(nmValue, tbValue, nmControlValue);
-		}
-		
-	public class ValueUpdateEventArgs : EventArgs
-    {
-        public long value;
-
-        public ValueUpdateEventArgs(long _value)
-        {
-            value = _value;
         }
-    }
+
+        private void nmControlValue_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (GeneralUpdateFlag)
+                return;
+
+            long nmValue = Convert.ToInt64(nmControlValue.Value);
+            int tbValue = nmValueToTbValueQuadScale(nmControlValue.Value);
+
+            PropagateValue(nmValue, tbValue, nmControlValue);
+        }
+
+        public class ValueUpdateEventArgs : EventArgs
+        {
+            public long value;
+
+            public ValueUpdateEventArgs(long _value)
+            {
+                value = _value;
+            }
+        }
 
         private void tbControlValue_Scroll(object sender, EventArgs e)
         {
@@ -371,7 +371,7 @@ namespace RTCV.UI.Components.Controls
             base.OnGotFocus(e);
             SendMessage(this.Handle, 0x0128, MakeParam(1, 0x1), 0);
         }
-		
+
     }
 
 }

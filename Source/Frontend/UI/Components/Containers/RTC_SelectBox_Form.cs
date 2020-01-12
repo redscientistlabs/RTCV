@@ -13,38 +13,38 @@ using System.Collections;
 
 namespace RTCV.UI
 {
-	public partial class RTC_SelectBox_Form : ComponentForm, IBlockable
-	{
-		public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-		public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+    public partial class RTC_SelectBox_Form : ComponentForm, IBlockable
+    {
+        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-		ComponentForm[] childForms;
+        ComponentForm[] childForms;
 
-		public RTC_SelectBox_Form(ComponentForm[] _childForms)
-		{
-			InitializeComponent();
+        public RTC_SelectBox_Form(ComponentForm[] _childForms)
+        {
+            InitializeComponent();
 
             UICore.SetRTCColor(UICore.GeneralColor, this);
 
-			childForms = _childForms;
+            childForms = _childForms;
 
-			cbSelectBox.DisplayMember = "text";
-			cbSelectBox.ValueMember = "value";
+            cbSelectBox.DisplayMember = "text";
+            cbSelectBox.ValueMember = "value";
 
-			foreach (var item in childForms)
-				cbSelectBox.Items.Add(new { text = item.Text, value = item });
+            foreach (var item in childForms)
+                cbSelectBox.Items.Add(new { text = item.Text, value = item });
 
-		}
+        }
 
-		private void cbSelectBox_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			((cbSelectBox.SelectedItem as dynamic)?.value as ComponentForm)?.AnchorToPanel(pnComponentForm);
-		}
+        private void cbSelectBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ((cbSelectBox.SelectedItem as dynamic)?.value as ComponentForm)?.AnchorToPanel(pnComponentForm);
+        }
 
-		private void RTC_SelectBox_Form_Load(object sender, EventArgs e)
-		{
-			cbSelectBox.SelectedIndex = 0;
-		}
+        private void RTC_SelectBox_Form_Load(object sender, EventArgs e)
+        {
+            cbSelectBox.SelectedIndex = 0;
+        }
 
         private void RTC_SelectBox_Form_Resize(object sender, EventArgs e)
         {

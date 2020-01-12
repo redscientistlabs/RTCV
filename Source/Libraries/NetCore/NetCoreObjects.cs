@@ -28,40 +28,40 @@ namespace RTCV.NetCore
         LISTENING
     }
 
-	public class NetCoreReceiver
-	{
-		public bool Attached = false;
-		public event EventHandler<NetCoreEventArgs> MessageReceived;
-		public virtual void OnMessageReceived(NetCoreEventArgs e)
+    public class NetCoreReceiver
+    {
+        public bool Attached = false;
+        public event EventHandler<NetCoreEventArgs> MessageReceived;
+        public virtual void OnMessageReceived(NetCoreEventArgs e)
         {
             if (MessageReceived == null)
-                throw new Exception ("No registered handler for MessageReceived!");
+                throw new Exception("No registered handler for MessageReceived!");
             MessageReceived.Invoke(this, e);
         }
     }
 
-	[Serializable()]
-	[Ceras.MemberConfig(TargetMember.All)]
-	public abstract class NetCoreMessage
+    [Serializable()]
+    [Ceras.MemberConfig(TargetMember.All)]
+    public abstract class NetCoreMessage
     {
         public string Type;
     }
 
     [Serializable()]
-	[Ceras.MemberConfig(TargetMember.All)]
-	public class NetCoreSimpleMessage : NetCoreMessage
-	{
-		public NetCoreSimpleMessage()
-		{
-		}
-		public NetCoreSimpleMessage(string _Type)
+    [Ceras.MemberConfig(TargetMember.All)]
+    public class NetCoreSimpleMessage : NetCoreMessage
+    {
+        public NetCoreSimpleMessage()
+        {
+        }
+        public NetCoreSimpleMessage(string _Type)
         {
             Type = _Type.Trim().ToUpper();
         }
     }
 
     [Serializable()]
-	[Ceras.MemberConfig(TargetMember.All)]
+    [Ceras.MemberConfig(TargetMember.All)]
     public class NetCoreAdvancedMessage : NetCoreMessage
     {
         public string ReturnedFrom;
@@ -69,11 +69,11 @@ namespace RTCV.NetCore
         public Guid? requestGuid = null;
         public object objectValue = null;
 
-		public NetCoreAdvancedMessage()
-		{
+        public NetCoreAdvancedMessage()
+        {
 
-		}
-		public NetCoreAdvancedMessage(string _Type)
+        }
+        public NetCoreAdvancedMessage(string _Type)
         {
             Type = _Type.Trim().ToUpper();
         }
@@ -94,10 +94,10 @@ namespace RTCV.NetCore
         public NetworkSide Side = NetworkSide.NONE;
         public bool AutoReconnect = true;
         public int ClientReconnectDelay = 1500;
-		public int DefaultBoopMonitoringCounter = System.Diagnostics.Debugger.IsAttached ? 1500 : 20;
+        public int DefaultBoopMonitoringCounter = System.Diagnostics.Debugger.IsAttached ? 1500 : 20;
 
-		public bool Attached = true;
-		public bool Loopback = true;
+        public bool Attached = true;
+        public bool Loopback = true;
         public string IP = "127.0.0.1";
         public int Port = 42069;
 
@@ -109,7 +109,8 @@ namespace RTCV.NetCore
         public ISynchronizeInvoke syncObject
         {
             get { return _syncObject; }
-            set {
+            set
+            {
                 _syncObject = value;
             }
         }
@@ -462,7 +463,7 @@ namespace RTCV.NetCore
             {
                 logger.Trace(ex, "Exception!");
             }
-            
+
             return s;
         }
         public void UnlockLockStatusEventLockout()
@@ -524,7 +525,7 @@ namespace RTCV.NetCore
             if (syncObject != null)
                 if (syncObject.InvokeRequired)
                 {
-                    syncObject.Invoke(new MethodInvoker(() => { OnConsoleWritten(e); }),null);
+                    syncObject.Invoke(new MethodInvoker(() => { OnConsoleWritten(e); }), null);
                     return;
                 }
 

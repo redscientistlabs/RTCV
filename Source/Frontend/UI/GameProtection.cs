@@ -10,12 +10,12 @@ using RTCV.NetCore;
 
 namespace RTCV.UI
 {
-	//Todo, rebuild this?
-	public static class GameProtection
-	{
-		static Timer t;
-		public static int BackupInterval = 5;
-		public static bool isRunning = false;
+    //Todo, rebuild this?
+    public static class GameProtection
+    {
+        static Timer t;
+        public static int BackupInterval = 5;
+        public static bool isRunning = false;
         public static bool WasAutoCorruptRunning = false;
         private const int maxStates = 20;
 
@@ -23,26 +23,26 @@ namespace RTCV.UI
         private static readonly LinkedList<StashKey> AllBackupStates = new LinkedList<StashKey>();
         public static bool HasBackedUpStates => AllBackupStates?.Count > 0;
         public static void Start(bool reset = true)
-		{
+        {
             if (reset)
             {
                 ClearAllBackups();
             }
 
             if (t == null)
-			{
-				t = new Timer();
-				t.Tick += new EventHandler(Tick);
-			}
+            {
+                t = new Timer();
+                t.Tick += new EventHandler(Tick);
+            }
 
-			t.Interval = Convert.ToInt32(BackupInterval) * 1000;
-			t.Start();
+            t.Interval = Convert.ToInt32(BackupInterval) * 1000;
+            t.Start();
 
-			isRunning = true;
+            isRunning = true;
 
-		}
+        }
 
-		public static void Stop(bool reset = true)
+        public static void Stop(bool reset = true)
         {
             if (reset)
             {
@@ -52,14 +52,14 @@ namespace RTCV.UI
 
             t?.Stop();
 
-			isRunning = false;
-		}
+            isRunning = false;
+        }
 
-		public static void Reset(bool reinit)
-		{
-			Stop(reinit);
-			Start(reinit);
-		}
+        public static void Reset(bool reinit)
+        {
+            Stop(reinit);
+            Start(reinit);
+        }
 
         public static void AddBackupState(StashKey sk)
         {
@@ -88,9 +88,9 @@ namespace RTCV.UI
                     AllBackupStates.RemoveLast();
                 }
             }
-            sk?.Run(); 
+            sk?.Run();
             //Don't delete it if it's also our "current" state
-            if(sk != CorruptCore.StockpileManager_UISide.BackupedState)
+            if (sk != CorruptCore.StockpileManager_UISide.BackupedState)
                 Task.Run(() => RemoveBackup(sk)); //Don't wait on the hdd operations
         }
 
@@ -131,8 +131,8 @@ namespace RTCV.UI
         }
 
         private static void Tick(object sender, EventArgs e)
-		{
-			LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_BACKUPKEY_REQUEST);
-		}
-	}
+        {
+            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_BACKUPKEY_REQUEST);
+        }
+    }
 }

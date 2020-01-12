@@ -85,7 +85,7 @@ namespace RTCV.Common.Objects
                         sb.AppendLine($"Exception: {message.Exception}");
                         ex = ex.InnerException;
                     }
-                        
+
                 }
             }
             return sb.ToString();

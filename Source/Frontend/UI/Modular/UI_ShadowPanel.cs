@@ -15,21 +15,21 @@ namespace RTCV.UI
     {
         public UI_CanvasForm parentForm;
         public Form subForm = null;
-		public Form blockerForm = null;
+        public Form blockerForm = null;
 
         public UI_ShadowPanel(UI_CanvasForm _parentForm, ISubForm reqForm)
         {
             InitializeComponent();
-			blockerForm = new Form
-			{
-				ControlBox = false,
-				MinimizeBox = false,
-				FormBorderStyle = System.Windows.Forms.FormBorderStyle.None,
-				Text = "",
-				Size = Size,
-				BackColor = Color.DarkSlateBlue,
-				Opacity = 0.2f
-			};
+            blockerForm = new Form
+            {
+                ControlBox = false,
+                MinimizeBox = false,
+                FormBorderStyle = System.Windows.Forms.FormBorderStyle.None,
+                Text = "",
+                Size = Size,
+                BackColor = Color.DarkSlateBlue,
+                Opacity = 0.2f
+            };
 
             UICore.SetRTCColor(UICore.GeneralColor, this);
 
@@ -62,7 +62,7 @@ namespace RTCV.UI
             if (subForm == null)
                 return;
 
-            if(!pnContainer.Contains(subForm))
+            if (!pnContainer.Contains(subForm))
             {
                 subForm.TopLevel = false;
                 pnContainer.Controls.Add(subForm);
@@ -75,9 +75,9 @@ namespace RTCV.UI
                 btnLeft.Visible = sf.SubForm_HasLeftButton;
                 btnRight.Visible = sf.SubForm_HasRightButton;
 
-                if(!sf.SubForm_HasLeftButton && !sf.SubForm_HasRightButton)
+                if (!sf.SubForm_HasLeftButton && !sf.SubForm_HasRightButton)
                 {
-                    int newYSize = pnFloater.Size.Height - (pnContainer.Location.Y*2);
+                    int newYSize = pnFloater.Size.Height - (pnContainer.Location.Y * 2);
                     pnContainer.Size = new Size(pnContainer.Size.Width, newYSize);
                 }
 
@@ -98,7 +98,7 @@ namespace RTCV.UI
 
             //Then, repositions flating box in the center of the window.
 
-            if(parentForm.Width == 0 || parentForm.Height == 0)
+            if (parentForm.Width == 0 || parentForm.Height == 0)
                 return;
 
             Bitmap bmp = parentForm.getFormScreenShot();

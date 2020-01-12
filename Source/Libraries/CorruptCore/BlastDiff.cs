@@ -13,7 +13,7 @@ namespace RTCV.CorruptCore
 
     public static class BlastDiff
     {
-        
+
         public static BlastLayer GetBlastLayer(string filename)
         {
             string thisSystem = (AllSpec.VanguardSpec[VSPEC.NAME] as string);
@@ -25,7 +25,7 @@ namespace RTCV.CorruptCore
 
             string[] selectedDomains = (string[])RTCV.NetCore.AllSpec.UISpec["SELECTEDDOMAINS"];
 
-            if(selectedDomains.Length == 0)
+            if (selectedDomains.Length == 0)
             {
                 MessageBox.Show("Error: No domain is selected");
                 return null;
@@ -92,7 +92,7 @@ namespace RTCV.CorruptCore
 
             long bankStartAddressDrift = 0;
 
-            for(int i = 0; i<bank.Length;i++)
+            for (int i = 0; i < bank.Length; i++)
             {
                 if (address - bankStartAddressDrift < bank[i].Size)
                     return bank[i].PeekBytes(address - bankStartAddressDrift, precision);
@@ -120,10 +120,10 @@ namespace RTCV.CorruptCore
 
             for (long i = 0; i < OriginalMaxAddress; i += precision)
             {
-                byte[] originalBytes = getBytefromIMemoryDomainArray(Original,i, precision);
-                byte[] corruptBytes = Corrupt.PeekBytes(i,precision);
+                byte[] originalBytes = getBytefromIMemoryDomainArray(Original, i, precision);
+                byte[] corruptBytes = Corrupt.PeekBytes(i, precision);
 
-                
+
 
                 if (!originalBytes.SequenceEqual(corruptBytes) && i >= skipBytes)
                 {
@@ -133,7 +133,7 @@ namespace RTCV.CorruptCore
                     BlastUnit bu;
                     if (i - skipBytes >= OriginalFirstDomainMaxAddress)
                     {
-                        bu = RTC_NightmareEngine.GenerateUnit(getNamefromIMemoryDomainArray(Original,i - skipBytes), (i - skipBytes) - OriginalFirstDomainMaxAddress, precision,0, corruptBytes);
+                        bu = RTC_NightmareEngine.GenerateUnit(getNamefromIMemoryDomainArray(Original, i - skipBytes), (i - skipBytes) - OriginalFirstDomainMaxAddress, precision, 0, corruptBytes);
                     }
                     else
                     {

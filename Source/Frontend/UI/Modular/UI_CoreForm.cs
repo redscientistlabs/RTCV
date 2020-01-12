@@ -138,7 +138,7 @@ This message only appears once.";
 
                 S.GET<RTC_Intro_Form>().DisplayRtcvDisclaimer(disclaimer.Replace("[ver]", CorruptCore.RtcCore.RtcVersion));
                 //MessageBox.Show(disclaimer.Replace("[ver]", CorruptCore.RtcCore.RtcVersion), "RTC", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                
+
                 NetCore.Params.SetParam("DISCLAIMER_READ");
 
                 if (S.GET<RTC_Intro_Form>().selection == IntroAction.SIMPLEMODE)
@@ -172,9 +172,9 @@ This message only appears once.";
         private void UI_CoreForm_ResizeBegin(object sender, EventArgs e)
         {
             //Sends event to SubForm 
-            if(cfForm.spForm != null)
+            if (cfForm.spForm != null)
                 cfForm.spForm.Parent_ResizeBegin();
-            
+
         }
 
 
@@ -221,7 +221,7 @@ This message only appears once.";
         private void BtnOpenCustomLayout_Click(object sender, EventArgs e)
         {
 
-                CanvasGrid.LoadCustomLayout();
+            CanvasGrid.LoadCustomLayout();
 
         }
 
@@ -238,29 +238,29 @@ This message only appears once.";
                 };
                 pnSideBar.Controls.Add(pnLockSidebar);
                 pnLockSidebar.BringToFront();
-   
-            }    
+
+            }
         }
 
         public void LockSideBar()
         {
             PrepareLockSideBar();
 
-			Bitmap bmp = pnSideBar.getFormScreenShot();
-			bmp.Tint(Color.FromArgb(0xF0, UICore.Dark4Color));
-			pnLockSidebar.BackgroundImage = bmp;
-			pnLockSidebar.Visible = true;
+            Bitmap bmp = pnSideBar.getFormScreenShot();
+            bmp.Tint(Color.FromArgb(0xF0, UICore.Dark4Color));
+            pnLockSidebar.BackgroundImage = bmp;
+            pnLockSidebar.Visible = true;
         }
 
         public void UnlockSideBar()
         {
-            if(pnLockSidebar != null)
+            if (pnLockSidebar != null)
                 pnLockSidebar.Visible = false;
         }
 
         public void btnEngineConfig_Click(object sender, EventArgs e)
         {
-            
+
             if (NetCore.Params.IsParamSet("SIMPLE_MODE"))
             {
                 UI_DefaultGrids.simpleMode.LoadToMain();
@@ -316,9 +316,10 @@ This message only appears once.";
             Point locate = e.GetMouseLocation(sender);
 
             ContextMenuStrip easyButtonMenu = new ContextMenuStrip();
-            (easyButtonMenu.Items.Add("Switch to Simple Mode", null, new EventHandler((ob, ev) => { 
+            (easyButtonMenu.Items.Add("Switch to Simple Mode", null, new EventHandler((ob, ev) =>
+            {
 
-                if((AllSpec.VanguardSpec[VSPEC.NAME] as string)?.ToUpper().Contains("SPEC") ?? false)
+                if ((AllSpec.VanguardSpec[VSPEC.NAME] as string)?.ToUpper().Contains("SPEC") ?? false)
                 {
                     MessageBox.Show("Simple Mode is currently only supported on Vanguard implementations.");
                     return;
@@ -443,7 +444,7 @@ This message only appears once.";
                 btnGpJumpNow.Visible = false;
 
                 //Do this to prevent any potential race
-                var sk = StockpileManager_UISide.BackupedState;;
+                var sk = StockpileManager_UISide.BackupedState; ;
 
                 if (sk != null)
                 {
@@ -610,7 +611,7 @@ This message only appears once.";
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⣽⣿⣿⣿⣿⣦⣰⣿⣿⣿⣿⣿⡿⠻⣿⣿⣿⣿⣶⣿⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿";
 
-            var ex = new CustomException("SECRET CRASH DONT TELL ANYONE",image);
+            var ex = new CustomException("SECRET CRASH DONT TELL ANYONE", image);
 
             Form error = new RTCV.NetCore.CloudDebug(ex, true);
             var result = error.ShowDialog();

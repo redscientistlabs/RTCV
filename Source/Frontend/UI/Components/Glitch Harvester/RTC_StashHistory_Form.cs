@@ -14,16 +14,16 @@ using RTCV.NetCore.StaticTools;
 
 namespace RTCV.UI
 {
-	public partial class RTC_StashHistory_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class RTC_StashHistory_Form : ComponentForm, IAutoColorize, IBlockable
     {
-		public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-		public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         public bool DontLoadSelectedStash = false;
 
         public RTC_StashHistory_Form()
-		{
-			InitializeComponent();
+        {
+            InitializeComponent();
 
             popoutAllowed = true;
             this.undockedSizable = true;
@@ -52,12 +52,12 @@ namespace RTCV.UI
 
             string Name = "";
             string value = "";
-            
-            StashKey sk = (StashKey)lbStashHistory.SelectedItem;;
+
+            StashKey sk = (StashKey)lbStashHistory.SelectedItem; ;
             StockpileManager_UISide.CurrentStashkey = sk;
 
             //If we don't support mixed stockpiles
-            if(!((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_MIXED_STOCKPILE] ?? false))
+            if (!((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_MIXED_STOCKPILE] ?? false))
             {
                 if (S.GET<RTC_StockpileManager_Form>().dgvStockpile.Rows.Count > 0)
                 {

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace RTCV.NetCore
 {
-	public static class NetcoreCommands
-	{
+    public static class NetcoreCommands
+    {
         public const string CORRUPTCORE = nameof(CORRUPTCORE);
         public const string VANGUARD = nameof(VANGUARD);
         public const string DEFAULT = nameof(DEFAULT);
@@ -50,7 +50,7 @@ namespace RTCV.NetCore
         public const string REMOTE_DISABLEREALTIMESUPPORT = nameof(REMOTE_DISABLEREALTIMESUPPORT);
         public const string REMOTE_DISABLEKILLSWITCHSUPPORT = nameof(REMOTE_DISABLEKILLSWITCHSUPPORT);
         public const string REMOTE_DISABLEGAMEPROTECTIONSUPPORT = nameof(REMOTE_DISABLEGAMEPROTECTIONSUPPORT);
-		public const string REMOTE_OPENHEXEDITOR = nameof(REMOTE_OPENHEXEDITOR);
+        public const string REMOTE_OPENHEXEDITOR = nameof(REMOTE_OPENHEXEDITOR);
 
         public const string REMOTE_BACKUPKEY_REQUEST = nameof(REMOTE_BACKUPKEY_REQUEST);
         public const string REMOTE_BACKUPKEY_STASH = nameof(REMOTE_BACKUPKEY_STASH);

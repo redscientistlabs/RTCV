@@ -102,7 +102,7 @@ namespace RTCV.UI
                 frm.Controls.Clear();
                 frm.Close();
             }
-            
+
             extraForms.Clear();
             loadedTileForms.Clear();
         }
@@ -187,23 +187,23 @@ namespace RTCV.UI
                 extraForms.Add(extraForm);
             }
 
-                extraForm.Controls.Clear();
-                extraForm.Text = WindowHeader;
+            extraForm.Controls.Clear();
+            extraForm.Text = WindowHeader;
 
-				UICore.registerFormEvents(extraForm);
-				UICore.registerHotkeyBlacklistControls(extraForm);
-                loadTileForm(extraForm, canvasGrid);
+            UICore.registerFormEvents(extraForm);
+            UICore.registerHotkeyBlacklistControls(extraForm);
+            loadTileForm(extraForm, canvasGrid);
 
-                if (canvasGrid.isResizable)
-                {
-                    extraForm.MaximizeBox = true;
-                    extraForm.FormBorderStyle = FormBorderStyle.Sizable;
-                }
-                else
-                {
-                    extraForm.MaximizeBox = false;
-                    extraForm.FormBorderStyle = FormBorderStyle.FixedSingle;
-                }
+            if (canvasGrid.isResizable)
+            {
+                extraForm.MaximizeBox = true;
+                extraForm.FormBorderStyle = FormBorderStyle.Sizable;
+            }
+            else
+            {
+                extraForm.MaximizeBox = false;
+                extraForm.FormBorderStyle = FormBorderStyle.FixedSingle;
+            }
 
 
             if (!silent)
@@ -264,7 +264,7 @@ namespace RTCV.UI
             //See DummySubForm for example
 
             if (lockSidebar)
-				S.GET<UI_CoreForm>().LockSideBar();
+                S.GET<UI_CoreForm>().LockSideBar();
 
             if (spForm != null)
                 CloseSubForm();
@@ -284,7 +284,7 @@ namespace RTCV.UI
             //Closes subform and exists SubForm mode.
             //is automatically called when Cancel/Ok is pressed in SubForm.
 
-			S.GET<UI_CoreForm>().UnlockSideBar();
+            S.GET<UI_CoreForm>().UnlockSideBar();
 
             if (spForm != null)
             {
@@ -297,7 +297,7 @@ namespace RTCV.UI
 
         private void UI_CanvasForm_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void UI_CanvasForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -306,7 +306,7 @@ namespace RTCV.UI
             {
                 //S.GET<RTC_Core_Form>().btnGlitchHarvester.Text = S.GET<RTC_Core_Form>().btnGlitchHarvester.Text.Replace("○ ", "");
 
-                if(this.Text == "Glitch Harvester")
+                if (this.Text == "Glitch Harvester")
                     S.GET<UI_CoreForm>().pnGlitchHarvesterOpen.Visible = false;
 
                 e.Cancel = true;

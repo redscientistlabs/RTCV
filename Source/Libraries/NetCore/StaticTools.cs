@@ -11,20 +11,20 @@ namespace RTCV.NetCore.StaticTools
 {
 
 
-	// Implementing this interface causes auto-coloration.
-	public interface IAutoColorize { }
+    // Implementing this interface causes auto-coloration.
+    public interface IAutoColorize { }
 
-	//Static singleton manager
-	//Call or create a singleton using class type
-	public static class S
-	{
-		static readonly ConcurrentDictionary<Type, object> instances = new ConcurrentDictionary<Type, object>();
-		public static FormRegister formRegister = new FormRegister();
+    //Static singleton manager
+    //Call or create a singleton using class type
+    public static class S
+    {
+        static readonly ConcurrentDictionary<Type, object> instances = new ConcurrentDictionary<Type, object>();
+        public static FormRegister formRegister = new FormRegister();
         private static object lockObject = new object();
 
 
         [ThreadStatic]
-        public static volatile Dictionary<int,List<string>> InvokeStackTraces = new Dictionary<int, List<string>>();
+        public static volatile Dictionary<int, List<string>> InvokeStackTraces = new Dictionary<int, List<string>>();
         static readonly object dicoLock = new object();
         public static void InvokeLog(this ISynchronizeInvoke si, Delegate method, object[] args)
         {
@@ -57,26 +57,26 @@ namespace RTCV.NetCore.StaticTools
         }
 
 
-		public static bool ISNULL<T>()
-		{
-            Type typ = typeof(T);
-            return instances.ContainsKey(typ);
-		}
-
-		public static T GET<T>()
+        public static bool ISNULL<T>()
         {
             Type typ = typeof(T);
-            
+            return instances.ContainsKey(typ);
+        }
+
+        public static T GET<T>()
+        {
+            Type typ = typeof(T);
+
             if (!instances.TryGetValue(typ, out object o))
             {
-                lock(lockObject)
+                lock (lockObject)
                 {
                     //Check again in case we had stacked threads
-                    if(!instances.TryGetValue(typ, out o))
+                    if (!instances.TryGetValue(typ, out o))
                     {
                         o = Activator.CreateInstance(typ);
                         instances[typ] = o;
-            
+
                         if (typ.IsSubclassOf(typeof(System.Windows.Forms.Form)))
                             formRegister.OnFormRegistered(new NetCoreEventArgs("FORMREGISTER", instances[typ]));
                     }
@@ -135,10 +135,10 @@ namespace RTCV.NetCore.StaticTools
 
     }
 
-	public class FormRegister
-	{
-		public event EventHandler<NetCoreEventArgs> FormRegistered;
-		public virtual void OnFormRegistered(NetCoreEventArgs e) => FormRegistered?.Invoke(this, e);
-	}
+    public class FormRegister
+    {
+        public event EventHandler<NetCoreEventArgs> FormRegistered;
+        public virtual void OnFormRegistered(NetCoreEventArgs e) => FormRegistered?.Invoke(this, e);
+    }
 
 }

@@ -17,10 +17,10 @@ using Newtonsoft.Json;
 
 namespace RTCV.UI
 {
-	public partial class RTC_SavestateManager_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class RTC_SavestateManager_Form : ComponentForm, IAutoColorize, IBlockable
     {
-		public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-		public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
 
         Dictionary<string, TextBox> StateBoxes = new Dictionary<string, TextBox>();
@@ -30,8 +30,8 @@ namespace RTCV.UI
         public StashKey CurrentSaveStateStashKey => savestateList.CurrentSaveStateStashKey;
 
         public RTC_SavestateManager_Form()
-		{
-			InitializeComponent();
+        {
+            InitializeComponent();
 
             popoutAllowed = true;
             this.undockedSizable = false;
@@ -41,7 +41,7 @@ namespace RTCV.UI
 
         private void btnLoadSavestateList_MouseClick(object sender, MouseEventArgs e)
         {
-            if(e.Button == MouseButtons.Left)
+            if (e.Button == MouseButtons.Left)
                 loadSavestateList();
         }
 
@@ -54,10 +54,10 @@ namespace RTCV.UI
 
         }
 
-		private void loadSSK(bool import, string fileName)
-		{
-			decimal currentProgress = 0;
-			decimal percentPerFile = 0;
+        private void loadSSK(bool import, string fileName)
+        {
+            decimal currentProgress = 0;
+            decimal percentPerFile = 0;
             SaveStateKeys ssk;
 
             if (!import)
@@ -72,7 +72,7 @@ namespace RTCV.UI
 
             //Extract the ssk
             RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Extracting the SSK", currentProgress += 50));
-            if (Stockpile.Extract(fileName, Path.Combine("WORKING", extractFolder), "keys.json") is {Failed:true})
+            if (Stockpile.Extract(fileName, Path.Combine("WORKING", extractFolder), "keys.json") is { Failed: true })
                 return;
 
             //Read in the ssk
@@ -168,9 +168,9 @@ namespace RTCV.UI
 
                 key.StateFilename = newStatePath;
                 key.StateShortFilename = Path.GetFileName(newStatePath);
-				
-				SyncObjectSingleton.FormExecute(() => savestateBindingSource.Add(new SaveStateKey(key, ssk.Text[i])));
-                
+
+                SyncObjectSingleton.FormExecute(() => savestateBindingSource.Add(new SaveStateKey(key, ssk.Text[i])));
+
             }
             RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Done", 100));
         }
@@ -199,31 +199,31 @@ namespace RTCV.UI
                 return;
             }
 
-			var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
-			try
-			{
-				//We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
-				//Thus, we want this to happen within the try block
-				SyncObjectSingleton.FormExecute(() =>
-				{
-					UICore.LockInterface(false, true);
-					S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
-					ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
-				});
+            var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
+            try
+            {
+                //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
+                //Thus, we want this to happen within the try block
+                SyncObjectSingleton.FormExecute(() =>
+                {
+                    UICore.LockInterface(false, true);
+                    S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
+                    ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
+                });
 
-				await Task.Run(() =>
-				{
-					loadSSK(import, fileName);
-				});
-			}
-			finally
-			{
-				SyncObjectSingleton.FormExecute(() =>
-				{
-					ghForm?.CloseSubForm();
-					UICore.UnlockInterface();
-				});
-			}
+                await Task.Run(() =>
+                {
+                    loadSSK(import, fileName);
+                });
+            }
+            finally
+            {
+                SyncObjectSingleton.FormExecute(() =>
+                {
+                    ghForm?.CloseSubForm();
+                    UICore.UnlockInterface();
+                });
+            }
         }
 
         private void commitUsedStatesToSession()
@@ -244,7 +244,7 @@ namespace RTCV.UI
                 try
                 {
                     var stateName = sk.GameName + "." + sk.ParentKey + ".timejump.State"; // get savestate name
-                    if(File.Exists(Path.Combine(CorruptCore.RtcCore.workingDir, "SSK", stateName))) //it SHOULD be here. If it's not, let's hunt for it
+                    if (File.Exists(Path.Combine(CorruptCore.RtcCore.workingDir, "SSK", stateName))) //it SHOULD be here. If it's not, let's hunt for it
                         File.Copy(Path.Combine(CorruptCore.RtcCore.workingDir, "SSK", stateName), Path.Combine(CorruptCore.RtcCore.workingDir, "SESSION", stateName), true);
                     else if (File.Exists(Path.Combine(CorruptCore.RtcCore.workingDir, "TEMP", stateName)))
                         File.Copy(Path.Combine(CorruptCore.RtcCore.workingDir, "TEMP", stateName), Path.Combine(CorruptCore.RtcCore.workingDir, "SESSION", stateName), true);
@@ -257,7 +257,7 @@ namespace RTCV.UI
                         MessageBox.Show($"Couldn't locate savestate {stateName}.\nIf you remember the course of actions that lead here, report to the RTC devs.\nSome of your non-stockpiled stashkeys may be broken.");
                         notified = true;
                     }
-                        
+
 
                     sk.StateLocation = StashKeySavestateLocation.SESSION;
                 }
@@ -292,11 +292,11 @@ namespace RTCV.UI
             }
         }
 
-		private void saveSSK(string path)
-		{
-			decimal currentProgress = 0;
-			try
-			{
+        private void saveSSK(string path)
+        {
+            decimal currentProgress = 0;
+            try
+            {
                 SaveStateKeys ssk = new SaveStateKeys();
                 foreach (SaveStateKey x in savestateBindingSource.List)
                 {
@@ -398,54 +398,54 @@ namespace RTCV.UI
 
                 return;
             }
-		}
+        }
 
 
         private async void btnSaveSavestateList_Click(object sender, EventArgs e)
-		{
-			string filename;
+        {
+            string filename;
             SaveFileDialog saveFileDialog1 = new SaveFileDialog
-			{
-				DefaultExt = "ssk",
-				Title = "Savestate Keys File",
-				Filter = "SSK files|*.ssk",
-				RestoreDirectory = true
-			};
-			if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-			{
-				filename = saveFileDialog1.FileName;
-			}
-			else
-				return;
+            {
+                DefaultExt = "ssk",
+                Title = "Savestate Keys File",
+                Filter = "SSK files|*.ssk",
+                RestoreDirectory = true
+            };
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                filename = saveFileDialog1.FileName;
+            }
+            else
+                return;
 
-			var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
-			try
-			{
-				//We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
-				//Thus, we want this to happen within the try block
-				SyncObjectSingleton.FormExecute(() =>
-				{
-					UICore.LockInterface(false, true);
-					S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
-					ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
-				});
-
-				await Task.Run(() =>
-				{
-					saveSSK(filename);
+            var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
+            try
+            {
+                //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
+                //Thus, we want this to happen within the try block
+                SyncObjectSingleton.FormExecute(() =>
+                {
+                    UICore.LockInterface(false, true);
+                    S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
+                    ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
                 });
-			}
-			finally
-			{
-				SyncObjectSingleton.FormExecute(() =>
-				{
-					ghForm?.CloseSubForm();
-					UICore.UnlockInterface();
-				});
-			}
-		}
 
-		internal void DisableFeature()
+                await Task.Run(() =>
+                {
+                    saveSSK(filename);
+                });
+            }
+            finally
+            {
+                SyncObjectSingleton.FormExecute(() =>
+                {
+                    ghForm?.CloseSubForm();
+                    UICore.UnlockInterface();
+                });
+            }
+        }
+
+        internal void DisableFeature()
         {
             Controls.Clear();
         }

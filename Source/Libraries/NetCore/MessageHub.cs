@@ -16,7 +16,7 @@ namespace RTCV.NetCore
 
         private object MessagePoolLock = new object();
         private LinkedList<NetCoreMessage> MessagePool = new LinkedList<NetCoreMessage>();
-        
+
 
         internal MessageHub(NetCoreSpec _spec)
         {
@@ -101,7 +101,7 @@ namespace RTCV.NetCore
                 spec.Connector.udp.SendMessage((NetCoreSimpleMessage)message);
             else //message is NetCoreAdvancedMessage
             {
-                if(synced)
+                if (synced)
                     return spec.Connector.tcp.SendSyncedMessage((NetCoreAdvancedMessage)message); //This will block the sender's thread until a response is received
                 else
                     spec.Connector.tcp.SendMessage((NetCoreAdvancedMessage)message);    //This sends the message async
@@ -121,23 +121,23 @@ namespace RTCV.NetCore
 
     public class NetCoreEventArgs : EventArgs
     {
-		public NetCoreEventArgs()
-		{
+        public NetCoreEventArgs()
+        {
 
-		}
+        }
 
         public NetCoreEventArgs(string type)
         {
             message = new NetCoreSimpleMessage(type);
         }
 
-		public NetCoreEventArgs(string type, object objectValue)
-		{
-			message = new NetCoreAdvancedMessage(type, objectValue);
-		}
+        public NetCoreEventArgs(string type, object objectValue)
+        {
+            message = new NetCoreAdvancedMessage(type, objectValue);
+        }
 
-		public NetCoreMessage message { get; set; } = null;
-        public NetCoreMessage returnMessage {get { return _returnMessage; }}
+        public NetCoreMessage message { get; set; } = null;
+        public NetCoreMessage returnMessage { get { return _returnMessage; } }
         internal NetCoreMessage _returnMessage = null;
 
         public void setReturnValue(object _objectValue)
@@ -150,7 +150,7 @@ namespace RTCV.NetCore
             _returnMessage = message;
         }
     }
-    
+
 }
 
 

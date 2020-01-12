@@ -34,7 +34,7 @@ namespace RTCV.UI.Components.Controls
             set
             {
                 _Value = value;
-                if(!GeneralUpdateFlag)
+                if (!GeneralUpdateFlag)
                     UpdateAllControls(value, null);
             }
         }

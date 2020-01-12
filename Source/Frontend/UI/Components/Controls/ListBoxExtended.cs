@@ -23,8 +23,8 @@ namespace RTCV.UI.Components.Controls
                 case WM_LBUTTONDOWN:
                     OnPreSelect();
                     break;
-                }
-                base.WndProc(ref m);
+            }
+            base.WndProc(ref m);
         }
         protected void OnPreSelect()
         {
@@ -66,7 +66,7 @@ namespace RTCV.UI.Components.Controls
                     return;
 
                 int toSelect = this.IndexFromPoint(e.X, e.Y);
-                if(toSelect != -1 && toSelect != lastClicked)
+                if (toSelect != -1 && toSelect != lastClicked)
                     this.SetSelected(toSelect, true);
             }
         }

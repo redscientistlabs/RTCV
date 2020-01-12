@@ -92,7 +92,7 @@ namespace RTCV.UI.Components.Controls
         {
             _timer.Start();
 
-			UICore.SetHotkeyTimer(false);
+            UICore.SetHotkeyTimer(false);
             _wasPressed = Input.Input.Instance.GetNextBindEvent();
             oldColor = BackColor;
             BackColor = Color.DarkSlateBlue;
@@ -101,7 +101,7 @@ namespace RTCV.UI.Components.Controls
         protected override void OnLeave(EventArgs e)
         {
             _timer.Stop();
-			UICore.SetHotkeyTimer(true);
+            UICore.SetHotkeyTimer(true);
             UpdateLabel();
             BackColor = oldColor;
             base.OnLeave(e);

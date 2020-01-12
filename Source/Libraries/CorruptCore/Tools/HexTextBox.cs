@@ -199,12 +199,12 @@ namespace RTCV.CorruptCore.Tools
 
         public static bool NotIn(this string str, params string[] options)
         {
-            return options.All(opt => opt.ToLower() != str.ToLower());
+            return options.All(opt => !string.Equals(opt, str, StringComparison.OrdinalIgnoreCase));
         }
 
         public static bool NotIn(this string str, IEnumerable<string> options)
         {
-            return options.All(opt => opt.ToLower() != str.ToLower());
+            return options.All(opt => !string.Equals(opt, str, StringComparison.OrdinalIgnoreCase));
         }
 
         public static int HowMany(this string str, char c)
