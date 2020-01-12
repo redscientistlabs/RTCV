@@ -66,7 +66,7 @@ namespace RTCV.UI
 
         private void dgvStockpile_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex == -1)
+            if (e == null || e.RowIndex == -1)
                 return;
             try
             {
