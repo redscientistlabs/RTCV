@@ -81,8 +81,7 @@ namespace RTCV.UI
 
         private const int SRCCOPY = 0xCC0020;
         [DllImport("gdi32.dll")]
-        private static int BitBlt(IntPtr hdc, int x, int y, int cx, int cy,
-            IntPtr hdcSrc, int x1, int y1, int rop);
+        private static extern int BitBlt(IntPtr hdc, int x, int y, int cx, int cy, IntPtr hdcSrc, int x1, int y1, int rop);
 
         public static Bitmap getFormScreenShot(this Control con)
         {
