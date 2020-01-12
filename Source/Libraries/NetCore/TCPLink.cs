@@ -278,7 +278,6 @@ namespace RTCV.NetCore
             }
             catch (Exception ex)
             {
-
                 if (ex is ThreadAbortException)
                 {
                     logger.Warn("Ongoing TCPLink Thread Killed");

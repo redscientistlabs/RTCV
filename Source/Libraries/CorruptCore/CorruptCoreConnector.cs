@@ -196,7 +196,6 @@ namespace RTCV.CorruptCore
 
                             bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
 
-
                             void a()
                             {
                                 lock (loadLock)
@@ -217,7 +216,6 @@ namespace RTCV.CorruptCore
 
                                     //We pull the domains here because if the syncsettings changed, there's a chance the domains changed
                                     string[] domains = (string[])AllSpec.UISpec["SELECTEDDOMAINS"];
-
 
                                     var cpus = Environment.ProcessorCount;
 
@@ -328,17 +326,14 @@ namespace RTCV.CorruptCore
                         break;
                         */
 
-
                     case REMOTE_PUSHRTCSPEC:
                         RTCV.NetCore.AllSpec.CorruptCoreSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
                         e.setReturnValue(true);
                         break;
 
-
                     case REMOTE_PUSHRTCSPECUPDATE:
                         RTCV.NetCore.AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
                         break;
-
 
                     case BLASTGENERATOR_BLAST:
                         {
@@ -394,7 +389,6 @@ namespace RTCV.CorruptCore
                             break;
                         }
 
-
                     case REMOTE_LOADSTATE:
                         {
                             lock (loadLock)
@@ -404,7 +398,6 @@ namespace RTCV.CorruptCore
                                 bool runBlastLayer = (bool)(advancedMessage.objectValue as object[])[2];
 
                                 bool returnValue = false;
-
 
                                 //Load the game from the main thread
                                 if (reloadRom)
@@ -576,7 +569,6 @@ namespace RTCV.CorruptCore
                         }
                         break;
 
-
                     case REMOTE_KEY_GETRAWBLASTLAYER:
                         {
                             void a()
@@ -593,8 +585,6 @@ namespace RTCV.CorruptCore
                             SyncObjectSingleton.EmuThreadExecute(a, false);
                         }
                         break;
-
-
 
                     case REMOTE_SET_APPLYUNCORRUPTBL:
                         {
@@ -653,7 +643,6 @@ namespace RTCV.CorruptCore
                 return e.returnMessage;
             }
         }
-
 
         public void Kill()
         {

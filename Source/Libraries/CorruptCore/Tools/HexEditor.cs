@@ -35,7 +35,6 @@ namespace RTCV.CorruptCore.Tools
 
         private long _maxRow;
 
-
         private MemoryInterface _domain = new NullMemoryInterface();
 
         private long _row;
@@ -83,7 +82,6 @@ namespace RTCV.CorruptCore.Tools
             AddressLabel.Font = font;
 
             Restart();
-
         }
 
         private void HexEditor_VisibleChanged(object sender, EventArgs e)
@@ -149,7 +147,6 @@ namespace RTCV.CorruptCore.Tools
             }));
         }
 
-
         private string _lastRom = "";
 
         public void Restart()
@@ -174,7 +171,6 @@ namespace RTCV.CorruptCore.Tools
                 DataSize = _domain.WordSize;
 
                 _maxRow = _domain.Size / 2;
-
 
                 // Don't reset scroll bar if restarting the same rom
                 if (_lastRom != (string)(AllSpec.VanguardSpec?[VSPEC.NAME] ?? "UNKNOWN"))
@@ -380,7 +376,6 @@ namespace RTCV.CorruptCore.Tools
             }
         }
 
-
         private static int GetNumDigits(long i)
         {
             if (i <= 0x10000)
@@ -422,7 +417,6 @@ namespace RTCV.CorruptCore.Tools
             this.BringToFront();
             this.Activate();
         }
-
 
         // TODO: rename me
         private void SaveConfigSettings()
@@ -604,7 +598,6 @@ namespace RTCV.CorruptCore.Tools
             this.Refresh();
         }
 
-
         private void UpdateGroupBoxTitle()
         {
             var addressesString = "0x" + $"{_domain.Size / DataSize:X8}".TrimStart('0');
@@ -718,8 +711,6 @@ namespace RTCV.CorruptCore.Tools
             }
         }
 
-
-
         private void SaveFileBinary(string path)
         {
             var file = new FileInfo(path);
@@ -736,8 +727,6 @@ namespace RTCV.CorruptCore.Tools
         {
             return "Binary (*.bin)|*.bin|All Files|*.*";
         }
-
-
 
         private void ResetScrollBar()
         {
@@ -911,7 +900,6 @@ namespace RTCV.CorruptCore.Tools
             }
         }
 
-
         private void CreateVMDFromSelectedMenuItem_Click(object sender, EventArgs e)
         {
             if (HighlightedAddress == null)
@@ -942,7 +930,6 @@ namespace RTCV.CorruptCore.Tools
             }
 
             var ordered = allAddresses.OrderBy(it => it).ToArray();
-
 
             bool contiguous = true;
             long? lastAddress = null;
@@ -1000,7 +987,6 @@ namespace RTCV.CorruptCore.Tools
             CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref bytes, -1, _domain.BigEndian);
             _domain.PokeBytes(address, bytes, _domain.BigEndian);
         }
-
 
         private string ValueString(long address)
         {
@@ -1080,7 +1066,6 @@ namespace RTCV.CorruptCore.Tools
         {
             _textTable.Clear();
         }
-
 
         private void ExitMenuItem_Click(object sender, EventArgs e)
         {
@@ -1398,7 +1383,6 @@ namespace RTCV.CorruptCore.Tools
         #endregion
 
         #region Settings Menu
-
 
         private void ResetColorsToDefaultMenuItem_Click(object sender, EventArgs e)
         {
@@ -1738,7 +1722,6 @@ namespace RTCV.CorruptCore.Tools
                         ContextSeparator2.Visible =
                             (HighlightedAddress.HasValue || _secondaryHighlightedAddresses.Any());
 
-
             PasteContextItem.Visible = data != null && data.GetDataPresent(DataFormats.Text);
 
             if (HighlightedAddress.HasValue && IsFrozen(HighlightedAddress.Value))
@@ -1996,7 +1979,6 @@ namespace RTCV.CorruptCore.Tools
                 FreezeAddress(x);
             }
         }
-
 
         private bool IsFrozen(long address)
         {

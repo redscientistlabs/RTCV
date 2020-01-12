@@ -7,7 +7,6 @@ using System.Numerics;
 using System.Windows.Forms;
 using RTCV.NetCore;
 
-
 namespace RTCV.CorruptCore
 {
     public static class RTC_CustomEngine
@@ -139,8 +138,6 @@ namespace RTCV.CorruptCore
             set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CUSTOM_VALUELISTHASH, value);
         }
 
-
-
         public static BlastUnit GenerateUnit(string domain, long address, int precision, int alignment)
         {
             try
@@ -151,7 +148,6 @@ namespace RTCV.CorruptCore
                 }
 
                 MemoryInterface mi = MemoryDomains.GetInterface(domain);
-
 
                 byte[] value = new byte[precision];
                 long safeAddress = address - (address % precision) + alignment;
@@ -295,7 +291,6 @@ namespace RTCV.CorruptCore
             }
         }
 
-
         public static bool IsConstant(byte[] bytes, string[] list, bool bigEndian)
         {
             if (list == null || bytes == null)
@@ -346,7 +341,6 @@ namespace RTCV.CorruptCore
                 name2TypeDico[k] = pSpec[k].GetType();
             }
         }
-
 
         public static void InitTemplates()
         {
@@ -413,8 +407,6 @@ namespace RTCV.CorruptCore
             pSpec[RTCSPEC.CUSTOM_STORELIMITERMODE] = StoreLimiterSource.ADDRESS;
             pSpec[RTCSPEC.CUSTOM_LIMITERINVERTED] = false;
 
-
-
             pSpec[RTCSPEC.CUSTOM_MINVALUE8BIT] = 0UL;
             pSpec[RTCSPEC.CUSTOM_MINVALUE16BIT] = 0UL;
             pSpec[RTCSPEC.CUSTOM_MINVALUE32BIT] = 0UL;
@@ -450,9 +442,6 @@ namespace RTCV.CorruptCore
             pSpec[RTCSPEC.CUSTOM_LIMITERTIME] = LimiterTime.NONE;
             pSpec[RTCSPEC.CUSTOM_STORELIMITERMODE] = StoreLimiterSource.ADDRESS;
             pSpec[RTCSPEC.CUSTOM_LIMITERINVERTED] = false;
-
-
-
 
             pSpec[RTCSPEC.CUSTOM_MINVALUE8BIT] = 0UL;
             pSpec[RTCSPEC.CUSTOM_MINVALUE16BIT] = 0UL;
@@ -491,9 +480,6 @@ namespace RTCV.CorruptCore
             pSpec[RTCSPEC.CUSTOM_STORELIMITERMODE] = StoreLimiterSource.ADDRESS;
             pSpec[RTCSPEC.CUSTOM_LIMITERINVERTED] = false;
 
-
-
-
             pSpec[RTCSPEC.CUSTOM_MINVALUE8BIT] = 0UL;
             pSpec[RTCSPEC.CUSTOM_MINVALUE16BIT] = 0UL;
             pSpec[RTCSPEC.CUSTOM_MINVALUE32BIT] = 0UL;
@@ -529,8 +515,6 @@ namespace RTCV.CorruptCore
             pSpec[RTCSPEC.CUSTOM_LIMITERTIME] = LimiterTime.NONE;
             pSpec[RTCSPEC.CUSTOM_STORELIMITERMODE] = StoreLimiterSource.ADDRESS;
             pSpec[RTCSPEC.CUSTOM_LIMITERINVERTED] = false;
-
-
 
             pSpec[RTCSPEC.CUSTOM_MINVALUE8BIT] = 0UL;
             pSpec[RTCSPEC.CUSTOM_MINVALUE16BIT] = 0UL;
@@ -568,7 +552,6 @@ namespace RTCV.CorruptCore
             pSpec[RTCSPEC.CUSTOM_STORELIMITERMODE] = StoreLimiterSource.ADDRESS;
             pSpec[RTCSPEC.CUSTOM_LIMITERINVERTED] = false;
 
-
             pSpec[RTCSPEC.CUSTOM_MINVALUE8BIT] = 0UL;
             pSpec[RTCSPEC.CUSTOM_MINVALUE16BIT] = 0UL;
             pSpec[RTCSPEC.CUSTOM_MINVALUE32BIT] = 0UL;
@@ -605,7 +588,6 @@ namespace RTCV.CorruptCore
             pSpec[RTCSPEC.CUSTOM_LIMITERTIME] = LimiterTime.GENERATE;
             pSpec[RTCSPEC.CUSTOM_STORELIMITERMODE] = StoreLimiterSource.ADDRESS;
             pSpec[RTCSPEC.CUSTOM_LIMITERINVERTED] = false;
-
 
             pSpec[RTCSPEC.CUSTOM_MINVALUE8BIT] = 0UL;
             pSpec[RTCSPEC.CUSTOM_MINVALUE16BIT] = 0UL;
@@ -668,7 +650,6 @@ namespace RTCV.CorruptCore
             return pSpec;
         }
 
-
         public static string CustomPath
         {
             get => RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.CUSTOM_PATH].ToString();
@@ -723,7 +704,6 @@ namespace RTCV.CorruptCore
                 using (FileStream fs = File.Open(Filename, FileMode.OpenOrCreate))
                 {
                     Dictionary<string, object> d = JsonHelper.Deserialize<Dictionary<string, object>>(fs);
-
 
                     //We don't want to store type data in the serialized data but specs store object
                     //To work around this, we store the type in a dictionary and pass the data through a typeconverter
@@ -790,7 +770,6 @@ namespace RTCV.CorruptCore
             //Overwrites spec path with loaded path
             pSpec[RTCSPEC.CUSTOM_PATH] = Filename;
 
-
             return pSpec;
         }
 
@@ -831,7 +810,6 @@ namespace RTCV.CorruptCore
             pSpec[RTCSPEC.CUSTOM_PATH] = path;
             pSpec[RTCSPEC.CORE_CURRENTPRECISION] = RtcCore.CurrentPrecision;
             pSpec[RTCSPEC.CORE_CURRENTALIGNMENT] = RtcCore.Alignment;
-
 
             string jsonString = pSpec.GetSerializedDico();
             File.WriteAllText(path, jsonString);

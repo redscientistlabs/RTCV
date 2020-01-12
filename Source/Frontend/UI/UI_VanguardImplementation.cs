@@ -117,7 +117,6 @@ namespace RTCV.UI
 
                                 UI_DefaultGrids.glitchHarvester.LoadToNewWindow("Glitch Harvester", true);
 
-
                             }
                             else
                             {
@@ -361,7 +360,6 @@ namespace RTCV.UI
                             S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked = false;
                         });
                         break;
-
                 }
             }
             catch (Exception ex)

@@ -26,6 +26,5 @@ namespace RTCV.NetCore
 
         private void btnGetDebugEmu_Click(object sender, EventArgs e) => richTextBox2.Text = CloudDebug.getEmuInfo();
 
-
     }
 }

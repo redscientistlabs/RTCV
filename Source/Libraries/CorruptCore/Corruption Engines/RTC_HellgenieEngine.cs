@@ -52,7 +52,6 @@ namespace RTCV.CorruptCore
         {
             var partial = new PartialSpec("RTCSpec");
 
-
             partial[RTCSPEC.HELLGENIE_MINVALUE8BIT] = 0UL;
             partial[RTCSPEC.HELLGENIE_MAXVALUE8BIT] = 0xFFUL;
 
@@ -65,13 +64,11 @@ namespace RTCV.CorruptCore
             partial[RTCSPEC.HELLGENIE_MINVALUE64BIT] = 0UL;
             partial[RTCSPEC.HELLGENIE_MAXVALUE64BIT] = 0xFFFFFFFFFFFFFFFFUL;
 
-
             return partial;
         }
 
         public static BlastUnit GenerateUnit(string domain, long address, int precision, int alignment)
         {
-
             if (domain == null)
             {
                 return null;

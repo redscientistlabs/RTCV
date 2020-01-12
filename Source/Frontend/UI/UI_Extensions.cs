@@ -14,6 +14,9 @@ using Newtonsoft.Json;
 using RTCV.CorruptCore.Tools;
 using static RTCV.UI.UI_Extensions;
 
+#pragma warning disable RCS1138 // Add summary element to documentation comment.
+#pragma warning disable RCS1139 // Add summary element to documentation comment.
+
 namespace RTCV.UI
 {
     public static class UI_Extensions

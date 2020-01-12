@@ -18,7 +18,6 @@ using Exception = System.Exception;
 
 namespace RTCV.CorruptCore
 {
-
     [Serializable]
     [Ceras.MemberConfig(TargetMember.All)]
     public class Stockpile
@@ -77,10 +76,8 @@ namespace RTCV.CorruptCore
                 }
             }
 
-
             sks.Filename = filename;
             sks.ShortFilename = Path.GetFileName(sks.Filename);
-
 
             //clean temp folder
             try
@@ -97,7 +94,6 @@ namespace RTCV.CorruptCore
             //Watermarking RTC Version
             sks.RtcVersion = RtcCore.RtcVersion;
             sks.VanguardImplementation = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "ERROR";
-
 
             List<string> allRoms = new List<string>();
             if (includeReferencedFiles && ((bool?)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.SUPPORTS_REFERENCES] ?? false))
@@ -266,6 +262,7 @@ namespace RTCV.CorruptCore
                     }
                 }
             }
+
             //Get all the limiter lists
             RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Finding limiter lists to copy", saveProgress += 5));
             var limiterLists = Filtering.GetAllLimiterListsFromStockpile(sks);
@@ -285,7 +282,6 @@ namespace RTCV.CorruptCore
             {
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Creating stockpile.json", saveProgress += 2));
                 JsonHelper.Serialize(sks, fs, Formatting.Indented);
-                fs.Close();
             }
 
             string tempFilename = sks.Filename + ".temp";
@@ -403,7 +399,6 @@ namespace RTCV.CorruptCore
                 return results;
             }
 
-
             var extractFolder = import ? "TEMP" : "SKS";
 
             //Extract the stockpile
@@ -414,7 +409,6 @@ namespace RTCV.CorruptCore
                 return results;
             }
 
-
             //Read in the stockpile
             try
             {
@@ -422,7 +416,6 @@ namespace RTCV.CorruptCore
                 using (FileStream fs = File.Open(Path.Combine(RtcCore.workingDir, extractFolder, "stockpile.json"), FileMode.OpenOrCreate))
                 {
                     sks = JsonHelper.Deserialize<Stockpile>(fs);
-                    fs.Close();
                 }
             }
             catch (Exception e)
@@ -430,7 +423,6 @@ namespace RTCV.CorruptCore
                 results.AddError("Failed to read the stockpile", e);
                 return results;
             }
-
 
             RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs("Checking Compatibility", loadProgress += 5));
             //Check version/implementation compatibility
@@ -507,13 +499,9 @@ namespace RTCV.CorruptCore
                 t.StateLocation = StashKeySavestateLocation.SKS;
             }
 
-
-
-
             RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Loading limiter lists", loadProgress += 5));
             //Load the limiter lists into the dictionary and UI
             Filtering.LoadStockpileLists(sks);
-
 
             //If there's a limiter missing, pop a message
             if (sks.MissingLimiter)
@@ -584,7 +572,6 @@ namespace RTCV.CorruptCore
             try
             {
                 string targetFolder = Path.Combine(RtcCore.RtcDir, folder);
-
 
                 foreach (string file in Directory.GetFiles(targetFolder))
                 {
@@ -662,7 +649,6 @@ namespace RTCV.CorruptCore
                 throw new CustomException("ConfigMode was set but ConfigPath was null!", Environment.StackTrace);
             }
 
-
             string filename;
             OpenFileDialog ofd = new OpenFileDialog
             {
@@ -695,7 +681,6 @@ namespace RTCV.CorruptCore
             {
                 return;
             }
-
 
             //Configs are stored in the "configs" folder within the stockpile
             //Build up a filename map and use that when copying back in
@@ -807,7 +792,6 @@ namespace RTCV.CorruptCore
         public string SyncSettings { get; set; }
         public string Note { get; set; }
 
-
         public string Key { get; set; }
         public string ParentKey { get; set; }
         public BlastLayer BlastLayer { get; set; }
@@ -818,8 +802,6 @@ namespace RTCV.CorruptCore
             get => alias ?? Key;
             set => alias = value;
         }
-
-
 
         public StashKey()
         {
@@ -872,13 +854,17 @@ namespace RTCV.CorruptCore
             return Alias;
         }
 
-        ///Can be called from UI Side
+        /// <summary>
+        /// Can be called from UI Side
+        /// </summary>
 		public bool Run()
         {
             StockpileManager_UISide.CurrentStashkey = this;
             return StockpileManager_UISide.ApplyStashkey(this);
         }
-        ///Can be called from UI Side
+        /// <summary>
+        /// Can be called from UI Side
+        /// </summary>
 		public void RunOriginal()
         {
             StockpileManager_UISide.CurrentStashkey = this;
@@ -1034,7 +1020,6 @@ namespace RTCV.CorruptCore
                 StockpileManager_EmuSide.CorruptBL = this;
             }
 
-
             bool success;
             bool UseRealtime = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME];
 
@@ -1175,7 +1160,6 @@ namespace RTCV.CorruptCore
                     Layer.Remove(bu);
                 }
             }
-
         }
     }
 
@@ -1235,7 +1219,6 @@ namespace RTCV.CorruptCore
         [Description("The address this unit will target")]
         [DisplayName("Address")]
         public long Address { get; set; }
-
 
         private int precision;
 
@@ -1302,7 +1285,6 @@ namespace RTCV.CorruptCore
             }
         }
 
-
         private BlastUnitSource source;
         [Category("Source")]
         [Description("The source for the value for this unit for STORE mode")]
@@ -1348,13 +1330,11 @@ namespace RTCV.CorruptCore
         [JsonConverter(typeof(StringEnumConverter))]
         public StoreType StoreType { get; set; }
 
-
         [JsonIgnore]
         [Category("Value")]
         [Description("The value used for the BlastUnit in VALUE mode")]
         [DisplayName("Value")]
         public byte[] Value { get; set; }
-
 
         [Category("Value")]
         [Description("Gets and sets Value[] through a string. Used for Textboxes")]
@@ -1397,18 +1377,14 @@ namespace RTCV.CorruptCore
         [DisplayName("Source Address")]
         public long SourceAddress { get; set; }
 
-
         [Category("Modifiers")]
         [Description("How much to tilt the value before poking memory")]
         [DisplayName("Tilt Value")]
         public BigInteger TiltValue { get; set; }
 
-
         public int ExecuteFrame { get; set; }
         public int Lifetime { get; set; }
         public bool Loop { get; set; } = false;
-
-
 
         [Category("Limiter")]
         [Description("What mode to use for the limiter in STORE mode")]
@@ -1441,13 +1417,9 @@ namespace RTCV.CorruptCore
         [Description("Note associated with this unit")]
         public string Note { get; set; }
 
-
-
         //Don't serialize this
         [NonSerialized, XmlIgnore, JsonIgnore, Ceras.Exclude]
         public BlastUnitWorkingData Working;
-
-
 
         /// <summary>
         /// Creates a Blastunit that utilizes a backup. 
@@ -1603,8 +1575,6 @@ namespace RTCV.CorruptCore
                     }
                 }
             }
-
-
 
             return bu;
         }
@@ -1777,7 +1747,6 @@ namespace RTCV.CorruptCore
                     }
                 }
 
-
                 if (Working == null)
                 {
                     if (Debugger.IsAttached)
@@ -1848,7 +1817,7 @@ namespace RTCV.CorruptCore
                         }
                 }
             }
-            catch (IOException e)
+            catch (IOException)
             {
                 var dr = MessageBox.Show(
                     "An IOException occured during Execute().\nThis probably means whatever is being corrupted can't be accessed.\nIf you're corrupting a file, close any program that might be using it.\n\nAborting corrupt.\nSend this error to the devs?",

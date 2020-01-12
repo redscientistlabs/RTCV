@@ -155,7 +155,6 @@ namespace RTCV.UI
             }
 
             targetForm.MinimumSize = targetForm.Size;
-
         }
 
         //public void BlockView() => (this as IBlockable)?.BlockView();

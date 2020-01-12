@@ -303,7 +303,7 @@ namespace RTCV.NetCore
             DPI_AWARENESS_CONTEXT dpiContext);
     }
 
-    public class SafeJsonTypeSerialization
+    public static class SafeJsonTypeSerialization
     {
         public class JsonKnownTypesBinder : ISerializationBinder
         {

@@ -26,7 +26,6 @@ namespace RTCV.CorruptCore
             return partial;
         }
 
-
         public static BlastUnit GenerateUnit(string domain, long address, int alignment)
         {
             if (domain == null)
@@ -35,7 +34,6 @@ namespace RTCV.CorruptCore
             }
 
             long safeAddress = address - (address % 4) + alignment; //32-bit trunk
-
 
             MemoryInterface mi = MemoryDomains.GetInterface(domain);
             if (mi == null)

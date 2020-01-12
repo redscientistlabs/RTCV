@@ -69,12 +69,11 @@ namespace RTCV.CorruptCore
 
                 return Banks;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
         }
-
 
         public static byte PeekByte(this byte[][] data, long Address)
         {
@@ -163,7 +162,6 @@ namespace RTCV.CorruptCore
                 Array.Copy(data[startBank], relativeStartAdress, result, 0, lengthFromStartBank);
                 Array.Copy(data[endBank], 0, result, lengthFromStartBank, lengthFromEndBank);
             }
-
 
             return result;
         }

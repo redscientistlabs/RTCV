@@ -1343,6 +1343,7 @@ namespace RTCV.CorruptCore
             catch (Exception ex)
             {
                 MessageBox.Show($"Couldn't set backup of {Filename}!");
+                logger.Debug(ex, "SetBackup failed");
                 return false;
             }
             return true;
@@ -1367,6 +1368,7 @@ namespace RTCV.CorruptCore
             catch (Exception ex)
             {
                 MessageBox.Show($"Couldn't reset backup of {Filename}!");
+                logger.Debug(ex, "ResetBackup failed");
                 return false;
             }
             return true;
@@ -1383,6 +1385,7 @@ namespace RTCV.CorruptCore
                 catch (Exception e)
                 {
                     MessageBox.Show($"Unable to restore backup of {Filename}!");
+                    logger.Debug(e, "RestoreBackup failed");
                     return false;
                 }
 
@@ -1582,7 +1585,6 @@ namespace RTCV.CorruptCore
                 stream = null;
             }
         }
-
     }
 
     [Serializable()]
@@ -1642,7 +1644,6 @@ namespace RTCV.CorruptCore
                 getMemorySize();
 
                 setFilePositions();
-
             }
             catch (Exception ex)
             {
@@ -1924,7 +1925,6 @@ namespace RTCV.CorruptCore
 
             //if wasn't found
             return 0;
-
         }
 
         public override byte[] PeekBytes(long address, int range)

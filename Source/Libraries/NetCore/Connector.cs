@@ -118,5 +118,4 @@ namespace RTCV.NetCore
 
         public void Kill() => Stop(true);
     }
-
 }

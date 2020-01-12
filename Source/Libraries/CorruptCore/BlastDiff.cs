@@ -127,7 +127,6 @@ namespace RTCV.CorruptCore
                 byte[] originalBytes = getBytefromIMemoryDomainArray(Original, i, precision);
                 byte[] corruptBytes = Corrupt.PeekBytes(i, precision);
 
-
                 if (!originalBytes.SequenceEqual(corruptBytes) && i >= skipBytes)
                 {
                     if (Original[0].BigEndian)
@@ -149,7 +148,6 @@ namespace RTCV.CorruptCore
                     bl.Layer.Add(bu);
                 }
             }
-
 
             if (bl.Layer.Count == 0)
             {

@@ -36,8 +36,6 @@ namespace RTCV.CorruptCore
             }
         }
 
-
-
         #region ARRAY EXTENSIONS
 
         public static int IndexOf<T>(this T[] haystack, T[] needle)
@@ -123,7 +121,6 @@ namespace RTCV.CorruptCore
                 return sb.ToString();
             }
         }
-
 
         /// <summary>
         /// Gets you a byte array representing the characters in a string.
@@ -360,7 +357,6 @@ namespace RTCV.CorruptCore
 
             return 0;
         }
-
 
         public static byte[] AddValueToByteArrayUnchecked(ref byte[] value, BigInteger addValue, bool isInputBigEndian)
         {
@@ -630,7 +626,6 @@ namespace RTCV.CorruptCore
             Buffer.BlockCopy(input, 0, newArray, startAt, input.Length);
             return newArray;
         }
-
 
         /// <summary>
         /// Converts bytes to an uppercase string of hex numbers in upper case without any spacing or anything
@@ -1014,7 +1009,6 @@ namespace RTCV.CorruptCore
         }
     }
 
-
     public static class ObjectCopier
     {
         public static T Clone<T>(T source)
@@ -1080,7 +1074,6 @@ namespace RTCV.CorruptCore
         }
     }
 
-
     public static class JsonHelper
     {
         public static void Serialize(object value, Stream s, Formatting f = Formatting.None, SafeJsonTypeSerialization.JsonKnownTypesBinder binder = null)
@@ -1121,7 +1114,6 @@ namespace RTCV.CorruptCore
             return JsonConvert.DeserializeObject<T>(str);
         }
     }
-
 
     //Lifted from Bizhawk https://github.com/TASVideos/BizHawk
 #pragma warning disable 162
@@ -1293,7 +1285,6 @@ namespace RTCV.CorruptCore
             hasConsole = false;
         }
 
-
         public static void ShowConsole()
         {
             var handle = Win32.GetConsoleWindow();
@@ -1323,7 +1314,6 @@ namespace RTCV.CorruptCore
     //Lifted from Bizhawk https://github.com/TASVideos/BizHawk
     public static class Win32
     {
-
         [DllImport("kernel32.dll")]
         public static extern IntPtr LoadLibrary(string dllToLoad);
 
@@ -1349,7 +1339,6 @@ namespace RTCV.CorruptCore
         internal const int MF_ENABLED = 0x00000000;     //enabled button status
         internal const int MF_GRAYED = 0x1;             //disabled button status (enabled = false)
         internal const int MF_DISABLED = 0x00000002;    //disabled button status
-
 
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern IntPtr GetConsoleWindow();

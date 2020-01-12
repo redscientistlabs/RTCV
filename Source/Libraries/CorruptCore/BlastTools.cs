@@ -4,7 +4,6 @@ using System.IO;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 
-
 namespace RTCV.CorruptCore
 {
     public static class BlastTools
@@ -40,7 +39,6 @@ namespace RTCV.CorruptCore
                     return false;
                 }
             }
-
 
             using (FileStream fs = new FileStream(filename, FileMode.Create))
             {
@@ -79,7 +77,6 @@ namespace RTCV.CorruptCore
                 MessageBox.Show("The BlastLayer file wasn't found");
                 return null;
             }
-
 
             try
             {

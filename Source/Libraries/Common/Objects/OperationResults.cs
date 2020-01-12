@@ -83,7 +83,6 @@ namespace RTCV.Common.Objects
                 if (includeException)
                 {
                     var ex = message.Exception;
-                    int depth = 0;
                     while (ex != null)
                     {
                         sb.AppendLine($"Exception: {message.Exception}");

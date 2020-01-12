@@ -451,7 +451,6 @@ namespace RTCV.UI
 
                 ActiveTableGenerated = newActiveTable.ToArray();
                 lbActiveTableSize.Text = "Active table size (0x" + ActiveTableGenerated.Length.ToString("X") + ")";
-
             }
             catch
             {

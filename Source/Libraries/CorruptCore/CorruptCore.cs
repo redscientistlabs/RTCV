@@ -214,7 +214,6 @@ namespace RTCV.CorruptCore
 
         public static string VanguardImplementationName => (string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard Implementation";
 
-
         public static bool IsStandaloneUI;
         public static bool IsEmulatorSide;
 
@@ -318,9 +317,7 @@ namespace RTCV.CorruptCore
                 rtcSpecTemplate.Insert(StockpileManager_EmuSide.getDefaultPartial());
                 rtcSpecTemplate.Insert(Render.getDefaultPartial());
 
-
                 AllSpec.CorruptCoreSpec = new FullSpec(rtcSpecTemplate, !RtcCore.Attached); //You have to feed a partial spec as a template
-
 
                 AllSpec.CorruptCoreSpec.SpecUpdated += (o, e) =>
                 {
@@ -357,8 +354,6 @@ namespace RTCV.CorruptCore
             {
                 var partial = new PartialSpec("RTCSpec");
 
-
-
                 partial[RTCSPEC.CORE_SELECTEDENGINE] = CorruptionEngine.NIGHTMARE;
 
                 partial[RTCSPEC.CORE_CURRENTPRECISION] = 1;
@@ -373,7 +368,6 @@ namespace RTCV.CorruptCore
                 partial[RTCSPEC.CORE_EMULATOROSDDISABLED] = true;
                 partial[RTCSPEC.CORE_DONTCLEANSAVESTATESONQUIT] = false;
                 partial[RTCSPEC.CORE_SHOWCONSOLE] = false;
-
 
                 if (Params.IsParamSet("ALLOW_CROSS_CORE_CORRUPTION"))
                 {
@@ -450,7 +444,6 @@ namespace RTCV.CorruptCore
                 return null;
             }
         }
-
 
         public static void DownloadProblematicProcesses()
         {
@@ -574,7 +567,6 @@ namespace RTCV.CorruptCore
             }
         }
 
-
         public static BlastUnit GetBlastUnit(string _domain, long _address, int precision, int alignment, CorruptionEngine engine)
         {
             try
@@ -680,7 +672,6 @@ namespace RTCV.CorruptCore
                         intensity = StepActions.MaxInfiniteBlastUnits; //Capping for cheat max
                     }
 
-
                     //Spec lookups add up really fast if you have a high intensity so we cache stuff we're going to be looking up over and over again
                     var cachedPrecision = CurrentPrecision;
                     var cachedDomainSizes = new long[selectedDomains.Length];
@@ -691,7 +682,6 @@ namespace RTCV.CorruptCore
                     {
                         cachedDomainSizes[i] = MemoryDomains.GetInterface(selectedDomains[i]).Size;
                     }
-
 
                     switch (RtcCore.Radius) //Algorithm branching
                     {
@@ -758,7 +748,6 @@ namespace RTCV.CorruptCore
 
                                 break;
                             }
-
 
                         case BlastRadius.NORMALIZED: // Blasts based on the size of the largest selected domain. Intensity =  Intensity / (domainSize[largestdomain]/domainSize[currentdomain])
                             {
@@ -880,7 +869,6 @@ namespace RTCV.CorruptCore
                 var ex2 = new CustomException("Something went wrong in the RTC Core | " + ex.Message, (RtcCore.AutoCorrupt ? "Autocorrupt was turned off for your safety\n\n" : "") + ex.StackTrace);
                 var dr = CloudDebug.ShowErrorDialog(ex2, true);
 
-
                 if (RtcCore.AutoCorrupt)
                 {
                     RtcCore.AutoCorrupt = false;
@@ -921,15 +909,13 @@ namespace RTCV.CorruptCore
             return Key;
         }
 
-
         public static void GenerateAndBlast()
         {
             BlastLayer bl = null;
-            void a()
+            void _generateAndBlast()
             {
                 //We pull the domains here because if the syncsettings changed, there's a chance the domains changed
                 string[] domains = (string[])AllSpec.UISpec["SELECTEDDOMAINS"];
-
 
                 var cpus = Environment.ProcessorCount;
 
@@ -982,11 +968,11 @@ namespace RTCV.CorruptCore
             //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
             if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
             {
-                SyncObjectSingleton.FormExecute(a);
+                SyncObjectSingleton.FormExecute(_generateAndBlast);
             }
             else //We can just do everything on the emulation thread as it'll block
             {
-                SyncObjectSingleton.EmuThreadExecute(a, true);
+                SyncObjectSingleton.EmuThreadExecute(_generateAndBlast, true);
             }
         }
 

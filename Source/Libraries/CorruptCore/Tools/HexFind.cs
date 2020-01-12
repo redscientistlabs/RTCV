@@ -20,7 +20,6 @@ namespace RTCV.CorruptCore.Tools
 
         public Point InitialLocation { get; set; }
 
-
         public string InitialValue
         {
             get => FindBox.Text;

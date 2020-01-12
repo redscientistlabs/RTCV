@@ -102,6 +102,5 @@ namespace RTCV.UI.Components.Controls
 
             PropagateValue(updown.Value, updown);
         }
-
     }
 }

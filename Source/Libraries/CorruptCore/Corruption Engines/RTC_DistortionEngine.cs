@@ -21,7 +21,6 @@ namespace RTCV.CorruptCore
         {
             // Randomly selects a memory operation according to the selected algorithm
 
-
             if (domain == null)
             {
                 return null;

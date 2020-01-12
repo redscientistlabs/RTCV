@@ -250,7 +250,7 @@ namespace RTCV.UI
             Point locate = new Point((sender as Control).Location.X + e.Location.X, (sender as Control).Location.Y + e.Location.Y);
 
             ContextMenuStrip LoadMenuItems = new ContextMenuStrip();
-            LoadMenuItems.Items.Add("Load Stockpile", null, new EventHandler(async (ob, ev) =>
+            LoadMenuItems.Items.Add("Load Stockpile", null, new EventHandler((ob, ev) =>
             {
                 try
                 {

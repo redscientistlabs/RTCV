@@ -7,7 +7,6 @@ using System.Threading;
 
 namespace RTCV.NetCore.StaticTools
 {
-
     // Implementing this interface causes auto-coloration.
     public interface IAutoColorize { }
 
@@ -141,7 +140,6 @@ namespace RTCV.NetCore.StaticTools
                 }
             }
         }
-
     }
 
     public class FormRegister

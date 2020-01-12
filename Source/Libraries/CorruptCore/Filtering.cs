@@ -351,10 +351,8 @@ namespace RTCV.CorruptCore
         {
             sks.MissingLimiter = false;
 
-
             var lists = new Dictionary<string, List<string>>();
             var hashList = new List<string>();
-
 
             //Build up a list of all the lists used by every blastunit
             foreach (StashKey sk in sks.StashKeys)

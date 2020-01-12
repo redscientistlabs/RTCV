@@ -100,7 +100,6 @@ namespace RTCV.NetCore
 
         public int messageReadTimerDelay = 5; //represents how often the messages are read (ms) (15ms = ~66fps)
         private Mutex StatusEventLockout = new Mutex();
-        private bool locked = true;
         private protected static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public ISynchronizeInvoke syncObject
@@ -448,7 +447,7 @@ namespace RTCV.NetCore
                 s = StatusEventLockout.WaitOne(timeout);
                 logger.Trace("Thread id {0} got StatusEventLockout Mutex.", Thread.CurrentThread.ManagedThreadId);
             }
-            catch (AbandonedMutexException ame)
+            catch (AbandonedMutexException)
             {
                 logger.Trace("Thread id {0} got StatusEventLockout Mutex (AbandonedMutexException).",
                     Thread.CurrentThread.ManagedThreadId);
@@ -463,7 +462,6 @@ namespace RTCV.NetCore
 
         public void UnlockLockStatusEventLockout()
         {
-            bool s = false;
             logger.Trace("Thread id {0} requested Unlock StatusEventLockout Mutex.", Thread.CurrentThread.ManagedThreadId);
             try
             {

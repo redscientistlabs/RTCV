@@ -15,7 +15,6 @@ namespace RTCV.UI
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         public bool DontLoadSelectedStockpile = false;
-        private bool currentlyLoading = false;
         private PlatformType platform = PlatformType.CLASSIC;
 
         public bool DontUpdateSpec = false;

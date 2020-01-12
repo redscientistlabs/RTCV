@@ -364,6 +364,5 @@ namespace RTCV.UI
                 lbStashHistory.SelectedIndex = newPos;
             }
         }
-
     }
 }
