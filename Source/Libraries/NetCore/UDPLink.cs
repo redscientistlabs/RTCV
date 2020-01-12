@@ -1,24 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using System.Windows.Forms;
-
 
 namespace RTCV.NetCore
 {
-
     public class UDPLink
     {
-
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private NetCoreSpec spec;
-        private string IP { get { return spec.IP; } }
-        private int PortServer{ get { return spec.Port; } }
-        private int PortClient{get{return spec.Port + (spec.Loopback ? 1 : 0 );}} //If running on loopback, will use port+1 for client
+        private string IP => spec.IP;
+        private int PortServer => spec.Port;
+        private int PortClient => spec.Port + (spec.Loopback ? 1 : 0);  //If running on loopback, will use port+1 for client
 
         private Thread ReaderThread;
         private UdpClient Sender = null;
@@ -31,19 +25,21 @@ namespace RTCV.NetCore
             int port = (spec.Side == NetworkSide.SERVER ? PortServer : PortClient);
             Sender = new UdpClient(IP, port);
             logger.Info("UDP Client sending at {IP}:{port}", IP, port);
-            ReaderThread = new Thread(new ThreadStart(ListenToReader));
-            ReaderThread.IsBackground = true;
-            ReaderThread.Name = "UDP READER";
+            ReaderThread = new Thread(new ThreadStart(ListenToReader))
+            {
+                IsBackground = true,
+                Name = "UDP READER"
+            };
             ReaderThread.Start();
         }
-
 
         internal void Kill()
         {
             Running = false;
 
             try { ReaderThread.Abort(); } catch { }
-            while (ReaderThread != null && ReaderThread.IsAlive) {
+            while (ReaderThread != null && ReaderThread.IsAlive)
+            {
                 System.Windows.Forms.Application.DoEvents();
                 Thread.Sleep(10);
             } //Lets wait for the thread to die
@@ -54,20 +50,22 @@ namespace RTCV.NetCore
 
         internal void SendMessage(NetCoreSimpleMessage message)
         {
-            if(Running)
+            if (Running)
             {
-                Byte[] sdata = Encoding.ASCII.GetBytes(message.Type);
+                byte[] sdata = Encoding.ASCII.GetBytes(message.Type);
                 Sender.Send(sdata, sdata.Length);
-				//Todo - Refactor this into a way to blacklist specific commands 
-				if(message.Type != "UI|KILLSWITCH_PULSE" || ConsoleEx.ShowDebug)
-					logger.Info("UDP : Sent simple message \"{type}\"", message.Type);
+                //Todo - Refactor this into a way to blacklist specific commands 
+                if (message.Type != "UI|KILLSWITCH_PULSE" || ConsoleEx.ShowDebug)
+                {
+                    logger.Info("UDP : Sent simple message \"{type}\"", message.Type);
+                }
             }
         }
 
         private void ListenToReader()
         {
             int port = (spec.Side == NetworkSide.SERVER ? PortClient : PortServer);
-            int UdpReceiveTimeout = Int32.MaxValue;
+            int UdpReceiveTimeout = int.MaxValue;
 
             UdpClient Listener = null;
             IPEndPoint groupEP = new IPEndPoint((IP == "127.0.0.1" ? IPAddress.Loopback : IPAddress.Any), port);
@@ -79,7 +77,6 @@ namespace RTCV.NetCore
 
                 while (Running)
                 {
-
                     try
                     {
                         if (Listener == null)
@@ -90,7 +87,7 @@ namespace RTCV.NetCore
                     }
                     catch (SocketException ex)
                     {
-                        if(ex.SocketErrorCode == SocketError.AddressAlreadyInUse)
+                        if (ex.SocketErrorCode == SocketError.AddressAlreadyInUse)
                         {
                             logger.Error("UDP Socket Port Collision");
                         }
@@ -98,7 +95,7 @@ namespace RTCV.NetCore
                         {
                             logger.Error(ex, "Error when opening socket.");
                         }
-                        
+
                         return;
                     }
                     catch (Exception ex)
@@ -111,8 +108,10 @@ namespace RTCV.NetCore
 
                     try
                     {
-						if(Listener.Available > 0)
-						    bytes = Listener.Receive(ref groupEP);
+                        if (Listener.Available > 0)
+                        {
+                            bytes = Listener.Receive(ref groupEP);
+                        }
                     }
                     catch (SocketException ex)
                     {
@@ -124,16 +123,21 @@ namespace RTCV.NetCore
                             continue;
                         }
                         else
+                        {
                             throw ex;
+                        }
                     }
-					if(bytes != null)
-						spec.Connector.hub.QueueMessage(new NetCoreSimpleMessage(Encoding.ASCII.GetString(bytes, 0, bytes.Length)));
+                    if (bytes != null)
+                    {
+                        spec.Connector.hub.QueueMessage(new NetCoreSimpleMessage(Encoding.ASCII.GetString(bytes, 0, bytes.Length)));
+                    }
 
                     //Sleep if there's no more data
                     if (Listener.Available == 0)
+                    {
                         Thread.Sleep(spec.messageReadTimerDelay);
+                    }
                 }
-
             }
             catch (ThreadAbortException)
             {
@@ -148,7 +152,6 @@ namespace RTCV.NetCore
                 Listener?.Client?.Close();
                 Listener?.Close();
             }
-
         }
     }
 }

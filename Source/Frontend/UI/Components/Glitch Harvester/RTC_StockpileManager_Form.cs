@@ -4,70 +4,70 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
-using NLog;
+using System.Windows.Forms;
 using RTCV.CorruptCore;
-using RTCV.NetCore;
-using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
-using RTCV.UI.Modular;
+using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
-	public partial class RTC_StockpileManager_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class RTC_StockpileManager_Form : ComponentForm, IAutoColorize, IBlockable
     {
-		public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-		public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         public bool DontLoadSelectedStockpile = false;
 
         private Color? originalSaveButtonColor = null;
-        private bool _UnsavedEdits= false;
+        private bool _UnsavedEdits = false;
         public bool UnsavedEdits
         {
-            get
-            {
-                return _UnsavedEdits;
-            }
+            get => _UnsavedEdits;
             set
             {
                 _UnsavedEdits = value;
-                
-                if(_UnsavedEdits && btnSaveStockpile.Enabled)
+
+                if (_UnsavedEdits && btnSaveStockpile.Enabled)
                 {
                     if (originalSaveButtonColor == null)
+                    {
                         originalSaveButtonColor = btnSaveStockpile.BackColor;
+                    }
 
                     btnSaveStockpile.BackColor = Color.Tomato;
                 }
                 else
                 {
                     if (originalSaveButtonColor != null)
+                    {
                         btnSaveStockpile.BackColor = originalSaveButtonColor.Value;
+                    }
                 }
             }
         }
 
         public RTC_StockpileManager_Form()
-		{
-			InitializeComponent();
+        {
+            InitializeComponent();
 
-			popoutAllowed = true;
+            popoutAllowed = true;
             this.undockedSizable = true;
 
-            dgvStockpile.RowsAdded += (o, e) => {
+            dgvStockpile.RowsAdded += (o, e) =>
+            {
                 RefreshNoteIcons();
             };
         }
 
         private void dgvStockpile_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex == -1)
+            if (e == null || e.RowIndex == -1)
+            {
                 return;
+            }
+
             try
             {
                 S.GET<RTC_StashHistory_Form>().btnAddStashToStockpile.Enabled = false;
@@ -97,16 +97,22 @@ namespace RTCV.UI
                 S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
 
                 if (dgvStockpile.SelectedRows.Count == 0)
+                {
                     return;
+                }
 
                 StockpileManager_UISide.CurrentStashkey = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
 
                 List<StashKey> keys = dgvStockpile.Rows.Cast<DataGridViewRow>().Select(x => (StashKey)x.Cells[0].Value).ToList();
                 if (!StockpileManager_UISide.CheckAndFixMissingReference(StockpileManager_UISide.CurrentStashkey, false, keys))
+                {
                     return;
+                }
 
                 if (!S.GET<RTC_GlitchHarvesterBlast_Form>().LoadOnSelect)
+                {
                     return;
+                }
 
                 // Merge Execution
                 if (dgvStockpile.SelectedRows.Count > 1)
@@ -114,13 +120,17 @@ namespace RTCV.UI
                     List<StashKey> sks = new List<StashKey>();
 
                     foreach (DataGridViewRow row in dgvStockpile.SelectedRows)
+                    {
                         sks.Add((StashKey)row.Cells[0].Value);
+                    }
                     //dgv is stupid since it selects rows backwards
                     sks.Reverse();
                     StockpileManager_UISide.MergeStashkeys(sks);
 
                     if (Render.RenderAtLoad && S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation)
+                    {
                         Render.StartRender();
+                    }
 
                     S.GET<RTC_StashHistory_Form>().RefreshStashHistory();
                     return;
@@ -134,7 +144,6 @@ namespace RTCV.UI
                 dgvStockpile.Enabled = true;
                 btnStockpileUP.Enabled = true;
                 btnStockpileDOWN.Enabled = true;
-                
             }
 
             S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
@@ -192,7 +201,6 @@ namespace RTCV.UI
                     var sk = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
                     StashKey newSk = (StashKey)sk.Clone();
                     S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newSk, false);
-
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
                 columnsMenu.Items.Add(new ToolStripSeparator());
@@ -207,7 +215,10 @@ namespace RTCV.UI
                 {
                     List<StashKey> sks = new List<StashKey>();
                     foreach (DataGridViewRow row in dgvStockpile.SelectedRows)
+                    {
                         sks.Add((StashKey)row.Cells[0].Value);
+                    }
+
                     StockpileManager_UISide.MergeStashkeys(sks);
                     S.GET<RTC_StashHistory_Form>().RefreshStashHistory();
                 }))).Enabled = (dgvStockpile.SelectedRows.Count > 1);
@@ -216,7 +227,9 @@ namespace RTCV.UI
                 {
                     List<StashKey> sks = new List<StashKey>();
                     foreach (DataGridViewRow row in dgvStockpile.SelectedRows)
+                    {
                         sks.Add((StashKey)row.Cells[0].Value);
+                    }
 
                     OpenFileDialog ofd = new OpenFileDialog
                     {
@@ -227,7 +240,7 @@ namespace RTCV.UI
                     };
                     if (ofd.ShowDialog() == DialogResult.OK)
                     {
-                        string filename = ofd.FileName.ToString();
+                        string filename = ofd.FileName;
                         string oldFilename = sks.First().RomFilename;
                         foreach (var sk in sks.Where(x => x.RomFilename == oldFilename))
                         {
@@ -254,8 +267,11 @@ namespace RTCV.UI
             {
                 StashKey sk = (StashKey)dataRow.Cells["Item"].Value;
                 if (sk == null)
+                {
                     continue;
-                if (String.IsNullOrWhiteSpace(sk.Note))
+                }
+
+                if (string.IsNullOrWhiteSpace(sk.Note))
                 {
                     dataRow.Cells["Note"].Value = "";
                 }
@@ -270,7 +286,7 @@ namespace RTCV.UI
         {
             string value = sk.Alias;
 
-            if (GetInputBox("Glitch Harvester", "Enter the new Stash name:", ref value) == DialogResult.OK && !String.IsNullOrWhiteSpace(value))
+            if (GetInputBox("Glitch Harvester", "Enter the new Stash name:", ref value) == DialogResult.OK && !string.IsNullOrWhiteSpace(value))
             {
                 sk.Alias = value.Trim();
             }
@@ -283,8 +299,9 @@ namespace RTCV.UI
         private void btnRenameSelected_Click(object sender, EventArgs e)
         {
             if (!btnRenameSelected.Visible)
+            {
                 return;
-
+            }
 
             if (dgvStockpile.SelectedRows.Count != 0)
             {
@@ -297,31 +314,37 @@ namespace RTCV.UI
             StockpileManager_UISide.StockpileChanged();
 
             UnsavedEdits = true;
-
         }
 
-        private void btnRemoveSelectedStockpile_Click(object sender, EventArgs e) => RemoveSelected();
+        private void btnRemoveSelectedStockpile_Click(object sender, EventArgs e)
+        {
+            RemoveSelected();
+        }
 
         public void RemoveSelected(bool force = false)
         {
-
             if (Control.ModifierKeys == Keys.Control || (dgvStockpile.SelectedRows.Count != 0 && (MessageBox.Show("Are you sure you want to remove the selected stockpile entries?", "Delete Stockpile Entry?", MessageBoxButtons.YesNo) == DialogResult.Yes)))
+            {
                 foreach (DataGridViewRow row in dgvStockpile.SelectedRows)
+                {
                     dgvStockpile.Rows.Remove(row);
+                }
+            }
 
             StockpileManager_UISide.StockpileChanged();
 
             UnsavedEdits = true;
 
             S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
-
         }
 
-        private void btnClearStockpile_Click(object sender, EventArgs e) => ClearStockpile();
+        private void btnClearStockpile_Click(object sender, EventArgs e)
+        {
+            ClearStockpile();
+        }
 
         public void ClearStockpile(bool force = false)
         {
-
             if (force || MessageBox.Show("Are you sure you want to clear the stockpile?", "Clearing stockpile", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 dgvStockpile.Rows.Clear();
@@ -331,10 +354,10 @@ namespace RTCV.UI
                 btnSaveStockpile.Enabled = false;
                 UnsavedEdits = false;
 
-                S.GET <RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
-
+                S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
             }
         }
+
         private async void LoadStockpile(string filename)
         {
             logger.Trace("Entered LoadStockpile {0}", Thread.CurrentThread.ManagedThreadId);
@@ -344,20 +367,20 @@ namespace RTCV.UI
                 return;
             }
 
-			var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
-			try
+            var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
+            try
             {
                 //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
                 //Thus, we want this to happen within the try block
                 UICore.SetHotkeyTimer(false);
-                
+
                 logger.Trace("Blocking UI");
                 UICore.LockInterface(false, true);
                 logger.Trace("UI Blocked");
 
                 logger.Trace("Opening SaveProgress Form");
                 S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
-				ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
+                ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
 
                 logger.Trace("Clearing Current Stockpile");
                 StockpileManager_UISide.ClearCurrentStockpile();
@@ -382,23 +405,26 @@ namespace RTCV.UI
 
                     logger.Trace("Populating DGV");
                     foreach (StashKey key in sks.StashKeys)
+                    {
                         dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.Note);
+                    }
 
                     btnSaveStockpile.Enabled = true;
                     RefreshNoteIcons();
 
-                    if(r.HasWarnings())
+                    if (r.HasWarnings())
+                    {
                         MessageBox.Show($"The stockpile gave the following warnings:\n" +
                                         $"{r.GetWarningsFormatted()}");
-                    
+                    }
                 }
 
-				dgvStockpile.ClearSelection();
-				StockpileManager_UISide.StockpileChanged();
+                dgvStockpile.ClearSelection();
+                StockpileManager_UISide.StockpileChanged();
 
-				UnsavedEdits = false;
-			}
-			finally
+                UnsavedEdits = false;
+            }
+            finally
             {
                 logger.Trace("Closing Save form");
                 ghForm?.CloseSubForm();
@@ -408,6 +434,7 @@ namespace RTCV.UI
                 logger.Trace("Load done");
             }
         }
+
         private async void ImportStockpile(string filename)
         {
             var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
@@ -428,7 +455,10 @@ namespace RTCV.UI
                     RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Populating UI", 95));
 
                     foreach (StashKey key in sks.StashKeys)
+                    {
                         dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.Note);
+                    }
+
                     UnsavedEdits = true;
 
                     RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Done", 100));
@@ -442,6 +472,7 @@ namespace RTCV.UI
                 RefreshNoteIcons();
             }
         }
+
         private async void SaveStockpile(Stockpile sks, string path)
         {
             logger.Trace("Entering SaveStockpile {0}\n{1}", System.Threading.Thread.CurrentThread.ManagedThreadId, Environment.StackTrace);
@@ -482,22 +513,26 @@ namespace RTCV.UI
 
             ContextMenuStrip loadMenuItems = new ContextMenuStrip();
             loadMenuItems.Items.Add("Load Stockpile", null, new EventHandler((ob, ev) =>
-			{
-				string filename = "";
-				OpenFileDialog ofd = new OpenFileDialog
-				{
-					DefaultExt = "sks",
-					Title = "Open Stockpile File",
-					Filter = "SKS files|*.sks",
-					RestoreDirectory = true
-				};
-				if (ofd.ShowDialog() == DialogResult.OK)
-					filename = ofd.FileName;
-				else
-					return;
+            {
+                string filename = "";
+                OpenFileDialog ofd = new OpenFileDialog
+                {
+                    DefaultExt = "sks",
+                    Title = "Open Stockpile File",
+                    Filter = "SKS files|*.sks",
+                    RestoreDirectory = true
+                };
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    filename = ofd.FileName;
+                }
+                else
+                {
+                    return;
+                }
+
                 LoadStockpile(filename);
             }));
-
 
             loadMenuItems.Items.Add($"Load {RtcCore.VanguardImplementationName} settings from Stockpile", null, new EventHandler((ob, ev) =>
             {
@@ -524,7 +559,10 @@ namespace RTCV.UI
                     if (UnsavedEdits && MessageBox.Show(
                         $"You have unsaved edits in the Glitch Harvester Stockpile. \n\n This will restart {RtcCore.VanguardImplementationName}. Are you sure you want to load without saving?",
                         "Unsaved edits in Stockpile", MessageBoxButtons.YesNo) == DialogResult.No)
+                    {
                         return;
+                    }
+
                     AutoKillSwitch.Enabled = false;
                     Stockpile.RestoreEmuConfig();
                     AutoKillSwitch.Enabled = true;
@@ -537,14 +575,13 @@ namespace RTCV.UI
             loadMenuItems.Show(this, locate);
         }
 
-        public async void btnSaveStockpileAs_Click(object sender, EventArgs e)
+        public void btnSaveStockpileAs_Click(object sender, EventArgs e)
         {
             if (dgvStockpile.Rows.Count == 0)
             {
                 MessageBox.Show("You cannot save the Stockpile because it is empty");
                 return;
             }
-
 
             UICore.SetHotkeyTimer(false);
             string path = "";
@@ -561,18 +598,19 @@ namespace RTCV.UI
                 path = saveFileDialog1.FileName;
             }
             else
+            {
                 return;
+            }
 
             Stockpile sks = new Stockpile(dgvStockpile);
             SaveStockpile(sks, path);
-
         }
 
         private void btnSaveStockpile_Click(object sender, EventArgs e)
         {
-			Stockpile sks = new Stockpile(dgvStockpile);
+            Stockpile sks = new Stockpile(dgvStockpile);
             SaveStockpile(sks, StockpileManager_UISide.GetCurrentStockpilePath());
-		}
+        }
 
         private void sendCurrentStockpileToSKS()
         {
@@ -620,7 +658,7 @@ namespace RTCV.UI
                 int pos = row.Index;
                 int count = dgvStockpile.Rows.Count;
                 dgvStockpile.Rows.RemoveAt(pos);
-                
+
                 if (pos == count - 1)
                 {
                     int newpos = 0;
@@ -662,27 +700,27 @@ namespace RTCV.UI
             e.Effect = DragDropEffects.Link;
         }
 
-
-
         private void btnImportStockpile_Click(object sender, EventArgs e)
-		{
-			OpenFileDialog ofd = new OpenFileDialog
-			{
-				DefaultExt = "*", 
-				Title = "Select stockpile to import",
-				Filter = "Any file|*.sks",
-				RestoreDirectory = true
-			};
-			if (ofd.ShowDialog() == DialogResult.OK)
-			{
-                ImportStockpile(ofd.FileName);
-			}
-		}
-		private void btnStockpileUP_Click(object sender, EventArgs e)
         {
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                DefaultExt = "*",
+                Title = "Select stockpile to import",
+                Filter = "Any file|*.sks",
+                RestoreDirectory = true
+            };
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                ImportStockpile(ofd.FileName);
+            }
+        }
 
+        private void btnStockpileUP_Click(object sender, EventArgs e)
+        {
             if (dgvStockpile.SelectedRows.Count == 0)
+            {
                 return;
+            }
 
             int currentSelectedIndex = dgvStockpile.SelectedRows[0].Index;
 
@@ -702,9 +740,10 @@ namespace RTCV.UI
 
         private void btnStockpileDOWN_Click(object sender, EventArgs e)
         {
-
             if (dgvStockpile.SelectedRows.Count == 0)
+            {
                 return;
+            }
 
             int currentSelectedIndex = dgvStockpile.SelectedRows[0].Index;
 
@@ -727,7 +766,6 @@ namespace RTCV.UI
             dgvStockpile.AllowDrop = true;
             dgvStockpile.DragDrop += dgvStockpile_DragDrop;
             dgvStockpile.DragEnter += dgvStockpile_DragEnter;
-
         }
 
         private void btnGlitchHarvesterSettings_MouseDown(object sender, MouseEventArgs e)
@@ -739,26 +777,30 @@ namespace RTCV.UI
             {
                 Font = new Font("Segoe UI", 12)
             });
-            
-            ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Compress Stockpiles", null, new EventHandler((ob, ev) => {
 
+            ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Compress Stockpiles", null, new EventHandler((ob, ev) =>
+            {
                 if (RTCV.NetCore.Params.IsParamSet("COMPRESS_STOCKPILE"))
+                {
                     RTCV.NetCore.Params.RemoveParam("COMPRESS_STOCKPILE");
+                }
                 else
+                {
                     RTCV.NetCore.Params.SetParam("COMPRESS_STOCKPILE");
-
+                }
             }))).Checked = RTCV.NetCore.Params.IsParamSet("COMPRESS_STOCKPILE");
 
             ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Include referenced files", null, new EventHandler((ob, ev) =>
             {
                 if (RTCV.NetCore.Params.IsParamSet("INCLUDE_REFERENCED_FILES"))
+                {
                     RTCV.NetCore.Params.RemoveParam("INCLUDE_REFERENCED_FILES");
+                }
                 else
+                {
                     RTCV.NetCore.Params.SetParam("INCLUDE_REFERENCED_FILES");
-
+                }
             }))).Checked = RTCV.NetCore.Params.IsParamSet("INCLUDE_REFERENCED_FILES");
-
-
 
             ghSettingsMenu.Show(this, locate);
         }

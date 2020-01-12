@@ -1,12 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using RTCV.CorruptCore;
 using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
@@ -20,7 +12,6 @@ namespace RTCV.UI
             UICore.SetRTCColor(UICore.GeneralColor, this);
         }
 
-
         public bool SubForm_HasLeftButton => true;
         public bool SubForm_HasRightButton => false;
         public string SubForm_LeftButtonText => "Exit";
@@ -28,27 +19,22 @@ namespace RTCV.UI
 
         public void SubForm_LeftButton_Click()
         {
-
         }
 
         public void SubForm_RightButton_Click()
         {
-
         }
 
         public void OnShown()
         {
-
         }
 
         public void OnHidden()
         {
-
         }
+
         private void UI_ComponentFormSubForm_Load(object sender, EventArgs e)
         {
         }
-
-        
     }
 }

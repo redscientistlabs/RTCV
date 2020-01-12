@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RTCV.CorruptCore.Tools
@@ -18,7 +17,6 @@ namespace RTCV.CorruptCore.Tools
     //From Bizhawk
     public static class NumberExtensions
     {
-
         public static string ToHexString(this int n, int numdigits)
         {
             return string.Format("{0:X" + numdigits + "}", n);
@@ -199,12 +197,12 @@ namespace RTCV.CorruptCore.Tools
 
         public static bool NotIn(this string str, params string[] options)
         {
-            return options.All(opt => opt.ToLower() != str.ToLower());
+            return options.All(opt => !string.Equals(opt, str, StringComparison.OrdinalIgnoreCase));
         }
 
         public static bool NotIn(this string str, IEnumerable<string> options)
         {
-            return options.All(opt => opt.ToLower() != str.ToLower());
+            return options.All(opt => !string.Equals(opt, str, StringComparison.OrdinalIgnoreCase));
         }
 
         public static int HowMany(this string str, char c)
@@ -561,7 +559,7 @@ namespace RTCV.CorruptCore.Tools
             CharacterCasing = CharacterCasing.Upper;
         }
 
-        public bool Nullable { get { return _nullable; } set { _nullable = value; } }
+        public bool Nullable { get => _nullable; set => _nullable = value; }
 
         public void SetHexProperties(long domainSize)
         {
@@ -575,16 +573,26 @@ namespace RTCV.CorruptCore.Tools
 
             //try to preserve the old value, as best we can
             if (!wasMaxSizeSet)
+            {
                 ResetText();
+            }
             else if (_nullable)
+            {
                 Text = "";
+            }
             else if (MaxLength != currMaxLength)
             {
                 long? value = ToLong();
                 if (value.HasValue)
+                {
                     value = value.Value & ((1L << (MaxLength * 4)) - 1);
-                else value = 0;
-                Text = String.Format(_addressFormatStr, value.Value);
+                }
+                else
+                {
+                    value = 0;
+                }
+
+                Text = string.Format(_addressFormatStr, value.Value);
             }
         }
 
@@ -600,7 +608,7 @@ namespace RTCV.CorruptCore.Tools
 
         public override void ResetText()
         {
-            Text = _nullable ? "" : String.Format(_addressFormatStr, 0);
+            Text = _nullable ? "" : string.Format(_addressFormatStr, 0);
         }
 
         protected override void OnKeyPress(KeyPressEventArgs e)
@@ -620,7 +628,7 @@ namespace RTCV.CorruptCore.Tools
         {
             if (e.KeyCode == Keys.Up)
             {
-                if (Text.IsHex() && !String.IsNullOrEmpty(_addressFormatStr))
+                if (Text.IsHex() && !string.IsNullOrEmpty(_addressFormatStr))
                 {
                     var val = (uint)ToRawInt();
 
@@ -633,12 +641,12 @@ namespace RTCV.CorruptCore.Tools
                         val++;
                     }
 
-                    Text = String.Format(_addressFormatStr, val);
+                    Text = string.Format(_addressFormatStr, val);
                 }
             }
             else if (e.KeyCode == Keys.Down)
             {
-                if (Text.IsHex() && !String.IsNullOrEmpty(_addressFormatStr))
+                if (Text.IsHex() && !string.IsNullOrEmpty(_addressFormatStr))
                 {
                     var val = (uint)ToRawInt();
                     if (val == 0)
@@ -650,7 +658,7 @@ namespace RTCV.CorruptCore.Tools
                         val--;
                     }
 
-                    Text = String.Format(_addressFormatStr, val);
+                    Text = string.Format(_addressFormatStr, val);
                 }
             }
             else
@@ -661,7 +669,7 @@ namespace RTCV.CorruptCore.Tools
 
         protected override void OnTextChanged(EventArgs e)
         {
-            if (String.IsNullOrWhiteSpace(Text))
+            if (string.IsNullOrWhiteSpace(Text))
             {
                 ResetText();
                 SelectAll();
@@ -673,7 +681,7 @@ namespace RTCV.CorruptCore.Tools
 
         public int? ToRawInt()
         {
-            if (String.IsNullOrWhiteSpace(Text))
+            if (string.IsNullOrWhiteSpace(Text))
             {
                 if (Nullable)
                 {
@@ -683,22 +691,22 @@ namespace RTCV.CorruptCore.Tools
                 return 0;
             }
 
-            return Int32.Parse(Text, NumberStyles.HexNumber);
+            return int.Parse(Text, NumberStyles.HexNumber);
         }
 
         public void SetFromRawInt(int? val)
         {
-            Text = val.HasValue ? String.Format(_addressFormatStr, val) : "";
+            Text = val.HasValue ? string.Format(_addressFormatStr, val) : "";
         }
 
         public void SetFromLong(long val)
         {
-            Text = String.Format(_addressFormatStr, val);
+            Text = string.Format(_addressFormatStr, val);
         }
 
         public long? ToLong()
         {
-            if (String.IsNullOrWhiteSpace(Text))
+            if (string.IsNullOrWhiteSpace(Text))
             {
                 if (Nullable)
                 {
@@ -708,7 +716,7 @@ namespace RTCV.CorruptCore.Tools
                 return 0;
             }
 
-            return Int64.Parse(Text, NumberStyles.HexNumber);
+            return long.Parse(Text, NumberStyles.HexNumber);
         }
     }
 }

@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Ceras;
-using NLog;
 
 namespace RTCV.NetCore
 {
-
     public enum NetworkSide
     {
         NONE,
@@ -28,40 +23,43 @@ namespace RTCV.NetCore
         LISTENING
     }
 
-	public class NetCoreReceiver
-	{
-		public bool Attached = false;
-		public event EventHandler<NetCoreEventArgs> MessageReceived;
-		public virtual void OnMessageReceived(NetCoreEventArgs e)
+    public class NetCoreReceiver
+    {
+        public bool Attached = false;
+        public event EventHandler<NetCoreEventArgs> MessageReceived;
+        public virtual void OnMessageReceived(NetCoreEventArgs e)
         {
             if (MessageReceived == null)
-                throw new Exception ("No registered handler for MessageReceived!");
+            {
+                throw new Exception("No registered handler for MessageReceived!");
+            }
+
             MessageReceived.Invoke(this, e);
         }
     }
 
-	[Serializable()]
-	[Ceras.MemberConfig(TargetMember.All)]
-	public abstract class NetCoreMessage
+    [Serializable()]
+    [Ceras.MemberConfig(TargetMember.All)]
+    public abstract class NetCoreMessage
     {
         public string Type;
     }
 
     [Serializable()]
-	[Ceras.MemberConfig(TargetMember.All)]
-	public class NetCoreSimpleMessage : NetCoreMessage
-	{
-		public NetCoreSimpleMessage()
-		{
-		}
-		public NetCoreSimpleMessage(string _Type)
+    [Ceras.MemberConfig(TargetMember.All)]
+    public class NetCoreSimpleMessage : NetCoreMessage
+    {
+        public NetCoreSimpleMessage()
+        {
+        }
+        public NetCoreSimpleMessage(string _Type)
         {
             Type = _Type.Trim().ToUpper();
         }
     }
 
     [Serializable()]
-	[Ceras.MemberConfig(TargetMember.All)]
+    [Ceras.MemberConfig(TargetMember.All)]
     public class NetCoreAdvancedMessage : NetCoreMessage
     {
         public string ReturnedFrom;
@@ -69,11 +67,10 @@ namespace RTCV.NetCore
         public Guid? requestGuid = null;
         public object objectValue = null;
 
-		public NetCoreAdvancedMessage()
-		{
-
-		}
-		public NetCoreAdvancedMessage(string _Type)
+        public NetCoreAdvancedMessage()
+        {
+        }
+        public NetCoreAdvancedMessage(string _Type)
         {
             Type = _Type.Trim().ToUpper();
         }
@@ -94,24 +91,21 @@ namespace RTCV.NetCore
         public NetworkSide Side = NetworkSide.NONE;
         public bool AutoReconnect = true;
         public int ClientReconnectDelay = 1500;
-		public int DefaultBoopMonitoringCounter = System.Diagnostics.Debugger.IsAttached ? 1500 : 20;
+        public int DefaultBoopMonitoringCounter = System.Diagnostics.Debugger.IsAttached ? 1500 : 20;
 
-		public bool Attached = true;
-		public bool Loopback = true;
+        public bool Attached = true;
+        public bool Loopback = true;
         public string IP = "127.0.0.1";
         public int Port = 42069;
 
         public int messageReadTimerDelay = 5; //represents how often the messages are read (ms) (15ms = ~66fps)
         private Mutex StatusEventLockout = new Mutex();
-        private bool locked = true;
         private protected static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public ISynchronizeInvoke syncObject
         {
-            get { return _syncObject; }
-            set {
-                _syncObject = value;
-            }
+            get => _syncObject;
+            set => _syncObject = value;
         }
 
         private ISynchronizeInvoke _syncObject = null;
@@ -444,7 +438,7 @@ namespace RTCV.NetCore
 
         #endregion
 
-        public bool LockStatusEventLockout(int timeout = Int32.MaxValue)
+        public bool LockStatusEventLockout(int timeout = int.MaxValue)
         {
             bool s = false;
             logger.Trace("Thread id {0} requested Lock StatusEventLockout Mutex.", Thread.CurrentThread.ManagedThreadId);
@@ -453,7 +447,7 @@ namespace RTCV.NetCore
                 s = StatusEventLockout.WaitOne(timeout);
                 logger.Trace("Thread id {0} got StatusEventLockout Mutex.", Thread.CurrentThread.ManagedThreadId);
             }
-            catch (AbandonedMutexException ame)
+            catch (AbandonedMutexException)
             {
                 logger.Trace("Thread id {0} got StatusEventLockout Mutex (AbandonedMutexException).",
                     Thread.CurrentThread.ManagedThreadId);
@@ -462,12 +456,12 @@ namespace RTCV.NetCore
             {
                 logger.Trace(ex, "Exception!");
             }
-            
+
             return s;
         }
+
         public void UnlockLockStatusEventLockout()
         {
-            bool s = false;
             logger.Trace("Thread id {0} requested Unlock StatusEventLockout Mutex.", Thread.CurrentThread.ManagedThreadId);
             try
             {
@@ -479,7 +473,6 @@ namespace RTCV.NetCore
                 logger.Trace(ex, "Exception!");
             }
         }
-
     }
 
     public class ConsoleEx
@@ -491,11 +484,15 @@ namespace RTCV.NetCore
             get
             {
                 if (_singularity == null)
+                {
                     _singularity = new ConsoleEx();
+                }
+
                 return _singularity;
             }
         }
-        static ConsoleEx _singularity = null;
+
+        private static ConsoleEx _singularity = null;
         public ISynchronizeInvoke syncObject = null; //This can contain the form or anything that implements it.
 
         public void Register(Action<object, NetCoreEventArgs> registrant, ISynchronizeInvoke _syncObject = null)
@@ -515,32 +512,34 @@ namespace RTCV.NetCore
             Delegate[] invocationList = eventInstance?.GetInvocationList() ?? new Delegate[] { };
             MethodInfo eventRemoveMethodInfo = typeof(ConsoleEx).GetEvent("ConsoleWritten").GetRemoveMethod(true);
             foreach (Delegate eventHandler in invocationList)
+            {
                 eventRemoveMethodInfo.Invoke(ConsoleEx.singularity, new object[] { eventHandler });
+            }
         }
 
         public event EventHandler<NetCoreEventArgs> ConsoleWritten;
         public virtual void OnConsoleWritten(NetCoreEventArgs e)
         {
             if (syncObject != null)
+            {
                 if (syncObject.InvokeRequired)
                 {
-                    syncObject.Invoke(new MethodInvoker(() => { OnConsoleWritten(e); }),null);
+                    syncObject.Invoke(new MethodInvoker(() => { OnConsoleWritten(e); }), null);
                     return;
                 }
+            }
 
             ConsoleWritten?.Invoke(this, e);
         }
 
-        public bool HasConsoleEventHandler
-        {
-            get { return ConsoleWritten != null; }
-        }
+        public bool HasConsoleEventHandler => ConsoleWritten != null;
 
         public static void WriteLine(string message)
         {
-
             if (!ShowDebug && (message.Contains("{BOOP}") || message.StartsWith("{EVENT_")))
+            {
                 return;
+            }
 
             string consoleLine = "[" + DateTime.Now.ToString("hh:mm:ss.ffff") + "] " + message;
 

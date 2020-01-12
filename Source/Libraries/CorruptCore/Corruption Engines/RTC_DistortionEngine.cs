@@ -1,38 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-using RTCV.NetCore;
+﻿using RTCV.NetCore;
 
 namespace RTCV.CorruptCore
 {
-	public static class RTC_DistortionEngine
-	{
-		public static int Delay
-		{
-			get => (int)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.DISTORTION_DELAY.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.DISTORTION_DELAY.ToString(), value);
-		}
-		public static PartialSpec getDefaultPartial()
-		{
-			var partial = new PartialSpec("RTCSpec");
-			partial[RTCSPEC.DISTORTION_DELAY.ToString()] = 50;
+    public static class RTC_DistortionEngine
+    {
+        public static int Delay
+        {
+            get => (int)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.DISTORTION_DELAY];
+            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.DISTORTION_DELAY, value);
+        }
 
-			return partial;
-		}
+        public static PartialSpec getDefaultPartial()
+        {
+            var partial = new PartialSpec("RTCSpec");
+            partial[RTCSPEC.DISTORTION_DELAY] = 50;
 
-		public static BlastUnit GenerateUnit(string domain, long address, int precision, int alignment)
-		{
-			// Randomly selects a memory operation according to the selected algorithm
-			
-			
-			if (domain == null)
-				return null;
-			MemoryInterface mi = MemoryDomains.GetInterface(domain);
-			long safeAddress = address - (address % precision) + alignment;
-			if (safeAddress > mi.Size - precision && mi.Size > precision)
+            return partial;
+        }
+
+        public static BlastUnit GenerateUnit(string domain, long address, int precision, int alignment)
+        {
+            // Randomly selects a memory operation according to the selected algorithm
+
+            if (domain == null)
+            {
+                return null;
+            }
+
+            MemoryInterface mi = MemoryDomains.GetInterface(domain);
+            long safeAddress = address - (address % precision) + alignment;
+            if (safeAddress > mi.Size - precision && mi.Size > precision)
+            {
                 safeAddress = mi.Size - (2 * precision) + alignment; //If we're out of range, hit the last aligned address
-            return new BlastUnit(StoreType.ONCE, StoreTime.IMMEDIATE, domain, safeAddress, domain, safeAddress, precision, mi.BigEndian, Delay, 1);
-		}
+            }
 
-	}
+            return new BlastUnit(StoreType.ONCE, StoreTime.IMMEDIATE, domain, safeAddress, domain, safeAddress, precision, mi.BigEndian, Delay, 1);
+        }
+    }
 }

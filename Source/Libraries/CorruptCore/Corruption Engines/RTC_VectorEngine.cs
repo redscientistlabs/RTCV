@@ -1,5 +1,4 @@
-﻿using System;
-using RTCV.NetCore;
+﻿using RTCV.NetCore;
 
 namespace RTCV.CorruptCore
 {
@@ -7,13 +6,13 @@ namespace RTCV.CorruptCore
     {
         public static string LimiterListHash
         {
-            get => (string) AllSpec.CorruptCoreSpec[RTCSPEC.VECTOR_LIMITERLISTHASH];
+            get => (string)AllSpec.CorruptCoreSpec[RTCSPEC.VECTOR_LIMITERLISTHASH];
             set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.VECTOR_LIMITERLISTHASH, value);
         }
 
         public static string ValueListHash
         {
-            get => (string) AllSpec.CorruptCoreSpec[RTCSPEC.VECTOR_VALUELISTHASH];
+            get => (string)AllSpec.CorruptCoreSpec[RTCSPEC.VECTOR_VALUELISTHASH];
             set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.VECTOR_VALUELISTHASH, value);
         }
 
@@ -27,25 +26,32 @@ namespace RTCV.CorruptCore
             return partial;
         }
 
-
         public static BlastUnit GenerateUnit(string domain, long address, int alignment)
         {
             if (domain == null)
+            {
                 return null;
+            }
 
             long safeAddress = address - (address % 4) + alignment; //32-bit trunk
 
-
             MemoryInterface mi = MemoryDomains.GetInterface(domain);
             if (mi == null)
+            {
                 return null;
+            }
 
-			if (safeAddress > mi.Size - 4)
-				safeAddress = mi.Size - 8 + alignment; //If we're out of range, hit the last aligned address
+            if (safeAddress > mi.Size - 4)
+            {
+                safeAddress = mi.Size - 8 + alignment; //If we're out of range, hit the last aligned address
+            }
             //Enforce the safeaddress at generation
             if (Filtering.LimiterPeekBytes(safeAddress, safeAddress + 4, domain, LimiterListHash, mi))
+            {
                 return new BlastUnit(Filtering.GetRandomConstant(ValueListHash, 4), domain, safeAddress, 4,
                     mi.BigEndian, 0, 1, null, true, false, true);
+            }
+
             return null;
         }
     }

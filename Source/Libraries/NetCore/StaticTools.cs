@@ -3,29 +3,26 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace RTCV.NetCore.StaticTools
 {
+    // Implementing this interface causes auto-coloration.
+    public interface IAutoColorize { }
 
-
-	// Implementing this interface causes auto-coloration.
-	public interface IAutoColorize { }
-
-	//Static singleton manager
-	//Call or create a singleton using class type
-	public static class S
-	{
-		static readonly ConcurrentDictionary<Type, object> instances = new ConcurrentDictionary<Type, object>();
-		public static FormRegister formRegister = new FormRegister();
+    //Static singleton manager
+    //Call or create a singleton using class type
+    public static class S
+    {
+        private static readonly ConcurrentDictionary<Type, object> instances = new ConcurrentDictionary<Type, object>();
+        public static FormRegister formRegister = new FormRegister();
         private static object lockObject = new object();
 
-
         [ThreadStatic]
-        public static volatile Dictionary<int,List<string>> InvokeStackTraces = new Dictionary<int, List<string>>();
-        static readonly object dicoLock = new object();
+        public static volatile Dictionary<int, List<string>> InvokeStackTraces = new Dictionary<int, List<string>>();
+
+        private static readonly object dicoLock = new object();
+
         public static void InvokeLog(this ISynchronizeInvoke si, Delegate method, object[] args)
         {
             int pid = Thread.CurrentThread.ManagedThreadId;
@@ -34,14 +31,18 @@ namespace RTCV.NetCore.StaticTools
             bool listExists;
 
             lock (dicoLock)
+            {
                 listExists = InvokeStackTraces.TryGetValue(32, out IST);
+            }
 
             if (listExists)
             {
                 IST = new List<string>();
 
                 lock (dicoLock)
+                {
                     InvokeStackTraces.Add(pid, IST);
+                }
             }
             IST.Add(Environment.StackTrace);
 
@@ -52,33 +53,36 @@ namespace RTCV.NetCore.StaticTools
             {
                 InvokeStackTraces.Remove(InvokeStackTraces.Count - 1);
                 if (InvokeStackTraces.Count == 0)
+                {
                     InvokeStackTraces.Remove(pid);
+                }
             }
         }
 
-
-		public static bool ISNULL<T>()
-		{
-            Type typ = typeof(T);
-            return instances.ContainsKey(typ);
-		}
-
-		public static T GET<T>()
+        public static bool ISNULL<T>()
         {
             Type typ = typeof(T);
-            
+            return instances.ContainsKey(typ);
+        }
+
+        public static T GET<T>()
+        {
+            Type typ = typeof(T);
+
             if (!instances.TryGetValue(typ, out object o))
             {
-                lock(lockObject)
+                lock (lockObject)
                 {
                     //Check again in case we had stacked threads
-                    if(!instances.TryGetValue(typ, out o))
+                    if (!instances.TryGetValue(typ, out o))
                     {
                         o = Activator.CreateInstance(typ);
                         instances[typ] = o;
-            
+
                         if (typ.IsSubclassOf(typeof(System.Windows.Forms.Form)))
+                        {
                             formRegister.OnFormRegistered(new NetCoreEventArgs("FORMREGISTER", instances[typ]));
+                        }
                     }
                 }
             }
@@ -109,13 +113,14 @@ namespace RTCV.NetCore.StaticTools
                         instances[typ] = o;
 
                         if (typ.IsSubclassOf(typeof(System.Windows.Forms.Form)))
+                        {
                             formRegister.OnFormRegistered(new NetCoreEventArgs("FORMREGISTER", instances[typ]));
+                        }
                     }
                 }
             }
             return o;
         }
-
 
         public static void SET<T>(T newTyp)
         {
@@ -123,22 +128,25 @@ namespace RTCV.NetCore.StaticTools
             {
                 Type typ = typeof(T);
                 if (newTyp == null)
+                {
                     instances.TryRemove(typ, out _);
+                }
                 else
+                {
                     instances[typ] = newTyp;
+                }
 
                 if (typ.IsSubclassOf(typeof(System.Windows.Forms.Form)))
+                {
                     formRegister.OnFormRegistered(new NetCoreEventArgs("FORMREGISTER", instances[typ]));
+                }
             }
         }
-
-
     }
 
-	public class FormRegister
-	{
-		public event EventHandler<NetCoreEventArgs> FormRegistered;
-		public virtual void OnFormRegistered(NetCoreEventArgs e) => FormRegistered?.Invoke(this, e);
-	}
-
+    public class FormRegister
+    {
+        public event EventHandler<NetCoreEventArgs> FormRegistered;
+        public virtual void OnFormRegistered(NetCoreEventArgs e) => FormRegistered?.Invoke(this, e);
+    }
 }
