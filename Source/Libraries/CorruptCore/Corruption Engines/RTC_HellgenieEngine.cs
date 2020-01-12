@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
-using RTCV.NetCore;
+﻿using RTCV.NetCore;
 
 namespace RTCV.CorruptCore
 {
@@ -76,14 +74,19 @@ namespace RTCV.CorruptCore
 
 
             if (domain == null)
+            {
                 return null;
+            }
+
             MemoryInterface mi = MemoryDomains.GetInterface(domain);
 
-            Byte[] value = new Byte[precision];
+            byte[] value = new byte[precision];
 
             long safeAddress = address - (address % precision) + alignment;
             if (safeAddress > mi.Size - precision && mi.Size > precision)
+            {
                 safeAddress = mi.Size - (2 * precision) + alignment; //If we're out of range, hit the last aligned address
+            }
 
             ulong randomValue = 0;
             bool def = false;
@@ -107,10 +110,16 @@ namespace RTCV.CorruptCore
             }
 
             if (def)
+            {
                 for (int i = 0; i < precision; i++)
+                {
                     value[i] = (byte)RtcCore.RND.Next();
+                }
+            }
             else
+            {
                 value = CorruptCore_Extensions.GetByteArrayValue(precision, randomValue, true);
+            }
 
             return new BlastUnit(value, domain, safeAddress, precision, mi.BigEndian, 0, 0);
 

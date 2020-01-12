@@ -7,11 +7,9 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RTCV.NetCore;
-using RTCV.CorruptCore;
 
 namespace RTCV.CorruptCore.Tools
 {
@@ -54,10 +52,7 @@ namespace RTCV.CorruptCore.Tools
 
         private int DataSize { get; set; }
 
-        private Dictionary<string, MemoryInterface> AllDomains
-        {
-            get => MemoryDomains.AllMemoryInterfaces;
-        }
+        private Dictionary<string, MemoryInterface> AllDomains => MemoryDomains.AllMemoryInterfaces;
         public volatile bool UpdateOnStep = true;
         public volatile bool HideOnClose = true;
 
@@ -131,10 +126,7 @@ namespace RTCV.CorruptCore.Tools
 
         #region API
 
-        public bool UpdateBefore
-        {
-            get { return false; }
-        }
+        public bool UpdateBefore => false;
 
         public bool AskSaveChanges()
         {
@@ -402,7 +394,7 @@ namespace RTCV.CorruptCore.Tools
 
         private static char ForceCorrectKeyString(char keycode)
         {
-            return (char)keycode;
+            return keycode;
         }
 
         private static bool IsHexKeyCode(char key)
@@ -556,7 +548,13 @@ namespace RTCV.CorruptCore.Tools
                         char c = Remap(b);
                         rowStr.Append(c);
                         //winforms will be using these as escape codes for hotkeys
-                        if (forWindow) if (c == '&') rowStr.Append('&');
+                        if (forWindow)
+                        {
+                            if (c == '&')
+                            {
+                                rowStr.Append('&');
+                            }
+                        }
                     }
                 }
 
@@ -918,7 +916,10 @@ namespace RTCV.CorruptCore.Tools
 
         private void CreateVMDFromSelectedMenuItem_Click(object sender, EventArgs e)
         {
-            if (HighlightedAddress == null) return;
+            if (HighlightedAddress == null)
+            {
+                return;
+            }
 
             List<long> allAddresses = new List<long>() { HighlightedAddress.Value };
             allAddresses.AddRange(_secondaryHighlightedAddresses);
@@ -932,13 +933,16 @@ namespace RTCV.CorruptCore.Tools
 
             int allAddrCount = allAddresses.Count;
             if (wordSize > 1) //fills the gap caused by address spacing
+            {
                 for (int addrPos = 0; addrPos < allAddrCount; addrPos++)
+                {
                     for (int addedCount = 1; addedCount < wordSize; addedCount++)
                     {
                         long newAddr = allAddresses[addrPos] + addedCount;
                         allAddresses.Add(newAddr);
                     }
-
+                }
+            }
 
             var ordered = allAddresses.OrderBy(it => it).ToArray();
 
@@ -950,9 +954,15 @@ namespace RTCV.CorruptCore.Tools
             foreach (long item in ordered)
             {
                 if (lastAddress != null) //not the first one
+                {
                     if (i != (ordered.Length - 1)) //not the last one
+                    {
                         if (item != lastAddress.Value + 1) //checks expected address
+                        {
                             contiguous = false;
+                        }
+                    }
+                }
 
                 lastAddress = item;
                 i++;
@@ -970,7 +980,7 @@ namespace RTCV.CorruptCore.Tools
             }
             else
             {
-                text = String.Join("\n", ordered.Select(it => ToHexString(it)));
+                text = string.Join("\n", ordered.Select(it => ToHexString(it)));
             }
             CreateVmdText(domain, text);
         }
@@ -1095,21 +1105,27 @@ namespace RTCV.CorruptCore.Tools
             FindNextMenuItem.Enabled = !string.IsNullOrWhiteSpace(_findStr);
         }
 
-        string MakeCopyExportString(bool export)
+        private string MakeCopyExportString(bool export)
         {
             //make room for an array with _secondaryHighlightedAddresses and optionally HighlightedAddress
             long[] addresses = new long[_secondaryHighlightedAddresses.Count + (HighlightedAddress.HasValue ? 1 : 0)];
 
             //if there was actually nothing to do, return
             if (addresses.Length == 0)
+            {
                 return null;
+            }
 
             //fill the array with _secondaryHighlightedAddresses
             for (int i = 0; i < _secondaryHighlightedAddresses.Count; i++)
+            {
                 addresses[i] = _secondaryHighlightedAddresses[i];
+            }
             //and add HighlightedAddress if present
             if (HighlightedAddress.HasValue)
+            {
                 addresses[addresses.Length - 1] = HighlightedAddress.Value;
+            }
 
             //these need to be sorted. it's not just for HighlightedAddress, _secondaryHighlightedAddresses can even be jumbled
             Array.Sort(addresses);
@@ -1120,12 +1136,16 @@ namespace RTCV.CorruptCore.Tools
 
             //generate it differently for export (as you see it) or copy (raw bytes)
             if (export)
+            {
                 for (int i = 0; i < addresses.Length; i++)
                 {
                     sb.Append(ValueString(addresses[i]));
                     if (i != addresses.Length - 1)
+                    {
                         sb.Append(' ');
+                    }
                 }
+            }
             else
             {
                 for (int i = 0; i < addresses.Length; i++)
@@ -1147,14 +1167,18 @@ namespace RTCV.CorruptCore.Tools
         {
             var value = MakeCopyExportString(true);
             if (!string.IsNullOrEmpty(value))
+            {
                 Clipboard.SetDataObject(value);
+            }
         }
 
         private void CopyMenuItem_Click(object sender, EventArgs e)
         {
             var value = MakeCopyExportString(false);
             if (!string.IsNullOrEmpty(value))
+            {
                 Clipboard.SetDataObject(value);
+            }
         }
 
         private void PasteMenuItem_Click(object sender, EventArgs e)
@@ -1162,7 +1186,9 @@ namespace RTCV.CorruptCore.Tools
             var data = Clipboard.GetDataObject();
 
             if (data != null && !data.GetDataPresent(DataFormats.Text))
+            {
                 return;
+            }
 
             var clipboardRaw = (string)data.GetData(DataFormats.Text);
             var hex = clipboardRaw.OnlyHex();
@@ -1634,7 +1660,7 @@ namespace RTCV.CorruptCore.Tools
                         var temp = _nibbles[0].ToString() + _nibbles[1];
                         var x1 = byte.Parse(temp, NumberStyles.HexNumber);
 
-                        var temp2 = _nibbles[2].ToString() + ((char)e.KeyChar);
+                        var temp2 = _nibbles[2].ToString() + e.KeyChar;
                         var x2 = byte.Parse(temp2, NumberStyles.HexNumber);
 
                         PokeWord(_addressHighlighted, x1, x2);
@@ -1797,7 +1823,7 @@ namespace RTCV.CorruptCore.Tools
                 {
                     if (_domain.ToString() == bu.Domain)
                     {
-                        var gaps = (int)bu.Precision - (int)DataSize;
+                        var gaps = bu.Precision - DataSize;
 
                         if (bu.Precision == 4 && DataSize == 2)
                         {
@@ -1806,7 +1832,7 @@ namespace RTCV.CorruptCore.Tools
 
                         if (gaps < 0) { gaps = 0; }
 
-                        var width = (fontWidth * 2 * (int)bu.Precision) + (gaps * fontWidth);
+                        var width = (fontWidth * 2 * bu.Precision) + (gaps * fontWidth);
 
                         var rect = new Rectangle(GetAddressCoordinates(bu.Address), new Size(width, fontHeight));
                         e.Graphics.DrawRectangle(new Pen(Brushes.Black), rect);
@@ -1927,7 +1953,7 @@ namespace RTCV.CorruptCore.Tools
             }
         }
 
-        bool _programmaticallyChangingValue = false;
+        private bool _programmaticallyChangingValue = false;
         private void HexScrollBar_ValueChanged(object sender, EventArgs e)
         {
             if (!_programmaticallyChangingValue)

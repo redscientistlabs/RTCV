@@ -265,10 +265,15 @@ namespace RTCV.CorruptCore
             while (StartPos < Data.Length)
             {
                 while ((StartPos < Data.Length) && (Data.modified[StartPos] == false))
+                {
                     StartPos++;
+                }
+
                 EndPos = StartPos;
                 while ((EndPos < Data.Length) && (Data.modified[EndPos] == true))
+                {
                     EndPos++;
+                }
 
                 if ((EndPos < Data.Length) && (Data.data[StartPos] == Data.data[EndPos]))
                 {
@@ -333,7 +338,9 @@ namespace RTCV.CorruptCore
             {
                 s = Lines[i];
                 if (trimSpace)
+                {
                     s = s.Trim();
+                }
 
                 if (ignoreSpace)
                 {
@@ -341,7 +348,9 @@ namespace RTCV.CorruptCore
                 }
 
                 if (ignoreCase)
+                {
                     s = s.ToLower();
+                }
 
                 aCode = h[s];
                 if (aCode == null)
@@ -412,7 +421,9 @@ namespace RTCV.CorruptCore
                     {
                         x = DownVector[DownOffset + k - 1] + 1; // a step to the right
                         if ((k < DownK + D) && (DownVector[DownOffset + k + 1] >= x))
+                        {
                             x = DownVector[DownOffset + k + 1]; // down
+                        }
                     }
                     y = x - k;
 
@@ -452,7 +463,9 @@ namespace RTCV.CorruptCore
                     {
                         x = UpVector[UpOffset + k + 1] - 1; // left
                         if ((k > UpK - D) && (UpVector[UpOffset + k - 1] < x))
+                        {
                             x = UpVector[UpOffset + k - 1]; // up
+                        }
                     } // if
                     y = x - k;
 
@@ -514,13 +527,17 @@ namespace RTCV.CorruptCore
             {
                 // mark as inserted lines.
                 while (LowerB < UpperB)
+                {
                     DataB.modified[LowerB++] = true;
+                }
             }
             else if (LowerB == UpperB)
             {
                 // mark as deleted lines.
                 while (LowerA < UpperA)
+                {
                     DataA.modified[LowerA++] = true;
+                }
             }
             else
             {
@@ -565,12 +582,16 @@ namespace RTCV.CorruptCore
                     StartB = LineB;
 
                     while (LineA < DataA.Length && (LineB >= DataB.Length || DataA.modified[LineA]))
+                    {
                         // while (LineA < DataA.Length && DataA.modified[LineA])
                         LineA++;
+                    }
 
                     while (LineB < DataB.Length && (LineA >= DataA.Length || DataB.modified[LineB]))
+                    {
                         // while (LineB < DataB.Length && DataB.modified[LineB])
                         LineB++;
+                    }
 
                     if ((StartA < LineA) || (StartB < LineB))
                     {

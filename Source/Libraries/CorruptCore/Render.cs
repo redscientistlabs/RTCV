@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using RTCV.CorruptCore;
+﻿using System.Windows.Forms;
 using RTCV.NetCore;
 
 namespace RTCV.CorruptCore
@@ -53,7 +46,9 @@ namespace RTCV.CorruptCore
 
 
             if (IsRendering)
+            {
                 StopRender();
+            }
 
             IsRendering = true;
             LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RENDER_START, true);

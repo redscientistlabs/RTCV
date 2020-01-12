@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
-using RTCV.CorruptCore;
 using RTCV.NetCore;
 
 namespace RTCV.CorruptCore
@@ -24,7 +22,9 @@ namespace RTCV.CorruptCore
         public static bool LoadRom_NET(StashKey sk)
         {
             if (sk == null)
+            {
                 return false;
+            }
 
             StashKey.SetCore(sk);
             LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_LOADROM, sk.RomFilename, true);
@@ -42,7 +42,9 @@ namespace RTCV.CorruptCore
         public static bool LoadState_NET(StashKey sk, bool applyBlastLayer = true)
         {
             if (sk == null)
+            {
                 return false;
+            }
 
             bool useStates = (AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] as bool? ?? false);
 
@@ -118,10 +120,12 @@ namespace RTCV.CorruptCore
             if (_sk == null)
             {
                 Key = RtcCore.GetRandomKey();
-                statePath = LocalNetCoreRouter.QueryRoute<String>(NetcoreCommands.VANGUARD, NetcoreCommands.SAVESAVESTATE, Key, true);
+                statePath = LocalNetCoreRouter.QueryRoute<string>(NetcoreCommands.VANGUARD, NetcoreCommands.SAVESAVESTATE, Key, true);
 
                 if (statePath == null)
+                {
                     return null;
+                }
 
                 sk = new StashKey(Key, Key, null);
             }
@@ -133,7 +137,9 @@ namespace RTCV.CorruptCore
             }
 
             if (string.IsNullOrEmpty(statePath))
+            {
                 return null;
+            }
 
             //sk.StateShortFilename = statePath.Substring(statePath.LastIndexOf(Path.DirectorySeparatorChar) + 1, statePath.Length - (statePath.LastIndexOf(Path.DirectorySeparatorChar) + 1));
             sk.StateShortFilename = Path.GetFileName(statePath);
@@ -147,7 +153,9 @@ namespace RTCV.CorruptCore
         {
             StashKey sk = SaveState_NET();
             if (sk == null)
+            {
                 return null;
+            }
 
             BlastLayer bl = new BlastLayer();
 
@@ -168,14 +176,18 @@ namespace RTCV.CorruptCore
                     {
                         byte[] padding = new byte[rp.SkipBytes];
                         for (int i = 0; i < rp.SkipBytes; i++)
+                        {
                             padding[i] = 0;
+                        }
 
                         addData.AddRange(padding);
                     }
 
                     addData.AddRange(MemoryDomains.GetDomainData(rp.PrimaryDomain));
                     if (rp.SecondDomain != null)
+                    {
                         addData.AddRange(MemoryDomains.GetDomainData(rp.SecondDomain));
+                    }
 
                     byte[] corrupted = addData.ToArray();
                     byte[] original = File.ReadAllBytes(romFilename);
@@ -183,17 +195,25 @@ namespace RTCV.CorruptCore
                     //if (MemoryDomains.MemoryInterfaces.ContainsKey("32X FB")) //Flip 16-bit words on 32X rom
                     //original = original.FlipWords(2);
                     if (string.Equals(thisSystem, "N64", StringComparison.OrdinalIgnoreCase))
+                    {
                         original = MutateSwapN64(original);
+                    }
                     else if (romFilename.IndexOf(".SMD", StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
                         original = DeInterleaveSMD(original);
+                    }
 
                     for (int i = 0; i < rp.SkipBytes; i++)
+                    {
                         original[i] = 0;
+                    }
 
                     BlastLayer romBlast = BlastTools.GetBlastLayerFromDiff(original, corrupted);
 
                     if (romBlast != null && romBlast.Layer.Count > 0)
+                    {
                         bl.Layer.AddRange(romBlast.Layer);
+                    }
                 }
             }
 

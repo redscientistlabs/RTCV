@@ -7,7 +7,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Ceras;
 using RTCV.NetCore;
 
 namespace RTCV.CorruptCore
@@ -20,9 +19,9 @@ namespace RTCV.CorruptCore
             get => (ConcurrentDictionary<string, HashSet<byte[]>>)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2LIMITERDICO];
             set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.FILTERING_HASH2VALUEDICO, value);
         }
-        public static ConcurrentDictionary<string, List<Byte[]>> Hash2ValueDico
+        public static ConcurrentDictionary<string, List<byte[]>> Hash2ValueDico
         {
-            get => (ConcurrentDictionary<string, List<Byte[]>>)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2VALUEDICO];
+            get => (ConcurrentDictionary<string, List<byte[]>>)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2VALUEDICO];
             set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.FILTERING_HASH2VALUEDICO, value);
         }
 
@@ -38,7 +37,7 @@ namespace RTCV.CorruptCore
         {
             var partial = new PartialSpec("RTCSpec");
             partial[RTCSPEC.FILTERING_HASH2LIMITERDICO] = new ConcurrentDictionary<string, HashSet<byte[]>>();
-            partial[RTCSPEC.FILTERING_HASH2VALUEDICO] = new ConcurrentDictionary<string, List<Byte[]>>();
+            partial[RTCSPEC.FILTERING_HASH2VALUEDICO] = new ConcurrentDictionary<string, List<byte[]>>();
             partial[RTCSPEC.FILTERING_HASH2NAMEDICO] = new ConcurrentDictionary<string, string>();
 
             return partial;
@@ -64,7 +63,9 @@ namespace RTCV.CorruptCore
             {
                 //We have the name so use it
                 if (allKnownLists.ContainsKey(list))
+                {
                     RegisterListInUI(allKnownLists[list], list);
+                }
                 //Throw in a generic name
                 else
                 {
@@ -93,8 +94,10 @@ namespace RTCV.CorruptCore
                 //Load the lists and add their hashes to the returns
                 var hash = loadListFromPath(path, false);
                 var name = Path.GetFileNameWithoutExtension(path);
-                if (!String.IsNullOrEmpty(hash))
+                if (!string.IsNullOrEmpty(hash))
+                {
                     h[hash] = name;
+                }
             });
 
             //We do this because we're adding to the lists not replacing them. It's a bit odd but it's needed for the spec system
@@ -117,7 +120,9 @@ namespace RTCV.CorruptCore
             //Load the list in
             string[] temp = File.ReadAllLines(path);
             if (temp.Length == 0)
+            {
                 return "";
+            }
 
             //If the file is prefixed with '_', we assume it's stored as big endian and flip the bytes
             bool flipBytes = Path.GetFileName(path).StartsWith("_");
@@ -132,7 +137,9 @@ namespace RTCV.CorruptCore
                 {
                     //Get the string as a byte array
                     if ((bytes = CorruptCore_Extensions.StringToByteArray(t)) == null)
+                    {
                         throw new Exception($"Error reading list {Path.GetFileName(path)}. Valid format is a list of raw hexadecimal values.\nLine{(i + 1)}.\nValue: {t}\n");
+                    }
                 }
                 catch (Exception e)
                 {
@@ -161,7 +168,7 @@ namespace RTCV.CorruptCore
         /// <param name="list"></param>
         /// <param name="syncListsViaNetcore"></param>
         /// <returns>The hash of the list being registereds</returns>
-        public static string RegisterList(List<Byte[]> list, string name, bool syncListsViaNetcore)
+        public static string RegisterList(List<byte[]> list, string name, bool syncListsViaNetcore)
         {
             List<byte> bList = new List<byte>();
             foreach (byte[] line in list)
@@ -176,11 +183,19 @@ namespace RTCV.CorruptCore
 
             //Assuming the key doesn't already exist (we assume collions won't happen), add it.
             if (!Hash2ValueDico?.ContainsKey(hashStr) ?? false)
+            {
                 Hash2ValueDico[hashStr] = list;
+            }
+
             if (!Hash2LimiterDico?.ContainsKey(hashStr) ?? false)
+            {
                 Hash2LimiterDico[hashStr] = new HashSet<byte[]>(list, new CorruptCore_Extensions.ByteArrayComparer());
+            }
+
             if (!Hash2NameDico?.ContainsKey(name) ?? false)
+            {
                 Hash2NameDico[hashStr] = name;
+            }
 
             //Push it over netcore if we need to
             if (syncListsViaNetcore)
@@ -199,7 +214,9 @@ namespace RTCV.CorruptCore
         {
             //If we go outside of the domain, just return false
             if (endAddress > mi.Size)
+            {
                 return false;
+            }
 
             //Find the precision
             long precision = endAddress - startAddress;
@@ -213,11 +230,15 @@ namespace RTCV.CorruptCore
 
             //The compare is done as little endian
             if (mi.BigEndian)
+            {
                 values = values.FlipBytes();
+            }
 
             //If the limiter contains the value we peeked, return true
             if (LimiterContainsValue(values, hash))
+            {
                 return true;
+            }
 
             return false;
         }
@@ -264,14 +285,16 @@ namespace RTCV.CorruptCore
         public static int GetPrecisionFromHash(string hash)
         {
             if (Hash2ValueDico == null)
+            {
                 return -1;
+            }
 
             if (!Hash2ValueDico.ContainsKey(hash))
             {
                 return -1;
             }
 
-            Byte[] value = Hash2ValueDico[hash][0];
+            byte[] value = Hash2ValueDico[hash][0];
             return value.Length;
         }
 
@@ -285,7 +308,9 @@ namespace RTCV.CorruptCore
         {
             //If the value dico doesn't exist, return false
             if (Hash2ValueDico == null)
+            {
                 return null;
+            }
 
             //If the dico doesn't contain the list, return null
             if (!Hash2ValueDico.ContainsKey(hash))
@@ -295,15 +320,17 @@ namespace RTCV.CorruptCore
 
             //Get a random line in the list and grab the value
             int line = RtcCore.RND.Next(Hash2ValueDico[hash].Count);
-            Byte[] value = Hash2ValueDico[hash][line];
+            byte[] value = Hash2ValueDico[hash][line];
 
             //Copy the value to a working array
-            Byte[] outValue = new byte[value.Length];
+            byte[] outValue = new byte[value.Length];
             Array.Copy(value, outValue, value.Length);
 
             //If the list is shorter than the current precision, left pad it
             if (outValue.Length < precision)
+            {
                 outValue = outValue.PadLeft(precision);
+            }
             //If the list is longer than the current precision, truncate it. Lists are stored little endian so truncate from the right
             else if (outValue.Length > precision)
             {
@@ -336,7 +363,9 @@ namespace RTCV.CorruptCore
                 foreach (BlastUnit bu in sk.BlastLayer.Layer)
                 {
                     if (!hashList.Contains(bu.LimiterListHash))
+                    {
                         hashList.Add(bu.LimiterListHash);
+                    }
                 }
             }
 
@@ -355,14 +384,19 @@ namespace RTCV.CorruptCore
                             //If the string isn't of an even length, pad it
                             string tmp = b.ToString("X");
                             if (tmp.Length % 2 != 0)
+                            {
                                 tmp = "0" + tmp;
+                            }
+
                             sb.Append(tmp);
                         }
                         strList.Add(sb.ToString());
                     }
                     Hash2NameDico.TryGetValue(s, out string name); //See if we can get the name
-                    if (String.IsNullOrWhiteSpace(name))
+                    if (string.IsNullOrWhiteSpace(name))
+                    {
                         name = "UNKNOWN_" + s.Substring(0, 5); // Default name will use the first 5 chars of the hash 
+                    }
 
                     lists[(name.StartsWith("STOCKPILE_") ? "" : "STOCKPILE_") + name] = strList;
                 }
@@ -377,7 +411,9 @@ namespace RTCV.CorruptCore
                         MessageBoxButtons.YesNo);
 
                     if (dr == DialogResult.No)
+                    {
                         return null;
+                    }
 
                     sks.MissingLimiter = true;
                 }
@@ -390,14 +426,19 @@ namespace RTCV.CorruptCore
             //Don't double-register the same name. For now, just iterate over the limiter lists and pull the names out.
             //In the future, we'll keep a proper dictionary when this code is re-written
             if (RtcCore.LimiterListBindingSource.Any(x => x.Value == hash))
+            {
                 return false;
+            }
 
             if (RtcCore.LimiterListBindingSource.Any(x => x.Name == name))
+            {
                 name = name + "_1";
+            }
+
             SyncObjectSingleton.FormExecute(() =>
             {
-                RtcCore.LimiterListBindingSource.Add(new ComboBoxItem<String>(name, hash));
-                RtcCore.ValueListBindingSource.Add((new ComboBoxItem<String>(name, hash)));
+                RtcCore.LimiterListBindingSource.Add(new ComboBoxItem<string>(name, hash));
+                RtcCore.ValueListBindingSource.Add((new ComboBoxItem<string>(name, hash)));
             });
             return true;
         }

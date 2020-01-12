@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using RTCV.CorruptCore;
 using RTCV.CorruptCore.Tools;
 using RTCV.NetCore;
 using RTCV.NetCore.StaticTools;
@@ -20,7 +15,7 @@ namespace RTCV.CorruptCore
     {
 
         private static volatile object _loadLock = new object();
-        private static object loadLock { get => _loadLock; }
+        private static object loadLock => _loadLock;
 
         public CorruptCoreConnector()
         {
@@ -73,7 +68,9 @@ namespace RTCV.CorruptCore
                         SyncObjectSingleton.FormExecute(() =>
                         {
                             if (!RtcCore.Attached)
+                            {
                                 RTCV.NetCore.AllSpec.VanguardSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
+                            }
                         });
                         break;
 
@@ -121,16 +118,24 @@ namespace RTCV.CorruptCore
                     case REMOTE_EVENT_RESTRICTFEATURES:
                         {
                             if (!RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_SAVESTATES) ?? true)
+                            {
                                 LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_DISABLESAVESTATESUPPORT);
+                            }
 
                             if (!RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true)
+                            {
                                 LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_DISABLEREALTIMESUPPORT);
+                            }
 
                             if (!RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_KILLSWITCH) ?? true)
+                            {
                                 LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_DISABLEKILLSWITCHSUPPORT);
+                            }
 
                             if (!RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_GAMEPROTECTION) ?? true)
+                            {
                                 LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_DISABLEGAMEPROTECTIONSUPPORT);
+                            }
 
                             break;
                         }
@@ -138,7 +143,9 @@ namespace RTCV.CorruptCore
                     case REMOTE_OPENHEXEDITOR:
                         {
                             if ((bool?)AllSpec.VanguardSpec[VSPEC.USE_INTEGRATED_HEXEDITOR] ?? false)
+                            {
                                 LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_OPENHEXEDITOR, true);
+                            }
                             else
                             {
                                 SyncObjectSingleton.FormExecute(() =>
@@ -153,7 +160,9 @@ namespace RTCV.CorruptCore
                     case EMU_OPEN_HEXEDITOR_ADDRESS:
                         {
                             if ((bool?)AllSpec.VanguardSpec[VSPEC.USE_INTEGRATED_HEXEDITOR] ?? false)
+                            {
                                 LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.EMU_OPEN_HEXEDITOR_ADDRESS, advancedMessage.objectValue, true);
+                            }
                             else
                             {
                                 var temp = advancedMessage.objectValue as object[];
@@ -207,7 +216,9 @@ namespace RTCV.CorruptCore
                                     }
 
                                     if (UseSavestates && loadBeforeCorrupt)
+                                    {
                                         StockpileManager_EmuSide.LoadState_NET(sk, false);
+                                    }
 
                                     //We pull the domains here because if the syncsettings changed, there's a chance the domains changed
                                     string[] domains = (string[])AllSpec.UISpec["SELECTEDDOMAINS"];
@@ -233,7 +244,9 @@ namespace RTCV.CorruptCore
                                             long requestedIntensity = splitintensity;
 
                                             if (i == 0 && reminder != 0)
+                                            {
                                                 requestedIntensity = reminder;
+                                            }
 
                                             tasks[i] = Task.Factory.StartNew(() =>
                                                 RtcCore.GenerateBlastLayer(domains, requestedIntensity));
@@ -245,19 +258,28 @@ namespace RTCV.CorruptCore
                                             .Result ?? new BlastLayer();
 
                                         if (tasks.Length > 1)
+                                        {
                                             for (int i = 1; i < tasks.Length; i++)
+                                            {
                                                 if (tasks[i]
                                                     .Result != null)
+                                                {
                                                     bl.Layer.AddRange(tasks[i]
                                                         .Result.Layer);
-
+                                                }
+                                            }
+                                        }
 
                                         if (bl.Layer.Count == 0)
+                                        {
                                             bl = null;
+                                        }
                                     }
 
                                     if (applyBlastLayer)
+                                    {
                                         bl?.Apply(backup);
+                                    }
                                 }
                             }
                             //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
@@ -267,7 +289,10 @@ namespace RTCV.CorruptCore
                                 e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
                             }
                             else //We can just do everything on the emulation thread as it'll block
+                            {
                                 SyncObjectSingleton.EmuThreadExecute(a, true);
+                            }
+
                             if (advancedMessage.requestGuid != null)
                             {
                                 e.setReturnValue(bl);
@@ -340,7 +365,9 @@ namespace RTCV.CorruptCore
                                 }
 
                                 if (loadBeforeCorrupt)
+                                {
                                     StockpileManager_EmuSide.LoadState_NET(sk, false);
+                                }
 
                                 returnList = BlastTools.GenerateBlastLayersFromBlastGeneratorProtos(blastGeneratorProtos, sk);
                                 if (applyAfterCorrupt)
@@ -358,10 +385,15 @@ namespace RTCV.CorruptCore
                             {
                                 SyncObjectSingleton.FormExecute(a);
                                 if (resumeAfter)
+                                {
                                     e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
+                                }
                             }
                             else
+                            {
                                 SyncObjectSingleton.EmuThreadExecute(a, false);
+                            }
+
                             e.setReturnValue(returnList);
 
                             break;
@@ -442,7 +474,10 @@ namespace RTCV.CorruptCore
                             });
 
                             if (sk != null)
+                            {
                                 LocalNetCoreRouter.Route(NetcoreCommands.UI, REMOTE_BACKUPKEY_STASH, sk, false);
+                            }
+
                             break;
                         }
                     case REMOTE_DOMAIN_GETDOMAINS:
@@ -451,7 +486,10 @@ namespace RTCV.CorruptCore
                     case REMOTE_PUSHVMDPROTOS:
                         MemoryDomains.VmdPool.Clear();
                         foreach (var proto in (advancedMessage.objectValue as VmdPrototype[]))
+                        {
                             MemoryDomains.AddVMD(proto);
+                        }
+
                         S.GET<HexEditor>().Restart();
                         break;
 
@@ -506,7 +544,9 @@ namespace RTCV.CorruptCore
                                 void a()
                                 {
                                     if (sk != null) //If a stashkey was passed in, we want to load then profile
+                                    {
                                         StockpileManager_EmuSide.LoadState_NET(sk, false);
+                                    }
 
                                     MemoryInterface mi = MemoryDomains.MemoryInterfaces[domain];
                                     List<long> allLegalAdresses = new List<long>();
@@ -514,9 +554,15 @@ namespace RTCV.CorruptCore
                                     int listItemSize = Filtering.GetPrecisionFromHash(LimiterListHash);
 
                                     for (long i = 0; i < mi.Size; i += listItemSize)
+                                    {
                                         if (Filtering.LimiterPeekBytes(i, i + listItemSize, mi.Name, LimiterListHash, mi))
+                                        {
                                             for (int j = 0; j < listItemSize; j++)
+                                            {
                                                 allLegalAdresses.Add(i + j);
+                                            }
+                                        }
+                                    }
 
                                     e.setReturnValue(allLegalAdresses.ToArray());
                                 }
@@ -528,7 +574,9 @@ namespace RTCV.CorruptCore
                                     LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true);
                                 }
                                 else //We can just do everything on the emulation thread as it'll block
+                                {
                                     SyncObjectSingleton.EmuThreadExecute(a, true);
+                                }
                             }
                         }
                         break;
@@ -558,7 +606,9 @@ namespace RTCV.CorruptCore
                             void a()
                             {
                                 if (StockpileManager_EmuSide.UnCorruptBL != null)
+                                {
                                     StockpileManager_EmuSide.UnCorruptBL.Apply(true);
+                                }
                             }
                             SyncObjectSingleton.EmuThreadExecute(a, false);
                         }
@@ -570,7 +620,9 @@ namespace RTCV.CorruptCore
                             void a()
                             {
                                 if (StockpileManager_EmuSide.CorruptBL != null)
+                                {
                                     StockpileManager_EmuSide.CorruptBL.Apply(false);
+                                }
                             }
                             SyncObjectSingleton.EmuThreadExecute(a, false);
                         }
@@ -601,7 +653,9 @@ namespace RTCV.CorruptCore
             catch (Exception ex)
             {
                 if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
+                {
                     throw new RTCV.NetCore.AbortEverythingException();
+                }
 
                 return e.returnMessage;
             }

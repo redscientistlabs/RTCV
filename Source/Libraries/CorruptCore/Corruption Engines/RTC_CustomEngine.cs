@@ -1,16 +1,10 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Numerics;
-using System.Security.Cryptography;
-using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
 using RTCV.NetCore;
 
 
@@ -18,8 +12,8 @@ namespace RTCV.CorruptCore
 {
     public static class RTC_CustomEngine
     {
-        private static Dictionary<String, Type> name2TypeDico = new Dictionary<string, Type>();
-        public static Dictionary<String, PartialSpec> Name2TemplateDico = new Dictionary<string, PartialSpec>();
+        private static Dictionary<string, Type> name2TypeDico = new Dictionary<string, Type>();
+        public static Dictionary<string, PartialSpec> Name2TemplateDico = new Dictionary<string, PartialSpec>();
 
         public static ulong MinValue8Bit
         {
@@ -153,7 +147,9 @@ namespace RTCV.CorruptCore
             {
 
                 if (domain == null)
+                {
                     return null;
+                }
 
                 MemoryInterface mi = MemoryDomains.GetInterface(domain);
 
@@ -161,7 +157,9 @@ namespace RTCV.CorruptCore
                 byte[] value = new byte[precision];
                 long safeAddress = address - (address % precision) + alignment;
                 if (safeAddress > mi.Size - precision && mi.Size > precision)
+                {
                     safeAddress = mi.Size - (2 * precision) + alignment; //If we're out of range, hit the last aligned address
+                }
 
                 BlastUnit bu = new BlastUnit();
 
@@ -201,17 +199,25 @@ namespace RTCV.CorruptCore
                                         }
 
                                         if (def)
+                                        {
                                             for (int i = 0; i < precision; i++)
+                                            {
                                                 value[i] = (byte)RtcCore.RND.Next();
+                                            }
+                                        }
                                         else
+                                        {
                                             value = CorruptCore_Extensions.GetByteArrayValue(precision, randomValue, true);
+                                        }
                                     }
                                     break;
 
                                 case CustomValueSource.RANDOM:
                                     {
                                         for (int i = 0; i < precision; i++)
+                                        {
                                             value[i] = (byte)RtcCore.RND.Next();
+                                        }
                                     }
                                     break;
 
@@ -233,7 +239,9 @@ namespace RTCV.CorruptCore
                                         long safeStartAddress = bt.Address - (bt.Address % precision) + alignment;
 
                                         if (safeStartAddress > _mi.Size - precision)
+                                        {
                                             safeStartAddress = _mi.Size - (2 * precision) + alignment; //If we're out of range, hit the last aligned address
+                                        }
 
                                         bu.SourceDomain = bt.Domain;
                                         bu.SourceAddress = safeStartAddress;
@@ -268,13 +276,17 @@ namespace RTCV.CorruptCore
 
                 //Only set a list if it's used
                 if (LimiterTime != LimiterTime.NONE)
+                {
                     bu.LimiterListHash = LimiterListHash;
+                }
 
                 //Limiter handling
                 if (LimiterTime == LimiterTime.GENERATE)
                 {
                     if (!bu.LimiterCheck(mi))
+                    {
                         return null;
+                    }
                 }
 
                 return bu;
@@ -289,9 +301,15 @@ namespace RTCV.CorruptCore
         public static bool IsConstant(byte[] bytes, string[] list, bool bigEndian)
         {
             if (list == null || bytes == null)
+            {
                 return true;
+            }
+
             if (!bigEndian)
+            {
                 return list.Contains(ByteArrayToString(bytes));
+            }
+
             Array.Reverse(bytes);
             return list.Contains(ByteArrayToString(bytes));
         }
@@ -356,7 +374,10 @@ namespace RTCV.CorruptCore
         public static void LoadUserTemplates()
         {
             if (!Directory.Exists(RtcCore.engineTemplateDir))
+            {
                 Directory.CreateDirectory(RtcCore.engineTemplateDir);
+            }
+
             string[] paths = System.IO.Directory.GetFiles(RtcCore.engineTemplateDir);
             paths = paths.OrderBy(x => x).ToArray();
             foreach (var p in paths)
@@ -373,9 +394,13 @@ namespace RTCV.CorruptCore
         {
             PartialSpec pSpec;
             if (name == null)
+            {
                 pSpec = new PartialSpec(NetCore.AllSpec.CorruptCoreSpec.name);
+            }
             else
+            {
                 pSpec = new PartialSpec(name);
+            }
 
             pSpec[RTCSPEC.CUSTOM_NAME] = "Nightmare Engine";
 
@@ -664,11 +689,13 @@ namespace RTCV.CorruptCore
             return t;
         }
 
-        public static bool LoadTemplate(String template)
+        public static bool LoadTemplate(string template)
         {
             PartialSpec spec = Name2TemplateDico[template];
             if (spec == null)
+            {
                 return false;
+            }
 
             RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(spec);
             return true;
@@ -691,7 +718,9 @@ namespace RTCV.CorruptCore
                     Filename = ofd.FileName;
                 }
                 else
+                {
                     return null;
+                }
             }
 
             PartialSpec pSpec = new PartialSpec("RTCSpec");
@@ -699,7 +728,7 @@ namespace RTCV.CorruptCore
             {
                 using (FileStream fs = File.Open(Filename, FileMode.OpenOrCreate))
                 {
-                    Dictionary<String, Object> d = JsonHelper.Deserialize<Dictionary<String, Object>>(fs);
+                    Dictionary<string, object> d = JsonHelper.Deserialize<Dictionary<string, object>>(fs);
 
 
                     //We don't want to store type data in the serialized data but specs store object
@@ -721,10 +750,14 @@ namespace RTCV.CorruptCore
                             if (type == typeof(BigInteger))
                             {
                                 if (BigInteger.TryParse(t.ToString(), out BigInteger a))
+                                {
                                     t = a;
+                                }
                                 else
+                                {
                                     throw new Exception("Couldn't convert " + t.ToString() +
                                                         " to BigInteger! Something is wrong with your template.");
+                                }
                             }
                             //ULong64 gets deserialized to bigint for some reason?????
                             else if (t is BigInteger _t && _t <= ulong.MaxValue)
@@ -746,7 +779,9 @@ namespace RTCV.CorruptCore
                                 }
                             }
                             else
+                            {
                                 t = TypeDescriptor.GetConverter(t).ConvertTo(t, type);
+                            }
                         }
                         pSpec[k] = t;
                     }
@@ -789,7 +824,9 @@ namespace RTCV.CorruptCore
                     templateName = Path.GetFileNameWithoutExtension(path);
                 }
                 else
+                {
                     return null;
+                }
             }
             else
             {

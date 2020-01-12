@@ -23,8 +23,8 @@ namespace RTCV.CorruptCore.Tools
 
         public string InitialValue
         {
-            get { return FindBox.Text; }
-            set { FindBox.Text = value ?? ""; }
+            get => FindBox.Text;
+            set => FindBox.Text = value ?? "";
         }
 
         private void HexFind_Load(object sender, EventArgs e)

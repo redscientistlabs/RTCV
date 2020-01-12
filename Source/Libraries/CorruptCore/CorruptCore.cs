@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -11,7 +10,6 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using RTCV.CorruptCore;
 using Newtonsoft.Json;
 using RTCV.NetCore;
 using RTCV.NetCore.StaticTools;
@@ -35,7 +33,9 @@ namespace RTCV.CorruptCore
             get
             {
                 if (_RND == null)
+                {
                     _RND = new Random(Seed);
+                }
 
                 return _RND;
             }
@@ -56,39 +56,26 @@ namespace RTCV.CorruptCore
                 //In attached mode we can just use the directory we're in.
                 //We do this as the EmuDir is not set in attached
                 if (Attached || EmuDirOverride)
+                {
                     return Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+                }
 
                 return (string)AllSpec.VanguardSpec?[VSPEC.EMUDIR];
             }
             set => AllSpec.VanguardSpec.Update(VSPEC.EMUDIR, value);
         }
 
-        public static string EmuAssetsDir
-        {
-            get => Path.Combine(EmuDir, "ASSETS");
-        }
+        public static string EmuAssetsDir => Path.Combine(EmuDir, "ASSETS");
 
         public static string RtcDir
         {
             get => (string)AllSpec.CorruptCoreSpec[RTCSPEC.RTCDIR];
             set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.RTCDIR, value);
         }
-        public static string workingDir
-        {
-            get => Path.Combine(RtcDir, "WORKING");
-        }
-        public static string assetsDir
-        {
-            get => Path.Combine(RtcDir, "ASSETS");
-        }
-        public static string listsDir
-        {
-            get => Path.Combine(RtcDir, "LISTS");
-        }
-        public static string engineTemplateDir
-        {
-            get => Path.Combine(RtcDir, "ENGINETEMPLATES");
-        }
+        public static string workingDir => Path.Combine(RtcDir, "WORKING");
+        public static string assetsDir => Path.Combine(RtcDir, "ASSETS");
+        public static string listsDir => Path.Combine(RtcDir, "LISTS");
+        public static string engineTemplateDir => Path.Combine(RtcDir, "ENGINETEMPLATES");
 
         public static event ProgressBarEventHandler ProgressBarHandler;
 
@@ -225,10 +212,7 @@ namespace RTCV.CorruptCore
             set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_EMULATOROSDDISABLED, value);
         }
 
-        public static string VanguardImplementationName
-        {
-            get => (String)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard Implementation";
-        }
+        public static string VanguardImplementationName => (string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard Implementation";
 
 
         public static bool IsStandaloneUI;
@@ -271,14 +255,18 @@ namespace RTCV.CorruptCore
                 });
 
                 if (!Params.IsParamSet("DISCLAIMER_READ"))
+                {
                     OneTimeSettingsInitialize();
+                }
 
                 IsStandaloneUI = true;
             }
             catch (Exception ex)
             {
                 if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
+                {
                     throw new AbortEverythingException();
+                }
             }
         }
         public static void StartEmuSide()
@@ -287,7 +275,9 @@ namespace RTCV.CorruptCore
             {
                 Start();
                 if (KillswitchTimer == null)
+                {
                     KillswitchTimer = new Timer();
+                }
 
                 KillswitchTimer.Interval = 250;
                 KillswitchTimer.Tick += KillswitchTimer_Tick;
@@ -337,9 +327,13 @@ namespace RTCV.CorruptCore
                 {
                     PartialSpec partial = e.partialSpec;
                     if (IsStandaloneUI)
+                    {
                         LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHCORRUPTCORESPECUPDATE, partial, true);
+                    }
                     else
+                    {
                         LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_PUSHCORRUPTCORESPECUPDATE, partial, true);
+                    }
                 };
 
                 /*
@@ -352,7 +346,9 @@ namespace RTCV.CorruptCore
             catch (Exception ex)
             {
                 if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
+                {
                     throw new AbortEverythingException();
+                }
             }
         }
 
@@ -381,47 +377,76 @@ namespace RTCV.CorruptCore
 
 
                 if (Params.IsParamSet("ALLOW_CROSS_CORE_CORRUPTION"))
+                {
                     partial[RTCSPEC.CORE_ALLOWCROSSCORECORRUPTION] = (string.Equals(Params.ReadParam("ALLOW_CROSS_CORE_CORRUPTION"), "TRUE", StringComparison.OrdinalIgnoreCase));
+                }
                 else
+                {
                     partial[RTCSPEC.CORE_ALLOWCROSSCORECORRUPTION] = false;
+                }
 
                 if (Params.IsParamSet("REROLL_SOURCEADDRESS"))
+                {
                     partial[RTCSPEC.CORE_REROLLSOURCEADDRESS] = (string.Equals(Params.ReadParam("REROLL_SOURCEADDRESS"), "TRUE", StringComparison.OrdinalIgnoreCase));
+                }
                 else
+                {
                     partial[RTCSPEC.CORE_REROLLSOURCEADDRESS] = false;
+                }
 
                 if (Params.IsParamSet("REROLL_SOURCEDOMAIN"))
+                {
                     partial[RTCSPEC.CORE_REROLLSOURCEDOMAIN] = (string.Equals(Params.ReadParam("REROLL_SOURCEDOMAIN"), "TRUE", StringComparison.OrdinalIgnoreCase));
+                }
                 else
+                {
                     partial[RTCSPEC.CORE_REROLLSOURCEDOMAIN] = false;
+                }
 
                 if (Params.IsParamSet("REROLL_ADDRESS"))
+                {
                     partial[RTCSPEC.CORE_REROLLADDRESS] = (string.Equals(Params.ReadParam("REROLL_ADDRESS"), "TRUE", StringComparison.OrdinalIgnoreCase));
+                }
                 else
+                {
                     partial[RTCSPEC.CORE_REROLLADDRESS] = false;
-                if (Params.IsParamSet("REROLL_DOMAIN"))
-                    partial[RTCSPEC.CORE_REROLLDOMAIN] = (string.Equals(Params.ReadParam("REROLL_DOMAIN"), "TRUE", StringComparison.OrdinalIgnoreCase));
-                else
-                    partial[RTCSPEC.CORE_REROLLDOMAIN] = false;
+                }
 
+                if (Params.IsParamSet("REROLL_DOMAIN"))
+                {
+                    partial[RTCSPEC.CORE_REROLLDOMAIN] = (string.Equals(Params.ReadParam("REROLL_DOMAIN"), "TRUE", StringComparison.OrdinalIgnoreCase));
+                }
+                else
+                {
+                    partial[RTCSPEC.CORE_REROLLDOMAIN] = false;
+                }
 
                 if (Params.IsParamSet("REROLL_FOLLOWSCUSTOMENGINE"))
+                {
                     partial[RTCSPEC.CORE_REROLLFOLLOWENGINESETTINGS] = (string.Equals(Params.ReadParam("REROLL_FOLLOWSCUSTOMENGINE"), "TRUE", StringComparison.OrdinalIgnoreCase));
+                }
                 else
+                {
                     partial[RTCSPEC.CORE_REROLLFOLLOWENGINESETTINGS] = false;
+                }
 
                 if (Params.IsParamSet("REROLL_USESVALUELIST"))
+                {
                     partial[RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE] = (string.Equals(Params.ReadParam("REROLL_USESVALUELIST"), "TRUE", StringComparison.OrdinalIgnoreCase));
+                }
                 else
+                {
                     partial[RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE] = false;
-
+                }
 
                 return partial;
             }
             catch (Exception ex)
             {
                 if (CloudDebug.ShowErrorDialog(ex) == DialogResult.Abort)
+                {
                     throw new AbortEverythingException();
+                }
 
                 return null;
             }
@@ -481,7 +506,9 @@ namespace RTCV.CorruptCore
                             }
                         }
                         else
+                        {
                             return;
+                        }
                     }
                     else
                     {
@@ -498,7 +525,10 @@ namespace RTCV.CorruptCore
                 {
                     logger.Error(ex);
                     if (File.Exists(LocalPath))
+                    {
                         File.Delete(LocalPath);
+                    }
+
                     throw;
                 }
             })).Start();
@@ -510,7 +540,9 @@ namespace RTCV.CorruptCore
         {
             logger.Info("Entering CheckForProblematicProcesses");
             if (Warned || ProblematicProcesses == null)
+            {
                 return;
+            }
 
             try
             {
@@ -531,7 +563,9 @@ namespace RTCV.CorruptCore
             catch (Exception ex)
             {
                 if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
+                {
                     throw new AbortEverythingException();
+                }
 
                 return;
             }
@@ -583,7 +617,9 @@ namespace RTCV.CorruptCore
             catch (Exception ex)
             {
                 if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
+                {
                     throw new AbortEverythingException();
+                }
 
                 return null;
             }
@@ -594,7 +630,9 @@ namespace RTCV.CorruptCore
         public static BlastLayer GenerateBlastLayer(string[] selectedDomains, long overrideIntensity = -1)
         {
             if (overrideIntensity == 0)
+            {
                 return null;
+            }
 
             try
             {
@@ -611,20 +649,27 @@ namespace RTCV.CorruptCore
                         //It will query a BlastLayer generated by the Blast Generator
                         bl = RTC_BlastGeneratorEngine.GetBlastLayer();
                         if (bl == null)
+                        {
                             //We return an empty blastlayer so when it goes to apply it, it doesn't find a null blastlayer and try and apply to the domains which aren't enabled resulting in an exception
                             return new BlastLayer();
+                        }
+
                         return bl;
                     }
 
                     bl = new BlastLayer();
 
                     if (selectedDomains == null || selectedDomains.Count() == 0)
+                    {
                         return null;
+                    }
 
                     long intensity = RtcCore.Intensity; //general RTC intensity
 
                     if (overrideIntensity != -1)
+                    {
                         intensity = overrideIntensity;
+                    }
 
                     // Capping intensity at engine-specific maximums
                     if ((RtcCore.SelectedEngine == CorruptionEngine.HELLGENIE ||
@@ -632,7 +677,9 @@ namespace RTCV.CorruptCore
                         RtcCore.SelectedEngine == CorruptionEngine.PIPE ||
                         RtcCore.SelectedEngine == CorruptionEngine.CUSTOM && RTC_CustomEngine.Lifetime == 0) &&
                         intensity > StepActions.MaxInfiniteBlastUnits)
+                    {
                         intensity = StepActions.MaxInfiniteBlastUnits; //Capping for cheat max
+                    }
 
 
                     //Spec lookups add up really fast if you have a high intensity so we cache stuff we're going to be looking up over and over again
@@ -661,7 +708,9 @@ namespace RTCV.CorruptCore
 
                                     bu = GetBlastUnit(Domain, RandomAddress, cachedPrecision, cachedAlignment, cachedEngine);
                                     if (bu != null)
+                                    {
                                         bl.Layer.Add(bu);
+                                    }
                                 }
 
                                 break;
@@ -680,7 +729,9 @@ namespace RTCV.CorruptCore
 
                                     bu = GetBlastUnit(Domain, RandomAddress, cachedPrecision, cachedAlignment, cachedEngine);
                                     if (bu != null)
+                                    {
                                         bl.Layer.Add(bu);
+                                    }
                                 }
 
                                 break;
@@ -700,7 +751,9 @@ namespace RTCV.CorruptCore
 
                                         bu = GetBlastUnit(Domain, RandomAddress, cachedPrecision, cachedAlignment, cachedEngine);
                                         if (bu != null)
+                                        {
                                             bl.Layer.Add(bu);
+                                        }
                                     }
                                 }
 
@@ -738,7 +791,9 @@ namespace RTCV.CorruptCore
 
                                         bu = GetBlastUnit(Domain, RandomAddress, cachedPrecision, cachedAlignment, cachedEngine);
                                         if (bu != null)
+                                        {
                                             bl.Layer.Add(bu);
+                                        }
                                     }
                                 }
 
@@ -752,8 +807,8 @@ namespace RTCV.CorruptCore
                             long[] normalizedIntensity = new long[selectedDomains.Length]; //matches the index of selectedDomains
                             for (int i = 0; i < selectedDomains.Length; i++)
                             {   //calculates the proportionnal normalized Intensity based on total selected domains size
-                                double proportion = (double)cachedDomainSizes[i] / (double)totalSize;
-                                normalizedIntensity[i] = Convert.ToInt64((double)intensity * proportion);
+                                double proportion = cachedDomainSizes[i] / (double)totalSize;
+                                normalizedIntensity[i] = Convert.ToInt64(intensity * proportion);
                             }
 
                             for (int i = 0; i < selectedDomains.Length; i++)
@@ -767,7 +822,9 @@ namespace RTCV.CorruptCore
 
                                     bu = GetBlastUnit(Domain, RandomAddress, cachedPrecision, cachedAlignment, cachedEngine);
                                     if (bu != null)
+                                    {
                                         bl.Layer.Add(bu);
+                                    }
                                 }
                             }
 
@@ -786,7 +843,9 @@ namespace RTCV.CorruptCore
 
                                     bu = GetBlastUnit(Domain, RandomAddress, cachedPrecision, cachedAlignment, cachedEngine);
                                     if (bu != null)
+                                    {
                                         bl.Layer.Add(bu);
+                                    }
                                 }
                             }
 
@@ -797,9 +856,13 @@ namespace RTCV.CorruptCore
                     }
 
                     if (bl.Layer.Count == 0)
+                    {
                         return null;
+                    }
                     else
+                    {
                         return bl;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -827,7 +890,9 @@ namespace RTCV.CorruptCore
                 }
 
                 if (dr == DialogResult.Abort)
+                {
                     throw new AbortEverythingException();
+                }
 
                 return null;
             }
@@ -886,7 +951,9 @@ namespace RTCV.CorruptCore
                         long requestedIntensity = splitintensity;
 
                         if (i == 0 && reminder != 0)
+                        {
                             requestedIntensity = reminder;
+                        }
 
                         tasks[i] = Task.Factory.StartNew(() => RtcCore.GenerateBlastLayer(domains, requestedIntensity));
                     }
@@ -896,12 +963,20 @@ namespace RTCV.CorruptCore
                     bl = tasks[0].Result ?? new BlastLayer();
 
                     if (tasks.Length > 1)
+                    {
                         for (int i = 1; i < tasks.Length; i++)
+                        {
                             if (tasks[i].Result != null)
+                            {
                                 bl.Layer.AddRange(tasks[i].Result.Layer);
+                            }
+                        }
+                    }
 
                     if (bl.Layer.Count == 0)
+                    {
                         bl = null;
+                    }
                 }
 
                 bl?.Apply(false, true);
@@ -912,7 +987,9 @@ namespace RTCV.CorruptCore
                 SyncObjectSingleton.FormExecute(a);
             }
             else //We can just do everything on the emulation thread as it'll block
+            {
                 SyncObjectSingleton.EmuThreadExecute(a, true);
+            }
         }
 
         /*
@@ -930,16 +1007,22 @@ namespace RTCV.CorruptCore
         public static void LOAD_GAME_DONE()
         {
             if (S.GET<CorruptCore.Tools.HexEditor>().Visible)
+            {
                 S.GET<CorruptCore.Tools.HexEditor>().Restart();
+            }
         }
         public static void GAME_CLOSED(bool closeHexEditor = false)
         {
             if (closeHexEditor)
+            {
                 S.GET<CorruptCore.Tools.HexEditor>().Close();
+            }
             else
             {
                 if (S.GET<CorruptCore.Tools.HexEditor>().Visible)
+                {
                     S.GET<CorruptCore.Tools.HexEditor>().Restart();
+                }
             }
         }
         public static void KILL_HEX_EDITOR()

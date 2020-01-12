@@ -1,24 +1,20 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Windows.Forms;
 using System.Numerics;
-using System.ComponentModel;
-using System.Data;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Xml.Serialization;
 using Ceras;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using RTCV.CorruptCore;
+using RTCV.Common.Objects;
 using RTCV.NetCore;
 using Exception = System.Exception;
-using System.Xml.Serialization;
-using RTCV.Common.Objects;
 
 namespace RTCV.CorruptCore
 {
@@ -44,7 +40,9 @@ namespace RTCV.CorruptCore
         public Stockpile(DataGridView dgvStockpile)
         {
             foreach (DataGridViewRow row in dgvStockpile.Rows)
+            {
                 StashKeys.Add((StashKey)row.Cells[0].Value);
+            }
         }
 
         public Stockpile()
@@ -144,7 +142,9 @@ namespace RTCV.CorruptCore
                                     binFiles.Add(cueLines[i].Substring(startFilename, endFilename - startFilename));
                                 }
                                 else
+                                {
                                     fixedCue[i] = cueLines[i];
+                                }
                             }
                             //Write our new cue
                             File.WriteAllLines(key.RomFilename, fixedCue);
@@ -157,10 +157,14 @@ namespace RTCV.CorruptCore
                             List<string> binFiles = new List<string>();
 
                             if (File.Exists(Path.GetFileNameWithoutExtension(key.RomFilename) + ".sub"))
+                            {
                                 binFiles.Add(Path.GetFileNameWithoutExtension(key.RomFilename) + ".sub");
+                            }
 
                             if (File.Exists(Path.GetFileNameWithoutExtension(key.RomFilename) + ".img"))
+                            {
                                 binFiles.Add(Path.GetFileNameWithoutExtension(key.RomFilename) + ".img");
+                            }
 
                             allRoms.AddRange(binFiles);
                         }
@@ -178,7 +182,9 @@ namespace RTCV.CorruptCore
                     if (!File.Exists(rom))
                     {
                         if (MessageBox.Show($"Include referenced files was set but we couldn't find {rom}. Continue saving? (You'll need to reassociate the file at runtime)", "Couldn't find file.", MessageBoxButtons.YesNo) == DialogResult.No)
+                        {
                             return false;
+                        }
                     }
                     else
                     {
@@ -191,7 +197,9 @@ namespace RTCV.CorruptCore
                             File.Copy(rom, romTempfilename);
                         }
                         else
+                        {
                             File.Copy(rom, romTempfilename);
+                        }
                     }
                 }
 
@@ -215,16 +223,20 @@ namespace RTCV.CorruptCore
                         string title = "Reference found in RTC dir";
                         string message = $"Can't save with file {key.RomFilename}\nGame name: {key.GameName}\n\nThis file appears to be in temporary storage (e.g. loaded from a stockpile).\nTo save without references, you will need to provide a replacement from outside the RTC's working directory.\n\nPlease provide a new path to the file in question.";
                         while (CorruptCore_Extensions.IsOrIsSubDirectoryOf(Path.GetDirectoryName(key.RomFilename), RtcCore.workingDir)) // Make sure they don't give a new file within working
+                        {
                             if (!StockpileManager_UISide.CheckAndFixMissingReference(key, true, sks.StashKeys, title, message))
                             {
                                 failure = true;
                                 return;
                             }
+                        }
                     }
                 });
 
                 if (failure)
+                {
                     return false;
+                }
             }
 
             if ((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] ?? false)
@@ -247,17 +259,21 @@ namespace RTCV.CorruptCore
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Copying configs to stockpile", saveProgress += 2));
                 string[] configPaths = AllSpec.VanguardSpec[VSPEC.CONFIG_PATHS] as string[] ?? new string[] { };
                 foreach (var path in configPaths)
+                {
                     if (File.Exists(path))
                     {
                         Directory.CreateDirectory(Path.Combine(RtcCore.workingDir, "TEMP", "CONFIGS"));
                         File.Copy(path, Path.Combine(RtcCore.workingDir, "TEMP", "CONFIGS", Path.GetFileName(path)));
                     }
+                }
             }
             //Get all the limiter lists
             RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Finding limiter lists to copy", saveProgress += 5));
             var limiterLists = Filtering.GetAllLimiterListsFromStockpile(sks);
             if (limiterLists == null)
+            {
                 return false;
+            }
 
             //Write them to a file
             foreach (var l in limiterLists.Keys)
@@ -278,7 +294,9 @@ namespace RTCV.CorruptCore
             try
             {
                 if (File.Exists(tempFilename))
+                {
                     File.Delete(tempFilename);
+                }
             }
             catch (Exception ex)
             {
@@ -288,7 +306,9 @@ namespace RTCV.CorruptCore
 
             CompressionLevel comp = CompressionLevel.Fastest;
             if (!compress)
+            {
                 comp = CompressionLevel.NoCompression;
+            }
 
             RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Creating SKS", saveProgress += 10));
             //Create the file into temp
@@ -299,7 +319,9 @@ namespace RTCV.CorruptCore
             {
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Removing old stockpile", saveProgress += 2));
                 if (File.Exists(sks.Filename))
+                {
                     File.Delete(sks.Filename);
+                }
             }
             catch (Exception ex)
             {
@@ -418,7 +440,9 @@ namespace RTCV.CorruptCore
             var c = CheckCompatibility(sks);
             results.AddResults(c);
             if (c.Failed)
+            {
                 return results;
+            }
 
             if (import)
             {
@@ -449,7 +473,9 @@ namespace RTCV.CorruptCore
                             try
                             {
                                 foreach (var f in allCopied)
+                                {
                                     File.Delete(f);
+                                }
                             }
                             catch { }
 
@@ -473,11 +499,13 @@ namespace RTCV.CorruptCore
             {
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Fixing up paths for {t.Alias}", loadProgress += percentPerFile));
                 //If we have the file, update the path
-                if (!String.IsNullOrEmpty(t.RomShortFilename))
+                if (!string.IsNullOrEmpty(t.RomShortFilename))
                 {
                     var newFilename = Path.Combine(RtcCore.workingDir, "SKS", t.RomShortFilename);
                     if (File.Exists(newFilename))
+                    {
                         t.RomFilename = newFilename;
+                    }
                 }
 
                 t.StateLocation = StashKeySavestateLocation.SKS;
@@ -493,10 +521,12 @@ namespace RTCV.CorruptCore
 
             //If there's a limiter missing, pop a message
             if (sks.MissingLimiter)
+            {
                 results.AddWarning(
                     "This stockpile is missing a limiter list used by some blastunits.\n" +
                     "Some corruptions probably won't work properly.\n" +
                     "If the limiter list is found next time you save, it'll automatically be packed in.");
+            }
 
             RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Done", 100));
 
@@ -524,9 +554,13 @@ namespace RTCV.CorruptCore
             if (sks.RtcVersion != RtcCore.RtcVersion)
             {
                 if (sks.RtcVersion == null)
+                {
                     results.AddError("You have loaded a broken stockpile that didn't contain an RTC Version number\n. There is no reason to believe that these items will work.");
+                }
                 else
+                {
                     results.AddWarning("You have loaded a stockpile created with RTC " + sks.RtcVersion + " using RTC " + RtcCore.RtcVersion + "\n" + "Items might not appear identical to how they when they were created or it is possible that they won't work.");
+                }
             }
             return results;
         }
@@ -538,7 +572,9 @@ namespace RTCV.CorruptCore
         public static void RecursiveDelete(DirectoryInfo baseDir)
         {
             if (!baseDir.Exists)
+            {
                 return;
+            }
 
             foreach (DirectoryInfo dir in baseDir.EnumerateDirectories())
             {
@@ -561,7 +597,9 @@ namespace RTCV.CorruptCore
                 }
 
                 foreach (string dir in Directory.GetDirectories(targetFolder))
+                {
                     RecursiveDelete(new DirectoryInfo(dir));
+                }
             }
             catch (Exception ex)
             {
@@ -587,11 +625,17 @@ namespace RTCV.CorruptCore
                 if (!File.Exists(Path.Combine(RtcCore.RtcDir, folder, masterFile)))
                 {
                     if (File.Exists(Path.Combine(RtcCore.RtcDir, folder, "stockpile.xml")))
+                    {
                         r.AddError("Legacy stockpile found. This stockpile isn't supported by this version of the RTC.");
+                    }
                     else if (File.Exists(Path.Combine(RtcCore.RtcDir, folder, "keys.xml")))
+                    {
                         r.AddError("Legacy SSK found. This SSK isn't supported by this version of the RTC.");
+                    }
                     else
+                    {
                         r.AddError("The file could not be read properly. Master file missing");
+                    }
 
                     EmptyFolder(folder);
                     return r;
@@ -636,7 +680,9 @@ namespace RTCV.CorruptCore
                 filename = ofd.FileName;
             }
             else
+            {
                 return;
+            }
 
             foreach (var path in configPaths)
             {
@@ -651,7 +697,9 @@ namespace RTCV.CorruptCore
             }
 
             if (Extract(filename, Path.Combine("WORKING", "TEMP"), "stockpile.json") is OperationResults<bool> r && r.Failed)
+            {
                 return;
+            }
 
 
             //Configs are stored in the "configs" folder within the stockpile
@@ -683,17 +731,23 @@ namespace RTCV.CorruptCore
                 {
                     //Nuke the old config if it exists
                     if (File.Exists(RtcCore.EmuDir + name2filedico[name]))
+                    {
                         File.Delete(RtcCore.EmuDir + name2filedico[name]);
+                    }
 
                     //Bring in our new config.
                     if (File.Exists(file))
+                    {
                         File.Copy(file, RtcCore.EmuDir + name2filedico[name], true);
+                    }
                 }
             }
 
-            ProcessStartInfo p = new ProcessStartInfo();
-            p.WorkingDirectory = RtcCore.EmuDir;
-            p.FileName = Path.Combine(RtcCore.EmuDir, "RESTARTDETACHEDRTC.bat");
+            ProcessStartInfo p = new ProcessStartInfo
+            {
+                WorkingDirectory = RtcCore.EmuDir,
+                FileName = Path.Combine(RtcCore.EmuDir, "RESTARTDETACHEDRTC.bat")
+            };
             Process.Start(p);
 
         }
@@ -717,13 +771,16 @@ namespace RTCV.CorruptCore
             {
                 var path = Path.Combine(Path.GetDirectoryName(str), "backup_" + Path.GetFileName(str));
                 if (File.Exists(path))
+                {
                     File.Copy(path, str, true);
-
+                }
             }
 
-            ProcessStartInfo p = new ProcessStartInfo();
-            p.WorkingDirectory = RtcCore.EmuDir;
-            p.FileName = Path.Combine(RtcCore.EmuDir, "RESTARTDETACHEDRTC.bat");
+            ProcessStartInfo p = new ProcessStartInfo
+            {
+                WorkingDirectory = RtcCore.EmuDir,
+                FileName = Path.Combine(RtcCore.EmuDir, "RESTARTDETACHEDRTC.bat")
+            };
             Process.Start(p);
         }
     }
@@ -778,7 +835,10 @@ namespace RTCV.CorruptCore
             StashKeyConstructor(key, parentkey, blastlayer);
         }
 
-        public StashKey(string key, string parentkey, BlastLayer blastlayer) => StashKeyConstructor(key, parentkey, blastlayer);
+        public StashKey(string key, string parentkey, BlastLayer blastlayer)
+        {
+            StashKeyConstructor(key, parentkey, blastlayer);
+        }
 
         private void StashKeyConstructor(string key, string parentkey, BlastLayer blastlayer)
         {
@@ -803,7 +863,11 @@ namespace RTCV.CorruptCore
             return sk;
         }
 
-        public static void SetCore(StashKey sk) => SetCore(sk.SystemName, sk.SystemCore);
+        public static void SetCore(StashKey sk)
+        {
+            SetCore(sk.SystemName, sk.SystemCore);
+        }
+
         public static void SetCore(string systemName, string systemCore)
         {
             LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_KEY_SETSYSTEMCORE, new object[] { systemName, systemCore }, true);
@@ -830,10 +894,14 @@ namespace RTCV.CorruptCore
         public byte[] EmbedState()
         {
             if (StateFilename == null)
+            {
                 return null;
+            }
 
             if (this.StateData != null)
+            {
                 return this.StateData;
+            }
 
             byte[] stateData = File.ReadAllBytes(StateFilename);
             this.StateData = stateData;
@@ -844,12 +912,16 @@ namespace RTCV.CorruptCore
         public bool DeployState()
         {
             if (StateShortFilename == null || this.StateData == null)
+            {
                 return false;
+            }
 
             string deployedStatePath = GetSavestateFullPath();
 
             if (File.Exists(deployedStatePath))
+            {
                 return true;
+            }
 
             File.WriteAllBytes(deployedStatePath, this.StateData);
 
@@ -882,9 +954,13 @@ namespace RTCV.CorruptCore
                 Filtering.Hash2NameDico.TryGetValue(bu.LimiterListHash, out string name);
 
                 if (name == null)
+                {
                     name = "UNKNOWN_" + Filtering.StockpileListCount++;
+                }
                 else
+                {
                     name = Path.GetFileNameWithoutExtension(name);
+                }
 
                 logger.Trace("Setting KnownLists[{bu.LimiterListHash}] to {name}", bu.LimiterListHash, name);
                 this.KnownLists[bu.LimiterListHash] = name;
@@ -899,7 +975,7 @@ namespace RTCV.CorruptCore
     public class SaveStateKey
     {
         public StashKey StashKey = null;
-        public String Text = "";
+        public string Text = "";
 
         public SaveStateKey(StashKey stashKey, string text)
         {
@@ -911,9 +987,9 @@ namespace RTCV.CorruptCore
     [Ceras.MemberConfig(TargetMember.All)]
     public class SaveStateKeys
     {
-        public String VanguardImplementation { get; set; }
+        public string VanguardImplementation { get; set; }
         public List<StashKey> StashKeys = new List<StashKey>();
-        public List<String> Text = new List<string>();
+        public List<string> Text = new List<string>();
 
         public SaveStateKeys()
         {
@@ -974,14 +1050,20 @@ namespace RTCV.CorruptCore
                 foreach (BlastUnit bb in Layer)
                 {
                     if (bb == null) //BlastCheat getBackup() always returns null so they can happen and they are valid
+                    {
                         success = true;
+                    }
                     else
+                    {
                         success = bb.Apply(true);
+                    }
 
                     if (!success)
+                    {
                         throw new Exception(
                         "One of the BlastUnits in the BlastLayer failed to Apply().\n\n" +
                         "The operation was cancelled");
+                    }
                 }
 
                 //Only filter if there are actually enabled units
@@ -991,7 +1073,9 @@ namespace RTCV.CorruptCore
 
                     //If we're not using realtime, we execute right away.
                     if (!UseRealtime)
+                    {
                         StepActions.Execute();
+                    }
                 }
             }
             catch (Exception ex)
@@ -1032,7 +1116,9 @@ namespace RTCV.CorruptCore
         public void Reroll()
         {
             foreach (BlastUnit bu in Layer.Where(x => x.IsLocked == false))
+            {
                 bu.Reroll();
+            }
         }
 
         public void RasterizeVMDs(string vmdToRasterize = null)
@@ -1067,7 +1153,9 @@ namespace RTCV.CorruptCore
                     return;
                 }
                 foreach (BlastUnit bu in Layer)
+                {
                     bu.Note = value;
+                }
             }
         }
 
@@ -1086,7 +1174,9 @@ namespace RTCV.CorruptCore
             foreach (BlastUnit bu in bul)
             {
                 if (!usedAddresses.Contains(new ValueTuple<string, long>(bu.Domain, bu.Address)) && !bu.IsLocked)
+                {
                     usedAddresses.Add(new ValueTuple<string, long>(bu.Domain, bu.Address));
+                }
                 else
                 {
                     Layer.Remove(bu);
@@ -1163,15 +1253,14 @@ namespace RTCV.CorruptCore
         [DisplayName("Precision")]
         public int Precision
         {
-            get
-            {
-                return precision;
-            }
+            get => precision;
             set
             {
                 int max = 16348; //The textbox breaks if I go over 20k
                 if (value > max)
+                {
                     value = max;
+                }
                 //Cache the old precision
                 int oldPrecision = precision;
                 //Update the precision
@@ -1196,7 +1285,9 @@ namespace RTCV.CorruptCore
                     {
                         //If there was no precision set, set it to 1
                         if (oldPrecision == 0)
+                        {
                             oldPrecision = 1;
+                        }
 
                         byte[] temp = new byte[precision];
                         //If the new unit is larger, copy it over left padded
@@ -1228,10 +1319,7 @@ namespace RTCV.CorruptCore
         [JsonConverter(typeof(StringEnumConverter))]
         public BlastUnitSource Source
         {
-            get
-            {
-                return source;
-            }
+            get => source;
             set
             {
                 //Cleanup from other types of units
@@ -1246,7 +1334,10 @@ namespace RTCV.CorruptCore
                     case BlastUnitSource.VALUE:
                         {
                             if (Value == null)
+                            {
                                 Value = new byte[Precision];
+                            }
+
                             break;
                         }
                 }
@@ -1283,7 +1374,10 @@ namespace RTCV.CorruptCore
             get
             {
                 if (Value == null)
-                    return String.Empty;
+                {
+                    return string.Empty;
+                }
+
                 return BitConverter.ToString(this.Value).Replace("-", string.Empty);
             }
             set
@@ -1296,7 +1390,9 @@ namespace RTCV.CorruptCore
                 }
                 var temp = CorruptCore_Extensions.StringToByteArrayPadLeft(value, p);
                 if (temp != null)
+                {
                     this.Value = temp;
+                }
             }
         }
 
@@ -1469,11 +1565,17 @@ namespace RTCV.CorruptCore
                 bu.SourceAddress += start;
 
                 if (BigEndian && start == (precision - 1))
+                {
                     bu.TiltValue = TiltValue;
+                }
                 else if (!BigEndian && start == 0)
+                {
                     bu.TiltValue = TiltValue;
+                }
                 else
+                {
                     bu.TiltValue = 0;
+                }
             }
             else
             {
@@ -1481,9 +1583,13 @@ namespace RTCV.CorruptCore
                 for (int i = 0; i < bu.precision; i++)
                 {
                     if (BigEndian)
+                    {
                         bu.Value[i] = Value[end - i];
+                    }
                     else
+                    {
                         bu.Value[i] = Value[start + i];
+                    }
 
                     //If we have a tilt, calculate it and bake it into the value
                     if (this.TiltValue != 0)
@@ -1491,14 +1597,19 @@ namespace RTCV.CorruptCore
                         unchecked
                         {
                             if (BigEndian)
+                            {
                                 bu.Value[i] += (TiltValue.ToByteArray().PadLeft(this.precision))[end - i];
+                            }
                             else
+                            {
                                 bu.Value[i] += (TiltValue.ToByteArray().PadLeft(this.precision).FlipBytes())[start + i];
+                            }
                         }
                     }
                     else
+                    {
                         bu.TiltValue = 0;
-
+                    }
                 }
             }
 
@@ -1514,7 +1625,10 @@ namespace RTCV.CorruptCore
         public List<BlastUnit> GetRasterizedUnits(string vmdToRasterize = null)
         {
             if (vmdToRasterize == null)
+            {
                 vmdToRasterize = "[V]";
+            }
+
             bool breakDown = false;
             BlastLayer l = new BlastLayer();
             //Todo - Change this to a more unique marker than [V]?
@@ -1599,7 +1713,9 @@ namespace RTCV.CorruptCore
                 l.RasterizeVMDs(); //recursively do this
             }
             else
+            {
                 l.Layer.Add(this);
+            }
 
             return l.Layer;
 
@@ -1611,7 +1727,9 @@ namespace RTCV.CorruptCore
         public bool Apply(bool dontFilter)
         {
             if (!IsEnabled)
+            {
                 return true;
+            }
             //Create our working data object
             this.Working = new BlastUnitWorkingData();
 
@@ -1620,7 +1738,9 @@ namespace RTCV.CorruptCore
             {
                 //If it's one time, store the backup. Otherwise add it to the backup pool 
                 if (StoreType == StoreType.ONCE)
+                {
                     StoreBackup();
+                }
                 else
                 {
                     StepActions.StoreDataPool.Add(this);
@@ -1630,7 +1750,10 @@ namespace RTCV.CorruptCore
             StepActions.AddBlastUnit(this);
 
             if (dontFilter)
+            {
                 return true;
+            }
+
             StepActions.FilterBuListCollection();
 
             return true;
@@ -1644,27 +1767,36 @@ namespace RTCV.CorruptCore
         public ExecuteState Execute(bool UseRealtime = true)
         {
             if (!IsEnabled)
+            {
                 return ExecuteState.NOTEXECUTED;
+            }
 
             try
             {
                 //Get our memory interface
                 MemoryInterface mi = MemoryDomains.GetInterface(Domain);
                 if (mi == null)
+                {
                     return ExecuteState.NOTEXECUTED;
+                }
 
                 //Limiter handling
                 if (LimiterListHash != null && LimiterTime == LimiterTime.EXECUTE)
                 {
                     if (!LimiterCheck(mi))
+                    {
                         return ExecuteState.SILENTERROR;
+                    }
                 }
 
 
                 if (Working == null)
                 {
                     if (Debugger.IsAttached)
+                    {
                         throw new Exception("wtf");
+                    }
+
                     RTCV.Common.Logging.GlobalLogger.Error("Blastunit: WORKING WAS NULL {this}", this);
                     return ExecuteState.SILENTERROR;
                 }
@@ -1682,14 +1814,18 @@ namespace RTCV.CorruptCore
 
                             //If there's no stored data, return out.
                             if (Working.StoreData.Count == 0)
+                            {
                                 return ExecuteState.NOTEXECUTED;
+                            }
 
                             //Apply the value we have stored
                             Working.ApplyValue = Working.StoreData.Peek();
 
                             //Remove it from the store pool if it's a continuous backup
                             if (StoreType == StoreType.CONTINUOUS)
+                            {
                                 Working.StoreData.Dequeue();
+                            }
 
                             //All the data is already handled by GetStoreBackup, so we can just poke
                             for (int i = 0; i < Precision; i++)
@@ -1712,7 +1848,9 @@ namespace RTCV.CorruptCore
 
                                 //Flip it if it's big endian
                                 if (this.BigEndian)
+                                {
                                     Working.ApplyValue.FlipBytes();
+                                }
                             }
 
                             //Poke the memory
@@ -1744,17 +1882,21 @@ namespace RTCV.CorruptCore
         public void StoreBackup()
         {
             if (SourceDomain == null)
+            {
                 return;
+            }
 
             //Snag our memory interface
             MemoryInterface mi = MemoryDomains.GetInterface(SourceDomain);
 
             if (mi == null)
+            {
                 throw new Exception(
                     $"Memory Domain error. Mi was null. If you know how to reproduce this, let the devs know");
+            }
 
             //Get the value
-            Byte[] value = new byte[Precision];
+            byte[] value = new byte[Precision];
             for (int i = 0; i < Precision; i++)
             {
                 value[i] = mi.PeekByte(SourceAddress + i);
@@ -1762,7 +1904,9 @@ namespace RTCV.CorruptCore
 
             //Calculate the final value after adding the tilt value
             if (TiltValue != 0)
+            {
                 CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref value, TiltValue, this.BigEndian);
+            }
 
             //Enqueue it
             Working.StoreData.Enqueue(value);
@@ -1775,12 +1919,16 @@ namespace RTCV.CorruptCore
         public BlastUnit GetBakedUnit()
         {
             if (!IsEnabled)
+            {
                 return null;
+            }
 
             //Grab our mi
             MemoryInterface mi = MemoryDomains.GetInterface(Domain);
             if (mi == null)
+            {
                 return null;
+            }
 
             //Grab the value
             byte[] _value = new byte[Precision];
@@ -1798,7 +1946,9 @@ namespace RTCV.CorruptCore
             if (this.Source == BlastUnitSource.STORE && this.StoreType == StoreType.CONTINUOUS && this.LimiterTime != LimiterTime.GENERATE)
             {
                 if (this.Working.StoreData.Count > 0)
+                {
                     this.Working.StoreData.Dequeue();
+                }
             }
 
             return false;
@@ -1814,7 +1964,10 @@ namespace RTCV.CorruptCore
                         Address + Precision, Domain, LimiterListHash, destMI))
                     {
                         if (InvertLimiter)
+                        {
                             return ReturnFalseAndDequeueIfContinuousStore();
+                        }
+
                         return true;
                     }
                 }
@@ -1823,13 +1976,18 @@ namespace RTCV.CorruptCore
                     //We need an MI for the source domain. We pass a normal one around and pull this when needed
                     MemoryInterface sourceMI = MemoryDomains.GetInterface(SourceDomain);
                     if (sourceMI == null)
+                    {
                         return false;
+                    }
 
                     if (Filtering.LimiterPeekBytes(SourceAddress,
                         SourceAddress + Precision, Domain, LimiterListHash, sourceMI))
                     {
                         if (InvertLimiter)
+                        {
                             return ReturnFalseAndDequeueIfContinuousStore();
+                        }
+
                         return true;
                     }
                 }
@@ -1840,13 +1998,19 @@ namespace RTCV.CorruptCore
                     Address + Precision, Domain, LimiterListHash, destMI))
                 {
                     if (InvertLimiter)
+                    {
                         return ReturnFalseAndDequeueIfContinuousStore();
+                    }
+
                     return true;
                 }
             }
             //Note the flipped logic here
             if (InvertLimiter)
+            {
                 return true;
+            }
+
             return ReturnFalseAndDequeueIfContinuousStore();
         }
 
@@ -1864,7 +2028,9 @@ namespace RTCV.CorruptCore
         {
             //Don't reroll locked units
             if (this.IsLocked)
+            {
                 return;
+            }
 
             if (Source == BlastUnitSource.VALUE)
             {
@@ -2010,7 +2176,9 @@ namespace RTCV.CorruptCore
         {
             string enabledString = "[ ] BlastUnit -> ";
             if (IsEnabled)
+            {
                 enabledString = "[x] BlastUnit -> ";
+            }
 
             string cleanDomainName = Domain.Replace("(nametables)", ""); //Shortens the domain name if it contains "(nametables)"
             return (enabledString + cleanDomainName + "(" + Convert.ToInt32(Address).ToString("X") + ")." + Source.ToString() + "(" + ValueString + ")");
@@ -2025,23 +2193,30 @@ namespace RTCV.CorruptCore
             //Snag our MI
             MemoryInterface mi = MemoryDomains.GetInterface(Domain);
             if (mi == null)
+            {
                 return false;
+            }
 
             //If it's a store unit, store the backup
             if (Source == BlastUnitSource.STORE && StoreTime == StoreTime.PREEXECUTE)
             {
                 //One off store vs execution pool
                 if (StoreType == StoreType.ONCE)
+                {
                     StoreBackup();
+                }
                 else
+                {
                     StepActions.StoreDataPool.Add(this);
-
+                }
             }
             //Limiter handling. Normal operation is to not do anything if it doesn't match the limiter. Inverted is to only continue if it doesn't match
             if (LimiterTime == LimiterTime.PREEXECUTE)
             {
                 if (!LimiterCheck(mi))
+                {
                     return false;
+                }
             }
 
             return true;
@@ -2163,7 +2338,7 @@ namespace RTCV.CorruptCore
         public string Name { get; set; }
         public T Value { get; set; }
 
-        public ComboBoxItem(String name, T value)
+        public ComboBoxItem(string name, T value)
         {
             Name = name;
             Value = value;

@@ -7,21 +7,14 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Numerics;
 using System.Reflection;
-using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Runtime.Serialization;
-using System.Security.Permissions;
 using System.Text;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 using Ceras;
-using Microsoft.Win32.SafeHandles;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using RTCV.NetCore;
 
 namespace RTCV.CorruptCore
@@ -31,12 +24,16 @@ namespace RTCV.CorruptCore
         public static void DirectoryRequired(string path)
         {
             if (!Directory.Exists(path))
+            {
                 Directory.CreateDirectory(path);
+            }
         }
         public static void DirectoryRequired(string[] paths)
         {
             foreach (string path in paths)
+            {
                 DirectoryRequired(path);
+            }
         }
 
 
@@ -64,7 +61,9 @@ namespace RTCV.CorruptCore
             T[] result = new T[length];
 
             if (data == null)
+            {
                 return null;
+            }
 
             Array.Copy(data, index, result, 0, length);
             return result;
@@ -149,7 +148,10 @@ namespace RTCV.CorruptCore
             var lengthPadded = (hex.Length / 2) + (hex.Length % 2);
             var bytes = new byte[lengthPadded];
             if (hex == null)
+            {
                 return null;
+            }
+
             string temp = hex.PadLeft(lengthPadded * 2, '0'); //*2 since a byte is two characters
 
             int j = 0;
@@ -179,7 +181,10 @@ namespace RTCV.CorruptCore
         {
             var bytes = new byte[precision];
             if (hex == null)
+            {
                 return null;
+            }
+
             string temp = hex.PadLeft(precision * 2, '0'); //*2 since a byte is two characters
 
             int j = 0;
@@ -187,9 +192,12 @@ namespace RTCV.CorruptCore
             {
                 try
                 {
-                    if (!Byte.TryParse(temp.Substring(i, 2), NumberStyles.HexNumber, CultureInfo.CurrentCulture
+                    if (!byte.TryParse(temp.Substring(i, 2), NumberStyles.HexNumber, CultureInfo.CurrentCulture
                         , out byte b))
+                    {
                         return null;
+                    }
+
                     bytes[j] = b;
                 }
                 catch (FormatException e)
@@ -319,11 +327,11 @@ namespace RTCV.CorruptCore
                 case 1:
                     return byte.MaxValue;
                 case 2:
-                    return UInt16.MaxValue;
+                    return ushort.MaxValue;
                 case 4:
-                    return UInt32.MaxValue;
+                    return uint.MaxValue;
                 case 8:
-                    return UInt64.MaxValue;
+                    return ulong.MaxValue;
             }
 
             return 0;
@@ -334,12 +342,14 @@ namespace RTCV.CorruptCore
             byte[] _value = (byte[])value.Clone();
 
             if (needsBytesFlipped)
+            {
                 Array.Reverse(_value);
+            }
 
             switch (value.Length)
             {
                 case 1:
-                    return (int)_value[0];
+                    return _value[0];
                 case 2:
                     return BitConverter.ToUInt16(_value, 0);
                 case 4:
@@ -355,7 +365,9 @@ namespace RTCV.CorruptCore
         public static byte[] AddValueToByteArrayUnchecked(ref byte[] value, BigInteger addValue, bool isInputBigEndian)
         {
             if (isInputBigEndian)
+            {
                 Array.Reverse(value);
+            }
 
             bool isAdd = addValue >= 0;
             BigInteger bigintAddValueAbs = BigInteger.Abs(addValue);
@@ -366,60 +378,82 @@ namespace RTCV.CorruptCore
                     byte addByteValue = (bigintAddValueAbs > byte.MaxValue ? byte.MaxValue : (byte)bigintAddValueAbs);
 
                     if (isAdd)
+                    {
                         unchecked { value[0] += addByteValue; }
+                    }
                     else
+                    {
                         unchecked { value[0] -= addByteValue; }
+                    }
 
                     return value;
 
                 case 2:
                     {
                         UInt16 int16Value = BitConverter.ToUInt16(value, 0);
-                        UInt16 addInt16Value = (bigintAddValueAbs > UInt16.MaxValue ? UInt16.MaxValue : (ushort)bigintAddValueAbs);
+                        UInt16 addInt16Value = (bigintAddValueAbs > ushort.MaxValue ? ushort.MaxValue : (ushort)bigintAddValueAbs);
 
                         if (isAdd)
+                        {
                             unchecked { int16Value += addInt16Value; }
+                        }
                         else
+                        {
                             unchecked { int16Value -= addInt16Value; }
+                        }
 
                         value = BitConverter.GetBytes(int16Value);
 
                         if (isInputBigEndian)
+                        {
                             Array.Reverse(value);
+                        }
 
                         return value;
                     }
                 case 4:
                     {
                         UInt32 int32Value = BitConverter.ToUInt32(value, 0);
-                        UInt32 addInt32Value = (bigintAddValueAbs > UInt32.MaxValue ? UInt32.MaxValue : (uint)bigintAddValueAbs);
+                        UInt32 addInt32Value = (bigintAddValueAbs > uint.MaxValue ? uint.MaxValue : (uint)bigintAddValueAbs);
 
                         if (isAdd)
+                        {
                             unchecked { int32Value += addInt32Value; }
+                        }
                         else
+                        {
                             unchecked { int32Value -= addInt32Value; }
+                        }
 
                         value = BitConverter.GetBytes(int32Value);
 
                         if (isInputBigEndian)
+                        {
                             Array.Reverse(value);
+                        }
 
                         return value;
                     }
                 case 8:
                     {
                         UInt64 int64Value = BitConverter.ToUInt64(value, 0);
-                        UInt64 addInt64Value = (bigintAddValueAbs > UInt64.MaxValue ? UInt64.MaxValue : (ulong)bigintAddValueAbs);
+                        UInt64 addInt64Value = (bigintAddValueAbs > ulong.MaxValue ? ulong.MaxValue : (ulong)bigintAddValueAbs);
 
                         if (isAdd)
+                        {
                             unchecked { int64Value += addInt64Value; }
+                        }
                         else
+                        {
                             unchecked { int64Value -= addInt64Value; }
+                        }
 
                         value = BitConverter.GetBytes(int64Value);
 
                         if (isInputBigEndian)
+                        {
                             Array.Reverse(value);
+                        }
 
                         return value;
                     }
@@ -431,17 +465,25 @@ namespace RTCV.CorruptCore
                         BigInteger bigIntValue = new BigInteger(temp);
 
                         if (isAdd)
+                        {
                             bigIntValue += bigintAddValueAbs;
+                        }
                         else
+                        {
                             bigIntValue -= bigintAddValueAbs;
+                        }
 
                         //Calculate the max value you can store in this many bits 
                         BigInteger maxValue = BigInteger.Pow(2, value.Length * 8) - 1;
 
                         if (bigIntValue > maxValue)
+                        {
                             bigIntValue = bigIntValue % maxValue - 1; //Works fine for positive
+                        }
                         else if (bigIntValue < 0)
+                        {
                             bigIntValue = Mod(maxValue, bigIntValue); //% means remainder in c#
+                        }
 
                         byte[] added = bigIntValue.ToByteArray();
 
@@ -450,17 +492,24 @@ namespace RTCV.CorruptCore
                         //There's also a chance we get a value with less bytes than we put in. If this is the case, we want to copy it over left to right still
                         //So that means if added is larger we want that & if added is smaller we want added's Length
                         if (added.Length > value.Length)
+                        {
                             length = value.Length;
+                        }
                         else
+                        {
                             length = added.Length;
+                        }
 
                         //Don't use copyto as we actually want to copy a trimmed array out (left aligned)
                         for (int i = 0; i < length; i++)
+                        {
                             value[i] = added[i];
-
+                        }
 
                         if (isInputBigEndian)
+                        {
                             Array.Reverse(value);
+                        }
 
                         return value;
                     }
@@ -489,21 +538,30 @@ namespace RTCV.CorruptCore
                     {
                         byte[] value = BitConverter.GetBytes(Convert.ToUInt16(newValue));
                         if (needsBytesFlipped)
+                        {
                             Array.Reverse(value);
+                        }
+
                         return value;
                     }
                 case 4:
                     {
                         byte[] value = BitConverter.GetBytes(Convert.ToUInt32(newValue));
                         if (needsBytesFlipped)
+                        {
                             Array.Reverse(value);
+                        }
+
                         return value;
                     }
                 case 8:
                     {
                         byte[] value = BitConverter.GetBytes(Convert.ToUInt64(newValue));
                         if (needsBytesFlipped)
+                        {
                             Array.Reverse(value);
+                        }
+
                         return value;
                     }
             }
@@ -521,21 +579,30 @@ namespace RTCV.CorruptCore
                     {
                         byte[] value = BitConverter.GetBytes(Convert.ToUInt16(newValue));
                         if (needsBytesFlipped)
+                        {
                             Array.Reverse(value);
+                        }
+
                         return value;
                     }
                 case 4:
                     {
                         byte[] value = BitConverter.GetBytes(Convert.ToUInt32(newValue));
                         if (needsBytesFlipped)
+                        {
                             Array.Reverse(value);
+                        }
+
                         return value;
                     }
                 case 8:
                     {
                         byte[] value = BitConverter.GetBytes(newValue);
                         if (needsBytesFlipped)
+                        {
                             Array.Reverse(value);
+                        }
+
                         return value;
                     }
             }
@@ -548,7 +615,10 @@ namespace RTCV.CorruptCore
             byte[] arrayClone = (byte[])array.Clone();
 
             for (int i = 0; i < arrayClone.Length; i++)
+            {
                 array[i] = arrayClone[(arrayClone.Length - 1) - i];
+            }
+
             return array;
         }
 
@@ -583,7 +653,10 @@ namespace RTCV.CorruptCore
         public static byte[] ToByteArray(this BitArray bits)
         {
             int numBytes = bits.Count / 8;
-            if (bits.Count % 8 != 0) numBytes++;
+            if (bits.Count % 8 != 0)
+            {
+                numBytes++;
+            }
 
             byte[] bytes = new byte[numBytes];
             int byteIndex = 0, bitIndex = 0;
@@ -591,7 +664,9 @@ namespace RTCV.CorruptCore
             for (int i = 0; i < bits.Count; i++)
             {
                 if (bits[i])
+                {
                     bytes[byteIndex] |= (byte)(1 << (7 - bitIndex));
+                }
 
                 bitIndex++;
                 if (bitIndex == 8)
@@ -619,9 +694,9 @@ namespace RTCV.CorruptCore
         /// </returns>
         public static Color ChangeColorBrightness(this Color color, float correctionFactor)
         {
-            float red = (float)color.R;
-            float green = (float)color.G;
-            float blue = (float)color.B;
+            float red = color.R;
+            float green = color.G;
+            float blue = color.B;
 
             if (correctionFactor < 0)
             {
@@ -668,13 +743,16 @@ namespace RTCV.CorruptCore
                         break;
                     }
                     if (candidateInfo.Parent == null)
+                    {
                         break;
+                    }
+
                     candidateInfo = candidateInfo.Parent;
                 }
             }
             catch (Exception error)
             {
-                var message = String.Format("Unable to check directories {0} and {1}: {2}", candidate, other, error);
+                var message = string.Format("Unable to check directories {0} and {1}: {2}", candidate, other, error);
                 Trace.WriteLine(message);
             }
 
@@ -693,7 +771,10 @@ namespace RTCV.CorruptCore
                 var toRead = Math.Min(bytesRequired - readSoFar, buffer.Length);
                 var readNow = inStream.Read(buffer, 0, (int)toRead);
                 if (readNow == 0)
+                {
                     break; // End of stream
+                }
+
                 outStream.Write(buffer, 0, readNow);
                 readSoFar += readNow;
             } while (readSoFar < bytesRequired);
@@ -720,7 +801,9 @@ namespace RTCV.CorruptCore
                     tb.Columns.Add(prop.Name, prop.PropertyType.GetGenericArguments()[0]);
                 }
                 else
+                {
                     tb.Columns.Add(prop.Name, prop.PropertyType);
+                }
             }
 
             foreach (var item in items)
@@ -750,7 +833,10 @@ namespace RTCV.CorruptCore
         public static BindingList<T> AddRange<T>(this BindingList<T> input, IEnumerable<T> collection)
         {
             foreach (T item in collection)
+            {
                 input.Add(item);
+            }
+
             return input;
         }
 
@@ -805,9 +891,19 @@ namespace RTCV.CorruptCore
         {
             public bool Equals(byte[] a, byte[] b)
             {
-                if (a.Length != b.Length) return false;
+                if (a.Length != b.Length)
+                {
+                    return false;
+                }
+
                 for (int i = 0; i < a.Length; i++)
-                    if (a[i] != b[i]) return false;
+                {
+                    if (a[i] != b[i])
+                    {
+                        return false;
+                    }
+                }
+
                 return true;
             }
 
@@ -815,7 +911,10 @@ namespace RTCV.CorruptCore
             {
                 uint b = 0;
                 for (int i = 0; i < a.Length; i++)
+                {
                     b = ((b << 23) | (b >> 9)) ^ a[i];
+                }
+
                 return unchecked((int)b);
             }
 
@@ -1015,7 +1114,7 @@ namespace RTCV.CorruptCore
         }
 
         //Wrap JsonConvert so we can access this in vanguard implementations without importing json.net directly
-        public static String Serialize(object value)
+        public static string Serialize(object value)
         {
             return JsonConvert.SerializeObject(value);
         }
@@ -1037,7 +1136,7 @@ namespace RTCV.CorruptCore
         }
 
         //static bool NeedToRelease;
-        static string SkipEverythingButProgramInCommandLine(string cmdLine)
+        private static string SkipEverythingButProgramInCommandLine(string cmdLine)
         {
             //skip past the program name. can anyone think of a better way to do this?
             //we could use CommandLineToArgvW (commented out below) but then we would just have to re-assemble and potentially re-quote it
@@ -1049,22 +1148,40 @@ namespace RTCV.CorruptCore
             {
                 char cur = cmdLine[childCmdLine];
                 childCmdLine++;
-                if (childCmdLine == cmdLine.Length) break;
+                if (childCmdLine == cmdLine.Length)
+                {
+                    break;
+                }
+
                 bool thisIsQuote = (cur == '\"');
                 if (cur == '\\' || cur == '/')
+                {
                     lastSlash = childCmdLine;
+                }
+
                 if (quote)
                 {
                     if (thisIsQuote)
+                    {
                         quote = false;
-                    else lastGood = childCmdLine;
+                    }
+                    else
+                    {
+                        lastGood = childCmdLine;
+                    }
                 }
                 else
                 {
                     if (cur == ' ' || cur == '\t')
+                    {
                         break;
+                    }
+
                     if (thisIsQuote)
+                    {
                         quote = true;
+                    }
+
                     lastGood = childCmdLine;
                 }
             }
@@ -1073,19 +1190,23 @@ namespace RTCV.CorruptCore
             return path + " " + remainder;
         }
 
-        static IntPtr oldOut, conOut;
-        static bool hasConsole;
-        static bool attachedConsole;
-        static bool shouldRedirectStdout;
+        private static IntPtr oldOut, conOut;
+        private static bool hasConsole;
+        private static bool attachedConsole;
+        private static bool shouldRedirectStdout;
         public static void CreateConsole()
         {
             //(see desmume for the basis of some of this logic)
 
             if (hasConsole)
+            {
                 return;
+            }
 
             if (oldOut == IntPtr.Zero)
+            {
                 oldOut = Win32.GetStdHandle(-11); //STD_OUTPUT_HANDLE
+            }
 
             Win32.FileType fileType = Win32.GetFileType(oldOut);
 
@@ -1116,7 +1237,9 @@ namespace RTCV.CorruptCore
                     hasConsole = true;
                 }
                 else
+                {
                     System.Windows.Forms.MessageBox.Show(string.Format("Couldn't allocate win32 console: {0}", Marshal.GetLastWin32Error()));
+                }
             }
 
             if (hasConsole)
@@ -1131,7 +1254,9 @@ namespace RTCV.CorruptCore
                 conOut = Win32.CreateFile("CONOUT$", 0x40000000, 2, IntPtr.Zero, 3, 0, IntPtr.Zero);
 
                 if (!Win32.SetStdHandle(-11, conOut))
+                {
                     throw new Exception("SetStdHandle() failed");
+                }
             }
 
             //DotNetRewireConout();
@@ -1150,10 +1275,20 @@ namespace RTCV.CorruptCore
         public static void ReleaseConsole()
         {
             if (!hasConsole)
+            {
                 return;
+            }
 
-            if (shouldRedirectStdout) Win32.CloseHandle(conOut);
-            if (!attachedConsole) Win32.FreeConsole();
+            if (shouldRedirectStdout)
+            {
+                Win32.CloseHandle(conOut);
+            }
+
+            if (!attachedConsole)
+            {
+                Win32.FreeConsole();
+            }
+
             Win32.SetStdHandle(-11, oldOut);
 
             conOut = IntPtr.Zero;
@@ -1179,9 +1314,13 @@ namespace RTCV.CorruptCore
         public static void ToggleConsole()
         {
             if (ConsoleVisible)
+            {
                 HideConsole();
+            }
             else
+            {
                 ShowConsole();
+            }
         }
 
     }

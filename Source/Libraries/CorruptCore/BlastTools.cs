@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using System.Xml.Serialization;
-using RTCV.CorruptCore;
 using Newtonsoft.Json;
-using RTCV.NetCore;
 
 
 namespace RTCV.CorruptCore
@@ -39,7 +36,9 @@ namespace RTCV.CorruptCore
                     filename = saveFileDialog1.FileName;
                 }
                 else
+                {
                     return false;
+                }
             }
 
 
@@ -70,7 +69,9 @@ namespace RTCV.CorruptCore
                     filename = ofd.FileName;
                 }
                 else
+                {
                     return null;
+                }
             }
 
             if (!File.Exists(filename))
@@ -100,16 +101,25 @@ namespace RTCV.CorruptCore
             switch (input.Length)
             {
                 case 1:
-                    if (CorruptCore_Extensions.GetDecimalValue(input, false) > Byte.MaxValue)
+                    if (CorruptCore_Extensions.GetDecimalValue(input, false) > byte.MaxValue)
+                    {
                         return getByteArray(1, 0xFF);
+                    }
+
                     break;
                 case 2:
-                    if (CorruptCore_Extensions.GetDecimalValue(input, false) > UInt16.MaxValue)
+                    if (CorruptCore_Extensions.GetDecimalValue(input, false) > ushort.MaxValue)
+                    {
                         return getByteArray(2, 0xFF);
+                    }
+
                     break;
                 case 4:
-                    if (CorruptCore_Extensions.GetDecimalValue(input, false) > UInt32.MaxValue)
+                    if (CorruptCore_Extensions.GetDecimalValue(input, false) > uint.MaxValue)
+                    {
                         return getByteArray(2, 0xFF);
+                    }
+
                     break;
             }
             return input;
@@ -170,14 +180,21 @@ namespace RTCV.CorruptCore
                 if (Original[i] != Corrupt[i] && i >= rp.SkipBytes)
                 {
                     if (i - rp.SkipBytes >= maxaddress)
+                    {
                         bl.Layer.Add(new BlastUnit(new byte[] { Corrupt[i] }, rp.SecondDomain, (i - rp.SkipBytes) - maxaddress, 1, mi.BigEndian));
+                    }
                     else
+                    {
                         bl.Layer.Add(new BlastUnit(new byte[] { Corrupt[i] }, rp.PrimaryDomain, (i - rp.SkipBytes), 1, mi.BigEndian));
+                    }
                 }
             }
 
             if (bl.Layer.Count == 0)
+            {
                 return null;
+            }
+
             return bl;
         }
 

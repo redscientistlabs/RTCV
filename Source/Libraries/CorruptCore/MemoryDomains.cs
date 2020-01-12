@@ -1,9 +1,5 @@
-﻿using Ceras;
-using Newtonsoft.Json;
-using RTCV.NetCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -11,6 +7,9 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using Ceras;
+using Newtonsoft.Json;
+using RTCV.NetCore;
 
 namespace RTCV.CorruptCore
 {
@@ -64,12 +63,20 @@ namespace RTCV.CorruptCore
                 {
                     var d = new Dictionary<string, MemoryInterface>();
                     if (MemoryInterfaces != null)
+                    {
                         foreach (var item in MemoryInterfaces)
+                        {
                             d[item.Key] = item.Value;
+                        }
+                    }
 
                     if (VmdPool != null)
+                    {
                         foreach (var item in VmdPool)
+                        {
                             d[item.Key] = item.Value;
+                        }
+                    }
 
                     return d;
                 }
@@ -89,16 +96,23 @@ namespace RTCV.CorruptCore
         {
             var mdps = RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.MEMORYDOMAINS_INTERFACES] as MemoryDomainProxy[];
             if (mdps == null)
+            {
                 return;
+            }
 
             var temp = new Dictionary<string, MemoryDomainProxy>();
 
             foreach (MemoryDomainProxy mdp in mdps)
+            {
                 temp.Add(mdp.ToString(), mdp);
+            }
+
             MemoryInterfaces = temp;
 
             if (domainsChanged)
+            {
                 LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_EVENT_DOMAINSUPDATED, true);
+            }
         }
 
 
@@ -110,16 +124,24 @@ namespace RTCV.CorruptCore
         public static MemoryDomainProxy GetProxy(string domain, long address)
         {
             if (domain == null)
+            {
                 return null;
+            }
 
             if (MemoryInterfaces.Count == 0)
+            {
                 RefreshDomains();
+            }
 
             if (MemoryInterfaces.TryGetValue(domain, out MemoryDomainProxy mdp))
+            {
                 return mdp;
+            }
 
             if (VmdPool.TryGetValue(domain, out VirtualMemoryDomain vmd))
+            {
                 return GetProxy(vmd.GetRealDomain(address), vmd.GetRealAddress(address));
+            }
 
             return null;
         }
@@ -127,16 +149,24 @@ namespace RTCV.CorruptCore
         public static MemoryInterface GetInterface(string _domain)
         {
             if (_domain == null)
+            {
                 return null;
+            }
 
             if (MemoryInterfaces.Count == 0)
+            {
                 RefreshDomains();
+            }
 
             if (MemoryInterfaces.TryGetValue(_domain, out MemoryDomainProxy mi))
+            {
                 return mi;
+            }
 
             if (VmdPool.TryGetValue(_domain, out VirtualMemoryDomain vmd))
+            {
                 return vmd;
+            }
 
             return null;
         }
@@ -151,7 +181,9 @@ namespace RTCV.CorruptCore
                 return vmd.GetRealAddress(address);
             }
             else
+            {
                 return address;
+            }
         }
 
         public static string GetRealDomain(string domain, long address)
@@ -163,7 +195,9 @@ namespace RTCV.CorruptCore
                 return vmd.GetRealDomain(address);
             }
             else
+            {
                 return domain;
+            }
         }
 
 
@@ -171,11 +205,15 @@ namespace RTCV.CorruptCore
         {
             //If the BL references a VMD that doesn't exist, return null
             if (bl.Layer.Any(x => MemoryDomains.GetInterface(x.Domain) == null))
+            {
                 return null;
+            }
 
-            VmdPrototype proto = new VmdPrototype();
-            proto.VmdName = RtcCore.GetRandomKey();
-            proto.GenDomain = "Hybrid";
+            VmdPrototype proto = new VmdPrototype
+            {
+                VmdName = RtcCore.GetRandomKey(),
+                GenDomain = "Hybrid"
+            };
 
             BlastUnit bu = bl.Layer[0];
             MemoryInterface mi = MemoryDomains.GetInterface(bu.Domain);
@@ -188,7 +226,10 @@ namespace RTCV.CorruptCore
         {
             VmdPrototype proto = GetVmdPrototypeFromBlastlayer(sk.BlastLayer);
             if (proto == null)
+            {
                 MessageBox.Show("The resulting layer was empty or contained invalid data (unloaded VMD?)");
+            }
+
             AddVMD(proto);
         }
 
@@ -197,7 +238,10 @@ namespace RTCV.CorruptCore
         /// We don't use a spec for this because VMDs can get huge, and as such, we keep the dictionary synced on both sides manually.
         /// </summary>
         /// <param name="proto"></param>
-        public static void AddVMD(VmdPrototype proto) => AddVMD(proto.Generate());
+        public static void AddVMD(VmdPrototype proto)
+        {
+            AddVMD(proto.Generate());
+        }
 
         /// <summary>
         /// This is one of the rare cases where a method is netcore redundant
@@ -213,7 +257,11 @@ namespace RTCV.CorruptCore
         }
 
 
-        public static void AddVMD_NET(VmdPrototype proto) => AddVMD_NET(proto.Generate());
+        public static void AddVMD_NET(VmdPrototype proto)
+        {
+            AddVMD_NET(proto.Generate());
+        }
+
         public static void AddVMD_NET(VirtualMemoryDomain VMD)
         {
             MemoryDomains.VmdPool[VMD.ToString()] = VMD;
@@ -224,7 +272,11 @@ namespace RTCV.CorruptCore
         /// We don't use a spec for this because VMDs can get huge, and as such, we keep the dictionary synced on both sides manually.
         /// </summary>
         /// <param name="VMD"></param>
-        public static void RemoveVMD(VirtualMemoryDomain VMD) => RemoveVMD(VMD.ToString());
+        public static void RemoveVMD(VirtualMemoryDomain VMD)
+        {
+            RemoveVMD(VMD.ToString());
+        }
+
         /// <summary>
         /// This is one of the rare cases where a method is netcore redundant
         /// We don't use a spec for this because VMDs can get huge, and as such, we keep the dictionary synced on both sides manually.
@@ -233,23 +285,33 @@ namespace RTCV.CorruptCore
         public static void RemoveVMD(string vmdName)
         {
             if (MemoryDomains.VmdPool.ContainsKey(vmdName))
+            {
                 MemoryDomains.VmdPool.Remove(vmdName);
+            }
 
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_DOMAIN_VMD_REMOVE, vmdName, true);
             LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_EVENT_DOMAINSUPDATED);
         }
 
-        public static void RemoveVMD_NET(VirtualMemoryDomain VMD) => RemoveVMD_NET(VMD.ToString());
+        public static void RemoveVMD_NET(VirtualMemoryDomain VMD)
+        {
+            RemoveVMD_NET(VMD.ToString());
+        }
+
         public static void RemoveVMD_NET(string vmdName)
         {
             if (MemoryDomains.VmdPool.ContainsKey(vmdName))
+            {
                 MemoryDomains.VmdPool.Remove(vmdName);
+            }
         }
 
         public static void GenerateActiveTableDump(string domain, string key)
         {
             if (!MemoryInterfaces.ContainsKey(domain))
+            {
                 return;
+            }
 
             MemoryInterface mi = MemoryInterfaces[domain];
 
@@ -273,7 +335,10 @@ namespace RTCV.CorruptCore
                 fs.Read(buffer, 0, buffer.Length);
             }
             if (!buffer.SequenceEqual(Encoding.ASCII.GetBytes("NES\x1A")))
+            {
                 return false;
+            }
+
             return true;
         }
 
@@ -287,7 +352,9 @@ namespace RTCV.CorruptCore
 
                     //There's no easy way to discern NES from FDS so just check for the domain name
                     if (MemoryDomains.MemoryInterfaces.ContainsKey("PRG ROM"))
+                    {
                         rp.PrimaryDomain = "PRG ROM";
+                    }
                     else
                     {
                         rp.Error = "Unfortunately, Bizhawk doesn't support editing the ROM (FDS Side) domain of FDS games. Maybe in a future version...";
@@ -295,15 +362,22 @@ namespace RTCV.CorruptCore
                     }
 
                     if (MemoryDomains.MemoryInterfaces.ContainsKey("CHR VROM"))
+                    {
                         rp.SecondDomain = "CHR VROM";
+                    }
                     //Skip the first 16 bytes if there's an iNES header
                     if (CheckNesHeader(romFilename))
+                    {
                         rp.SkipBytes = 16;
+                    }
+
                     break;
 
                 case "SNES":    //Super Nintendo
                     if (MemoryDomains.MemoryInterfaces.ContainsKey("SGB CARTROM")) //BSNES SGB Mode
+                    {
                         rp.PrimaryDomain = "SGB CARTROM";
+                    }
                     else
                     {
                         rp.PrimaryDomain = "CARTROM";
@@ -311,7 +385,9 @@ namespace RTCV.CorruptCore
                         long filesize = new FileInfo(romFilename).Length;
 
                         if (filesize % 1024 != 0)
+                        {
                             rp.SkipBytes = 512;
+                        }
                     }
 
                     break;
@@ -342,7 +418,9 @@ namespace RTCV.CorruptCore
                         rp.PrimaryDomain = "MD CART";
 
                         if (romFilename.IndexOf(".SMD", StringComparison.OrdinalIgnoreCase) >= 0)
+                        {
                             rp.SkipBytes = 512;
+                        }
                     }
                     else
                     {    //If it's in Sega CD mode
@@ -411,10 +489,7 @@ namespace RTCV.CorruptCore
 
         public abstract void PokeByte(long address, byte value);
 
-        private MemoryInterface this[string name]
-        {
-            get => this;
-        }
+        private MemoryInterface this[string name] => this;
 
         public MemoryInterface()
         {
@@ -479,16 +554,21 @@ namespace RTCV.CorruptCore
                 long start = range[0];
                 long end = range[1];
                 if (end < start)
+                {
                     continue;
+                }
 
                 for (long i = start; i < end; i++)
                 {
                     if (!IsAddressInRanges(i, RemoveSingles, RemoveRanges))
+                    {
                         if (PointerSpacer == 1 || addressCount % PointerSpacer == 0)
                         {
                             //VMD.PointerDomains.Add(GenDomain);
                             VMD.PointerAddresses.Add(i);
                         }
+                    }
+
                     addressCount++;
                 }
             }
@@ -511,7 +591,9 @@ namespace RTCV.CorruptCore
         public bool IsAddressInRanges(long address, List<long> singles, List<long[]> ranges)
         {
             if (singles.Contains(address))
+            {
                 return true;
+            }
 
             foreach (long[] range in ranges)
             {
@@ -519,7 +601,9 @@ namespace RTCV.CorruptCore
                 long end = range[1];
 
                 if (address >= start && address < end)
+                {
                     return true;
+                }
             }
 
             return false;
@@ -564,7 +648,9 @@ namespace RTCV.CorruptCore
             }
 
             if (PointerDomains.Count == 0 && PointerAddresses.Count == 0)
+            {
                 return;
+            }
 
             List<string> domains = new List<string>();
             List<List<long>> domainAdresses = new List<List<long>>();
@@ -600,9 +686,13 @@ namespace RTCV.CorruptCore
             get
             {
                 if (Compacted)
+                {
                     return CompactPointerAddresses.Sum(it => it.Length);
+                }
                 else
+                {
                     return PointerAddresses.Count;
+                }
             }
             set { }
         }
@@ -610,14 +700,16 @@ namespace RTCV.CorruptCore
         private string name;
         public override string Name
         {
-            get { return "[V]" + name; }
-            set { name = value; }
+            get => "[V]" + name;
+            set => name = value;
         }
 
         public void AddFromBlastLayer(BlastLayer bl)
         {
             if (bl == null)
+            {
                 return;
+            }
 
             bl.SanitizeDuplicates();
 
@@ -640,7 +732,10 @@ namespace RTCV.CorruptCore
             {
                 long[] addressBank = CompactPointerAddresses[i];
                 if (address < (currentBankStartAddress + addressBank.Length)) // are we in the right bank?
+                {
                     return i;
+                }
+
                 currentBankStartAddress += addressBank.Length;
             }
             return 0;
@@ -654,7 +749,9 @@ namespace RTCV.CorruptCore
             else
             {
                 if (address < 0 || address > PointerDomains.Count)
+                {
                     return "ERROR";
+                }
 
                 return PointerDomains[(int)address];
             }
@@ -668,7 +765,10 @@ namespace RTCV.CorruptCore
                 foreach (long[] addressBank in CompactPointerAddresses)
                 {
                     if (address < (currentBankStartAddress + addressBank.Length)) // are we in the right bank?
+                    {
                         return addressBank[address - currentBankStartAddress];
+                    }
+
                     currentBankStartAddress += addressBank.Length;
                 }
                 return 0; //failure
@@ -676,7 +776,10 @@ namespace RTCV.CorruptCore
             else
             {
                 if (address < 0 || address > PointerAddresses.Count || address < Proto.Padding)
+                {
                     return 0;
+                }
+
                 return PointerAddresses[(int)address];
             }
         }
@@ -739,30 +842,45 @@ namespace RTCV.CorruptCore
             //endAddress is exclusive
             List<byte> data = new List<byte>();
             for (long i = startAddress; i < endAddress; i++)
+            {
                 data.Add(PeekByte(i));
+            }
 
             if (raw || BigEndian)
+            {
                 return data.ToArray();
+            }
             else
+            {
                 return data.ToArray().FlipBytes();
+            }
         }
 
         public override void PokeBytes(long startAddress, byte[] value, bool raw = true)
         {
 
             if (!raw || !BigEndian)
+            {
                 value.FlipBytes();
+            }
 
             for (long i = 0; i < value.Length; i++)
+            {
                 PokeByte(startAddress + i, value[i]);
-
+            }
         }
         public override byte PeekByte(long address)
         {
             if (address < this.Proto.Padding)
-                return (byte)0;
-            if (address > this.Size - 1)
+            {
                 return 0;
+            }
+
+            if (address > this.Size - 1)
+            {
+                return 0;
+            }
+
             string targetDomain = GetRealDomain(address);
             long targetAddress = GetRealAddress(address);
 
@@ -774,9 +892,14 @@ namespace RTCV.CorruptCore
         public override void PokeByte(long address, byte value)
         {
             if (address < this.Proto.Padding)
+            {
                 return;
+            }
+
             if (address > this.Size - 1)
+            {
                 return;
+            }
 
             string targetDomain = GetRealDomain(address);
             long targetAddress = GetRealAddress(address);
@@ -825,26 +948,39 @@ namespace RTCV.CorruptCore
             //endAddress is exclusive
             List<byte> data = new List<byte>();
             for (long i = startAddress; i < endAddress; i++)
+            {
                 data.Add(PeekByte(i));
+            }
 
             if (raw || BigEndian)
+            {
                 return data.ToArray();
+            }
             else
+            {
                 return data.ToArray().FlipBytes();
+            }
         }
         public override void PokeBytes(long startAddress, byte[] value, bool raw = true)
         {
             if (!raw || !BigEndian)
+            {
                 value.FlipBytes();
+            }
 
             for (long i = 0; i < value.Length; i++)
+            {
                 PokeByte(startAddress + i, value[i]);
+            }
         }
 
         public override byte PeekByte(long address)
         {
             if (address > Size - 1)
+            {
                 return 0;
+            }
+
             try
             {
                 return MD.PeekByte(address);
@@ -858,7 +994,9 @@ namespace RTCV.CorruptCore
         public override void PokeByte(long address, byte value)
         {
             if (address > Size - 1)
+            {
                 return;
+            }
 
             try
             {
@@ -960,7 +1098,7 @@ namespace RTCV.CorruptCore
     public class FileInterface : FileMemoryInterface
     {
         //File management
-        public static Dictionary<String, String> CompositeFilenameDico { get; set; }
+        public static Dictionary<string, string> CompositeFilenameDico { get; set; }
 
         public static FileInterfaceIdentity identity = FileInterfaceIdentity.SELF_DESCRIBE;
         public override string Name => ShortFilename;
@@ -974,7 +1112,7 @@ namespace RTCV.CorruptCore
 
         public MultipleFileInterface parent = null;
         public override byte[][] lastMemoryDump { get; set; } = null;
-        public override bool cacheEnabled { get { return lastMemoryDump != null; } }
+        public override bool cacheEnabled => lastMemoryDump != null;
 
         //lastMemorySize gets rounded up to a multiplier of 4 to make the vector engine work on multiple files
         //lastRealMemorySize is used in peek/poke to cancel out non-existing adresses
@@ -1016,7 +1154,9 @@ namespace RTCV.CorruptCore
                 useAutomaticFileBackups = _useAutomaticFileBackups;
 
                 if (!File.Exists(Filename))
+                {
                     throw new FileNotFoundException("The file " + Filename + " doesn't exist! Cancelling load");
+                }
 
                 FileInfo info = new System.IO.FileInfo(Filename);
 
@@ -1042,7 +1182,9 @@ namespace RTCV.CorruptCore
 
 
                 if (useAutomaticFileBackups)
+                {
                     SetBackup();
+                }
 
                 //getMemoryDump();
                 getMemorySize();
@@ -1051,7 +1193,9 @@ namespace RTCV.CorruptCore
             catch (Exception ex)
             {
                 if (parent != null && !MultipleFileInterface.LoadAnything)
+                {
                     MessageBox.Show($"FileInterface failed to load something \n\n" + "Culprit file: " + Filename + "\n\n" + ex.ToString());
+                }
 
                 throw;
             }
@@ -1079,7 +1223,9 @@ namespace RTCV.CorruptCore
         public static bool LoadCompositeFilenameDico(string jsonBaseDir = null)
         {
             if (jsonBaseDir == null)
+            {
                 jsonBaseDir = RtcCore.EmuDir;
+            }
 
             JsonSerializer serializer = new JsonSerializer();
             var path = Path.Combine(jsonBaseDir, "FILEBACKUPS", "filemap.json");
@@ -1109,13 +1255,17 @@ namespace RTCV.CorruptCore
         public static bool SaveCompositeFilenameDico(string jsonFilePath = null)
         {
             if (jsonFilePath == null)
+            {
                 jsonFilePath = RtcCore.EmuDir;
+            }
 
             JsonSerializer serializer = new JsonSerializer();
             var folder = Path.Combine(jsonFilePath, "FILEBACKUPS");
 
             if (!Directory.Exists(folder))
+            {
                 Directory.CreateDirectory(folder);
+            }
 
             var path = Path.Combine(folder, "filemap.json");
             try
@@ -1139,9 +1289,13 @@ namespace RTCV.CorruptCore
         public string getCorruptFilename(bool overrideWriteCopyMode = false)
         {
             if (overrideWriteCopyMode || FileInterface.writeCopyMode)
+            {
                 return Path.Combine(RtcCore.EmuDir, "FILEBACKUPS", getCompositeFilename("CORRUPT"));
+            }
             else
+            {
                 return Filename;
+            }
         }
         public string getBackupFilename()
         {
@@ -1153,7 +1307,9 @@ namespace RTCV.CorruptCore
             try
             {
                 if (File.Exists(getCorruptFilename()))
+                {
                     File.Delete(getCorruptFilename());
+                }
             }
             catch
             {
@@ -1172,7 +1328,9 @@ namespace RTCV.CorruptCore
 
 
             if (!File.Exists(corruptFilename))
+            {
                 File.Copy(getBackupFilename(), corruptFilename, true);
+            }
 
             return corruptFilename;
         }
@@ -1186,10 +1344,14 @@ namespace RTCV.CorruptCore
                 try
                 {
                     if (File.Exists(Filename))
+                    {
                         File.Delete(Filename);
+                    }
 
                     if (File.Exists(getCorruptFilename()))
+                    {
                         File.Move(getCorruptFilename(), Filename);
+                    }
                 }
                 catch
                 {
@@ -1206,7 +1368,9 @@ namespace RTCV.CorruptCore
             try
             {
                 if (!File.Exists(getBackupFilename()))
+                {
                     File.Copy(Filename, getBackupFilename(), true);
+                }
             }
             catch (Exception ex)
             {
@@ -1219,12 +1383,16 @@ namespace RTCV.CorruptCore
         public override bool ResetBackup(bool askConfirmation = true)
         {
             if (askConfirmation && MessageBox.Show("Are you sure you want to reset the backup using the target file?", "WARNING", MessageBoxButtons.YesNo) == DialogResult.No)
+            {
                 return false;
+            }
 
             try
             {
                 if (File.Exists(getBackupFilename()))
+                {
                     File.Delete(getBackupFilename());
+                }
 
                 SetBackup();
             }
@@ -1252,7 +1420,9 @@ namespace RTCV.CorruptCore
                 }
 
                 if (announce)
+                {
                     MessageBox.Show("Backup of " + ShortFilename + " was restored");
+                }
             }
             else
             {
@@ -1272,16 +1442,21 @@ namespace RTCV.CorruptCore
         public override void getMemoryDump()
         {
             if (useAutomaticFileBackups)
+            {
                 lastMemoryDump = MemoryBanks.ReadFile(getBackupFilename());
+            }
             else
+            {
                 lastMemoryDump = MemoryBanks.ReadFile(Filename);
-
+            }
         }
 
         public override long getMemorySize()
         {
             if (lastMemorySize != null)
+            {
                 return (long)lastMemorySize;
+            }
 
             lastRealMemorySize = new FileInfo(Filename).Length;
 
@@ -1303,16 +1478,22 @@ namespace RTCV.CorruptCore
         public override void PokeBytes(long address, byte[] data)
         {
             if (address + data.Length >= lastRealMemorySize)
+            {
                 return;
+            }
 
             if (stream == null)
+            {
                 stream = File.Open(SetWorkingFile(), FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
+            }
 
             stream.Position = address;
             stream.Write(data, 0, data.Length);
 
             if (cacheEnabled)
+            {
                 MemoryBanks.PokeBytes(lastMemoryDump, address, data);
+            }
 
             /*
             if (lastMemoryDump != null)
@@ -1325,12 +1506,16 @@ namespace RTCV.CorruptCore
         public override void PokeByte(long address, byte data)
         {
             if (address >= lastRealMemorySize)
+            {
                 return;
+            }
 
             try
             {
                 if (stream == null)
+                {
                     stream = File.Open(SetWorkingFile(), FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
+                }
 
                 stream.Position = address;
                 stream.WriteByte(data);
@@ -1349,26 +1534,32 @@ namespace RTCV.CorruptCore
             }
 
             if (cacheEnabled)
+            {
                 MemoryBanks.PokeByte(lastMemoryDump, address, data);
+            }
             //lastMemoryDump[address] = data;
         }
 
         public override byte PeekByte(long address)
         {
             if (address >= lastRealMemorySize)
+            {
                 return 0;
-
+            }
 
             if (cacheEnabled)
+            {
                 return MemoryBanks.PeekByte(lastMemoryDump, address);
+            }
             //return lastMemoryDump[address];
             try
             {
                 byte[] readBytes = new byte[1];
 
                 if (stream == null)
+                {
                     stream = File.Open(SetWorkingFile(), FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
-
+                }
 
                 stream.Position = address;
                 stream.Read(readBytes, 0, 1);
@@ -1394,18 +1585,23 @@ namespace RTCV.CorruptCore
         public override byte[] PeekBytes(long address, int length)
         {
             if (address + length >= lastRealMemorySize)
+            {
                 return new byte[length];
+            }
 
             if (cacheEnabled)
+            {
                 return MemoryBanks.PeekBytes(lastMemoryDump, address, length);
+            }
             //return lastMemoryDump.SubArray(address, range);
 
             byte[] readBytes = new byte[length];
 
 
             if (stream == null)
+            {
                 stream = File.Open(SetWorkingFile(), FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
-
+            }
 
             stream.Position = address;
             stream.Read(readBytes, 0, length);
@@ -1432,7 +1628,7 @@ namespace RTCV.CorruptCore
     [Serializable()]
     public class MultipleFileInterface : FileMemoryInterface, IMemoryDomain
     {
-        public static Dictionary<String, String> CompositeFilenameDico { get; set; }
+        public static Dictionary<string, string> CompositeFilenameDico { get; set; }
 
 
         public override string Name => ShortFilename;
@@ -1457,16 +1653,22 @@ namespace RTCV.CorruptCore
                 {
                     try
                     {
-                        var fi = new FileInterface("File|" + t, _bigEndian, _useAutomaticFileBackups);
-                        fi.parent = this;
+                        var fi = new FileInterface("File|" + t, _bigEndian, _useAutomaticFileBackups)
+                        {
+                            parent = this
+                        };
                         FileInterfaces.Add(fi);
                     }
                     catch
                     {
                         if (MultipleFileInterface.LoadAnything)
+                        {
                             break;
+                        }
                         else
+                        {
                             throw;
+                        }
                     }
                 }
 
@@ -1474,7 +1676,9 @@ namespace RTCV.CorruptCore
                 ShortFilename = "MultipleFiles";
 
                 if (_useAutomaticFileBackups)
+                {
                     SetBackup();
+                }
 
 
                 //getMemoryDump();
@@ -1499,12 +1703,13 @@ namespace RTCV.CorruptCore
             }
 
             foreach (var fi in FileInterfaces)
+            {
                 if (fi.stream != null)
                 {
                     fi.stream.Close();
                     fi.stream = null;
                 }
-
+            }
         }
 
         public override string ToString()
@@ -1533,9 +1738,13 @@ namespace RTCV.CorruptCore
             foreach (var fi in FileInterfaces)
             {
                 if (allSucceeded)
+                {
                     allSucceeded = fi.ResetWorkingFile();
+                }
                 else
+                {
                     fi.ResetWorkingFile();
+                }
             }
 
             return allSucceeded;
@@ -1553,9 +1762,13 @@ namespace RTCV.CorruptCore
             foreach (var fi in FileInterfaces)
             {
                 if (allSucceeded)
+                {
                     allSucceeded = fi.ApplyWorkingFile();
+                }
                 else
+                {
                     fi.ApplyWorkingFile();
+                }
             }
 
             return allSucceeded;
@@ -1567,9 +1780,13 @@ namespace RTCV.CorruptCore
             foreach (var fi in FileInterfaces)
             {
                 if (allSucceeded)
+                {
                     allSucceeded = fi.SetBackup();
+                }
                 else
+                {
                     fi.SetBackup();
+                }
             }
 
             return allSucceeded;
@@ -1579,14 +1796,20 @@ namespace RTCV.CorruptCore
         {
             bool allSucceeded = true;
             if (askConfirmation && MessageBox.Show("Are you sure you want to reset the backup using the target files?", "WARNING", MessageBoxButtons.YesNo) == DialogResult.No)
+            {
                 return false;
+            }
 
             foreach (var fi in FileInterfaces)
             {
                 if (allSucceeded)
+                {
                     allSucceeded = fi.ResetBackup(false);
+                }
                 else
+                {
                     fi.ResetBackup(false);
+                }
             }
             return allSucceeded;
 
@@ -1598,12 +1821,18 @@ namespace RTCV.CorruptCore
             foreach (var fi in FileInterfaces)
             {
                 if (allSucceeded)
+                {
                     allSucceeded = fi.RestoreBackup(false);
+                }
                 else
+                {
                     fi.RestoreBackup(false);
+                }
             }
             if (announce)
+            {
                 MessageBox.Show("Backups of " + string.Join(",", FileInterfaces.Select(it => (it as FileInterface).ShortFilename)) + " were restored");
+            }
 
             return allSucceeded;
         }
@@ -1678,21 +1907,20 @@ namespace RTCV.CorruptCore
         }
         public override byte[][] lastMemoryDump
         {
-            get { throw new Exception("FORBIDDEN USE OF LASTMEMORYDUMP ON MULTIPLEFILEINTERFACE"); }
-            set { throw new Exception("FORBIDDEN USE OF LASTMEMORYDUMP ON MULTIPLEFILEINTERFACE"); }
+            get => throw new Exception("FORBIDDEN USE OF LASTMEMORYDUMP ON MULTIPLEFILEINTERFACE");
+            set => throw new Exception("FORBIDDEN USE OF LASTMEMORYDUMP ON MULTIPLEFILEINTERFACE");
         }
 
-        public override bool cacheEnabled
-        {
-            get { return FileInterfaces.Count > 0 && FileInterfaces[0].lastMemoryDump != null; }
-        }
+        public override bool cacheEnabled => FileInterfaces.Count > 0 && FileInterfaces[0].lastMemoryDump != null;
 
         public override long getMemorySize()
         {
             long size = 0;
 
             foreach (var fi in FileInterfaces)
+            {
                 size += fi.getMemorySize();
+            }
 
             lastMemorySize = size;
             return (long)lastMemorySize;
@@ -1744,7 +1972,9 @@ namespace RTCV.CorruptCore
                 var fi = FileInterfaces[i];
 
                 if (fi.MultiFilePositionCeiling > address)
+                {
                     return fi.PeekByte(address - fi.MultiFilePosition);
+                }
             }
 
             //if wasn't found
@@ -1762,7 +1992,9 @@ namespace RTCV.CorruptCore
                 var fi = FileInterfaces[i];
 
                 if (fi.MultiFilePositionCeiling > address)
+                {
                     return fi.PeekBytes(address - fi.MultiFilePosition, range);
+                }
             }
 
             //if wasn't found

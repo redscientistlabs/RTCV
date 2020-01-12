@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.IO;
-using System.Diagnostics;
-using System.Threading;
 using RTCV.NetCore;
 
 namespace RTCV.CorruptCore
@@ -52,8 +47,9 @@ namespace RTCV.CorruptCore
                 originalDomains.Add(mdps.FirstOrDefault(it => it.Name == rp.PrimaryDomain).MD);
 
                 if (rp.SecondDomain != null)
+                {
                     originalDomains.Add(mdps.FirstOrDefault(it => it.Name == rp.SecondDomain).MD);
-
+                }
             }
 
             bool useCustomPrecision = false;
@@ -71,16 +67,22 @@ namespace RTCV.CorruptCore
         private static string getNamefromIMemoryDomainArray(IMemoryDomain[] bank, long address)
         {
             if (bank == null | bank.Length == 0)
+            {
                 return null;
+            }
 
             long bankStartAddressDrift = 0;
 
             for (int i = 0; i < bank.Length; i++)
             {
                 if (address - bankStartAddressDrift < bank[i].Size)
+                {
                     return bank[i].Name;
+                }
                 else
+                {
                     bankStartAddressDrift += bank[i].Size;
+                }
             }
 
             return null;
@@ -88,16 +90,22 @@ namespace RTCV.CorruptCore
         private static byte[] getBytefromIMemoryDomainArray(IMemoryDomain[] bank, long address, int precision)
         {
             if (bank == null | bank.Length == 0)
+            {
                 return new byte[precision];
+            }
 
             long bankStartAddressDrift = 0;
 
             for (int i = 0; i < bank.Length; i++)
             {
                 if (address - bankStartAddressDrift < bank[i].Size)
+                {
                     return bank[i].PeekBytes(address - bankStartAddressDrift, precision);
+                }
                 else
+                {
                     bankStartAddressDrift += bank[i].Size;
+                }
             }
 
             return new byte[precision];
@@ -127,7 +135,9 @@ namespace RTCV.CorruptCore
                 if (!originalBytes.SequenceEqual(corruptBytes) && i >= skipBytes)
                 {
                     if (Original[0].BigEndian)
+                    {
                         corruptBytes = corruptBytes.FlipBytes();
+                    }
 
                     BlastUnit bu;
                     if (i - skipBytes >= OriginalFirstDomainMaxAddress)
@@ -146,12 +156,13 @@ namespace RTCV.CorruptCore
 
 
             if (bl.Layer.Count == 0)
+            {
                 return null;
+            }
             else
+            {
                 return bl;
-
-
-
+            }
         }
 
     }

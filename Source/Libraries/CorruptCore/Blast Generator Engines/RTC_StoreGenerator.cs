@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows.Forms;
 
 namespace RTCV.CorruptCore
 {
@@ -16,7 +15,9 @@ namespace RTCV.CorruptCore
             {
                 BlastUnit bu = GenerateUnit(domain, address, param1, param2, stepSize, precision, lifetime, executeFrame, loop, mode, note, rand);
                 if (bu != null)
+                {
                     bl.Layer.Add(bu);
+                }
             }
 
             return bl;
@@ -31,13 +32,19 @@ namespace RTCV.CorruptCore
                 if (domain.Contains("[V]"))
                 {
                     if (!MemoryDomains.VmdPool.ContainsKey(domain))
+                    {
                         return null;
+                    }
+
                     mi = MemoryDomains.VmdPool[domain];
                 }
                 else
                 {
                     if (!MemoryDomains.MemoryInterfaces.ContainsKey(domain))
+                    {
                         return null;
+                    }
+
                     mi = MemoryDomains.MemoryInterfaces[domain];
                 }
 
@@ -48,16 +55,23 @@ namespace RTCV.CorruptCore
 
 
                 if (address + value.Length > mi.Size)
+                {
                     return null;
+                }
 
                 switch (mode)
                 {
                     case BGStoreModes.CHAINED:
                         long temp = address + stepSize;
                         if (temp <= mi.Size)
+                        {
                             destAddress = temp;
+                        }
                         else
+                        {
                             destAddress = mi.Size - 1;
+                        }
+
                         break;
                     case BGStoreModes.SOURCE_RANDOM:
                         destAddress = address;
@@ -78,7 +92,9 @@ namespace RTCV.CorruptCore
                 }
 
                 if (destAddress >= mi.Size)
+                {
                     return null;
+                }
 
                 var bu = new BlastUnit(storeType, StoreTime.PREEXECUTE, domain, destAddress, domain, address, precision, mi.BigEndian, executeFrame, lifetime, note)
                 {

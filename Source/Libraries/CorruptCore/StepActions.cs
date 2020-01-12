@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using RTCV.NetCore;
 using RTCV.NetCore.StaticTools;
@@ -38,20 +36,20 @@ namespace RTCV.CorruptCore
 
         public static int MaxInfiniteBlastUnits
         {
-            get { return (int)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.STEP_MAXINFINITEBLASTUNITS]; }
-            set { RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_MAXINFINITEBLASTUNITS, value); }
+            get => (int)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.STEP_MAXINFINITEBLASTUNITS];
+            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_MAXINFINITEBLASTUNITS, value);
         }
 
         public static bool LockExecution
         {
-            get { return (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.STEP_LOCKEXECUTION]; }
-            set { RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_LOCKEXECUTION, value); }
+            get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.STEP_LOCKEXECUTION];
+            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_LOCKEXECUTION, value);
         }
 
         public static bool ClearStepActionsOnRewind
         {
-            get { return (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.STEP_CLEARSTEPACTIONSONREWIND]; }
-            set { RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_CLEARSTEPACTIONSONREWIND, value); }
+            get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.STEP_CLEARSTEPACTIONSONREWIND];
+            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_CLEARSTEPACTIONSONREWIND, value);
         }
 
         public static PartialSpec getDefaultPartial()
@@ -74,12 +72,16 @@ namespace RTCV.CorruptCore
                 foreach (List<BlastUnit> buList in appliedLifetime)
                 {
                     foreach (BlastUnit bu in buList)
+                    {
                         bu.Working = null;
+                    }
                 }
                 foreach (List<BlastUnit> buList in appliedInfinite)
                 {
                     foreach (BlastUnit bu in buList)
+                    {
                         bu.Working = null;
+                    }
                 }
 
                 buListCollection = new List<List<BlastUnit>>();
@@ -97,12 +99,16 @@ namespace RTCV.CorruptCore
         public static void RemoveExcessInfiniteStepUnits()
         {
             if (LockExecution)
+            {
                 return;
+            }
 
             lock (executeLock)
             {
                 while (appliedInfinite.Count > MaxInfiniteBlastUnits)
+                {
                     appliedInfinite.Remove(appliedInfinite[0]);
+                }
             }
         }
 
@@ -183,7 +189,10 @@ namespace RTCV.CorruptCore
             {
                 //We only care if it's pre-execute because otherwise its limiter is independent from batching 
                 if (bu1.LimiterTime != LimiterTime.PREEXECUTE)
+                {
                     return true;
+                }
+
                 if (bu1.LimiterListHash == bu2.LimiterListHash &&
                     bu1.LimiterTime == bu2.LimiterTime &&
                     bu1.InvertLimiter == bu2.InvertLimiter)
@@ -258,7 +267,9 @@ namespace RTCV.CorruptCore
             {
                 //Build up our list of buLists
                 foreach (List<BlastUnit> buList in queued)
+                {
                     buListCollection.Add(buList);
+                }
 
                 //Empty queued out
                 queued = new LinkedList<List<BlastUnit>>();
@@ -291,7 +302,9 @@ namespace RTCV.CorruptCore
         {
             //We need to do this twice because the while loop is vital on the nextFrame being set from the very beginning.
             if (queued.Count == 0)
+            {
                 return;
+            }
             //This will only occur if the queue has something in it due to the check above
             while (currentFrame >= nextFrame)
             {
@@ -330,7 +343,9 @@ namespace RTCV.CorruptCore
 
                 //Check if the queue is empty
                 if (queued.Count == 0)
+                {
                     return;
+                }
                 //It's not empty so set the next frame
                 nextFrame = (queued.First())[0].Working.ExecuteFrameQueued;
             }
@@ -362,7 +377,10 @@ namespace RTCV.CorruptCore
                                     "A fatal error occurred", MessageBoxButtons.YesNo);
                                 isRunning = false;
                                 if (dr == DialogResult.Yes)
+                                {
                                     throw new CustomException("BlastUnit appliedLifetime Execute threw up. Check the log for more info.", Environment.StackTrace);
+                                }
+
                                 return;
                             }
                             if (result == ExecuteState.HANDLEDERROR)
@@ -372,11 +390,14 @@ namespace RTCV.CorruptCore
                             }
                         }
                         if (buList[0].Working.LastFrame == currentFrame)
+                        {
                             itemsToRemove.Add(buList);
+                        }
                     }
 
                     //Execute all infinite lifetime units
                     foreach (List<BlastUnit> buList in appliedInfinite)
+                    {
                         foreach (BlastUnit bu in buList)
                         {
                             var result = bu.Execute();
@@ -387,7 +408,10 @@ namespace RTCV.CorruptCore
                                     "A fatal error occurred", MessageBoxButtons.YesNo);
                                 isRunning = false;
                                 if (dr == DialogResult.Yes)
+                                {
                                     throw new CustomException("BlastUnit appliedInfinite Execute threw up. Check the log for more info.", Environment.StackTrace);
+                                }
+
                                 return;
                             }
                             if (result == ExecuteState.HANDLEDERROR)
@@ -396,6 +420,7 @@ namespace RTCV.CorruptCore
                                 return;
                             }
                         }
+                    }
 
 
                     //Increment the frame
@@ -412,7 +437,9 @@ namespace RTCV.CorruptCore
                             bu.Working = null;
                             //Remove it from the store pool
                             if (bu.Source == BlastUnitSource.STORE)
+                            {
                                 StoreDataPool.Remove(bu);
+                            }
                         }
 
                         //If there's a loop, re-apply all the units
@@ -427,11 +454,15 @@ namespace RTCV.CorruptCore
                     }
                     //We only call this if there's a loop
                     if (needsRefilter)
+                    {
                         FilterBuListCollection();
+                    }
                 }
                 //Update any tools
                 if (S.GET<CorruptCore.Tools.HexEditor>().Visible && S.GET<CorruptCore.Tools.HexEditor>().UpdateOnStep)
+                {
                     S.GET<CorruptCore.Tools.HexEditor>().UpdateValues();
+                }
             }
         }
     }

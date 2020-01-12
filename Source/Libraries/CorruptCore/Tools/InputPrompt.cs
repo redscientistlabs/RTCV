@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace RTCV.CorruptCore.Tools
 {
@@ -24,10 +24,7 @@ namespace RTCV.CorruptCore.Tools
 
         public string Message
         {
-            get
-            {
-                return PromptLabel.Text;
-            }
+            get => PromptLabel.Text;
 
             set
             {
@@ -38,14 +35,11 @@ namespace RTCV.CorruptCore.Tools
 
         public string InitialValue
         {
-            get { return PromptBox.Text; }
-            set { PromptBox.Text = value ?? ""; }
+            get => PromptBox.Text;
+            set => PromptBox.Text = value ?? "";
         }
 
-        public string PromptText
-        {
-            get { return PromptBox.Text ?? ""; }
-        }
+        public string PromptText => PromptBox.Text ?? "";
 
         private void InputPrompt_Load(object sender, EventArgs e)
         {
