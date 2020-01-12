@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 
 namespace RTCV.NetCore
 {
@@ -10,12 +6,14 @@ namespace RTCV.NetCore
     {
         private volatile System.Timers.Timer watchdog = null;
         private object watchLock = new object();
-        TCPLink tcp;
+        private TCPLink tcp;
 
         internal TCPLinkWatch(TCPLink _tcp, NetCoreSpec spec)
         {
-            watchdog = new System.Timers.Timer();
-            watchdog.Interval = spec.ClientReconnectDelay;
+            watchdog = new System.Timers.Timer
+            {
+                Interval = spec.ClientReconnectDelay
+            };
             watchdog.Elapsed += Watchdog_Elapsed;
             tcp = _tcp;
             tcp.StartNetworking();

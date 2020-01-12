@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RTCV.NetCore
@@ -25,24 +21,36 @@ namespace RTCV.NetCore
         public static void FormExecute(Action a)
         {
             if (SyncObject.InvokeRequired)
+            {
                 SyncObject.InvokeCorrectly(new MethodInvoker(a.Invoke));
+            }
             else
+            {
                 a.Invoke();
+            }
         }
         public static void FormExecute<T>(Action<T> a, T b)
         {
             if (SyncObject.InvokeRequired)
+            {
                 SyncObject.InvokeCorrectly(new MethodInvoker(() => { a.Invoke(b); }));
+            }
             else
+            {
                 a.Invoke(b);
+            }
         }
 
         public static void FormExecute(Delegate a)
         {
             if (SyncObject.InvokeRequired)
+            {
                 SyncObject.InvokeCorrectly(a);
+            }
             else
+            {
                 a.DynamicInvoke();
+            }
         }
 
         public static void EmuThreadExecute(Action a, bool fallBackToMainThread)
@@ -70,22 +78,28 @@ namespace RTCV.NetCore
         public static void SyncObjectExecute(Form sync, Action<object, EventArgs> a, object[] args = null)
         {
             if (sync.InvokeRequired)
+            {
                 sync.InvokeCorrectly(new MethodInvoker(() => { a.Invoke(null, null); }));
+            }
             else
+            {
                 a.Invoke(null, null);
+            }
         }
     }
     public static class ActionDistributor
     {
-        static volatile Dictionary<string, LinkedList<Action>> ActionDico = new Dictionary<string, LinkedList<Action>>();
-        static object ActionPoolLock = new object();
+        private static Dictionary<string, LinkedList<Action>> ActionDico = new Dictionary<string, LinkedList<Action>>();
+        private static object ActionPoolLock = new object();
 
         public static void Enqueue(string key, Action act)
         {
             lock (ActionPoolLock)
             {
                 if (ActionDico.TryGetValue(key, out LinkedList<Action> actions))
+                {
                     actions.AddLast(act);
+                }
                 else
                 {
                     ActionDico[key] = new LinkedList<Action>();
@@ -102,7 +116,9 @@ namespace RTCV.NetCore
             lock (ActionPoolLock)
             {
                 if (!ActionDico.TryGetValue(key, out actions))
+                {
                     return;
+                }
             }
 
             while (actions.Contains(act)) { Thread.Sleep(10); } //Lock until action has been executed
@@ -113,14 +129,17 @@ namespace RTCV.NetCore
         {
             lock (ActionPoolLock)
             {
-                LinkedList<Action> actions;
-                if (!ActionDico.TryGetValue(key, out actions))
+                if (!ActionDico.TryGetValue(key, out LinkedList<Action> actions))
+                {
                     return;
+                }
 
                 while (true)
                 {
                     if (actions.Count == 0)
+                    {
                         return;
+                    }
 
                     var act = actions.First.Value;
                     act.Invoke();

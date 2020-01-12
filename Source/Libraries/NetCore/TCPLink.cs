@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Net;
-using System.Windows.Forms;
-using System.Runtime.Serialization;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
+using System.Runtime.Serialization;
+using System.Threading;
 using Ceras;
-using Ceras.Helpers;
 
 namespace RTCV.NetCore
 {
@@ -26,24 +20,23 @@ namespace RTCV.NetCore
         private volatile NetworkStatus _status = NetworkStatus.DISCONNECTED;
         internal NetworkStatus status
         {
-            get
-            {
-                return _status;
-            }
+            get => _status;
             set
             {
 
                 spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{EVENT_NETWORKSTATUS}", value.ToString()));
 
                 if (value != _status)
+                {
                     logger.Debug("TCPLink status {STATUS}", value);
+                }
 
                 _status = value;
             }
         }
 
-        private string IP { get { return spec.IP; } }
-        private int Port { get { return spec.Port; } }
+        private string IP => spec.IP;
+        private int Port => spec.Port;
 
         internal volatile TcpClient client;
         private volatile NetworkStream clientStream;
@@ -73,7 +66,9 @@ namespace RTCV.NetCore
                 linkWatch = new TCPLinkWatch(this, spec);
             }
             else
+            {
                 StartNetworking();
+            }
         }
 
 
@@ -117,7 +112,10 @@ namespace RTCV.NetCore
             config.OnResolveFormatter.Add((c, t) =>
             {
                 if (t == typeof(HashSet<byte[]>))
+                {
                     return new NetCore.NetCore_Extensions.HashSetFormatterThatKeepsItsComparer();
+                }
+
                 return null; // continue searching
             });
             var serializer = new CerasSerializer(config);
@@ -127,7 +125,9 @@ namespace RTCV.NetCore
             NetworkStream networkStream = null;
 
             if (providedStream != null)
+            {
                 networkStream = providedStream;
+            }
 
             try
             {
@@ -147,14 +147,18 @@ namespace RTCV.NetCore
                 networkStream.WriteTimeout = int.MaxValue;  //Using {BOOP} commands routed through UDP/TCP
 
                 if (spec.Side == NetworkSide.CLIENT)
+                {
                     SendMessage(new NetCoreAdvancedMessage("{HI}"));    //The exchange of {HI} command confirms that link is established on Receiving
+                }
 
                 while (true)
                 {
                     if (networkStream != null && networkStream.DataAvailable)
                     {
                         if (spec.Side == NetworkSide.SERVER && (!socket?.Connected ?? true))
+                        {
                             return;
+                        }
 
                         NetCoreAdvancedMessage message = null;
 
@@ -189,7 +193,9 @@ namespace RTCV.NetCore
 
                                 sw.Stop();
                                 if (message.Type != "{BOOP}" && sw.ElapsedMilliseconds > 50)
+                                {
                                     logger.Info($"It took {sw.ElapsedMilliseconds} ms to deserialize cmd {message.Type} of {temp.Length} bytes");
+                                }
                             }
                         }
                         catch { throw; }
@@ -197,9 +203,13 @@ namespace RTCV.NetCore
                         if (message != null)
                         {
                             if (message.Type == "{RETURNVALUE}")
+                            {
                                 spec.Connector.watch.AddReturn(message);
+                            }
                             else
+                            {
                                 spec.Connector.hub.QueueMessage(message);
+                            }
                         }
                     }
 
@@ -224,10 +234,14 @@ namespace RTCV.NetCore
                                 if (pendingMessage is NetCoreAdvancedMessage am && am.objectValue != null)
                                 {
                                     lock (am.objectValue)
+                                    {
                                         buf = serializer.Serialize(pendingMessage);
+                                    }
                                 }
                                 else
+                                {
                                     buf = serializer.Serialize(pendingMessage);
+                                }
                             }
                             //Write the length of the incoming object to the NetworkStream
                             byte[] length = BitConverter.GetBytes(buf.Length);
@@ -236,7 +250,9 @@ namespace RTCV.NetCore
                             networkStream.Write(buf, 0, buf.Length);
                             sw.Stop();
                             if (pendingMessage.Type != "{BOOP}" && sw.ElapsedMilliseconds > 50)
+                            {
                                 logger.Info($"It took {sw.ElapsedMilliseconds} ms to serialize backCmd {pendingMessage.Type} of {buf.Length} bytes");
+                            }
                         }
                         catch
                         {
@@ -246,7 +262,9 @@ namespace RTCV.NetCore
                         if (pendingMessage.Type == "{BYE}")
                         {
                             lock (PeerMessageQueueLock) //Since we're shutting down, let's clear the message queue
+                            {
                                 PeerMessageQueue?.Clear();
+                            }
                         }
 
                         if (status == NetworkStatus.DISCONNECTED || status == NetworkStatus.CONNECTIONLOST)
@@ -254,7 +272,9 @@ namespace RTCV.NetCore
                             //If the link's status changed from an outside factor, we want to stop the thread.
 
                             lock (PeerMessageQueueLock)
+                            {
                                 PeerMessageQueue?.Clear();
+                            }
 
                             return;
                         }
@@ -323,9 +343,13 @@ namespace RTCV.NetCore
                 }
 
                 if (status == NetworkStatus.CONNECTED)
+                {
                     status = (expectingSomeone ? NetworkStatus.CONNECTIONLOST : NetworkStatus.DISCONNECTED);
+                }
                 else if (status != NetworkStatus.CONNECTIONLOST)
+                {
                     status = NetworkStatus.DISCONNECTED;
+                }
 
                 //Kill synced query if happenning
                 spec.Connector.watch.Kill();
@@ -333,11 +357,9 @@ namespace RTCV.NetCore
 
         }
 
-        private void DiscardException(Exception ex)
-        {
+        private void DiscardException(Exception ex) =>
             //Discarded exception but write it in console
             logger.Warn(ex, "DiscardException: {spec.Side}:{status} -> Supposed to be connected -> {supposedToBeConnected} expectingsomeone -> {expectingSomeone} status -> {status}\n{stacktrace}", spec.Side, status, supposedToBeConnected, expectingSomeone, status, ex.StackTrace);
-        }
 
         internal void Kill()
         {
@@ -401,7 +423,9 @@ namespace RTCV.NetCore
             supposedToBeConnected = false;
 
             if (!stayConnected)
+            {
                 expectingSomeone = false;
+            }
 
             if (spec.Side == NetworkSide.CLIENT)
             {
@@ -437,7 +461,9 @@ namespace RTCV.NetCore
             status = (stayConnected ? NetworkStatus.CONNECTIONLOST : NetworkStatus.DISCONNECTED);
 
             lock (PeerMessageQueueLock)
+            {
                 PeerMessageQueue.Clear();
+            }
 
             KillConnections(clientRef);
 
@@ -466,7 +492,9 @@ namespace RTCV.NetCore
                 }
 
                 if (!success || result == null || client == null)
+                {
                     throw new Exception("Failed to connect");
+                }
 
                 client.EndConnect(result);
                 clientStream = client.GetStream();
@@ -481,9 +509,11 @@ namespace RTCV.NetCore
                     } //Lets wait for the thread to die
                 }
 
-                streamReadingThread = new Thread(() => StoreMessages(clientStream));
-                streamReadingThread.Name = "TCP CLIENT";
-                streamReadingThread.IsBackground = true;
+                streamReadingThread = new Thread(() => StoreMessages(clientStream))
+                {
+                    Name = "TCP CLIENT",
+                    IsBackground = true
+                };
                 streamReadingThread.Start();
                 logger.Debug("Started new TCPLink Thread for CLIENT");
 
@@ -492,7 +522,9 @@ namespace RTCV.NetCore
             {
 
                 if (ex.Message != "Failed to connect")
+                {
                     DiscardException(ex);
+                }
 
                 try
                 {
@@ -537,9 +569,11 @@ namespace RTCV.NetCore
                     } //Lets wait for the thread to die
                 }
 
-                streamReadingThread = new Thread(() => StoreMessages(null));
-                streamReadingThread.Name = "TCP SERVER";
-                streamReadingThread.IsBackground = true;
+                streamReadingThread = new Thread(() => StoreMessages(null))
+                {
+                    Name = "TCP SERVER",
+                    IsBackground = true
+                };
                 streamReadingThread.Start();
                 logger.Debug($"Started new TCPLink Thread for SERVER");
             }
@@ -556,8 +590,9 @@ namespace RTCV.NetCore
         {
 
             if (supposedToBeConnected && (status == NetworkStatus.CONNECTED || status == NetworkStatus.CONNECTING || status == NetworkStatus.LISTENING))
+            {
                 return;
-
+            }
 
             if (spec.Side == NetworkSide.CLIENT)
             {
@@ -567,8 +602,9 @@ namespace RTCV.NetCore
                 //spec.OnClientConnecting(null);
 
                 if (!StartClient())
+                {
                     return;
-
+                }
             }
             else //(spec.Side == NetworkSide.SERVER)
             {
@@ -579,8 +615,9 @@ namespace RTCV.NetCore
                 spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{EVENT_SERVERLISTENING}"));
 
                 if (!StartServer())
+                {
                     return;
-
+                }
             }
 
             supposedToBeConnected = true;
@@ -589,8 +626,10 @@ namespace RTCV.NetCore
             BoopMonitoringCounter = DefaultBoopMonitoringCounter;
 
             BoopMonitoringTimer?.Stop();
-            BoopMonitoringTimer = new System.Timers.Timer();
-            BoopMonitoringTimer.Interval = 500;
+            BoopMonitoringTimer = new System.Timers.Timer
+            {
+                Interval = 500
+            };
             BoopMonitoringTimer.Elapsed += BoopMonitoringTimer_Tick;
             BoopMonitoringTimer.Start();
 
@@ -599,15 +638,20 @@ namespace RTCV.NetCore
         private void BoopMonitoringTimer_Tick(object sender, EventArgs e)
         {
             if (!supposedToBeConnected || status != NetworkStatus.CONNECTED)
+            {
                 return;
+            }
 
             BoopMonitoringCounter--;
 
             if (spec.Connector.watch.IsWaitingForReturn)
+            {
                 spec.Connector.SendMessage("{BOOP}");   //If waiting for the return of a synced message or sending flood is happenning, send {BOOP} messages through UDP
+            }
             else
+            {
                 SendMessage(new NetCoreAdvancedMessage("{BOOP}"), true);
-
+            }
 
             if (BoopMonitoringCounter == 0 && status == NetworkStatus.CONNECTED)//If no boops have been received in some time, shutdown netcore's TCP
             {
@@ -622,12 +666,18 @@ namespace RTCV.NetCore
             NetCoreAdvancedMessage message;
 
             if (_message is NetCoreAdvancedMessage)
+            {
                 message = (_message as NetCoreAdvancedMessage);
+            }
             else
+            {
                 message = new NetCoreAdvancedMessage(_message.Type); // promote message to Advanced if simple ({BOOP} command goes through UDP Link)
+            }
 
             if ((!message.Type.StartsWith("{EVENT_") && message.Type != "{BOOP}") || ConsoleEx.ShowDebug)
+            {
                 logger.Info("{side} Process advanced message -> {message}", spec.Side, message.Type);
+            }
 
             switch (message.Type)
             {
@@ -746,18 +796,25 @@ namespace RTCV.NetCore
         {
 
             if (!IsSendingAdvancedMessageAuthorized(message))
+            {
                 return;
+            }
 
             lock (PeerMessageQueueLock)
             {
                 if (priority) //If there is a stream of data occuring, priority ensures that a message will skip the line and gets sent ASAP
+                {
                     PeerMessageQueue.AddFirst(message);
+                }
                 else
+                {
                     PeerMessageQueue.AddLast(message);
+                }
             }
             if (ConsoleEx.ShowDebug)
+            {
                 logger.Trace("side} -> Sent advanced message \"{Type}\", priority:{Priority}", spec.Side, message.Type, priority);
-
+            }
         }
 
         internal object SendSyncedMessage(NetCoreAdvancedMessage message, bool priority = false)
@@ -765,16 +822,22 @@ namespace RTCV.NetCore
             //A synced will block the sender's thread until a response is received
 
             if (!IsSendingAdvancedMessageAuthorized(message))
+            {
                 return null;
+            }
 
             message.requestGuid = Guid.NewGuid();
 
             lock (PeerMessageQueueLock)
             {
                 if (priority)
+                {
                     PeerMessageQueue.AddFirst(message);
+                }
                 else
+                {
                     PeerMessageQueue.AddLast(message);
+                }
             }
 
             logger.Info("{side} -> Sent advanced message {Type}, priority:{Priority}", spec.Side, message.Type, priority);
@@ -793,7 +856,10 @@ namespace RTCV.NetCore
                 var toRead = Math.Min(bytesRequired - readSoFar, buffer.Length);
                 var readNow = inStream.Read(buffer, 0, (int)toRead);
                 if (readNow == 0)
+                {
                     break; // End of stream
+                }
+
                 outStream.Write(buffer, 0, readNow);
                 readSoFar += readNow;
             } while (readSoFar < bytesRequired);

@@ -5,14 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters;
-using System.Security.Permissions;
 using System.Text;
-using System.Threading.Tasks;
 using Ceras;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using RTCV.NetCore;
 
 namespace RTCV.NetCore
 {
@@ -48,7 +44,9 @@ namespace RTCV.NetCore
 
             //Set the version after the update 
             if (partialSpec.version != 1)
+            {
                 base.version = partialSpec.version;
+            }
         }
 
         public void RegisterUpdateAction(Action<object, SpecUpdateEventArgs> registrant)
@@ -66,7 +64,9 @@ namespace RTCV.NetCore
             Delegate[] invocationList = eventInstance?.GetInvocationList() ?? new Delegate[] { };
             MethodInfo eventRemoveMethodInfo = typeof(FullSpec).GetEvent("SpecUpdated").GetRemoveMethod(true);
             foreach (Delegate eventHandler in invocationList)
+            {
                 eventRemoveMethodInfo.Invoke(this, new object[] { eventHandler });
+            }
         }
 
         public new void Reset()
@@ -74,30 +74,38 @@ namespace RTCV.NetCore
             base.Reset();
 
             if (template != null)
+            {
                 Update(template);
+            }
         }
 
         public void Update(PartialSpec _partialSpec, bool propagate = true, bool synced = true)
         {
             if (name != _partialSpec.Name)
+            {
                 throw new Exception("Name mismatch between PartialSpec and FullSpec");
+            }
 
             //For initial
             foreach (var key in _partialSpec.specDico.Keys)
+            {
                 base[key] = _partialSpec.specDico[key];
+            }
 
             //Increment the version
             base.version++;
 
             if (propagationIsEnabled && propagate)
+            {
                 OnSpecUpdated(new SpecUpdateEventArgs()
                 {
                     partialSpec = _partialSpec,
                     syncedUpdate = synced
                 });
+            }
         }
 
-        public void Update(String key, Object value, bool propagate = true, bool synced = true)
+        public void Update(string key, object value, bool propagate = true, bool synced = true)
         {
             /*
 			//Make a partial spec and pass it into Update(PartialSpec)
@@ -131,23 +139,27 @@ namespace RTCV.NetCore
             p.version = base.version;
             return p;
         }
-        public void FullUpdate()
-        {
-            Update(GetPartialSpec());
-        }
+        public void FullUpdate() => Update(GetPartialSpec());
 
-        public List<String> GetDump()
+        public List<string> GetDump()
         {
-            var dump = new List<String>();
-            dump.Add(this.name + " v" + version);
+            var dump = new List<string>
+            {
+                this.name + " v" + version
+            };
             foreach (string key in base.specDico.Keys)
             {
                 StringBuilder sb = new StringBuilder();
                 sb.Append(key + ": ");
                 if (base[key] is IEnumerable em && !(base[key] is string))
+                {
                     sb.AppendLine(RecursiveEnumerate(em));
+                }
                 else
+                {
                     sb.Append(base[key].ToString());
+                }
+
                 dump.Add(sb.ToString());
             }
             return dump;
@@ -156,10 +168,16 @@ namespace RTCV.NetCore
         private string RecursiveEnumerate(IEnumerable em, StringBuilder sb = null, int tab = 1)
         {
             if (sb == null)
+            {
                 sb = new StringBuilder();
+            }
+
             StringBuilder tabBuilder = new StringBuilder();
             for (int i = 0; i < tab; i++)
+            {
                 tabBuilder.Append("\t");
+            }
+
             string t = tabBuilder.ToString();
 
             sb.AppendLine(t + em.ToString());
@@ -203,10 +221,14 @@ namespace RTCV.NetCore
         public void Insert(PartialSpec partialSpec)
         {
             if (partialSpec == null)
+            {
                 return;
+            }
 
             foreach (var key in partialSpec.specDico.Keys)
+            {
                 this[key] = partialSpec.specDico[key];
+            }
         }
 
 
@@ -221,10 +243,7 @@ namespace RTCV.NetCore
     public abstract class BaseSpec
     {
         internal int version { get; set; }
-        public int Version
-        {
-            get => version;
-        }
+        public int Version => version;
         internal ConcurrentDictionary<string, object> specDico { get; set; } = new ConcurrentDictionary<string, object>();
 
         public object this[string key]
@@ -242,15 +261,13 @@ namespace RTCV.NetCore
 
                 }
                 else
+                {
                     specDico[key] = value;
-
+                }
             }
         }
 
-        public void Set(string key, object value)
-        {
-            this[key] = value;
-        }
+        public void Set(string key, object value) => this[key] = value;
 
         public T Get<T>(string key)
         {
@@ -261,11 +278,8 @@ namespace RTCV.NetCore
             return default(T);
         }
 
-        public List<String> GetKeys()
-        {
-            return specDico.Keys.ToList();
-        }
-        public String GetSerializedDico()
+        public List<string> GetKeys() => specDico.Keys.ToList();
+        public string GetSerializedDico()
         {
             var jsonSerializerSettings = new JsonSerializerSettings()
             {

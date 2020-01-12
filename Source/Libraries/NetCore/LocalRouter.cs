@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using NLog;
 
 namespace RTCV.NetCore
 {
@@ -11,14 +8,18 @@ namespace RTCV.NetCore
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private static Dictionary<string, IRoutable> endpoints = new Dictionary<string, IRoutable>();
-        public static bool HasEndpoints { get { return endpoints.Count > 0; } }
+        public static bool HasEndpoints => endpoints.Count > 0;
 
         public static T registerEndpoint<T>(T endpoint, string name)
         {
             if (endpoint is IRoutable)
+            {
                 endpoints[name] = (IRoutable)endpoint;
+            }
             else
+            {
                 logger.Fatal($"Error while registering object {endpoint} in Netcore Local Router, does not implement IRoutable");
+            }
 
             return endpoint;
         }
@@ -31,10 +32,7 @@ namespace RTCV.NetCore
             }
             catch { return null; }
         }
-        public static bool hasEndpoint(string name)
-        {
-            return endpoints.TryGetValue(name, out IRoutable chosen);
-        }
+        public static bool hasEndpoint(string name) => endpoints.TryGetValue(name, out IRoutable chosen);
 
         public static object Route(string endpointName, string messageType, object objectValue) => Route(endpointName, messageType, objectValue, false);
         public static object Route(string endpointName, string messageType, object objectValue, bool synced)
@@ -54,7 +52,10 @@ namespace RTCV.NetCore
                 return (T)ncam.objectValue;
             }
             if (returnValue == null)
+            {
                 return default(T);
+            }
+
             return (T)returnValue;
         }
 
@@ -100,7 +101,9 @@ namespace RTCV.NetCore
                 var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
 
                 if (CloudDebug.ShowErrorDialog(ex2) == DialogResult.Abort)
+                {
                     throw new RTCV.NetCore.AbortEverythingException();
+                }
 
                 return null;
             }

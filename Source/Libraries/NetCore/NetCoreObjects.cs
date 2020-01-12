@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using Ceras;
-using NLog;
 
 namespace RTCV.NetCore
 {
@@ -35,7 +31,10 @@ namespace RTCV.NetCore
         public virtual void OnMessageReceived(NetCoreEventArgs e)
         {
             if (MessageReceived == null)
+            {
                 throw new Exception("No registered handler for MessageReceived!");
+            }
+
             MessageReceived.Invoke(this, e);
         }
     }
@@ -108,11 +107,8 @@ namespace RTCV.NetCore
 
         public ISynchronizeInvoke syncObject
         {
-            get { return _syncObject; }
-            set
-            {
-                _syncObject = value;
-            }
+            get => _syncObject;
+            set => _syncObject = value;
         }
 
         private ISynchronizeInvoke _syncObject = null;
@@ -445,7 +441,7 @@ namespace RTCV.NetCore
 
         #endregion
 
-        public bool LockStatusEventLockout(int timeout = Int32.MaxValue)
+        public bool LockStatusEventLockout(int timeout = int.MaxValue)
         {
             bool s = false;
             logger.Trace("Thread id {0} requested Lock StatusEventLockout Mutex.", Thread.CurrentThread.ManagedThreadId);
@@ -492,11 +488,15 @@ namespace RTCV.NetCore
             get
             {
                 if (_singularity == null)
+                {
                     _singularity = new ConsoleEx();
+                }
+
                 return _singularity;
             }
         }
-        static ConsoleEx _singularity = null;
+
+        private static ConsoleEx _singularity = null;
         public ISynchronizeInvoke syncObject = null; //This can contain the form or anything that implements it.
 
         public void Register(Action<object, NetCoreEventArgs> registrant, ISynchronizeInvoke _syncObject = null)
@@ -516,32 +516,35 @@ namespace RTCV.NetCore
             Delegate[] invocationList = eventInstance?.GetInvocationList() ?? new Delegate[] { };
             MethodInfo eventRemoveMethodInfo = typeof(ConsoleEx).GetEvent("ConsoleWritten").GetRemoveMethod(true);
             foreach (Delegate eventHandler in invocationList)
+            {
                 eventRemoveMethodInfo.Invoke(ConsoleEx.singularity, new object[] { eventHandler });
+            }
         }
 
         public event EventHandler<NetCoreEventArgs> ConsoleWritten;
         public virtual void OnConsoleWritten(NetCoreEventArgs e)
         {
             if (syncObject != null)
+            {
                 if (syncObject.InvokeRequired)
                 {
                     syncObject.Invoke(new MethodInvoker(() => { OnConsoleWritten(e); }), null);
                     return;
                 }
+            }
 
             ConsoleWritten?.Invoke(this, e);
         }
 
-        public bool HasConsoleEventHandler
-        {
-            get { return ConsoleWritten != null; }
-        }
+        public bool HasConsoleEventHandler => ConsoleWritten != null;
 
         public static void WriteLine(string message)
         {
 
             if (!ShowDebug && (message.Contains("{BOOP}") || message.StartsWith("{EVENT_")))
+            {
                 return;
+            }
 
             string consoleLine = "[" + DateTime.Now.ToString("hh:mm:ss.ffff") + "] " + message;
 

@@ -1,5 +1,4 @@
-﻿using Ceras;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -8,15 +7,13 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Ceras;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using NLog;
 
 namespace RTCV.NetCore
 {
@@ -54,8 +51,10 @@ namespace RTCV.NetCore
             {
                 ReleaseConsole();
                 AllocConsole();
-                if (!String.IsNullOrEmpty(path))
+                if (!string.IsNullOrEmpty(path))
+                {
                     con = new ConsoleCopy(path);
+                }
 
                 //Disable the X button on the console window
                 EnableMenuItem(GetSystemMenu(GetConsoleWindow(), false), SC_CLOSE, MF_DISABLED);
@@ -79,9 +78,13 @@ namespace RTCV.NetCore
             public static void ToggleConsole()
             {
                 if (ConsoleVisible)
+                {
                     HideConsole();
+                }
                 else
+                {
                     ShowConsole();
+                }
             }
             public static void ReleaseConsole()
             {
@@ -97,15 +100,15 @@ namespace RTCV.NetCore
             internal const int MF_GRAYED = 0x1;             //disabled button status (enabled = false)
             internal const int MF_DISABLED = 0x00000002;    //disabled button status
 
-            private const UInt32 StdOutputHandle = 0xFFFFFFF5;
+            private const uint StdOutputHandle = 0xFFFFFFF5;
             [DllImport("kernel32.dll")]
-            private static extern IntPtr GetStdHandle(UInt32 nStdHandle);
+            private static extern IntPtr GetStdHandle(uint nStdHandle);
             [DllImport("kernel32.dll", ExactSpelling = true, SetLastError = true)]
             public static extern bool CloseHandle(IntPtr handle);
             [DllImport("kernel32.dll")]
-            private static extern void SetStdHandle(UInt32 nStdHandle, IntPtr handle);
+            private static extern void SetStdHandle(uint nStdHandle, IntPtr handle);
             [DllImport("kernel32")]
-            static extern bool AllocConsole();
+            private static extern bool AllocConsole();
             [DllImport("kernel32.dll", SetLastError = true)]
             public static extern IntPtr GetConsoleWindow();
             [DllImport("user32.dll")]
@@ -116,16 +119,15 @@ namespace RTCV.NetCore
             public static extern int EnableMenuItem(IntPtr tMenu, int targetItem, int targetStatus);
             public class ConsoleCopy : IDisposable
             {
-                FileStream fileStream;
+                private FileStream fileStream;
                 public StreamWriter FileWriter;
-                TextWriter doubleWriter;
-                TextWriter oldOut;
+                private TextWriter doubleWriter;
+                private TextWriter oldOut;
 
-                class DoubleWriter : TextWriter
+                private class DoubleWriter : TextWriter
                 {
-
-                    TextWriter one;
-                    TextWriter two;
+                    private TextWriter one;
+                    private TextWriter two;
 
                     public DoubleWriter(TextWriter one, TextWriter two)
                     {
@@ -133,10 +135,7 @@ namespace RTCV.NetCore
                         this.two = two;
                     }
 
-                    public override Encoding Encoding
-                    {
-                        get { return one.Encoding; }
-                    }
+                    public override Encoding Encoding => one.Encoding;
 
                     public override void Flush()
                     {
@@ -160,11 +159,16 @@ namespace RTCV.NetCore
                     {
                         var dir = Path.GetDirectoryName(path);
                         if (!Directory.Exists(dir))
+                        {
                             Directory.CreateDirectory(dir);
+                        }
+
                         File.Create(path).Close();
                         fileStream = File.Open(path, FileMode.Open, FileAccess.Write, FileShare.Read);
-                        FileWriter = new StreamWriter(fileStream);
-                        FileWriter.AutoFlush = true;
+                        FileWriter = new StreamWriter(fileStream)
+                        {
+                            AutoFlush = true
+                        };
 
                         doubleWriter = new DoubleWriter(FileWriter, oldOut);
                     }
@@ -220,7 +224,9 @@ namespace RTCV.NetCore
 
                 // Actual content
                 foreach (var array in set)
+                {
                     _byteArrayFormatter.Serialize(ref buffer, ref offset, array);
+                }
             }
 
             public void Deserialize(byte[] buffer, ref int offset, ref HashSet<byte[]> set)
@@ -267,11 +273,8 @@ namespace RTCV.NetCore
             return result;
         }
 
-        public static bool IsGDIEnhancedScalingAvailable()
-        {
-            return (Environment.OSVersion.Version.Major == 10 &
+        public static bool IsGDIEnhancedScalingAvailable() => (Environment.OSVersion.Version.Major == 10 &
                     Environment.OSVersion.Version.Build >= 17763);
-        }
 
         public enum DPI_AWARENESS
         {
@@ -315,10 +318,7 @@ namespace RTCV.NetCore
                 KnownTypes = new List<Type>();
             }
 
-            public Type BindToType(string assemblyName, string typeName)
-            {
-                return KnownTypes.SingleOrDefault(t => t.Name == typeName);
-            }
+            public Type BindToType(string assemblyName, string typeName) => KnownTypes.SingleOrDefault(t => t.Name == typeName);
 
             public void BindToName(Type serializedType, out string assemblyName, out string typeName)
             {
@@ -335,12 +335,12 @@ namespace RTCV.NetCore
             // http://www.newtonsoft.com/json/help/html/M_Newtonsoft_Json_Serialization_DefaultContractResolver__ctor_1.htm
             // "Use the parameterless constructor and cache instances of the contract resolver within your application for optimal performance."
             // See also https://stackoverflow.com/questions/33557737/does-json-net-cache-types-serialization-information
-            static UntypedToTypedValueContractResolver instance;
+            private static UntypedToTypedValueContractResolver instance;
 
             // Explicit static constructor to tell C# compiler not to mark type as beforefieldinit
             static UntypedToTypedValueContractResolver() { instance = new UntypedToTypedValueContractResolver(); }
 
-            public static UntypedToTypedValueContractResolver Instance { get { return instance; } }
+            public static UntypedToTypedValueContractResolver Instance => instance;
 
             protected override JsonDictionaryContract CreateDictionaryContract(Type objectType)
             {
@@ -357,15 +357,15 @@ namespace RTCV.NetCore
 
         public class UntypedToTypedValueConverter : JsonConverter
         {
-            public override bool CanConvert(Type objectType)
-            {
-                throw new NotImplementedException("This converter should only be applied directly via ItemConverterType, not added to JsonSerializer.Converters");
-            }
+            public override bool CanConvert(Type objectType) => throw new NotImplementedException("This converter should only be applied directly via ItemConverterType, not added to JsonSerializer.Converters");
 
             public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
             {
                 if (reader.TokenType == JsonToken.Null)
+                {
                     return null;
+                }
+
                 var value = serializer.Deserialize(reader, objectType);
                 if (value is TypeWrapper)
                 {
@@ -416,10 +416,15 @@ namespace RTCV.NetCore
             public static TypeWrapper CreateWrapper<T>(T value)
             {
                 if (value == null)
+                {
                     return new TypeWrapper<T>();
+                }
+
                 var type = value.GetType();
                 if (type == typeof(T))
+                {
                     return new TypeWrapper<T>(value);
+                }
                 // Return actual type of subclass
                 return (TypeWrapper)Activator.CreateInstance(typeof(TypeWrapper<>).MakeGenericType(type), value);
             }
@@ -435,7 +440,7 @@ namespace RTCV.NetCore
                 this.Value = value;
             }
 
-            public override object ObjectValue { get { return Value; } }
+            public override object ObjectValue => Value;
 
             public T Value { get; set; }
         }
@@ -455,7 +460,10 @@ namespace RTCV.NetCore
         public static void OneTimeSetup()
         {
             if (initialized)
+            {
                 return;
+            }
+
             try
             {
                 Type stackFrameHelperType =
@@ -466,7 +474,9 @@ namespace RTCV.NetCore
                    Type.GetType("System.Diagnostics.StackTrace, mscorlib").GetMethod(
                                 "GetStackFramesInternal", BindingFlags.Static | BindingFlags.NonPublic);
                 if (getStackFramesInternal == null)
+                {
                     return;  // Unknown mscorlib implementation
+                }
 
                 DynamicMethod dynamicMethod = new DynamicMethod(
                           "GetStackFrameHelper", typeof(object), new Type[0], typeof(StackTrace), true);
@@ -479,12 +489,17 @@ namespace RTCV.NetCore
                 ConstructorInfo constructorInfo =
                          stackFrameHelperType.GetConstructor(new Type[] { typeof(bool), typeof(Thread) });
                 if (constructorInfo != null)
+                {
                     generator.Emit(OpCodes.Ldc_I4_0);
+                }
                 else
                 {
                     constructorInfo = stackFrameHelperType.GetConstructor(new Type[] { typeof(Thread) });
                     if (constructorInfo == null)
+                    {
                         return; // Unknown mscorlib implementation
+                    }
+
                     newDotNet = true;
                 }
 
@@ -495,7 +510,9 @@ namespace RTCV.NetCore
                 generator.Emit(OpCodes.Ldc_I4_0);
 
                 if (newDotNet)
+                {
                     generator.Emit(OpCodes.Ldc_I4_0);  // Extra parameter
+                }
 
                 generator.Emit(OpCodes.Ldnull);
                 generator.Emit(OpCodes.Call, getStackFramesInternal);
@@ -517,10 +534,15 @@ namespace RTCV.NetCore
         public static int GetCallStackDepth()
         {
             if (!initialized)
+            {
                 OneTimeSetup();
+            }
 
             if (_frameCount == null)
+            {
                 return 0;  // Unknown mscorlib implementation
+            }
+
             return (int)_frameCount.GetValue(_getStackFrameHelper());
         }
     }
@@ -578,21 +600,9 @@ namespace RTCV.NetCore
             this.period = period;
         }
 
-        internal static int MinimumPeriod
-        {
-            get
-            {
-                return timeCapabilities.wPeriodMin;
-            }
-        }
+        internal static int MinimumPeriod => timeCapabilities.wPeriodMin;
 
-        internal static int MaximumPeriod
-        {
-            get
-            {
-                return timeCapabilities.wPeriodMax;
-            }
-        }
+        internal static int MaximumPeriod => timeCapabilities.wPeriodMax;
 
         internal int Period
         {

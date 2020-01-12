@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using NLog;
 
 namespace RTCV.NetCore
 {
@@ -17,13 +14,7 @@ namespace RTCV.NetCore
         internal MessageHub hub = null;
         internal ReturnWatch watch = null;
 
-        public NetworkStatus status
-        {
-            get
-            {
-                return tcp?.status ?? NetworkStatus.DISCONNECTED;
-            }
-        }
+        public NetworkStatus status => tcp?.status ?? NetworkStatus.DISCONNECTED;
 
         public bool Disposed { get; set; } = false;
 
@@ -64,7 +55,9 @@ namespace RTCV.NetCore
         {
 
             if ((e.message as NetCoreAdvancedMessage)?.requestGuid != null)
+            {
                 return SendMessage(e.message, true, true);
+            }
             else
             {
                 SendMessage(e.message, false, true);
@@ -75,8 +68,8 @@ namespace RTCV.NetCore
 
         public void SendMessage(string message) => SendMessage(new NetCoreSimpleMessage(message));
         public void SendMessage(string message, object value) => SendMessage(new NetCoreAdvancedMessage(message) { objectValue = value });
-        public object SendSyncedMessage(string message) { return SendMessage(new NetCoreAdvancedMessage(message), true); }
-        public object SendSyncedMessage(string message, object value) { return SendMessage(new NetCoreAdvancedMessage(message) { objectValue = value }, true); }
+        public object SendSyncedMessage(string message) => SendMessage(new NetCoreAdvancedMessage(message), true);
+        public object SendSyncedMessage(string message, object value) => SendMessage(new NetCoreAdvancedMessage(message) { objectValue = value }, true);
 
         private object SendMessage(NetCoreMessage _message, bool synced = false, bool external = false)
         {
@@ -91,7 +84,9 @@ namespace RTCV.NetCore
                     if (synced)
                     {
                         if (((NetCoreAdvancedMessage)_message).requestGuid == null)
+                        {
                             ((NetCoreAdvancedMessage)_message).requestGuid = Guid.NewGuid();
+                        }
                     }
 
                     return LocalNetCoreRouter.Route(target, new NetCoreEventArgs() { message = _message });
@@ -113,7 +108,9 @@ namespace RTCV.NetCore
                 DateTime startDT = DateTime.Now;
 
                 while (tcp?.client != null && ((DateTime.Now - startDT).TotalMilliseconds) < 1500) // wait timeout
+                {
                     Thread.Sleep(50);
+                }
             }
 
             tcp?.Kill();
@@ -124,11 +121,7 @@ namespace RTCV.NetCore
             logger.Debug($"NetCore {(force ? "Killed" : "Stopped")}");
         }
 
-        public void Kill()
-        {
-            Stop(true);
-
-        }
+        public void Kill() => Stop(true);
 
     }
 

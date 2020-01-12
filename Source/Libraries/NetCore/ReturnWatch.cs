@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 
 namespace RTCV.NetCore
@@ -18,10 +15,7 @@ namespace RTCV.NetCore
         private volatile int attemptsAtReading = 0;
         private volatile bool KillReturnWatch = false;
 
-        public bool IsWaitingForReturn
-        {
-            get { return attemptsAtReading > 0; }
-        }
+        public bool IsWaitingForReturn => attemptsAtReading > 0;
 
         internal ReturnWatch(NetCoreSpec _spec)
         {
@@ -37,7 +31,9 @@ namespace RTCV.NetCore
         public void AddReturn(NetCoreAdvancedMessage message)
         {
             if (!message.requestGuid.HasValue)
+            {
                 return;
+            }
 
             SyncReturns.TryAdd(message.requestGuid.Value, message.objectValue);
         }

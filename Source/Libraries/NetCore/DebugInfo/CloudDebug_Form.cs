@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.IO.Compression;
-using System.Linq;
 using System.Net;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using RTCV.NetCore.StaticTools;
 
@@ -19,15 +14,17 @@ namespace RTCV.NetCore
 {
     public partial class CloudDebug : Form
     {
-
-        Exception ex;
+        private Exception ex;
 
         public CloudDebug(Exception _ex, bool canContinue = false)
         {
             InitializeComponent();
             ex = _ex;
             if (ex is AbortEverythingException)
+            {
                 return;
+            }
+
             if (!(ex is OperationAbortedException))
             {
                 lbException.Text = ex.Message;
@@ -59,9 +56,13 @@ namespace RTCV.NetCore
         public DialogResult Start()
         {
             if (ex is OperationAbortedException)
+            {
                 return DialogResult.Abort;
+            }
             else
+            {
                 return this.ShowDialog();
+            }
         }
 
 
@@ -84,9 +85,13 @@ namespace RTCV.NetCore
         {
             string str = LocalNetCoreRouter.QueryRoute<string>(NetcoreCommands.CORRUPTCORE, "GETSPECDUMPS");
             if (str != null)
+            {
                 return str;
+            }
             else
+            {
                 return "GETSPECDUMPS returned null!";
+            }
         }
 
 
@@ -101,14 +106,20 @@ namespace RTCV.NetCore
                 string tempzipfile = tempdebugdir + ".7z";
 
                 if (!Directory.Exists(tempdebugdir))
+                {
                     Directory.CreateDirectory(tempdebugdir);
+                }
 
                 string[] debugFiles = Directory.GetFiles(tempdebugdir);
                 foreach (string file in debugFiles)
+                {
                     File.Delete(file);
+                }
 
                 if (File.Exists(tempzipfile))
+                {
                     File.Delete(tempzipfile);
+                }
 
 
                 //Exporting side
@@ -155,7 +166,9 @@ namespace RTCV.NetCore
                     //lock (NetCore_Extensions.ConsoleHelper.con.FileWriter)
                     //{
                     if (File.Exists(rtcLog))
+                    {
                         File.Copy(rtcLog, rtcLogOutput, true);
+                    }
                     //}
                 }
 
@@ -166,7 +179,9 @@ namespace RTCV.NetCore
                     //lock (NetCore_Extensions.ConsoleHelper.con.FileWriter)
                     //{
                     if (File.Exists(emuLog))
+                    {
                         File.Copy(emuLog, emuLogOutput, true);
+                    }
                     //}
                 }
 
@@ -174,10 +189,12 @@ namespace RTCV.NetCore
 
                 var path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "7z.dll");
                 SevenZip.SevenZipBase.SetLibraryPath(path);
-                var comp = new SevenZip.SevenZipCompressor();
-                comp.CompressionMode = SevenZip.CompressionMode.Create;
-                comp.TempFolderPath = Path.GetTempPath();
-                comp.ArchiveFormat = SevenZip.OutArchiveFormat.SevenZip;
+                var comp = new SevenZip.SevenZipCompressor
+                {
+                    CompressionMode = SevenZip.CompressionMode.Create,
+                    TempFolderPath = Path.GetTempPath(),
+                    ArchiveFormat = SevenZip.OutArchiveFormat.SevenZip
+                };
                 comp.CompressDirectory(tempdebugdir, tempzipfile, false, password);
 
                 string filename = CloudTransfer.CloudSave(tempzipfile);
@@ -186,7 +203,9 @@ namespace RTCV.NetCore
                 btnSendDebug.Enabled = false;
 
                 if (File.Exists(tempzipfile))
+                {
                     File.Delete(tempzipfile);
+                }
             }
             else
             {
@@ -203,16 +222,22 @@ namespace RTCV.NetCore
                 string downloadfilepath = CloudTransfer.CloudLoad(filename, password);
 
                 if (downloadfilepath == null)
+                {
                     return;
+                }
 
                 string extractpath = downloadfilepath.Replace(".7z", "");
 
                 if (!Directory.Exists(extractpath))
+                {
                     Directory.CreateDirectory(extractpath);
+                }
 
                 string[] debugFiles = Directory.GetFiles(extractpath);
                 foreach (string file in debugFiles)
+                {
                     File.Delete(file);
+                }
 
                 var path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "7z.dll");
                 SevenZip.SevenZipCompressor.SetLibraryPath(path);
@@ -230,10 +255,7 @@ namespace RTCV.NetCore
             Close();
         }
 
-        public static DialogResult ShowErrorDialog(Exception ex, bool canContinue = false)
-        {
-            return new RTCV.NetCore.CloudDebug(ex, canContinue).Start();
-        }
+        public static DialogResult ShowErrorDialog(Exception ex, bool canContinue = false) => new RTCV.NetCore.CloudDebug(ex, canContinue).Start();
 
         private void btnContinue_Click(object sender, EventArgs e)
         {
@@ -288,10 +310,7 @@ namespace RTCV.NetCore
             }
         }
 
-        private void btnDebugInfo_Click(object sender, EventArgs e)
-        {
-            S.GET<DebugInfo_Form>().ShowDialog();
-        }
+        private void btnDebugInfo_Click(object sender, EventArgs e) => S.GET<DebugInfo_Form>().ShowDialog();
     }
 
     public class SilentException : Exception
@@ -315,7 +334,7 @@ namespace RTCV.NetCore
             this._additionalInfo = additionalInfo;
         }
 
-        public override string StackTrace => (String.IsNullOrEmpty(_additionalInfo) ? "" : $"{_additionalInfo}\n") + base.StackTrace;
+        public override string StackTrace => (string.IsNullOrEmpty(_additionalInfo) ? "" : $"{_additionalInfo}\n") + base.StackTrace;
     }
 
     public class AbortEverythingException : Exception
@@ -323,7 +342,7 @@ namespace RTCV.NetCore
 
     }
 
-    class WebClientTimeout : WebClient
+    internal class WebClientTimeout : WebClient
     {
         protected override WebRequest GetWebRequest(Uri uri)
         {
@@ -332,9 +351,10 @@ namespace RTCV.NetCore
             return w;
         }
     }
-    static class CloudTransfer
+
+    internal static class CloudTransfer
     {
-        static string CorruptCloudServer = "http://cc.r5x.cc/rtc/debug";
+        private static string CorruptCloudServer = "http://cc.r5x.cc/rtc/debug";
 
         public static string CloudLoad(string filename, string password)
         {
@@ -358,10 +378,14 @@ namespace RTCV.NetCore
                 downloadfilepath = saveFileDialog1.FileName;
             }
             else
+            {
                 return null;
+            }
 
             if (File.Exists(downloadfilepath))
+            {
                 File.Delete(downloadfilepath);
+            }
 
             try
             {
@@ -398,10 +422,13 @@ namespace RTCV.NetCore
             string response = Encoding.UTF8.GetString(responseBinary);
 
             if (response == "ERROR")
+            {
                 return "";
+            }
             else
+            {
                 return response;
-
+            }
         }
 
 
