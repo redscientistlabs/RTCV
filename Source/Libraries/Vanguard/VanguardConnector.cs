@@ -22,7 +22,6 @@ namespace RTCV.Vanguard
             corruptConn = new CorruptCoreConnector();
             LocalNetCoreRouter.registerEndpoint(corruptConn, NetcoreCommands.CORRUPTCORE);
 
-
             if (receiver.Attached)//attached mode
             {
                 CorruptCore.RtcCore.Attached = true;
@@ -40,7 +39,6 @@ namespace RTCV.Vanguard
 
             //netConn = LocalNetCoreRouter.registerEndpoint(new NetCoreConnector(netCoreSpec), "WGH");
             LocalNetCoreRouter.registerEndpoint(netConn, NetcoreCommands.DEFAULT); //Will send mesages to netcore if can't find the destination
-
         }
 
         public static void ImplyClientConnected() => NetCoreSpec_ClientConnected(null, null);
@@ -58,7 +56,6 @@ namespace RTCV.Vanguard
 
             if (e.message.Type.Contains('|'))
             {   //This needs to be routed
-
                 var msgParts = e.message.Type.Split('|');
                 string endpoint = msgParts[0];
                 e.message.Type = msgParts[1]; //remove endpoint from type
@@ -70,7 +67,6 @@ namespace RTCV.Vanguard
                 receiver.OnMessageReceived(e);
                 return e.returnMessage;
             }
-
         }
 
         //Ship everything to netcore, any needed routing will be handled in there
@@ -81,7 +77,6 @@ namespace RTCV.Vanguard
 
         public void Kill()
         {
-
         }
 
         public static void PushVanguardSpecRef(FullSpec spec) => RTCV.NetCore.AllSpec.VanguardSpec = spec;

@@ -91,7 +91,6 @@ namespace RTCV.CorruptCore
             return partial;
         }
 
-
         public static void RefreshDomains(bool domainsChanged = false)
         {
             var mdps = RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.MEMORYDOMAINS_INTERFACES] as MemoryDomainProxy[];
@@ -114,7 +113,6 @@ namespace RTCV.CorruptCore
                 LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_EVENT_DOMAINSUPDATED, true);
             }
         }
-
 
         public static void Clear()
         {
@@ -171,7 +169,6 @@ namespace RTCV.CorruptCore
             return null;
         }
 
-
         public static long GetRealAddress(string domain, long address)
         {
             if (domain.Contains("[V]"))
@@ -199,7 +196,6 @@ namespace RTCV.CorruptCore
                 return domain;
             }
         }
-
 
         public static VmdPrototype GetVmdPrototypeFromBlastlayer(BlastLayer bl)
         {
@@ -255,7 +251,6 @@ namespace RTCV.CorruptCore
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_DOMAIN_VMD_ADD, VMD.Proto, true);
             LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_EVENT_DOMAINSUPDATED);
         }
-
 
         public static void AddVMD_NET(VmdPrototype proto)
         {
@@ -325,7 +320,6 @@ namespace RTCV.CorruptCore
             MemoryInterface mi = domain.Contains("[V]") ? (MemoryInterface)VmdPool[domain] : MemoryInterfaces[domain];
             return mi.GetDump();
         }
-
 
         private static bool CheckNesHeader(string filename)
         {
@@ -493,7 +487,6 @@ namespace RTCV.CorruptCore
 
         public MemoryInterface()
         {
-
         }
     }
 
@@ -521,7 +514,6 @@ namespace RTCV.CorruptCore
 
         public VmdPrototype()
         {
-
         }
 
         public VirtualMemoryDomain Generate()
@@ -533,7 +525,6 @@ namespace RTCV.CorruptCore
                 BigEndian = BigEndian,
                 WordSize = WordSize
             };
-
 
             if (SuppliedBlastLayer != null)
             {
@@ -625,11 +616,8 @@ namespace RTCV.CorruptCore
 
         public bool Compacted = false;
 
-
-
         public VirtualMemoryDomain()
         {
-
         }
 
         public void Compact(bool preCompacted = false)
@@ -678,7 +666,6 @@ namespace RTCV.CorruptCore
 
             GC.Collect();
             GC.WaitForFullGCComplete();
-
         }
 
         public override long Size
@@ -713,7 +700,6 @@ namespace RTCV.CorruptCore
 
             bl.SanitizeDuplicates();
 
-
             foreach (BlastUnit bu in bl.Layer)
             {
                 for (int i = 0; i < bu.Precision; i++)
@@ -721,7 +707,6 @@ namespace RTCV.CorruptCore
                     PointerDomains.Add(bu.Domain);
                     PointerAddresses.Add(bu.Address + i);
                 }
-
             }
         }
 
@@ -858,7 +843,6 @@ namespace RTCV.CorruptCore
 
         public override void PokeBytes(long startAddress, byte[] value, bool raw = true)
         {
-
             if (!raw || !BigEndian)
             {
                 value.FlipBytes();
@@ -910,7 +894,6 @@ namespace RTCV.CorruptCore
         }
     }
 
-
     [Serializable]
     [Ceras.MemberConfig(TargetMember.All)]
     public sealed class MemoryDomainProxy : MemoryInterface
@@ -924,7 +907,6 @@ namespace RTCV.CorruptCore
             Size = MD.Size;
 
             Name = MD.ToString();
-
 
             WordSize = MD.WordSize;
             Name = MD.ToString();
@@ -1009,7 +991,6 @@ namespace RTCV.CorruptCore
         }
     }
 
-
     [Serializable()]
     public abstract class FileMemoryInterface : IMemoryDomain
     {
@@ -1055,7 +1036,6 @@ namespace RTCV.CorruptCore
         [Ceras.Exclude]
         public override long Size { get; set; }
 
-
         public override string ToString()
         {
             return Name;
@@ -1073,7 +1053,6 @@ namespace RTCV.CorruptCore
 
         public override void PokeBytes(long startAddress, byte[] value, bool raw = true)
         {
-
         }
 
         public override byte PeekByte(long address)
@@ -1138,7 +1117,6 @@ namespace RTCV.CorruptCore
                 default:
                     return ShortFilename;
             }
-
         }
 
         public FileInterface(string _targetId, bool _bigEndian, bool _useAutomaticFileBackups = false)
@@ -1180,7 +1158,6 @@ namespace RTCV.CorruptCore
                     throw new Exception($"FileInterface failed to load something because the file is (probably) in use \n" + "Culprit file: " + Filename + "\n", ex);
                 }
 
-
                 if (useAutomaticFileBackups)
                 {
                     SetBackup();
@@ -1188,7 +1165,6 @@ namespace RTCV.CorruptCore
 
                 //getMemoryDump();
                 getMemorySize();
-
             }
             catch (Exception ex)
             {
@@ -1219,7 +1195,6 @@ namespace RTCV.CorruptCore
             return name;
         }
 
-
         public static bool LoadCompositeFilenameDico(string jsonBaseDir = null)
         {
             if (jsonBaseDir == null)
@@ -1236,7 +1211,6 @@ namespace RTCV.CorruptCore
             }
             try
             {
-
                 using (StreamReader sw = new StreamReader(path))
                 using (JsonTextReader reader = new JsonTextReader(sw))
                 {
@@ -1250,7 +1224,6 @@ namespace RTCV.CorruptCore
             }
             return true;
         }
-
 
         public static bool SaveCompositeFilenameDico(string jsonFilePath = null)
         {
@@ -1283,8 +1256,6 @@ namespace RTCV.CorruptCore
             }
             return true;
         }
-
-
 
         public string getCorruptFilename(bool overrideWriteCopyMode = false)
         {
@@ -1323,9 +1294,7 @@ namespace RTCV.CorruptCore
 
         public string SetWorkingFile()
         {
-
             string corruptFilename = getCorruptFilename();
-
 
             if (!File.Exists(corruptFilename))
             {
@@ -1358,7 +1327,6 @@ namespace RTCV.CorruptCore
                     MessageBox.Show($"Could not get access to {Filename} because some other program is probably using it. \n\nClose the file then press OK to try again", "WARNING");
                     return false;
                 }
-
             }
             return true;
         }
@@ -1406,7 +1374,6 @@ namespace RTCV.CorruptCore
 
         public override bool RestoreBackup(bool announce = true)
         {
-
             if (File.Exists(getBackupFilename()))
             {
                 try
@@ -1472,7 +1439,6 @@ namespace RTCV.CorruptCore
             }
 
             return (long)lastMemorySize;
-
         }
 
         public override void PokeBytes(long address, byte[] data)
@@ -1520,7 +1486,6 @@ namespace RTCV.CorruptCore
                 stream.Position = address;
                 stream.WriteByte(data);
             }
-
             catch (IOException e)
             {
                 logger.Error(e, "IOException in FileInterface.PeekByte!");
@@ -1579,7 +1544,6 @@ namespace RTCV.CorruptCore
                 }
                 return 0;
             }
-
         }
 
         public override byte[] PeekBytes(long address, int length)
@@ -1597,7 +1561,6 @@ namespace RTCV.CorruptCore
 
             byte[] readBytes = new byte[length];
 
-
             if (stream == null)
             {
                 stream = File.Open(SetWorkingFile(), FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
@@ -1609,7 +1572,6 @@ namespace RTCV.CorruptCore
             //fs.Close();
 
             return readBytes;
-
         }
 
         public override void CloseStream()
@@ -1619,9 +1581,7 @@ namespace RTCV.CorruptCore
                 stream.Close();
                 stream = null;
             }
-
         }
-
 
     }
 
@@ -1630,13 +1590,11 @@ namespace RTCV.CorruptCore
     {
         public static Dictionary<string, string> CompositeFilenameDico { get; set; }
 
-
         public override string Name => ShortFilename;
         public override long Size => lastMemorySize.GetValueOrDefault(0);
 
         public override bool BigEndian { get; }
         public override int WordSize => 4;
-
 
         public string Filename;
         public string ShortFilename;
@@ -1680,12 +1638,10 @@ namespace RTCV.CorruptCore
                     SetBackup();
                 }
 
-
                 //getMemoryDump();
                 getMemorySize();
 
                 setFilePositions();
-
 
             }
             catch (Exception ex)
@@ -1724,7 +1680,6 @@ namespace RTCV.CorruptCore
         public string getCorruptFilename(bool overrideWriteCopyMode = false)
         {
             return string.Join("|", FileInterfaces.Select(it => it.getCorruptFilename(overrideWriteCopyMode)));
-
         }
 
         public string getBackupFilename()
@@ -1753,7 +1708,6 @@ namespace RTCV.CorruptCore
         public string SetWorkingFile()
         {
             return string.Join("|", FileInterfaces.Select(it => it.SetWorkingFile()));
-
         }
 
         public override bool ApplyWorkingFile()
@@ -1812,7 +1766,6 @@ namespace RTCV.CorruptCore
                 }
             }
             return allSucceeded;
-
         }
 
         public override bool RestoreBackup(bool announce = true)
@@ -1847,7 +1800,6 @@ namespace RTCV.CorruptCore
                 fi.MultiFilePosition = addressPad;
                 addressPad += fi.getMemorySize();
                 fi.MultiFilePositionCeiling = addressPad;
-
             }
         }
 
@@ -1877,7 +1829,6 @@ namespace RTCV.CorruptCore
 
             //for (int i = 0; i < FileInterfaces.Count; i++)
             //{
-
 
             //Removed copying of the memory in a local big file because
             //it's smarter to actually use the FileInterfaces themselves
@@ -1924,14 +1875,12 @@ namespace RTCV.CorruptCore
 
             lastMemorySize = size;
             return (long)lastMemorySize;
-
         }
         public override long? lastMemorySize { get; set; }
         public static bool LoadAnything { get; set; } = false;
 
         public override void PokeBytes(long address, byte[] data)
         {
-
             //find which fileInterface contains the file we want
             for (int i = 0; i < FileInterfaces.Count; i++)
             {
@@ -1943,12 +1892,10 @@ namespace RTCV.CorruptCore
                     return;
                 }
             }
-
         }
 
         public override void PokeByte(long address, byte data)
         {
-
             //find which fileInterface contains the file we want
             for (int i = 0; i < FileInterfaces.Count; i++)
             {
@@ -1960,12 +1907,10 @@ namespace RTCV.CorruptCore
                     return;
                 }
             }
-
         }
 
         public override byte PeekByte(long address)
         {
-
             //find which fileInterface contains the file we want
             for (int i = 0; i < FileInterfaces.Count; i++)
             {
@@ -1980,12 +1925,10 @@ namespace RTCV.CorruptCore
             //if wasn't found
             return 0;
 
-
         }
 
         public override byte[] PeekBytes(long address, int range)
         {
-
             //find which fileInterface contains the file we want
             for (int i = 0; i < FileInterfaces.Count; i++)
             {
@@ -1999,11 +1942,8 @@ namespace RTCV.CorruptCore
 
             //if wasn't found
             return null;
-
         }
-
     }
-
 
     public enum FileInterfaceIdentity
     {
@@ -2023,5 +1963,4 @@ namespace RTCV.CorruptCore
         byte[] PeekBytes(long address, int length);
         void PokeByte(long addr, byte val);
     }
-
 }

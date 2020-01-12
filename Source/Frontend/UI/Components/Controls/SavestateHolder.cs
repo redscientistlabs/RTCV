@@ -19,7 +19,6 @@ namespace RTCV.UI.Components.Controls
             tbSavestate.Visible = false;
         }
 
-
         public void SetStashKey(SaveStateKey key, int number)
         {
             ssk = key;
@@ -46,6 +45,5 @@ namespace RTCV.UI.Components.Controls
         {
             btnSavestate.ForeColor = selected ? Color.OrangeRed : Color.PaleGreen;
         }
-
     }
 }

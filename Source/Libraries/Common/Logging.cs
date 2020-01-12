@@ -60,7 +60,6 @@ namespace RTCV.Common
             var logfile = new NLog.Targets.FileTarget("logfile") { FileName = filename, Layout = layout };
             var logconsole = new NLog.Targets.ColoredConsoleTarget("logconsole") { Layout = layout };
 
-
             // Rules for mapping loggers to targets            
             config.AddRule(LogLevel.Trace, LogLevel.Fatal, logconsole);
             config.AddRule(LogLevel.Trace, LogLevel.Fatal, logfile);
@@ -88,7 +87,6 @@ namespace RTCV.Common
             }
         }
     }
-
 
     public class ExtendedRenderer : LayoutRenderer
     {

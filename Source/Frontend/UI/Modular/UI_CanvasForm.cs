@@ -44,12 +44,10 @@ namespace RTCV.UI
                 tileSize = pnScale.Size.Width;
                 Controls.Remove(pnScale);
             }
-
         }
 
         public static UI_ComponentFormTile getTileForm(Form componentForm, int? newSizeX = null, int? newSizeY = null, bool DisplayHeader = true)
         {
-
             if (!loadedTileForms.ContainsKey(componentForm))
             {
                 var newForm = (UI_ComponentFormTile)Activator.CreateInstance(typeof(UI_ComponentFormTile));
@@ -91,7 +89,6 @@ namespace RTCV.UI
 
         public static void clearExtraTileForms()
         {
-
             foreach (Form frm in extraForms)
             {
                 frm.Controls.Clear();
@@ -159,7 +156,6 @@ namespace RTCV.UI
 
             targetForm.MinimumSize = targetForm.Size;
 
-
         }
 
         //public void BlockView() => (this as IBlockable)?.BlockView();
@@ -167,7 +163,6 @@ namespace RTCV.UI
 
         public static void loadTileFormExtraWindow(CanvasGrid canvasGrid, string WindowHeader, bool silent = false)
         {
-
             UI_CanvasForm extraForm;
 
             if (allExtraForms.ContainsKey(WindowHeader))
@@ -181,7 +176,6 @@ namespace RTCV.UI
                         cft.ReAnchorToPanel();
                     }
                 }
-
             }
             else
             {
@@ -207,7 +201,6 @@ namespace RTCV.UI
                 extraForm.MaximizeBox = false;
                 extraForm.FormBorderStyle = FormBorderStyle.FixedSingle;
             }
-
 
             if (!silent)
             {
@@ -238,7 +231,6 @@ namespace RTCV.UI
             //thisForm.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
         }
 
-
         public int getTileSpacesX()
         {
             int sizeX = this.Size.Width;
@@ -257,10 +249,8 @@ namespace RTCV.UI
             return nbSpaces;
         }
 
-
         public void OpenSubForm(ISubForm reqForm, bool lockSidebar = false)
         {
-
             //sets program to SubForm mode, darkens screen and displays flating form.
             //Start by giving type of Form class. Implement interface SubForms.UI_SubForm for Cancel/Ok buttons
 
@@ -285,7 +275,6 @@ namespace RTCV.UI
             spForm.Show();
             spForm.BringToFront();
             spForm.Refresh();
-
         }
 
         public void CloseSubForm()
@@ -306,7 +295,6 @@ namespace RTCV.UI
 
         private void UI_CanvasForm_Load(object sender, EventArgs e)
         {
-
         }
 
         private void UI_CanvasForm_FormClosing(object sender, FormClosingEventArgs e)

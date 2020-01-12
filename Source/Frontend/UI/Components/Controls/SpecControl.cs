@@ -5,7 +5,6 @@ using System.Windows.Forms;
 
 namespace RTCV.UI.Components.Controls
 {
-
     public abstract class SpecControl<T> : UserControl where T : new()
     {
         internal bool GeneralUpdateFlag = false; //makes other events ignore firing
@@ -23,7 +22,6 @@ namespace RTCV.UI.Components.Controls
         }
 
         internal T _Value;
-
 
         [Description("Net value of the control"), Category("Data")]
         public T Value

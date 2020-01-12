@@ -61,7 +61,6 @@ namespace RTCV.UI
             S.GET<UI_CoreForm>().btnManualBlast.Visible = true;
 
             S.GET<UI_CoreForm>().btnEngineConfig_Click(null, null);
-
         }
 
         private void RTC_SimpleMode_Form_FormClosing(object sender, FormClosingEventArgs e)
@@ -91,12 +90,10 @@ namespace RTCV.UI
 
         private void btnCreateGhSavestate_Click(object sender, EventArgs e)
         {
-
             //Select first savestate slot if none is selected
             var selectedHolder = S.GET<RTC_SavestateManager_Form>().savestateList.selectedHolder;
             if (selectedHolder == null)
             {
-
                 //Generate object sender and MouseEventArgs e data for the button click
                 SavestateHolder holder = (SavestateHolder)S.GET<RTC_SavestateManager_Form>().savestateList.flowPanel.Controls[0];
                 Button _sender = holder.btnSavestate;
@@ -112,7 +109,6 @@ namespace RTCV.UI
 
             //Trigger Save button
             S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad_Click(null, null);
-
         }
 
         private void btnGlitchHarvesterCorrupt_Click(object sender, EventArgs e)
@@ -123,7 +119,6 @@ namespace RTCV.UI
             }
 
             S.GET<RTC_GlitchHarvesterBlast_Form>().btnCorrupt_Click(null, null);
-
         }
 
         private void rbClassicPlatforms_CheckedChanged(object sender, EventArgs e)
@@ -148,7 +143,6 @@ namespace RTCV.UI
                     SelectVectorEngine();
                     break;
             }
-
 
             S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
             S.GET<UI_CoreForm>().btnManualBlast.Visible = false;
@@ -178,7 +172,6 @@ namespace RTCV.UI
         {
             //TODO: If vanguard implementation doesn't support real-time
             //SelectNightmareEngine();
-
 
             string originalText = lbEngineDescription.Text;
 
@@ -226,7 +219,6 @@ namespace RTCV.UI
                                        $"\n" +
                                        $"This engine is made for corrupting 3d games\n" +
                                        $"and 2d games made for 3d-era consoles.";
-
         }
 
         public void SelectComboBoxRandomItem(ComboBox cb)
@@ -258,7 +250,6 @@ namespace RTCV.UI
             }
 
             cb.SelectedIndex = selectedEngineIndex;
-
         }
 
         public void ResetSession()
@@ -283,7 +274,6 @@ namespace RTCV.UI
                                        $"This engine is made for corrupting 2d games.\n" +
                                        $"It generates garbage data and writes it \n" +
                                        $"to the game's memory.";
-
         }
 
         public void SelectHellgenieEngine()
@@ -296,7 +286,6 @@ namespace RTCV.UI
                                       $"\n" +
                                       $"This engine generates garbage data and then\n" +
                                       $"continuously writes it to the game's memory.";
-
         }
 
         public void SelectFreezeEngine()
@@ -334,7 +323,6 @@ namespace RTCV.UI
                                        $"\n" +
                                        $"This engine randomly links memory adresses together,\n" +
                                        $"transporting the value of one to another.";
-
         }
 
         public void SelectVectorEngine()
@@ -393,7 +381,6 @@ namespace RTCV.UI
             var selectedHolder = S.GET<RTC_SavestateManager_Form>().savestateList.selectedHolder;
             if (selectedHolder == null)
             {
-
                 //Generate object sender and MouseEventArgs e data for the button click
                 SavestateHolder holder = (SavestateHolder)S.GET<RTC_SavestateManager_Form>().savestateList.flowPanel.Controls[0];
                 Button _sender = holder.btnSavestate;
@@ -433,7 +420,6 @@ namespace RTCV.UI
 
         private void cbClearRewind_CheckedChanged(object sender, EventArgs e)
         {
-
         }
     }
 

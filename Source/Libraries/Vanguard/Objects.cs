@@ -9,7 +9,5 @@ namespace RTCV.Vanguard
         public virtual void OnMessageReceived(NetCoreEventArgs e) => MessageReceived?.Invoke(this, e);
 
         public FullSpec specDetails;
-
     }
-
 }

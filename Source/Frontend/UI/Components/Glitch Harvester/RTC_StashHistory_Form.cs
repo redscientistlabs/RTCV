@@ -26,7 +26,6 @@ namespace RTCV.UI
             this.MouseDoubleClick += ClearSelectedSKs;
 
             lbStashHistory.DataSource = StockpileManager_UISide.StashHistory;
-
         }
 
         public void btnAddStashToStockpile_Click(object sender, EventArgs e)
@@ -67,7 +66,6 @@ namespace RTCV.UI
                         MessageBox.Show($"{name} does not support mixed stockpiles.");
                         return;
                     }
-
                 }
             }
 
@@ -97,7 +95,6 @@ namespace RTCV.UI
             }
 
             sk.BlastLayer.RasterizeVMDs();
-
 
             DataGridViewRow dataRow = S.GET<RTC_StockpileManager_Form>().dgvStockpile.Rows[S.GET<RTC_StockpileManager_Form>().dgvStockpile.Rows.Add()];
             dataRow.Cells["Item"].Value = sk;
@@ -258,7 +255,6 @@ namespace RTCV.UI
                 btnStashDOWN.Enabled = false;
                 btnAddStashToStockpile.Enabled = false;
 
-
                 if (DontLoadSelectedStash || lbStashHistory.SelectedIndex == -1)
                 {
                     DontLoadSelectedStash = false;
@@ -317,7 +313,6 @@ namespace RTCV.UI
             DontLoadSelectedStash = true;
             S.GET<RTC_StockpileManager_Form>().dgvStockpile.ClearSelection();
             S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
-
         }
 
         private void btnClearStashHistory_Click(object sender, EventArgs e)
@@ -347,14 +342,11 @@ namespace RTCV.UI
                 int newPos = lbStashHistory.SelectedIndex - 1;
                 lbStashHistory.ClearSelected();
                 lbStashHistory.SelectedIndex = newPos;
-
             }
-
         }
 
         private void btnStashDOWN_Click(object sender, EventArgs e)
         {
-
             if (lbStashHistory.SelectedIndex == -1)
             {
                 return;
@@ -370,11 +362,8 @@ namespace RTCV.UI
                 int newPos = lbStashHistory.SelectedIndex + 1;
                 lbStashHistory.ClearSelected();
                 lbStashHistory.SelectedIndex = newPos;
-
             }
-
         }
-
 
     }
 }

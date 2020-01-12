@@ -41,7 +41,6 @@ namespace RTCV.UI
             RefreshVMDs();
         }
 
-
         private void btnUnloadVMD_Click(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
@@ -110,7 +109,6 @@ namespace RTCV.UI
             VMD.Name = name;
             VMD.Proto.VmdName = name;
             MemoryDomains.AddVMD(VMD);
-
 
             foreach (BlastUnit bu in StepActions.GetRawBlastLayer().Layer)
             {
@@ -322,6 +320,5 @@ namespace RTCV.UI
 
             RefreshVMDs();
         }
-
     }
 }

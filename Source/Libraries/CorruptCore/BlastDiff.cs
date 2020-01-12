@@ -5,10 +5,8 @@ using RTCV.NetCore;
 
 namespace RTCV.CorruptCore
 {
-
     public static class BlastDiff
     {
-
         public static BlastLayer GetBlastLayer(string filename)
         {
             string thisSystem = (AllSpec.VanguardSpec[VSPEC.NAME] as string);
@@ -40,7 +38,6 @@ namespace RTCV.CorruptCore
                 {
                     MessageBox.Show($"Warning: More than one domain was selected. The first one ({targetDomain}) was chosen.");
                 }
-
             }
             else
             {
@@ -61,7 +58,6 @@ namespace RTCV.CorruptCore
             }
 
             return (GetBlastLayer(originalDomains.ToArray(), Corrupt, rp.SkipBytes, useCustomPrecision));
-
         }
 
         private static string getNamefromIMemoryDomainArray(IMemoryDomain[] bank, long address)
@@ -164,6 +160,5 @@ namespace RTCV.CorruptCore
                 return bl;
             }
         }
-
     }
 }

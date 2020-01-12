@@ -259,13 +259,10 @@ namespace RTCV.UI
 
             string key = CorruptCore.RtcCore.GetRandomKey();
 
-
-
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_DOMAIN_ACTIVETABLE_MAKEDUMP, new object[] { cbSelectedMemoryDomain.SelectedItem.ToString(), key }, true);
 
             ActiveTableDumps.Add(key);
             lbFreezeEngineNbDumps.Text = "Memory dumps collected: " + ActiveTableDumps.Count.ToString();
-
         }
 
         private void btnActiveTableDumpsReset_Click(object sender, EventArgs e)
@@ -322,7 +319,6 @@ namespace RTCV.UI
 
         private void btnActiveTableLoad_Click(object sender, EventArgs e)
         {
-
             try
             {
                 OpenFileDialog OpenFileDialog1 = new OpenFileDialog
@@ -370,7 +366,6 @@ namespace RTCV.UI
 
         private void btnActiveTableSubtractFile_Click(object sender, EventArgs e)
         {
-
             string tempFilename;
 
             OpenFileDialog OpenFileDialog1 = new OpenFileDialog
@@ -400,7 +395,6 @@ namespace RTCV.UI
 
             List<long> newActiveTable = new List<long>();
 
-
             foreach (long item in ActiveTableGenerated)
             {
                 if (!subtractiveActiveTable.Contains(item))
@@ -411,14 +405,12 @@ namespace RTCV.UI
 
             ActiveTableGenerated = newActiveTable.ToArray();
             lbActiveTableSize.Text = "Active table size (0x" + ActiveTableGenerated.Length.ToString("X") + ")";
-
         }
 
         private void btnActiveTableAddFile_Click(object sender, EventArgs e)
         {
             try
             {
-
                 string tempFilename;
 
                 OpenFileDialog OpenFileDialog1 = new OpenFileDialog
@@ -449,7 +441,6 @@ namespace RTCV.UI
 
                 List<long> newActiveTable = new List<long>();
 
-
                 foreach (long item in ActiveTableGenerated)
                 {
                     if (additiveActiveTable.Contains(item))
@@ -460,7 +451,6 @@ namespace RTCV.UI
 
                 ActiveTableGenerated = newActiveTable.ToArray();
                 lbActiveTableSize.Text = "Active table size (0x" + ActiveTableGenerated.Length.ToString("X") + ")";
-
 
             }
             catch
@@ -715,7 +705,6 @@ namespace RTCV.UI
 
         private void RTC_VmdAct_Form_Load(object sender, EventArgs e)
         {
-
         }
     }
 }

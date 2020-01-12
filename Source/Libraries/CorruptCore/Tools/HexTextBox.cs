@@ -17,7 +17,6 @@ namespace RTCV.CorruptCore.Tools
     //From Bizhawk
     public static class NumberExtensions
     {
-
         public static string ToHexString(this int n, int numdigits)
         {
             return string.Format("{0:X" + numdigits + "}", n);

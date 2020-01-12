@@ -18,7 +18,6 @@ namespace RTCV.UI
             this.btnTriggerKillswitch.MouseClick += BtnTriggerKillswitch_MouseClick;
         }
 
-
         private readonly string[] _flavorText = {
             "Imagine if we had actual flavor text",
             "Fun flavor text goes here",

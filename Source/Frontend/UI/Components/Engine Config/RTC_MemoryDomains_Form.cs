@@ -85,7 +85,6 @@ namespace RTCV.UI
         {
             RefreshDomains();
 
-
             for (int i = 0; i < lbMemoryDomains.Items.Count; i++)
             {
                 lbMemoryDomains.SetSelected(i, true);
@@ -122,8 +121,6 @@ namespace RTCV.UI
         {
             var temp = (string[])RTCV.NetCore.AllSpec.UISpec["SELECTEDDOMAINS"];
             var oldDomain = lbMemoryDomains.Items;
-
-
 
             RefreshDomains(); //refresh and reload domains
 
@@ -166,7 +163,6 @@ namespace RTCV.UI
 
             //RTC_Restore.SaveRestore();
         }
-
 
         private void btnRefreshDomains_Click(object sender, EventArgs e)
         {

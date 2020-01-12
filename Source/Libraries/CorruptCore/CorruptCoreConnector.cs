@@ -13,7 +13,6 @@ namespace RTCV.CorruptCore
 {
     public class CorruptCoreConnector : IRoutable
     {
-
         private static volatile object _loadLock = new object();
         private static object loadLock => _loadLock;
 
@@ -26,7 +25,6 @@ namespace RTCV.CorruptCore
         {
             try
             { //Use setReturnValue to handle returns
-
                 var message = e.message;
                 var advancedMessage = message as NetCoreAdvancedMessage;
 
@@ -153,7 +151,6 @@ namespace RTCV.CorruptCore
                                     S.GET<CorruptCore.Tools.HexEditor>().Show();
                                 });
                             }
-
                         }
                         break;
 
@@ -176,7 +173,6 @@ namespace RTCV.CorruptCore
                                     S.GET<CorruptCore.Tools.HexEditor>().Show();
                                     S.GET<CorruptCore.Tools.HexEditor>().SetDomain(mi);
                                     S.GET<CorruptCore.Tools.HexEditor>().GoToAddress(address);
-
                                 });
                             }
                             break;
@@ -205,7 +201,6 @@ namespace RTCV.CorruptCore
                             {
                                 lock (loadLock)
                                 {
-
                                     //Load the game from the main thread
                                     if (UseSavestates && loadBeforeCorrupt)
                                     {
@@ -616,7 +611,6 @@ namespace RTCV.CorruptCore
 
                     case REMOTE_SET_APPLYCORRUPTBL:
                         {
-
                             void a()
                             {
                                 if (StockpileManager_EmuSide.CorruptBL != null)
@@ -648,7 +642,6 @@ namespace RTCV.CorruptCore
                 }
 
                 return e.returnMessage;
-
             }
             catch (Exception ex)
             {
@@ -664,7 +657,6 @@ namespace RTCV.CorruptCore
 
         public void Kill()
         {
-
         }
     }
 }

@@ -53,7 +53,6 @@ namespace RTCV.NetCore
 
         public object OnMessageReceived(object sender, NetCoreEventArgs e)
         {
-
             if ((e.message as NetCoreAdvancedMessage)?.requestGuid != null)
             {
                 return SendMessage(e.message, true, true);
@@ -63,7 +62,6 @@ namespace RTCV.NetCore
                 SendMessage(e.message, false, true);
                 return null;
             }
-
         }
 
         public void SendMessage(string message) => SendMessage(new NetCoreSimpleMessage(message));
@@ -73,7 +71,6 @@ namespace RTCV.NetCore
 
         private object SendMessage(NetCoreMessage _message, bool synced = false, bool external = false)
         {
-
             if (!external && _message.Type.Contains('|'))
             {
                 string[] splitType = _message.Type.Split('|');
@@ -91,7 +88,6 @@ namespace RTCV.NetCore
 
                     return LocalNetCoreRouter.Route(target, new NetCoreEventArgs() { message = _message });
                 }
-
             }
 
             return hub?.SendMessage(_message, synced);
@@ -103,7 +99,6 @@ namespace RTCV.NetCore
 
             if (!force)
             {
-
                 tcp?.StopNetworking(!force);
                 DateTime startDT = DateTime.Now;
 
@@ -122,8 +117,6 @@ namespace RTCV.NetCore
         }
 
         public void Kill() => Stop(true);
-
     }
-
 
 }

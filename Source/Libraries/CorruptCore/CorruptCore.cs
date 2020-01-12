@@ -220,7 +220,6 @@ namespace RTCV.CorruptCore
 
         public static void Start()
         {
-
         }
 
         private static void OneTimeSettingsInitialize()
@@ -874,7 +873,6 @@ namespace RTCV.CorruptCore
                     }
 
                     throw new CustomException(ex.Message, additionalInfo + ex.StackTrace + ex.InnerException);
-
                 }
             }
             catch (Exception ex)

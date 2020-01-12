@@ -55,7 +55,6 @@ namespace RTCV.UI
 
             UI_VanguardImplementation.StartServer();
 
-
             PartialSpec p = new PartialSpec("UISpec");
 
             p["SELECTEDDOMAINS"] = new string[] { };
@@ -70,14 +69,12 @@ namespace RTCV.UI
 
             CorruptCore.RtcCore.StartUISide();
 
-
             //Loading RTC Params
 
             S.GET<RTC_SettingsGeneral_Form>().cbDisableEmulatorOSD.Checked = RTCV.NetCore.Params.IsParamSet(RTCSPEC.CORE_EMULATOROSDDISABLED);
             S.GET<RTC_SettingsGeneral_Form>().cbAllowCrossCoreCorruption.Checked = RTCV.NetCore.Params.IsParamSet("ALLOW_CROSS_CORE_CORRUPTION");
             S.GET<RTC_SettingsGeneral_Form>().cbDontCleanAtQuit.Checked = RTCV.NetCore.Params.IsParamSet("DONT_CLEAN_SAVESTATES_AT_QUIT");
             S.GET<RTC_SettingsGeneral_Form>().cbUncapIntensity.Checked = RTCV.NetCore.Params.IsParamSet("UNCAP_INTENSITY");
-
 
             //Initialize input code. Poll every 16ms
             Input.Input.Initialize();
@@ -86,7 +83,6 @@ namespace RTCV.UI
             inputCheckTimer.AutoReset = false;
             inputCheckTimer.Interval = 10;
             inputCheckTimer.Start();
-
 
             if (FirstConnect)
             {
@@ -108,7 +104,6 @@ namespace RTCV.UI
                 registerFormEvents(newForm);
                 registerHotkeyBlacklistControls(newForm);
             }
-
         }
 
         public static void registerHotkeyBlacklistControls(Control container)
@@ -123,7 +118,6 @@ namespace RTCV.UI
 
                     c.Leave -= ControlFocusLost;
                     c.Leave += ControlFocusLost;
-
                 }
                 else if (c is DataGridView dgv)
                 {
@@ -149,7 +143,6 @@ namespace RTCV.UI
 
             f.LostFocus -= NewForm_FocusChanged;
             f.LostFocus += NewForm_FocusChanged;
-
 
             //There's a chance that the form may already be visible by the time this fires
             if (f.Focused)
@@ -184,7 +177,6 @@ namespace RTCV.UI
                 //This is a non-synced spec update to prevent jittering. Shouldn't have any other noticeable impact
                 RTCV.NetCore.AllSpec.UISpec.Update(RTC_INFOCUS, currentState, true, false);
             }
-
         }
         private static bool isAnyRTCFormFocused()
         {
@@ -283,7 +275,6 @@ namespace RTCV.UI
             Input.Input.Instance.ClearEvents();
         }
 
-
         public static void BlockView(this IBlockable ib)
         {
             if (ib is RTC_ConnectionStatus_Form)
@@ -328,7 +319,6 @@ namespace RTCV.UI
         //All RTC forms
         public static Form[] AllColorizedSingletons(Type baseType = null)
         {
-
             if (baseType == null)
             {
                 baseType = typeof(RTCV.UI.UI_CoreForm);
@@ -381,7 +371,6 @@ namespace RTCV.UI
             Environment.Exit(-1);
         }
 
-
         public static Color Light1Color;
         public static Color Light2Color;
         public static Color NormalColor;
@@ -422,7 +411,6 @@ namespace RTCV.UI
                     allControls.AddRange(mtForm.Controls.getControlsWithTag());
                     allControls.Add(mtForm);
                 }
-
             }
             else if (ctr is Form)
             {
@@ -568,7 +556,6 @@ namespace RTCV.UI
                         // useful debugging:
                         //Console.WriteLine(ie);
 
-
                         // look for hotkey bindings for this key
                         var triggers = Input.Bindings.SearchBindings(ie.LogicalButton.ToString());
 
@@ -577,7 +564,6 @@ namespace RTCV.UI
                         {
                             triggers.Aggregate(handled, (current, trigger) => current | CheckHotkey(trigger));
                         }
-
                     } // foreach event
                 }
             }
@@ -587,13 +573,11 @@ namespace RTCV.UI
             }
         }
 
-
         private static bool CheckHotkey(string trigger)
         {
             logger.Info("Hotkey {trigger} pressed", trigger);
             switch (trigger)
             {
-
                 case "Manual Blast":
                     S.GET<UI_CoreForm>().btnManualBlast_Click(null, null);
                     break;
@@ -845,7 +829,6 @@ namespace RTCV.UI
             return true;
         }
 
-
         /// <summary>
         /// Disables things in the UI that aren't supported by the current spec.
         /// </summary>
@@ -869,9 +852,7 @@ namespace RTCV.UI
 
                 S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
             }
-
         }
-
 
         private static void toggleLimiterBoxSource(bool setToBindingSource)
         {
@@ -881,12 +862,9 @@ namespace RTCV.UI
                 S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.ValueMember = "Value";
                 S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
 
-
                 S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DisplayMember = "Name";
                 S.GET<RTC_CustomEngineConfig_Form>().cbValueList.ValueMember = "Value";
                 S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DataSource = CorruptCore.RtcCore.ValueListBindingSource;
-
-
 
                 S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.DisplayMember = "Name";
                 S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.ValueMember = "Value";
@@ -925,6 +903,5 @@ namespace RTCV.UI
 
             toggleLimiterBoxSource(true);
         }
-
     }
 }

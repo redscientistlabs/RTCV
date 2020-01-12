@@ -40,7 +40,6 @@ namespace RTCV.NetCore
             NetCoreEventArgs ncea = new NetCoreEventArgs(messageType, objectValue);
             (ncea.message as NetCoreAdvancedMessage).requestGuid = (synced ? (Guid?)Guid.NewGuid() : null);
             return Route(endpointName, ncea);
-
         }
         public static T QueryRoute<T>(string endpointName, string messageType, object objectValue, bool synced = true)
         {
@@ -93,7 +92,6 @@ namespace RTCV.NetCore
                 }
                 return endpoint.OnMessageReceived(null, e);
             }
-
             catch (Exception ex)
             {
                 string additionalInfo = "Error trapped from LocalRouter\n\n";

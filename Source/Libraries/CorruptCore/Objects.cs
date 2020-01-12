@@ -19,7 +19,6 @@ using Exception = System.Exception;
 namespace RTCV.CorruptCore
 {
 
-
     [Serializable]
     [Ceras.MemberConfig(TargetMember.All)]
     public class Stockpile
@@ -362,7 +361,6 @@ namespace RTCV.CorruptCore
                                     "If you're seeing this error, that means the file is probably in use. If it is, everything should technically be fine assuming it's the same file.\n" +
                                     "If the file you're seeing here has changed since the stockpile was last saved (rom edited manually), you should probably reload your stockpile from the file.");
                 }
-
             }
 
             //Update savestate location info 
@@ -466,7 +464,6 @@ namespace RTCV.CorruptCore
                                 File.Copy(file, dest); // copy roms/stockpile/whatever to sks folder
                                 allCopied.Add(dest);
                             }
-
                         }
                         catch (Exception ex)
                         {
@@ -483,7 +480,6 @@ namespace RTCV.CorruptCore
                             return results;
                         }
                     }
-
                 }
                 EmptyFolder(Path.Combine("WORKING", "TEMP"));
             }
@@ -693,7 +689,6 @@ namespace RTCV.CorruptCore
                     return;
                 }
                 File.Copy(path, backupFilename, true);
-
             }
 
             if (Extract(filename, Path.Combine("WORKING", "TEMP"), "stockpile.json") is OperationResults<bool> r && r.Failed)
@@ -749,7 +744,6 @@ namespace RTCV.CorruptCore
                 FileName = Path.Combine(RtcCore.EmuDir, "RESTARTDETACHEDRTC.bat")
             };
             Process.Start(p);
-
         }
 
         public static void RestoreEmuConfig()
@@ -967,7 +961,6 @@ namespace RTCV.CorruptCore
                 logger.Trace("Done");
             }
         }
-
     }
 
     [Serializable]
@@ -1183,7 +1176,6 @@ namespace RTCV.CorruptCore
                 }
             }
 
-
         }
     }
 
@@ -1214,7 +1206,6 @@ namespace RTCV.CorruptCore
     [Ceras.MemberConfig(TargetMember.All)]
     public class BlastUnit : INote
     {
-
         public object Clone()
         {
             return ObjectCopierCeras.Clone(this);
@@ -1659,7 +1650,6 @@ namespace RTCV.CorruptCore
                         Domain = vmd.GetRealDomain(address);
                         Address = vmd.GetRealAddress(address);
                     }
-
                 }
                 else
                 {
@@ -1694,7 +1684,6 @@ namespace RTCV.CorruptCore
                         SourceDomain = vmd.GetRealDomain(sourceAddress);
                         SourceAddress = vmd.GetRealAddress(sourceAddress);
                     }
-
                 }
                 else
                 {
@@ -1718,7 +1707,6 @@ namespace RTCV.CorruptCore
             }
 
             return l.Layer;
-
         }
         /// <summary>
         /// Adds a blastunit to the execution pool
@@ -1802,10 +1790,8 @@ namespace RTCV.CorruptCore
                 }
                 switch (Source)
                 {
-
                     case (BlastUnitSource.STORE):
                         {
-
                             if (Working.StoreData == null)
                             {
                                 RTCV.Common.Logging.GlobalLogger.Error("Blastunit: STOREDATA WAS NULL {this}", this);
@@ -2239,7 +2225,6 @@ namespace RTCV.CorruptCore
             }
 
             return brokenUnits;
-
         }
     }
 

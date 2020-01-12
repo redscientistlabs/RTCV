@@ -24,10 +24,7 @@ namespace RTCV.NetCore
 
         private void btnGetDebugRTC_Click(object sender, EventArgs e) => tbRTC.Text = CloudDebug.getRTCInfo();
 
-
-
         private void btnGetDebugEmu_Click(object sender, EventArgs e) => richTextBox2.Text = CloudDebug.getEmuInfo();
-
 
 
     }

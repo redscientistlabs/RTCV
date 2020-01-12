@@ -61,7 +61,6 @@ namespace RTCV.Common.Objects
             logger.Error(e, error);
         }
 
-
         public bool HasErrors() => Errors.Count > 0;
 
         public bool HasWarnings() => Warnings.Count > 0;
@@ -69,7 +68,6 @@ namespace RTCV.Common.Objects
         public bool HasMessages() => Warnings.Count > 0 || Errors.Count > 0;
 
         public bool Failed => HasErrors();
-
 
         public string GetWarningsFormatted() => getMessagesFormatted(NLog.LogLevel.Warn);
 
@@ -91,7 +89,6 @@ namespace RTCV.Common.Objects
                         sb.AppendLine($"Exception: {message.Exception}");
                         ex = ex.InnerException;
                     }
-
                 }
             }
             return sb.ToString();
@@ -107,6 +104,5 @@ namespace RTCV.Common.Objects
         {
             Result = result;
         }
-
     }
 }

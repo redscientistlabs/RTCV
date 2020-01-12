@@ -189,7 +189,6 @@ namespace RTCV.UI.Input
                 return;
             }
 
-
             //dont generate events for things like Ctrl+LeftControl
             ModifierKey mods = _Modifiers;
             if (button == "LeftShift") mods &= ~ModifierKey.Shift;
@@ -366,7 +365,6 @@ namespace RTCV.UI.Input
                             //HandleButton("WMouse 1", false);
                             //HandleButton("WMouse 2", false);
                         }
-
                     }
 
                     bool allowInput = ((bool?)RTCV.NetCore.AllSpec.UISpec?[NetcoreCommands.RTC_INFOCUS] ?? true) || ((bool?)RTCV.NetCore.AllSpec.VanguardSpec?[NetcoreCommands.EMU_INFOCUS] ?? true);
@@ -384,7 +382,6 @@ namespace RTCV.UI.Input
                         }
                         else
                             EnqueueEvent(ie);
-
                     }
                 } //lock(this)
 
@@ -486,6 +483,5 @@ namespace RTCV.UI.Input
             UnpressState[keystr] = true;
             LastState[keystr] = true;
         }
-
     }
 }

@@ -2,7 +2,6 @@
 {
     public static class RTC_PipeEngine
     {
-
         public static BlastUnit GenerateUnit(string domain, long address, int precision, int alignment)
         {
             // Randomly selects a memory operation according to the selected algorithm

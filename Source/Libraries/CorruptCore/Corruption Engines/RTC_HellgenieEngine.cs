@@ -72,7 +72,6 @@ namespace RTCV.CorruptCore
         public static BlastUnit GenerateUnit(string domain, long address, int precision, int alignment)
         {
 
-
             if (domain == null)
             {
                 return null;
@@ -122,8 +121,6 @@ namespace RTCV.CorruptCore
             }
 
             return new BlastUnit(value, domain, safeAddress, precision, mi.BigEndian, 0, 0);
-
         }
-
     }
 }

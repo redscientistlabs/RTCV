@@ -9,7 +9,6 @@ namespace RTCV.NetCore
         {
             get
             {
-
                 if (AllSpec.CorruptCoreSpec?["RTCDIR"] is string rtcDir)
                 {
                     return Path.Combine(rtcDir, "PARAMS");
@@ -63,5 +62,4 @@ namespace RTCV.NetCore
 
         public static bool IsParamSet(string paramName) => File.Exists(Path.Combine(ParamsDir, paramName));
     }
-
 }

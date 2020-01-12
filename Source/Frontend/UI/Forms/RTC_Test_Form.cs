@@ -22,7 +22,6 @@ namespace RTCV.UI
         public List<long[]> ListLongArr { get; set; } = new List<long[]>();
         public TestClass()
         {
-
         }
     }
 }

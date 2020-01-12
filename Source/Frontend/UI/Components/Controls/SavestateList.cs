@@ -31,7 +31,6 @@ namespace RTCV.UI.Components.Controls
 
         public StashKey CurrentSaveStateStashKey => selectedHolder?.sk ?? null;
 
-
         private int numPerPage;
 
         public int NumPerPage => numPerPage;
@@ -65,7 +64,6 @@ namespace RTCV.UI.Components.Controls
                     _DataSource.PositionChanged += _DataSource_PositionChanged;
                     _DataSource_PositionChanged(null, null);
                 }
-
             }
         }
 
@@ -163,7 +161,6 @@ namespace RTCV.UI.Components.Controls
                     btnSaveLoad.Text = "LOAD";
                     btnSaveLoad_Click(null, null);
                 }
-
             }
             else if (e.Button == MouseButtons.Right)
             {
@@ -278,7 +275,6 @@ namespace RTCV.UI.Components.Controls
         }
         public void btnSaveLoad_Click(object sender, EventArgs e)
         {
-
             object renameSaveStateWord = AllSpec.VanguardSpec[VSPEC.RENAME_SAVESTATE];
             if (renameSaveStateWord != null && renameSaveStateWord is string s)
             {
@@ -321,7 +317,6 @@ namespace RTCV.UI.Components.Controls
                         _DataSource.Insert(indexToReplace, new SaveStateKey(sk, ""));
                         _DataSource.Position = oldpos;
                     }
-
                 }
                 //Otherwise add to the last box
                 else
@@ -337,7 +332,6 @@ namespace RTCV.UI.Components.Controls
 
                 btnSaveLoad.Text = "LOAD";
                 btnSaveLoad.ForeColor = Color.FromArgb(192, 255, 192);
-
             }
         }
     }

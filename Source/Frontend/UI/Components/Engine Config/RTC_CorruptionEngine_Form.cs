@@ -16,7 +16,6 @@ namespace RTCV.UI
         //private int defaultPrecision = -1;
         private bool updatingMinMax = false;
 
-
         public RTC_CorruptionEngine_Form()
         {
             InitializeComponent();
@@ -36,11 +35,9 @@ namespace RTCV.UI
             gbBlastGeneratorEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
             gbCustomEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
 
-
             cbSelectedEngine.SelectedIndex = 0;
             cbBlastType.SelectedIndex = 0;
             cbCustomPrecision.SelectedIndex = 0;
-
 
             cbVectorValueList.DataSource = null;
             cbVectorLimiterList.DataSource = null;
@@ -62,9 +59,7 @@ namespace RTCV.UI
             {
                 cbVectorValueList_SelectedIndexChanged(cbVectorValueList, null);
             }
-
         }
-
 
         private void nmDistortionDelay_ValueChanged(object sender, EventArgs e)
         {
@@ -75,7 +70,6 @@ namespace RTCV.UI
         {
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_CLEARSTEPBLASTUNITS, null, true);
         }
-
 
         private void cbSelectedEngine_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -90,14 +84,10 @@ namespace RTCV.UI
             cbCustomPrecision.Enabled = false;
             nmAlignment.Maximum = CorruptCore.RtcCore.CurrentPrecision - 1;
 
-
-
-
             //S.GET<RTC_GlitchHarvesterIntensity_Form>().Visible = true;
             S.GET<RTC_GeneralParameters_Form>().Show();
             S.GET<RTC_MemoryDomains_Form>().Show();
             S.GET<RTC_GlitchHarvesterIntensity_Form>().Show();
-
 
             switch (cbSelectedEngine.SelectedItem.ToString())
             {
@@ -223,7 +213,6 @@ namespace RTCV.UI
             StepActions.LockExecution = cbLockPipes.Checked;
         }
 
-
         private void cbVectorLimiterList_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
@@ -258,7 +247,6 @@ namespace RTCV.UI
 
                     nmMinValueHellgenie.Maximum = byte.MaxValue;
                     nmMaxValueHellgenie.Maximum = byte.MaxValue;
-
 
                     nmMinValueNightmare.Value = RTC_NightmareEngine.MinValue8Bit;
                     nmMaxValueNightmare.Value = RTC_NightmareEngine.MaxValue8Bit;
@@ -353,12 +341,10 @@ namespace RTCV.UI
             }
         }
 
-
         private void nmAlignment_ValueChanged(object sender, EventArgs e)
         {
             CorruptCore.RtcCore.Alignment = Convert.ToInt32(nmAlignment.Value);
         }
-
 
         private void btnOpenBlastGenerator_Click(object sender, EventArgs e)
         {
@@ -371,7 +357,6 @@ namespace RTCV.UI
             S.GET<RTC_BlastGenerator_Form>().LoadNoStashKey();
         }
 
-
         private void nmMinValueNightmare_ValueChanged(object sender, EventArgs e)
         {
             //We don't want to trigger this if it caps when stepping downwards
@@ -381,7 +366,6 @@ namespace RTCV.UI
             }
 
             ulong value = Convert.ToUInt64(nmMinValueNightmare.Value);
-
 
             switch (CorruptCore.RtcCore.CurrentPrecision)
             {
@@ -398,7 +382,6 @@ namespace RTCV.UI
                     RTC_NightmareEngine.MinValue64Bit = value;
                     break;
             }
-
         }
 
         private void nmMaxValueNightmare_ValueChanged(object sender, EventArgs e)
@@ -410,7 +393,6 @@ namespace RTCV.UI
             }
 
             ulong value = Convert.ToUInt64(nmMaxValueNightmare.Value);
-
 
             switch (CorruptCore.RtcCore.CurrentPrecision)
             {
@@ -483,7 +465,6 @@ namespace RTCV.UI
             }
         }
 
-
         private void cbBlastType_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (cbBlastType.SelectedItem.ToString())
@@ -513,6 +494,5 @@ namespace RTCV.UI
             S.GET<RTC_CustomEngineConfig_Form>().Show();
             S.GET<RTC_CustomEngineConfig_Form>().Focus();
         }
-
     }
 }

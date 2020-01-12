@@ -20,7 +20,6 @@ namespace RTCV.UI
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-
         private Dictionary<string, TextBox> StateBoxes = new Dictionary<string, TextBox>();
         private BindingSource savestateBindingSource = new BindingSource(new BindingList<SaveStateKey>(), null);
 
@@ -45,13 +44,11 @@ namespace RTCV.UI
             }
         }
 
-
         private void RTC_SavestateManager_Form_Load(object sender, EventArgs e)
         {
             savestateList.AllowDrop = true;
             savestateList.DragDrop += pnSavestateHolder_DragDrop;
             savestateList.DragEnter += pnSavestateHolder_DragEnter;
-
         }
 
         private void loadSSK(bool import, string fileName)
@@ -86,7 +83,6 @@ namespace RTCV.UI
                     ssk = CorruptCore.JsonHelper.Deserialize<SaveStateKeys>(fs);
                     fs.Close();
                 }
-
             }
             catch (Exception ex)
             {
@@ -100,7 +96,6 @@ namespace RTCV.UI
 
                 return;
             }
-
 
             if (ssk == null)
             {
@@ -137,7 +132,6 @@ namespace RTCV.UI
                                 File.Copy(file, dest); // copy roms/stockpile/whatever to sks folder
                                 allCopied.Add(dest);
                             }
-
                         }
                         catch (Exception ex)
                         {
@@ -149,7 +143,6 @@ namespace RTCV.UI
                             }
 
                             return;
-
                         }
                     }
                 }
@@ -179,7 +172,6 @@ namespace RTCV.UI
                 key.StateShortFilename = Path.GetFileName(newStatePath);
 
                 SyncObjectSingleton.FormExecute(() => savestateBindingSource.Add(new SaveStateKey(key, ssk.Text[i])));
-
             }
             RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Done", 100));
         }
@@ -279,7 +271,6 @@ namespace RTCV.UI
                         notified = true;
                     }
 
-
                     sk.StateLocation = StashKeySavestateLocation.SESSION;
                 }
                 catch (IOException e)
@@ -301,7 +292,6 @@ namespace RTCV.UI
                     //Commit any used states to disk
                     commitUsedStatesToSession();
                     savestateBindingSource.Clear();
-
                 }));
 
                 columnsMenu.Items.Add("Import SSK", null, (ob, ev) =>
@@ -347,12 +337,10 @@ namespace RTCV.UI
                     }
                     else
                     {
-
                         MessageBox.Show("Couldn't find savestate " + statePath + "!\n\n. This is savestate index " + ssk.StashKeys.IndexOf(key) + 1 + ".\nAborting save");
                         Stockpile.EmptyFolder(Path.Combine("WORKING", "TEMP"));
                         return;
                     }
-
                 }
 
                 percentPerFile = 10m / (ssk.StashKeys.Count + 1);
@@ -415,7 +403,6 @@ namespace RTCV.UI
                     RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Moving {Path.GetFileName(file)} to SSK", currentProgress += percentPerFile));
                     File.Move(file, Path.Combine(CorruptCore.RtcCore.workingDir, "SSK", Path.GetFileName(file)));
                 }
-
             }
             catch (Exception ex)
             {
@@ -431,7 +418,6 @@ namespace RTCV.UI
                 return;
             }
         }
-
 
         private async void btnSaveSavestateList_Click(object sender, EventArgs e)
         {
@@ -509,14 +495,12 @@ namespace RTCV.UI
 
         private void RTC_SavestateManager_Form_Shown(object sender, EventArgs e)
         {
-
             object param = AllSpec.VanguardSpec[VSPEC.RENAME_SAVESTATE];
             if (param != null && param is string RenameTitle)
             {
                 Text = RenameTitle;
                 ParentComponentFormTitle.lbComponentFormName.Text = $"{RenameTitle} Manager";
             }
-
         }
     }
 }

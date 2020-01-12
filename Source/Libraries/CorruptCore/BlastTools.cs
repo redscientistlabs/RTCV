@@ -217,7 +217,6 @@ namespace RTCV.CorruptCore
                     Console.Write("BGP was dirty. Generating BlastLayer\n");
                     bgp.bl = bgp.GenerateBlastLayer();
                 }
-
             }
             return blastLayers;
         }

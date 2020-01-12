@@ -21,7 +21,6 @@ namespace RTCV.UI
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         public static DialogResult GetInputBox(string title, string promptText, ref string value)
         {
-
             Form form = new Form();
             Label label = new Label();
             TextBox textBox = new TextBox();
@@ -66,7 +65,6 @@ namespace RTCV.UI
 
         public static void Tint(this Bitmap bmp, Color col)
         {
-
             Rectangle rectSize = new Rectangle(0, 0, bmp.Width, bmp.Height);
 
             using (Graphics g = Graphics.FromImage(bmp))
@@ -75,7 +73,6 @@ namespace RTCV.UI
 
                 SolidBrush darkBrush = new SolidBrush(col);
                 g.FillRectangle(darkBrush, rectSize);
-
             }
         }
 
@@ -110,7 +107,6 @@ namespace RTCV.UI
             };
         }
 
-
         #region CONTROL EXTENSIONS
 
         public static List<Control> getControlsWithTag(this Control.ControlCollection controls)
@@ -144,14 +140,12 @@ namespace RTCV.UI
 
         public interface IColorable
         {
-
         }
 
         public class RTC_Standalone_Form : Form { }
 
         public class ComponentForm : Form
         {
-
             private protected static NLog.Logger logger;
             private Panel defaultPanel = null;
             private Panel previousPanel = null;
@@ -169,7 +163,6 @@ namespace RTCV.UI
 
             public void AnchorToPanel(Panel pn)
             {
-
                 if (defaultPanel == null)
                 {
                     defaultPanel = pn;
@@ -228,7 +221,6 @@ namespace RTCV.UI
                     this.MaximizeBox = false;
                 }
 
-
                 this.Show();
             }
 
@@ -271,7 +263,6 @@ namespace RTCV.UI
                     AnchorToPanel(targetPanel); //then another VMD tool was selected and that window was closed
                 }
             }
-
 
             /* Note: Visual studio is so dumb, the designer won't allow to bind an event to a method in the base class
 			   Just paste the following code at the beginning of the ComponentForm class to fix this stupid shit
@@ -367,7 +358,6 @@ namespace RTCV.UI
                 //    }
                 else if (AllowSpace && e.KeyChar == ' ')
                 {
-
                 }
                 else
                 {
@@ -387,8 +377,6 @@ namespace RTCV.UI
 
             public bool AllowNegative { get; set; }
         }
-
-
 
         public class UnsignedIntegerBox : TextBox, INumberBox
         {
@@ -494,7 +482,6 @@ namespace RTCV.UI
                 Text = val.HasValue ? val.ToString() : "";
             }
         }
-
     }
 
     //From Bizhawk
@@ -510,7 +497,6 @@ namespace RTCV.UI
 
             int x = e.Location.X;
             int y = e.Location.Y;
-
 
             do
             {
@@ -528,7 +514,6 @@ namespace RTCV.UI
                 ctr = ctr.Parent;
             }
             while (ctr != null);
-
 
             return new Point(x, y);
         }
@@ -2110,7 +2095,6 @@ namespace RTCV.UI
             NotifyDataGridViewOfValueChange();
         }
 
-
         /*
 		/// <summary>
 		/// Listen to the KeyPress notification to know when the value changed, and
@@ -2185,7 +2169,6 @@ namespace RTCV.UI
             }
         }
     }
-
 
     //Fixes microsoft's numericupdown hex issues. Thanks microsoft
     public class NumericUpDownHexFix : NumericUpDown
@@ -2283,7 +2266,6 @@ namespace RTCV.UI
             }
             return text;
         }
-
 
         private void HexParseEditText()
         {
@@ -2444,7 +2426,6 @@ namespace RTCV.UI
                         this.Rows.Remove(row);
                     }
 
-
                     // Get the row index of the item the mouse is below. 
                     var hitTest = this.HitTest(clientPoint.X, clientPoint.Y);
                     rowIndexOfItemUnderMouseToDrop = hitTest.RowIndex;
@@ -2466,7 +2447,6 @@ namespace RTCV.UI
                             {
                                 rowIndexOfItemUnderMouseToDrop = 0;
                             }
-
                         }
                     }
 
@@ -2480,7 +2460,6 @@ namespace RTCV.UI
                         this.Rows[i].Selected = true;
                     }
                 }
-
             }
         }
         private new void DragOver(object sender, DragEventArgs e)
@@ -2501,7 +2480,6 @@ namespace RTCV.UI
             //Cursor.Position = this.PointToScreen(new Point(Cursor.Position.X, this.Top + this.ColumnHeadersHeight));
         }
     }
-
 }
 
 public static class JsonHelper
@@ -2530,7 +2508,6 @@ public static class JsonHelper
         }
     }
 }
-
 
 // https://stackoverflow.com/a/11640700/10923568
 internal static class RandomExtensions
@@ -2622,8 +2599,6 @@ internal static class RandomExtensions
     }
 }
 
-
-
 /// <summary>
 /// Provides a generic collection that supports data binding and additionally supports sorting.
 /// See http://msdn.microsoft.com/en-us/library/ms993236.aspx
@@ -2704,7 +2679,6 @@ public class SortableBindingList<T> : BindingList<T> where T : class
         //fire an event that the list has been changed.
         OnListChanged(new ListChangedEventArgs(ListChangedType.Reset, -1));
     }
-
 
     private int Compare(T lhs, T rhs)
     {

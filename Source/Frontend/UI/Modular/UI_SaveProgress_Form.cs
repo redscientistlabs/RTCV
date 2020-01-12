@@ -8,14 +8,12 @@ namespace RTCV.UI
 {
     public partial class UI_SaveProgress_Form : ComponentForm, IAutoColorize, ISubForm
     {
-
         public UI_SaveProgress_Form()
         {
             InitializeComponent();
 
             RtcCore.ProgressBarHandler += StockpileProgressBarHandler;
         }
-
 
         private void StockpileProgressBarHandler(object source, ProgressBarEventArgs e)
         {
@@ -66,6 +64,5 @@ namespace RTCV.UI
             UI_VanguardImplementation.connector.netConn.spec.UnlockLockStatusEventLockout();
             logger.Trace("Thread id {0} released Mutex... (save)", System.Threading.Thread.CurrentThread.ManagedThreadId);
         }
-
     }
 }

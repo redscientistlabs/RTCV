@@ -63,7 +63,6 @@ namespace StandaloneRTC
             Exception ex = (Exception)e.ExceptionObject;
             Form error = new RTCV.NetCore.CloudDebug(ex);
             var result = error.ShowDialog();
-
         }
 
         /// <summary>

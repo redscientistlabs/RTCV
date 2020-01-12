@@ -7,7 +7,6 @@ using Ceras;
 
 namespace RTCV.NetCore
 {
-
     public enum NetworkSide
     {
         NONE,
@@ -70,7 +69,6 @@ namespace RTCV.NetCore
 
         public NetCoreAdvancedMessage()
         {
-
         }
         public NetCoreAdvancedMessage(string _Type)
         {
@@ -462,6 +460,7 @@ namespace RTCV.NetCore
 
             return s;
         }
+
         public void UnlockLockStatusEventLockout()
         {
             bool s = false;
@@ -476,7 +475,6 @@ namespace RTCV.NetCore
                 logger.Trace(ex, "Exception!");
             }
         }
-
     }
 
     public class ConsoleEx
@@ -540,7 +538,6 @@ namespace RTCV.NetCore
 
         public static void WriteLine(string message)
         {
-
             if (!ShowDebug && (message.Contains("{BOOP}") || message.StartsWith("{EVENT_")))
             {
                 return;

@@ -13,7 +13,6 @@ namespace RTCV.CorruptCore
         {
             try
             {
-
                 long fileLength = new System.IO.FileInfo(path).Length;
                 totalFileSize = fileLength;
                 int tailBankSize = Convert.ToInt32(fileLength % maxBankSize);
@@ -58,7 +57,6 @@ namespace RTCV.CorruptCore
                             }
 
                             addressStart = i * maxBankSize;
-
                         }
 
                         byte[] readBytes = new byte[bankSize];
@@ -75,7 +73,6 @@ namespace RTCV.CorruptCore
             {
                 throw ex;
             }
-
         }
 
 
@@ -204,7 +201,6 @@ namespace RTCV.CorruptCore
                     _e = _e.InnerException;
                 }
             }
-
         }
 
         public static void PokeBytes(this byte[][] data, long startAddress, byte[] values)
@@ -256,8 +252,6 @@ namespace RTCV.CorruptCore
                 Array.Copy(values, 0, data[startBank], relativeStartAdress, lengthFromStartBank);
                 Array.Copy(values, lengthFromStartBank, data[endBank], 0, lengthFromEndBank);
             }
-
         }
-
     }
 }

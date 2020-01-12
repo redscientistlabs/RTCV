@@ -148,7 +148,6 @@ namespace RTCV.NetCore
                         one.Write(value);
                         two.Write(value);
                     }
-
                 }
 
                 public ConsoleCopy(string path)
@@ -200,7 +199,6 @@ namespace RTCV.NetCore
             }
         }
 
-
         //Thanks to Riki, dev of Ceras for writing this
         public class HashSetFormatterThatKeepsItsComparer : Ceras.Formatters.IFormatter<HashSet<byte[]>>
         {
@@ -248,7 +246,6 @@ namespace RTCV.NetCore
                 }
             }
         }
-
 
         //https://stackoverflow.com/a/56931457
         public static object InvokeCorrectly(this Control control, Delegate method, params object[] args)
@@ -304,7 +301,6 @@ namespace RTCV.NetCore
         [DllImport("User32.dll")]
         public static extern DPI_AWARENESS_CONTEXT SetThreadDpiAwarenessContext(
             DPI_AWARENESS_CONTEXT dpiContext);
-
     }
 
     public class SafeJsonTypeSerialization
@@ -444,7 +440,6 @@ namespace RTCV.NetCore
 
             public T Value { get; set; }
         }
-
     }
 
     //https://stackoverflow.com/a/47744757/10923568
@@ -529,7 +524,6 @@ namespace RTCV.NetCore
             catch
             { }  // _frameCount remains null, indicating unknown mscorlib implementation
         }
-
 
         public static int GetCallStackDepth()
         {

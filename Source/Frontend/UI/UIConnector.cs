@@ -13,7 +13,6 @@ namespace RTCV.UI
         public NetCoreConnector netConn;
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-
         public UIConnector(NetCoreReceiver _receiver)
         {
             receiver = _receiver;
@@ -95,7 +94,6 @@ namespace RTCV.UI
 
             if (e.message.Type.Contains('|'))
             {   //This needs to be routed
-
                 var msgParts = e.message.Type.Split('|');
                 string endpoint = msgParts[0];
                 e.message.Type = msgParts[1]; //remove endpoint from type
@@ -107,7 +105,6 @@ namespace RTCV.UI
                 receiver.OnMessageReceived(e);
                 return e.returnMessage;
             }
-
         }
 
         //Ship everything to netcore, any needed routing will be handled in there

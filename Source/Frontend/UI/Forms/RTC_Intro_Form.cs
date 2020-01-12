@@ -3,7 +3,6 @@ using System.Windows.Forms;
 using RTCV.NetCore;
 using RTCV.NetCore.StaticTools;
 
-
 namespace RTCV.UI
 {
     public partial class RTC_Intro_Form : Form, IAutoColorize
@@ -15,7 +14,6 @@ namespace RTCV.UI
             try
             {
                 InitializeComponent();
-
             }
             catch (Exception ex)
             {
@@ -33,7 +31,6 @@ namespace RTCV.UI
         private void RTC_Intro_Form_Load(object sender, EventArgs e)
         {
             UICore.SetRTCColor(UICore.GeneralColor, this);
-
         }
 
         private void RTC_Intro_Form_FormClosing(object sender, FormClosingEventArgs e)
@@ -52,7 +49,6 @@ namespace RTCV.UI
 
                 Environment.Exit(0);
             }
-
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -117,7 +113,6 @@ namespace RTCV.UI
             selection = IntroAction.EXIT;
             this.ShowDialog();
         }
-
     }
 
     public enum IntroAction { EXIT, SIMPLEMODE, NORMALMODE }

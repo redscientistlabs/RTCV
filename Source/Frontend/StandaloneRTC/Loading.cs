@@ -11,7 +11,6 @@ namespace StandaloneRTC
 {
     public partial class Loader : UI_Extensions.RTC_Standalone_Form
     {
-
         public Loader(string[] args)
         {
             if (RTCV.NetCore.NetCore_Extensions.IsGDIEnhancedScalingAvailable())
@@ -40,7 +39,6 @@ namespace StandaloneRTC
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
         }
 
 

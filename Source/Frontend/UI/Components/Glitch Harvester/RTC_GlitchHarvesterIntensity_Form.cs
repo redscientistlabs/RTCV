@@ -12,15 +12,12 @@ namespace RTCV.UI
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-
-
         public RTC_GlitchHarvesterIntensity_Form()
         {
             InitializeComponent();
             popoutAllowed = true;
 
             multiTB_Intensity.ValueChanged += (sender, args) => CorruptCore.RtcCore.Intensity = multiTB_Intensity.Value;
-
         }
 
         private void RTC_GlitchHarvesterIntensity_Form_Shown(object sender, EventArgs e)
@@ -34,7 +31,6 @@ namespace RTCV.UI
                 multiTB_Intensity.Maximum = maxintensity;
                 multiTB_Intensity.FirstLoadDone = prevState;
             }
-
         }
     }
 }

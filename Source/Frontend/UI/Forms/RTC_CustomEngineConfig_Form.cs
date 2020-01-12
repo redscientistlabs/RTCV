@@ -128,7 +128,6 @@ namespace RTCV.UI
             }
         }
 
-
         //I'm using if-else's rather than switch statements on purpose.
         //The switch statements required more lines and were harder to read.
         private void unitSource_CheckedChanged(object sender, EventArgs e)
@@ -139,12 +138,10 @@ namespace RTCV.UI
             }
 
             updateUILock();
-
         }
 
         private void updateUILock()
         {
-
             if (rbUnitSourceStore.Checked)
             {
                 RTC_CustomEngine.Source = BlastUnitSource.STORE;
@@ -152,7 +149,6 @@ namespace RTCV.UI
                 gbStoreSettings.Enabled = true;
                 gbStoreCompare.Enabled = true;
             }
-
             else if (rbUnitSourceValue.Checked)
             {
                 RTC_CustomEngine.Source = BlastUnitSource.VALUE;
@@ -182,7 +178,6 @@ namespace RTCV.UI
                 RTC_CustomEngine.ValueSource = CustomValueSource.RANGE;
             }
         }
-
 
         private void storeTime_CheckedChanged(object sender, EventArgs e)
         {
@@ -218,7 +213,6 @@ namespace RTCV.UI
             }
         }
 
-
         private void storeType_CheckedChanged(object sender, EventArgs e)
         {
             if (DontUpdateSpec)
@@ -236,7 +230,6 @@ namespace RTCV.UI
                 RTC_CustomEngine.StoreType = StoreType.CONTINUOUS;
             }
         }
-
 
         private void nmMinValue_ValueChanged(object sender, EventArgs e)
         {
@@ -284,7 +277,6 @@ namespace RTCV.UI
             }
 
             ulong value = Convert.ToUInt64(nmMaxValue.Value);
-
 
             switch (CorruptCore.RtcCore.CurrentPrecision)
             {
@@ -351,7 +343,6 @@ namespace RTCV.UI
 
             RTC_CustomEngine.LimiterListHash = (string)cbLimiterList.SelectedValue;
         }
-
 
         private void limiterTime_CheckedChanged(object sender, EventArgs e)
         {
@@ -477,7 +468,6 @@ namespace RTCV.UI
             RTC_CustomEngine.LimiterInverted = cbLimiterInverted.Checked;
         }
 
-
         private void cbSelectedTemplate_SelectedIndexChanged(object sender, EventArgs e)
         {
             PartialSpec spec = new PartialSpec("RTCSpec");
@@ -516,7 +506,6 @@ namespace RTCV.UI
                 updateUILock();
                 Refresh();
             }
-
         }
 
         private void btnCustomTemplateLoad_Click(object sender, EventArgs e)
@@ -556,7 +545,6 @@ namespace RTCV.UI
 
             cbSelectedTemplate.SelectedItem = TemplateName;
 
-
             btnCustomTemplateSave.Enabled = true;
             btnCustomTemplateSave.BackColor = Color.Tomato;
             btnCustomTemplateSave.ForeColor = Color.Black;
@@ -567,12 +555,10 @@ namespace RTCV.UI
             RTC_CustomEngine.SaveTemplateFile(false);
         }
 
-
         private void RestoreUIStateFromSpec()
         {
             try
             {
-
                 DontUpdateSpec = true;
 
                 switch (RTC_CustomEngine.Source)
@@ -642,7 +628,6 @@ namespace RTCV.UI
                     case (LimiterTime.EXECUTE):
                         rbLimiterExecute.Checked = true;
                         break;
-
                 }
 
                 switch (RTC_CustomEngine.StoreLimiterSource)
@@ -656,7 +641,6 @@ namespace RTCV.UI
                     case (StoreLimiterSource.BOTH):
                         rbStoreModeBoth.Checked = true;
                         break;
-
                 }
 
                 cbClearRewind.Checked = StepActions.ClearStepActionsOnRewind;
@@ -667,7 +651,6 @@ namespace RTCV.UI
                 cbValueList.SelectedValue = RTC_CustomEngine.ValueListHash;
                 cbLimiterList.SelectedValue = RTC_CustomEngine.LimiterListHash;
 
-
                 if (RTC_CustomEngine.TiltValue > (BigInteger)decimal.MaxValue)
                 {
                     RTC_CustomEngine.TiltValue = (BigInteger)decimal.MaxValue;
@@ -676,7 +659,6 @@ namespace RTCV.UI
                 nmTilt.Value = (decimal)RTC_CustomEngine.TiltValue;
                 nmDelay.Value = RTC_CustomEngine.Delay;
                 nmLifetime.Value = RTC_CustomEngine.Lifetime;
-
 
                 UpdateMinMaxBoxes(RtcCore.CurrentPrecision);
 
@@ -738,7 +720,5 @@ namespace RTCV.UI
                 this.Focus();
             }
         }
-
     }
-
 }

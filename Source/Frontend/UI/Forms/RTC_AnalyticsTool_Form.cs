@@ -4,21 +4,17 @@ using RTCV.CorruptCore;
 using RTCV.NetCore;
 using RTCV.NetCore.StaticTools;
 
-
 namespace RTCV.UI
 {
     public partial class RTC_AnalyticsTool_Form : Form, IAutoColorize
     {
-
         public BlastLayer originalBlastLayer = null;
-
 
         public RTC_AnalyticsTool_Form()
         {
             try
             {
                 InitializeComponent();
-
             }
             catch (Exception ex)
             {
@@ -70,7 +66,6 @@ namespace RTCV.UI
         private void RTC_AnalyticsToolForm_Load(object sender, EventArgs e)
         {
             UICore.SetRTCColor(UICore.GeneralColor, this);
-
         }
 
         private void RTC_SanitizeTool_Form_FormClosing(object sender, FormClosingEventArgs e)
@@ -85,9 +80,7 @@ namespace RTCV.UI
 
             if (check == null && lbDumps.Items.Count > 1)
             {
-
             }
-
         }
     }
 }

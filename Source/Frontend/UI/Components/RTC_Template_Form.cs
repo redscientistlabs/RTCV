@@ -15,6 +15,5 @@ namespace RTCV.UI
 
             this.undockedSizable = false;
         }
-
     }
 }

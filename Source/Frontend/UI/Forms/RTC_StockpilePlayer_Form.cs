@@ -56,7 +56,6 @@ namespace RTCV.UI
                     }
                 }
             }
-
         }
 
         private void RTC_BE_Form_FormClosing(object sender, FormClosingEventArgs e)
@@ -169,7 +168,6 @@ namespace RTCV.UI
                 (columnsMenu.Items.Add("Load on Select", null, new EventHandler((ob, ev) => { S.GET<RTC_GlitchHarvesterBlast_Form>().LoadOnSelect ^= true; })) as ToolStripMenuItem).Checked = S.GET<RTC_GlitchHarvesterBlast_Form>().LoadOnSelect;
                 (columnsMenu.Items.Add("Clear Infinite Units on Rewind", null, new EventHandler((ob, ev) => { S.GET<RTC_CorruptionEngine_Form>().cbClearCheatsOnRewind.Checked ^= true; })) as ToolStripMenuItem).Checked = S.GET<RTC_CorruptionEngine_Form>().cbClearCheatsOnRewind.Checked;
 
-
                 columnsMenu.Items.Add(stripSeparator);
 
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Manual Inject", null, new EventHandler((ob, ev) =>
@@ -177,9 +175,7 @@ namespace RTCV.UI
                     var sk = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
                     StashKey newSk = (StashKey)sk.Clone();
                     S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newSk, false);
-
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
-
 
                 columnsMenu.Show(this, locate);
             }
@@ -212,7 +208,6 @@ namespace RTCV.UI
                 //Clear out the DGVs
                 S.GET<RTC_StockpileManager_Form>().dgvStockpile.Rows.Clear(); // Clear the stockpile manager
                 dgvStockpile.Rows.Clear(); // Clear the stockpile player
-
 
                 var r = await Task.Run(() => Stockpile.Load(fileName));
 

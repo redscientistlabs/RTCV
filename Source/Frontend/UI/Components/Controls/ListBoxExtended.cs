@@ -47,10 +47,8 @@ namespace RTCV.UI.Components.Controls
                     {
                         this.SetSelected(i, true);
                     }
-
                 }
             }
-
         }
 
         protected override void OnMouseMove(MouseEventArgs e)

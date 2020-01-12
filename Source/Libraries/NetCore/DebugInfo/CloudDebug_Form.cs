@@ -65,7 +65,6 @@ namespace RTCV.NetCore
             }
         }
 
-
         public static string getRTCInfo()
         {
             StringBuilder sb = new StringBuilder();
@@ -94,7 +93,6 @@ namespace RTCV.NetCore
             }
         }
 
-
         private void btnSendDebug_Click(object sender, EventArgs e)
         {
             if (btnSendDebug.Text != "Fetch data") //If not in receive mode
@@ -121,7 +119,6 @@ namespace RTCV.NetCore
                     File.Delete(tempzipfile);
                 }
 
-
                 //Exporting side
                 string sideFile = Path.Combine(tempdebugdir, "SIDE.txt");
                 File.WriteAllText(sideFile, System.Diagnostics.Process.GetCurrentProcess().ProcessName);
@@ -139,7 +136,6 @@ namespace RTCV.NetCore
                 tbStackTrace.Text = sb.ToString();
                 string stacktracefile = Path.Combine(tempdebugdir, "STACKTRACE.TXT");
                 File.WriteAllText(stacktracefile, sb.ToString());
-
 
                 //Exporting data
                 string data = Path.Combine(tempdebugdir, "DATA.TXT");
@@ -265,7 +261,6 @@ namespace RTCV.NetCore
 
         private void btnSendDebug_MouseDown(object sender, MouseEventArgs e)
         {
-
             if (e.Button == MouseButtons.Right)
             {
                 Control c = (Control)sender;
@@ -296,10 +291,7 @@ namespace RTCV.NetCore
                 }
                 columnsMenu.Show(this, locate);
             }
-
         }
-
-
 
         private void CloudDebug_Load(object sender, EventArgs e)
         {
@@ -315,7 +307,6 @@ namespace RTCV.NetCore
 
     public class SilentException : Exception
     {
-
     }
     public class CustomException : Exception
     {
@@ -327,7 +318,6 @@ namespace RTCV.NetCore
         }
         public CustomException(string message, Exception innerException) : base(message, innerException)
         {
-
         }
         public CustomException(string message, string additionalInfo, Exception innerException) : base(message, innerException)
         {
@@ -339,7 +329,6 @@ namespace RTCV.NetCore
 
     public class AbortEverythingException : Exception
     {
-
     }
 
     internal class WebClientTimeout : WebClient
@@ -358,7 +347,6 @@ namespace RTCV.NetCore
 
         public static string CloudLoad(string filename, string password)
         {
-
             string remoteUri = CorruptCloudServer + "/FILES/";
 
             WebClientTimeout myWebClient = new WebClientTimeout();
@@ -398,9 +386,7 @@ namespace RTCV.NetCore
             }
 
             return downloadfilepath;
-
         }
-
 
         public static string CloudSave(string filepath)
         {
@@ -431,9 +417,6 @@ namespace RTCV.NetCore
             }
         }
 
-
-
-
         // String serializers
         public static string SerializeObject(object o)
         {
@@ -448,7 +431,6 @@ namespace RTCV.NetCore
                 return Convert.ToBase64String(stream.ToArray());
             }
         }
-
 
         public static object DeserializeObject(string str)
         {

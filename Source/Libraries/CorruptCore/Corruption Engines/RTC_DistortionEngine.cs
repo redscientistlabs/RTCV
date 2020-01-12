@@ -36,6 +36,5 @@ namespace RTCV.CorruptCore
 
             return new BlastUnit(StoreType.ONCE, StoreTime.IMMEDIATE, domain, safeAddress, domain, safeAddress, precision, mi.BigEndian, Delay, 1);
         }
-
     }
 }

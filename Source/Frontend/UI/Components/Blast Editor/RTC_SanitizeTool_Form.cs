@@ -5,21 +5,17 @@ using RTCV.CorruptCore;
 using RTCV.NetCore;
 using RTCV.NetCore.StaticTools;
 
-
 namespace RTCV.UI
 {
     public partial class RTC_SanitizeTool_Form : Form, IAutoColorize
     {
-
         public BlastLayer originalBlastLayer = null;
-
 
         public RTC_SanitizeTool_Form()
         {
             try
             {
                 InitializeComponent();
-
             }
             catch (Exception ex)
             {
@@ -74,7 +70,6 @@ namespace RTCV.UI
         private void RTC_NewBlastEditorForm_Load(object sender, EventArgs e)
         {
             UICore.SetRTCColor(UICore.GeneralColor, this);
-
         }
 
         private void btnReroll_Click(object sender, EventArgs e)
@@ -181,7 +176,6 @@ namespace RTCV.UI
                 it.ValueString == unit.ValueString
                 );
 
-
                 if (TargetUnit != null && !TargetUnit.IsLocked)
                 {
                     modified.Layer.Remove(TargetUnit);
@@ -233,7 +227,6 @@ namespace RTCV.UI
                 pnBlastLayerSanitization.Visible = false;
                 btnStartSanitizing.Visible = true;
             }
-
         }
 
         private void btnStartSanitizing_Click(object sender, EventArgs e)
@@ -281,8 +274,6 @@ namespace RTCV.UI
                         break;
                 }
             }
-
         }
-
     }
 }

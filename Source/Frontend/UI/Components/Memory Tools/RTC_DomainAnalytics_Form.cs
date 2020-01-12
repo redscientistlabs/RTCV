@@ -30,7 +30,6 @@ namespace RTCV.UI
         public bool FirstInit = false;
         public bool _activeTableReady = false;
 
-
         public bool UseActiveTable = false;
         public bool UseCorePrecision = false;
         public List<string> ActiveTableDumps = null;
@@ -46,7 +45,6 @@ namespace RTCV.UI
             return File.ReadAllBytes(Path.Combine(CorruptCore.RtcCore.workingDir, "MEMORYDUMPS", key + ".dmp"));
         }
 
-
         private void btnActiveTableAddDump_Click(object sender, EventArgs e)
         {
             if (cbSelectedMemoryDomain == null || MemoryDomains.GetInterface(cbSelectedMemoryDomain.SelectedItem.ToString()).Size.ToString() == null)
@@ -59,8 +57,6 @@ namespace RTCV.UI
 
             string key = CorruptCore.RtcCore.GetRandomKey();
 
-
-
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_DOMAIN_ACTIVETABLE_MAKEDUMP, new object[] { cbSelectedMemoryDomain.SelectedItem.ToString(), key }, true);
 
             ActiveTableDumps.Add(key);
@@ -68,7 +64,6 @@ namespace RTCV.UI
 
             if (ActiveTableDumps.Count > 1)
                 btnSendToAnalytics.Enabled = true;
-
         }
 
         private void btnActiveTableDumpsReset_Click(object sender, EventArgs e)
@@ -111,9 +106,7 @@ namespace RTCV.UI
                 File.Delete(file);
 
             btnSendToAnalytics.Enabled = false;
-
         }
-
 
         private void RefreshDomains()
         {
@@ -124,7 +117,6 @@ namespace RTCV.UI
             var domains = MemoryDomains.MemoryInterfaces?.Keys.Where(it => !it.Contains("[V]")).ToArray();
             if (domains?.Length > 0)
                 cbSelectedMemoryDomain.Items.AddRange(domains);
-
 
             if (temp != null && cbSelectedMemoryDomain.Items.Contains(temp))
                 cbSelectedMemoryDomain.SelectedItem = temp;
@@ -167,7 +159,6 @@ namespace RTCV.UI
 
         private void RTC_VmdAct_Form_Load(object sender, EventArgs e)
         {
-
         }
 
         private void btnSendToAnalytics_Click(object sender, EventArgs e)

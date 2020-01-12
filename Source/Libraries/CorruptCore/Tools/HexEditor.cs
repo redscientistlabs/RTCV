@@ -84,7 +84,6 @@ namespace RTCV.CorruptCore.Tools
 
             Restart();
 
-
         }
 
         private void HexEditor_VisibleChanged(object sender, EventArgs e)
@@ -510,7 +509,6 @@ namespace RTCV.CorruptCore.Tools
                         int t_next = 0;
                         for (int k = 0; k < DataSize; k++)
                         {
-
                             if (!MakeValue(1, _addr + j + k, out t_next))
                             {
                                 return "ERROR";
@@ -930,7 +928,6 @@ namespace RTCV.CorruptCore.Tools
 
         public static void CreateVmdFromSelected(string domain, List<long> allAddresses, int wordSize)
         {
-
             int allAddrCount = allAddresses.Count;
             if (wordSize > 1) //fills the gap caused by address spacing
             {
@@ -1283,7 +1280,6 @@ namespace RTCV.CorruptCore.Tools
                 MemoryDomainsMenuItem.DropDownItems.Add(GetMenuItem(new NullMemoryInterface(), SetMemoryDomain, _domain.Name));
                 MemoryDomainsMenuItem.ShowDropDown();
             }
-
         }
         private void MemoryDomainsMenuItem_DropDown(object sender, EventArgs e)
         {
@@ -1757,7 +1753,6 @@ namespace RTCV.CorruptCore.Tools
 
         private void IncrementContextItem_Click(object sender, EventArgs e)
         {
-
             if (HighlightedAddress.HasValue)
             {
                 IncrementAddress(HighlightedAddress.Value);
@@ -1880,7 +1875,6 @@ namespace RTCV.CorruptCore.Tools
 
                     e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(0x44, Color.LightPink)), rect);
                     e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(0x44, Color.LightPink)), textrect);
-
                 }
             }
 
@@ -1973,7 +1967,6 @@ namespace RTCV.CorruptCore.Tools
 
         private void HexMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-
         }
 
         #endregion
@@ -2013,6 +2006,5 @@ namespace RTCV.CorruptCore.Tools
         private void OptionsSubMenu_Click(object sender, EventArgs e)
         {
         }
-
     }
 }

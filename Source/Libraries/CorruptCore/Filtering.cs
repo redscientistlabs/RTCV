@@ -442,6 +442,5 @@ namespace RTCV.CorruptCore
             });
             return true;
         }
-
     }
 }

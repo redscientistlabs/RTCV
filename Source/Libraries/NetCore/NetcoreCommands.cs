@@ -9,8 +9,6 @@
         public const string KILLSWITCH_PULSE = nameof(KILLSWITCH_PULSE);
         public const string RESET_GAME_PROTECTION_IF_RUNNING = nameof(RESET_GAME_PROTECTION_IF_RUNNING);
 
-
-
         public const string REMOTE_PUSHVANGUARDSPEC = nameof(REMOTE_PUSHVANGUARDSPEC);
         public const string REMOTE_PUSHVANGUARDSPECUPDATE = nameof(REMOTE_PUSHVANGUARDSPECUPDATE);
         public const string REMOTE_PUSHCORRUPTCORESPEC = nameof(REMOTE_PUSHCORRUPTCORESPEC);
@@ -79,13 +77,9 @@
         public const string REMOTE_PRECORRUPTACTION = nameof(REMOTE_PRECORRUPTACTION);
         public const string REMOTE_POSTCORRUPTACTION = nameof(REMOTE_POSTCORRUPTACTION);
 
-
         public const string REMOTE_BLASTTOOLS_GETAPPLIEDBACKUPLAYER = nameof(REMOTE_BLASTTOOLS_GETAPPLIEDBACKUPLAYER);
 
-
         public const string ERROR_DISABLE_AUTOCORRUPT = nameof(ERROR_DISABLE_AUTOCORRUPT);
-
-
 
         public const string REMOTE_KEY_SETSYNCSETTINGS = nameof(REMOTE_KEY_SETSYNCSETTINGS);
         public const string REMOTE_KEY_SETSYSTEMCORE = nameof(REMOTE_KEY_SETSYSTEMCORE);
@@ -93,7 +87,6 @@
         public const string EMU_OPEN_HEXEDITOR_ADDRESS = nameof(EMU_OPEN_HEXEDITOR_ADDRESS);
         public const string REMOTE_EVENT_EMU_MAINFORM_CLOSE = nameof(REMOTE_EVENT_EMU_MAINFORM_CLOSE);
         public const string REMOTE_EVENT_EMUSTARTED = nameof(REMOTE_EVENT_EMUSTARTED);
-
 
         public const string RTC_INFOCUS = nameof(RTC_INFOCUS);
         public const string EMU_INFOCUS = nameof(EMU_INFOCUS);
@@ -124,6 +117,5 @@
         public const string REMOTE_HOTKEY_BELOADCORRUPT = nameof(REMOTE_HOTKEY_BELOADCORRUPT);
         public const string REMOTE_HOTKEY_BEAPPLY = nameof(REMOTE_HOTKEY_BEAPPLY);
         public const string REMOTE_HOTKEY_BESENDSTASH = nameof(REMOTE_HOTKEY_BESENDSTASH);
-
     }
 }

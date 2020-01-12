@@ -206,7 +206,6 @@ namespace RTCV.UI
                     return;
                 }
 
-
                 if (ghMode == GlitchHarvesterMode.CORRUPT)
                 {
                     string romFilename = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME];
@@ -261,8 +260,6 @@ namespace RTCV.UI
             }
         }
 
-
-
         private void btnOpenRenderFolder_Click(object sender, EventArgs e)
         {
             Process.Start(Path.Combine(CorruptCore.RtcCore.RtcDir, "RENDEROUTPUT"));
@@ -316,7 +313,6 @@ namespace RTCV.UI
 
                 StockpileManager_UISide.CurrentStashkey = sk;
                 StockpileManager_UISide.StashHistory.Add(StockpileManager_UISide.CurrentStashkey);
-
 
                 S.GET<RTC_StashHistory_Form>().DontLoadSelectedStash = true;
                 S.GET<RTC_StashHistory_Form>().RefreshStashHistorySelectLast();
@@ -381,7 +377,6 @@ namespace RTCV.UI
             {
                 SetBlastButtonVisibility(false);
 
-
                 if (S.GET<RTC_StashHistory_Form>().lbStashHistory.SelectedIndex != -1)
                 {
                     StockpileManager_UISide.CurrentStashkey = (StashKey)StockpileManager_UISide.StashHistory[S.GET<RTC_StashHistory_Form>().lbStashHistory.SelectedIndex].Clone();
@@ -422,7 +417,6 @@ namespace RTCV.UI
                 SetBlastButtonVisibility(true);
             }
         }
-
 
         public void SetBlastButtonVisibility(bool visible)
         {
@@ -486,7 +480,6 @@ namespace RTCV.UI
             }))).Checked = StockpileManager_UISide.StashAfterOperation;
 
             ghSettingsMenu.Show(this, locate);
-
         }
 
         private void btnRenderOutput_MouseDown(object sender, MouseEventArgs e)
@@ -501,7 +494,6 @@ namespace RTCV.UI
 
             ((ToolStripMenuItem)ghSettingsMenu.Items.Add((Render.IsRendering ? "Stop rendering" : "Start rendering"), null, new EventHandler((ob, ev) =>
             {
-
                 if (Render.IsRendering)
                 {
                     Render.StopRender();
@@ -548,8 +540,6 @@ namespace RTCV.UI
             {
                 Render.RenderAtLoad = Render.RenderAtLoad ^= true;
             }))).Checked = Render.RenderAtLoad;
-
-
 
             ghSettingsMenu.Show(this, locate);
         }

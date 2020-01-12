@@ -2,7 +2,6 @@
 //https://github.com/tasvideos/bizhawk
 //Thanks guys
 
-
 using System;
 using System.Collections.Generic;
 using RTCV.NetCore.StaticTools;

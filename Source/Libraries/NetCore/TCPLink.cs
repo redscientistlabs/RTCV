@@ -12,7 +12,6 @@ namespace RTCV.NetCore
 {
     public class TCPLink
     {
-
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private NetCoreSpec spec;
         private TCPLinkWatch linkWatch = null;
@@ -23,7 +22,6 @@ namespace RTCV.NetCore
             get => _status;
             set
             {
-
                 spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{EVENT_NETWORKSTATUS}", value.ToString()));
 
                 if (value != _status)
@@ -71,7 +69,6 @@ namespace RTCV.NetCore
             }
         }
 
-
         private Socket KillableAcceptSocket(TcpListener listener)
         {
             Socket socket = null;
@@ -89,7 +86,6 @@ namespace RTCV.NetCore
                         clientConnected?.Set();
                     }
                     catch (Exception ex) { DiscardException(ex); }
-
                 }, null);
                 clientConnected.WaitOne();
 
@@ -131,7 +127,6 @@ namespace RTCV.NetCore
 
             try
             {
-
                 if (networkStream == null)
                 {
                     server = new TcpListener((IP == "127.0.0.1" ? IPAddress.Loopback : IPAddress.Any), Port);
@@ -140,7 +135,6 @@ namespace RTCV.NetCore
                     networkStream = new NetworkStream(socket);
 
                     server.Stop();
-
                 }
 
                 networkStream.ReadTimeout = 20;
@@ -189,7 +183,6 @@ namespace RTCV.NetCore
                                 {
                                     message = serializer.Deserialize<NetCoreAdvancedMessage>(temp);
                                 }
-
 
                                 sw.Stop();
                                 if (message.Type != "{BOOP}" && sw.ElapsedMilliseconds > 50)
@@ -282,11 +275,9 @@ namespace RTCV.NetCore
 
                     Thread.Sleep(spec.messageReadTimerDelay);
                 }
-
             }
             catch (Exception ex)
             {
-
 
                 if (ex is ThreadAbortException)
                 {
@@ -310,11 +301,9 @@ namespace RTCV.NetCore
                 {
                     DiscardException(ex);
                 }
-
             }
             finally
             {
-
                 //Let's force close everything JUST IN CASE
 
                 try
@@ -324,14 +313,12 @@ namespace RTCV.NetCore
                 }
                 catch { } //nobody cares why this failed
 
-
                 try
                 {
                     socket?.Shutdown(SocketShutdown.Both);
                     socket?.Dispose();
                 }
                 catch { } //nobody cares why this failed
-
 
                 try
                 {
@@ -354,7 +341,6 @@ namespace RTCV.NetCore
                 //Kill synced query if happenning
                 spec.Connector.watch.Kill();
             }
-
         }
 
         private void DiscardException(Exception ex) =>
@@ -397,7 +383,6 @@ namespace RTCV.NetCore
                 }
             }
             catch { }
-
         }
 
         internal void StopNetworking(bool stopGracefully = true, bool stayConnected = false)
@@ -468,7 +453,6 @@ namespace RTCV.NetCore
             KillConnections(clientRef);
 
             spec.Connector.watch.Kill(); //Kills the ReturnWatch if waiting for a value
-
         }
 
         private bool StartClient()
@@ -516,11 +500,9 @@ namespace RTCV.NetCore
                 };
                 streamReadingThread.Start();
                 logger.Debug("Started new TCPLink Thread for CLIENT");
-
             }
             catch (Exception ex)
             {
-
                 if (ex.Message != "Failed to connect")
                 {
                     DiscardException(ex);
@@ -540,7 +522,6 @@ namespace RTCV.NetCore
                         client?.Close();
                         client = null;
                     }
-
                 }
                 catch { }
 
@@ -588,7 +569,6 @@ namespace RTCV.NetCore
 
         internal void StartNetworking()
         {
-
             if (supposedToBeConnected && (status == NetworkStatus.CONNECTED || status == NetworkStatus.CONNECTING || status == NetworkStatus.LISTENING))
             {
                 return;
@@ -622,7 +602,6 @@ namespace RTCV.NetCore
 
             supposedToBeConnected = true;
 
-
             BoopMonitoringCounter = DefaultBoopMonitoringCounter;
 
             BoopMonitoringTimer?.Stop();
@@ -632,7 +611,6 @@ namespace RTCV.NetCore
             };
             BoopMonitoringTimer.Elapsed += BoopMonitoringTimer_Tick;
             BoopMonitoringTimer.Start();
-
         }
 
         private void BoopMonitoringTimer_Tick(object sender, EventArgs e)
@@ -658,7 +636,6 @@ namespace RTCV.NetCore
                 //Shutdown TCP Link
                 StopNetworking(false, expectingSomeone);
             }
-
         }
 
         internal bool ProcessAdvancedMessage(NetCoreMessage _message)
@@ -706,7 +683,6 @@ namespace RTCV.NetCore
                         //spec.OnClientConnected(null);
                         spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{EVENT_CLIENTCONNECTED}"));
                     }
-
 
                     break;
 
@@ -765,20 +741,17 @@ namespace RTCV.NetCore
                     spec.OnSyncedMessageEnd(null);
                     break;
 
-
                 default:
                     //If message wasn't procesed, just return false
                     //Message may be handled on an upper level
                     return false;
             }
 
-
             return true;
         }
 
         internal bool IsSendingAdvancedMessageAuthorized(NetCoreAdvancedMessage message)
         {
-
             if (message.Type == "{HI}") // {HI} is the only command that can go blindly through the pipe before the link is established
             {
                 return true;
@@ -794,7 +767,6 @@ namespace RTCV.NetCore
 
         internal void SendMessage(NetCoreAdvancedMessage message, bool priority = false)
         {
-
             if (!IsSendingAdvancedMessageAuthorized(message))
             {
                 return;

@@ -12,7 +12,6 @@ using Newtonsoft.Json.Converters;
 
 namespace RTCV.NetCore
 {
-
     public class FullSpec : BaseSpec
     {
         public event EventHandler<SpecUpdateEventArgs> SpecUpdated;
@@ -34,7 +33,6 @@ namespace RTCV.NetCore
         public FullSpec(PartialSpec partialSpec, bool _propagationEnabled)
         {
             propagationIsEnabled = _propagationEnabled;
-
 
             //Creating a FullSpec requires a template
             template = partialSpec;
@@ -231,7 +229,6 @@ namespace RTCV.NetCore
             }
         }
 
-
         protected PartialSpec(SerializationInfo info, StreamingContext context)
         {
             Name = info.GetString("Name");
@@ -258,7 +255,6 @@ namespace RTCV.NetCore
                 if (value == null && !(this is PartialSpec))    // Partials can have null values
                 {                                               // A null value means a key removal in the Full Spec
                     specDico.TryRemove(key, out _);
-
                 }
                 else
                 {
@@ -291,7 +287,6 @@ namespace RTCV.NetCore
 
         public void Reset() => specDico.Clear();
         public object Clone() => NetCore_Extensions.ObjectCopier.Clone(this);
-
     }
 
     public class SpecUpdateEventArgs : EventArgs

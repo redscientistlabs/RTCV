@@ -32,7 +32,6 @@ namespace RTCV.UI
             subForm = (Form)reqForm;
 
             UpdateSubForm();
-
         }
 
         public void Parent_ResizeBegin()
@@ -86,9 +85,7 @@ namespace RTCV.UI
                     btnRight.Text = sf.SubForm_RightButtonText;
                 }
             }
-
         }
-
 
         public void UpdateBackground()
         {
@@ -109,7 +106,6 @@ namespace RTCV.UI
             this.BackgroundImage = bmp;
 
             pnFloater.Location = new Point((parentForm.Width - pnFloater.Width) / 2, (parentForm.Height - pnFloater.Height) / 2);
-
         }
 
         private void btnRight_Click(object sender, EventArgs e)
@@ -138,7 +134,6 @@ namespace RTCV.UI
 
         private void UI_ShadowPanel_Load(object sender, EventArgs e)
         {
-
         }
     }
 }

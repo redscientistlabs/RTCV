@@ -33,7 +33,6 @@ namespace RTCV.UI
 
             DoTabs();
             DoFocus();
-
         }
 
         private void RTC_SettingsHotkeyConfig_Form_GotFocus(object sender, EventArgs e)
@@ -152,8 +151,6 @@ namespace RTCV.UI
             }
         }
 
-
-
         private void DoFocus()
         {
             if (HotkeyTabControl.SelectedTab != null)
@@ -196,6 +193,5 @@ namespace RTCV.UI
                 }
             }
         }
-
     }
 }

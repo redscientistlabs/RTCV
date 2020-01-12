@@ -41,7 +41,6 @@ namespace RTCV.CorruptCore.Tools
 
             FindBox.Focus();
             FindBox.Select();
-
         }
 
         private string GetFindBoxChars()

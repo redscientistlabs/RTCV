@@ -10,7 +10,6 @@ using System.IO.Pipes;
 using SlimDX;
 using SlimDX.DirectInput;
 
-
 //Lifted from bizhawk
 
 namespace RTCV.UI.Input
@@ -24,14 +23,12 @@ namespace RTCV.UI.Input
             t.Start();
         }
 
-
         static List<KeyInput.KeyEvent> PendingEventList = new List<KeyInput.KeyEvent>();
         static List<KeyInput.KeyEvent> EventList = new List<KeyInput.KeyEvent>();
 
         static void IPCThread()
         {
             string pipeName = string.Format("rtc-pid-{0}-IPCKeyInput", System.Diagnostics.Process.GetCurrentProcess().Id);
-
 
             for (; ; )
             {

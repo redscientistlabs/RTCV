@@ -15,7 +15,6 @@ namespace RTCV.NetCore
         private object MessagePoolLock = new object();
         private LinkedList<NetCoreMessage> MessagePool = new LinkedList<NetCoreMessage>();
 
-
         internal MessageHub(NetCoreSpec _spec)
         {
             spec = _spec;
@@ -139,14 +138,12 @@ namespace RTCV.NetCore
                 hubTimer.Stop();
             }
         }
-
     }
 
     public class NetCoreEventArgs : EventArgs
     {
         public NetCoreEventArgs()
         {
-
         }
 
         public NetCoreEventArgs(string type)
@@ -175,7 +172,6 @@ namespace RTCV.NetCore
             _returnMessage = message;
         }
     }
-
 }
 
 

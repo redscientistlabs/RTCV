@@ -69,7 +69,6 @@ namespace RTCV.UI
 
         private void RTC_SettingsNetCore_Form_Load(object sender, EventArgs e)
         {
-
         }
     }
 }

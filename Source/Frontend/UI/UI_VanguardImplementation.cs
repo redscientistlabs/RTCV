@@ -48,7 +48,6 @@ namespace RTCV.UI
                 {
                     case REMOTE_PUSHVANGUARDSPEC:
                         {
-
                             if (!CorruptCore.RtcCore.Attached)
                             {
                                 RTCV.NetCore.AllSpec.VanguardSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !CorruptCore.RtcCore.Attached);
@@ -60,7 +59,6 @@ namespace RTCV.UI
                             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHUISPEC, RTCV.NetCore.AllSpec.UISpec.GetPartialSpec(), true);
                             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHCORRUPTCORESPEC, RTCV.NetCore.AllSpec.CorruptCoreSpec.GetPartialSpec(), true);
 
-
                             SyncObjectSingleton.FormExecute(() =>
                             {
                                 S.GET<UI_CoreForm>().pnAutoKillSwitch.Visible = true;
@@ -70,7 +68,6 @@ namespace RTCV.UI
                             LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_ALLSPECSSENT, true);
                         }
                         break;
-
 
                     case REMOTE_ALLSPECSSENT:
                         if (UICore.FirstConnect)
@@ -89,7 +86,6 @@ namespace RTCV.UI
                                 UICore.ConfigureUIFromVanguardSpec();
 
                                 S.GET<UI_CoreForm>().Show();
-
 
                                 //Pull any lists from the vanguard implementation
                                 if (RtcCore.EmuDir != null)
@@ -119,9 +115,7 @@ namespace RTCV.UI
 
                                 UI_DefaultGrids.engineConfig.LoadToMain();
 
-
                                 UI_DefaultGrids.glitchHarvester.LoadToNewWindow("Glitch Harvester", true);
-
 
 
                             }
@@ -184,7 +178,6 @@ namespace RTCV.UI
                             }
 
                             S.GET<UI_CoreForm>().Show();
-
 
                             if (NetCore.Params.IsParamSet("SIMPLE_MODE"))
                             {
@@ -263,11 +256,9 @@ namespace RTCV.UI
                             }
 
                             vmdgenerator.btnGenerateVMD_Click(null, null);
-
                         });
                         e.setReturnValue(true);
                         break;
-
 
                     case REMOTE_EVENT_DOMAINSUPDATED:
 
@@ -370,7 +361,6 @@ namespace RTCV.UI
                             S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked = false;
                         });
                         break;
-
 
                 }
             }

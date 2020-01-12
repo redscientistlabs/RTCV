@@ -8,13 +8,11 @@ using RTCV.NetCore.StaticTools;
 
 namespace RTCV.UI
 {
-
     public static class AutoKillSwitch
     {
         public static int MaxMissedPulses = 20;
         private static Timer killswitchSpamPreventTimer;
         public static bool ShouldKillswitchFire = true;
-
 
         public static bool Enabled
         {
@@ -102,7 +100,6 @@ namespace RTCV.UI
                 };
                 killswitchSpamPreventTimer.Tick += KillswitchSpamPreventTimer_Tick;
                 killswitchSpamPreventTimer.Start();
-
 
                 PlayCrashSound(true);
 

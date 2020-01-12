@@ -10,7 +10,6 @@ namespace RTCV.UI.Components.Controls
         public event EventHandler<ValueUpdateEventArgs> ValueChanged;
         public virtual void OnValueChanged(ValueUpdateEventArgs e) => ValueChanged?.Invoke(this, e);
 
-
         public event EventHandler<EventArgs> CheckChanged;
         public virtual void OnCheckChanged(object sender, EventArgs e) => CheckChanged?.Invoke(sender, e);
 
@@ -59,7 +58,6 @@ namespace RTCV.UI.Components.Controls
                 }
             }
         }
-
 
         [Description("Value of the checkbox"), Category("Data")]
         public bool Checked
@@ -143,7 +141,6 @@ namespace RTCV.UI.Components.Controls
             A = Maximum / max_X_Squared;
         }
 
-
         /*
         Y = AX²
         5000000 = A * 4294967296
@@ -181,7 +178,6 @@ namespace RTCV.UI.Components.Controls
             decimal Floored_X = Math.Floor(X);
             return Convert.ToInt32(Floored_X);
         }
-
 
         public static decimal DecSqrt(decimal x)
         {
@@ -344,7 +340,6 @@ namespace RTCV.UI.Components.Controls
             }
 
             OnCheckChanged(sender, e);
-
         }
 
         private void nmControlValue_KeyUp(object sender, KeyEventArgs e)
@@ -372,7 +367,6 @@ namespace RTCV.UI.Components.Controls
 
         private void tbControlValue_Scroll(object sender, EventArgs e)
         {
-
         }
     }
 
@@ -391,7 +385,5 @@ namespace RTCV.UI.Components.Controls
             base.OnGotFocus(e);
             SendMessage(this.Handle, 0x0128, MakeParam(1, 0x1), 0);
         }
-
     }
-
 }

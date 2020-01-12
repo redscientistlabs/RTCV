@@ -920,7 +920,6 @@ namespace RTCV.CorruptCore
 
             public ByteArrayComparer()
             {
-
             }
         }
     }
@@ -1062,7 +1061,6 @@ namespace RTCV.CorruptCore
 
             return ser.Deserialize<T>(ser.Serialize(source));
         }
-
     }
     //Export dgv to csv
     public class CSVGenerator
@@ -1298,7 +1296,6 @@ namespace RTCV.CorruptCore
 
         public static void ShowConsole()
         {
-
             var handle = Win32.GetConsoleWindow();
             Win32.ShowWindow(handle, Win32.SW_SHOW);
             ConsoleVisible = true;
@@ -1322,12 +1319,10 @@ namespace RTCV.CorruptCore
                 ShowConsole();
             }
         }
-
     }
     //Lifted from Bizhawk https://github.com/TASVideos/BizHawk
     public static class Win32
     {
-
 
         [DllImport("kernel32.dll")]
         public static extern IntPtr LoadLibrary(string dllToLoad);
@@ -1402,5 +1397,4 @@ namespace RTCV.CorruptCore
         [DllImport("kernel32.dll", ExactSpelling = true, SetLastError = true)]
         public static extern bool CloseHandle(IntPtr handle);
     }
-
 }

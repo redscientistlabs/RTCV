@@ -19,7 +19,6 @@ namespace RTCV.UI
             popoutAllowed = false;
         }
 
-
         //todo - rewrite this?
         /*
 		private void btnImportKeyBindings_Click(object sender, EventArgs e)
@@ -125,7 +124,6 @@ namespace RTCV.UI
 
             S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.UncapNumericBox = cbUncapIntensity.Checked;
             S.GET<RTC_GlitchHarvesterIntensity_Form>().multiTB_Intensity.UncapNumericBox = cbUncapIntensity.Checked;
-
         }
 
         private void btnRefreshInputDevices_Click(object sender, EventArgs e)

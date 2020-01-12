@@ -144,7 +144,6 @@ namespace RTCV.UI
                 dgvStockpile.Enabled = true;
                 btnStockpileUP.Enabled = true;
                 btnStockpileDOWN.Enabled = true;
-
             }
 
             S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
@@ -202,7 +201,6 @@ namespace RTCV.UI
                     var sk = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
                     StashKey newSk = (StashKey)sk.Clone();
                     S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newSk, false);
-
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
                 columnsMenu.Items.Add(new ToolStripSeparator());
@@ -316,7 +314,6 @@ namespace RTCV.UI
             StockpileManager_UISide.StockpileChanged();
 
             UnsavedEdits = true;
-
         }
 
         private void btnRemoveSelectedStockpile_Click(object sender, EventArgs e)
@@ -326,7 +323,6 @@ namespace RTCV.UI
 
         public void RemoveSelected(bool force = false)
         {
-
             if (Control.ModifierKeys == Keys.Control || (dgvStockpile.SelectedRows.Count != 0 && (MessageBox.Show("Are you sure you want to remove the selected stockpile entries?", "Delete Stockpile Entry?", MessageBoxButtons.YesNo) == DialogResult.Yes)))
             {
                 foreach (DataGridViewRow row in dgvStockpile.SelectedRows)
@@ -340,7 +336,6 @@ namespace RTCV.UI
             UnsavedEdits = true;
 
             S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
-
         }
 
         private void btnClearStockpile_Click(object sender, EventArgs e)
@@ -350,7 +345,6 @@ namespace RTCV.UI
 
         public void ClearStockpile(bool force = false)
         {
-
             if (force || MessageBox.Show("Are you sure you want to clear the stockpile?", "Clearing stockpile", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 dgvStockpile.Rows.Clear();
@@ -361,7 +355,6 @@ namespace RTCV.UI
                 UnsavedEdits = false;
 
                 S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
-
             }
         }
         private async void LoadStockpile(string filename)
@@ -538,7 +531,6 @@ namespace RTCV.UI
                 LoadStockpile(filename);
             }));
 
-
             loadMenuItems.Items.Add($"Load {RtcCore.VanguardImplementationName} settings from Stockpile", null, new EventHandler((ob, ev) =>
             {
                 try
@@ -588,7 +580,6 @@ namespace RTCV.UI
                 return;
             }
 
-
             UICore.SetHotkeyTimer(false);
             string path = "";
             SaveFileDialog saveFileDialog1 = new SaveFileDialog
@@ -610,7 +601,6 @@ namespace RTCV.UI
 
             Stockpile sks = new Stockpile(dgvStockpile);
             SaveStockpile(sks, path);
-
         }
 
         private void btnSaveStockpile_Click(object sender, EventArgs e)
@@ -707,8 +697,6 @@ namespace RTCV.UI
             e.Effect = DragDropEffects.Link;
         }
 
-
-
         private void btnImportStockpile_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog
@@ -725,7 +713,6 @@ namespace RTCV.UI
         }
         private void btnStockpileUP_Click(object sender, EventArgs e)
         {
-
             if (dgvStockpile.SelectedRows.Count == 0)
             {
                 return;
@@ -749,7 +736,6 @@ namespace RTCV.UI
 
         private void btnStockpileDOWN_Click(object sender, EventArgs e)
         {
-
             if (dgvStockpile.SelectedRows.Count == 0)
             {
                 return;
@@ -776,7 +762,6 @@ namespace RTCV.UI
             dgvStockpile.AllowDrop = true;
             dgvStockpile.DragDrop += dgvStockpile_DragDrop;
             dgvStockpile.DragEnter += dgvStockpile_DragEnter;
-
         }
 
         private void btnGlitchHarvesterSettings_MouseDown(object sender, MouseEventArgs e)
@@ -791,7 +776,6 @@ namespace RTCV.UI
 
             ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Compress Stockpiles", null, new EventHandler((ob, ev) =>
             {
-
                 if (RTCV.NetCore.Params.IsParamSet("COMPRESS_STOCKPILE"))
                 {
                     RTCV.NetCore.Params.RemoveParam("COMPRESS_STOCKPILE");
@@ -813,8 +797,6 @@ namespace RTCV.UI
                     RTCV.NetCore.Params.SetParam("INCLUDE_REFERENCED_FILES");
                 }
             }))).Checked = RTCV.NetCore.Params.IsParamSet("INCLUDE_REFERENCED_FILES");
-
-
 
             ghSettingsMenu.Show(this, locate);
         }

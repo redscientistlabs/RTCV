@@ -145,7 +145,6 @@ namespace RTCV.UI
                 //Set up the DGV based on the current state of Bizhawk
                 (dgvBlastGenerator.Rows[lastrow].Cells["dgvRowDirty"]).Value = true;
 
-
                 //For some godforsaken reason, xmlSerializer deserialization wont fill this in as a bool so just use a string god help us all 
                 (dgvBlastGenerator.Rows[lastrow].Cells["dgvEnabled"]).ValueType = typeof(string);
                 ((DataGridViewCheckBoxCell)(dgvBlastGenerator.Rows[lastrow].Cells["dgvEnabled"])).TrueValue = "true";
@@ -154,7 +153,6 @@ namespace RTCV.UI
 
                 ((DataGridViewComboBoxCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvPrecision"]).Value = ((DataGridViewComboBoxCell)dgvBlastGenerator.Rows[0].Cells["dgvPrecision"]).Items[0];
                 ((DataGridViewComboBoxCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvType"]).Value = ((DataGridViewComboBoxCell)dgvBlastGenerator.Rows[0].Cells["dgvType"]).Items[0];
-
 
                 //We need to make the rows type decimal as the NumericUpDown is formatted as string by default (due to the potential for commas)
                 dgvBlastGenerator.Rows[lastrow].Cells["dgvStartAddress"].ValueType = typeof(decimal);
@@ -165,7 +163,6 @@ namespace RTCV.UI
                 dgvBlastGenerator.Rows[lastrow].Cells["dgvExecuteFrame"].ValueType = typeof(decimal);
                 dgvBlastGenerator.Rows[lastrow].Cells["dgvSeed"].ValueType = typeof(decimal);
 
-
                 //These can't be null or else things go bad when trying to save and load them from a file. Include an M as they NEED to be decimal.
                 ((DataGridViewNumericUpDownCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvStartAddress"]).Value = 0M;
                 ((DataGridViewNumericUpDownCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvEndAddress"]).Value = 1M;
@@ -175,15 +172,12 @@ namespace RTCV.UI
                 ((DataGridViewNumericUpDownCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvLifetime"]).Value = 1M;
                 ((DataGridViewNumericUpDownCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvExecuteFrame"]).Value = 0M;
 
-
                 //Generate a random Seed
                 ((DataGridViewTextBoxCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvSeed"]).Value = CorruptCore.RtcCore.RND.Next();
-
 
                 PopulateDomainCombobox(dgvBlastGenerator.Rows[lastrow]);
                 PopulateModeCombobox(dgvBlastGenerator.Rows[lastrow]);
                 // (dgvBlastGenerator.Rows[lastrow].Cells["dgvMode"] as DataGridViewComboBoxCell).Value = (dgvBlastGenerator.Rows[0].Cells["dgvMode"] as DataGridViewComboBoxCell).Items[0];
-
 
                 //For some reason, setting the minimum on the DGV to 1 doesn't change the fact it inserts with a count of 0
                 (dgvBlastGenerator.Rows[lastrow].Cells["dgvInterval"]).Value = 1;
@@ -212,7 +206,6 @@ namespace RTCV.UI
                     {
                         cell.Items.Add(domain);
                     }
-
 
                     if (currentValue != null && cell.Items.Contains(currentValue))
                     {
@@ -253,7 +246,6 @@ namespace RTCV.UI
                     .Value.ToString() + ".\nAre you sure you have the right core loaded?");
             }
 
-
             long size = domainToMiDico[row.Cells["dgvDomain"].Value.ToString()].Size;
 
             ((DataGridViewNumericUpDownCell)row.Cells["dgvStartAddress"]).Maximum = size;
@@ -262,12 +254,10 @@ namespace RTCV.UI
 
         private static void PopulateModeCombobox(DataGridViewRow row)
         {
-
             if (row.Cells["dgvMode"] is DataGridViewComboBoxCell cell)
             {
                 cell.Value = null;
                 cell.Items.Clear();
-
 
                 switch (row.Cells["dgvType"].Value.ToString())
                 {
@@ -303,11 +293,9 @@ namespace RTCV.UI
             }
             finally
             {
-
                 btnLoadCorrupt.Enabled = true;
                 btnSendTo.Enabled = true;
                 btnJustCorrupt.Enabled = true;
-
             }
         }
 
@@ -429,7 +417,6 @@ namespace RTCV.UI
                     }
 
                     {
-
                     }
                     S.GET<RTC_NewBlastEditor_Form>().Show();
                 }
@@ -452,7 +439,6 @@ namespace RTCV.UI
                 btnJustCorrupt.Enabled = true;
             }
         }
-
 
         private void dgvBlastGenerator_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
@@ -490,7 +476,6 @@ namespace RTCV.UI
                 }
             }
         }
-
 
         public BlastLayer GenerateBlastLayers(bool loadBeforeCorrupt = false, bool applyAfterCorrupt = false, bool resumeAfter = true)
         {
@@ -561,7 +546,6 @@ namespace RTCV.UI
                     }
                     protoList.Add(proto);
                 }
-
 
                 List<BlastGeneratorProto> returnList = new List<BlastGeneratorProto>();
 
@@ -857,7 +841,6 @@ namespace RTCV.UI
                     };
                     var s = JsonConvert.SerializeObject(dt, settings);
                     File.WriteAllText(sfd.FileName, s);
-
                 }
                 catch (Exception ex)
                 {

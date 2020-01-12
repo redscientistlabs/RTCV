@@ -212,7 +212,6 @@ namespace RTCV.UI
                             proto.AddSingles.Add(address);
                         }
                     }
-
                 }
             }
 
@@ -221,7 +220,6 @@ namespace RTCV.UI
                 //No add range was specified, use entire domain
                 proto.AddRanges.Add(new long[] { 0, (currentDomainSize > long.MaxValue ? long.MaxValue : Convert.ToInt64(currentDomainSize)) });
             }
-
 
             //Precalc the size of the vmd
             //Ignore the fact that addranges and subtractranges can overlap. Only account for add
@@ -255,7 +253,6 @@ namespace RTCV.UI
                 size -= x;
             }
 
-
             //Verify they want to continue if the domain is larger than 32MB and they didn't manually set ranges
             if (size > 0x2000000)
             {
@@ -273,7 +270,6 @@ namespace RTCV.UI
                 MessageBox.Show("The resulting VMD had no pointers so the operation got cancelled.");
                 return false;
             }
-
 
             MemoryDomains.AddVMD(VMD);
 
@@ -357,7 +353,6 @@ pointer spacer parameter");
 
             string generatedExpression = $"{startAddress.ToHexString()}-{(rangeUsed ? addressPlusRange.ToHexString() : maxAddress.ToHexString())}";
             tbRangeExpression.Text = generatedExpression;
-
         }
     }
 }

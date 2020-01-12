@@ -17,7 +17,6 @@ namespace RTCV.NetCore
         public static bool UseQueue = false;
         public static bool EmuThreadIsMainThread = false;
 
-
         public static void FormExecute(Action a)
         {
             if (SyncObject.InvokeRequired)
@@ -122,7 +121,6 @@ namespace RTCV.NetCore
             }
 
             while (actions.Contains(act)) { Thread.Sleep(10); } //Lock until action has been executed
-
         }
 
         public static void Execute(string key)
@@ -144,7 +142,6 @@ namespace RTCV.NetCore
                     var act = actions.First.Value;
                     act.Invoke();
                     actions.RemoveFirst();
-
                 }
             }
         }

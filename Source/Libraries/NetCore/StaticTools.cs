@@ -8,7 +8,6 @@ using System.Threading;
 namespace RTCV.NetCore.StaticTools
 {
 
-
     // Implementing this interface causes auto-coloration.
     public interface IAutoColorize { }
 
@@ -19,7 +18,6 @@ namespace RTCV.NetCore.StaticTools
         private static readonly ConcurrentDictionary<Type, object> instances = new ConcurrentDictionary<Type, object>();
         public static FormRegister formRegister = new FormRegister();
         private static object lockObject = new object();
-
 
         [ThreadStatic]
         public static volatile Dictionary<int, List<string>> InvokeStackTraces = new Dictionary<int, List<string>>();
@@ -59,7 +57,6 @@ namespace RTCV.NetCore.StaticTools
                 }
             }
         }
-
 
         public static bool ISNULL<T>()
         {
@@ -124,7 +121,6 @@ namespace RTCV.NetCore.StaticTools
             return o;
         }
 
-
         public static void SET<T>(T newTyp)
         {
             lock (lockObject)
@@ -146,7 +142,6 @@ namespace RTCV.NetCore.StaticTools
             }
         }
 
-
     }
 
     public class FormRegister
@@ -154,5 +149,4 @@ namespace RTCV.NetCore.StaticTools
         public event EventHandler<NetCoreEventArgs> FormRegistered;
         public virtual void OnFormRegistered(NetCoreEventArgs e) => FormRegistered?.Invoke(this, e);
     }
-
 }

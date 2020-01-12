@@ -12,7 +12,6 @@ namespace RTCV.UI
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-
         public RTC_GeneralParameters_Form()
         {
             InitializeComponent();
@@ -27,10 +26,8 @@ namespace RTCV.UI
             cbBlastRadius.SelectedIndex = 0;
         }
 
-
         //Guid? errorDelayToken = null;
         //Guid? intensityToken = null;
-
 
         private void cbBlastRadius_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -62,8 +59,6 @@ namespace RTCV.UI
             }
         }
 
-
-
         private void RTC_GeneralParameters_Form_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason != CloseReason.FormOwnerClosing)
@@ -76,32 +71,26 @@ namespace RTCV.UI
 
         private void nmErrorDelay_ValueChanged(object sender, KeyPressEventArgs e)
         {
-
         }
 
         private void nmErrorDelay_ValueChanged(object sender, KeyEventArgs e)
         {
-
         }
 
         private void nmIntensity_KeyDown(object sender, KeyEventArgs e)
         {
-
         }
 
         private void nmIntensity_KeyUp(object sender, KeyEventArgs e)
         {
-
         }
 
         private void track_Intensity_MouseUp(object sender, KeyPressEventArgs e)
         {
-
         }
 
         private void track_Intensity_MouseUp(object sender, MouseEventArgs e)
         {
-
         }
 
         private void RTC_GeneralParameters_Form_Shown(object sender, EventArgs e)
@@ -115,7 +104,6 @@ namespace RTCV.UI
                 multiTB_Intensity.Maximum = maxintensity;
                 multiTB_Intensity.FirstLoadDone = prevState;
             }
-
         }
     }
 }

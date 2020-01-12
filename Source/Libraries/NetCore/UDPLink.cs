@@ -4,13 +4,10 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 
-
 namespace RTCV.NetCore
 {
-
     public class UDPLink
     {
-
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private NetCoreSpec spec;
         private string IP => spec.IP;
@@ -35,7 +32,6 @@ namespace RTCV.NetCore
             };
             ReaderThread.Start();
         }
-
 
         internal void Kill()
         {
@@ -81,7 +77,6 @@ namespace RTCV.NetCore
 
                 while (Running)
                 {
-
                     try
                     {
                         if (Listener == null)
@@ -143,7 +138,6 @@ namespace RTCV.NetCore
                         Thread.Sleep(spec.messageReadTimerDelay);
                     }
                 }
-
             }
             catch (ThreadAbortException)
             {
@@ -158,7 +152,6 @@ namespace RTCV.NetCore
                 Listener?.Client?.Close();
                 Listener?.Close();
             }
-
         }
     }
 }

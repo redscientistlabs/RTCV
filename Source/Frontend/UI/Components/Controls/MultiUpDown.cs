@@ -5,10 +5,8 @@ using System.Windows.Forms;
 
 namespace RTCV.UI.Components.Controls
 {
-
     public partial class MultiUpDown : SpecControl<decimal>
     {
-
         [Description("Whether or not the NumericUpDown should use hex"), Category("Data")]
         public bool Hexadecimal
         {
@@ -34,7 +32,6 @@ namespace RTCV.UI.Components.Controls
             get => updown.Maximum;
             set
             {
-
                 //If the minimum is going to change the current value, we need to mark initialized as false at the end
                 bool reinit = value > updown.Value;
                 updown.Maximum = value;
@@ -46,7 +43,6 @@ namespace RTCV.UI.Components.Controls
             InitializeComponent();
             ForeColorChanged += (o, a) => updown.ForeColor = base.ForeColor.A == 255 ? base.ForeColor : Color.FromArgb(base.ForeColor.R, base.ForeColor.G, base.ForeColor.B);
             BackColorChanged += (o, a) => updown.BackColor = base.BackColor.A == 255 ? base.BackColor : Color.FromArgb(base.BackColor.R, base.BackColor.G, base.BackColor.B);
-
 
             updown.Tag = base.Tag;
             updown.ValueChanged += updown_ValueChanged;
@@ -106,7 +102,6 @@ namespace RTCV.UI.Components.Controls
 
             PropagateValue(updown.Value, updown);
         }
-
 
     }
 }

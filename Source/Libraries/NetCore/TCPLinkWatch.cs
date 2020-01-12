@@ -18,7 +18,6 @@ namespace RTCV.NetCore
             tcp = _tcp;
             tcp.StartNetworking();
             watchdog.Start();
-
         }
 
         private void Watchdog_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -39,6 +38,5 @@ namespace RTCV.NetCore
             watchdog?.Stop();
             watchdog = null;
         }
-
     }
 }

@@ -38,7 +38,6 @@ namespace RTCV.UI
             t.Start();
 
             isRunning = true;
-
         }
 
         public static void Stop(bool reset = true)
@@ -96,7 +95,6 @@ namespace RTCV.UI
                 Task.Run(() => RemoveBackup(sk)); //Don't wait on the hdd operations
             }
         }
-
 
         private static void RemoveBackup(StashKey sk)
         {

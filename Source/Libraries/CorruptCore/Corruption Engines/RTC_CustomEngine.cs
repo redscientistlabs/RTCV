@@ -145,7 +145,6 @@ namespace RTCV.CorruptCore
         {
             try
             {
-
                 if (domain == null)
                 {
                     return null;
@@ -220,7 +219,6 @@ namespace RTCV.CorruptCore
                                         }
                                     }
                                     break;
-
                             }
                         }
                         break;
@@ -347,7 +345,6 @@ namespace RTCV.CorruptCore
             {
                 name2TypeDico[k] = pSpec[k].GetType();
             }
-
         }
 
 
@@ -368,7 +365,6 @@ namespace RTCV.CorruptCore
             Name2TemplateDico[vector[RTCSPEC.CUSTOM_NAME].ToString()] = vector;
 
             LoadUserTemplates();
-
         }
 
         public static void LoadUserTemplates()
@@ -590,7 +586,6 @@ namespace RTCV.CorruptCore
             pSpec[RTCSPEC.CUSTOM_STORETIME] = StoreTime.PREEXECUTE;
             pSpec[RTCSPEC.CUSTOM_STORETYPE] = StoreType.CONTINUOUS;
             return pSpec;
-
         }
         public static PartialSpec InitTemplate_VectorEngine()
         {
@@ -629,7 +624,6 @@ namespace RTCV.CorruptCore
             pSpec[RTCSPEC.CUSTOM_STORETIME] = StoreTime.IMMEDIATE;
             pSpec[RTCSPEC.CUSTOM_STORETYPE] = StoreType.ONCE;
             return pSpec;
-
         }
 
         public static PartialSpec getCurrentConfigSpec()
@@ -785,7 +779,6 @@ namespace RTCV.CorruptCore
                         }
                         pSpec[k] = t;
                     }
-
                 }
             }
             catch (Exception e)

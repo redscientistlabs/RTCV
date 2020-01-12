@@ -32,7 +32,6 @@ namespace RTCV.UI
             lbForm.AnchorToPanel(pnListBoxForm);
         }
 
-
         private void btnRtcFactoryClean_Click(object sender, EventArgs e)
         {
             Process p = new Process();

@@ -22,9 +22,6 @@ namespace RTCV.UI
             SizeX = _sizeX;
             SizeY = _sizeY;
 
-
-
-
             this.Size = new Size(
                 (SizeX * UI_CanvasForm.tileSize) + ((SizeX - 1) * UI_CanvasForm.spacerSize),
                 (SizeY * UI_CanvasForm.tileSize) + ((SizeY - 1) * UI_CanvasForm.spacerSize)
@@ -35,7 +32,6 @@ namespace RTCV.UI
                 cf.AnchorToPanel(pnComponentFormHost);
                 cf.ParentComponentFormTitle = this;
             }
-
 
             if (DisplayHeader)
             {
@@ -72,11 +68,9 @@ namespace RTCV.UI
                 this.Anchor = cf.Anchor;
             }
         }
-
     }
 
     public class ComponentPanel : Panel
     {
-
     }
 }

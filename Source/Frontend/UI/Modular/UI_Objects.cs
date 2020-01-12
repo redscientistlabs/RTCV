@@ -6,7 +6,6 @@ using RTCV.NetCore.StaticTools;
 
 namespace RTCV.UI
 {
-
     public interface ISubForm
     {
         //Interface used for added contrals in SubForms
@@ -21,7 +20,6 @@ namespace RTCV.UI
         void OnHidden(); //There's no OnHidden and VisibleChanged sucks
     }
 
-
     public interface ITileForm
     {
         //Interface used for added contrals in TileForms
@@ -29,7 +27,6 @@ namespace RTCV.UI
         int TilesX { get; set; }
         int TilesY { get; set; }
         bool CanPopout { get; set; }
-
     }
 
     public interface IBlockable
@@ -39,8 +36,6 @@ namespace RTCV.UI
         //void BlockView();
         //void UnblockView();
     }
-
-
 
     public class CanvasGrid
     {
@@ -112,12 +107,10 @@ namespace RTCV.UI
             string gridName = "Custom Grid";
             CanvasGrid cuGrid = new CanvasGrid(gridSizeX, gridSizeY, gridName);
 
-
             //foreach(string line in allLines.Select(it => it.Trim()))
             for (int i = 0; i < allLines.Length; i++)
             {
                 string line = allLines[i].Trim();
-
 
                 if (line == "" || line.StartsWith("//"))
                 {
@@ -134,8 +127,6 @@ namespace RTCV.UI
 
                 string command = parts[0];
                 string data = (parts.Length > 1 ? parts[1] : "");
-
-
 
                 switch (command)
                 {
@@ -173,7 +164,6 @@ namespace RTCV.UI
                             int formGridPosY = Convert.ToInt32(subData[2].Trim());
                             int formGridSizeX = Convert.ToInt32(subData[3].Trim());
                             int formGridSizeY = Convert.ToInt32(subData[4].Trim());
-
 
                             AnchorStyles formGridAnchor = (AnchorStyles.Top | AnchorStyles.Left);
 

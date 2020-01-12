@@ -15,7 +15,6 @@ namespace RTCV.UI
 
         private List<DataGridViewCell> cells;
 
-
         public RTC_NoteEditor_Form(INote noteObject, DataGridViewCell _cell)
         {
             KeyDown += RTC_NE_Form_KeyDown;
@@ -37,7 +36,6 @@ namespace RTCV.UI
             InitializeComponent();
         }
 
-
         private void RTC_NE_Form_Load(object sender, EventArgs e)
         {
             if (note.Note != null)
@@ -55,7 +53,6 @@ namespace RTCV.UI
                 this.Size = UICore.NoteBoxSize;
             }
         }
-
 
         private void RTC_NE_Form_KeyDown(object sender, KeyEventArgs e)
         {

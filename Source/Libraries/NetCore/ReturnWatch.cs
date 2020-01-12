@@ -89,8 +89,6 @@ namespace RTCV.NetCore
                 return ret;
             }
         }
-
     }
-
 
 }
