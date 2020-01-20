@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -39,7 +39,7 @@ namespace RTCV.UI
         {
             //Hex characters 
             //Trim the 0x off
-            string regex = "^[0(x|X)]+[0-9A-Fa-f]+$";
+            string regex = "^((0[Xx])|([xX]))[0-9A-Fa-f]+$";
             return Regex.IsMatch(str, regex);
         }
 
