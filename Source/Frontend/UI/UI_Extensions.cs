@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -61,7 +61,14 @@ namespace RTCV.UI
             form.MaximizeBox = false;
             form.AcceptButton = buttonOk;
             form.CancelButton = buttonCancel;
-
+            form.Shown += (f, g) =>
+            {
+                form.ShowInTaskbar = false;
+                form.TopMost = true;
+                form.Focus();
+                form.BringToFront();
+                form.TopMost = false;
+            };
             DialogResult dialogResult = form.ShowDialog();
             value = textBox.Text;
             return dialogResult;
