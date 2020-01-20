@@ -63,11 +63,9 @@ namespace RTCV.UI
             form.CancelButton = buttonCancel;
             form.Shown += (f, g) =>
             {
-                form.ShowInTaskbar = false;
                 form.TopMost = true;
                 form.Focus();
                 form.BringToFront();
-                form.TopMost = false;
             };
             DialogResult dialogResult = form.ShowDialog();
             value = textBox.Text;
