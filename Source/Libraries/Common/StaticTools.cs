@@ -1,14 +1,31 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
-namespace RTCV.NetCore.StaticTools
+namespace RTCV.Common
 {
     // Implementing this interface causes auto-coloration.
     public interface IAutoColorize { }
+
+    public class FormRegisteredEventArgs : EventArgs
+    {
+        public Form Form;
+        public FormRegisteredEventArgs(Form form)
+        {
+            Form = form;
+        }
+    }
+    public class FormRegister
+    {
+        public event EventHandler<FormRegisteredEventArgs> FormRegistered;
+        public virtual void OnFormRegistered(FormRegisteredEventArgs e) => FormRegistered?.Invoke(this, e);
+    }
 
     //Static singleton manager
     //Call or create a singleton using class type
@@ -81,7 +98,7 @@ namespace RTCV.NetCore.StaticTools
 
                         if (typ.IsSubclassOf(typeof(System.Windows.Forms.Form)))
                         {
-                            formRegister.OnFormRegistered(new NetCoreEventArgs("FORMREGISTER", instances[typ]));
+                            formRegister.OnFormRegistered(new FormRegisteredEventArgs((Form)instances[typ]));
                         }
                     }
                 }
@@ -114,7 +131,7 @@ namespace RTCV.NetCore.StaticTools
 
                         if (typ.IsSubclassOf(typeof(System.Windows.Forms.Form)))
                         {
-                            formRegister.OnFormRegistered(new NetCoreEventArgs("FORMREGISTER", instances[typ]));
+                            formRegister.OnFormRegistered(new FormRegisteredEventArgs((Form)instances[typ]));
                         }
                     }
                 }
@@ -138,15 +155,10 @@ namespace RTCV.NetCore.StaticTools
 
                 if (typ.IsSubclassOf(typeof(System.Windows.Forms.Form)))
                 {
-                    formRegister.OnFormRegistered(new NetCoreEventArgs("FORMREGISTER", instances[typ]));
+                    formRegister.OnFormRegistered(new FormRegisteredEventArgs((Form)instances[typ]));
                 }
             }
         }
     }
 
-    public class FormRegister
-    {
-        public event EventHandler<NetCoreEventArgs> FormRegistered;
-        public virtual void OnFormRegistered(NetCoreEventArgs e) => FormRegistered?.Invoke(this, e);
-    }
 }

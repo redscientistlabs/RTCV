@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using RTCV.NetCore.StaticTools;
+using RTCV.Common;
 
 namespace RTCV.CorruptCore.Tools
 {
