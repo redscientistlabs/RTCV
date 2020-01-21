@@ -623,8 +623,17 @@ namespace RTCV.CorruptCore
 
                     case REMOTE_LOADPLUGINS:
                         SyncObjectSingleton.FormExecute(() =>
-                        {
-                            RtcCore.LoadPlugins(new[] { RtcCore.pluginDir, System.IO.Path.Combine(RtcCore.EmuDir, "RTC", "PLUGINS") });
+                        { 
+                            string emuPluginDir = "";
+                            try
+                            {
+                                emuPluginDir = System.IO.Path.Combine(RtcCore.EmuDir, "RTC", "PLUGINS");
+                            }
+                            catch (Exception e)
+                            {
+                                RTCV.Common.Logging.GlobalLogger.Error(e, "Unable to find plugin dir in {dir}", RtcCore.EmuDir + "\\RTC" + "\\PLUGINS");
+                            }
+                            RtcCore.LoadPlugins(new[] { RtcCore.pluginDir,  emuPluginDir});
                         });
 
                         break;

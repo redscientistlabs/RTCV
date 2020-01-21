@@ -135,6 +135,12 @@
     <Compile Include="Components\Controls\MultiUpDown.Designer.cs">
       <DependentUpon>MultiUpDown.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\Controls\OpenToolButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\Controls\OpenToolButton.Designer.cs">
+      <DependentUpon>OpenToolButton.cs</DependentUpon>
+    </Compile>
     <Compile Include="Components\Controls\SavestateHolder.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -428,6 +434,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Controls\MultiUpDown.resx">
       <DependentUpon>MultiUpDown.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Controls\OpenToolButton.resx">
+      <DependentUpon>OpenToolButton.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Controls\SavestateHolder.resx">
       <DependentUpon>SavestateHolder.cs</DependentUpon>

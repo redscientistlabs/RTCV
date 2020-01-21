@@ -29,6 +29,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{68C0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestPlugin", "Source\Plugins\TestPlugin\TestPlugin.csproj", "{B795F19F-133C-4AC5-A124-DAC0DCDBDAC0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptHost", "Source\Plugins\ScriptHost\ScriptHost.csproj", "{534A9766-5C29-4B27-84B1-42043A667261}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{B795F19F-133C-4AC5-A124-DAC0DCDBDAC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B795F19F-133C-4AC5-A124-DAC0DCDBDAC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B795F19F-133C-4AC5-A124-DAC0DCDBDAC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{534A9766-5C29-4B27-84B1-42043A667261}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{534A9766-5C29-4B27-84B1-42043A667261}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{534A9766-5C29-4B27-84B1-42043A667261}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{534A9766-5C29-4B27-84B1-42043A667261}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,6 +86,7 @@ Global
 		{A31C17E1-2EAB-434F-A022-20193F2CEAB7} = {D2E71B6D-F28F-4331-988F-F9750192D1B0}
 		{3F02EDA3-6949-4B30-9CDA-B56FFBA0E976} = {D2E71B6D-F28F-4331-988F-F9750192D1B0}
 		{B795F19F-133C-4AC5-A124-DAC0DCDBDAC0} = {68C0A19E-FC93-4AC8-9E17-0D8D2B7F59BF}
+		{534A9766-5C29-4B27-84B1-42043A667261} = {68C0A19E-FC93-4AC8-9E17-0D8D2B7F59BF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EFD75441-C3FA-4DDC-B001-A7EDDC11E8DE}

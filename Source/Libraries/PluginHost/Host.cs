@@ -1,11 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.ComponentModel.Composition.Primitives;
+using System.IO;
+using NLog;
 
 namespace RTCV.PluginHost
 {
@@ -15,13 +13,15 @@ namespace RTCV.PluginHost
         private IEnumerable<IPlugin> plugins;
 
         private CompositionContainer _container;
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private void initialize(string[] pluginDirs, RTCSide side)
         {
             var catalog = new AggregateCatalog();
             foreach (var dir in pluginDirs)
             {
-                catalog.Catalogs.Add(new DirectoryCatalog(dir));
+                if(Directory.Exists(dir))
+                    catalog.Catalogs.Add(new DirectoryCatalog(dir));
             }
             _container = new CompositionContainer(catalog);
 
@@ -31,7 +31,7 @@ namespace RTCV.PluginHost
             }
             catch (CompositionException compositionException)
             {
-                Console.WriteLine(compositionException.ToString());
+                logger.Error(compositionException, "Composition failed in plugin initialization");
             }
 
         }
@@ -39,14 +39,21 @@ namespace RTCV.PluginHost
         public void Start(string[] pluginDirs, RTCSide side)
         {
             initialize(pluginDirs, side);
-            Console.WriteLine("wtf");
 
             foreach (var p in plugins)
             {
                 if (p.SupportedSide == side || p.SupportedSide == RTCSide.Both)
                 {
-                    Console.WriteLine($"Loading {p.Name}");
-                    Console.WriteLine(p.Start(side) ? $"Loaded {p.Name} successfully" : $"Failed to load {p.Name}");
+                    logger.Info($"Loading {p.Name}");
+                    if (p.Start(side))
+                    {
+                        logger.Info("Loaded {pluginName} successfully", p.Name);
+                    }
+                    else
+                    {
+                        logger.Error("Failed to load {pluginName}", p.Name);
+                    }
+
                 }
             }
         }

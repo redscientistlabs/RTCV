@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using RTCV.NetCore;
-using RTCV.Common;
 using RTCV.PluginHost;
+using RTCV.Common;
 using Timer = System.Windows.Forms.Timer;
 
 namespace RTCV.CorruptCore
