@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -616,6 +616,13 @@ namespace RTCV.CorruptCore
                         SyncObjectSingleton.FormExecute(() =>
                         {
                             StepActions.ClearStepBlastUnits();
+                        });
+                        break;
+
+                    case REMOTE_LOADPLUGINS:
+                        SyncObjectSingleton.FormExecute(() =>
+                        {
+                            RtcCore.LoadPlugins(new[] { RtcCore.pluginDir, System.IO.Path.Combine(RtcCore.EmuDir, "RTC", "PLUGINS") });
                         });
 
                         break;

@@ -127,6 +127,10 @@
       <Name>NetCore</Name>
       <Private>True</Private>
     </ProjectReference>
+    <ProjectReference Include="..\PluginHost\PluginHost.csproj">
+      <Project>{3f02eda3-6949-4b30-9cda-b56ffba0e976}</Project>
+      <Name>PluginHost</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Ceras">
@@ -154,4 +158,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>rd /s /q "cs", "pl", "pt-BR", "tr", "de", "en", "es", "fr", "it", "ja", "ko", "ru", "zh-Hans", "zh-Hant"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
