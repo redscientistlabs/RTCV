@@ -56,6 +56,7 @@
     <Compile Include="Logging.cs" />
     <Compile Include="Objects\OperationResults.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StaticTools.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

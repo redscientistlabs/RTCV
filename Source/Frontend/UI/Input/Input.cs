@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Threading;
-using SlimDX.DirectInput;
 using RTCV.NetCore;
-using RTCV.UI.Input;
 
 namespace RTCV.UI.Input
 {

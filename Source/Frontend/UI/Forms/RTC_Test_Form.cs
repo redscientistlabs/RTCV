@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using RTCV.NetCore.StaticTools;
+using RTCV.Common;
 
 namespace RTCV.UI
 {
