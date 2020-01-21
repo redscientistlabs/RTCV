@@ -12,8 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using RTCV.NetCore;
-using RTCV.NetCore.StaticTools;
-using RTCV.PluginHost;
+using RTCV.Common;
 using Timer = System.Windows.Forms.Timer;
 
 namespace RTCV.CorruptCore
@@ -21,7 +20,7 @@ namespace RTCV.CorruptCore
     public static class RtcCore
     {
         //General RTC Values
-        public const string RtcVersion = "5.0.4-b8";
+        public const string RtcVersion = "5.0.4-b10";
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private static volatile int seed = DateTime.Now.Millisecond;
@@ -48,8 +47,6 @@ namespace RTCV.CorruptCore
 
         public static Timer KillswitchTimer = new Timer();
 
-        private static PluginHost.Host pluginHost = new PluginHost.Host();
-
         public static bool EmuDirOverride = false;
 
         public static string EmuDir
@@ -66,11 +63,6 @@ namespace RTCV.CorruptCore
                 return (string)AllSpec.VanguardSpec?[VSPEC.EMUDIR];
             }
             set => AllSpec.VanguardSpec.Update(VSPEC.EMUDIR, value);
-        }
-
-        public static string pluginDir
-        {
-            get => Path.Combine(RtcDir, "PLUGINS");
         }
 
         public static string EmuAssetsDir => Path.Combine(EmuDir, "ASSETS");
@@ -359,16 +351,6 @@ namespace RTCV.CorruptCore
                     throw new AbortEverythingException();
                 }
             }
-        }
-        public static void LoadPlugins(string[] paths = null)
-        {
-            if (paths == null)
-                paths = new[] { pluginDir };
-
-            RTCSide side = RTCSide.Server;
-            if (IsEmulatorSide)
-                side = RTCSide.Client;
-            pluginHost.Start(paths, side);
         }
 
         public static PartialSpec getDefaultPartial()

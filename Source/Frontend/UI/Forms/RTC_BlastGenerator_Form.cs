@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using Newtonsoft.Json;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
-using RTCV.NetCore.StaticTools;
+using RTCV.Common;
 
 namespace RTCV.UI
 {

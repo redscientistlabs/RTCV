@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -9,7 +9,7 @@ using System.Timers;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
-using RTCV.NetCore.StaticTools;
+using RTCV.Common;
 using RTCV.UI.Input;
 using RTCV.UI.Modular;
 using static RTCV.NetCore.NetcoreCommands;
@@ -95,9 +95,9 @@ namespace RTCV.UI
             LoadRTCColor();
         }
 
-        private static void FormRegister_FormRegistered(object sender, NetCoreEventArgs e)
+        private static void FormRegister_FormRegistered(object sender, FormRegisteredEventArgs e)
         {
-            Form newForm = ((e.message as NetCoreAdvancedMessage)?.objectValue as Form);
+            Form newForm = e.Form;
 
             if (newForm != null)
             {

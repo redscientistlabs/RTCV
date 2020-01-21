@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -106,6 +106,7 @@ namespace RTCV.NetCore
         {
             var config = new SerializerConfig();
             config.Advanced.PersistTypeCache = true;
+            config.Advanced.UseReinterpretFormatter = false;
             config.OnResolveFormatter.Add((c, t) =>
             {
                 if (t == typeof(HashSet<byte[]>))

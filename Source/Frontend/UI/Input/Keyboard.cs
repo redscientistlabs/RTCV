@@ -3,8 +3,7 @@
 //Thanks guys
 
 using System.Collections.Generic;
-using RTCV.NetCore.StaticTools;
-using RTCV.UI;
+using RTCV.Common;
 using SlimDX;
 using SlimDX.DirectInput;
 

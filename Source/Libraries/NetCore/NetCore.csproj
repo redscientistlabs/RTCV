@@ -84,7 +84,6 @@
     <Compile Include="DebugInfo\DebugInfo_Form.Designer.cs">
       <DependentUpon>DebugInfo_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="StaticTools.cs" />
     <Compile Include="SyncObjectSingleton.cs" />
     <Compile Include="TCPLinkWatch.cs" />
     <Compile Include="UDPLink.cs" />

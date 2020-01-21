@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
-using RTCV.NetCore.StaticTools;
+using RTCV.Common;
 using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI

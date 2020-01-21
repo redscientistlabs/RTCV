@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Windows.Forms;
-using RTCV.NetCore.StaticTools;
+using RTCV.Common;
 
 namespace RTCV.NetCore
 {
