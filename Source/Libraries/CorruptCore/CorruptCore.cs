@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using Newtonsoft.Json;
 using RTCV.NetCore;
 using RTCV.Common;
+using RTCV.PluginHost;
 using Timer = System.Windows.Forms.Timer;
 
 namespace RTCV.CorruptCore
@@ -47,6 +48,8 @@ namespace RTCV.CorruptCore
 
         public static Timer KillswitchTimer = new Timer();
 
+        private static PluginHost.Host pluginHost = new PluginHost.Host();
+
         public static bool EmuDirOverride = false;
 
         public static string EmuDir
@@ -66,6 +69,10 @@ namespace RTCV.CorruptCore
         }
 
         public static string EmuAssetsDir => Path.Combine(EmuDir, "ASSETS");
+        public static string pluginDir
+        {
+            get => Path.Combine(RtcDir, "PLUGINS");
+        }
 
         public static string RtcDir
         {
@@ -351,6 +358,16 @@ namespace RTCV.CorruptCore
                     throw new AbortEverythingException();
                 }
             }
+        }
+        public static void LoadPlugins(string[] paths = null)
+        {
+            if (paths == null)
+                paths = new[] { pluginDir };
+
+            RTCSide side = RTCSide.Server;
+            if (IsEmulatorSide)
+                side = RTCSide.Client;
+            pluginHost.Start(paths, side);
         }
 
         public static PartialSpec getDefaultPartial()
