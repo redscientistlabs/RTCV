@@ -1,128 +1,132 @@
-﻿	using System;
-	using System.Collections.Generic;
-
-	namespace RTCV.CorruptCore
+﻿namespace RTCV.CorruptCore
 {
-	public enum BlastRadius
-	{
-		SPREAD,
-		CHUNK,
-		BURST,
-		NORMALIZED,
-		PROPORTIONAL,
-		EVEN,
-		NONE
-	}
+    public enum BlastRadius
+    {
+        SPREAD,
+        CHUNK,
+        BURST,
+        NORMALIZED,
+        PROPORTIONAL,
+        EVEN,
+        NONE
+    }
 
-	public enum BlastUnitSource
-	{
-		VALUE,
-		STORE
-	}
-	public enum StoreTime
-	{
-		IMMEDIATE,  //Frame 0 for the blastunit. Right when it's applied. Used for Distortion
-		PREEXECUTE, //For when you want it to happen right before the first step
-	}
-	public enum LimiterTime
-	{
-		NONE,       //For when something will never happen
-		GENERATE,  //Generate
-		PREEXECUTE, //For when you want it to happen right before the first step
-		EXECUTE     //For when you want it to happen every step
-	}
-	public enum StoreType
-	{
-		ONCE, 
-		CONTINUOUS
-	}
+    public enum BlastUnitSource
+    {
+        VALUE,
+        STORE
+    }
 
-	public enum StoreLimiterSource
-	{
-		ADDRESS,
-		SOURCEADDRESS,
-		BOTH
-	}
+    public enum StoreTime
+    {
+        IMMEDIATE,  //Frame 0 for the blastunit. Right when it's applied. Used for Distortion
+        PREEXECUTE, //For when you want it to happen right before the first step
+    }
 
-	public enum CustomValueSource
-	{
-		RANDOM,
-		VALUELIST,
-		RANGE
-	}
-	public enum CustomStoreAddress
-	{
-		SAME,
-		RANDOM
-	}
+    public enum LimiterTime
+    {
+        NONE,       //For when something will never happen
+        GENERATE,  //Generate
+        PREEXECUTE, //For when you want it to happen right before the first step
+        EXECUTE     //For when you want it to happen every step
+    }
 
-	public enum NightmareAlgo
-	{
-		RANDOM,
-		RANDOMTILT,
-		TILT
-	}
-	public enum NightmareType
-	{
-		SET,
-		ADD,
-		SUBTRACT
-	}
+    public enum StoreType
+    {
+        ONCE,
+        CONTINUOUS
+    }
 
-	public enum CorruptionEngine
-	{
-		NIGHTMARE,
-		HELLGENIE,
-		DISTORTION,
-		FREEZE,
-		PIPE,
-		VECTOR,
-		BLASTGENERATORENGINE,
-		CUSTOM,
-		NONE
-	}
-	public enum BGValueModes
-	{
-		SET,
-		ADD,
-		SUBTRACT,
-		RANDOM,
-		RANDOM_RANGE,
-		SHIFT_LEFT,
-		SHIFT_RIGHT,
-		REPLACE_X_WITH_Y,
-		BITWISE_AND,
-		BITWISE_OR,
-		BITWISE_XOR,
-		BITWISE_COMPLEMENT,
-		BITWISE_SHIFT_LEFT,
-		BITWISE_SHIFT_RIGHT,
-		BITWISE_ROTATE_LEFT,
-		BITWISE_ROTATE_RIGHT
-	}
+    public enum StoreLimiterSource
+    {
+        ADDRESS,
+        SOURCEADDRESS,
+        BOTH
+    }
 
-	public enum BGStoreModes
-	{
-		CHAINED,
-		SOURCE_SET,
-		SOURCE_RANDOM,
-		DEST_RANDOM,
-		FREEZE,
-	}
+    public enum CustomValueSource
+    {
+        RANDOM,
+        VALUELIST,
+        RANGE
+    }
 
-	public enum ProblematicItemTypes
-	{
-		PROCESS,
-		ASSEMBLY
-	}
-	public enum StashKeySavestateLocation
-	{
-		SKS,
-		SSK,
-		MP,
-		SESSION,
-		DEFAULTVALUE
-	}
+    public enum CustomStoreAddress
+    {
+        SAME,
+        RANDOM
+    }
+
+    public enum NightmareAlgo
+    {
+        RANDOM,
+        RANDOMTILT,
+        TILT
+    }
+
+    public enum NightmareType
+    {
+        SET,
+        ADD,
+        SUBTRACT
+    }
+
+    public enum CorruptionEngine
+    {
+        NIGHTMARE,
+        HELLGENIE,
+        DISTORTION,
+        FREEZE,
+        PIPE,
+        VECTOR,
+        BLASTGENERATORENGINE,
+        CUSTOM,
+        NONE
+    }
+
+    public enum BGValueModes
+    {
+        SET,
+        ADD,
+        SUBTRACT,
+        RANDOM,
+        RANDOM_RANGE,
+        SHIFT_LEFT,
+        SHIFT_RIGHT,
+        REPLACE_X_WITH_Y,
+        BITWISE_AND,
+        BITWISE_OR,
+        BITWISE_XOR,
+        BITWISE_COMPLEMENT,
+        BITWISE_SHIFT_LEFT,
+        BITWISE_SHIFT_RIGHT,
+        BITWISE_ROTATE_LEFT,
+        BITWISE_ROTATE_RIGHT
+    }
+
+    public enum BGStoreModes
+    {
+        CHAINED,
+        SOURCE_SET,
+        SOURCE_RANDOM,
+        DEST_RANDOM,
+        FREEZE,
+    }
+
+    public enum ProblematicItemTypes
+    {
+        PROCESS,
+        ASSEMBLY
+    }
+
+    public enum StashKeySavestateLocation
+    {
+        SKS,
+        SSK,
+        MP,
+        SESSION,
+        DEFAULTVALUE
+    }
 
     public enum ExecuteState
     {
@@ -133,7 +137,7 @@
         SILENTERROR,
     }
 
-	public static class RTCSPEC
+    public static class RTCSPEC
     {
         public static readonly string RTCDIR = nameof(RTCDIR);
         public static readonly string CORE_SELECTEDENGINE = nameof(CORE_SELECTEDENGINE);
@@ -217,8 +221,8 @@
         public static readonly string STOCKPILE_RenderAtLoad = nameof(STOCKPILE_RenderAtLoad);
     }
 
-	public static class VSPEC
-	{
+    public static class VSPEC
+    {
         public static readonly string NAME = nameof(NAME);
         public static readonly string EMUDIR = nameof(EMUDIR);
         public static readonly string CORE_LASTLOADERROM = nameof(CORE_LASTLOADERROM);
@@ -237,21 +241,21 @@
         public static readonly string SUPPORTS_CONFIG_MANAGEMENT = nameof(SUPPORTS_CONFIG_MANAGEMENT);
         public static readonly string SUPPORTS_SAVESTATES = nameof(SUPPORTS_SAVESTATES);
         public static readonly string SUPPORTS_REFERENCES = nameof(SUPPORTS_REFERENCES);
-		public static readonly string SUPPORTS_GAMEPROTECTION = nameof(SUPPORTS_GAMEPROTECTION);
+        public static readonly string SUPPORTS_GAMEPROTECTION = nameof(SUPPORTS_GAMEPROTECTION);
         public static readonly string SUPPORTS_REALTIME = nameof(SUPPORTS_REALTIME);
         public static readonly string SUPPORTS_MULTITHREAD = nameof(SUPPORTS_MULTITHREAD);
         public static readonly string SUPPORTS_MIXED_STOCKPILE = nameof(SUPPORTS_MIXED_STOCKPILE);
         public static readonly string SUPPORTS_KILLSWITCH = nameof(SUPPORTS_KILLSWITCH);
         public static readonly string SUPPORTS_CONFIG_HANDOFF = nameof(SUPPORTS_CONFIG_HANDOFF);
-		public static readonly string USE_INTEGRATED_HEXEDITOR = nameof(USE_INTEGRATED_HEXEDITOR);
+        public static readonly string USE_INTEGRATED_HEXEDITOR = nameof(USE_INTEGRATED_HEXEDITOR);
         public static readonly string RENAME_SAVESTATE = nameof(RENAME_SAVESTATE);
         public static readonly string OVERRIDE_DEFAULTMAXINTENSITY = nameof(OVERRIDE_DEFAULTMAXINTENSITY);
         public static readonly string CONFIG_PATHS = nameof(CONFIG_PATHS);
         public static readonly string REPLACE_MANUALBLAST_WITH_GHCORRUPT = nameof(REPLACE_MANUALBLAST_WITH_GHCORRUPT);
         public static readonly string LOADSTATE_USES_CALLBACKS = nameof(LOADSTATE_USES_CALLBACKS);
     }
-    public enum UISPEC
-	{
-	}
 
+    public enum UISPEC
+    {
+    }
 }

@@ -1,10 +1,5 @@
-﻿using RTCV.NetCore.StaticTools;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
+using RTCV.NetCore.StaticTools;
 using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI.Modular
@@ -34,9 +29,7 @@ namespace RTCV.UI.Modular
             {
                 if (_engineConfig == null)
                 {
-
                     var ecGrid = new CanvasGrid(15, 12, "Engine Config");
-                   
 
                     Form gpForm = S.GET<RTC_GeneralParameters_Form>();
                     Form mdForm = S.GET<RTC_MemoryDomains_Form>();
@@ -126,10 +119,10 @@ namespace RTCV.UI.Modular
             {
                 if (_glitchHarvester == null)
                 {
-
-                    var ghGrid = new CanvasGrid(20, 12, "Glitch Harvester");
-                    ghGrid.isResizable = true;
-
+                    var ghGrid = new CanvasGrid(20, 12, "Glitch Harvester")
+                    {
+                        isResizable = true
+                    };
 
                     Form ghbForm = S.GET<RTC_GlitchHarvesterBlast_Form>();
                     Form ghiForm = S.GET<RTC_GlitchHarvesterIntensity_Form>();

@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.IO;
-using System.Diagnostics;
-using System.Threading;
 using RTCV.NetCore;
 
 namespace RTCV.CorruptCore
 {
-
     public static class BlastDiff
     {
-        
         public static BlastLayer GetBlastLayer(string filename)
         {
             string thisSystem = (AllSpec.VanguardSpec[VSPEC.NAME] as string);
@@ -25,7 +18,7 @@ namespace RTCV.CorruptCore
 
             string[] selectedDomains = (string[])RTCV.NetCore.AllSpec.UISpec["SELECTEDDOMAINS"];
 
-            if(selectedDomains.Length == 0)
+            if (selectedDomains.Length == 0)
             {
                 MessageBox.Show("Error: No domain is selected");
                 return null;
@@ -45,15 +38,15 @@ namespace RTCV.CorruptCore
                 {
                     MessageBox.Show($"Warning: More than one domain was selected. The first one ({targetDomain}) was chosen.");
                 }
-
             }
             else
             {
                 originalDomains.Add(mdps.FirstOrDefault(it => it.Name == rp.PrimaryDomain).MD);
 
                 if (rp.SecondDomain != null)
+                {
                     originalDomains.Add(mdps.FirstOrDefault(it => it.Name == rp.SecondDomain).MD);
-
+                }
             }
 
             bool useCustomPrecision = false;
@@ -65,39 +58,51 @@ namespace RTCV.CorruptCore
             }
 
             return (GetBlastLayer(originalDomains.ToArray(), Corrupt, rp.SkipBytes, useCustomPrecision));
-
         }
 
         private static string getNamefromIMemoryDomainArray(IMemoryDomain[] bank, long address)
         {
             if (bank == null | bank.Length == 0)
+            {
                 return null;
+            }
 
             long bankStartAddressDrift = 0;
 
             for (int i = 0; i < bank.Length; i++)
             {
                 if (address - bankStartAddressDrift < bank[i].Size)
+                {
                     return bank[i].Name;
+                }
                 else
+                {
                     bankStartAddressDrift += bank[i].Size;
+                }
             }
 
             return null;
         }
+
         private static byte[] getBytefromIMemoryDomainArray(IMemoryDomain[] bank, long address, int precision)
         {
             if (bank == null | bank.Length == 0)
+            {
                 return new byte[precision];
+            }
 
             long bankStartAddressDrift = 0;
 
-            for(int i = 0; i<bank.Length;i++)
+            for (int i = 0; i < bank.Length; i++)
             {
                 if (address - bankStartAddressDrift < bank[i].Size)
+                {
                     return bank[i].PeekBytes(address - bankStartAddressDrift, precision);
+                }
                 else
+                {
                     bankStartAddressDrift += bank[i].Size;
+                }
             }
 
             return new byte[precision];
@@ -120,20 +125,20 @@ namespace RTCV.CorruptCore
 
             for (long i = 0; i < OriginalMaxAddress; i += precision)
             {
-                byte[] originalBytes = getBytefromIMemoryDomainArray(Original,i, precision);
-                byte[] corruptBytes = Corrupt.PeekBytes(i,precision);
-
-                
+                byte[] originalBytes = getBytefromIMemoryDomainArray(Original, i, precision);
+                byte[] corruptBytes = Corrupt.PeekBytes(i, precision);
 
                 if (!originalBytes.SequenceEqual(corruptBytes) && i >= skipBytes)
                 {
                     if (Original[0].BigEndian)
+                    {
                         corruptBytes = corruptBytes.FlipBytes();
+                    }
 
                     BlastUnit bu;
                     if (i - skipBytes >= OriginalFirstDomainMaxAddress)
                     {
-                        bu = RTC_NightmareEngine.GenerateUnit(getNamefromIMemoryDomainArray(Original,i - skipBytes), (i - skipBytes) - OriginalFirstDomainMaxAddress, precision,0, corruptBytes);
+                        bu = RTC_NightmareEngine.GenerateUnit(getNamefromIMemoryDomainArray(Original, i - skipBytes), (i - skipBytes) - OriginalFirstDomainMaxAddress, precision, 0, corruptBytes);
                     }
                     else
                     {
@@ -145,15 +150,14 @@ namespace RTCV.CorruptCore
                 }
             }
 
-
             if (bl.Layer.Count == 0)
+            {
                 return null;
+            }
             else
+            {
                 return bl;
-
-
-
+            }
         }
-
     }
 }

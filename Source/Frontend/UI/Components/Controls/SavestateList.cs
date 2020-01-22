@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Data;
+using System.Drawing;
 using System.Drawing.Design;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
@@ -33,13 +31,9 @@ namespace RTCV.UI.Components.Controls
 
         public StashKey CurrentSaveStateStashKey => selectedHolder?.sk ?? null;
 
-
         private int numPerPage;
 
-        public int NumPerPage
-        {
-            get => numPerPage;
-        }
+        public int NumPerPage => numPerPage;
 
         //private BindingSource pagedSource;
 
@@ -50,7 +44,7 @@ namespace RTCV.UI.Components.Controls
         [AttributeProvider(typeof(IListSource))]
         public object DataSource
         {
-            get { return _DataSource; }
+            get => _DataSource;
             set
             {
                 //Detach from old DataSource
@@ -70,7 +64,6 @@ namespace RTCV.UI.Components.Controls
                     _DataSource.PositionChanged += _DataSource_PositionChanged;
                     _DataSource_PositionChanged(null, null);
                 }
-
             }
         }
 
@@ -94,17 +87,19 @@ namespace RTCV.UI.Components.Controls
                         controlList[i].SetStashKey(x, i + _DataSource.Position);
                     }
                     else
+                    {
                         controlList[i].SetStashKey(null, i + _DataSource.Position);
+                    }
                 }
             }
 
-			RefreshForwardBackwardButtons();
-		}
+            RefreshForwardBackwardButtons();
+        }
 
-        void _DataSource_ListChanged(object sender, ListChangedEventArgs e)
+        private void _DataSource_ListChanged(object sender, ListChangedEventArgs e)
         {
-			//Just refresh as it's cleaner and we're not dealing with so many that it causes perf problems
-			_DataSource_PositionChanged(null, null);
+            //Just refresh as it's cleaner and we're not dealing with so many that it causes perf problems
+            _DataSource_PositionChanged(null, null);
         }
 
         public SavestateList()
@@ -114,8 +109,8 @@ namespace RTCV.UI.Components.Controls
 
         private void InitializeSavestateHolder()
         {
-			//Nuke any old holder if it exists
-			selectedHolder?.SetSelected(false);
+            //Nuke any old holder if it exists
+            selectedHolder?.SetSelected(false);
             selectedHolder = null;
 
             int ssHeight = 22;
@@ -145,7 +140,9 @@ namespace RTCV.UI.Components.Controls
                 selectedHolder.SetSelected(true);
 
                 if (selectedHolder.sk == null)
+                {
                     return;
+                }
 
                 StashKey psk = selectedHolder.sk;
 
@@ -164,7 +161,6 @@ namespace RTCV.UI.Components.Controls
                     btnSaveLoad.Text = "LOAD";
                     btnSaveLoad_Click(null, null);
                 }
-
             }
             else if (e.Button == MouseButtons.Right)
             {
@@ -174,22 +170,26 @@ namespace RTCV.UI.Components.Controls
                     var holder = (SavestateHolder)((Button)sender).Parent;
                     int indexToRemove = controlList.IndexOf(holder) + _DataSource.Position;
                     if (indexToRemove <= _DataSource.Count)
+                    {
                         _DataSource.RemoveAt(indexToRemove);
+                    }
                 });
                 cms.Show((Control)sender, locate);
             }
         }
 
-		private void RefreshForwardBackwardButtons()
-		{
-			btnForward.Enabled = _DataSource.Count >= _DataSource.Position + NumPerPage;
-			btnBack.Enabled = _DataSource.Position > 0;
-		}
+        private void RefreshForwardBackwardButtons()
+        {
+            btnForward.Enabled = _DataSource.Count >= _DataSource.Position + NumPerPage;
+            btnBack.Enabled = _DataSource.Position > 0;
+        }
 
         private void BtnForward_Click(object sender, EventArgs e)
         {
             if (_DataSource.Position + NumPerPage <= _DataSource.Count)
+            {
                 _DataSource.Position = _DataSource.Position + NumPerPage;
+            }
 
             selectedHolder?.SetSelected(false);
             selectedHolder = controlList.First();
@@ -227,6 +227,7 @@ namespace RTCV.UI.Components.Controls
         private bool checkAndFixingMissingStates(StashKey psk)
         {
             if (!File.Exists(psk.RomFilename))
+            {
                 if (DialogResult.Yes == MessageBox.Show($"Can't find file {psk.RomFilename}\nGame name: {psk.GameName}\nSystem name: {psk.SystemName}\n\n Would you like to provide a new file for replacement?", "Error: File not found", MessageBoxButtons.YesNo))
                 {
                     OpenFileDialog ofd = new OpenFileDialog
@@ -246,8 +247,12 @@ namespace RTCV.UI.Components.Controls
                         }
                     }
                     else
+                    {
                         return false;
+                    }
                 }
+            }
+
             return true;
         }
 
@@ -257,18 +262,25 @@ namespace RTCV.UI.Components.Controls
             if (psk != null)
             {
                 if (!checkAndFixingMissingStates(psk))
+                {
                     return;
+                }
+
                 StockpileManager_UISide.LoadState(psk);
             }
             else
+            {
                 MessageBox.Show($"{saveStateWord} box is empty");
+            }
         }
+
         public void btnSaveLoad_Click(object sender, EventArgs e)
         {
-
             object renameSaveStateWord = AllSpec.VanguardSpec[VSPEC.RENAME_SAVESTATE];
-            if (renameSaveStateWord != null && renameSaveStateWord is String s)
+            if (renameSaveStateWord != null && renameSaveStateWord is string s)
+            {
                 saveStateWord = s;
+            }
 
             if (btnSaveLoad.Text == "LOAD")
             {
@@ -286,7 +298,7 @@ namespace RTCV.UI.Components.Controls
 
                 StashKey sk = StockpileManager_UISide.SaveState();
 
-                if(sk == null)
+                if (sk == null)
                 {
                     btnSaveLoad.Text = "LOAD";
                     btnSaveLoad.ForeColor = Color.FromArgb(192, 255, 192);
@@ -306,7 +318,6 @@ namespace RTCV.UI.Components.Controls
                         _DataSource.Insert(indexToReplace, new SaveStateKey(sk, ""));
                         _DataSource.Position = oldpos;
                     }
-
                 }
                 //Otherwise add to the last box
                 else
@@ -322,7 +333,6 @@ namespace RTCV.UI.Components.Controls
 
                 btnSaveLoad.Text = "LOAD";
                 btnSaveLoad.ForeColor = Color.FromArgb(192, 255, 192);
-
             }
         }
     }

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using NLog;
-using NLog.Fluent;
 using NLog.LayoutRenderers;
 using NLog.Layouts;
 
@@ -32,8 +28,10 @@ namespace RTCV.Common
                 {
                     var newName = getFormattedLogFilename(filename, i);
 
-                    if (String.IsNullOrEmpty(newName)) //If something went wrong generating the name, just give up
+                    if (string.IsNullOrEmpty(newName)) //If something went wrong generating the name, just give up
+                    {
                         break;
+                    }
 
                     File.Copy(_filename, newName, true);
                 }
@@ -49,14 +47,18 @@ namespace RTCV.Common
             }
 
             SimpleLayout layout = defaultLayout;
-            if(minLevel == LogLevel.Trace)
+            if (minLevel == LogLevel.Trace)
+            {
                 layout = traceLayout;
+            }
 
             if (minLevel == LogLevel.Trace)
+            {
                 layout = traceLayout;
-            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = filename , Layout = layout };
-            var logconsole = new NLog.Targets.ColoredConsoleTarget("logconsole") {Layout = layout };
-            
+            }
+
+            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = filename, Layout = layout };
+            var logconsole = new NLog.Targets.ColoredConsoleTarget("logconsole") { Layout = layout };
 
             // Rules for mapping loggers to targets            
             config.AddRule(LogLevel.Trace, LogLevel.Fatal, logconsole);
@@ -81,11 +83,10 @@ namespace RTCV.Common
             catch (Exception e)
             {
                 Console.WriteLine($"getFormattedLogFilename failed {e}");
-                return String.Empty;
+                return string.Empty;
             }
         }
     }
-
 
     public class ExtendedRenderer : LayoutRenderer
     {

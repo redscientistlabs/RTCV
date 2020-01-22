@@ -1,21 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RTCV.NetCore
+﻿namespace RTCV.NetCore
 {
-	public static class NetcoreCommands
-	{
+    public static class NetcoreCommands
+    {
         public const string CORRUPTCORE = nameof(CORRUPTCORE);
         public const string VANGUARD = nameof(VANGUARD);
         public const string DEFAULT = nameof(DEFAULT);
         public const string UI = nameof(UI);
         public const string KILLSWITCH_PULSE = nameof(KILLSWITCH_PULSE);
         public const string RESET_GAME_PROTECTION_IF_RUNNING = nameof(RESET_GAME_PROTECTION_IF_RUNNING);
-
-
 
         public const string REMOTE_PUSHVANGUARDSPEC = nameof(REMOTE_PUSHVANGUARDSPEC);
         public const string REMOTE_PUSHVANGUARDSPECUPDATE = nameof(REMOTE_PUSHVANGUARDSPECUPDATE);
@@ -50,7 +42,7 @@ namespace RTCV.NetCore
         public const string REMOTE_DISABLEREALTIMESUPPORT = nameof(REMOTE_DISABLEREALTIMESUPPORT);
         public const string REMOTE_DISABLEKILLSWITCHSUPPORT = nameof(REMOTE_DISABLEKILLSWITCHSUPPORT);
         public const string REMOTE_DISABLEGAMEPROTECTIONSUPPORT = nameof(REMOTE_DISABLEGAMEPROTECTIONSUPPORT);
-		public const string REMOTE_OPENHEXEDITOR = nameof(REMOTE_OPENHEXEDITOR);
+        public const string REMOTE_OPENHEXEDITOR = nameof(REMOTE_OPENHEXEDITOR);
 
         public const string REMOTE_BACKUPKEY_REQUEST = nameof(REMOTE_BACKUPKEY_REQUEST);
         public const string REMOTE_BACKUPKEY_STASH = nameof(REMOTE_BACKUPKEY_STASH);
@@ -85,13 +77,9 @@ namespace RTCV.NetCore
         public const string REMOTE_PRECORRUPTACTION = nameof(REMOTE_PRECORRUPTACTION);
         public const string REMOTE_POSTCORRUPTACTION = nameof(REMOTE_POSTCORRUPTACTION);
 
-
         public const string REMOTE_BLASTTOOLS_GETAPPLIEDBACKUPLAYER = nameof(REMOTE_BLASTTOOLS_GETAPPLIEDBACKUPLAYER);
 
-
         public const string ERROR_DISABLE_AUTOCORRUPT = nameof(ERROR_DISABLE_AUTOCORRUPT);
-
-
 
         public const string REMOTE_KEY_SETSYNCSETTINGS = nameof(REMOTE_KEY_SETSYNCSETTINGS);
         public const string REMOTE_KEY_SETSYSTEMCORE = nameof(REMOTE_KEY_SETSYSTEMCORE);
@@ -99,7 +87,6 @@ namespace RTCV.NetCore
         public const string EMU_OPEN_HEXEDITOR_ADDRESS = nameof(EMU_OPEN_HEXEDITOR_ADDRESS);
         public const string REMOTE_EVENT_EMU_MAINFORM_CLOSE = nameof(REMOTE_EVENT_EMU_MAINFORM_CLOSE);
         public const string REMOTE_EVENT_EMUSTARTED = nameof(REMOTE_EVENT_EMUSTARTED);
-
 
         public const string RTC_INFOCUS = nameof(RTC_INFOCUS);
         public const string EMU_INFOCUS = nameof(EMU_INFOCUS);
@@ -130,6 +117,5 @@ namespace RTCV.NetCore
         public const string REMOTE_HOTKEY_BELOADCORRUPT = nameof(REMOTE_HOTKEY_BELOADCORRUPT);
         public const string REMOTE_HOTKEY_BEAPPLY = nameof(REMOTE_HOTKEY_BEAPPLY);
         public const string REMOTE_HOTKEY_BESENDSTASH = nameof(REMOTE_HOTKEY_BESENDSTASH);
-
     }
 }

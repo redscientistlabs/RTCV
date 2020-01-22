@@ -60,10 +60,9 @@ namespace StandaloneRTC
         /// <param name="e"></param>
         private static void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            Exception ex = (Exception) e.ExceptionObject;
+            Exception ex = (Exception)e.ExceptionObject;
             Form error = new RTCV.NetCore.CloudDebug(ex);
             var result = error.ShowDialog();
-
         }
 
         /// <summary>

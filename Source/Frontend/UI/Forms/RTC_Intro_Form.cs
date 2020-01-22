@@ -1,66 +1,54 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Numerics;
-using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json.Serialization;
-using RTCV.CorruptCore;
 using RTCV.NetCore;
-using static RTCV.UI.UI_Extensions;
 using RTCV.NetCore.StaticTools;
-
 
 namespace RTCV.UI
 {
-	public partial class RTC_Intro_Form : Form, IAutoColorize
-	{
+    public partial class RTC_Intro_Form : Form, IAutoColorize
+    {
         public IntroAction selection = IntroAction.EXIT;
 
         public RTC_Intro_Form()
-		{
-			try
-			{
-				InitializeComponent();
+        {
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception ex)
+            {
+                string additionalInfo = "An error occurred while opening the Intro Form\n\n";
 
-			}
-			catch(Exception ex)
-			{
-				string additionalInfo = "An error occurred while opening the Intro Form\n\n";
+                var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
 
-				var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
-
-				if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
-					throw new RTCV.NetCore.AbortEverythingException();
-
-			}
-		}
+                if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                {
+                    throw new RTCV.NetCore.AbortEverythingException();
+                }
+            }
+        }
 
         private void RTC_Intro_Form_Load(object sender, EventArgs e)
-		{
-			UICore.SetRTCColor(UICore.GeneralColor, this);
-
-		}
+        {
+            UICore.SetRTCColor(UICore.GeneralColor, this);
+        }
 
         private void RTC_Intro_Form_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason != CloseReason.UserClosing)
+            {
                 return;
+            }
 
             if (selection == IntroAction.EXIT)
             {
-                if(UI_VanguardImplementation.connector.netConn.status == NetworkStatus.CONNECTED)
+                if (UI_VanguardImplementation.connector.netConn.status == NetworkStatus.CONNECTED)
                 {
                     LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_EVENT_CLOSEEMULATOR);
                 }
 
                 Environment.Exit(0);
             }
-
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -83,7 +71,7 @@ namespace RTCV.UI
 
         private void cbAgree_CheckedChanged(object sender, EventArgs e)
         {
-            if(cbAgree.Checked)
+            if (cbAgree.Checked)
             {
                 btnSimpleMode.Visible = true;
 
@@ -125,8 +113,7 @@ namespace RTCV.UI
             selection = IntroAction.EXIT;
             this.ShowDialog();
         }
-
     }
 
-    public enum IntroAction { EXIT, SIMPLEMODE, NORMALMODE}
+    public enum IntroAction { EXIT, SIMPLEMODE, NORMALMODE }
 }
