@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
-using RTCV.NetCore.StaticTools;
+using RTCV.Common;
 
 namespace RTCV.UI
 {
@@ -41,13 +41,13 @@ namespace RTCV.UI
                 return;
             }
 
-            if (bl.Layer.Count == 0)
+            if (bl.Layer.Count(x => !x.IsLocked) == 0)
             {
                 MessageBox.Show("Sanitize Tool cannot sanitize BlastLayers that don't have any units.");
                 return;
             }
 
-            if (bl.Layer.Count == 1)
+            if (bl.Layer.Count(x => !x.IsLocked) == 1)
             {
                 MessageBox.Show("Sanitize Tool cannot sanitize BlastLayers that only have one unit.");
                 return;
@@ -55,12 +55,12 @@ namespace RTCV.UI
 
             BlastLayer clone = (BlastLayer)bl.Clone();
 
-            stf.lbOriginalLayerSize.Text = $"Original Layer size: {clone.Layer.Count}";
-            stf.lbCurrentLayerSize.Text = $"Current Layer size: {clone.Layer.Count}";
+            stf.lbOriginalLayerSize.Text = $"Original Layer size: {clone.Layer.Count(x => !x.IsLocked)}";
+            stf.lbCurrentLayerSize.Text = $"Current Layer size: {clone.Layer.Count(x => !x.IsLocked)}";
 
             stf.lbSteps.DisplayMember = "Text";
             stf.lbSteps.ValueMember = "Value";
-            stf.lbSteps.Items.Add(new { Text = $"Original Layer [{clone.Layer.Count} Units]", Value = clone });
+            stf.lbSteps.Items.Add(new { Text = $"Original Layer [{clone.Layer.Count(x => !x.IsLocked)} Units]", Value = clone });
 
             stf.originalBlastLayer = clone;
 
@@ -82,7 +82,7 @@ namespace RTCV.UI
 
             BlastLayer bl = (BlastLayer)S.GET<RTC_NewBlastEditor_Form>().currentSK.BlastLayer.Clone();
 
-            lbCurrentLayerSize.Text = $"Current Layer size: {bl.Layer.Count}";
+            lbCurrentLayerSize.Text = $"Current Layer size: {bl.Layer.Count(x => !x.IsLocked)}";
 
             pnBlastLayerSanitization.Visible = true;
         }
@@ -98,11 +98,11 @@ namespace RTCV.UI
             S.GET<RTC_NewBlastEditor_Form>().btnLoadCorrupt_Click(null, null);
 
             BlastLayer bl = (BlastLayer)S.GET<RTC_NewBlastEditor_Form>().currentSK.BlastLayer.Clone();
-            lbSteps.Items.Add(new { Text = $"[{bl.Layer.Count} Units]", Value = bl });
+            lbSteps.Items.Add(new { Text = $"[{bl.Layer.Count(x => !x.IsLocked)} Units]", Value = bl });
 
-            lbCurrentLayerSize.Text = $"Current Layer size: {bl.Layer.Count}";
+            lbCurrentLayerSize.Text = $"Current Layer size: {bl.Layer.Count(x => !x.IsLocked)}";
 
-            if (bl.Layer.Count == 1)
+            if (bl.Layer.Count(x => !x.IsLocked) == 1)
             {
                 lbSanitizationText.Text = "1 Unit remaining, sanitization complete.";
                 btnYesEffect.Visible = false;
@@ -123,11 +123,11 @@ namespace RTCV.UI
             RunSanitizeAlgo();
 
             BlastLayer bl = (BlastLayer)S.GET<RTC_NewBlastEditor_Form>().currentSK.BlastLayer.Clone();
-            lbSteps.Items.Add(new { Text = $"[{bl.Layer.Count} Units]", Value = bl });
+            lbSteps.Items.Add(new { Text = $"[{bl.Layer.Count(x => !x.IsLocked)} Units]", Value = bl });
 
-            lbCurrentLayerSize.Text = $"Current Layer size: {bl.Layer.Count}";
+            lbCurrentLayerSize.Text = $"Current Layer size: {bl.Layer.Count(x => !x.IsLocked)}";
 
-            if (bl.Layer.Count == 1)
+            if (bl.Layer.Count(x => !x.IsLocked) == 1)
             {
                 lbSanitizationText.Text = "1 Unit remaining, sanitization complete.";
                 btnYesEffect.Visible = false;
@@ -208,7 +208,7 @@ namespace RTCV.UI
             BlastLayer bl = (BlastLayer)modified.Value.Clone();
             S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(bl);
 
-            lbCurrentLayerSize.Text = $"Current Layer size: {bl.Layer.Count}";
+            lbCurrentLayerSize.Text = $"Current Layer size: {bl.Layer.Count(x => !x.IsLocked)}";
 
             if (lbSteps.Items.Count > 1)
             {

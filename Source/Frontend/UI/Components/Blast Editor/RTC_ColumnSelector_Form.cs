@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using RTCV.NetCore.StaticTools;
+using RTCV.Common;
 
 namespace RTCV.UI
 {

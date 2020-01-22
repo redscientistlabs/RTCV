@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
-using RTCV.NetCore.StaticTools;
+using RTCV.Common;
 using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
@@ -77,6 +77,7 @@ namespace RTCV.UI
 
         public void OneTimeExecute()
         {
+            logger.Trace("Entering OneTimeExecute()");
             //Disable autocorrupt
             S.GET<UI_CoreForm>().AutoCorrupt = false;
 
@@ -102,6 +103,7 @@ namespace RTCV.UI
             {
                 Render.StopRender();
             }
+            logger.Trace("Exiting OneTimeExecute()");
         }
 
         public void RedrawActionUI()

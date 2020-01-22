@@ -1,12 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RTCV.Common;
 using RTCV.CorruptCore.Tools;
 using RTCV.NetCore;
-using RTCV.NetCore.StaticTools;
 using static RTCV.NetCore.NetcoreCommands;
 
 namespace RTCV.CorruptCore
@@ -167,6 +167,8 @@ namespace RTCV.CorruptCore
                                 long address = (long)temp[1];
 
                                 MemoryInterface mi = MemoryDomains.GetInterface(domain);
+                                if (mi == null)
+                                    break;
 
                                 SyncObjectSingleton.FormExecute(() =>
                                 {

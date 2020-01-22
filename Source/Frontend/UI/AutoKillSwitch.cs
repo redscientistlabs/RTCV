@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Media;
 using System.Windows.Forms;
+using RTCV.Common;
 using RTCV.NetCore;
-using RTCV.NetCore.StaticTools;
 
 namespace RTCV.UI
 {

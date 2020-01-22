@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
-using RTCV.NetCore.StaticTools;
+using RTCV.Common;
 using RTCV.UI.Modular;
 
 namespace RTCV.UI
@@ -611,7 +611,7 @@ This message only appears once.";
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⣽⣿⣿⣿⣿⣦⣰⣿⣿⣿⣿⣿⡿⠻⣿⣿⣿⣿⣶⣿⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿";
 
-            var ex = new CustomException("SECRET CRASH DONT TELL ANYONE", image);
+            var ex = new CustomException("SECRET CRASH DONT TELL ANYONE\n" + image, Environment.StackTrace);
 
             Form error = new RTCV.NetCore.CloudDebug(ex, true);
             var result = error.ShowDialog();

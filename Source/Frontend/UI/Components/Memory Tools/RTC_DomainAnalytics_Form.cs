@@ -5,12 +5,10 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using System.Xml.Serialization;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
-using RTCV.UI;
+using RTCV.Common;
 using static RTCV.UI.UI_Extensions;
-using RTCV.NetCore.StaticTools;
 
 namespace RTCV.UI
 {

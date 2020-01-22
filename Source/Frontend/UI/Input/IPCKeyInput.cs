@@ -4,10 +4,8 @@
 
 using System.Collections.Generic;
 using System.IO;
-using System;
-using System.Threading;
 using System.IO.Pipes;
-using SlimDX;
+using System.Threading;
 using SlimDX.DirectInput;
 
 //Lifted from bizhawk

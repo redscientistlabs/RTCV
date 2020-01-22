@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Linq;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
-using RTCV.NetCore.StaticTools;
+using RTCV.Common;
 using RTCV.UI.Modular;
 
 namespace RTCV.UI

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using RTCV.NetCore.StaticTools;
+using RTCV.Common;
 using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
