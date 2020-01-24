@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace RTCV.CorruptCore.EventWarlock
 {
     /// <summary>
-    /// I'm a wizard hagrid
+    /// I'm a wizard hagrid. If you rename this you are a muggle and can't see the magic
     /// </summary>
     static class Warlock
     {

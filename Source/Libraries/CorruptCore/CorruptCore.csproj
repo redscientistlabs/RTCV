@@ -73,6 +73,13 @@
   <ItemGroup>
     <Compile Include="Blast Generator Engines\RTC_ValueGenerator.cs" />
     <Compile Include="Blast Generator Engines\RTC_StoreGenerator.cs" />
+    <Compile Include="Coroutines\Conditionals\WaitFrames.cs" />
+    <Compile Include="Coroutines\Conditionals\WaitUntil.cs" />
+    <Compile Include="Coroutines\Coroutine.cs" />
+    <Compile Include="Coroutines\CoroutineEngine.cs" />
+    <Compile Include="Coroutines\CoroutineRunner.cs" />
+    <Compile Include="Coroutines\ExecutionTime.cs" />
+    <Compile Include="Coroutines\Yielder.cs" />
     <Compile Include="CorruptCoreConnector.cs" />
     <Compile Include="Corruption Engines\RTC_BlastGeneratorEngine.cs" />
     <Compile Include="Corruption Engines\RTC_CustomEngine.cs" />
@@ -82,6 +89,16 @@
     <Compile Include="Corruption Engines\RTC_NightmareEngine.cs" />
     <Compile Include="Corruption Engines\RTC_PipeEngine.cs" />
     <Compile Include="Corruption Engines\RTC_VectorEngine.cs" />
+    <Compile Include="EventWarlock\EWConditional.cs" />
+    <Compile Include="EventWarlock\EWConditionGroup.cs" />
+    <Compile Include="EventWarlock\Grimoire.cs" />
+    <Compile Include="EventWarlock\QuestionOp.cs" />
+    <Compile Include="EventWarlock\Spell.cs" />
+    <Compile Include="EventWarlock\Warlock.cs" />
+    <Compile Include="EventWarlock\WarlockAction.cs" />
+    <Compile Include="EventWarlock\WarlockActions\WarlockActionEcho.cs" />
+    <Compile Include="EventWarlock\WarlockConditions\AeqB.cs" />
+    <Compile Include="EventWarlock\WarlockEffect.cs" />
     <Compile Include="MemoryBanks.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BlastTools.cs" />
@@ -153,5 +170,6 @@
       <DependentUpon>HexFind.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
