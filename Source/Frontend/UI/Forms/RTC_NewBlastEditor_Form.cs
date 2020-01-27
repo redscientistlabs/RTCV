@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -1334,7 +1334,7 @@ namespace RTCV.UI
             foreach (BlastUnit bu in currentSK.BlastLayer.Layer
                 .Where(x => x.IsLocked == false)
                 .OrderBy(x => CorruptCore.RtcCore.RND.Next())
-                .Take(currentSK.BlastLayer.Layer.Count / 2))
+                .Take(currentSK.BlastLayer.Layer.Count(x => !x.IsEnabled) / 2))
             {
                 bu.IsEnabled = false;
             }
