@@ -9,7 +9,7 @@ namespace RTCV.CorruptCore.Coroutines
     /// <summary>
     /// Note: counts the current frame as one frame
     /// </summary>
-    class WaitFrames : Yielder
+    public class WaitFrames : Yielder
     {
         int framesLeft;
         public WaitFrames(int frames = 1)

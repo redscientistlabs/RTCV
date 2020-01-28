@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace RTCV.CorruptCore.EventWarlock
 {
     [Serializable]
-    enum QuestionOp
+    public enum QuestionOp
     {
         NONE = 0,
         AND = 1,

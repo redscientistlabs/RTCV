@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RTCV.CorruptCore.Coroutines
 {
-    static class CoroutineEngine
+    public static class CoroutineEngine
     {
         public static CoroutineRunner Load = new CoroutineRunner();
         public static CoroutineRunner PreExecute = new CoroutineRunner();

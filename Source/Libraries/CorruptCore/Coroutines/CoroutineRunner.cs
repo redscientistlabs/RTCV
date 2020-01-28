@@ -39,7 +39,7 @@ namespace RTCV.CorruptCore.Coroutines
         /// <returns></returns>
         public Coroutine StartCoroutine(IEnumerator<Yielder> enumerator)
         {
-            Coroutine res = new Coroutine(enumerator,this);
+            Coroutine res = new Coroutine(enumerator);
             subCoroutines.AddLast(res);
             return res;
         }

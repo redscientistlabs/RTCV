@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace RTCV.CorruptCore.EventWarlock.WarlockActions
 {
+    /// <summary>
+    /// Example action
+    /// </summary>
     [Serializable]
-    class WarlockActionEcho : WarlockAction
+    public class WarlockActionEcho : WarlockAction
     {
         string Data { get; set; }
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace RTCV.CorruptCore.EventWarlock
 {
     [System.Serializable]
-    class EWConditionGroup : EWConditional
+    public class EWConditionGroup : EWConditional
     {
 
         List<EWConditional> Questions = new List<EWConditional>(2);

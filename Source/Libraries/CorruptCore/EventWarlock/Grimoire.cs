@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace RTCV.CorruptCore.EventWarlock
 {
     [System.Serializable]
-    class Grimoire
+    public class Grimoire
     {
         public List<Spell> LoadSpells = new List<Spell>();
         public List<Spell> PreExecuteSpells = new List<Spell>();

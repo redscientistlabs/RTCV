@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace RTCV.CorruptCore.EventWarlock.WarlockConditions
 {
+    /// <summary>
+    /// Example conditional
+    /// </summary>
     [Serializable]
-    class FirstEqualsSecond : EWConditional
+    public class FirstEqualsSecond : EWConditional
     {
         string a = "";
         string b = "";

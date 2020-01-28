@@ -7,15 +7,25 @@ using System.Threading.Tasks;
 namespace RTCV.CorruptCore.EventWarlock
 {
     [System.Serializable]
-    class Spell
+    public class Spell
     {
-        EWConditional Conditionals = null;
-        List<WarlockAction> Actions = new List<WarlockAction>();
-
-        public void SetConditional(EWConditional conditional)
+        public string Name;
+        public Spell(string name = "Unnamed")
         {
+            Name = name;
+        }
+
+
+        public EWConditional Conditionals = null;
+        public List<WarlockAction> Actions = new List<WarlockAction>();
+        private bool isElse = false;
+
+        public void SetConditional(EWConditional conditional, bool isElse = false)
+        {
+            this.isElse = isElse;
             Conditionals = conditional;
         }
+
         public void SetActions(List<WarlockAction> action)
         {
             Actions = action;
@@ -25,24 +35,35 @@ namespace RTCV.CorruptCore.EventWarlock
             Actions.Add(action);
         }
 
-        public void Execute()
+        /// <summary>
+        /// Checks the conditionals and executes the actions if the conditionals evaluate to true. Returns the conditional result
+        /// </summary>
+        /// <returns>the conditional result</returns>
+        public bool Execute()
         {
-            //if debug
-            if(Actions.Count == 0)
+            bool res = true;
+
+            bool doLogic = true;
+
+            if (isElse && Warlock.LastResult)
             {
-                Console.WriteLine("Actions are empty dummy");
+                doLogic = false;
+                //return value will be true, prevents other elses from executing
             }
 
-            if (Conditionals == null || Conditionals.Evaluate())
+            if (doLogic)
             {
-                
-                for (int j = 0; j < Actions.Count; j++)
+                if (Conditionals == null || (res = Conditionals.Evaluate()))
                 {
-                    Actions[j].DoAction();
+                    for (int j = 0; j < Actions.Count; j++)
+                    {
+                        Actions[j].DoAction();
+                    }
                 }
             }
-        }
 
+            return res;
+        }
         //List<Wizard>
     }
 }

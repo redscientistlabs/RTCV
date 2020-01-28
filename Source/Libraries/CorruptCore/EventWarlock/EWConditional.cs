@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace RTCV.CorruptCore.EventWarlock
 {
     /// <summary>
-    /// Abstract due to serialization
+    /// Name subclasses what you want them to appear as in the editor
     /// </summary>
     [Serializable]
-    abstract class EWConditional
+    public abstract class EWConditional
     {
         public QuestionOp NextOp = QuestionOp.NONE;
         public EWConditional SetNextOp(QuestionOp op) { NextOp = op; return this; }

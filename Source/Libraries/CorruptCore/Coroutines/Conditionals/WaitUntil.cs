@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RTCV.CorruptCore.Coroutines
 {
-    class WaitUntil : Yielder
+    public class WaitUntil : Yielder
     {
         Func<bool> pred;
 
