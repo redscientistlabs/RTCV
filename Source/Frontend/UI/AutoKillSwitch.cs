@@ -14,6 +14,7 @@ namespace RTCV.UI
         private static Timer killswitchSpamPreventTimer;
         public static bool ShouldKillswitchFire = true;
         private static volatile object lockObject = new object();
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public static bool Enabled
         {
@@ -74,55 +75,73 @@ namespace RTCV.UI
 
         public static void KillEmulator(bool forceBypass = false)
         {
+            logger.Trace("Entered KillEmulator {ShouldKillswitchFire} {UICore.FirstConnect} {!forceBypass} {!S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked} {!forceBypass}", ShouldKillswitchFire, UICore.FirstConnect, !forceBypass, !S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked, !forceBypass); 
             if (!ShouldKillswitchFire || (UICore.FirstConnect && !forceBypass) || (!S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked && !forceBypass))
             {
+                logger.Trace("Exited KillEmulator {ShouldKillswitchFire} {UICore.FirstConnect} {!forceBypass} {!S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked} {!forceBypass}", ShouldKillswitchFire, UICore.FirstConnect, !forceBypass, !S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked, !forceBypass);
                 return;
             }
+            logger.Trace("Thread id {0} requesting KillEmulator lockObject...", System.Threading.Thread.CurrentThread.ManagedThreadId);
             if (System.Threading.Monitor.TryEnter(lockObject)) // No re-entrancy on the killswitch
             {
-                ShouldKillswitchFire = false;
-
-                //Nuke netcore
-                UI_VanguardImplementation.RestartServer();
-
-                SyncObjectSingleton.FormExecute(() =>
+                logger.Trace("Thread id {0} got KillEmulator lockObject...", System.Threading.Thread.CurrentThread.ManagedThreadId);
+                try
                 {
-                    //Stop the old timer and eat any exceptions
-                    try
-                    {
-                        BoopMonitoringTimer?.Stop();
-                        BoopMonitoringTimer?.Dispose();
-                    }
-                    catch
-                    {
-                    }
+                    ShouldKillswitchFire = false;
 
-                    killswitchSpamPreventTimer = new Timer
-                    {
-                        Interval = 5000
-                    };
-                    killswitchSpamPreventTimer.Tick += KillswitchSpamPreventTimer_Tick;
-                    killswitchSpamPreventTimer.Start();
+                    //Nuke netcore
+                    logger.Trace("Nuking Netcore");
+                    UI_VanguardImplementation.RestartServer();
 
-                    PlayCrashSound(true);
-
-                    if (CorruptCore.RtcCore.EmuDir == null)
+                    SyncObjectSingleton.FormExecute(() =>
                     {
-                        MessageBox.Show("Couldn't determine what emulator to start! Please start it manually.");
+                        //Stop the old timer and eat any exceptions
+                        try
+                        {
+                            BoopMonitoringTimer?.Stop();
+                            BoopMonitoringTimer?.Dispose();
+                        }
+                        catch
+                        {
+                        }
+
+                        killswitchSpamPreventTimer = new Timer
+                        {
+                            Interval = 5000
+                        };
+                        killswitchSpamPreventTimer.Tick += KillswitchSpamPreventTimer_Tick;
+                        killswitchSpamPreventTimer.Start();
+
+                        PlayCrashSound(true);
+
+                        if (CorruptCore.RtcCore.EmuDir == null)
+                        {
+                            MessageBox.Show("Couldn't determine what emulator to start! Please start it manually.");
+                            return;
+                        }
+                    });
+                    logger.Trace("Starting the new process");
+                    var info = new ProcessStartInfo();
+                    oldEmuDir = CorruptCore.RtcCore.EmuDir;
+                    info.WorkingDirectory = oldEmuDir;
+                    info.FileName = Path.Combine(oldEmuDir, "RESTARTDETACHEDRTC.bat");
+                    if (!File.Exists(info.FileName))
+                    {
+                        MessageBox.Show($"Couldn't find {info.FileName}! Killswitch will not work.");
                         return;
                     }
-                });
-                var info = new ProcessStartInfo();
-                oldEmuDir = CorruptCore.RtcCore.EmuDir;
-                info.WorkingDirectory = oldEmuDir;
-                info.FileName = Path.Combine(oldEmuDir, "RESTARTDETACHEDRTC.bat");
-                if (!File.Exists(info.FileName))
-                {
-                    MessageBox.Show($"Couldn't find {info.FileName}! Killswitch will not work.");
-                    return;
-                }
 
-                Process.Start(info);
+                    Process.Start(info);
+                }
+                finally
+                {
+                    logger.Trace("Thread id {0} released KillEmulator lockObject...", System.Threading.Thread.CurrentThread.ManagedThreadId);
+                    System.Threading.Monitor.Exit(lockObject);
+                }
+            }
+            else
+            {
+                logger.Trace("Thread id {0} did not get KillEmulator lockObject...", System.Threading.Thread.CurrentThread.ManagedThreadId);
             }
         }
 
