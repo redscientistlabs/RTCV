@@ -1769,7 +1769,8 @@ namespace RTCV.UI
         private void loadFromFileblToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BlastLayer temp = BlastTools.LoadBlastLayerFromFile();
-            LoadBlastlayer(temp);
+            if(temp != null)
+                LoadBlastlayer(temp);
         }
 
         public void LoadBlastlayer(BlastLayer bl, bool import = false)
