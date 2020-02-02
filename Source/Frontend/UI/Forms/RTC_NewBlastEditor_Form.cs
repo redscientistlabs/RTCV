@@ -1332,9 +1332,9 @@ namespace RTCV.UI
             }
 
             foreach (BlastUnit bu in currentSK.BlastLayer.Layer
-                .Where(x => x.IsLocked == false)
-                .OrderBy(x => CorruptCore.RtcCore.RND.Next())
-                .Take(currentSK.BlastLayer.Layer.Count(x => !x.IsEnabled) / 2))
+                .Where(x => !x.IsLocked)
+                .OrderBy(_ => RtcCore.RND.Next())
+                .Take(currentSK.BlastLayer.Layer.Count / 2))
             {
                 bu.IsEnabled = false;
             }
