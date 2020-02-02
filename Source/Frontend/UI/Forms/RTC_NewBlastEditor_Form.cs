@@ -1331,10 +1331,10 @@ namespace RTCV.UI
                 bu.IsEnabled = true;
             }
 
-            foreach (BlastUnit bu in currentSK.BlastLayer.Layer
-                .Where(x => !x.IsLocked)
+            var unlocked = currentSK.BlastLayer.Layer.Where(x => !x.IsLocked).ToList();
+            foreach (BlastUnit bu in unlocked
                 .OrderBy(_ => RtcCore.RND.Next())
-                .Take(currentSK.BlastLayer.Layer.Count / 2))
+                .Take(unlocked.Count / 2))
             {
                 bu.IsEnabled = false;
             }
@@ -1344,7 +1344,7 @@ namespace RTCV.UI
         public void btnInvertDisabled_Click(object sender, EventArgs e)
         {
             foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
-                Where(x => x.IsLocked == false))
+                Where(x => !x.IsLocked))
             {
                 bu.IsEnabled = !bu.IsEnabled;
             }
@@ -1361,8 +1361,8 @@ namespace RTCV.UI
             dgvBlastEditor.DataSource = null;
             foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
                 Where(x =>
-                x.IsLocked == false &&
-                x.IsEnabled == false))
+                !x.IsLocked &&
+                !x.IsEnabled))
             {
                 buToRemove.Add(bu);
             }
