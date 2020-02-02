@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -15,6 +15,7 @@ namespace RTCV.UI
     {
         public static UIConnector connector = null;
         private static string lastVanguardClient = "";
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public static void StartServer()
         {
@@ -30,6 +31,7 @@ namespace RTCV.UI
 
         public static void RestartServer()
         {
+            logger.Info("Restarting NetCore");
             connector?.Kill();
             connector?.netConn?.Kill();
             connector = null;

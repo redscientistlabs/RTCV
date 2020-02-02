@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Text;
 using NLog;
@@ -33,7 +33,14 @@ namespace RTCV.Common
                         break;
                     }
 
-                    File.Copy(_filename, newName, true);
+                    try
+                    {
+                        File.Copy(_filename, newName, true);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"Failed to rotate log file {_filename} to {newName}\n{e}");
+                    }
                 }
             }
 
@@ -43,7 +50,7 @@ namespace RTCV.Common
             }
             catch (Exception e)
             {
-                Console.WriteLine("Failed to delete old log!\n" + e);
+                Console.WriteLine($"Failed to delete old log!\n{e}");
             }
 
             SimpleLayout layout = defaultLayout;

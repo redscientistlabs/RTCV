@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading;
 
@@ -99,19 +99,53 @@ namespace RTCV.NetCore
 
             if (!force)
             {
-                tcp?.StopNetworking(!force);
-                DateTime startDT = DateTime.Now;
-
-                while (tcp?.client != null && ((DateTime.Now - startDT).TotalMilliseconds) < 1500) // wait timeout
+                try
                 {
-                    Thread.Sleep(50);
+                    tcp?.StopNetworking(!force);
+                    DateTime startDT = DateTime.Now;
+
+                    while (tcp?.client != null && ((DateTime.Now - startDT).TotalMilliseconds) < 1500) // wait timeout
+                    {
+                        Thread.Sleep(50);
+                    }
+                }catch(Exception ex)
+                {
+                    logger.Error(ex, "Something went terribly wrong when stopping tcp networking");
                 }
             }
 
-            tcp?.Kill();
-            udp?.Kill();
-            hub?.Kill();
-            watch?.Kill();
+            try
+            {
+                tcp?.Kill();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Something went terribly wrong when killing tcp");
+            }
+            try
+            {
+                udp?.Kill();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Something went terribly wrong when killing udp");
+            }
+            try
+            {
+                hub?.Kill();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Something went terribly wrong when killing hub");
+            }
+            try
+            {
+                watch?.Kill();
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Something went terribly wrong when killing watch");
+            }
 
             logger.Debug($"NetCore {(force ? "Killed" : "Stopped")}");
         }
