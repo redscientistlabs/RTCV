@@ -64,15 +64,16 @@ namespace RTCV.Common
                 layout = traceLayout;
             }
 
-            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = filename, Layout = layout };
+           // var logfile = new NLog.Targets.FileTarget("logfile") { FileName = filename, Layout = layout };
             var logconsole = new NLog.Targets.ColoredConsoleTarget("logconsole") { Layout = layout };
 
             // Rules for mapping loggers to targets            
             config.AddRule(LogLevel.Trace, LogLevel.Fatal, logconsole);
-            config.AddRule(LogLevel.Trace, LogLevel.Fatal, logfile);
+            //config.AddRule(LogLevel.Trace, LogLevel.Fatal, logfile);
 
             // Apply config           
             NLog.LogManager.Configuration = config;
+            Common.ConsoleHelper.CreateConsole(filename);
 
             GlobalLogger = LogManager.GetLogger("Global");
         }

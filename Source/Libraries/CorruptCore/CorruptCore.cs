@@ -20,7 +20,7 @@ namespace RTCV.CorruptCore
     public static class RtcCore
     {
         //General RTC Values
-        public const string RtcVersion = "5.0.4-b10";
+        public const string RtcVersion = "5.0.4-b11";
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private static volatile int seed = DateTime.Now.Millisecond;
