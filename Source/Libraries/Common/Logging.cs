@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Linq;
 using NLog;
 using NLog.LayoutRenderers;
 using NLog.Layouts;
@@ -74,6 +75,11 @@ namespace RTCV.Common
             // Apply config           
             NLog.LogManager.Configuration = config;
             Common.ConsoleHelper.CreateConsole(filename);
+            if (!Environment.GetCommandLineArgs().Any(x => string.Equals(x, "-CONSOLE", StringComparison.OrdinalIgnoreCase)))
+            {
+                Common.ConsoleHelper.HideConsole();
+            }
+
 
             GlobalLogger = LogManager.GetLogger("Global");
         }
