@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -1562,7 +1562,7 @@ namespace RTCV.CorruptCore
 
         public override byte[] PeekBytes(long address, int length)
         {
-            if (address + length >= lastRealMemorySize)
+            if (address + length > lastRealMemorySize)
             {
                 return new byte[length];
             }
