@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using RTCV.NetCore;
@@ -9,16 +9,16 @@ namespace RTCV.CorruptCore
     {
         public static BlastLayer GetBlastLayer(string filename)
         {
-            string thisSystem = (AllSpec.VanguardSpec[VSPEC.NAME] as string);
+            string thisSystem = (AllSpec.VanguardSpec[VSPEC.SYSTEM] as string);
             var rp = MemoryDomains.GetRomParts(thisSystem, filename);
 
             IMemoryDomain Corrupt = new FileInterface("File|" + filename, false, false);
 
             (Corrupt as FileInterface).getMemoryDump(); //gotta cache it otherwise it's going to be super slow
 
-            string[] selectedDomains = (string[])RTCV.NetCore.AllSpec.UISpec["SELECTEDDOMAINS"];
+            string[] selectedDomains = RTCV.NetCore.AllSpec.UISpec["SELECTEDDOMAINS"] as string[];
 
-            if (selectedDomains.Length == 0)
+            if (selectedDomains == null || selectedDomains.Length == 0)
             {
                 MessageBox.Show("Error: No domain is selected");
                 return null;
@@ -113,9 +113,9 @@ namespace RTCV.CorruptCore
             BlastLayer bl = new BlastLayer();
 
             long OriginalMaxAddress = Original.Sum(it => it.Size);
-            long OriginalFirstDomainMaxAddress = Original[0].Size;
+            long OriginalFirstDomainMaxAddress = Original[0].Size - 1;
 
-            if (Corrupt.Size != OriginalMaxAddress)
+            if (Corrupt.Size - skipBytes != OriginalMaxAddress)
             {
                 MessageBox.Show("ERROR, DOMAIN SIZE MISMATCH");
                 return null;
@@ -126,9 +126,9 @@ namespace RTCV.CorruptCore
             for (long i = 0; i < OriginalMaxAddress; i += precision)
             {
                 byte[] originalBytes = getBytefromIMemoryDomainArray(Original, i, precision);
-                byte[] corruptBytes = Corrupt.PeekBytes(i, precision);
+                byte[] corruptBytes = Corrupt.PeekBytes(i + skipBytes, precision);
 
-                if (!originalBytes.SequenceEqual(corruptBytes) && i >= skipBytes)
+                if (!originalBytes.SequenceEqual(corruptBytes))
                 {
                     if (Original[0].BigEndian)
                     {
@@ -136,17 +136,18 @@ namespace RTCV.CorruptCore
                     }
 
                     BlastUnit bu;
-                    if (i - skipBytes >= OriginalFirstDomainMaxAddress)
+                    if (i > OriginalFirstDomainMaxAddress)
                     {
-                        bu = RTC_NightmareEngine.GenerateUnit(getNamefromIMemoryDomainArray(Original, i - skipBytes), (i - skipBytes) - OriginalFirstDomainMaxAddress, precision, 0, corruptBytes);
+                        bu = RTC_NightmareEngine.GenerateUnit(getNamefromIMemoryDomainArray(Original, i), i - OriginalFirstDomainMaxAddress - 1, precision, 0, corruptBytes);
                     }
                     else
                     {
-                        bu = RTC_NightmareEngine.GenerateUnit(getNamefromIMemoryDomainArray(Original, i - skipBytes), i - skipBytes, precision, 0, corruptBytes);
+                        bu = RTC_NightmareEngine.GenerateUnit(getNamefromIMemoryDomainArray(Original, i), i, precision, 0, corruptBytes);
                     }
 
                     bu.BigEndian = Original[0].BigEndian;
                     bl.Layer.Add(bu);
+
                 }
             }
 
