@@ -75,6 +75,7 @@ namespace RTCV.UI
         private const int comboBoxFillWeight = 40;
         private const int textBoxFillWeight = 30;
         private const int numericUpDownFillWeight = 35;
+        private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private enum BuProperty
         {
@@ -1775,6 +1776,11 @@ namespace RTCV.UI
 
         public void LoadBlastlayer(BlastLayer bl, bool import = false)
         {
+            if (bl == null)
+            {
+                logger.Trace("LoadBlastLayer had an empty bl");
+                return;
+            }
             List<BlastUnit> checkUnits()
             {
                 var warned = new List<string>();
