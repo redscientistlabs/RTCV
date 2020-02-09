@@ -10,7 +10,7 @@ namespace RTCV.UI
 {
     public static class AutoKillSwitch
     {
-        public static int MaxMissedPulses = 20;
+        public static int MaxMissedPulses = 25;
         private static Timer killswitchSpamPreventTimer;
         public static bool ShouldKillswitchFire = true;
         private static volatile object lockObject = new object();

@@ -148,7 +148,7 @@ namespace RTCV.CorruptCore
                             {
                                 SyncObjectSingleton.FormExecute(() =>
                                 {
-                                    S.GET<CorruptCore.Tools.HexEditor>().Show();
+                                //    S.GET<CorruptCore.Tools.HexEditor>().Show();
                                 });
                             }
                         }
@@ -172,9 +172,9 @@ namespace RTCV.CorruptCore
 
                                 SyncObjectSingleton.FormExecute(() =>
                                 {
-                                    S.GET<CorruptCore.Tools.HexEditor>().Show();
-                                    S.GET<CorruptCore.Tools.HexEditor>().SetDomain(mi);
-                                    S.GET<CorruptCore.Tools.HexEditor>().GoToAddress(address);
+                               //     S.GET<CorruptCore.Tools.HexEditor>().Show();
+                               //     S.GET<CorruptCore.Tools.HexEditor>().SetDomain(mi);
+                                //    S.GET<CorruptCore.Tools.HexEditor>().GoToAddress(address);
                                 });
                             }
                             break;
@@ -480,19 +480,19 @@ namespace RTCV.CorruptCore
                             MemoryDomains.AddVMD(proto);
                         }
 
-                        S.GET<HexEditor>().Restart();
+                      //  S.GET<HexEditor>().Restart();
                         break;
 
                     case REMOTE_DOMAIN_VMD_ADD:
                         MemoryDomains.AddVMD_NET((advancedMessage.objectValue as VmdPrototype));
-                        S.GET<HexEditor>().Restart();
+                      //  S.GET<HexEditor>().Restart();
                         break;
 
                     case REMOTE_DOMAIN_VMD_REMOVE:
                         {
                             StepActions.ClearStepBlastUnits();
                             MemoryDomains.RemoveVMD_NET((advancedMessage.objectValue as string));
-                            S.GET<HexEditor>().Restart();
+                        //    S.GET<HexEditor>().Restart();
                         }
                         break;
 

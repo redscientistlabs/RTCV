@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -17,6 +17,7 @@ namespace RTCV.CorruptCore
     ///appliedLifetime and appliedInfinite are the two collections where we store what we want to actually be applied
     public static class StepActions
     {
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private static List<List<BlastUnit>> buListCollection = new List<List<BlastUnit>>();
 
         private static LinkedList<List<BlastUnit>> queued = new LinkedList<List<BlastUnit>>();
@@ -459,10 +460,16 @@ namespace RTCV.CorruptCore
                         FilterBuListCollection();
                     }
                 }
-                //Update any tools
-                if (S.GET<CorruptCore.Tools.HexEditor>().Visible && S.GET<CorruptCore.Tools.HexEditor>().UpdateOnStep)
+                try
                 {
-                    S.GET<CorruptCore.Tools.HexEditor>().UpdateValues();
+                    //Update any tools
+                //    if (S.GET<CorruptCore.Tools.HexEditor>().Visible && S.GET<CorruptCore.Tools.HexEditor>().UpdateOnStep)
+                 //   {
+                //        S.GET<CorruptCore.Tools.HexEditor>().UpdateValues();
+             //       }
+                }catch(Exception e)
+                {
+                    logger.Error(e, "Exception when updating the hex editor");
                 }
             }
         }

@@ -19,7 +19,7 @@ namespace RTCV.UI
 
         public static void StartServer()
         {
-            ConsoleEx.WriteLine("Starting UI Vanguard Implementation");
+            logger.Trace("Starting UI Vanguard Implementation");
 
             var spec = new NetCoreReceiver();
             spec.MessageReceived += OnMessageReceived;
