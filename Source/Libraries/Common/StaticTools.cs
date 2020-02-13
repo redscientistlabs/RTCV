@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -169,8 +170,13 @@ namespace RTCV.Common
 
         public static void CreateConsole(string path = null)
         {
-            ReleaseConsole();
-            AllocConsole();
+
+            if (!Debugger.IsAttached) //Don't override debugger's console
+            {
+                ReleaseConsole();
+                AllocConsole();
+            }
+
             if (!string.IsNullOrEmpty(path))
             {
                 con = new ConsoleCopy(path);
