@@ -21,6 +21,7 @@ namespace RTCV.UI.Components.Controls
             {
                 onClickedAction.Invoke();
             };
+            UICore.SetRTCColor(UICore.GeneralColor, this);
         }
     }
 }

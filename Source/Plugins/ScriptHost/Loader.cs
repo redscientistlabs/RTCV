@@ -10,7 +10,7 @@ using RTCV.UI;
 namespace RTCV.Plugins.ScriptHost
 {
     [Export(typeof(IPlugin))]
-    class Loader : IPlugin
+    public class Loader : IPlugin
     {
         public string Name => "ScriptHost";
         public string Description => "A script host for the RTC allowing the running of C# code within the RTC";

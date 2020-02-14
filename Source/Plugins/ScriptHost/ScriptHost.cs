@@ -1,6 +1,10 @@
+using System;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using NLog;
+using RTCV.Plugins.ScriptHost.Controls;
 
 namespace RTCV.Plugins.ScriptHost
 {
@@ -10,15 +14,8 @@ namespace RTCV.Plugins.ScriptHost
         public ScriptHost()
         {
             InitializeComponent();
-            tabControl1.PageAdded += TabControl1_PageAdded;
-            tabControl1.TabClick += TabControl1_TabClick;
-            var defaultTab = new Manina.Windows.Forms.Tab()
-            {
-                Name = "Script 1",
-                Text = "Script 1",
-                BackColor = DarkerGray,
-                ForeColor = Color.White
-            };
+            tc.TabClick += TcTabClick;
+            var defaultTab = new ScriptManagerTab();
             var addTab = new Manina.Windows.Forms.Tab()
             {
                 Name = " + ",
@@ -26,31 +23,104 @@ namespace RTCV.Plugins.ScriptHost
                 BackColor = DarkerGray,
                 ForeColor = Color.White
             };
-            tabControl1.Tabs.Add(defaultTab);
-            tabControl1.Tabs.Add(addTab);
+            tc.Tabs.Add(defaultTab);
+            tc.Tabs.Add(addTab);
         }
 
-        private void TabControl1_TabClick(object sender, Manina.Windows.Forms.TabMouseEventArgs e)
+        private void TcTabClick(object sender, Manina.Windows.Forms.TabMouseEventArgs e)
         {
-            if (this.tabControl1.GetTabBounds(this.tabControl1.Tabs.Last()).Contains(e.Location))
+            if (this.tc.GetTabBounds(this.tc.Tabs.Last()).Contains(e.Location))
             {
-                var newTab = new Manina.Windows.Forms.Tab()
-                {
-                    Name = $"Script {tabControl1.Tabs.Count}",
-                    Text = $"Script {tabControl1.Tabs.Count}",
-                    BackColor = DarkerGray,
-                    ForeColor = Color.White
-                };
-                this.tabControl1.Tabs.Insert(this.tabControl1.Tabs.Count - 1, newTab);
-                this.tabControl1.SelectedTab = newTab;
+                var newTab = new ScriptManagerTab();
+                this.tc.Tabs.Insert(tc.Tabs.Count - 1, newTab);
+                this.tc.SelectedTab = newTab;
             }
         }
 
-        private void TabControl1_PageAdded(object sender, Manina.Windows.Forms.PageEventArgs e)
+        private ScriptManager GetCurrentManager()
         {
-            var sm = new RTCV.Plugins.ScriptHost.Controls.ScriptManager();
-            sm.Dock = DockStyle.Fill;
-            e.Page.Controls.Add(sm);
+            var shTab = tc.SelectedTab as ScriptManagerTab;
+            return shTab?.ScriptManager;
+        }
+
+        private void SaveScript(string filename = null)
+        {
+            var script = GetCurrentManager()?.GetScript();
+            if (string.IsNullOrWhiteSpace(script))
+            {
+                MessageBox.Show("Script is empty");
+                return;
+            }
+
+            if (filename == null)
+            {
+                SaveFileDialog sfd = new SaveFileDialog();
+
+                sfd.Filter = "C# script files (*.cs)|*.cs|All files (*.*)|*.*";
+                sfd.RestoreDirectory = true;
+
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    filename = sfd.FileName;
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            try
+            {
+                File.WriteAllText(filename, script);
+            }
+            catch (Exception e)
+            {
+                RTCV.Common.Logging.GlobalLogger.Error(e, "Unable to save file.");
+                MessageBox.Show($"Unable to save file. Error message: {e.Message}");
+                return;
+            }
+        }
+        private void LoadScript(string filename = null)
+        {
+            var tab = new ScriptManagerTab();
+            if (filename == null)
+            {
+                OpenFileDialog sfd = new OpenFileDialog();
+
+                sfd.Filter = "C# script files (*.cs)|*.cs|All files (*.*)|*.*";
+                sfd.RestoreDirectory = true;
+
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        filename = sfd.FileName;
+                    }
+                    catch (Exception e)
+                    {
+                        RTCV.Common.Logging.GlobalLogger.Error(e, "Unable to open file.");
+                        MessageBox.Show($"Unable to open file. Error message: {e.Message}");
+                        return;
+                    }
+                }
+            }
+            tab.ScriptManager.LoadScript(filename);
+            tc.Tabs.Add(tab);
+        }
+
+        private void loadToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            LoadScript();
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            SaveScript(GetCurrentManager()?.FilePath);
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, System.EventArgs e)
+        {
+            SaveScript();
         }
     }
 }

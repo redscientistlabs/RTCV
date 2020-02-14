@@ -1,5 +1,7 @@
 using System;
 using System.Drawing;
+using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using CSScriptLibrary;
 using NLog;
@@ -64,14 +66,54 @@ namespace RTCV.Plugins.ScriptHost.Controls
                 return _logger;
             }
         }
-        public ScriptManager()
+
+        public string FilePath;
+
+
+        public ScriptManager(bool darkTheme = true)
         {
             InitializeComponent();
             //CSScript.EvaluatorConfig.Engine = EvaluatorEngine.Roslyn;
-            ConfigureScintillaDark();
+            if(darkTheme)
+                ConfigureScintillaDark();
+            else
+            {
+                ConfigureScintilla();
+            }
             //CSScript.EvaluatorConfig.Access = EvaluatorAccess.Singleton;
         }
 
+        public bool LoadScript(string path)
+        {
+            if (path == null || !File.Exists(path))
+            {
+                logger.Error("File {path} doesn't exist.", path ?? "DEFAULT");
+                return false;
+            }
+
+            string script = "";
+            try
+            {
+                script = File.ReadAllText(path);
+            }
+            catch (FileNotFoundException e)
+            {
+                logger.Error("File {file} not found. Message:{e}", e.Message);
+                return false;
+            }
+            catch (Exception e)
+            {
+                logger.Error(e, "An unknown error has occurred");
+            }
+
+            FilePath = path;
+            scintilla.Text = script;
+            return true;
+        }
+        public string GetScript()
+        {
+            return scintilla.Text;
+        }
 
         private void ConfigureScintilla()
         {
@@ -115,7 +157,7 @@ namespace RTCV.Plugins.ScriptHost.Controls
             scintilla.StyleClearAll();
 
             // Configure the CPP (C#) lexer styles
-            scintilla.Styles[Style.Cpp.Default].ForeColor = Color.FromArgb(220, 220, 220);
+            scintilla.Styles[Style.Cpp.Default].ForeColor = Color.LightGray;
             scintilla.Styles[Style.Cpp.Comment].ForeColor = Color.FromArgb(0, 128, 0); // Green
             scintilla.Styles[Style.Cpp.CommentLine].ForeColor = Color.FromArgb(0, 128, 0); // Green
             scintilla.Styles[Style.Cpp.CommentLineDoc].ForeColor = Color.FromArgb(128, 128, 128); // Gray
@@ -127,7 +169,7 @@ namespace RTCV.Plugins.ScriptHost.Controls
             scintilla.Styles[Style.Cpp.Verbatim].ForeColor = Color.FromArgb(214, 157, 133);
             scintilla.Styles[Style.Cpp.StringEol].BackColor = Color.Pink;
             scintilla.Styles[Style.Cpp.Operator].ForeColor = Color.FromArgb(220, 20, 220);
-            scintilla.Styles[Style.Cpp.Preprocessor].ForeColor = Color.Maroon;
+            scintilla.Styles[Style.Cpp.Preprocessor].ForeColor = Color.OrangeRed;
             scintilla.Lexer = Lexer.Cpp;
 
             // Set the keywords
@@ -158,12 +200,12 @@ namespace RTCV.Plugins.ScriptHost.Controls
             }
         }
 
-        private void btnRunAsync_Click(object sender, EventArgs e)
+        private async void btnRunAsync_Click(object sender, EventArgs e)
         {
             MethodDelegate scr = null;
             try
             {
-                scr = CSScript.CodeDomEvaluator.CreateDelegate(scintilla.Text);
+                scr = await Task.Run(() =>CSScript.CodeDomEvaluator.CreateDelegate(scintilla.Text));
             }
             catch (Exception ex)
             {
