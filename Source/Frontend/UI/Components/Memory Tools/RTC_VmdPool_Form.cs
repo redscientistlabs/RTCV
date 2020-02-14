@@ -104,6 +104,12 @@ namespace RTCV.UI
                 name = CorruptCore.RtcCore.GetRandomKey();
             }
 
+            if (MemoryDomains.VmdPool.ContainsKey(name))
+            {
+                MessageBox.Show("There's already a VMD with this name. Aborting rename.");
+                return;
+            }
+
             VirtualMemoryDomain VMD = MemoryDomains.VmdPool[vmdName];
 
             MemoryDomains.RemoveVMD(VMD);

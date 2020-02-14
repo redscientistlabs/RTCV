@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Reflection;
 using System.Threading;
@@ -477,6 +477,7 @@ namespace RTCV.NetCore
 
     public class ConsoleEx
     {
+        private protected static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         public static volatile bool ShowDebug = false; // for debugging purposes, put this to true in order to see BOOP and EVENT commands in the console
 
         public static ConsoleEx singularity
@@ -545,6 +546,7 @@ namespace RTCV.NetCore
 
             ConsoleEx.singularity.OnConsoleWritten(new NetCoreEventArgs() { message = new NetCoreSimpleMessage(consoleLine) });
 
+            logger.Info(consoleLine);
             Console.WriteLine(consoleLine);
         }
     }

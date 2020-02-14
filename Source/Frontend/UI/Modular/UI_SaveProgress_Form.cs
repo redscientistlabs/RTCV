@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
 using RTCV.Common;
@@ -51,7 +51,7 @@ namespace RTCV.UI
             pbSave.Value = 0;
             try
             {
-                UI_VanguardImplementation.connector.netConn.spec.LockStatusEventLockout();
+                UI_VanguardImplementation.connector?.netConn?.spec?.LockStatusEventLockout();
                 logger.Trace("Thread id {0} got Mutex... (save)", System.Threading.Thread.CurrentThread.ManagedThreadId);
             }
             catch (System.Threading.AbandonedMutexException)
@@ -63,7 +63,7 @@ namespace RTCV.UI
         public void OnHidden()
         {
             logger.Trace("Entering OnHidden() {0}\n{1}", System.Threading.Thread.CurrentThread.ManagedThreadId, Environment.StackTrace);
-            UI_VanguardImplementation.connector.netConn.spec.UnlockLockStatusEventLockout();
+            UI_VanguardImplementation.connector?.netConn?.spec?.UnlockLockStatusEventLockout();
             logger.Trace("Thread id {0} released Mutex... (save)", System.Threading.Thread.CurrentThread.ManagedThreadId);
         }
     }

@@ -15,10 +15,11 @@ namespace RTCV.UI
     {
         public static UIConnector connector = null;
         private static string lastVanguardClient = "";
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public static void StartServer()
         {
-            ConsoleEx.WriteLine("Starting UI Vanguard Implementation");
+            logger.Trace("Starting UI Vanguard Implementation");
 
             var spec = new NetCoreReceiver();
             spec.MessageReceived += OnMessageReceived;
@@ -30,6 +31,7 @@ namespace RTCV.UI
 
         public static void RestartServer()
         {
+            logger.Info("Restarting NetCore");
             connector?.Kill();
             connector?.netConn?.Kill();
             connector = null;

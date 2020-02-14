@@ -1159,7 +1159,7 @@ namespace RTCV.CorruptCore
                 {
                     usedAddresses.Add(new ValueTuple<string, long>(bu.Domain, bu.Address));
                 }
-                else
+                else if(!bu.IsLocked)
                 {
                     Layer.Remove(bu);
                 }
@@ -1552,7 +1552,7 @@ namespace RTCV.CorruptCore
                 {
                     if (BigEndian)
                     {
-                        bu.Value[i] = Value[end - i];
+                        bu.Value[i] = Value[end - (i +1)];
                     }
                     else
                     {
@@ -1566,7 +1566,7 @@ namespace RTCV.CorruptCore
                         {
                             if (BigEndian)
                             {
-                                bu.Value[i] += (TiltValue.ToByteArray().PadLeft(this.precision))[end - i];
+                                bu.Value[i] += (TiltValue.ToByteArray().PadLeft(this.precision))[end - (i + 1)];
                             }
                             else
                             {

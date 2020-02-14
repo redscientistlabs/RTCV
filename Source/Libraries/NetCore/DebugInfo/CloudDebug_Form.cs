@@ -95,6 +95,13 @@ namespace RTCV.NetCore
 
         private void btnSendDebug_Click(object sender, EventArgs e)
         {
+            string szdll = "";
+            if (Environment.Is64BitProcess)
+                szdll = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "7z.dll");
+            else
+                szdll = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "7z32.dll");
+
+
             if (btnSendDebug.Text != "Fetch data") //If not in receive mode
             {
                 string password = Guid.NewGuid().ToString().Replace("-", "").Replace("{", "").Replace("}", "").ToUpper();
@@ -181,10 +188,7 @@ namespace RTCV.NetCore
                     //}
                 }
 
-                //Copying the log files
-
-                var path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "7z.dll");
-                SevenZip.SevenZipBase.SetLibraryPath(path);
+                SevenZip.SevenZipBase.SetLibraryPath(szdll);
                 var comp = new SevenZip.SevenZipCompressor
                 {
                     CompressionMode = SevenZip.CompressionMode.Create,
@@ -235,8 +239,8 @@ namespace RTCV.NetCore
                     File.Delete(file);
                 }
 
-                var path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "7z.dll");
-                SevenZip.SevenZipCompressor.SetLibraryPath(path);
+                
+                SevenZip.SevenZipCompressor.SetLibraryPath(szdll);
                 var decomp = new SevenZip.SevenZipExtractor(downloadfilepath, password, SevenZip.InArchiveFormat.SevenZip);
                 decomp.ExtractArchive(extractpath);
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -75,6 +75,7 @@ namespace RTCV.UI
         private const int comboBoxFillWeight = 40;
         private const int textBoxFillWeight = 30;
         private const int numericUpDownFillWeight = 35;
+        private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private enum BuProperty
         {
@@ -1331,10 +1332,10 @@ namespace RTCV.UI
                 bu.IsEnabled = true;
             }
 
-            foreach (BlastUnit bu in currentSK.BlastLayer.Layer
-                .Where(x => x.IsLocked == false)
-                .OrderBy(x => CorruptCore.RtcCore.RND.Next())
-                .Take(currentSK.BlastLayer.Layer.Count / 2))
+            var unlocked = currentSK.BlastLayer.Layer.Where(x => !x.IsLocked).ToList();
+            foreach (BlastUnit bu in unlocked
+                .OrderBy(_ => RtcCore.RND.Next())
+                .Take(unlocked.Count / 2))
             {
                 bu.IsEnabled = false;
             }
@@ -1344,7 +1345,7 @@ namespace RTCV.UI
         public void btnInvertDisabled_Click(object sender, EventArgs e)
         {
             foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
-                Where(x => x.IsLocked == false))
+                Where(x => !x.IsLocked))
             {
                 bu.IsEnabled = !bu.IsEnabled;
             }
@@ -1361,8 +1362,8 @@ namespace RTCV.UI
             dgvBlastEditor.DataSource = null;
             foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
                 Where(x =>
-                x.IsLocked == false &&
-                x.IsEnabled == false))
+                !x.IsLocked &&
+                !x.IsEnabled))
             {
                 buToRemove.Add(bu);
             }
@@ -1769,11 +1770,17 @@ namespace RTCV.UI
         private void loadFromFileblToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BlastLayer temp = BlastTools.LoadBlastLayerFromFile();
-            LoadBlastlayer(temp);
+            if(temp != null)
+                LoadBlastlayer(temp);
         }
 
         public void LoadBlastlayer(BlastLayer bl, bool import = false)
         {
+            if (bl == null)
+            {
+                logger.Trace("LoadBlastLayer had an empty bl");
+                return;
+            }
             List<BlastUnit> checkUnits()
             {
                 var warned = new List<string>();

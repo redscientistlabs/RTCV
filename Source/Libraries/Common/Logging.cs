@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Text;
+using System.Linq;
 using NLog;
 using NLog.LayoutRenderers;
 using NLog.Layouts;
@@ -33,7 +34,14 @@ namespace RTCV.Common
                         break;
                     }
 
-                    File.Copy(_filename, newName, true);
+                    try
+                    {
+                        File.Copy(_filename, newName, true);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"Failed to rotate log file {_filename} to {newName}\n{e}");
+                    }
                 }
             }
 
@@ -43,7 +51,7 @@ namespace RTCV.Common
             }
             catch (Exception e)
             {
-                Console.WriteLine("Failed to delete old log!\n" + e);
+                Console.WriteLine($"Failed to delete old log!\n{e}");
             }
 
             SimpleLayout layout = defaultLayout;
@@ -57,15 +65,21 @@ namespace RTCV.Common
                 layout = traceLayout;
             }
 
-            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = filename, Layout = layout };
+           // var logfile = new NLog.Targets.FileTarget("logfile") { FileName = filename, Layout = layout };
             var logconsole = new NLog.Targets.ColoredConsoleTarget("logconsole") { Layout = layout };
 
             // Rules for mapping loggers to targets            
             config.AddRule(LogLevel.Trace, LogLevel.Fatal, logconsole);
-            config.AddRule(LogLevel.Trace, LogLevel.Fatal, logfile);
+            //config.AddRule(LogLevel.Trace, LogLevel.Fatal, logfile);
 
             // Apply config           
             NLog.LogManager.Configuration = config;
+            Common.ConsoleHelper.CreateConsole(filename);
+            if (!Environment.GetCommandLineArgs().Any(x => string.Equals(x, "-CONSOLE", StringComparison.OrdinalIgnoreCase)))
+            {
+                Common.ConsoleHelper.HideConsole();
+            }
+
 
             GlobalLogger = LogManager.GetLogger("Global");
         }
