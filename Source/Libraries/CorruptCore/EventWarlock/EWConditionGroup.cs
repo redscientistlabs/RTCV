@@ -9,8 +9,10 @@ namespace RTCV.CorruptCore.EventWarlock
     [System.Serializable]
     public class EWConditionGroup : EWConditional
     {
-
-        List<EWConditional> Questions = new List<EWConditional>(2);
+        /// <summary>
+        /// The list of conditionals
+        /// </summary>
+        public List<EWConditional> Conditionals = new List<EWConditional>(2);
 
         /// <summary>
         /// Adds a conditional. If an operator wasn't set on the last conditional it is automatically assigned a QuestionOp.AND
@@ -18,33 +20,34 @@ namespace RTCV.CorruptCore.EventWarlock
         /// <param name="w"></param>
         public void AddConditional(EWConditional w)
         {
-            Questions.Add(w);
-            if(Questions.Count > 1 && Questions[Questions.Count-1].NextOp == QuestionOp.NONE)
+            Conditionals.Add(w);
+            if(Conditionals.Count > 1 && Conditionals[Conditionals.Count-1].NextOp == QuestionOp.NONE)
             {
-                Questions[Questions.Count - 1].NextOp = QuestionOp.AND;
+                Conditionals[Conditionals.Count - 1].NextOp = QuestionOp.AND;
             }
         }
 
         public void AddOperator(QuestionOp op)
         {
-            if (Questions.Count == 0) return;
-            else { Questions[Questions.Count - 1].NextOp = op; }
+            if (Conditionals.Count == 0) { return; }
+            else { Conditionals[Conditionals.Count - 1].NextOp = op; }
         }
 
+        //Could use optimization
         public override bool Evaluate()
         {
-            int ct = Questions.Count;
-            bool res = Questions[0].Evaluate();
+            int ct = Conditionals.Count;
+            bool res = Conditionals[0].Evaluate();
             //bypassed if only one
             for (int j = 1; j < ct; j++)
             {
-                var next = Questions[j - 1].NextOp;
+                var next = Conditionals[j - 1].NextOp;
                 if (next == QuestionOp.AND) {
-                    res = res && Questions[j].Evaluate();
+                    res = res && Conditionals[j].Evaluate();
                 }
                 else if(next == QuestionOp.OR)
                 {
-                    res = res || Questions[j].Evaluate();
+                    res = res || Conditionals[j].Evaluate();
                 }
                 else
                 {

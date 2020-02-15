@@ -6,19 +6,20 @@ using System.Threading.Tasks;
 
 namespace RTCV.CorruptCore.Coroutines
 {
+    /// <summary>
+    /// Holds all the coroutine runners
+    /// </summary>
     public static class CoroutineEngine
     {
-        public static CoroutineRunner Load = new CoroutineRunner();
         public static CoroutineRunner PreExecute = new CoroutineRunner();
+        public static CoroutineRunner Execute = new CoroutineRunner();
         public static CoroutineRunner PostExecute = new CoroutineRunner();
 
-        public static void StopAll()
+        public static void Reset()
         {
-            Load.StopAll();
-            PreExecute.StopAll();
-            PostExecute.StopAll();
+            PreExecute.StopAndClearAll();
+            Execute.StopAndClearAll();
+            PostExecute.StopAndClearAll();
         }
-
-        
     }
 }

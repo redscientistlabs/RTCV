@@ -6,9 +6,6 @@ using System.Threading.Tasks;
 
 namespace RTCV.CorruptCore.EventWarlock
 {
-    /// <summary>
-    /// Name subclasses what you want them to appear as in the editor
-    /// </summary>
     [Serializable]
     public abstract class EWConditional
     {

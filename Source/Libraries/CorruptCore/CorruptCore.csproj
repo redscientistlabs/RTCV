@@ -78,7 +78,6 @@
     <Compile Include="Coroutines\Coroutine.cs" />
     <Compile Include="Coroutines\CoroutineEngine.cs" />
     <Compile Include="Coroutines\CoroutineRunner.cs" />
-    <Compile Include="Coroutines\ExecutionTime.cs" />
     <Compile Include="Coroutines\Yielder.cs" />
     <Compile Include="CorruptCoreConnector.cs" />
     <Compile Include="Corruption Engines\RTC_BlastGeneratorEngine.cs" />
@@ -97,8 +96,7 @@
     <Compile Include="EventWarlock\Warlock.cs" />
     <Compile Include="EventWarlock\WarlockAction.cs" />
     <Compile Include="EventWarlock\WarlockActions\WarlockActionEcho.cs" />
-    <Compile Include="EventWarlock\WarlockConditions\AeqB.cs" />
-    <Compile Include="EventWarlock\WarlockEffect.cs" />
+    <Compile Include="EventWarlock\WarlockConditions\FirstEqualsSecond.cs" />
     <Compile Include="MemoryBanks.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BlastTools.cs" />

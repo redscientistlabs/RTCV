@@ -12,6 +12,7 @@ namespace RTCV.CorruptCore.EventWarlock
     {
         public List<Spell> LoadSpells = new List<Spell>();
         public List<Spell> PreExecuteSpells = new List<Spell>();
+        public List<Spell> ExecuteSpells = new List<Spell>();
         public List<Spell> PostExecuteSpells = new List<Spell>();
     }
 }
