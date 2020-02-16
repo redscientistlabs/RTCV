@@ -19,6 +19,6 @@ namespace RTCV.CorruptCore.EventWarlock
         }
 
         //Add param data in subclasses
-        public abstract void DoAction();
+        public abstract void DoAction(Grimoire grimoire);
     }
 }

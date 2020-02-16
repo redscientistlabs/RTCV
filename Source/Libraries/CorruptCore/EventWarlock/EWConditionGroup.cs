@@ -34,20 +34,20 @@ namespace RTCV.CorruptCore.EventWarlock
         }
 
         //Could use optimization
-        public override bool Evaluate()
+        public override bool Evaluate(Grimoire grimoire)
         {
             int ct = Conditionals.Count;
-            bool res = Conditionals[0].Evaluate();
+            bool res = Conditionals[0].Evaluate(grimoire);
             //bypassed if only one
             for (int j = 1; j < ct; j++)
             {
                 var next = Conditionals[j - 1].NextOp;
                 if (next == QuestionOp.AND) {
-                    res = res && Conditionals[j].Evaluate();
+                    res = res && Conditionals[j].Evaluate(grimoire);
                 }
                 else if(next == QuestionOp.OR)
                 {
-                    res = res || Conditionals[j].Evaluate();
+                    res = res || Conditionals[j].Evaluate(grimoire);
                 }
                 else
                 {

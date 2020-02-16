@@ -11,6 +11,6 @@ namespace RTCV.CorruptCore.EventWarlock
     {
         public QuestionOp NextOp = QuestionOp.NONE;
         public EWConditional SetNextOp(QuestionOp op) { NextOp = op; return this; }
-        public abstract bool Evaluate();
+        public abstract bool Evaluate(Grimoire grimoire);
     }
 }

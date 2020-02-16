@@ -63,7 +63,7 @@ namespace RTCV.CorruptCore.EventWarlock
         /// Checks the conditionals and executes the actions if the conditionals evaluate to true. Returns the conditional result
         /// </summary>
         /// <returns>the conditional result</returns>
-        public bool Execute()
+        public bool Execute(Grimoire grimoire)
         {
             bool res = true;
 
@@ -77,11 +77,11 @@ namespace RTCV.CorruptCore.EventWarlock
 
             if (doLogic)
             {
-                if (conditional == null || (res = conditional.Evaluate()))
+                if (conditional == null || (res = conditional.Evaluate(grimoire)))
                 {
                     for (int j = 0; j < Actions.Count; j++)
                     {
-                        Actions[j].DoAction();
+                        Actions[j].DoAction(grimoire);
                     }
                 }
             }

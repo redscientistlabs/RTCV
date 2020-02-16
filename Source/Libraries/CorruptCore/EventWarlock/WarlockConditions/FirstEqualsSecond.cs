@@ -21,7 +21,7 @@ namespace RTCV.CorruptCore.EventWarlock.WarlockConditions
             this.b = b;
         }
 
-        public override bool Evaluate()
+        public override bool Evaluate(Grimoire grimoire)
         {
             return a == b;
         }

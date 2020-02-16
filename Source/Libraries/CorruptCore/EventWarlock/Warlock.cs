@@ -15,106 +15,106 @@ namespace RTCV.CorruptCore.EventWarlock
     /// </summary>
     public static class Warlock
     {
-        /// <summary>
-        /// Holds the execution lists and can be serialized
-        /// </summary>
-        public static Grimoire BookOfSpells = new Grimoire();
+
+        private static List<Grimoire> Grimoires = new List<Grimoire>();
+
         /// <summary>
         /// Last result, used for else logic
         /// </summary>
         public static bool LastResult { get; private set; } = false;
 
-        [NonSerialized]
-        public static HashSet<string> StaticFlags = new HashSet<string>();
-        [NonSerialized]
-        public static Dictionary<string, object> StaticVariables = new Dictionary<string, object>();
 
-        public static void ResetVariables()
+        public static Grimoire GetByName(string name)
         {
-            StaticFlags.Clear();
-            StaticVariables.Clear();
+            return Grimoires.FirstOrDefault(x => x.Name == name);
         }
 
-
-        private static void ClearLists()
+        /// <summary>
+        /// Add new grimoire
+        /// </summary>
+        /// <param name="grimoire"></param>
+        /// <returns></returns>
+        public static bool AddGrimoire(Grimoire grimoire)
         {
-            if (BookOfSpells != null)
+            if(grimoire.Name != null && Grimoires.Any(x => x.Name == grimoire.Name))
             {
-                BookOfSpells.LoadSpells.Clear();
-                BookOfSpells.PreExecuteSpells.Clear();
-                BookOfSpells.ExecuteSpells.Clear();
-                BookOfSpells.PostExecuteSpells.Clear();
+                return false;
             }
+            else
+            {
+                Grimoires.Add(grimoire);
+                return true;
+            }
+        }
+
+        public static void RemoveGrimoire(Grimoire g)
+        {
+            Grimoires.Remove(g);
         }
 
 
         public static void Reset()
         {
-            ClearLists();
-            ResetVariables();
+            Grimoires.Clear();
+            Grimoire.ResetStaticVariables();
             CoroutineEngine.Reset();
+            LastResult = false;
         }
 
-        public static void LoadGrimoire(Grimoire grimoire)
+        public static void LoadGrimoires(List<Grimoire> grimoires)
         {
             Reset();
-            BookOfSpells = grimoire;
+            Grimoires = grimoires;
         }
 
 
         //Can probably do these by just accessing the BookOfSpells
-        public static void AddLoadSpell(Spell spell)
-        {
-            BookOfSpells.LoadSpells.Add(spell);
-        }
 
-        public static void AddPreExecuteSpell(Spell spell)
-        {
-            BookOfSpells.PreExecuteSpells.Add(spell);
-        }
-
-        public static void AddExecuteSpell(Spell spell)
-        {
-            BookOfSpells.ExecuteSpells.Add(spell);
-        }
-
-        public static void AddPostExecuteSpell(Spell spell)
-        {
-            BookOfSpells.PostExecuteSpells.Add(spell);
-        }
-
-        private static void ExecuteList(List<Spell> list)
+        private static void ExecuteList(Grimoire grimoire, List<Spell> list)
         {
             for (int j = 0; j < list.Count; j++)
             {
                 if (list[j].Enabled)
                 {
-                    LastResult = list[j].Execute();
+                    LastResult = list[j].Execute(grimoire);
                 }
             }
         }
 
         public static void Load()
         {
-            ExecuteList(BookOfSpells.LoadSpells);
+            for (int j = 0; j < Grimoires.Count; j++)
+            {
+                ExecuteList(Grimoires[j], Grimoires[j].LoadSpells); 
+            }
+           
         }
 
         public static void PreExecute()
         {
             CoroutineEngine.PreExecute.Update();
-            ExecuteList(BookOfSpells.PreExecuteSpells);
+            for (int j = 0; j < Grimoires.Count; j++)
+            {
+                ExecuteList(Grimoires[j], Grimoires[j].PreExecuteSpells);
+            }
         }
 
         public static void Execute()
         {
             CoroutineEngine.Execute.Update();
-            ExecuteList(BookOfSpells.ExecuteSpells);
+            for (int j = 0; j < Grimoires.Count; j++)
+            {
+                ExecuteList(Grimoires[j], Grimoires[j].ExecuteSpells);
+            }
         }
 
         public static void PostExecute()
         {
             CoroutineEngine.PostExecute.Update();
-            ExecuteList(BookOfSpells.PostExecuteSpells);
+            for (int j = 0; j < Grimoires.Count; j++)
+            {
+                ExecuteList(Grimoires[j], Grimoires[j].PostExecuteSpells);
+            }
         }
     }
 }

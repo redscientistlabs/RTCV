@@ -19,7 +19,7 @@ namespace RTCV.CorruptCore.EventWarlock.WarlockActions
             Data = data;
         }
 
-        public override void DoAction()
+        public override void DoAction(Grimoire grimoire)
         {
             Console.WriteLine("Repeating: " + Data);
         }
