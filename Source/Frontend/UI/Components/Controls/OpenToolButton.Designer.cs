@@ -69,6 +69,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "OpenToolButton";
             this.Size = new System.Drawing.Size(372, 83);
+            this.Tag = "color:dark1";
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 

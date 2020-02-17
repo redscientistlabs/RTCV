@@ -37,15 +37,23 @@ namespace RTCV.Plugins.ScriptHost
             }
         }
 
-        private ScriptManager GetCurrentManager()
+        private ScriptManagerTab GetCurrentTab()
         {
             var shTab = tc.SelectedTab as ScriptManagerTab;
-            return shTab?.ScriptManager;
+            return shTab;
+        }
+        private ScriptManager GetCurrentManager()
+        {
+            return GetCurrentTab()?.ScriptManager;
         }
 
         private void SaveScript(string filename = null)
         {
-            var script = GetCurrentManager()?.GetScript();
+            var manager = GetCurrentManager();
+            if (manager == null)
+                return;
+            var script =  manager.GetScript();
+
             if (string.IsNullOrWhiteSpace(script))
             {
                 MessageBox.Show("Script is empty");
@@ -79,6 +87,10 @@ namespace RTCV.Plugins.ScriptHost
                 MessageBox.Show($"Unable to save file. Error message: {e.Message}");
                 return;
             }
+            var shortName = Path.GetFileNameWithoutExtension(filename);
+            var t = GetCurrentTab();
+            t.Name = shortName;
+            t.Text = shortName;
         }
         private void LoadScript(string filename = null)
         {
@@ -105,7 +117,12 @@ namespace RTCV.Plugins.ScriptHost
                 }
             }
             tab.ScriptManager.LoadScript(filename);
-            tc.Tabs.Add(tab);
+            var shortName = Path.GetFileNameWithoutExtension(filename);
+            tab.Name = shortName;
+            tab.Text = shortName;
+
+            tc.Tabs.Insert(tc.Tabs.Count - 1, tab);
+            tc.SelectedTab = tab;
         }
 
         private void loadToolStripMenuItem_Click(object sender, System.EventArgs e)

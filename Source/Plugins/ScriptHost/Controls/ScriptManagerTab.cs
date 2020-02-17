@@ -21,6 +21,8 @@ namespace RTCV.Plugins.ScriptHost.Controls
             Text = name ?? "New Script";
             BackColor = DarkerGray;
             ForeColor = Color.White;
+            this.Controls.Add(ScriptManager);
+            ScriptManager.Dock = System.Windows.Forms.DockStyle.Fill;
         }
     }
 }
