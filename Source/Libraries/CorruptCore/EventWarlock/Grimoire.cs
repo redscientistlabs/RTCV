@@ -19,8 +19,7 @@ namespace RTCV.CorruptCore.EventWarlock
 
 
         public BlastLayer Layer = null;
-        //Add other data here
-
+        //Todo: add other wanted data here
 
         //Static variables
         [NonSerialized]
@@ -35,6 +34,13 @@ namespace RTCV.CorruptCore.EventWarlock
         public Dictionary<string, object> Variables = new Dictionary<string, object>();
 
 
+        public Grimoire(string name = "") {
+            this.Name = name;
+        }
+
+        /// <summary>
+        /// Resets all static variables and flags
+        /// </summary>
         public static void ResetStaticVariables()
         {
             StaticFlags.Clear();
@@ -48,6 +54,24 @@ namespace RTCV.CorruptCore.EventWarlock
             Variables.Clear();
         }
 
+
+        public void Smallify()
+        {
+            //local functions yay
+            void SmallifyList(List<Spell> spellList)
+            {
+                spellList.TrimExcess();
+                for (int j = 0; j < spellList.Count; j++)
+                {
+                    spellList[j].Smallify();
+                }
+            }
+
+            SmallifyList(LoadSpells);
+            SmallifyList(PreExecuteSpells);
+            SmallifyList(ExecuteSpells);
+            SmallifyList(PostExecuteSpells);
+        }
 
     }
 }

@@ -25,13 +25,13 @@ namespace RTCV.CorruptCore.Coroutines
         {
             return coroutines.Remove(coroutine);
         }
-        public void AddCoroutineLast(Coroutine coroutine)
+        public void AddCoroutine(Coroutine coroutine)
         {
             coroutines.AddLast(coroutine);
         }
 
         /// <summary>
-        /// Starts a coroutine. IMPORTANT: coroutines always execute to the first yield when starting, add a "yield return null;" to skip this
+        /// Starts a coroutine.
         /// </summary>
         /// <param name="enumerator"></param>
         /// <returns></returns>
@@ -52,6 +52,7 @@ namespace RTCV.CorruptCore.Coroutines
                 var nextNode = curCoroutineNode.Next;
                 if (curCoroutine.IsComplete)
                 {
+                    curCoroutineNode.Value.Dispose();
                     curCoroutineNode.Value = null;
                     coroutines.Remove(curCoroutineNode);
                 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RTCV.CorruptCore.EventWarlock.Editor;
 
 namespace RTCV.CorruptCore.EventWarlock.WarlockActions
 {
@@ -10,18 +11,19 @@ namespace RTCV.CorruptCore.EventWarlock.WarlockActions
     /// Example action
     /// </summary>
     [Serializable]
+    [WarlockEditable]
     public class WarlockActionEcho : WarlockAction
     {
-        string Data { get; set; }
+        [WarlockEditorField("Data")] string data;
 
         public WarlockActionEcho(string data)
         {
-            Data = data;
+            this.data = data;
         }
 
         public override void DoAction(Grimoire grimoire)
         {
-            Console.WriteLine("Repeating: " + Data);
+            Console.WriteLine("Repeating: " + data);
         }
     }
 }

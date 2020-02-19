@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace RTCV.CorruptCore.EventWarlock
 {
+
+    //todo: make easier for the editor to access all the conditionals
     [System.Serializable]
     public class EWConditionGroup : EWConditional
     {
         /// <summary>
         /// The list of conditionals
         /// </summary>
-        public List<EWConditional> Conditionals = new List<EWConditional>(2);
+        public List<EWConditional> Conditionals = new List<EWConditional>(2);//try to make it as small as possible
 
         /// <summary>
         /// Adds a conditional. If an operator wasn't set on the last conditional it is automatically assigned a QuestionOp.AND
@@ -55,6 +57,15 @@ namespace RTCV.CorruptCore.EventWarlock
                 }
             }
             return res;
+        }
+
+        public override void Smallify()
+        {
+            Conditionals.TrimExcess();
+            for (int j = 0; j < Conditionals.Count; j++)
+            {
+                Conditionals[j].Smallify();
+            }
         }
     }
 }

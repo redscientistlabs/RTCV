@@ -1,4 +1,5 @@
 using RTCV.CorruptCore.EventWarlock;
+using RTCV.CorruptCore.EventWarlock.Editor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,12 @@ namespace RTCV.CorruptCore.EventWarlock.WarlockConditions
     /// Example conditional
     /// </summary>
     [Serializable]
+    [WarlockEditable]
     public class FirstEqualsSecond : EWConditional
     {
-        string a = "";
-        string b = "";
+        [WarlockEditorField("First string")]  string a;
+        [WarlockEditorField("Second string")] string b;
+
         public FirstEqualsSecond(string a, string b)
         {
             this.a = a;

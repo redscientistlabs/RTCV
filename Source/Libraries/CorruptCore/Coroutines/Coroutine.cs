@@ -11,7 +11,7 @@ namespace RTCV.CorruptCore.Coroutines
     /// <summary>
     /// Class form of a coroutine. Call StartCoroutine() on a <see cref="CoroutineRunner"/> in <see cref="CoroutineEngine"/> to start one
     /// </summary>
-    public class Coroutine
+    public class Coroutine : IDisposable
     {
         public bool IsComplete { get; protected set; } = false;
         IEnumerator<Yielder> coroutine;
@@ -32,7 +32,15 @@ namespace RTCV.CorruptCore.Coroutines
         public void Stop()
         {
             IsComplete = true;
-            coroutine.Dispose();
+            Dispose();
+        }
+
+        public void Dispose()
+        {
+            if(coroutine != null)
+            {
+                coroutine.Dispose();
+            }
         }
 
         public void DoCycle()

@@ -18,7 +18,7 @@ namespace RTCV.CorruptCore.EventWarlock
         public string Name;
         private EWConditional conditional = null;
         public EWConditional Conditional { get => conditional; }
-        private List<WarlockAction> Actions = new List<WarlockAction>();
+        public List<WarlockAction> Actions = new List<WarlockAction>();
         public bool isElse = false;
 
         public Spell(string name = "Unnamed")
@@ -57,6 +57,11 @@ namespace RTCV.CorruptCore.EventWarlock
             conditional = null;
         }
 
+        public void Smallify()
+        {
+            Conditional.Smallify();
+            Actions.TrimExcess();
+        }
 
 
         /// <summary>

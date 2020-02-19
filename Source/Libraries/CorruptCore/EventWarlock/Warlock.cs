@@ -15,14 +15,15 @@ namespace RTCV.CorruptCore.EventWarlock
     /// </summary>
     public static class Warlock
     {
-
+        /// <summary>
+        /// The list of grimoires 
+        /// </summary>
         private static List<Grimoire> Grimoires = new List<Grimoire>();
 
         /// <summary>
-        /// Last result, used for else logic
+        /// Last result(conditionals), used for else logic within Spells. All elses will be after another spell
         /// </summary>
         public static bool LastResult { get; private set; } = false;
-
 
         public static Grimoire GetByName(string name)
         {
@@ -36,12 +37,14 @@ namespace RTCV.CorruptCore.EventWarlock
         /// <returns></returns>
         public static bool AddGrimoire(Grimoire grimoire)
         {
-            if(grimoire.Name != null && Grimoires.Any(x => x.Name == grimoire.Name))
+            if(grimoire.Name != "" && Grimoires.Any(x => x.Name == grimoire.Name))
             {
+                //Grimoire name already taken
                 return false;
             }
             else
             {
+                //Unnamed grimoire or name is not taken
                 Grimoires.Add(grimoire);
                 return true;
             }
@@ -51,7 +54,6 @@ namespace RTCV.CorruptCore.EventWarlock
         {
             Grimoires.Remove(g);
         }
-
 
         public static void Reset()
         {
@@ -67,9 +69,6 @@ namespace RTCV.CorruptCore.EventWarlock
             Grimoires = grimoires;
         }
 
-
-        //Can probably do these by just accessing the BookOfSpells
-
         private static void ExecuteList(Grimoire grimoire, List<Spell> list)
         {
             for (int j = 0; j < list.Count; j++)
@@ -81,13 +80,28 @@ namespace RTCV.CorruptCore.EventWarlock
             }
         }
 
+        public static List<Grimoire> GetGrimoiresForSaving()
+        {
+            Smallify();
+            return Grimoires;
+        }
+
+        public static void Smallify()
+        {
+            Grimoires.TrimExcess();
+            for (int j = 0; j < Grimoires.Count; j++)
+            {
+                Grimoires[j].Smallify();
+            }
+        }
+
+        //todo: rename
         public static void Load()
         {
             for (int j = 0; j < Grimoires.Count; j++)
             {
                 ExecuteList(Grimoires[j], Grimoires[j].LoadSpells); 
-            }
-           
+            }          
         }
 
         public static void PreExecute()
