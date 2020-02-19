@@ -7,7 +7,9 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v1
-      - name: Build DotNET35
-        run: |
-           cd "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\"
-           .\MSBuild.exe $Env:GITHUB_WORKSPACE
+      - name: Setup .NET 4.7.1
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '4.7.1'
+      - name: Build with .NET
+        run: dotnet build RTCV.sln
