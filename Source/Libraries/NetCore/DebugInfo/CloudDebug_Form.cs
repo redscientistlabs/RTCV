@@ -1,17 +1,17 @@
-using System;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Net;
-using System.Reflection;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Windows.Forms;
-using RTCV.Common;
-
 namespace RTCV.NetCore
 {
+    using System;
+    using System.Data;
+    using System.Diagnostics;
+    using System.Drawing;
+    using System.IO;
+    using System.Net;
+    using System.Reflection;
+    using System.Runtime.Serialization.Formatters.Binary;
+    using System.Text;
+    using System.Windows.Forms;
+    using RTCV.Common;
+
     public partial class CloudDebug : Form
     {
         private Exception ex;
@@ -239,7 +239,7 @@ namespace RTCV.NetCore
                     File.Delete(file);
                 }
 
-                
+
                 SevenZip.SevenZipCompressor.SetLibraryPath(szdll);
                 var decomp = new SevenZip.SevenZipExtractor(downloadfilepath, password, SevenZip.InArchiveFormat.SevenZip);
                 decomp.ExtractArchive(extractpath);

@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.Text;
-using System.Threading.Tasks;
-using RTCV.PluginHost;
-
 namespace RTCV.Plugins
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.Composition;
+    using System.Text;
+    using System.Threading.Tasks;
+    using RTCV.PluginHost;
+
     [Export(typeof(IPlugin))]
     public class TestPlugin : IPlugin
     {

@@ -1,14 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-using static RTCV.UI.UI_Extensions;
-
-namespace RTCV.UI
+﻿namespace RTCV.UI
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.Windows.Forms;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using RTCV.Common;
+    using static RTCV.UI.UI_Extensions;
+
     public partial class RTC_StashHistory_Form : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
@@ -52,7 +52,7 @@ namespace RTCV.UI
             string Name = "";
             string value = "";
 
-            StashKey sk = (StashKey)lbStashHistory.SelectedItem; ;
+            StashKey sk = (StashKey)lbStashHistory.SelectedItem;
             StockpileManager_UISide.CurrentStashkey = sk;
 
             //If we don't support mixed stockpiles
@@ -221,15 +221,15 @@ namespace RTCV.UI
                 }))).Enabled = (lbStashHistory.SelectedIndex != -1 && lbStashHistory.SelectedItems.Count > 1);
 
                 /*
-				if (!RTC_NetcoreImplementation.isStandaloneUI)
-				{
-					columnsMenu.Items.Add(new ToolStripSeparator());
-					((ToolStripMenuItem)columnsMenu.Items.Add("[Multiplayer] Pull State from peer", null, new EventHandler((ob, ev) =>
-						{
-							S.GET<RTC_Multiplayer_Form>().cbPullStateToGlitchHarvester.Checked = true;
-							RTC_NetcoreImplementation.Multiplayer.SendCommand(new RTC_Command(CommandType.PULLSTATE), false);
-						}))).Enabled = RTC_NetcoreImplementation.Multiplayer != null && RTC_NetcoreImplementation.Multiplayer.side != NetworkSide.DISCONNECTED;
-				}*/
+                if (!RTC_NetcoreImplementation.isStandaloneUI)
+                {
+                    columnsMenu.Items.Add(new ToolStripSeparator());
+                    ((ToolStripMenuItem)columnsMenu.Items.Add("[Multiplayer] Pull State from peer", null, new EventHandler((ob, ev) =>
+                        {
+                            S.GET<RTC_Multiplayer_Form>().cbPullStateToGlitchHarvester.Checked = true;
+                            RTC_NetcoreImplementation.Multiplayer.SendCommand(new RTC_Command(CommandType.PULLSTATE), false);
+                        }))).Enabled = RTC_NetcoreImplementation.Multiplayer != null && RTC_NetcoreImplementation.Multiplayer.side != NetworkSide.DISCONNECTED;
+                }*/
 
                 columnsMenu.Show(this, locate);
             }

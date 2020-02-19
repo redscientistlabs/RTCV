@@ -2,16 +2,14 @@
 //https://github.com/tasvideos/bizhawk
 //Thanks guys
 
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Pipes;
-using System.Threading;
-using SlimDX.DirectInput;
-
-//Lifted from bizhawk
-
 namespace RTCV.UI.Input
 {
+    using System.Collections.Generic;
+    using System.IO;
+    using System.IO.Pipes;
+    using System.Threading;
+    using SlimDX.DirectInput;
+
     public static class IPCKeyInput
     {
         public static void Initialize()

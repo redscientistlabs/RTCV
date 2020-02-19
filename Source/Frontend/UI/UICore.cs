@@ -1,22 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading;
-using System.Timers;
-using System.Windows.Forms;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-using RTCV.UI.Input;
-using RTCV.UI.Modular;
-using static RTCV.NetCore.NetcoreCommands;
-using static RTCV.UI.UI_Extensions;
-
 namespace RTCV.UI
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using System.Threading;
+    using System.Timers;
+    using System.Windows.Forms;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using RTCV.Common;
+    using RTCV.UI.Input;
+    using RTCV.UI.Modular;
+    using static RTCV.NetCore.NetcoreCommands;
+    using static RTCV.UI.UI_Extensions;
+
     public static class UICore
     {
         //Note Box Settings
@@ -394,7 +394,7 @@ namespace RTCV.UI
                 {
                     if (targetForm != null)
                     {
-                        foreach(var c in targetForm.Controls.getControlsWithTag())
+                        foreach (var c in targetForm.Controls.getControlsWithTag())
                             allControls.Add(c);
                         allControls.Add(targetForm);
                     }
@@ -900,7 +900,7 @@ namespace RTCV.UI
                 return;
             }
 
-            
+
             //x.Substring(x.LastIndexOf('\\')+1)[0] != '$'
             //checks if first char is $
 

@@ -1,13 +1,12 @@
-using System;
-using System.Linq;
-using System.Windows.Forms;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-using NLog.LayoutRenderers;
-
 namespace RTCV.UI
 {
+    using System;
+    using System.Linq;
+    using System.Windows.Forms;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using RTCV.Common;
+
     public partial class RTC_SanitizeTool_Form : Form, IAutoColorize
     {
         public BlastLayer originalBlastLayer = null;
@@ -31,7 +30,7 @@ namespace RTCV.UI
                 }
             }
         }
-        
+
         public static void OpenSanitizeTool(BlastLayer bl = null)
         {
             S.GET<RTC_SanitizeTool_Form>().Close();
@@ -69,7 +68,6 @@ namespace RTCV.UI
 
             stf.UpdateSanitizeProgress();
             stf.ShowDialog();
-
         }
 
         private void RTC_NewBlastEditorForm_Load(object sender, EventArgs e)
@@ -172,7 +170,6 @@ namespace RTCV.UI
             be.Show();
             be.WindowState = FormWindowState.Normal;
             be.BringToFront();
-            
         }
 
         private void btnLeaveSubstractChanges_Click(object sender, EventArgs e)
@@ -231,7 +228,7 @@ namespace RTCV.UI
             }
 
             T Cast<T>(object obj, T type) { return (T)obj; }
-            var modified = Cast(lastItem, new { Text = "", Value = new BlastLayer() }); ;
+            var modified = Cast(lastItem, new { Text = "", Value = new BlastLayer() });
 
             BlastLayer bl = (BlastLayer)modified.Value.Clone();
             S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(bl);
@@ -269,7 +266,7 @@ namespace RTCV.UI
 
             int original_remainder = originalSize;
             int original_maxsteps = 0;
-            while(original_remainder>1)
+            while (original_remainder>1)
             {
                 original_remainder = original_remainder / 2;
                 original_maxsteps++;
@@ -295,7 +292,7 @@ namespace RTCV.UI
         private void btnStartSanitizing_Click(object sender, EventArgs e)
         {
             btnStartSanitizing.Visible = false;
-            
+
 
             S.GET<RTC_NewBlastEditor_Form>().dgvBlastEditor.ClearSelection();
             S.GET<RTC_NewBlastEditor_Form>().btnDisable50_Click(null, null);
@@ -345,7 +342,6 @@ namespace RTCV.UI
         {
             if (S.GET<RTC_NewBlastEditor_Form>().AddStashToStockpile())
                 this.Close();
-
         }
         private void btnAddToStash_Click(object sender, EventArgs e)
         {
@@ -357,6 +353,5 @@ namespace RTCV.UI
             //S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(originalBlastLayer);
             this.Close();
         }
-
     }
 }

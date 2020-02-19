@@ -1,12 +1,12 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Windows.Forms;
-using RTCV.UI;
-
-namespace StandaloneRTC
+﻿namespace StandaloneRTC
 {
+    using System;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using System.Windows.Forms;
+    using RTCV.UI;
+
     public partial class Loader : UI_Extensions.RTC_Standalone_Form
     {
         public Loader(string[] args)

@@ -1,21 +1,18 @@
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Reflection;
-using NLog;
-
 namespace RTCV.Common
 {
+    using System;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Linq;
+    using System.Runtime.InteropServices;
+    using System.Text;
+    using System.Threading;
+    using System.Windows.Forms;
+    using NLog;
+
     // Implementing this interface causes auto-coloration.
     public interface IAutoColorize { }
 
@@ -89,7 +86,7 @@ namespace RTCV.Common
         }
 
         private static Type FINDTYPE(string name, bool any = false)
-        { 
+        {
             //thx https://stackoverflow.com/questions/4692340/find-types-in-all-assemblies
 
             return
@@ -204,7 +201,6 @@ namespace RTCV.Common
 
         public static void CreateConsole(string path = null)
         {
-
             if (!Debugger.IsAttached) //Don't override debugger's console
             {
                 ReleaseConsole();

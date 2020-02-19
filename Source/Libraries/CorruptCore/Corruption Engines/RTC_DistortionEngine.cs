@@ -1,7 +1,7 @@
-﻿using RTCV.NetCore;
-
-namespace RTCV.CorruptCore
+﻿namespace RTCV.CorruptCore
 {
+    using RTCV.NetCore;
+
     public static class RTC_DistortionEngine
     {
         public static int Delay

@@ -1,5 +1,4 @@
-﻿
-namespace RTCV.CorruptCore
+﻿namespace RTCV.CorruptCore
 {
     public static class RTC_BlastGeneratorEngine
     {

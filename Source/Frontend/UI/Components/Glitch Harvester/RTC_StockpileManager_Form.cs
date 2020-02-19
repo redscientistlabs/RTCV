@@ -1,18 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using RTCV.CorruptCore;
-using RTCV.Common;
-using static RTCV.UI.UI_Extensions;
-
 namespace RTCV.UI
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Drawing;
+    using System.IO;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+    using RTCV.CorruptCore;
+    using RTCV.Common;
+    using static RTCV.UI.UI_Extensions;
+
     public partial class RTC_StockpileManager_Form : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
@@ -123,11 +123,11 @@ namespace RTCV.UI
                     {
                         sks.Add((StashKey)row.Cells[0].Value);
                     }
-                    
+
                     //dgv is stupid.
                     //If you shift-select you get things in the order you'd expect (start > end).
                     //If you ctrl+select, you get things in the reverse order (the most recent selected gets inserted at the start of the list)
-                    if(IsControlDown())
+                    if (IsControlDown())
                         sks.Reverse();
                     StockpileManager_UISide.MergeStashkeys(sks);
 
@@ -260,11 +260,11 @@ namespace RTCV.UI
                 }))).Enabled = (dgvStockpile.SelectedRows.Count >= 1);
 
                 /*
-				if (!RTC_NetcoreImplementation.isStandaloneUI)
-				{
-					((ToolStripMenuItem)columnsMenu.Items.Add("[Multiplayer] Send Selected Item as a Blast", null, new EventHandler((ob, ev) => { RTC_NetcoreImplementation.Multiplayer?.SendBlastlayer(); }))).Enabled = RTC_NetcoreImplementation.Multiplayer != null && RTC_NetcoreImplementation.Multiplayer.side != NetworkSide.DISCONNECTED;
-					((ToolStripMenuItem)columnsMenu.Items.Add("[Multiplayer] Send Selected Item as a Game State", null, new EventHandler((ob, ev) => { RTC_NetcoreImplementation.Multiplayer?.SendStashkey(); }))).Enabled = RTC_NetcoreImplementation.Multiplayer != null && RTC_NetcoreImplementation.Multiplayer.side != NetworkSide.DISCONNECTED;
-				}*/
+                if (!RTC_NetcoreImplementation.isStandaloneUI)
+                {
+                    ((ToolStripMenuItem)columnsMenu.Items.Add("[Multiplayer] Send Selected Item as a Blast", null, new EventHandler((ob, ev) => { RTC_NetcoreImplementation.Multiplayer?.SendBlastlayer(); }))).Enabled = RTC_NetcoreImplementation.Multiplayer != null && RTC_NetcoreImplementation.Multiplayer.side != NetworkSide.DISCONNECTED;
+                    ((ToolStripMenuItem)columnsMenu.Items.Add("[Multiplayer] Send Selected Item as a Game State", null, new EventHandler((ob, ev) => { RTC_NetcoreImplementation.Multiplayer?.SendStashkey(); }))).Enabled = RTC_NetcoreImplementation.Multiplayer != null && RTC_NetcoreImplementation.Multiplayer.side != NetworkSide.DISCONNECTED;
+                }*/
 
                 columnsMenu.Show(this, locate);
             }
@@ -322,7 +322,6 @@ namespace RTCV.UI
 
                 //lbStockpile.RefreshItemsReal();
             }
-
         }
 
         private void btnRemoveSelectedStockpile_Click(object sender, EventArgs e)
@@ -342,7 +341,6 @@ namespace RTCV.UI
                 UnsavedEdits = true;
                 S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
             }
-
         }
 
         private void btnClearStockpile_Click(object sender, EventArgs e)
@@ -377,7 +375,7 @@ namespace RTCV.UI
             var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
             try
             {
-                //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
+                //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs
                 //Thus, we want this to happen within the try block
                 UICore.SetHotkeyTimer(false);
 
@@ -486,7 +484,7 @@ namespace RTCV.UI
             var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
             try
             {
-                //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
+                //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs
                 //Thus, we want this to happen within the try block
                 UICore.SetHotkeyTimer(false);
                 UICore.LockInterface(false, true);
@@ -698,7 +696,7 @@ namespace RTCV.UI
                 LoadStockpile(files[0]);
             }
 
-            //Bring the UI back to normal after a drag+drop to prevent weird merge stuff 
+            //Bring the UI back to normal after a drag+drop to prevent weird merge stuff
             S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
         }
 

@@ -1,11 +1,11 @@
-using System;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-using static RTCV.UI.UI_Extensions;
-
 namespace RTCV.UI
 {
+    using System;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using RTCV.Common;
+    using static RTCV.UI.UI_Extensions;
+
     public partial class UI_SaveProgress_Form : ComponentForm, IAutoColorize, ISubForm
     {
         public UI_SaveProgress_Form()

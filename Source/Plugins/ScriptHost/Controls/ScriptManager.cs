@@ -1,16 +1,16 @@
-using System;
-using System.Drawing;
-using System.IO;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using CSScriptLibrary;
-using NLog;
-using NLog.Layouts;
-using NLog.Windows.Forms;
-using ScintillaNET;
-
 namespace RTCV.Plugins.ScriptHost.Controls
 {
+    using System;
+    using System.Drawing;
+    using System.IO;
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+    using CSScriptLibrary;
+    using NLog;
+    using NLog.Layouts;
+    using NLog.Windows.Forms;
+    using ScintillaNET;
+
     public partial class ScriptManager : UserControl
     {
         Logger _logger = null;
@@ -32,7 +32,6 @@ namespace RTCV.Plugins.ScriptHost.Controls
                     MaxLines = 10000,
                     AutoScroll = true,
                     UseDefaultRowColoringRules = false,
-
                 };
                 logtextbox.RowColoringRules.Add(new RichTextBoxRowColoringRule(
                         "level == LogLevel.Trace", // condition
@@ -74,7 +73,7 @@ namespace RTCV.Plugins.ScriptHost.Controls
         {
             InitializeComponent();
             //CSScript.EvaluatorConfig.Engine = EvaluatorEngine.Roslyn;
-            if(darkTheme)
+            if (darkTheme)
                 ConfigureScintillaDark();
             else
             {
@@ -205,7 +204,7 @@ namespace RTCV.Plugins.ScriptHost.Controls
             MethodDelegate scr = null;
             try
             {
-                scr = await Task.Run(() =>CSScript.CodeDomEvaluator.CreateDelegate(scintilla.Text));
+                scr = await Task.Run(() => CSScript.CodeDomEvaluator.CreateDelegate(scintilla.Text));
             }
             catch (Exception ex)
             {

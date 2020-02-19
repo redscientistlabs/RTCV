@@ -1,9 +1,9 @@
-using RTCV.Common;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-
 namespace RTCV.Plugins.HexEditor
 {
+    using RTCV.Common;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+
     public class HexEditorConnector : IRoutable
     {
         public HexEditorConnector()
@@ -58,5 +58,5 @@ namespace RTCV.Plugins.HexEditor
             }
             return e.returnMessage;
         }
-    } 
+    }
 }

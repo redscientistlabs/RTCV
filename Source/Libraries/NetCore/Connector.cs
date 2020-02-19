@@ -1,9 +1,9 @@
-using System;
-using System.Linq;
-using System.Threading;
-
 namespace RTCV.NetCore
 {
+    using System;
+    using System.Linq;
+    using System.Threading;
+
     public class NetCoreConnector : IRoutable
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
@@ -108,7 +108,8 @@ namespace RTCV.NetCore
                     {
                         Thread.Sleep(50);
                     }
-                }catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
                     logger.Error(ex, "Something went terribly wrong when stopping tcp networking");
                 }

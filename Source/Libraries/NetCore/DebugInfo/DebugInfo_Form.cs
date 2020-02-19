@@ -1,8 +1,8 @@
-﻿using System;
-using System.Windows.Forms;
-
-namespace RTCV.NetCore
+﻿namespace RTCV.NetCore
 {
+    using System;
+    using System.Windows.Forms;
+
     public partial class DebugInfo_Form : Form
     {
         public DebugInfo_Form()
@@ -25,6 +25,5 @@ namespace RTCV.NetCore
         private void btnGetDebugRTC_Click(object sender, EventArgs e) => tbRTC.Text = CloudDebug.getRTCInfo();
 
         private void btnGetDebugEmu_Click(object sender, EventArgs e) => richTextBox2.Text = CloudDebug.getEmuInfo();
-
     }
 }

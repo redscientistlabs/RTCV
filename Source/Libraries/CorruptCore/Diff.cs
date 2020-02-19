@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.IO;
-using System.Text.RegularExpressions;
-
-namespace RTCV.CorruptCore
+﻿namespace RTCV.CorruptCore
 {
+    using System;
+    using System.Collections;
+    using System.IO;
+    using System.Text.RegularExpressions;
+
     //ALL OF THIS WAS OBTAINED HERE: http://www.mathertel.de/Diff/
 
     /// <summary>

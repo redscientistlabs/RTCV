@@ -1,23 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Newtonsoft.Json;
-using RTCV.NetCore;
-using RTCV.PluginHost;
-using RTCV.Common;
-using Timer = System.Windows.Forms.Timer;
-
 namespace RTCV.CorruptCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Reflection;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+    using Newtonsoft.Json;
+    using RTCV.NetCore;
+    using RTCV.PluginHost;
+    using Timer = System.Windows.Forms.Timer;
+
     public static class RtcCore
     {
         //General RTC Values
@@ -324,8 +323,8 @@ namespace RTCV.CorruptCore
         }
 
         /**
-		* Register the spec on the rtc side
-		*/
+        * Register the spec on the rtc side
+        */
         public static void RegisterCorruptcoreSpec()
         {
             try
@@ -367,11 +366,11 @@ namespace RTCV.CorruptCore
                 };
 
                 /*
-				if (RTC_StockpileManager.BackupedState != null)
-					RTC_StockpileManager.BackupedState.Run();
-				else
-					CorruptCoreSpec.Update(RTCSPEC.CORE_AUTOCORRUPT.ToString(), false);
-					*/
+                if (RTC_StockpileManager.BackupedState != null)
+                    RTC_StockpileManager.BackupedState.Run();
+                else
+                    CorruptCoreSpec.Update(RTCSPEC.CORE_AUTOCORRUPT.ToString(), false);
+                    */
             }
             catch (Exception ex)
             {
@@ -1025,11 +1024,11 @@ namespace RTCV.CorruptCore
         }
 
         /*
-		public static void ApplyBlastLayer(BlastLayer bl)
-		{
-			if(bl.Layer != null)
-				bl.Apply();
-		}*/
+        public static void ApplyBlastLayer(BlastLayer bl)
+        {
+            if(bl.Layer != null)
+                bl.Apply();
+        }*/
 
         public static void OnProgressBarUpdate(object sender, ProgressBarEventArgs e)
         {

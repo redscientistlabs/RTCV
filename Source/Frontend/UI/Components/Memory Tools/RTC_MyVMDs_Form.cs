@@ -1,20 +1,14 @@
-using System;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-using static RTCV.UI.UI_Extensions;
-
 namespace RTCV.UI
 {
+    using System;
+    using System.IO;
+    using System.Windows.Forms;
+    using RTCV.CorruptCore;
+    using RTCV.Common;
+    using static RTCV.UI.UI_Extensions;
+
     public partial class RTC_MyVMDs_Form : ComponentForm, IAutoColorize, IBlockable
     {
-        
-
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
@@ -55,7 +49,6 @@ namespace RTCV.UI
 
                 if (File.Exists(vmdPath))
                     File.Delete(vmdPath);
-
             }
 
             RefreshVMDs();
@@ -69,7 +62,7 @@ namespace RTCV.UI
                 Directory.CreateDirectory(RtcCore.vmdsDir);
 
             var files = Directory.GetFiles(RtcCore.vmdsDir);
-            foreach(var file in files)
+            foreach (var file in files)
             {
                 string shortfile = file.Substring(file.LastIndexOf('\\') + 1);
                 lbLoadedVmdList.Items.Add(shortfile);
@@ -79,7 +72,6 @@ namespace RTCV.UI
             btnSaveVmd.Enabled = false;
             btnRenameVMD.Enabled = false;
             btnUnloadVmd.Enabled = false;
-
         }
 
 
@@ -112,7 +104,6 @@ namespace RTCV.UI
             }
 
             File.Move(vmdPath, path);
-
         }
 
         private void RTC_MyVMDs_Form_Load(object sender, EventArgs e)
@@ -139,8 +130,6 @@ namespace RTCV.UI
 
             btnLoadVmd.Enabled = true;
             btnUnloadVmd.Enabled = true;
-
-
         }
 
         private void btnSaveVmd_Click(object sender, EventArgs e)
@@ -174,13 +163,11 @@ namespace RTCV.UI
 
         private void importVmd(string path)
         {
-
             string shortPath = path.Substring(path.LastIndexOf('\\') + 1);
             string targetPath = Path.Combine(RtcCore.vmdsDir, shortPath);
 
             if (File.Exists(targetPath))
             {
-
                 var result = MessageBox.Show("This file already exist in your VMDs folder, do you want to overwrite it?", "Overwrite file?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result == DialogResult.No)
                     return;
@@ -192,7 +179,6 @@ namespace RTCV.UI
 
 
             RefreshVMDs();
-
         }
 
 
@@ -203,7 +189,6 @@ namespace RTCV.UI
 
             foreach (var item in lbLoadedVmdList.SelectedItems)
             {
-
                 string vmdName = item.ToString();
                 string path = Path.Combine(RtcCore.vmdsDir, vmdName);
 
@@ -219,7 +204,6 @@ namespace RTCV.UI
                     break;
                 }
             }
-
         }
 
         private void btnRenameVMD_Click(object sender, EventArgs e)
@@ -251,7 +235,6 @@ namespace RTCV.UI
             };
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                bool notified = false;
                 //string Filename = ofd.FileName.ToString();
                 foreach (string filename in ofd.FileNames)
                 {

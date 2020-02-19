@@ -1,15 +1,13 @@
-using System;
-using System.Drawing;
-using System.Windows.Forms;
-using NLog;
-using NLog.Layouts;
-using NLog.Windows.Forms;
-
 namespace RTCV.Common.Forms
 {
+    using System.Drawing;
+    using System.Windows.Forms;
+    using NLog;
+    using NLog.Layouts;
+    using NLog.Windows.Forms;
+
     public partial class LogConsole : UserControl
     {
-
         public override Color ForeColor
         {
             get => base.ForeColor;
@@ -90,7 +88,7 @@ namespace RTCV.Common.Forms
         }
         public void InitializeCustomLogger(int maxLines, Layout layout, string fileName = null)
         {
-            if(layout == null)
+            if (layout == null)
                 layout = "${level} ${logger} ${message} ${onexception:|${newline}EXCEPTION OCCURRED\\:${exception:format=type,message,method:maxInnerExceptionLevel=5:innerFormat=shortType,message,method}${newline}";
 
             var config = new NLog.Config.LoggingConfiguration();
@@ -100,7 +98,7 @@ namespace RTCV.Common.Forms
                 var logfile = new NLog.Targets.FileTarget("logfile") { FileName = fileName, Layout = layout };
                 config.AddRule(LogLevel.Trace, LogLevel.Fatal, logfile);
             }
-            
+
             var t = GetRichTextBoxTarget(1000, layout);
             config.AddRule(LogLevel.Trace, LogLevel.Fatal, t);
 
@@ -117,6 +115,5 @@ namespace RTCV.Common.Forms
             InitializeComponent();
             InitializeCustomLogger(maxLines, customLayout, fileName);
         }
-
     }
 }

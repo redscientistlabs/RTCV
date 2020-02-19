@@ -1,11 +1,11 @@
-using System;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-
 namespace RTCV.NetCore
 {
+    using System;
+    using System.Net;
+    using System.Net.Sockets;
+    using System.Text;
+    using System.Threading;
+
     public class UDPLink
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
@@ -54,7 +54,7 @@ namespace RTCV.NetCore
             {
                 byte[] sdata = Encoding.ASCII.GetBytes(message.Type);
                 Sender.Send(sdata, sdata.Length);
-                //Todo - Refactor this into a way to blacklist specific commands 
+                //Todo - Refactor this into a way to blacklist specific commands
                 if (message.Type != "UI|KILLSWITCH_PULSE" || ConsoleEx.ShowDebug)
                 {
                     logger.Trace("UDP : Sent simple message \"{type}\"", message.Type);

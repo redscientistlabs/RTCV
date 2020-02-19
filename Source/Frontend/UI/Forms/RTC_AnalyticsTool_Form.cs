@@ -1,19 +1,15 @@
-using System;
-using System.Windows.Forms;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-using System.Collections.Generic;
-using System.IO;
-using System.Dynamic;
-using System.Runtime.Serialization.Formatters;
-using System.Threading.Tasks;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading;
-
-namespace RTCV.UI
+﻿namespace RTCV.UI
 {
+    using System;
+    using System.Windows.Forms;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Threading.Tasks;
+    using System.Linq;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using RTCV.Common;
+
     public partial class RTC_AnalyticsTool_Form : Form, IAutoColorize
     {
         public BlastLayer originalBlastLayer = null;
@@ -56,9 +52,9 @@ namespace RTCV.UI
             foreach (var dump in memoryDumpPaths)
             {
                 var fi = new FileInfo(dump);
-                stf.DumpSource.Add(new { 
-                    key = fi.Name, 
-                    value = fi.FullName 
+                stf.DumpSource.Add(new {
+                    key = fi.Name,
+                    value = fi.FullName
                 });
             }
 
@@ -164,11 +160,9 @@ namespace RTCV.UI
                 {
                     dumpSize = dump.Length;
                     nbWords = (dumpSize / WordSize);
-
                 }
 
                 AnalyticsCube.Push(dump, WordSize);
-
             }
 
             var cpus = Environment.ProcessorCount;
@@ -206,7 +200,6 @@ namespace RTCV.UI
                     }
 
                     return (real_i, activity.ToArray(), maxActivity);
-
                 }, state: i);
 
                 tasks.Add(task);
@@ -215,11 +208,11 @@ namespace RTCV.UI
 
             Task.WaitAll(tasks.ToArray());
             var returns = tasks.Select(it => (it as Task<(int cpu_i, int[] activity, int maxActivity)>).Result).OrderBy(it => it.cpu_i).ToArray();
-            
+
             int maxActivity = 0;
             List<int> fullActivity = new List<int>();
 
-            foreach(var ret in returns)
+            foreach (var ret in returns)
             {
                 if (maxActivity < ret.maxActivity)
                     maxActivity = ret.maxActivity;
@@ -256,7 +249,7 @@ namespace RTCV.UI
         {
             int activity = 0;
 
-            for(int i=0;i<stripe.Count;i++)
+            for (int i=0; i<stripe.Count; i++)
             {
                 if (i == 0)
                     continue;
@@ -266,7 +259,7 @@ namespace RTCV.UI
                 byte[] prevWord = stripe[i - 1];
                 byte[] currentWord = stripe[i];
 
-                for (int j=0;j< currentWord.Length; j++)
+                for (int j=0; j< currentWord.Length; j++)
                 {
                     if (prevWord[j] != currentWord[j])
                     {
@@ -288,7 +281,8 @@ namespace RTCV.UI
             {
                 return Cube[x][y];
             }
-            catch(Exception ex)
+            #pragma warning disable CS0168
+            catch (Exception ex)
             {
                 new object();
                 return null;
@@ -320,11 +314,10 @@ namespace RTCV.UI
         {
             byte[] output = new byte[wordSize];
 
-            for(int i=0;i<wordSize;i++)
+            for (int i=0; i < wordSize; i++)
                 output[i] = dump[index + i];
 
             return output;
         }
     }
-
 }

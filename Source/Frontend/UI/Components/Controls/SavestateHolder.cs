@@ -1,10 +1,10 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using RTCV.CorruptCore;
-
-namespace RTCV.UI.Components.Controls
+﻿namespace RTCV.UI.Components.Controls
 {
+    using System;
+    using System.Drawing;
+    using System.Windows.Forms;
+    using RTCV.CorruptCore;
+
     public partial class SavestateHolder : UserControl
     {
         private StashKey _sk = null;

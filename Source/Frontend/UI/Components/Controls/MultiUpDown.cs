@@ -1,10 +1,10 @@
-﻿using System;
-using System.ComponentModel;
-using System.Drawing;
-using System.Windows.Forms;
-
-namespace RTCV.UI.Components.Controls
+﻿namespace RTCV.UI.Components.Controls
 {
+    using System;
+    using System.ComponentModel;
+    using System.Drawing;
+    using System.Windows.Forms;
+
     public partial class MultiUpDown : SpecControl<decimal>
     {
         [Description("Whether or not the NumericUpDown should use hex"), Category("Data")]

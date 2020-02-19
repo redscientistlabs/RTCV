@@ -1,18 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-using Ceras;
-using Newtonsoft.Json;
-using RTCV.NetCore;
-
 namespace RTCV.CorruptCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.IO.Compression;
+    using System.Linq;
+    using System.Runtime.Serialization.Formatters.Binary;
+    using System.Text;
+    using System.Windows.Forms;
+    using System.Xml.Serialization;
+    using Ceras;
+    using Newtonsoft.Json;
+    using RTCV.NetCore;
+
     public static class MemoryDomains
     {
         private static object miLock = new object();
@@ -1480,7 +1480,6 @@ namespace RTCV.CorruptCore
                 for (int i = 0; i < data.Length; i++)
                     lastMemoryDump[address + i] = data[i];
             */
-
         }
 
         public override void PokeByte(long address, byte data)
@@ -1867,7 +1866,6 @@ namespace RTCV.CorruptCore
         */
 
             //return lastMemoryDump;
-
         }
 
         public override byte[][] lastMemoryDump
