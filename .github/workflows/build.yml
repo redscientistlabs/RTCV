@@ -5,11 +5,12 @@ jobs:
   build:
     runs-on: windows-2019
     steps:
-      - name: checkout
-        uses: actions/checkout@v1
-      - name: Setup .NET 4.7.1
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: '4.7.1'
-      - name: Build with .NET
-        run: dotnet build RTCV.sln
+    - uses: actions/checkout@v1
+    - name: Setup Nuget.exe
+      uses: warrenbuckley/Setup-Nuget@v1
+    - name: Restore packages
+      run: nuget restore legacyproj\example3.sln
+    - name: Setup MSBuild.exe
+      uses: warrenbuckley/Setup-MSBuild@v1
+    - name: Build with MSBuild
+      run: msbuild RTCV.sln
