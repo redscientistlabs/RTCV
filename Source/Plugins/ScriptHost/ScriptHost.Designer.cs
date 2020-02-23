@@ -38,6 +38,7 @@ namespace RTCV.Plugins.ScriptHost
             this.tc.Location = new System.Drawing.Point(0, 24);
             this.tc.Name = "tc";
             this.tc.SelectedIndex = -1;
+            this.tc.ShowCloseTabButtons = true;
             this.tc.Size = new System.Drawing.Size(633, 496);
             this.tc.TabIndex = 0;
             // 
