@@ -35,24 +35,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Frontend\UI\UI.csproj">
-      <Project>{bd376bb2-17ec-4fb0-a9fe-6b1bbf4af3e3}</Project>
-      <Name>UI</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\CorruptCore\CorruptCore.csproj">
-      <Project>{b5633a86-dc66-4723-88eb-7dfc95458072}</Project>
-      <Name>CorruptCore</Name>
-      <Private>False</Private>
-    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\PluginHost\PluginHost.csproj">
       <Project>{3f02eda3-6949-4b30-9cda-b56ffba0e976}</Project>
       <Name>PluginHost</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Vanguard\Vanguard.csproj">
-      <Project>{364c705e-b7ab-4a94-a59b-88899ce65958}</Project>
-      <Name>Vanguard</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>

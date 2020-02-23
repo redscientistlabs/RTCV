@@ -10,7 +10,7 @@
     <AssemblyName>UI</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -77,18 +77,13 @@
       <HintPath>..\..\..\Deps\SlimDX.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Transactions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
@@ -590,9 +585,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Question Mark.png" />

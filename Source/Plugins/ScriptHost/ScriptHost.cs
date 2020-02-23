@@ -31,9 +31,12 @@ namespace RTCV.Plugins.ScriptHost
         {
             if (this.tc.GetTabBounds(this.tc.Tabs.Last()).Contains(e.Location))
             {
-                var newTab = new ScriptManagerTab();
-                this.tc.Tabs.Insert(tc.Tabs.Count - 1, newTab);
-                this.tc.SelectedTab = newTab;
+                if (e.Button == MouseButtons.Left)
+                {
+                    var newTab = new ScriptManagerTab();
+                    this.tc.Tabs.Insert(tc.Tabs.Count - 1, newTab);
+                    this.tc.SelectedTab = newTab;
+                }
             }
         }
 
