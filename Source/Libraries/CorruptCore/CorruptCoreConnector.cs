@@ -149,6 +149,7 @@ namespace RTCV.CorruptCore
                                 SyncObjectSingleton.FormExecute(() =>
                                 {
                                 //    S.GET<CorruptCore.Tools.HexEditor>().Show();
+                                    MessageBox.Show("Hex editor temporarily disabled");
                                 });
                             }
                         }
@@ -175,6 +176,7 @@ namespace RTCV.CorruptCore
                                //     S.GET<CorruptCore.Tools.HexEditor>().Show();
                                //     S.GET<CorruptCore.Tools.HexEditor>().SetDomain(mi);
                                 //    S.GET<CorruptCore.Tools.HexEditor>().GoToAddress(address);
+                                    MessageBox.Show("Hex editor temporarily disabled");
                                 });
                             }
                             break;
