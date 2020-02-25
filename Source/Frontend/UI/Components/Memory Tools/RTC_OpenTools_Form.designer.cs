@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     partial class RTC_OpenTools_Form
     {
@@ -28,38 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnOpenHexEditor = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox1.SuspendLayout();
+            this.flpTools = new System.Windows.Forms.FlowLayoutPanel();
             this.SuspendLayout();
             // 
-            // btnOpenHexEditor
+            // flpTools
             // 
-            this.btnOpenHexEditor.BackColor = System.Drawing.Color.Gray;
-            this.btnOpenHexEditor.FlatAppearance.BorderSize = 0;
-            this.btnOpenHexEditor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOpenHexEditor.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnOpenHexEditor.ForeColor = System.Drawing.Color.White;
-            this.btnOpenHexEditor.Location = new System.Drawing.Point(6, 26);
-            this.btnOpenHexEditor.Name = "btnOpenHexEditor";
-            this.btnOpenHexEditor.Size = new System.Drawing.Size(354, 30);
-            this.btnOpenHexEditor.TabIndex = 136;
-            this.btnOpenHexEditor.TabStop = false;
-            this.btnOpenHexEditor.Tag = "color:light1";
-            this.btnOpenHexEditor.Text = "Open Hex Editor";
-            this.btnOpenHexEditor.UseVisualStyleBackColor = false;
-            this.btnOpenHexEditor.Click += new System.EventHandler(this.btnOpenHexEditor_Click);
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.btnOpenHexEditor);
-            this.groupBox1.ForeColor = System.Drawing.Color.White;
-            this.groupBox1.Location = new System.Drawing.Point(12, 14);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(366, 74);
-            this.groupBox1.TabIndex = 137;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Hex Editor";
+            this.flpTools.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flpTools.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flpTools.Location = new System.Drawing.Point(0, 0);
+            this.flpTools.Name = "flpTools";
+            this.flpTools.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
+            this.flpTools.Size = new System.Drawing.Size(390, 250);
+            this.flpTools.TabIndex = 138;
             // 
             // RTC_OpenTools_Form
             // 
@@ -67,7 +47,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(390, 250);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.flpTools);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI Symbol", 8F);
             this.ForeColor = System.Drawing.Color.White;
@@ -77,13 +57,11 @@
             this.Text = "Extra Tools Form";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-		private System.Windows.Forms.Button btnOpenHexEditor;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.FlowLayoutPanel flpTools;
     }
 }

@@ -383,9 +383,10 @@ namespace RTCV.UI
         private static bool lockPending;
         private static object lockObject = new object();
 
+
         public static void SetRTCColor(Color color, Control ctr = null)
         {
-            List<Control> allControls = new List<Control>();
+            HashSet<Control> allControls = new HashSet<Control>();
 
             if (ctr == null)
             {
@@ -393,7 +394,8 @@ namespace RTCV.UI
                 {
                     if (targetForm != null)
                     {
-                        allControls.AddRange(targetForm.Controls.getControlsWithTag());
+                        foreach(var c in targetForm.Controls.getControlsWithTag())
+                            allControls.Add(c);
                         allControls.Add(targetForm);
                     }
                 }
@@ -401,7 +403,8 @@ namespace RTCV.UI
                 //Get the extraforms
                 foreach (UI_CanvasForm targetForm in UI_CanvasForm.extraForms)
                 {
-                    allControls.AddRange(targetForm.Controls.getControlsWithTag());
+                    foreach (var c in targetForm.Controls.getControlsWithTag())
+                        allControls.Add(c);
                     allControls.Add(targetForm);
                 }
 
@@ -409,16 +412,18 @@ namespace RTCV.UI
                 //Todo - Refactor this so we don't need to add it separately
                 if (mtForm != null)
                 {
-                    allControls.AddRange(mtForm.Controls.getControlsWithTag());
+                    foreach (var c in mtForm.Controls.getControlsWithTag())
+                        allControls.Add(c);
                     allControls.Add(mtForm);
                 }
             }
-            else if (ctr is Form)
+            else if (ctr is Form || ctr is UserControl)
             {
-                allControls.AddRange(ctr.Controls.getControlsWithTag());
+                foreach (var c in ctr.Controls.getControlsWithTag())
+                    allControls.Add(c);
                 allControls.Add(ctr);
             }
-            else
+            else if (ctr is Form)
             {
                 allControls.Add(ctr);
             }

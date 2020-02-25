@@ -621,6 +621,22 @@ namespace RTCV.CorruptCore
                         {
                             StepActions.ClearStepBlastUnits();
                         });
+                        break;
+
+                    case REMOTE_LOADPLUGINS:
+                        SyncObjectSingleton.FormExecute(() =>
+                        { 
+                            string emuPluginDir = "";
+                            try
+                            {
+                                emuPluginDir = System.IO.Path.Combine(RtcCore.EmuDir, "RTC", "PLUGINS");
+                            }
+                            catch (Exception e)
+                            {
+                                RTCV.Common.Logging.GlobalLogger.Error(e, "Unable to find plugin dir in {dir}", RtcCore.EmuDir + "\\RTC" + "\\PLUGINS");
+                            }
+                            RtcCore.LoadPlugins(new[] { RtcCore.pluginDir,  emuPluginDir});
+                        });
 
                         break;
                     case REMOTE_REMOVEEXCESSINFINITESTEPUNITS:

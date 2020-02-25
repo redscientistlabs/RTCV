@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
 using RTCV.Common;
+using RTCV.UI.Components.Controls;
 using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
@@ -15,6 +16,8 @@ namespace RTCV.UI
         public RTC_OpenTools_Form()
         {
             InitializeComponent();
+
+            RegisterTool("Hex Editor", "Open Hex Editor", () => btnOpenHexEditor_Click(this, EventArgs.Empty));
         }
 
         private void btnOpenHexEditor_Click(object sender, EventArgs e)
@@ -28,6 +31,12 @@ namespace RTCV.UI
             {
                 MessageBox.Show("Hex editor only works with real-time systems");
             }
+        }
+
+        public void RegisterTool(string name, string buttonText, Action clickAction)
+        {
+            Control c = new OpenToolButton(name, buttonText, clickAction);
+            flpTools.Controls.Add(c);
         }
     }
 }

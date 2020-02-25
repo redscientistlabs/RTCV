@@ -1,4 +1,4 @@
-﻿namespace RTCV.NetCore
+namespace RTCV.NetCore
 {
     public static class NetcoreCommands
     {
@@ -34,6 +34,7 @@
         public const string REMOTE_PUSHVMDPROTOS = nameof(REMOTE_PUSHVMDPROTOS);
         public const string REMOTE_GENERATEVMDTEXT = nameof(REMOTE_GENERATEVMDTEXT);
         public const string BLASTGENERATOR_BLAST = nameof(BLASTGENERATOR_BLAST);
+        public const string REMOTE_LOADPLUGINS = nameof(REMOTE_LOADPLUGINS);
         public const string REMOTE_LOADSTATE = nameof(REMOTE_LOADSTATE);
         public const string REMOTE_SAVESTATE = nameof(REMOTE_SAVESTATE);
         public const string REMOTE_SAVESTATELESS = nameof(REMOTE_SAVESTATELESS);
