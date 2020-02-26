@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
@@ -95,42 +95,56 @@ namespace RTCV.UI
                     CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.NIGHTMARE;
                     gbNightmareEngine.Visible = true;
                     cbCustomPrecision.Enabled = true;
+
+                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
 
                 case "Hellgenie Engine":
                     CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.HELLGENIE;
                     gbHellgenieEngine.Visible = true;
                     cbCustomPrecision.Enabled = true;
+
+                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
 
                 case "Distortion Engine":
                     CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.DISTORTION;
                     gbDistortionEngine.Visible = true;
                     cbCustomPrecision.Enabled = true;
+
+                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
 
                 case "Freeze Engine":
                     CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.FREEZE;
                     gbFreezeEngine.Visible = true;
                     cbCustomPrecision.Enabled = true;
+
+                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
 
                 case "Pipe Engine":
                     CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.PIPE;
                     gbPipeEngine.Visible = true;
                     cbCustomPrecision.Enabled = true;
+
+                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
 
                 case "Vector Engine":
                     CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.VECTOR;
                     nmAlignment.Maximum = 3;
                     gbVectorEngine.Visible = true;
+
+                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
 
                 case "Custom Engine":
                     CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.CUSTOM;
                     gbCustomEngine.Visible = true;
                     cbCustomPrecision.Enabled = true;
+
+                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
 
                 case "Blast Generator":
