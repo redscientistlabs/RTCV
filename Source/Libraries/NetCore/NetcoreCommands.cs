@@ -69,6 +69,7 @@ namespace RTCV.NetCore
         public const string REMOTE_EVENT_LOADGAMEDONE_NEWGAME = nameof(REMOTE_EVENT_LOADGAMEDONE_NEWGAME);
         public const string REMOTE_EVENT_LOADGAMEDONE_SAMEGAME = nameof(REMOTE_EVENT_LOADGAMEDONE_SAMEGAME);
         public const string REMOTE_EVENT_CLOSEEMULATOR = nameof(REMOTE_EVENT_CLOSEEMULATOR);
+        public const string REMOTE_EVENT_SHUTDOWN = nameof(REMOTE_EVENT_SHUTDOWN);
 
         public const string GENERATEBLASTLAYER = nameof(GENERATEBLASTLAYER);
         public const string SAVESAVESTATE = nameof(SAVESAVESTATE);

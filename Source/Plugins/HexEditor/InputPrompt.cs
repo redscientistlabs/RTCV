@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace RTCV.CorruptCore.Tools
+namespace RTCV.Plugins.HexEditor
 {
     /// <summary>
     /// A simple form that prompts the user for a single line of input.

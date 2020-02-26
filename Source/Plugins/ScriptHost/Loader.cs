@@ -16,7 +16,7 @@ namespace RTCV.Plugins.ScriptHost
         public string Description => "A script host for the RTC allowing the running of C# code within the RTC";
         public string Author => "Narry";
         public Version Version => new Version(0, 0, 1);
-        public RTCSide SupportedSide => RTCSide.Both;
+        public RTCSide SupportedSide => RTCSide.Server;
 
         public bool Start(RTCSide side)
         {

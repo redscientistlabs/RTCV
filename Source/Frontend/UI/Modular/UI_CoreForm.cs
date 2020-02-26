@@ -85,6 +85,7 @@ namespace RTCV.UI
                 return;
             }
 
+            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_EVENT_SHUTDOWN, true);
             LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_EVENT_CLOSEEMULATOR);
 
             //Sleep to make sure the message is sent

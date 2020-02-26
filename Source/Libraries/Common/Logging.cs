@@ -84,6 +84,7 @@ namespace RTCV.Common
             GlobalLogger = LogManager.GetLogger("Global");
         }
 
+
         private static string getFormattedLogFilename(string path, int num)
         {
             try

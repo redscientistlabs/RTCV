@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using NLog;
 
@@ -12,9 +13,20 @@ namespace RTCV.PluginHost
     {
         [ImportMany(typeof(IPlugin))]
         private IEnumerable<IPlugin> plugins;
+        private List<IPlugin> _loadedPlugins;
+        public IReadOnlyList<IPlugin> LoadedPlugins => _loadedPlugins;
+
 
         private CompositionContainer _container;
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private static Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private bool initialized = false;
+
+        public Host()
+        {
+            _loadedPlugins = new List<IPlugin>();
+            AppDomain.CurrentDomain.AssemblyLoad -= CurrentDomain_AssemblyLoad;
+            AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
+        }
 
         private void initialize(string[] pluginDirs, RTCSide side)
         {
@@ -34,13 +46,15 @@ namespace RTCV.PluginHost
             {
                 logger.Error(compositionException, "Composition failed in plugin initialization");
             }
-
         }
 
         public void Start(string[] pluginDirs, RTCSide side)
         {
-            AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
-            AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
+            if (initialized)
+            {
+                throw new InvalidOperationException("Host has already been started. ");
+            }
+
             initialize(pluginDirs, side);
 
             foreach (var p in plugins)
@@ -51,13 +65,21 @@ namespace RTCV.PluginHost
                     if (p.Start(side))
                     {
                         logger.Info("Loaded {pluginName} successfully", p.Name);
+                        _loadedPlugins.Add(p);
                     }
                     else
                     {
                         logger.Error("Failed to load {pluginName}", p.Name);
                     }
-
                 }
+            }
+            initialized = true;
+        }
+        public void Shutdown()
+        {
+            foreach(var p in _loadedPlugins)
+            {
+                p.Stop();
             }
         }
 

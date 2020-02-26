@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,8 +10,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using RTCV.NetCore;
+using RTCV.CorruptCore;
+using NLog;
+using NLog.Layouts;
+using NLog.Windows.Forms;
 
-namespace RTCV.CorruptCore.Tools
+namespace RTCV.Plugins.HexEditor
 {
     //Based on the Hex Editor from Bizhawk, available under MIT.
     //https://github.com/tasvideos/bizhawk
@@ -55,6 +59,9 @@ namespace RTCV.CorruptCore.Tools
         public volatile bool UpdateOnStep = true;
         public volatile bool HideOnClose = true;
 
+        Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
+
         public HexEditor()
         {
             DataSize = 1;
@@ -82,6 +89,27 @@ namespace RTCV.CorruptCore.Tools
             AddressLabel.Font = font;
 
             Restart();
+
+            CorruptCore.StepActions.StepEnd += (o, e) =>
+            {
+                if (this.Visible)
+                    UpdateValues();
+            };
+            CorruptCore.RtcCore.GameClosed += (o, e) =>
+            {
+                if (e.FullyClosed)
+                {
+                    HideOnClose = false;
+                    this.Close();
+                }
+                else if (this.Visible)
+                    Restart();
+            };
+            CorruptCore.RtcCore.LoadGameDone += (o, e) =>
+            {
+                if(this.Visible)
+                    Restart();
+            };
         }
 
         private void HexEditor_VisibleChanged(object sender, EventArgs e)
@@ -143,7 +171,7 @@ namespace RTCV.CorruptCore.Tools
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine($"Failed to UpdateValues() in hex editor.{e}");
+                    logger.Error(e,"Failed to UpdateValues() in hex editor.");
                 }
             }));
         }
@@ -474,9 +502,9 @@ namespace RTCV.CorruptCore.Tools
                         break;
                 }
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Console.WriteLine(ex);
+                logger.Error(e, "Unable to MakeValue");
                 return false;
             }
 
