@@ -33,6 +33,10 @@ namespace RTCV.CorruptCore
         private static bool isRunning = false;
         private static object executeLock = new object();
 
+        public static event EventHandler StepStart;
+        public static event EventHandler StepPreCorrupt;
+        public static event EventHandler StepPostCorrupt;
+        public static event EventHandler StepEnd;
 
 
         public static int MaxInfiniteBlastUnits
@@ -356,6 +360,7 @@ namespace RTCV.CorruptCore
         {
             lock (executeLock)
             {
+                StepStart?.Invoke(null, new EventArgs());
                 if (isRunning)
                 {
                     bool needsRefilter = false;
@@ -364,6 +369,7 @@ namespace RTCV.CorruptCore
 
                     //Get the backups for any store units
                     GetStoreBackups();
+                    StepPreCorrupt?.Invoke(null, new EventArgs());
 
                     //Execute all temp units
                     List<List<BlastUnit>> itemsToRemove = new List<List<BlastUnit>>();
@@ -424,7 +430,7 @@ namespace RTCV.CorruptCore
                         }
                     }
 
-
+                    StepPostCorrupt?.Invoke(null, new EventArgs());
                     //Increment the frame
                     currentFrame++;
 
@@ -460,17 +466,7 @@ namespace RTCV.CorruptCore
                         FilterBuListCollection();
                     }
                 }
-                try
-                {
-                    //Update any tools
-                //    if (S.GET<CorruptCore.Tools.HexEditor>().Visible && S.GET<CorruptCore.Tools.HexEditor>().UpdateOnStep)
-                 //   {
-                //        S.GET<CorruptCore.Tools.HexEditor>().UpdateValues();
-             //       }
-                }catch(Exception e)
-                {
-                    logger.Error(e, "Exception when updating the hex editor");
-                }
+                StepEnd?.Invoke(null, new EventArgs());
             }
         }
     }

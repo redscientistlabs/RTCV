@@ -1,4 +1,4 @@
-﻿namespace RTCV.CorruptCore.Tools
+namespace RTCV.Plugins.HexEditor
 {
     partial class HexEditor
     {

@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using RTCV.Common;
-using RTCV.CorruptCore.Tools;
 using RTCV.NetCore;
 using static RTCV.NetCore.NetcoreCommands;
 
@@ -137,20 +135,28 @@ namespace RTCV.CorruptCore
 
                             break;
                         }
+                    case REMOTE_EVENT_SHUTDOWN:
+                        {
+                            RtcCore.Shutdown();
+                            break;
+                        }
 
                     case REMOTE_OPENHEXEDITOR:
                         {
                             if ((bool?)AllSpec.VanguardSpec[VSPEC.USE_INTEGRATED_HEXEDITOR] ?? false)
                             {
-                                LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_OPENHEXEDITOR, true);
+                              LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_OPENHEXEDITOR, true);
                             }
                             else
                             {
-                                SyncObjectSingleton.FormExecute(() =>
+
+                                //Route it to the plugin if loaded
+                                if (RtcCore.PluginHost.LoadedPlugins.Any(x => x.Name == "Hex Editor"))
+                                    LocalNetCoreRouter.Route("HEXEDITOR", NetcoreCommands.REMOTE_OPENHEXEDITOR, true);
+                                else
                                 {
-                                //    S.GET<CorruptCore.Tools.HexEditor>().Show();
-                                    MessageBox.Show("Hex editor temporarily disabled");
-                                });
+                                    MessageBox.Show("The current Vanguard implementation does not include a\n hex editor & the hex editor plugin isn't loaded. Aborting.");
+                                }
                             }
                         }
                         break;
@@ -163,21 +169,13 @@ namespace RTCV.CorruptCore
                             }
                             else
                             {
-                                var temp = advancedMessage.objectValue as object[];
-                                string domain = (string)temp[0];
-                                long address = (long)temp[1];
-
-                                MemoryInterface mi = MemoryDomains.GetInterface(domain);
-                                if (mi == null)
-                                    break;
-
-                                SyncObjectSingleton.FormExecute(() =>
+                                //Route it to the plugin if loaded
+                                if (RtcCore.PluginHost.LoadedPlugins.Any(x => x.Name == "Hex Editor"))
+                                    LocalNetCoreRouter.Route("HEXEDITOR", NetcoreCommands.EMU_OPEN_HEXEDITOR_ADDRESS, advancedMessage.objectValue, true);
+                                else
                                 {
-                               //     S.GET<CorruptCore.Tools.HexEditor>().Show();
-                               //     S.GET<CorruptCore.Tools.HexEditor>().SetDomain(mi);
-                                //    S.GET<CorruptCore.Tools.HexEditor>().GoToAddress(address);
-                                    MessageBox.Show("Hex editor temporarily disabled");
-                                });
+                                    MessageBox.Show("The current Vanguard implementation does not include a\n hex editor & the hex editor plugin isn't loaded. Aborting.");
+                                }
                             }
                             break;
                         }
@@ -482,19 +480,16 @@ namespace RTCV.CorruptCore
                             MemoryDomains.AddVMD(proto);
                         }
 
-                      //  S.GET<HexEditor>().Restart();
                         break;
 
                     case REMOTE_DOMAIN_VMD_ADD:
                         MemoryDomains.AddVMD_NET((advancedMessage.objectValue as VmdPrototype));
-                      //  S.GET<HexEditor>().Restart();
                         break;
 
                     case REMOTE_DOMAIN_VMD_REMOVE:
                         {
                             StepActions.ClearStepBlastUnits();
                             MemoryDomains.RemoveVMD_NET((advancedMessage.objectValue as string));
-                        //    S.GET<HexEditor>().Restart();
                         }
                         break;
 

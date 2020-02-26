@@ -11,7 +11,6 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Windows.Forms;
 using Newtonsoft.Json;
-using RTCV.CorruptCore.Tools;
 using static RTCV.UI.UI_Extensions;
 
 #pragma warning disable RCS1138 // Add summary element to documentation comment.
@@ -388,110 +387,6 @@ namespace RTCV.UI
             public bool AllowNegative { get; set; }
         }
 
-        public class UnsignedIntegerBox : TextBox, INumberBox
-        {
-            private bool _nullable = true;
-
-            public UnsignedIntegerBox()
-            {
-                CharacterCasing = CharacterCasing.Upper;
-            }
-
-            public bool Nullable { get => _nullable; set => _nullable = value; }
-
-            protected override void OnKeyPress(KeyPressEventArgs e)
-            {
-                if (e.KeyChar == '\b' || e.KeyChar == 22 || e.KeyChar == 1 || e.KeyChar == 3)
-                {
-                    return;
-                }
-
-                if (!e.KeyChar.IsUnsigned())
-                {
-                    e.Handled = true;
-                }
-            }
-
-            public override void ResetText()
-            {
-                Text = _nullable ? "" : "0";
-            }
-
-            protected override void OnKeyDown(KeyEventArgs e)
-            {
-                if (e.KeyCode == Keys.Up)
-                {
-                    if (Text.IsHex())
-                    {
-                        var val = (uint)ToRawInt();
-                        if (val == uint.MaxValue)
-                        {
-                            val = 0;
-                        }
-                        else
-                        {
-                            val++;
-                        }
-
-                        Text = val.ToString();
-                    }
-                }
-                else if (e.KeyCode == Keys.Down)
-                {
-                    if (Text.IsHex())
-                    {
-                        var val = (uint)ToRawInt();
-
-                        if (val == 0)
-                        {
-                            val = uint.MaxValue;
-                        }
-                        else
-                        {
-                            val--;
-                        }
-
-                        Text = val.ToString();
-                    }
-                }
-                else
-                {
-                    base.OnKeyDown(e);
-                }
-            }
-
-            protected override void OnTextChanged(EventArgs e)
-            {
-                if (string.IsNullOrWhiteSpace(Text) || !Text.IsHex())
-                {
-                    ResetText();
-                    SelectAll();
-                    return;
-                }
-
-                base.OnTextChanged(e);
-            }
-
-            public int? ToRawInt()
-            {
-                if (string.IsNullOrWhiteSpace(Text) || !Text.IsHex())
-                {
-                    if (Nullable)
-                    {
-                        return null;
-                    }
-
-                    return 0;
-                }
-
-                return (int)uint.Parse(Text);
-            }
-
-            public void SetFromRawInt(int? val)
-            {
-                Text = val.HasValue ? val.ToString() : "";
-            }
-        }
     }
 
     //From Bizhawk

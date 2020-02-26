@@ -49,6 +49,7 @@ namespace RTCV.CorruptCore
         public static Timer KillswitchTimer = new Timer();
 
         private static PluginHost.Host pluginHost = new PluginHost.Host();
+        public static PluginHost.Host PluginHost => pluginHost;
 
         public static bool EmuDirOverride = false;
 
@@ -228,8 +229,27 @@ namespace RTCV.CorruptCore
         public static bool IsStandaloneUI;
         public static bool IsEmulatorSide;
 
+
+        public class GameClosedEventArgs : EventArgs
+        {
+            public bool FullyClosed;
+            public GameClosedEventArgs(bool fullyClosed)
+            {
+                FullyClosed = fullyClosed;
+            }
+        }
+        public static EventHandler CorruptCoreExiting;
+        public static EventHandler<GameClosedEventArgs> GameClosed;
+        public static EventHandler LoadGameDone;
+
         public static void Start()
         {
+        }
+
+        public static void Shutdown()
+        {
+            CorruptCoreExiting?.Invoke(null, null);
+            PluginHost.Shutdown();
         }
 
         private static void OneTimeSettingsInitialize()
@@ -1012,31 +1032,17 @@ namespace RTCV.CorruptCore
 
         public static void LOAD_GAME_DONE()
         {
-         //   if (S.GET<CorruptCore.Tools.HexEditor>().Visible)
-         //   {
-         //       S.GET<CorruptCore.Tools.HexEditor>().Restart();
-         //   }
+            LoadGameDone?.Invoke(null, null);
         }
 
-        public static void GAME_CLOSED(bool closeHexEditor = false)
+        public static void GAME_CLOSED(bool fullyClosed = false)
         {
-            if (closeHexEditor)
-            {
-            //    S.GET<CorruptCore.Tools.HexEditor>().Close();
-            }
-            else
-            {
-          //      if (S.GET<CorruptCore.Tools.HexEditor>().Visible)
-          //      {
-           //         S.GET<CorruptCore.Tools.HexEditor>().Restart();
-         //       }
-            }
+            GameClosed?.Invoke(null, new GameClosedEventArgs(fullyClosed));
         }
+
 
         public static void KILL_HEX_EDITOR()
         {
-           // S.GET<CorruptCore.Tools.HexEditor>().HideOnClose = false;
-           // S.GET<CorruptCore.Tools.HexEditor>().Close();
         }
     }
 }
