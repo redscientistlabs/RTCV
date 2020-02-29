@@ -86,6 +86,9 @@ namespace RTCV.CorruptCore.EventWarlock
             return Grimoires;
         }
 
+        /// <summary>
+        /// Makes the lists as small as possible. Only really saves a few bytes but hey
+        /// </summary>
         public static void Smallify()
         {
             Grimoires.TrimExcess();
