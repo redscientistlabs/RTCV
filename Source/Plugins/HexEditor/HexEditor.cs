@@ -13,7 +13,6 @@ using RTCV.NetCore;
 using RTCV.CorruptCore;
 using NLog;
 using NLog.Layouts;
-using NLog.Windows.Forms;
 
 namespace RTCV.Plugins.HexEditor
 {
