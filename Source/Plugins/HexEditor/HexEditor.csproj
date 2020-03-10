@@ -33,25 +33,16 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Numerics" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Transactions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Frontend\UI\UI.csproj">
-      <Project>{bd376bb2-17ec-4fb0-a9fe-6b1bbf4af3e3}</Project>
-      <Name>UI</Name>
-      <Private>False</Private>
-    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\Common\Common.csproj">
       <Project>{a31c17e1-2eab-434f-a022-20193f2ceab7}</Project>
       <Name>Common</Name>

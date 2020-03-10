@@ -16,9 +16,7 @@ namespace RTCV.NetCore
         private volatile NetCoreSpec spec;
         private volatile ConcurrentDictionary<Guid, object> SyncReturns = new ConcurrentDictionary<Guid, object>();
         private volatile int activeWatches = 0;
-        private volatile bool KillReturnWatch;
         private CancellationTokenSource cts = new CancellationTokenSource();
-
         public Guid guid = Guid.NewGuid();
 
         public bool IsWaitingForReturn
@@ -63,7 +61,6 @@ namespace RTCV.NetCore
             catch(Exception e)
             {
                 if(e is OperationCanceledException
-                    || e is TaskCanceledException
                     || (e is AggregateException && (e.InnerException is OperationCanceledException || e.InnerException is TaskCanceledException)))
                 {
                     logger.Info("WatchedGuid {guid} was cancelled, returning null.", WatchedGuid);
@@ -92,7 +89,7 @@ namespace RTCV.NetCore
             //If we're this deep, something went really wrong so we just emergency abort
             if (StackFrameHelper.GetCallStackDepth() > 2000)
             {
-                KillReturnWatch = true;
+                cts.Cancel();
                 throw new CustomException("A fatal error has occurred. Please send this to the devs. You should save your Stockpile then restart the RTC.", Environment.StackTrace);
             }
 
@@ -100,9 +97,6 @@ namespace RTCV.NetCore
             {
                 if (token.IsCancellationRequested)
                 {
-                    logger.Info("Killing Return Watch on {guid}", guid);
-                    attemptsAtReading = 0;
-
                     logger.Warn("GetValue:Killed -> " + type);
                     //spec.OnSyncedMessageEnd(null);
                     spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{EVENT_SYNCEDMESSAGEEND}"));
@@ -118,7 +112,6 @@ namespace RTCV.NetCore
                 Thread.Sleep(spec.messageReadTimerDelay);
             }
 
-            attemptsAtReading = 0;
             SyncReturns.TryRemove(WatchedGuid, out object ret);
 
             logger.Info("GetValue:Returned -> " + type);

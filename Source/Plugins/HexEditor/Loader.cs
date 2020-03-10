@@ -2,7 +2,6 @@ using System;
 using System.ComponentModel.Composition;
 using NLog;
 using RTCV.Common;
-using RTCV.UI;
 using RTCV.PluginHost;
 using RTCV.NetCore;
 using System.Windows.Forms;

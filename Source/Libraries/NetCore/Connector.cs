@@ -12,21 +12,7 @@ namespace RTCV.NetCore
         internal UDPLink udp = null;
         internal volatile TCPLink tcp = null;
         internal MessageHub hub = null;
-        internal ReturnWatch _watch = null;
-        internal ReturnWatch watch
-        {
-            get
-            {
-                logger.Info("NetCoreConnector {guid} got return watch {guid}.", guid, _watch?.guid);
-                return _watch;
-            }
-
-            set
-            {
-                logger.Info("NetCoreConnector {guid} is replacting return watch {guid} with new watch {newguid}.", guid, _watch?.guid, value.guid);
-                _watch = value;
-            }
-        }
+        internal ReturnWatch watch = null;
 
         public NetworkStatus status => tcp?.status ?? NetworkStatus.DISCONNECTED;
 
