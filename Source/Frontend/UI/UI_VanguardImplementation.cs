@@ -32,10 +32,7 @@ namespace RTCV.UI
         public static void RestartServer()
         {
             logger.Info("Restarting NetCore");
-            connector?.Kill();
-            connector?.netConn?.Kill();
-            connector = null;
-            StartServer();
+            connector?.Restart();
         }
 
         private static void OnMessageReceived(object sender, NetCoreEventArgs e)
@@ -71,7 +68,7 @@ namespace RTCV.UI
                         }
                         break;
 
-                    case REMOTE_ALLSPECSSENT:
+                    case REMOTE_ALLSPECSSENT: 
                         if (UICore.FirstConnect)
                         {
                             UICore.Initialized.WaitOne(10000);

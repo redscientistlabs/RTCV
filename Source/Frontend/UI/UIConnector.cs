@@ -125,5 +125,9 @@ namespace RTCV.UI
         {
             netConn.Kill();
         }
+        public void Restart()
+        {
+            netConn.Restart();
+        }
     }
 }
