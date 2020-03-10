@@ -87,6 +87,7 @@
     <ProjectReference Include="..\..\Libraries\PluginHost\PluginHost.csproj">
       <Project>{3f02eda3-6949-4b30-9cda-b56ffba0e976}</Project>
       <Name>PluginHost</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +125,9 @@
     <PackageReference Include="TabControl">
       <Version>2.1.2</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FodyWeavers.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

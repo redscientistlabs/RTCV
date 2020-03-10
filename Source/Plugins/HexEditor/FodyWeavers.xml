@@ -2,7 +2,10 @@
   <Costura>
     <ExcludeAssemblies>
       Common
+      CorruptCore
+      NetCore
       PluginHost
+      UI
     </ExcludeAssemblies>
   </Costura>
 </Weavers>
