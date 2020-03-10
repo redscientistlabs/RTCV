@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -62,7 +62,7 @@ namespace RTCV.UI
                 RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Committing used states to session", currentProgress += 5));
                 //Commit any used states to the SESSION folder
                 commitUsedStatesToSession();
-                savestateBindingSource.Clear();
+                SyncObjectSingleton.FormExecute(() => savestateBindingSource.Clear()); 
             }
 
             var extractFolder = import ? "TEMP" : "SSK";
