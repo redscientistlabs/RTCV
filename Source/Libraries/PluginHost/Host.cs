@@ -50,10 +50,10 @@ namespace RTCV.PluginHost
 
         public void Start(string[] pluginDirs, RTCSide side)
         {
-            if (initialized)
-            {
-                throw new InvalidOperationException("Host has already been started. ");
-            }
+            //if (initialized)
+           // {
+           //     throw new InvalidOperationException("Host has already been started. ");
+          //  }
 
             initialize(pluginDirs, side);
 
@@ -83,11 +83,15 @@ namespace RTCV.PluginHost
             }
         }
 
-        //We want people to be able to pack their plugins into singular binaries and Costura seems like a good option
+        //We want people to be able to pack their plugins into singular binaries and Costura Fody seems like a good option
         //Costura doesn't play nicely with loading assemblies via reflection so we need Costura to register any of the loaded assemblies
         private void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
         {
-            var assembly = Assembly.LoadFile(args.LoadedAssembly.Location);
+            Assembly assembly = null;
+            if (args.LoadedAssembly.IsDynamic)
+                assembly = args.LoadedAssembly;
+            else
+                assembly = Assembly.LoadFile(args.LoadedAssembly.Location);
             var assemblyLoaderType = assembly.GetType("Costura.AssemblyLoader", false);
             var attachMethod = assemblyLoaderType?.GetMethod("Attach", BindingFlags.Static | BindingFlags.Public);
             attachMethod?.Invoke(null, new object[] { });
