@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -345,7 +346,26 @@ namespace RTCV.CorruptCore
         {
             if (!(bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_REFERENCES] ?? false)
             {
-                return true;
+                //Hack hack hack
+                //In pre-504, some stubs would save references. This results in a fun infinite loop
+                //As such, delete the referenced file because it doesn't matter as the implementation doesn't support references
+                //Only do this if we explicitly know that the references are not supported. If there's missing spec info, don't do it.
+                if (!(bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_REFERENCES] == true)
+                {
+                    try
+                    {
+                        File.Delete(psk.RomFilename);
+                    }
+                    catch (Exception ex)
+                    {
+                        Common.Logging.GlobalLogger.Error(ex,
+                            "Som-ething went terribly wrong when fixing missing references\n" +
+                            "Your stockpile should be fine (might prompt you to fix it on load)" +
+                            "Report this to the devs.");
+                    }
+                    psk.RomFilename = "";
+                    return true;
+                }
             }
 
             string message = customMessage ?? $"Can't find file {psk.RomFilename}\nGame name: {psk.GameName}\nSystem name: {psk.SystemName}\n\n To continue loading, provide a new file for replacement.";
