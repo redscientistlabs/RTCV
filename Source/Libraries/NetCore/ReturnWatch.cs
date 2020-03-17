@@ -77,7 +77,7 @@ namespace RTCV.NetCore
         internal async Task<Object> GetValueTask(Guid WatchedGuid, string type, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            logger.Info("GetValue called on {guid}", guid);
+            logger.Trace("GetValue called on {guid}", guid);
             //Jams the current thread until the value is returned or the KillReturnWatch flag is set to true
 
             logger.Info("GetValue:Awaiting -> " + type);
