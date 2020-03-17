@@ -585,7 +585,10 @@ namespace RTCV.UI
             switch (trigger)
             {
                 case "Manual Blast":
-                    S.GET<UI_CoreForm>().btnManualBlast_Click(null, null);
+                    SyncObjectSingleton.FormExecute(() =>
+                    {
+                        S.GET<UI_CoreForm>().btnManualBlast_Click(null, null);
+                    });
                     break;
 
                 case "Auto-Corrupt":
