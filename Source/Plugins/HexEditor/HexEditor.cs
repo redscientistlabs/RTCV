@@ -109,6 +109,15 @@ namespace RTCV.Plugins.HexEditor
                 if(this.Visible)
                     Restart();
             };
+
+
+            if (!Params.IsParamSet("HEXEDITOR_WARNING"))
+            {
+                MessageBox.Show("While the hex editor works fine for most people, on some systems it'll cause random crashes.\n" +
+                                "If you find yourself experiencing weird emulator issues, try disabling this plugin.\n\n" +
+                                "This message will only appear once.");
+                Params.SetParam("HEXEDITOR_WARNING");
+            }
         }
 
         private void HexEditor_VisibleChanged(object sender, EventArgs e)
