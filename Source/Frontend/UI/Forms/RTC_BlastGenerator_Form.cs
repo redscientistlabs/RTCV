@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -77,7 +77,7 @@ namespace RTCV.UI
         {
             dgvBlastGenerator.MouseClick += dgvBlastGenerator_MouseClick;
             dgvBlastGenerator.CellValueChanged += dgvBlastGenerator_CellValueChanged;
-            dgvBlastGenerator.CellClick += dgvBlastGenerator_CellClick;
+            dgvBlastGenerator.CellMouseClick += dgvBlastGenerator_CellMouseClick;
             dgvBlastGenerator.CellMouseDoubleClick += DgvBlastGenerator_CellMouseDoubleClick;
 
             UICore.SetRTCColor(UICore.GeneralColor, this);
@@ -174,7 +174,7 @@ namespace RTCV.UI
                 ((DataGridViewNumericUpDownCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvExecuteFrame"]).Value = 0M;
 
                 //Generate a random Seed
-                ((DataGridViewTextBoxCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvSeed"]).Value = CorruptCore.RtcCore.RND.Next();
+                ((DataGridViewTextBoxCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvSeed"]).Value = CorruptCore.RtcCore.RND.Next(Int32.MinValue, Int32.MaxValue);
 
                 PopulateDomainCombobox(dgvBlastGenerator.Rows[lastrow]);
                 PopulateModeCombobox(dgvBlastGenerator.Rows[lastrow]);
@@ -956,26 +956,45 @@ namespace RTCV.UI
             System.Diagnostics.Process.Start(sInfo);
         }
 
-        private void dgvBlastGenerator_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void dgvBlastGenerator_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             // Note handling
             if (e != null)
             {
                 DataGridView senderGrid = (DataGridView)sender;
 
-                if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
-                    e.RowIndex >= 0)
+                if (e.Button == MouseButtons.Left)
                 {
+                    if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
+                        e.RowIndex >= 0)
                     {
-                        DataGridViewCell textCell = dgvBlastGenerator.Rows[e.RowIndex].Cells["dgvNoteText"];
-                        DataGridViewCell buttonCell = dgvBlastGenerator.Rows[e.RowIndex].Cells["dgvNoteButton"];
+                        {
+                            DataGridViewCell textCell = dgvBlastGenerator.Rows[e.RowIndex].Cells["dgvNoteText"];
+                            DataGridViewCell buttonCell = dgvBlastGenerator.Rows[e.RowIndex].Cells["dgvNoteButton"];
 
-                        NoteItem note = new NoteItem(textCell.Value == null ? "" : textCell.Value.ToString());
-                        textCell.Value = note;
-                        S.SET(new RTC_NoteEditor_Form(note, buttonCell));
-                        S.GET<RTC_NoteEditor_Form>().Show();
-                        return;
+                            NoteItem note = new NoteItem(textCell.Value == null ? "" : textCell.Value.ToString());
+                            textCell.Value = note;
+                            S.SET(new RTC_NoteEditor_Form(note, buttonCell));
+                            S.GET<RTC_NoteEditor_Form>().Show();
+                            return;
+                        }
                     }
+                }
+                else if (e.Button == MouseButtons.Right)
+                {
+                    cms = new ContextMenuStrip();
+                    if (e.RowIndex != -1 && e.ColumnIndex != -1)
+                    {
+                        if (e.ColumnIndex == dgvBlastGenerator.Columns["dgvSeed"].Index)
+                        {
+                            ((ToolStripMenuItem)cms.Items.Add("Reroll Seed", null, new EventHandler((ob, ev) =>
+                            {
+                                var cell = dgvBlastGenerator[e.ColumnIndex, e.RowIndex];
+                                cell.Value = RtcCore.RND.Next(int.MinValue, int.MaxValue);
+                            }))).Enabled = true;
+                        }
+                    }
+                    cms.Show(dgvBlastGenerator, dgvBlastGenerator.PointToClient(Cursor.Position));
                 }
             }
         }
