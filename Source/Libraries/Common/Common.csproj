@@ -36,6 +36,9 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ConsoleTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Logging.cs" />
     <Compile Include="Objects\OperationResults.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -49,8 +52,6 @@
       <Version>4.3.0</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
