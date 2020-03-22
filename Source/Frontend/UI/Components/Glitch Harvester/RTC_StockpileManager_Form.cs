@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -283,18 +283,17 @@ namespace RTCV.UI
             }
         }
 
-        public void renameStashKey(StashKey sk)
+        public bool RenameStashKey(StashKey sk)
         {
             string value = sk.Alias;
 
             if (GetInputBox("Glitch Harvester", "Enter the new Stash name:", ref value) == DialogResult.OK && !string.IsNullOrWhiteSpace(value))
             {
                 sk.Alias = value.Trim();
+                return true;
             }
-            else
-            {
-                return;
-            }
+
+            return false;
         }
 
         private void btnRenameSelected_Click(object sender, EventArgs e)
@@ -306,15 +305,16 @@ namespace RTCV.UI
 
             if (dgvStockpile.SelectedRows.Count != 0)
             {
-                renameStashKey(dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
+                if (RenameStashKey(dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey))
+                {
+                    StockpileManager_UISide.StockpileChanged();
+                    dgvStockpile.Refresh();
+                    UnsavedEdits = true;
+                }
 
-                dgvStockpile.Refresh();
                 //lbStockpile.RefreshItemsReal();
             }
 
-            StockpileManager_UISide.StockpileChanged();
-
-            UnsavedEdits = true;
         }
 
         private void btnRemoveSelectedStockpile_Click(object sender, EventArgs e)
