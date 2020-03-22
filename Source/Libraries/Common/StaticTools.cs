@@ -82,7 +82,7 @@ namespace RTCV.Common
         public static bool ISNULL<T>()
         {
             Type typ = typeof(T);
-            return instances.ContainsKey(typ);
+            return !instances.ContainsKey(typ);
         }
 
         public static T GET<T>()
