@@ -50,10 +50,10 @@ namespace RTCV.UI
             this.btnRemoveSelected = new System.Windows.Forms.Button();
             this.btnCorrupt = new System.Windows.Forms.Button();
             this.btnSendToStash = new System.Windows.Forms.Button();
-            this.btnRemoveDisabled = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.btnDisable50 = new System.Windows.Forms.Button();
             this.btnInvertDisabled = new System.Windows.Forms.Button();
+            this.btnRemoveDisabled = new System.Windows.Forms.Button();
             this.btnDisableEverything = new System.Windows.Forms.Button();
             this.btnEnableEverything = new System.Windows.Forms.Button();
             this.btnDuplicateSelected = new System.Windows.Forms.Button();
@@ -174,24 +174,24 @@ namespace RTCV.UI
             // panelSidebar
             // 
             this.panelSidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.panelSidebar.Controls.Add(this.btnAddStashToStockpile);
+            this.panelSidebar.Controls.Add(this.btnDisable50);
+            this.panelSidebar.Controls.Add(this.btnInvertDisabled);
+            this.panelSidebar.Controls.Add(this.btnRemoveDisabled);
             this.panelSidebar.Controls.Add(this.btnSanitizeTool);
+            this.panelSidebar.Controls.Add(this.btnDisableEverything);
+            this.panelSidebar.Controls.Add(this.btnEnableEverything);
+            this.panelSidebar.Controls.Add(this.btnRemoveSelected);
+            this.panelSidebar.Controls.Add(this.btnDuplicateSelected);
             this.panelSidebar.Controls.Add(this.btnAddRow);
+            this.panelSidebar.Controls.Add(this.btnAddStashToStockpile);
             this.panelSidebar.Controls.Add(this.panel1);
             this.panelSidebar.Controls.Add(this.pnMemoryTargetting);
             this.panelSidebar.Controls.Add(this.btnHelp);
             this.panelSidebar.Controls.Add(this.label3);
             this.panelSidebar.Controls.Add(this.btnLoadCorrupt);
-            this.panelSidebar.Controls.Add(this.btnRemoveSelected);
             this.panelSidebar.Controls.Add(this.btnCorrupt);
             this.panelSidebar.Controls.Add(this.btnSendToStash);
-            this.panelSidebar.Controls.Add(this.btnRemoveDisabled);
             this.panelSidebar.Controls.Add(this.label4);
-            this.panelSidebar.Controls.Add(this.btnDisable50);
-            this.panelSidebar.Controls.Add(this.btnInvertDisabled);
-            this.panelSidebar.Controls.Add(this.btnDisableEverything);
-            this.panelSidebar.Controls.Add(this.btnEnableEverything);
-            this.panelSidebar.Controls.Add(this.btnDuplicateSelected);
             this.panelSidebar.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelSidebar.Location = new System.Drawing.Point(662, 24);
             this.panelSidebar.Name = "panelSidebar";
