@@ -14,6 +14,28 @@ namespace RTCV.Common.Forms
 {
     public partial class LogConsoleForm : Form
     {
+        public bool HideOnClose = false;
+
+        public override Color ForeColor
+        {
+            get => base.ForeColor;
+            set
+            {
+                LogConsole.ForeColor = value;
+                base.ForeColor = value;
+            }
+        }
+        public override Color BackColor
+        {
+            get => base.BackColor;
+            set
+            {
+                LogConsole.BackColor = value;
+                base.BackColor = value;
+            }
+        }
+
+
         /// <summary>
         /// Creates a LogConsoleForm using the global logger
         /// </summary>
@@ -33,6 +55,16 @@ namespace RTCV.Common.Forms
         {
             InitializeComponent();
             LogConsole.InitializeCustomLogger(maxLines, layout, fileName);
+            this.FormClosing += LogConsoleForm_FormClosing;
+        }
+
+        private void LogConsoleForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (HideOnClose)
+            {
+                this.Hide();
+                e.Cancel = true;
+            }
         }
 
         public Logger Logger => LogConsole.Logger;
