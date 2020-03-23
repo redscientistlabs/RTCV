@@ -28,35 +28,36 @@ namespace RTCV.Common.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.tbLog = new System.Windows.Forms.RichTextBox();
+            this.LogConsole = new RTCV.Common.Forms.LogConsole();
             this.SuspendLayout();
             // 
-            // tbLog
+            // logConsole1
             // 
-            this.tbLog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.tbLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbLog.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.tbLog.ForeColor = System.Drawing.Color.White;
-            this.tbLog.Location = new System.Drawing.Point(0, 0);
-            this.tbLog.Name = "tbLog";
-            this.tbLog.Size = new System.Drawing.Size(484, 321);
-            this.tbLog.TabIndex = 0;
-            this.tbLog.Text = "";
+            this.LogConsole.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LogConsole.Location = new System.Drawing.Point(0, 0);
+            this.LogConsole.Name = "LogConsole";
+            this.LogConsole.Size = new System.Drawing.Size(415, 322);
+            this.LogConsole.TabIndex = 0;
+            this.LogConsole.Tag = "color:dark1";
             // 
-            // ConsoleForm
+            // LogConsoleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(484, 321);
-            this.Controls.Add(this.tbLog);
-            this.Name = "ConsoleForm";
-            this.Text = "Console";
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.ClientSize = new System.Drawing.Size(415, 322);
+            this.Controls.Add(this.LogConsole);
+            this.Font = new System.Drawing.Font("Segoe UI", 8.25F);
+            this.ForeColor = System.Drawing.Color.White;
+            this.Name = "LogConsoleForm";
+            this.Tag = "color:normal";
+            this.Text = "Log Console";
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox tbLog;
+        public LogConsole LogConsole;
     }
 }

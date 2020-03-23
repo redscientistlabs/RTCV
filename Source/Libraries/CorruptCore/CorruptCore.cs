@@ -387,6 +387,10 @@ namespace RTCV.CorruptCore
             RTCSide side = RTCSide.Server;
             if (IsEmulatorSide)
                 side = RTCSide.Client;
+            if (Attached)
+            {
+                side = RTCSide.Both;
+            }
             pluginHost.Start(paths, side);
         }
 

@@ -33,14 +33,22 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\LogConsole.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\LogConsole.designer.cs">
+      <DependentUpon>LogConsole.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\LogConsoleForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\LogConsoleForm.designer.cs">
+    <Compile Include="Forms\LogConsoleForm.Designer.cs">
       <DependentUpon>LogConsoleForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Logging.cs" />
@@ -56,10 +64,11 @@
       <Version>4.3.0</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Controls\" />
-  </ItemGroup>
-  <ItemGroup>
+    <EmbeddedResource Include="Controls\LogConsole.resx">
+      <DependentUpon>LogConsole.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\LogConsoleForm.resx">
       <DependentUpon>LogConsoleForm.cs</DependentUpon>
     </EmbeddedResource>

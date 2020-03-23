@@ -11,6 +11,11 @@ namespace RTCV.Common
     public static class Logging
     {
         public static Logger GlobalLogger = LogManager.GetLogger("Global");
+
+        private static readonly SimpleLayout defaultLayout = new NLog.Layouts.SimpleLayout("${longdate}|${level:uppercase=true}|${logger}|${message}${onexception:|${newline}EXCEPTION OCCURRED\\:${exception:format=type,message,method:maxInnerExceptionLevel=5:innerFormat=shortType,message,method}${newline}");
+        private static readonly SimpleLayout traceLayout = new NLog.Layouts.SimpleLayout("${longdate}|${level:uppercase=true}|${logger}|${callsite}|${message}${onexception:|${newline}EXCEPTION OCCURRED\\:${exception:format=type,message,method:maxInnerExceptionLevel=5:innerFormat=shortType,message,method}${newline}");
+
+        public static Layout CurrentLayout = defaultLayout;
         private static readonly LogLevel minLevel = LogLevel.Trace;
         private static readonly int logsToKeep = 5;
 
@@ -18,9 +23,6 @@ namespace RTCV.Common
         {
             var config = new NLog.Config.LoggingConfiguration();
 
-            // Targets where to log to: File and Console
-            var traceLayout = new NLog.Layouts.SimpleLayout("${longdate}|${level:uppercase=true}|${logger}|${callsite}|${message}${onexception:|${newline}EXCEPTION OCCURRED\\:${exception:format=type,message,method:maxInnerExceptionLevel=5:innerFormat=shortType,message,method}${newline}");
-            var defaultLayout = new NLog.Layouts.SimpleLayout("${longdate}|${level:uppercase=true}|${logger}|${message}${onexception:|${newline}EXCEPTION OCCURRED\\:${exception:format=type,message,method:maxInnerExceptionLevel=5:innerFormat=shortType,message,method}${newline}");
 
             for (int i = logsToKeep; i >= 0; i--)
             {
@@ -54,19 +56,13 @@ namespace RTCV.Common
                 Console.WriteLine($"Failed to delete old log!\n{e}");
             }
 
-            SimpleLayout layout = defaultLayout;
             if (minLevel == LogLevel.Trace)
             {
-                layout = traceLayout;
+                CurrentLayout = traceLayout;
             }
 
-            if (minLevel == LogLevel.Trace)
-            {
-                layout = traceLayout;
-            }
-
-           // var logfile = new NLog.Targets.FileTarget("logfile") { FileName = filename, Layout = layout };
-            var logconsole = new NLog.Targets.ColoredConsoleTarget("logconsole") { Layout = layout };
+            // var logfile = new NLog.Targets.FileTarget("logfile") { FileName = filename, Layout = layout };
+            var logconsole = new NLog.Targets.ColoredConsoleTarget("logconsole") { Layout = CurrentLayout };
 
             // Rules for mapping loggers to targets            
             config.AddRule(LogLevel.Trace, LogLevel.Fatal, logconsole);
@@ -79,7 +75,6 @@ namespace RTCV.Common
             {
                 Common.ConsoleHelper.HideConsole();
             }
-
 
             GlobalLogger = LogManager.GetLogger("Global");
         }

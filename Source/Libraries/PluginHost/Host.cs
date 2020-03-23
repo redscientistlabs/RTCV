@@ -50,10 +50,10 @@ namespace RTCV.PluginHost
 
         public void Start(string[] pluginDirs, RTCSide side)
         {
-            //if (initialized)
-           // {
-           //     throw new InvalidOperationException("Host has already been started. ");
-          //  }
+            if (initialized)
+            {
+                logger.Error(new InvalidOperationException("Host has already been started.");
+            }
 
             initialize(pluginDirs, side);
 
@@ -62,7 +62,19 @@ namespace RTCV.PluginHost
                 if (p.SupportedSide == side || p.SupportedSide == RTCSide.Both)
                 {
                     logger.Info($"Loading {p.Name}");
-                    if (p.Start(side))
+
+
+                    //Hack Hack Hack. If we're in attached, we're both sides. We can't thin-client this, we're actually both sides.
+                    //Start both sides and leave it up to the plugin dev to handle it for now if they're devving in attached mode (sorry Narry) //Narry 3-22-20
+                    if (side == RTCSide.Both)
+                    {
+                        if(p.Start(RTCSide.Client))
+                            logger.Info("Loaded {pluginName} as client successfully", p.Name);
+                        if(p.Start(RTCSide.Server))
+                            logger.Info("Loaded {pluginName} as server successfully", p.Name);
+                        _loadedPlugins.Add(p);
+                    }
+                    else if (p.Start(side))
                     {
                         logger.Info("Loaded {pluginName} successfully", p.Name);
                         _loadedPlugins.Add(p);
@@ -71,6 +83,7 @@ namespace RTCV.PluginHost
                     {
                         logger.Error("Failed to load {pluginName}", p.Name);
                     }
+
                 }
             }
             initialized = true;
