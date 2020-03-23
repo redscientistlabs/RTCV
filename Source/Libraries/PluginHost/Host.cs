@@ -52,7 +52,7 @@ namespace RTCV.PluginHost
         {
             if (initialized)
             {
-                logger.Error(new InvalidOperationException("Host has already been started.");
+                logger.Error(new InvalidOperationException("Host has already been started."));
             }
 
             initialize(pluginDirs, side);
