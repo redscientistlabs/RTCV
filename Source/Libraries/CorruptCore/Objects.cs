@@ -763,6 +763,11 @@ namespace RTCV.CorruptCore
             };
             Process.Start(p);
         }
+
+        public StashKey GetStashkey(string name)
+        {
+            return StashKeys.First(x => x.Alias == name);
+        }
     }
 
     [Serializable]
@@ -859,10 +864,19 @@ namespace RTCV.CorruptCore
         /// <summary>
         /// Can be called from UI Side
         /// </summary>
-		public bool Run()
+        public bool Run()
         {
             StockpileManager_UISide.CurrentStashkey = this;
             return StockpileManager_UISide.ApplyStashkey(this);
+        }
+
+        /// <summary>
+        /// Can be called from UI Side
+        /// </summary>
+        public bool Apply()
+        {
+            StockpileManager_UISide.CurrentStashkey = this;
+            return StockpileManager_UISide.ApplyStashkey(this, false);
         }
 
         /// <summary>

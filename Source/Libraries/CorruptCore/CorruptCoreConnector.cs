@@ -640,6 +640,20 @@ namespace RTCV.CorruptCore
                             StepActions.RemoveExcessInfiniteStepUnits();
                         });
                         break;
+                    case "REMOTE_PEEKBYTES":
+                    {
+                        var val = advancedMessage.objectValue as object[];
+                        var domain = val[0] as string;
+                        long address = (long)val[1];
+                        byte[] value = (byte[])val[2];
+
+                        var mi = MemoryDomains.GetInterface(domain);
+                        if(mi != null)
+                            e.setReturnValue(mi.PeekBytes(address, address + value.Length, true));
+
+
+                        break;
+                    }
 
                     default:
                         new object();

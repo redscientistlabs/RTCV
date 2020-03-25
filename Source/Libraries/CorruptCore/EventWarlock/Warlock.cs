@@ -19,6 +19,7 @@ namespace RTCV.CorruptCore.EventWarlock
         /// The list of grimoires 
         /// </summary>
         private static List<Grimoire> Grimoires = new List<Grimoire>();
+        private static bool initialized = false;
 
         /// <summary>
         /// Last result(conditionals), used for else logic within Spells. All elses will be after another spell
@@ -54,7 +55,7 @@ namespace RTCV.CorruptCore.EventWarlock
         {
             Grimoires.Remove(g);
         }
-
+        
         public static void Reset()
         {
             Grimoires.Clear();

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ceras;
 
 namespace RTCV.CorruptCore.EventWarlock
 {
 
     //todo: make easier for the editor to access all the conditionals
     [System.Serializable]
+    [Ceras.MemberConfig(TargetMember.All)]
     public class EWConditionGroup : EWConditional
     {
         /// <summary>

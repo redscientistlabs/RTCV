@@ -13,25 +13,18 @@ namespace RTCV.CorruptCore.EventWarlock.WarlockConditions
     /// </summary>
     [Serializable]
     [WarlockEditable]
-    public class FirstEqualsSecond : EWConditional
+    public class ExecuteOnce : EWConditional
     {
-        [WarlockEditorField("First string")]  string a;
-        [WarlockEditorField("Second string")] string b;
-
-        /// <summary>
-        /// Parameterless consturctor for serialization
-        /// </summary>
-        public FirstEqualsSecond() { }
-
-        public FirstEqualsSecond(string a, string b)
-        {
-            this.a = a;
-            this.b = b;
-        }
-
+        bool executed = false;
+        
         public override bool Evaluate(Grimoire grimoire)
         {
-            return a == b;
+            if (executed == false)
+            {
+                executed = true;
+                return true;
+            }
+            return false;
         }
     }
 }

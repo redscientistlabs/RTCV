@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ceras;
 
 namespace RTCV.CorruptCore.EventWarlock
 {
@@ -10,6 +11,7 @@ namespace RTCV.CorruptCore.EventWarlock
     /// Holds conditionals and actions to be executed if conditionals evaluates to true
     /// </summary>
     [System.Serializable]
+    [Ceras.MemberConfig(TargetMember.All)]
     public class Spell
     {
         //encapsulation will need to be figured out later
@@ -21,7 +23,12 @@ namespace RTCV.CorruptCore.EventWarlock
         public List<WarlockAction> Actions = new List<WarlockAction>();
         public bool isElse = false;
 
-        public Spell(string name = "Unnamed")
+
+        public Spell()
+        {
+            this.Name = "Unnamed";
+        }
+        public Spell(string name)
         {
             this.Name = name;
         }

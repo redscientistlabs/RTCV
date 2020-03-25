@@ -14,23 +14,24 @@ namespace RTCV.CorruptCore.EventWarlock.WarlockActions
     [Serializable]
     [WarlockEditable]
     [Ceras.MemberConfig(TargetMember.All)]
-    public class WarlockActionEcho : WarlockAction
+    public class WarlockActionRunStashKey : WarlockAction
     {
-        [WarlockEditorField("Data")] string data;
+        private StashKey sk;
+
 
         /// <summary>
         /// Parameterless consturctor for serialization. DON'T USE THIS.
         /// </summary>
-        public WarlockActionEcho() { }
+        public WarlockActionRunStashKey() { }
 
-        public WarlockActionEcho(string data)
+        public WarlockActionRunStashKey(StashKey _sk)
         {
-            this.data = data;
+            sk = _sk;
         }
 
         public override void DoAction(Grimoire grimoire)
         {
-            Console.WriteLine("Repeating: " + data);
+            sk.Run();
         }
     }
 }

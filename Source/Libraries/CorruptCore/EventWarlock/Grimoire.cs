@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ceras;
 
 namespace RTCV.CorruptCore.EventWarlock
 {
     [System.Serializable]
+    [Ceras.MemberConfig(TargetMember.All)]
     public class Grimoire
     {
         public string Name = null;
@@ -22,19 +24,27 @@ namespace RTCV.CorruptCore.EventWarlock
         //Todo: add other wanted data here
 
         //Static variables
-        [NonSerialized]
+        [NonSerialized, Ceras.Exclude]
         public static HashSet<string> StaticFlags = new HashSet<string>();
-        [NonSerialized]
+        [NonSerialized, Ceras.Exclude]
         public static Dictionary<string, object> StaticVariables = new Dictionary<string, object>();
 
         //Non static variables
-        [NonSerialized]
+        [NonSerialized, Ceras.Exclude]
         public HashSet<string> Flags = new HashSet<string>();
-        [NonSerialized]
+        [NonSerialized, Ceras.Exclude]
         public Dictionary<string, object> Variables = new Dictionary<string, object>();
 
 
-        public Grimoire(string name = "") {
+        /// <summary>
+        /// Parameterless consturctor for serialization
+        /// </summary>
+        public Grimoire()
+        {
+            this.Name = RtcCore.GetRandomKey();
+        }
+        public Grimoire(string name)
+        {
             this.Name = name;
         }
 

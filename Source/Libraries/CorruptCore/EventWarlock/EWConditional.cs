@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ceras;
 
 namespace RTCV.CorruptCore.EventWarlock
 {
     [Serializable]
+    [Ceras.MemberConfig(TargetMember.All)]
     public abstract class EWConditional
     {
         public QuestionOp NextOp = QuestionOp.NONE;

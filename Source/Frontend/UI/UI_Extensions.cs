@@ -155,7 +155,7 @@ namespace RTCV.UI
 
         public class ComponentForm : Form
         {
-            private protected static NLog.Logger logger;
+            protected internal static NLog.Logger logger;
             private Panel defaultPanel = null;
             private Panel previousPanel = null;
 

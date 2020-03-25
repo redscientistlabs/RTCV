@@ -97,7 +97,12 @@
     <Compile Include="EventWarlock\Spell.cs" />
     <Compile Include="EventWarlock\Warlock.cs" />
     <Compile Include="EventWarlock\WarlockAction.cs" />
+    <Compile Include="EventWarlock\WarlockActions\WarlockActionApplyStashKey.cs" />
+    <Compile Include="EventWarlock\WarlockActions\WarlockActionRunStashKey.cs" />
     <Compile Include="EventWarlock\WarlockActions\WarlockActionEcho.cs" />
+    <Compile Include="EventWarlock\WarlockConditions\ExecuteOnce.cs" />
+    <Compile Include="EventWarlock\WarlockConditions\MemoryEqualsServer.cs" />
+    <Compile Include="EventWarlock\WarlockConditions\MemoryEquals.cs" />
     <Compile Include="EventWarlock\WarlockConditions\FirstEqualsSecond.cs" />
     <Compile Include="MemoryBanks.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
