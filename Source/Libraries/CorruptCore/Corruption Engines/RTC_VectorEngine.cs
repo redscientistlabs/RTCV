@@ -1,4 +1,4 @@
-﻿using RTCV.NetCore;
+using RTCV.NetCore;
 
 namespace RTCV.CorruptCore
 {
@@ -15,6 +15,9 @@ namespace RTCV.CorruptCore
             get => (string)AllSpec.CorruptCoreSpec[RTCSPEC.VECTOR_VALUELISTHASH];
             set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.VECTOR_VALUELISTHASH, value);
         }
+
+        //public static int Surrounding
+
 
         public static PartialSpec getDefaultPartial()
         {
