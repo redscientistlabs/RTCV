@@ -16,12 +16,17 @@ namespace RTCV.CorruptCore.EventWarlock
 
         public bool Enabled = true;
         public string Name;
+        //private EWConditional conditional = null;
+        //public EWConditional Conditional { get => conditional; }
         public List<WarlockAction> Actions = new List<WarlockAction>();
-        //Not a property because it needs to be serialized
         public bool IsElse = false;
 
         public List<List<EWConditional>> ConditionalGroups { get; private set; } = new List<List<EWConditional>>();
-
+        //public List<List<EWConditional>> ConditionalGroups => conditionalGroups;
+        private int maxExecutions = -1;
+        private int executionsLeft = -1;
+        public int MaxExecutions { get { return maxExecutions; } set { maxExecutions = value; executionsLeft = value; } }
+        public int ExecutionsLeft => executionsLeft;
         public Spell(string name = "Unnamed")
         {
             this.Name = name;
@@ -56,13 +61,13 @@ namespace RTCV.CorruptCore.EventWarlock
 
         public void AddConditionalToLastGroup(EWConditional conditional)
         {
-            if(ConditionalGroups.Count == 0)
+            if (ConditionalGroups.Count == 0)
             {
                 ConditionalGroups.Add(new List<EWConditional>() { conditional });
             }
             else
             {
-                ConditionalGroups[ConditionalGroups.Count-1].Add(conditional);
+                ConditionalGroups[ConditionalGroups.Count - 1].Add(conditional);
             }
         }
 
@@ -75,7 +80,7 @@ namespace RTCV.CorruptCore.EventWarlock
         {
             for (int j = 0; j < ConditionalGroups.Count; j++)
             {
-                if(ConditionalGroups[j].Remove(conditional)) break;
+                if (ConditionalGroups[j].Remove(conditional)) break;
             }
             CleanGroups();
         }
@@ -85,7 +90,7 @@ namespace RTCV.CorruptCore.EventWarlock
             var groupsToClean = new List<List<EWConditional>>();
             for (int j = 0; j < ConditionalGroups.Count; j++)
             {
-                if(ConditionalGroups[j].Count == 0)
+                if (ConditionalGroups[j].Count == 0)
                 {
                     groupsToClean.Add(ConditionalGroups[j]);
                 }
@@ -140,6 +145,11 @@ namespace RTCV.CorruptCore.EventWarlock
             //Local function to run actions
             void DoLogic()
             {
+                if(maxExecutions > -1 && executionsLeft != 0)
+                {
+                    executionsLeft--;
+                }
+
                 for (int j = 0; j < Actions.Count; j++)
                 {
                     Actions[j].DoAction(grimoire);
@@ -153,17 +163,27 @@ namespace RTCV.CorruptCore.EventWarlock
                 return true;
             }
 
+            if(maxExecutions > -1)
+            {
+                if(executionsLeft == 0)
+                {
+                    //elses after will run
+                    return false;
+                }
+            }
+
+
             if (elseCheck)
             {
                 //If no conditionals just do the logic
-                if(ConditionalGroups.Count == 0)
+                if (ConditionalGroups.Count == 0)
                 {
                     DoLogic();
                     return true;
                 }
                 else
                 {
-                    
+
                     bool curRes = true;
                     for (int j = 0; j < ConditionalGroups.Count; j++)
                     {
