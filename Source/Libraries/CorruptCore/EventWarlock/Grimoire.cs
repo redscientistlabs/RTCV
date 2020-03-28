@@ -1,5 +1,6 @@
 using RTCV.CorruptCore.EventWarlock;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ namespace RTCV.CorruptCore.EventWarlock
     {
         public string Name = null;
 
+        public IEnumerable<Spell> AllSpells => LoadSpells.Concat(PreExecuteSpells).Concat(PreExecuteSpells).Concat(ExecuteSpells).Concat(PostExecuteSpells);
         public List<Spell> LoadSpells = new List<Spell>();
         public List<Spell> PreExecuteSpells = new List<Spell>();
         public List<Spell> ExecuteSpells = new List<Spell>();

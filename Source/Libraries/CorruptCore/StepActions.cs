@@ -361,8 +361,8 @@ namespace RTCV.CorruptCore
             lock (executeLock)
             {
                 StepStart?.Invoke(null, new EventArgs());
-                if (isRunning)
-                {
+               //if (isRunning)
+               //{
                     bool needsRefilter = false;
                     //Queue everything up
                     CheckApply();
@@ -465,7 +465,7 @@ namespace RTCV.CorruptCore
                     {
                         FilterBuListCollection();
                     }
-                }
+                //}
                 StepEnd?.Invoke(null, new EventArgs());
             }
         }
