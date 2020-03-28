@@ -141,6 +141,7 @@
             this.btnHelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnHelp.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold);
             this.btnHelp.ForeColor = System.Drawing.Color.Black;
+            this.btnHelp.Image = global::RTCV.UI.Properties.Resources.Question_Mark;
             this.btnHelp.Location = new System.Drawing.Point(133, 1);
             this.btnHelp.Name = "btnHelp";
             this.btnHelp.Size = new System.Drawing.Size(27, 22);
