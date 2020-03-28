@@ -278,6 +278,7 @@ namespace RTCV.UI
                         break;
                 }
                 cell.Value = cell.Items[0];
+                cell.ToolTipText = "The generation mode. See the ? button on the sidebar for more info.";
             }
         }
 
