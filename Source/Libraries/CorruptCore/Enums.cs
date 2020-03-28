@@ -110,7 +110,7 @@
         SOURCE_SET,
         SOURCE_RANDOM,
         DEST_RANDOM,
-        FREEZE,
+        SELF,
     }
 
     public enum ProblematicItemTypes

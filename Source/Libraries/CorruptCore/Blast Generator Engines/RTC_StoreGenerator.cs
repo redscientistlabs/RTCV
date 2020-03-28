@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace RTCV.CorruptCore
 {
@@ -84,7 +84,7 @@ namespace RTCV.CorruptCore
                     case BGStoreModes.DEST_RANDOM:
                         destAddress = rand.Next(0, Convert.ToInt32(mi.Size - 1));
                         break;
-                    case BGStoreModes.FREEZE:
+                    case BGStoreModes.SELF:
                         destAddress = address;
                         break;
                     default:
