@@ -676,7 +676,7 @@ namespace RTCV.UI
                     return 4;
 
                 case "64-bit":
-                    return 4;
+                    return 8;
 
                 default:
                     return -1;
