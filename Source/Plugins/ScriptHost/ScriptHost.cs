@@ -14,30 +14,9 @@ namespace RTCV.Plugins.ScriptHost
         public ScriptHost()
         {
             InitializeComponent();
-            tc.TabClick += TcTabClick;
             var defaultTab = new ScriptManagerTab();
-            var addTab = new Manina.Windows.Forms.Tab()
-            {
-                Name = " + ",
-                Text = " + ",
-                BackColor = DarkerGray,
-                ForeColor = Color.White
-            };
             tc.Tabs.Add(defaultTab);
-            tc.Tabs.Add(addTab);
-        }
-
-        private void TcTabClick(object sender, Manina.Windows.Forms.TabMouseEventArgs e)
-        {
-            if (this.tc.GetTabBounds(this.tc.Tabs.Last()).Contains(e.Location))
-            {
-                if (e.Button == MouseButtons.Left)
-                {
-                    var newTab = new ScriptManagerTab();
-                    this.tc.Tabs.Insert(tc.Tabs.Count - 1, newTab);
-                    this.tc.SelectedTab = newTab;
-                }
-            }
+            tc.MouseDoubleClick += Tc_MouseDoubleClick;
         }
 
         private ScriptManagerTab GetCurrentTab()
@@ -141,6 +120,26 @@ namespace RTCV.Plugins.ScriptHost
         private void saveAsToolStripMenuItem_Click(object sender, System.EventArgs e)
         {
             SaveScript();
+        }
+
+        private void AddTab()
+        {
+            var newTab = new ScriptManagerTab();
+            this.tc.Tabs.Add(newTab);
+            this.tc.SelectedTab = newTab;
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddTab();
+        }
+
+        private void Tc_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (tc.TabArea.Contains(e.Location) && !tc.Tabs.All(x => x.ClientRectangle.Contains(e.Location)))
+            {
+                AddTab();
+            }
         }
     }
 }
