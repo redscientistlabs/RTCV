@@ -330,13 +330,11 @@ namespace RTCV.UI
                 {
                     dgvStockpile.Rows.Remove(row);
                 }
+                StockpileManager_UISide.StockpileChanged();
+                UnsavedEdits = true;
+                S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
             }
 
-            StockpileManager_UISide.StockpileChanged();
-
-            UnsavedEdits = true;
-
-            S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
         }
 
         private void btnClearStockpile_Click(object sender, EventArgs e)
