@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -121,12 +121,12 @@ namespace RTCV.UI
             {
                 if (bu.Domain == vmdName)
                 {
-                    bu.Domain = name;
+                    bu.Domain = "[V]" + name;
                 }
 
                 if (bu.SourceDomain == vmdName)
                 {
-                    bu.SourceDomain = name;
+                    bu.SourceDomain = "[V]" + name;
                 }
             }
             //Go through the stash history and update any references 
@@ -136,12 +136,12 @@ namespace RTCV.UI
                 {
                     if (bu.Domain == vmdName)
                     {
-                        bu.Domain = name;
+                        bu.Domain = "[V]" + name;
                     }
 
                     if (bu.SourceDomain == vmdName)
                     {
-                        bu.SourceDomain = name;
+                        bu.SourceDomain = "[V]" + name;
                     }
                 }
             }
@@ -152,12 +152,12 @@ namespace RTCV.UI
                 {
                     if (bu.Domain == vmdName)
                     {
-                        bu.Domain = name;
+                        bu.Domain = "[V]" + name;
                     }
 
                     if (bu.SourceDomain == vmdName)
                     {
-                        bu.SourceDomain = name;
+                        bu.SourceDomain = "[V]" + name;
                     }
                 }
             }
