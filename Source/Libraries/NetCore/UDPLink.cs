@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -57,7 +57,7 @@ namespace RTCV.NetCore
                 //Todo - Refactor this into a way to blacklist specific commands 
                 if (message.Type != "UI|KILLSWITCH_PULSE" || ConsoleEx.ShowDebug)
                 {
-                    logger.Info("UDP : Sent simple message \"{type}\"", message.Type);
+                    logger.Trace("UDP : Sent simple message \"{type}\"", message.Type);
                 }
             }
         }

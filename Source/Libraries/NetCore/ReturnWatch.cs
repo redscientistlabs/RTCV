@@ -80,7 +80,7 @@ namespace RTCV.NetCore
             logger.Trace("GetValue called on {guid}", guid);
             //Jams the current thread until the value is returned or the KillReturnWatch flag is set to true
 
-            logger.Info("GetValue:Awaiting -> " + type);
+            logger.Trace("GetValue:Awaiting -> " + type);
             //spec.OnSyncedMessageStart(null);
             spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{EVENT_SYNCEDMESSAGESTART}"));
 
