@@ -626,8 +626,8 @@ namespace RTCV.UI
                 int interval = Convert.ToInt32(row.Cells["dgvInterval"].Value);
                 long startAddress = Convert.ToInt64(row.Cells["dgvStartAddress"].Value);
                 long endAddress = Convert.ToInt64(row.Cells["dgvEndAddress"].Value);
-                long param1 = Convert.ToInt64(row.Cells["dgvParam1"].Value);
-                long param2 = Convert.ToInt64(row.Cells["dgvParam2"].Value);
+                ulong param1 = Convert.ToUInt64(row.Cells["dgvParam1"].Value);
+                ulong param2 = Convert.ToUInt64(row.Cells["dgvParam2"].Value);
                 int lifetime = Convert.ToInt32(row.Cells["dgvLifetime"].Value);
                 int executeframe = Convert.ToInt32(row.Cells["dgvExecuteFrame"].Value);
                 bool loop = Convert.ToBoolean(row.Cells["dgvLoop"].Value);

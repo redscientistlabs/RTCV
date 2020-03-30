@@ -2228,8 +2228,8 @@ namespace RTCV.CorruptCore
         public long StepSize { get; set; }
         public long StartAddress { get; set; }
         public long EndAddress { get; set; }
-        public long Param1 { get; set; }
-        public long Param2 { get; set; }
+        public ulong Param1 { get; set; }
+        public ulong Param2 { get; set; }
         public string Mode { get; set; }
         public string Note { get; set; }
         public int Lifetime { get; set; }
@@ -2242,7 +2242,7 @@ namespace RTCV.CorruptCore
         {
         }
 
-        public BlastGeneratorProto(string _note, string _blastType, string _domain, string _mode, int _precision, long _stepSize, long _startAddress, long _endAddress, long _param1, long _param2, int lifetime, int executeframe, bool loop, int _seed)
+        public BlastGeneratorProto(string _note, string _blastType, string _domain, string _mode, int _precision, long _stepSize, long _startAddress, long _endAddress, ulong _param1, ulong _param2, int lifetime, int executeframe, bool loop, int _seed)
         {
             Note = _note;
             BlastType = _blastType;
