@@ -252,9 +252,10 @@ namespace RTCV.UI
 
                             string value = "";
 
-                            if (RTCV.UI.UI_Extensions.GetInputBox("VMD Generation", "Enter the new VMD name:", ref value) == DialogResult.OK && !string.IsNullOrWhiteSpace(value))
+                            if (RTCV.UI.UI_Extensions.GetInputBox("VMD Generation", "Enter the new VMD name:", ref value) == DialogResult.OK)
                             {
-                                vmdgenerator.tbVmdName.Text = value.Trim();
+                                if(!string.IsNullOrWhiteSpace(value))
+                                    vmdgenerator.tbVmdName.Text = value.Trim();
                                 vmdgenerator.btnGenerateVMD_Click(null, null);
                             }
 
