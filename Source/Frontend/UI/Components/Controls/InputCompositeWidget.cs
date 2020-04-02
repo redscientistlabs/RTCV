@@ -2,7 +2,6 @@
 
 using System;
 using System.Windows.Forms;
-using RTCV.UI.Input;
 
 namespace RTCV.UI.Components.Controls
 {
@@ -67,10 +66,10 @@ namespace RTCV.UI.Components.Controls
 
         private readonly ContextMenuStrip _dropdownMenu;
 
-        public bool AutoTab { get { return widget.AutoTab; } set { widget.AutoTab = value; } }
-        public string WidgetName { get { return widget.WidgetName; } set { widget.WidgetName = value; } }
+        public bool AutoTab { get => widget.AutoTab; set => widget.AutoTab = value; }
+        public string WidgetName { get => widget.WidgetName; set => widget.WidgetName = value; }
 
-        public string Bindings { get { return widget.Bindings; } set { widget.Bindings = value; } }
+        public string Bindings { get => widget.Bindings; set => widget.Bindings = value; }
 
         public void Clear()
         {

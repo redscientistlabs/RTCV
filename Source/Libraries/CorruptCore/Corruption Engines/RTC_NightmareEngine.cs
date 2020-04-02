@@ -1,157 +1,167 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using RTCV.NetCore;
 
 namespace RTCV.CorruptCore
 {
-	public static class RTC_NightmareEngine
-	{
-		public static NightmareAlgo Algo
-		{
-			get => (NightmareAlgo)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_ALGO.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_ALGO.ToString(), value);
-		}
-		public static ulong MinValue8Bit
-		{
-			get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MINVALUE8BIT.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MINVALUE8BIT.ToString(), value);
-		}
-		public static ulong MaxValue8Bit
-		{
-			get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MAXVALUE8BIT.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MAXVALUE8BIT.ToString(), value);
-		}
+    public static class RTC_NightmareEngine
+    {
+        public static NightmareAlgo Algo
+        {
+            get => (NightmareAlgo)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_ALGO];
+            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_ALGO, value);
+        }
 
-		public static ulong MinValue16Bit
-		{
-			get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MINVALUE16BIT.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MINVALUE16BIT.ToString(), value);
-		}
-		public static ulong MaxValue16Bit
-		{
-			get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MAXVALUE16BIT.ToString()];
-			set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MAXVALUE16BIT.ToString(), value);
-		}
+        public static ulong MinValue8Bit
+        {
+            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MINVALUE8BIT];
+            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MINVALUE8BIT, value);
+        }
+
+        public static ulong MaxValue8Bit
+        {
+            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MAXVALUE8BIT];
+            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MAXVALUE8BIT, value);
+        }
+
+        public static ulong MinValue16Bit
+        {
+            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MINVALUE16BIT];
+            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MINVALUE16BIT, value);
+        }
+
+        public static ulong MaxValue16Bit
+        {
+            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MAXVALUE16BIT];
+            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MAXVALUE16BIT, value);
+        }
 
         public static ulong MinValue32Bit
         {
-            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MINVALUE32BIT.ToString()];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MINVALUE32BIT.ToString(), value);
+            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MINVALUE32BIT];
+            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MINVALUE32BIT, value);
         }
+
         public static ulong MaxValue32Bit
         {
-            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MAXVALUE32BIT.ToString()];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MAXVALUE32BIT.ToString(), value);
+            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MAXVALUE32BIT];
+            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MAXVALUE32BIT, value);
         }
+
         public static ulong MinValue64Bit
         {
-            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MINVALUE64BIT.ToString()];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MINVALUE64BIT.ToString(), value);
+            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MINVALUE64BIT];
+            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MINVALUE64BIT, value);
         }
+
         public static ulong MaxValue64Bit
         {
-            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MAXVALUE64BIT.ToString()];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MAXVALUE64BIT.ToString(), value);
+            get => (ulong)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.NIGHTMARE_MAXVALUE64BIT];
+            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.NIGHTMARE_MAXVALUE64BIT, value);
         }
 
 
         public static PartialSpec getDefaultPartial()
-		{
-			var partial = new PartialSpec("RTCSpec");
+        {
+            var partial = new PartialSpec("RTCSpec");
 
 
-			partial[RTCSPEC.NIGHTMARE_MINVALUE8BIT.ToString()] = 0UL;
-			partial[RTCSPEC.NIGHTMARE_MAXVALUE8BIT.ToString()] = 0xFFUL;
+            partial[RTCSPEC.NIGHTMARE_MINVALUE8BIT] = 0UL;
+            partial[RTCSPEC.NIGHTMARE_MAXVALUE8BIT] = 0xFFUL;
 
-			partial[RTCSPEC.NIGHTMARE_MINVALUE16BIT.ToString()] = 0UL;
-			partial[RTCSPEC.NIGHTMARE_MAXVALUE16BIT.ToString()] = 0xFFFFUL;
+            partial[RTCSPEC.NIGHTMARE_MINVALUE16BIT] = 0UL;
+            partial[RTCSPEC.NIGHTMARE_MAXVALUE16BIT] = 0xFFFFUL;
 
-            partial[RTCSPEC.NIGHTMARE_MINVALUE32BIT.ToString()] = 0UL;
-            partial[RTCSPEC.NIGHTMARE_MAXVALUE32BIT.ToString()] = 0xFFFFFFFFUL;
+            partial[RTCSPEC.NIGHTMARE_MINVALUE32BIT] = 0UL;
+            partial[RTCSPEC.NIGHTMARE_MAXVALUE32BIT] = 0xFFFFFFFFUL;
 
-            partial[RTCSPEC.NIGHTMARE_MINVALUE64BIT.ToString()] = 0UL;
-            partial[RTCSPEC.NIGHTMARE_MAXVALUE64BIT.ToString()] = 0xFFFFFFFFFFFFFFFFUL;
+            partial[RTCSPEC.NIGHTMARE_MINVALUE64BIT] = 0UL;
+            partial[RTCSPEC.NIGHTMARE_MAXVALUE64BIT] = 0xFFFFFFFFFFFFFFFFUL;
 
-            partial[RTCSPEC.NIGHTMARE_ALGO.ToString()] = NightmareAlgo.RANDOM;
+            partial[RTCSPEC.NIGHTMARE_ALGO] = NightmareAlgo.RANDOM;
 
-			return partial;
-		}
+            return partial;
+        }
 
-		private static NightmareType type = NightmareType.SET;
+        private static NightmareType type = NightmareType.SET;
 
-		public static BlastUnit GenerateUnit(string domain, long address, int precision, int alignment, byte[] replacementValue = null)
-		{
-			// Randomly selects a memory operation according to the selected algorithm
+        public static BlastUnit GenerateUnit(string domain, long address, int precision, int alignment, byte[] replacementValue = null)
+        {
+            // Randomly selects a memory operation according to the selected algorithm
 
-			switch (Algo)
-			{
-				case NightmareAlgo.RANDOM: //RANDOM always sets a random value
-					type = NightmareType.SET;
-					break;
+            switch (Algo)
+            {
+                case NightmareAlgo.RANDOM: //RANDOM always sets a random value
+                    type = NightmareType.SET;
+                    break;
 
-				case NightmareAlgo.RANDOMTILT: //RANDOMTILT may add 1,substract 1 or set a random value
-					int result = RtcCore.RND.Next(1, 4);
-					switch (result)
-					{
-						case 1:
-							type = NightmareType.ADD;
-							break;
-						case 2:
-							type = NightmareType.SUBTRACT;
-							break;
-						case 3:
-							type = NightmareType.SET;
-							break;
-						default:
-							MessageBox.Show("Random returned an unexpected value (RTC_NightmareEngine switch(Algo) RANDOMTILT)");
-							return null;
-					}
+                case NightmareAlgo.RANDOMTILT: //RANDOMTILT may add 1,substract 1 or set a random value
+                    int result = RtcCore.RND.Next(1, 4);
+                    switch (result)
+                    {
+                        case 1:
+                            type = NightmareType.ADD;
+                            break;
+                        case 2:
+                            type = NightmareType.SUBTRACT;
+                            break;
+                        case 3:
+                            type = NightmareType.SET;
+                            break;
+                        default:
+                            MessageBox.Show("Random returned an unexpected value (RTC_NightmareEngine switch(Algo) RANDOMTILT)");
+                            return null;
+                    }
 
-					break;
+                    break;
 
-				case NightmareAlgo.TILT: //TILT can either add 1 or substract 1
-					result = RtcCore.RND.Next(1, 3);
-					switch (result)
-					{
-						case 1:
-							type = NightmareType.ADD;
-							break;
+                case NightmareAlgo.TILT: //TILT can either add 1 or substract 1
+                    result = RtcCore.RND.Next(1, 3);
+                    switch (result)
+                    {
+                        case 1:
+                            type = NightmareType.ADD;
+                            break;
 
-						case 2:
-							type = NightmareType.SUBTRACT;
-							break;
+                        case 2:
+                            type = NightmareType.SUBTRACT;
+                            break;
 
-						default:
-							MessageBox.Show("Random returned an unexpected value (RTC_NightmareEngine switch(Algo) TILT)");
-							return null;
-					}
-					break;
-			}
+                        default:
+                            MessageBox.Show("Random returned an unexpected value (RTC_NightmareEngine switch(Algo) TILT)");
+                            return null;
+                    }
+                    break;
+            }
 
 
-			if (domain == null)
-				return null;
-			MemoryInterface mi = MemoryDomains.GetInterface(domain);
+            if (domain == null)
+            {
+                return null;
+            }
 
-			byte[] value = new byte[precision];
+            MemoryInterface mi = MemoryDomains.GetInterface(domain);
 
-			long safeAddress = address - (address % precision) + alignment;
-			if (safeAddress > mi.Size - precision && mi.Size > precision)
-				safeAddress = mi.Size - (2*precision) + alignment; //If we're out of range, hit the last aligned address
+            byte[] value = new byte[precision];
 
-			if (type == NightmareType.SET)
+            long safeAddress = address - (address % precision) + alignment;
+            if (safeAddress > mi.Size - precision && mi.Size > precision)
+            {
+                safeAddress = mi.Size - (2 * precision) + alignment; //If we're out of range, hit the last aligned address
+            }
+
+            if (type == NightmareType.SET)
             {
                 ulong randomValue = 0;
 
                 bool def = false;
-				switch (precision)
-				{
-					case 1:
-						randomValue = RtcCore.RND.NextULong(MinValue8Bit, MaxValue8Bit, true);
-						break;
-					case 2:
-						randomValue = RtcCore.RND.NextULong(MinValue16Bit, MaxValue16Bit, true);
-						break;
+                switch (precision)
+                {
+                    case 1:
+                        randomValue = RtcCore.RND.NextULong(MinValue8Bit, MaxValue8Bit, true);
+                        break;
+                    case 2:
+                        randomValue = RtcCore.RND.NextULong(MinValue16Bit, MaxValue16Bit, true);
+                        break;
                     case 4:
                         randomValue = RtcCore.RND.NextULong(MinValue32Bit, MaxValue32Bit, true);
                         break;
@@ -166,30 +176,38 @@ namespace RTCV.CorruptCore
                 if (replacementValue == null)
                 {
                     if (def)
+                    {
                         for (int i = 0; i < precision; i++)
+                        {
                             value[i] = (byte)RtcCore.RND.Next();
+                        }
+                    }
                     else
+                    {
                         value = CorruptCore_Extensions.GetByteArrayValue(precision, randomValue, true);
+                    }
                 }
                 else
+                {
                     value = replacementValue;
+                }
 
                 return new BlastUnit(value, domain, safeAddress, precision, mi.BigEndian, 0, 1);
-			}
-			BlastUnit bu = new BlastUnit(StoreType.ONCE, StoreTime.PREEXECUTE, domain, safeAddress, domain, safeAddress, precision, mi.BigEndian);
-			switch (type)
-			{
-				case NightmareType.ADD:
-					bu.TiltValue = 1;
-					break;
-				case NightmareType.SUBTRACT:
-					bu.TiltValue = -1;
-					break;
-				default:
-					bu.TiltValue = 0;
-					break;
-			}
-			return bu;
-		}
-	}
+            }
+            BlastUnit bu = new BlastUnit(StoreType.ONCE, StoreTime.PREEXECUTE, domain, safeAddress, domain, safeAddress, precision, mi.BigEndian);
+            switch (type)
+            {
+                case NightmareType.ADD:
+                    bu.TiltValue = 1;
+                    break;
+                case NightmareType.SUBTRACT:
+                    bu.TiltValue = -1;
+                    break;
+                default:
+                    bu.TiltValue = 0;
+                    break;
+            }
+            return bu;
+        }
+    }
 }

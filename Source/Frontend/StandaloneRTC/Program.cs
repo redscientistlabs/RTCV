@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -60,10 +56,9 @@ namespace StandaloneRTC
         /// <param name="e"></param>
         private static void CurrentDomainOnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            Exception ex = (Exception) e.ExceptionObject;
+            Exception ex = (Exception)e.ExceptionObject;
             Form error = new RTCV.NetCore.CloudDebug(ex);
             var result = error.ShowDialog();
-
         }
 
         /// <summary>

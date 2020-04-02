@@ -1,25 +1,19 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Media;
-using System.Net;
 using System.Reflection;
 using System.Threading;
 using System.Timers;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
-using RTCV.UI;
-using static RTCV.UI.UI_Extensions;
-using RTCV.NetCore.StaticTools;
+using RTCV.Common;
 using RTCV.UI.Input;
-using static RTCV.NetCore.NetcoreCommands;
 using RTCV.UI.Modular;
+using static RTCV.NetCore.NetcoreCommands;
+using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
@@ -31,6 +25,7 @@ namespace RTCV.UI
 
         public static bool FirstConnect = true;
         public static ManualResetEvent Initialized = new ManualResetEvent(false);
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private static System.Timers.Timer inputCheckTimer;
 
@@ -45,11 +40,13 @@ namespace RTCV.UI
         {
             S.formRegister.FormRegistered += FormRegister_FormRegistered;
             //registerFormEvents(S.GET<RTC_Core_Form>());
-			registerFormEvents(S.GET<UI_CoreForm>());
-			registerHotkeyBlacklistControls(S.GET<UI_CoreForm>());
+            registerFormEvents(S.GET<UI_CoreForm>());
+            registerHotkeyBlacklistControls(S.GET<UI_CoreForm>());
 
-            if(!RtcCore.Attached)
-				S.SET((RTC_Standalone_Form)standaloneForm);
+            if (!RtcCore.Attached)
+            {
+                S.SET((RTC_Standalone_Form)standaloneForm);
+            }
 
             Form dummy = new Form();
             IntPtr Handle = dummy.Handle;
@@ -57,7 +54,6 @@ namespace RTCV.UI
             SyncObjectSingleton.SyncObject = dummy;
 
             UI_VanguardImplementation.StartServer();
-
 
             PartialSpec p = new PartialSpec("UISpec");
 
@@ -73,14 +69,12 @@ namespace RTCV.UI
 
             CorruptCore.RtcCore.StartUISide();
 
-
             //Loading RTC Params
 
             S.GET<RTC_SettingsGeneral_Form>().cbDisableEmulatorOSD.Checked = RTCV.NetCore.Params.IsParamSet(RTCSPEC.CORE_EMULATOROSDDISABLED);
             S.GET<RTC_SettingsGeneral_Form>().cbAllowCrossCoreCorruption.Checked = RTCV.NetCore.Params.IsParamSet("ALLOW_CROSS_CORE_CORRUPTION");
             S.GET<RTC_SettingsGeneral_Form>().cbDontCleanAtQuit.Checked = RTCV.NetCore.Params.IsParamSet("DONT_CLEAN_SAVESTATES_AT_QUIT");
             S.GET<RTC_SettingsGeneral_Form>().cbUncapIntensity.Checked = RTCV.NetCore.Params.IsParamSet("UNCAP_INTENSITY");
-
 
             //Initialize input code. Poll every 16ms
             Input.Input.Initialize();
@@ -90,7 +84,6 @@ namespace RTCV.UI
             inputCheckTimer.Interval = 10;
             inputCheckTimer.Start();
 
-
             if (FirstConnect)
             {
                 UI_DefaultGrids.connectionStatus.LoadToMain();
@@ -99,18 +92,18 @@ namespace RTCV.UI
             LoadRTCColor();
             S.GET<UI_CoreForm>().Show();
             Initialized.Set();
+            LoadRTCColor();
         }
 
-        private static void FormRegister_FormRegistered(object sender, NetCoreEventArgs e)
+        private static void FormRegister_FormRegistered(object sender, FormRegisteredEventArgs e)
         {
-            Form newForm = ((e.message as NetCoreAdvancedMessage)?.objectValue as Form);
+            Form newForm = e.Form;
 
             if (newForm != null)
             {
                 registerFormEvents(newForm);
                 registerHotkeyBlacklistControls(newForm);
             }
-
         }
 
         public static void registerHotkeyBlacklistControls(Control container)
@@ -125,7 +118,6 @@ namespace RTCV.UI
 
                     c.Leave -= ControlFocusLost;
                     c.Leave += ControlFocusLost;
-
                 }
                 else if (c is DataGridView dgv)
                 {
@@ -152,7 +144,6 @@ namespace RTCV.UI
             f.LostFocus -= NewForm_FocusChanged;
             f.LostFocus += NewForm_FocusChanged;
 
-
             //There's a chance that the form may already be visible by the time this fires
             if (f.Focused)
             {
@@ -172,26 +163,30 @@ namespace RTCV.UI
         public static void UpdateFormFocusStatus(bool? forceSet = null)
         {
             if (RTCV.NetCore.AllSpec.UISpec == null)
+            {
                 return;
+            }
 
             bool previousState = (bool?)RTCV.NetCore.AllSpec.UISpec[RTC_INFOCUS] ?? false;
             //bool currentState = forceSet ?? isAnyRTCFormFocused();
             bool currentState = (Form.ActiveForm != null && forceSet == null) || (forceSet ?? false);
 
             if (previousState != currentState)
-			{
-				Console.WriteLine($"Swapping focus state {previousState} => {currentState}");
-				//This is a non-synced spec update to prevent jittering. Shouldn't have any other noticeable impact
+            {
+                logger.Trace($"Swapping focus state {previousState} => {currentState}");
+                //This is a non-synced spec update to prevent jittering. Shouldn't have any other noticeable impact
                 RTCV.NetCore.AllSpec.UISpec.Update(RTC_INFOCUS, currentState, true, false);
             }
-
         }
+
         private static bool isAnyRTCFormFocused()
         {
             bool ExternalForm = Form.ActiveForm == null;
 
             if (ExternalForm)
+            {
                 return false;
+            }
 
             var form = Form.ActiveForm;
             var t = form.GetType();
@@ -210,31 +205,40 @@ namespace RTCV.UI
         public static void LockInterface(bool focusCoreForm = true, bool blockMainForm = false)
         {
             if (interfaceLocked || lockPending)
+            {
                 return;
+            }
+
             lockPending = true;
             lock (lockObject)
             {
+                //Kill hotkeys while locked
+                SetHotkeyTimer(false);
+
                 interfaceLocked = true;
                 var cf = S.GET<UI_CoreForm>();
                 cf.LockSideBar();
 
                 S.GET<RTC_ConnectionStatus_Form>().pnBlockedButtons.Show();
 
-				if(blockMainForm)
-					UI_CanvasForm.mainForm.BlockView();
+                if (blockMainForm)
+                {
+                    UI_CanvasForm.mainForm.BlockView();
+                }
 
                 UI_CanvasForm.extraForms.ForEach(it => it.BlockView());
 
                 var ifs = S.GETINTERFACES<IBlockable>();
 
                 foreach (var i in ifs)
+                {
                     i.BlockView();
+                }
 
-				if(focusCoreForm)
-					cf.Focus();
-
-                //Kill hotkeys while locked
-				SetHotkeyTimer(false);
+                if (focusCoreForm)
+                {
+                    cf.Focus();
+                }
             }
             lockPending = false;
         }
@@ -242,7 +246,10 @@ namespace RTCV.UI
         public static void UnlockInterface()
         {
             if (lockPending)
+            {
                 lockPending = false;
+            }
+
             lock (lockObject)
             {
                 interfaceLocked = false;
@@ -250,32 +257,38 @@ namespace RTCV.UI
 
                 S.GET<RTC_ConnectionStatus_Form>().pnBlockedButtons.Hide();
 
-				UI_CanvasForm.mainForm.UnblockView();
+                UI_CanvasForm.mainForm.UnblockView();
                 UI_CanvasForm.extraForms.ForEach(it => it.UnblockView());
                 var ifs = S.GETINTERFACES<IBlockable>();
                 foreach (var i in ifs)
+                {
                     i.UnblockView();
+                }
+
                 //Resume hotkeys
-				SetHotkeyTimer(true);
-			}
+                SetHotkeyTimer(true);
+            }
         }
 
-		public static void SetHotkeyTimer(bool enable)
-		{
-			inputCheckTimer.Enabled = enable;
-			Input.Input.Instance.ClearEvents();
-		}
-
+        public static void SetHotkeyTimer(bool enable)
+        {
+            inputCheckTimer.Enabled = enable;
+            Input.Input.Instance.ClearEvents();
+        }
 
         public static void BlockView(this IBlockable ib)
         {
             if (ib is RTC_ConnectionStatus_Form)
+            {
                 return;
+            }
 
             if (ib.blockPanel == null)
+            {
                 ib.blockPanel = new Panel();
+            }
 
-            if(ib is Control c)
+            if (ib is Control c)
             {
                 c.Controls.Add(ib.blockPanel);
                 ib.blockPanel.Location = new Point(0, 0);
@@ -294,55 +307,70 @@ namespace RTCV.UI
         public static void UnblockView(this IBlockable ib)
         {
             if (ib is RTC_ConnectionStatus_Form)
+            {
                 return;
+            }
 
             if (ib.blockPanel != null)
+            {
                 ib.blockPanel.Visible = false;
+            }
         }
 
         //All RTC forms
         public static Form[] AllColorizedSingletons(Type baseType = null)
-		{
-
+        {
             if (baseType == null)
+            {
                 baseType = typeof(RTCV.UI.UI_CoreForm);
-                //This fetches all singletons interface IAutoColorized
+            }
+            //This fetches all singletons interface IAutoColorized
 
             List<Form> all = new List<Form>();
-				foreach (Type t in Assembly.GetAssembly(baseType).GetTypes())
-					if (typeof(IAutoColorize).IsAssignableFrom(t) && t != typeof(IAutoColorize))
-						all.Add((Form)S.GET(Type.GetType(t.ToString())));
-                return all.ToArray();
-		}
+            foreach (Type t in Assembly.GetAssembly(baseType).GetTypes())
+            {
+                if (typeof(IAutoColorize).IsAssignableFrom(t) && t != typeof(IAutoColorize))
+                {
+                    all.Add((Form)S.GET(Type.GetType(t.ToString())));
+                }
+            }
 
-		public static volatile bool isClosing = false;
-		private static bool focus;
+            return all.ToArray();
+        }
 
-		public static void CloseAllRtcForms() //This allows every form to get closed to prevent RTC from hanging
-		{
-			if (isClosing)
-				return;
+        public static volatile bool isClosing = false;
+        private static bool focus;
 
-			isClosing = true;
+        public static void CloseAllRtcForms() //This allows every form to get closed to prevent RTC from hanging
+        {
+            if (isClosing)
+            {
+                return;
+            }
 
-			foreach (Form frm in UICore.AllColorizedSingletons())
-			{
-				if (frm != null)
-					frm.Close();
-			}
+            isClosing = true;
 
-			if (S.GET<RTC_Standalone_Form>() != null)
-				S.GET<RTC_Standalone_Form>().Close();
+            foreach (Form frm in UICore.AllColorizedSingletons())
+            {
+                if (frm != null)
+                {
+                    frm.Close();
+                }
+            }
 
-			//Clean out the working folders
-			if (!CorruptCore.RtcCore.DontCleanSavestatesOnQuit)
-			{
-				Stockpile.EmptyFolder("WORKING");
-			}
+            if (S.GET<RTC_Standalone_Form>() != null)
+            {
+                S.GET<RTC_Standalone_Form>().Close();
+            }
 
-			Environment.Exit(-1);
-		}
+            //Clean out the working folders
+            if (!CorruptCore.RtcCore.DontCleanSavestatesOnQuit)
+            {
+                Stockpile.EmptyFolder("WORKING");
+            }
 
+            Environment.Exit(0);
+        }
 
         public static Color Light1Color;
         public static Color Light2Color;
@@ -355,43 +383,47 @@ namespace RTCV.UI
         private static bool lockPending;
         private static object lockObject = new object();
 
+
         public static void SetRTCColor(Color color, Control ctr = null)
-		{
-			List<Control> allControls = new List<Control>();
+        {
+            HashSet<Control> allControls = new HashSet<Control>();
 
-			if (ctr == null)
-			{
-				foreach (Form targetForm in UICore.AllColorizedSingletons())
-				{
-					if (targetForm != null)
-					{
-						allControls.AddRange(targetForm.Controls.getControlsWithTag());
-						allControls.Add(targetForm);
-					}
-				}
+            if (ctr == null)
+            {
+                foreach (Form targetForm in UICore.AllColorizedSingletons())
+                {
+                    if (targetForm != null)
+                    {
+                        foreach(var c in targetForm.Controls.getControlsWithTag())
+                            allControls.Add(c);
+                        allControls.Add(targetForm);
+                    }
+                }
 
-				//Get the extraforms
-				foreach (UI_CanvasForm targetForm in UI_CanvasForm.extraForms)
-				{
-					allControls.AddRange(targetForm.Controls.getControlsWithTag());
-					allControls.Add(targetForm);
+                //Get the extraforms
+                foreach (UI_CanvasForm targetForm in UI_CanvasForm.extraForms)
+                {
+                    foreach (var c in targetForm.Controls.getControlsWithTag())
+                        allControls.Add(c);
+                    allControls.Add(targetForm);
                 }
 
                 //We have to manually add the etform because it's not singleton, not an extraForm, and not owned by any specific form
                 //Todo - Refactor this so we don't need to add it separately
-				if (mtForm != null)
-				{
-					allControls.AddRange(mtForm.Controls.getControlsWithTag());
-					allControls.Add(mtForm);
+                if (mtForm != null)
+                {
+                    foreach (var c in mtForm.Controls.getControlsWithTag())
+                        allControls.Add(c);
+                    allControls.Add(mtForm);
                 }
-
-			}
-			else if (ctr is Form)
-			{
-				allControls.AddRange(ctr.Controls.getControlsWithTag());
-				allControls.Add(ctr);
-			}
-            else
+            }
+            else if (ctr is Form || ctr is UserControl)
+            {
+                foreach (var c in ctr.Controls.getControlsWithTag())
+                    allControls.Add(c);
+                allControls.Add(ctr);
+            }
+            else if (ctr is Form)
             {
                 allControls.Add(ctr);
             }
@@ -414,132 +446,149 @@ namespace RTCV.UI
             Dark3Color = color.ChangeColorBrightness(dark3);
             Dark4Color = color.ChangeColorBrightness(dark4);
 
-			var tag2ColorDico = new Dictionary<string, Color>();
-			tag2ColorDico.Add("color:light2", Light2Color);
-			tag2ColorDico.Add("color:light1", Light1Color);
-			tag2ColorDico.Add("color:normal", NormalColor);
-			tag2ColorDico.Add("color:dark1", Dark1Color);
-			tag2ColorDico.Add("color:dark2", Dark2Color);
-			tag2ColorDico.Add("color:dark3", Dark3Color);
-			tag2ColorDico.Add("color:dark4", Dark4Color);
+            var tag2ColorDico = new Dictionary<string, Color>
+            {
+                { "color:light2", Light2Color },
+                { "color:light1", Light1Color },
+                { "color:normal", NormalColor },
+                { "color:dark1", Dark1Color },
+                { "color:dark2", Dark2Color },
+                { "color:dark3", Dark3Color },
+                { "color:dark4", Dark4Color }
+            };
 
             foreach (var c in allControls)
-			{
-				var tag = c.Tag?.ToString().Split(' ');
+            {
+                var tag = c.Tag?.ToString().Split(' ');
 
                 if (tag == null || tag.Length == 0)
+                {
                     continue;
+                }
 
-				//Snag the tag and look for the color.
-				var ctag = tag.FirstOrDefault(x => x.Contains("color:"));
+                //Snag the tag and look for the color.
+                var ctag = tag.FirstOrDefault(x => x.Contains("color:"));
 
                 //We didn't find a valid color
-				if (ctag == null || !tag2ColorDico.TryGetValue(ctag, out Color _color))
+                if (ctag == null || !tag2ColorDico.TryGetValue(ctag, out Color _color))
+                {
                     continue;
+                }
 
                 if (c is Label l && l.BackColor != Color.FromArgb(30, 31, 32))
-					c.ForeColor = _color;
-				else
-					c.BackColor = _color;
+                {
+                    c.ForeColor = _color;
+                }
+                else
+                {
+                    c.BackColor = _color;
+                }
 
-				if (c is Button btn)
-					btn.FlatAppearance.BorderColor = _color;
+                if (c is Button btn)
+                {
+                    btn.FlatAppearance.BorderColor = _color;
+                }
 
-				if (c is DataGridView dgv)
-					dgv.BackgroundColor = _color;
+                if (c is DataGridView dgv)
+                {
+                    dgv.BackgroundColor = _color;
+                }
 
-				c.Invalidate();
-			}
-		}
-
-		public static void SelectRTCColor()
-		{
-			// Show the color dialog.
-			Color color;
-			ColorDialog cd = new ColorDialog();
-			DialogResult result = cd.ShowDialog();
-			// See if user pressed ok.
-			if (result == DialogResult.OK)
-			{
-				// Set form background to the selected color.
-				color = cd.Color;
-			}
-			else
-				return;
-
-			GeneralColor = color;
-			SetRTCColor(color);
-
-			SaveRTCColor(color);
-		}
-
-		public static void LoadRTCColor()
-		{
-				if (RTCV.NetCore.Params.IsParamSet("COLOR"))
-				{
-					string[] bytes = RTCV.NetCore.Params.ReadParam("COLOR").Split(',');
-					UICore.GeneralColor = Color.FromArgb(Convert.ToByte(bytes[0]), Convert.ToByte(bytes[1]), Convert.ToByte(bytes[2]));
-				}
-				else
-					UICore.GeneralColor = Color.FromArgb(110, 150, 193);
-
-				UICore.SetRTCColor(UICore.GeneralColor);
-		}
-
-		public static void SaveRTCColor(Color color)
-		{
-			RTCV.NetCore.Params.SetParam("COLOR", color.R.ToString() + "," + color.G.ToString() + "," + color.B.ToString());
-		}
-
-		public static object InputLock = new object();
-        //Borrowed from Bizhawk. Thanks guys
-        private static void ProcessInputCheck(Object o, ElapsedEventArgs e)
-        {
-            try
-			{
-				lock (InputLock)
-				{
-					while (true)
-					{
-						Input.Input.Instance.Update();
-						// loop through all available events
-						var ie = Input.Input.Instance.DequeueEvent();
-						if (ie == null)
-						{
-							break;
-						}
-
-						// useful debugging:
-						//Console.WriteLine(ie);
-
-
-						// look for hotkey bindings for this key
-						var triggers = Input.Bindings.SearchBindings(ie.LogicalButton.ToString());
-
-						bool handled = false;
-						if (ie.EventType == RTCV.UI.Input.Input.InputEventType.Press)
-						{
-							triggers.Aggregate(handled, (current, trigger) => current | CheckHotkey(trigger));
-						}
-
-					} // foreach event
-				}
-			}
-			finally
-			{
-				inputCheckTimer.Start();
+                c.Invalidate();
             }
         }
 
+        public static void SelectRTCColor()
+        {
+            // Show the color dialog.
+            Color color;
+            ColorDialog cd = new ColorDialog();
+            DialogResult result = cd.ShowDialog();
+            // See if user pressed ok.
+            if (result == DialogResult.OK)
+            {
+                // Set form background to the selected color.
+                color = cd.Color;
+            }
+            else
+            {
+                return;
+            }
+
+            GeneralColor = color;
+            SetRTCColor(color);
+
+            SaveRTCColor(color);
+        }
+
+        public static void LoadRTCColor()
+        {
+            if (RTCV.NetCore.Params.IsParamSet("COLOR"))
+            {
+                string[] bytes = RTCV.NetCore.Params.ReadParam("COLOR").Split(',');
+                UICore.GeneralColor = Color.FromArgb(Convert.ToByte(bytes[0]), Convert.ToByte(bytes[1]), Convert.ToByte(bytes[2]));
+            }
+            else
+            {
+                UICore.GeneralColor = Color.FromArgb(110, 150, 193);
+            }
+
+            UICore.SetRTCColor(UICore.GeneralColor);
+        }
+
+        public static void SaveRTCColor(Color color)
+        {
+            RTCV.NetCore.Params.SetParam("COLOR", color.R.ToString() + "," + color.G.ToString() + "," + color.B.ToString());
+        }
+
+        public static object InputLock = new object();
+        //Borrowed from Bizhawk. Thanks guys
+        private static void ProcessInputCheck(object o, ElapsedEventArgs e)
+        {
+            try
+            {
+                lock (InputLock)
+                {
+                    while (true)
+                    {
+                        Input.Input.Instance.Update();
+                        // loop through all available events
+                        var ie = Input.Input.Instance.DequeueEvent();
+                        if (ie == null)
+                        {
+                            break;
+                        }
+
+                        // useful debugging:
+                        //Console.WriteLine(ie);
+
+                        // look for hotkey bindings for this key
+                        var triggers = Input.Bindings.SearchBindings(ie.LogicalButton.ToString());
+
+                        bool handled = false;
+                        if (ie.EventType == RTCV.UI.Input.Input.InputEventType.Press)
+                        {
+                            triggers.Aggregate(handled, (current, trigger) => current | CheckHotkey(trigger));
+                        }
+                    } // foreach event
+                }
+            }
+            finally
+            {
+                inputCheckTimer.Start();
+            }
+        }
 
         private static bool CheckHotkey(string trigger)
         {
-            Console.WriteLine(trigger);
+            logger.Info("Hotkey {trigger} pressed", trigger);
             switch (trigger)
             {
-
                 case "Manual Blast":
-                    S.GET<UI_CoreForm>().btnManualBlast_Click(null, null);
+                    SyncObjectSingleton.FormExecute(() =>
+                    {
+                        S.GET<UI_CoreForm>().btnManualBlast_Click(null, null);
+                    });
                     break;
 
                 case "Auto-Corrupt":
@@ -552,32 +601,40 @@ namespace RTCV.UI
                 case "Error Delay--":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        	if (S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value > 1)
-                        		S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value--;
+                        if (S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value > 1)
+                        {
+                            S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value--;
+                        }
                     });
                     break;
 
                 case "Error Delay++":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        	if (S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value < S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Maximum)
-                        		S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value++;
+                        if (S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value < S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Maximum)
+                        {
+                            S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value++;
+                        }
                     });
                     break;
 
                 case "Intensity--":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        	if (S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value > 1)
-                        		S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value--;
+                        if (S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value > 1)
+                        {
+                            S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value--;
+                        }
                     });
                     break;
 
                 case "Intensity++":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        	if (S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value < S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Maximum)
-                        		S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value++;
+                        if (S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value < S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Maximum)
+                        {
+                            S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value++;
+                        }
                     });
                     break;
 
@@ -677,7 +734,9 @@ namespace RTCV.UI
                         var f = S.GET<UI_CoreForm>();
                         var b = f.btnGpJumpBack;
                         if (b.Visible && b.Enabled)
+                        {
                             f.btnGpJumpBack_Click(null, null);
+                        }
                     });
                     break;
 
@@ -687,7 +746,9 @@ namespace RTCV.UI
                         var f = S.GET<UI_CoreForm>();
                         var b = f.btnGpJumpNow;
                         if (b.Visible && b.Enabled)
+                        {
                             f.btnGpJumpNow_Click(null, null);
+                        }
                     });
                     break;
                 case "Disable 50":
@@ -777,29 +838,30 @@ namespace RTCV.UI
             return true;
         }
 
-
-		/// <summary>
+        /// <summary>
         /// Disables things in the UI that aren't supported by the current spec.
         /// </summary>
-		public static void ConfigureUIFromVanguardSpec()
-		{
-			if ((AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME] as bool?) ?? false)
-			{
-				S.GET<UI_CoreForm>().btnManualBlast.Visible = true;
-				S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = true;
-			}
-			else
+        public static void ConfigureUIFromVanguardSpec()
+        {
+            if ((AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME] as bool?) ?? false)
             {
-				if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] == null)
-					S.GET<UI_CoreForm>().btnManualBlast.Visible = false;
-				else
-					S.GET<UI_CoreForm>().btnManualBlast.Visible = true;
+                S.GET<UI_CoreForm>().btnManualBlast.Visible = true;
+                S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = true;
+            }
+            else
+            {
+                if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] == null)
+                {
+                    S.GET<UI_CoreForm>().btnManualBlast.Visible = false;
+                }
+                else
+                {
+                    S.GET<UI_CoreForm>().btnManualBlast.Visible = true;
+                }
 
-				S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
-			}
-
+                S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
+            }
         }
-
 
         private static void toggleLimiterBoxSource(bool setToBindingSource)
         {
@@ -809,12 +871,9 @@ namespace RTCV.UI
                 S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.ValueMember = "Value";
                 S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
 
-
                 S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DisplayMember = "Name";
                 S.GET<RTC_CustomEngineConfig_Form>().cbValueList.ValueMember = "Value";
                 S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DataSource = CorruptCore.RtcCore.ValueListBindingSource;
-
-
 
                 S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.DisplayMember = "Name";
                 S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.ValueMember = "Value";
@@ -837,16 +896,21 @@ namespace RTCV.UI
         public static void LoadLists(string dir)
         {
             if (!Directory.Exists(dir))
+            {
                 return;
+            }
+
             string[] paths = System.IO.Directory.GetFiles(dir).Where(x => x.EndsWith(".txt", StringComparison.OrdinalIgnoreCase)).ToArray();
             paths = paths.OrderBy(x => x).ToArray();
 
             List<string> hashes = Filtering.LoadListsFromPaths(paths);
             toggleLimiterBoxSource(false);
-            foreach(var hash in hashes)
+            foreach (var hash in hashes)
+            {
                 Filtering.RegisterListInUI(Filtering.Hash2NameDico[hash], hash);
+            }
+
             toggleLimiterBoxSource(true);
         }
-
     }
 }

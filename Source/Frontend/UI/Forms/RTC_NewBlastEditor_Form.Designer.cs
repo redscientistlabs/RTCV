@@ -1,4 +1,4 @@
-﻿using System.Windows.Forms;
+using System.Windows.Forms;
 using RTCV.UI;
 
 namespace RTCV.UI
@@ -34,6 +34,7 @@ namespace RTCV.UI
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_NewBlastEditor_Form));
             this.dgvBlastEditor = new System.Windows.Forms.DataGridView();
             this.panelSidebar = new System.Windows.Forms.Panel();
+            this.btnAddStashToStockpile = new System.Windows.Forms.Button();
             this.btnSanitizeTool = new System.Windows.Forms.Button();
             this.btnAddRow = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -49,10 +50,10 @@ namespace RTCV.UI
             this.btnRemoveSelected = new System.Windows.Forms.Button();
             this.btnCorrupt = new System.Windows.Forms.Button();
             this.btnSendToStash = new System.Windows.Forms.Button();
-            this.btnRemoveDisabled = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.btnDisable50 = new System.Windows.Forms.Button();
             this.btnInvertDisabled = new System.Windows.Forms.Button();
+            this.btnRemoveDisabled = new System.Windows.Forms.Button();
             this.btnDisableEverything = new System.Windows.Forms.Button();
             this.btnEnableEverything = new System.Windows.Forms.Button();
             this.btnDuplicateSelected = new System.Windows.Forms.Button();
@@ -83,7 +84,7 @@ namespace RTCV.UI
             this.cbSource = new System.Windows.Forms.ComboBox();
             this.panel6 = new System.Windows.Forms.Panel();
             this.label12 = new System.Windows.Forms.Label();
-            this.tbValue = new RTCV.CorruptCore.Tools.HexTextBox();
+            this.tbValue = new RTCV.UI.Components.Controls.HexTextBox();
             this.panel7 = new System.Windows.Forms.Panel();
             this.cbSourceDomain = new System.Windows.Forms.ComboBox();
             this.upDownSourceAddress = new RTCV.UI.NumericUpDownHexFix();
@@ -128,6 +129,7 @@ namespace RTCV.UI
             this.rasterizeVMDsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.bakeBlastunitsToVALUEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openBlastGeneratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.breakDownAllBlastunitsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBlastEditor)).BeginInit();
             this.panelSidebar.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -165,36 +167,57 @@ namespace RTCV.UI
             this.dgvBlastEditor.RowHeadersVisible = false;
             this.dgvBlastEditor.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders;
             this.dgvBlastEditor.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvBlastEditor.Size = new System.Drawing.Size(662, 221);
+            this.dgvBlastEditor.Size = new System.Drawing.Size(662, 254);
             this.dgvBlastEditor.TabIndex = 0;
             this.dgvBlastEditor.Tag = "color:normal";
             // 
             // panelSidebar
             // 
             this.panelSidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.panelSidebar.Controls.Add(this.btnDisable50);
+            this.panelSidebar.Controls.Add(this.btnInvertDisabled);
+            this.panelSidebar.Controls.Add(this.btnRemoveDisabled);
             this.panelSidebar.Controls.Add(this.btnSanitizeTool);
+            this.panelSidebar.Controls.Add(this.btnDisableEverything);
+            this.panelSidebar.Controls.Add(this.btnEnableEverything);
+            this.panelSidebar.Controls.Add(this.btnRemoveSelected);
+            this.panelSidebar.Controls.Add(this.btnDuplicateSelected);
             this.panelSidebar.Controls.Add(this.btnAddRow);
+            this.panelSidebar.Controls.Add(this.btnAddStashToStockpile);
             this.panelSidebar.Controls.Add(this.panel1);
             this.panelSidebar.Controls.Add(this.pnMemoryTargetting);
             this.panelSidebar.Controls.Add(this.btnHelp);
             this.panelSidebar.Controls.Add(this.label3);
             this.panelSidebar.Controls.Add(this.btnLoadCorrupt);
-            this.panelSidebar.Controls.Add(this.btnRemoveSelected);
             this.panelSidebar.Controls.Add(this.btnCorrupt);
             this.panelSidebar.Controls.Add(this.btnSendToStash);
-            this.panelSidebar.Controls.Add(this.btnRemoveDisabled);
             this.panelSidebar.Controls.Add(this.label4);
-            this.panelSidebar.Controls.Add(this.btnDisable50);
-            this.panelSidebar.Controls.Add(this.btnInvertDisabled);
-            this.panelSidebar.Controls.Add(this.btnDisableEverything);
-            this.panelSidebar.Controls.Add(this.btnEnableEverything);
-            this.panelSidebar.Controls.Add(this.btnDuplicateSelected);
             this.panelSidebar.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelSidebar.Location = new System.Drawing.Point(662, 24);
             this.panelSidebar.Name = "panelSidebar";
-            this.panelSidebar.Size = new System.Drawing.Size(159, 463);
+            this.panelSidebar.Size = new System.Drawing.Size(159, 496);
             this.panelSidebar.TabIndex = 146;
             this.panelSidebar.Tag = "color:dark1";
+            // 
+            // btnAddStashToStockpile
+            // 
+            this.btnAddStashToStockpile.BackColor = System.Drawing.Color.Gray;
+            this.btnAddStashToStockpile.FlatAppearance.BorderSize = 0;
+            this.btnAddStashToStockpile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddStashToStockpile.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnAddStashToStockpile.ForeColor = System.Drawing.Color.White;
+            this.btnAddStashToStockpile.Image = ((System.Drawing.Image)(resources.GetObject("btnAddStashToStockpile.Image")));
+            this.btnAddStashToStockpile.Location = new System.Drawing.Point(14, 382);
+            this.btnAddStashToStockpile.Name = "btnAddStashToStockpile";
+            this.btnAddStashToStockpile.Size = new System.Drawing.Size(135, 23);
+            this.btnAddStashToStockpile.TabIndex = 150;
+            this.btnAddStashToStockpile.TabStop = false;
+            this.btnAddStashToStockpile.Tag = "color:light1";
+            this.btnAddStashToStockpile.Text = " To Stockpile";
+            this.btnAddStashToStockpile.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnAddStashToStockpile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnAddStashToStockpile.UseVisualStyleBackColor = false;
+            this.btnAddStashToStockpile.Click += new System.EventHandler(this.btnAddStashToStockpile_Click);
             // 
             // btnSanitizeTool
             // 
@@ -360,7 +383,7 @@ namespace RTCV.UI
             this.btnLoadCorrupt.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLoadCorrupt.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.btnLoadCorrupt.ForeColor = System.Drawing.Color.OrangeRed;
-            this.btnLoadCorrupt.Location = new System.Drawing.Point(14, 380);
+            this.btnLoadCorrupt.Location = new System.Drawing.Point(14, 413);
             this.btnLoadCorrupt.Name = "btnLoadCorrupt";
             this.btnLoadCorrupt.Size = new System.Drawing.Size(135, 25);
             this.btnLoadCorrupt.TabIndex = 14;
@@ -395,7 +418,7 @@ namespace RTCV.UI
             this.btnCorrupt.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCorrupt.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.btnCorrupt.ForeColor = System.Drawing.Color.OrangeRed;
-            this.btnCorrupt.Location = new System.Drawing.Point(14, 406);
+            this.btnCorrupt.Location = new System.Drawing.Point(14, 439);
             this.btnCorrupt.Name = "btnCorrupt";
             this.btnCorrupt.Size = new System.Drawing.Size(135, 25);
             this.btnCorrupt.TabIndex = 13;
@@ -413,7 +436,7 @@ namespace RTCV.UI
             this.btnSendToStash.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSendToStash.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.btnSendToStash.ForeColor = System.Drawing.Color.OrangeRed;
-            this.btnSendToStash.Location = new System.Drawing.Point(14, 432);
+            this.btnSendToStash.Location = new System.Drawing.Point(14, 465);
             this.btnSendToStash.Name = "btnSendToStash";
             this.btnSendToStash.Size = new System.Drawing.Size(135, 25);
             this.btnSendToStash.TabIndex = 12;
@@ -542,7 +565,7 @@ namespace RTCV.UI
             this.panel2.Controls.Add(this.cbFilterColumn);
             this.panel2.Controls.Add(this.tbFilter);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 245);
+            this.panel2.Location = new System.Drawing.Point(0, 278);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(662, 21);
             this.panel2.TabIndex = 148;
@@ -577,7 +600,7 @@ namespace RTCV.UI
             this.panelBottom.Controls.Add(this.panel4);
             this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelBottom.ForeColor = System.Drawing.Color.White;
-            this.panelBottom.Location = new System.Drawing.Point(0, 266);
+            this.panelBottom.Location = new System.Drawing.Point(0, 299);
             this.panelBottom.Name = "panelBottom";
             this.panelBottom.Size = new System.Drawing.Size(662, 221);
             this.panelBottom.TabIndex = 149;
@@ -1254,6 +1277,7 @@ namespace RTCV.UI
             this.sanitizeDuplicatesToolStripMenuItem,
             this.rasterizeVMDsToolStripMenuItem,
             this.bakeBlastunitsToVALUEToolStripMenuItem,
+            this.breakDownAllBlastunitsToolStripMenuItem,
             this.openBlastGeneratorToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
@@ -1263,36 +1287,43 @@ namespace RTCV.UI
             // sanitizeDuplicatesToolStripMenuItem
             // 
             this.sanitizeDuplicatesToolStripMenuItem.Name = "sanitizeDuplicatesToolStripMenuItem";
-            this.sanitizeDuplicatesToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
+            this.sanitizeDuplicatesToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.sanitizeDuplicatesToolStripMenuItem.Text = "Sanitize Duplicates";
             this.sanitizeDuplicatesToolStripMenuItem.Click += new System.EventHandler(this.sanitizeDuplicatesToolStripMenuItem_Click);
             // 
             // rasterizeVMDsToolStripMenuItem
             // 
             this.rasterizeVMDsToolStripMenuItem.Name = "rasterizeVMDsToolStripMenuItem";
-            this.rasterizeVMDsToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
+            this.rasterizeVMDsToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.rasterizeVMDsToolStripMenuItem.Text = "Rasterize VMDs";
             this.rasterizeVMDsToolStripMenuItem.Click += new System.EventHandler(this.rasterizeVMDsToolStripMenuItem_Click);
             // 
             // bakeBlastunitsToVALUEToolStripMenuItem
             // 
             this.bakeBlastunitsToVALUEToolStripMenuItem.Name = "bakeBlastunitsToVALUEToolStripMenuItem";
-            this.bakeBlastunitsToVALUEToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
-            this.bakeBlastunitsToVALUEToolStripMenuItem.Text = "Bake Selected Blastunits to VALUE";
+            this.bakeBlastunitsToVALUEToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.bakeBlastunitsToVALUEToolStripMenuItem.Text = "Bake All Blastunits to VALUE";
             this.bakeBlastunitsToVALUEToolStripMenuItem.Click += new System.EventHandler(this.bakeBlastunitsToVALUEToolStripMenuItem_Click);
             // 
             // openBlastGeneratorToolStripMenuItem
             // 
             this.openBlastGeneratorToolStripMenuItem.Name = "openBlastGeneratorToolStripMenuItem";
-            this.openBlastGeneratorToolStripMenuItem.Size = new System.Drawing.Size(252, 22);
+            this.openBlastGeneratorToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.openBlastGeneratorToolStripMenuItem.Text = "Open Blast Generator";
             this.openBlastGeneratorToolStripMenuItem.Click += new System.EventHandler(this.OpenBlastGeneratorToolStripMenuItem_Click);
+            // 
+            // breakDownAllBlastunitsToolStripMenuItem
+            // 
+            this.breakDownAllBlastunitsToolStripMenuItem.Name = "breakDownAllBlastunitsToolStripMenuItem";
+            this.breakDownAllBlastunitsToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.breakDownAllBlastunitsToolStripMenuItem.Text = "Break Down All Blastunits";
+            this.breakDownAllBlastunitsToolStripMenuItem.Click += new System.EventHandler(this.breakDownAllBlastunitsToolStripMenuItem_Click);
             // 
             // RTC_NewBlastEditor_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(821, 487);
+            this.ClientSize = new System.Drawing.Size(821, 520);
             this.Controls.Add(this.dgvBlastEditor);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panelBottom);
@@ -1301,6 +1332,7 @@ namespace RTCV.UI
             this.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
+            this.MinimumSize = new System.Drawing.Size(837, 559);
             this.Name = "RTC_NewBlastEditor_Form";
             this.Text = "Blast Editor";
             this.Load += new System.EventHandler(this.RTC_NewBlastEditorForm_Load);
@@ -1396,7 +1428,7 @@ namespace RTCV.UI
 		private NumericUpDownHexFix upDownAddress;
 		private System.Windows.Forms.Panel panel6;
 		private System.Windows.Forms.Label label12;
-		private CorruptCore.Tools.HexTextBox tbValue;
+		private RTCV.UI.Components.Controls.HexTextBox tbValue;
 		private System.Windows.Forms.Panel panel7;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.ComboBox cbStoreType;
@@ -1433,8 +1465,10 @@ namespace RTCV.UI
 		private Label label17;
 		private ToolStripMenuItem openBlastGeneratorToolStripMenuItem;
 		private Button btnAddRow;
-        private Button btnSanitizeTool;
         private ToolStripMenuItem importBlastlayerFromCorruptedFileToolStripMenuItem;
         private ToolStripMenuItem newToolStripMenuItem;
+        private Button btnSanitizeTool;
+        public Button btnAddStashToStockpile;
+        private ToolStripMenuItem breakDownAllBlastunitsToolStripMenuItem;
     }
 }

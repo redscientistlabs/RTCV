@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+﻿using System.Drawing;
 using System.Windows.Forms;
 using static RTCV.UI.UI_Extensions;
 
@@ -28,10 +22,6 @@ namespace RTCV.UI
             SizeX = _sizeX;
             SizeY = _sizeY;
 
-
-            
-
-
             this.Size = new Size(
                 (SizeX * UI_CanvasForm.tileSize) + ((SizeX - 1) * UI_CanvasForm.spacerSize),
                 (SizeY * UI_CanvasForm.tileSize) + ((SizeY - 1) * UI_CanvasForm.spacerSize)
@@ -42,7 +32,6 @@ namespace RTCV.UI
                 cf.AnchorToPanel(pnComponentFormHost);
                 cf.ParentComponentFormTitle = this;
             }
-
 
             if (DisplayHeader)
             {
@@ -58,8 +47,8 @@ namespace RTCV.UI
         }
 
         public bool CanPopout { get; set; } = false;
-        public int TilesX { get { return SizeX; } set { SizeX = value; } }
-        public int TilesY { get { return SizeY; } set { SizeY = value; } }
+        public int TilesX { get => SizeX; set => SizeX = value; }
+        public int TilesY { get => SizeY; set => SizeY = value; }
 
         private void UI_ComponentFormTile_MouseDown(object sender, MouseEventArgs e)
         {
@@ -79,11 +68,9 @@ namespace RTCV.UI
                 this.Anchor = cf.Anchor;
             }
         }
-
     }
 
     public class ComponentPanel : Panel
     {
-
     }
 }

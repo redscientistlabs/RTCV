@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using RTCV.NetCore.StaticTools;
-using RTCV.UI;
+using RTCV.Common;
 
 namespace RTCV.UI
 {
@@ -22,19 +17,17 @@ namespace RTCV.UI
 
         public static int spacerSize;
         public static int tileSize;
-
-        static Dictionary<Form, UI_ComponentFormTile> loadedTileForms = new Dictionary<Form, UI_ComponentFormTile>();
+        private static Dictionary<Form, UI_ComponentFormTile> loadedTileForms = new Dictionary<Form, UI_ComponentFormTile>();
 
         public bool SubFormMode
         {
-            get
-            {
-                return (spForm != null);
-            }
+            get => (spForm != null);
             set
             {
                 if (value == false && spForm != null)
+                {
                     CloseSubForm();
+                }
             }
         }
 
@@ -51,19 +44,19 @@ namespace RTCV.UI
                 tileSize = pnScale.Size.Width;
                 Controls.Remove(pnScale);
             }
-
         }
 
         public static UI_ComponentFormTile getTileForm(Form componentForm, int? newSizeX = null, int? newSizeY = null, bool DisplayHeader = true)
         {
-
             if (!loadedTileForms.ContainsKey(componentForm))
             {
                 var newForm = (UI_ComponentFormTile)Activator.CreateInstance(typeof(UI_ComponentFormTile));
                 loadedTileForms[componentForm] = newForm;
 
                 if (newSizeX != null && newSizeY != null)
+                {
                     newForm.SetCompoentForm(componentForm, newSizeX.Value, newSizeY.Value, DisplayHeader);
+                }
             }
             else
             {
@@ -83,6 +76,7 @@ namespace RTCV.UI
         {
             return (gridPos * tileSize) + (gridPos * spacerSize) + spacerSize;
         }
+
         public static Point getTileLocation(int x, int y)
         {
             return new Point(getTilePos(x), getTilePos(y));
@@ -96,13 +90,12 @@ namespace RTCV.UI
 
         public static void clearExtraTileForms()
         {
-
             foreach (Form frm in extraForms)
             {
                 frm.Controls.Clear();
                 frm.Close();
             }
-            
+
             extraForms.Clear();
             loadedTileForms.Clear();
         }
@@ -128,9 +121,13 @@ namespace RTCV.UI
         public void SetSize(int x, int y)
         {
             if (this.TopLevel)
+            {
                 this.Size = new Size(x + UI_CoreForm.xPadding, y + UI_CoreForm.yPadding);
+            }
             else
+            {
                 UI_CoreForm.thisForm.SetSize(x, y);
+            }
         }
 
         public static void loadTileForm(UI_CanvasForm targetForm, CanvasGrid canvasGrid)
@@ -138,7 +135,9 @@ namespace RTCV.UI
             targetForm.ResizeCanvas(targetForm, canvasGrid);
 
             for (int x = 0; x < canvasGrid.x; x++)
+            {
                 for (int y = 0; y < canvasGrid.y; y++)
+                {
                     if (canvasGrid.gridComponent[x, y] != null)
                     {
                         targetForm.Text = canvasGrid.GridName;
@@ -153,10 +152,10 @@ namespace RTCV.UI
 
                         tileForm.Show();
                     }
+                }
+            }
 
             targetForm.MinimumSize = targetForm.Size;
-
-
         }
 
         //public void BlockView() => (this as IBlockable)?.BlockView();
@@ -164,7 +163,6 @@ namespace RTCV.UI
 
         public static void loadTileFormExtraWindow(CanvasGrid canvasGrid, string WindowHeader, bool silent = false)
         {
-
             UI_CanvasForm extraForm;
 
             if (allExtraForms.ContainsKey(WindowHeader))
@@ -178,7 +176,6 @@ namespace RTCV.UI
                         cft.ReAnchorToPanel();
                     }
                 }
-
             }
             else
             {
@@ -187,24 +184,23 @@ namespace RTCV.UI
                 extraForms.Add(extraForm);
             }
 
-                extraForm.Controls.Clear();
-                extraForm.Text = WindowHeader;
+            extraForm.Controls.Clear();
+            extraForm.Text = WindowHeader;
 
-				UICore.registerFormEvents(extraForm);
-				UICore.registerHotkeyBlacklistControls(extraForm);
-                loadTileForm(extraForm, canvasGrid);
+            UICore.registerFormEvents(extraForm);
+            UICore.registerHotkeyBlacklistControls(extraForm);
+            loadTileForm(extraForm, canvasGrid);
 
-                if (canvasGrid.isResizable)
-                {
-                    extraForm.MaximizeBox = true;
-                    extraForm.FormBorderStyle = FormBorderStyle.Sizable;
-                }
-                else
-                {
-                    extraForm.MaximizeBox = false;
-                    extraForm.FormBorderStyle = FormBorderStyle.FixedSingle;
-                }
-
+            if (canvasGrid.isResizable)
+            {
+                extraForm.MaximizeBox = true;
+                extraForm.FormBorderStyle = FormBorderStyle.Sizable;
+            }
+            else
+            {
+                extraForm.MaximizeBox = false;
+                extraForm.FormBorderStyle = FormBorderStyle.FixedSingle;
+            }
 
             if (!silent)
             {
@@ -235,7 +231,6 @@ namespace RTCV.UI
             //thisForm.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
         }
 
-
         public int getTileSpacesX()
         {
             int sizeX = this.Size.Width;
@@ -254,28 +249,32 @@ namespace RTCV.UI
             return nbSpaces;
         }
 
-
         public void OpenSubForm(ISubForm reqForm, bool lockSidebar = false)
         {
-
             //sets program to SubForm mode, darkens screen and displays flating form.
             //Start by giving type of Form class. Implement interface SubForms.UI_SubForm for Cancel/Ok buttons
 
             //See DummySubForm for example
 
             if (lockSidebar)
-				S.GET<UI_CoreForm>().LockSideBar();
+            {
+                S.GET<UI_CoreForm>().LockSideBar();
+            }
 
             if (spForm != null)
+            {
                 CloseSubForm();
+            }
 
-            spForm = new UI_ShadowPanel(this, reqForm);
-            spForm.TopLevel = false;
+            spForm = new UI_ShadowPanel(this, reqForm)
+            {
+                TopLevel = false
+            };
             this.Controls.Add(spForm);
 
             spForm.Show();
             spForm.BringToFront();
-
+            spForm.Refresh();
         }
 
         public void CloseSubForm()
@@ -283,7 +282,7 @@ namespace RTCV.UI
             //Closes subform and exists SubForm mode.
             //is automatically called when Cancel/Ok is pressed in SubForm.
 
-			S.GET<UI_CoreForm>().UnlockSideBar();
+            S.GET<UI_CoreForm>().UnlockSideBar();
 
             if (spForm != null)
             {
@@ -296,7 +295,6 @@ namespace RTCV.UI
 
         private void UI_CanvasForm_Load(object sender, EventArgs e)
         {
-            
         }
 
         private void UI_CanvasForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -305,8 +303,10 @@ namespace RTCV.UI
             {
                 //S.GET<RTC_Core_Form>().btnGlitchHarvester.Text = S.GET<RTC_Core_Form>().btnGlitchHarvester.Text.Replace("○ ", "");
 
-                if(this.Text == "Glitch Harvester")
+                if (this.Text == "Glitch Harvester")
+                {
                     S.GET<UI_CoreForm>().pnGlitchHarvesterOpen.Visible = false;
+                }
 
                 e.Cancel = true;
                 this.Hide();

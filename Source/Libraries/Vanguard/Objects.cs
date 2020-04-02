@@ -1,8 +1,5 @@
-﻿using System;
+using System;
 using RTCV.NetCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace RTCV.Vanguard
 {
@@ -12,7 +9,5 @@ namespace RTCV.Vanguard
         public virtual void OnMessageReceived(NetCoreEventArgs e) => MessageReceived?.Invoke(this, e);
 
         public FullSpec specDetails;
-
     }
-
 }

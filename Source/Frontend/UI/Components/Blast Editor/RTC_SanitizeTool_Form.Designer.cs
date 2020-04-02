@@ -48,6 +48,7 @@ namespace RTCV.UI
             this.btnLeaveSubstractChanges = new System.Windows.Forms.Button();
             this.btnLeaveWithoutChanges = new System.Windows.Forms.Button();
             this.btnStartSanitizing = new System.Windows.Forms.Button();
+            this.btnReroll = new System.Windows.Forms.Button();
             this.lbSteps = new RTCV.UI.Components.Controls.ListBoxExtended();
             this.pnBlastLayerSanitization.SuspendLayout();
             this.panel6.SuspendLayout();
@@ -102,13 +103,14 @@ namespace RTCV.UI
             // pnBlastLayerSanitization
             // 
             this.pnBlastLayerSanitization.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnBlastLayerSanitization.Controls.Add(this.btnReroll);
             this.pnBlastLayerSanitization.Controls.Add(this.btnReplayLast);
             this.pnBlastLayerSanitization.Controls.Add(this.lbSanitizationText);
             this.pnBlastLayerSanitization.Controls.Add(this.btnNoEffect);
             this.pnBlastLayerSanitization.Controls.Add(this.btnYesEffect);
             this.pnBlastLayerSanitization.Location = new System.Drawing.Point(19, 124);
             this.pnBlastLayerSanitization.Name = "pnBlastLayerSanitization";
-            this.pnBlastLayerSanitization.Size = new System.Drawing.Size(332, 83);
+            this.pnBlastLayerSanitization.Size = new System.Drawing.Size(332, 116);
             this.pnBlastLayerSanitization.TabIndex = 185;
             this.pnBlastLayerSanitization.Visible = false;
             // 
@@ -121,7 +123,7 @@ namespace RTCV.UI
             this.btnReplayLast.ForeColor = System.Drawing.Color.White;
             this.btnReplayLast.Location = new System.Drawing.Point(170, 44);
             this.btnReplayLast.Name = "btnReplayLast";
-            this.btnReplayLast.Size = new System.Drawing.Size(147, 23);
+            this.btnReplayLast.Size = new System.Drawing.Size(147, 53);
             this.btnReplayLast.TabIndex = 188;
             this.btnReplayLast.TabStop = false;
             this.btnReplayLast.Tag = "color:light1";
@@ -174,7 +176,7 @@ namespace RTCV.UI
             this.btnBackPrevState.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBackPrevState.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnBackPrevState.ForeColor = System.Drawing.Color.White;
-            this.btnBackPrevState.Location = new System.Drawing.Point(372, 256);
+            this.btnBackPrevState.Location = new System.Drawing.Point(372, 287);
             this.btnBackPrevState.Name = "btnBackPrevState";
             this.btnBackPrevState.Size = new System.Drawing.Size(181, 24);
             this.btnBackPrevState.TabIndex = 192;
@@ -210,7 +212,7 @@ namespace RTCV.UI
             this.btnLeaveWithChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLeaveWithChanges.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.btnLeaveWithChanges.ForeColor = System.Drawing.Color.OrangeRed;
-            this.btnLeaveWithChanges.Location = new System.Drawing.Point(19, 223);
+            this.btnLeaveWithChanges.Location = new System.Drawing.Point(19, 253);
             this.btnLeaveWithChanges.Name = "btnLeaveWithChanges";
             this.btnLeaveWithChanges.Size = new System.Drawing.Size(145, 25);
             this.btnLeaveWithChanges.TabIndex = 195;
@@ -227,7 +229,7 @@ namespace RTCV.UI
             this.btnLeaveSubstractChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLeaveSubstractChanges.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.btnLeaveSubstractChanges.ForeColor = System.Drawing.Color.OrangeRed;
-            this.btnLeaveSubstractChanges.Location = new System.Drawing.Point(170, 223);
+            this.btnLeaveSubstractChanges.Location = new System.Drawing.Point(170, 253);
             this.btnLeaveSubstractChanges.Name = "btnLeaveSubstractChanges";
             this.btnLeaveSubstractChanges.Size = new System.Drawing.Size(181, 25);
             this.btnLeaveSubstractChanges.TabIndex = 196;
@@ -244,7 +246,7 @@ namespace RTCV.UI
             this.btnLeaveWithoutChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLeaveWithoutChanges.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.btnLeaveWithoutChanges.ForeColor = System.Drawing.Color.OrangeRed;
-            this.btnLeaveWithoutChanges.Location = new System.Drawing.Point(19, 256);
+            this.btnLeaveWithoutChanges.Location = new System.Drawing.Point(19, 286);
             this.btnLeaveWithoutChanges.Name = "btnLeaveWithoutChanges";
             this.btnLeaveWithoutChanges.Size = new System.Drawing.Size(332, 25);
             this.btnLeaveWithoutChanges.TabIndex = 197;
@@ -271,6 +273,24 @@ namespace RTCV.UI
             this.btnStartSanitizing.UseVisualStyleBackColor = false;
             this.btnStartSanitizing.Click += new System.EventHandler(this.btnStartSanitizing_Click);
             // 
+            // btnReroll
+            // 
+            this.btnReroll.BackColor = System.Drawing.Color.Gray;
+            this.btnReroll.FlatAppearance.BorderSize = 0;
+            this.btnReroll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReroll.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnReroll.ForeColor = System.Drawing.Color.White;
+            this.btnReroll.Location = new System.Drawing.Point(16, 74);
+            this.btnReroll.MinimumSize = new System.Drawing.Size(141, 23);
+            this.btnReroll.Name = "btnReroll";
+            this.btnReroll.Size = new System.Drawing.Size(141, 23);
+            this.btnReroll.TabIndex = 189;
+            this.btnReroll.TabStop = false;
+            this.btnReroll.Tag = "color:light1";
+            this.btnReroll.Text = "Reroll sanitize step";
+            this.btnReroll.UseVisualStyleBackColor = false;
+            this.btnReroll.Click += new System.EventHandler(this.btnReroll_Click);
+            // 
             // lbSteps
             // 
             this.lbSteps.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -287,7 +307,7 @@ namespace RTCV.UI
             this.lbSteps.Name = "lbSteps";
             this.lbSteps.ScrollAlwaysVisible = true;
             this.lbSteps.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbSteps.Size = new System.Drawing.Size(181, 222);
+            this.lbSteps.Size = new System.Drawing.Size(181, 253);
             this.lbSteps.TabIndex = 191;
             this.lbSteps.Tag = "color:dark2";
             // 
@@ -296,7 +316,7 @@ namespace RTCV.UI
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(574, 301);
+            this.ClientSize = new System.Drawing.Size(574, 332);
             this.Controls.Add(this.btnStartSanitizing);
             this.Controls.Add(this.btnLeaveWithoutChanges);
             this.Controls.Add(this.btnLeaveSubstractChanges);
@@ -343,5 +363,6 @@ namespace RTCV.UI
         private Button btnLeaveSubstractChanges;
         private Button btnLeaveWithoutChanges;
         private Button btnStartSanitizing;
+        private Button btnReroll;
     }
 }

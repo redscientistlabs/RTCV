@@ -2,28 +2,23 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using System.Xml.Serialization;
-using System.Runtime.InteropServices;
-using System.Text;
 using Newtonsoft.Json;
-using RTCV.CorruptCore;
-using static RTCV.UI.UI_Extensions;
-using RTCV.NetCore.StaticTools;
+using RTCV.Common;
 using RTCV.UI.Components.Controls;
+using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
-	public partial class RTC_SettingsHotkeyConfig_Form : ComponentForm, IAutoColorize
-	{
-		public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-		public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+    public partial class RTC_SettingsHotkeyConfig_Form : ComponentForm, IAutoColorize, IBlockable
+    {
+        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-		public RTC_SettingsHotkeyConfig_Form()
-		{
-			InitializeComponent();
+        public RTC_SettingsHotkeyConfig_Form()
+        {
+            InitializeComponent();
 
             LoadHotkeys();
 
@@ -38,14 +33,14 @@ namespace RTCV.UI
 
             DoTabs();
             DoFocus();
-
         }
 
         private void RTC_SettingsHotkeyConfig_Form_GotFocus(object sender, EventArgs e)
         {
-			UICore.SetHotkeyTimer(false);
+            UICore.SetHotkeyTimer(false);
             DoFocus();
         }
+
         private void RTC_SettingsHotkeyConfig_Form_LostFocus(object sender, EventArgs e)
         {
             Save();
@@ -84,7 +79,7 @@ namespace RTCV.UI
                 catch (Exception e)
                 {
                     MessageBox.Show("Something went wrong when loading your hotkeys. Deleting old hotkeys and contining");
-                    Console.WriteLine(e + "\n" + e.StackTrace);
+                    logger.Error(e, "Error loading hotkeys");
                     NetCore.Params.RemoveParam("HOTKEYS");
                 }
             }
@@ -157,8 +152,6 @@ namespace RTCV.UI
             }
         }
 
-
-
         private void DoFocus()
         {
             if (HotkeyTabControl.SelectedTab != null)
@@ -201,6 +194,5 @@ namespace RTCV.UI
                 }
             }
         }
-
     }
 }

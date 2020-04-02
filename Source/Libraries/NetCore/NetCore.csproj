@@ -84,7 +84,6 @@
     <Compile Include="DebugInfo\DebugInfo_Form.Designer.cs">
       <DependentUpon>DebugInfo_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="StaticTools.cs" />
     <Compile Include="SyncObjectSingleton.cs" />
     <Compile Include="TCPLinkWatch.cs" />
     <Compile Include="UDPLink.cs" />
@@ -108,7 +107,7 @@
       <Version>4.1.7</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.2</Version>
+      <Version>12.0.3</Version>
     </PackageReference>
     <PackageReference Include="NLog">
       <Version>4.6.8</Version>
@@ -117,8 +116,14 @@
       <Version>1.0.19</Version>
     </PackageReference>
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
-      <Version>4.6.0</Version>
+      <Version>4.5.2</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{a31c17e1-2eab-434f-a022-20193f2ceab7}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

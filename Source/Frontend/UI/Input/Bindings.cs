@@ -1,16 +1,12 @@
 ﻿//Based on code from https://github.com/TASVideos/BizHawk/
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RTCV.UI.Input
 {
     public static class Bindings
     {
-
         private static readonly WorkingDictionary<string, List<string>> _bindings = new WorkingDictionary<string, List<string>>();
         private static readonly WorkingDictionary<string, bool> _buttons = new WorkingDictionary<string, bool>();
         private static readonly WorkingDictionary<string, int> _buttonStarts = new WorkingDictionary<string, int>();
@@ -20,10 +16,10 @@ namespace RTCV.UI.Input
         {
             List<string> list = new List<string>();
             foreach (KeyValuePair<string, List<string>> kvp in _bindings)
-            foreach (var boundButton in kvp.Value)
-            {
-                if (boundButton == button) list.Add(kvp.Key);
-            }
+                foreach (var boundButton in kvp.Value)
+                {
+                    if (boundButton == button) list.Add(kvp.Key);
+                }
 
             return list;
         }

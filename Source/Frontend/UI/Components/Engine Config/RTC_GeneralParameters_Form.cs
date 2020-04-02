@@ -1,116 +1,97 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
 using System.Windows.Forms;
+using RTCV.Common;
 using RTCV.CorruptCore;
-using static RTCV.UI.UI_Extensions;
-using RTCV.NetCore.StaticTools;
 using RTCV.NetCore;
+using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
-	public partial class RTC_GeneralParameters_Form : ComponentForm, IAutoColorize
-	{
-		public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-		public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+    public partial class RTC_GeneralParameters_Form : ComponentForm, IAutoColorize, IBlockable
+    {
+        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
+        public RTC_GeneralParameters_Form()
+        {
+            InitializeComponent();
+            multiTB_Intensity.ValueChanged += (sender, args) => CorruptCore.RtcCore.Intensity = multiTB_Intensity.Value;
+            multiTB_Intensity.registerSlave(S.GET<RTC_GlitchHarvesterIntensity_Form>().multiTB_Intensity);
 
-		public RTC_GeneralParameters_Form()
-		{
-			InitializeComponent();
-			multiTB_Intensity.ValueChanged += (sender, args) => CorruptCore.RtcCore.Intensity = multiTB_Intensity.Value;
-			multiTB_Intensity.registerSlave(S.GET<RTC_GlitchHarvesterIntensity_Form>().multiTB_Intensity);
+            multiTB_ErrorDelay.ValueChanged += (sender, args) => CorruptCore.RtcCore.ErrorDelay = multiTB_ErrorDelay.Value;
+        }
 
-			multiTB_ErrorDelay.ValueChanged += (sender, args) => CorruptCore.RtcCore.ErrorDelay = multiTB_ErrorDelay.Value;
-		}
+        private void RTC_GeneralParameters_Form_Load(object sender, EventArgs e)
+        {
+            cbBlastRadius.SelectedIndex = 0;
+        }
 
-		private void RTC_GeneralParameters_Form_Load(object sender, EventArgs e)
-		{
-			cbBlastRadius.SelectedIndex = 0;
-		}
+        //Guid? errorDelayToken = null;
+        //Guid? intensityToken = null;
 
+        private void cbBlastRadius_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            switch (cbBlastRadius.SelectedItem.ToString())
+            {
+                case "SPREAD":
+                    CorruptCore.RtcCore.Radius = BlastRadius.SPREAD;
+                    break;
 
-		
-		//Guid? errorDelayToken = null;
-		//Guid? intensityToken = null;
+                case "CHUNK":
+                    CorruptCore.RtcCore.Radius = BlastRadius.CHUNK;
+                    break;
 
+                case "BURST":
+                    CorruptCore.RtcCore.Radius = BlastRadius.BURST;
+                    break;
 
-		private void cbBlastRadius_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			switch (cbBlastRadius.SelectedItem.ToString())
-			{
-				case "SPREAD":
-					CorruptCore.RtcCore.Radius = BlastRadius.SPREAD;
-					break;
+                case "NORMALIZED":
+                    CorruptCore.RtcCore.Radius = BlastRadius.NORMALIZED;
+                    break;
 
-				case "CHUNK":
-					CorruptCore.RtcCore.Radius = BlastRadius.CHUNK;
-					break;
+                case "PROPORTIONAL":
+                    CorruptCore.RtcCore.Radius = BlastRadius.PROPORTIONAL;
+                    break;
 
-				case "BURST":
-					CorruptCore.RtcCore.Radius = BlastRadius.BURST;
-					break;
+                case "EVEN":
+                    CorruptCore.RtcCore.Radius = BlastRadius.EVEN;
+                    break;
+            }
+        }
 
-				case "NORMALIZED":
-					CorruptCore.RtcCore.Radius = BlastRadius.NORMALIZED;
-					break;
+        private void RTC_GeneralParameters_Form_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason != CloseReason.FormOwnerClosing)
+            {
+                e.Cancel = true;
+                this.RestoreToPreviousPanel();
+                return;
+            }
+        }
 
-				case "PROPORTIONAL":
-					CorruptCore.RtcCore.Radius = BlastRadius.PROPORTIONAL;
-					break;
+        private void nmErrorDelay_ValueChanged(object sender, KeyPressEventArgs e)
+        {
+        }
 
-				case "EVEN":
-					CorruptCore.RtcCore.Radius = BlastRadius.EVEN;
-					break;
-			}
-		}
+        private void nmErrorDelay_ValueChanged(object sender, KeyEventArgs e)
+        {
+        }
 
+        private void nmIntensity_KeyDown(object sender, KeyEventArgs e)
+        {
+        }
 
+        private void nmIntensity_KeyUp(object sender, KeyEventArgs e)
+        {
+        }
 
-		private void RTC_GeneralParameters_Form_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			if (e.CloseReason != CloseReason.FormOwnerClosing)
-			{
-				e.Cancel = true;
-				this.RestoreToPreviousPanel();
-				return;
-			}
-		}
+        private void track_Intensity_MouseUp(object sender, KeyPressEventArgs e)
+        {
+        }
 
-		private void nmErrorDelay_ValueChanged(object sender, KeyPressEventArgs e)
-		{
-
-		}
-
-		private void nmErrorDelay_ValueChanged(object sender, KeyEventArgs e)
-		{
-
-		}
-
-		private void nmIntensity_KeyDown(object sender, KeyEventArgs e)
-		{
-
-		}
-
-		private void nmIntensity_KeyUp(object sender, KeyEventArgs e)
-		{
-
-		}
-
-		private void track_Intensity_MouseUp(object sender, KeyPressEventArgs e)
-		{
-
-		}
-
-		private void track_Intensity_MouseUp(object sender, MouseEventArgs e)
-		{
-
-		}
+        private void track_Intensity_MouseUp(object sender, MouseEventArgs e)
+        {
+        }
 
         private void RTC_GeneralParameters_Form_Shown(object sender, EventArgs e)
         {
@@ -123,7 +104,6 @@ namespace RTCV.UI
                 multiTB_Intensity.Maximum = maxintensity;
                 multiTB_Intensity.FirstLoadDone = prevState;
             }
-                
         }
     }
 }
