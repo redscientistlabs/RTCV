@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -179,10 +179,12 @@ namespace RTCV.Launcher
                 {
                     file.CopyTo(Path.Combine(target.FullName, file.Name), true);
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
                     File.SetAttributes(file.FullName, FileAttributes.Normal);
                     file.CopyTo(Path.Combine(target.FullName, file.Name), true);
+
+                    _ = ex;
                 }
 
             }
@@ -205,16 +207,18 @@ namespace RTCV.Launcher
                 {
                     File.Delete(file.FullName);
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
                     try
                     {
                         File.SetAttributes(file.FullName, FileAttributes.Normal);
                         File.Delete(file.FullName);
-                    }catch(Exception ex)
+                    }catch(Exception ex2)
                     {
                         failedList.Add(file.FullName);
+                        _ = ex2;
                     }
+                    _ = ex;
                 }
             }
             if (target.GetFiles().Length == 0)

@@ -36,12 +36,12 @@
             this.pnLeftSide = new System.Windows.Forms.Panel();
             this.pbNewVersionNotification = new System.Windows.Forms.PictureBox();
             this.btnVersionDownloader = new System.Windows.Forms.Button();
+            this.pnAnchorRight = new System.Windows.Forms.Panel();
             this.pnTopPanel = new System.Windows.Forms.Panel();
             this.btnDiscord = new System.Windows.Forms.Button();
             this.btnMinimize = new System.Windows.Forms.Button();
             this.btnQuit = new System.Windows.Forms.Button();
             this.btnOnlineGuide = new System.Windows.Forms.Button();
-            this.pnAnchorRight = new System.Windows.Forms.Panel();
             this.pnBottomPanel.SuspendLayout();
             this.pnLeftSide.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbNewVersionNotification)).BeginInit();
@@ -54,9 +54,9 @@
             this.pnBottomPanel.Controls.Add(this.lbMOTD);
             this.pnBottomPanel.Controls.Add(this.label5);
             this.pnBottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnBottomPanel.Location = new System.Drawing.Point(139, 505);
+            this.pnBottomPanel.Location = new System.Drawing.Point(145, 505);
             this.pnBottomPanel.Name = "pnBottomPanel";
-            this.pnBottomPanel.Size = new System.Drawing.Size(1011, 45);
+            this.pnBottomPanel.Size = new System.Drawing.Size(790, 45);
             this.pnBottomPanel.TabIndex = 0;
             // 
             // lbMOTD
@@ -67,7 +67,7 @@
             this.lbMOTD.ForeColor = System.Drawing.Color.White;
             this.lbMOTD.Location = new System.Drawing.Point(2, 21);
             this.lbMOTD.Name = "lbMOTD";
-            this.lbMOTD.Size = new System.Drawing.Size(1003, 18);
+            this.lbMOTD.Size = new System.Drawing.Size(788, 18);
             this.lbMOTD.TabIndex = 125;
             this.lbMOTD.Text = "...";
             this.lbMOTD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -81,7 +81,7 @@
             this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(2, 3);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(1003, 18);
+            this.label5.Size = new System.Drawing.Size(788, 18);
             this.label5.TabIndex = 132;
             this.label5.Text = "RTC, emulator mods and stubs are developed by Redscientist Media, consult redscie" +
     "ntist.com for more details";
@@ -93,7 +93,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbVersions.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))));
             this.lbVersions.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lbVersions.Font = new System.Drawing.Font("Segoe UI Semibold", 13F, System.Drawing.FontStyle.Bold);
+            this.lbVersions.Font = new System.Drawing.Font("Segoe UI Light", 13F, System.Drawing.FontStyle.Bold);
             this.lbVersions.ForeColor = System.Drawing.Color.White;
             this.lbVersions.FormattingEnabled = true;
             this.lbVersions.IntegralHeight = false;
@@ -117,13 +117,12 @@
             this.pnLeftSide.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnLeftSide.Location = new System.Drawing.Point(0, 41);
             this.pnLeftSide.Name = "pnLeftSide";
-            this.pnLeftSide.Size = new System.Drawing.Size(139, 509);
+            this.pnLeftSide.Size = new System.Drawing.Size(145, 509);
             this.pnLeftSide.TabIndex = 134;
             // 
             // pbNewVersionNotification
             // 
-            this.pbNewVersionNotification.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbNewVersionNotification.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pbNewVersionNotification.Image = global::RTCV.Launcher.Properties.Resources.notificationBadge;
             this.pbNewVersionNotification.InitialImage = global::RTCV.Launcher.Properties.Resources.notificationBadge;
             this.pbNewVersionNotification.Location = new System.Drawing.Point(109, 467);
@@ -144,13 +143,25 @@
             this.btnVersionDownloader.ForeColor = System.Drawing.Color.White;
             this.btnVersionDownloader.Location = new System.Drawing.Point(0, 464);
             this.btnVersionDownloader.Name = "btnVersionDownloader";
-            this.btnVersionDownloader.Size = new System.Drawing.Size(139, 45);
+            this.btnVersionDownloader.Size = new System.Drawing.Size(145, 45);
             this.btnVersionDownloader.TabIndex = 132;
             this.btnVersionDownloader.TabStop = false;
             this.btnVersionDownloader.Tag = "";
             this.btnVersionDownloader.Text = "Downloader";
             this.btnVersionDownloader.UseVisualStyleBackColor = false;
             this.btnVersionDownloader.Click += new System.EventHandler(this.btnVersionDownloader_Click);
+            // 
+            // pnAnchorRight
+            // 
+            this.pnAnchorRight.AutoSize = true;
+            this.pnAnchorRight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.pnAnchorRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pnAnchorRight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnAnchorRight.Location = new System.Drawing.Point(145, 41);
+            this.pnAnchorRight.Name = "pnAnchorRight";
+            this.pnAnchorRight.Size = new System.Drawing.Size(790, 464);
+            this.pnAnchorRight.TabIndex = 133;
+            this.pnAnchorRight.Paint += new System.Windows.Forms.PaintEventHandler(this.pnAnchorRight_Paint);
             // 
             // pnTopPanel
             // 
@@ -164,7 +175,7 @@
             this.pnTopPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnTopPanel.Location = new System.Drawing.Point(0, 0);
             this.pnTopPanel.Name = "pnTopPanel";
-            this.pnTopPanel.Size = new System.Drawing.Size(1150, 41);
+            this.pnTopPanel.Size = new System.Drawing.Size(935, 41);
             this.pnTopPanel.TabIndex = 131;
             // 
             // btnDiscord
@@ -178,7 +189,7 @@
             this.btnDiscord.ForeColor = System.Drawing.Color.White;
             this.btnDiscord.Image = global::RTCV.Launcher.Properties.Resources.discord;
             this.btnDiscord.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnDiscord.Location = new System.Drawing.Point(908, 8);
+            this.btnDiscord.Location = new System.Drawing.Point(693, 8);
             this.btnDiscord.Name = "btnDiscord";
             this.btnDiscord.Size = new System.Drawing.Size(73, 24);
             this.btnDiscord.TabIndex = 131;
@@ -197,7 +208,7 @@
             this.btnMinimize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnMinimize.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
             this.btnMinimize.ForeColor = System.Drawing.Color.White;
-            this.btnMinimize.Location = new System.Drawing.Point(1092, 8);
+            this.btnMinimize.Location = new System.Drawing.Point(877, 8);
             this.btnMinimize.Name = "btnMinimize";
             this.btnMinimize.Size = new System.Drawing.Size(22, 24);
             this.btnMinimize.TabIndex = 131;
@@ -215,7 +226,7 @@
             this.btnQuit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnQuit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Bold);
             this.btnQuit.ForeColor = System.Drawing.Color.White;
-            this.btnQuit.Location = new System.Drawing.Point(1120, 8);
+            this.btnQuit.Location = new System.Drawing.Point(905, 8);
             this.btnQuit.Name = "btnQuit";
             this.btnQuit.Size = new System.Drawing.Size(22, 24);
             this.btnQuit.TabIndex = 130;
@@ -237,7 +248,7 @@
             this.btnOnlineGuide.ForeColor = System.Drawing.Color.White;
             this.btnOnlineGuide.Image = global::RTCV.Launcher.Properties.Resources.corruptwiki;
             this.btnOnlineGuide.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnOnlineGuide.Location = new System.Drawing.Point(987, 8);
+            this.btnOnlineGuide.Location = new System.Drawing.Point(772, 8);
             this.btnOnlineGuide.Name = "btnOnlineGuide";
             this.btnOnlineGuide.Size = new System.Drawing.Size(99, 24);
             this.btnOnlineGuide.TabIndex = 129;
@@ -249,24 +260,12 @@
             this.btnOnlineGuide.UseVisualStyleBackColor = false;
             this.btnOnlineGuide.Click += new System.EventHandler(this.btnOnlineGuide_Click);
             // 
-            // pnAnchorRight
-            // 
-            this.pnAnchorRight.AutoSize = true;
-            this.pnAnchorRight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.pnAnchorRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pnAnchorRight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnAnchorRight.Location = new System.Drawing.Point(139, 41);
-            this.pnAnchorRight.Name = "pnAnchorRight";
-            this.pnAnchorRight.Size = new System.Drawing.Size(1011, 464);
-            this.pnAnchorRight.TabIndex = 133;
-            this.pnAnchorRight.Paint += new System.Windows.Forms.PaintEventHandler(this.pnAnchorRight_Paint);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.ClientSize = new System.Drawing.Size(1150, 550);
+            this.ClientSize = new System.Drawing.Size(935, 550);
             this.Controls.Add(this.pnAnchorRight);
             this.Controls.Add(this.pnBottomPanel);
             this.Controls.Add(this.pnLeftSide);
@@ -274,7 +273,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(680, 550);
+            this.MinimumSize = new System.Drawing.Size(935, 550);
             this.Name = "MainForm";
             this.Tag = "";
             this.Text = "RTC Launcher";

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -27,9 +27,6 @@ namespace RTCV.Launcher
         public void DisplayVersion()
         {
             Size? btnSize = null;
-            int maxHorizontal = 4;
-            int positionX = 0;
-            int positionY = 0;
 
             foreach (LauncherConfItem lci in lc.items)
             {

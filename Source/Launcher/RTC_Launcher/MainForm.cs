@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -46,10 +46,11 @@ namespace RTCV.Launcher
 
         public static MainForm mf = null;
         public static VersionDownloadPanel vdppForm = null;
+        public static SidebarInfoPanel sideinfoForm = null;
         public static DownloadForm dForm = null;
         public static Form lpForm = null;
 
-        public static int launcherVer = 22;
+        public static int launcherVer = 24;
 
 
         public static int devCounter = 0;
@@ -62,6 +63,12 @@ namespace RTCV.Launcher
 
             mf = this;
             lbVersions.AutoSize = true;
+            sideinfoForm = new SidebarInfoPanel();
+            sideinfoForm.BackColor = pnLeftSide.BackColor;
+            sideinfoForm.TopLevel = false;
+            pnLeftSide.Controls.Add(sideinfoForm);
+            sideinfoForm.Dock = DockStyle.Fill;
+
             RewireMouseMove();
 
 
@@ -122,6 +129,10 @@ namespace RTCV.Launcher
         private void MainForm_Load(object sender, EventArgs e)
         {
             RefreshInstalledVersions();
+
+            if (lbVersions.Items.Count > 0)
+                lbVersions.SelectedIndex = 0;
+
             try
             {
                 Action a = () =>
@@ -204,6 +215,23 @@ namespace RTCV.Launcher
             Task.Run(a);
         }
 
+        public void RefreshPanel()
+        {
+            lbVersions.SelectedIndex = -1;
+
+            RefreshInstalledVersions();
+
+            MainForm.mf.pnLeftSide.Visible = true;
+
+            if (MainForm.vdppForm != null)
+            {
+                MainForm.vdppForm.lbOnlineVersions.SelectedIndex = -1;
+                MainForm.vdppForm.btnDownloadVersion.Visible = false;
+            }
+
+            RefreshKeepSelectedVersion();
+        }
+
         public static byte[] GetFileViaHttp(string url)
         {
             //Windows does the big dumb: part 11
@@ -217,9 +245,10 @@ namespace RTCV.Launcher
                 {
                     b = client.GetByteArrayAsync(url).Result;
                 }
-                catch (AggregateException e)
+                catch (AggregateException ex)
                 {
                     Console.WriteLine($"{url} timed out.");
+                    _ = ex;
                 }
 
                 return b;
@@ -278,7 +307,7 @@ namespace RTCV.Launcher
             this.BeginInvoke(new MethodInvoker(a));
         }
 
-        private void UpdateLauncher(string extractDirectory)
+        private void Update(string extractDirectory)
         {
             string batchLocation = extractDirectory + Path.DirectorySeparatorChar + "Launcher\\update.bat";
             ProcessStartInfo psi = new ProcessStartInfo();
@@ -396,7 +425,7 @@ namespace RTCV.Launcher
                                     MessageBoxDefaultButton.Button1,
                                     MessageBoxOptions.DefaultDesktopOnly) == DialogResult.OK)
                             {
-                                UpdateLauncher(extractDirectory);
+                                Update();
                             }
                             else
                             {
@@ -408,7 +437,7 @@ namespace RTCV.Launcher
 
                         if (MessageBox.Show("The downloaded package contains a new launcher update.\n\nDo you want to update the Launcher?", "Launcher update", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
-                            UpdateLauncher(extractDirectory);
+                            Update();
                         }
                     }
                 }
@@ -600,16 +629,16 @@ namespace RTCV.Launcher
             Process.Start("https://discord.corrupt.wiki/");
         }
 
-        const int _ = 10; // you can rename this variable if you like
+        const int grabBorderSize = 10; // size of the area where you can grab the borderless window
 
-        Rectangle Top => new Rectangle(0, 0, this.ClientSize.Width, _);
-        Rectangle Left => new Rectangle(0, 0, _, this.ClientSize.Height);
-        Rectangle Bottom => new Rectangle(0, this.ClientSize.Height - _, this.ClientSize.Width, _);
-        Rectangle Right => new Rectangle(this.ClientSize.Width - _, 0, _, this.ClientSize.Height);
-        Rectangle TopLeft => new Rectangle(0, 0, _, _);
-        Rectangle TopRight => new Rectangle(this.ClientSize.Width - _, 0, _, _);
-        Rectangle BottomLeft => new Rectangle(0, this.ClientSize.Height - _, _, _);
-        Rectangle BottomRight => new Rectangle(this.ClientSize.Width - _, this.ClientSize.Height - _, _, _);
+        Rectangle RectTop => new Rectangle(0, 0, this.ClientSize.Width, grabBorderSize);
+        Rectangle RectLeft => new Rectangle(0, 0, grabBorderSize, this.ClientSize.Height);
+        Rectangle RectBottom => new Rectangle(0, this.ClientSize.Height - grabBorderSize, this.ClientSize.Width, grabBorderSize);
+        Rectangle RectRight => new Rectangle(this.ClientSize.Width - grabBorderSize, 0, grabBorderSize, this.ClientSize.Height);
+        Rectangle RectTopLeft => new Rectangle(0, 0, grabBorderSize, grabBorderSize);
+        Rectangle RectTopRight => new Rectangle(this.ClientSize.Width - grabBorderSize, 0, grabBorderSize, grabBorderSize);
+        Rectangle RectBottomLeft => new Rectangle(0, this.ClientSize.Height - grabBorderSize, grabBorderSize, grabBorderSize);
+        Rectangle RectBottomRight => new Rectangle(this.ClientSize.Width - grabBorderSize, this.ClientSize.Height - grabBorderSize, grabBorderSize, grabBorderSize);
 
 
 
@@ -635,42 +664,42 @@ namespace RTCV.Launcher
         {
             Cursor.Current = Cursors.Default;
             var cursor = this.PointToClient(Cursor.Position);
-            if (TopLeft.Contains(cursor))
+            if (RectTopLeft.Contains(cursor))
             {
                 Cursor.Current = Cursors.SizeNWSE;
                 ResizeWindow(e, HT_TOPLEFT);
             }
-            else if (TopRight.Contains(cursor))
+            else if (RectTopRight.Contains(cursor))
             {
                 Cursor.Current = Cursors.SizeNESW;
                 ResizeWindow(e, HT_TOPRIGHT);
             }
-            else if (BottomLeft.Contains(cursor))
+            else if (RectBottomLeft.Contains(cursor))
             {
                 Cursor.Current = Cursors.SizeNESW;
                 ResizeWindow(e, HT_BOTTOMLEFT);
             }
-            else if (BottomRight.Contains(cursor))
+            else if (RectBottomRight.Contains(cursor))
             {
                 Cursor.Current = Cursors.SizeNWSE;
                 ResizeWindow(e, HT_BOTTOMRIGHT);
             }
-            else if (Top.Contains(cursor))
+            else if (RectTop.Contains(cursor))
             {
                 Cursor.Current = Cursors.SizeNS;
                 ResizeWindow(e, HT_TOP);
             }
-            else if (Left.Contains(cursor))
+            else if (RectLeft.Contains(cursor))
             {
                 Cursor.Current = Cursors.SizeWE;
                 ResizeWindow(e, HT_LEFT);
             }
-            else if (Right.Contains(cursor))
+            else if (RectRight.Contains(cursor))
             {
                 Cursor.Current = Cursors.SizeWE;
                 ResizeWindow(e, HT_RIGHT);
             }
-            else if (Bottom.Contains(cursor))
+            else if (RectBottom.Contains(cursor))
             {
                 Cursor.Current = Cursors.SizeNS;
                 ResizeWindow(e, HT_BOTTOM);
