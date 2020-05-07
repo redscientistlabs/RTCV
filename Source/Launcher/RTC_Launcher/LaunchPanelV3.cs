@@ -295,7 +295,7 @@ namespace RTCV.Launcher
                 MainForm.sideinfoForm.lbDescription.Text = (lcji.ItemDescription != null ? lcji.ItemDescription : "");
 
                 MainForm.sideinfoForm.Show();
-                MainForm.mf.lbVersions.Hide();
+                MainForm.mf.lbVersions.Visible = false;
             }
         }
 

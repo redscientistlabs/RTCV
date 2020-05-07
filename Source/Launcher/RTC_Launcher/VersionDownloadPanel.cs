@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -43,7 +43,12 @@ namespace RTCV.Launcher
                 string str = Encoding.UTF8.GetString(versionFile);
                 List<string> onlineVersions = new List<string>(str.Split('|').Where(it => !it.Contains("Launcher")).ToArray());
 
-                return onlineVersions.OrderByNaturalDescending(x => x).Select(it => it.Replace(".zip", "")).ToArray()[0];
+                var returnValue = onlineVersions.OrderByNaturalDescending(x => x).Select(it => it.Replace(".zip", "")).ToArray()[0];
+
+                if (returnValue.EndsWith("-bz"))
+                    returnValue = returnValue.Replace("-bz", "");
+
+                return returnValue;
             }
             catch
             {
@@ -57,23 +62,45 @@ namespace RTCV.Launcher
         {
             Action a = () =>
             {
-                var versionFile = MainForm.GetFileViaHttp($"{MainForm.webRessourceDomain}/rtc/releases/version.php");
+            var versionFile = MainForm.GetFileViaHttp($"{MainForm.webRessourceDomain}/rtc/releases/version.php");
 
-                if (versionFile == null)
-                    return;
+            if (versionFile == null)
+                return;
 
-                string str = Encoding.UTF8.GetString(versionFile);
+            string str = Encoding.UTF8.GetString(versionFile);
 
-                //Ignores any build containing the word Launcher in it
-                var onlineVersions = str.Split('|').Where(it => !it.Contains("Launcher")).OrderByNaturalDescending(x => x).Select(it => it.Replace(".zip", "")).ToArray();
-                this.Invoke(new MethodInvoker(() =>
+            //Ignores any build containing the word Launcher in it
+            var onlineVersions = str.Split('|').Where(it => !it.Contains("Launcher")).OrderByNaturalDescending(x => x).Select(it => it.Replace(".zip", "")).ToArray();
+            this.Invoke(new MethodInvoker(() =>
+            {
+            ListBox.ObjectCollection onlineVersionsTuples = new ListBox.ObjectCollection(lbOnlineVersions);
+
+            lbOnlineVersions.Items.Clear();
+            if (onlineVersions.Length > 0)
+            {
+                for (int i = 0; i < onlineVersions.Length; i++)
                 {
-                    lbOnlineVersions.Items.Clear();
-                    if (onlineVersions.Length > 0)
-                    {
-                        onlineVersions[0] += latestVersionString;
+                    string value = onlineVersions[i];
+
+                    if (onlineVersions[i].EndsWith("-bz"))
+                        onlineVersions[i] = onlineVersions[i].Replace("-bz", "");
+
+                    if (i == 0)
+                        onlineVersions[i] += latestVersionString;
+
+
+
+                    string key = onlineVersions[i];
+
+                    onlineVersionsTuples.Add(new { key=key, value=value});
+                        }
+
+                        
                     }
-                    lbOnlineVersions.Items.AddRange(onlineVersions);
+
+                    
+
+                    lbOnlineVersions.Items.AddRange(onlineVersionsTuples);
                 }));
             };
             Task.Run(a);
@@ -93,7 +120,9 @@ namespace RTCV.Launcher
             if (lbOnlineVersions.SelectedIndex == -1)
                 return;
 
-            string version = lbOnlineVersions.SelectedItem.ToString();
+            dynamic itemData = lbOnlineVersions.SelectedItem;
+
+            string version = itemData.value;
             version = version.Replace(latestVersionString, "");
 
             if (Directory.Exists((MainForm.launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version)))

@@ -322,6 +322,10 @@ namespace RTCV.Launcher
 
             try
             {
+                if (extractDirectory.EndsWith("-bz"))
+                    extractDirectory = extractDirectory.Replace("-bz", "");
+
+
                 if (!Directory.Exists(extractDirectory))
                     Directory.CreateDirectory(extractDirectory);
 
