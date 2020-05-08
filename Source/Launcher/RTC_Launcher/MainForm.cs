@@ -65,13 +65,15 @@ namespace RTCV.Launcher
 
             mf = this;
 
+            var preAnchorLeftPanelSize = new Size(pnLeftSide.Width, pnLeftSide.Height - btnVersionDownloader.Height);
+
             sideversionForm = new SidebarVersionsPanel();
             sideversionForm.BackColor = pnLeftSide.BackColor;
             sideversionForm.TopLevel = false;
             pnLeftSide.Controls.Add(sideversionForm);
             //sideversionForm.Dock = DockStyle.Fill;
             sideversionForm.Location = new Point(0, 0);
-            sideversionForm.Size = pnLeftSide.Size;
+            sideversionForm.Size = preAnchorLeftPanelSize;
             sideversionForm.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
 
             sideversionForm.Show();
@@ -82,7 +84,7 @@ namespace RTCV.Launcher
             pnLeftSide.Controls.Add(sideinfoForm);
             //sideinfoForm.Dock = DockStyle.Fill;
             sideinfoForm.Location = new Point(0, 0);
-            sideinfoForm.Size = pnLeftSide.Size;
+            sideinfoForm.Size = preAnchorLeftPanelSize;
             sideinfoForm.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
 
             
@@ -228,7 +230,9 @@ namespace RTCV.Launcher
             Action a = () =>
             {
                 string latestVersion = VersionDownloadPanel.getLatestVersion();
-                this.Invoke(new MethodInvoker(() => { pbNewVersionNotification.Visible = !versions.Select(it => it.Substring(it.LastIndexOf('\\') + 1)).Contains(latestVersion); }));
+                this.Invoke(new MethodInvoker(() => { 
+                    pbNewVersionNotification.Visible = !versions.Select(it => it.Substring(it.LastIndexOf('\\') + 1)).Contains(latestVersion);
+                }));
             };
             Task.Run(a);
         }

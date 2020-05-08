@@ -38,11 +38,11 @@ namespace RTCV.Launcher
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbVersions.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))));
             this.lbVersions.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lbVersions.Font = new System.Drawing.Font("Segoe UI Light", 13F, System.Drawing.FontStyle.Bold);
+            this.lbVersions.Font = new System.Drawing.Font("Segoe UI Light", 12F, System.Drawing.FontStyle.Bold);
             this.lbVersions.ForeColor = System.Drawing.Color.White;
             this.lbVersions.FormattingEnabled = true;
             this.lbVersions.IntegralHeight = false;
-            this.lbVersions.ItemHeight = 23;
+            this.lbVersions.ItemHeight = 21;
             this.lbVersions.Location = new System.Drawing.Point(9, 8);
             this.lbVersions.Margin = new System.Windows.Forms.Padding(0);
             this.lbVersions.Name = "lbVersions";

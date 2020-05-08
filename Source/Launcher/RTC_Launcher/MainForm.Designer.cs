@@ -53,9 +53,9 @@
             this.pnBottomPanel.Controls.Add(this.lbMOTD);
             this.pnBottomPanel.Controls.Add(this.label5);
             this.pnBottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnBottomPanel.Location = new System.Drawing.Point(155, 505);
+            this.pnBottomPanel.Location = new System.Drawing.Point(170, 505);
             this.pnBottomPanel.Name = "pnBottomPanel";
-            this.pnBottomPanel.Size = new System.Drawing.Size(780, 45);
+            this.pnBottomPanel.Size = new System.Drawing.Size(765, 45);
             this.pnBottomPanel.TabIndex = 0;
             // 
             // lbMOTD
@@ -66,7 +66,7 @@
             this.lbMOTD.ForeColor = System.Drawing.Color.White;
             this.lbMOTD.Location = new System.Drawing.Point(2, 21);
             this.lbMOTD.Name = "lbMOTD";
-            this.lbMOTD.Size = new System.Drawing.Size(778, 18);
+            this.lbMOTD.Size = new System.Drawing.Size(763, 18);
             this.lbMOTD.TabIndex = 125;
             this.lbMOTD.Text = "...";
             this.lbMOTD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -80,7 +80,7 @@
             this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(2, 3);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(778, 18);
+            this.label5.Size = new System.Drawing.Size(763, 18);
             this.label5.TabIndex = 132;
             this.label5.Text = "RTC, emulator mods and stubs are developed by Redscientist Media, consult redscie" +
     "ntist.com for more details";
@@ -94,9 +94,9 @@
             this.pnLeftSide.Controls.Add(this.btnVersionDownloader);
             this.pnLeftSide.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnLeftSide.Location = new System.Drawing.Point(0, 41);
-            this.pnLeftSide.MinimumSize = new System.Drawing.Size(155, 509);
+            this.pnLeftSide.MinimumSize = new System.Drawing.Size(170, 509);
             this.pnLeftSide.Name = "pnLeftSide";
-            this.pnLeftSide.Size = new System.Drawing.Size(155, 509);
+            this.pnLeftSide.Size = new System.Drawing.Size(170, 509);
             this.pnLeftSide.TabIndex = 134;
             // 
             // pbNewVersionNotification
@@ -104,7 +104,7 @@
             this.pbNewVersionNotification.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pbNewVersionNotification.Image = global::RTCV.Launcher.Properties.Resources.notificationBadge;
             this.pbNewVersionNotification.InitialImage = global::RTCV.Launcher.Properties.Resources.notificationBadge;
-            this.pbNewVersionNotification.Location = new System.Drawing.Point(127, 469);
+            this.pbNewVersionNotification.Location = new System.Drawing.Point(142, 469);
             this.pbNewVersionNotification.Name = "pbNewVersionNotification";
             this.pbNewVersionNotification.Size = new System.Drawing.Size(14, 14);
             this.pbNewVersionNotification.TabIndex = 131;
@@ -122,7 +122,7 @@
             this.btnVersionDownloader.ForeColor = System.Drawing.Color.White;
             this.btnVersionDownloader.Location = new System.Drawing.Point(0, 464);
             this.btnVersionDownloader.Name = "btnVersionDownloader";
-            this.btnVersionDownloader.Size = new System.Drawing.Size(155, 45);
+            this.btnVersionDownloader.Size = new System.Drawing.Size(170, 45);
             this.btnVersionDownloader.TabIndex = 132;
             this.btnVersionDownloader.TabStop = false;
             this.btnVersionDownloader.Tag = "";
@@ -136,9 +136,9 @@
             this.pnAnchorRight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.pnAnchorRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pnAnchorRight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnAnchorRight.Location = new System.Drawing.Point(155, 41);
+            this.pnAnchorRight.Location = new System.Drawing.Point(170, 41);
             this.pnAnchorRight.Name = "pnAnchorRight";
-            this.pnAnchorRight.Size = new System.Drawing.Size(780, 464);
+            this.pnAnchorRight.Size = new System.Drawing.Size(765, 464);
             this.pnAnchorRight.TabIndex = 133;
             this.pnAnchorRight.Paint += new System.Windows.Forms.PaintEventHandler(this.pnAnchorRight_Paint);
             // 

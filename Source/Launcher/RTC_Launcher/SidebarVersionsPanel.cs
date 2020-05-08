@@ -26,7 +26,7 @@ namespace RTCV.Launcher
 
         private void SidebarVersionsPanel_Load(object sender, EventArgs e)
         {
-
+            VerticalScroll.Enabled = true;
         }
     }
 }

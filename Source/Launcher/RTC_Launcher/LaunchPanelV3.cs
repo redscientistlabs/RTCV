@@ -339,7 +339,7 @@ namespace RTCV.Launcher
                 if(lcji.IsAddon)
                 {
 
-                    string ImageFilename = Path.Combine(MainForm.launcherDir, "VERSIONS", "Launcherz", lcji.ImageName);
+                    string ImageFilename = Path.Combine(MainForm.launcherDir, "VERSIONS", "Launcher", lcji.ImageName);
 
                     if (File.Exists(lcji.ConfigFilename))
                         File.Delete(lcji.ConfigFilename);
