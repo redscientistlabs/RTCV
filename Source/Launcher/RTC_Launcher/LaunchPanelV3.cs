@@ -255,7 +255,7 @@ namespace RTCV.Launcher
             sidebarCloseTimer.Stop();
 
             MainForm.sideinfoForm.Hide();
-            MainForm.mf.lbVersions.Show();
+            MainForm.sideversionForm.Show();
         }
 
         private void NewButton_MouseLeave(object sender, EventArgs e)
@@ -295,7 +295,7 @@ namespace RTCV.Launcher
                 MainForm.sideinfoForm.lbDescription.Text = (lcji.ItemDescription != null ? lcji.ItemDescription : "");
 
                 MainForm.sideinfoForm.Show();
-                MainForm.mf.lbVersions.Visible = false;
+                MainForm.sideversionForm.Hide();
             }
         }
 
@@ -402,7 +402,7 @@ namespace RTCV.Launcher
 
         private LauncherConfJson getFolderFromPreviousVersion(string downloadVersion)
         {
-            foreach(string ver in MainForm.mf.lbVersions.Items.Cast<string>())
+            foreach(string ver in MainForm.sideversionForm.lbVersions.Items.Cast<string>())
             {
                 if (downloadVersion == ver)
                     continue;

@@ -47,6 +47,8 @@ namespace RTCV.Launcher
         public static MainForm mf = null;
         public static VersionDownloadPanel vdppForm = null;
         public static SidebarInfoPanel sideinfoForm = null;
+        public static SidebarVersionsPanel sideversionForm = null;
+
         public static DownloadForm dForm = null;
         public static Form lpForm = null;
 
@@ -62,12 +64,28 @@ namespace RTCV.Launcher
             InitializeComponent();
 
             mf = this;
-            lbVersions.AutoSize = true;
+
+            sideversionForm = new SidebarVersionsPanel();
+            sideversionForm.BackColor = pnLeftSide.BackColor;
+            sideversionForm.TopLevel = false;
+            pnLeftSide.Controls.Add(sideversionForm);
+            //sideversionForm.Dock = DockStyle.Fill;
+            sideversionForm.Location = new Point(0, 0);
+            sideversionForm.Size = pnLeftSide.Size;
+            sideversionForm.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
+
+            sideversionForm.Show();
+
             sideinfoForm = new SidebarInfoPanel();
             sideinfoForm.BackColor = pnLeftSide.BackColor;
             sideinfoForm.TopLevel = false;
             pnLeftSide.Controls.Add(sideinfoForm);
-            sideinfoForm.Dock = DockStyle.Fill;
+            //sideinfoForm.Dock = DockStyle.Fill;
+            sideinfoForm.Location = new Point(0, 0);
+            sideinfoForm.Size = pnLeftSide.Size;
+            sideinfoForm.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
+
+            
 
             RewireMouseMove();
 
@@ -130,8 +148,8 @@ namespace RTCV.Launcher
         {
             RefreshInstalledVersions();
 
-            if (lbVersions.Items.Count > 0)
-                lbVersions.SelectedIndex = 0;
+            if (sideversionForm.lbVersions.Items.Count > 0)
+                sideversionForm.lbVersions.SelectedIndex = 0;
 
             try
             {
@@ -200,9 +218,9 @@ namespace RTCV.Launcher
 
         public void RefreshInstalledVersions()
         {
-            lbVersions.Items.Clear();
+            sideversionForm.lbVersions.Items.Clear();
             List<string> versions = new List<string>(Directory.GetDirectories(launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar));
-            lbVersions.Items.AddRange(versions.OrderByNaturalDescending(x => x).Select(it => getFilenameFromFullFilename(it)).ToArray<object>());
+            sideversionForm.lbVersions.Items.AddRange(versions.OrderByNaturalDescending(x => x).Select(it => getFilenameFromFullFilename(it)).ToArray<object>());
             this.PerformLayout();
             SelectedVersion = null;
 
@@ -217,7 +235,7 @@ namespace RTCV.Launcher
 
         public void RefreshPanel()
         {
-            lbVersions.SelectedIndex = -1;
+            sideversionForm.lbVersions.SelectedIndex = -1;
 
             RefreshInstalledVersions();
 
@@ -266,17 +284,17 @@ namespace RTCV.Launcher
         }
 
 
-        private void lbVersions_SelectedIndexChanged(object sender, EventArgs e)
+        public void lbVersions_SelectedIndexChanged(object sender, EventArgs e)
         {
             clearAnchorRight();
-            if (lbVersions.SelectedIndex == -1)
+            if (sideversionForm.lbVersions.SelectedIndex == -1)
             {
                 SelectedVersion = null;
                 return;
             }
             else
             {
-                SelectedVersion = lbVersions.SelectedItem.ToString();
+                SelectedVersion = sideversionForm.lbVersions.SelectedItem.ToString();
                 lastSelectedVersion = SelectedVersion;
             }
 
@@ -449,7 +467,7 @@ namespace RTCV.Launcher
             finally
             {
 
-                lbVersions.SelectedIndex = -1;
+                sideversionForm.lbVersions.SelectedIndex = -1;
 
                 RefreshInstalledVersions();
 
@@ -475,9 +493,9 @@ namespace RTCV.Launcher
             if (lastSelectedVersion != null)
             {
                 int index = -1;
-                for (int i = 0; i < lbVersions.Items.Count; i++)
+                for (int i = 0; i < sideversionForm.lbVersions.Items.Count; i++)
                 {
-                    var item = lbVersions.Items[i];
+                    var item = sideversionForm.lbVersions.Items[i];
                     if (item.ToString() == lastSelectedVersion)
                     {
                         index = i;
@@ -485,18 +503,18 @@ namespace RTCV.Launcher
                     }
                 }
 
-                lbVersions.SelectedIndex = -1;
-                lbVersions.SelectedIndex = index;
+                sideversionForm.lbVersions.SelectedIndex = -1;
+                sideversionForm.lbVersions.SelectedIndex = index;
             }
         }
 
         public void DeleteSelected()
         {
-            if (lbVersions.SelectedIndex == -1)
+            if (sideversionForm.lbVersions.SelectedIndex == -1)
                 return;
 
             Directory.SetCurrentDirectory(launcherDir); //Move our working dir back
-            string version = lbVersions.SelectedItem.ToString();
+            string version = sideversionForm.lbVersions.SelectedItem.ToString();
 
             if (File.Exists(launcherDir + Path.DirectorySeparatorChar + "PACKAGES" + Path.DirectorySeparatorChar + version + ".zip"))
                 File.Delete(launcherDir + Path.DirectorySeparatorChar + "PACKAGES" + Path.DirectorySeparatorChar + version + ".zip");
@@ -523,24 +541,24 @@ namespace RTCV.Launcher
 
         public void RefreshInterface()
         {
-            lbVersions.SelectedIndex = -1;
+            sideversionForm.lbVersions.SelectedIndex = -1;
             RefreshInstalledVersions();
         }
 
         public void OpenFolder()
         {
-            if (lbVersions.SelectedIndex == -1)
+            if (sideversionForm.lbVersions.SelectedIndex == -1)
                 return;
 
-            string version = lbVersions.SelectedItem.ToString();
+            string version = sideversionForm.lbVersions.SelectedItem.ToString();
 
             if (Directory.Exists((launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version)))
                 Process.Start(launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version);
         }
 
-        private void lbVersions_MouseDown(object sender, MouseEventArgs e)
+        public void lbVersions_MouseDown(object sender, MouseEventArgs e)
         {
-            if (lbVersions.SelectedIndex == -1)
+            if (sideversionForm.lbVersions.SelectedIndex == -1)
                 return;
 
             if (e.Button == MouseButtons.Right)
@@ -575,7 +593,7 @@ namespace RTCV.Launcher
 
         private void btnVersionDownloader_Click(object sender, EventArgs e)
         {
-            lbVersions.SelectedIndex = -1;
+            sideversionForm.lbVersions.SelectedIndex = -1;
 
             lastSelectedVersion = null;
 

@@ -129,6 +129,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="RTC_Extensions.cs" />
+    <Compile Include="SidebarVersionsPanel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SidebarVersionsPanel.Designer.cs">
+      <DependentUpon>SidebarVersionsPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="VersionDownloadPanel.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -161,6 +167,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SidebarVersionsPanel.resx">
+      <DependentUpon>SidebarVersionsPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VersionDownloadPanel.resx">
       <DependentUpon>VersionDownloadPanel.cs</DependentUpon>

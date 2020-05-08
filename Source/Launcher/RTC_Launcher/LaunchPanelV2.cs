@@ -220,7 +220,7 @@ namespace RTCV.Launcher
 
         private LauncherConf getFolderFromPreviousVersion(string downloadVersion)
         {
-            foreach(string ver in MainForm.mf.lbVersions.Items.Cast<string>())
+            foreach(string ver in MainForm.sideversionForm.lbVersions.Items.Cast<string>())
             {
                 if (downloadVersion == ver)
                     continue;

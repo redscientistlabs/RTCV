@@ -62,7 +62,7 @@
             this.lbDescription.ForeColor = System.Drawing.Color.White;
             this.lbDescription.Location = new System.Drawing.Point(6, 67);
             this.lbDescription.Name = "lbDescription";
-            this.lbDescription.Size = new System.Drawing.Size(109, 349);
+            this.lbDescription.Size = new System.Drawing.Size(144, 433);
             this.lbDescription.TabIndex = 2;
             this.lbDescription.Text = "_";
             // 
@@ -71,7 +71,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(120, 452);
+            this.ClientSize = new System.Drawing.Size(155, 509);
             this.Controls.Add(this.lbDescription);
             this.Controls.Add(this.lbSubtitle);
             this.Controls.Add(this.lbName);

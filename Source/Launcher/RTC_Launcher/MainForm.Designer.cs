@@ -32,7 +32,6 @@
             this.pnBottomPanel = new System.Windows.Forms.Panel();
             this.lbMOTD = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.lbVersions = new System.Windows.Forms.ListBox();
             this.pnLeftSide = new System.Windows.Forms.Panel();
             this.pbNewVersionNotification = new System.Windows.Forms.PictureBox();
             this.btnVersionDownloader = new System.Windows.Forms.Button();
@@ -54,9 +53,9 @@
             this.pnBottomPanel.Controls.Add(this.lbMOTD);
             this.pnBottomPanel.Controls.Add(this.label5);
             this.pnBottomPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnBottomPanel.Location = new System.Drawing.Point(145, 505);
+            this.pnBottomPanel.Location = new System.Drawing.Point(155, 505);
             this.pnBottomPanel.Name = "pnBottomPanel";
-            this.pnBottomPanel.Size = new System.Drawing.Size(790, 45);
+            this.pnBottomPanel.Size = new System.Drawing.Size(780, 45);
             this.pnBottomPanel.TabIndex = 0;
             // 
             // lbMOTD
@@ -67,7 +66,7 @@
             this.lbMOTD.ForeColor = System.Drawing.Color.White;
             this.lbMOTD.Location = new System.Drawing.Point(2, 21);
             this.lbMOTD.Name = "lbMOTD";
-            this.lbMOTD.Size = new System.Drawing.Size(788, 18);
+            this.lbMOTD.Size = new System.Drawing.Size(778, 18);
             this.lbMOTD.TabIndex = 125;
             this.lbMOTD.Text = "...";
             this.lbMOTD.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -81,31 +80,11 @@
             this.label5.ForeColor = System.Drawing.Color.White;
             this.label5.Location = new System.Drawing.Point(2, 3);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(788, 18);
+            this.label5.Size = new System.Drawing.Size(778, 18);
             this.label5.TabIndex = 132;
             this.label5.Text = "RTC, emulator mods and stubs are developed by Redscientist Media, consult redscie" +
     "ntist.com for more details";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lbVersions
-            // 
-            this.lbVersions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbVersions.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))));
-            this.lbVersions.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lbVersions.Font = new System.Drawing.Font("Segoe UI Light", 13F, System.Drawing.FontStyle.Bold);
-            this.lbVersions.ForeColor = System.Drawing.Color.White;
-            this.lbVersions.FormattingEnabled = true;
-            this.lbVersions.IntegralHeight = false;
-            this.lbVersions.ItemHeight = 23;
-            this.lbVersions.Location = new System.Drawing.Point(10, 7);
-            this.lbVersions.Margin = new System.Windows.Forms.Padding(14, 3, 3, 3);
-            this.lbVersions.Name = "lbVersions";
-            this.lbVersions.Size = new System.Drawing.Size(120, 452);
-            this.lbVersions.TabIndex = 82;
-            this.lbVersions.Tag = "";
-            this.lbVersions.SelectedIndexChanged += new System.EventHandler(this.lbVersions_SelectedIndexChanged);
-            this.lbVersions.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbVersions_MouseDown);
             // 
             // pnLeftSide
             // 
@@ -113,11 +92,11 @@
             this.pnLeftSide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))));
             this.pnLeftSide.Controls.Add(this.pbNewVersionNotification);
             this.pnLeftSide.Controls.Add(this.btnVersionDownloader);
-            this.pnLeftSide.Controls.Add(this.lbVersions);
             this.pnLeftSide.Dock = System.Windows.Forms.DockStyle.Left;
             this.pnLeftSide.Location = new System.Drawing.Point(0, 41);
+            this.pnLeftSide.MinimumSize = new System.Drawing.Size(155, 509);
             this.pnLeftSide.Name = "pnLeftSide";
-            this.pnLeftSide.Size = new System.Drawing.Size(145, 509);
+            this.pnLeftSide.Size = new System.Drawing.Size(155, 509);
             this.pnLeftSide.TabIndex = 134;
             // 
             // pbNewVersionNotification
@@ -125,7 +104,7 @@
             this.pbNewVersionNotification.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.pbNewVersionNotification.Image = global::RTCV.Launcher.Properties.Resources.notificationBadge;
             this.pbNewVersionNotification.InitialImage = global::RTCV.Launcher.Properties.Resources.notificationBadge;
-            this.pbNewVersionNotification.Location = new System.Drawing.Point(109, 467);
+            this.pbNewVersionNotification.Location = new System.Drawing.Point(127, 469);
             this.pbNewVersionNotification.Name = "pbNewVersionNotification";
             this.pbNewVersionNotification.Size = new System.Drawing.Size(14, 14);
             this.pbNewVersionNotification.TabIndex = 131;
@@ -143,7 +122,7 @@
             this.btnVersionDownloader.ForeColor = System.Drawing.Color.White;
             this.btnVersionDownloader.Location = new System.Drawing.Point(0, 464);
             this.btnVersionDownloader.Name = "btnVersionDownloader";
-            this.btnVersionDownloader.Size = new System.Drawing.Size(145, 45);
+            this.btnVersionDownloader.Size = new System.Drawing.Size(155, 45);
             this.btnVersionDownloader.TabIndex = 132;
             this.btnVersionDownloader.TabStop = false;
             this.btnVersionDownloader.Tag = "";
@@ -157,9 +136,9 @@
             this.pnAnchorRight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.pnAnchorRight.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.pnAnchorRight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnAnchorRight.Location = new System.Drawing.Point(145, 41);
+            this.pnAnchorRight.Location = new System.Drawing.Point(155, 41);
             this.pnAnchorRight.Name = "pnAnchorRight";
-            this.pnAnchorRight.Size = new System.Drawing.Size(790, 464);
+            this.pnAnchorRight.Size = new System.Drawing.Size(780, 464);
             this.pnAnchorRight.TabIndex = 133;
             this.pnAnchorRight.Paint += new System.Windows.Forms.PaintEventHandler(this.pnAnchorRight_Paint);
             // 
@@ -291,7 +270,6 @@
 
         private System.Windows.Forms.Panel pnBottomPanel;
         private System.Windows.Forms.Label lbMOTD;
-        public System.Windows.Forms.ListBox lbVersions;
         private System.Windows.Forms.Panel pnTopPanel;
         private System.Windows.Forms.Button btnOnlineGuide;
         private System.Windows.Forms.Label label5;
