@@ -17,7 +17,7 @@ namespace RTCV.Launcher
     public partial class VersionDownloadPanel : Form
     {
         public string latestVersionString = " (Latest version)";
-
+        List<dynamic> onlineVersionsObjects = null;
         public VersionDownloadPanel()
         {
             InitializeComponent();
@@ -73,7 +73,7 @@ namespace RTCV.Launcher
                 var onlineVersions = str.Split('|').Where(it => !it.Contains("Launcher")).OrderByNaturalDescending(x => x).Select(it => it.Replace(".zip", "")).ToArray();
                 this.Invoke(new MethodInvoker(() =>
                 {
-                    ListBox.ObjectCollection onlineVersionsTuples = new ListBox.ObjectCollection(lbOnlineVersions);
+                    onlineVersionsObjects = new List<dynamic>();
 
                     lbOnlineVersions.Items.Clear();
                     if (onlineVersions.Length > 0)
@@ -92,13 +92,14 @@ namespace RTCV.Launcher
 
                             string key = onlineVersions[i];
 
-                            onlineVersionsTuples.Add(new { key = key, value = value });
+                            onlineVersionsObjects.Add(new { key = key, value = value });
                         }
 
 
                     }
 
-
+                    lbOnlineVersions.DataSource = null;
+                    lbOnlineVersions.DataSource = onlineVersionsObjects;
 
                     //lbOnlineVersions.Items.AddRange(onlineVersionsTuples);
                 }));
