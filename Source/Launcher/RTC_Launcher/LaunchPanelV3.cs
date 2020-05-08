@@ -134,6 +134,88 @@ namespace RTCV.Launcher
             lbSelectedVersion.Visible = true;
 
         }
+        public void InstallCustomPackages()
+        {
+            string[] fileNames = null;
+
+            OpenFileDialog ofd = new OpenFileDialog
+            {
+                DefaultExt = "pkg",
+                Title = "Open Package files",
+                Filter = "PKG files|*.pkg",
+                RestoreDirectory = true,
+                Multiselect = true
+            };
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                fileNames = ofd.FileNames;
+            }
+            else
+            {
+                return;
+            }
+
+            if (fileNames != null && fileNames.Length > 0)
+                InstallCustomPackages(fileNames);
+        }
+
+        public void InstallCustomPackages(string[] files)
+        {
+            if (files != null && files.Length > 0)
+            {
+                var nonPkg = files.Where(it => !it.ToUpper().EndsWith(".PKG")).ToList();
+                if (nonPkg.Count > 0)
+                {
+                    MessageBox.Show("The custom package installer can only process PKG files. Aborting.");
+                    return;
+                }
+            }
+
+                if (files.Length == 0)
+                return;
+            else if (files.Length == 1 && MessageBox.Show("You are about to install a custom package in your RTC installation. Any changes done by the package will overwrite files in the installation.\n\nDo you wish to continue?", "Custom packge install", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+                return;
+            else if (files.Length > 1 && MessageBox.Show("You are about to install multiple custom packages in your RTC installation. Any changes done by the packages will overwrite files in the installation.\n\nDo you wish to continue?", "Custom packge install", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+                return;
+
+            var versionFolder = lc.VersionLocation;
+            foreach (var file in files)
+            {
+                try
+                {
+                    using (ZipArchive archive = ZipFile.OpenRead(file))
+                    {
+                        foreach (var entry in archive.Entries)
+                        {
+                            var entryPath = Path.Combine(versionFolder, entry.FullName).Replace("/", "\\");
+
+                            if (entryPath.EndsWith("\\"))
+                            {
+                                if (!Directory.Exists(entryPath))
+                                    Directory.CreateDirectory(entryPath);
+                            }
+                            else
+                            {
+                                entry.ExtractToFile(entryPath, true);
+                            }
+
+
+                        }
+                    }
+
+                    //System.IO.Compression.ZipFile.ExtractToDirectory(file, versionFolder,);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred during extraction and your RTC installation is possibly corrupted. \n\nYou may need to delete your RTC installation and reinstall it from the launcher. To do so, you can right click the version on the left side panel and select Delete from the menu.\n\nIf you need to backup any downloaded emulator to keep configurations or particular setups, you will find the content to backup by right clicking the card and selecting Open Folder.\n\n{ex}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    return;
+                }
+
+                MainForm.mf.RefreshPanel();
+
+            }
+        }
 
         private void AddButton_DragDrop(object sender, DragEventArgs e)
         {
@@ -142,61 +224,9 @@ namespace RTCV.Launcher
 
             string[] fd = (string[])e.Data.GetData(DataFormats.FileDrop); //file drop
 
-            if (fd != null && fd.Length > 0)
-            {
-                var nonPkg = fd.Where(it => !it.ToUpper().EndsWith(".PKG")).ToList();
-                if(nonPkg.Count>0)
-                {
-                    MessageBox.Show("The custom package installer can only process PKG files. Aborting.");
-                    return;
-                }
-
-                if (fd.Length == 1 && MessageBox.Show("You are about to install a custom package in your RTC installation. Any changes done by the package will overwrite files in the installation.\n\nDo you wish to continue?", "Custom packge install", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) ==  DialogResult.No)
-                    return;
-                else if (fd.Length > 1 && MessageBox.Show("You are about to install multiple custom packages in your RTC installation. Any changes done by the packages will overwrite files in the installation.\n\nDo you wish to continue?", "Custom packge install", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
-                    return;
 
 
-                
-
-                var versionFolder = lc.VersionLocation;
-                foreach (var file in fd)
-                {
-                    try
-                    {
-                        using(ZipArchive archive = ZipFile.OpenRead(file))
-                        {
-                            foreach (var entry in archive.Entries)
-                            {
-                                var entryPath = Path.Combine(versionFolder, entry.FullName).Replace("/","\\");
-
-                                if(entryPath.EndsWith("\\"))
-                                {
-                                    if (!Directory.Exists(entryPath))
-                                        Directory.CreateDirectory(entryPath);
-                                }
-                                else
-                                {
-                                    entry.ExtractToFile(entryPath, true);
-                                }
-
-
-                            }
-                        }
-
-                        //System.IO.Compression.ZipFile.ExtractToDirectory(file, versionFolder,);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"An error occurred during extraction and your RTC installation is possibly corrupted. \n\nYou may need to delete your RTC installation and reinstall it from the launcher. To do so, you can right click the version on the left side panel and select Delete from the menu.\n\nIf you need to backup any downloaded emulator to keep configurations or particular setups, you will find the content to backup by right clicking the card and selecting Open Folder.\n\n{ex}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                        return;
-                    }
-
-                    MainForm.mf.RefreshPanel();
-
-                }
-            }
+            InstallCustomPackages(fd);
         }
 
         private void AddButton_MouseDown(object sender, MouseEventArgs e)
@@ -221,25 +251,24 @@ namespace RTCV.Launcher
                             }));
                         }
 
-                    }    
-
+                    }
 
             if(columnsMenu.Items.Count == 0)
-            {
-                columnsMenu.Items.Add("No available addons", null, new EventHandler((ob, ev) =>
-                {
-                })).Enabled = false;
-            }
-            else
-            {
-                var title = new ToolStripMenuItem("Extra addons for this RTC version");
-                title.Enabled = false;
-                var sep = new ToolStripSeparator();
+                columnsMenu.Items.Add("No available addons", null, new EventHandler((ob, ev) =>{})).Enabled = false;
 
-                columnsMenu.Items.Insert(0, sep);
-                columnsMenu.Items.Insert(0, title);
-            }
+            columnsMenu.Items.Add(new ToolStripSeparator());
+            columnsMenu.Items.Add("Load Custom Package..", null, new EventHandler((ob, ev) =>
+            {
+                InstallCustomPackages();
+            }));
 
+
+            var title = new ToolStripMenuItem("Extra addons for this RTC version");
+            title.Enabled = false;
+            var sep = new ToolStripSeparator();
+
+            columnsMenu.Items.Insert(0, sep);
+            columnsMenu.Items.Insert(0, title);
 
             columnsMenu.Show(this, locate);
 
