@@ -62,45 +62,45 @@ namespace RTCV.Launcher
         {
             Action a = () =>
             {
-            var versionFile = MainForm.GetFileViaHttp($"{MainForm.webRessourceDomain}/rtc/releases/version.php");
+                var versionFile = MainForm.GetFileViaHttp($"{MainForm.webRessourceDomain}/rtc/releases/version.php");
 
-            if (versionFile == null)
-                return;
+                if (versionFile == null)
+                    return;
 
-            string str = Encoding.UTF8.GetString(versionFile);
+                string str = Encoding.UTF8.GetString(versionFile);
 
-            //Ignores any build containing the word Launcher in it
-            var onlineVersions = str.Split('|').Where(it => !it.Contains("Launcher")).OrderByNaturalDescending(x => x).Select(it => it.Replace(".zip", "")).ToArray();
-            this.Invoke(new MethodInvoker(() =>
-            {
-            ListBox.ObjectCollection onlineVersionsTuples = new ListBox.ObjectCollection(lbOnlineVersions);
-
-            lbOnlineVersions.Items.Clear();
-            if (onlineVersions.Length > 0)
-            {
-                for (int i = 0; i < onlineVersions.Length; i++)
+                //Ignores any build containing the word Launcher in it
+                var onlineVersions = str.Split('|').Where(it => !it.Contains("Launcher")).OrderByNaturalDescending(x => x).Select(it => it.Replace(".zip", "")).ToArray();
+                this.Invoke(new MethodInvoker(() =>
                 {
-                    string value = onlineVersions[i];
+                    ListBox.ObjectCollection onlineVersionsTuples = new ListBox.ObjectCollection(lbOnlineVersions);
 
-                    if (onlineVersions[i].EndsWith("-bz"))
-                        onlineVersions[i] = onlineVersions[i].Replace("-bz", "");
+                    lbOnlineVersions.Items.Clear();
+                    if (onlineVersions.Length > 0)
+                    {
+                        for (int i = 0; i < onlineVersions.Length; i++)
+                        {
+                            string value = onlineVersions[i];
 
-                    if (i == 0)
-                        onlineVersions[i] += latestVersionString;
+                            if (onlineVersions[i].EndsWith("-bz"))
+                                onlineVersions[i] = onlineVersions[i].Replace("-bz", "");
+
+                            if (i == 0)
+                                onlineVersions[i] += latestVersionString;
 
 
 
-                    string key = onlineVersions[i];
+                            string key = onlineVersions[i];
 
-                    onlineVersionsTuples.Add(new { key=key, value=value});
+                            onlineVersionsTuples.Add(new { key = key, value = value });
                         }
 
-                        
+
                     }
 
-                    
 
-                    lbOnlineVersions.Items.AddRange(onlineVersionsTuples);
+
+                    //lbOnlineVersions.Items.AddRange(onlineVersionsTuples);
                 }));
             };
             Task.Run(a);

@@ -15,7 +15,7 @@ namespace RTCV.Launcher
         public SidebarVersionsPanel()
         {
             InitializeComponent();
-            lbVersions.AutoSize = true;
+            //lbVersions.AutoSize = true;
         }
 
 
