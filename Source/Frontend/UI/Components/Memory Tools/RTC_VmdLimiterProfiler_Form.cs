@@ -144,8 +144,9 @@ namespace RTCV.UI
                 return false;
             }
             var legalAdresses = LocalNetCoreRouter.QueryRoute<long[]>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_LONGARRAY_FILTERDOMAIN, new object[] { mi.Name, LimiterListHash, cbLoadBeforeGenerate.Checked ? sk : null });
-            if (legalAdresses == null)
+            if (legalAdresses == null || legalAdresses.Length == 0)
             {
+                tbVmdName.Text = "";
                 return false;
             }
 
@@ -244,16 +245,23 @@ namespace RTCV.UI
         {
             btnLoadDomains_Click(null, null);
 
-            foreach(var item in cbSelectedMemoryDomain.Items)
-            {
+            var ceForm = S.GET<RTC_CorruptionEngine_Form>();
+
+            foreach (var item in cbSelectedMemoryDomain.Items)
                 if(item.ToString() == mi.ToString())
                 {
                     cbSelectedMemoryDomain.SelectedItem = item;
                     break;
                 }
-            }
 
-            ComboBoxItem<string> cbItem = (ComboBoxItem<string>)((ComboBox)S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList).SelectedItem;
+            foreach (ComboBoxItem<string> item in ceForm.cbVectorLimiterList.Items)
+                if (item.Name == limiter)
+                {
+                    ceForm.cbVectorLimiterList.SelectedItem = item;
+                    break;
+                }
+
+            ComboBoxItem<string> cbItem = (ComboBoxItem<string>)((ComboBox)ceForm.cbVectorLimiterList).SelectedItem;
             if (cbItem != null)
             {
                 LimiterListHash = cbItem.Value;

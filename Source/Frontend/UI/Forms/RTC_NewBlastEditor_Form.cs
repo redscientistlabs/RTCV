@@ -176,6 +176,9 @@ namespace RTCV.UI
 
         public static void OpenBlastEditor(StashKey sk = null, bool silent = false)
         {
+            if (S.GET<RTC_NewBlastEditor_Form>().Visible)
+                silent = false;
+
             S.GET<RTC_NewBlastEditor_Form>().Close();
             S.SET(new RTC_NewBlastEditor_Form());
 
@@ -2112,7 +2115,7 @@ namespace RTCV.UI
                 return;
             }
 
-            this.Hide();
+            //this.Hide();
             RTC_SanitizeTool_Form.OpenSanitizeTool(currentSK?.BlastLayer);
 
             /*

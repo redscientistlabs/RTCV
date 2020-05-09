@@ -54,6 +54,7 @@ namespace RTCV.UI
             this.label1 = new System.Windows.Forms.Label();
             this.btnAddToStockpile = new System.Windows.Forms.Button();
             this.btnLeaveNoChanges = new System.Windows.Forms.Button();
+            this.lbWorkingPleaseWait = new System.Windows.Forms.Label();
             this.pnBlastLayerSanitization.SuspendLayout();
             this.panel6.SuspendLayout();
             this.SuspendLayout();
@@ -372,6 +373,17 @@ namespace RTCV.UI
             this.btnLeaveNoChanges.UseVisualStyleBackColor = false;
             this.btnLeaveNoChanges.Click += new System.EventHandler(this.btnLeaveNoChanges_Click);
             // 
+            // lbWorkingPleaseWait
+            // 
+            this.lbWorkingPleaseWait.Font = new System.Drawing.Font("Segoe UI Symbol", 12F);
+            this.lbWorkingPleaseWait.Location = new System.Drawing.Point(95, 165);
+            this.lbWorkingPleaseWait.Name = "lbWorkingPleaseWait";
+            this.lbWorkingPleaseWait.Size = new System.Drawing.Size(178, 30);
+            this.lbWorkingPleaseWait.TabIndex = 202;
+            this.lbWorkingPleaseWait.Text = "Working... Please Wait...";
+            this.lbWorkingPleaseWait.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lbWorkingPleaseWait.Visible = false;
+            // 
             // RTC_SanitizeTool_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -392,10 +404,13 @@ namespace RTCV.UI
             this.Controls.Add(this.label2);
             this.Controls.Add(this.pnBlastLayerSanitization);
             this.Controls.Add(this.label3);
+            this.Controls.Add(this.lbWorkingPleaseWait);
             this.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.ForeColor = System.Drawing.Color.White;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
+            this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(590, 401);
             this.Name = "RTC_SanitizeTool_Form";
             this.Tag = "color:dark1";
@@ -432,5 +447,6 @@ namespace RTCV.UI
         private ProgressBar pbProgress;
         public Button btnAddToStockpile;
         private Button btnLeaveNoChanges;
+        private Label lbWorkingPleaseWait;
     }
 }

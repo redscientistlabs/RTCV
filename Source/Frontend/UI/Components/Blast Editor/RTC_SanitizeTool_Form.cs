@@ -80,6 +80,7 @@ namespace RTCV.UI
         private void btnReroll_Click(object sender, EventArgs e)
         {
             pnBlastLayerSanitization.Visible = false;
+            this.Refresh();
 
             S.GET<RTC_NewBlastEditor_Form>().dgvBlastEditor.ClearSelection();
             S.GET<RTC_NewBlastEditor_Form>().btnDisable50_Click(null, null);
@@ -95,6 +96,7 @@ namespace RTCV.UI
         private void btnYesEffect_Click(object sender, EventArgs e)
         {
             pnBlastLayerSanitization.Visible = false;
+            this.Refresh();
 
             S.GET<RTC_NewBlastEditor_Form>().btnRemoveDisabled_Click(null, null);
 
@@ -121,6 +123,7 @@ namespace RTCV.UI
         private void btnNoEffect_Click(object sender, EventArgs e)
         {
             pnBlastLayerSanitization.Visible = false;
+            this.Refresh();
 
             S.GET<RTC_NewBlastEditor_Form>().btnInvertDisabled_Click(null, null);
             S.GET<RTC_NewBlastEditor_Form>().btnRemoveDisabled_Click(null, null);
@@ -146,6 +149,7 @@ namespace RTCV.UI
         private void btnReplayLast_Click(object sender, EventArgs e)
         {
             pnBlastLayerSanitization.Visible = false;
+            this.Refresh();
 
             S.GET<RTC_NewBlastEditor_Form>().btnLoadCorrupt_Click(null, null);
 
@@ -173,7 +177,7 @@ namespace RTCV.UI
             BlastLayer changes = (BlastLayer)S.GET<RTC_NewBlastEditor_Form>().currentSK.BlastLayer.Clone();
             BlastLayer modified = (BlastLayer)originalBlastLayer.Clone();
 
-            foreach (var unit in changes.Layer)
+            foreach (var unit in changes.Layer.Where(it=> it.IsEnabled))
             {
                 var TargetUnit = modified.Layer.FirstOrDefault(it =>
                 it.Address == unit.Address &&
@@ -191,9 +195,10 @@ namespace RTCV.UI
                 );
 
                 if (TargetUnit != null && !TargetUnit.IsLocked)
-                {
                     modified.Layer.Remove(TargetUnit);
-                }
+
+                foreach (var bu in modified.Layer)
+                    bu.IsEnabled = true;
             }
 
             S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(modified);
@@ -211,6 +216,9 @@ namespace RTCV.UI
 
         private void btnBackPrevState_Click(object sender, EventArgs e)
         {
+            pnBlastLayerSanitization.Visible = false;
+            this.Refresh();
+
             var lastItem = lbSteps.Items[lbSteps.Items.Count - 1];
 
             if (lbSteps.Items.Count > 1)
@@ -241,8 +249,13 @@ namespace RTCV.UI
 
             if (lbSteps.Items.Count == 1)
             {
+                lbWorkingPleaseWait.Visible = false;
                 pnBlastLayerSanitization.Visible = false;
                 btnStartSanitizing.Visible = true;
+            }
+            else
+            {
+                pnBlastLayerSanitization.Visible = true;
             }
         }
 
@@ -258,7 +271,9 @@ namespace RTCV.UI
                 original_maxsteps++;
             }
 
-            int currentSize = workBlastLayer.Layer.Count(x => !x.IsLocked);
+
+            int currentSize = S.GET<RTC_NewBlastEditor_Form>().currentSK.BlastLayer.Layer.Count(x => !x.IsLocked);
+            //int currentSize = workBlastLayer
 
             int current_remainder = currentSize;
             int current_maxsteps = 0;
@@ -276,12 +291,14 @@ namespace RTCV.UI
         private void btnStartSanitizing_Click(object sender, EventArgs e)
         {
             btnStartSanitizing.Visible = false;
+            
 
             S.GET<RTC_NewBlastEditor_Form>().dgvBlastEditor.ClearSelection();
             S.GET<RTC_NewBlastEditor_Form>().btnDisable50_Click(null, null);
             S.GET<RTC_NewBlastEditor_Form>().btnLoadCorrupt_Click(null, null);
 
             pnBlastLayerSanitization.Visible = true;
+            lbWorkingPleaseWait.Visible = true;
         }
 
         public void RunSanitizeAlgo()
