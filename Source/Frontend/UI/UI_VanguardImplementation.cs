@@ -76,6 +76,8 @@ namespace RTCV.UI
 
                         SyncObjectSingleton.FormExecute(() =>
                         {
+
+                            
                             if (UICore.FirstConnect)
                             {
                                 lastVanguardClient = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
@@ -123,6 +125,9 @@ namespace RTCV.UI
                             }
                             else
                             {
+                                LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_LOADPLUGINS, true);
+                                //make sure the other side reloads the plugins
+
                                 var clientName = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
                                 if (clientName != lastVanguardClient)
                                 {
