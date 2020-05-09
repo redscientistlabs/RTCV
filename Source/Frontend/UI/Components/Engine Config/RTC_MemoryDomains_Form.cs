@@ -180,28 +180,60 @@ namespace RTCV.UI
 
             if (e.Button == MouseButtons.Right)
             {
-                string limiter = S.GET<RTC_CorruptionEngine_Form>().CurrentVectorLimiterListName;
+                string vectorLimiter = S.GET<RTC_CorruptionEngine_Form>().CurrentVectorLimiterListName;
+                var AutoLimitedDomains = MemoryDomains.AllMemoryInterfaces.Where(it => it.Value is VirtualMemoryDomain vmd && vmd.Name.Contains("->")).ToList();
 
-                if (limiter != null)
+                if (vectorLimiter != null)
                 { 
                     ContextMenuStrip cms = new ContextMenuStrip();
                     //cms.Items.Add($"Generate VMD using Vector Limiter", null, (ob, ev) => {}).Enabled = false;
-                    cms.Items.Add(new ToolStripLabel($"Generate VMD using Vector Limiter"));
+                    cms.Items.Add(new ToolStripLabel($"Quick VMD Limiter Profiler"));
                     cms.Items.Add(new ToolStripSeparator());
-
+                    cms.Items.Add($"Refresh all Profiler VMDs", null, (ob, ev) =>
+                    {
+                        
+                    }).Enabled = (AutoLimitedDomains.Count > 0);
+                    cms.Items.Add(new ToolStripSeparator());
                     foreach (var mi in MemoryDomains.AllMemoryInterfaces.Where(it => !(it.Value is VirtualMemoryDomain)))
                     {
-                        string vmdName = $"{mi.Value} -> {limiter}";
-                        string extra = "";
+                        var menu = new ToolStripMenuItem();
 
-                        if(MemoryDomains.VmdPool.ContainsKey($"[V]{vmdName}"))
-                            extra = " (Regenerate)";
+                        string extraVector = "";
+                        if (MemoryDomains.VmdPool.ContainsKey($"[V]{mi.Value} -> {vectorLimiter}"))
+                            extraVector = " (Regenerate)";
 
+                        var currentListMenuItem = new ToolStripMenuItem();
+                        currentListMenuItem.Text = mi.Key.ToString();
 
-                        cms.Items.Add($"{vmdName}{extra}", null, (ob, ev) =>
+                        var vectorMenuItem = new ToolStripMenuItem();
+                        vectorMenuItem.Text = $"Use Vector Engine Limiter: -> {vectorLimiter}" + extraVector;
+
+                        vectorMenuItem.Click += (ob, ev) => {
+                            S.GET<RTC_VmdLimiterProfiler_Form>().AutoProfile(mi.Value, vectorLimiter);
+                        };
+
+                        currentListMenuItem.DropDownItems.Add(vectorMenuItem);
+                        currentListMenuItem.DropDownItems.Add(new ToolStripSeparator());
+
+                        foreach (ComboBoxItem<string> listItem in S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.Items)
                         {
-                            S.GET<RTC_VmdLimiterProfiler_Form>().AutoProfile(mi.Value, limiter);
-                        });
+                            var listName = listItem.Name;
+                            var subMenuItem = new ToolStripMenuItem();
+
+                            string extra = "";
+                            if (MemoryDomains.VmdPool.ContainsKey($"[V]{mi.Value} -> {listName}"))
+                                extra = " (Regenerate)";
+
+                            subMenuItem.Text = "-> " + listName + extra;
+
+                            subMenuItem.Click += (ob, ev) => {
+                                S.GET<RTC_VmdLimiterProfiler_Form>().AutoProfile(mi.Value, listName);
+                            };
+
+                            currentListMenuItem.DropDownItems.Add(subMenuItem);
+                        }
+
+                        cms.Items.Add(currentListMenuItem);
                     }
 
                     cms.Show((Control)sender, locate);
