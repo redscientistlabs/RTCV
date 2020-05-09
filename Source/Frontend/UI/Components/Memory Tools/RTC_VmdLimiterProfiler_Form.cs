@@ -219,11 +219,11 @@ namespace RTCV.UI
             lbEndianTypeValue.Text = "######";
             lbWordSizeValue.Text = "######";
 
+            //refresh to vmd pool menu
+            S.GET<RTC_VmdPool_Form>().RefreshVMDs();
+
             if (!AutoGenerate)
             {
-
-                //send to vmd pool menu
-                S.GET<RTC_VmdPool_Form>().RefreshVMDs();
 
                 //Selects back the VMD Pool menu
                 foreach (var item in UICore.mtForm.cbSelectBox.Items)
