@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,7 +12,6 @@ using Newtonsoft.Json.Serialization;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
 using static RTCV.UI.UI_Extensions;
-using RTCV.NetCore.StaticTools;
 using System.Threading.Tasks;
 using RTCV.Common;
 
