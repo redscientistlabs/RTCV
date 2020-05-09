@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -7,6 +7,8 @@ using RTCV.CorruptCore;
 using RTCV.NetCore;
 using RTCV.Common;
 using static RTCV.UI.UI_Extensions;
+using System.Drawing;
+using RTCV.UI.Components.Controls;
 
 namespace RTCV.UI
 {
@@ -169,6 +171,42 @@ namespace RTCV.UI
         {
             RefreshDomains();
             RTCV.NetCore.AllSpec.UISpec.Update("SELECTEDDOMAINS", lbMemoryDomains.SelectedItems.Cast<string>().ToArray());
+        }
+
+        private void lbMemoryDomains_MouseDown(object sender, MouseEventArgs e)
+        {
+            //Point locate = new Point(((Control)sender).Location.X + e.Location.X, ((Control)sender).Location.Y + e.Location.Y);
+            Point locate = new Point(e.Location.X, e.Location.Y);
+
+            if (e.Button == MouseButtons.Right)
+            {
+                string limiter = S.GET<RTC_CorruptionEngine_Form>().CurrentVectorLimiterListName;
+
+                if (limiter != null)
+                { 
+                    ContextMenuStrip cms = new ContextMenuStrip();
+                    //cms.Items.Add($"Generate VMD using Vector Limiter", null, (ob, ev) => {}).Enabled = false;
+                    cms.Items.Add(new ToolStripLabel($"Generate VMD using Vector Limiter"));
+                    cms.Items.Add(new ToolStripSeparator());
+
+                    foreach (var mi in MemoryDomains.AllMemoryInterfaces.Where(it => !(it.Value is VirtualMemoryDomain)))
+                    {
+                        string vmdName = $"{mi.Value} -> {limiter}";
+                        string extra = "";
+
+                        if(MemoryDomains.VmdPool.ContainsKey($"[V]{vmdName}"))
+                            extra = " (Regenerate)";
+
+
+                        cms.Items.Add($"{vmdName}{extra}", null, (ob, ev) =>
+                        {
+                            S.GET<RTC_VmdLimiterProfiler_Form>().AutoProfile(mi.Value, limiter);
+                        });
+                    }
+
+                    cms.Show((Control)sender, locate);
+                }
+            }
         }
     }
 }

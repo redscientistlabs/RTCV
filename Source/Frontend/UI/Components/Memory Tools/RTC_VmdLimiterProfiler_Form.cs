@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Globalization;
 using System.Linq;
@@ -24,7 +24,7 @@ namespace RTCV.UI
             InitializeComponent();
         }
 
-        private void btnSelectAll_Click(object sender, EventArgs e)
+        private void btnLoadDomains_Click(object sender, EventArgs e)
         {
             S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected();
 
@@ -98,7 +98,7 @@ namespace RTCV.UI
             GenerateVMD();
         }
 
-        private bool GenerateVMD()
+        private bool GenerateVMD(bool AutoGenerate = false)
         {
             if (string.IsNullOrWhiteSpace(cbSelectedMemoryDomain.SelectedItem?.ToString()) || !MemoryDomains.MemoryInterfaces.ContainsKey(cbSelectedMemoryDomain.SelectedItem.ToString()))
             {
@@ -106,10 +106,15 @@ namespace RTCV.UI
                 return false;
             }
 
-            if (!string.IsNullOrWhiteSpace(tbVmdName.Text) && MemoryDomains.VmdPool.ContainsKey($"[V]{tbVmdName.Text}"))
+            if (!AutoGenerate && !string.IsNullOrWhiteSpace(tbVmdName.Text) && MemoryDomains.VmdPool.ContainsKey($"[V]{tbVmdName.Text}"))
             {
                 MessageBox.Show("There is already a VMD with this name in the VMD Pool");
                 return false;
+            }
+
+            if (AutoGenerate && MemoryDomains.VmdPool.ContainsKey($"[V]{tbVmdName.Text}"))
+            {
+                MemoryDomains.RemoveVMD($"[V]{tbVmdName.Text}");
             }
 
             MemoryInterface mi = MemoryDomains.MemoryInterfaces[cbSelectedMemoryDomain.SelectedItem.ToString()];
@@ -214,20 +219,50 @@ namespace RTCV.UI
             lbEndianTypeValue.Text = "######";
             lbWordSizeValue.Text = "######";
 
-            //send to vmd pool menu
-            S.GET<RTC_VmdPool_Form>().RefreshVMDs();
-
-            //Selects back the VMD Pool menu
-            foreach (var item in UICore.mtForm.cbSelectBox.Items)
+            if (!AutoGenerate)
             {
-                if (((dynamic)item).value is RTC_VmdPool_Form)
+
+                //send to vmd pool menu
+                S.GET<RTC_VmdPool_Form>().RefreshVMDs();
+
+                //Selects back the VMD Pool menu
+                foreach (var item in UICore.mtForm.cbSelectBox.Items)
                 {
-                    UICore.mtForm.cbSelectBox.SelectedItem = item;
+                    if (((dynamic)item).value is RTC_VmdPool_Form)
+                    {
+                        UICore.mtForm.cbSelectBox.SelectedItem = item;
+                        break;
+                    }
+                }
+
+            }
+
+            return true;
+        }
+
+        internal void AutoProfile(MemoryInterface mi, string limiter)
+        {
+            btnLoadDomains_Click(null, null);
+
+            foreach(var item in cbSelectedMemoryDomain.Items)
+            {
+                if(item.ToString() == mi.ToString())
+                {
+                    cbSelectedMemoryDomain.SelectedItem = item;
                     break;
                 }
             }
 
-            return true;
+            ComboBoxItem<string> cbItem = (ComboBoxItem<string>)((ComboBox)S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList).SelectedItem;
+            if (cbItem != null)
+            {
+                LimiterListHash = cbItem.Value;
+            }
+
+            tbVmdName.Text = $"{mi} -> {limiter}";
+
+            GenerateVMD(true);
+
         }
 
         private void RTC_VmdLimiterProfiler_Form_Load(object sender, EventArgs e)

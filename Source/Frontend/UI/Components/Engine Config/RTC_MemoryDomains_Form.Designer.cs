@@ -29,33 +29,11 @@
 		private void InitializeComponent()
 		{
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_MemoryDomains_Form));
-            this.lbMemoryDomains = new RTCV.UI.Components.Controls.ListBoxExtended();
             this.btnAutoSelectDomains = new System.Windows.Forms.Button();
             this.btnRefreshDomains = new System.Windows.Forms.Button();
             this.btnSelectAll = new System.Windows.Forms.Button();
+            this.lbMemoryDomains = new RTCV.UI.Components.Controls.ListBoxExtended();
             this.SuspendLayout();
-            // 
-            // lbMemoryDomains
-            // 
-            this.lbMemoryDomains.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbMemoryDomains.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lbMemoryDomains.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lbMemoryDomains.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.lbMemoryDomains.ForeColor = System.Drawing.Color.White;
-            this.lbMemoryDomains.FormattingEnabled = true;
-            this.lbMemoryDomains.IntegralHeight = false;
-            this.lbMemoryDomains.Location = new System.Drawing.Point(10, 41);
-            this.lbMemoryDomains.Margin = new System.Windows.Forms.Padding(5);
-            this.lbMemoryDomains.Name = "lbMemoryDomains";
-            this.lbMemoryDomains.ScrollAlwaysVisible = true;
-            this.lbMemoryDomains.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.lbMemoryDomains.Size = new System.Drawing.Size(181, 208);
-            this.lbMemoryDomains.TabIndex = 15;
-            this.lbMemoryDomains.Tag = "color:dark2";
-            this.lbMemoryDomains.SelectedIndexChanged += new System.EventHandler(this.lbMemoryDomains_SelectedIndexChanged);
-            this.lbMemoryDomains.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // btnAutoSelectDomains
             // 
@@ -114,6 +92,28 @@
             this.btnSelectAll.UseVisualStyleBackColor = false;
             this.btnSelectAll.Click += new System.EventHandler(this.btnSelectAll_Click);
             this.btnSelectAll.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
+            // 
+            // lbMemoryDomains
+            // 
+            this.lbMemoryDomains.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbMemoryDomains.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.lbMemoryDomains.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lbMemoryDomains.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.lbMemoryDomains.ForeColor = System.Drawing.Color.White;
+            this.lbMemoryDomains.FormattingEnabled = true;
+            this.lbMemoryDomains.IntegralHeight = false;
+            this.lbMemoryDomains.Location = new System.Drawing.Point(10, 41);
+            this.lbMemoryDomains.Margin = new System.Windows.Forms.Padding(5);
+            this.lbMemoryDomains.Name = "lbMemoryDomains";
+            this.lbMemoryDomains.ScrollAlwaysVisible = true;
+            this.lbMemoryDomains.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+            this.lbMemoryDomains.Size = new System.Drawing.Size(181, 208);
+            this.lbMemoryDomains.TabIndex = 15;
+            this.lbMemoryDomains.Tag = "color:dark2";
+            this.lbMemoryDomains.SelectedIndexChanged += new System.EventHandler(this.lbMemoryDomains_SelectedIndexChanged);
+            this.lbMemoryDomains.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbMemoryDomains_MouseDown);
             // 
             // RTC_MemoryDomains_Form
             // 
