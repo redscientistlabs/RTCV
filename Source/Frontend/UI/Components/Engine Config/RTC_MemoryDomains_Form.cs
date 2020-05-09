@@ -187,13 +187,44 @@ namespace RTCV.UI
                 { 
                     ContextMenuStrip cms = new ContextMenuStrip();
                     //cms.Items.Add($"Generate VMD using Vector Limiter", null, (ob, ev) => {}).Enabled = false;
-                    cms.Items.Add(new ToolStripLabel($"Quick VMD Limiter Profiler"));
+                    var lbGen = new ToolStripLabel($"Limiter Profiler");
+                    lbGen.Font = new Font(lbGen.Font, FontStyle.Italic);
+
+                    cms.Items.Add(lbGen);
                     cms.Items.Add(new ToolStripSeparator());
-                    cms.Items.Add($"Refresh all Profiler VMDs", null, (ob, ev) =>
+                    cms.Items.Add($"Regenerate all Profiled VMDs", null, (ob, ev) =>
                     {
-                        
+                        foreach (var mi in MemoryDomains.AllMemoryInterfaces.Where(it => it.Value is VirtualMemoryDomain && it.Key.Contains("->")))
+                        {
+                            var vmd = (mi.Value as VirtualMemoryDomain);
+                            string domain;
+                            if (vmd.CompactPointerDomains.Length > 0)
+                                domain = vmd.CompactPointerDomains.FirstOrDefault();
+                            else
+                                domain = vmd.PointerDomains.FirstOrDefault();
+
+
+                            if (domain != null)
+                            {
+                                string limiter = vmd.Name.Substring(vmd.Name.LastIndexOf('>') + 2);
+                                S.GET<RTC_VmdLimiterProfiler_Form>().AutoProfile(MemoryDomains.AllMemoryInterfaces[domain], limiter);
+                            }
+                        }
+
                     }).Enabled = (AutoLimitedDomains.Count > 0);
+
+
+                    var cbLoadState = new ToolStripMenuItem();
+                    cbLoadState.Text = "Load GH State on Generate";
+                    var vlpForm = S.GET<RTC_VmdLimiterProfiler_Form>();
+                    cbLoadState.Checked = vlpForm.cbLoadBeforeGenerate.Checked;
+                    cbLoadState.Click += (ob, ev) => {
+                        vlpForm.cbLoadBeforeGenerate.Checked = !vlpForm.cbLoadBeforeGenerate.Checked;
+                    };
+                    cms.Items.Add(cbLoadState);
+
                     cms.Items.Add(new ToolStripSeparator());
+
                     foreach (var mi in MemoryDomains.AllMemoryInterfaces.Where(it => !(it.Value is VirtualMemoryDomain)))
                     {
                         var menu = new ToolStripMenuItem();

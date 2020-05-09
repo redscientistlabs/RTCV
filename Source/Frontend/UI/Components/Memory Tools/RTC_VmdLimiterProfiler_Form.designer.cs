@@ -340,6 +340,6 @@
         private System.Windows.Forms.Panel pnLimiterList;
         public System.Windows.Forms.ComboBox cbVectorLimiterList;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.CheckBox cbLoadBeforeGenerate;
+        public System.Windows.Forms.CheckBox cbLoadBeforeGenerate;
     }
 }
