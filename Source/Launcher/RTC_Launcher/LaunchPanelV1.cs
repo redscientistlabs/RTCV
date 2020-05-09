@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -43,9 +43,11 @@ namespace RTCV.Launcher
 
         public void DisplayVersion()
         {
-            string version = MainForm.SelectedVersion;
+            string folderPath = Path.Combine(MainForm.launcherDir, "VERSIONS", MainForm.SelectedVersion);
+            if (!Directory.Exists(folderPath))
+                return;
 
-            List<string> batchFiles = new List<string>(Directory.GetFiles(MainForm.launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version));
+            List<string> batchFiles = new List<string>(Directory.GetFiles(folderPath));
             List<string> batchFileNames = new List<string>(batchFiles.Select(it => MainForm.mf.removeExtension(MainForm.mf.getFilenameFromFullFilename(it))));
 
             bool isDefaultStartPresent = false;
@@ -88,7 +90,7 @@ namespace RTCV.Launcher
             btnStart.Visible = isDefaultStartPresent;
 
                 
-            lbSelectedVersion.Text = version;
+            lbSelectedVersion.Text = MainForm.SelectedVersion;
             lbSelectedVersion.Visible = true;
             pnVersionBatchFiles.Visible = true;
 

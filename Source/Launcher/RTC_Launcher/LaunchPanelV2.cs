@@ -28,6 +28,11 @@ namespace RTCV.Launcher
         {
             Size? btnSize = null;
 
+            string folderPath = Path.Combine(MainForm.launcherDir, "VERSIONS", MainForm.SelectedVersion);
+            if (!Directory.Exists(folderPath))
+                return;
+
+
             foreach (LauncherConfItem lci in lc.items)
             {
 

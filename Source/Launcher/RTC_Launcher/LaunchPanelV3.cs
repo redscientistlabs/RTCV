@@ -17,6 +17,7 @@ namespace RTCV.Launcher
     {
         private LauncherConfJson lc;
         private Timer sidebarCloseTimer;
+        private List<Button> HiddenButtons = new List<Button>();
 
         public LaunchPanelV3()
         {
@@ -32,9 +33,14 @@ namespace RTCV.Launcher
 
         public void DisplayVersion()
         {
-            Size? btnSize = null;
+            string folderPath = Path.Combine(MainForm.launcherDir, "VERSIONS", MainForm.SelectedVersion);
+            if (!Directory.Exists(folderPath))
+                return;
 
-            foreach (var lcji in lc.Items)
+            Size? btnSize = null;
+            HiddenButtons.Clear();
+
+            foreach (var lcji in lc.Items)//.Where(it => !it.HideItem))
             {
                 Bitmap btnImage;
                 using (var bmpTemp = new Bitmap(Path.Combine(lc.LauncherAssetLocation, lcji.ImageName)))
@@ -82,12 +88,6 @@ namespace RTCV.Launcher
                 {
                     AddonInstalled = Directory.Exists(Path.Combine(lc.VersionLocation, lcji.FolderName));
 
-                    if(!AddonInstalled && lcji.HideItem)
-                    {
-                        newButton.Size = new Size(0, 0);
-                        newButton.Location = new Point(0, 0);
-                    }
-
                     newButton.MouseDown += (sender, e) =>
                     {
 
@@ -96,10 +96,13 @@ namespace RTCV.Launcher
                             Point locate = new Point((sender as Control).Location.X + e.Location.X, (sender as Control).Location.Y + e.Location.Y);
 
                             ContextMenuStrip columnsMenu = new ContextMenuStrip();
-                            columnsMenu.Items.Add("Delete Addon", null, new EventHandler((ob, ev) => { DeleteAddon(lcji); })).Enabled = AddonInstalled;
+                            columnsMenu.Items.Add("Delete Addon", null, new EventHandler((ob, ev) => { DeleteAddon(lcji); })).Enabled = (lcji.IsAddon || AddonInstalled);
                             columnsMenu.Items.Add("Open Folder in Explorer", null, new EventHandler((ob, ev) =>
                             {
-                                Process.Start(Path.Combine(MainForm.launcherDir, "VERSIONS", lc.Version, lcji.FolderName));
+                                string addonFolderPath = Path.Combine(MainForm.launcherDir, "VERSIONS", lc.Version, lcji.FolderName);
+
+                                if(Directory.Exists(addonFolderPath))
+                                    Process.Start(addonFolderPath);
                                 
                             })).Enabled = AddonInstalled;
                             columnsMenu.Show(this, locate);
@@ -124,6 +127,18 @@ namespace RTCV.Launcher
 
 
                 newButton.Image = btnImage;
+
+                if (!AddonInstalled && lcji.HideItem)
+                {
+                    newButton.Size = new Size(0, 0);
+                    newButton.Location = new Point(0, 0);
+
+                    HiddenButtons.Add(newButton);
+                    continue;
+
+                }
+
+
                 newButton.Visible = true;
                 flowLayoutPanel1.Controls.Add(newButton);
 
@@ -237,7 +252,12 @@ namespace RTCV.Launcher
 
             ContextMenuStrip columnsMenu = new ContextMenuStrip();
 
-            foreach (var ctrl in flowLayoutPanel1.Controls)
+            var allControls = new List<Control>();
+
+            allControls.AddRange(flowLayoutPanel1.Controls.Cast<Control>());
+            allControls.AddRange(HiddenButtons);
+
+            foreach (var ctrl in allControls)
                 if (ctrl is Button btn)
                     if (btn.Tag is LauncherConfJsonItem lcji && lcji.FolderName != null)
                     {
@@ -331,10 +351,23 @@ namespace RTCV.Launcher
         public void DeleteAddon(LauncherConfJsonItem lcji)
         {
             string AddonFolderName = lcji.FolderName;
+            string targetFolder = Path.Combine(MainForm.launcherDir, "VERSIONS", lc.Version, AddonFolderName);
+
+            if (Directory.Exists(targetFolder))
+            {
+                string CustomPackage = null;
+
+                if (lcji.IsAddon)
+                    CustomPackage = "This addon is a Custom Package\n\n";
+                if (MessageBox.Show(CustomPackage + "Deleting this addon will also wipe the configuration and temporary files that it contains.\n\nDo you want to continue?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+                    return;
+            }
+
+
 
             try
             {
-                string targetFolder = Path.Combine(MainForm.launcherDir, "VERSIONS", lc.Version, AddonFolderName);
+                
 
                 if(lcji.IsAddon)
                 {
@@ -411,6 +444,13 @@ namespace RTCV.Launcher
                     }
 
                 }
+
+                if(lcji.IsAddon)
+                {
+                    MessageBox.Show("This is a card for a missing Custom Package. You can reinstall the package with the PKG file or delete this addon.", "Missing folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
 
                 var result = MessageBox.Show($"The following component is missing: {lcji.FolderName}\nDo you wish to download it?", "Additional download required", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 

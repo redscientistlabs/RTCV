@@ -565,7 +565,11 @@ namespace RTCV.Launcher
             if (sideversionForm.lbVersions.SelectedIndex == -1)
                 return;
 
-            if (e.Button == MouseButtons.Right)
+            string version = sideversionForm.lbVersions.SelectedItem.ToString();
+            if (!Directory.Exists((launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version)))
+                return;
+
+                if (e.Button == MouseButtons.Right)
             {
                 Point locate = new Point((sender as Control).Location.X + e.Location.X, (sender as Control).Location.Y + e.Location.Y + pnTopPanel.Height);
 
