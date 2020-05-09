@@ -1,4 +1,4 @@
-﻿using System.Windows.Forms;
+using System.Windows.Forms;
 using RTCV.UI;
 
 namespace RTCV.UI
@@ -37,6 +37,7 @@ namespace RTCV.UI
             this.btnYesEffect = new System.Windows.Forms.Button();
             this.lbCurrentLayerSize = new System.Windows.Forms.Label();
             this.pnBlastLayerSanitization = new System.Windows.Forms.Panel();
+            this.btnReroll = new System.Windows.Forms.Button();
             this.btnReplayLast = new System.Windows.Forms.Button();
             this.lbSanitizationText = new System.Windows.Forms.Label();
             this.btnNoEffect = new System.Windows.Forms.Button();
@@ -44,12 +45,15 @@ namespace RTCV.UI
             this.btnBackPrevState = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.pbProgress = new System.Windows.Forms.ProgressBar();
             this.btnLeaveWithChanges = new System.Windows.Forms.Button();
             this.btnLeaveSubstractChanges = new System.Windows.Forms.Button();
             this.btnLeaveWithoutChanges = new System.Windows.Forms.Button();
             this.btnStartSanitizing = new System.Windows.Forms.Button();
-            this.btnReroll = new System.Windows.Forms.Button();
             this.lbSteps = new RTCV.UI.Components.Controls.ListBoxExtended();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnAddToStockpile = new System.Windows.Forms.Button();
+            this.btnLeaveNoChanges = new System.Windows.Forms.Button();
             this.pnBlastLayerSanitization.SuspendLayout();
             this.panel6.SuspendLayout();
             this.SuspendLayout();
@@ -57,7 +61,7 @@ namespace RTCV.UI
             // lbOriginalLayerSize
             // 
             this.lbOriginalLayerSize.ForeColor = System.Drawing.Color.White;
-            this.lbOriginalLayerSize.Location = new System.Drawing.Point(11, 10);
+            this.lbOriginalLayerSize.Location = new System.Drawing.Point(10, 4);
             this.lbOriginalLayerSize.Name = "lbOriginalLayerSize";
             this.lbOriginalLayerSize.Size = new System.Drawing.Size(304, 19);
             this.lbOriginalLayerSize.TabIndex = 132;
@@ -70,9 +74,9 @@ namespace RTCV.UI
             this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(16, 16);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(82, 13);
+            this.label3.Size = new System.Drawing.Size(95, 13);
             this.label3.TabIndex = 135;
-            this.label3.Text = "BlastLayer Info";
+            this.label3.Text = "Sanitize progress";
             // 
             // btnYesEffect
             // 
@@ -94,7 +98,7 @@ namespace RTCV.UI
             // lbCurrentLayerSize
             // 
             this.lbCurrentLayerSize.ForeColor = System.Drawing.Color.White;
-            this.lbCurrentLayerSize.Location = new System.Drawing.Point(11, 33);
+            this.lbCurrentLayerSize.Location = new System.Drawing.Point(11, 22);
             this.lbCurrentLayerSize.Name = "lbCurrentLayerSize";
             this.lbCurrentLayerSize.Size = new System.Drawing.Size(307, 19);
             this.lbCurrentLayerSize.TabIndex = 133;
@@ -114,6 +118,24 @@ namespace RTCV.UI
             this.pnBlastLayerSanitization.TabIndex = 185;
             this.pnBlastLayerSanitization.Visible = false;
             // 
+            // btnReroll
+            // 
+            this.btnReroll.BackColor = System.Drawing.Color.Gray;
+            this.btnReroll.FlatAppearance.BorderSize = 0;
+            this.btnReroll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReroll.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnReroll.ForeColor = System.Drawing.Color.White;
+            this.btnReroll.Location = new System.Drawing.Point(16, 74);
+            this.btnReroll.MinimumSize = new System.Drawing.Size(141, 23);
+            this.btnReroll.Name = "btnReroll";
+            this.btnReroll.Size = new System.Drawing.Size(141, 23);
+            this.btnReroll.TabIndex = 189;
+            this.btnReroll.TabStop = false;
+            this.btnReroll.Tag = "color:light1";
+            this.btnReroll.Text = "Try different attempt";
+            this.btnReroll.UseVisualStyleBackColor = false;
+            this.btnReroll.Click += new System.EventHandler(this.btnReroll_Click);
+            // 
             // btnReplayLast
             // 
             this.btnReplayLast.BackColor = System.Drawing.Color.Gray;
@@ -127,7 +149,7 @@ namespace RTCV.UI
             this.btnReplayLast.TabIndex = 188;
             this.btnReplayLast.TabStop = false;
             this.btnReplayLast.Tag = "color:light1";
-            this.btnReplayLast.Text = "Replay last corruption";
+            this.btnReplayLast.Text = "Reload current attempt (Replay corruption)";
             this.btnReplayLast.UseVisualStyleBackColor = false;
             this.btnReplayLast.Click += new System.EventHandler(this.btnReplayLast_Click);
             // 
@@ -161,11 +183,11 @@ namespace RTCV.UI
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(16, 105);
+            this.label2.Location = new System.Drawing.Point(16, 106);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(122, 13);
+            this.label2.Size = new System.Drawing.Size(75, 13);
             this.label2.TabIndex = 186;
-            this.label2.Text = "BlastLayer Sanitization";
+            this.label2.Text = "Guided steps";
             // 
             // btnBackPrevState
             // 
@@ -176,7 +198,7 @@ namespace RTCV.UI
             this.btnBackPrevState.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBackPrevState.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnBackPrevState.ForeColor = System.Drawing.Color.White;
-            this.btnBackPrevState.Location = new System.Drawing.Point(372, 287);
+            this.btnBackPrevState.Location = new System.Drawing.Point(372, 332);
             this.btnBackPrevState.Name = "btnBackPrevState";
             this.btnBackPrevState.Size = new System.Drawing.Size(181, 24);
             this.btnBackPrevState.TabIndex = 192;
@@ -198,12 +220,20 @@ namespace RTCV.UI
             // panel6
             // 
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel6.Controls.Add(this.pbProgress);
             this.panel6.Controls.Add(this.lbCurrentLayerSize);
             this.panel6.Controls.Add(this.lbOriginalLayerSize);
             this.panel6.Location = new System.Drawing.Point(19, 35);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(332, 60);
             this.panel6.TabIndex = 194;
+            // 
+            // pbProgress
+            // 
+            this.pbProgress.Location = new System.Drawing.Point(16, 43);
+            this.pbProgress.Name = "pbProgress";
+            this.pbProgress.Size = new System.Drawing.Size(302, 7);
+            this.pbProgress.TabIndex = 134;
             // 
             // btnLeaveWithChanges
             // 
@@ -212,13 +242,13 @@ namespace RTCV.UI
             this.btnLeaveWithChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLeaveWithChanges.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.btnLeaveWithChanges.ForeColor = System.Drawing.Color.OrangeRed;
-            this.btnLeaveWithChanges.Location = new System.Drawing.Point(19, 253);
+            this.btnLeaveWithChanges.Location = new System.Drawing.Point(19, 275);
             this.btnLeaveWithChanges.Name = "btnLeaveWithChanges";
-            this.btnLeaveWithChanges.Size = new System.Drawing.Size(145, 25);
+            this.btnLeaveWithChanges.Size = new System.Drawing.Size(172, 25);
             this.btnLeaveWithChanges.TabIndex = 195;
             this.btnLeaveWithChanges.TabStop = false;
             this.btnLeaveWithChanges.Tag = "color:dark2";
-            this.btnLeaveWithChanges.Text = "Leave with changes";
+            this.btnLeaveWithChanges.Text = "Keep changes";
             this.btnLeaveWithChanges.UseVisualStyleBackColor = false;
             this.btnLeaveWithChanges.Click += new System.EventHandler(this.btnLeaveWithChanges_Click);
             // 
@@ -229,13 +259,13 @@ namespace RTCV.UI
             this.btnLeaveSubstractChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLeaveSubstractChanges.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.btnLeaveSubstractChanges.ForeColor = System.Drawing.Color.OrangeRed;
-            this.btnLeaveSubstractChanges.Location = new System.Drawing.Point(170, 253);
+            this.btnLeaveSubstractChanges.Location = new System.Drawing.Point(19, 302);
             this.btnLeaveSubstractChanges.Name = "btnLeaveSubstractChanges";
-            this.btnLeaveSubstractChanges.Size = new System.Drawing.Size(181, 25);
+            this.btnLeaveSubstractChanges.Size = new System.Drawing.Size(172, 25);
             this.btnLeaveSubstractChanges.TabIndex = 196;
             this.btnLeaveSubstractChanges.TabStop = false;
             this.btnLeaveSubstractChanges.Tag = "color:dark2";
-            this.btnLeaveSubstractChanges.Text = "Leave and subtract changes";
+            this.btnLeaveSubstractChanges.Text = "Subtract result from original";
             this.btnLeaveSubstractChanges.UseVisualStyleBackColor = false;
             this.btnLeaveSubstractChanges.Click += new System.EventHandler(this.btnLeaveSubstractChanges_Click);
             // 
@@ -246,13 +276,13 @@ namespace RTCV.UI
             this.btnLeaveWithoutChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLeaveWithoutChanges.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.btnLeaveWithoutChanges.ForeColor = System.Drawing.Color.OrangeRed;
-            this.btnLeaveWithoutChanges.Location = new System.Drawing.Point(19, 286);
+            this.btnLeaveWithoutChanges.Location = new System.Drawing.Point(19, 329);
             this.btnLeaveWithoutChanges.Name = "btnLeaveWithoutChanges";
-            this.btnLeaveWithoutChanges.Size = new System.Drawing.Size(332, 25);
+            this.btnLeaveWithoutChanges.Size = new System.Drawing.Size(172, 25);
             this.btnLeaveWithoutChanges.TabIndex = 197;
             this.btnLeaveWithoutChanges.TabStop = false;
             this.btnLeaveWithoutChanges.Tag = "color:dark2";
-            this.btnLeaveWithoutChanges.Text = "Leave without changes (Restore BlastLayer)";
+            this.btnLeaveWithoutChanges.Text = "Reload original Blast Layer";
             this.btnLeaveWithoutChanges.UseVisualStyleBackColor = false;
             this.btnLeaveWithoutChanges.Click += new System.EventHandler(this.btnLeaveWithoutChanges_Click);
             // 
@@ -263,33 +293,15 @@ namespace RTCV.UI
             this.btnStartSanitizing.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnStartSanitizing.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.btnStartSanitizing.ForeColor = System.Drawing.Color.White;
-            this.btnStartSanitizing.Location = new System.Drawing.Point(28, 134);
+            this.btnStartSanitizing.Location = new System.Drawing.Point(37, 136);
             this.btnStartSanitizing.Name = "btnStartSanitizing";
-            this.btnStartSanitizing.Size = new System.Drawing.Size(123, 22);
+            this.btnStartSanitizing.Size = new System.Drawing.Size(300, 22);
             this.btnStartSanitizing.TabIndex = 189;
             this.btnStartSanitizing.TabStop = false;
             this.btnStartSanitizing.Tag = "color:light1";
             this.btnStartSanitizing.Text = "Start Sanitizing";
             this.btnStartSanitizing.UseVisualStyleBackColor = false;
             this.btnStartSanitizing.Click += new System.EventHandler(this.btnStartSanitizing_Click);
-            // 
-            // btnReroll
-            // 
-            this.btnReroll.BackColor = System.Drawing.Color.Gray;
-            this.btnReroll.FlatAppearance.BorderSize = 0;
-            this.btnReroll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReroll.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.btnReroll.ForeColor = System.Drawing.Color.White;
-            this.btnReroll.Location = new System.Drawing.Point(16, 74);
-            this.btnReroll.MinimumSize = new System.Drawing.Size(141, 23);
-            this.btnReroll.Name = "btnReroll";
-            this.btnReroll.Size = new System.Drawing.Size(141, 23);
-            this.btnReroll.TabIndex = 189;
-            this.btnReroll.TabStop = false;
-            this.btnReroll.Tag = "color:light1";
-            this.btnReroll.Text = "Reroll sanitize step";
-            this.btnReroll.UseVisualStyleBackColor = false;
-            this.btnReroll.Click += new System.EventHandler(this.btnReroll_Click);
             // 
             // lbSteps
             // 
@@ -307,16 +319,68 @@ namespace RTCV.UI
             this.lbSteps.Name = "lbSteps";
             this.lbSteps.ScrollAlwaysVisible = true;
             this.lbSteps.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbSteps.Size = new System.Drawing.Size(181, 253);
+            this.lbSteps.Size = new System.Drawing.Size(181, 298);
             this.lbSteps.TabIndex = 191;
             this.lbSteps.Tag = "color:dark2";
+            // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Segoe UI Symbol", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(17, 245);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(178, 30);
+            this.label1.TabIndex = 198;
+            this.label1.Text = "Send results to Blast Editor";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnAddToStockpile
+            // 
+            this.btnAddToStockpile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddToStockpile.BackColor = System.Drawing.Color.Gray;
+            this.btnAddToStockpile.FlatAppearance.BorderSize = 0;
+            this.btnAddToStockpile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddToStockpile.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnAddToStockpile.ForeColor = System.Drawing.Color.White;
+            this.btnAddToStockpile.Image = ((System.Drawing.Image)(resources.GetObject("btnAddToStockpile.Image")));
+            this.btnAddToStockpile.Location = new System.Drawing.Point(219, 257);
+            this.btnAddToStockpile.Name = "btnAddToStockpile";
+            this.btnAddToStockpile.Size = new System.Drawing.Size(132, 39);
+            this.btnAddToStockpile.TabIndex = 199;
+            this.btnAddToStockpile.TabStop = false;
+            this.btnAddToStockpile.Tag = "color:light1";
+            this.btnAddToStockpile.Text = "  To Stockpile";
+            this.btnAddToStockpile.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnAddToStockpile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnAddToStockpile.UseVisualStyleBackColor = false;
+            this.btnAddToStockpile.Click += new System.EventHandler(this.btnAddToStockpile_Click);
+            // 
+            // btnLeaveNoChanges
+            // 
+            this.btnLeaveNoChanges.BackColor = System.Drawing.Color.Gray;
+            this.btnLeaveNoChanges.FlatAppearance.BorderSize = 0;
+            this.btnLeaveNoChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLeaveNoChanges.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnLeaveNoChanges.ForeColor = System.Drawing.Color.White;
+            this.btnLeaveNoChanges.Location = new System.Drawing.Point(219, 307);
+            this.btnLeaveNoChanges.Name = "btnLeaveNoChanges";
+            this.btnLeaveNoChanges.Size = new System.Drawing.Size(132, 47);
+            this.btnLeaveNoChanges.TabIndex = 201;
+            this.btnLeaveNoChanges.TabStop = false;
+            this.btnLeaveNoChanges.Tag = "color:light1";
+            this.btnLeaveNoChanges.Text = "Leave with no changes";
+            this.btnLeaveNoChanges.UseVisualStyleBackColor = false;
+            this.btnLeaveNoChanges.Click += new System.EventHandler(this.btnLeaveNoChanges_Click);
             // 
             // RTC_SanitizeTool_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(574, 332);
+            this.ClientSize = new System.Drawing.Size(574, 377);
+            this.Controls.Add(this.btnLeaveNoChanges);
+            this.Controls.Add(this.btnAddToStockpile);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnStartSanitizing);
             this.Controls.Add(this.btnLeaveWithoutChanges);
             this.Controls.Add(this.btnLeaveSubstractChanges);
@@ -332,7 +396,7 @@ namespace RTCV.UI
             this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.MinimumSize = new System.Drawing.Size(590, 340);
+            this.MinimumSize = new System.Drawing.Size(590, 401);
             this.Name = "RTC_SanitizeTool_Form";
             this.Tag = "color:dark1";
             this.Text = "Sanitize Tool";
@@ -364,5 +428,9 @@ namespace RTCV.UI
         private Button btnLeaveWithoutChanges;
         private Button btnStartSanitizing;
         private Button btnReroll;
+        private Label label1;
+        private ProgressBar pbProgress;
+        public Button btnAddToStockpile;
+        private Button btnLeaveNoChanges;
     }
 }

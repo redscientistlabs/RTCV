@@ -174,7 +174,7 @@ namespace RTCV.UI
             }
         }
 
-        public static void OpenBlastEditor(StashKey sk = null)
+        public static void OpenBlastEditor(StashKey sk = null, bool silent = false)
         {
             S.GET<RTC_NewBlastEditor_Form>().Close();
             S.SET(new RTC_NewBlastEditor_Form());
@@ -189,11 +189,11 @@ namespace RTCV.UI
             //TODO
             if (sk.BlastLayer.Layer.Count > 5000 && (DialogResult.Yes == MessageBox.Show($"You're trying to open a blastlayer of size " + sk.BlastLayer.Layer.Count + ". This could take a while. Are you sure you want to continue?", "Opening a large BlastLayer", MessageBoxButtons.YesNo)))
             {
-                S.GET<RTC_NewBlastEditor_Form>().LoadStashkey(sk);
+                S.GET<RTC_NewBlastEditor_Form>().LoadStashkey(sk, silent);
             }
             else if (sk.BlastLayer.Layer.Count <= 5000)
             {
-                S.GET<RTC_NewBlastEditor_Form>().LoadStashkey(sk);
+                S.GET<RTC_NewBlastEditor_Form>().LoadStashkey(sk, silent);
             }
         }
 
@@ -1228,7 +1228,7 @@ namespace RTCV.UI
         private BindingSource bs = null;
         private BindingSource _bs = null;
 
-        public void LoadStashkey(StashKey sk)
+        public void LoadStashkey(StashKey sk, bool silent = false)
         {
             if (!RefreshDomains())
             {
@@ -1283,9 +1283,13 @@ namespace RTCV.UI
             dgvBlastEditor.DataSource = bs;
             InitializeDGV();
             InitializeBottom();
-            this.Show();
-            this.BringToFront();
-            RefreshAllNoteIcons();
+
+            if (!silent)
+            {
+                this.Show();
+                this.BringToFront();
+                RefreshAllNoteIcons();
+            }
         }
 
         private bool RefreshDomains()
@@ -2108,6 +2112,7 @@ namespace RTCV.UI
                 return;
             }
 
+            this.Hide();
             RTC_SanitizeTool_Form.OpenSanitizeTool(currentSK?.BlastLayer);
 
             /*
@@ -2188,7 +2193,7 @@ namespace RTCV.UI
             dgvBlastEditor.Refresh();
         }
 
-        private void btnAddStashToStockpile_Click(object sender, EventArgs e)
+        public void btnAddStashToStockpile_Click(object sender, EventArgs e)
         {
             btnSendToStash_Click(sender, e);
             S.GET<RTC_StashHistory_Form>().btnAddStashToStockpile_Click(sender, e);
