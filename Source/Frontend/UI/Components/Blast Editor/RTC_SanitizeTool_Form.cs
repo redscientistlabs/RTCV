@@ -4,12 +4,14 @@ using System.Windows.Forms;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
 using RTCV.Common;
+using NLog.LayoutRenderers;
 
 namespace RTCV.UI
 {
     public partial class RTC_SanitizeTool_Form : Form, IAutoColorize
     {
         public BlastLayer originalBlastLayer = null;
+        public BlastLayer workBlastLayer = null;
 
         public RTC_SanitizeTool_Form()
         {
@@ -29,7 +31,7 @@ namespace RTCV.UI
                 }
             }
         }
-
+        
         public static void OpenSanitizeTool(BlastLayer bl = null)
         {
             S.GET<RTC_SanitizeTool_Form>().Close();
@@ -56,15 +58,18 @@ namespace RTCV.UI
             BlastLayer clone = (BlastLayer)bl.Clone();
 
             stf.lbOriginalLayerSize.Text = $"Original Layer size: {clone.Layer.Count(x => !x.IsLocked)}";
-            stf.lbCurrentLayerSize.Text = $"Current Layer size: {clone.Layer.Count(x => !x.IsLocked)}";
+
 
             stf.lbSteps.DisplayMember = "Text";
             stf.lbSteps.ValueMember = "Value";
             stf.lbSteps.Items.Add(new { Text = $"Original Layer [{clone.Layer.Count(x => !x.IsLocked)} Units]", Value = clone });
 
             stf.originalBlastLayer = clone;
+            stf.workBlastLayer = bl;
 
+            stf.UpdateSanitizeProgress();
             stf.ShowDialog();
+
         }
 
         private void RTC_NewBlastEditorForm_Load(object sender, EventArgs e)
@@ -82,7 +87,7 @@ namespace RTCV.UI
 
             BlastLayer bl = (BlastLayer)S.GET<RTC_NewBlastEditor_Form>().currentSK.BlastLayer.Clone();
 
-            lbCurrentLayerSize.Text = $"Current Layer size: {bl.Layer.Count(x => !x.IsLocked)}";
+            UpdateSanitizeProgress();
 
             pnBlastLayerSanitization.Visible = true;
         }
@@ -100,7 +105,7 @@ namespace RTCV.UI
             BlastLayer bl = (BlastLayer)S.GET<RTC_NewBlastEditor_Form>().currentSK.BlastLayer.Clone();
             lbSteps.Items.Add(new { Text = $"[{bl.Layer.Count(x => !x.IsLocked)} Units]", Value = bl });
 
-            lbCurrentLayerSize.Text = $"Current Layer size: {bl.Layer.Count(x => !x.IsLocked)}";
+            UpdateSanitizeProgress();
 
             if (bl.Layer.Count(x => !x.IsLocked) == 1)
             {
@@ -125,7 +130,7 @@ namespace RTCV.UI
             BlastLayer bl = (BlastLayer)S.GET<RTC_NewBlastEditor_Form>().currentSK.BlastLayer.Clone();
             lbSteps.Items.Add(new { Text = $"[{bl.Layer.Count(x => !x.IsLocked)} Units]", Value = bl });
 
-            lbCurrentLayerSize.Text = $"Current Layer size: {bl.Layer.Count(x => !x.IsLocked)}";
+            UpdateSanitizeProgress();
 
             if (bl.Layer.Count(x => !x.IsLocked) == 1)
             {
@@ -151,7 +156,16 @@ namespace RTCV.UI
 
         private void btnLeaveWithChanges_Click(object sender, EventArgs e)
         {
+            ReopenBlastEditor();
             this.Close();
+        }
+
+        private void ReopenBlastEditor()
+        {
+            var be = S.GET<RTC_NewBlastEditor_Form>();
+            be.Show();
+            be.BringToFront();
+            be.RefreshAllNoteIcons();
         }
 
         private void btnLeaveSubstractChanges_Click(object sender, EventArgs e)
@@ -183,13 +197,15 @@ namespace RTCV.UI
             }
 
             S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(modified);
-
+            ReopenBlastEditor();
             this.Close();
         }
 
         private void btnLeaveWithoutChanges_Click(object sender, EventArgs e)
         {
             S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(originalBlastLayer);
+            ReopenBlastEditor();
+
             this.Close();
         }
 
@@ -207,8 +223,9 @@ namespace RTCV.UI
 
             BlastLayer bl = (BlastLayer)modified.Value.Clone();
             S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(bl);
+            workBlastLayer = bl;
 
-            lbCurrentLayerSize.Text = $"Current Layer size: {bl.Layer.Count(x => !x.IsLocked)}";
+            UpdateSanitizeProgress();
 
             if (lbSteps.Items.Count > 1)
             {
@@ -227,6 +244,33 @@ namespace RTCV.UI
                 pnBlastLayerSanitization.Visible = false;
                 btnStartSanitizing.Visible = true;
             }
+        }
+
+        public void UpdateSanitizeProgress()
+        {
+            int originalSize = originalBlastLayer.Layer.Count(x => !x.IsLocked);
+
+            int original_remainder = originalSize;
+            int original_maxsteps = 0;
+            while(original_remainder>1)
+            {
+                original_remainder = original_remainder / 2;
+                original_maxsteps++;
+            }
+
+            int currentSize = workBlastLayer.Layer.Count(x => !x.IsLocked);
+
+            int current_remainder = currentSize;
+            int current_maxsteps = 0;
+            while (current_remainder > 1)
+            {
+                current_remainder = current_remainder / 2;
+                current_maxsteps++;
+            }
+
+            lbCurrentLayerSize.Text = $"Current Layer size: {currentSize}";
+            pbProgress.Maximum = original_maxsteps;
+            pbProgress.Value = original_maxsteps - current_maxsteps;
         }
 
         private void btnStartSanitizing_Click(object sender, EventArgs e)
@@ -274,6 +318,19 @@ namespace RTCV.UI
                         break;
                 }
             }
+        }
+
+        private void btnAddToStockpile_Click(object sender, EventArgs e)
+        {
+            S.GET<RTC_NewBlastEditor_Form>().btnAddStashToStockpile_Click(sender, e);
+            this.Close();
+            
+        }
+
+        private void btnLeaveNoChanges_Click(object sender, EventArgs e)
+        {
+            //S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(originalBlastLayer);
+            this.Close();
         }
     }
 }

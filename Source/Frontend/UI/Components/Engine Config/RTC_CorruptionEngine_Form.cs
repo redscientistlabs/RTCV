@@ -16,6 +16,31 @@ namespace RTCV.UI
         //private int defaultPrecision = -1;
         private bool updatingMinMax = false;
 
+        public string CurrentVectorLimiterListName
+        {
+            get {
+                ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)cbVectorLimiterList).SelectedItem;
+
+                if (item == null) //this shouldn't ever happen unless the list files are missing
+                    MessageBox.Show("Error: No vector engine limiter list selected. Bad install?");
+
+                return item?.Name;
+            }
+        }
+
+        public string CurrentVectorValueListName
+        {
+            get
+            {
+                ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)cbVectorValueList).SelectedItem;
+
+                if (item == null) //this shouldn't ever happen unless the list files are missing
+                    MessageBox.Show("Error: No vector engine value list selected. Bad install?");
+
+                return item?.Name;
+            }
+        }
+
         public RTC_CorruptionEngine_Form()
         {
             InitializeComponent();

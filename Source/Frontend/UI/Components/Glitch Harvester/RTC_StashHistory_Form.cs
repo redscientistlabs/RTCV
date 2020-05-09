@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -180,7 +180,7 @@ namespace RTCV.UI
                     if (S.GET<RTC_NewBlastEditor_Form>() != null)
                     {
                         StashKey sk = StockpileManager_UISide.StashHistory[lbStashHistory.SelectedIndex];
-                        RTC_NewBlastEditor_Form.OpenBlastEditor(sk);
+                        RTC_NewBlastEditor_Form.OpenBlastEditor(sk, true);
                         S.GET<RTC_NewBlastEditor_Form>().btnSanitizeTool_Click(null, null);
                     }
                 }))).Enabled = lbStashHistory.SelectedIndex != -1;
