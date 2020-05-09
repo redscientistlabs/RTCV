@@ -162,6 +162,9 @@ namespace RTCV.UI
         private void btnSendToAnalytics_Click(object sender, EventArgs e)
         {
             cbAutoAddDump.Checked = false;
+
+			RTC_AnalyticsTool_Form.OpenAnalyticsTool(ActiveTableDumps);
+			
         }
 
         private void cbSelectedMemoryDomain_SelectedIndexChanged(object sender, EventArgs e)

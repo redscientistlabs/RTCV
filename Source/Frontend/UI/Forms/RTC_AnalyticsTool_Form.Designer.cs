@@ -39,13 +39,13 @@ namespace RTCV.UI
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.lbDumps = new RTCV.UI.Components.Controls.ListBoxExtended();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.pbActivity = new System.Windows.Forms.PictureBox();
-            this.button5 = new System.Windows.Forms.Button();
+            this.btnCalculateActivity = new System.Windows.Forms.Button();
+            this.lbDumps = new RTCV.UI.Components.Controls.ListBoxExtended();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbActivity)).BeginInit();
             this.SuspendLayout();
@@ -60,7 +60,7 @@ namespace RTCV.UI
             this.btnBackPrevState.ForeColor = System.Drawing.Color.White;
             this.btnBackPrevState.Location = new System.Drawing.Point(14, 429);
             this.btnBackPrevState.Name = "btnBackPrevState";
-            this.btnBackPrevState.Size = new System.Drawing.Size(106, 24);
+            this.btnBackPrevState.Size = new System.Drawing.Size(159, 24);
             this.btnBackPrevState.TabIndex = 192;
             this.btnBackPrevState.TabStop = false;
             this.btnBackPrevState.Tag = "color:light1";
@@ -86,7 +86,7 @@ namespace RTCV.UI
             this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.Location = new System.Drawing.Point(14, 459);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(106, 24);
+            this.button1.Size = new System.Drawing.Size(159, 24);
             this.button1.TabIndex = 198;
             this.button1.TabStop = false;
             this.button1.Tag = "color:light1";
@@ -132,7 +132,7 @@ namespace RTCV.UI
             this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button4.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.button4.ForeColor = System.Drawing.Color.White;
-            this.button4.Location = new System.Drawing.Point(284, 345);
+            this.button4.Location = new System.Drawing.Point(329, 345);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(147, 23);
             this.button4.TabIndex = 201;
@@ -144,12 +144,78 @@ namespace RTCV.UI
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.label1.Location = new System.Drawing.Point(158, 301);
+            this.label1.Location = new System.Drawing.Point(203, 301);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(301, 30);
             this.label1.TabIndex = 189;
             this.label1.Text = "Is the effect you are looking for still present?";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // panel1
+            // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.button2);
+            this.panel1.Controls.Add(this.button3);
+            this.panel1.Location = new System.Drawing.Point(184, 423);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(332, 60);
+            this.panel1.TabIndex = 196;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.ForeColor = System.Drawing.Color.White;
+            this.label4.Location = new System.Drawing.Point(181, 404);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(137, 13);
+            this.label4.TabIndex = 195;
+            this.label4.Text = "Export Filtered Addresses";
+            // 
+            // label5
+            // 
+            this.label5.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.label5.Location = new System.Drawing.Point(181, 10);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(153, 19);
+            this.label5.TabIndex = 203;
+            this.label5.Text = "Domain size:";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label7
+            // 
+            this.label7.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.label7.Location = new System.Drawing.Point(342, 10);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(174, 19);
+            this.label7.TabIndex = 204;
+            this.label7.Text = "Dumps selected:";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pbActivity
+            // 
+            this.pbActivity.Location = new System.Drawing.Point(184, 60);
+            this.pbActivity.Name = "pbActivity";
+            this.pbActivity.Size = new System.Drawing.Size(332, 35);
+            this.pbActivity.TabIndex = 202;
+            this.pbActivity.TabStop = false;
+            // 
+            // button5
+            // 
+            this.btnCalculateActivity.BackColor = System.Drawing.Color.Gray;
+            this.btnCalculateActivity.FlatAppearance.BorderSize = 0;
+            this.btnCalculateActivity.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCalculateActivity.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.btnCalculateActivity.ForeColor = System.Drawing.Color.White;
+            this.btnCalculateActivity.Location = new System.Drawing.Point(184, 32);
+            this.btnCalculateActivity.Name = "button5";
+            this.btnCalculateActivity.Size = new System.Drawing.Size(332, 22);
+            this.btnCalculateActivity.TabIndex = 203;
+            this.btnCalculateActivity.TabStop = false;
+            this.btnCalculateActivity.Tag = "color:light1";
+            this.btnCalculateActivity.Text = "Compute activity";
+            this.btnCalculateActivity.UseVisualStyleBackColor = false;
+            this.btnCalculateActivity.Click += new System.EventHandler(this.btnCalculateActivity_Click);
             // 
             // lbDumps
             // 
@@ -166,83 +232,18 @@ namespace RTCV.UI
             this.lbDumps.Name = "lbDumps";
             this.lbDumps.ScrollAlwaysVisible = true;
             this.lbDumps.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbDumps.Size = new System.Drawing.Size(104, 390);
+            this.lbDumps.Size = new System.Drawing.Size(157, 390);
             this.lbDumps.TabIndex = 191;
             this.lbDumps.Tag = "color:dark2";
-            // 
-            // panel1
-            // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.button3);
-            this.panel1.Location = new System.Drawing.Point(139, 423);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(332, 60);
-            this.panel1.TabIndex = 196;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(136, 404);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(137, 13);
-            this.label4.TabIndex = 195;
-            this.label4.Text = "Export Filtered Addresses";
-            // 
-            // label5
-            // 
-            this.label5.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.label5.Location = new System.Drawing.Point(136, 10);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(153, 19);
-            this.label5.TabIndex = 203;
-            this.label5.Text = "Domain size:";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label7
-            // 
-            this.label7.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.label7.Location = new System.Drawing.Point(297, 10);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(174, 19);
-            this.label7.TabIndex = 204;
-            this.label7.Text = "Dumps selected:";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pbActivity
-            // 
-            this.pbActivity.Location = new System.Drawing.Point(139, 60);
-            this.pbActivity.Name = "pbActivity";
-            this.pbActivity.Size = new System.Drawing.Size(332, 35);
-            this.pbActivity.TabIndex = 202;
-            this.pbActivity.TabStop = false;
-            // 
-            // button5
-            // 
-            this.button5.BackColor = System.Drawing.Color.Gray;
-            this.button5.FlatAppearance.BorderSize = 0;
-            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button5.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.button5.ForeColor = System.Drawing.Color.White;
-            this.button5.Location = new System.Drawing.Point(139, 32);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(332, 22);
-            this.button5.TabIndex = 203;
-            this.button5.TabStop = false;
-            this.button5.Tag = "color:light1";
-            this.button5.Text = "Compute activity";
-            this.button5.UseVisualStyleBackColor = false;
             // 
             // RTC_AnalyticsTool_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(490, 498);
+            this.ClientSize = new System.Drawing.Size(529, 498);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.button5);
+            this.Controls.Add(this.btnCalculateActivity);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.pbActivity);
             this.Controls.Add(this.panel1);
@@ -283,6 +284,6 @@ namespace RTCV.UI
         private Panel panel1;
         private Label label4;
         private PictureBox pbActivity;
-        private Button button5;
+        private Button btnCalculateActivity;
     }
 }

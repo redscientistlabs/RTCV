@@ -3,18 +3,16 @@ using System.IO;
 
 namespace RTCV.CorruptCore
 {
-    internal static class MemoryBanks
+    public static class MemoryBanks
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         public static int maxBankSize = 1073741824;
-        public static long totalFileSize = 0;
 
         public static byte[][] ReadFile(string path)
         {
             try
             {
                 long fileLength = new System.IO.FileInfo(path).Length;
-                totalFileSize = fileLength;
                 int tailBankSize = Convert.ToInt32(fileLength % maxBankSize);
                 bool multipleBanks = fileLength > maxBankSize;
                 int banksCount = 1;
@@ -75,6 +73,32 @@ namespace RTCV.CorruptCore
             }
         }
 
+        public static long GetSize(this byte[][] data)
+        {
+            try
+            {
+                long size = 0;
+
+                if (data == null)
+                    return size;
+
+                foreach (byte[] bank in data)
+                    size += bank?.Length ?? 0;
+
+                return size;
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine($"IOException in MemoryBanks.GetSize! {e.Message}\n{e.StackTrace}");
+                Exception _e = e.InnerException;
+                while (_e != null)
+                {
+                    Console.WriteLine($"InnserException {_e.Message}\n{_e.StackTrace}");
+                    _e = _e.InnerException;
+                }
+                return 0;
+            }
+        }
         public static byte PeekByte(this byte[][] data, long Address)
         {
             try
@@ -252,4 +276,5 @@ namespace RTCV.CorruptCore
             }
         }
     }
+
 }
