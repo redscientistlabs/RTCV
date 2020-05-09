@@ -167,9 +167,12 @@ namespace RTCV.UI
         private void ReopenBlastEditor()
         {
             var be = S.GET<RTC_NewBlastEditor_Form>();
-            be.Show();
-            be.BringToFront();
             be.RefreshAllNoteIcons();
+            be.WindowState = FormWindowState.Minimized;
+            be.Show();
+            be.WindowState = FormWindowState.Normal;
+            be.BringToFront();
+            
         }
 
         private void btnLeaveSubstractChanges_Click(object sender, EventArgs e)
@@ -339,8 +342,8 @@ namespace RTCV.UI
 
         private void btnAddToStockpile_Click(object sender, EventArgs e)
         {
-            S.GET<RTC_NewBlastEditor_Form>().btnAddStashToStockpile_Click(sender, e);
-            this.Close();
+            if (S.GET<RTC_NewBlastEditor_Form>().AddStashToStockpile())
+                this.Close();
             
         }
 

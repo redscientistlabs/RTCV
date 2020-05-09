@@ -2196,12 +2196,13 @@ namespace RTCV.UI
             dgvBlastEditor.Refresh();
         }
 
-        public void btnAddStashToStockpile_Click(object sender, EventArgs e)
+        public bool AddStashToStockpile()
         {
-            btnSendToStash_Click(sender, e);
-            S.GET<RTC_StashHistory_Form>().btnAddStashToStockpile_Click(sender, e);
-        }
+            btnSendToStash_Click(null, null);
 
+            return S.GET<RTC_StashHistory_Form>().btnAddStashToStockpile_Click();
+        }
+        public void btnAddStashToStockpile_Click(object sender, EventArgs e) => AddStashToStockpile();
         private void breakDownAllBlastunitsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             breakDownUnits();

@@ -28,24 +28,25 @@ namespace RTCV.UI
             lbStashHistory.DataSource = StockpileManager_UISide.StashHistory;
         }
 
-        public void btnAddStashToStockpile_Click(object sender, EventArgs e)
+        public void btnAddStashToStockpile_Click(object sender, EventArgs e) => btnAddStashToStockpile_Click();
+        public bool btnAddStashToStockpile_Click()
         {
             if (StockpileManager_UISide.CurrentStashkey != null && StockpileManager_UISide.CurrentStashkey.Alias != StockpileManager_UISide.CurrentStashkey.Key)
             {
-                AddStashToStockpile(false);
+                return AddStashToStockpile(false);
             }
             else
             {
-                AddStashToStockpile(true);
+                return AddStashToStockpile(true);
             }
         }
 
-        public void AddStashToStockpile(bool askForName = true)
+        public bool AddStashToStockpile(bool askForName = true)
         {
             if (lbStashHistory.Items.Count == 0 || lbStashHistory.SelectedIndex == -1)
             {
                 MessageBox.Show("Can't add the Stash to the Stockpile because none is selected in the Stash History");
-                return;
+                return false;
             }
 
             string Name = "";
@@ -64,7 +65,7 @@ namespace RTCV.UI
                     {
                         string name = (AllSpec.VanguardSpec[VSPEC.NAME] as string) ?? "Vanguard implementation";
                         MessageBox.Show($"{name} does not support mixed stockpiles.");
-                        return;
+                        return false;
                     }
                 }
             }
@@ -77,7 +78,7 @@ namespace RTCV.UI
                 }
                 else
                 {
-                    return;
+                    return false;
                 }
             }
             else
@@ -120,6 +121,8 @@ namespace RTCV.UI
             StockpileManager_UISide.StockpileChanged();
 
             S.GET<RTC_StockpileManager_Form>().UnsavedEdits = true;
+
+            return true;
         }
 
         public void RefreshStashHistory()
