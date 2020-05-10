@@ -172,58 +172,65 @@ namespace RTCV.UI
             }
 
             var cpus = Environment.ProcessorCount;
-            int remainder = nbWords % cpus;
+            int remainderWords = nbWords % cpus;
 
             List<Task> tasks = new List<Task>();
 
             for (int i = 0; i < cpus; i++)
             {
-                var task = new Task<int[]>(function: (cpu_i) =>
+                //tuple params: cpuid, activity array, max activity
+                var task = new Task<(int,int[],int)>(function: (cpu_i) =>
                 {
-
                     int real_i = (int)cpu_i;
 
-                    int nbWordsInASlice = ((nbWords - remainder) / cpus);
-                    int nbWordsInThisOne = ((nbWords - remainder) / cpus) + (real_i == (cpus - 1) ? remainder : 0);
+                    int nbWordsInASlice = ((nbWords - remainderWords) / cpus);
+                    int nbWordsInThisOne = nbWordsInASlice + (real_i == (cpus - 1) ? remainderWords : 0);
 
                     List<int> activity = new List<int>();
-
                     int maxActivity = 0;
+                    int wordStartIndex = (nbWordsInASlice * real_i);
 
-                    for (int y = (nbWordsInASlice * real_i); y < (nbWordsInASlice * real_i) + nbWordsInThisOne; y++)
+                    for (int y = wordStartIndex; y < wordStartIndex + nbWordsInThisOne; y++)
                     {
                         List<byte[]> stripe = new List<byte[]>();
 
-
                         for (int x = 0; x < AnalyticsCube.Cube.Count; x++)
-                        {
-                            var word = AnalyticsCube.GetWord(x, y);
-                            stripe.Add(word);
+                            stripe.Add(AnalyticsCube.GetWord(x, y));
 
-                        }
-
-                        int crunchedActivity = AnalyticsCube.CrunchChain(stripe);
+                        int crunchedActivity = AnalyticsCube.CrunchAlgoChain(stripe);
 
                         if (maxActivity < crunchedActivity)
                             maxActivity = crunchedActivity;
 
                         activity.Add(crunchedActivity);
-
                     }
 
-                    return activity.ToArray();
+                    return (real_i, activity.ToArray(), maxActivity);
 
                 }, state: i);
 
                 tasks.Add(task);
                 task.Start();
-
             }
 
             Task.WaitAll(tasks.ToArray());
+            var returns = tasks.Select(it => (it as Task<(int cpu_i, int[] activity, int maxActivity)>).Result).OrderBy(it => it.cpu_i).ToArray();
+            
+            int maxActivity = 0;
+            List<int> fullActivity = new List<int>();
 
-            new object();
+            foreach(var ret in returns)
+            {
+                if (maxActivity < ret.maxActivity)
+                    maxActivity = ret.maxActivity;
 
+                fullActivity.AddRange(ret.activity);
+            }
+
+            List<double> dumpsActivity = AnalyticsCube.CrunchFloatActivity(fullActivity, maxActivity);
+
+            var more50 = dumpsActivity.Where(it => it > 0.5d).ToList();
+            new Object();
         }
     }
 
@@ -231,7 +238,21 @@ namespace RTCV.UI
     {
         public static List<List<byte[]>> Cube;
 
-        internal static int CrunchChain(List<byte[]> stripe)
+        internal static List<double> CrunchFloatActivity(List<int> fullActivity, int maxActivity)
+        {
+            List<double> output = new List<double>();
+
+            foreach (var activity in fullActivity)
+                output.Add(Convert.ToDouble(activity) / Convert.ToDouble(maxActivity));
+
+            return output;
+        }
+        internal static int CrunchAlgoList(List<byte[]> stripe, string list)
+        {
+            return 0;
+        }
+
+        internal static int CrunchAlgoChain(List<byte[]> stripe)
         {
             int activity = 0;
 
@@ -287,7 +308,6 @@ namespace RTCV.UI
                 Init();
 
             int nbWords = (dump.Length / wordSize);
-
             var Square = new List<byte[]>();
 
             for (int i = 0; i < nbWords; i++)
@@ -301,9 +321,7 @@ namespace RTCV.UI
             byte[] output = new byte[wordSize];
 
             for(int i=0;i<wordSize;i++)
-            {
                 output[i] = dump[index + i];
-            }
 
             return output;
         }
