@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -30,7 +30,7 @@ namespace RTCV.UI
 
         public bool UseActiveTable = false;
         public bool UseCorePrecision = false;
-        public List<string> ActiveTableDumps = null;
+        public List<string> MemoryDumps = null;
         public long[] ActiveTableActivity = null;
         public long[] ActiveTableGenerated = null;
         public double ActivityThreshold = 0;
@@ -50,17 +50,18 @@ namespace RTCV.UI
                 MessageBox.Show("Select a valid domain before continuing!");
                 return;
             }
-            if (ActiveTableDumps == null)
+            if (MemoryDumps == null)
                 return;
 
             string key = CorruptCore.RtcCore.GetRandomKey();
 
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_DOMAIN_ACTIVETABLE_MAKEDUMP, new object[] { cbSelectedMemoryDomain.SelectedItem.ToString(), key }, true);
 
-            ActiveTableDumps.Add(key);
-            lbNbMemoryDumps.Text = "Memory dumps collected: " + ActiveTableDumps.Count.ToString();
+            var keyPath = Path.Combine(RtcCore.workingDir, "MEMORYDUMPS", key + ".dmp");
+            MemoryDumps.Add(keyPath);
+            lbNbMemoryDumps.Text = "Memory dumps collected: " + MemoryDumps.Count.ToString();
 
-            if (ActiveTableDumps.Count > 1)
+            if (MemoryDumps.Count > 1)
                 btnSendToAnalytics.Enabled = true;
         }
 
@@ -98,7 +99,7 @@ namespace RTCV.UI
 
             ActiveTableGenerated = null;
 
-            ActiveTableDumps = new List<string>();
+            MemoryDumps = new List<string>();
 
             foreach (string file in Directory.GetFiles(Path.Combine(CorruptCore.RtcCore.workingDir, "MEMORYDUMPS")))
                 File.Delete(file);
@@ -162,6 +163,8 @@ namespace RTCV.UI
         private void btnSendToAnalytics_Click(object sender, EventArgs e)
         {
             cbAutoAddDump.Checked = false;
+            var mi = MemoryDomains.GetInterface(cbSelectedMemoryDomain.SelectedItem.ToString());
+            RTC_AnalyticsTool_Form.OpenAnalyticsTool(mi, MemoryDumps);
         }
 
         private void cbSelectedMemoryDomain_SelectedIndexChanged(object sender, EventArgs e)
