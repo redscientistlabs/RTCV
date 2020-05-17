@@ -1466,7 +1466,7 @@ namespace RTCV.Plugins.HexEditor
             }
             if (e.Control && e.KeyCode == Keys.F)
             {
-                PokeAddressMenuItem_Click(sender, e);
+                FindMenuItem_Click(sender, e);
                 return;
             }
             if (e.Control && e.KeyCode == Keys.C)
@@ -1486,7 +1486,7 @@ namespace RTCV.Plugins.HexEditor
             }
             if (e.Shift && e.KeyCode == Keys.Delete)
             {
-                PasteMenuItem_Click(sender, e);
+                UnfreezeAllMenuItem_Click(sender, e);
                 return;
             }
             if (e.KeyCode == Keys.F2)
