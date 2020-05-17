@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
@@ -196,7 +196,8 @@ namespace RTCV.UI.Components.Controls
             }
             else
             {
-                if (tbControlValue.Value - e.Delta >= tbControlValue.Minimum)
+                //We're using a negative number so use +
+                if (tbControlValue.Value + e.Delta >= tbControlValue.Minimum)
                 {
                     tbControlValue.Value += e.Delta;
                 }
