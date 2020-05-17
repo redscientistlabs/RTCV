@@ -1461,6 +1461,42 @@ namespace RTCV.Plugins.HexEditor
                 PokeAddressMenuItem_Click(sender, e);
                 return;
             }
+            if (e.Control && e.KeyCode == Keys.F)
+            {
+                PokeAddressMenuItem_Click(sender, e);
+                return;
+            }
+            if (e.Control && e.KeyCode == Keys.C)
+            {
+                CopyMenuItem_Click(sender, e);
+                return;
+            }
+            if (e.Control && e.KeyCode == Keys.E)
+            {
+                ExportMenuItem_Click(sender, e);
+                return;
+            }
+            if (e.Control && e.KeyCode == Keys.V)
+            {
+                PasteMenuItem_Click(sender, e);
+                return;
+            }
+            if (e.Shift && e.KeyCode == Keys.Delete)
+            {
+                PasteMenuItem_Click(sender, e);
+                return;
+            }
+            if (e.KeyCode == Keys.F2)
+            {
+                FindNextMenuItem_Click(sender, e);
+                return;
+            }
+            if (e.KeyCode == Keys.F3)
+            {
+                FindPrevMenuItem_Click(sender, e);
+                return;
+            }
+
 
             long newHighlighted;
             switch (e.KeyCode)
