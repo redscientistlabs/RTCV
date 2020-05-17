@@ -1303,15 +1303,18 @@ namespace RTCV.Plugins.HexEditor
                 MemoryDomainsMenuItem.DropDownItems.Add(GetMenuItem(new NullMemoryInterface(), SetMemoryDomain, _domain.Name));
                 MemoryDomainsMenuItem.ShowDropDown();
             }
+            else
+            {
+                MemoryDomainsMenuItem.DropDownItems.Clear();
+                foreach (var k in AllDomains.Values)
+                {
+                    MemoryDomainsMenuItem.DropDownItems.Add(GetMenuItem(k, SetMemoryDomain, _domain.Name));
+                }
+            }
         }
 
         private void MemoryDomainsMenuItem_DropDown(object sender, EventArgs e)
         {
-            MemoryDomainsMenuItem.DropDownItems.Clear();
-            foreach (var k in AllDomains.Values)
-            {
-                MemoryDomainsMenuItem.DropDownItems.Add(GetMenuItem(k, SetMemoryDomain, _domain.Name));
-            }
         }
 
         private void DataSizeByteMenuItem_Click(object sender, EventArgs e)

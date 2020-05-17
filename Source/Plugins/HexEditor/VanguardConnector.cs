@@ -22,6 +22,10 @@ namespace RTCV.Plugins.HexEditor
                     {
                         SyncObjectSingleton.FormExecute(() =>
                         {
+                            if (S.GET<HexEditor>().IsDisposed)
+                            {
+                                S.SET(new HexEditor());
+                            }
                             S.GET<HexEditor>().Restart();
                             S.GET<HexEditor>().Show();
                         });
@@ -40,6 +44,10 @@ namespace RTCV.Plugins.HexEditor
 
                         SyncObjectSingleton.FormExecute(() =>
                         {
+                            if (S.GET<HexEditor>().IsDisposed)
+                            {
+                                S.SET(new HexEditor());
+                            }
                             S.GET<HexEditor>().Restart();
                             S.GET<HexEditor>().Show();
                             S.GET<HexEditor>().SetDomain(mi);
