@@ -238,6 +238,7 @@ namespace RTCV.UI
             // 
             // btnLeaveWithChanges
             // 
+            this.btnLeaveWithChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnLeaveWithChanges.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnLeaveWithChanges.FlatAppearance.BorderSize = 0;
             this.btnLeaveWithChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -255,6 +256,7 @@ namespace RTCV.UI
             // 
             // btnLeaveSubstractChanges
             // 
+            this.btnLeaveSubstractChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnLeaveSubstractChanges.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnLeaveSubstractChanges.FlatAppearance.BorderSize = 0;
             this.btnLeaveSubstractChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -272,6 +274,7 @@ namespace RTCV.UI
             // 
             // btnLeaveWithoutChanges
             // 
+            this.btnLeaveWithoutChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnLeaveWithoutChanges.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnLeaveWithoutChanges.FlatAppearance.BorderSize = 0;
             this.btnLeaveWithoutChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -326,6 +329,7 @@ namespace RTCV.UI
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.Font = new System.Drawing.Font("Segoe UI Symbol", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(17, 245);
             this.label1.Name = "label1";
@@ -336,8 +340,7 @@ namespace RTCV.UI
             // 
             // btnAddToStockpile
             // 
-            this.btnAddToStockpile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddToStockpile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnAddToStockpile.BackColor = System.Drawing.Color.Gray;
             this.btnAddToStockpile.FlatAppearance.BorderSize = 0;
             this.btnAddToStockpile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -358,6 +361,7 @@ namespace RTCV.UI
             // 
             // btnLeaveNoChanges
             // 
+            this.btnLeaveNoChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnLeaveNoChanges.BackColor = System.Drawing.Color.Gray;
             this.btnLeaveNoChanges.FlatAppearance.BorderSize = 0;
             this.btnLeaveNoChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
