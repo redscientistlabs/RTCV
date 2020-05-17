@@ -55,6 +55,7 @@ namespace RTCV.UI
             this.btnAddToStockpile = new System.Windows.Forms.Button();
             this.btnLeaveNoChanges = new System.Windows.Forms.Button();
             this.lbWorkingPleaseWait = new System.Windows.Forms.Label();
+            this.btnAddToStash = new System.Windows.Forms.Button();
             this.pnBlastLayerSanitization.SuspendLayout();
             this.panel6.SuspendLayout();
             this.SuspendLayout();
@@ -199,7 +200,7 @@ namespace RTCV.UI
             this.btnBackPrevState.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBackPrevState.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnBackPrevState.ForeColor = System.Drawing.Color.White;
-            this.btnBackPrevState.Location = new System.Drawing.Point(372, 332);
+            this.btnBackPrevState.Location = new System.Drawing.Point(372, 339);
             this.btnBackPrevState.Name = "btnBackPrevState";
             this.btnBackPrevState.Size = new System.Drawing.Size(181, 24);
             this.btnBackPrevState.TabIndex = 192;
@@ -244,7 +245,7 @@ namespace RTCV.UI
             this.btnLeaveWithChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLeaveWithChanges.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.btnLeaveWithChanges.ForeColor = System.Drawing.Color.OrangeRed;
-            this.btnLeaveWithChanges.Location = new System.Drawing.Point(19, 275);
+            this.btnLeaveWithChanges.Location = new System.Drawing.Point(18, 276);
             this.btnLeaveWithChanges.Name = "btnLeaveWithChanges";
             this.btnLeaveWithChanges.Size = new System.Drawing.Size(172, 25);
             this.btnLeaveWithChanges.TabIndex = 195;
@@ -262,7 +263,7 @@ namespace RTCV.UI
             this.btnLeaveSubstractChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLeaveSubstractChanges.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.btnLeaveSubstractChanges.ForeColor = System.Drawing.Color.OrangeRed;
-            this.btnLeaveSubstractChanges.Location = new System.Drawing.Point(19, 302);
+            this.btnLeaveSubstractChanges.Location = new System.Drawing.Point(18, 307);
             this.btnLeaveSubstractChanges.Name = "btnLeaveSubstractChanges";
             this.btnLeaveSubstractChanges.Size = new System.Drawing.Size(172, 25);
             this.btnLeaveSubstractChanges.TabIndex = 196;
@@ -280,7 +281,7 @@ namespace RTCV.UI
             this.btnLeaveWithoutChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLeaveWithoutChanges.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.btnLeaveWithoutChanges.ForeColor = System.Drawing.Color.OrangeRed;
-            this.btnLeaveWithoutChanges.Location = new System.Drawing.Point(19, 329);
+            this.btnLeaveWithoutChanges.Location = new System.Drawing.Point(18, 338);
             this.btnLeaveWithoutChanges.Name = "btnLeaveWithoutChanges";
             this.btnLeaveWithoutChanges.Size = new System.Drawing.Size(172, 25);
             this.btnLeaveWithoutChanges.TabIndex = 197;
@@ -323,7 +324,7 @@ namespace RTCV.UI
             this.lbSteps.Name = "lbSteps";
             this.lbSteps.ScrollAlwaysVisible = true;
             this.lbSteps.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbSteps.Size = new System.Drawing.Size(181, 298);
+            this.lbSteps.Size = new System.Drawing.Size(181, 305);
             this.lbSteps.TabIndex = 191;
             this.lbSteps.Tag = "color:dark2";
             // 
@@ -331,7 +332,7 @@ namespace RTCV.UI
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.Font = new System.Drawing.Font("Segoe UI Symbol", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(17, 245);
+            this.label1.Location = new System.Drawing.Point(15, 243);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(178, 30);
             this.label1.TabIndex = 198;
@@ -347,9 +348,9 @@ namespace RTCV.UI
             this.btnAddToStockpile.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnAddToStockpile.ForeColor = System.Drawing.Color.White;
             this.btnAddToStockpile.Image = ((System.Drawing.Image)(resources.GetObject("btnAddToStockpile.Image")));
-            this.btnAddToStockpile.Location = new System.Drawing.Point(219, 257);
+            this.btnAddToStockpile.Location = new System.Drawing.Point(219, 292);
             this.btnAddToStockpile.Name = "btnAddToStockpile";
-            this.btnAddToStockpile.Size = new System.Drawing.Size(132, 39);
+            this.btnAddToStockpile.Size = new System.Drawing.Size(132, 25);
             this.btnAddToStockpile.TabIndex = 199;
             this.btnAddToStockpile.TabStop = false;
             this.btnAddToStockpile.Tag = "color:light1";
@@ -367,9 +368,9 @@ namespace RTCV.UI
             this.btnLeaveNoChanges.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnLeaveNoChanges.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.btnLeaveNoChanges.ForeColor = System.Drawing.Color.White;
-            this.btnLeaveNoChanges.Location = new System.Drawing.Point(219, 307);
+            this.btnLeaveNoChanges.Location = new System.Drawing.Point(219, 323);
             this.btnLeaveNoChanges.Name = "btnLeaveNoChanges";
-            this.btnLeaveNoChanges.Size = new System.Drawing.Size(132, 47);
+            this.btnLeaveNoChanges.Size = new System.Drawing.Size(132, 40);
             this.btnLeaveNoChanges.TabIndex = 201;
             this.btnLeaveNoChanges.TabStop = false;
             this.btnLeaveNoChanges.Tag = "color:light1";
@@ -388,12 +389,34 @@ namespace RTCV.UI
             this.lbWorkingPleaseWait.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lbWorkingPleaseWait.Visible = false;
             // 
+            // btnAddToStash
+            // 
+            this.btnAddToStash.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnAddToStash.BackColor = System.Drawing.Color.Gray;
+            this.btnAddToStash.FlatAppearance.BorderSize = 0;
+            this.btnAddToStash.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnAddToStash.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnAddToStash.ForeColor = System.Drawing.Color.White;
+            this.btnAddToStash.Image = ((System.Drawing.Image)(resources.GetObject("btnAddToStash.Image")));
+            this.btnAddToStash.Location = new System.Drawing.Point(219, 261);
+            this.btnAddToStash.Name = "btnAddToStash";
+            this.btnAddToStash.Size = new System.Drawing.Size(132, 25);
+            this.btnAddToStash.TabIndex = 203;
+            this.btnAddToStash.TabStop = false;
+            this.btnAddToStash.Tag = "color:light1";
+            this.btnAddToStash.Text = "  To Stash";
+            this.btnAddToStash.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnAddToStash.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnAddToStash.UseVisualStyleBackColor = false;
+            this.btnAddToStash.Click += new System.EventHandler(this.btnAddToStash_Click);
+            // 
             // RTC_SanitizeTool_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(574, 377);
+            this.ClientSize = new System.Drawing.Size(574, 384);
+            this.Controls.Add(this.btnAddToStash);
             this.Controls.Add(this.btnLeaveNoChanges);
             this.Controls.Add(this.btnAddToStockpile);
             this.Controls.Add(this.label1);
@@ -452,5 +475,6 @@ namespace RTCV.UI
         public Button btnAddToStockpile;
         private Button btnLeaveNoChanges;
         private Label lbWorkingPleaseWait;
+        public Button btnAddToStash;
     }
 }
