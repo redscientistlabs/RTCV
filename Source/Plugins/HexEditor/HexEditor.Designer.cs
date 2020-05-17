@@ -31,7 +31,7 @@ namespace RTCV.Plugins.HexEditor
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HexEditor));
-            this.HexMenuStrip = new System.Windows.Forms.MenuStrip();
+            this.HexMenuStrip = new RTCV.Common.Controls.MenuStripEx();
             this.FileSubMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.SaveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SaveAsBinaryMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -575,7 +575,7 @@ namespace RTCV.Plugins.HexEditor
 
         #endregion
 
-        public System.Windows.Forms.MenuStrip HexMenuStrip;
+        public RTCV.Common.Controls.MenuStripEx HexMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem FileSubMenu;
         private System.Windows.Forms.ToolStripMenuItem SaveAsTextMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
