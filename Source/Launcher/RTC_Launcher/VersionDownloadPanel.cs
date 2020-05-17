@@ -45,9 +45,6 @@ namespace RTCV.Launcher
 
                 var returnValue = onlineVersions.OrderByNaturalDescending(x => x).Select(it => it.Replace(".zip", "")).ToArray()[0];
 
-                if (returnValue.EndsWith("-bz"))
-                    returnValue = returnValue.Replace("-bz", "");
-
                 return returnValue;
             }
             catch
@@ -82,13 +79,8 @@ namespace RTCV.Launcher
                         {
                             string value = onlineVersions[i];
 
-                            if (onlineVersions[i].EndsWith("-bz"))
-                                onlineVersions[i] = onlineVersions[i].Replace("-bz", "");
-
                             if (i == 0)
                                 onlineVersions[i] += latestVersionString;
-
-
 
                             string key = onlineVersions[i];
 
