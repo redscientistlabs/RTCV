@@ -213,6 +213,7 @@ namespace RTCV.UI
                 DefaultExt = "vmd",
                 Title = "Save VMD to File",
                 Filter = "VMD file|*.vmd",
+                FileName = vmdName + ".vmd",
                 RestoreDirectory = true
             };
 
