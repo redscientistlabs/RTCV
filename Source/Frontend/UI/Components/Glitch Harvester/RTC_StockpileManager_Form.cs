@@ -123,8 +123,12 @@ namespace RTCV.UI
                     {
                         sks.Add((StashKey)row.Cells[0].Value);
                     }
-                    //dgv is stupid since it selects rows backwards
-                    sks.Reverse();
+                    
+                    //dgv is stupid.
+                    //If you shift-select you get things in the order you'd expect (start > end).
+                    //If you ctrl+select, you get things in the reverse order (the most recent selected gets inserted at the start of the list)
+                    if(IsControlDown())
+                        sks.Reverse();
                     StockpileManager_UISide.MergeStashkeys(sks);
 
                     if (Render.RenderAtLoad && S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation)
@@ -148,6 +152,10 @@ namespace RTCV.UI
             }
 
             S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
+        }
+        private bool IsControlDown()
+        {
+            return (Control.ModifierKeys & Keys.Control) != 0;
         }
 
         private void dgvStockpile_MouseDown(object sender, MouseEventArgs e)
