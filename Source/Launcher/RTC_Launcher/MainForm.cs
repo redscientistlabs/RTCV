@@ -660,6 +660,22 @@ namespace RTCV.Launcher
         Rectangle RectTop => new Rectangle(0, 0, this.ClientSize.Width, grabBorderSize);
         Rectangle RectLeft => new Rectangle(0, 0, grabBorderSize, this.ClientSize.Height);
         Rectangle RectBottom => new Rectangle(0, this.ClientSize.Height - grabBorderSize, this.ClientSize.Width, grabBorderSize);
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("The Real Time Corruptor is a Dynamic Corruptor for emulated games.\n" +
+                            "It is a set of libraries that can be rigged up to various emulators and works by corrupting data into virtual memory chips of emulated systems.\n" +
+                            "RTCV currently comes with implementations for Bizhawk, Dolphin, PCSX2, melonDS, and Citra.\n" +
+                            "More information is available at https://redscientist.com/rtc \n\n" +
+                            "RTC Launcher Software Third Party Licenses:\n\n" +
+                            "Json.NET:" +
+                            @"
+Copyright(c) 2007 James Newton - King
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files(the ""Software""), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and / or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.", "About"); }
+
         Rectangle RectRight => new Rectangle(this.ClientSize.Width - grabBorderSize, 0, grabBorderSize, this.ClientSize.Height);
         Rectangle RectTopLeft => new Rectangle(0, 0, grabBorderSize, grabBorderSize);
         Rectangle RectTopRight => new Rectangle(this.ClientSize.Width - grabBorderSize, 0, grabBorderSize, grabBorderSize);
