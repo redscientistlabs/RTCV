@@ -72,7 +72,6 @@ namespace RTCV.Common
             else
                 config.AddRule(LogLevel.Debug, LogLevel.Fatal, logconsole);
             // Rules for mapping loggers to targets            
-            config.AddRule(LogLevel.Debug, LogLevel.Fatal, logconsole);
             //config.AddRule(LogLevel.Trace, LogLevel.Fatal, logfile);
 
             // Apply config           
