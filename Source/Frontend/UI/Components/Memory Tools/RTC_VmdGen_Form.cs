@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Globalization;
 using System.Linq;
@@ -130,7 +130,7 @@ namespace RTCV.UI
 
             foreach (string line in tbCustomAddresses.Lines)
             {
-                if (string.IsNullOrWhiteSpace(line))
+                if (string.IsNullOrWhiteSpace(line) || line.StartsWith("==="))
                 {
                     continue;
                 }

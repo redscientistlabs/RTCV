@@ -39,6 +39,7 @@
             this.lbVmdSizeValue = new System.Windows.Forms.Label();
             this.lbVmdSizeLabel = new System.Windows.Forms.Label();
             this.btnRenameVMD = new System.Windows.Forms.Button();
+            this.tbVmdPrototype = new System.Windows.Forms.TextBox();
             this.gbVmdSummary.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,7 +57,7 @@
             this.lbLoadedVmdList.Margin = new System.Windows.Forms.Padding(5);
             this.lbLoadedVmdList.Name = "lbLoadedVmdList";
             this.lbLoadedVmdList.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.lbLoadedVmdList.Size = new System.Drawing.Size(173, 223);
+            this.lbLoadedVmdList.Size = new System.Drawing.Size(173, 119);
             this.lbLoadedVmdList.TabIndex = 12;
             this.lbLoadedVmdList.Tag = "color:dark1";
             this.lbLoadedVmdList.SelectedIndexChanged += new System.EventHandler(this.lbLoadedVmdList_SelectedIndexChanged);
@@ -121,16 +122,17 @@
             // 
             // gbVmdSummary
             // 
-            this.gbVmdSummary.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbVmdSummary.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gbVmdSummary.Controls.Add(this.lbRealDomainValue);
             this.gbVmdSummary.Controls.Add(this.lbRealDomainLabel);
             this.gbVmdSummary.Controls.Add(this.lbVmdSizeValue);
             this.gbVmdSummary.Controls.Add(this.lbVmdSizeLabel);
             this.gbVmdSummary.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.gbVmdSummary.ForeColor = System.Drawing.Color.White;
-            this.gbVmdSummary.Location = new System.Drawing.Point(197, 144);
+            this.gbVmdSummary.Location = new System.Drawing.Point(12, 144);
             this.gbVmdSummary.Name = "gbVmdSummary";
-            this.gbVmdSummary.Size = new System.Drawing.Size(182, 91);
+            this.gbVmdSummary.Size = new System.Drawing.Size(173, 91);
             this.gbVmdSummary.TabIndex = 129;
             this.gbVmdSummary.TabStop = false;
             this.gbVmdSummary.Text = "Selected VMD Summary";
@@ -203,12 +205,29 @@
             this.btnRenameVMD.Click += new System.EventHandler(this.btnRenameVMD_Click);
             this.btnRenameVMD.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
+            // tbVmdPrototype
+            // 
+            this.tbVmdPrototype.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbVmdPrototype.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tbVmdPrototype.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbVmdPrototype.ForeColor = System.Drawing.Color.White;
+            this.tbVmdPrototype.Location = new System.Drawing.Point(197, 151);
+            this.tbVmdPrototype.Multiline = true;
+            this.tbVmdPrototype.Name = "tbVmdPrototype";
+            this.tbVmdPrototype.ReadOnly = true;
+            this.tbVmdPrototype.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbVmdPrototype.Size = new System.Drawing.Size(181, 83);
+            this.tbVmdPrototype.TabIndex = 131;
+            this.tbVmdPrototype.Tag = "color:dark3";
+            // 
             // RTC_VmdPool_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(390, 250);
+            this.Controls.Add(this.tbVmdPrototype);
             this.Controls.Add(this.btnRenameVMD);
             this.Controls.Add(this.gbVmdSummary);
             this.Controls.Add(this.btnSaveVmd);
@@ -218,6 +237,7 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(390, 250);
             this.Name = "RTC_VmdPool_Form";
             this.Tag = "color:dark3";
             this.Text = "VMD Pool";
@@ -227,6 +247,7 @@
             this.gbVmdSummary.ResumeLayout(false);
             this.gbVmdSummary.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -242,5 +263,6 @@
         public System.Windows.Forms.Label lbVmdSizeValue;
         public System.Windows.Forms.Label lbVmdSizeLabel;
         private System.Windows.Forms.Button btnRenameVMD;
+        private System.Windows.Forms.TextBox tbVmdPrototype;
     }
 }

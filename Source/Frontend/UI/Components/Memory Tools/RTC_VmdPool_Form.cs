@@ -196,6 +196,39 @@ namespace RTCV.UI
                     lbRealDomainValue.Text = vmd.PointerDomains.FirstOrDefault();
                 }
             }
+
+            //display proto here
+
+            tbVmdPrototype.Text = DisplayVMD(vmd);
+
+        }
+
+        private string DisplayVMD(VirtualMemoryDomain vmd)
+        {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+            sb.Append($"===Singles==={Environment.NewLine}");
+
+            foreach(var i in vmd.Proto.AddSingles)
+                sb.Append($"{i.ToHexString()}{Environment.NewLine}");
+
+            foreach (var i in vmd.Proto.RemoveSingles)
+                sb.Append($"-{i.ToHexString()}{Environment.NewLine}");
+
+
+            sb.Append($"{Environment.NewLine}");
+
+
+
+            sb.Append($"===Ranges==={Environment.NewLine}");
+
+            foreach (var i in vmd.Proto.AddRanges)
+                sb.Append($"{i[0].ToHexString()}-{i[1].ToHexString()}{Environment.NewLine}");
+
+            foreach (var i in vmd.Proto.RemoveRanges)
+                sb.Append($"-{i[0].ToHexString()}-{i[1].ToHexString()}{Environment.NewLine}");
+
+            return sb.ToString();
         }
 
         private void btnSaveVmd_Click(object sender, EventArgs e)

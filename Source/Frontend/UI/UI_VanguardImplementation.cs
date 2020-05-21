@@ -115,6 +115,7 @@ namespace RTCV.UI
                                 string customLayoutPath = Path.Combine(RTCV.CorruptCore.RtcCore.RtcDir, "CustomLayout.txt");
                                 if (File.Exists(customLayoutPath))
                                 {
+                                    S.GET<UI_CoreForm>().SetCustomLayoutName(customLayoutPath);
                                     S.GET<UI_CoreForm>().btnOpenCustomLayout.Visible = true;
                                 }
 
