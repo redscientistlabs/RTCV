@@ -47,15 +47,16 @@ namespace RTCV.UI
         private void btnUnloadVMD_Click(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
-            {
                 return;
+
+            foreach (var item in lbLoadedVmdList.SelectedItems)
+            {
+                string vmdPath = Path.Combine(RtcCore.vmdsDir, item.ToString());
+
+                if (File.Exists(vmdPath))
+                    File.Delete(vmdPath);
+
             }
-
-            string vmdPath = Path.Combine(RtcCore.vmdsDir, lbLoadedVmdList.SelectedItem.ToString());
-
-            if (File.Exists(vmdPath))
-                File.Delete(vmdPath);
-
 
             RefreshVMDs();
         }
@@ -121,20 +122,22 @@ namespace RTCV.UI
 
         private void lbLoadedVmdList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (lbLoadedVmdList.SelectedItem == null)
-            {
-                btnLoadVmd.Enabled = false;
-                btnSaveVmd.Enabled = false;
-                btnRenameVMD.Enabled = false;
-                btnUnloadVmd.Enabled = false;
+            btnLoadVmd.Enabled = false;
+            btnSaveVmd.Enabled = false;
+            btnRenameVMD.Enabled = false;
+            btnUnloadVmd.Enabled = false;
 
+            if (lbLoadedVmdList.SelectedItem == null)
                 return;
-                
+
+
+            if (lbLoadedVmdList.SelectedItems.Count == 1)
+            {
+                btnSaveVmd.Enabled = true;
+                btnRenameVMD.Enabled = true;
             }
 
             btnLoadVmd.Enabled = true;
-            btnSaveVmd.Enabled = true;
-            btnRenameVMD.Enabled = true;
             btnUnloadVmd.Enabled = true;
 
 
@@ -143,9 +146,7 @@ namespace RTCV.UI
         private void btnSaveVmd_Click(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
-            {
                 return;
-            }
 
             string vmdName = lbLoadedVmdList.SelectedItem.ToString();
             string path = Path.Combine(RtcCore.vmdsDir, vmdName);
@@ -197,13 +198,17 @@ namespace RTCV.UI
 
         private void btnLoadVmd_Click(object sender, EventArgs e)
         {
-            string vmdName = lbLoadedVmdList.SelectedItem.ToString();
+            if (lbLoadedVmdList.SelectedIndex == -1)
+                return;
 
+            foreach (var item in lbLoadedVmdList.SelectedItems)
+            {
 
-            string path = Path.Combine(RtcCore.vmdsDir, vmdName);
+                string vmdName = item.ToString();
+                string path = Path.Combine(RtcCore.vmdsDir, vmdName);
 
-            S.GET<RTC_VmdPool_Form>().loadVmd(path, true);
-
+                S.GET<RTC_VmdPool_Form>().loadVmd(path, true);
+            }
 
             //switch to VMD Pool
             foreach (var item in UICore.mtForm.cbSelectBox.Items)
@@ -220,9 +225,7 @@ namespace RTCV.UI
         private void btnRenameVMD_Click(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
-            {
                 return;
-            }
 
             string vmdName = lbLoadedVmdList.SelectedItem.ToString();
 
