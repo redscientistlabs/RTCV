@@ -900,7 +900,11 @@ namespace RTCV.UI
                 return;
             }
 
-            string[] paths = System.IO.Directory.GetFiles(dir).Where(x => x.EndsWith(".txt", StringComparison.OrdinalIgnoreCase)).ToArray();
+            
+            //x.Substring(x.LastIndexOf('\\')+1)[0] != '$'
+            //checks if first char is $
+
+            string[] paths = System.IO.Directory.GetFiles(dir).Where(x => x.EndsWith(".txt", StringComparison.OrdinalIgnoreCase) && x.Substring(x.LastIndexOf('\\')+1)[0] != '$').ToArray();
             paths = paths.OrderBy(x => x).ToArray();
 
             List<string> hashes = Filtering.LoadListsFromPaths(paths);

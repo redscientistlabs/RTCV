@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -420,6 +420,15 @@ namespace RTCV.CorruptCore
             }
 
             return lists;
+        }
+
+        public static void ResetLoadedListsInUI()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                RtcCore.LimiterListBindingSource.Clear();
+                RtcCore.ValueListBindingSource.Clear();
+            });
         }
 
         public static bool RegisterListInUI(string name, string hash)
