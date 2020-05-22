@@ -277,7 +277,7 @@ namespace RTCV.CorruptCore
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Copying limiter lists to stockpile", saveProgress += 2));
                 File.WriteAllLines(Path.Combine(RtcCore.workingDir, "TEMP", l + ".limiter"), limiterLists[l]);
             }
-            //Create stockpile.xml to temp folder from stockpile object
+            //Create stockpile.json to temp folder from stockpile object
             using (FileStream fs = File.Open(Path.Combine(RtcCore.workingDir, "TEMP", "stockpile.json"), FileMode.OpenOrCreate))
             {
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Creating stockpile.json", saveProgress += 2));

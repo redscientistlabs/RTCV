@@ -84,6 +84,8 @@ namespace RTCV.CorruptCore
         public static string workingDir => Path.Combine(RtcDir, "WORKING");
         public static string assetsDir => Path.Combine(RtcDir, "ASSETS");
         public static string listsDir => Path.Combine(RtcDir, "LISTS");
+
+        public static string vmdsDir => Path.Combine(RtcDir, "VMDS");
         public static string engineTemplateDir => Path.Combine(RtcDir, "ENGINETEMPLATES");
 
         public static event ProgressBarEventHandler ProgressBarHandler;

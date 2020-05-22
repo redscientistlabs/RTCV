@@ -164,7 +164,7 @@ namespace RTCV.UI
             {
                 string filename = saveFileDialog1.FileName;
 
-                //creater stockpile.xml to temp folder from stockpile object
+
                 if (File.Exists(filename))
                     File.Delete(filename);
 

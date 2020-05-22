@@ -270,7 +270,7 @@ namespace RTCV.UI
             {
                 string filename = saveFileDialog1.FileName;
 
-                //creater stockpile.xml to temp folder from stockpile object
+                //create json file for vmd
                 using (FileStream fs = File.Open(filename, FileMode.Create))
                 {
                     JsonHelper.Serialize(vmd.Proto, fs);
@@ -297,28 +297,6 @@ namespace RTCV.UI
             }
         }
 
-        private void loadLegacyVmd(string path)
-        {
-            //Fix int[] to long[]
-            string vmdXML = File.ReadAllText(path);
-            vmdXML = vmdXML.Replace("<int>", "<long>");
-            vmdXML = vmdXML.Replace("</int>", "</long>");
-            vmdXML = vmdXML.Replace("ArrayOfInt", "ArrayOfLong");
-            vmdXML = vmdXML.Replace("addRanges", "AddRanges");
-            vmdXML = vmdXML.Replace("addSingles", "AddSingles");
-            vmdXML = vmdXML.Replace("removeRanges", "RemoveRanges");
-            vmdXML = vmdXML.Replace("removeSingles", "removeSingles");
-            XmlSerializer xs = new XmlSerializer(typeof(VmdPrototype));
-            VmdPrototype proto = (VmdPrototype)xs.Deserialize(new StringReader(vmdXML));
-
-            var jsonFilename = Path.Combine(Path.GetDirectoryName(path), Path.GetFileNameWithoutExtension(path) + ".vmd");
-            using (FileStream _fs = File.Open(jsonFilename, FileMode.Create))
-            {
-                JsonHelper.Serialize(proto, _fs, Newtonsoft.Json.Formatting.Indented);
-            }
-
-            MemoryDomains.AddVMD(proto);
-        }
 
         private void btnLoadVmd_Click(object sender, EventArgs e)
         {
@@ -327,7 +305,7 @@ namespace RTCV.UI
                 DefaultExt = "vmd",
                 Multiselect = true,
                 Title = "Open VMD File",
-                Filter = "VMD files|*.vmd;*.xml",
+                Filter = "VMD files|*.vmd",
                 RestoreDirectory = true
             };
             if (ofd.ShowDialog() == DialogResult.OK)
@@ -338,20 +316,7 @@ namespace RTCV.UI
                 {
                     try
                     {
-                        if (string.Equals(Path.GetExtension(filename), ".XML", StringComparison.OrdinalIgnoreCase))
-                        {
-                            if (!notified)
-                            {
-                                MessageBox.Show("Legacy XML VMD detected. We're going to drop support for these at some point.\nConverting to JSON and saving to the original folder.");
-                                notified = true;
-                            }
-
-                            loadLegacyVmd(filename);
-                        }
-                        else
-                        {
-                            loadVmd(filename, false);
-                        }
+                        loadVmd(filename, false);
                     }
                     catch (Exception ex)
                     {
@@ -413,7 +378,7 @@ namespace RTCV.UI
 
                     }
 
-                    //creater stockpile.xml to temp folder from stockpile object
+                    //creates json file for vmd
                     using (FileStream fs = File.Open(targetPath, FileMode.Create))
                     {
                         JsonHelper.Serialize(vmd.Proto, fs);
