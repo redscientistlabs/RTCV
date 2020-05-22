@@ -94,7 +94,7 @@ namespace RTCV.UI
             this.btnLoadVmd.TabIndex = 161;
             this.btnLoadVmd.TabStop = false;
             this.btnLoadVmd.Tag = "color:light1";
-            this.btnLoadVmd.Text = "  Load VMD File";
+            this.btnLoadVmd.Text = "  Load Selected Item";
             this.btnLoadVmd.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnLoadVmd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnLoadVmd.UseVisualStyleBackColor = false;

@@ -269,6 +269,12 @@ namespace RTCV.UI
 
         private void btnRefreshVmdFiles_Click(object sender, EventArgs e)
         {
+            CorruptCore.Filtering.ResetLoadedListsInUI();
+
+            //reload lists
+            UICore.LoadLists(RtcCore.listsDir);
+            UICore.LoadLists(Path.Combine(RtcCore.EmuDir, "LISTS"));
+
             RefreshLists();
         }
 
