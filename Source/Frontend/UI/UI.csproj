@@ -223,6 +223,12 @@
     <Compile Include="Components\Memory Tools\RTC_VmdLimiterProfiler_Form.designer.cs">
       <DependentUpon>RTC_VmdLimiterProfiler_Form.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\Memory Tools\RTC_MyVMDs_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Components\Memory Tools\RTC_MyVMDs_Form.designer.cs">
+      <DependentUpon>RTC_MyVMDs_Form.cs</DependentUpon>
+    </Compile>
     <Compile Include="Components\Memory Tools\RTC_VmdSimpleGen_Form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -480,6 +486,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Memory Tools\RTC_VmdLimiterProfiler_Form.resx">
       <DependentUpon>RTC_VmdLimiterProfiler_Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Memory Tools\RTC_MyVMDs_Form.resx">
+      <DependentUpon>RTC_MyVMDs_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Memory Tools\RTC_VmdSimpleGen_Form.resx">
       <DependentUpon>RTC_VmdSimpleGen_Form.cs</DependentUpon>

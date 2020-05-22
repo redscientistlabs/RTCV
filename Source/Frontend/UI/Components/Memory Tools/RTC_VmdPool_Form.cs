@@ -74,6 +74,11 @@ namespace RTCV.UI
 
             lbRealDomainValue.Text = "#####";
             lbVmdSizeValue.Text = "#####";
+
+            btnSendToMyVMDs.Enabled = false;
+            btnSaveVmd.Enabled = false;
+            btnRenameVmd.Enabled = false;
+            btnUnloadVmd.Enabled = false;
         }
 
         private static void RenameVMD(VirtualMemoryDomain VMD)
@@ -89,7 +94,7 @@ namespace RTCV.UI
             }
 
             string name = "";
-            string value = "";
+            string value = vmdName.Trim().Replace("[V]", ""); ;
             if (UI_Extensions.GetInputBox("BlastLayer to VMD", "Enter the new VMD name:", ref value) == DialogResult.OK)
             {
                 name = value.Trim();
@@ -171,8 +176,17 @@ namespace RTCV.UI
         {
             if (lbLoadedVmdList.SelectedItem == null)
             {
+                btnSendToMyVMDs.Enabled = false;
+                btnSaveVmd.Enabled = false;
+                btnRenameVmd.Enabled = false;
+                btnUnloadVmd.Enabled = false;
                 return;
             }
+
+            btnSendToMyVMDs.Enabled = true;
+            btnSaveVmd.Enabled = true;
+            btnRenameVmd.Enabled = true;
+            btnUnloadVmd.Enabled = true;
 
             string vmdName = lbLoadedVmdList.SelectedItem.ToString();
             MemoryInterface mi = MemoryDomains.VmdPool[vmdName];
@@ -246,7 +260,7 @@ namespace RTCV.UI
                 DefaultExt = "vmd",
                 Title = "Save VMD to File",
                 Filter = "VMD file|*.vmd",
-                FileName = vmdName + ".vmd",
+                FileName = vmdName.Trim().Replace("[V]", "") + ".vmd",
                 RestoreDirectory = true
             };
 
@@ -262,12 +276,15 @@ namespace RTCV.UI
             }
         }
 
-        private void loadVmd(string path, bool refreshvmds)
+        internal void loadVmd(string path, bool refreshvmds)
         {
             using (FileStream fs = File.Open(path, FileMode.Open))
             {
                 VmdPrototype proto = null;
                 proto = JsonHelper.Deserialize<VmdPrototype>(fs);
+
+                string filePath = path.Substring(path.LastIndexOf('\\') + 1);
+                proto.VmdName = filePath.Replace(".vmd","").Replace(".VMD", "");
 
                 MemoryDomains.AddVMD(proto);
             }
@@ -360,6 +377,59 @@ namespace RTCV.UI
             RenameVMD(vmdName);
 
             RefreshVMDs();
+        }
+
+        private void btnSendToMyVMDs_Click(object sender, EventArgs e)
+        {
+            string vmdName = lbLoadedVmdList.SelectedItem.ToString();
+            VirtualMemoryDomain vmd = MemoryDomains.VmdPool[vmdName];
+
+            string value = lbLoadedVmdList.SelectedItem.ToString().Trim().Replace("[V]", "");
+            if (GetInputBox("Add to My VMDs", "Confirm VMD name:", ref value) == DialogResult.OK)
+            {
+                if (string.IsNullOrWhiteSpace(value.Trim()))
+                {
+                    MessageBox.Show("Invalid name");
+                    return;
+                }
+
+
+                string targetPath = Path.Combine(RtcCore.vmdsDir, value.Trim() + ".vmd");
+
+                if(File.Exists(targetPath))
+                {
+
+                    var result = MessageBox.Show("This file already exists in your VMDs folder, do you want to overwrite it?", "Overwrite file?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (result == DialogResult.No)
+                        return;
+
+                    File.Delete(targetPath);
+
+                }
+
+                //creater stockpile.xml to temp folder from stockpile object
+                using (FileStream fs = File.Open(targetPath, FileMode.Create))
+                {
+                    JsonHelper.Serialize(vmd.Proto, fs);
+                }
+
+                S.GET<RTC_MyVMDs_Form>().RefreshVMDs();
+
+
+                //switch to My VMDs
+                foreach (var item in UICore.mtForm.cbSelectBox.Items)
+                {
+                    if (((dynamic)item).value is RTC_MyVMDs_Form)
+                    {
+                        UICore.mtForm.cbSelectBox.SelectedItem = item;
+                        break;
+                    }
+                }
+
+
+
+
+            }
         }
     }
 }
