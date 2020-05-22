@@ -387,8 +387,6 @@ namespace RTCV.UI
             if (lbLoadedVmdList.SelectedItems.Count == 1)
             {
 
-
-
                 string vmdName = lbLoadedVmdList.SelectedItem.ToString();
                 VirtualMemoryDomain vmd = MemoryDomains.VmdPool[vmdName];
 
@@ -423,56 +421,54 @@ namespace RTCV.UI
 
 
                 }
-                else //multiple selected
+
+
+
+            }
+            else //multiple selected
+            {
+
+                foreach (var item in lbLoadedVmdList.SelectedItems)
                 {
-                    string targetPath = Path.Combine(RtcCore.vmdsDir, value.Trim() + ".vmd");
-                    
-                    foreach(var item in lbLoadedVmdList.SelectedItems)
+                    string vmdName = item.ToString();
+                    VirtualMemoryDomain vmd = MemoryDomains.VmdPool[vmdName];
+
+                    string itemValue = item.ToString().Trim().Replace("[V]", "");
+
+                    //string targetPath = Path.Combine(RtcCore.vmdsDir, value.Trim() + ".vmd");
+
+                    string itemTargetPath = Path.Combine(RtcCore.vmdsDir, itemValue.Trim() + ".vmd");
+
+                    if (File.Exists(itemTargetPath))
                     {
-                        string itemValue = item.ToString().Trim().Replace("[V]", "");
 
+                        var result = MessageBox.Show("This file already exists in your VMDs folder, do you want to overwrite it?", "Overwrite file?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        if (result == DialogResult.No)
+                            return;
 
-                        string itemTargetPath = Path.Combine(RtcCore.vmdsDir, itemValue.Trim() + ".vmd");
-
-                        if (File.Exists(itemTargetPath))
-                        {
-
-                            var result = MessageBox.Show("This file already exists in your VMDs folder, do you want to overwrite it?", "Overwrite file?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                            if (result == DialogResult.No)
-                                return;
-
-                            File.Delete(itemTargetPath);
-
-                        }
-
-                        using (FileStream fs = File.Open(itemTargetPath, FileMode.Create))
-                        {
-                            JsonHelper.Serialize(vmd.Proto, fs);
-                        }
-
+                        File.Delete(itemTargetPath);
 
                     }
-                }
 
-
-
-
-
-                S.GET<RTC_MyVMDs_Form>().RefreshVMDs();
-
-                //switch to My VMDs
-                foreach (var item in UICore.mtForm.cbSelectBox.Items)
-                {
-                    if (((dynamic)item).value is RTC_MyVMDs_Form)
+                    using (FileStream fs = File.Open(itemTargetPath, FileMode.Create))
                     {
-                        UICore.mtForm.cbSelectBox.SelectedItem = item;
-                        break;
+                        JsonHelper.Serialize(vmd.Proto, fs);
                     }
+
+
                 }
+            }
 
+            S.GET<RTC_MyVMDs_Form>().RefreshVMDs();
 
-
-
+            //switch to My VMDs
+            foreach (var item in UICore.mtForm.cbSelectBox.Items)
+            {
+                if (((dynamic)item).value is RTC_MyVMDs_Form)
+                {
+                    UICore.mtForm.cbSelectBox.SelectedItem = item;
+                    break;
+                }
             }
         }
     }
