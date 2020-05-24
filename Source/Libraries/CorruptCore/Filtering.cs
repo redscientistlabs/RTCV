@@ -429,7 +429,7 @@ namespace RTCV.CorruptCore
 
                             if(tmp == null)
                             {
-                                tmp = "**";
+                                tmp = "??";
                             }
                             else if (tmp.Length % 2 != 0)
                             {

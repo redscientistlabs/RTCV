@@ -159,7 +159,7 @@ namespace RTCV.CorruptCore
                 {
                     string chars = temp.Substring(i, 2);
 
-                    if (chars == "**")
+                    if (chars == "??")
                         bytes[j] = null;
                     else
                         bytes[j] = (byte)Convert.ToUInt32(chars, 16);
