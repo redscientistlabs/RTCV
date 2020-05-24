@@ -169,10 +169,10 @@ namespace RTCV.UI
             }
 
             //Register the list and update netcore
-            List<Byte[]> byteList = new List<byte[]>();
+            List<byte?[]> byteList = new List<byte?[]>();
             foreach (string t in newList)
             {
-                byte[] bytes = CorruptCore_Extensions.StringToByteArray(t);
+                byte?[] bytes = CorruptCore_Extensions.StringToByteArray(t);
                 byteList.Add(bytes);
             }
             string hash = Filtering.RegisterList(byteList, filename, true);

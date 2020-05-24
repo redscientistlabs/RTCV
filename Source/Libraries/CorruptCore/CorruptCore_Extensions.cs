@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -141,10 +141,10 @@ namespace RTCV.CorruptCore
         /// </summary>
         /// <param name="hex"></param>
         /// <returns></returns>
-        public static byte[] StringToByteArray(string hex)
+        public static byte?[] StringToByteArray(string hex)
         {
             var lengthPadded = (hex.Length / 2) + (hex.Length % 2);
-            var bytes = new byte[lengthPadded];
+            var bytes = new byte?[lengthPadded];
             if (hex == null)
             {
                 return null;
@@ -157,7 +157,12 @@ namespace RTCV.CorruptCore
             {
                 try
                 {
-                    bytes[j] = (byte)Convert.ToUInt32(temp.Substring(i, 2), 16);
+                    string chars = temp.Substring(i, 2);
+
+                    if (chars == "**")
+                        bytes[j] = null;
+                    else
+                        bytes[j] = (byte)Convert.ToUInt32(chars, 16);
                 }
                 catch (FormatException e)
                 {
@@ -619,6 +624,18 @@ namespace RTCV.CorruptCore
             return array;
         }
 
+        public static byte?[] FlipBytes(this byte?[] array)
+        {
+            byte?[] arrayClone = (byte?[])array.Clone();
+
+            for (int i = 0; i < arrayClone.Length; i++)
+            {
+                array[i] = arrayClone[(arrayClone.Length - 1) - i];
+            }
+
+            return array;
+        }
+
         public static byte[] PadLeft(this byte[] input, int length)
         {
             var newArray = new byte[length];
@@ -640,6 +657,24 @@ namespace RTCV.CorruptCore
             }
 
             return sb.ToString();
+        }
+
+        public static byte[] Flatten69(this byte?[] bytes)
+        {
+            if (bytes == null)
+                return null;
+
+            var newArray = new byte[bytes.Length];
+
+            for(int i=0;i<bytes.Length;i++)
+            {
+                if (bytes[i] == null)
+                    newArray[i] = 69;
+                else
+                    newArray[i] = bytes[i].Value;
+            }
+
+            return newArray;
         }
 
         #endregion BYTE ARRAY EXTENSIONS
@@ -883,9 +918,9 @@ namespace RTCV.CorruptCore
         #endregion
 
         [Serializable]
-        public class ByteArrayComparer : IEqualityComparer<byte[]>
+        public class ByteArrayComparer : IEqualityComparer<byte?[]>
         {
-            public bool Equals(byte[] a, byte[] b)
+            public bool Equals(byte?[] a, byte?[] b)
             {
                 if (a.Length != b.Length)
                 {
@@ -894,7 +929,10 @@ namespace RTCV.CorruptCore
 
                 for (int i = 0; i < a.Length; i++)
                 {
-                    if (a[i] != b[i])
+                    if (a[i] == null || b[i] == null) //wildcards
+                        return true;
+
+                    if (a[i].Value != b[i].Value)
                     {
                         return false;
                     }
@@ -903,12 +941,12 @@ namespace RTCV.CorruptCore
                 return true;
             }
 
-            public int GetHashCode(byte[] a)
+            public int GetHashCode(byte?[] a)
             {
                 uint b = 0;
                 for (int i = 0; i < a.Length; i++)
                 {
-                    b = ((b << 23) | (b >> 9)) ^ a[i];
+                    b = ((b << 23) | (b >> 9)) ^ (a[i] ?? 69);
                 }
 
                 return unchecked((int)b);

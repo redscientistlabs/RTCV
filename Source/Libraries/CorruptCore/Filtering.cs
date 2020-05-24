@@ -15,15 +15,15 @@ namespace RTCV.CorruptCore
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public static ConcurrentDictionary<string, HashSet<byte[]>> Hash2LimiterDico
+        public static ConcurrentDictionary<string, HashSet<byte?[]>> Hash2LimiterDico
         {
-            get => (ConcurrentDictionary<string, HashSet<byte[]>>)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2LIMITERDICO];
+            get => (ConcurrentDictionary<string, HashSet<byte?[]>>)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2LIMITERDICO];
             set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.FILTERING_HASH2VALUEDICO, value);
         }
 
-        public static ConcurrentDictionary<string, List<byte[]>> Hash2ValueDico
+        public static ConcurrentDictionary<string, List<byte?[]>> Hash2ValueDico
         {
-            get => (ConcurrentDictionary<string, List<byte[]>>)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2VALUEDICO];
+            get => (ConcurrentDictionary<string, List<byte?[]>>)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2VALUEDICO];
             set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.FILTERING_HASH2VALUEDICO, value);
         }
 
@@ -38,8 +38,8 @@ namespace RTCV.CorruptCore
         public static PartialSpec getDefaultPartial()
         {
             var partial = new PartialSpec("RTCSpec");
-            partial[RTCSPEC.FILTERING_HASH2LIMITERDICO] = new ConcurrentDictionary<string, HashSet<byte[]>>();
-            partial[RTCSPEC.FILTERING_HASH2VALUEDICO] = new ConcurrentDictionary<string, List<byte[]>>();
+            partial[RTCSPEC.FILTERING_HASH2LIMITERDICO] = new ConcurrentDictionary<string, HashSet<byte?[]>>();
+            partial[RTCSPEC.FILTERING_HASH2VALUEDICO] = new ConcurrentDictionary<string, List<byte?[]>>();
             partial[RTCSPEC.FILTERING_HASH2NAMEDICO] = new ConcurrentDictionary<string, string>();
 
             return partial;
@@ -129,12 +129,12 @@ namespace RTCV.CorruptCore
             //If the file is prefixed with '_', we assume it's stored as big endian and flip the bytes
             bool flipBytes = Path.GetFileName(path).StartsWith("_");
 
-            List<Byte[]> byteList = new List<byte[]>();
+            List<byte?[]> byteList = new List<byte?[]>();
             //For every line in the list, build up our list of bytes
             for (int i = 0; i < temp.Length; i++)
             {
                 string t = temp[i];
-                byte[] bytes = null;
+                byte?[] bytes = null;
                 try
                 {
                     //Get the string as a byte array
@@ -170,17 +170,17 @@ namespace RTCV.CorruptCore
         /// <param name="list"></param>
         /// <param name="syncListsViaNetcore"></param>
         /// <returns>The hash of the list being registereds</returns>
-        public static string RegisterList(List<byte[]> list, string name, bool syncListsViaNetcore)
+        public static string RegisterList(List<byte?[]> list, string name, bool syncListsViaNetcore)
         {
-            List<byte> bList = new List<byte>();
-            foreach (byte[] line in list)
+            List<byte?> bList = new List<byte?>();
+            foreach (byte?[] line in list)
             {
                 bList.AddRange(line);
             }
 
             //Hash it. We don't use GetHashCode because we want something consistent to hash to use as a key
             MD5 hash = MD5.Create();
-            hash.ComputeHash(bList.ToArray());
+            hash.ComputeHash(bList.ToArray().Flatten69());
             string hashStr = Convert.ToBase64String(hash.Hash);
 
             //Assuming the key doesn't already exist (we assume collions won't happen), add it.
@@ -191,7 +191,7 @@ namespace RTCV.CorruptCore
 
             if (!Hash2LimiterDico?.ContainsKey(hashStr) ?? false)
             {
-                Hash2LimiterDico[hashStr] = new HashSet<byte[]>(list, new CorruptCore_Extensions.ByteArrayComparer());
+                Hash2LimiterDico[hashStr] = new HashSet<byte?[]>(list, new CorruptCore_Extensions.ByteArrayComparer());
             }
 
             if (!Hash2NameDico?.ContainsKey(name) ?? false)
@@ -222,7 +222,7 @@ namespace RTCV.CorruptCore
 
             //Find the precision
             long precision = endAddress - startAddress;
-            byte[] values = new byte[precision];
+            byte?[] values = new byte?[precision];
 
             //Peek the memory
             for (long i = 0; i < precision; i++)
@@ -251,7 +251,7 @@ namespace RTCV.CorruptCore
         /// <param name="bytes"></param>
         /// <param name="hash"></param>
         /// <returns></returns>
-        public static bool LimiterContainsValue(byte[] bytes, string hash)
+        public static bool LimiterContainsValue(byte?[] bytes, string hash)
         {
             //Specifically log if any of these are null
             if (Hash2LimiterDico == null)
@@ -271,7 +271,7 @@ namespace RTCV.CorruptCore
             }
 
             //If the limiter dictionary contains the hash, check if the hashset contains the byte sequence
-            if (Hash2LimiterDico.TryGetValue(hash, out HashSet<byte[]> hs))
+            if (Hash2LimiterDico.TryGetValue(hash, out HashSet<byte?[]> hs))
             {
                 return hs.Contains(bytes);
             }
@@ -296,7 +296,7 @@ namespace RTCV.CorruptCore
                 return -1;
             }
 
-            byte[] value = Hash2ValueDico[hash][0];
+            byte?[] value = Hash2ValueDico[hash][0];
             return value.Length;
         }
 
@@ -322,7 +322,7 @@ namespace RTCV.CorruptCore
 
             //Get a random line in the list and grab the value
             int line = RtcCore.RND.Next(Hash2ValueDico[hash].Count);
-            byte[] value = Hash2ValueDico[hash][line];
+            byte?[] value = Hash2ValueDico[hash][line];
 
             //Copy the value to a working array
             byte[] outValue = new byte[value.Length];
@@ -382,8 +382,13 @@ namespace RTCV.CorruptCore
                         foreach (var b in line)
                         {
                             //If the string isn't of an even length, pad it
-                            string tmp = b.ToString("X");
-                            if (tmp.Length % 2 != 0)
+                            string tmp = b?.ToString("X");
+
+                            if(tmp == null)
+                            {
+                                tmp = "**";
+                            }
+                            else if (tmp.Length % 2 != 0)
                             {
                                 tmp = "0" + tmp;
                             }
