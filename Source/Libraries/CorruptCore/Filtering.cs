@@ -160,7 +160,10 @@ namespace RTCV.CorruptCore
             }
 
             var name = Path.GetFileNameWithoutExtension(path);
-            var hash = RegisterList(byteList.Distinct(new CorruptCore_Extensions.ByteArrayComparer()).ToList(), name, syncListViaNetcore);
+
+            var hash = RegisterList(byteList, name, syncListViaNetcore);
+            //var hash = RegisterList(byteList.Distinct(new CorruptCore_Extensions.ByteArrayComparer()).ToList(), name, syncListViaNetcore);
+            
             return hash;
         }
 
@@ -273,7 +276,37 @@ namespace RTCV.CorruptCore
             //If the limiter dictionary contains the hash, check if the hashset contains the byte sequence
             if (Hash2LimiterDico.TryGetValue(hash, out HashSet<byte?[]> hs))
             {
-                return hs.Contains(bytes);
+                return NullableByteArrayContains(hs,bytes);
+            }
+
+            return false;
+        }
+
+        public static bool NullableByteArrayContains(HashSet<byte?[]> hs, byte?[] bytes)
+        {
+            //checks nullable bytes lists against other byte lists, ignoring null collisions from both sides.
+
+            foreach(var item in hs.ToArray())
+            {
+                bool found = true;
+
+                for(int i = 0; i<item.Length;i++)
+                {
+                    if (item[i] == null || bytes[i] == null) //ignoring wildcards (null values)
+                        continue;
+
+                    if(item[i].Value != bytes[i].Value)
+                    {
+                        found = false;
+                        break;
+                    }
+                }
+
+                if(found)
+                {
+                    return true;
+                }
+
             }
 
             return false;
@@ -324,9 +357,19 @@ namespace RTCV.CorruptCore
             int line = RtcCore.RND.Next(Hash2ValueDico[hash].Count);
             byte?[] value = Hash2ValueDico[hash][line];
 
-            //Copy the value to a working array
             byte[] outValue = new byte[value.Length];
-            Array.Copy(value, outValue, value.Length);
+
+            for (int i=0;i<value.Length;i++)
+            {
+                if (value[i] == null)
+                    outValue[i] = (byte)RtcCore.RND.Next(255); //filling wildcards with random(255)
+                else
+                    outValue[i] = value[i].Value;
+            }
+
+            //Copy the value to a working array
+
+            //Array.Copy(value, outValue, value.Length);
 
             //If the list is shorter than the current precision, left pad it
             if (outValue.Length < precision)
