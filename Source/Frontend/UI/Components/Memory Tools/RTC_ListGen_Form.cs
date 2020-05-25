@@ -168,14 +168,30 @@ namespace RTCV.UI
                 filename = CorruptCore.RtcCore.GetRandomKey();
             }
 
-            //Register the list and update netcore
-            List<byte?[]> byteList = new List<byte?[]>();
-            foreach (string t in newList)
+            //TODO fix this before i forget
+
+            IListFilter list;
+
+            if(newList.Contains("?"))
             {
-                byte?[] bytes = CorruptCore_Extensions.StringToByteArray(t);
-                byteList.Add(bytes);
+                list = new NullableByteArrayList();
             }
-            string hash = Filtering.RegisterList(byteList, filename, true);
+            else
+            {
+                list = new ValueByteArrayList();
+            }
+
+            list.Initialize(filename + ".txt", newList.ToArray(), false, false);
+            Filtering.RegisterList(list, filename, true);
+            var hash = list.GetHash();
+            //Register the list and update netcore
+            //List<byte?[]> byteList = new List<byte?[]>();
+            //foreach (string t in newList)
+            //{
+            //    byte?[] bytes = CorruptCore_Extensions.StringToNullableByteArray(t);
+            //    byteList.Add(bytes);
+            //}
+            //string hash = Filtering.RegisterList(byteList, filename, true);
 
             //Register the list in the ui
             CorruptCore.Filtering.RegisterListInUI(filename, hash);

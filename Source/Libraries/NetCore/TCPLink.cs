@@ -113,6 +113,10 @@ namespace RTCV.NetCore
                 {
                     return new NetCore.NetCore_Extensions.HashSetFormatterThatKeepsItsComparer();
                 }
+                else if (t == typeof(HashSet<byte?[]>))
+                {
+                    return new NetCore.NetCore_Extensions.NullableByteHashSetFormatterThatKeepsItsComparer();
+                }
 
                 return null; // continue searching
             });

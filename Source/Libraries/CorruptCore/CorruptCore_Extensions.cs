@@ -141,7 +141,43 @@ namespace RTCV.CorruptCore
         /// </summary>
         /// <param name="hex"></param>
         /// <returns></returns>
-        public static byte?[] StringToByteArray(string hex)
+        public static byte[] StringToByteArray(string hex)
+        {
+            var lengthPadded = (hex.Length / 2) + (hex.Length % 2);
+            var bytes = new byte[lengthPadded];
+            if (hex == null)
+            {
+                return null;
+            }
+
+            string temp = hex.PadLeft(lengthPadded * 2, '0'); //*2 since a byte is two characters
+
+            int j = 0;
+            for (var i = 0; i < lengthPadded * 2; i += 2)
+            {
+                try
+                {
+                    string chars = temp.Substring(i, 2);
+
+                    bytes[j] = (byte)Convert.ToUInt32(chars, 16);
+                }
+                catch (FormatException e)
+                {
+                    Console.Write(e);
+                    return null;
+                }
+
+                j++;
+            }
+            return bytes;
+        }
+
+        /// <summary>
+        /// Gets you a byte array from the CONTENTS of a string
+        /// </summary>
+        /// <param name="hex"></param>
+        /// <returns></returns>
+        public static byte?[] StringToNullableByteArray(string hex)
         {
             var lengthPadded = (hex.Length / 2) + (hex.Length % 2);
             var bytes = new byte?[lengthPadded];
@@ -174,6 +210,7 @@ namespace RTCV.CorruptCore
             }
             return bytes;
         }
+
 
         /// <summary>
         /// Gets you a byte array from the CONTENTS of a string 0 padded on the left to a specific length
@@ -918,7 +955,7 @@ namespace RTCV.CorruptCore
         #endregion
 
         [Serializable]
-        public class ByteArrayComparer : IEqualityComparer<byte?[]>
+        public class NullableByteArrayComparer : IEqualityComparer<byte?[]>
         {
             public bool Equals(byte?[] a, byte?[] b)
             {
@@ -947,6 +984,43 @@ namespace RTCV.CorruptCore
                 for (int i = 0; i < a.Length; i++)
                 {
                     b = ((b << 23) | (b >> 9)) ^ (a[i] ?? 69);
+                }
+
+                return unchecked((int)b);
+            }
+
+            public NullableByteArrayComparer()
+            {
+            }
+        }
+
+        public class ByteArrayComparer : IEqualityComparer<byte[]>
+        {
+            public bool Equals(byte[] a, byte[] b)
+            {
+                if (a.Length != b.Length)
+                {
+                    return false;
+                }
+
+                for (int i = 0; i < a.Length; i++)
+                {
+
+                    if (a[i] != b[i])
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            public int GetHashCode(byte[] a)
+            {
+                uint b = 0;
+                for (int i = 0; i < a.Length; i++)
+                {
+                    b = ((b << 23) | (b >> 9)) ^ a[i];
                 }
 
                 return unchecked((int)b);
