@@ -71,6 +71,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BitlogicListFilter.cs" />
     <Compile Include="Blast Generator Engines\RTC_ValueGenerator.cs" />
     <Compile Include="Blast Generator Engines\RTC_StoreGenerator.cs" />
     <Compile Include="Coroutines\Conditionals\WaitFrames.cs" />
@@ -99,7 +100,6 @@
     <Compile Include="EventWarlock\WarlockAction.cs" />
     <Compile Include="EventWarlock\WarlockActions\WarlockActionEcho.cs" />
     <Compile Include="EventWarlock\WarlockConditions\FirstEqualsSecond.cs" />
-    <Compile Include="FastBitwiseListFilter.cs" />
     <Compile Include="MemoryBanks.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BlastTools.cs" />
