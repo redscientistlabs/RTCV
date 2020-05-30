@@ -5,11 +5,14 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Reflection;
+using NLog;
 
 namespace RTCV.Common
 {
@@ -83,6 +86,37 @@ namespace RTCV.Common
         {
             Type typ = typeof(T);
             return !instances.ContainsKey(typ);
+        }
+
+        private static Type FINDTYPE(string name, bool any = false)
+        { 
+            //thx https://stackoverflow.com/questions/4692340/find-types-in-all-assemblies
+
+            return
+            AppDomain.CurrentDomain.GetAssemblies()
+            .Where(a => !a.IsDynamic)
+            .SelectMany(a => a.GetTypes())
+            .FirstOrDefault(t => (any ? t.FullName.Contains(name) : t.FullName.Equals(name)));
+        }
+
+        public static object BLINDMAKE(string name)
+        {
+            //Returns a distinct new instance of an object using a string instead of type
+            //Will scan all loaded asemblies to fetch the needed type for creating the instance
+
+            //The instance is not registered in the singleton dictionary
+
+            try
+            {
+                Type typ = FINDTYPE(name, true);
+                var o = Activator.CreateInstance(typ);
+                return o;
+            }
+            catch (Exception ex)
+            {
+                LogManager.GetCurrentClassLogger().Error(ex);
+                return null;
+            }
         }
 
         public static T GET<T>()

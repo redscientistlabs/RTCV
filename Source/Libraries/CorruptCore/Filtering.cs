@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RTCV.Common;
 using RTCV.NetCore;
 
 namespace RTCV.CorruptCore
@@ -131,14 +132,27 @@ namespace RTCV.CorruptCore
 
             IListFilter list;
 
-            //detect what kind of list it is
-            if(temp.FirstOrDefault(it => it.Contains("?")) != null) //has wildcards, needs nullable array
+            if (temp[0][0] == '@')
             {
-                list = new NullableByteArrayList();
+                string typeRequested = temp[0].Substring(1).Trim();
+                list = (IListFilter)S.BLINDMAKE(typeRequested);
+
+                var temp2 = new string[temp.Length - 1];
+                Array.Copy(temp, 1, temp2, 0, temp2.Length);
+                temp = temp2;
             }
-            else //standard list, use value arrays
+            else
             {
-                list = new ValueByteArrayList();
+
+                //detect what kind of list it is
+                if (temp.FirstOrDefault(it => it.Contains("?")) != null) //has wildcards, needs nullable array
+                {
+                    list = new NullableByteArrayList();
+                }
+                else //standard list, use value arrays
+                {
+                    list = new ValueByteArrayList();
+                }
             }
 
             try
@@ -147,6 +161,7 @@ namespace RTCV.CorruptCore
             }
             catch(Exception ex)
             {
+                logger.Error(ex);
                 return "";
             }
 
