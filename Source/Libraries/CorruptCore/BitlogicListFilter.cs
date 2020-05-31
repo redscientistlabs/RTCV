@@ -181,6 +181,11 @@ namespace RTCV.CorruptCore
                 return null;
             }
 
+            //Discard non-byte divisible lines
+            if ((!isHex && (line.Length % 8 != 0)) || (isHex && (line.Length % 2 != 0)))
+            {
+                return null;
+            }
 
             //Check for invalid characters
             char[] validChars = isHex ? validCharListHex : validCharListBinary; //Get ref to correct valid char list
