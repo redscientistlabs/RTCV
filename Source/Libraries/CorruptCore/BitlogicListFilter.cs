@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Windows.Forms;
 using Ceras;
 
 namespace RTCV.CorruptCore
@@ -11,14 +12,9 @@ namespace RTCV.CorruptCore
     [Ceras.MemberConfig(TargetMember.All)]
     public class BitlogicListFilter : IListFilter
     {
-
         List<BitlogicFilterEntry> entries = new List<BitlogicFilterEntry>();
 
-        //Ideal random algorithm
-        //static Redzen.Random.Xoshiro256StarStarRandom random = new Redzen.Random.Xoshiro256StarStarRandom();
-
-
-        int precision = 0;
+        private int precision = 0;
 
         //Could be moved to a common location
         const char CHAR_WILD = '?';
@@ -27,13 +23,29 @@ namespace RTCV.CorruptCore
 
         public string Initialize(string filePath, string[] dataLines, bool flipBytes, bool syncListViaNetcore)
         {
-            for (int j = 0; j < dataLines.Length; j++)
+            try
             {
-                var e = ParseLine(dataLines[j]);//Parse lines individually
-                if (e != null)
+                for (int j = 0; j < dataLines.Length; j++)
                 {
-                    entries.Add(e);
+                    var e = ParseLine(j + 2, filePath, dataLines[j]);//Parse lines individually
+                    if (e != null)
+                    {
+                        entries.Add(e);
+                    }
                 }
+
+                if (entries.Count == 0)
+                {
+                    throw new Exception($"Error reading list {Path.GetFileName(filePath)}, list was empty or contained no valid lines");//show message to user
+                }
+
+            }
+            catch (Exception e)
+            {
+                var logger = NLog.LogManager.GetCurrentClassLogger();
+                logger.Error(e, "Error in loadListFromPath");
+                MessageBox.Show(e.Message);
+                return "";
             }
 
             //Bad, but keeps individual precision
@@ -59,15 +71,22 @@ namespace RTCV.CorruptCore
 
         public bool ContainsValue(byte[] bytes)
         {
-            ulong data = BytesToUlong((byte[])bytes.Clone());//Convert bytes to ulong 
-            foreach (var e in entries)
+            try
             {
-                if (e.Matches(data))
+                ulong data = BytesToUlong(bytes);//Convert bytes to ulong 
+                foreach (var e in entries)
                 {
-                    return true;
+                    if (e.Matches(data))
+                    {
+                        return true;
+                    }
                 }
+                return false;
             }
-            return false;
+            catch
+            {
+                return false;
+            }
         }
 
         public int GetPrecision()
@@ -77,7 +96,7 @@ namespace RTCV.CorruptCore
 
         public byte[] GetRandomValue(string hash /*unused*/, int precision)
         {
-            //Could be optimized?
+            //When passthrough is implemented, work here
             var rval = entries[RtcCore.RND.Next(entries.Count)];
             var outValue = BitConverter.GetBytes(rval.GetRandom()); //Bitconverter as little endian
             Array.Resize(ref outValue, rval.Precision);//discard the last bytes
@@ -108,9 +127,10 @@ namespace RTCV.CorruptCore
             return res;
         }
 
-        private ulong BytesToUlong(byte[] bytes)
+        private ulong BytesToUlong(byte[] byteRef)
         {
-            //Fun switch of fun
+            var bytes = (byte[])byteRef.Clone();
+            //Fun switch of fun, but is faster for most paths than resizing to 8 bytes
             switch (bytes.Length)
             {
                 case 1:
@@ -134,7 +154,7 @@ namespace RTCV.CorruptCore
                 case 8:
                     return BitConverter.ToUInt64(bytes, 0);
                 default:
-                    throw new Exception("Invalid byte count in BitLogicListFilter");
+                    throw new Exception("Invalid byte count in BitLogicListFilter. Limiter must be less than 64 bits (8 bytes)");
             }
         }
 
@@ -143,7 +163,7 @@ namespace RTCV.CorruptCore
         private static char[] validCharListHex = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', CHAR_WILD, CHAR_PASS };
         private static char[] validCharListBinary = new char[] { '0', '1', CHAR_WILD, CHAR_PASS };
 
-        private BitlogicFilterEntry ParseLine(string line)
+        private BitlogicFilterEntry ParseLine(int lineNum, string filePath, string line)
         {
             line = line.Trim();//remove whitespace on both sides
             string originalLine = line;
@@ -151,8 +171,9 @@ namespace RTCV.CorruptCore
             //Ignore empty lines and comments
             if (string.IsNullOrWhiteSpace(line) || (line.Length > 2 && (line.Substring(0, 2) == "//")))
             {
-                return null;
+                return null; //do not throw error
             }
+
 
             line = line.ToUpper(); //All alphabetical characters to upper case for easier handling
 
@@ -174,27 +195,28 @@ namespace RTCV.CorruptCore
                 }
             }
 
-            //Check for line sizes that may be too big
-            //Note: May have to move and rework this depending on future formats
-            if ((!isHex && line.Length > 64) || (isHex && line.Length > 16))
-            {
-                return null;
-            }
-
-            //Discard non-byte divisible lines
-            if ((!isHex && (line.Length % 8 != 0)) || (isHex && (line.Length % 2 != 0)))
-            {
-                return null;
-            }
-
             //Check for invalid characters
             char[] validChars = isHex ? validCharListHex : validCharListBinary; //Get ref to correct valid char list
             foreach (char c in line)
             {
                 if (!validChars.Contains(c))
                 {
-                    return null;
+                    //return null;
+                    throw new Exception($"Error reading list {Path.GetFileName(filePath)} (Line {lineNum}), line contains invalid character"); //Warn user about invalid characters
                 }
+            }
+
+            //Check for line sizes that may be too big
+            //Note: May have to move and rework this depending on future formats
+            if ((!isHex && line.Length > 64) || (isHex && line.Length > 16))
+            {
+                throw new Exception($"Error reading list {Path.GetFileName(filePath)} (Line {lineNum}), total number of bits must be 64 or less (8 bytes)"); //Warn user about line size too big
+            }
+
+            //Discard non-byte divisible lines
+            if ((!isHex && (line.Length % 8 != 0)) || (isHex && (line.Length % 2 != 0)))
+            {
+                throw new Exception($"Error reading list {Path.GetFileName(filePath)} (Line {lineNum}), lines must be byte sized"); //Warn user about line not byte sized
             }
 
 
@@ -224,19 +246,24 @@ namespace RTCV.CorruptCore
             return (ulong)(i - ((i <= 57) ? 48 : 55)); //optimized, values are guaranteed
         }
 
-        //Gets precision of a line
+        ////Gets precision of a line, uncomment if non-byte sized lists become a thing
+        //private int GetPrecision(string s, int incr = 1)
+        //{
+        //    int ret = s.Length * incr;
+
+        //    if (ret % 8 > 0)
+        //    {
+        //        return (ret / 8) + 1;
+        //    }
+        //    else
+        //    {
+        //        return ret / 8;
+        //    }
+        //}
+
         private int GetPrecision(string s, int incr = 1)
         {
-            int ret = s.Length * incr;
-
-            if (ret % 8 > 0)
-            {
-                return (ret / 8) + 1;
-            }
-            else
-            {
-                return ret / 8;
-            }
+            return (s.Length * incr) / 8;
         }
 
         private BitlogicFilterEntry ParseHex(string line)
@@ -260,7 +287,7 @@ namespace RTCV.CorruptCore
                 else if (line[j] == CHAR_PASS) { passthrough |= digitMask << curLeftShift; } //Passthrough
                 else //is a Constant
                 {
-                    //line[j] is guaranteed to be '1' or '0' here
+                    //line[j] is guaranteed to be Hex characters here
                     template |= CharToUlongHex(line[j]) << curLeftShift; //Convert char to ulong and shift
                     reserved |= digitMask << curLeftShift; //Also add to reserved mask
                 }
@@ -268,7 +295,7 @@ namespace RTCV.CorruptCore
                 curLeftShift += 4; //add half byte shift
             }
 
-            return new BitlogicFilterEntry(template, wildcard, passthrough, reserved) { Precision = GetPrecision(line, 4) };
+            return new BitlogicFilterEntry(template, wildcard, passthrough, reserved, GetPrecision(line, 4));
         }
 
         private BitlogicFilterEntry ParseBin(string line)
@@ -296,7 +323,7 @@ namespace RTCV.CorruptCore
                 curLeftShift++;
             }
 
-            return new BitlogicFilterEntry(template, wildcard, passthrough, reserved) { Precision = GetPrecision(line, 1) };
+            return new BitlogicFilterEntry(template, wildcard, passthrough, reserved, GetPrecision(line, 1));
         }
 
     }
@@ -314,29 +341,30 @@ namespace RTCV.CorruptCore
         ulong reserved;
         ulong unreserved;
 
-        public int Precision { get; set; }
+        public int Precision { get; private set; }
         public string OriginalLine { get; set; }
 
         //Ideal random
         //static Redzen.Random.Xoshiro256StarStarRandom rand = new Redzen.Random.Xoshiro256StarStarRandom();
 
-        //Current random, slow, remove eventually
-        static Random random = new Random();
+        //Current random, slow, replace eventually
         static byte[] byteBuffer = new byte[sizeof(ulong)];
         static ulong NextULong()
         {
-            random.NextBytes(byteBuffer);
+
+            RtcCore.RND.NextBytes(byteBuffer);
             return BitConverter.ToUInt64(byteBuffer, 0);
         }
 
 
-        public BitlogicFilterEntry(ulong template, ulong wildcard, ulong passthrough, ulong reserved)
+        public BitlogicFilterEntry(ulong template, ulong wildcard, ulong passthrough, ulong reserved, int precision)
         {
             this.template = template;
             this.wildcard = wildcard;
             this.passthrough = passthrough;
             this.reserved = reserved;
             this.unreserved = ~reserved; //Opposite of reserved for efficiency
+            this.Precision = precision;
         }
 
         //Gotta do this to satisfy Ceras
@@ -347,19 +375,20 @@ namespace RTCV.CorruptCore
             this.passthrough = 0;
             this.reserved = 0;
             this.unreserved = 0;
+            Precision = 0;
         }
 
 
         public bool Matches(ulong data)
         {
+            //template == data and reserved mask
             return template == (data & reserved);
         }
 
         public ulong GetRandom(/*ulong data*/)
         {
             //When passthrough is implemented, uncomment this line and remove the other
-            //return (RandomUlong() & wildcard) | (data & passthrough) | template;
-            //return (rand.NextULong() & unreserved) | template;
+            //return (NextULong() & wildcard) | (data & passthrough) | template;
             return (NextULong() & unreserved) | template;
         }
 
@@ -377,6 +406,4 @@ namespace RTCV.CorruptCore
             return bytes.ToArray();
         }
     }
-
-
 }
