@@ -64,6 +64,7 @@
             this.nmControlValue.TabIndex = 2;
             this.nmControlValue.Tag = "color:normal";
             this.nmControlValue.ValueChanged += new System.EventHandler(this.nmControlValue_ValueChanged);
+            this.nmControlValue.KeyUp += new System.Windows.Forms.KeyEventHandler(this.nmControlValue_KeyUp);
             // 
             // tbControlValue
             // 
