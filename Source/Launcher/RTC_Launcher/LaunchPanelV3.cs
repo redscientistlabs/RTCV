@@ -424,8 +424,6 @@ namespace RTCV.Launcher
                         try
                         {
                             RTC_Extensions.RecursiveCopyNukeReadOnly(new DirectoryInfo(Path.Combine(lcCandidateForPull.VersionLocation, candidate.FolderName)), new DirectoryInfo(Path.Combine(lc.VersionLocation, lcji.FolderName)));
-                            RTC_Extensions.RecursiveDeleteNukeReadOnly(new DirectoryInfo(Path.Combine(lcCandidateForPull.VersionLocation, candidate.FolderName)));
-                            MainForm.mf.RefreshKeepSelectedVersion();
                         }
                         catch (Exception ex)
                         {
@@ -438,7 +436,18 @@ namespace RTCV.Launcher
                             {
                                 Console.WriteLine(_ex);
                             }
+                            return;
                         }
+                        try
+                        {
+                            RTC_Extensions.RecursiveDeleteNukeReadOnly(new DirectoryInfo(Path.Combine(lcCandidateForPull.VersionLocation, candidate.FolderName)));
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Failed to delete old version {Path.Combine(lcCandidateForPull.VersionLocation, candidate?.FolderName ?? "NULL") ?? "NULL"}. Is the file in use?\nException:{ex.Message}");
+                            return;
+                        }
+                        MainForm.mf.RefreshKeepSelectedVersion();
                         return;
 
                     }
