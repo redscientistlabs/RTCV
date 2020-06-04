@@ -194,7 +194,8 @@ namespace RTCV.UI
                 it.StoreTime == unit.StoreTime &&
                 it.StoreType == unit.StoreType &&
                 it.TiltValue == unit.TiltValue &&
-                it.ValueString == unit.ValueString
+                it.ValueString == unit.ValueString &&
+                it.LoopTiming == unit.LoopTiming
                 );
 
                 if (TargetUnit != null && !TargetUnit.IsLocked)

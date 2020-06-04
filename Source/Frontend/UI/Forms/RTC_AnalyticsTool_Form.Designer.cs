@@ -1,4 +1,4 @@
-﻿using System.Windows.Forms;
+using System.Windows.Forms;
 using RTCV.UI;
 
 namespace RTCV.UI
@@ -45,11 +45,11 @@ namespace RTCV.UI
             this.label5 = new System.Windows.Forms.Label();
             this.lbDumps = new RTCV.UI.Components.Controls.ListBoxExtended();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.label1 = new System.Windows.Forms.Label();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.label2 = new System.Windows.Forms.Label();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbActivity)).BeginInit();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -108,7 +108,7 @@ namespace RTCV.UI
             this.button2.ForeColor = System.Drawing.Color.OrangeRed;
             this.button2.Location = new System.Drawing.Point(168, 459);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(269, 24);
+            this.button2.Size = new System.Drawing.Size(138, 24);
             this.button2.TabIndex = 199;
             this.button2.TabStop = false;
             this.button2.Tag = "color:dark2";
@@ -150,9 +150,9 @@ namespace RTCV.UI
             // 
             this.pbActivity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbActivity.Location = new System.Drawing.Point(168, 225);
+            this.pbActivity.Location = new System.Drawing.Point(168, 173);
             this.pbActivity.Name = "pbActivity";
-            this.pbActivity.Size = new System.Drawing.Size(269, 66);
+            this.pbActivity.Size = new System.Drawing.Size(486, 104);
             this.pbActivity.TabIndex = 202;
             this.pbActivity.TabStop = false;
             // 
@@ -165,9 +165,9 @@ namespace RTCV.UI
             this.btnComputeActivity.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnComputeActivity.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.btnComputeActivity.ForeColor = System.Drawing.Color.White;
-            this.btnComputeActivity.Location = new System.Drawing.Point(168, 197);
+            this.btnComputeActivity.Location = new System.Drawing.Point(168, 145);
             this.btnComputeActivity.Name = "btnComputeActivity";
-            this.btnComputeActivity.Size = new System.Drawing.Size(269, 22);
+            this.btnComputeActivity.Size = new System.Drawing.Size(486, 22);
             this.btnComputeActivity.TabIndex = 203;
             this.btnComputeActivity.TabStop = false;
             this.btnComputeActivity.Tag = "color:light1";
@@ -188,7 +188,7 @@ namespace RTCV.UI
             "16-bit",
             "32-bit",
             "64-bit"});
-            this.cbWordSize.Location = new System.Drawing.Point(286, 40);
+            this.cbWordSize.Location = new System.Drawing.Point(286, 36);
             this.cbWordSize.Name = "cbWordSize";
             this.cbWordSize.Size = new System.Drawing.Size(151, 21);
             this.cbWordSize.TabIndex = 205;
@@ -200,7 +200,7 @@ namespace RTCV.UI
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F);
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(165, 44);
+            this.label5.Location = new System.Drawing.Point(165, 40);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(117, 13);
             this.label5.TabIndex = 206;
@@ -237,10 +237,43 @@ namespace RTCV.UI
             this.panel2.Controls.Add(this.radioButton2);
             this.panel2.Controls.Add(this.radioButton1);
             this.panel2.Controls.Add(this.comboBox1);
-            this.panel2.Location = new System.Drawing.Point(168, 89);
+            this.panel2.Location = new System.Drawing.Point(460, 35);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(269, 94);
+            this.panel2.Size = new System.Drawing.Size(194, 94);
             this.panel2.TabIndex = 207;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F);
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(8, 56);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(27, 13);
+            this.label2.TabIndex = 211;
+            this.label2.Text = "List:";
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(8, 28);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(82, 17);
+            this.radioButton2.TabIndex = 210;
+            this.radioButton2.Text = "Against list";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Checked = true;
+            this.radioButton1.Location = new System.Drawing.Point(8, 6);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(141, 17);
+            this.radioButton1.TabIndex = 209;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "Against previous value";
+            this.radioButton1.UseVisualStyleBackColor = true;
             // 
             // comboBox1
             // 
@@ -255,62 +288,29 @@ namespace RTCV.UI
             "16-bit",
             "32-bit",
             "64-bit"});
-            this.comboBox1.Location = new System.Drawing.Point(49, 55);
+            this.comboBox1.Location = new System.Drawing.Point(41, 50);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(204, 21);
+            this.comboBox1.Size = new System.Drawing.Size(136, 21);
             this.comboBox1.TabIndex = 208;
             this.comboBox1.Tag = "color:normal";
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(15, 8);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(141, 17);
-            this.radioButton1.TabIndex = 209;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Against previous value";
-            this.radioButton1.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F);
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(169, 73);
+            this.label1.Location = new System.Drawing.Point(457, 15);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(111, 13);
             this.label1.TabIndex = 208;
             this.label1.Text = "Definition of activity";
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(15, 31);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(82, 17);
-            this.radioButton2.TabIndex = 210;
-            this.radioButton2.Text = "Against list";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F);
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(16, 61);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(27, 13);
-            this.label2.TabIndex = 211;
-            this.label2.Text = "List:";
             // 
             // RTC_AnalyticsTool_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(460, 498);
+            this.ClientSize = new System.Drawing.Size(677, 498);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label5);

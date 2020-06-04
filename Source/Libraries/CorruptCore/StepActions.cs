@@ -243,7 +243,7 @@ namespace RTCV.CorruptCore
             return collection;
         }
 
-        public static void AddBlastUnit(BlastUnit bu)
+        public static void AddBlastUnit(BlastUnit bu, bool overrideExecuteFrame)
         {
             lock (executeLock)
             {
@@ -255,9 +255,18 @@ namespace RTCV.CorruptCore
                 }
                 else
                 {
-                    bu.Working.ExecuteFrameQueued = bu.ExecuteFrame + currentFrame;
-                    //We subtract 1 here as we want lifetime to be exclusive. 1 means 1 apply, not applies 0 > applies 1 > done
-                    bu.Working.LastFrame = bu.Working.ExecuteFrameQueued + bu.Lifetime - 1;
+                    if (overrideExecuteFrame) //If a looping unit has a loop timing, use the loop timing instead of ExecuteFrame for subsequent loops
+                    {
+                        bu.Working.ExecuteFrameQueued = bu.LoopTiming.Value + currentFrame;
+                        //We subtract 1 here as we want lifetime to be exclusive. 1 means 1 apply, not applies 0 > applies 1 > done
+                        bu.Working.LastFrame = bu.Working.ExecuteFrameQueued + bu.Lifetime - 1;
+                    }
+                    else
+                    {
+                        bu.Working.ExecuteFrameQueued = bu.ExecuteFrame + currentFrame;
+                        //We subtract 1 here as we want lifetime to be exclusive. 1 means 1 apply, not applies 0 > applies 1 > done
+                        bu.Working.LastFrame = bu.Working.ExecuteFrameQueued + bu.Lifetime - 1;
+                    }
                 }
 
                 var collection = GetBatchedLayer(bu);
@@ -456,7 +465,7 @@ namespace RTCV.CorruptCore
                             needsRefilter = true;
                             foreach (BlastUnit bu in buList)
                             {
-                                bu.Apply(true);
+                                bu.Apply(true, bu.LoopTiming != null);
                             }
                         }
                     }
