@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using RTCV.Common;
@@ -69,6 +69,12 @@ namespace RTCV.UI
             }
 
             S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Maximum;
+            AutoKillSwitch.KillEmulator(true);
+        }
+
+        private void btnBreakCrashLoop_Click(object sender, EventArgs e)
+        {
+            S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked = false;
             AutoKillSwitch.KillEmulator(true);
         }
     }
