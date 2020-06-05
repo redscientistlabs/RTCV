@@ -609,6 +609,7 @@ namespace RTCV.UI
 
         private void UpDownLoopTiming_Validated(object sender, EventArgs e)
         {
+
             var value = upDownLoopTiming.Value;
             if (value > int.MaxValue)
             {
@@ -617,7 +618,7 @@ namespace RTCV.UI
 
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
             {
-                row.Cells[BuProperty.LoopTiming.ToString()].Value = value;
+                row.Cells[BuProperty.LoopTiming.ToString()].Value = (int?)Convert.ToInt32(value);
             }
 
             UpdateBottom();
@@ -861,7 +862,7 @@ namespace RTCV.UI
                 upDownPrecision.Value = bu.Precision;
                 tbValue.Text = bu.ValueString;
                 upDownExecuteFrame.Value = bu.ExecuteFrame;
-                upDownLoopTiming.Value = bu.LoopTiming ?? -1;
+                upDownLoopTiming.Value = (bu.LoopTiming ?? -1);
                 upDownLifetime.Value = bu.Lifetime;
                 cbLoop.Checked = bu.Loop;
                 cbLimiterTime.SelectedItem = bu.LimiterTime;
@@ -1047,6 +1048,12 @@ namespace RTCV.UI
             executeFrame.SortMode = DataGridViewColumnSortMode.Automatic;
             ((DataGridViewNumericUpDownColumn)(executeFrame)).Maximum = int.MaxValue;
             dgvBlastEditor.Columns.Add(executeFrame);
+
+            var loopTimng = CreateColumn(BuProperty.LoopTiming.ToString(), BuProperty.LoopTiming.ToString()
+            , "Loop Timing", new DataGridViewNumericUpDownColumn());
+            loopTimng.SortMode = DataGridViewColumnSortMode.Automatic;
+            ((DataGridViewNumericUpDownColumn)(loopTimng)).Maximum = int.MaxValue;
+            dgvBlastEditor.Columns.Add(loopTimng);
 
             var lifetime = CreateColumn(BuProperty.Lifetime.ToString(), BuProperty.Lifetime.ToString(), "Lifetime"
                 , new DataGridViewNumericUpDownColumn());

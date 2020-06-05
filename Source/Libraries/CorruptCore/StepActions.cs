@@ -465,7 +465,8 @@ namespace RTCV.CorruptCore
                             needsRefilter = true;
                             foreach (BlastUnit bu in buList)
                             {
-                                bu.Apply(true, bu.LoopTiming != null);
+                                bool applyLoopTiming = (bu.LoopTiming != null && bu.LoopTiming != -1);
+                                bu.Apply(true, applyLoopTiming);
                             }
                         }
                     }
