@@ -344,7 +344,7 @@ namespace RTCV.UI
             else if (e.Button == MouseButtons.Right)
             {
                 //End the edit if they're right clicking somewhere else
-                if (dgvBlastEditor.CurrentCell.ColumnIndex != e.ColumnIndex)
+                if (dgvBlastEditor.CurrentCell != null && dgvBlastEditor.CurrentCell.ColumnIndex != e.ColumnIndex)
                 {
                     dgvBlastEditor.EndEdit();
                 }
