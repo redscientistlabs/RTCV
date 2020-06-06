@@ -1051,4 +1051,38 @@ namespace RTCV.CorruptCore
         {
         }
     }
+
+    public static class RtcClock
+    {
+        static int CPU_STEP_Count = 0;
+
+        public static void STEP_CORRUPT(bool executeActions, bool performStep)
+        {
+            if (executeActions)
+            {
+                StepActions.Execute();
+            }
+
+            if (performStep)
+            {
+                CPU_STEP_Count++;
+
+                bool autoCorrupt = RtcCore.AutoCorrupt;
+                long errorDelay = RtcCore.ErrorDelay;
+                if (autoCorrupt && CPU_STEP_Count >= errorDelay)
+                {
+                    CPU_STEP_Count = 0;
+                    BlastLayer bl = RtcCore.GenerateBlastLayer((string[])AllSpec.UISpec["SELECTEDDOMAINS"]);
+                    if (bl != null)
+                        bl.Apply(false, false);
+                }
+
+            }
+        }
+
+        public static void RESET_COUNT()
+        {
+            CPU_STEP_Count = 0;
+        }
+    }
 }
