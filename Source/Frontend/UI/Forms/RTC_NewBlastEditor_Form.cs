@@ -89,6 +89,7 @@ namespace RTCV.UI
             ExecuteFrame,
             Lifetime,
             Loop,
+            LoopTiming,
             LimiterTime,
             LimiterListHash,
             InvertLimiter,
@@ -134,6 +135,7 @@ namespace RTCV.UI
                 tbTiltValue.Validated += TbTiltValue_Validated;
 
                 upDownExecuteFrame.Validated += UpDownExecuteFrame_Validated;
+                upDownLoopTiming.Validated += UpDownLoopTiming_Validated;
                 upDownLifetime.Validated += UpDownLifetime_Validated;
 
                 cbSource.Validated += CbSource_Validated;
@@ -153,6 +155,7 @@ namespace RTCV.UI
 
                 //On today's episode of "why is the designer overriding these values every time I build"
                 upDownExecuteFrame.Maximum = int.MaxValue;
+                upDownLoopTiming.Maximum = int.MaxValue;
                 upDownPrecision.Maximum = 16348; //Textbox doesn't like more than ~20k
                 upDownLifetime.Maximum = int.MaxValue;
                 upDownSourceAddress.Maximum = int.MaxValue;
@@ -341,7 +344,7 @@ namespace RTCV.UI
             else if (e.Button == MouseButtons.Right)
             {
                 //End the edit if they're right clicking somewhere else
-                if (dgvBlastEditor.CurrentCell.ColumnIndex != e.ColumnIndex)
+                if (dgvBlastEditor.CurrentCell != null && dgvBlastEditor.CurrentCell.ColumnIndex != e.ColumnIndex)
                 {
                     dgvBlastEditor.EndEdit();
                 }
@@ -604,6 +607,24 @@ namespace RTCV.UI
             dgvBlastEditor.Refresh();
         }
 
+        private void UpDownLoopTiming_Validated(object sender, EventArgs e)
+        {
+
+            var value = upDownLoopTiming.Value;
+            if (value > int.MaxValue)
+            {
+                value = int.MaxValue;
+            }
+
+            foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
+            {
+                row.Cells[BuProperty.LoopTiming.ToString()].Value = (int?)Convert.ToInt32(value);
+            }
+
+            UpdateBottom();
+            dgvBlastEditor.Refresh();
+        }
+
         private void UpDownPrecision_Validated(object sender, EventArgs e)
         {
             var value = upDownPrecision.Value;
@@ -841,6 +862,7 @@ namespace RTCV.UI
                 upDownPrecision.Value = bu.Precision;
                 tbValue.Text = bu.ValueString;
                 upDownExecuteFrame.Value = bu.ExecuteFrame;
+                upDownLoopTiming.Value = (bu.LoopTiming ?? -1);
                 upDownLifetime.Value = bu.Lifetime;
                 cbLoop.Checked = bu.Loop;
                 cbLimiterTime.SelectedItem = bu.LimiterTime;
@@ -954,6 +976,7 @@ namespace RTCV.UI
             property2ControlDico.Add(BuProperty.Domain.ToString(), cbDomain);
             property2ControlDico.Add(BuProperty.Source.ToString(), cbSource);
             property2ControlDico.Add(BuProperty.ExecuteFrame.ToString(), upDownExecuteFrame);
+            property2ControlDico.Add(BuProperty.LoopTiming.ToString(), upDownLoopTiming);
             property2ControlDico.Add(BuProperty.InvertLimiter.ToString(), cbInvertLimiter);
             property2ControlDico.Add(BuProperty.isEnabled.ToString(), cbEnabled);
             property2ControlDico.Add(BuProperty.isLocked.ToString(), cbLocked);
@@ -1025,6 +1048,12 @@ namespace RTCV.UI
             executeFrame.SortMode = DataGridViewColumnSortMode.Automatic;
             ((DataGridViewNumericUpDownColumn)(executeFrame)).Maximum = int.MaxValue;
             dgvBlastEditor.Columns.Add(executeFrame);
+
+            var loopTimng = CreateColumn(BuProperty.LoopTiming.ToString(), BuProperty.LoopTiming.ToString()
+            , "Loop Timing", new DataGridViewNumericUpDownColumn());
+            loopTimng.SortMode = DataGridViewColumnSortMode.Automatic;
+            ((DataGridViewNumericUpDownColumn)(loopTimng)).Maximum = int.MaxValue;
+            dgvBlastEditor.Columns.Add(loopTimng);
 
             var lifetime = CreateColumn(BuProperty.Lifetime.ToString(), BuProperty.Lifetime.ToString(), "Lifetime"
                 , new DataGridViewNumericUpDownColumn());

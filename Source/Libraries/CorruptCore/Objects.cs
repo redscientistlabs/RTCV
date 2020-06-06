@@ -1397,6 +1397,8 @@ namespace RTCV.CorruptCore
         public int Lifetime { get; set; }
         public bool Loop { get; set; } = false;
 
+        public int? LoopTiming { get; set; } = null;
+
         [Category("Limiter")]
         [Description("What mode to use for the limiter in STORE mode")]
         [DisplayName("Store Limiter Source")]
@@ -1447,7 +1449,7 @@ namespace RTCV.CorruptCore
         /// <param name="isLocked"></param>
         public BlastUnit(StoreType storeType, StoreTime storeTime,
             string domain, long address, string sourceDomain, long sourceAddress, int precision, bool bigEndian, int executeFrame = 0, int lifetime = 1,
-            string note = null, bool isEnabled = true, bool isLocked = false)
+            string note = null, bool isEnabled = true, bool isLocked = false, int? loopTiming = null)
         {
             Source = BlastUnitSource.STORE;
             StoreTime = storeTime;
@@ -1464,6 +1466,7 @@ namespace RTCV.CorruptCore
             Note = note;
             IsEnabled = isEnabled;
             IsLocked = isLocked;
+            LoopTiming = loopTiming;
         }
 
         /// <summary>
@@ -1480,7 +1483,7 @@ namespace RTCV.CorruptCore
         /// <param name="isLocked"></param>
         public BlastUnit(byte[] value,
             string domain, long address, int precision, bool bigEndian, int executeFrame = 0, int lifetime = 1,
-            string note = null, bool isEnabled = true, bool isLocked = false, bool generatedUsingValueList = false)
+            string note = null, bool isEnabled = true, bool isLocked = false, bool generatedUsingValueList = false, int? loopTiming = null)
         {
             Source = BlastUnitSource.VALUE;
             //Precision has to be set before value
@@ -1496,6 +1499,7 @@ namespace RTCV.CorruptCore
             IsLocked = isLocked;
             GeneratedUsingValueList = generatedUsingValueList;
             BigEndian = bigEndian;
+            LoopTiming = loopTiming;
         }
 
         public BlastUnit()
@@ -1532,6 +1536,7 @@ namespace RTCV.CorruptCore
                 StoreType = this.StoreType,
                 IsEnabled = this.IsEnabled,
                 LimiterListHash = this.LimiterListHash,
+                LoopTiming = this.LoopTiming,
             };
 
             if (bu.Source == BlastUnitSource.STORE)
@@ -1694,7 +1699,7 @@ namespace RTCV.CorruptCore
         /// Adds a blastunit to the execution pool
         /// </summary>
         /// <returns></returns>
-        public bool Apply(bool dontFilter)
+        public bool Apply(bool dontFilter, bool overrideExecuteFrame = false)
         {
             if (!IsEnabled)
             {
@@ -1717,7 +1722,7 @@ namespace RTCV.CorruptCore
                 }
             }
             //Add it to the execution pool
-            StepActions.AddBlastUnit(this);
+            StepActions.AddBlastUnit(this, overrideExecuteFrame);
 
             if (dontFilter)
             {
