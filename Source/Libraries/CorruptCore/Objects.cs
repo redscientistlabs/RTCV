@@ -1022,12 +1022,21 @@ namespace RTCV.CorruptCore
             return ObjectCopierCeras.Clone(this);
         }
 
-        public void Apply(bool storeUncorruptBackup, bool followMaximums = false)
+        public void Apply(bool storeUncorruptBackup, bool followMaximums = false, bool mergeWithCurrent = false)
         {
             if (storeUncorruptBackup && this != StockpileManager_EmuSide.UnCorruptBL)
             {
+                BlastLayer UnCorruptBL_Backup = StockpileManager_EmuSide.UnCorruptBL;
+                BlastLayer CorruptBL_Backup = StockpileManager_EmuSide.CorruptBL;
+
                 StockpileManager_EmuSide.UnCorruptBL = GetBackup();
                 StockpileManager_EmuSide.CorruptBL = this;
+
+                if(mergeWithCurrent)
+                {
+                    StockpileManager_EmuSide.UnCorruptBL.Layer.AddRange(UnCorruptBL_Backup.Layer);
+                    StockpileManager_EmuSide.CorruptBL.Layer.AddRange(CorruptBL_Backup.Layer);
+                }
             }
 
             bool success;

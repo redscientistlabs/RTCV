@@ -298,11 +298,17 @@ namespace RTCV.CorruptCore
                         {
                             var temp = advancedMessage.objectValue as object[];
                             BlastLayer bl = (BlastLayer)temp[0];
-                            bool backup = (bool)temp[1];
+                            bool storeUncorruptBackup = (bool)temp[1];
+
+                            bool merge = false;
+
+                            if (temp.Length > 2)
+                                 merge = (bool)temp[2];
+                            
 
                             void a()
-                            {
-                                bl.Apply(backup, true);
+                            { 
+                                bl.Apply(storeUncorruptBackup, true, false);
                             }
 
                             SyncObjectSingleton.EmuThreadExecute(a, true);
