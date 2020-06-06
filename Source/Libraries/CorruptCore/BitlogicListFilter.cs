@@ -13,6 +13,7 @@ namespace RTCV.CorruptCore
     public class BitlogicListFilter : IListFilter
     {
         List<BitlogicFilterEntry> entries = new List<BitlogicFilterEntry>();
+        private HashSet<string> options = new HashSet<string>();
 
         private int precision = 0;
 
@@ -20,17 +21,36 @@ namespace RTCV.CorruptCore
         const char CHAR_WILD = '?';
         const char CHAR_PASS = '#';
 
+        const char CHAR_FLAG = '@';
 
         public string Initialize(string filePath, string[] dataLines, bool flipBytes, bool syncListViaNetcore)
         {
+            bool inHeader = true;
+            bool doFlipBytes = flipBytes;
+
             try
             {
                 for (int j = 0; j < dataLines.Length; j++)
                 {
-                    var e = ParseLine(j + 2, filePath, dataLines[j]);//Parse lines individually
-                    if (e != null)
+                    if (inHeader && ((!string.IsNullOrWhiteSpace(dataLines[j])) && dataLines[j].Length > 1 && dataLines[j][0] == CHAR_FLAG))
                     {
-                        entries.Add(e);
+                        string flag = dataLines[j].Substring(1).Trim().ToLower();
+
+                        if (flag == "v1.0")
+                        {
+                            doFlipBytes = true;
+                        }
+                        options.Add(flag); //add as flag to hashset
+
+                    }
+                    else
+                    {
+                        if (inHeader) { inHeader = false; }
+                        var e = ParseLine(j + 2, filePath, dataLines[j], doFlipBytes);//Parse lines individually
+                        if (e != null)
+                        {
+                            entries.Add(e);
+                        }
                     }
                 }
 
@@ -94,13 +114,12 @@ namespace RTCV.CorruptCore
             return precision;
         }
 
-        public byte[] GetRandomValue(string hash /*unused*/, int precision)
+        public byte[] GetRandomValue(string hash /*unused*/, int precision /*, byte[] bytes*/)
         {
             //When passthrough is implemented, work here
             var rval = entries[RtcCore.RND.Next(entries.Count)];
-            var outValue = BitConverter.GetBytes(rval.GetRandom()); //Bitconverter as little endian
+            var outValue = BitConverter.GetBytes(rval.GetRandom(/*BytesToUlong(bytes)*/)); //Bitconverter as little endian
             Array.Resize(ref outValue, rval.Precision);//discard the last bytes
-
 
             //Copied and pasted from other list implementations
             if (outValue.Length < precision)
@@ -120,6 +139,8 @@ namespace RTCV.CorruptCore
         public List<string> GetStringList()
         {
             List<string> res = new List<string>();
+            res.Add("@" + nameof(BitlogicListFilter)); //Add top line to specify class for reflection
+            res.AddRange(this.options);
             foreach (var e in entries)
             {
                 res.Add(e.OriginalLine);
@@ -163,8 +184,10 @@ namespace RTCV.CorruptCore
         private static char[] validCharListHex = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', CHAR_WILD, CHAR_PASS };
         private static char[] validCharListBinary = new char[] { '0', '1', CHAR_WILD, CHAR_PASS };
 
-        private BitlogicFilterEntry ParseLine(int lineNum, string filePath, string line)
+        private BitlogicFilterEntry ParseLine(int lineNum, string filePath, string line, bool doFlipBytes)
         {
+            bool flipBytes = !doFlipBytes; //to maintain sanity
+
             line = line.Trim();//remove whitespace on both sides
             string originalLine = line;
 
@@ -220,6 +243,19 @@ namespace RTCV.CorruptCore
             }
 
 
+            //Flip bytes, simulating manual flipping
+            if (flipBytes)
+            {
+                if (isHex)
+                {
+                    line = FlipBytesStr(line, 2);
+                }
+                else
+                {
+                    line = FlipBytesStr(line, 8);
+                }
+            }
+
             //=========================== At this point it *should* be valid ===========================
 
             //Parse with the correct method
@@ -237,6 +273,19 @@ namespace RTCV.CorruptCore
             }
         }
 
+
+        //assumes s.Length is evenly divisible by chunksize, should be the case always
+        private static string FlipBytesStr(string s, int chunkSize)
+        {
+            //StringBuilder sb = new StringBuilder();
+            string res = "";
+            int div = s.Length / chunkSize;
+            for (int j = div - 1; j >= 0; j--)
+            {
+                res += s.Substring(j * chunkSize, chunkSize);
+            }
+            return res;
+        }
 
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] //Inline hint
         private ulong CharToUlongHex(char c)
@@ -377,7 +426,6 @@ namespace RTCV.CorruptCore
             this.unreserved = 0;
             Precision = 0;
         }
-
 
         public bool Matches(ulong data)
         {
