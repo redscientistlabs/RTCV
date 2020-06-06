@@ -17,12 +17,13 @@ namespace RTCV.CorruptCore
         public static bool StashAfterOperation = true;
         public static volatile List<StashKey> StashHistory = new List<StashKey>();
 
-        private static void PreApplyStashkey()
+        private static void PreApplyStashkey(bool _clearUnitsBeforeApply = true)
         {
-            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_CLEARSTEPBLASTUNITS, null, true);
+            if(_clearUnitsBeforeApply)
+                LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_CLEARSTEPBLASTUNITS, null, true);
+
 
             bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
-
             LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_PRECORRUPTACTION, null, true);
         }
 
@@ -39,9 +40,9 @@ namespace RTCV.CorruptCore
             LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_POSTCORRUPTACTION);
         }
 
-        public static bool ApplyStashkey(StashKey sk, bool _loadBeforeOperation = true)
+        public static bool ApplyStashkey(StashKey sk, bool _loadBeforeOperation = true, bool _clearUnitsBeforeApply = true)
         {
-            PreApplyStashkey();
+            PreApplyStashkey(_clearUnitsBeforeApply);
 
             bool isCorruptionApplied = sk?.BlastLayer?.Layer?.Count > 0;
 
@@ -54,7 +55,11 @@ namespace RTCV.CorruptCore
             }
             else
             {
-                LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.APPLYBLASTLAYER, new object[] { sk?.BlastLayer, true }, true);
+                //APPLYBLASTLAYER
+                //Param 0 is BlastLayer
+                //Param 1 is storeUncorruptBackup
+                //Param 2 is MergeWithCurrent (for fixing blast toggle with inject)
+                LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.APPLYBLASTLAYER, new object[] { sk?.BlastLayer, true, true }, true);
             }
 
             PostApplyStashkey();
