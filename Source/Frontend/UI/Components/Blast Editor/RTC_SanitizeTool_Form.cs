@@ -1,46 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
+using System;
 using System.Linq;
-using System.Numerics;
-using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json.Serialization;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
-using static RTCV.UI.UI_Extensions;
-using RTCV.NetCore.StaticTools;
-
+using RTCV.Common;
 
 namespace RTCV.UI
 {
-	public partial class RTC_SanitizeTool_Form : Form, IAutoColorize
-	{
-
+    public partial class RTC_SanitizeTool_Form : Form, IAutoColorize
+    {
         public BlastLayer originalBlastLayer = null;
 
+        public RTC_SanitizeTool_Form()
+        {
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception ex)
+            {
+                string additionalInfo = "An error occurred while opening the SanitizeTool Form\n\n";
 
-		public RTC_SanitizeTool_Form()
-		{
-			try
-			{
-				InitializeComponent();
+                var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
 
-			}
-			catch(Exception ex)
-			{
-				string additionalInfo = "An error occurred while opening the SanitizeTool Form\n\n";
-
-				var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
-
-				if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
-					throw new RTCV.NetCore.AbortEverythingException();
-
-			}
-		}
+                if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                {
+                    throw new RTCV.NetCore.AbortEverythingException();
+                }
+            }
+        }
 
         public static void OpenSanitizeTool(BlastLayer bl = null)
         {
@@ -49,15 +37,17 @@ namespace RTCV.UI
             S.SET(stf);
 
             if (bl == null)
+            {
                 return;
+            }
 
-            if (bl.Layer.Count == 0)
+            if (bl.Layer.Count(x => !x.IsLocked) == 0)
             {
                 MessageBox.Show("Sanitize Tool cannot sanitize BlastLayers that don't have any units.");
                 return;
             }
 
-            if (bl.Layer.Count == 1)
+            if (bl.Layer.Count(x => !x.IsLocked) == 1)
             {
                 MessageBox.Show("Sanitize Tool cannot sanitize BlastLayers that only have one unit.");
                 return;
@@ -65,12 +55,12 @@ namespace RTCV.UI
 
             BlastLayer clone = (BlastLayer)bl.Clone();
 
-            stf.lbOriginalLayerSize.Text = $"Original Layer size: {clone.Layer.Count}"; 
-            stf.lbCurrentLayerSize.Text = $"Current Layer size: {clone.Layer.Count}"; 
+            stf.lbOriginalLayerSize.Text = $"Original Layer size: {clone.Layer.Count(x => !x.IsLocked)}";
+            stf.lbCurrentLayerSize.Text = $"Current Layer size: {clone.Layer.Count(x => !x.IsLocked)}";
 
             stf.lbSteps.DisplayMember = "Text";
             stf.lbSteps.ValueMember = "Value";
-            stf.lbSteps.Items.Add(new { Text = $"Original Layer [{clone.Layer.Count} Units]", Value = clone });
+            stf.lbSteps.Items.Add(new { Text = $"Original Layer [{clone.Layer.Count(x => !x.IsLocked)} Units]", Value = clone });
 
             stf.originalBlastLayer = clone;
 
@@ -78,10 +68,24 @@ namespace RTCV.UI
         }
 
         private void RTC_NewBlastEditorForm_Load(object sender, EventArgs e)
-		{
-			UICore.SetRTCColor(UICore.GeneralColor, this);
+        {
+            UICore.SetRTCColor(UICore.GeneralColor, this);
+        }
 
-		}
+        private void btnReroll_Click(object sender, EventArgs e)
+        {
+            pnBlastLayerSanitization.Visible = false;
+
+            S.GET<RTC_NewBlastEditor_Form>().dgvBlastEditor.ClearSelection();
+            S.GET<RTC_NewBlastEditor_Form>().btnDisable50_Click(null, null);
+            S.GET<RTC_NewBlastEditor_Form>().btnLoadCorrupt_Click(null, null);
+
+            BlastLayer bl = (BlastLayer)S.GET<RTC_NewBlastEditor_Form>().currentSK.BlastLayer.Clone();
+
+            lbCurrentLayerSize.Text = $"Current Layer size: {bl.Layer.Count(x => !x.IsLocked)}";
+
+            pnBlastLayerSanitization.Visible = true;
+        }
 
         private void btnYesEffect_Click(object sender, EventArgs e)
         {
@@ -94,15 +98,16 @@ namespace RTCV.UI
             S.GET<RTC_NewBlastEditor_Form>().btnLoadCorrupt_Click(null, null);
 
             BlastLayer bl = (BlastLayer)S.GET<RTC_NewBlastEditor_Form>().currentSK.BlastLayer.Clone();
-            lbSteps.Items.Add(new { Text = $"[{bl.Layer.Count} Units]", Value = bl });
+            lbSteps.Items.Add(new { Text = $"[{bl.Layer.Count(x => !x.IsLocked)} Units]", Value = bl });
 
-            lbCurrentLayerSize.Text = $"Current Layer size: {bl.Layer.Count}";
+            lbCurrentLayerSize.Text = $"Current Layer size: {bl.Layer.Count(x => !x.IsLocked)}";
 
-            if(bl.Layer.Count == 1)
+            if (bl.Layer.Count(x => !x.IsLocked) == 1)
             {
                 lbSanitizationText.Text = "1 Unit remaining, sanitization complete.";
                 btnYesEffect.Visible = false;
                 btnNoEffect.Visible = false;
+                btnReroll.Visible = false;
             }
 
             pnBlastLayerSanitization.Visible = true;
@@ -118,15 +123,16 @@ namespace RTCV.UI
             RunSanitizeAlgo();
 
             BlastLayer bl = (BlastLayer)S.GET<RTC_NewBlastEditor_Form>().currentSK.BlastLayer.Clone();
-            lbSteps.Items.Add(new { Text = $"[{bl.Layer.Count} Units]", Value = bl });
+            lbSteps.Items.Add(new { Text = $"[{bl.Layer.Count(x => !x.IsLocked)} Units]", Value = bl });
 
-            lbCurrentLayerSize.Text = $"Current Layer size: {bl.Layer.Count}";
+            lbCurrentLayerSize.Text = $"Current Layer size: {bl.Layer.Count(x => !x.IsLocked)}";
 
-            if (bl.Layer.Count == 1)
+            if (bl.Layer.Count(x => !x.IsLocked) == 1)
             {
                 lbSanitizationText.Text = "1 Unit remaining, sanitization complete.";
                 btnYesEffect.Visible = false;
                 btnNoEffect.Visible = false;
+                btnReroll.Visible = false;
             }
 
             pnBlastLayerSanitization.Visible = true;
@@ -170,10 +176,11 @@ namespace RTCV.UI
                 it.ValueString == unit.ValueString
                 );
 
-
-                if (TargetUnit != null)
+                if (TargetUnit != null && !TargetUnit.IsLocked)
+                {
                     modified.Layer.Remove(TargetUnit);
-			}
+                }
+            }
 
             S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(modified);
 
@@ -188,10 +195,12 @@ namespace RTCV.UI
 
         private void btnBackPrevState_Click(object sender, EventArgs e)
         {
-            var lastItem = lbSteps.Items[lbSteps.Items.Count -1];
+            var lastItem = lbSteps.Items[lbSteps.Items.Count - 1];
 
-            if(lbSteps.Items.Count > 1)
+            if (lbSteps.Items.Count > 1)
+            {
                 lastItem = lbSteps.Items[lbSteps.Items.Count - 2];
+            }
 
             T Cast<T>(object obj, T type) { return (T)obj; }
             var modified = Cast(lastItem, new { Text = "", Value = new BlastLayer() }); ;
@@ -199,23 +208,25 @@ namespace RTCV.UI
             BlastLayer bl = (BlastLayer)modified.Value.Clone();
             S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(bl);
 
-            lbCurrentLayerSize.Text = $"Current Layer size: {bl.Layer.Count}";
+            lbCurrentLayerSize.Text = $"Current Layer size: {bl.Layer.Count(x => !x.IsLocked)}";
 
-            if(lbSteps.Items.Count>1)
+            if (lbSteps.Items.Count > 1)
+            {
                 lbSteps.Items.RemoveAt(lbSteps.Items.Count - 1);
+            }
 
             S.GET<RTC_NewBlastEditor_Form>().btnLoadCorrupt_Click(null, null);
 
             lbSanitizationText.Text = "Is the effect you are looking for still present?";
             btnYesEffect.Visible = true;
             btnNoEffect.Visible = true;
+            btnReroll.Visible = true;
 
-            if(lbSteps.Items.Count == 1)
+            if (lbSteps.Items.Count == 1)
             {
                 pnBlastLayerSanitization.Visible = false;
                 btnStartSanitizing.Visible = true;
             }
-
         }
 
         private void btnStartSanitizing_Click(object sender, EventArgs e)
@@ -239,16 +250,18 @@ namespace RTCV.UI
         private void RTC_SanitizeTool_Form_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason != CloseReason.UserClosing)
+            {
                 return;
+            }
 
             Form frm = (sender as Form);
             Button check = (frm?.ActiveControl as Button);
 
-            if(check == null && lbSteps.Items.Count > 1)
+            if (check == null && lbSteps.Items.Count > 1)
             {
                 DialogResult dr = MessageBox.Show("Would you like to restore the Original BlastLayer?", "Leaving Sanitize Tool", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
-                switch(dr)
+                switch (dr)
                 {
                     case DialogResult.Yes:
                         S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(originalBlastLayer);
@@ -261,7 +274,6 @@ namespace RTCV.UI
                         break;
                 }
             }
-
         }
     }
 }

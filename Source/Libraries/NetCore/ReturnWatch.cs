@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace RTCV.NetCore
 {
@@ -12,14 +12,19 @@ namespace RTCV.NetCore
         //This is a component that allows to freeze the thread that asked for a value from a Synced Message
         //This makes inter-process calls able to block and wait for return values to keep code linearity
 
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private volatile NetCoreSpec spec;
         private volatile ConcurrentDictionary<Guid, object> SyncReturns = new ConcurrentDictionary<Guid, object>();
-        private volatile int attemptsAtReading = 0;
-        private volatile bool KillReturnWatch = false;
+        private volatile int activeWatches = 0;
+        private CancellationTokenSource cts = new CancellationTokenSource();
+        public Guid guid = Guid.NewGuid();
 
         public bool IsWaitingForReturn
         {
-            get { return attemptsAtReading > 0; }
+            get 
+            {
+                return activeWatches > 0;
+            }
         }
 
         internal ReturnWatch(NetCoreSpec _spec)
@@ -29,71 +34,90 @@ namespace RTCV.NetCore
 
         public void Kill()
         {
+            logger.Info("KillReturnWatch called on {guid}", guid);
             SyncReturns.Clear();
-            KillReturnWatch = true;
+            cts.Cancel();
+            cts = new CancellationTokenSource();
         }
 
         public void AddReturn(NetCoreAdvancedMessage message)
         {
-			if (!message.requestGuid.HasValue)
-				return;
+            if (!message.requestGuid.HasValue)
+            {
+                return;
+            }
 
-			SyncReturns.TryAdd(message.requestGuid.Value, message.objectValue);
+            SyncReturns.TryAdd(message.requestGuid.Value, message.objectValue);
         }
 
         internal object GetValue(Guid WatchedGuid, string type)
         {
-            //Jams the current thread until the value is returned or the KillReturnWatch flag is set to true
-
-			using (new TimePeriod(1))
-			{
-				ConsoleEx.WriteLine("GetValue:Awaiting -> " + type.ToString());
-				//spec.OnSyncedMessageStart(null);
-				spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{EVENT_SYNCEDMESSAGESTART}"));
-
-				attemptsAtReading = 0;
-
-				//If we're this deep, something went really wrong so we just emergency abort
-				if (StackFrameHelper.GetCallStackDepth() > 2000)
-				{
-					KillReturnWatch = true;
-					throw new CustomException("A fatal error has occurred. Please send this to the devs. You should save your Stockpile then restart the RTC.", Environment.StackTrace);
-				}
-
-				while (!SyncReturns.ContainsKey(WatchedGuid))
-				{
-					if (KillReturnWatch)
-					{
-						//Stops waiting and returns null
-						KillReturnWatch = false;
-						attemptsAtReading = 0;
-
-						ConsoleEx.WriteLine("GetValue:Killed -> " + type.ToString());
-						//spec.OnSyncedMessageEnd(null);
-						spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{EVENT_SYNCEDMESSAGEEND}"));
-						return null;
-					}
-
-					attemptsAtReading++;
-					if (attemptsAtReading % 5 == 0)
-					{
-						System.Windows.Forms.Application.DoEvents(); //This is a horrible hack we need due to the fact we have synchronous calls that invoke the main thread
-					}
-
-					Thread.Sleep(spec.messageReadTimerDelay);
-				}
-
-				attemptsAtReading = 0;
-				SyncReturns.TryRemove(WatchedGuid, out object ret);
-
-				ConsoleEx.WriteLine("GetValue:Returned -> " + type.ToString());
-				//spec.OnSyncedMessageEnd(null);
-				spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{EVENT_SYNCEDMESSAGEEND}"));
-				return ret;
+            object result = null;
+            Interlocked.Increment(ref activeWatches);
+            try
+            {
+                result = GetValueTask(WatchedGuid, type, cts.Token).Result;
             }
+            catch(Exception e)
+            {
+                if(e is OperationCanceledException
+                    || (e is AggregateException && (e.InnerException is OperationCanceledException || e.InnerException is TaskCanceledException)))
+                {
+                    logger.Info("WatchedGuid {guid} was cancelled, returning null.", WatchedGuid);
+                    Interlocked.Decrement(ref activeWatches);
+                    return null;
+                }
+                //Let it up the chain if it's not a cancellation
+                throw;
+            }
+            Interlocked.Decrement(ref activeWatches);
+            return result;
         }
 
+        internal async Task<Object> GetValueTask(Guid WatchedGuid, string type, CancellationToken token)
+        {
+            token.ThrowIfCancellationRequested();
+            logger.Trace("GetValue called on {guid}", guid);
+            //Jams the current thread until the value is returned or the KillReturnWatch flag is set to true
+
+            logger.Trace("GetValue:Awaiting -> " + type);
+            //spec.OnSyncedMessageStart(null);
+            spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{EVENT_SYNCEDMESSAGESTART}"));
+
+            var attemptsAtReading = 0;
+
+            //If we're this deep, something went really wrong so we just emergency abort
+            if (StackFrameHelper.GetCallStackDepth() > 2000)
+            {
+                cts.Cancel();
+                throw new CustomException("A fatal error has occurred. Please send this to the devs. You should save your Stockpile then restart the RTC.", Environment.StackTrace);
+            }
+
+            while (!SyncReturns.ContainsKey(WatchedGuid))
+            {
+                if (token.IsCancellationRequested)
+                {
+                    logger.Warn("GetValue:Killed -> " + type);
+                    //spec.OnSyncedMessageEnd(null);
+                    spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{EVENT_SYNCEDMESSAGEEND}"));
+                    throw new OperationCanceledException();
+                }
+
+                attemptsAtReading++;
+                if (attemptsAtReading % 5 == 0)
+                {
+                    System.Windows.Forms.Application.DoEvents(); //This is a horrible hack we need due to the fact we have synchronous calls that invoke the main thread
+                }
+
+                Thread.Sleep(spec.messageReadTimerDelay);
+            }
+
+            SyncReturns.TryRemove(WatchedGuid, out object ret);
+
+            logger.Info("GetValue:Returned -> " + type);
+            //spec.OnSyncedMessageEnd(null);
+            spec.Connector.hub.QueueMessage(new NetCoreAdvancedMessage("{EVENT_SYNCEDMESSAGEEND}"));
+            return ret;
+        }
     }
-
-
 }

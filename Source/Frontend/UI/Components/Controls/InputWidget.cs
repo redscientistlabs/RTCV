@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using RTCV.UI.Input;
 
 namespace RTCV.UI.Components.Controls
 {
@@ -53,10 +52,7 @@ namespace RTCV.UI.Components.Controls
 
         public string Bindings
         {
-            get
-            {
-                return Text;
-            }
+            get => Text;
 
             set
             {
@@ -88,11 +84,12 @@ namespace RTCV.UI.Components.Controls
         }
 
         private Color oldColor = Color.White;
+
         protected override void OnEnter(EventArgs e)
         {
             _timer.Start();
 
-			UICore.SetHotkeyTimer(false);
+            UICore.SetHotkeyTimer(false);
             _wasPressed = Input.Input.Instance.GetNextBindEvent();
             oldColor = BackColor;
             BackColor = Color.DarkSlateBlue;
@@ -101,7 +98,7 @@ namespace RTCV.UI.Components.Controls
         protected override void OnLeave(EventArgs e)
         {
             _timer.Stop();
-			UICore.SetHotkeyTimer(true);
+            UICore.SetHotkeyTimer(true);
             UpdateLabel();
             BackColor = oldColor;
             base.OnLeave(e);

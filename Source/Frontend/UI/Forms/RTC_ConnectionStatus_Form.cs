@@ -1,26 +1,22 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
-using RTCV.CorruptCore;
+using RTCV.Common;
 using static RTCV.UI.UI_Extensions;
-using RTCV.NetCore.StaticTools;
 
 namespace RTCV.UI
 {
-	public partial class RTC_ConnectionStatus_Form : ComponentForm, IAutoColorize
-	{
+    public partial class RTC_ConnectionStatus_Form : ComponentForm, IAutoColorize, IBlockable
+    {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         public RTC_ConnectionStatus_Form()
-		{
-			InitializeComponent();
+        {
+            InitializeComponent();
             this.Shown += RTC_ConnectionStatus_Form_Shown;
             this.btnTriggerKillswitch.MouseClick += BtnTriggerKillswitch_MouseClick;
         }
-
 
         private readonly string[] _flavorText = {
             "Imagine if we had actual flavor text",
@@ -35,18 +31,20 @@ namespace RTCV.UI
             "The Vanguard of unreliable sloshy behavior r&&d innovation for the thrill of gamers",
             "Where are all these plates coming from anyway",
             "Preparing more plates, please standby",
-			"Unpredictable and profoundly cursed",
-			"Violates every design paradigm in the book",
+            "Unpredictable and profoundly cursed",
+            "Violates every design paradigm in the book",
         };
 
-		private void RTC_ConnectionStatus_Form_Load(object sender, EventArgs e)
-		{
-			int crashSound = 0;
+        private void RTC_ConnectionStatus_Form_Load(object sender, EventArgs e)
+        {
+            int crashSound = 0;
 
-			if (NetCore.Params.IsParamSet("CRASHSOUND"))
-				crashSound = Convert.ToInt32(NetCore.Params.ReadParam("CRASHSOUND"));
+            if (NetCore.Params.IsParamSet("CRASHSOUND"))
+            {
+                crashSound = Convert.ToInt32(NetCore.Params.ReadParam("CRASHSOUND"));
+            }
 
-			S.GET<RTC_SettingsNetCore_Form>().cbCrashSoundEffect.SelectedIndex = crashSound;
+            S.GET<RTC_SettingsNetCore_Form>().cbCrashSoundEffect.SelectedIndex = crashSound;
         }
 
         private void RTC_ConnectionStatus_Form_Shown(object sender, EventArgs e)

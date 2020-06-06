@@ -10,7 +10,7 @@
     <AssemblyName>UI</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -64,13 +64,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\..\..\TwitchControlRTCV\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\NLog.4.6.8\lib\net45\NLog.dll</HintPath>
+      <HintPath>..\..\..\..\TwitchControlRTCV\packages\NLog.4.6.8\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="NLog.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\NLog.Windows.Forms.4.3.0\lib\net35\NLog.Windows.Forms.dll</HintPath>
+      <HintPath>..\..\..\..\TwitchControlRTCV\packages\NLog.Windows.Forms.4.3.0\lib\net35\NLog.Windows.Forms.dll</HintPath>
     </Reference>
     <Reference Include="SlimDX, Version=4.0.13.43, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
@@ -111,6 +111,7 @@
     <Compile Include="Components\Containers\RTC_SelectBox_Form.designer.cs">
       <DependentUpon>RTC_SelectBox_Form.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\Controls\HexTextBox.cs" />
     <Compile Include="Components\Controls\InputCompositeWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -134,6 +135,12 @@
     </Compile>
     <Compile Include="Components\Controls\MultiUpDown.Designer.cs">
       <DependentUpon>MultiUpDown.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Controls\OpenToolButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Components\Controls\OpenToolButton.Designer.cs">
+      <DependentUpon>OpenToolButton.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Controls\SavestateHolder.cs">
       <SubType>UserControl</SubType>
@@ -197,6 +204,12 @@
     </Compile>
     <Compile Include="Components\Glitch Harvester\RTC_StockpileManager_Form.designer.cs">
       <DependentUpon>RTC_StockpileManager_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Memory Tools\RTC_DomainAnalytics_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Components\Memory Tools\RTC_DomainAnalytics_Form.designer.cs">
+      <DependentUpon>RTC_DomainAnalytics_Form.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Memory Tools\RTC_OpenTools_Form.cs">
       <SubType>Form</SubType>
@@ -281,6 +294,12 @@
     </Compile>
     <Compile Include="Components\Settings\RTC_SettingsHotkeyConfig_Form.designer.cs">
       <DependentUpon>RTC_SettingsHotkeyConfig_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\RTC_AnalyticsTool_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RTC_AnalyticsTool_Form.Designer.cs">
+      <DependentUpon>RTC_AnalyticsTool_Form.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\RTC_BlastGenerator_Form.cs">
       <SubType>Form</SubType>
@@ -417,6 +436,9 @@
     <EmbeddedResource Include="Components\Controls\MultiUpDown.resx">
       <DependentUpon>MultiUpDown.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Components\Controls\OpenToolButton.resx">
+      <DependentUpon>OpenToolButton.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Components\Controls\SavestateHolder.resx">
       <DependentUpon>SavestateHolder.cs</DependentUpon>
     </EmbeddedResource>
@@ -449,6 +471,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Glitch Harvester\RTC_StockpileManager_Form.resx">
       <DependentUpon>RTC_StockpileManager_Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Memory Tools\RTC_DomainAnalytics_Form.resx">
+      <DependentUpon>RTC_DomainAnalytics_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Memory Tools\RTC_OpenTools_Form.resx">
       <DependentUpon>RTC_OpenTools_Form.cs</DependentUpon>
@@ -491,6 +516,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Settings\RTC_SettingsNetCore_Form.resx">
       <DependentUpon>RTC_SettingsNetCore_Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RTC_AnalyticsTool_Form.resx">
+      <DependentUpon>RTC_AnalyticsTool_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RTC_BlastGenerator_Form.resx">
       <DependentUpon>RTC_BlastGenerator_Form.cs</DependentUpon>
@@ -563,9 +591,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Question Mark.png" />

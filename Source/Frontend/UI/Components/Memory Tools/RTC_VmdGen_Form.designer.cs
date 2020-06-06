@@ -434,7 +434,7 @@
         public System.Windows.Forms.Label lbWordSizeValue;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tbVmdName;
+        public System.Windows.Forms.TextBox tbVmdName;
         private System.Windows.Forms.Button btnHelp;
 		private System.Windows.Forms.Label label1;
 		public System.Windows.Forms.NumericUpDown nmPadding;

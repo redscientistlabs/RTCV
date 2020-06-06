@@ -1,33 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 using RTCV.CorruptCore;
-using System.Linq;
-using System.Threading.Tasks;
-using static RTCV.UI.UI_Extensions;
-using RTCV.NetCore.StaticTools;
 using RTCV.NetCore;
+using RTCV.Common;
 using RTCV.UI.Components.Controls;
+using static RTCV.UI.UI_Extensions;
 
 namespace RTCV.UI
 {
-	public partial class RTC_SimpleMode_Form : ComponentForm, IAutoColorize
+    public partial class RTC_SimpleMode_Form : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         public bool DontLoadSelectedStockpile = false;
-		private bool currentlyLoading = false;
-
-        PlatformType platform = PlatformType.CLASSIC;
+        private PlatformType platform = PlatformType.CLASSIC;
 
         public bool DontUpdateSpec = false;
 
         public RTC_SimpleMode_Form()
-		{
-			InitializeComponent();
+        {
+            InitializeComponent();
         }
 
         public void EnteringSimpleMode()
@@ -42,10 +36,14 @@ namespace RTCV.UI
             S.GET<UI_CoreForm>().btnManualBlast.Visible = false;
 
             if (rbClassicPlatforms.Checked)
+            {
                 rbClassicPlatforms_CheckedChanged(null, null);
+            }
 
             if (rbModernPlatforms.Checked)
+            {
                 rbModernPlatforms_CheckedChanged(null, null);
+            }
 
             NetCore.Params.SetParam("SIMPLE_MODE"); //Set RTC in Simple Mode
         }
@@ -62,23 +60,21 @@ namespace RTCV.UI
             S.GET<UI_CoreForm>().btnManualBlast.Visible = true;
 
             S.GET<UI_CoreForm>().btnEngineConfig_Click(null, null);
-
-            
         }
 
-		private void RTC_SimpleMode_Form_FormClosing(object sender, FormClosingEventArgs e)
-		{
-			if (e.CloseReason != CloseReason.FormOwnerClosing)
-			{
-				e.Cancel = true;
-				this.Hide();
-			}
-		}
+        private void RTC_SimpleMode_Form_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason != CloseReason.FormOwnerClosing)
+            {
+                e.Cancel = true;
+                this.Hide();
+            }
+        }
 
-		private void btnBlastToggle_Click(object sender, EventArgs e)
-		{
-			S.GET<RTC_GlitchHarvesterBlast_Form>().btnBlastToggle_Click(null, null);
-		}
+        private void btnBlastToggle_Click(object sender, EventArgs e)
+        {
+            S.GET<RTC_GlitchHarvesterBlast_Form>().btnBlastToggle_Click(null, null);
+        }
 
         private void btnManualBlast_Click(object sender, EventArgs e)
         {
@@ -93,12 +89,10 @@ namespace RTCV.UI
 
         private void btnCreateGhSavestate_Click(object sender, EventArgs e)
         {
-
             //Select first savestate slot if none is selected
             var selectedHolder = S.GET<RTC_SavestateManager_Form>().savestateList.selectedHolder;
             if (selectedHolder == null)
             {
-
                 //Generate object sender and MouseEventArgs e data for the button click
                 SavestateHolder holder = (SavestateHolder)S.GET<RTC_SavestateManager_Form>().savestateList.flowPanel.Controls[0];
                 Button _sender = holder.btnSavestate;
@@ -114,18 +108,16 @@ namespace RTCV.UI
 
             //Trigger Save button
             S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad_Click(null, null);
-
         }
 
         private void btnGlitchHarvesterCorrupt_Click(object sender, EventArgs e)
         {
-            if(S.GET<RTC_StashHistory_Form>().lbStashHistory.Items.Count >= 20)
+            if (S.GET<RTC_StashHistory_Form>().lbStashHistory.Items.Count >= 20)
             {
                 S.GET<RTC_StashHistory_Form>().RemoveFirstStashHistoryItem();
             }
 
             S.GET<RTC_GlitchHarvesterBlast_Form>().btnCorrupt_Click(null, null);
-
         }
 
         private void rbClassicPlatforms_CheckedChanged(object sender, EventArgs e)
@@ -140,7 +132,7 @@ namespace RTCV.UI
 
         public void SwitchPlatformType(PlatformType pt)
         {
-            switch(pt)
+            switch (pt)
             {
                 case PlatformType.CLASSIC:
                     SelectNightmareEngine();
@@ -150,7 +142,6 @@ namespace RTCV.UI
                     SelectVectorEngine();
                     break;
             }
-
 
             S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
             S.GET<UI_CoreForm>().btnManualBlast.Visible = false;
@@ -167,10 +158,13 @@ namespace RTCV.UI
         public void Shuffle()
         {
             if (platform == PlatformType.CLASSIC)
+            {
                 ShuffleClassic();
+            }
             else if (platform == PlatformType.MODERN)
+            {
                 ShuffleModern();
-
+            }
         }
 
         public void ShuffleClassic()
@@ -178,13 +172,12 @@ namespace RTCV.UI
             //TODO: If vanguard implementation doesn't support real-time
             //SelectNightmareEngine();
 
-
             string originalText = lbEngineDescription.Text;
 
             Random RND = new Random((int)DateTime.Now.Ticks);
             int engineSelect = RND.Next(1, 5);
 
-            switch(engineSelect)
+            switch (engineSelect)
             {
                 case 1:
                     SelectNightmareEngine();
@@ -204,7 +197,9 @@ namespace RTCV.UI
             }
 
             if (originalText == lbEngineDescription.Text)
+            {
                 ShuffleClassic();
+            }
 
             S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
             S.GET<UI_CoreForm>().btnManualBlast.Visible = false;
@@ -223,14 +218,13 @@ namespace RTCV.UI
                                        $"\n" +
                                        $"This engine is made for corrupting 3d games\n" +
                                        $"and 2d games made for 3d-era consoles.";
-
         }
 
         public void SelectComboBoxRandomItem(ComboBox cb)
         {
             Random RND = new Random((int)DateTime.Now.Ticks);
             int nbItems = cb.Items.Count;
-            int SelectIndex = RND.Next(0, nbItems -1);
+            int SelectIndex = RND.Next(0, nbItems - 1);
             cb.SelectedIndex = SelectIndex;
         }
 
@@ -250,17 +244,20 @@ namespace RTCV.UI
             }
 
             if (selectedEngineIndex == -1)
+            {
                 throw new Exception($"Could not load {name}");
+            }
 
             cb.SelectedIndex = selectedEngineIndex;
-
         }
 
         public void ResetSession()
         {
             var ui = S.GET<UI_CoreForm>();
             if (ui.AutoCorrupt)
+            {
                 btnAutoCorrupt_Click(null, null);
+            }
 
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_CLEARSTEPBLASTUNITS, null, true);
         }
@@ -276,7 +273,6 @@ namespace RTCV.UI
                                        $"This engine is made for corrupting 2d games.\n" +
                                        $"It generates garbage data and writes it \n" +
                                        $"to the game's memory.";
-
         }
 
         public void SelectHellgenieEngine()
@@ -285,11 +281,10 @@ namespace RTCV.UI
             SelectEngineByName("Hellgenie Engine");
             SetInfiniteUnitVisibility(true);
 
-            lbEngineDescription.Text =$"Auto-Selected Engine: Hellgenie Engine\n" +
+            lbEngineDescription.Text = $"Auto-Selected Engine: Hellgenie Engine\n" +
                                       $"\n" +
                                       $"This engine generates garbage data and then\n" +
                                       $"continuously writes it to the game's memory.";
-
         }
 
         public void SelectFreezeEngine()
@@ -327,7 +322,6 @@ namespace RTCV.UI
                                        $"\n" +
                                        $"This engine randomly links memory adresses together,\n" +
                                        $"transporting the value of one to another.";
-
         }
 
         public void SelectVectorEngine()
@@ -342,7 +336,9 @@ namespace RTCV.UI
                 S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.SelectedIndex = 0;
             }
             else
+            {
                 throw new Exception("No vector lists could be found. Your RTCV installation might be broken.");
+            }
 
             string limiter = S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.Text;
             string value = S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.Text;
@@ -384,7 +380,6 @@ namespace RTCV.UI
             var selectedHolder = S.GET<RTC_SavestateManager_Form>().savestateList.selectedHolder;
             if (selectedHolder == null)
             {
-
                 //Generate object sender and MouseEventArgs e data for the button click
                 SavestateHolder holder = (SavestateHolder)S.GET<RTC_SavestateManager_Form>().savestateList.flowPanel.Controls[0];
                 Button _sender = holder.btnSavestate;
@@ -412,7 +407,10 @@ namespace RTCV.UI
         private void CbClearRewind_CheckedChanged(object sender, EventArgs e)
         {
             if (DontUpdateSpec)
+            {
                 return;
+            }
+
             S.GET<RTC_CorruptionEngine_Form>().SetRewindBoxes(cbClearRewind.Checked);
             S.GET<RTC_CustomEngineConfig_Form>().SetRewindBoxes(cbClearRewind.Checked);
 
@@ -421,7 +419,6 @@ namespace RTCV.UI
 
         private void cbClearRewind_CheckedChanged(object sender, EventArgs e)
         {
-
         }
     }
 

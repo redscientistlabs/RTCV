@@ -1,19 +1,12 @@
-﻿using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.NetCore.StaticTools;
-using RTCV.UI.Modular;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json;
-using static RTCV.UI.UI_Extensions;
+using RTCV.CorruptCore;
+using RTCV.NetCore;
+using RTCV.Common;
+using RTCV.UI.Modular;
 
 namespace RTCV.UI
 {
@@ -36,10 +29,7 @@ namespace RTCV.UI
 
         public bool AutoCorrupt
         {
-            get
-            {
-                return CorruptCore.RtcCore.AutoCorrupt;
-            }
+            get => CorruptCore.RtcCore.AutoCorrupt;
             set
             {
                 if (value)
@@ -57,14 +47,11 @@ namespace RTCV.UI
             }
         }
 
-
         public UI_CoreForm()
         {
             InitializeComponent();
             thisForm = this;
             this.FormClosing += UI_CoreForm_FormClosing;
-
-
 
             cfForm = new UI_CanvasForm
             {
@@ -98,6 +85,7 @@ namespace RTCV.UI
                 return;
             }
 
+            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_EVENT_SHUTDOWN, true);
             LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_EVENT_CLOSEEMULATOR);
 
             //Sleep to make sure the message is sent
@@ -134,11 +122,13 @@ This message only appears once.";
 
                 //Use the text file if it exists
                 if (File.Exists(disclaimerPath))
+                {
                     disclaimer = File.ReadAllText(disclaimerPath);
+                }
 
                 S.GET<RTC_Intro_Form>().DisplayRtcvDisclaimer(disclaimer.Replace("[ver]", CorruptCore.RtcCore.RtcVersion));
                 //MessageBox.Show(disclaimer.Replace("[ver]", CorruptCore.RtcCore.RtcVersion), "RTC", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                
+
                 NetCore.Params.SetParam("DISCLAIMER_READ");
 
                 if (S.GET<RTC_Intro_Form>().selection == IntroAction.SIMPLEMODE)
@@ -151,7 +141,6 @@ This message only appears once.";
                         RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
                         smForm.EnteringSimpleMode();
                     }
-
                 }
 
                 NetCore.Params.SetParam("COMPRESS_STOCKPILE"); //Default param
@@ -160,7 +149,6 @@ This message only appears once.";
 
             CorruptCore.RtcCore.DownloadProblematicProcesses();
 
-            UICore.LoadLists(CorruptCore.RtcCore.listsDir);
             //UI_DefaultGrids.engineConfig.LoadToMain();
         }
 
@@ -173,20 +161,23 @@ This message only appears once.";
         private void UI_CoreForm_ResizeBegin(object sender, EventArgs e)
         {
             //Sends event to SubForm 
-            if(cfForm.spForm != null)
+            if (cfForm.spForm != null)
+            {
                 cfForm.spForm.Parent_ResizeBegin();
-            
+            }
         }
-
 
         private void UI_CoreForm_ResizeEnd(object sender, EventArgs e)
         {
             //Sends event to SubForm
             if (cfForm.spForm != null)
+            {
                 cfForm.spForm?.Parent_ResizeEnd();
+            }
         }
 
-        FormWindowState? LastWindowState = null;
+        private FormWindowState? LastWindowState = null;
+
         private void UI_CoreForm_Resize(object sender, EventArgs e)
         {
             // When window state changes
@@ -204,7 +195,9 @@ This message only appears once.";
                 */
 
                 if (cfForm.spForm != null)
+                {
                     cfForm.spForm?.Parent_ResizeEnd();
+                }
 
                 LastWindowState = WindowState;
             }
@@ -216,14 +209,11 @@ This message only appears once.";
 
             var f = S.GET<UI_ComponentFormSubForm>();
             cfForm.OpenSubForm(f, true);
-
         }
 
         private void BtnOpenCustomLayout_Click(object sender, EventArgs e)
         {
-
-                CanvasGrid.LoadCustomLayout();
-
+            CanvasGrid.LoadCustomLayout();
         }
 
         private void PrepareLockSideBar()
@@ -239,29 +229,29 @@ This message only appears once.";
                 };
                 pnSideBar.Controls.Add(pnLockSidebar);
                 pnLockSidebar.BringToFront();
-   
-            }    
+            }
         }
 
         public void LockSideBar()
         {
             PrepareLockSideBar();
 
-			Bitmap bmp = pnSideBar.getFormScreenShot();
-			bmp.Tint(Color.FromArgb(0xF0, UICore.Dark4Color));
-			pnLockSidebar.BackgroundImage = bmp;
-			pnLockSidebar.Visible = true;
+            Bitmap bmp = pnSideBar.getFormScreenShot();
+            bmp.Tint(Color.FromArgb(0xF0, UICore.Dark4Color));
+            pnLockSidebar.BackgroundImage = bmp;
+            pnLockSidebar.Visible = true;
         }
 
         public void UnlockSideBar()
         {
-            if(pnLockSidebar != null)
+            if (pnLockSidebar != null)
+            {
                 pnLockSidebar.Visible = false;
+            }
         }
 
         public void btnEngineConfig_Click(object sender, EventArgs e)
         {
-            
             if (NetCore.Params.IsParamSet("SIMPLE_MODE"))
             {
                 UI_DefaultGrids.simpleMode.LoadToMain();
@@ -269,7 +259,9 @@ This message only appears once.";
                 smForm.EnteringSimpleMode();
             }
             else
+            {
                 UI_DefaultGrids.engineConfig.LoadToMain();
+            }
         }
 
         private void pnAutoKillSwitch_MouseHover(object sender, EventArgs e)
@@ -289,25 +281,32 @@ This message only appears once.";
             pnGlitchHarvesterOpen.Visible = true;
 
             UI_DefaultGrids.glitchHarvester.LoadToNewWindow("Glitch Harvester");
-
         }
 
         public void btnAutoCorrupt_Click(object sender, EventArgs e)
         {
             if (btnAutoCorrupt.ForeColor == Color.Silver)
+            {
                 return;
+            }
 
             AutoCorrupt = !AutoCorrupt;
             if (AutoCorrupt)
-                RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_RUNBEFORE.ToString(), true);
+            {
+                RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_RUNBEFORE, true);
+            }
         }
 
         public void btnManualBlast_Click(object sender, EventArgs e)
         {
             if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null)
+            {
                 S.GET<RTC_GlitchHarvesterBlast_Form>().btnCorrupt_Click(sender, e);
+            }
             else
+            {
                 LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.MANUALBLAST, true);
+            }
         }
 
         private void btnEasyMode_MouseDown(object sender, MouseEventArgs e)
@@ -317,27 +316,24 @@ This message only appears once.";
             Point locate = e.GetMouseLocation(sender);
 
             ContextMenuStrip easyButtonMenu = new ContextMenuStrip();
-            (easyButtonMenu.Items.Add("Switch to Simple Mode", null, new EventHandler((ob, ev) => { 
-
-                if((AllSpec.VanguardSpec[VSPEC.NAME] as string)?.ToUpper().Contains("SPEC") ?? false)
+            (easyButtonMenu.Items.Add("Switch to Simple Mode", null, new EventHandler((ob, ev) =>
+            {
+                if ((AllSpec.VanguardSpec[VSPEC.NAME] as string)?.ToUpper().Contains("SPEC") ?? false)
                 {
                     MessageBox.Show("Simple Mode is currently only supported on Vanguard implementations.");
                     return;
                 }
 
-
                 UI_DefaultGrids.simpleMode.LoadToMain();
                 RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
 
                 smForm.EnteringSimpleMode();
-
             }))).Enabled = !simpleModeVisible;
             (easyButtonMenu.Items.Add("Start Auto-Corrupt with Recommended Settings for loaded game", null, new EventHandler(((ob, ev) => { S.GET<UI_CoreForm>().StartEasyMode(true); })))).Enabled = ((bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] == true) && !simpleModeVisible;
             easyButtonMenu.Items.Add(new ToolStripSeparator());
             //EasyButtonMenu.Items.Add("Watch a tutorial video", null, new EventHandler((ob,ev) => Process.Start("https://www.youtube.com/watch?v=sIELpn4-Umw"))).Enabled = false;
             easyButtonMenu.Items.Add("Open the online wiki", null, new EventHandler((ob, ev) => Process.Start("https://corrupt.wiki/")));
             easyButtonMenu.Show(this, locate);
-
         }
 
         private void btnStockpilePlayer_Click(object sender, EventArgs e)
@@ -345,18 +341,19 @@ This message only appears once.";
             UI_DefaultGrids.stockpilePlayer.LoadToMain();
         }
 
+        private int settingsRightClickTimer = 0;
+        private System.Windows.Forms.Timer testErrorTimer = null;
 
-
-        int settingsRightClickTimer = 0;
-        System.Windows.Forms.Timer testErrorTimer = null;
         public void btnSettings_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
                 if (testErrorTimer == null && !RTCV.NetCore.Params.IsParamSet("DEBUG_FETCHMODE"))
                 {
-                    testErrorTimer = new System.Windows.Forms.Timer();
-                    testErrorTimer.Interval = 3000;
+                    testErrorTimer = new System.Windows.Forms.Timer
+                    {
+                        Interval = 3000
+                    };
                     testErrorTimer.Tick += TestErrorTimer_Tick;
                     testErrorTimer.Start();
                 }
@@ -404,6 +401,7 @@ This message only appears once.";
         {
             cbUseGameProtection.Checked = !cbUseGameProtection.Checked;
         }
+
         private void cbUseGameProtection_CheckedChanged(object sender, EventArgs e)
         {
             if (cbUseGameProtection.Checked)
@@ -425,7 +423,9 @@ This message only appears once.";
                 btnGpJumpBack.Visible = false;
 
                 if (!GameProtection.HasBackedUpStates)
+                {
                     return;
+                }
 
                 GameProtection.PopAndRunBackupState();
                 GameProtection.Reset(false);
@@ -433,7 +433,9 @@ This message only appears once.";
             finally
             {
                 if (GameProtection.HasBackedUpStates)
+                {
                     btnGpJumpBack.Visible = true;
+                }
             }
         }
 
@@ -444,7 +446,7 @@ This message only appears once.";
                 btnGpJumpNow.Visible = false;
 
                 //Do this to prevent any potential race
-                var sk = StockpileManager_UISide.BackupedState;;
+                var sk = StockpileManager_UISide.BackupedState; ;
 
                 if (sk != null)
                 {
@@ -462,7 +464,6 @@ This message only appears once.";
 
         private void btnLogo_MouseClick(object sender, MouseEventArgs e)
         {
-
         }
 
         private void btnLogo_Click(object sender, EventArgs e)
@@ -474,7 +475,6 @@ This message only appears once.";
         {
             //	if (RTC_NetcoreImplementation.isStandaloneUI && !S.GET<RTC_Core_Form>().cbUseGameProtection.Checked)
             S.GET<UI_CoreForm>().cbUseGameProtection.Checked = true;
-
 
             if (useTemplate)
             {
@@ -554,12 +554,15 @@ This message only appears once.";
             //Selects an engine from a given string name
 
             for (int i = 0; i < S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Count; i++)
+            {
                 if (S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items[i].ToString() == name)
                 {
                     S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.SelectedIndex = i;
                     break;
                 }
+            }
         }
+
         private void BlastRawStash()
         {
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.MANUALBLAST, true);
@@ -578,26 +581,38 @@ This message only appears once.";
                     BlastRawStash();
                 }));
 
-
                 columnsMenu.Show(this, locate);
             }
-
         }
 
         public static void ForceCloudDebug()
         {
             //SECRET CRASH DONT TELL ANYONE
-            //Trigger: Hold Manual Blast for 7 seconds
             //Purpose: Testing debug window
-            var ex = new CustomException("SECRET CRASH DONT TELL ANYONE",
-"───────▄▀▀▀▀▀▀▀▀▀▀▄▄" + Environment.NewLine + "────▄▀▀─────────────▀▄" + Environment.NewLine + "──▄▀──────────────────▀▄" + Environment.NewLine +
-"──█─────────────────────▀▄" + Environment.NewLine + "─▐▌────────▄▄▄▄▄▄▄───────▐▌" + Environment.NewLine + "─█───────────▄▄▄▄──▀▀▀▀▀──█" + Environment.NewLine +
-"▐▌───────▀▀▀▀─────▀▀▀▀▀───▐▌" + Environment.NewLine + "█─────────▄▄▀▀▀▀▀────▀▀▀▀▄─█" + Environment.NewLine + "█────────────────▀───▐─────▐▌" +
-Environment.NewLine + "▐▌─────────▐▀▀██▄──────▄▄▄─▐▌" + Environment.NewLine + "─█───────────▀▀▀──────▀▀██──█" + Environment.NewLine + "─▐▌────▄─────────────▌──────█" + Environment.NewLine + "──▐▌──▐──────────────▀▄─────█" +
-Environment.NewLine + "───█───▌────────▐▀────▄▀───▐▌" + Environment.NewLine + "───▐▌──▀▄────────▀─▀─▀▀───▄▀" + Environment.NewLine + "───▐▌──▐▀▄────────────────█" + Environment.NewLine + "───▐▌───▌─▀▄────▀▀▀▀▀▀───█" + Environment.NewLine +
-"───█───▀────▀▄──────────▄▀" + Environment.NewLine + "──▐▌──────────▀▄──────▄▀" + Environment.NewLine +
-"─▄▀───▄▀────────▀▀▀▀█▀" + Environment.NewLine + "▀───▄▀──────────▀───▀▀▀▀▄▄▄▄▄"
-            );
+            var image = @"
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣿⣿⣿⠟⠋⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⢿⣿⣿⣿⣿⣿⣿⣿⣿⠟⣿⣿⣿⣿⢻⣿⣿⣿⣯⣤⣶⣿⣿⡿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⣄⣙⣿⣿⣿⣿⣿⣿⣿⣦⣿⣿⣿⠁⢸⣿⣿⡿⣿⣿⣿⣿⣿⣿⣦⡀⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣍⡉⢻⣿⣿⣿⡿⠃⠀⡞⣹⡿⠁⠙⣿⣿⣿⣿⣿⣿⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣌⠻⡛⠉⠙⠛⠚⠉⠉⣽⠁⠀⢠⣷⡏⠀⠀⠀⠹⣿⡿⠿⢛⣫⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠻⣿⣿⣿⡾⡄⠈⠳⠴⠒⠛⠛⠉⠁⠀⠀⠈⠙⠓⢤⡀⠀⠀⠘⣶⣿⡿⠿⠟⠛⢛⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣿⣿⣿⣿⣿⡘⣄⠀⠀⣤⣄⠀⠀⠀⠀⠀⢀⡤⠀⠀⠈⠉⠉⠉⠁⠀⠀⠀⣠⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣭⣽⡷⠁⠀⣰⣿⣿⣏⡳⠀⢀⣴⣿⣧⠀⠀⠀⠀⠀⠀⠀⢀⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣭⣍⣉⠉⠉⠉⠉⠉⠁⠀⠀⠉⠉⠉⢉⣁⣀⠉⠉⠉⠉⠀⠀⠀⠀⠀⡤⠚⢻⣿⠟⢻⣿⣟⠿⢿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣶⠤⣄⠀⠀⠀⠀⠀⠙⠁⠀⠀⠀⠀⠀⠀⢀⡤⠋⠀⣠⠜⠁⠀⠈⣿⣿⣴⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⠿⠛⠉⠁⠀⣿⡏⠀⣾⠀⣠⡆⠀⠀⠀⣀⡀⠀⠀⢠⣶⣿⣧⣤⣤⣴⠁⢀⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⢟⣁⡤⠀⠀⠀⢀⣿⣷⣶⣧⡞⠁⢣⠀⣀⠜⠁⠱⡀⢀⢮⣾⣿⣿⠟⠉⢹⠀⣾⡄⢠⣧⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣷⣿⣿⢁⣴⠇⢠⣿⣿⠿⣿⣿⣿⣶⣾⣜⣡⣴⠆⠀⢻⣿⡿⠟⠉⠀⠀⢀⣼⣼⣙⡇⣼⣿⣧⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣧⣿⣿⢠⣾⣿⣿⣾⣿⣿⣿⣿⡿⠻⡇⠀⣀⣀⠤⣤⢶⣄⡀⢀⣴⣿⣿⣿⣿⣿⣿⣷⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣛⣉⣤⣴⣶⣿⡀⠙⠦⡰⠃⠀⠀⠉⢻⡿⣿⣿⣿⣿⣿⣿⣟⠛⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⣿⣿⣿⣷⣤⣶⣄⣀⠀⠀⠀⠈⢿⣿⣿⣿⡘⠿⣿⣿⣷⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣏⠉⠀⣰⣿⣿⣿⣿⣋⣀⣉⣛⠻⠆⠀⠀⠀⠻⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣼⣿⣿⣿⡿⢿⣿⣿⣿⣿⣿⣷⣶⣶⣦⣤⣤⣤⣭⣿⣿⣿⣿⣿⢿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⣽⣿⣿⣿⣿⣦⣰⣿⣿⣿⣿⣿⡿⠻⣿⣿⣿⣿⣶⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿";
+
+            var ex = new CustomException("SECRET CRASH DONT TELL ANYONE\n" + image, Environment.StackTrace);
 
             Form error = new RTCV.NetCore.CloudDebug(ex, true);
             var result = error.ShowDialog();
@@ -627,7 +642,6 @@ Environment.NewLine + "───█───▌────────▐▀─
                 {
                     RTC_NewBlastEditor_Form.OpenBlastEditor();
                 }));
-
 
                 columnsMenu.Show(this, locate);
             }

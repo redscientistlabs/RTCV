@@ -1,0 +1,11 @@
+﻿<Weavers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="FodyWeavers.xsd">
+  <Costura>
+    <ExcludeAssemblies>
+      Common
+      CorruptCore
+      NetCore
+      PluginHost
+      UI
+    </ExcludeAssemblies>
+  </Costura>
+</Weavers>

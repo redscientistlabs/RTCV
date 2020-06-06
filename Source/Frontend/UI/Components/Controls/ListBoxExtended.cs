@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
+﻿using System.Drawing;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RTCV.UI.Components.Controls
@@ -13,6 +8,7 @@ namespace RTCV.UI.Components.Controls
     {
         [DllImport("user32")]
         public static extern int GetMessagePos();
+
         private const int WM_LBUTTONDOWN = 0x201;
         private int lastClicked = -1;
 
@@ -23,9 +19,10 @@ namespace RTCV.UI.Components.Controls
                 case WM_LBUTTONDOWN:
                     OnPreSelect();
                     break;
-                }
-                base.WndProc(ref m);
+            }
+            base.WndProc(ref m);
         }
+
         protected void OnPreSelect()
         {
             int pos = GetMessagePos();
@@ -52,10 +49,8 @@ namespace RTCV.UI.Components.Controls
                     {
                         this.SetSelected(i, true);
                     }
-
                 }
             }
-
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -63,11 +58,15 @@ namespace RTCV.UI.Components.Controls
             if ((e.Button & MouseButtons.Left) != 0) //Attempt to prevent being triggered from slight accidental mouse movement when deselecting by having a buffer
             {
                 if (SelectionMode == SelectionMode.None)
+                {
                     return;
+                }
 
                 int toSelect = this.IndexFromPoint(e.X, e.Y);
-                if(toSelect != -1 && toSelect != lastClicked)
+                if (toSelect != -1 && toSelect != lastClicked)
+                {
                     this.SetSelected(toSelect, true);
+                }
             }
         }
     }
