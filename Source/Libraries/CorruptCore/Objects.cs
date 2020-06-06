@@ -1022,20 +1022,43 @@ namespace RTCV.CorruptCore
             return ObjectCopierCeras.Clone(this);
         }
 
-        public void Apply(bool storeUncorruptBackup, bool followMaximums = false, bool mergeWithCurrent = false)
+        public void Apply(bool storeUncorruptBackup, bool followMaximums = false, bool mergeWithPrevious = false)
         {
             if (storeUncorruptBackup && this != StockpileManager_EmuSide.UnCorruptBL)
             {
-                BlastLayer UnCorruptBL_Backup = StockpileManager_EmuSide.UnCorruptBL;
-                BlastLayer CorruptBL_Backup = StockpileManager_EmuSide.CorruptBL;
+                BlastLayer UnCorruptBL_Backup = null;
+                BlastLayer CorruptBL_Backup = null;
+
+                if (mergeWithPrevious)
+                {
+                    //UnCorruptBL_Backup = (BlastLayer)StockpileManager_EmuSide.UnCorruptBL?.Clone();
+                    //CorruptBL_Backup = (BlastLayer)StockpileManager_EmuSide.CorruptBL?.Clone();
+
+                    UnCorruptBL_Backup = StockpileManager_EmuSide.UnCorruptBL;
+                    CorruptBL_Backup = StockpileManager_EmuSide.CorruptBL;
+                }
 
                 StockpileManager_EmuSide.UnCorruptBL = GetBackup();
                 StockpileManager_EmuSide.CorruptBL = this;
 
-                if(mergeWithCurrent)
+                if(mergeWithPrevious)
                 {
-                    StockpileManager_EmuSide.UnCorruptBL.Layer.AddRange(UnCorruptBL_Backup.Layer);
-                    StockpileManager_EmuSide.CorruptBL.Layer.AddRange(CorruptBL_Backup.Layer);
+
+                    if (UnCorruptBL_Backup.Layer != null)
+                    {
+                        if (StockpileManager_EmuSide.UnCorruptBL.Layer == null)
+                            StockpileManager_EmuSide.UnCorruptBL.Layer = new List<BlastUnit>();
+
+                        StockpileManager_EmuSide.UnCorruptBL.Layer.AddRange(UnCorruptBL_Backup.Layer);
+                    }
+
+                    if (CorruptBL_Backup.Layer != null)
+                    {
+                        if (StockpileManager_EmuSide.CorruptBL.Layer == null)
+                            StockpileManager_EmuSide.CorruptBL.Layer = new List<BlastUnit>();
+
+                        StockpileManager_EmuSide.CorruptBL.Layer.AddRange(CorruptBL_Backup.Layer);
+                    }
                 }
             }
 

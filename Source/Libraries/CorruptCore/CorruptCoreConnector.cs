@@ -308,7 +308,7 @@ namespace RTCV.CorruptCore
 
                             void a()
                             { 
-                                bl.Apply(storeUncorruptBackup, true, false);
+                                bl.Apply(storeUncorruptBackup, true, merge);
                             }
 
                             SyncObjectSingleton.EmuThreadExecute(a, true);

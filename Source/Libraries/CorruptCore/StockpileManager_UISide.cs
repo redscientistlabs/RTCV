@@ -55,11 +55,13 @@ namespace RTCV.CorruptCore
             }
             else
             {
+                bool mergeWithCurrent = !_clearUnitsBeforeApply;
+
                 //APPLYBLASTLAYER
                 //Param 0 is BlastLayer
                 //Param 1 is storeUncorruptBackup
                 //Param 2 is MergeWithCurrent (for fixing blast toggle with inject)
-                LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.APPLYBLASTLAYER, new object[] { sk?.BlastLayer, true, true }, true);
+                LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.APPLYBLASTLAYER, new object[] { sk?.BlastLayer, true, mergeWithCurrent }, true);
             }
 
             PostApplyStashkey();
