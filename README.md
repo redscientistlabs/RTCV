@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="Assets/Graphical Assets/Vanguard/icon.ico" alt="RTCV Icon" />
+    <a href="https://corrupt.wiki/"><img src="Assets/Graphical Assets/Vanguard/icon.ico" alt="RTCV Icon" /></a>
 </p>
 
 <p align="center">
@@ -21,6 +21,8 @@
 
 Real-Time Corruptor Vanaguard is a Dynamic Corruptor for games. It is a set of libraries that can be rigged up to any program that can load the CLR and works by corrupting data in memory to force glitches. RTCV currently comes with implementations for [Bizhawk](https://github.com/ircluzar/Bizhawk-Vanguard), [Dolphin](https://github.com/NarryG/dolphin-vanguard/), [PCSX2](https://github.com/NarryG/pcsx2-Vanguard), [melonDS](https://github.com/narryg/melonds-vanguard), and [Windows Processes](https://github.com/narryg/processstub-vanguard).
 
+Icon graciously provided by [ShyGuyXXL](https://twitter.com/shyguyxxl)
+
 ## Features
 - Corrupts in real-time
 - Supports various emulators via a generic API. Currently comes with Bizhawk, Dolphin, PCSX2, melonDS, and Windows real-time implementations.
@@ -39,8 +41,6 @@ Real-Time Corruptor Vanaguard is a Dynamic Corruptor for games. It is a set of l
 - The Pipe Engine can corrupt by simulating digital short circuits
 - The Vector Engine is a specialty corruption engine designed for 3D systems. The included lists target systems that support IEEE754 Floating Point values
 - The Custom Engine allows you to create your own engine using the various corruption parameters.
-
-Icon graciously provided by [ShyGuyXXL](https://twitter.com/shyguyxxl)
 
 ## Development
 ### Without Visual Studio
