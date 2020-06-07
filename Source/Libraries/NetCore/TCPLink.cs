@@ -1,15 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Net;
-using System.Net.Sockets;
-using System.Runtime.Serialization;
-using System.Threading;
-using Ceras;
-
 namespace RTCV.NetCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Net;
+    using System.Net.Sockets;
+    using System.Runtime.Serialization;
+    using System.Threading;
+    using Ceras;
+
     public class TCPLink
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();

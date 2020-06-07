@@ -1,13 +1,9 @@
-using RTCV.CorruptCore.EventWarlock;
-using RTCV.CorruptCore.EventWarlock.Editor;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace RTCV.CorruptCore.EventWarlock.WarlockConditions
 {
+    using RTCV.CorruptCore.EventWarlock;
+    using RTCV.CorruptCore.EventWarlock.Editor;
+    using System;
+
     /// <summary>
     /// Example conditional
     /// </summary>

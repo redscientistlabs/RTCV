@@ -1,22 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Reflection.Emit;
-using System.Runtime.ExceptionServices;
-using System.Runtime.InteropServices;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading;
-using System.Windows.Forms;
-using Ceras;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-
 namespace RTCV.NetCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using System.Reflection.Emit;
+    using System.Runtime.ExceptionServices;
+    using System.Runtime.InteropServices;
+    using System.Runtime.Serialization.Formatters.Binary;
+    using System.Text;
+    using System.Threading;
+    using System.Windows.Forms;
+    using Ceras;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
+
     public static class NetCore_Extensions
     {
         public static class ObjectCopier

@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-
-namespace RTCV.NetCore
+﻿namespace RTCV.NetCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Windows.Forms;
+
     public static class LocalNetCoreRouter
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();

@@ -1,11 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace RTCV.CorruptCore.EventWarlock.Editor
 {
+    using System;
+
     /// <summary>
     /// Used to link parameters to constructor arguments for the editor
     /// </summary>

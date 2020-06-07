@@ -880,7 +880,7 @@ namespace RTCV.UI
                     DataTable dt = null;
                     var settings = new JsonSerializerSettings
                     {
-                        //	NullValueHandling = NullValueHandling.Ignore,
+                        //    NullValueHandling = NullValueHandling.Ignore,
                     };
                     dt = JsonConvert.DeserializeObject<DataTable>(File.ReadAllText(ofd.FileName), settings);
                     if (!import)

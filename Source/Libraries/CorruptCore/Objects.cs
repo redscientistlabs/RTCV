@@ -592,13 +592,13 @@ namespace RTCV.CorruptCore
         }
 
         /// <summary>
-		/// Extracts a stockpile into a folder and ensures a master file exists
-		/// </summary>
-		/// <param name="filename"></param>
-		/// <param name="folder"></param>
-		/// <param name="masterFile"></param>
-		/// <returns></returns>
-		public static OperationResults<bool> Extract(string filename, string folder, string masterFile)
+        /// Extracts a stockpile into a folder and ensures a master file exists
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="folder"></param>
+        /// <param name="masterFile"></param>
+        /// <returns></returns>
+        public static OperationResults<bool> Extract(string filename, string folder, string masterFile)
         {
             var r = new OperationResults<bool>();
             try
@@ -859,7 +859,7 @@ namespace RTCV.CorruptCore
         /// <summary>
         /// Can be called from UI Side
         /// </summary>
-		public bool Run()
+        public bool Run()
         {
             StockpileManager_UISide.CurrentStashkey = this;
             return StockpileManager_UISide.ApplyStashkey(this);
@@ -868,7 +868,7 @@ namespace RTCV.CorruptCore
         /// <summary>
         /// Can be called from UI Side
         /// </summary>
-		public void RunOriginal()
+        public void RunOriginal()
         {
             StockpileManager_UISide.CurrentStashkey = this;
             StockpileManager_UISide.OriginalFromStashkey(this);

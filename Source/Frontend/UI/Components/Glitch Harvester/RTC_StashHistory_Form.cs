@@ -51,7 +51,7 @@
             string Name = "";
             string value = "";
 
-            StashKey sk = (StashKey)lbStashHistory.SelectedItem; ;
+            StashKey sk = (StashKey)lbStashHistory.SelectedItem;
             StockpileManager_UISide.CurrentStashkey = sk;
 
             //If we don't support mixed stockpiles

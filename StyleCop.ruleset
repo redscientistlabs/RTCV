@@ -74,6 +74,8 @@
     <Rule Id="SA1212" Action="None" /> <!-- A get accessor appears after a set accessor within a property or indexer -->
     <Rule Id="SA1311" Action="None" /> <!-- Static readonly fields should begin with upper-case letter -->
     <Rule Id="SA1408" Action="None" /> <!-- Conditional expressions should declare precedence -->
+    <Rule Id="SA1129" Action="None" /> <!-- Do not use default value type constructor -->
+    <Rule Id="SA1003" Action="None" /> <!-- Operator whitespace -->
   </Rules>
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
     <Rule Id="CA1001" Action="Warning" />
@@ -138,5 +140,6 @@
     <Rule Id="CA2240" Action="Warning" />
     <Rule Id="CA2241" Action="Warning" />
     <Rule Id="CA2242" Action="Warning" />
+    <Rule Id="CS0649" Action="None" /> <!-- Field is never assigned to -->
   </Rules>
 </RuleSet>

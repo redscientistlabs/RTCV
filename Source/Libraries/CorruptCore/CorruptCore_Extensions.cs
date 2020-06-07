@@ -1226,8 +1226,8 @@
                 if (Win32.AllocConsole())
                 {
                     //set icons for the console so we can tell them apart from the main window
-                    //		Win32.SendMessage(Win32.GetConsoleWindow(), 0x0080/*WM_SETICON*/, (IntPtr)0/*ICON_SMALL*/, Properties.Resources.console16x16.GetHicon());
-                    //		Win32.SendMessage(Win32.GetConsoleWindow(), 0x0080/*WM_SETICON*/, (IntPtr)1/*ICON_LARGE*/, Properties.Resources.console32x32.GetHicon());
+                    //    Win32.SendMessage(Win32.GetConsoleWindow(), 0x0080/*WM_SETICON*/, (IntPtr)0/*ICON_SMALL*/, Properties.Resources.console16x16.GetHicon());
+                    //    Win32.SendMessage(Win32.GetConsoleWindow(), 0x0080/*WM_SETICON*/, (IntPtr)1/*ICON_LARGE*/, Properties.Resources.console32x32.GetHicon());
                     hasConsole = true;
                 }
                 else

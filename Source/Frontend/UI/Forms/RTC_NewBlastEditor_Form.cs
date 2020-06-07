@@ -1770,7 +1770,7 @@ namespace RTCV.UI
         private void loadFromFileblToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BlastLayer temp = BlastTools.LoadBlastLayerFromFile();
-            if(temp != null)
+            if (temp != null)
                 LoadBlastlayer(temp);
         }
 
@@ -2144,7 +2144,6 @@ namespace RTCV.UI
                 lastAnswer = MessageBox.Show(@"Is the effect you are looking for still present?", "BlastLayer sanitization", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             }
             */
-
         }
 
         public StashKey[] GetStashKeys()

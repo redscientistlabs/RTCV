@@ -1,12 +1,12 @@
-using System;
-using System.ComponentModel;
-using System.Reflection;
-using System.Threading;
-using System.Windows.Forms;
-using Ceras;
-
 namespace RTCV.NetCore
 {
+    using System;
+    using System.ComponentModel;
+    using System.Reflection;
+    using System.Threading;
+    using System.Windows.Forms;
+    using Ceras;
+
     public enum NetworkSide
     {
         NONE,

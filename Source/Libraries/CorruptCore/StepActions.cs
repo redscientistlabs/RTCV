@@ -169,9 +169,9 @@ namespace RTCV.CorruptCore
 
 
         /*
-		 Iterate over all the existing batches.
-		 If a batch that matches all the params already exists, return that. otherwise, create and return a new batch.
-		 */
+         Iterate over all the existing batches.
+         If a batch that matches all the params already exists, return that. otherwise, create and return a new batch.
+         */
         public static List<BlastUnit> GetBatchedLayer(BlastUnit bu)
         {
             List<BlastUnit> collection = null;

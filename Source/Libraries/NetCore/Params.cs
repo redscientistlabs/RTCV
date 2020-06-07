@@ -1,7 +1,7 @@
-﻿using System.IO;
-
-namespace RTCV.NetCore
+﻿namespace RTCV.NetCore
 {
+    using System.IO;
+
     public static class Params
     {
         //Todo - Isolate this out

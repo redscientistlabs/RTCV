@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RTCV.CorruptCore.EventWarlock.Editor;
-
 namespace RTCV.CorruptCore.EventWarlock.WarlockActions
 {
+    using System;
+    using RTCV.CorruptCore.EventWarlock.Editor;
+
     /// <summary>
     /// Example action
     /// </summary>

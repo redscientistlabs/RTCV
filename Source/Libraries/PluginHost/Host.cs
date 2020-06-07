@@ -68,9 +68,9 @@ namespace RTCV.PluginHost
                     //Start both sides and leave it up to the plugin dev to handle it for now if they're devving in attached mode (sorry Narry) //Narry 3-22-20
                     if (side == RTCSide.Both)
                     {
-                        if(p.Start(RTCSide.Client))
+                        if (p.Start(RTCSide.Client))
                             logger.Info("Loaded {pluginName} as client successfully", p.Name);
-                        if(p.Start(RTCSide.Server))
+                        if (p.Start(RTCSide.Server))
                             logger.Info("Loaded {pluginName} as server successfully", p.Name);
                         _loadedPlugins.Add(p);
                     }

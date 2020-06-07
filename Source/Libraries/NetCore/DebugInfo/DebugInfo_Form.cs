@@ -1,8 +1,8 @@
-﻿using System;
-using System.Windows.Forms;
-
-namespace RTCV.NetCore
+﻿namespace RTCV.NetCore
 {
+    using System;
+    using System.Windows.Forms;
+
     public partial class DebugInfo_Form : Form
     {
         public DebugInfo_Form()

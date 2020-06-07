@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Timers;
-
-namespace RTCV.NetCore
+﻿namespace RTCV.NetCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Timers;
+
     public class MessageHub
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();

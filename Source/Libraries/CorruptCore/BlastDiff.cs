@@ -147,7 +147,6 @@ namespace RTCV.CorruptCore
 
                     bu.BigEndian = Original[0].BigEndian;
                     bl.Layer.Add(bu);
-
                 }
             }
 
