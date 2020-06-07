@@ -919,7 +919,7 @@ namespace RTCV.CorruptCore
         //Todo - Replace this when compat is broken
         public void PopulateKnownLists()
         {
-            if(BlastLayer.Layer == null){
+            if (BlastLayer.Layer == null) {
                 MessageBox.Show($"Something went really wrong. Stashkey {Alias}.\nThere doesn't appear to be a linked blastlayer.\nWill attempt to continue saving. If save fails, remove {Alias} from your stockpile and save again.\nSend this stockpile and any info on how you got into this state to the devs.");
                 return;
             }
@@ -1039,9 +1039,8 @@ namespace RTCV.CorruptCore
                 StockpileManager_EmuSide.UnCorruptBL = GetBackup();
                 StockpileManager_EmuSide.CorruptBL = this;
 
-                if(mergeWithPrevious)
+                if (mergeWithPrevious)
                 {
-
                     if (UnCorruptBL_Backup.Layer != null)
                     {
                         if (StockpileManager_EmuSide.UnCorruptBL.Layer == null)

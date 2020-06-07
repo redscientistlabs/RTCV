@@ -19,7 +19,7 @@ namespace RTCV.CorruptCore
 
         private static void PreApplyStashkey(bool _clearUnitsBeforeApply = true)
         {
-            if(_clearUnitsBeforeApply)
+            if (_clearUnitsBeforeApply)
                 LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_CLEARSTEPBLASTUNITS, null, true);
 
 

@@ -703,7 +703,7 @@
 
             var newArray = new byte[bytes.Length];
 
-            for(int i=0;i<bytes.Length;i++)
+            for (int i=0; i<bytes.Length; i++)
             {
                 if (bytes[i] == null)
                     newArray[i] = 69;
@@ -1005,7 +1005,6 @@
 
                 for (int i = 0; i < a.Length; i++)
                 {
-
                     if (a[i] != b[i])
                     {
                         return false;

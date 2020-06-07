@@ -1,13 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Windows.Forms;
-using Ceras;
-
 namespace RTCV.CorruptCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Security.Cryptography;
+    using System.Windows.Forms;
+    using Ceras;
+
     [Serializable]
     [Ceras.MemberConfig(TargetMember.All)]
     public class BitlogicListFilter : IListFilter
@@ -41,12 +41,11 @@ namespace RTCV.CorruptCore
                             doFlipBytes = true;
                         }
                         options.Add(flag); //add as flag to hashset
-
                     }
                     else
                     {
                         if (inHeader) { inHeader = false; }
-                        var e = ParseLine(j + 2, filePath, dataLines[j], doFlipBytes);//Parse lines individually
+                        var e = ParseLine(j + 2, filePath, dataLines[j], doFlipBytes); //Parse lines individually
                         if (e != null)
                         {
                             entries.Add(e);
@@ -56,9 +55,8 @@ namespace RTCV.CorruptCore
 
                 if (entries.Count == 0)
                 {
-                    throw new Exception($"Error reading list {Path.GetFileName(filePath)}, list was empty or contained no valid lines");//show message to user
+                    throw new Exception($"Error reading list {Path.GetFileName(filePath)}, list was empty or contained no valid lines"); //show message to user
                 }
-
             }
             catch (Exception e)
             {
@@ -93,7 +91,7 @@ namespace RTCV.CorruptCore
         {
             try
             {
-                ulong data = BytesToUlong(bytes);//Convert bytes to ulong 
+                ulong data = BytesToUlong(bytes); //Convert bytes to ulong
                 foreach (var e in entries)
                 {
                     if (e.Matches(data))
@@ -119,7 +117,7 @@ namespace RTCV.CorruptCore
             //When passthrough is implemented, work here
             var rval = entries[RtcCore.RND.Next(entries.Count)];
             var outValue = BitConverter.GetBytes(rval.GetRandom(/*BytesToUlong(bytes)*/)); //Bitconverter as little endian
-            Array.Resize(ref outValue, rval.Precision);//discard the last bytes
+            Array.Resize(ref outValue, rval.Precision); //discard the last bytes
 
             //Copied and pasted from other list implementations
             if (outValue.Length < precision)
@@ -188,7 +186,7 @@ namespace RTCV.CorruptCore
         {
             bool flipBytes = !doFlipBytes; //to maintain sanity
 
-            line = line.Trim();//remove whitespace on both sides
+            line = line.Trim(); //remove whitespace on both sides
             string originalLine = line;
 
             //Ignore empty lines and comments
@@ -319,7 +317,7 @@ namespace RTCV.CorruptCore
         {
             //Could be refactored and merged with ParseBin probably
 
-            const ulong digitMask = 0b1111;//ulong mask for one hex digit
+            const ulong digitMask = 0b1111; //ulong mask for one hex digit
 
             ulong template = 0UL;
             ulong wildcard = 0UL;
@@ -374,7 +372,6 @@ namespace RTCV.CorruptCore
 
             return new BitlogicFilterEntry(template, wildcard, passthrough, reserved, GetPrecision(line, 1));
         }
-
     }
 
     /// <summary>
@@ -400,7 +397,6 @@ namespace RTCV.CorruptCore
         static byte[] byteBuffer = new byte[sizeof(ulong)];
         static ulong NextULong()
         {
-
             RtcCore.RND.NextBytes(byteBuffer);
             return BitConverter.ToUInt64(byteBuffer, 0);
         }

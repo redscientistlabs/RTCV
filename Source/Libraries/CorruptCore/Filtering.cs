@@ -141,7 +141,6 @@
             }
             else
             {
-
                 //detect what kind of list it is
                 if (temp.FirstOrDefault(it => it.Contains("?")) != null) //has wildcards, needs nullable array
                 {
@@ -157,12 +156,11 @@
             {
                 return list.Initialize(path, temp, flipBytes,syncListViaNetcore);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex);
                 return "";
             }
-
         }
 
         /// <summary>
@@ -275,27 +273,26 @@
         {
             //checks nullable bytes lists against other byte lists, ignoring null collisions from both sides.
 
-            foreach(var item in hs.ToArray())
+            foreach (var item in hs.ToArray())
             {
                 bool found = true;
 
-                for(int i = 0; i<item.Length;i++)
+                for (int i = 0; i<item.Length; i++)
                 {
                     if (item[i] == null) //ignoring wildcards (null values)
                         continue;
 
-                    if(item[i].Value != bytes[i])
+                    if (item[i].Value != bytes[i])
                     {
                         found = false;
                         break;
                     }
                 }
 
-                if(found)
+                if (found)
                 {
                     return true;
                 }
-
             }
 
             return false;
@@ -320,7 +317,6 @@
             }
 
             return Hash2ValueDico[hash].GetPrecision();
-
         }
 
         /// <summary>
@@ -346,7 +342,6 @@
             var list = Hash2ValueDico[hash];
 
             return list.GetRandomValue(hash,precision);
-
         }
 
         /// <summary>
@@ -380,7 +375,6 @@
                 //If we have a value and the dictionary contains it, build up a String[] containing the values
                 if (s != null && Hash2LimiterDico.ContainsKey(s))
                 {
-
                     List<String> strList = Hash2LimiterDico[s].GetStringList();
 
 

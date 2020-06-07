@@ -303,10 +303,10 @@ namespace RTCV.CorruptCore
 
                             if (temp.Length > 2)
                                  merge = (bool)temp[2];
-                            
+
 
                             void a()
-                            { 
+                            {
                                 bl.Apply(storeUncorruptBackup, true, merge);
                             }
 

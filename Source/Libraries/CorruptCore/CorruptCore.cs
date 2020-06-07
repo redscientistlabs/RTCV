@@ -1075,7 +1075,6 @@ namespace RTCV.CorruptCore
                     if (bl != null)
                         bl.Apply(false, false);
                 }
-
             }
         }
 
