@@ -138,10 +138,6 @@
     <PackageReference Include="NLog">
       <Version>4.6.8</Version>
     </PackageReference>
-    <PackageReference Include="StyleCop.MSBuild" Version="6.1.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -1,11 +1,11 @@
-using System;
-using System.Linq;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using NetworkSide = RTCV.NetCore.NetworkSide;
-
 namespace RTCV.Vanguard
 {
+    using System;
+    using System.Linq;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using NetworkSide = RTCV.NetCore.NetworkSide;
+
     public class VanguardConnector : IRoutable
     {
         public NetCoreReceiver receiver;

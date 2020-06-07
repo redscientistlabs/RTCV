@@ -160,7 +160,7 @@ This message only appears once.";
 
         private void UI_CoreForm_ResizeBegin(object sender, EventArgs e)
         {
-            //Sends event to SubForm 
+            //Sends event to SubForm
             if (cfForm.spForm != null)
             {
                 cfForm.spForm.Parent_ResizeBegin();
@@ -473,7 +473,7 @@ This message only appears once.";
 
         public void StartEasyMode(bool useTemplate)
         {
-            //	if (RTC_NetcoreImplementation.isStandaloneUI && !S.GET<RTC_Core_Form>().cbUseGameProtection.Checked)
+            //if (RTC_NetcoreImplementation.isStandaloneUI && !S.GET<RTC_Core_Form>().cbUseGameProtection.Checked)
             S.GET<UI_CoreForm>().cbUseGameProtection.Checked = true;
 
             if (useTemplate)
