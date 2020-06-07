@@ -48,4 +48,4 @@ Icon graciously provided by [ShyGuyXXL](https://twitter.com/shyguyxxl)
 1. Install [chocolatey](https://chocolatey.org/install)
 1. `cinst -y visualstudio2019buildtools nuget.commandline`
 1. `nuget restore RTCV.sln`
-1. `msbuild.exe RTCV.sln`
+1. `msbuild.exe`
