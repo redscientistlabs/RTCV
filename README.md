@@ -1,11 +1,29 @@
+<p align="center">
+    <img src="Assets/Graphical Assets/Vanguard/icon.ico" alt="RTCV Icon" />
+</p>
+
+<p align="center">
+    <!-- Github action -->
+    <a href="https://github.com/ircluzar/RTCV/actions?query=workflow%3ABuild"><img src="https://github.com/ircluzar/RTCV/workflows/Build/badge.svg" alt="Build status badge" /></a>
+    <!-- Wiki -->
+    <a href="https://corrupt.wiki/"><img src="https://img.shields.io/badge/docs-corrupt.wiki-blue.svg" alt="Docs wiki badge" /></a>
+    <!-- Download -->
+    <a href="https://redscientist.com/rtc"><img src="https://img.shields.io/badge/download-RTC-red.svg" alt="Download badge" /></a>
+    <!-- Discord -->
+    <a href="https://corrupt.wiki/corruptors/rtc/expert#rtc-dev-discord"><img src="https://img.shields.io/discord/279664862836031488.svg" alt="Chat badge" /></a>
+    <!-- Trello -->
+    <a href="https://trello.com/b/9QYo50OC/rtcv"><img src="https://img.shields.io/badge/planning-Trello-blue.svg" alt="Trello badge" /></a>
+</p>
+
 # RTCV - Real-Time Corruptor Vanguard
-Real-Time Corruptor, Vanguard, CorruptCore, NetCore2, RTC Launcher
+
+ > Real-Time Corruptor, Vanguard, CorruptCore, NetCore2, RTC Launcher
 
 Real-Time Corruptor Vanaguard is a Dynamic Corruptor for games. It is a set of libraries that can be rigged up to any program that can load the CLR and works by corrupting data in memory to force glitches. RTCV currently comes with implementations for [Bizhawk](https://github.com/ircluzar/Bizhawk-Vanguard), [Dolphin](https://github.com/NarryG/dolphin-vanguard/), [PCSX2](https://github.com/NarryG/pcsx2-Vanguard), [melonDS](https://github.com/narryg/melonds-vanguard), and [Windows Processes](https://github.com/narryg/processstub-vanguard).
 
-Features:
-- Corrupts in real-time 
-- Supports various emulators via a generic API. Currently comes with Bizhawk, Dolphin, PCSX2, melonDS, and Windows real-time implementations. 
+## Features
+- Corrupts in real-time
+- Supports various emulators via a generic API. Currently comes with Bizhawk, Dolphin, PCSX2, melonDS, and Windows real-time implementations.
 - Supports corrupting files on-disk via the FileStub implementation, as well as including specialized support for certain kinds of files (WiiU games via CemuStub & Unity games via UnityStub).
 - Many corruption engines with customizable algorithms
 - Easy start option for autocorrupt
@@ -22,11 +40,12 @@ Features:
 - The Vector Engine is a specialty corruption engine designed for 3D systems. The included lists target systems that support IEEE754 Floating Point values
 - The Custom Engine allows you to create your own engine using the various corruption parameters.
 
-
-Please consult the Official Wiki for software documentation. https://corrupt.wiki
-
-Download link: http://redscientist.com/rtc
-Trello: https://trello.com/b/9QYo50OC/rtcv
-
-
 Icon graciously provided by [ShyGuyXXL](https://twitter.com/shyguyxxl)
+
+## Development
+### Without Visual Studio
+
+1. Install [chocolatey](https://chocolatey.org/install)
+1. `cinst -y visualstudio2019buildtools nuget.commandline`
+1. `nuget restore RTCV.sln`
+1. `msbuild.exe RTCV.sln`
