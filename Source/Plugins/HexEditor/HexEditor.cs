@@ -179,7 +179,7 @@ namespace RTCV.Plugins.HexEditor
                 }
                 catch (Exception e)
                 {
-                    logger.Error(e,"Failed to UpdateValues() in hex editor.");
+                    logger.Error(e, "Failed to UpdateValues() in hex editor.");
                 }
             }));
         }
@@ -2010,7 +2010,7 @@ namespace RTCV.Plugins.HexEditor
 
         private void FreezeAddress(long address)
         {
-            BlastUnit bu = new BlastUnit(StoreType.ONCE, StoreTime.IMMEDIATE, _domain.Name, address, _domain.Name, address, DataSize, _domain.BigEndian, 0, 0); ;
+            BlastUnit bu = new BlastUnit(StoreType.ONCE, StoreTime.IMMEDIATE, _domain.Name, address, _domain.Name, address, DataSize, _domain.BigEndian, 0, 0);
             bu.Apply(false);
         }
 
