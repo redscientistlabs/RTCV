@@ -149,7 +149,6 @@ namespace RTCV.CorruptCore
                             }
                             else
                             {
-
                                 //Route it to the plugin if loaded
                                 if (RtcCore.PluginHost.LoadedPlugins.Any(x => x.Name == "Hex Editor"))
                                     LocalNetCoreRouter.Route("HEXEDITOR", NetcoreCommands.REMOTE_OPENHEXEDITOR, true);
@@ -630,7 +629,7 @@ namespace RTCV.CorruptCore
                             {
                                 RTCV.Common.Logging.GlobalLogger.Error(e, "Unable to find plugin dir in {dir}", RtcCore.EmuDir + "\\RTC" + "\\PLUGINS");
                             }
-                            RtcCore.LoadPlugins(new[] { RtcCore.pluginDir,  emuPluginDir});
+                            RtcCore.LoadPlugins(new[] { RtcCore.pluginDir,  emuPluginDir });
                         });
 
                         break;

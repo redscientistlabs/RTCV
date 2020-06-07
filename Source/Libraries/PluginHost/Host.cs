@@ -32,7 +32,7 @@ namespace RTCV.PluginHost
             var catalog = new AggregateCatalog();
             foreach (var dir in pluginDirs)
             {
-                if(Directory.Exists(dir))
+                if (Directory.Exists(dir))
                     catalog.Catalogs.Add(new DirectoryCatalog(dir));
             }
             _container = new CompositionContainer(catalog);
@@ -82,14 +82,13 @@ namespace RTCV.PluginHost
                     {
                         logger.Error("Failed to load {pluginName}", p.Name);
                     }
-
                 }
             }
             initialized = true;
         }
         public void Shutdown()
         {
-            foreach(var p in _loadedPlugins)
+            foreach (var p in _loadedPlugins)
             {
                 p.Stop();
             }

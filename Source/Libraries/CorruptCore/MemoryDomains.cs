@@ -1480,7 +1480,6 @@ namespace RTCV.CorruptCore
                 for (int i = 0; i < data.Length; i++)
                     lastMemoryDump[address + i] = data[i];
             */
-
         }
 
         public override void PokeByte(long address, byte data)
@@ -1867,7 +1866,6 @@ namespace RTCV.CorruptCore
         */
 
             //return lastMemoryDump;
-
         }
 
         public override byte[][] lastMemoryDump

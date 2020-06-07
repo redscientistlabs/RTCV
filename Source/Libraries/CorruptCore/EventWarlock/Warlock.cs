@@ -31,7 +31,7 @@ namespace RTCV.CorruptCore.EventWarlock
         /// <returns></returns>
         public static bool AddGrimoire(Grimoire grimoire)
         {
-            if(grimoire.Name != "" && Grimoires.Any(x => x.Name == grimoire.Name))
+            if (grimoire.Name != "" && Grimoires.Any(x => x.Name == grimoire.Name))
             {
                 //Grimoire name already taken
                 return false;

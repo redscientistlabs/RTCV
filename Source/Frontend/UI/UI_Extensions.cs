@@ -386,7 +386,6 @@ namespace RTCV.UI
 
             public bool AllowNegative { get; set; }
         }
-
     }
 
     //From Bizhawk

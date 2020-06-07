@@ -9,7 +9,7 @@ namespace RTCV.CorruptCore.EventWarlock
         /// <summary>
         /// The list of conditionals
         /// </summary>
-        public List<EWConditional> Conditionals = new List<EWConditional>(2);//try to make it as small as possible
+        public List<EWConditional> Conditionals = new List<EWConditional>(2); //try to make it as small as possible
 
         /// <summary>
         /// Adds a conditional. If an operator wasn't set on the last conditional it is automatically assigned a QuestionOp.AND
@@ -18,7 +18,7 @@ namespace RTCV.CorruptCore.EventWarlock
         public void AddConditional(EWConditional w)
         {
             Conditionals.Add(w);
-            if(Conditionals.Count > 1 && Conditionals[Conditionals.Count - 1].NextOp == QuestionOp.NONE)
+            if (Conditionals.Count > 1 && Conditionals[Conditionals.Count - 1].NextOp == QuestionOp.NONE)
             {
                 Conditionals[Conditionals.Count - 1].NextOp = QuestionOp.AND;
             }
