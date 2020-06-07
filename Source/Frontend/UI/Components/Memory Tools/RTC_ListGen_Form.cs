@@ -37,7 +37,7 @@ namespace RTCV.UI
 
         private bool isHex(string str)
         {
-            //Hex characters 
+            //Hex characters
             //Trim the 0x off
             string regex = "^((0[Xx])|([xX]))[0-9A-Fa-f]+$";
             return Regex.IsMatch(str, regex);
@@ -90,7 +90,7 @@ namespace RTCV.UI
 
                 string[] lineParts = trimmedLine.Split('-');
 
-                //We can't do a range on anything besides plain old numbers 
+                //We can't do a range on anything besides plain old numbers
                 if (lineParts.Length > 1)
                 {
                     //Hex

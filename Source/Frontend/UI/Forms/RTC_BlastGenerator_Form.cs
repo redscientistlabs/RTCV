@@ -1,16 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using Newtonsoft.Json;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-
 namespace RTCV.UI
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.IO;
+    using System.Linq;
+    using System.Windows.Forms;
+    using Newtonsoft.Json;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using RTCV.Common;
+
     // 0  dgvBlastProtoReference
     // 1  dgvRowDirty
     // 2  dgvEnabled
@@ -69,7 +69,7 @@ namespace RTCV.UI
         {
             InitializeComponent();
 
-            //For some godforsaken reason, xmlSerializer deserialization wont fill this in as a bool so just use a string god help us all 
+            //For some godforsaken reason, xmlSerializer deserialization wont fill this in as a bool so just use a string god help us all
             (dgvBlastGenerator.Columns["dgvEnabled"]).ValueType = typeof(string);
         }
 
@@ -146,7 +146,7 @@ namespace RTCV.UI
                 //Set up the DGV based on the current state of Bizhawk
                 (dgvBlastGenerator.Rows[lastrow].Cells["dgvRowDirty"]).Value = true;
 
-                //For some godforsaken reason, xmlSerializer deserialization wont fill this in as a bool so just use a string god help us all 
+                //For some godforsaken reason, xmlSerializer deserialization wont fill this in as a bool so just use a string god help us all
                 (dgvBlastGenerator.Rows[lastrow].Cells["dgvEnabled"]).ValueType = typeof(string);
                 ((DataGridViewCheckBoxCell)(dgvBlastGenerator.Rows[lastrow].Cells["dgvEnabled"])).TrueValue = "true";
                 ((DataGridViewCheckBoxCell)(dgvBlastGenerator.Rows[lastrow].Cells["dgvEnabled"])).FalseValue = "false";

@@ -1,15 +1,15 @@
-using System;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Windows.Forms;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-using RTCV.UI.Modular;
-
 namespace RTCV.UI
 {
+    using System;
+    using System.Diagnostics;
+    using System.Drawing;
+    using System.IO;
+    using System.Windows.Forms;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using RTCV.Common;
+    using RTCV.UI.Modular;
+
     public partial class UI_CoreForm : Form, IAutoColorize
     {
         //This form traps events and forwards them.

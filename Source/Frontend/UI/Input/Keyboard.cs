@@ -2,13 +2,13 @@
 //https://github.com/tasvideos/bizhawk
 //Thanks guys
 
-using System.Collections.Generic;
-using RTCV.Common;
-using SlimDX;
-using SlimDX.DirectInput;
-
 namespace RTCV.UI.Input
 {
+    using System.Collections.Generic;
+    using RTCV.Common;
+    using SlimDX;
+    using SlimDX.DirectInput;
+
     public static class KeyInput
     {
         private static readonly object _syncObj = new object();

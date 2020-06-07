@@ -252,11 +252,11 @@ namespace RTCV.UI
                 }))).Enabled = (dgvStockpile.SelectedRows.Count >= 1);
 
                 /*
-				if (!RTC_NetcoreImplementation.isStandaloneUI)
-				{
-					((ToolStripMenuItem)columnsMenu.Items.Add("[Multiplayer] Send Selected Item as a Blast", null, new EventHandler((ob, ev) => { RTC_NetcoreImplementation.Multiplayer?.SendBlastlayer(); }))).Enabled = RTC_NetcoreImplementation.Multiplayer != null && RTC_NetcoreImplementation.Multiplayer.side != NetworkSide.DISCONNECTED;
-					((ToolStripMenuItem)columnsMenu.Items.Add("[Multiplayer] Send Selected Item as a Game State", null, new EventHandler((ob, ev) => { RTC_NetcoreImplementation.Multiplayer?.SendStashkey(); }))).Enabled = RTC_NetcoreImplementation.Multiplayer != null && RTC_NetcoreImplementation.Multiplayer.side != NetworkSide.DISCONNECTED;
-				}*/
+                if (!RTC_NetcoreImplementation.isStandaloneUI)
+                {
+                    ((ToolStripMenuItem)columnsMenu.Items.Add("[Multiplayer] Send Selected Item as a Blast", null, new EventHandler((ob, ev) => { RTC_NetcoreImplementation.Multiplayer?.SendBlastlayer(); }))).Enabled = RTC_NetcoreImplementation.Multiplayer != null && RTC_NetcoreImplementation.Multiplayer.side != NetworkSide.DISCONNECTED;
+                    ((ToolStripMenuItem)columnsMenu.Items.Add("[Multiplayer] Send Selected Item as a Game State", null, new EventHandler((ob, ev) => { RTC_NetcoreImplementation.Multiplayer?.SendStashkey(); }))).Enabled = RTC_NetcoreImplementation.Multiplayer != null && RTC_NetcoreImplementation.Multiplayer.side != NetworkSide.DISCONNECTED;
+                }*/
 
                 columnsMenu.Show(this, locate);
             }
@@ -369,7 +369,7 @@ namespace RTCV.UI
             var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
             try
             {
-                //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
+                //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs
                 //Thus, we want this to happen within the try block
                 UICore.SetHotkeyTimer(false);
 
@@ -478,7 +478,7 @@ namespace RTCV.UI
             var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
             try
             {
-                //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
+                //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs
                 //Thus, we want this to happen within the try block
                 UICore.SetHotkeyTimer(false);
                 UICore.LockInterface(false, true);
@@ -690,7 +690,7 @@ namespace RTCV.UI
                 LoadStockpile(files[0]);
             }
 
-            //Bring the UI back to normal after a drag+drop to prevent weird merge stuff 
+            //Bring the UI back to normal after a drag+drop to prevent weird merge stuff
             S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
         }
 
