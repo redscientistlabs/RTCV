@@ -202,7 +202,7 @@
         /// <param name="sk"></param>
         /// <param name="loadBeforeCorrupt"></param>
         /// <returns></returns>
-		public static List<BlastGeneratorProto> GenerateBlastLayersFromBlastGeneratorProtos(List<BlastGeneratorProto> blastLayers, StashKey sk)
+        public static List<BlastGeneratorProto> GenerateBlastLayersFromBlastGeneratorProtos(List<BlastGeneratorProto> blastLayers, StashKey sk)
         {
             foreach (BlastGeneratorProto bgp in blastLayers)
             {

@@ -76,6 +76,9 @@
     <Rule Id="SA1408" Action="None" /> <!-- Conditional expressions should declare precedence -->
     <Rule Id="SA1129" Action="None" /> <!-- Do not use default value type constructor -->
     <Rule Id="SA1003" Action="None" /> <!-- Operator whitespace -->
+    <Rule Id="SA1411" Action="None" /> <!-- Attribute constructor should not use unnecessary parenthesis -->
+    <Rule Id="SA1134" Action="None" /> <!-- Each attribute should be placed on its own line of code -->
+    <Rule Id="SA1504" Action="None" /> <!-- All accessors should be single-line or multi-line -->
   </Rules>
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
     <Rule Id="CA1001" Action="Warning" />

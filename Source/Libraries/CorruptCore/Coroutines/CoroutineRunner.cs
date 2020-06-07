@@ -55,6 +55,5 @@ namespace RTCV.CorruptCore.Coroutines
                 curCoroutineNode = nextNode;
             }
         }
-
     }
 }

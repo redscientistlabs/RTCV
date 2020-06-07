@@ -68,6 +68,5 @@ namespace RTCV.CorruptCore.EventWarlock
             SmallifyList(ExecuteSpells);
             SmallifyList(PostExecuteSpells);
         }
-
     }
 }

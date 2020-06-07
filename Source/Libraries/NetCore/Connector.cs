@@ -108,7 +108,8 @@ namespace RTCV.NetCore
                     {
                         Thread.Sleep(50);
                     }
-                }catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
                     logger.Error(ex, "Something went terribly wrong when stopping tcp networking");
                 }

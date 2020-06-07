@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Windows.Forms;
-
-namespace RTCV.NetCore
+﻿namespace RTCV.NetCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Windows.Forms;
+
     public static class SyncObjectSingleton
     {
         public static Form SyncObject;
