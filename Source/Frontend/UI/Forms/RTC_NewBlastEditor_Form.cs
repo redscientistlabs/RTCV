@@ -1,16 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Windows.Forms;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-
 /**
  * The DataGridView is bound to the blastlayer
  * All validation is done within the dgv
@@ -53,6 +40,19 @@ Applies for Value & should be editable
 
 namespace RTCV.UI
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Data;
+    using System.IO;
+    using System.Linq;
+    using System.Numerics;
+    using System.Text;
+    using System.Windows.Forms;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using RTCV.Common;
+
     public partial class RTC_NewBlastEditor_Form : Form, IAutoColorize
     {
         private static Dictionary<string, MemoryInterface> _domainToMiDico;

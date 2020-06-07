@@ -1,16 +1,16 @@
-using System;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-using static RTCV.UI.UI_Extensions;
-
 namespace RTCV.UI
 {
+    using System;
+    using System.Data;
+    using System.IO;
+    using System.Linq;
+    using System.Windows.Forms;
+    using System.Xml.Serialization;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using RTCV.Common;
+    using static RTCV.UI.UI_Extensions;
+
     public partial class RTC_VmdPool_Form : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
@@ -129,7 +129,7 @@ namespace RTCV.UI
                     bu.SourceDomain = "[V]" + name;
                 }
             }
-            //Go through the stash history and update any references 
+            //Go through the stash history and update any references
             foreach (StashKey sk in S.GET<RTC_StashHistory_Form>().lbStashHistory.Items)
             {
                 foreach (var bu in sk.BlastLayer.Layer)

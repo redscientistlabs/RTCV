@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows.Forms;
-
-namespace RTCV.UI.Components.Controls
+﻿namespace RTCV.UI.Components.Controls
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Windows.Forms;
+
     public abstract class SpecControl<T> : UserControl where T : new()
     {
         internal bool GeneralUpdateFlag = false; //makes other events ignore firing

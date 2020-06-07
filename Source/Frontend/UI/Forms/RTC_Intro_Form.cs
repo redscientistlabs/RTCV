@@ -1,10 +1,10 @@
-﻿using System;
-using System.Windows.Forms;
-using RTCV.NetCore;
-using RTCV.Common;
-
-namespace RTCV.UI
+﻿namespace RTCV.UI
 {
+    using System;
+    using System.Windows.Forms;
+    using RTCV.NetCore;
+    using RTCV.Common;
+
     public partial class RTC_Intro_Form : Form, IAutoColorize
     {
         public IntroAction selection = IntroAction.EXIT;

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Drawing;
-using System.IO;
-using System.Windows.Forms;
-using RTCV.Common;
-
-namespace RTCV.UI
+﻿namespace RTCV.UI
 {
+    using System;
+    using System.Drawing;
+    using System.IO;
+    using System.Windows.Forms;
+    using RTCV.Common;
+
     public interface ISubForm
     {
         //Interface used for added contrals in SubForms

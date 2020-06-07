@@ -1,14 +1,14 @@
-﻿using System;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Media;
-using System.Windows.Forms;
-using RTCV.Common;
-using static RTCV.UI.UI_Extensions;
-
-namespace RTCV.UI
+﻿namespace RTCV.UI
 {
+    using System;
+    using System.Data;
+    using System.IO;
+    using System.Linq;
+    using System.Media;
+    using System.Windows.Forms;
+    using RTCV.Common;
+    using static RTCV.UI.UI_Extensions;
+
     public partial class RTC_SettingsNetCore_Form : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);

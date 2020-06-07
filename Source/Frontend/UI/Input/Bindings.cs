@@ -1,10 +1,10 @@
 ﻿//Based on code from https://github.com/TASVideos/BizHawk/
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace RTCV.UI.Input
 {
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public static class Bindings
     {
         private static readonly WorkingDictionary<string, List<string>> _bindings = new WorkingDictionary<string, List<string>>();

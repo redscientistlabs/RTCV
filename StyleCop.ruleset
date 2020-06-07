@@ -66,6 +66,10 @@
     <Rule Id="SA1312" Action="None" /> <!-- Variable 'Handle' should begin with lower-case letter -->
     <Rule Id="SA1121" Action="None" /> <!-- Use built-in type alias -->
     <Rule Id="SA1405" Action="None" /> <!-- Debug.Assert should provide message text -->
+    <Rule Id="SA1100" Action="None" /> <!-- Do not prefix calls with base unless local implementation exists -->
+    <Rule Id="SA1310" Action="None" /> <!-- Field should not contain an underscore -->
+    <Rule Id="SA1303" Action="None" /> <!-- Const field names should begin with upper-case letter -->
+    <Rule Id="SA1500" Action="None" /> <!-- Braces for multi-line statements should not share line -->
   </Rules>
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
     <Rule Id="CA1001" Action="Warning" />

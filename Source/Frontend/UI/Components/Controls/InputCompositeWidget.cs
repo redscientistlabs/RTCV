@@ -1,10 +1,9 @@
 ﻿//https://github.com/TASVideos/BizHawk/blob/master/BizHawk.Client.EmuHawk/config/InputCompositeWidget.cs
-
-using System;
-using System.Windows.Forms;
-
 namespace RTCV.UI.Components.Controls
 {
+    using System;
+    using System.Windows.Forms;
+
     public partial class InputCompositeWidget : UserControl
     {
         public InputCompositeWidget()

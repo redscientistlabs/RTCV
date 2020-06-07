@@ -1,12 +1,12 @@
-using System;
-using System.Linq;
-using System.Windows.Forms;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-
 namespace RTCV.UI
 {
+    using System;
+    using System.Linq;
+    using System.Windows.Forms;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using RTCV.Common;
+
     public partial class RTC_SanitizeTool_Form : Form, IAutoColorize
     {
         public BlastLayer originalBlastLayer = null;

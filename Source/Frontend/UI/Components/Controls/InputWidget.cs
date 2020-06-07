@@ -1,14 +1,13 @@
 ﻿//Based on https://github.com/TASVideos/BizHawk/blob/master/BizHawk.Client.EmuHawk/config/InputWidget.cs
-
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-
 namespace RTCV.UI.Components.Controls
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.Linq;
+    using System.Runtime.InteropServices;
+    using System.Windows.Forms;
+
     public sealed class InputWidget : TextBox
     {
         // TODO: when binding, make sure that the new key combo is not in one of the other bindings

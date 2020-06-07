@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
-using Newtonsoft.Json;
-using RTCV.Common;
-using RTCV.UI.Components.Controls;
-using static RTCV.UI.UI_Extensions;
-
-namespace RTCV.UI
+﻿namespace RTCV.UI
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Drawing;
+    using System.Linq;
+    using System.Windows.Forms;
+    using Newtonsoft.Json;
+    using RTCV.Common;
+    using RTCV.UI.Components.Controls;
+    using static RTCV.UI.UI_Extensions;
+
     public partial class RTC_SettingsHotkeyConfig_Form : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);

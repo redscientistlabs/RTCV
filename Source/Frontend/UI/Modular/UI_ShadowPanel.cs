@@ -1,9 +1,9 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-
-namespace RTCV.UI
+﻿namespace RTCV.UI
 {
+    using System;
+    using System.Drawing;
+    using System.Windows.Forms;
+
     public partial class UI_ShadowPanel : Form
     {
         public UI_CanvasForm parentForm;
