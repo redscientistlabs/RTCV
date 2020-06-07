@@ -1,18 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-using Ceras;
-using Newtonsoft.Json;
-using RTCV.NetCore;
-
 namespace RTCV.CorruptCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.IO.Compression;
+    using System.Linq;
+    using System.Runtime.Serialization.Formatters.Binary;
+    using System.Text;
+    using System.Windows.Forms;
+    using System.Xml.Serialization;
+    using Ceras;
+    using Newtonsoft.Json;
+    using RTCV.NetCore;
+
     public static class MemoryDomains
     {
         private static object miLock = new object();

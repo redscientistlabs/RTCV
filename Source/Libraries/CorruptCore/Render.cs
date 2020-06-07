@@ -1,8 +1,8 @@
-﻿using System.Windows.Forms;
-using RTCV.NetCore;
-
-namespace RTCV.CorruptCore
+﻿namespace RTCV.CorruptCore
 {
+    using System.Windows.Forms;
+    using RTCV.NetCore;
+
     public static class Render
     {
         public static bool RenderAtLoad

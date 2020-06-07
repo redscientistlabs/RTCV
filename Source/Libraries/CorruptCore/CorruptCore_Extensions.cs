@@ -1,24 +1,24 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Drawing;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Numerics;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Windows.Forms;
-using Ceras;
-using Newtonsoft.Json;
-using RTCV.NetCore;
-
-namespace RTCV.CorruptCore
+﻿namespace RTCV.CorruptCore
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Diagnostics;
+    using System.Drawing;
+    using System.Globalization;
+    using System.IO;
+    using System.Linq;
+    using System.Numerics;
+    using System.Reflection;
+    using System.Runtime.InteropServices;
+    using System.Runtime.Serialization.Formatters.Binary;
+    using System.Text;
+    using System.Windows.Forms;
+    using Ceras;
+    using Newtonsoft.Json;
+    using RTCV.NetCore;
+
     public static class CorruptCore_Extensions
     {
         public static void DirectoryRequired(string path)
@@ -470,7 +470,7 @@ namespace RTCV.CorruptCore
                             bigIntValue -= bigintAddValueAbs;
                         }
 
-                        //Calculate the max value you can store in this many bits 
+                        //Calculate the max value you can store in this many bits
                         BigInteger maxValue = BigInteger.Pow(2, value.Length * 8) - 1;
 
                         if (bigIntValue > maxValue)

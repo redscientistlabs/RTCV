@@ -1,12 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
-using RTCV.NetCore;
-using RTCV.Common;
-
 namespace RTCV.CorruptCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows.Forms;
+    using RTCV.NetCore;
+
     ///Rather than handling everything individually, we have a system here that works on collections of Blastunits
     ///In most usage, you're probably only going to have a small number of different lifetime/start time mixtures
     ///Rather than operating on every unit individually, we place everything into collections of Blastunits and then operate on them
@@ -192,7 +191,7 @@ namespace RTCV.CorruptCore
             //Checks that the limiters match
             bool CheckLimitersMatch(BlastUnit bu1, BlastUnit bu2)
             {
-                //We only care if it's pre-execute because otherwise its limiter is independent from batching 
+                //We only care if it's pre-execute because otherwise its limiter is independent from batching
                 if (bu1.LimiterTime != LimiterTime.PREEXECUTE)
                 {
                     return true;
@@ -286,7 +285,7 @@ namespace RTCV.CorruptCore
                     queued.AddLast(buList);
                 }
 
-                //Nuke the list 
+                //Nuke the list
                 buListCollection = new List<List<BlastUnit>>();
 
                 //There's data so have the execute loop actually do something
@@ -320,7 +319,7 @@ namespace RTCV.CorruptCore
                 foreach (BlastUnit bu in buList)
                 {
                     //If it returns false, that means the layer shouldn't apply
-                    //This is primarily for if a limiter returns false 
+                    //This is primarily for if a limiter returns false
                     //If this happens, we need to remove it from the pool and then return out
                     if (!bu.EnteringExecution())
                     {

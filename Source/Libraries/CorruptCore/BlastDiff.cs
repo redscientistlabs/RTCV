@@ -1,10 +1,10 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
-using RTCV.NetCore;
-
 namespace RTCV.CorruptCore
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows.Forms;
+    using RTCV.NetCore;
+
     public static class BlastDiff
     {
         public static BlastLayer GetBlastLayer(string filename)

@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using RTCV.NetCore;
-
-namespace RTCV.CorruptCore
+﻿namespace RTCV.CorruptCore
 {
+    using System;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Security.Cryptography;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+    using RTCV.NetCore;
+
     public static class Filtering
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
@@ -395,7 +395,7 @@ namespace RTCV.CorruptCore
                     Hash2NameDico.TryGetValue(s, out string name); //See if we can get the name
                     if (string.IsNullOrWhiteSpace(name))
                     {
-                        name = "UNKNOWN_" + s.Substring(0, 5); // Default name will use the first 5 chars of the hash 
+                        name = "UNKNOWN_" + s.Substring(0, 5); // Default name will use the first 5 chars of the hash
                     }
 
                     lists[(name.StartsWith("STOCKPILE_") ? "" : "STOCKPILE_") + name] = strList;

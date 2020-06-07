@@ -1,14 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using RTCV.NetCore;
-using static RTCV.NetCore.NetcoreCommands;
-
 namespace RTCV.CorruptCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+    using RTCV.NetCore;
+    using static RTCV.NetCore.NetcoreCommands;
+
     public class CorruptCoreConnector : IRoutable
     {
         private static volatile object _loadLock = new object();
@@ -620,7 +620,7 @@ namespace RTCV.CorruptCore
 
                     case REMOTE_LOADPLUGINS:
                         SyncObjectSingleton.FormExecute(() =>
-                        { 
+                        {
                             string emuPluginDir = "";
                             try
                             {

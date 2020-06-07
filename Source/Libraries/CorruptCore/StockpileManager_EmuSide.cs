@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Windows.Forms;
-using RTCV.NetCore;
-
-namespace RTCV.CorruptCore
+﻿namespace RTCV.CorruptCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Windows.Forms;
+    using RTCV.NetCore;
+
     public static class StockpileManager_EmuSide
     {
         public static BlastLayer CorruptBL = null;
@@ -227,7 +227,7 @@ namespace RTCV.CorruptCore
         //From Bizhawk
         public static byte[] DeInterleaveSMD(byte[] source)
         {
-            // SMD files are interleaved in pages of 16k, with the first 8k containing all 
+            // SMD files are interleaved in pages of 16k, with the first 8k containing all
             // odd bytes and the second 8k containing all even bytes.
             int size = source.Length;
             if (size > 0x400000)

@@ -1,23 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Newtonsoft.Json;
-using RTCV.NetCore;
-using RTCV.PluginHost;
-using RTCV.Common;
-using Timer = System.Windows.Forms.Timer;
-
 namespace RTCV.CorruptCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Reflection;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+    using Newtonsoft.Json;
+    using RTCV.NetCore;
+    using RTCV.PluginHost;
+    using Timer = System.Windows.Forms.Timer;
+
     public static class RtcCore
     {
         //General RTC Values

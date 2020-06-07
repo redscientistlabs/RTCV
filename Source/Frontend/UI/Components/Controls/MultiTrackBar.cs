@@ -186,7 +186,7 @@
 
         private void TbControlValue_MouseWheel(object sender, MouseEventArgs e)
         {
-            ((HandledMouseEventArgs)e).Handled = true;//disable default mouse wheel
+            ((HandledMouseEventArgs)e).Handled = true; //disable default mouse wheel
             if (e.Delta > 0)
             {
                 if (tbControlValue.Value + e.Delta <= tbControlValue.Maximum)

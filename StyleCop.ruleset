@@ -70,6 +70,9 @@
     <Rule Id="SA1310" Action="None" /> <!-- Field should not contain an underscore -->
     <Rule Id="SA1303" Action="None" /> <!-- Const field names should begin with upper-case letter -->
     <Rule Id="SA1500" Action="None" /> <!-- Braces for multi-line statements should not share line -->
+    <Rule Id="SA1314" Action="None" /> <!-- Type parameter names should begin with T -->
+    <Rule Id="SA1212" Action="None" /> <!-- A get accessor appears after a set accessor within a property or indexer -->
+    <Rule Id="SA1311" Action="None" /> <!-- Static readonly fields should begin with upper-case letter -->
   </Rules>
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
     <Rule Id="CA1001" Action="Warning" />
