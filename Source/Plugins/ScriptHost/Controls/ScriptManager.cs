@@ -32,7 +32,6 @@ namespace RTCV.Plugins.ScriptHost.Controls
                     MaxLines = 10000,
                     AutoScroll = true,
                     UseDefaultRowColoringRules = false,
-
                 };
                 logtextbox.RowColoringRules.Add(new RichTextBoxRowColoringRule(
                         "level == LogLevel.Trace", // condition
@@ -205,7 +204,7 @@ namespace RTCV.Plugins.ScriptHost.Controls
             MethodDelegate scr = null;
             try
             {
-                scr = await Task.Run(() =>CSScript.CodeDomEvaluator.CreateDelegate(scintilla.Text));
+                scr = await Task.Run(() => CSScript.CodeDomEvaluator.CreateDelegate(scintilla.Text));
             }
             catch (Exception ex)
             {

@@ -1,11 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Reflection;
-using System.Threading;
-using System.Windows.Forms;
-
-namespace StandaloneRTC
+﻿namespace StandaloneRTC
 {
+    using System;
+    using System.IO;
+    using System.Reflection;
+    using System.Threading;
+    using System.Windows.Forms;
+
     static class Program
     {
         static Form loaderObject;
@@ -50,7 +50,7 @@ namespace StandaloneRTC
         }
 
         /// <summary>
-        /// Global exceptions in Non User Interfarce(other thread) antipicated error
+        /// Global exceptions in Non User Interface(other thread) anticipated error
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -62,7 +62,7 @@ namespace StandaloneRTC
         }
 
         /// <summary>
-        /// Global exceptions in User Interfarce antipicated error
+        /// Global exceptions in User Interface anticipated error
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

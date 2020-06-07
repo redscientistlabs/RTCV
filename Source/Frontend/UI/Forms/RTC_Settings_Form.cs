@@ -52,10 +52,10 @@ namespace RTCV.UI
         {
             //If we're not connected, go to connectionstatus
             /*
-			if (UI_VanguardImplementation.connector.netConn.status != NetCore.NetworkStatus.CONNECTED)
-				S.GET<RTC_Core_Form>().ShowPanelForm(S.GET<RTC_ConnectionStatus_Form>());
-			else
-				S.GET<RTC_Core_Form>().ShowPanelForm(S.GET<RTC_Core_Form>().previousForm, false);
+            if (UI_VanguardImplementation.connector.netConn.status != NetCore.NetworkStatus.CONNECTED)
+                S.GET<RTC_Core_Form>().ShowPanelForm(S.GET<RTC_ConnectionStatus_Form>());
+            else
+                S.GET<RTC_Core_Form>().ShowPanelForm(S.GET<RTC_Core_Form>().previousForm, false);
              */
 
             MessageBox.Show("is this even needed anymore?");
