@@ -1,13 +1,13 @@
-using System;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using NLog;
-using RTCV.Plugins.ScriptHost.Controls;
-
 namespace RTCV.Plugins.ScriptHost
 {
+    using System;
+    using System.Drawing;
+    using System.IO;
+    using System.Linq;
+    using System.Windows.Forms;
+    using NLog;
+    using RTCV.Plugins.ScriptHost.Controls;
+
     public partial class ScriptHost : Form
     {
         Color DarkerGray = Color.FromArgb(64, 64, 64);

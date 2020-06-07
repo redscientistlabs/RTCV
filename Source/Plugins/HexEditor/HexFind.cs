@@ -1,11 +1,11 @@
-using System;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using RTCV.Common;
-
 namespace RTCV.Plugins.HexEditor
 {
+    using System;
+    using System.Drawing;
+    using System.Text;
+    using System.Windows.Forms;
+    using RTCV.Common;
+
     public partial class HexFind : Form
     {
         public HexFind()

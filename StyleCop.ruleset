@@ -47,5 +47,11 @@
     <Rule Id="SA1503" Action="None" /> <!-- Braces should not be omitted -->
     <Rule Id="SA1119" Action="None" /> <!-- Statement should not use unnecessary parenthesis -->
     <Rule Id="SA1136" Action="None" /> <!-- Enum values should be on separate lines -->
+    <Rule Id="SA1300" Action="None" /> <!-- Element should begin with an uppercase letter -->
+    <Rule Id="SA1111" Action="None" /> <!-- Closing parenthesis should be on line of last parameter -->
+    <Rule Id="SA1210" Action="None" /> <!-- Using directives should be ordered alphabetically by the namespaces -->
+    <Rule Id="SA1400" Action="None" /> <!-- Element should declare an access modifier -->
+    <Rule Id="SA1131" Action="None" /> <!-- Constant values should appear on the right-hand side of comparisons -->
+    <Rule Id="SA1520" Action="None" /> <!-- Use braces consistently -->
   </Rules>
 </RuleSet>
