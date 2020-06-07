@@ -333,7 +333,7 @@
                                 string n = jname + sv.Item1;
                                 float f = sv.Item2;
                                 //if (n == "J5 RotationZ")
-                                //	System.Diagnostics.Debugger.Break();
+                                //    System.Diagnostics.Debugger.Break();
                                 if (trackdeltas)
                                     FloatDeltas[n] += Math.Abs(f - FloatValues[n]);
                                 FloatValues[n] = f;

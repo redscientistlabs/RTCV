@@ -113,7 +113,7 @@ namespace RTCV.UI
             {
                 logger.Error(ex, $"Failed to get form screenshot.");
                 return new Bitmap(1, 1);
-            };
+            }
         }
 
         #region CONTROL EXTENSIONS
@@ -2142,7 +2142,6 @@ namespace RTCV.UI
 
             //    if(base.Hexadecimal)
             //    base.Text = GetNumberText(base.Value);
-
         }
 
         protected override void ValidateEditText()

@@ -314,7 +314,6 @@ namespace RTCV.UI
 
                 //lbStockpile.RefreshItemsReal();
             }
-
         }
 
         private void btnRemoveSelectedStockpile_Click(object sender, EventArgs e)
@@ -334,7 +333,6 @@ namespace RTCV.UI
                 UnsavedEdits = true;
                 S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
             }
-
         }
 
         private void btnClearStockpile_Click(object sender, EventArgs e)

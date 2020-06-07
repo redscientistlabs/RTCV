@@ -203,7 +203,7 @@ namespace RTCV.UI
             }
 
             T Cast<T>(object obj, T type) { return (T)obj; }
-            var modified = Cast(lastItem, new { Text = "", Value = new BlastLayer() }); ;
+            var modified = Cast(lastItem, new { Text = "", Value = new BlastLayer() });
 
             BlastLayer bl = (BlastLayer)modified.Value.Clone();
             S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(bl);

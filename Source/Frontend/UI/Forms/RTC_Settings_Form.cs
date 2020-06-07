@@ -18,7 +18,7 @@
         {
             InitializeComponent();
 
-            lbForm = new RTC_ListBox_Form(new ComponentForm[]{
+            lbForm = new RTC_ListBox_Form(new ComponentForm[] {
                 S.GET<RTC_SettingsGeneral_Form>(),
                 S.GET<RTC_SettingsCorrupt_Form>(),
                 S.GET<RTC_SettingsHotkeyConfig_Form>(),
