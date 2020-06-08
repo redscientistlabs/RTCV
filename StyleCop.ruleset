@@ -82,46 +82,65 @@
     <Rule Id="SA1130" Action="None" /> <!-- Use lambda syntax -->
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.FxCopAnalyzers" RuleNamespace="Microsoft.CodeAnalysis.FxCopAnalyzers">
+    <Rule Id="CS0649" Action="None" /> <!-- Field never assigned to -->
     <Rule Id="CA2000" Action="None" /> <!-- Call on object before all references to it are out of scope -->
     <Rule Id="CA2002" Action="None" /> <!-- Do not lock on objects with weak identity -->
     <Rule Id="CA2007" Action="None" /> <!-- Call ConfigureAwait on the awaited task -->
+    <Rule Id="CA2008" Action="None" /> <!-- No tasks without a TaskScheduler -->
+    <Rule Id="CA1001" Action="None" /> <!-- Class owns disposable fields but is not disposable -->
+    <Rule Id="CA1028" Action="None" /> <!-- If possible, make the underlying type of FileType System.Int32 instead of uint -->
+    <Rule Id="CA1032" Action="None" /> <!-- Add constructor to class -->
     <Rule Id="CA1040" Action="None" /> <!-- Avoid empty interfaces -->
     <Rule Id="CA1060" Action="None" /> <!-- Move pinvokes to native methods class -->
+    <Rule Id="CA1065" Action="None" /> <!-- Method creates exception -->
     <Rule Id="CA1303" Action="None" /> <!-- Passing literal string as parameter -->
     <Rule Id="CA1822" Action="None" /> <!-- Member can be marked as static -->
     <Rule Id="CA2101" Action="None" /> <!--  Specify marshaling for P/Invoke string arguments -->
+    <Rule Id="CA2200" Action="None" /> <!-- Re-throwing caught exception changes stack information -->
     <Rule Id="CA2208" Action="None" /> <!-- Method passes parameter as the message argument -->
     <Rule Id="CA2211" Action="None" /> <!-- Non-constant fields should not be visible -->
     <Rule Id="CA2213" Action="None" /> <!-- Change Dispore method to call Close or Dispose -->
     <Rule Id="CA2227" Action="None" /> <!-- Change to be read-only by removing the property setter -->
+    <Rule Id="CA2234" Action="None" /> <!-- Call a different method -->
+    <Rule Id="CA2237" Action="None" /> <!-- Add [Serializable] to class -->
     <Rule Id="CA1724" Action="None" /> <!-- Naming conflict -->
     <Rule Id="CA1051" Action="None" /> <!-- Do not declare visible instance fields -->
     <Rule Id="CA1304" Action="None" /> <!-- string.ToUpper behavior could vary based on the current user's locale settings -->
     <Rule Id="CA1305" Action="None" /> <!-- String parsing behavior could vary based on the current user's locale settings -->
     <Rule Id="CA1307" Action="None" /> <!-- string.EndsWith behavior could vary based on the current user's locale settings -->
     <Rule Id="CA1034" Action="None" /> <!-- Do not nest type -->
+    <Rule Id="CA1052" Action="None" /> <!--Type is a static holder type but is neither static nor NotInheritable -->
     <Rule Id="CA1401" Action="None" />
     <Rule Id="CA1062" Action="None" /> <!-- Validate parameters for externally visible methods -->
     <Rule Id="CA1063" Action="None" />
+    <Rule Id="CA1066" Action="None" /> <!-- Implement IEquatable when overriding Object.Equals -->
+    <Rule Id="CA1810" Action="None" /> <!-- Remove the explicit static constructor -->
     <Rule Id="CA1016" Action="None" /> <!-- Mark assemblies with assembly version -->
+    <Rule Id="CA1507" Action="None" /> <!-- Use nameof in place of string literal -->
     <Rule Id="CA1707" Action="None" /> <!-- Remove underscore for member name -->
+    <Rule Id="CA1712" Action="None" /> <!-- Do not prefix enum values with the name of the enum type 'FileType' -->
     <Rule Id="CA1714" Action="None" /> <!-- Flags enums should have plural names -->
     <Rule Id="CA1715" Action="None" /> <!-- Prefix generic type parameter name with 'T' -->
+    <Rule Id="CA1717" Action="None" /> <!-- Only FlagsAttribute enums should have plural names -->
     <Rule Id="CA1801" Action="None" /> <!-- Parameter list of method is never used. Remove the parameter or use it in the method body -->
     <Rule Id="CA1802" Action="None" /> <!-- readonly field should be const -->
     <Rule Id="CA1806" Action="None" /> <!-- Using method without reference to error -->
+    <Rule Id="CA1812" Action="None" /> <!-- internal class never instatiated -->
     <Rule Id="CA1814" Action="None" /> <!-- .ctor uses a multidimensional array. Replace it with a jagged array if possible. -->
     <Rule Id="CA1815" Action="None" /> <!-- KeyEvent should override method -->
     <Rule Id="CA1816" Action="None" />
+    <Rule Id="CA1819" Action="None" /> <!-- Properties should not return arrays -->
     <Rule Id="CA1820" Action="None" /> <!-- Test for empty strings not using Equality check -->
     <Rule Id="CA1823" Action="None" /> <!-- Unused field -->
     <Rule Id="CA1824" Action="None" /> <!-- Mark assemblies with NeutralResourcesLanguageAttribute -->
     <Rule Id="CA1825" Action="None" /> <!-- Avoid unnecessary zero-length array allocations -->
     <Rule Id="CA1827" Action="None" /> <!-- Count() is used where Any() could be used instead to improve performance -->
     <Rule Id="CA1829" Action="None" /> <!-- Use the "Count" property instead of Enumerable.Count() -->
+    <Rule Id="CA1716" Action="None" /> <!-- Rename virtual/interface member so it no longer conflicts with reserved language -->
     <Rule Id="CA1720" Action="None" /> <!-- Identifier contains type name -->
     <Rule Id="CA1031" Action="None" /> <!-- Catch more specific exception type -->
     <Rule Id="CA5369" Action="None" /> <!-- Overload is potentially unsafe -->
     <Rule Id="CA3075" Action="None" /> <!-- Unsafe overload of 'Deserialize' method -->
+    <Rule Id="CA5351" Action="None" /> <!-- Don't use MD5 -->
   </Rules>
 </RuleSet>
