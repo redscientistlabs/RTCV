@@ -87,6 +87,8 @@
     <Rule Id="CA2007" Action="None" /> <!-- Call ConfigureAwait on the awaited task -->
     <Rule Id="CA1303" Action="None" /> <!-- Passing literal string as parameter -->
     <Rule Id="CA1822" Action="None" /> <!-- Member can be marked as static -->
+    <Rule Id="CA2208" Action="None" /> <!-- Method passes parameter as the message argument -->
+    <Rule Id="CA2211" Action="None" /> <!-- Non-constant fields should not be visible -->
     <Rule Id="CA2213" Action="None" /> <!-- Change Dispore method to call Close or Dispose -->
     <Rule Id="CA1724" Action="None" /> <!-- Naming conflict -->
     <Rule Id="CA1051" Action="None" /> <!-- Do not declare visible instance fields -->
@@ -97,13 +99,22 @@
     <Rule Id="CA1063" Action="None" />
     <Rule Id="CA1016" Action="None" /> <!-- Mark assemblies with assembly version -->
     <Rule Id="CA1707" Action="None" /> <!-- Remove underscore for member name -->
+    <Rule Id="CA1801" Action="None" /> <!-- Parameter list of method is never used. Remove the parameter or use it in the method body -->
+    <Rule Id="CA1802" Action="None" /> <!-- readonly field should be const -->
+    <Rule Id="CA1806" Action="None" /> <!-- Using method without reference to error -->
+    <Rule Id="CA1814" Action="None" /> <!-- .ctor uses a multidimensional array. Replace it with a jagged array if possible. -->
+    <Rule Id="CA1815" Action="None" /> <!-- KeyEvent should override method -->
     <Rule Id="CA1816" Action="None" />
     <Rule Id="CA1820" Action="None" /> <!-- Test for empty strings not using Equality check -->
+    <Rule Id="CA1823" Action="None" /> <!-- Unused field -->
     <Rule Id="CA1824" Action="None" /> <!-- Mark assemblies with NeutralResourcesLanguageAttribute -->
     <Rule Id="CA1825" Action="None" /> <!-- Avoid unnecessary zero-length array allocations -->
+    <Rule Id="CA1827" Action="None" /> <!-- Count() is used where Any() could be used instead to improve performance -->
     <Rule Id="CA1829" Action="None" /> <!-- Use the "Count" property instead of Enumerable.Count() -->
     <Rule Id="CA1720" Action="None" /> <!-- Identifier contains type name -->
     <Rule Id="CA1031" Action="None" /> <!-- Catch more specific exception type -->
+    <Rule Id="CA5369" Action="None" /> <!-- Overload is potentially unsafe -->
+    <Rule Id="CA3075" Action="None" /> <!-- Unsafe overload of 'Deserialize' method -->
   </Rules>
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
     <Rule Id="CA1001" Action="Warning" />
