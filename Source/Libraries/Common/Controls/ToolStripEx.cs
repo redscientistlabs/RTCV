@@ -12,7 +12,7 @@ namespace RTCV.Common.Controls
         private bool clickThrough = true;
 
         /// <summary>
-        /// Gets or sets whether the ToolStripEx honors item clicks when its containing form does
+        /// Gets or sets a value indicating whether the ToolStripEx honors item clicks when its containing form does
         /// not have input focus.
         /// </summary>
         public bool ClickThrough

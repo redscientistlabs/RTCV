@@ -14,7 +14,15 @@ using Newtonsoft.Json;
 using static RTCV.UI.UI_Extensions;
 
 #pragma warning disable RCS1138 // Add summary element to documentation comment.
-#pragma warning disable RCS1139 // Add summary element to documentation comment.
+#pragma warning disable CA1200
+#pragma warning disable SA1611
+#pragma warning disable SA1629
+#pragma warning disable SA1642
+#pragma warning disable SA1615
+#pragma warning disable SA1514
+#pragma warning disable SA1626
+#pragma warning disable SA1623
+
 
 namespace RTCV.UI
 {
