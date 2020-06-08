@@ -1,16 +1,15 @@
-using System;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-using static RTCV.UI.UI_Extensions;
-
 namespace RTCV.UI
 {
+    using System;
+    using System.Data;
+    using System.IO;
+    using System.Linq;
+    using System.Windows.Forms;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using RTCV.Common;
+    using static RTCV.UI.UI_Extensions;
+
     public partial class RTC_VmdPool_Form : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
@@ -92,7 +91,7 @@ namespace RTCV.UI
             }
 
             string name = "";
-            string value = vmdName.Trim().Replace("[V]", ""); ;
+            string value = vmdName.Trim().Replace("[V]", "");
             if (UI_Extensions.GetInputBox("BlastLayer to VMD", "Enter the new VMD name:", ref value) == DialogResult.OK)
             {
                 name = value.Trim();
@@ -132,7 +131,7 @@ namespace RTCV.UI
                     bu.SourceDomain = "[V]" + name;
                 }
             }
-            //Go through the stash history and update any references 
+            //Go through the stash history and update any references
             foreach (StashKey sk in S.GET<RTC_StashHistory_Form>().lbStashHistory.Items)
             {
                 foreach (var bu in sk.BlastLayer.Layer)
@@ -172,7 +171,6 @@ namespace RTCV.UI
 
         private void lbLoadedVmdList_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             btnSendToMyVMDs.Enabled = false;
             btnSaveVmd.Enabled = false;
             btnRenameVmd.Enabled = false;
@@ -218,7 +216,6 @@ namespace RTCV.UI
             //display proto here
 
             tbVmdPrototype.Text = DisplayVMD(vmd);
-
         }
 
         private string DisplayVMD(VirtualMemoryDomain vmd)
@@ -227,7 +224,7 @@ namespace RTCV.UI
 
             sb.Append($"===Singles==={Environment.NewLine}");
 
-            foreach(var i in vmd.Proto.AddSingles)
+            foreach (var i in vmd.Proto.AddSingles)
                 sb.Append($"{i.ToHexString()}{Environment.NewLine}");
 
             foreach (var i in vmd.Proto.RemoveSingles)
@@ -310,7 +307,6 @@ namespace RTCV.UI
             };
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                bool notified = false;
                 //string Filename = ofd.FileName.ToString();
                 foreach (string filename in ofd.FileNames)
                 {
@@ -351,7 +347,6 @@ namespace RTCV.UI
 
             if (lbLoadedVmdList.SelectedItems.Count == 1)
             {
-
                 string vmdName = lbLoadedVmdList.SelectedItem.ToString();
                 VirtualMemoryDomain vmd = MemoryDomains.VmdPool[vmdName];
 
@@ -369,13 +364,11 @@ namespace RTCV.UI
 
                     if (File.Exists(targetPath))
                     {
-
                         var result = MessageBox.Show("This file already exists in your VMDs folder, do you want to overwrite it?", "Overwrite file?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                         if (result == DialogResult.No)
                             return;
 
                         File.Delete(targetPath);
-
                     }
 
                     //creates json file for vmd
@@ -383,16 +376,10 @@ namespace RTCV.UI
                     {
                         JsonHelper.Serialize(vmd.Proto, fs);
                     }
-
-
                 }
-
-
-
             }
             else //multiple selected
             {
-
                 foreach (var item in lbLoadedVmdList.SelectedItems)
                 {
                     string vmdName = item.ToString();
@@ -406,21 +393,17 @@ namespace RTCV.UI
 
                     if (File.Exists(itemTargetPath))
                     {
-
                         var result = MessageBox.Show("This file already exists in your VMDs folder, do you want to overwrite it?", "Overwrite file?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                         if (result == DialogResult.No)
                             return;
 
                         File.Delete(itemTargetPath);
-
                     }
 
                     using (FileStream fs = File.Open(itemTargetPath, FileMode.Create))
                     {
                         JsonHelper.Serialize(vmd.Proto, fs);
                     }
-
-
                 }
             }
 

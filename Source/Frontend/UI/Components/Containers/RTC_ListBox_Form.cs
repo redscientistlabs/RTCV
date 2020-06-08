@@ -1,12 +1,12 @@
-﻿using System;
-using System.Data;
-using System.Linq;
-using System.Windows.Forms;
-using RTCV.CorruptCore;
-using static RTCV.UI.UI_Extensions;
-
-namespace RTCV.UI
+﻿namespace RTCV.UI
 {
+    using System;
+    using System.Data;
+    using System.Linq;
+    using System.Windows.Forms;
+    using RTCV.CorruptCore;
+    using static RTCV.UI.UI_Extensions;
+
     public partial class RTC_ListBox_Form : ComponentForm, IBlockable
     {
         private ComponentForm[] childForms;

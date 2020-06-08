@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
-using RTCV.CorruptCore;
-using RTCV.Common;
-
-namespace RTCV.UI
+﻿namespace RTCV.UI
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Drawing;
+    using System.Linq;
+    using System.Windows.Forms;
+    using RTCV.CorruptCore;
+    using RTCV.Common;
+
     public partial class RTC_NoteEditor_Form : Form
     {
         private INote note;

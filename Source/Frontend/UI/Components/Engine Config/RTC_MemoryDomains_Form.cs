@@ -1,17 +1,16 @@
-using System;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-using static RTCV.UI.UI_Extensions;
-using System.Drawing;
-using RTCV.UI.Components.Controls;
-
-namespace RTCV.UI
+﻿namespace RTCV.UI
 {
+    using System;
+    using System.Data;
+    using System.Drawing;
+    using System.Linq;
+    using System.Text;
+    using System.Windows.Forms;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using RTCV.Common;
+    using static RTCV.UI.UI_Extensions;
+
     public partial class RTC_MemoryDomains_Form : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
@@ -184,7 +183,7 @@ namespace RTCV.UI
                 var AutoLimitedDomains = MemoryDomains.AllMemoryInterfaces.Where(it => it.Value is VirtualMemoryDomain vmd && vmd.Name.Contains("->")).ToList();
 
                 if (vectorLimiter != null)
-                { 
+                {
                     ContextMenuStrip cms = new ContextMenuStrip();
                     //cms.Items.Add($"Generate VMD using Vector Limiter", null, (ob, ev) => {}).Enabled = false;
                     var lbGen = new ToolStripLabel($"Limiter Profiler");
@@ -210,7 +209,6 @@ namespace RTCV.UI
                                 S.GET<RTC_VmdLimiterProfiler_Form>().AutoProfile(MemoryDomains.AllMemoryInterfaces[domain], limiter);
                             }
                         }
-
                     }).Enabled = (AutoLimitedDomains.Count > 0);
 
 

@@ -2,14 +2,14 @@
 //https://github.com/tasvideos/bizhawk
 //Thanks guys
 
-using System;
-using System.Collections.Generic;
-using RTCV.Common;
-using SlimDX;
-using SlimDX.DirectInput;
-
 namespace RTCV.UI.Input
 {
+    using System;
+    using System.Collections.Generic;
+    using RTCV.Common;
+    using SlimDX;
+    using SlimDX.DirectInput;
+
     public class GamePad
     {
         // ********************************** Static interface **********************************

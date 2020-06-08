@@ -1,17 +1,15 @@
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using RTCV.Common;
-using RTCV.NetCore;
-
-namespace RTCV.CorruptCore
+﻿namespace RTCV.CorruptCore
 {
+    using System;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+    using RTCV.Common;
+    using RTCV.NetCore;
+
     public static class Filtering
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
@@ -143,7 +141,6 @@ namespace RTCV.CorruptCore
             }
             else
             {
-
                 //detect what kind of list it is
                 if (temp.FirstOrDefault(it => it.Contains("?")) != null) //has wildcards, needs nullable array
                 {
@@ -159,12 +156,11 @@ namespace RTCV.CorruptCore
             {
                 return list.Initialize(path, temp, flipBytes,syncListViaNetcore);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 logger.Error(ex);
                 return "";
             }
-
         }
 
         /// <summary>
@@ -277,27 +273,26 @@ namespace RTCV.CorruptCore
         {
             //checks nullable bytes lists against other byte lists, ignoring null collisions from both sides.
 
-            foreach(var item in hs.ToArray())
+            foreach (var item in hs.ToArray())
             {
                 bool found = true;
 
-                for(int i = 0; i<item.Length;i++)
+                for (int i = 0; i<item.Length; i++)
                 {
                     if (item[i] == null) //ignoring wildcards (null values)
                         continue;
 
-                    if(item[i].Value != bytes[i])
+                    if (item[i].Value != bytes[i])
                     {
                         found = false;
                         break;
                     }
                 }
 
-                if(found)
+                if (found)
                 {
                     return true;
                 }
-
             }
 
             return false;
@@ -322,7 +317,6 @@ namespace RTCV.CorruptCore
             }
 
             return Hash2ValueDico[hash].GetPrecision();
-
         }
 
         /// <summary>
@@ -348,7 +342,6 @@ namespace RTCV.CorruptCore
             var list = Hash2ValueDico[hash];
 
             return list.GetRandomValue(hash,precision);
-
         }
 
         /// <summary>
@@ -382,14 +375,13 @@ namespace RTCV.CorruptCore
                 //If we have a value and the dictionary contains it, build up a String[] containing the values
                 if (s != null && Hash2LimiterDico.ContainsKey(s))
                 {
-
                     List<String> strList = Hash2LimiterDico[s].GetStringList();
 
 
                     Hash2NameDico.TryGetValue(s, out string name); //See if we can get the name
                     if (string.IsNullOrWhiteSpace(name))
                     {
-                        name = "UNKNOWN_" + s.Substring(0, 5); // Default name will use the first 5 chars of the hash 
+                        name = "UNKNOWN_" + s.Substring(0, 5); // Default name will use the first 5 chars of the hash
                     }
 
                     lists[(name.StartsWith("STOCKPILE_") ? "" : "STOCKPILE_") + name] = strList;

@@ -1,20 +1,16 @@
-using System;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-using static RTCV.UI.UI_Extensions;
-
 namespace RTCV.UI
 {
+    using System;
+    using System.Data;
+    using System.IO;
+    using System.Linq;
+    using System.Windows.Forms;
+    using RTCV.CorruptCore;
+    using RTCV.Common;
+    using static RTCV.UI.UI_Extensions;
+
     public partial class RTC_MyLists_Form : ComponentForm, IAutoColorize, IBlockable
     {
-        
-
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
@@ -55,7 +51,6 @@ namespace RTCV.UI
 
                 if (File.Exists(listPath))
                     File.Delete(listPath);
-
             }
 
             RefreshLists();
@@ -69,7 +64,7 @@ namespace RTCV.UI
                 Directory.CreateDirectory(RtcCore.listsDir);
 
             var files = Directory.GetFiles(RtcCore.listsDir).OrderBy(it => it.Replace("$",""));
-            foreach(var file in files)
+            foreach (var file in files)
             {
                 string shortfile = file.Substring(file.LastIndexOf('\\') + 1);
                 lbKnownLists.Items.Add(shortfile.Replace("$", "[DISABLED] "));
@@ -79,7 +74,6 @@ namespace RTCV.UI
             btnSaveList.Enabled = false;
             btnRenameList.Enabled = false;
             btnRemoveList.Enabled = false;
-
         }
 
 
@@ -112,7 +106,6 @@ namespace RTCV.UI
             }
 
             File.Move(listPath, path);
-
         }
 
         private void RTC_MyLists_Form_Load(object sender, EventArgs e)
@@ -142,13 +135,13 @@ namespace RTCV.UI
 
             bool allDisabled = true;
 
-            foreach(var item in lbKnownLists.SelectedItems)
+            foreach (var item in lbKnownLists.SelectedItems)
             {
-                if(!item.ToString().Contains("[DISABLED] "))
+                if (!item.ToString().Contains("[DISABLED] "))
                 {
                     allDisabled = false;
                     break;
-                }    
+                }
             }
 
             if (allDisabled)
@@ -180,7 +173,6 @@ namespace RTCV.UI
             {
                 string filename = saveFileDialog1.FileName;
 
-
                 if (File.Exists(filename))
                     File.Delete(filename);
 
@@ -190,13 +182,11 @@ namespace RTCV.UI
 
         private void importList(string path)
         {
-
             string shortPath = path.Substring(path.LastIndexOf('\\') + 1);
             string targetPath = Path.Combine(RtcCore.listsDir, shortPath);
 
             if (File.Exists(targetPath))
             {
-
                 var result = MessageBox.Show("This file already exist in your VMDs folder, do you want to overwrite it?", "Overwrite file?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result == DialogResult.No)
                     return;
@@ -206,9 +196,7 @@ namespace RTCV.UI
 
             File.Copy(path, targetPath);
 
-
             RefreshLists();
-
         }
 
 
@@ -231,7 +219,7 @@ namespace RTCV.UI
 
                 if (btnEnableDisableList.Text.Contains("Disable"))
                 {
-                    if(!isDisabled)
+                    if (!isDisabled)
                     {
                         File.Move(pathEnabled, pathDisabled);
                     }
@@ -243,7 +231,6 @@ namespace RTCV.UI
                         File.Move(pathDisabled, pathEnabled);
                     }
                 }
-                
             }
 
             CorruptCore.Filtering.ResetLoadedListsInUI();
@@ -290,7 +277,6 @@ namespace RTCV.UI
             };
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                bool notified = false;
                 //string Filename = ofd.FileName.ToString();
                 foreach (string filename in ofd.FileNames)
                 {

@@ -1,14 +1,13 @@
-using System;
-using System.ComponentModel.Composition;
-using NLog;
-using RTCV.Common;
-using RTCV.PluginHost;
-using RTCV.Plugins.ScriptHost.Controls;
-using RTCV.UI;
-
-
 namespace RTCV.Plugins.ScriptHost
 {
+    using System;
+    using System.ComponentModel.Composition;
+    using NLog;
+    using RTCV.Common;
+    using RTCV.PluginHost;
+    using RTCV.Plugins.ScriptHost.Controls;
+    using RTCV.UI;
+
     [Export(typeof(IPlugin))]
     public class Loader : IPlugin
     {

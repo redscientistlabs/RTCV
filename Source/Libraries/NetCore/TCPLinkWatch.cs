@@ -1,7 +1,7 @@
-﻿using System.Threading;
-
-namespace RTCV.NetCore
+﻿namespace RTCV.NetCore
 {
+    using System.Threading;
+
     public class TCPLinkWatch
     {
         private volatile System.Timers.Timer watchdog = null;

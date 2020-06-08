@@ -1,9 +1,9 @@
-using System;
-using System.Linq;
-using System.Numerics;
-
 namespace RTCV.CorruptCore
 {
+    using System;
+    using System.Linq;
+    using System.Numerics;
+
     public static class RTC_ValueGenerator
     {
         private static byte[] param1Bytes;

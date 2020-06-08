@@ -1,8 +1,8 @@
-﻿using System;
-using System.IO;
-
-namespace RTCV.CorruptCore
+﻿namespace RTCV.CorruptCore
 {
+    using System;
+    using System.IO;
+
     internal static class MemoryBanks
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();

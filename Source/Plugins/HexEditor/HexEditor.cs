@@ -1,21 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using RTCV.NetCore;
-using RTCV.CorruptCore;
-using NLog;
-using NLog.Layouts;
-
 namespace RTCV.Plugins.HexEditor
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Data;
+    using System.Drawing;
+    using System.Globalization;
+    using System.IO;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+    using RTCV.NetCore;
+    using RTCV.CorruptCore;
+    using NLog;
+    using NLog.Layouts;
+
     //Based on the Hex Editor from Bizhawk, available under MIT.
     //https://github.com/tasvideos/bizhawk
     public partial class HexEditor : Form
@@ -23,7 +23,6 @@ namespace RTCV.Plugins.HexEditor
         private int fontWidth;
         private int fontHeight;
 
-        private readonly List<ToolStripMenuItem> _domainMenuItems = new List<ToolStripMenuItem>();
         private readonly char[] _nibbles = { 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G' };    // G = off 0-9 & A-F are acceptable values
         private readonly List<long> _secondaryHighlightedAddresses = new List<long>();
 
@@ -106,7 +105,7 @@ namespace RTCV.Plugins.HexEditor
             };
             CorruptCore.RtcCore.LoadGameDone += (o, e) =>
             {
-                if(this.Visible)
+                if (this.Visible)
                     Restart();
             };
 
@@ -166,8 +165,6 @@ namespace RTCV.Plugins.HexEditor
             return true;
         }
 
-        private volatile object updateValuesSyncObject = new object();
-
         public async void UpdateValues()
         {
             await Task.Run(() => SyncObjectSingleton.FormExecute(() =>
@@ -179,7 +176,7 @@ namespace RTCV.Plugins.HexEditor
                 }
                 catch (Exception e)
                 {
-                    logger.Error(e,"Failed to UpdateValues() in hex editor.");
+                    logger.Error(e, "Failed to UpdateValues() in hex editor.");
                 }
             }));
         }
@@ -2049,7 +2046,7 @@ namespace RTCV.Plugins.HexEditor
 
         private void FreezeAddress(long address)
         {
-            BlastUnit bu = new BlastUnit(StoreType.ONCE, StoreTime.IMMEDIATE, _domain.Name, address, _domain.Name, address, DataSize, _domain.BigEndian, 0, 0); ;
+            BlastUnit bu = new BlastUnit(StoreType.ONCE, StoreTime.IMMEDIATE, _domain.Name, address, _domain.Name, address, DataSize, _domain.BigEndian, 0, 0);
             bu.Apply(false);
         }
 

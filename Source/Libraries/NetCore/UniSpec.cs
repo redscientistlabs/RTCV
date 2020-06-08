@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.Serialization;
-using System.Text;
-using Ceras;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-
-namespace RTCV.NetCore
+﻿namespace RTCV.NetCore
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using System.Runtime.Serialization;
+    using System.Text;
+    using Ceras;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+
     public class FullSpec : BaseSpec
     {
         public event EventHandler<SpecUpdateEventArgs> SpecUpdated;
@@ -40,7 +40,7 @@ namespace RTCV.NetCore
             name = partialSpec.Name;
             Update(template);
 
-            //Set the version after the update 
+            //Set the version after the update
             if (partialSpec.version != 1)
             {
                 base.version = partialSpec.version;
@@ -106,20 +106,20 @@ namespace RTCV.NetCore
         public void Update(string key, object value, bool propagate = true, bool synced = true)
         {
             /*
-			//Make a partial spec and pass it into Update(PartialSpec)
-			if (RTC_NetcoreImplementation.isStandaloneEmu && name == "RTCSpec" && key != RTCSPEC.CORE_AUTOCORRUPT.ToString())
-				throw new Exception("Tried updating the RTCSpec from Emuhawk");
+            //Make a partial spec and pass it into Update(PartialSpec)
+            if (RTC_NetcoreImplementation.isStandaloneEmu && name == "RTCSpec" && key != RTCSPEC.CORE_AUTOCORRUPT.ToString())
+                throw new Exception("Tried updating the RTCSpec from Emuhawk");
 
-			if (RTC_NetcoreImplementation.isStandaloneUI && name == "EmuSpec")
-				throw new Exception("Tried updating the EmuSpec from StandaloneRTC");
-				*/
+            if (RTC_NetcoreImplementation.isStandaloneUI && name == "EmuSpec")
+                throw new Exception("Tried updating the EmuSpec from StandaloneRTC");
+                */
             /*
-			if(value is bool)
-			{
-				bool boolValue = (bool)value;
-				if (boolValue == false)
-					value = null;
-			}*/
+            if(value is bool)
+            {
+                bool boolValue = (bool)value;
+                if (boolValue == false)
+                    value = null;
+            }*/
 
             PartialSpec spec = new PartialSpec(name);
             spec[key] = value;
@@ -187,16 +187,16 @@ namespace RTCV.NetCore
                     sb.AppendLine(RecursiveEnumerate(_em, sb, tab + 1));
                 }
                 /*
-				if (x is KeyValuePair<string, List<Byte[]>> b)
-				{
-					b.Value.ForEach(y =>
-					{
-						foreach (var z in y)
-							sb.Append(z.ToString());
-						sb.Append("\n" + t + "\t");
-					});
-				}
-				*/
+                if (x is KeyValuePair<string, List<Byte[]>> b)
+                {
+                    b.Value.ForEach(y =>
+                    {
+                        foreach (var z in y)
+                            sb.Append(z.ToString());
+                        sb.Append("\n" + t + "\t");
+                    });
+                }
+                */
                 sb.AppendLine(t + x.ToString());
             }
             return sb.ToString();

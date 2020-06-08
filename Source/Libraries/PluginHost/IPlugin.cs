@@ -1,7 +1,7 @@
-using System;
-
 namespace RTCV.PluginHost
 {
+    using System;
+
     public enum RTCSide
     {
         Server,

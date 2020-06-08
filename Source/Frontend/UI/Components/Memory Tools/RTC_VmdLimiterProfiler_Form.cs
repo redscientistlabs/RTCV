@@ -1,15 +1,15 @@
-using System;
-using System.Data;
-using System.Globalization;
-using System.Linq;
-using System.Windows.Forms;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-using static RTCV.UI.UI_Extensions;
-
-namespace RTCV.UI
+﻿namespace RTCV.UI
 {
+    using System;
+    using System.Data;
+    using System.Globalization;
+    using System.Linq;
+    using System.Windows.Forms;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using RTCV.Common;
+    using static RTCV.UI.UI_Extensions;
+
     public partial class RTC_VmdLimiterProfiler_Form : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
@@ -225,7 +225,6 @@ namespace RTCV.UI
 
             if (!AutoGenerate)
             {
-
                 //Selects back the VMD Pool menu
                 foreach (var item in UICore.mtForm.cbSelectBox.Items)
                 {
@@ -235,7 +234,6 @@ namespace RTCV.UI
                         break;
                     }
                 }
-
             }
 
             return true;
@@ -248,7 +246,7 @@ namespace RTCV.UI
             var ceForm = S.GET<RTC_CorruptionEngine_Form>();
 
             foreach (var item in cbSelectedMemoryDomain.Items)
-                if(item.ToString() == mi.ToString())
+                if (item.ToString() == mi.ToString())
                 {
                     cbSelectedMemoryDomain.SelectedItem = item;
                     break;
@@ -270,7 +268,6 @@ namespace RTCV.UI
             tbVmdName.Text = $"{mi} -> {limiter}";
 
             GenerateVMD(true);
-
         }
 
         private void RTC_VmdLimiterProfiler_Form_Load(object sender, EventArgs e)

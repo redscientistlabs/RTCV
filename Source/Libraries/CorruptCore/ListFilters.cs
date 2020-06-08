@@ -1,15 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Ceras;
-
 namespace RTCV.CorruptCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Security.Cryptography;
+    using System.Text;
+    using System.Windows.Forms;
+    using Ceras;
 
     public interface IListFilter
     {
@@ -21,7 +19,6 @@ namespace RTCV.CorruptCore
         public List<string> GetStringList();
 
         public int GetPrecision();
-
     }
 
     [Serializable]
@@ -74,8 +71,6 @@ namespace RTCV.CorruptCore
             string hash = Filtering.RegisterList(this, name, syncListViaNetcore);
 
             return hash;
-
-
         }
         public string GetHash()
         {
@@ -97,7 +92,6 @@ namespace RTCV.CorruptCore
         }
         public byte[] GetRandomValue(string hash, int precision)
         {
-
             //Get a random line in the list and grab the value
             int line = RtcCore.RND.Next(byteList.Count);
             byte[] value = byteList[line];
@@ -209,7 +203,6 @@ namespace RTCV.CorruptCore
             Filtering.RegisterList(this, name, syncListViaNetcore);
 
             return hash;
-
         }
         public string GetHash()
         {
@@ -231,7 +224,6 @@ namespace RTCV.CorruptCore
         }
         public byte[] GetRandomValue(string hash, int precision)
         {
-
             //Get a random line in the list and grab the value
             int line = RtcCore.RND.Next(byteList.Count);
             byte?[] value = byteList[line];
@@ -298,5 +290,4 @@ namespace RTCV.CorruptCore
             return value.Length;
         }
     }
-
 }

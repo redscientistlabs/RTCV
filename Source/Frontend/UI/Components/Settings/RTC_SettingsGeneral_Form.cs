@@ -1,12 +1,12 @@
-﻿using System;
-using System.Diagnostics;
-using System.Windows.Forms;
-using RTCV.CorruptCore;
-using RTCV.Common;
-using static RTCV.UI.UI_Extensions;
-
-namespace RTCV.UI
+﻿namespace RTCV.UI
 {
+    using System;
+    using System.Diagnostics;
+    using System.Windows.Forms;
+    using RTCV.CorruptCore;
+    using RTCV.Common;
+    using static RTCV.UI.UI_Extensions;
+
     public partial class RTC_SettingsGeneral_Form : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
@@ -21,43 +21,43 @@ namespace RTCV.UI
 
         //todo - rewrite this?
         /*
-		private void btnImportKeyBindings_Click(object sender, EventArgs e)
-		{
-			
-			if (UI_VanguardImplementation.connector.netConn.status != NetworkStatus.CONNECTED)
-			{
-				MessageBox.Show("Can't import keybindings when not connected to Bizhawk!");
-				return;
-			}
+        private void btnImportKeyBindings_Click(object sender, EventArgs e)
+        {
 
-			try
-			{
-				if (CorruptCore.CorruptCore.EmuDir.Contains(Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar))
-				{
-					var bizhawkFolder = new DirectoryInfo(CorruptCore.CorruptCore.EmuDir);
-					var LauncherVersFolder = bizhawkFolder.Parent.Parent;
+            if (UI_VanguardImplementation.connector.netConn.status != NetworkStatus.CONNECTED)
+            {
+                MessageBox.Show("Can't import keybindings when not connected to Bizhawk!");
+                return;
+            }
 
-					var versions = LauncherVersFolder.GetDirectories().Reverse().ToArray();
+            try
+            {
+                if (CorruptCore.CorruptCore.EmuDir.Contains(Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar))
+                {
+                    var bizhawkFolder = new DirectoryInfo(CorruptCore.CorruptCore.EmuDir);
+                    var LauncherVersFolder = bizhawkFolder.Parent.Parent;
 
-					var prevVersion = versions[1].Name;
+                    var versions = LauncherVersFolder.GetDirectories().Reverse().ToArray();
 
-					var dr = MessageBox.Show(
-						"RTC Launcher detected,\n" +
-						$"Do you want to import Controller/Hotkey bindings from version {prevVersion}"
-						, $"Import config from previous version ?", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    var prevVersion = versions[1].Name;
 
-					if (dr == DialogResult.Yes)
-						Stockpile.LoadBizhawkKeyBindsFromIni(versions[1].FullName + Path.DirectorySeparatorChar + "BizHawk\\config.ini");
-					else
-						Stockpile.LoadBizhawkKeyBindsFromIni();
-				}
-				else
-					Stockpile.LoadBizhawkKeyBindsFromIni();
-			}
-			finally
-			{
-			}
-		}*/
+                    var dr = MessageBox.Show(
+                        "RTC Launcher detected,\n" +
+                        $"Do you want to import Controller/Hotkey bindings from version {prevVersion}"
+                        , $"Import config from previous version ?", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+
+                    if (dr == DialogResult.Yes)
+                        Stockpile.LoadBizhawkKeyBindsFromIni(versions[1].FullName + Path.DirectorySeparatorChar + "BizHawk\\config.ini");
+                    else
+                        Stockpile.LoadBizhawkKeyBindsFromIni();
+                }
+                else
+                    Stockpile.LoadBizhawkKeyBindsFromIni();
+            }
+            finally
+            {
+            }
+        }*/
 
         private void btnOpenOnlineWiki_Click(object sender, EventArgs e)
         {

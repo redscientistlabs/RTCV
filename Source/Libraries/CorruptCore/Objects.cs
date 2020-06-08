@@ -1,25 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Numerics;
-using System.Security.Cryptography;
-using System.Text;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-using Ceras;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using RTCV.Common.Objects;
-using RTCV.NetCore;
-using Exception = System.Exception;
-
 namespace RTCV.CorruptCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Data;
+    using System.Diagnostics;
+    using System.IO;
+    using System.IO.Compression;
+    using System.Linq;
+    using System.Numerics;
+    using System.Windows.Forms;
+    using System.Xml.Serialization;
+    using Ceras;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using RTCV.Common.Objects;
+    using RTCV.NetCore;
+    using Exception = System.Exception;
+
     [Serializable]
     [Ceras.MemberConfig(TargetMember.All)]
     public class Stockpile
@@ -188,7 +186,7 @@ namespace RTCV.CorruptCore
                         //If the file already exists, overwrite it.
                         if (File.Exists(romTempfilename))
                         {
-                            //Whack the attributes in case a rom is readonly 
+                            //Whack the attributes in case a rom is readonly
                             File.SetAttributes(romTempfilename, FileAttributes.Normal);
                             File.Delete(romTempfilename);
                             File.Copy(rom, romTempfilename);
@@ -361,7 +359,7 @@ namespace RTCV.CorruptCore
                 }
             }
 
-            //Update savestate location info 
+            //Update savestate location info
             percentPerFile = (5m) / (sks.StashKeys.Count + 1);
             foreach (StashKey sk in sks.StashKeys)
             {
@@ -594,13 +592,13 @@ namespace RTCV.CorruptCore
         }
 
         /// <summary>
-		/// Extracts a stockpile into a folder and ensures a master file exists
-		/// </summary>
-		/// <param name="filename"></param>
-		/// <param name="folder"></param>
-		/// <param name="masterFile"></param>
-		/// <returns></returns>
-		public static OperationResults<bool> Extract(string filename, string folder, string masterFile)
+        /// Extracts a stockpile into a folder and ensures a master file exists
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="folder"></param>
+        /// <param name="masterFile"></param>
+        /// <returns></returns>
+        public static OperationResults<bool> Extract(string filename, string folder, string masterFile)
         {
             var r = new OperationResults<bool>();
             try
@@ -861,7 +859,7 @@ namespace RTCV.CorruptCore
         /// <summary>
         /// Can be called from UI Side
         /// </summary>
-		public bool Run()
+        public bool Run()
         {
             StockpileManager_UISide.CurrentStashkey = this;
             return StockpileManager_UISide.ApplyStashkey(this);
@@ -870,7 +868,7 @@ namespace RTCV.CorruptCore
         /// <summary>
         /// Can be called from UI Side
         /// </summary>
-		public void RunOriginal()
+        public void RunOriginal()
         {
             StockpileManager_UISide.CurrentStashkey = this;
             StockpileManager_UISide.OriginalFromStashkey(this);
@@ -921,7 +919,7 @@ namespace RTCV.CorruptCore
         //Todo - Replace this when compat is broken
         public void PopulateKnownLists()
         {
-            if(BlastLayer.Layer == null){
+            if (BlastLayer.Layer == null) {
                 MessageBox.Show($"Something went really wrong. Stashkey {Alias}.\nThere doesn't appear to be a linked blastlayer.\nWill attempt to continue saving. If save fails, remove {Alias} from your stockpile and save again.\nSend this stockpile and any info on how you got into this state to the devs.");
                 return;
             }
@@ -1041,9 +1039,8 @@ namespace RTCV.CorruptCore
                 StockpileManager_EmuSide.UnCorruptBL = GetBackup();
                 StockpileManager_EmuSide.CorruptBL = this;
 
-                if(mergeWithPrevious)
+                if (mergeWithPrevious)
                 {
-
                     if (UnCorruptBL_Backup.Layer != null)
                     {
                         if (StockpileManager_EmuSide.UnCorruptBL.Layer == null)
@@ -1197,7 +1194,7 @@ namespace RTCV.CorruptCore
                 {
                     usedAddresses.Add(new ValueTuple<string, long>(bu.Domain, bu.Address));
                 }
-                else if(!bu.IsLocked)
+                else if (!bu.IsLocked)
                 {
                     Layer.Remove(bu);
                 }
@@ -1396,7 +1393,7 @@ namespace RTCV.CorruptCore
             }
             set
             {
-                //If there's no precision, use the length of the string rounded up 
+                //If there's no precision, use the length of the string rounded up
                 int p = this.Precision;
                 if (p == 0 && value.Length != 0)
                 {
@@ -1467,7 +1464,7 @@ namespace RTCV.CorruptCore
         public BlastUnitWorkingData Working;
 
         /// <summary>
-        /// Creates a Blastunit that utilizes a backup. 
+        /// Creates a Blastunit that utilizes a backup.
         /// </summary>
         /// <param name="storeType">The type of store</param>
         /// <param name="storeTime">The time of the store</param>
@@ -1743,7 +1740,7 @@ namespace RTCV.CorruptCore
             //We need to grab the value to freeze
             if (Source == BlastUnitSource.STORE && StoreTime == StoreTime.IMMEDIATE)
             {
-                //If it's one time, store the backup. Otherwise add it to the backup pool 
+                //If it's one time, store the backup. Otherwise add it to the backup pool
                 if (StoreType == StoreType.ONCE)
                 {
                     StoreBackup();
@@ -1769,7 +1766,7 @@ namespace RTCV.CorruptCore
         /// <summary>
         /// Executes (applies) a blastunit. This shouldn't be called manually.
         /// If you want to execute a blastunit, add it to the execution pool using Apply()
-        /// Returns false 
+        /// Returns false
         /// </summary>
         public ExecuteState Execute(bool UseRealtime = true)
         {
@@ -2021,12 +2018,12 @@ namespace RTCV.CorruptCore
         public BlastUnit GetBackup()
         {
             //TODO
-            //There's a todo here but I didn't leave a note please help someone tell me why there's a todo here oh god I'm the only one working on this code 
+            //There's a todo here but I didn't leave a note please help someone tell me why there's a todo here oh god I'm the only one working on this code
             return GetBakedUnit();
         }
 
         /// <summary>
-        /// Rerolls a blastunit and generates new values based on various params 
+        /// Rerolls a blastunit and generates new values based on various params
         /// </summary>
         public void Reroll()
         {
@@ -2052,7 +2049,7 @@ namespace RTCV.CorruptCore
                             return;
                         }
 
-                        //Generate a random value based on our precision. 
+                        //Generate a random value based on our precision.
                         //We use a BigInteger as we support arbitrary length, but we do use built in methods for 8,16,32 bit for performance reasons
                         BigInteger randomValue = 0;
                         if (RTC_CustomEngine.ValueSource == CustomValueSource.RANGE)
@@ -2117,7 +2114,7 @@ namespace RTCV.CorruptCore
                     }
                     else
                     {
-                        //Generate a random value based on our precision. 
+                        //Generate a random value based on our precision.
                         //We use a BigInteger as we support arbitrary length, but we do use built in methods for 8,16,32 bit for performance reasons
                         BigInteger randomValue;
                         switch (Precision)

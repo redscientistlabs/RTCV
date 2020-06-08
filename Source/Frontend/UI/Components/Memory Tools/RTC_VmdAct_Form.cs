@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-using static RTCV.UI.UI_Extensions;
-
-namespace RTCV.UI
+﻿namespace RTCV.UI
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Drawing;
+    using System.IO;
+    using System.Linq;
+    using System.Windows.Forms;
+    using System.Xml.Serialization;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using RTCV.Common;
+    using static RTCV.UI.UI_Extensions;
+
     public partial class RTC_VmdAct_Form : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
@@ -549,7 +549,7 @@ namespace RTCV.UI
                                 proto.AddSingles.Add(safeaddress + i);
                             }
                             //[] _addresses = { safeaddress, safeaddress + mi.WordSize };
-                            //	proto.addRanges.Add(_addresses);
+                            //    proto.addRanges.Add(_addresses);
                         }
                     }
                 }

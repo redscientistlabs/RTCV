@@ -19,7 +19,7 @@ namespace TestVanguardImplemented
 	public static class VanguardCore
 	{
 		public static string[] args;
-		
+
 
 		internal static DialogResult ShowErrorDialog(Exception exception, bool canContinue = false)
 		{
@@ -28,7 +28,7 @@ namespace TestVanguardImplemented
 
 
 		/// <summary>
-		/// Global exceptions in Non User Interfarce(other thread) antipicated error
+		/// Global exceptions in Non User Interface(other thread) anticipated error
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -41,7 +41,7 @@ namespace TestVanguardImplemented
 		}
 
 		/// <summary>
-		/// Global exceptions in User Interfarce antipicated error
+		/// Global exceptions in User Interface anticipated error
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -301,7 +301,7 @@ namespace TestVanguardImplemented
 		}
 
 		/// <summary>
-		/// Loads a savestate from a path. 
+		/// Loads a savestate from a path.
 		/// </summary>
 		/// <param name="path">The path of the state</param>
 		/// <param name="stateLocation">Where the state is located in a stashkey (used for errors, not required)</param>

@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using RTCV.NetCore;
-
-namespace RTCV.UI.Input
+﻿namespace RTCV.UI.Input
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Threading;
+    using RTCV.NetCore;
+
     public class Input
     {
         [Flags]
@@ -171,7 +171,7 @@ namespace RTCV.UI.Input
             if (LastState[button] && newState) return;
             if (!LastState[button] && !newState) return;
 
-            //apply 
+            //apply
             //NOTE: this is not quite right. if someone held leftshift+rightshift it would be broken. seems unlikely, though.
             if (button == "LeftShift")
             {
@@ -333,7 +333,7 @@ namespace RTCV.UI.Input
                                 string n = jname + sv.Item1;
                                 float f = sv.Item2;
                                 //if (n == "J5 RotationZ")
-                                //	System.Diagnostics.Debugger.Break();
+                                //    System.Diagnostics.Debugger.Break();
                                 if (trackdeltas)
                                     FloatDeltas[n] += Math.Abs(f - FloatValues[n]);
                                 FloatValues[n] = f;

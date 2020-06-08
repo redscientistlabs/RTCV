@@ -1,12 +1,12 @@
-using System;
-using System.Linq;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-using RTCV.UI.Modular;
-
 namespace RTCV.UI
 {
+    using System;
+    using System.Linq;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using RTCV.Common;
+    using RTCV.UI.Modular;
+
     public class UIConnector : IRoutable
     {
         private NetCoreReceiver receiver;

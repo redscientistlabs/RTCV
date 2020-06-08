@@ -1,16 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
-using System.IO;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
-using RTCV.CorruptCore;
-using RTCV.Common;
-using static RTCV.UI.UI_Extensions;
-
 namespace RTCV.UI
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Globalization;
+    using System.IO;
+    using System.Text.RegularExpressions;
+    using System.Windows.Forms;
+    using RTCV.CorruptCore;
+    using RTCV.Common;
+    using static RTCV.UI.UI_Extensions;
+
     public partial class RTC_ListGen_Form : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
@@ -37,7 +37,7 @@ namespace RTCV.UI
 
         private bool isHex(string str)
         {
-            //Hex characters 
+            //Hex characters
             //Trim the 0x off
             string regex = "^((0[Xx])|([xX]))[0-9A-Fa-f]+$";
             return Regex.IsMatch(str, regex);
@@ -90,7 +90,7 @@ namespace RTCV.UI
 
                 string[] lineParts = trimmedLine.Split('-');
 
-                //We can't do a range on anything besides plain old numbers 
+                //We can't do a range on anything besides plain old numbers
                 if (lineParts.Length > 1)
                 {
                     //Hex
@@ -172,7 +172,7 @@ namespace RTCV.UI
 
             IListFilter list;
 
-            if(newList.Contains("?"))
+            if (newList.Contains("?"))
             {
                 list = new NullableByteArrayList();
             }

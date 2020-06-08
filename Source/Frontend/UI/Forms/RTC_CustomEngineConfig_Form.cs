@@ -1,13 +1,13 @@
-﻿using System;
-using System.Drawing;
-using System.Numerics;
-using System.Windows.Forms;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-
-namespace RTCV.UI
+﻿namespace RTCV.UI
 {
+    using System;
+    using System.Drawing;
+    using System.Numerics;
+    using System.Windows.Forms;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using RTCV.Common;
+
     public partial class RTC_CustomEngineConfig_Form : Form, IAutoColorize
     {
         private bool updatingMinMax = false;

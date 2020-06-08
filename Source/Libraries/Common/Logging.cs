@@ -1,14 +1,14 @@
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
-using System.Linq;
-using NLog;
-using NLog.LayoutRenderers;
-using NLog.Layouts;
-
 namespace RTCV.Common
 {
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Text;
+    using System.Linq;
+    using NLog;
+    using NLog.LayoutRenderers;
+    using NLog.Layouts;
+
     public static class Logging
     {
         public static Logger GlobalLogger = LogManager.GetLogger("Global");
@@ -71,10 +71,10 @@ namespace RTCV.Common
                 config.AddRule(LogLevel.Trace, LogLevel.Fatal, logconsole);
             else
                 config.AddRule(LogLevel.Debug, LogLevel.Fatal, logconsole);
-            // Rules for mapping loggers to targets            
+            // Rules for mapping loggers to targets
             //config.AddRule(LogLevel.Trace, LogLevel.Fatal, logfile);
 
-            // Apply config           
+            // Apply config
             NLog.LogManager.Configuration = config;
             Common.ConsoleHelper.CreateConsole(filename);
             if (!Environment.GetCommandLineArgs().Any(x => string.Equals(x, "-CONSOLE", StringComparison.OrdinalIgnoreCase)))

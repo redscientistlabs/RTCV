@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Numerics;
-using System.Windows.Forms;
-using RTCV.NetCore;
-
-namespace RTCV.CorruptCore
+﻿namespace RTCV.CorruptCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.IO;
+    using System.Linq;
+    using System.Numerics;
+    using System.Windows.Forms;
+    using RTCV.NetCore;
+
     public static class RTC_CustomEngine
     {
         private static Dictionary<string, Type> name2TypeDico = new Dictionary<string, Type>();
