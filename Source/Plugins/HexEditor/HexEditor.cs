@@ -23,7 +23,6 @@ namespace RTCV.Plugins.HexEditor
         private int fontWidth;
         private int fontHeight;
 
-        private readonly List<ToolStripMenuItem> _domainMenuItems = new List<ToolStripMenuItem>();
         private readonly char[] _nibbles = { 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G' };    // G = off 0-9 & A-F are acceptable values
         private readonly List<long> _secondaryHighlightedAddresses = new List<long>();
 
@@ -165,8 +164,6 @@ namespace RTCV.Plugins.HexEditor
         {
             return true;
         }
-
-        private volatile object updateValuesSyncObject = new object();
 
         public async void UpdateValues()
         {
