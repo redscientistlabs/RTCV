@@ -83,10 +83,19 @@
   </Rules>
   <Rules AnalyzerId="Microsoft.CodeAnalysis.FxCopAnalyzers" RuleNamespace="Microsoft.CodeAnalysis.FxCopAnalyzers">
     <Rule Id="CA2000" Action="None" /> <!-- Call on object before all references to it are out of scope -->
+    <Rule Id="CA2007" Action="None" /> <!-- Call ConfigureAwait on the awaited task -->
     <Rule Id="CA1303" Action="None" /> <!-- Passing literal string as parameter -->
     <Rule Id="CA1822" Action="None" /> <!-- Member can be marked as static -->
     <Rule Id="CA2213" Action="None" /> <!-- Change Dispore method to call Close or Dispose -->
     <Rule Id="CA1724" Action="None" /> <!-- Naming conflict -->
+    <Rule Id="CA1051" Action="None" /> <!-- Do not declare visible instance fields -->
+    <Rule Id="CA1304" Action="None" /> <!-- string.ToUpper behavior could vary based on the current user's locale settings -->
+    <Rule Id="CA1305" Action="None" /> <!-- String parsing behavior could vary based on the current user's locale settings -->
+    <Rule Id="CA1062" Action="None" /> <!-- Validate parameters for externally visible methods -->
+    <Rule Id="CA1063" Action="None" />
+    <Rule Id="CA1816" Action="None" />
+    <Rule Id="CA1720" Action="None" /> <!-- Identifier contains type name -->
+    <Rule Id="CA1031" Action="None" /> <!-- Catch more specific exception type -->
   </Rules>
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
     <Rule Id="CA1001" Action="Warning" />
@@ -96,7 +105,6 @@
     <Rule Id="CA1049" Action="Warning" />
     <Rule Id="CA1060" Action="Warning" />
     <Rule Id="CA1061" Action="Warning" />
-    <Rule Id="CA1063" Action="Warning" />
     <Rule Id="CA1065" Action="Warning" />
     <Rule Id="CA1301" Action="Warning" />
     <Rule Id="CA1400" Action="Warning" />

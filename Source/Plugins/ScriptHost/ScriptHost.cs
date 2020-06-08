@@ -10,7 +10,6 @@ namespace RTCV.Plugins.ScriptHost
 
     public partial class ScriptHost : Form
     {
-        Color DarkerGray = Color.FromArgb(64, 64, 64);
         public ScriptHost()
         {
             InitializeComponent();
