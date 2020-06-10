@@ -6,9 +6,9 @@ jobs:
     runs-on: windows-2019
     steps:
     - uses: actions/checkout@v1
-    - uses: nuget/setup-nuget@v1
+    - uses: nuget/setup-nuget@v1.0.2
       with:
-        nuget-version: 'latest '
+        nuget-version: 'latest'
     - name: Restore packages
       run: nuget restore RTCV.sln
     - name: Setup MSBuild.exe and Nuget
