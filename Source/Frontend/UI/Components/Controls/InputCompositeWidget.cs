@@ -25,7 +25,7 @@ namespace RTCV.UI.Components.Controls
             widget.CompositeWidget = this;
         }
 
-        private static readonly string WidgetTooltipText = "* Escape clears a key mapping\r\n* Disable Auto Tab to multiply bind";
+        private const string WidgetTooltipText = "* Escape clears a key mapping\r\n* Disable Auto Tab to multiply bind";
         private ToolTip _tooltip;
         private string _bindingTooltipText;
 

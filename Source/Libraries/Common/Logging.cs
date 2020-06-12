@@ -18,7 +18,7 @@ namespace RTCV.Common
 
         public static Layout CurrentLayout = defaultLayout;
         private static readonly LogLevel minLevel = LogLevel.Trace;
-        private static readonly int logsToKeep = 5;
+        private const int logsToKeep = 5;
 
         public static void StartLogging(string filename)
         {
