@@ -27,7 +27,7 @@ namespace RTCV.CorruptCore
         }
 
 
-        public static BlastUnit GenerateUnit(string domain, long address, int alignment)
+        public static BlastUnit[] GenerateUnit(string domain, long address, int alignment)
         {
             if (domain == null)
             {
@@ -96,7 +96,12 @@ namespace RTCV.CorruptCore
                     btsOut.AddRange(byteArr[j]);
                 }
                 //do not swap endianess
-                return new BlastUnit(btsOut.ToArray(), domain, safeAddress, (4 * cs), false, 0, 1, null, true, false, true);
+
+                BlastUnit yourUnit = new BlastUnit(btsOut.ToArray(), domain, safeAddress, (4 * cs), false, 0, 1, null, true, false, true);
+
+                BlastUnit[] yourBlastUnits = { yourUnit };
+
+                return yourBlastUnits;
             }
             return null;
         }
