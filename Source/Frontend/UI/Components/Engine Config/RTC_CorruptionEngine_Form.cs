@@ -57,6 +57,7 @@ namespace RTCV.UI
             gbFreezeEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
             gbPipeEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
             gbVectorEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
+            gbClusterEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
             gbBlastGeneratorEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
             gbCustomEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
 
@@ -66,24 +67,32 @@ namespace RTCV.UI
 
             cbVectorValueList.DataSource = null;
             cbVectorLimiterList.DataSource = null;
+            cbClusterLimiterList.DataSource = null;
             cbVectorValueList.DisplayMember = "Name";
             cbVectorLimiterList.DisplayMember = "Name";
+            cbClusterLimiterList.DisplayMember = "Name";
 
             cbVectorValueList.ValueMember = "Value";
             cbVectorLimiterList.ValueMember = "Value";
+            cbClusterLimiterList.ValueMember = "Value";
 
             //Do this here as if it's stuck into the designer, it keeps defaulting out
             cbVectorValueList.DataSource = CorruptCore.RtcCore.ValueListBindingSource;
             cbVectorLimiterList.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
+            cbClusterLimiterList.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
 
             if (CorruptCore.RtcCore.LimiterListBindingSource.Count > 0)
             {
                 cbVectorLimiterList_SelectedIndexChanged(cbVectorLimiterList, null);
+                cbVectorLimiterList_SelectedIndexChanged(cbClusterLimiterList, null);
             }
             if (CorruptCore.RtcCore.ValueListBindingSource.Count > 0)
             {
                 cbVectorValueList_SelectedIndexChanged(cbVectorValueList, null);
             }
+
+            clusterChunkSize.ValueChanged += clusterChunkSize_ValueChanged;
+
         }
 
         private void nmDistortionDelay_ValueChanged(object sender, EventArgs e)
@@ -104,6 +113,7 @@ namespace RTCV.UI
             gbFreezeEngine.Visible = false;
             gbPipeEngine.Visible = false;
             gbVectorEngine.Visible = false;
+            gbClusterEngine.Visible = false;
             gbBlastGeneratorEngine.Visible = false;
             gbCustomEngine.Visible = false;
             cbCustomPrecision.Enabled = false;
@@ -160,6 +170,14 @@ namespace RTCV.UI
                     CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.VECTOR;
                     nmAlignment.Maximum = 3;
                     gbVectorEngine.Visible = true;
+
+                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
+                    break;
+
+                case "Cluster Engine":
+                    CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.CLUSTER;
+                    nmAlignment.Maximum = 3;
+                    gbClusterEngine.Visible = true;
 
                     S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
@@ -535,6 +553,20 @@ namespace RTCV.UI
         {
             S.GET<RTC_CustomEngineConfig_Form>().Show();
             S.GET<RTC_CustomEngineConfig_Form>().Focus();
+        }
+
+        private void cbClusterLimiterList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
+            if (item != null)
+            {
+                RTC_ClusterEngine.LimiterListHash = item.Value;
+            }
+        }
+
+        private void clusterChunkSize_ValueChanged(object sender, EventArgs e)
+        {
+            RTC_ClusterEngine.ChunkSize = (int)clusterChunkSize.Value;
         }
     }
 }

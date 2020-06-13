@@ -1,4 +1,4 @@
-﻿namespace RTCV.CorruptCore
+namespace RTCV.CorruptCore
 {
     public enum BlastRadius
     {
@@ -79,6 +79,7 @@
         FREEZE,
         PIPE,
         VECTOR,
+        CLUSTER,
         BLASTGENERATORENGINE,
         CUSTOM,
         NONE

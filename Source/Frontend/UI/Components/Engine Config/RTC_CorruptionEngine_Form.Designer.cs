@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
 	partial class RTC_CorruptionEngine_Form
 	{
@@ -30,8 +30,10 @@
 		{
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_CorruptionEngine_Form));
             this.pnCustomPrecision = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
             this.cbCustomPrecision = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.nmAlignment = new RTCV.UI.Components.Controls.MultiUpDown();
             this.cbSelectedEngine = new System.Windows.Forms.ComboBox();
             this.gbSelectedEngine = new System.Windows.Forms.GroupBox();
             this.gbBlastGeneratorEngine = new System.Windows.Forms.GroupBox();
@@ -96,8 +98,15 @@
             this.comboBox7 = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.btnOpenCustomEngine = new System.Windows.Forms.Button();
-            this.nmAlignment = new RTCV.UI.Components.Controls.MultiUpDown();
-            this.label8 = new System.Windows.Forms.Label();
+            this.gbClusterEngine = new System.Windows.Forms.GroupBox();
+            this.pnClusterLimiterList = new System.Windows.Forms.Panel();
+            this.label11 = new System.Windows.Forms.Label();
+            this.lbClusterEngineLimiterText1 = new System.Windows.Forms.Label();
+            this.clusterChunkSize = new System.Windows.Forms.NumericUpDown();
+            this.cbClusterLimiterList = new System.Windows.Forms.ComboBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.comboBox9 = new System.Windows.Forms.ComboBox();
+            this.label22 = new System.Windows.Forms.Label();
             this.pnCustomPrecision.SuspendLayout();
             this.gbBlastGeneratorEngine.SuspendLayout();
             this.gbVectorEngine.SuspendLayout();
@@ -109,6 +118,9 @@
             this.gbHellgenieEngine.SuspendLayout();
             this.gbNightmareEngine.SuspendLayout();
             this.gbCustomEngine.SuspendLayout();
+            this.gbClusterEngine.SuspendLayout();
+            this.pnClusterLimiterList.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.clusterChunkSize)).BeginInit();
             this.SuspendLayout();
             // 
             // pnCustomPrecision
@@ -124,17 +136,6 @@
             this.pnCustomPrecision.TabIndex = 139;
             this.pnCustomPrecision.Tag = "color:dark2";
             this.pnCustomPrecision.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F);
-            this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(195, 8);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(95, 13);
-            this.label5.TabIndex = 82;
-            this.label5.Text = "Engine Precision:";
             // 
             // cbCustomPrecision
             // 
@@ -157,6 +158,57 @@
             this.cbCustomPrecision.SelectedIndexChanged += new System.EventHandler(this.cbCustomPrecision_SelectedIndexChanged);
             this.cbCustomPrecision.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F);
+            this.label5.ForeColor = System.Drawing.Color.White;
+            this.label5.Location = new System.Drawing.Point(195, 8);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(95, 13);
+            this.label5.TabIndex = 82;
+            this.label5.Text = "Engine Precision:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F);
+            this.label8.ForeColor = System.Drawing.Color.White;
+            this.label8.Location = new System.Drawing.Point(86, 8);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(63, 13);
+            this.label8.TabIndex = 149;
+            this.label8.Text = "Alignment:";
+            // 
+            // nmAlignment
+            // 
+            this.nmAlignment.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
+            this.nmAlignment.Font = new System.Drawing.Font("Segoe UI", 7F);
+            this.nmAlignment.ForeColor = System.Drawing.Color.White;
+            this.nmAlignment.Hexadecimal = false;
+            this.nmAlignment.Location = new System.Drawing.Point(152, 5);
+            this.nmAlignment.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.nmAlignment.Maximum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.nmAlignment.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.nmAlignment.Name = "nmAlignment";
+            this.nmAlignment.Size = new System.Drawing.Size(37, 21);
+            this.nmAlignment.TabIndex = 148;
+            this.nmAlignment.Tag = "color:normal";
+            this.nmAlignment.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.nmAlignment.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
+            // 
             // cbSelectedEngine
             // 
             this.cbSelectedEngine.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
@@ -172,6 +224,7 @@
             "Freeze Engine",
             "Pipe Engine",
             "Vector Engine",
+            "Cluster Engine",
             "Custom Engine",
             "Blast Generator"});
             this.cbSelectedEngine.Location = new System.Drawing.Point(19, 16);
@@ -618,6 +671,7 @@
             this.nmDistortionDelay.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.nmDistortionDelay.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.nmDistortionDelay.ForeColor = System.Drawing.Color.White;
+            this.nmDistortionDelay.Hexadecimal = false;
             this.nmDistortionDelay.Location = new System.Drawing.Point(96, 39);
             this.nmDistortionDelay.Maximum = new decimal(new int[] {
             65536,
@@ -638,7 +692,6 @@
             0,
             0,
             0});
-            this.nmDistortionDelay.ValueChanged += this.nmDistortionDelay_ValueChanged;
             this.nmDistortionDelay.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // label7
@@ -854,6 +907,16 @@
             this.nmMaxValueHellgenie.ForeColor = System.Drawing.Color.White;
             this.nmMaxValueHellgenie.Hexadecimal = true;
             this.nmMaxValueHellgenie.Location = new System.Drawing.Point(96, 65);
+            this.nmMaxValueHellgenie.Maximum = new decimal(new int[] {
+            -1,
+            -1,
+            0,
+            0});
+            this.nmMaxValueHellgenie.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             this.nmMaxValueHellgenie.Name = "nmMaxValueHellgenie";
             this.nmMaxValueHellgenie.Size = new System.Drawing.Size(70, 20);
             this.nmMaxValueHellgenie.TabIndex = 146;
@@ -863,7 +926,6 @@
             0,
             0,
             0});
-            this.nmMaxValueHellgenie.ValueChanged += this.nmMaxValueHellgenie_ValueChanged;
             this.nmMaxValueHellgenie.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // label16
@@ -884,11 +946,25 @@
             this.nmMinValueHellgenie.ForeColor = System.Drawing.Color.White;
             this.nmMinValueHellgenie.Hexadecimal = true;
             this.nmMinValueHellgenie.Location = new System.Drawing.Point(96, 40);
+            this.nmMinValueHellgenie.Maximum = new decimal(new int[] {
+            -1,
+            -1,
+            0,
+            0});
+            this.nmMinValueHellgenie.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             this.nmMinValueHellgenie.Name = "nmMinValueHellgenie";
             this.nmMinValueHellgenie.Size = new System.Drawing.Size(70, 20);
             this.nmMinValueHellgenie.TabIndex = 145;
             this.nmMinValueHellgenie.Tag = "color:normal";
-            this.nmMinValueHellgenie.ValueChanged += this.nmMinValueHellgenie_ValueChanged;
+            this.nmMinValueHellgenie.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             this.nmMinValueHellgenie.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // comboBox2
@@ -988,6 +1064,16 @@
             this.nmMaxValueNightmare.ForeColor = System.Drawing.Color.White;
             this.nmMaxValueNightmare.Hexadecimal = true;
             this.nmMaxValueNightmare.Location = new System.Drawing.Point(96, 89);
+            this.nmMaxValueNightmare.Maximum = new decimal(new int[] {
+            -1,
+            -1,
+            0,
+            0});
+            this.nmMaxValueNightmare.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             this.nmMaxValueNightmare.Name = "nmMaxValueNightmare";
             this.nmMaxValueNightmare.Size = new System.Drawing.Size(70, 20);
             this.nmMaxValueNightmare.TabIndex = 142;
@@ -997,7 +1083,6 @@
             0,
             0,
             0});
-            this.nmMaxValueNightmare.ValueChanged += this.nmMaxValueNightmare_ValueChanged;
             this.nmMaxValueNightmare.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // nmMinValueNightmare
@@ -1007,11 +1092,25 @@
             this.nmMinValueNightmare.ForeColor = System.Drawing.Color.White;
             this.nmMinValueNightmare.Hexadecimal = true;
             this.nmMinValueNightmare.Location = new System.Drawing.Point(96, 64);
+            this.nmMinValueNightmare.Maximum = new decimal(new int[] {
+            -1,
+            -1,
+            0,
+            0});
+            this.nmMinValueNightmare.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             this.nmMinValueNightmare.Name = "nmMinValueNightmare";
             this.nmMinValueNightmare.Size = new System.Drawing.Size(70, 20);
             this.nmMinValueNightmare.TabIndex = 141;
             this.nmMinValueNightmare.Tag = "color:normal";
-            this.nmMinValueNightmare.ValueChanged += this.nmMinValueNightmare_ValueChanged;
+            this.nmMinValueNightmare.Value = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             this.nmMinValueNightmare.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // label15
@@ -1067,7 +1166,7 @@
             this.label9.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label9.Location = new System.Drawing.Point(5, 41);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(60, 13);
+            this.label9.Size = new System.Drawing.Size(59, 13);
             this.label9.TabIndex = 12;
             this.label9.Text = "Blast type:";
             this.label9.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
@@ -1080,7 +1179,7 @@
             this.gbCustomEngine.Controls.Add(this.btnOpenCustomEngine);
             this.gbCustomEngine.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.gbCustomEngine.ForeColor = System.Drawing.Color.White;
-            this.gbCustomEngine.Location = new System.Drawing.Point(880, 308);
+            this.gbCustomEngine.Location = new System.Drawing.Point(880, 611);
             this.gbCustomEngine.Name = "gbCustomEngine";
             this.gbCustomEngine.Size = new System.Drawing.Size(420, 151);
             this.gbCustomEngine.TabIndex = 147;
@@ -1140,52 +1239,148 @@
             this.btnOpenCustomEngine.UseVisualStyleBackColor = false;
             this.btnOpenCustomEngine.Click += new System.EventHandler(this.btnOpenCustomEngine_Click);
             // 
-            // nmAlignment
+            // gbClusterEngine
             // 
-            this.nmAlignment.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.nmAlignment.Font = new System.Drawing.Font("Segoe UI", 7F);
-            this.nmAlignment.ForeColor = System.Drawing.Color.White;
-            this.nmAlignment.Hexadecimal = false;
-            this.nmAlignment.Location = new System.Drawing.Point(152, 5);
-            this.nmAlignment.Maximum = new decimal(new int[] {
-            0,
+            this.gbClusterEngine.Controls.Add(this.pnClusterLimiterList);
+            this.gbClusterEngine.Controls.Add(this.comboBox9);
+            this.gbClusterEngine.Controls.Add(this.label22);
+            this.gbClusterEngine.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            this.gbClusterEngine.ForeColor = System.Drawing.Color.White;
+            this.gbClusterEngine.Location = new System.Drawing.Point(880, 308);
+            this.gbClusterEngine.Name = "gbClusterEngine";
+            this.gbClusterEngine.Size = new System.Drawing.Size(420, 151);
+            this.gbClusterEngine.TabIndex = 148;
+            this.gbClusterEngine.TabStop = false;
+            this.gbClusterEngine.Visible = false;
+            // 
+            // pnClusterLimiterList
+            // 
+            this.pnClusterLimiterList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.pnClusterLimiterList.Controls.Add(this.label11);
+            this.pnClusterLimiterList.Controls.Add(this.lbClusterEngineLimiterText1);
+            this.pnClusterLimiterList.Controls.Add(this.clusterChunkSize);
+            this.pnClusterLimiterList.Controls.Add(this.cbClusterLimiterList);
+            this.pnClusterLimiterList.Controls.Add(this.label12);
+            this.pnClusterLimiterList.Location = new System.Drawing.Point(6, 40);
+            this.pnClusterLimiterList.Name = "pnClusterLimiterList";
+            this.pnClusterLimiterList.Size = new System.Drawing.Size(408, 104);
+            this.pnClusterLimiterList.TabIndex = 134;
+            this.pnClusterLimiterList.Tag = "color:dark2";
+            this.pnClusterLimiterList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label11.Location = new System.Drawing.Point(7, 52);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(106, 13);
+            this.label11.TabIndex = 142;
+            this.label11.Text = "Cluster Chunk Size:";
+            this.label11.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
+            // 
+            // lbClusterEngineLimiterText1
+            // 
+            this.lbClusterEngineLimiterText1.AutoSize = true;
+            this.lbClusterEngineLimiterText1.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.lbClusterEngineLimiterText1.Location = new System.Drawing.Point(165, 27);
+            this.lbClusterEngineLimiterText1.Name = "lbClusterEngineLimiterText1";
+            this.lbClusterEngineLimiterText1.Size = new System.Drawing.Size(104, 13);
+            this.lbClusterEngineLimiterText1.TabIndex = 141;
+            this.lbClusterEngineLimiterText1.Text = "Comparison values";
+            this.lbClusterEngineLimiterText1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
+            // 
+            // clusterChunkSize
+            // 
+            this.clusterChunkSize.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
+            this.clusterChunkSize.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.clusterChunkSize.ForeColor = System.Drawing.Color.White;
+            this.clusterChunkSize.Location = new System.Drawing.Point(11, 68);
+            this.clusterChunkSize.Maximum = new decimal(new int[] {
+            65536,
             0,
             0,
             0});
-            this.nmAlignment.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.nmAlignment.Name = "nmAlignment";
-            this.nmAlignment.Size = new System.Drawing.Size(37, 21);
-            this.nmAlignment.TabIndex = 148;
-            this.nmAlignment.Tag = "color:normal";
-            this.nmAlignment.Value = new decimal(new int[] {
-            0,
+            this.clusterChunkSize.Minimum = new decimal(new int[] {
+            2,
             0,
             0,
             0});
-            this.nmAlignment.ValueChanged += this.nmAlignment_ValueChanged;
-            this.nmAlignment.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
+            this.clusterChunkSize.Name = "clusterChunkSize";
+            this.clusterChunkSize.Size = new System.Drawing.Size(100, 22);
+            this.clusterChunkSize.TabIndex = 144;
+            this.clusterChunkSize.Tag = "color:normal";
+            this.clusterChunkSize.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            this.clusterChunkSize.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
-            // label8
+            // cbClusterLimiterList
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F);
-            this.label8.ForeColor = System.Drawing.Color.White;
-            this.label8.Location = new System.Drawing.Point(86, 8);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(63, 13);
-            this.label8.TabIndex = 149;
-            this.label8.Text = "Alignment:";
+            this.cbClusterLimiterList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
+            this.cbClusterLimiterList.DisplayMember = "Name";
+            this.cbClusterLimiterList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbClusterLimiterList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbClusterLimiterList.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.cbClusterLimiterList.ForeColor = System.Drawing.Color.White;
+            this.cbClusterLimiterList.FormattingEnabled = true;
+            this.cbClusterLimiterList.IntegralHeight = false;
+            this.cbClusterLimiterList.Location = new System.Drawing.Point(8, 19);
+            this.cbClusterLimiterList.MaxDropDownItems = 15;
+            this.cbClusterLimiterList.Name = "cbClusterLimiterList";
+            this.cbClusterLimiterList.Size = new System.Drawing.Size(152, 21);
+            this.cbClusterLimiterList.TabIndex = 78;
+            this.cbClusterLimiterList.Tag = "color:normal";
+            this.cbClusterLimiterList.ValueMember = "Value";
+            this.cbClusterLimiterList.SelectedIndexChanged += new System.EventHandler(this.cbClusterLimiterList_SelectedIndexChanged);
+            this.cbClusterLimiterList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label12.Location = new System.Drawing.Point(6, 4);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(62, 13);
+            this.label12.TabIndex = 79;
+            this.label12.Text = "Limiter list:";
+            this.label12.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
+            // 
+            // comboBox9
+            // 
+            this.comboBox9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.comboBox9.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBox9.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.comboBox9.ForeColor = System.Drawing.Color.White;
+            this.comboBox9.FormattingEnabled = true;
+            this.comboBox9.Location = new System.Drawing.Point(0, 9);
+            this.comboBox9.Name = "comboBox9";
+            this.comboBox9.Size = new System.Drawing.Size(165, 21);
+            this.comboBox9.TabIndex = 82;
+            this.comboBox9.Tag = "color:dark1";
+            this.comboBox9.Visible = false;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
+            this.label22.Location = new System.Drawing.Point(170, 16);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(167, 13);
+            this.label22.TabIndex = 77;
+            this.label22.Text = "Swaps Floats with neighbor Floats";
+            this.label22.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // RTC_CorruptionEngine_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(1448, 646);
+            this.ClientSize = new System.Drawing.Size(1448, 1097);
+            this.Controls.Add(this.gbClusterEngine);
             this.Controls.Add(this.gbCustomEngine);
             this.Controls.Add(this.gbBlastGeneratorEngine);
             this.Controls.Add(this.gbVectorEngine);
@@ -1227,6 +1422,11 @@
             this.gbNightmareEngine.PerformLayout();
             this.gbCustomEngine.ResumeLayout(false);
             this.gbCustomEngine.PerformLayout();
+            this.gbClusterEngine.ResumeLayout(false);
+            this.gbClusterEngine.PerformLayout();
+            this.pnClusterLimiterList.ResumeLayout(false);
+            this.pnClusterLimiterList.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.clusterChunkSize)).EndInit();
             this.ResumeLayout(false);
 
 		}
@@ -1302,5 +1502,14 @@
 		public Components.Controls.MultiUpDown updownMaxFreeze;
         private System.Windows.Forms.Label label8;
         public Components.Controls.MultiUpDown nmAlignment;
+        private System.Windows.Forms.GroupBox gbClusterEngine;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.NumericUpDown clusterChunkSize;
+        private System.Windows.Forms.Panel pnClusterLimiterList;
+        private System.Windows.Forms.Label lbClusterEngineLimiterText1;
+        public System.Windows.Forms.ComboBox cbClusterLimiterList;
+        private System.Windows.Forms.Label label12;
+        public System.Windows.Forms.ComboBox comboBox9;
+        private System.Windows.Forms.Label label22;
     }
 }

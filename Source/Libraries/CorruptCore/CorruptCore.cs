@@ -346,6 +346,7 @@ namespace RTCV.CorruptCore
                 rtcSpecTemplate.Insert(StepActions.getDefaultPartial());
                 rtcSpecTemplate.Insert(Filtering.getDefaultPartial());
                 rtcSpecTemplate.Insert(RTC_VectorEngine.getDefaultPartial());
+                rtcSpecTemplate.Insert(RTC_ClusterEngine.getDefaultPartial());
                 rtcSpecTemplate.Insert(MemoryDomains.getDefaultPartial());
                 rtcSpecTemplate.Insert(StockpileManager_EmuSide.getDefaultPartial());
                 rtcSpecTemplate.Insert(Render.getDefaultPartial());
@@ -642,6 +643,9 @@ namespace RTCV.CorruptCore
                         break;
                     case CorruptionEngine.VECTOR:
                         bu = RTC_VectorEngine.GenerateUnit(_domain, _address, alignment);
+                        break;
+                    case CorruptionEngine.CLUSTER:
+                        bu = RTC_ClusterEngine.GenerateUnit(_domain, _address, alignment);
                         break;
                     case CorruptionEngine.CUSTOM:
                         bu = RTC_CustomEngine.GenerateUnit(_domain, _address, precision, alignment);
