@@ -433,9 +433,6 @@ dotnet_diagnostic.SA1118.severity = none
 # Statement should not use unnecessary parenthesis
 dotnet_diagnostic.SA1119.severity = none
 
-# Comments should contain text
-dotnet_diagnostic.SA1120.severity = none
-
 # Use built-in type alias
 dotnet_diagnostic.SA1121.severity = none
 
