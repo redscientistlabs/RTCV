@@ -177,7 +177,7 @@ namespace RTCV.UI
             BlastLayer changes = (BlastLayer)S.GET<RTC_NewBlastEditor_Form>().currentSK.BlastLayer.Clone();
             BlastLayer modified = (BlastLayer)originalBlastLayer.Clone();
 
-            foreach (var unit in changes.Layer.Where(it=> it.IsEnabled))
+            foreach (var unit in changes.Layer.Where(it => it.IsEnabled))
             {
                 var TargetUnit = modified.Layer.FirstOrDefault(it =>
                 it.Address == unit.Address &&
@@ -266,7 +266,7 @@ namespace RTCV.UI
 
             int original_remainder = originalSize;
             int original_maxsteps = 0;
-            while (original_remainder>1)
+            while (original_remainder > 1)
             {
                 original_remainder = original_remainder / 2;
                 original_maxsteps++;

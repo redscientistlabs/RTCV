@@ -277,7 +277,7 @@
             {
                 bool found = true;
 
-                for (int i = 0; i<item.Length; i++)
+                for (int i = 0; i < item.Length; i++)
                 {
                     if (item[i] == null) //ignoring wildcards (null values)
                         continue;
