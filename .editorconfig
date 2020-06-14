@@ -285,9 +285,6 @@ dotnet_diagnostic.CA1712.severity = none
 # Flags enums should have plural names
 dotnet_diagnostic.CA1714.severity = none
 
-# Prefix generic type parameter name with 'T'
-dotnet_diagnostic.CA1715.severity = none
-
 # Rename virtual/interface member so it no longer conflicts with reserved language
 dotnet_diagnostic.CA1716.severity = none
 
@@ -328,6 +325,7 @@ dotnet_diagnostic.CA1819.severity = none
 dotnet_diagnostic.CA1820.severity = none
 
 # Member can be marked as static
+# NOTE: Fixing this requires a simultaneous fix in Bizhawk-Vanguard
 dotnet_diagnostic.CA1822.severity = none
 
 # Mark assemblies with NeutralResourcesLanguageAttribute
