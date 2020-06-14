@@ -1294,7 +1294,8 @@ namespace RTCV.CorruptCore
             return path + " " + remainder;
         }
 
-        private static IntPtr oldOut, conOut;
+        private static IntPtr oldOut;
+        private static IntPtr conOut;
         private static bool hasConsole;
         private static bool attachedConsole;
         private static bool shouldRedirectStdout;
