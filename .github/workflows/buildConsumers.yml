@@ -1,11 +1,11 @@
-name: Build consumers
+name: Build Bizhawk and CemuStub
 on:
   push:
     branches:
-      - '505'
+      - '505' # Bizhawk and CemuStub depend on RTCV 505
   pull_request:
     branches:
-      - '505'
+      - '505' # Bizhawk and CemuStub depend on RTCV 505
 
 jobs:
   buildAll:
@@ -45,8 +45,8 @@ jobs:
     - name: Restore Nuget packages in consumer - CemuStub
       run: nuget restore '.\CemuStub-Vanguard\'
 
-    # Build consumers
-    - name: Build consumer - Bizhawk with MSBuild
+    # Build consumers  of RTCV
+    - name: Build Bizhawk-Vanguard
       run: msbuild '.\Bizhawk-Vanguard\Real-Time Corruptor\BizHawk_RTC\BizHawk.sln'
-    - name: Build consumer - CemuStub with MSBuild
+    - name: Build CemuStub-Vanguard
       run: msbuild '.\CemuStub-Vanguard\'
