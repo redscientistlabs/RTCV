@@ -6,6 +6,12 @@ namespace RTCV.CorruptCore
     public static class RTC_ClusterEngine
     {
 
+        const string rand = "Random";
+        const string rotFW = "Rotate Forwards";
+        const string rotBW = "Rotate Backwards";
+
+        public static string[] ShuffleTypes { get; private set; } = new string[] { rand, rotFW, rotBW };
+
         public static string LimiterListHash
         {
             get => (string)AllSpec.CorruptCoreSpec["CLUSTER_LIMITERLISTHASH"];
@@ -18,11 +24,26 @@ namespace RTCV.CorruptCore
             set => AllSpec.CorruptCoreSpec.Update("CLUSTER_SHUFFLEAMT", value);
         }
 
+        public static string ShuffleType
+        {
+            get => (string)AllSpec.CorruptCoreSpec["CLUSTER_SHUFFLETYPE"];
+            set => AllSpec.CorruptCoreSpec.Update("CLUSTER_SHUFFLETYPE", value);
+        }
+
+        public static int Modifier
+        {
+            get => (int)AllSpec.CorruptCoreSpec["CLUSTER_MODIFIER"];
+            set => AllSpec.CorruptCoreSpec.Update("CLUSTER_MODIFIER", value);
+        }
+
+
         public static PartialSpec getDefaultPartial()
         {
             var partial = new PartialSpec("RTCSpec");
             partial["CLUSTER_LIMITERLISTHASH"] = string.Empty;
+            partial["CLUSTER_SHUFFLETYPE"] = rand;
             partial["CLUSTER_SHUFFLEAMT"] = 3;
+            partial["CLUSTER_MODIFIER"] = 1;
             return partial;
         }
 
@@ -60,9 +81,9 @@ namespace RTCV.CorruptCore
                 return values;
             }
 
-            void Shuffle(byte[][] list)
+            void ShuffleRandom(List<byte[]> list)
             {
-                int n = list.Length;
+                int n = list.Count;
                 while (n > 1)
                 {
                     n--;
@@ -73,10 +94,25 @@ namespace RTCV.CorruptCore
                 }
             }
 
+            void RotateForward(List<byte[]> list)
+            {
+                var x = list[list.Count - 1];
+                list.RemoveAt(list.Count - 1);
+                list.Insert(0, x);
+            }
+
+            void RotateBackward(List<byte[]> list)
+            {
+                var x = list[0];
+                list.RemoveAt(0);
+                list.Insert(list.Count, x);
+            }
+
+
             if (Filtering.LimiterPeekBytes(safeAddress, safeAddress + 4, domain, LimiterListHash, mi))
             {
                 int cs = ChunkSize;
-                byte[][] byteArr = new byte[cs][];
+                List<byte[]> byteArr = new List<byte[]>();
 
                 if (safeAddress + (long)(cs * 4) >= mi.Size)
                 {
@@ -85,10 +121,30 @@ namespace RTCV.CorruptCore
 
                 for (int j = 0; j < cs; j++)
                 {
-                    byteArr[j] = GetWord(safeAddress + (long)(j * 4));
+                    byteArr.Add(GetWord(safeAddress + (long)(j * 4)));
                 }
 
-                Shuffle(byteArr);
+                int modifier = Modifier;
+                switch (ShuffleType)
+                {
+                    case rotFW:
+                        for (int j = 0; j < modifier; j++)
+                        {
+                            RotateForward(byteArr);
+                        }
+                        break;
+                    case rotBW:
+                        for (int j = 0; j < modifier; j++)
+                        {
+                            RotateBackward(byteArr);
+                        }
+                        break;
+                    case rand:
+                    default:
+                        ShuffleRandom(byteArr);
+                        break;
+                }
+
 
                 List<byte> btsOut = new List<byte>();
                 for (int j = 0; j < cs; j++)
@@ -96,12 +152,7 @@ namespace RTCV.CorruptCore
                     btsOut.AddRange(byteArr[j]);
                 }
                 //do not swap endianess
-
-                BlastUnit yourUnit = new BlastUnit(btsOut.ToArray(), domain, safeAddress, (4 * cs), false, 0, 1, null, true, false, true);
-
-                BlastUnit[] yourBlastUnits = { yourUnit };
-
-                return yourBlastUnits;
+                return new BlastUnit[] { new BlastUnit(btsOut.ToArray(), domain, safeAddress, (4 * cs), false, 0, 1, null, true, false, true) };
             }
             return null;
         }
