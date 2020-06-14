@@ -250,6 +250,7 @@ dotnet_diagnostic.CA1060.severity = none
 # Validate parameters for externally visible methods
 dotnet_diagnostic.CA1062.severity = none
 
+# Modify 'Dispose' so that it calls Dispose(true), then calls GC.SuppressFinalize on the current object instance ('this' or 'Me' in Visual Basic), and then returns.
 dotnet_diagnostic.CA1063.severity = none
 
 # Method creates exception
@@ -302,9 +303,6 @@ dotnet_diagnostic.CA1724.severity = none
 # Parameter list of method is never used. Remove the parameter or use it in the method body
 dotnet_diagnostic.CA1801.severity = none
 
-# readonly field should be const
-dotnet_diagnostic.CA1802.severity = none
-
 # Using method without reference to error
 dotnet_diagnostic.CA1806.severity = none
 
@@ -320,6 +318,7 @@ dotnet_diagnostic.CA1814.severity = none
 # KeyEvent should override method
 dotnet_diagnostic.CA1815.severity = none
 
+# Change Dispose() to call GC.SuppressFinalize(object). This will prevent derived types that introduce a finalizer from needing to re-implement 'IDisposable' to call it.
 dotnet_diagnostic.CA1816.severity = none
 
 # Properties should not return arrays
