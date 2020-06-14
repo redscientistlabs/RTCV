@@ -16,7 +16,6 @@ namespace RTCV.CorruptCore
     ///appliedLifetime and appliedInfinite are the two collections where we store what we want to actually be applied
     public static class StepActions
     {
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private static List<List<BlastUnit>> buListCollection = new List<List<BlastUnit>>();
 
         private static LinkedList<List<BlastUnit>> queued = new LinkedList<List<BlastUnit>>();

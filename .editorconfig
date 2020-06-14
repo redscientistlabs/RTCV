@@ -330,9 +330,6 @@ dotnet_diagnostic.CA1820.severity = none
 # Member can be marked as static
 dotnet_diagnostic.CA1822.severity = none
 
-# Unused field
-dotnet_diagnostic.CA1823.severity = none
-
 # Mark assemblies with NeutralResourcesLanguageAttribute
 dotnet_diagnostic.CA1824.severity = none
 
