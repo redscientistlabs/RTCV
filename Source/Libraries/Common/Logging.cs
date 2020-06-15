@@ -2,19 +2,23 @@ namespace RTCV.Common
 {
     using System;
     using System.Diagnostics;
+    using System.Globalization;
     using System.IO;
     using System.Text;
+    using System.Threading;
     using System.Linq;
     using NLog;
     using NLog.LayoutRenderers;
     using NLog.Layouts;
+    using NLog.LayoutRenderers.Wrappers;
+    using NLog.Config;
 
     public static class Logging
     {
         public static Logger GlobalLogger = LogManager.GetLogger("Global");
 
-        private static readonly SimpleLayout defaultLayout = new NLog.Layouts.SimpleLayout("${longdate}|${level:uppercase=true}|${logger}|${message}${onexception:|${newline}EXCEPTION OCCURRED\\:${exception:format=type,message,method:maxInnerExceptionLevel=5:innerFormat=shortType,message,method}${newline}");
-        private static readonly SimpleLayout traceLayout = new NLog.Layouts.SimpleLayout("${longdate}|${level:uppercase=true}|${logger}|${callsite}|${message}${onexception:|${newline}EXCEPTION OCCURRED\\:${exception:format=type,message,method:maxInnerExceptionLevel=5:innerFormat=shortType,message,method}${newline}");
+        private static readonly SimpleLayout defaultLayout = new NLog.Layouts.SimpleLayout("${longdate}|${level:uppercase=true}|${logger}|${message}${onexception:|${newline}EXCEPTION OCCURRED\\:${InvariantCulture:${exception:format=type,message,method:maxInnerExceptionLevel=5:innerFormat=shortType,message,method}${newline}");
+        private static readonly SimpleLayout traceLayout = new NLog.Layouts.SimpleLayout("${longdate}|${level:uppercase=true}|${logger}|${callsite}|${message}${onexception:|${newline}EXCEPTION OCCURRED\\:${InvariantCulture:${exception:format=type,message,method:maxInnerExceptionLevel=5:innerFormat=shortType,message,method}${newline}");
 
         public static Layout CurrentLayout = defaultLayout;
         private static readonly LogLevel minLevel = LogLevel.Trace;
@@ -22,6 +26,7 @@ namespace RTCV.Common
 
         public static void StartLogging(string filename)
         {
+            ConfigurationItemFactory.Default.LayoutRenderers.RegisterDefinition("InvariantCulture", typeof(InvariantCultureLayoutRendererWrapper));
             var config = new NLog.Config.LoggingConfiguration();
 
 
@@ -104,11 +109,36 @@ namespace RTCV.Common
         }
     }
 
+
     public class ExtendedRenderer : LayoutRenderer
     {
         protected override void Append(StringBuilder builder, LogEventInfo logEvent)
         {
             throw new NotImplementedException();
+        }
+    }
+
+    [LayoutRenderer("InvariantCulture")]
+    [ThreadAgnostic]
+    public sealed class InvariantCultureLayoutRendererWrapper : WrapperLayoutRendererBase
+    {
+        protected override string Transform(string text)
+        {
+            return text;
+        }
+
+        protected override string RenderInner(LogEventInfo logEvent)
+        {
+            var currentCulture = Thread.CurrentThread.CurrentUICulture;
+            try
+            {
+                Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;
+                return base.RenderInner(logEvent);
+            }
+            finally
+            {
+                Thread.CurrentThread.CurrentUICulture = currentCulture;
+            }
         }
     }
 }
