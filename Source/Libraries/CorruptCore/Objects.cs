@@ -1592,7 +1592,7 @@ namespace RTCV.CorruptCore
                 {
                     if (BigEndian)
                     {
-                        bu.Value[i] = Value[end - (i +1)];
+                        bu.Value[i] = Value[end - (i + 1)];
                     }
                     else
                     {

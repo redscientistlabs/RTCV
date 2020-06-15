@@ -20,7 +20,6 @@ namespace RTCV.UI
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        private Dictionary<string, TextBox> StateBoxes = new Dictionary<string, TextBox>();
         private BindingSource savestateBindingSource = new BindingSource(new BindingList<SaveStateKey>(), null);
 
         private bool LoadSavestateOnClick = false;

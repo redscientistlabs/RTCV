@@ -502,7 +502,8 @@ namespace RTCV.CorruptCore
                         {
                             void a()
                             {
-                                MemoryDomains.GenerateActiveTableDump((string)(advancedMessage.objectValue as object[])[0],
+                                MemoryDomains.GenerateActiveTableDump(
+                                    (string)(advancedMessage.objectValue as object[])[0],
                                     (string)(advancedMessage.objectValue as object[])[1]);
                             }
 

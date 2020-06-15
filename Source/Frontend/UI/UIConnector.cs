@@ -11,7 +11,6 @@ namespace RTCV.UI
     {
         private NetCoreReceiver receiver;
         public NetCoreConnector netConn;
-        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public UIConnector(NetCoreReceiver _receiver)
         {

@@ -99,7 +99,8 @@
         /// </summary>
         private struct SMSRD
         {
-            internal int x, y;
+            internal int x;
+            internal int y;
             // internal int u, v;  // 2002.09.20: no need for 2 points
         }
 

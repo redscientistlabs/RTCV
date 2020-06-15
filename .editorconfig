@@ -285,9 +285,6 @@ dotnet_diagnostic.CA1712.severity = none
 # Flags enums should have plural names
 dotnet_diagnostic.CA1714.severity = none
 
-# Prefix generic type parameter name with 'T'
-dotnet_diagnostic.CA1715.severity = none
-
 # Rename virtual/interface member so it no longer conflicts with reserved language
 dotnet_diagnostic.CA1716.severity = none
 
@@ -328,10 +325,8 @@ dotnet_diagnostic.CA1819.severity = none
 dotnet_diagnostic.CA1820.severity = none
 
 # Member can be marked as static
+# NOTE: Fixing this requires a simultaneous fix in Bizhawk-Vanguard
 dotnet_diagnostic.CA1822.severity = none
-
-# Unused field
-dotnet_diagnostic.CA1823.severity = none
 
 # Mark assemblies with NeutralResourcesLanguageAttribute
 dotnet_diagnostic.CA1824.severity = none
@@ -399,9 +394,6 @@ dotnet_diagnostic.SA0001.severity = none
 # Commas should be followed by whitespace
 dotnet_diagnostic.SA1001.severity = none
 
-# Operator whitespace
-dotnet_diagnostic.SA1003.severity = none
-
 # Single line comment should begin with a space
 dotnet_diagnostic.SA1005.severity = none
 
@@ -441,9 +433,6 @@ dotnet_diagnostic.SA1118.severity = none
 # Statement should not use unnecessary parenthesis
 dotnet_diagnostic.SA1119.severity = none
 
-# Comments should contain text
-dotnet_diagnostic.SA1120.severity = none
-
 # Use built-in type alias
 dotnet_diagnostic.SA1121.severity = none
 
@@ -467,9 +456,6 @@ dotnet_diagnostic.SA1130.severity = none
 
 # Constant values should appear on the right-hand side of comparisons
 dotnet_diagnostic.SA1131.severity = none
-
-# Do not combine fields
-dotnet_diagnostic.SA1132.severity = none
 
 # Do not combine attributes
 dotnet_diagnostic.SA1133.severity = none

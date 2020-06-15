@@ -703,7 +703,7 @@ namespace RTCV.CorruptCore
 
             var newArray = new byte[bytes.Length];
 
-            for (int i=0; i<bytes.Length; i++)
+            for (int i = 0; i < bytes.Length; i++)
             {
                 if (bytes[i] == null)
                     newArray[i] = 69;
@@ -1294,7 +1294,8 @@ namespace RTCV.CorruptCore
             return path + " " + remainder;
         }
 
-        private static IntPtr oldOut, conOut;
+        private static IntPtr oldOut;
+        private static IntPtr conOut;
         private static bool hasConsole;
         private static bool attachedConsole;
         private static bool shouldRedirectStdout;

@@ -103,8 +103,6 @@ namespace RTCV.NetCore
             internal const int MF_GRAYED = 0x1;             //disabled button status (enabled = false)
             internal const int MF_DISABLED = 0x00000002;    //disabled button status
 
-            private const uint StdOutputHandle = 0xFFFFFFF5;
-
             [DllImport("kernel32.dll")]
             private static extern IntPtr GetStdHandle(uint nStdHandle);
 

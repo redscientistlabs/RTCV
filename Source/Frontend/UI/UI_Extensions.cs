@@ -2639,18 +2639,18 @@ public class SortableBindingList<T> : BindingList<T> where T : class
 /// <summary>
 /// A dictionary that creates new values on the fly as necessary so that any key you need will be defined.
 /// </summary>
-/// <typeparam name="K">dictionary keys</typeparam>
-/// <typeparam name="V">dictionary values</typeparam>
+/// <typeparam name="TKey">dictionary keys</typeparam>
+/// <typeparam name="TValue">dictionary values</typeparam>
 [Serializable]
-public class WorkingDictionary<K, V> : Dictionary<K, V> where V : new()
+public class WorkingDictionary<TKey, TValue> : Dictionary<TKey, TValue> where TValue : new()
 {
-    public new V this[K key]
+    public new TValue this[TKey key]
     {
         get
         {
-            if (!TryGetValue(key, out V temp))
+            if (!TryGetValue(key, out TValue temp))
             {
-                temp = this[key] = new V();
+                temp = this[key] = new TValue();
             }
 
             return temp;

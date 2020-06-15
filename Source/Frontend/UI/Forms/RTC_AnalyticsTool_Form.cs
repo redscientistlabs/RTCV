@@ -249,7 +249,7 @@
         {
             int activity = 0;
 
-            for (int i=0; i<stripe.Count; i++)
+            for (int i = 0; i < stripe.Count; i++)
             {
                 if (i == 0)
                     continue;
@@ -259,7 +259,7 @@
                 byte[] prevWord = stripe[i - 1];
                 byte[] currentWord = stripe[i];
 
-                for (int j=0; j< currentWord.Length; j++)
+                for (int j = 0; j < currentWord.Length; j++)
                 {
                     if (prevWord[j] != currentWord[j])
                     {
@@ -314,7 +314,7 @@
         {
             byte[] output = new byte[wordSize];
 
-            for (int i=0; i < wordSize; i++)
+            for (int i = 0; i < wordSize; i++)
                 output[i] = dump[index + i];
 
             return output;
