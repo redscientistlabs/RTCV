@@ -13,9 +13,17 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing)
             {
-                components.Dispose();
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+
+                if (spForm != null)
+                {
+                    spForm.Dispose();
+                }
             }
             base.Dispose(disposing);
         }
@@ -31,18 +39,18 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UI_CanvasForm));
             this.pnScale = new System.Windows.Forms.Panel();
             this.SuspendLayout();
-            // 
+            //
             // pnScale
-            // 
+            //
             this.pnScale.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.pnScale.Location = new System.Drawing.Point(16, 16);
             this.pnScale.Name = "pnScale";
             this.pnScale.Size = new System.Drawing.Size(32, 32);
             this.pnScale.TabIndex = 5;
             this.pnScale.Tag = "color:dark2";
-            // 
+            //
             // UI_CanvasForm
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
