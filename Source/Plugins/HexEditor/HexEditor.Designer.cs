@@ -21,7 +21,7 @@ namespace RTCV.Plugins.HexEditor
                     components.Dispose();
                 }
 
-                if ((_hexFind != null) && !_hexFind.IsDisposed)
+                if (_hexFind != null)
                 {
                     _hexFind.Dispose();
                 }

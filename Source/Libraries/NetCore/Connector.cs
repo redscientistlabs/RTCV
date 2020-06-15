@@ -162,6 +162,31 @@ namespace RTCV.NetCore
         public void Dispose()
         {
             Stop(true);
+
+            if (spec != null)
+            {
+                spec.Dispose();
+            }
+
+            if (udp != null)
+            {
+                udp.Dispose();
+            }
+
+            if (tcp != null)
+            {
+                tcp.Dispose();
+            }
+
+            if (hub != null)
+            {
+                hub.Dispose();
+            }
+
+            if (watch != null)
+            {
+                watch.Dispose();
+            }
         }
     }
 }
