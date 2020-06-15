@@ -13,9 +13,22 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing)
             {
-                components.Dispose();
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+
+                if (subForm != null)
+                {
+                    subForm.Dispose();
+                }
+
+                if (blockerForm != null)
+                {
+                    blockerForm.Dispose();
+                }
             }
             base.Dispose(disposing);
         }
@@ -35,9 +48,9 @@
             this.btnRight = new System.Windows.Forms.Button();
             this.pnFloater.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // pnFloater
-            // 
+            //
             this.pnFloater.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.pnFloater.Controls.Add(this.pnContainer);
             this.pnFloater.Controls.Add(this.btnLeft);
@@ -47,20 +60,20 @@
             this.pnFloater.Size = new System.Drawing.Size(500, 400);
             this.pnFloater.TabIndex = 0;
             this.pnFloater.Tag = "color:dark2";
-            // 
+            //
             // pnContainer
-            // 
+            //
             this.pnContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.pnContainer.Location = new System.Drawing.Point(11, 15);
             this.pnContainer.Name = "pnContainer";
             this.pnContainer.Size = new System.Drawing.Size(475, 320);
             this.pnContainer.TabIndex = 118;
             this.pnContainer.Tag = "color:dark1";
-            // 
+            //
             // btnCancel
-            // 
-            this.btnLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.btnLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLeft.BackColor = System.Drawing.Color.Gray;
             this.btnLeft.FlatAppearance.BorderSize = 0;
@@ -77,11 +90,11 @@
             this.btnLeft.UseVisualStyleBackColor = false;
             this.btnLeft.Visible = false;
             this.btnLeft.Click += new System.EventHandler(this.btnLeft_Click);
-            // 
+            //
             // btnOk
-            // 
-            this.btnRight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.btnRight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRight.BackColor = System.Drawing.Color.Gray;
             this.btnRight.FlatAppearance.BorderSize = 0;
@@ -97,9 +110,9 @@
             this.btnRight.Text = "OK";
             this.btnRight.UseVisualStyleBackColor = false;
             this.btnRight.Click += new System.EventHandler(this.btnRight_Click);
-            // 
+            //
             // UI_ShadowPanel
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
