@@ -13,9 +13,17 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing)
             {
-                components.Dispose();
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+
+                if (lbForm != null)
+                {
+                    lbForm.Dispose();
+                }
             }
             base.Dispose(disposing);
         }
@@ -37,9 +45,9 @@
             this.btnDebugInfo = new System.Windows.Forms.Button();
             this.btnTestForm = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
+            //
             // lbSettingsAndTools
-            // 
+            //
             this.lbSettingsAndTools.AutoSize = true;
             this.lbSettingsAndTools.Font = new System.Drawing.Font("Segoe UI Semibold", 22F, System.Drawing.FontStyle.Bold);
             this.lbSettingsAndTools.ForeColor = System.Drawing.Color.White;
@@ -48,10 +56,10 @@
             this.lbSettingsAndTools.Size = new System.Drawing.Size(265, 41);
             this.lbSettingsAndTools.TabIndex = 118;
             this.lbSettingsAndTools.Text = "Settings and tools";
-            // 
+            //
             // btnRtcFactoryClean
-            // 
-            this.btnRtcFactoryClean.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.btnRtcFactoryClean.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRtcFactoryClean.BackColor = System.Drawing.Color.Gray;
             this.btnRtcFactoryClean.FlatAppearance.BorderSize = 0;
@@ -69,10 +77,10 @@
             this.btnRtcFactoryClean.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnRtcFactoryClean.UseVisualStyleBackColor = false;
             this.btnRtcFactoryClean.Click += new System.EventHandler(this.btnRtcFactoryClean_Click);
-            // 
+            //
             // btnCloseSettings
-            // 
-            this.btnCloseSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.btnCloseSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCloseSettings.BackColor = System.Drawing.Color.Gray;
             this.btnCloseSettings.FlatAppearance.BorderSize = 0;
@@ -91,11 +99,11 @@
             this.btnCloseSettings.UseVisualStyleBackColor = false;
             this.btnCloseSettings.Visible = false;
             this.btnCloseSettings.Click += new System.EventHandler(this.btnCloseSettings_Click);
-            // 
+            //
             // pnListBoxForm
-            // 
-            this.pnListBoxForm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.pnListBoxForm.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnListBoxForm.BackColor = System.Drawing.Color.Gray;
             this.pnListBoxForm.Location = new System.Drawing.Point(19, 66);
@@ -103,9 +111,9 @@
             this.pnListBoxForm.Size = new System.Drawing.Size(622, 378);
             this.pnListBoxForm.TabIndex = 137;
             this.pnListBoxForm.Tag = "color:normal";
-            // 
+            //
             // btnOpenConsole
-            // 
+            //
             this.btnOpenConsole.BackColor = System.Drawing.Color.Gray;
             this.btnOpenConsole.FlatAppearance.BorderSize = 0;
             this.btnOpenConsole.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -122,9 +130,9 @@
             this.btnOpenConsole.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnOpenConsole.UseVisualStyleBackColor = false;
             this.btnOpenConsole.Click += new System.EventHandler(this.btnToggleConsole_Click);
-            // 
+            //
             // btnDebugInfo
-            // 
+            //
             this.btnDebugInfo.BackColor = System.Drawing.Color.Gray;
             this.btnDebugInfo.FlatAppearance.BorderSize = 0;
             this.btnDebugInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -141,9 +149,9 @@
             this.btnDebugInfo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnDebugInfo.UseVisualStyleBackColor = false;
             this.btnDebugInfo.Click += new System.EventHandler(this.btnDebugInfo_Click);
-            // 
+            //
             // btnTestForm
-            // 
+            //
             this.btnTestForm.BackColor = System.Drawing.Color.Gray;
             this.btnTestForm.FlatAppearance.BorderSize = 0;
             this.btnTestForm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -158,9 +166,9 @@
             this.btnTestForm.UseVisualStyleBackColor = false;
             this.btnTestForm.Visible = false;
             this.btnTestForm.Click += new System.EventHandler(this.BtnTestForm_Click);
-            // 
+            //
             // RTC_Settings_Form
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));

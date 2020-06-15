@@ -13,9 +13,16 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing)
             {
-                components.Dispose();
+                if (components != null)
+                {
+                    components.Dispose();
+                }
+                if (ActiveTableAutodump != null)
+                {
+                    ActiveTableAutodump.Dispose();
+                }
             }
             base.Dispose(disposing);
         }
@@ -41,9 +48,9 @@
             this.label16 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nmAutoAddSec)).BeginInit();
             this.SuspendLayout();
-            // 
+            //
             // btnSendToAnalytics
-            // 
+            //
             this.btnSendToAnalytics.BackColor = System.Drawing.Color.Gray;
             this.btnSendToAnalytics.Enabled = false;
             this.btnSendToAnalytics.FlatAppearance.BorderSize = 0;
@@ -58,9 +65,9 @@
             this.btnSendToAnalytics.Text = "Send dumps to analytics";
             this.btnSendToAnalytics.UseVisualStyleBackColor = false;
             this.btnSendToAnalytics.Click += new System.EventHandler(this.btnSendToAnalytics_Click);
-            // 
+            //
             // btnLoadDomains
-            // 
+            //
             this.btnLoadDomains.BackColor = System.Drawing.Color.Gray;
             this.btnLoadDomains.FlatAppearance.BorderSize = 0;
             this.btnLoadDomains.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -76,9 +83,9 @@
             this.btnLoadDomains.UseVisualStyleBackColor = false;
             this.btnLoadDomains.Click += new System.EventHandler(this.btnLoadDomains_Click);
             this.btnLoadDomains.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // cbSelectedMemoryDomain
-            // 
+            //
             this.cbSelectedMemoryDomain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.cbSelectedMemoryDomain.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSelectedMemoryDomain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -92,9 +99,9 @@
             this.cbSelectedMemoryDomain.Tag = "color:dark1";
             this.cbSelectedMemoryDomain.SelectedIndexChanged += new System.EventHandler(this.cbSelectedMemoryDomain_SelectedIndexChanged);
             this.cbSelectedMemoryDomain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // btnActiveTableDumpsReset
-            // 
+            //
             this.btnActiveTableDumpsReset.BackColor = System.Drawing.Color.Gray;
             this.btnActiveTableDumpsReset.Enabled = false;
             this.btnActiveTableDumpsReset.FlatAppearance.BorderSize = 0;
@@ -110,9 +117,9 @@
             this.btnActiveTableDumpsReset.UseVisualStyleBackColor = false;
             this.btnActiveTableDumpsReset.Click += new System.EventHandler(this.btnActiveTableDumpsReset_Click);
             this.btnActiveTableDumpsReset.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // lbNbMemoryDumps
-            // 
+            //
             this.lbNbMemoryDumps.AutoSize = true;
             this.lbNbMemoryDumps.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lbNbMemoryDumps.ForeColor = System.Drawing.Color.White;
@@ -122,9 +129,9 @@
             this.lbNbMemoryDumps.TabIndex = 86;
             this.lbNbMemoryDumps.Text = "Memory dumps collected: #";
             this.lbNbMemoryDumps.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // nmAutoAddSec
-            // 
+            //
             this.nmAutoAddSec.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.nmAutoAddSec.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.nmAutoAddSec.ForeColor = System.Drawing.Color.White;
@@ -145,9 +152,9 @@
             0});
             this.nmAutoAddSec.ValueChanged += new System.EventHandler(this.nmAutoAddSec_ValueChanged);
             this.nmAutoAddSec.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // cbAutoAddDump
-            // 
+            //
             this.cbAutoAddDump.AutoSize = true;
             this.cbAutoAddDump.Enabled = false;
             this.cbAutoAddDump.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -160,9 +167,9 @@
             this.cbAutoAddDump.UseVisualStyleBackColor = true;
             this.cbAutoAddDump.CheckedChanged += new System.EventHandler(this.cbAutoAddDump_CheckedChanged);
             this.cbAutoAddDump.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // lbDomainAddressSize
-            // 
+            //
             this.lbDomainAddressSize.AutoSize = true;
             this.lbDomainAddressSize.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.lbDomainAddressSize.ForeColor = System.Drawing.Color.White;
@@ -172,9 +179,9 @@
             this.lbDomainAddressSize.TabIndex = 82;
             this.lbDomainAddressSize.Text = "Domain address size: ######";
             this.lbDomainAddressSize.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // btnActiveTableAddDump
-            // 
+            //
             this.btnActiveTableAddDump.BackColor = System.Drawing.Color.Gray;
             this.btnActiveTableAddDump.Enabled = false;
             this.btnActiveTableAddDump.FlatAppearance.BorderSize = 0;
@@ -190,9 +197,9 @@
             this.btnActiveTableAddDump.UseVisualStyleBackColor = false;
             this.btnActiveTableAddDump.Click += new System.EventHandler(this.btnActiveTableAddDump_Click);
             this.btnActiveTableAddDump.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // label16
-            // 
+            //
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.label16.ForeColor = System.Drawing.Color.White;
@@ -202,9 +209,9 @@
             this.label16.TabIndex = 122;
             this.label16.Text = "sec";
             this.label16.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // RTC_DomainAnalytics_Form
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));

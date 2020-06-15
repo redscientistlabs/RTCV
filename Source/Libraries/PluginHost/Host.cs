@@ -8,7 +8,7 @@ namespace RTCV.PluginHost
     using System.Reflection;
     using NLog;
 
-    public class Host
+    public class Host : IDisposable
     {
         #pragma warning disable CS0649 //plugins are assigned by MEF, so "never assigned to" warning doesn't apply
         [ImportMany(typeof(IPlugin))]
@@ -92,6 +92,14 @@ namespace RTCV.PluginHost
             foreach (var p in _loadedPlugins)
             {
                 p.Stop();
+            }
+        }
+
+        public void Dispose()
+        {
+            if (_container != null)
+            {
+                _container.Dispose();
             }
         }
 
