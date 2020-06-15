@@ -922,13 +922,13 @@ namespace RTCV.UI
         private static extern short VkKeyScan(char key);
 
         // Used in TranslateAlignment function
-        private static readonly DataGridViewContentAlignment anyRight = DataGridViewContentAlignment.TopRight |
-                                                                        DataGridViewContentAlignment.MiddleRight |
-                                                                        DataGridViewContentAlignment.BottomRight;
+        private const DataGridViewContentAlignment anyRight = DataGridViewContentAlignment.TopRight |
+                                                              DataGridViewContentAlignment.MiddleRight |
+                                                              DataGridViewContentAlignment.BottomRight;
 
-        private static readonly DataGridViewContentAlignment anyCenter = DataGridViewContentAlignment.TopCenter |
-                                                                         DataGridViewContentAlignment.MiddleCenter |
-                                                                         DataGridViewContentAlignment.BottomCenter;
+        private const DataGridViewContentAlignment anyCenter = DataGridViewContentAlignment.TopCenter |
+                                                               DataGridViewContentAlignment.MiddleCenter |
+                                                               DataGridViewContentAlignment.BottomCenter;
 
         // Default dimensions of the static rendering bitmap used for the painting of the non-edited cells
         private const int DATAGRIDVIEWNUMERICUPDOWNCELL_defaultRenderingBitmapWidth = 100;
