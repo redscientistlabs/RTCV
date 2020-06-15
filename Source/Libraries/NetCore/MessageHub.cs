@@ -145,7 +145,6 @@
             {
                 hubTimer.Stop();
                 hubTimer.Dispose();
-                hubTimer = null;
             }
         }
     }
