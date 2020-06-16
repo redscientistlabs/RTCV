@@ -174,5 +174,19 @@
             if (btnActiveTableDumpsReset.Text == "Reset")
                 btnActiveTableDumpsReset_Click(sender, e);
         }
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                components?.Dispose();
+                ActiveTableAutodump?.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

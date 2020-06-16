@@ -135,5 +135,20 @@
         private void UI_ShadowPanel_Load(object sender, EventArgs e)
         {
         }
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                components?.Dispose();
+                subForm?.Dispose();
+                blockerForm?.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

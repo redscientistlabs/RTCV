@@ -10,42 +10,6 @@ namespace RTCV.UI
 		/// </summary>
 		private System.ComponentModel.IContainer components = null;
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing)
-			{
-                if (components != null)
-                {
-				    components.Dispose();
-                }
-
-                if (headerStrip != null)
-                {
-                    headerStrip.Dispose();
-                }
-
-                if (cms != null)
-                {
-                    cms.Dispose();
-                }
-
-                if (bs != null)
-                {
-                    bs.Dispose();
-                }
-
-                if (_bs != null)
-                {
-                    _bs.Dispose();
-                }
-			}
-			base.Dispose(disposing);
-		}
-
 		#region Windows Form Designer generated code
 
 		/// <summary>

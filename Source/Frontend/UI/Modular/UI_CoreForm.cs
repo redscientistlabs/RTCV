@@ -669,5 +669,20 @@ This message only appears once.";
         {
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, "TEST");
         }
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                components?.Dispose();
+                pnLockSidebar?.Dispose();
+                testErrorTimer?.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }
