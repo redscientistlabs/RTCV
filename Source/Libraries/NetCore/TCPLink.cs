@@ -360,30 +360,11 @@ namespace RTCV.NetCore
 
         public void Dispose()
         {
-            if (BoopMonitoringTimer != null)
-            {
-                BoopMonitoringTimer.Dispose();
-            }
-
-            if (client != null)
-            {
-                client.Dispose();
-            }
-
-            if (clientStream != null)
-            {
-                clientStream.Dispose();
-            }
-
-            if (linkWatch != null)
-            {
-                linkWatch.Dispose();
-            }
-
-            if (spec != null)
-            {
-                spec.Dispose();
-            }
+            BoopMonitoringTimer.Dispose();
+            client.Dispose();
+            clientStream.Dispose();
+            linkWatch.Dispose();
+            spec.Dispose();
         }
 
         private void KillConnections(TcpClient clientRef)

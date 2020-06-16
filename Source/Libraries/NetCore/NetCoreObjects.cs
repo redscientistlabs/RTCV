@@ -476,15 +476,8 @@ namespace RTCV.NetCore
 
         public void Dispose()
         {
-            if (Connector != null)
-            {
-                Connector.Dispose();
-            }
-
-            if (StatusEventLockout != null)
-            {
-                StatusEventLockout.Dispose();
-            }
+            Connector?.Dispose();
+            StatusEventLockout?.Dispose();
         }
     }
 

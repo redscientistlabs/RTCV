@@ -131,11 +131,7 @@ namespace RTCV.UI
 
         public void Dispose()
         {
-            if (netConn != null)
-            {
-                netConn.Kill();
-                netConn.Dispose();
-            }
+            netConn?.Dispose();
         }
     }
 }

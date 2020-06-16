@@ -42,10 +42,7 @@
 
         public void Dispose()
         {
-            if (watchdog != null)
-            {
-                watchdog.Dispose();
-            }
+            watchdog?.Dispose();
         }
     }
 }
