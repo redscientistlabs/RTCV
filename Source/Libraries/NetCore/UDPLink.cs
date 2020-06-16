@@ -50,15 +50,8 @@ namespace RTCV.NetCore
 
         public void Dispose()
         {
-            if (Sender != null)
-            {
-                Sender.Dispose();
-            }
-
-            if (spec != null)
-            {
-                spec.Dispose();
-            }
+            Sender?.Dispose();
+            spec?.Dispose();
         }
 
         internal void SendMessage(NetCoreSimpleMessage message)

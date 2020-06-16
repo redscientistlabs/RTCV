@@ -82,10 +82,7 @@ namespace RTCV.Vanguard
 
         public void Dispose()
         {
-            if (netConn != null)
-            {
-                netConn.Dispose();
-            }
+            netConn?.Dispose();
         }
 
         public static void PushVanguardSpecRef(FullSpec spec) => RTCV.NetCore.AllSpec.VanguardSpec = spec;

@@ -96,10 +96,7 @@ namespace RTCV.PluginHost
 
         public void Dispose()
         {
-            if (_container != null)
-            {
-                _container.Dispose();
-            }
+            _container?.Dispose();
         }
 
         //We want people to be able to pack their plugins into singular binaries and Costura Fody seems like a good option

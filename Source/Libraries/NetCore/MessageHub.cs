@@ -141,11 +141,8 @@
 
         public void Dispose()
         {
-            if (hubTimer != null)
-            {
-                hubTimer.Stop();
-                hubTimer.Dispose();
-            }
+            Kill();
+            hubTimer?.Dispose();
         }
     }
 
