@@ -98,7 +98,7 @@
             Press, Release
         }
 
-        public struct LogicalButton : IEquatable<object>
+        public struct LogicalButton : IEquatable<LogicalButton>
         {
             public LogicalButton(string button, ModifierKey modifiers)
             {
@@ -126,6 +126,11 @@
             public override bool Equals(object obj)
             {
                 var other = (LogicalButton)obj;
+                return Equals(other);
+            }
+
+            public bool Equals(LogicalButton other)
+            {
                 return other == this;
             }
 
