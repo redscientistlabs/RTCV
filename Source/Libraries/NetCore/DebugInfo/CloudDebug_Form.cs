@@ -309,13 +309,17 @@ namespace RTCV.NetCore
         private void btnDebugInfo_Click(object sender, EventArgs e) => S.GET<DebugInfo_Form>().ShowDialog();
     }
 
-    public class SilentException : Exception
-    {
-    }
-
     public class CustomException : Exception
     {
         private readonly string _additionalInfo = "";
+
+        public CustomException() : base()
+        {
+        }
+
+        public CustomException(string message) : base(message)
+        {
+        }
 
         public CustomException(string message, string additionalInfo) : base(message)
         {
@@ -326,16 +330,22 @@ namespace RTCV.NetCore
         {
         }
 
-        public CustomException(string message, string additionalInfo, Exception innerException) : base(message, innerException)
-        {
-            this._additionalInfo = additionalInfo;
-        }
-
         public override string StackTrace => (string.IsNullOrEmpty(_additionalInfo) ? "" : $"{_additionalInfo}\n") + base.StackTrace;
     }
 
     public class AbortEverythingException : Exception
     {
+        public AbortEverythingException() : base()
+        {
+        }
+
+        public AbortEverythingException(string message) : base(message)
+        {
+        }
+
+        public AbortEverythingException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
     }
 
     internal class WebClientTimeout : WebClient
