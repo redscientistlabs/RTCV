@@ -1439,6 +1439,7 @@ namespace RTCV.CorruptCore
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
         public static extern IntPtr GetCommandLine();
 
+        //pragma warning disable CA1028 (preserving enum type to ensure maximum Bizhawk compatibility)
         public enum FileType : uint
         {
             FileTypeChar = 0x0002,

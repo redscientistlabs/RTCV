@@ -223,9 +223,6 @@ dotnet_diagnostic.CA1001.severity = none
 # Mark assemblies with assembly version
 dotnet_diagnostic.CA1016.severity = none
 
-# If possible, make the underlying type of FileType System.Int32 instead of uint
-dotnet_diagnostic.CA1028.severity = none
-
 # Catch more specific exception type
 dotnet_diagnostic.CA1031.severity = none
 
