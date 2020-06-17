@@ -253,12 +253,6 @@ dotnet_diagnostic.CA1062.severity = none
 # Modify 'Dispose' so that it calls Dispose(true), then calls GC.SuppressFinalize on the current object instance ('this' or 'Me' in Visual Basic), and then returns.
 dotnet_diagnostic.CA1063.severity = none
 
-# Method creates exception
-dotnet_diagnostic.CA1065.severity = none
-
-# Implement IEquatable when overriding Object.Equals
-dotnet_diagnostic.CA1066.severity = none
-
 # Passing literal string as parameter
 dotnet_diagnostic.CA1303.severity = none
 

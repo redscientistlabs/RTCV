@@ -98,7 +98,7 @@
             Press, Release
         }
 
-        public struct LogicalButton
+        public struct LogicalButton : IEquatable<object>
         {
             public LogicalButton(string button, ModifierKey modifiers)
             {
