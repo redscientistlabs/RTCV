@@ -5,7 +5,7 @@ namespace RTCV.CorruptCore
     public class RTC_StoreGenerator
     {
         public static BlastLayer GenerateLayer(string note, string domain, long stepSize, long startAddress, long endAddress,
-            ulong param1, ulong param2, int precision, int lifetime, int executeFrame, bool loop, int seed, BGStoreModes mode)
+            ulong param1, ulong param2, int precision, int lifetime, int executeFrame, bool loop, int seed, BGStoreMode mode)
         {
             BlastLayer bl = new BlastLayer();
 
@@ -24,7 +24,7 @@ namespace RTCV.CorruptCore
         }
 
         private static BlastUnit GenerateUnit(string domain, long address, ulong param1, ulong param2, long stepSize,
-            int precision, int lifetime, int executeFrame, bool loop, BGStoreModes mode, string note, Random rand)
+            int precision, int lifetime, int executeFrame, bool loop, BGStoreMode mode, string note, Random rand)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace RTCV.CorruptCore
 
                 switch (mode)
                 {
-                    case BGStoreModes.CHAINED:
+                    case BGStoreMode.CHAINED:
                         long temp = address + stepSize;
                         if (temp <= mi.Size)
                         {
@@ -73,18 +73,18 @@ namespace RTCV.CorruptCore
                         }
 
                         break;
-                    case BGStoreModes.SOURCE_RANDOM:
+                    case BGStoreMode.SOURCE_RANDOM:
                         destAddress = address;
                         address = rand.Next(0, Convert.ToInt32(mi.Size - 1));
                         break;
-                    case BGStoreModes.SOURCE_SET:
+                    case BGStoreMode.SOURCE_SET:
                         destAddress = address;
                         address = (long)param1;
                         break;
-                    case BGStoreModes.DEST_RANDOM:
+                    case BGStoreMode.DEST_RANDOM:
                         destAddress = rand.Next(0, Convert.ToInt32(mi.Size - 1));
                         break;
-                    case BGStoreModes.SELF:
+                    case BGStoreMode.SELF:
                         destAddress = address;
                         break;
                     default:
