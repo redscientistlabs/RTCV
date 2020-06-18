@@ -4,7 +4,7 @@
 
 <p align="center">
     <!-- Github action -->
-    <a href="https://github.com/ircluzar/RTCV/actions?query=workflow%3ABuild+branch%3Amaster"><img src="https://github.com/ircluzar/RTCV/workflows/Build/badge.svg?branch=master" alt="Build status badge" /></a>
+    <a href="https://github.com/ircluzar/RTCV/actions?query=workflow%3ABuild+branch%505"><img src="https://github.com/ircluzar/RTCV/workflows/Build/badge.svg?branch=505" alt="Build status badge" /></a>
     <!-- Wiki -->
     <a href="https://corrupt.wiki/"><img src="https://img.shields.io/badge/docs-corrupt.wiki-blue.svg" alt="Docs wiki badge" /></a>
     <!-- Download -->
