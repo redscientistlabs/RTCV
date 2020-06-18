@@ -253,7 +253,7 @@ dotnet_diagnostic.CA1062.severity = none
 # Modify 'Dispose' so that it calls Dispose(true), then calls GC.SuppressFinalize on the current object instance ('this' or 'Me' in Visual Basic), and then returns.
 dotnet_diagnostic.CA1063.severity = none
 
-# Passing literal string as parameter
+# Retrieve strings from a resource table instead of using a strint literal
 dotnet_diagnostic.CA1303.severity = none
 
 # string.ToUpper behavior could vary based on the current user's locale settings
@@ -265,10 +265,8 @@ dotnet_diagnostic.CA1305.severity = none
 # string.EndsWith behavior could vary based on the current user's locale settings
 dotnet_diagnostic.CA1307.severity = none
 
+# P/Invoke method should not be visible
 dotnet_diagnostic.CA1401.severity = none
-
-# Use nameof in place of string literal
-dotnet_diagnostic.CA1507.severity = none
 
 # Remove underscore for member name
 dotnet_diagnostic.CA1707.severity = none
@@ -378,9 +376,6 @@ dotnet_diagnostic.CA5351.severity = none
 
 # Overload is potentially unsafe
 dotnet_diagnostic.CA5369.severity = none
-
-# Field never assigned to
-dotnet_diagnostic.CS0649.severity = none
 
 # XML comments
 dotnet_diagnostic.SA0001.severity = none
