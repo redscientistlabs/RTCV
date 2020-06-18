@@ -353,14 +353,8 @@ dotnet_diagnostic.CA2234.severity = none
 # Add [Serializable] to class
 dotnet_diagnostic.CA2237.severity = none
 
-# Unsafe overload of 'Deserialize' method
-dotnet_diagnostic.CA3075.severity = none
-
 # Don't use MD5
 dotnet_diagnostic.CA5351.severity = none
-
-# Overload is potentially unsafe
-dotnet_diagnostic.CA5369.severity = none
 
 # XML comments
 dotnet_diagnostic.SA0001.severity = none
