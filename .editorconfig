@@ -232,9 +232,6 @@ dotnet_diagnostic.CA1032.severity = none
 # Do not nest type
 dotnet_diagnostic.CA1034.severity = none
 
-# Avoid empty interfaces
-dotnet_diagnostic.CA1040.severity = none
-
 # Do not declare visible instance fields
 dotnet_diagnostic.CA1051.severity = none
 
