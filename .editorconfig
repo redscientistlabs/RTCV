@@ -385,9 +385,6 @@ dotnet_diagnostic.CA5351.severity = none
 # Overload is potentially unsafe
 dotnet_diagnostic.CA5369.severity = none
 
-# Field never assigned to
-dotnet_diagnostic.CS0649.severity = none
-
 # XML comments
 dotnet_diagnostic.SA0001.severity = none
 
