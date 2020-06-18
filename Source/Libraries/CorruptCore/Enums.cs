@@ -84,7 +84,7 @@
         NONE
     }
 
-    public enum BGValueModes
+    public enum BGValueMode
     {
         SET,
         ADD,
@@ -104,7 +104,7 @@
         BITWISE_ROTATE_RIGHT
     }
 
-    public enum BGStoreModes
+    public enum BGStoreMode
     {
         CHAINED,
         SOURCE_SET,
@@ -113,7 +113,7 @@
         SELF,
     }
 
-    public enum ProblematicItemTypes
+    public enum ProblematicItemType
     {
         PROCESS,
         ASSEMBLY

@@ -265,14 +265,8 @@ dotnet_diagnostic.CA1707.severity = none
 # Do not prefix enum values with the name of the enum type 'FileType'
 dotnet_diagnostic.CA1712.severity = none
 
-# Flags enums should have plural names
-dotnet_diagnostic.CA1714.severity = none
-
 # Rename virtual/interface member so it no longer conflicts with reserved language
 dotnet_diagnostic.CA1716.severity = none
-
-# Only FlagsAttribute enums should have plural names
-dotnet_diagnostic.CA1717.severity = none
 
 # Identifier contains type name
 dotnet_diagnostic.CA1720.severity = none
