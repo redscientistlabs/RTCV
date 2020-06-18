@@ -1127,7 +1127,7 @@ namespace RTCV.CorruptCore
         {
             if (!typeof(T).IsSerializable)
             {
-                throw new ArgumentException("The type must be serializable.", "source");
+                throw new ArgumentException("The type must be serializable.", nameof(source));
             }
 
             //Return default of a null object
@@ -1156,7 +1156,7 @@ namespace RTCV.CorruptCore
             });
             if (!typeof(T).IsSerializable)
             {
-                throw new ArgumentException("The type must be serializable.", "source");
+                throw new ArgumentException("The type must be serializable.", nameof(source));
             }
 
             //Return default of a null object
