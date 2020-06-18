@@ -86,6 +86,7 @@
     </Compile>
     <Compile Include="Loader.cs" />
     <Compile Include="VanguardConnector.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="HexEditor.resx">

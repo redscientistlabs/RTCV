@@ -263,13 +263,13 @@ namespace RTCV.UI
                 switch (row.Cells["dgvType"].Value.ToString())
                 {
                     case "Value":
-                        foreach (BGValueModes type in Enum.GetValues(typeof(BGValueModes)))
+                        foreach (BGValueMode type in Enum.GetValues(typeof(BGValueMode)))
                         {
                             cell.Items.Add(type.ToString());
                         }
                         break;
                     case "Store":
-                        foreach (BGStoreModes type in Enum.GetValues(typeof(BGStoreModes)))
+                        foreach (BGStoreMode type in Enum.GetValues(typeof(BGStoreMode)))
                         {
                             cell.Items.Add(type.ToString());
                         }
