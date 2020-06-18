@@ -1,0 +1,52 @@
+name: Build Bizhawk and CemuStub
+on:
+  push:
+    branches:
+      - '505' # Bizhawk and CemuStub depend on RTCV 505
+  pull_request:
+    branches:
+      - '505' # Bizhawk and CemuStub depend on RTCV 505
+
+jobs:
+  buildAll:
+    runs-on: windows-2019
+    steps:
+    # Checkout relevant code
+    - name: Checkout current build target
+      uses: actions/checkout@v2
+      with:
+        path: 'RTCV'
+    - name: Checkout consumer - Bizhawk
+      uses: actions/checkout@v2
+      with:
+        repository: 'ircluzar/Bizhawk-Vanguard'
+        ref: 'master'
+        path: 'Bizhawk-Vanguard'
+    - name: Checkout consumer - CemuStub
+      uses: actions/checkout@v2
+      with:
+        repository: 'ircluzar/CemuStub-Vanguard'
+        ref: 'master'
+        path: 'CemuStub-Vanguard'
+
+    # Setup Tooling
+    - name: Setup Nuget
+      uses: nuget/setup-nuget@v1.0.2
+      with:
+        nuget-version: 'latest'
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.0
+
+    # Restore nuget packages for all targets
+    - name: Restore Nuget packages in current build target
+      run: nuget restore '.\RTCV\'
+    - name: Restore Nuget packages in consumer - Bizhawk
+      run: nuget restore '.\Bizhawk-Vanguard\Real-Time Corruptor\BizHawk_RTC\BizHawk.sln'
+    - name: Restore Nuget packages in consumer - CemuStub
+      run: nuget restore '.\CemuStub-Vanguard\'
+
+    # Build consumers  of RTCV
+    - name: Build Bizhawk-Vanguard
+      run: msbuild '.\Bizhawk-Vanguard\Real-Time Corruptor\BizHawk_RTC\BizHawk.sln'
+    - name: Build CemuStub-Vanguard
+      run: msbuild '.\CemuStub-Vanguard\'
