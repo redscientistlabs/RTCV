@@ -235,9 +235,6 @@ dotnet_diagnostic.CA1034.severity = none
 # Do not declare visible instance fields
 dotnet_diagnostic.CA1051.severity = none
 
-# Type is a static holder type but is neither static nor NotInheritable
-dotnet_diagnostic.CA1052.severity = none
-
 # Move pinvokes to native methods class
 dotnet_diagnostic.CA1060.severity = none
 
