@@ -155,10 +155,6 @@ namespace RTCV.UI
             T NewMe();
         }
 
-        public interface IColorable
-        {
-        }
-
         public class RTC_Standalone_Form : Form { }
 
         public class ComponentForm : Form
