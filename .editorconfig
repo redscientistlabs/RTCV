@@ -216,6 +216,7 @@ csharp_preserve_single_line_statements = true
 # Code files
 [*.{cs,vb}]
 
+
 # If possible, make the underlying type of FileType System.Int32 instead of uint
 dotnet_diagnostic.CA1028.severity = none
 
