@@ -1271,8 +1271,8 @@ namespace RTCV.UI
         {
             if (this.Hexadecimal)
             {
-                ulong valueuint64 = System.Convert.ToUInt64(value);
-                return valueuint64.ToString("X");
+                ulong valueulong = System.Convert.ToUInt64(value);
+                return valueulong.ToString("X");
             }
             else
             {
