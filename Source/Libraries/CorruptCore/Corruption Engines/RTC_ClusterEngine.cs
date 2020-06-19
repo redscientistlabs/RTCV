@@ -7,10 +7,11 @@ namespace RTCV.CorruptCore
     {
 
         const string rand = "Random";
+        const string reverse = "Reverse";
         const string rotFW = "Rotate Forwards";
         const string rotBW = "Rotate Backwards";
 
-        public static string[] ShuffleTypes { get; private set; } = new string[] { rand, rotFW, rotBW };
+        public static string[] ShuffleTypes { get; private set; } = new string[] { rand, reverse, rotFW, rotBW };
 
         public static string LimiterListHash
         {
@@ -37,6 +38,14 @@ namespace RTCV.CorruptCore
         }
 
 
+        public static bool OutputMultipleUnits
+        {
+            get => (bool)AllSpec.CorruptCoreSpec["CLUSTER_MULTIOUT"];
+            set => AllSpec.CorruptCoreSpec.Update("CLUSTER_MULTIOUT", value);
+        }
+
+        private static int precision = 4;
+
         public static PartialSpec getDefaultPartial()
         {
             var partial = new PartialSpec("RTCSpec");
@@ -44,18 +53,28 @@ namespace RTCV.CorruptCore
             partial["CLUSTER_SHUFFLETYPE"] = rand;
             partial["CLUSTER_SHUFFLEAMT"] = 3;
             partial["CLUSTER_MODIFIER"] = 1;
+            partial["CLUSTER_MULTIOUT"] = true;
             return partial;
         }
 
 
         public static BlastUnit[] GenerateUnit(string domain, long address, int alignment)
         {
+            if (Filtering.Hash2LimiterDico.TryGetValue(LimiterListHash, out IListFilter list))
+            {
+                precision = list.GetPrecision();
+            }
+            else
+            {
+                return null;
+            }
+
             if (domain == null)
             {
                 return null;
             }
 
-            long safeAddress = address - (address % 4) + alignment; //32-bit trunk
+            long safeAddress = address - (address % precision) + alignment;
 
             MemoryInterface mi = MemoryDomains.GetInterface(domain);
             if (mi == null)
@@ -63,17 +82,25 @@ namespace RTCV.CorruptCore
                 return null;
             }
 
-            if (safeAddress > mi.Size - 4)
+            if (safeAddress > mi.Size - precision)
             {
-                safeAddress = mi.Size - 8 + alignment; //If we're out of range, hit the last aligned address
+                safeAddress = mi.Size - (precision * 2) + alignment; //If we're out of range, hit the last aligned address
+            }
+
+            //Only query dictionary once per call
+            int chunkSize = ChunkSize;
+
+            if (safeAddress + (long)(chunkSize * precision) >= mi.Size)
+            {
+                return null;
             }
 
             //do not swap endianess
-            byte[] GetWord(long address)
+            byte[] GetSegment(long address)
             {
-                byte[] values = new byte[4];
+                byte[] values = new byte[precision];
 
-                for (long i = 0; i < 4; i++)
+                for (long i = 0; i < precision; i++)
                 {
                     values[i] = mi.PeekByte(address + i);
                 }
@@ -105,23 +132,18 @@ namespace RTCV.CorruptCore
             {
                 var x = list[0];
                 list.RemoveAt(0);
-                list.Insert(list.Count, x);
+                list.Add(x);
             }
 
 
-            if (Filtering.LimiterPeekBytes(safeAddress, safeAddress + 4, domain, LimiterListHash, mi))
+            if (Filtering.LimiterPeekBytes(safeAddress, safeAddress + precision, domain, LimiterListHash, mi))
             {
-                int cs = ChunkSize;
                 List<byte[]> byteArr = new List<byte[]>();
 
-                if (safeAddress + (long)(cs * 4) >= mi.Size)
-                {
-                    return null;
-                }
 
-                for (int j = 0; j < cs; j++)
+                for (int j = 0; j < chunkSize; j++)
                 {
-                    byteArr.Add(GetWord(safeAddress + (long)(j * 4)));
+                    byteArr.Add(GetSegment(safeAddress + (long)(j * precision)));
                 }
 
                 int modifier = Modifier;
@@ -139,20 +161,37 @@ namespace RTCV.CorruptCore
                             RotateBackward(byteArr);
                         }
                         break;
+                    case reverse:
+                        byteArr.Reverse();
+                        break;
                     case rand:
                     default:
                         ShuffleRandom(byteArr);
                         break;
                 }
 
-
-                List<byte> btsOut = new List<byte>();
-                for (int j = 0; j < cs; j++)
+                if (OutputMultipleUnits)
                 {
-                    btsOut.AddRange(byteArr[j]);
+                    BlastUnit[] ret = new BlastUnit[chunkSize];
+
+                    for (int j = 0; j < chunkSize; j++)
+                    {
+                        //do not swap endianess
+                        ret[j] = new BlastUnit(byteArr[j], domain, safeAddress + (j * precision), precision, false, 0, 1, null, true, false, true);
+                    }
+
+                    return ret;
                 }
-                //do not swap endianess
-                return new BlastUnit[] { new BlastUnit(btsOut.ToArray(), domain, safeAddress, (4 * cs), false, 0, 1, null, true, false, true) };
+                else
+                {
+                    List<byte> btsOut = new List<byte>();
+                    for (int j = 0; j < chunkSize; j++)
+                    {
+                        btsOut.AddRange(byteArr[j]);
+                    }
+                    //do not swap endianess
+                    return new BlastUnit[] { new BlastUnit(btsOut.ToArray(), domain, safeAddress, (precision * chunkSize), false, 0, 1, null, true, false, true) };
+                }
             }
             return null;
         }

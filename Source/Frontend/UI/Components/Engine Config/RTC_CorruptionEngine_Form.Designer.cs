@@ -1,33 +1,33 @@
 namespace RTCV.UI
 {
-	partial class RTC_CorruptionEngine_Form
-	{
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+    partial class RTC_CorruptionEngine_Form
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (components != null))
-			{
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-		#region Windows Form Designer generated code
+        #region Windows Form Designer generated code
 
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_CorruptionEngine_Form));
             this.pnCustomPrecision = new System.Windows.Forms.Panel();
             this.cbCustomPrecision = new System.Windows.Forms.ComboBox();
@@ -100,13 +100,17 @@ namespace RTCV.UI
             this.btnOpenCustomEngine = new System.Windows.Forms.Button();
             this.gbClusterEngine = new System.Windows.Forms.GroupBox();
             this.pnClusterLimiterList = new System.Windows.Forms.Panel();
+            this.label28 = new System.Windows.Forms.Label();
+            this.clusterChunkModifier = new System.Windows.Forms.NumericUpDown();
+            this.label25 = new System.Windows.Forms.Label();
+            this.cbClusterMethod = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.lbClusterEngineLimiterText1 = new System.Windows.Forms.Label();
             this.clusterChunkSize = new System.Windows.Forms.NumericUpDown();
             this.cbClusterLimiterList = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
             this.comboBox9 = new System.Windows.Forms.ComboBox();
             this.label22 = new System.Windows.Forms.Label();
+            this.clusterSplitUnits = new System.Windows.Forms.CheckBox();
             this.pnCustomPrecision.SuspendLayout();
             this.gbBlastGeneratorEngine.SuspendLayout();
             this.gbVectorEngine.SuspendLayout();
@@ -120,6 +124,7 @@ namespace RTCV.UI
             this.gbCustomEngine.SuspendLayout();
             this.gbClusterEngine.SuspendLayout();
             this.pnClusterLimiterList.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.clusterChunkModifier)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.clusterChunkSize)).BeginInit();
             this.SuspendLayout();
             // 
@@ -1256,8 +1261,12 @@ namespace RTCV.UI
             // pnClusterLimiterList
             // 
             this.pnClusterLimiterList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.pnClusterLimiterList.Controls.Add(this.clusterSplitUnits);
+            this.pnClusterLimiterList.Controls.Add(this.label28);
+            this.pnClusterLimiterList.Controls.Add(this.clusterChunkModifier);
+            this.pnClusterLimiterList.Controls.Add(this.label25);
+            this.pnClusterLimiterList.Controls.Add(this.cbClusterMethod);
             this.pnClusterLimiterList.Controls.Add(this.label11);
-            this.pnClusterLimiterList.Controls.Add(this.lbClusterEngineLimiterText1);
             this.pnClusterLimiterList.Controls.Add(this.clusterChunkSize);
             this.pnClusterLimiterList.Controls.Add(this.cbClusterLimiterList);
             this.pnClusterLimiterList.Controls.Add(this.label12);
@@ -1268,34 +1277,89 @@ namespace RTCV.UI
             this.pnClusterLimiterList.Tag = "color:dark2";
             this.pnClusterLimiterList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label28.Location = new System.Drawing.Point(175, 52);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(88, 13);
+            this.label28.TabIndex = 148;
+            this.label28.Text = "Rotate Amount:";
+            // 
+            // clusterChunkModifier
+            // 
+            this.clusterChunkModifier.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
+            this.clusterChunkModifier.Enabled = false;
+            this.clusterChunkModifier.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.clusterChunkModifier.ForeColor = System.Drawing.Color.White;
+            this.clusterChunkModifier.Location = new System.Drawing.Point(178, 67);
+            this.clusterChunkModifier.Maximum = new decimal(new int[] {
+            65536,
+            0,
+            0,
+            0});
+            this.clusterChunkModifier.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.clusterChunkModifier.Name = "clusterChunkModifier";
+            this.clusterChunkModifier.Size = new System.Drawing.Size(100, 22);
+            this.clusterChunkModifier.TabIndex = 147;
+            this.clusterChunkModifier.Tag = "color:normal";
+            this.clusterChunkModifier.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.label25.Location = new System.Drawing.Point(6, 52);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(51, 13);
+            this.label25.TabIndex = 146;
+            this.label25.Text = "Method:";
+            // 
+            // cbClusterMethod
+            // 
+            this.cbClusterMethod.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
+            this.cbClusterMethod.DisplayMember = "Name";
+            this.cbClusterMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbClusterMethod.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.cbClusterMethod.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.cbClusterMethod.ForeColor = System.Drawing.Color.White;
+            this.cbClusterMethod.FormattingEnabled = true;
+            this.cbClusterMethod.IntegralHeight = false;
+            this.cbClusterMethod.Location = new System.Drawing.Point(9, 68);
+            this.cbClusterMethod.MaxDropDownItems = 15;
+            this.cbClusterMethod.Name = "cbClusterMethod";
+            this.cbClusterMethod.Size = new System.Drawing.Size(152, 21);
+            this.cbClusterMethod.TabIndex = 145;
+            this.cbClusterMethod.Tag = "color:normal";
+            this.cbClusterMethod.ValueMember = "Value";
+            this.cbClusterMethod.SelectedIndexChanged += new System.EventHandler(this.cbClusterMethod_SelectedIndexChanged);
+            // 
             // label11
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label11.Location = new System.Drawing.Point(7, 52);
+            this.label11.Location = new System.Drawing.Point(176, 3);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(106, 13);
             this.label11.TabIndex = 142;
             this.label11.Text = "Cluster Chunk Size:";
             this.label11.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
-            // lbClusterEngineLimiterText1
-            // 
-            this.lbClusterEngineLimiterText1.AutoSize = true;
-            this.lbClusterEngineLimiterText1.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.lbClusterEngineLimiterText1.Location = new System.Drawing.Point(165, 27);
-            this.lbClusterEngineLimiterText1.Name = "lbClusterEngineLimiterText1";
-            this.lbClusterEngineLimiterText1.Size = new System.Drawing.Size(104, 13);
-            this.lbClusterEngineLimiterText1.TabIndex = 141;
-            this.lbClusterEngineLimiterText1.Text = "Comparison values";
-            this.lbClusterEngineLimiterText1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
             // clusterChunkSize
             // 
             this.clusterChunkSize.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.clusterChunkSize.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.clusterChunkSize.ForeColor = System.Drawing.Color.White;
-            this.clusterChunkSize.Location = new System.Drawing.Point(11, 68);
+            this.clusterChunkSize.Location = new System.Drawing.Point(178, 19);
             this.clusterChunkSize.Maximum = new decimal(new int[] {
             65536,
             0,
@@ -1369,10 +1433,25 @@ namespace RTCV.UI
             this.label22.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
             this.label22.Location = new System.Drawing.Point(170, 16);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(167, 13);
+            this.label22.Size = new System.Drawing.Size(173, 13);
             this.label22.TabIndex = 77;
-            this.label22.Text = "Swaps Floats with neighbor Floats";
+            this.label22.Text = "Swaps Values with neighbor Values";
             this.label22.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
+            // 
+            // clusterSplitUnits
+            // 
+            this.clusterSplitUnits.AutoSize = true;
+            this.clusterSplitUnits.Checked = true;
+            this.clusterSplitUnits.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.clusterSplitUnits.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.clusterSplitUnits.ForeColor = System.Drawing.Color.White;
+            this.clusterSplitUnits.Location = new System.Drawing.Point(296, 19);
+            this.clusterSplitUnits.Name = "clusterSplitUnits";
+            this.clusterSplitUnits.Size = new System.Drawing.Size(106, 17);
+            this.clusterSplitUnits.TabIndex = 144;
+            this.clusterSplitUnits.Text = "Split Blast Units";
+            this.clusterSplitUnits.UseVisualStyleBackColor = true;
+            this.clusterSplitUnits.CheckedChanged += new System.EventHandler(this.clusterSplitUnits_CheckedChanged);
             // 
             // RTC_CorruptionEngine_Form
             // 
@@ -1426,90 +1505,95 @@ namespace RTCV.UI
             this.gbClusterEngine.PerformLayout();
             this.pnClusterLimiterList.ResumeLayout(false);
             this.pnClusterLimiterList.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.clusterChunkModifier)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.clusterChunkSize)).EndInit();
             this.ResumeLayout(false);
 
-		}
-		
-		#endregion
+        }
 
-		private System.Windows.Forms.Panel pnCustomPrecision;
-		public System.Windows.Forms.ComboBox cbCustomPrecision;
-		public System.Windows.Forms.ComboBox cbSelectedEngine;
-		private System.Windows.Forms.GroupBox gbSelectedEngine;
-		private System.Windows.Forms.GroupBox gbBlastGeneratorEngine;
-		private System.Windows.Forms.Label label10;
-		public System.Windows.Forms.ComboBox comboBox8;
-		private System.Windows.Forms.Label label21;
-		private System.Windows.Forms.Button btnOpenBlastGenerator;
-		private System.Windows.Forms.GroupBox gbVectorEngine;
-		private System.Windows.Forms.Panel panel2;
-		private System.Windows.Forms.Label lbVectorEngineValueText1;
-		public System.Windows.Forms.ComboBox cbVectorValueList;
-		private System.Windows.Forms.Label label18;
-		private System.Windows.Forms.Panel pnLimiterList;
-		private System.Windows.Forms.Label lbVectorEngineLimiterText1;
-		public System.Windows.Forms.ComboBox cbVectorLimiterList;
-		private System.Windows.Forms.Label label13;
-		public System.Windows.Forms.ComboBox comboBox6;
-		private System.Windows.Forms.Label label19;
-		private System.Windows.Forms.GroupBox gbPipeEngine;
-		private System.Windows.Forms.Label label14;
-		public System.Windows.Forms.ComboBox comboBox5;
-		public System.Windows.Forms.CheckBox cbClearPipesOnRewind;
-		public System.Windows.Forms.CheckBox cbLockPipes;
-		private System.Windows.Forms.Button btnClearPipes;
-		private System.Windows.Forms.GroupBox gbDistortionEngine;
-		private System.Windows.Forms.Label label17;
-		public System.Windows.Forms.ComboBox comboBox3;
-		private System.Windows.Forms.Button btnResyncDistortionEngine;
+        #endregion
+
+        private System.Windows.Forms.Panel pnCustomPrecision;
+        public System.Windows.Forms.ComboBox cbCustomPrecision;
+        public System.Windows.Forms.ComboBox cbSelectedEngine;
+        private System.Windows.Forms.GroupBox gbSelectedEngine;
+        private System.Windows.Forms.GroupBox gbBlastGeneratorEngine;
+        private System.Windows.Forms.Label label10;
+        public System.Windows.Forms.ComboBox comboBox8;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Button btnOpenBlastGenerator;
+        private System.Windows.Forms.GroupBox gbVectorEngine;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label lbVectorEngineValueText1;
+        public System.Windows.Forms.ComboBox cbVectorValueList;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Panel pnLimiterList;
+        private System.Windows.Forms.Label lbVectorEngineLimiterText1;
+        public System.Windows.Forms.ComboBox cbVectorLimiterList;
+        private System.Windows.Forms.Label label13;
+        public System.Windows.Forms.ComboBox comboBox6;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.GroupBox gbPipeEngine;
+        private System.Windows.Forms.Label label14;
+        public System.Windows.Forms.ComboBox comboBox5;
+        public System.Windows.Forms.CheckBox cbClearPipesOnRewind;
+        public System.Windows.Forms.CheckBox cbLockPipes;
+        private System.Windows.Forms.Button btnClearPipes;
+        private System.Windows.Forms.GroupBox gbDistortionEngine;
+        private System.Windows.Forms.Label label17;
+        public System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.Button btnResyncDistortionEngine;
         public RTCV.UI.Components.Controls.MultiUpDown nmDistortionDelay;
-		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.GroupBox gbFreezeEngine;
-		private System.Windows.Forms.Label label20;
-		public System.Windows.Forms.ComboBox comboBox4;
-		public System.Windows.Forms.CheckBox cbClearFreezesOnRewind;
-		private System.Windows.Forms.Button btnClearAllFreezes;
-		private System.Windows.Forms.GroupBox gbHellgenieEngine;
-		private System.Windows.Forms.Label label26;
-		private System.Windows.Forms.Label label27;
-		public RTCV.UI.Components.Controls.MultiUpDown nmMaxValueHellgenie;
-		private System.Windows.Forms.Label label16;
-		public RTCV.UI.Components.Controls.MultiUpDown nmMinValueHellgenie;
-		public System.Windows.Forms.ComboBox comboBox2;
-		public System.Windows.Forms.CheckBox cbClearCheatsOnRewind;
-		private System.Windows.Forms.Button btnClearCheats;
-		private System.Windows.Forms.GroupBox gbNightmareEngine;
-		private System.Windows.Forms.Label label24;
-		private System.Windows.Forms.Label label23;
-		public RTCV.UI.Components.Controls.MultiUpDown nmMaxValueNightmare;
-		public RTCV.UI.Components.Controls.MultiUpDown nmMinValueNightmare;
-		private System.Windows.Forms.Label label15;
-		public System.Windows.Forms.ComboBox comboBox1;
-		public System.Windows.Forms.ComboBox cbBlastType;
-		private System.Windows.Forms.Label label9;
-		private System.Windows.Forms.GroupBox gbCustomEngine;
-		private System.Windows.Forms.Label label2;
-		public System.Windows.Forms.ComboBox comboBox7;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.Button btnOpenCustomEngine;
-		private System.Windows.Forms.Label label5;
-		public Components.Controls.MultiUpDown updownMaxCheats;
-		private System.Windows.Forms.Label label4;
-		public Components.Controls.MultiUpDown updownMaxPipes;
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Label label6;
-		public Components.Controls.MultiUpDown updownMaxFreeze;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.GroupBox gbFreezeEngine;
+        private System.Windows.Forms.Label label20;
+        public System.Windows.Forms.ComboBox comboBox4;
+        public System.Windows.Forms.CheckBox cbClearFreezesOnRewind;
+        private System.Windows.Forms.Button btnClearAllFreezes;
+        private System.Windows.Forms.GroupBox gbHellgenieEngine;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label label27;
+        public RTCV.UI.Components.Controls.MultiUpDown nmMaxValueHellgenie;
+        private System.Windows.Forms.Label label16;
+        public RTCV.UI.Components.Controls.MultiUpDown nmMinValueHellgenie;
+        public System.Windows.Forms.ComboBox comboBox2;
+        public System.Windows.Forms.CheckBox cbClearCheatsOnRewind;
+        private System.Windows.Forms.Button btnClearCheats;
+        private System.Windows.Forms.GroupBox gbNightmareEngine;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label23;
+        public RTCV.UI.Components.Controls.MultiUpDown nmMaxValueNightmare;
+        public RTCV.UI.Components.Controls.MultiUpDown nmMinValueNightmare;
+        private System.Windows.Forms.Label label15;
+        public System.Windows.Forms.ComboBox comboBox1;
+        public System.Windows.Forms.ComboBox cbBlastType;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.GroupBox gbCustomEngine;
+        private System.Windows.Forms.Label label2;
+        public System.Windows.Forms.ComboBox comboBox7;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnOpenCustomEngine;
+        private System.Windows.Forms.Label label5;
+        public Components.Controls.MultiUpDown updownMaxCheats;
+        private System.Windows.Forms.Label label4;
+        public Components.Controls.MultiUpDown updownMaxPipes;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label6;
+        public Components.Controls.MultiUpDown updownMaxFreeze;
         private System.Windows.Forms.Label label8;
         public Components.Controls.MultiUpDown nmAlignment;
         private System.Windows.Forms.GroupBox gbClusterEngine;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.NumericUpDown clusterChunkSize;
         private System.Windows.Forms.Panel pnClusterLimiterList;
-        private System.Windows.Forms.Label lbClusterEngineLimiterText1;
         public System.Windows.Forms.ComboBox cbClusterLimiterList;
         private System.Windows.Forms.Label label12;
         public System.Windows.Forms.ComboBox comboBox9;
         private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label25;
+        public System.Windows.Forms.ComboBox cbClusterMethod;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.NumericUpDown clusterChunkModifier;
+        public System.Windows.Forms.CheckBox clusterSplitUnits;
     }
 }

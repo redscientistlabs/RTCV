@@ -7,6 +7,7 @@ namespace RTCV.UI
     using RTCV.NetCore;
     using RTCV.Common;
     using static RTCV.UI.UI_Extensions;
+    using System.Linq;
 
     public partial class RTC_CorruptionEngine_Form : ComponentForm, IAutoColorize, IBlockable
     {
@@ -18,7 +19,8 @@ namespace RTCV.UI
 
         public string CurrentVectorLimiterListName
         {
-            get {
+            get
+            {
                 ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)cbVectorLimiterList).SelectedItem;
 
                 if (item == null) //this shouldn't ever happen unless the list files are missing
@@ -92,6 +94,14 @@ namespace RTCV.UI
             }
 
             clusterChunkSize.ValueChanged += clusterChunkSize_ValueChanged;
+
+            clusterChunkModifier.ValueChanged += ClusterChunkModifier_ValueChanged;
+
+            for (int j = 0; j < RTC_ClusterEngine.ShuffleTypes.Length; j++)
+            {
+                cbClusterMethod.Items.Add(RTC_ClusterEngine.ShuffleTypes[j]);
+            }
+            cbClusterMethod.SelectedIndex = 0;
 
         }
 
@@ -567,6 +577,30 @@ namespace RTCV.UI
         private void clusterChunkSize_ValueChanged(object sender, EventArgs e)
         {
             RTC_ClusterEngine.ChunkSize = (int)clusterChunkSize.Value;
+        }
+
+        private void ClusterChunkModifier_ValueChanged(object sender, EventArgs e)
+        {
+            RTC_ClusterEngine.Modifier = (int)clusterChunkModifier.Value;
+        }
+
+        private void cbClusterMethod_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RTC_ClusterEngine.ShuffleType = cbClusterMethod.SelectedItem.ToString();
+
+            if (cbClusterMethod.SelectedItem.ToString().ToLower().Contains("rotate"))
+            {
+                clusterChunkModifier.Enabled = true;
+            }
+            else
+            {
+                clusterChunkModifier.Enabled = false;
+            }
+        }
+
+        private void clusterSplitUnits_CheckedChanged(object sender, EventArgs e)
+        {
+            RTC_ClusterEngine.OutputMultipleUnits = clusterSplitUnits.Checked;
         }
     }
 }
