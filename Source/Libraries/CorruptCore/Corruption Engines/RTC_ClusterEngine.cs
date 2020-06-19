@@ -5,7 +5,6 @@ namespace RTCV.CorruptCore
 
     public static class RTC_ClusterEngine
     {
-
         const string rand = "Random";
         const string reverse = "Reverse";
         const string rotFW = "Rotate Forwards";
