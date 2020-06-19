@@ -35,7 +35,7 @@
 
         private void ColumnSelector_Closing(object sender, FormClosingEventArgs e)
         {
-            if (tablePanel.Controls.Cast<CheckBox>().Count(item => item.Checked) == 0)
+            if (!tablePanel.Controls.Cast<CheckBox>().Any(item => item.Checked))
             {
                 e.Cancel = true;
                 MessageBox.Show("Select at least one column");
