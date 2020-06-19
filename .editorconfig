@@ -335,9 +335,6 @@ dotnet_diagnostic.CA2101.severity = none
 # Re-throwing caught exception changes stack information
 dotnet_diagnostic.CA2200.severity = none
 
-# Method passes parameter as the message argument
-dotnet_diagnostic.CA2208.severity = none
-
 # Non-constant fields should not be visible
 dotnet_diagnostic.CA2211.severity = none
 

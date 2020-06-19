@@ -1017,7 +1017,7 @@ namespace RTCV.UI
             {
                 if (value < 0 || value > 99)
                 {
-                    throw new ArgumentOutOfRangeException("The DecimalPlaces property cannot be smaller than 0 or larger than 99.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "The DecimalPlaces property cannot be smaller than 0 or larger than 99.");
                 }
                 if (this.decimalPlaces != value)
                 {
@@ -1048,7 +1048,7 @@ namespace RTCV.UI
             {
                 if (value < (decimal)0.0)
                 {
-                    throw new ArgumentOutOfRangeException("The Increment property cannot be smaller than 0.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "The Increment property cannot be smaller than 0.");
                 }
                 SetIncrement(this.RowIndex, value);
                 // No call to OnCommonChange is needed since the increment value does not affect the rendering of the cell.
@@ -2457,7 +2457,7 @@ internal static class RandomExtensions
 
         if (range <= 0)
         {
-            throw new ArgumentOutOfRangeException("Max must be greater than min when inclusiveUpperBound is false, and greater than or equal to when true", "max");
+            throw new ArgumentOutOfRangeException(nameof(max), "Max must be greater than min when inclusiveUpperBound is false, and greater than or equal to when true");
         }
 
         ulong limit = ulong.MaxValue - ulong.MaxValue % range;
@@ -2500,7 +2500,7 @@ internal static class RandomExtensions
 
         if (range <= 0)
         {
-            throw new ArgumentOutOfRangeException("Max must be greater than min when inclusiveUpperBound is false, and greater than or equal to when true", "max");
+            throw new ArgumentOutOfRangeException(nameof(max), "Max must be greater than min when inclusiveUpperBound is false, and greater than or equal to when true");
         }
 
         ulong limit = ulong.MaxValue - ulong.MaxValue % range;
