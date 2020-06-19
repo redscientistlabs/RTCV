@@ -14,8 +14,8 @@ namespace RTCV.Plugins.HexEditor
     using RTCV.NetCore;
     using RTCV.CorruptCore;
     using NLog;
-    using NLog.Layouts;
 
+    #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     //Based on the Hex Editor from Bizhawk, available under MIT.
     //https://github.com/tasvideos/bizhawk
     public partial class HexEditor : Form

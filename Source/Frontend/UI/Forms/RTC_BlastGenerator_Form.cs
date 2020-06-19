@@ -30,6 +30,7 @@ namespace RTCV.UI
     //TYPE = BLASTUNITTYPE
     //MODE = GENERATIONMODE
 
+    #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class RTC_BlastGenerator_Form : Form
     {
         private enum BlastGeneratorColumn
