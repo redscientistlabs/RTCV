@@ -10,6 +10,7 @@ namespace RTCV.PluginHost
 
     public class Host : IDisposable
     {
+        #pragma warning disable CS0649 //plugins are assigned by MEF, so "never assigned to" warning doesn't apply
         [ImportMany(typeof(IPlugin))]
         private IEnumerable<IPlugin> plugins;
         private List<IPlugin> _loadedPlugins;

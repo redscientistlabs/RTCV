@@ -216,9 +216,6 @@ csharp_preserve_single_line_statements = true
 # Code files
 [*.{cs,vb}]
 
-# Mark assemblies with assembly version
-dotnet_diagnostic.CA1016.severity = none
-
 # If possible, make the underlying type of FileType System.Int32 instead of uint
 dotnet_diagnostic.CA1028.severity = none
 
@@ -231,14 +228,8 @@ dotnet_diagnostic.CA1032.severity = none
 # Do not nest type
 dotnet_diagnostic.CA1034.severity = none
 
-# Avoid empty interfaces
-dotnet_diagnostic.CA1040.severity = none
-
 # Do not declare visible instance fields
 dotnet_diagnostic.CA1051.severity = none
-
-# Type is a static holder type but is neither static nor NotInheritable
-dotnet_diagnostic.CA1052.severity = none
 
 # Move pinvokes to native methods class
 dotnet_diagnostic.CA1060.severity = none
@@ -249,13 +240,7 @@ dotnet_diagnostic.CA1062.severity = none
 # Modify 'Dispose' so that it calls Dispose(true), then calls GC.SuppressFinalize on the current object instance ('this' or 'Me' in Visual Basic), and then returns.
 dotnet_diagnostic.CA1063.severity = none
 
-# Method creates exception
-dotnet_diagnostic.CA1065.severity = none
-
-# Implement IEquatable when overriding Object.Equals
-dotnet_diagnostic.CA1066.severity = none
-
-# Passing literal string as parameter
+# Retrieve strings from a resource table instead of using a strint literal
 dotnet_diagnostic.CA1303.severity = none
 
 # string.ToUpper behavior could vary based on the current user's locale settings
@@ -267,10 +252,8 @@ dotnet_diagnostic.CA1305.severity = none
 # string.EndsWith behavior could vary based on the current user's locale settings
 dotnet_diagnostic.CA1307.severity = none
 
+# P/Invoke method should not be visible
 dotnet_diagnostic.CA1401.severity = none
-
-# Use nameof in place of string literal
-dotnet_diagnostic.CA1507.severity = none
 
 # Remove underscore for member name
 dotnet_diagnostic.CA1707.severity = none
@@ -278,14 +261,8 @@ dotnet_diagnostic.CA1707.severity = none
 # Do not prefix enum values with the name of the enum type 'FileType'
 dotnet_diagnostic.CA1712.severity = none
 
-# Flags enums should have plural names
-dotnet_diagnostic.CA1714.severity = none
-
 # Rename virtual/interface member so it no longer conflicts with reserved language
 dotnet_diagnostic.CA1716.severity = none
-
-# Only FlagsAttribute enums should have plural names
-dotnet_diagnostic.CA1717.severity = none
 
 # Identifier contains type name
 dotnet_diagnostic.CA1720.severity = none
@@ -369,17 +346,8 @@ dotnet_diagnostic.CA2234.severity = none
 # Add [Serializable] to class
 dotnet_diagnostic.CA2237.severity = none
 
-# Unsafe overload of 'Deserialize' method
-dotnet_diagnostic.CA3075.severity = none
-
 # Don't use MD5
 dotnet_diagnostic.CA5351.severity = none
-
-# Overload is potentially unsafe
-dotnet_diagnostic.CA5369.severity = none
-
-# Field never assigned to
-dotnet_diagnostic.CS0649.severity = none
 
 # XML comments
 dotnet_diagnostic.SA0001.severity = none

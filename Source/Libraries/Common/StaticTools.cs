@@ -13,6 +13,7 @@ namespace RTCV.Common
     using System.Windows.Forms;
     using NLog;
 
+    #pragma warning disable CA1040 // Allow this interface to be empty, since it's used to signal auto-coloriation for a class
     // Implementing this interface causes auto-coloration.
     public interface IAutoColorize { }
 

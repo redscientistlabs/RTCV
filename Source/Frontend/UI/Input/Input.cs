@@ -8,7 +8,7 @@
     public class Input
     {
         [Flags]
-        public enum InputFocus
+        public enum InputFocusTypes
         {
             None = 0,
             Mouse = 1,
@@ -22,16 +22,16 @@
         /// Why is this receiving a control, but actually using it as a Form (where the WantingMouseFocus is checked?)
         /// Because later we might change it to work off the control, specifically, if a control is supplied (normally actually a Form will be supplied)
         /// </summary>
-        public void ControlInputFocus(System.Windows.Forms.Control c, InputFocus types, bool wants)
+        public void ControlInputFocus(System.Windows.Forms.Control c, InputFocusTypes types, bool wants)
         {
-            if (types.HasFlag(InputFocus.Mouse) && wants) WantingMouseFocus.Add(c);
-            if (types.HasFlag(InputFocus.Mouse) && !wants) WantingMouseFocus.Remove(c);
+            if (types.HasFlag(InputFocusTypes.Mouse) && wants) WantingMouseFocus.Add(c);
+            if (types.HasFlag(InputFocusTypes.Mouse) && !wants) WantingMouseFocus.Remove(c);
         }
 
         readonly HashSet<System.Windows.Forms.Control> WantingMouseFocus = new HashSet<System.Windows.Forms.Control>();
 
         [Flags]
-        public enum ModifierKey
+        public enum ModifierKeys
         {
             // Summary:
             //     The bitmask to extract modifiers from a key value.
@@ -98,20 +98,20 @@
             Press, Release
         }
 
-        public struct LogicalButton
+        public struct LogicalButton : IEquatable<LogicalButton>
         {
-            public LogicalButton(string button, ModifierKey modifiers)
+            public LogicalButton(string button, ModifierKeys modifiers)
             {
                 Button = button;
                 Modifiers = modifiers;
             }
 
             public readonly string Button;
-            public readonly ModifierKey Modifiers;
+            public readonly ModifierKeys Modifiers;
 
-            public bool Alt { get { return ((Modifiers & ModifierKey.Alt) != 0); } }
-            public bool Control { get { return ((Modifiers & ModifierKey.Control) != 0); } }
-            public bool Shift { get { return ((Modifiers & ModifierKey.Shift) != 0); } }
+            public bool Alt { get { return ((Modifiers & ModifierKeys.Alt) != 0); } }
+            public bool Control { get { return ((Modifiers & ModifierKeys.Control) != 0); } }
+            public bool Shift { get { return ((Modifiers & ModifierKeys.Shift) != 0); } }
 
             public override string ToString()
             {
@@ -126,6 +126,11 @@
             public override bool Equals(object obj)
             {
                 var other = (LogicalButton)obj;
+                return Equals(other);
+            }
+
+            public bool Equals(LogicalButton other)
+            {
                 return other == this;
             }
 
@@ -175,15 +180,15 @@
             //NOTE: this is not quite right. if someone held leftshift+rightshift it would be broken. seems unlikely, though.
             if (button == "LeftShift")
             {
-                _Modifiers &= ~ModifierKey.Shift;
+                _Modifiers &= ~ModifierKeys.Shift;
                 if (newState)
-                    _Modifiers |= ModifierKey.Shift;
+                    _Modifiers |= ModifierKeys.Shift;
             }
-            if (button == "RightShift") { _Modifiers &= ~ModifierKey.Shift; if (newState) _Modifiers |= ModifierKey.Shift; }
-            if (button == "LeftControl") { _Modifiers &= ~ModifierKey.Control; if (newState) _Modifiers |= ModifierKey.Control; }
-            if (button == "RightControl") { _Modifiers &= ~ModifierKey.Control; if (newState) _Modifiers |= ModifierKey.Control; }
-            if (button == "LeftAlt") { _Modifiers &= ~ModifierKey.Alt; if (newState) _Modifiers |= ModifierKey.Alt; }
-            if (button == "RightAlt") { _Modifiers &= ~ModifierKey.Alt; if (newState) _Modifiers |= ModifierKey.Alt; }
+            if (button == "RightShift") { _Modifiers &= ~ModifierKeys.Shift; if (newState) _Modifiers |= ModifierKeys.Shift; }
+            if (button == "LeftControl") { _Modifiers &= ~ModifierKeys.Control; if (newState) _Modifiers |= ModifierKeys.Control; }
+            if (button == "RightControl") { _Modifiers &= ~ModifierKeys.Control; if (newState) _Modifiers |= ModifierKeys.Control; }
+            if (button == "LeftAlt") { _Modifiers &= ~ModifierKeys.Alt; if (newState) _Modifiers |= ModifierKeys.Alt; }
+            if (button == "RightAlt") { _Modifiers &= ~ModifierKeys.Alt; if (newState) _Modifiers |= ModifierKeys.Alt; }
 
             if (UnpressState.ContainsKey(button))
             {
@@ -195,13 +200,13 @@
             }
 
             //dont generate events for things like Ctrl+LeftControl
-            ModifierKey mods = _Modifiers;
-            if (button == "LeftShift") mods &= ~ModifierKey.Shift;
-            if (button == "RightShift") mods &= ~ModifierKey.Shift;
-            if (button == "LeftControl") mods &= ~ModifierKey.Control;
-            if (button == "RightControl") mods &= ~ModifierKey.Control;
-            if (button == "LeftAlt") mods &= ~ModifierKey.Alt;
-            if (button == "RightAlt") mods &= ~ModifierKey.Alt;
+            ModifierKeys mods = _Modifiers;
+            if (button == "LeftShift") mods &= ~ModifierKeys.Shift;
+            if (button == "RightShift") mods &= ~ModifierKeys.Shift;
+            if (button == "LeftControl") mods &= ~ModifierKeys.Control;
+            if (button == "RightControl") mods &= ~ModifierKeys.Control;
+            if (button == "LeftAlt") mods &= ~ModifierKeys.Alt;
+            if (button == "RightAlt") mods &= ~ModifierKeys.Alt;
 
             var ie = new InputEvent
             {
@@ -240,7 +245,7 @@
             _NewEvents.Add(ie);
         }
 
-        ModifierKey _Modifiers;
+        ModifierKeys _Modifiers;
         private readonly List<InputEvent> _NewEvents = new List<InputEvent>();
 
         //do we need this?

@@ -1846,6 +1846,7 @@ namespace RTCV.CorruptCore
             //return lastMemoryDump;
         }
 
+        #pragma warning disable CA1065
         public override byte[][] lastMemoryDump
         {
             get => throw new Exception("FORBIDDEN USE OF LASTMEMORYDUMP ON MULTIPLEFILEINTERFACE");

@@ -7,6 +7,7 @@
     using System.IO;
     using System.Linq;
     using System.Windows.Forms;
+    using System.Xml;
     using System.Xml.Serialization;
     using RTCV.CorruptCore;
     using RTCV.NetCore;
@@ -340,7 +341,7 @@
                 using (FileStream FS = File.Open(currentFilename, FileMode.OpenOrCreate))
                 {
                     XmlSerializer xs = new XmlSerializer(typeof(ActiveTableObject));
-                    ActiveTableObject act = (ActiveTableObject)xs.Deserialize(FS);
+                    ActiveTableObject act = (ActiveTableObject)xs.Deserialize(XmlReader.Create(FS));
                     FS.Close();
                     SetActiveTable(act);
                     ActLoadedFromFile = true;
@@ -388,7 +389,7 @@
             using (FileStream FS = File.Open(tempFilename, FileMode.OpenOrCreate))
             {
                 XmlSerializer xs = new XmlSerializer(typeof(ActiveTableObject));
-                act = (ActiveTableObject)xs.Deserialize(FS);
+                act = (ActiveTableObject)xs.Deserialize(XmlReader.Create(FS));
                 FS.Close();
             }
             long[] subtractiveActiveTable = act.Data;
@@ -434,7 +435,7 @@
                 using (FileStream FS = File.Open(tempFilename, FileMode.OpenOrCreate))
                 {
                     XmlSerializer xs = new XmlSerializer(typeof(ActiveTableObject));
-                    act = (ActiveTableObject)xs.Deserialize(FS);
+                    act = (ActiveTableObject)xs.Deserialize(XmlReader.Create(FS));
                     FS.Close();
                 }
                 long[] additiveActiveTable = act.Data;
