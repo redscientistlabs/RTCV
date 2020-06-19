@@ -370,21 +370,6 @@
         private void tbControlValue_Scroll(object sender, EventArgs e)
         {
         }
-
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                components?.Dispose();
-                updater?.Dispose();
-                _parent?.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 
     internal class NoFocusTrackBar : System.Windows.Forms.TrackBar

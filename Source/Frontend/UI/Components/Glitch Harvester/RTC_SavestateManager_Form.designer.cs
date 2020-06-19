@@ -7,6 +7,19 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -21,9 +34,9 @@
             this.cbSavestateLoadOnClick = new System.Windows.Forms.CheckBox();
             this.savestateList = new RTCV.UI.Components.Controls.SavestateList();
             this.SuspendLayout();
-            //
+            // 
             // btnSaveSavestateList
-            //
+            // 
             this.btnSaveSavestateList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnSaveSavestateList.FlatAppearance.BorderSize = 0;
             this.btnSaveSavestateList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -43,9 +56,9 @@
             this.btnSaveSavestateList.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSaveSavestateList.UseVisualStyleBackColor = false;
             this.btnSaveSavestateList.Click += new System.EventHandler(this.btnSaveSavestateList_Click);
-            //
+            // 
             // btnLoadSavestateList
-            //
+            // 
             this.btnLoadSavestateList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnLoadSavestateList.FlatAppearance.BorderSize = 0;
             this.btnLoadSavestateList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -66,9 +79,9 @@
             this.btnLoadSavestateList.UseVisualStyleBackColor = false;
             this.btnLoadSavestateList.MouseClick += this.btnLoadSavestateList_MouseClick;
             this.btnLoadSavestateList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnLoadSavestateList_MouseDown);
-            //
+            // 
             // cbSavestateLoadOnClick
-            //
+            // 
             this.cbSavestateLoadOnClick.AutoSize = true;
             this.cbSavestateLoadOnClick.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbSavestateLoadOnClick.ForeColor = System.Drawing.Color.White;
@@ -80,18 +93,18 @@
             this.cbSavestateLoadOnClick.Text = "Load state on click";
             this.cbSavestateLoadOnClick.UseVisualStyleBackColor = true;
             this.cbSavestateLoadOnClick.CheckedChanged += new System.EventHandler(this.cbSavestateLoadOnClick_CheckedChanged);
-            //
+            // 
             // savestateList
-            //
+            // 
             this.savestateList.DataSource = null;
             this.savestateList.Location = new System.Drawing.Point(12, 8);
             this.savestateList.Margin = new System.Windows.Forms.Padding(1);
             this.savestateList.Name = "savestateList";
             this.savestateList.Size = new System.Drawing.Size(150, 268);
             this.savestateList.TabIndex = 169;
-            //
+            // 
             // RTC_SavestateManager_Form
-            //
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
