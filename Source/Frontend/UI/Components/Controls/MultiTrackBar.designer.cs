@@ -2,15 +2,28 @@
 {
     partial class MultiTrackBar
     {
-        /// <summary>
+        /// <summary> 
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
         #region Component Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
@@ -22,9 +35,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.nmControlValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbControlValue)).BeginInit();
             this.SuspendLayout();
-            //
+            // 
             // lbControlName
-            //
+            // 
             this.lbControlName.AutoSize = true;
             this.lbControlName.Font = new System.Drawing.Font("Segoe UI", 9.25F);
             this.lbControlName.ForeColor = System.Drawing.Color.White;
@@ -33,9 +46,9 @@
             this.lbControlName.Size = new System.Drawing.Size(43, 17);
             this.lbControlName.TabIndex = 0;
             this.lbControlName.Text = "Name";
-            //
+            // 
             // nmControlValue
-            //
+            // 
             this.nmControlValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.nmControlValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.nmControlValue.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -52,10 +65,10 @@
             this.nmControlValue.Tag = "color:normal";
             this.nmControlValue.ValueChanged += new System.EventHandler(this.nmControlValue_ValueChanged);
             this.nmControlValue.KeyUp += new System.Windows.Forms.KeyEventHandler(this.nmControlValue_KeyUp);
-            //
+            // 
             // tbControlValue
-            //
-            this.tbControlValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+            // 
+            this.tbControlValue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbControlValue.Location = new System.Drawing.Point(0, 29);
             this.tbControlValue.Maximum = 65536;
@@ -66,9 +79,9 @@
             this.tbControlValue.TickFrequency = 6553;
             this.tbControlValue.Scroll += new System.EventHandler(this.tbControlValue_Scroll);
             this.tbControlValue.ValueChanged += new System.EventHandler(this.tbControlValue_ValueChanged);
-            //
+            // 
             // cbControlName
-            //
+            // 
             this.cbControlName.AutoSize = true;
             this.cbControlName.Font = new System.Drawing.Font("Segoe UI", 9.25F);
             this.cbControlName.ForeColor = System.Drawing.Color.White;
@@ -80,9 +93,9 @@
             this.cbControlName.UseVisualStyleBackColor = true;
             this.cbControlName.Visible = false;
             this.cbControlName.CheckedChanged += new System.EventHandler(this.cbControlName_CheckedChanged);
-            //
+            // 
             // MultiTrackBar
-            //
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));

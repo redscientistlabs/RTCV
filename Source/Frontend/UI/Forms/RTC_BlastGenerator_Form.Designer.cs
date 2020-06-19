@@ -13,14 +13,9 @@
 		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
 		protected override void Dispose(bool disposing)
 		{
-			if (disposing)
+			if (disposing && (components != null))
 			{
-                if (components != null)
-                {
-				    components.Dispose();
-                }
-
-                cms.Dispose();
+				components.Dispose();
 			}
 			base.Dispose(disposing);
 		}
@@ -106,9 +101,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvBlastGenerator)).BeginInit();
             this.menuStripEx1.SuspendLayout();
             this.SuspendLayout();
-            //
+            // 
             // panelSidebar
-            //
+            // 
             this.panelSidebar.Controls.Add(this.cbUnitsShareNote);
             this.panelSidebar.Controls.Add(this.btnHelp);
             this.panelSidebar.Controls.Add(this.btnLoadCorrupt);
@@ -124,9 +119,9 @@
             this.panelSidebar.Size = new System.Drawing.Size(159, 365);
             this.panelSidebar.TabIndex = 166;
             this.panelSidebar.Tag = "color:dark1";
-            //
+            // 
             // cbUnitsShareNote
-            //
+            // 
             this.cbUnitsShareNote.AutoSize = true;
             this.cbUnitsShareNote.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
             this.cbUnitsShareNote.ForeColor = System.Drawing.Color.White;
@@ -138,9 +133,9 @@
             this.cbUnitsShareNote.Text = "Units inheret note";
             this.cbUnitsShareNote.UseVisualStyleBackColor = true;
             this.cbUnitsShareNote.CheckedChanged += new System.EventHandler(this.CbUnitsShareNote_CheckedChanged);
-            //
+            // 
             // btnHelp
-            //
+            // 
             this.btnHelp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnHelp.FlatAppearance.BorderSize = 0;
             this.btnHelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -155,9 +150,9 @@
             this.btnHelp.Tag = "color:dark1";
             this.btnHelp.UseVisualStyleBackColor = false;
             this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
-            //
+            // 
             // btnLoadCorrupt
-            //
+            // 
             this.btnLoadCorrupt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLoadCorrupt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnLoadCorrupt.FlatAppearance.BorderSize = 0;
@@ -173,9 +168,9 @@
             this.btnLoadCorrupt.Text = "Load + Corrupt";
             this.btnLoadCorrupt.UseVisualStyleBackColor = false;
             this.btnLoadCorrupt.Click += new System.EventHandler(this.btnLoadCorrupt_Click);
-            //
+            // 
             // btnJustCorrupt
-            //
+            // 
             this.btnJustCorrupt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnJustCorrupt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnJustCorrupt.FlatAppearance.BorderSize = 0;
@@ -191,9 +186,9 @@
             this.btnJustCorrupt.Text = "Apply Corruption";
             this.btnJustCorrupt.UseVisualStyleBackColor = false;
             this.btnJustCorrupt.Click += new System.EventHandler(this.btnJustCorrupt_Click);
-            //
+            // 
             // btnRefreshDomains
-            //
+            // 
             this.btnRefreshDomains.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnRefreshDomains.FlatAppearance.BorderSize = 0;
             this.btnRefreshDomains.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -208,9 +203,9 @@
             this.btnRefreshDomains.Text = "Refresh Domains";
             this.btnRefreshDomains.UseVisualStyleBackColor = false;
             this.btnRefreshDomains.Click += new System.EventHandler(this.btnRefreshDomains_Click);
-            //
+            // 
             // btnSendTo
-            //
+            // 
             this.btnSendTo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSendTo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnSendTo.FlatAppearance.BorderSize = 0;
@@ -226,9 +221,9 @@
             this.btnSendTo.Text = "Send To Stash";
             this.btnSendTo.UseVisualStyleBackColor = false;
             this.btnSendTo.Click += new System.EventHandler(this.btnSendTo_Click);
-            //
+            // 
             // btnAddRow
-            //
+            // 
             this.btnAddRow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnAddRow.FlatAppearance.BorderSize = 0;
             this.btnAddRow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -243,9 +238,9 @@
             this.btnAddRow.Text = "Add Row";
             this.btnAddRow.UseVisualStyleBackColor = false;
             this.btnAddRow.Click += new System.EventHandler(this.btnAddRow_Click);
-            //
+            // 
             // panel2
-            //
+            // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BackColor = System.Drawing.Color.Gray;
             this.panel2.Controls.Add(this.btnNudgeParam2Up);
@@ -269,9 +264,9 @@
             this.panel2.Size = new System.Drawing.Size(147, 167);
             this.panel2.TabIndex = 159;
             this.panel2.Tag = "color:normal";
-            //
+            // 
             // btnNudgeParam2Up
-            //
+            // 
             this.btnNudgeParam2Up.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnNudgeParam2Up.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnNudgeParam2Up.FlatAppearance.BorderSize = 0;
@@ -287,9 +282,9 @@
             this.btnNudgeParam2Up.Text = "▶";
             this.btnNudgeParam2Up.UseVisualStyleBackColor = false;
             this.btnNudgeParam2Up.Click += new System.EventHandler(this.btnNudgeParam2Up_Click);
-            //
+            // 
             // btnNudgeParam2Down
-            //
+            // 
             this.btnNudgeParam2Down.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnNudgeParam2Down.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnNudgeParam2Down.FlatAppearance.BorderSize = 0;
@@ -305,9 +300,9 @@
             this.btnNudgeParam2Down.Text = "◀";
             this.btnNudgeParam2Down.UseVisualStyleBackColor = false;
             this.btnNudgeParam2Down.Click += new System.EventHandler(this.btnNudgeParam2Down_Click);
-            //
+            // 
             // updownNudgeParam2
-            //
+            // 
             this.updownNudgeParam2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.updownNudgeParam2.Font = new System.Drawing.Font("Consolas", 8F);
             this.updownNudgeParam2.ForeColor = System.Drawing.Color.White;
@@ -327,9 +322,9 @@
             0,
             0,
             0});
-            //
+            // 
             // btnNudgeParam1Up
-            //
+            // 
             this.btnNudgeParam1Up.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnNudgeParam1Up.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnNudgeParam1Up.FlatAppearance.BorderSize = 0;
@@ -345,9 +340,9 @@
             this.btnNudgeParam1Up.Text = "▶";
             this.btnNudgeParam1Up.UseVisualStyleBackColor = false;
             this.btnNudgeParam1Up.Click += new System.EventHandler(this.btnNudgeParam1Up_Click);
-            //
+            // 
             // btnNudgeParam1Down
-            //
+            // 
             this.btnNudgeParam1Down.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnNudgeParam1Down.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnNudgeParam1Down.FlatAppearance.BorderSize = 0;
@@ -363,9 +358,9 @@
             this.btnNudgeParam1Down.Text = "◀";
             this.btnNudgeParam1Down.UseVisualStyleBackColor = false;
             this.btnNudgeParam1Down.Click += new System.EventHandler(this.btnNudgeParam1Down_Click);
-            //
+            // 
             // updownNudgeParam1
-            //
+            // 
             this.updownNudgeParam1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.updownNudgeParam1.Font = new System.Drawing.Font("Consolas", 8F);
             this.updownNudgeParam1.ForeColor = System.Drawing.Color.White;
@@ -385,9 +380,9 @@
             0,
             0,
             0});
-            //
+            // 
             // btnNudgeEndAddressUp
-            //
+            // 
             this.btnNudgeEndAddressUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnNudgeEndAddressUp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnNudgeEndAddressUp.FlatAppearance.BorderSize = 0;
@@ -403,9 +398,9 @@
             this.btnNudgeEndAddressUp.Text = "▶";
             this.btnNudgeEndAddressUp.UseVisualStyleBackColor = false;
             this.btnNudgeEndAddressUp.Click += new System.EventHandler(this.btnNudgeEndAddressUp_Click);
-            //
+            // 
             // btnNudgeEndAddressDown
-            //
+            // 
             this.btnNudgeEndAddressDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnNudgeEndAddressDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnNudgeEndAddressDown.FlatAppearance.BorderSize = 0;
@@ -421,9 +416,9 @@
             this.btnNudgeEndAddressDown.Text = "◀";
             this.btnNudgeEndAddressDown.UseVisualStyleBackColor = false;
             this.btnNudgeEndAddressDown.Click += new System.EventHandler(this.btnNudgeEndAddressDown_Click);
-            //
+            // 
             // updownNudgeEndAddress
-            //
+            // 
             this.updownNudgeEndAddress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.updownNudgeEndAddress.Font = new System.Drawing.Font("Consolas", 8F);
             this.updownNudgeEndAddress.ForeColor = System.Drawing.Color.White;
@@ -443,9 +438,9 @@
             0,
             0,
             0});
-            //
+            // 
             // btnNudgeStartAddressUp
-            //
+            // 
             this.btnNudgeStartAddressUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnNudgeStartAddressUp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnNudgeStartAddressUp.FlatAppearance.BorderSize = 0;
@@ -461,9 +456,9 @@
             this.btnNudgeStartAddressUp.Text = "▶";
             this.btnNudgeStartAddressUp.UseVisualStyleBackColor = false;
             this.btnNudgeStartAddressUp.Click += new System.EventHandler(this.btnNudgeStartAddressUp_Click);
-            //
+            // 
             // btnNudgeStartAddressDown
-            //
+            // 
             this.btnNudgeStartAddressDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnNudgeStartAddressDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnNudgeStartAddressDown.FlatAppearance.BorderSize = 0;
@@ -479,9 +474,9 @@
             this.btnNudgeStartAddressDown.Text = "◀";
             this.btnNudgeStartAddressDown.UseVisualStyleBackColor = false;
             this.btnNudgeStartAddressDown.Click += new System.EventHandler(this.btnNudgeStartAddressDown_Click);
-            //
+            // 
             // updownNudgeStartAddress
-            //
+            // 
             this.updownNudgeStartAddress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.updownNudgeStartAddress.Font = new System.Drawing.Font("Consolas", 8F);
             this.updownNudgeStartAddress.ForeColor = System.Drawing.Color.White;
@@ -501,9 +496,9 @@
             0,
             0,
             0});
-            //
+            // 
             // label5
-            //
+            // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
@@ -513,9 +508,9 @@
             this.label5.Size = new System.Drawing.Size(47, 13);
             this.label5.TabIndex = 172;
             this.label5.Text = "Param 2";
-            //
+            // 
             // label3
-            //
+            // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
@@ -525,9 +520,9 @@
             this.label3.Size = new System.Drawing.Size(47, 13);
             this.label3.TabIndex = 171;
             this.label3.Text = "Param 1";
-            //
+            // 
             // label2
-            //
+            // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
@@ -537,9 +532,9 @@
             this.label2.Size = new System.Drawing.Size(71, 13);
             this.label2.TabIndex = 170;
             this.label2.Text = "End Address";
-            //
+            // 
             // label1
-            //
+            // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
@@ -549,9 +544,9 @@
             this.label1.Size = new System.Drawing.Size(75, 13);
             this.label1.TabIndex = 169;
             this.label1.Text = "Start Address";
-            //
+            // 
             // label4
-            //
+            // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -561,9 +556,9 @@
             this.label4.Size = new System.Drawing.Size(108, 13);
             this.label4.TabIndex = 158;
             this.label4.Text = "Shift Selected Rows";
-            //
+            // 
             // dgvBlastGenerator
-            //
+            // 
             this.dgvBlastGenerator.AllowUserToAddRows = false;
             this.dgvBlastGenerator.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
@@ -602,18 +597,18 @@
             this.dgvBlastGenerator.Size = new System.Drawing.Size(872, 365);
             this.dgvBlastGenerator.TabIndex = 167;
             this.dgvBlastGenerator.Tag = "color:normal hex";
-            //
+            // 
             // dataGridViewTextBoxColumn1
-            //
+            // 
             this.dataGridViewTextBoxColumn1.FillWeight = 55F;
             this.dataGridViewTextBoxColumn1.HeaderText = "Mode";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.dataGridViewTextBoxColumn1.Width = 92;
-            //
+            // 
             // dataGridViewNumericUpDownColumn1
-            //
+            // 
             this.dataGridViewNumericUpDownColumn1.FillWeight = 50F;
             this.dataGridViewNumericUpDownColumn1.HeaderText = "Step Size";
             this.dataGridViewNumericUpDownColumn1.Maximum = new decimal(new int[] {
@@ -628,9 +623,9 @@
             0});
             this.dataGridViewNumericUpDownColumn1.Name = "dataGridViewNumericUpDownColumn1";
             this.dataGridViewNumericUpDownColumn1.Width = 82;
-            //
+            // 
             // dataGridViewNumericUpDownColumn2
-            //
+            // 
             this.dataGridViewNumericUpDownColumn2.FillWeight = 50F;
             this.dataGridViewNumericUpDownColumn2.HeaderText = "Start Address";
             this.dataGridViewNumericUpDownColumn2.Hexadecimal = true;
@@ -642,9 +637,9 @@
             this.dataGridViewNumericUpDownColumn2.Name = "dataGridViewNumericUpDownColumn2";
             this.dataGridViewNumericUpDownColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.dataGridViewNumericUpDownColumn2.Width = 83;
-            //
+            // 
             // dataGridViewNumericUpDownColumn3
-            //
+            // 
             this.dataGridViewNumericUpDownColumn3.FillWeight = 50F;
             this.dataGridViewNumericUpDownColumn3.HeaderText = "End Address";
             this.dataGridViewNumericUpDownColumn3.Hexadecimal = true;
@@ -656,9 +651,9 @@
             this.dataGridViewNumericUpDownColumn3.Name = "dataGridViewNumericUpDownColumn3";
             this.dataGridViewNumericUpDownColumn3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.dataGridViewNumericUpDownColumn3.Width = 83;
-            //
+            // 
             // dataGridViewNumericUpDownColumn4
-            //
+            // 
             this.dataGridViewNumericUpDownColumn4.FillWeight = 50F;
             this.dataGridViewNumericUpDownColumn4.HeaderText = "Param 1";
             this.dataGridViewNumericUpDownColumn4.Hexadecimal = true;
@@ -669,9 +664,9 @@
             0});
             this.dataGridViewNumericUpDownColumn4.Name = "dataGridViewNumericUpDownColumn4";
             this.dataGridViewNumericUpDownColumn4.Width = 83;
-            //
+            // 
             // dataGridViewNumericUpDownColumn5
-            //
+            // 
             this.dataGridViewNumericUpDownColumn5.FillWeight = 50F;
             this.dataGridViewNumericUpDownColumn5.HeaderText = "Param 2";
             this.dataGridViewNumericUpDownColumn5.Hexadecimal = true;
@@ -682,9 +677,9 @@
             0});
             this.dataGridViewNumericUpDownColumn5.Name = "dataGridViewNumericUpDownColumn5";
             this.dataGridViewNumericUpDownColumn5.Width = 83;
-            //
+            // 
             // menuStripEx1
-            //
+            // 
             this.menuStripEx1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStripEx1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.blastLayerToolStripMenuItem});
@@ -694,9 +689,9 @@
             this.menuStripEx1.TabIndex = 168;
             this.menuStripEx1.Tag = "";
             this.menuStripEx1.Text = "menuStripEx1";
-            //
+            // 
             // blastLayerToolStripMenuItem
-            //
+            // 
             this.blastLayerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.saveAsToFileblToolStripMenuItem,
             this.loadFromFileblToolStripMenuItem,
@@ -705,30 +700,30 @@
             this.blastLayerToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.blastLayerToolStripMenuItem.Tag = "";
             this.blastLayerToolStripMenuItem.Text = "File";
-            //
+            // 
             // saveAsToFileblToolStripMenuItem
-            //
+            // 
             this.saveAsToFileblToolStripMenuItem.Name = "saveAsToFileblToolStripMenuItem";
             this.saveAsToFileblToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
             this.saveAsToFileblToolStripMenuItem.Text = "&Save As to File (.bg)";
             this.saveAsToFileblToolStripMenuItem.Click += new System.EventHandler(this.saveAsToFileblToolStripMenuItem_Click);
-            //
+            // 
             // loadFromFileblToolStripMenuItem
-            //
+            // 
             this.loadFromFileblToolStripMenuItem.Name = "loadFromFileblToolStripMenuItem";
             this.loadFromFileblToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
             this.loadFromFileblToolStripMenuItem.Text = "&Load From File (.bg)";
             this.loadFromFileblToolStripMenuItem.Click += new System.EventHandler(this.loadFromFileblToolStripMenuItem_Click);
-            //
+            // 
             // importBlastlayerblToolStripMenuItem
-            //
+            // 
             this.importBlastlayerblToolStripMenuItem.Name = "importBlastlayerblToolStripMenuItem";
             this.importBlastlayerblToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
             this.importBlastlayerblToolStripMenuItem.Text = "&Import Generation Params (.bg)";
             this.importBlastlayerblToolStripMenuItem.Click += new System.EventHandler(this.importBlastlayerblToolStripMenuItem_Click);
-            //
+            // 
             // btnHideSidebar
-            //
+            // 
             this.btnHideSidebar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnHideSidebar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.btnHideSidebar.Location = new System.Drawing.Point(1004, 0);
@@ -738,38 +733,38 @@
             this.btnHideSidebar.Text = "▶";
             this.btnHideSidebar.UseVisualStyleBackColor = true;
             this.btnHideSidebar.Click += new System.EventHandler(this.btnHideSidebar_Click);
-            //
+            // 
             // dgvBlastProtoReference
-            //
+            // 
             this.dgvBlastProtoReference.HeaderText = "dgvBlastProtoReference";
             this.dgvBlastProtoReference.Name = "dgvBlastProtoReference";
             this.dgvBlastProtoReference.Visible = false;
-            //
+            // 
             // dgvRowDirty
-            //
+            // 
             this.dgvRowDirty.HeaderText = "dgvRowDirty";
             this.dgvRowDirty.Name = "dgvRowDirty";
             this.dgvRowDirty.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvRowDirty.Visible = false;
-            //
+            // 
             // dgvNoteText
-            //
+            // 
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dgvNoteText.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvNoteText.HeaderText = "dgvNoteText";
             this.dgvNoteText.Name = "dgvNoteText";
             this.dgvNoteText.Visible = false;
-            //
+            // 
             // dgvEnabled
-            //
+            // 
             this.dgvEnabled.FillWeight = 17F;
             this.dgvEnabled.HeaderText = "✔";
             this.dgvEnabled.Name = "dgvEnabled";
             this.dgvEnabled.ToolTipText = "Row enabled";
             this.dgvEnabled.TrueValue = "true";
-            //
+            // 
             // dgvDomain
-            //
+            // 
             this.dgvDomain.DropDownWidth = 150;
             this.dgvDomain.FillWeight = 60F;
             this.dgvDomain.HeaderText = "Domain";
@@ -780,9 +775,9 @@
             this.dgvDomain.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvDomain.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.dgvDomain.ToolTipText = "The domain to generate your corruption for";
-            //
+            // 
             // dgvPrecision
-            //
+            // 
             this.dgvPrecision.FillWeight = 45F;
             this.dgvPrecision.HeaderText = "Precision";
             this.dgvPrecision.Items.AddRange(new object[] {
@@ -793,9 +788,9 @@
             this.dgvPrecision.Name = "dgvPrecision";
             this.dgvPrecision.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.dgvPrecision.ToolTipText = "The size of the generated blast";
-            //
+            // 
             // dgvType
-            //
+            // 
             this.dgvType.FillWeight = 55F;
             this.dgvType.HeaderText = "Type";
             this.dgvType.Items.AddRange(new object[] {
@@ -805,9 +800,9 @@
             this.dgvType.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.dgvType.ToolTipText = "The BlastUnit type";
-            //
+            // 
             // dgvMode
-            //
+            // 
             this.dgvMode.DropDownWidth = 150;
             this.dgvMode.FillWeight = 60F;
             this.dgvMode.HeaderText = "Mode";
@@ -818,9 +813,9 @@
             this.dgvMode.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dgvMode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.dgvMode.ToolTipText = "The generation mode. See the ? button on the sidebar for more info.";
-            //
+            // 
             // dgvInterval
-            //
+            // 
             this.dgvInterval.FillWeight = 45F;
             this.dgvInterval.HeaderText = "Interval";
             this.dgvInterval.Maximum = new decimal(new int[] {
@@ -836,9 +831,9 @@
             this.dgvInterval.Name = "dgvInterval";
             this.dgvInterval.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.dgvInterval.ToolTipText = "How many bytes to step in-between generated BlastUnits";
-            //
+            // 
             // dgvStartAddress
-            //
+            // 
             dataGridViewCellStyle3.Font = new System.Drawing.Font("Consolas", 9F);
             this.dgvStartAddress.DefaultCellStyle = dataGridViewCellStyle3;
             this.dgvStartAddress.FillWeight = 50F;
@@ -852,9 +847,9 @@
             this.dgvStartAddress.Name = "dgvStartAddress";
             this.dgvStartAddress.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.dgvStartAddress.ToolTipText = "The address to start generating from";
-            //
+            // 
             // dgvEndAddress
-            //
+            // 
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Consolas", 9F);
             this.dgvEndAddress.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgvEndAddress.FillWeight = 50F;
@@ -868,9 +863,9 @@
             this.dgvEndAddress.Name = "dgvEndAddress";
             this.dgvEndAddress.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.dgvEndAddress.ToolTipText = "The address to end generation at (exclusive)";
-            //
+            // 
             // dgvParam1
-            //
+            // 
             dataGridViewCellStyle5.Font = new System.Drawing.Font("Consolas", 9F);
             this.dgvParam1.DefaultCellStyle = dataGridViewCellStyle5;
             this.dgvParam1.FillWeight = 50F;
@@ -884,9 +879,9 @@
             this.dgvParam1.Name = "dgvParam1";
             this.dgvParam1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.dgvParam1.ToolTipText = "See the ? button on the right for more details.";
-            //
+            // 
             // dgvParam2
-            //
+            // 
             dataGridViewCellStyle6.Font = new System.Drawing.Font("Consolas", 9F);
             this.dgvParam2.DefaultCellStyle = dataGridViewCellStyle6;
             this.dgvParam2.FillWeight = 50F;
@@ -900,27 +895,27 @@
             this.dgvParam2.Name = "dgvParam2";
             this.dgvParam2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.dgvParam2.ToolTipText = "See the ? button on the right for more details.";
-            //
+            // 
             // dgvLifetime
-            //
+            // 
             this.dgvLifetime.FillWeight = 45F;
             this.dgvLifetime.HeaderText = "Lifetime";
             this.dgvLifetime.Name = "dgvLifetime";
-            //
+            // 
             // dgvExecuteFrame
-            //
+            // 
             this.dgvExecuteFrame.FillWeight = 45F;
             this.dgvExecuteFrame.HeaderText = "Execute Frame";
             this.dgvExecuteFrame.Name = "dgvExecuteFrame";
-            //
+            // 
             // dgvLoop
-            //
+            // 
             this.dgvLoop.FillWeight = 30F;
             this.dgvLoop.HeaderText = "Loop";
             this.dgvLoop.Name = "dgvLoop";
-            //
+            // 
             // dgvSeed
-            //
+            // 
             this.dgvSeed.FillWeight = 50F;
             this.dgvSeed.HeaderText = "Seed";
             this.dgvSeed.Maximum = new decimal(new int[] {
@@ -934,17 +929,17 @@
             0,
             -2147483648});
             this.dgvSeed.Name = "dgvSeed";
-            //
+            // 
             // dgvNoteButton
-            //
+            // 
             this.dgvNoteButton.FillWeight = 15F;
             this.dgvNoteButton.HeaderText = "📝";
             this.dgvNoteButton.MinimumWidth = 15;
             this.dgvNoteButton.Name = "dgvNoteButton";
             this.dgvNoteButton.ToolTipText = "Tells you if the row has a note.";
-            //
+            // 
             // RTC_BlastGenerator_Form
-            //
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
