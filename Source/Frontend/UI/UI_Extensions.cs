@@ -542,7 +542,8 @@ namespace RTCV.UI
         /// <param name="min">Minimum allowed</param>
         /// <param name="max">Maximum allowed</param>
         /// <returns>The value if strictly between min and max; otherwise min (or max depending of what is passed)</returns>
-        public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T>
+        public static T Clamp<T>(this T val, T min, T max)
+            where T : IComparable<T>
         {
             if (val.CompareTo(min) < 0)
             {
@@ -2519,7 +2520,8 @@ internal static class RandomExtensions
 /// If the elements are IComparable it uses that; otherwise compares the ToString()
 /// </summary>
 /// <typeparam name="T">The type of elements in the list.</typeparam>
-public class SortableBindingList<T> : BindingList<T> where T : class
+public class SortableBindingList<T> : BindingList<T>
+    where T : class
 {
     private bool _isSorted;
     private ListSortDirection _sortDirection = ListSortDirection.Ascending;
@@ -2638,7 +2640,8 @@ public class SortableBindingList<T> : BindingList<T> where T : class
 /// <typeparam name="TKey">dictionary keys</typeparam>
 /// <typeparam name="TValue">dictionary values</typeparam>
 [Serializable]
-public class WorkingDictionary<TKey, TValue> : Dictionary<TKey, TValue> where TValue : new()
+public class WorkingDictionary<TKey, TValue> : Dictionary<TKey, TValue>
+    where TValue : new()
 {
     public new TValue this[TKey key]
     {
