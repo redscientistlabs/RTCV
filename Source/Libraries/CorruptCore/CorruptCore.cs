@@ -269,19 +269,19 @@ namespace RTCV.CorruptCore
                 RegisterCorruptcoreSpec();
 
                 CorruptCore_Extensions.DirectoryRequired(paths: new string[] {
-                    RtcCore.workingDir
-                    , Path.Combine(RtcCore.workingDir,"TEMP")
-                    , Path.Combine(RtcCore.workingDir, "SKS")
-                    , Path.Combine(RtcCore.workingDir, "SSK")
-                    , Path.Combine(RtcCore.workingDir, "SESSION")
-                    , Path.Combine(RtcCore.workingDir, "MEMORYDUMPS")
-                    , Path.Combine(RtcCore.workingDir, "MP")
-                    , Path.Combine(RtcCore.assetsDir, "CRASHSOUNDS")
-                    , Path.Combine(RtcCore.RtcDir, "PARAMS")
-                    , Path.Combine(RtcCore.RtcDir, "LISTS")
-                    , Path.Combine(RtcCore.RtcDir, "RENDEROUTPUT")
-                    , Path.Combine(RtcCore.RtcDir, "ENGINETEMPLATES")
-                    , Path.Combine(RtcCore.assetsDir, "PLATESHD")
+                    RtcCore.workingDir,
+                    Path.Combine(RtcCore.workingDir, "TEMP"),
+                    Path.Combine(RtcCore.workingDir, "SKS"),
+                    Path.Combine(RtcCore.workingDir, "SSK"),
+                    Path.Combine(RtcCore.workingDir, "SESSION"),
+                    Path.Combine(RtcCore.workingDir, "MEMORYDUMPS"),
+                    Path.Combine(RtcCore.workingDir, "MP"),
+                    Path.Combine(RtcCore.assetsDir, "CRASHSOUNDS"),
+                    Path.Combine(RtcCore.RtcDir, "PARAMS"),
+                    Path.Combine(RtcCore.RtcDir, "LISTS"),
+                    Path.Combine(RtcCore.RtcDir, "RENDEROUTPUT"),
+                    Path.Combine(RtcCore.RtcDir, "ENGINETEMPLATES"),
+                    Path.Combine(RtcCore.assetsDir, "PLATESHD")
                 });
 
                 if (!Params.IsParamSet("DISCLAIMER_READ"))

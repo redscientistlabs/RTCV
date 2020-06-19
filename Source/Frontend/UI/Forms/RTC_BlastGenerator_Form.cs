@@ -332,8 +332,7 @@ namespace RTCV.UI
                     {
                         RomFilename = psk.RomFilename,
                         SystemName = psk.SystemName,
-                        SystemCore = psk.SystemCore
-                        ,
+                        SystemCore = psk.SystemCore,
                         GameName = psk.GameName,
                         SyncSettings = psk.SyncSettings,
                         StateLocation = psk.StateLocation

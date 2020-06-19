@@ -63,7 +63,7 @@ namespace RTCV.UI
             if (!Directory.Exists(RtcCore.listsDir))
                 Directory.CreateDirectory(RtcCore.listsDir);
 
-            var files = Directory.GetFiles(RtcCore.listsDir).OrderBy(it => it.Replace("$",""));
+            var files = Directory.GetFiles(RtcCore.listsDir).OrderBy(it => it.Replace("$", ""));
             foreach (var file in files)
             {
                 string shortfile = file.Substring(file.LastIndexOf('\\') + 1);
@@ -157,7 +157,7 @@ namespace RTCV.UI
             if (lbKnownLists.SelectedIndex == -1)
                 return;
 
-            string listName = lbKnownLists.SelectedItem.ToString().Replace("[DISABLED] ","");
+            string listName = lbKnownLists.SelectedItem.ToString().Replace("[DISABLED] ", "");
             string path = Path.Combine(RtcCore.listsDir, listName);
 
             SaveFileDialog saveFileDialog1 = new SaveFileDialog

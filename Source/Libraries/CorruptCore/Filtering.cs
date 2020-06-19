@@ -154,7 +154,7 @@
 
             try
             {
-                return list.Initialize(path, temp, flipBytes,syncListViaNetcore);
+                return list.Initialize(path, temp, flipBytes, syncListViaNetcore);
             }
             catch (Exception ex)
             {
@@ -341,7 +341,7 @@
 
             var list = Hash2ValueDico[hash];
 
-            return list.GetRandomValue(hash,precision);
+            return list.GetRandomValue(hash, precision);
         }
 
         /// <summary>
