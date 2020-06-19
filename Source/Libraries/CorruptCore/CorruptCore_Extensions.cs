@@ -1439,7 +1439,7 @@ namespace RTCV.CorruptCore
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
         public static extern IntPtr GetCommandLine();
 
-        public enum FileType : uint
+        public enum FileType : Int32
         {
             FileTypeChar = 0x0002,
             FileTypeDisk = 0x0001,

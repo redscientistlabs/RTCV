@@ -220,9 +220,6 @@ csharp_preserve_single_line_statements = true
 # Class owns disposable fields but is not disposable
 dotnet_diagnostic.CA1001.severity = none
 
-# If possible, make the underlying type of FileType System.Int32 instead of uint
-dotnet_diagnostic.CA1028.severity = none
-
 # Catch more specific exception type
 dotnet_diagnostic.CA1031.severity = none
 
