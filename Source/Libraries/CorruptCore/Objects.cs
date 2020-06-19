@@ -1592,7 +1592,7 @@ namespace RTCV.CorruptCore
                 {
                     if (BigEndian)
                     {
-                        bu.Value[i] = Value[end - (i +1)];
+                        bu.Value[i] = Value[end - (i + 1)];
                     }
                     else
                     {
@@ -2305,10 +2305,10 @@ namespace RTCV.CorruptCore
             switch (BlastType)
             {
                 case "Value":
-                    bl = RTC_ValueGenerator.GenerateLayer(Note, Domain, StepSize, StartAddress, EndAddress, Param1, Param2, Precision, Lifetime, ExecuteFrame, Loop, Seed, (BGValueModes)Enum.Parse(typeof(BGValueModes), Mode, true));
+                    bl = RTC_ValueGenerator.GenerateLayer(Note, Domain, StepSize, StartAddress, EndAddress, Param1, Param2, Precision, Lifetime, ExecuteFrame, Loop, Seed, (BGValueMode)Enum.Parse(typeof(BGValueMode), Mode, true));
                     break;
                 case "Store":
-                    bl = RTC_StoreGenerator.GenerateLayer(Note, Domain, StepSize, StartAddress, EndAddress, Param1, Param2, Precision, Lifetime, ExecuteFrame, Loop, Seed, (BGStoreModes)Enum.Parse(typeof(BGStoreModes), Mode, true));
+                    bl = RTC_StoreGenerator.GenerateLayer(Note, Domain, StepSize, StartAddress, EndAddress, Param1, Param2, Precision, Lifetime, ExecuteFrame, Loop, Seed, (BGStoreMode)Enum.Parse(typeof(BGStoreMode), Mode, true));
                     break;
                 default:
                     return null;

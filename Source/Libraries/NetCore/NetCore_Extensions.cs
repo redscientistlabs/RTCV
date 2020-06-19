@@ -25,7 +25,7 @@ namespace RTCV.NetCore
             {
                 if (!typeof(T).IsSerializable)
                 {
-                    throw new ArgumentException("The type must be serializable.", "source");
+                    throw new ArgumentException("The type must be serializable.", nameof(source));
                 }
 
                 //Return default of a null object
@@ -102,8 +102,6 @@ namespace RTCV.NetCore
             internal const int MF_ENABLED = 0x00000000;     //enabled button status
             internal const int MF_GRAYED = 0x1;             //disabled button status (enabled = false)
             internal const int MF_DISABLED = 0x00000002;    //disabled button status
-
-            private const uint StdOutputHandle = 0xFFFFFFF5;
 
             [DllImport("kernel32.dll")]
             private static extern IntPtr GetStdHandle(uint nStdHandle);

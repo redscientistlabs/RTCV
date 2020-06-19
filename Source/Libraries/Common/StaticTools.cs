@@ -13,6 +13,7 @@ namespace RTCV.Common
     using System.Windows.Forms;
     using NLog;
 
+    #pragma warning disable CA1040 // Allow this interface to be empty, since it's used to signal auto-coloriation for a class
     // Implementing this interface causes auto-coloration.
     public interface IAutoColorize { }
 
@@ -258,7 +259,6 @@ namespace RTCV.Common
         internal const int MF_GRAYED = 0x1;             //disabled button status (enabled = false)
         internal const int MF_DISABLED = 0x00000002;    //disabled button status
 
-        private const uint StdOutputHandle = 0xFFFFFFF5;
 
         [DllImport("kernel32.dll")]
         private static extern IntPtr GetStdHandle(uint nStdHandle);

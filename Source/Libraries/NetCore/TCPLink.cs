@@ -143,7 +143,7 @@ namespace RTCV.NetCore
                     server.Stop();
                 }
 
-                networkStream.ReadTimeout = 20;
+                networkStream.ReadTimeout = 10000;
                 networkStream.WriteTimeout = int.MaxValue;  //Using {BOOP} commands routed through UDP/TCP
 
                 if (spec.Side == NetworkSide.CLIENT)

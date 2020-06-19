@@ -8,8 +8,6 @@ namespace RTCV.UI.Input
     public static class Bindings
     {
         private static readonly WorkingDictionary<string, List<string>> _bindings = new WorkingDictionary<string, List<string>>();
-        private static readonly WorkingDictionary<string, bool> _buttons = new WorkingDictionary<string, bool>();
-        private static readonly WorkingDictionary<string, int> _buttonStarts = new WorkingDictionary<string, int>();
 
         // Looks for bindings which are activated by the supplied physical button.
         public static List<string> SearchBindings(string button)
