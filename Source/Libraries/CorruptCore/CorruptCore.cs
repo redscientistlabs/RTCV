@@ -697,7 +697,7 @@ namespace RTCV.CorruptCore
 
                     bl = new BlastLayer();
 
-                    if (selectedDomains == null || selectedDomains.Count() == 0)
+                    if (selectedDomains == null || selectedDomains.Length == 0)
                     {
                         return null;
                     }

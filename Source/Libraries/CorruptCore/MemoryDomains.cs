@@ -645,7 +645,7 @@ namespace RTCV.CorruptCore
             List<string> domains = new List<string>();
             List<List<long>> domainAdresses = new List<List<long>>();
 
-            for (int i = 0; i < PointerAddresses.Count(); i++)
+            for (int i = 0; i < PointerAddresses.Count; i++)
             {
                 var dom = PointerDomains[i];
                 if (!domains.Contains(dom))
