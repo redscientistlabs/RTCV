@@ -78,7 +78,7 @@ namespace RTCV.UI
             {
                 return false;
             }
-            List<String> newList = new List<string>();
+            List<string> newList = new List<string>();
             foreach (string line in tbListValues.Lines)
             {
                 if (string.IsNullOrWhiteSpace(line))
@@ -148,7 +148,7 @@ namespace RTCV.UI
                 }
             }
 
-            String filename = CorruptCore_Extensions.MakeSafeFilename(tbListName.Text, '-');
+            string filename = CorruptCore_Extensions.MakeSafeFilename(tbListName.Text, '-');
             //Handle saving the list to a file
             if (cbSaveFile.Checked)
             {

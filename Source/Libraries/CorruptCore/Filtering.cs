@@ -375,8 +375,7 @@
                 //If we have a value and the dictionary contains it, build up a String[] containing the values
                 if (s != null && Hash2LimiterDico.ContainsKey(s))
                 {
-                    List<String> strList = Hash2LimiterDico[s].GetStringList();
-
+                    List<string> strList = Hash2LimiterDico[s].GetStringList();
 
                     Hash2NameDico.TryGetValue(s, out string name); //See if we can get the name
                     if (string.IsNullOrWhiteSpace(name))
