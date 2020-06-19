@@ -308,12 +308,6 @@ dotnet_diagnostic.CA1824.severity = none
 # Avoid unnecessary zero-length array allocations
 dotnet_diagnostic.CA1825.severity = none
 
-# Count() is used where Any() could be used instead to improve performance
-dotnet_diagnostic.CA1827.severity = none
-
-# Use the "Count" property instead of Enumerable.Count()
-dotnet_diagnostic.CA1829.severity = none
-
 # Call on object before all references to it are out of scope
 dotnet_diagnostic.CA2000.severity = none
 
