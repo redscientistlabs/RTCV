@@ -302,9 +302,6 @@ dotnet_diagnostic.CA1820.severity = none
 # NOTE: Fixing this requires a simultaneous fix in Bizhawk-Vanguard
 dotnet_diagnostic.CA1822.severity = none
 
-# Mark assemblies with NeutralResourcesLanguageAttribute
-dotnet_diagnostic.CA1824.severity = none
-
 # Avoid unnecessary zero-length array allocations
 dotnet_diagnostic.CA1825.severity = none
 
