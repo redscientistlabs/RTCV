@@ -166,13 +166,9 @@ namespace RTCV.UI
             }
             catch (Exception ex)
             {
-                string additionalInfo = "An error occurred while opening the BlastEditor Form\n\n";
-
-                var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
-
-                if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
-                    throw new RTCV.NetCore.AbortEverythingException();
+                    throw new Exception();
                 }
             }
         }

@@ -372,7 +372,7 @@ namespace RTCV.UI
             {
                 if (CloudDebug.ShowErrorDialog(ex) == DialogResult.Abort)
                 {
-                    throw new RTCV.NetCore.AbortEverythingException();
+                    throw new Exception();
                 }
 
                 return;

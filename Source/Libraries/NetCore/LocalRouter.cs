@@ -97,13 +97,9 @@
             }
             catch (Exception ex)
             {
-                string additionalInfo = "Error trapped from LocalRouter\n\n";
-
-                var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
-
-                if (CloudDebug.ShowErrorDialog(ex2) == DialogResult.Abort)
+                if (CloudDebug.ShowErrorDialog(ex) == DialogResult.Abort)
                 {
-                    throw new RTCV.NetCore.AbortEverythingException();
+                    throw new Exception();
                 }
 
                 return null;

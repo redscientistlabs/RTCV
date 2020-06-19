@@ -85,12 +85,9 @@ namespace RTCV.UI
             }
             catch (Exception ex)
             {
-                string additionalInfo = "The Savestate Keys file could not be loaded\n\n";
-                var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
-
-                if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
-                    throw new RTCV.NetCore.AbortEverythingException();
+                    throw new Exception();
                 }
 
                 return;
@@ -274,7 +271,7 @@ namespace RTCV.UI
                 }
                 catch (IOException e)
                 {
-                    throw new CustomException("Couldn't copy savestate " + sk.StateShortFilename + " to SESSION! " + e.Message, e.StackTrace);
+                    throw new Exception("Couldn't copy savestate " + sk.StateShortFilename + " to SESSION! " + e.Message);
                 }
             }
         }
@@ -405,13 +402,9 @@ namespace RTCV.UI
             }
             catch (Exception ex)
             {
-                string additionalInfo = "The Savestate Keys file could not be saved\n\n";
-
-                var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
-
-                if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
-                    throw new RTCV.NetCore.AbortEverythingException();
+                    throw new Exception();
                 }
 
                 return;

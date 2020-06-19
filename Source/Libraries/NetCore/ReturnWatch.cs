@@ -89,7 +89,7 @@ namespace RTCV.NetCore
             if (StackFrameHelper.GetCallStackDepth() > 2000)
             {
                 cts.Cancel();
-                throw new CustomException("A fatal error has occurred. Please send this to the devs. You should save your Stockpile then restart the RTC.", Environment.StackTrace);
+                throw new Exception("A fatal error has occurred. Please send this to the devs. You should save your Stockpile then restart the RTC.");
             }
 
             while (!SyncReturns.ContainsKey(WatchedGuid))

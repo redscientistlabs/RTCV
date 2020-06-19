@@ -295,7 +295,7 @@ namespace RTCV.CorruptCore
             {
                 if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
-                    throw new AbortEverythingException();
+                    throw new Exception();
                 }
             }
         }
@@ -376,7 +376,7 @@ namespace RTCV.CorruptCore
             {
                 if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
-                    throw new AbortEverythingException();
+                    throw new Exception();
                 }
             }
         }
@@ -485,7 +485,7 @@ namespace RTCV.CorruptCore
             {
                 if (CloudDebug.ShowErrorDialog(ex) == DialogResult.Abort)
                 {
-                    throw new AbortEverythingException();
+                    throw new Exception();
                 }
 
                 return null;
@@ -603,7 +603,7 @@ namespace RTCV.CorruptCore
             {
                 if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
-                    throw new AbortEverythingException();
+                    throw new Exception();
                 }
 
                 return;
@@ -656,7 +656,7 @@ namespace RTCV.CorruptCore
             {
                 if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
-                    throw new AbortEverythingException();
+                    throw new Exception();
                 }
 
                 return null;
@@ -908,13 +908,12 @@ namespace RTCV.CorruptCore
                         additionalInfo = "Unable to get an interface to the selected memory domain! \nTry clicking the Auto-Select Domains button to refresh the domains!\n\n";
                     }
 
-                    throw new CustomException(ex.Message, additionalInfo + ex.StackTrace + ex.InnerException);
+                    throw new Exception(additionalInfo + ex.Message);
                 }
             }
             catch (Exception ex)
             {
-                var ex2 = new CustomException("Something went wrong in the RTC Core | " + ex.Message, (RtcCore.AutoCorrupt ? "Autocorrupt was turned off for your safety\n\n" : "") + ex.StackTrace);
-                var dr = CloudDebug.ShowErrorDialog(ex2, true);
+                var dr = CloudDebug.ShowErrorDialog(ex, true);
 
                 if (RtcCore.AutoCorrupt)
                 {
@@ -924,7 +923,7 @@ namespace RTCV.CorruptCore
 
                 if (dr == DialogResult.Abort)
                 {
-                    throw new AbortEverythingException();
+                    throw new Exception();
                 }
 
                 return null;

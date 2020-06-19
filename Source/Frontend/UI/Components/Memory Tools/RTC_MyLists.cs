@@ -286,7 +286,7 @@ namespace RTCV.UI
                     }
                     catch (Exception ex)
                     {
-                        throw new NetCore.CustomException($"The VMD file {filename} could not be loaded." + ex.Message, ex.StackTrace);
+                        throw new Exception($"The VMD file {filename} could not be loaded." + ex.Message);
                     }
                 }
 

@@ -498,14 +498,9 @@
             }
             catch (Exception ex)
             {
-                string additionalInfo = "Something went wrong in when generating the active table. \n" +
-                    "This is an RTC error, so you should probably send this to the RTC devs with instructions on what you did to cause it.\n\n";
-
-                var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
-
-                if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
-                    throw new RTCV.NetCore.AbortEverythingException();
+                    throw new Exception();
                 }
 
                 return false;
@@ -576,14 +571,9 @@
             }
             catch (Exception ex)
             {
-                string additionalInfo = "Something went wrong in when generating the VMD table. \n" +
-                    "This is an RTC error, so you should probably send this to the RTC devs with instructions on what you did to cause it.\n\n";
-
-                var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
-
-                if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
-                    throw new RTCV.NetCore.AbortEverythingException();
+                    throw new Exception();
                 }
 
                 return;
