@@ -347,9 +347,6 @@ dotnet_diagnostic.CA2227.severity = none
 # Call a different method
 dotnet_diagnostic.CA2234.severity = none
 
-# Add [Serializable] to class
-dotnet_diagnostic.CA2237.severity = none
-
 # Unsafe overload of 'Deserialize' method
 dotnet_diagnostic.CA3075.severity = none
 
