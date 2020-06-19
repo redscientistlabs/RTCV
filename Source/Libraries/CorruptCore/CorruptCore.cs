@@ -295,7 +295,7 @@ namespace RTCV.CorruptCore
             {
                 if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
-                    throw new Exception();
+                    throw new AbortEverythingException();
                 }
             }
         }
@@ -376,7 +376,7 @@ namespace RTCV.CorruptCore
             {
                 if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
-                    throw new Exception();
+                    throw new AbortEverythingException();
                 }
             }
         }
@@ -485,7 +485,7 @@ namespace RTCV.CorruptCore
             {
                 if (CloudDebug.ShowErrorDialog(ex) == DialogResult.Abort)
                 {
-                    throw new Exception();
+                    throw new AbortEverythingException();
                 }
 
                 return null;
@@ -603,7 +603,7 @@ namespace RTCV.CorruptCore
             {
                 if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
-                    throw new Exception();
+                    throw new AbortEverythingException();
                 }
 
                 return;
@@ -656,7 +656,7 @@ namespace RTCV.CorruptCore
             {
                 if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
-                    throw new Exception();
+                    throw new AbortEverythingException();
                 }
 
                 return null;
@@ -923,7 +923,7 @@ namespace RTCV.CorruptCore
 
                 if (dr == DialogResult.Abort)
                 {
-                    throw new Exception();
+                    throw new AbortEverythingException();
                 }
 
                 return null;

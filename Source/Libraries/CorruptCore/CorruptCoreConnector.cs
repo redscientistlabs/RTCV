@@ -658,7 +658,7 @@ namespace RTCV.CorruptCore
             {
                 if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
-                    throw new Exception();
+                    throw new RTCV.NetCore.AbortEverythingException();
                 }
 
                 return e.returnMessage;

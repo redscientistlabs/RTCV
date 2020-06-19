@@ -7,6 +7,7 @@ namespace RTCV.NetCore
     using System.IO;
     using System.Net;
     using System.Reflection;
+    using System.Runtime.Serialization;
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Text;
     using System.Windows.Forms;
@@ -20,6 +21,10 @@ namespace RTCV.NetCore
         {
             InitializeComponent();
             ex = _ex;
+            if (ex is AbortEverythingException)
+            {
+                return;
+            }
 
             if (!(ex is OperationAbortedException))
             {
@@ -303,6 +308,26 @@ namespace RTCV.NetCore
         }
 
         private void btnDebugInfo_Click(object sender, EventArgs e) => S.GET<DebugInfo_Form>().ShowDialog();
+    }
+
+    [Serializable]
+    public class AbortEverythingException : Exception
+    {
+        public AbortEverythingException() : base()
+        {
+        }
+
+        public AbortEverythingException(string message) : base(message)
+        {
+        }
+
+        public AbortEverythingException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected AbortEverythingException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
     }
 
     internal class WebClientTimeout : WebClient

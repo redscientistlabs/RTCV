@@ -99,7 +99,7 @@
             {
                 if (CloudDebug.ShowErrorDialog(ex) == DialogResult.Abort)
                 {
-                    throw new Exception();
+                    throw new RTCV.NetCore.AbortEverythingException();
                 }
 
                 return null;
