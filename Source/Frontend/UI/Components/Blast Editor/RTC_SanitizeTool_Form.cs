@@ -42,7 +42,7 @@ namespace RTCV.UI
                 return;
             }
 
-            if (bl.Layer.Count(x => !x.IsLocked) == 0)
+            if (!bl.Layer.Any(x => !x.IsLocked))
             {
                 MessageBox.Show("Sanitize Tool cannot sanitize BlastLayers that don't have any units.");
                 return;
