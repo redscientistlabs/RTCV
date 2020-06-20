@@ -347,6 +347,7 @@ namespace RTCV.CorruptCore
         /// Takes a stashkey and a list of keys, fixing the path and if a list of keys is provided, it'll look for all shared references and update them
         /// </summary>
         /// <param name="psk"></param>
+        /// <param name="force"></param>
         /// <param name="keys"></param>
         /// <returns></returns>
         public static bool CheckAndFixMissingReference(StashKey psk, bool force = false, List<StashKey> keys = null, string customTitle = null, string customMessage = null)

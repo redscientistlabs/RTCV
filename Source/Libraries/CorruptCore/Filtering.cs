@@ -167,6 +167,7 @@
         /// Registers a list as a limiter and value list in the dictionaries
         /// </summary>
         /// <param name="list"></param>
+        /// <param name="name"></param>
         /// <param name="syncListsViaNetcore"></param>
         /// <returns>The hash of the list being registereds</returns>
         public static string RegisterList(IListFilter list, string name, bool syncListsViaNetcore)
