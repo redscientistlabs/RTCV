@@ -131,7 +131,7 @@ namespace RTCV.CorruptCore
         }
         public List<string> GetStringList()
         {
-            List<String> strList = new List<string>();
+            List<string> strList = new List<string>();
 
             foreach (var line in hashSet)
             {
@@ -259,7 +259,7 @@ namespace RTCV.CorruptCore
         }
         public List<string> GetStringList()
         {
-            List<String> strList = new List<string>();
+            List<string> strList = new List<string>();
 
             foreach (var line in hashSet)
             {

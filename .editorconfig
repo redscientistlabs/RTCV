@@ -303,9 +303,6 @@ dotnet_diagnostic.CA1816.severity = none
 # Properties should not return arrays
 dotnet_diagnostic.CA1819.severity = none
 
-# Test for empty strings not using Equality check
-dotnet_diagnostic.CA1820.severity = none
-
 # Member can be marked as static
 # NOTE: Fixing this requires a simultaneous fix in Bizhawk-Vanguard
 dotnet_diagnostic.CA1822.severity = none
@@ -352,9 +349,6 @@ dotnet_diagnostic.CA5351.severity = none
 # XML comments
 dotnet_diagnostic.SA0001.severity = none
 
-# Commas should be followed by whitespace
-dotnet_diagnostic.SA1001.severity = none
-
 # Documentation line should begin with a space
 dotnet_diagnostic.SA1004.severity = none
 
@@ -397,17 +391,11 @@ dotnet_diagnostic.SA1118.severity = none
 # Statement should not use unnecessary parenthesis
 dotnet_diagnostic.SA1119.severity = none
 
-# Use built-in type alias
-dotnet_diagnostic.SA1121.severity = none
-
 # Use string.Empty for empty strings
 dotnet_diagnostic.SA1122.severity = none
 
 # Do not use regions
 dotnet_diagnostic.SA1124.severity = none
-
-# Generic type constraints should be on their own line
-dotnet_diagnostic.SA1127.severity = none
 
 # Put constructor initializers on their own line
 dotnet_diagnostic.SA1128.severity = none

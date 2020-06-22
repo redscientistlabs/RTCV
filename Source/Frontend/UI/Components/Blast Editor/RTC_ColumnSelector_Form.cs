@@ -41,7 +41,7 @@
                 MessageBox.Show("Select at least one column");
                 return;
             }
-            List<String> temp = new List<string>();
+            List<string> temp = new List<string>();
             StringBuilder sb = new StringBuilder();
             foreach (CheckBox cb in tablePanel.Controls.Cast<CheckBox>().Where(item => item.Checked))
             {

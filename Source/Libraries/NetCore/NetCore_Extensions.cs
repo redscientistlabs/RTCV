@@ -29,7 +29,7 @@ namespace RTCV.NetCore
                 }
 
                 //Return default of a null object
-                if (Object.ReferenceEquals(source, null))
+                if (object.ReferenceEquals(source, null))
                 {
                     return default(T);
                 }

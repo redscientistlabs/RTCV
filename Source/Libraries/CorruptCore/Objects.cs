@@ -62,7 +62,7 @@ namespace RTCV.CorruptCore
                 return false;
             }
 
-            if ((AllSpec.VanguardSpec[VSPEC.CORE_DISKBASED] as bool? ?? false) && ((AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME] as string ?? "DEFAULT") != ""))
+            if ((AllSpec.VanguardSpec[VSPEC.CORE_DISKBASED] as bool? ?? false) && ((AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME] as string ?? "DEFAULT").Length != 0))
             {
                 var dr = MessageBox.Show("The currently loaded game is disk based and needs to be closed before saving. Press OK to close the game and continue saving.", "Saving requires closing game", MessageBoxButtons.OKCancel,
                     MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
@@ -378,7 +378,7 @@ namespace RTCV.CorruptCore
 
             decimal loadProgress = 0;
             decimal percentPerFile = 0;
-            if ((AllSpec.VanguardSpec[VSPEC.CORE_DISKBASED] as bool? ?? false) && ((AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME] as string ?? "DEFAULT") != ""))
+            if ((AllSpec.VanguardSpec[VSPEC.CORE_DISKBASED] as bool? ?? false) && ((AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME] as string ?? "DEFAULT").Length != 0))
             {
                 var dr = MessageBox.Show($"The currently loaded game is disk based and needs to be closed before {(import ? "importing" : "loading")}. Press OK to close the game and continue loading.", "Loading requires closing game",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
@@ -923,7 +923,7 @@ namespace RTCV.CorruptCore
                 MessageBox.Show($"Something went really wrong. Stashkey {Alias}.\nThere doesn't appear to be a linked blastlayer.\nWill attempt to continue saving. If save fails, remove {Alias} from your stockpile and save again.\nSend this stockpile and any info on how you got into this state to the devs.");
                 return;
             }
-            List<String> knownListKeys = new List<string>();
+            List<string> knownListKeys = new List<string>();
             foreach (var bu in BlastLayer.Layer.Where(x => x.LimiterListHash != null))
             {
                 logger.Trace("Looking for knownlist {bu.LimiterListHash}", bu.LimiterListHash);
