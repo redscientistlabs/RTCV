@@ -386,9 +386,6 @@ dotnet_diagnostic.SA1122.severity = none
 # Do not use regions
 dotnet_diagnostic.SA1124.severity = none
 
-# Generic type constraints should be on their own line
-dotnet_diagnostic.SA1127.severity = none
-
 # Put constructor initializers on their own line
 dotnet_diagnostic.SA1128.severity = none
 
