@@ -5,12 +5,19 @@ namespace RTCV.CorruptCore
 
     public static class RTC_ClusterEngine
     {
+
         const string rand = "Random";
         const string reverse = "Reverse";
         const string rotFW = "Rotate Forwards";
         const string rotBW = "Rotate Backwards";
+        const string overWrite = "Overwrite";
 
-        public static string[] ShuffleTypes { get; private set; } = new string[] { rand, reverse, rotFW, rotBW };
+        public static string[] ShuffleTypes { get; private set; } = new string[] { rand, reverse, rotFW, rotBW, overWrite };
+
+
+        const string forwards = "Forwards";
+        const string backwards = "Backwards";
+        public static string[] Directions { get; private set; } = new string[] { forwards, backwards };
 
         public static string LimiterListHash
         {
@@ -43,7 +50,17 @@ namespace RTCV.CorruptCore
             set => AllSpec.CorruptCoreSpec.Update("CLUSTER_MULTIOUT", value);
         }
 
-        private static int precision = 4;
+        public static bool FilterAll
+        {
+            get => (bool)AllSpec.CorruptCoreSpec["CLUSTER_FILTERALL"];
+            set => AllSpec.CorruptCoreSpec.Update("CLUSTER_FILTERALL", value);
+        }
+
+        public static string Direction
+        {
+            get => (string)AllSpec.CorruptCoreSpec["CLUSTER_DIR"];
+            set => AllSpec.CorruptCoreSpec.Update("CLUSTER_DIR", value);
+        }
 
         public static PartialSpec getDefaultPartial()
         {
@@ -53,12 +70,21 @@ namespace RTCV.CorruptCore
             partial["CLUSTER_SHUFFLEAMT"] = 3;
             partial["CLUSTER_MODIFIER"] = 1;
             partial["CLUSTER_MULTIOUT"] = true;
+            partial["CLUSTER_FILTERALL"] = false;
+            partial["CLUSTER_DIR"] = forwards;
             return partial;
         }
 
 
         public static BlastUnit[] GenerateUnit(string domain, long address, int alignment)
         {
+
+            if (domain == null)
+            {
+                return null;
+            }
+
+            int precision = 4;
             if (Filtering.Hash2LimiterDico.TryGetValue(LimiterListHash, out IListFilter list))
             {
                 precision = list.GetPrecision();
@@ -68,30 +94,36 @@ namespace RTCV.CorruptCore
                 return null;
             }
 
-            if (domain == null)
-            {
-                return null;
-            }
-
-            long safeAddress = address - (address % precision) + alignment;
-
             MemoryInterface mi = MemoryDomains.GetInterface(domain);
             if (mi == null)
             {
                 return null;
             }
+            //Query once
+            int chunkSize = ChunkSize;
+
+            int srcUnit = 0;
+            //always align
+            long safeAddress = address - (address % precision) + alignment;
+
+
 
             if (safeAddress > mi.Size - precision)
             {
                 safeAddress = mi.Size - (precision * 2) + alignment; //If we're out of range, hit the last aligned address
             }
 
-            //Only query dictionary once per call
-            int chunkSize = ChunkSize;
-
+            //if chunk size is still too big then abort, could be optimized for forwards
             if (safeAddress + (long)(chunkSize * precision) >= mi.Size)
             {
                 return null;
+            }
+            long filterAddress = safeAddress;
+
+            if (Direction == backwards)
+            {
+                srcUnit = chunkSize - 1;
+                filterAddress = safeAddress + (precision * (chunkSize-1));
             }
 
             //do not swap endianess
@@ -134,65 +166,87 @@ namespace RTCV.CorruptCore
                 list.Add(x);
             }
 
-
-            if (Filtering.LimiterPeekBytes(safeAddress, safeAddress + precision, domain, LimiterListHash, mi))
+            void OverWrite(List<byte[]> list)
             {
-                List<byte[]> byteArr = new List<byte[]>();
+                for (int j = 0; j < list.Count; j++)
+                {
+                    list[j] = list[srcUnit];
+                }
+            }
 
+            //filter
+            if (FilterAll)
+            {
+                for (int j = 0; j < chunkSize; j++)
+                {
+                    if (!Filtering.LimiterPeekBytes(safeAddress + (j*precision), safeAddress + (j * precision) + precision, domain, LimiterListHash, mi))
+                    {
+                        return null;
+                    }
+                }
+            }
+            else if (!Filtering.LimiterPeekBytes(filterAddress, filterAddress + precision, domain, LimiterListHash, mi))
+            {
+                return null;
+            }
+
+
+            List<byte[]> byteArr = new List<byte[]>();
+
+            for (int j = 0; j < chunkSize; j++)
+            {
+                byteArr.Add(GetSegment(safeAddress + (long)(j * precision)));
+            }
+
+            int modifier = Modifier;
+            switch (ShuffleType)
+            {
+                case rotFW:
+                    for (int j = 0; j < modifier; j++)
+                    {
+                        RotateForward(byteArr);
+                    }
+                    break;
+                case rotBW:
+                    for (int j = 0; j < modifier; j++)
+                    {
+                        RotateBackward(byteArr);
+                    }
+                    break;
+                case reverse:
+                    byteArr.Reverse();
+                    break;
+                case overWrite:
+                    OverWrite(byteArr);
+                    break;
+                case rand:
+                default:
+                    ShuffleRandom(byteArr);
+                    break;
+            }
+
+            if (OutputMultipleUnits)
+            {
+                BlastUnit[] ret = new BlastUnit[chunkSize];
 
                 for (int j = 0; j < chunkSize; j++)
                 {
-                    byteArr.Add(GetSegment(safeAddress + (long)(j * precision)));
-                }
-
-                int modifier = Modifier;
-                switch (ShuffleType)
-                {
-                    case rotFW:
-                        for (int j = 0; j < modifier; j++)
-                        {
-                            RotateForward(byteArr);
-                        }
-                        break;
-                    case rotBW:
-                        for (int j = 0; j < modifier; j++)
-                        {
-                            RotateBackward(byteArr);
-                        }
-                        break;
-                    case reverse:
-                        byteArr.Reverse();
-                        break;
-                    case rand:
-                    default:
-                        ShuffleRandom(byteArr);
-                        break;
-                }
-
-                if (OutputMultipleUnits)
-                {
-                    BlastUnit[] ret = new BlastUnit[chunkSize];
-
-                    for (int j = 0; j < chunkSize; j++)
-                    {
-                        //do not swap endianess
-                        ret[j] = new BlastUnit(byteArr[j], domain, safeAddress + (j * precision), precision, false, 0, 1, null, true, false, true);
-                    }
-
-                    return ret;
-                }
-                else
-                {
-                    List<byte> btsOut = new List<byte>();
-                    for (int j = 0; j < chunkSize; j++)
-                    {
-                        btsOut.AddRange(byteArr[j]);
-                    }
                     //do not swap endianess
-                    return new BlastUnit[] { new BlastUnit(btsOut.ToArray(), domain, safeAddress, (precision * chunkSize), false, 0, 1, null, true, false, true) };
+                    ret[j] = new BlastUnit(byteArr[j], domain, safeAddress + (j * precision), precision, false, 0, 1, null, true, false, true);
                 }
+
+                return ret;
             }
-            return null;
+            else
+            {
+                List<byte> btsOut = new List<byte>();
+                for (int j = 0; j < chunkSize; j++)
+                {
+                    btsOut.AddRange(byteArr[j]);
+                }
+                //do not swap endianess
+                return new BlastUnit[] { new BlastUnit(btsOut.ToArray(), domain, safeAddress, (precision * chunkSize), false, 0, 1, null, true, false, true) };
+            }
         }
     }
 }
