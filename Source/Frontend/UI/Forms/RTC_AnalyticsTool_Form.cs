@@ -223,7 +223,7 @@
             List<double> dumpsActivity = AnalyticsCube.CrunchFloatActivity(fullActivity, maxActivity);
 
             var more50 = dumpsActivity.Where(it => it > 0.5d).ToList();
-            new Object();
+            new object();
         }
     }
 

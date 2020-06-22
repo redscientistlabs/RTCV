@@ -1271,8 +1271,8 @@ namespace RTCV.UI
         {
             if (this.Hexadecimal)
             {
-                UInt64 valueuint64 = System.Convert.ToUInt64(value);
-                return valueuint64.ToString("X");
+                ulong valueulong = System.Convert.ToUInt64(value);
+                return valueulong.ToString("X");
             }
             else
             {
@@ -1281,8 +1281,8 @@ namespace RTCV.UI
                 string formattedNumber = formattedValue as string;
                 if (!string.IsNullOrEmpty(formattedNumber) && value != null)
                 {
-                    Decimal unformattedDecimal = System.Convert.ToDecimal(value);
-                    Decimal formattedDecimal = System.Convert.ToDecimal(formattedNumber);
+                    decimal unformattedDecimal = System.Convert.ToDecimal(value);
+                    decimal formattedDecimal = System.Convert.ToDecimal(formattedNumber);
                     if (unformattedDecimal == formattedDecimal)
                     {
                         // The base implementation of GetFormattedValue (which triggers the CellFormatting event) did nothing else than
@@ -1640,8 +1640,8 @@ namespace RTCV.UI
             object cellValue = GetValue(rowIndex);
             if (cellValue != null)
             {
-                Decimal currentValue = System.Convert.ToDecimal(cellValue);
-                Decimal constrainedValue = Constrain(currentValue);
+                decimal currentValue = System.Convert.ToDecimal(cellValue);
+                decimal constrainedValue = Constrain(currentValue);
                 if (constrainedValue != currentValue)
                 {
                     SetValue(rowIndex, constrainedValue);
@@ -1671,8 +1671,8 @@ namespace RTCV.UI
             {
                 if (Hexadecimal)
                 {
-                    Decimal currentValue = System.Convert.ToDecimal(cellValue);
-                    Decimal constrainedValue = Constrain(currentValue);
+                    decimal currentValue = System.Convert.ToDecimal(cellValue);
+                    decimal constrainedValue = Constrain(currentValue);
                     if (constrainedValue != currentValue)
                     {
                         SetValue(rowIndex, constrainedValue);
@@ -1680,8 +1680,8 @@ namespace RTCV.UI
                 }
                 else
                 {
-                    Decimal currentValue = System.Convert.ToDecimal(cellValue);
-                    Decimal constrainedValue = Constrain(currentValue);
+                    decimal currentValue = System.Convert.ToDecimal(cellValue);
+                    decimal constrainedValue = Constrain(currentValue);
                     if (constrainedValue != currentValue)
                     {
                         SetValue(rowIndex, constrainedValue);

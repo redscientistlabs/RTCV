@@ -923,7 +923,7 @@ namespace RTCV.CorruptCore
                 MessageBox.Show($"Something went really wrong. Stashkey {Alias}.\nThere doesn't appear to be a linked blastlayer.\nWill attempt to continue saving. If save fails, remove {Alias} from your stockpile and save again.\nSend this stockpile and any info on how you got into this state to the devs.");
                 return;
             }
-            List<String> knownListKeys = new List<string>();
+            List<string> knownListKeys = new List<string>();
             foreach (var bu in BlastLayer.Layer.Where(x => x.LimiterListHash != null))
             {
                 logger.Trace("Looking for knownlist {bu.LimiterListHash}", bu.LimiterListHash);

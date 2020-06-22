@@ -1267,7 +1267,7 @@ namespace RTCV.UI
                 this.Close();
                 return;
             }
-            List<String> buDomains = new List<string>();
+            List<string> buDomains = new List<string>();
             foreach (var bu in sk.BlastLayer.Layer)
             {
                 if (!buDomains.Contains(bu.Domain))
