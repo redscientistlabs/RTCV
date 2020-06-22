@@ -112,7 +112,7 @@
             {
                 string line = allLines[i].Trim();
 
-                if (line == "" || line.StartsWith("//"))
+                if (line.Length == 0 || line.StartsWith("//"))
                 {
                     continue;
                 }

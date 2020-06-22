@@ -295,9 +295,6 @@ dotnet_diagnostic.CA1816.severity = none
 # Properties should not return arrays
 dotnet_diagnostic.CA1819.severity = none
 
-# Test for empty strings not using Equality check
-dotnet_diagnostic.CA1820.severity = none
-
 # Member can be marked as static
 # NOTE: Fixing this requires a simultaneous fix in Bizhawk-Vanguard
 dotnet_diagnostic.CA1822.severity = none
