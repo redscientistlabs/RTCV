@@ -232,8 +232,8 @@ namespace RTCV.CorruptCore
             {
                 try
                 {
-                    if (!byte.TryParse(temp.Substring(i, 2), NumberStyles.HexNumber, CultureInfo.CurrentCulture
-                        , out byte b))
+                    if (!byte.TryParse(temp.Substring(i, 2), NumberStyles.HexNumber, CultureInfo.CurrentCulture,
+                        out byte b))
                     {
                         return null;
                     }

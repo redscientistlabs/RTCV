@@ -341,9 +341,6 @@ dotnet_diagnostic.CA5351.severity = none
 # XML comments
 dotnet_diagnostic.SA0001.severity = none
 
-# Commas should be followed by whitespace
-dotnet_diagnostic.SA1001.severity = none
-
 # Single line comment should begin with a space
 dotnet_diagnostic.SA1005.severity = none
 

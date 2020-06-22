@@ -173,7 +173,7 @@
             for (int i = 0; i < cpus; i++)
             {
                 //tuple params: cpuid, activity array, max activity
-                var task = new Task<(int,int[],int)>(function: (cpu_i) =>
+                var task = new Task<(int, int[], int)>(function: (cpu_i) =>
                 {
                     int real_i = (int)cpu_i;
 
