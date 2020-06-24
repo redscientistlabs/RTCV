@@ -56,7 +56,7 @@
                 string key = sk.ParentKey;
                 StashKeySavestateLocation stateLocation = sk.StateLocation;
 
-                string theoreticalSaveStateFilename = Path.Combine(RtcCore.WorkingDir, stateLocation.ToString(), gameName + "." + key + ".timejump.State");
+                string theoreticalSaveStateFilename = Path.Combine(RtcCore.workingDir, stateLocation.ToString(), gameName + "." + key + ".timejump.State");
 
                 if (File.Exists(theoreticalSaveStateFilename))
                 {

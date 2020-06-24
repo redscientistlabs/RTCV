@@ -172,7 +172,7 @@ namespace RTCV.CorruptCore
                 {
                     RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Copying {Path.GetFileNameWithoutExtension(str)} to stockpile", saveProgress += percentPerFile));
                     string rom = str;
-                    string romTempfilename = Path.Combine(RtcCore.WorkingDir, "TEMP", Path.GetFileName(rom));
+                    string romTempfilename = Path.Combine(RtcCore.workingDir, "TEMP", Path.GetFileName(rom));
 
                     if (!File.Exists(rom))
                     {
@@ -203,7 +203,7 @@ namespace RTCV.CorruptCore
                 foreach (var sk in sks.StashKeys)
                 {
                     sk.RomShortFilename = Path.GetFileName(sk.RomFilename);
-                    sk.RomFilename = Path.Combine(RtcCore.WorkingDir, "SKS", sk.RomShortFilename);
+                    sk.RomFilename = Path.Combine(RtcCore.workingDir, "SKS", sk.RomShortFilename);
                 }
             }
             else
@@ -217,7 +217,7 @@ namespace RTCV.CorruptCore
                     {
                         string title = "Reference found in RTC dir";
                         string message = $"Can't save with file {key.RomFilename}\nGame name: {key.GameName}\n\nThis file appears to be in temporary storage (e.g. loaded from a stockpile).\nTo save without references, you will need to provide a replacement from outside the RTC's working directory.\n\nPlease provide a new path to the file in question.";
-                        while ((!string.IsNullOrEmpty(key.RomFilename)) && (CorruptCore_Extensions.IsOrIsSubDirectoryOf(Path.GetDirectoryName(key.RomFilename), RtcCore.WorkingDir))) // Make sure they don't give a new file within working
+                        while ((!string.IsNullOrEmpty(key.RomFilename)) && (CorruptCore_Extensions.IsOrIsSubDirectoryOf(Path.GetDirectoryName(key.RomFilename), RtcCore.workingDir))) // Make sure they don't give a new file within working
                         {
                             if (!StockpileManager_UISide.CheckAndFixMissingReference(key, true, sks.StashKeys, title, message))
                             {
@@ -244,8 +244,8 @@ namespace RTCV.CorruptCore
                     string stateFilename = key.GameName + "." + key.ParentKey + ".timejump.State";
                     RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Copying {stateFilename} to stockpile", saveProgress += percentPerFile));
                     File.Copy(
-                        Path.Combine(RtcCore.WorkingDir, key.StateLocation.ToString(), stateFilename),
-                        Path.Combine(RtcCore.WorkingDir, "TEMP", stateFilename), true); // copy savestates to temp folder
+                        Path.Combine(RtcCore.workingDir, key.StateLocation.ToString(), stateFilename),
+                        Path.Combine(RtcCore.workingDir, "TEMP", stateFilename), true); // copy savestates to temp folder
                 }
             }
 
@@ -257,8 +257,8 @@ namespace RTCV.CorruptCore
                 {
                     if (File.Exists(path))
                     {
-                        Directory.CreateDirectory(Path.Combine(RtcCore.WorkingDir, "TEMP", "CONFIGS"));
-                        File.Copy(path, Path.Combine(RtcCore.WorkingDir, "TEMP", "CONFIGS", Path.GetFileName(path)));
+                        Directory.CreateDirectory(Path.Combine(RtcCore.workingDir, "TEMP", "CONFIGS"));
+                        File.Copy(path, Path.Combine(RtcCore.workingDir, "TEMP", "CONFIGS", Path.GetFileName(path)));
                     }
                 }
             }
@@ -275,10 +275,10 @@ namespace RTCV.CorruptCore
             foreach (var l in limiterLists.Keys)
             {
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Copying limiter lists to stockpile", saveProgress += 2));
-                File.WriteAllLines(Path.Combine(RtcCore.WorkingDir, "TEMP", l + ".limiter"), limiterLists[l]);
+                File.WriteAllLines(Path.Combine(RtcCore.workingDir, "TEMP", l + ".limiter"), limiterLists[l]);
             }
             //Create stockpile.json to temp folder from stockpile object
-            using (FileStream fs = File.Open(Path.Combine(RtcCore.WorkingDir, "TEMP", "stockpile.json"), FileMode.OpenOrCreate))
+            using (FileStream fs = File.Open(Path.Combine(RtcCore.workingDir, "TEMP", "stockpile.json"), FileMode.OpenOrCreate))
             {
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Creating stockpile.json", saveProgress += 2));
                 JsonHelper.Serialize(sks, fs, Formatting.Indented);
@@ -307,7 +307,7 @@ namespace RTCV.CorruptCore
 
             RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Creating SKS", saveProgress += 10));
             //Create the file into temp
-            ZipFile.CreateFromDirectory(Path.Combine(RtcCore.WorkingDir, "TEMP"), tempFilename, comp, false);
+            ZipFile.CreateFromDirectory(Path.Combine(RtcCore.workingDir, "TEMP"), tempFilename, comp, false);
 
             //Remove the old stockpile
             try
@@ -340,14 +340,14 @@ namespace RTCV.CorruptCore
                 MessageBox.Show("Unable to empty the stockpile folder. There's probably something locking a file inside it (iso based game loaded?)\n. Your stockpile is saved, but your current session is bunk.\nRe-load the file");
             }
 
-            var files = Directory.GetFiles(Path.Combine(RtcCore.WorkingDir, "TEMP"));
+            var files = Directory.GetFiles(Path.Combine(RtcCore.workingDir, "TEMP"));
             percentPerFile = (10m) / (files.Length + 1);
             foreach (var file in files)
             {
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Copying limiter lists to stockpile", saveProgress += percentPerFile));
                 try
                 {
-                    File.Move(file, Path.Combine(RtcCore.WorkingDir, "SKS", Path.GetFileName(file)));
+                    File.Move(file, Path.Combine(RtcCore.workingDir, "SKS", Path.GetFileName(file)));
                 }
                 catch (Exception e)
                 {
@@ -413,7 +413,7 @@ namespace RTCV.CorruptCore
             try
             {
                 RtcCore.OnProgressBarUpdate(null, new ProgressBarEventArgs("Reading Stockpile", loadProgress += 45));
-                using (FileStream fs = File.Open(Path.Combine(RtcCore.WorkingDir, extractFolder, "stockpile.json"), FileMode.OpenOrCreate))
+                using (FileStream fs = File.Open(Path.Combine(RtcCore.workingDir, extractFolder, "stockpile.json"), FileMode.OpenOrCreate))
                 {
                     sks = JsonHelper.Deserialize<Stockpile>(fs);
                 }
@@ -438,7 +438,7 @@ namespace RTCV.CorruptCore
             {
                 var allCopied = new List<string>();
                 //Copy from temp to sks
-                var files = Directory.GetFiles(Path.Combine(RtcCore.WorkingDir, "TEMP"));
+                var files = Directory.GetFiles(Path.Combine(RtcCore.workingDir, "TEMP"));
                 percentPerFile = 20m / (files.Length + 1);
                 foreach (string file in files)
                 {
@@ -447,7 +447,7 @@ namespace RTCV.CorruptCore
                     {
                         try
                         {
-                            string dest = Path.Combine(RtcCore.WorkingDir, "SKS", Path.GetFileName(file));
+                            string dest = Path.Combine(RtcCore.workingDir, "SKS", Path.GetFileName(file));
 
                             //Only copy if a version doesn't exist
                             //This prevents copying over keys
@@ -489,7 +489,7 @@ namespace RTCV.CorruptCore
                 //If we have the file, update the path
                 if (!string.IsNullOrEmpty(t.RomShortFilename))
                 {
-                    var newFilename = Path.Combine(RtcCore.WorkingDir, "SKS", t.RomShortFilename);
+                    var newFilename = Path.Combine(RtcCore.workingDir, "SKS", t.RomShortFilename);
                     if (File.Exists(newFilename))
                     {
                         t.RomFilename = newFilename;
@@ -696,7 +696,7 @@ namespace RTCV.CorruptCore
 
             //Parse the configs folder and then if the emulator is looking for that file, copy it over.
             //Otherwise ignore it (version change, wrong emulator, etc)
-            var newConfigPath = Path.Combine(RtcCore.WorkingDir, "TEMP", "CONFIGS");
+            var newConfigPath = Path.Combine(RtcCore.workingDir, "TEMP", "CONFIGS");
             if (!Directory.Exists(newConfigPath))
             {
                 MessageBox.Show("No configs found in stockpile");
@@ -913,7 +913,7 @@ namespace RTCV.CorruptCore
 
         public string GetSavestateFullPath()
         {
-            return Path.Combine(RtcCore.WorkingDir, this.StateLocation.ToString(), this.GameName + "." + this.ParentKey + ".timejump.State"); // get savestate name
+            return Path.Combine(RtcCore.workingDir, this.StateLocation.ToString(), this.GameName + "." + this.ParentKey + ".timejump.State"); // get savestate name
         }
 
         //Todo - Replace this when compat is broken

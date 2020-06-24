@@ -66,7 +66,7 @@ namespace RTCV.CorruptCore
             set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.RTCDIR, value);
         }
 
-        public static string WorkingDir => Path.Combine(RtcDir, "WORKING");
+        public static string workingDir => Path.Combine(RtcDir, "WORKING");
         public static string AssetsDir => Path.Combine(RtcDir, "ASSETS");
         public static string ListsDir => Path.Combine(RtcDir, "LISTS");
 
@@ -254,13 +254,13 @@ namespace RTCV.CorruptCore
                 RegisterCorruptcoreSpec();
 
                 CorruptCore_Extensions.DirectoryRequired(paths: new string[] {
-                    RtcCore.WorkingDir,
-                    Path.Combine(RtcCore.WorkingDir, "TEMP"),
-                    Path.Combine(RtcCore.WorkingDir, "SKS"),
-                    Path.Combine(RtcCore.WorkingDir, "SSK"),
-                    Path.Combine(RtcCore.WorkingDir, "SESSION"),
-                    Path.Combine(RtcCore.WorkingDir, "MEMORYDUMPS"),
-                    Path.Combine(RtcCore.WorkingDir, "MP"),
+                    RtcCore.workingDir,
+                    Path.Combine(RtcCore.workingDir, "TEMP"),
+                    Path.Combine(RtcCore.workingDir, "SKS"),
+                    Path.Combine(RtcCore.workingDir, "SSK"),
+                    Path.Combine(RtcCore.workingDir, "SESSION"),
+                    Path.Combine(RtcCore.workingDir, "MEMORYDUMPS"),
+                    Path.Combine(RtcCore.workingDir, "MP"),
                     Path.Combine(RtcCore.AssetsDir, "CRASHSOUNDS"),
                     Path.Combine(RtcCore.RtcDir, "PARAMS"),
                     Path.Combine(RtcCore.RtcDir, "LISTS"),

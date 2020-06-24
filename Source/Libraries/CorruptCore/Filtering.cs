@@ -46,7 +46,7 @@
 
         public static void LoadStockpileLists(Stockpile sks)
         {
-            var lists = LoadListsFromPaths(Directory.GetFiles(Path.Combine(RtcCore.WorkingDir, "SKS"), "*.limiter"));
+            var lists = LoadListsFromPaths(Directory.GetFiles(Path.Combine(RtcCore.workingDir, "SKS"), "*.limiter"));
 
             Dictionary<string, string> allKnownLists = new Dictionary<string, string>();
 

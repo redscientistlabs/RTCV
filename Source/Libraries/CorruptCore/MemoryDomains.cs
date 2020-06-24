@@ -314,7 +314,7 @@ namespace RTCV.CorruptCore
 
             byte[] dump = mi.GetDump();
 
-            File.WriteAllBytes(Path.Combine(RtcCore.WorkingDir, "MEMORYDUMPS", key + ".dmp"), dump.ToArray());
+            File.WriteAllBytes(Path.Combine(RtcCore.workingDir, "MEMORYDUMPS", key + ".dmp"), dump.ToArray());
         }
 
         public static byte[] GetDomainData(string domain)
