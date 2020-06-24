@@ -58,7 +58,7 @@ namespace RTCV.CorruptCore
         }
 
         public static string EmuAssetsDir => Path.Combine(EmuDir, "ASSETS");
-        public static string pluginDir => Path.Combine(RtcDir, "PLUGINS");
+        public static string PluginDir => Path.Combine(RtcDir, "PLUGINS");
 
         public static string RtcDir
         {
@@ -66,12 +66,12 @@ namespace RTCV.CorruptCore
             set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.RTCDIR, value);
         }
 
-        public static string workingDir => Path.Combine(RtcDir, "WORKING");
-        public static string assetsDir => Path.Combine(RtcDir, "ASSETS");
-        public static string listsDir => Path.Combine(RtcDir, "LISTS");
+        public static string WorkingDir => Path.Combine(RtcDir, "WORKING");
+        public static string AssetsDir => Path.Combine(RtcDir, "ASSETS");
+        public static string ListsDir => Path.Combine(RtcDir, "LISTS");
 
-        public static string vmdsDir => Path.Combine(RtcDir, "VMDS");
-        public static string engineTemplateDir => Path.Combine(RtcDir, "ENGINETEMPLATES");
+        public static string VmdsDir => Path.Combine(RtcDir, "VMDS");
+        public static string EngineTemplateDir => Path.Combine(RtcDir, "ENGINETEMPLATES");
 
         public static event EventHandler<ProgressBarEventArgs> ProgressBarHandler;
 
@@ -254,19 +254,19 @@ namespace RTCV.CorruptCore
                 RegisterCorruptcoreSpec();
 
                 CorruptCore_Extensions.DirectoryRequired(paths: new string[] {
-                    RtcCore.workingDir,
-                    Path.Combine(RtcCore.workingDir, "TEMP"),
-                    Path.Combine(RtcCore.workingDir, "SKS"),
-                    Path.Combine(RtcCore.workingDir, "SSK"),
-                    Path.Combine(RtcCore.workingDir, "SESSION"),
-                    Path.Combine(RtcCore.workingDir, "MEMORYDUMPS"),
-                    Path.Combine(RtcCore.workingDir, "MP"),
-                    Path.Combine(RtcCore.assetsDir, "CRASHSOUNDS"),
+                    RtcCore.WorkingDir,
+                    Path.Combine(RtcCore.WorkingDir, "TEMP"),
+                    Path.Combine(RtcCore.WorkingDir, "SKS"),
+                    Path.Combine(RtcCore.WorkingDir, "SSK"),
+                    Path.Combine(RtcCore.WorkingDir, "SESSION"),
+                    Path.Combine(RtcCore.WorkingDir, "MEMORYDUMPS"),
+                    Path.Combine(RtcCore.WorkingDir, "MP"),
+                    Path.Combine(RtcCore.AssetsDir, "CRASHSOUNDS"),
                     Path.Combine(RtcCore.RtcDir, "PARAMS"),
                     Path.Combine(RtcCore.RtcDir, "LISTS"),
                     Path.Combine(RtcCore.RtcDir, "RENDEROUTPUT"),
                     Path.Combine(RtcCore.RtcDir, "ENGINETEMPLATES"),
-                    Path.Combine(RtcCore.assetsDir, "PLATESHD")
+                    Path.Combine(RtcCore.AssetsDir, "PLATESHD")
                 });
 
                 if (!Params.IsParamSet("DISCLAIMER_READ"))
@@ -368,7 +368,7 @@ namespace RTCV.CorruptCore
         public static void LoadPlugins(string[] paths = null)
         {
             if (paths == null)
-                paths = new[] { pluginDir };
+                paths = new[] { PluginDir };
 
             RTCSide side = RTCSide.Server;
             if (IsEmulatorSide)
@@ -648,6 +648,28 @@ namespace RTCV.CorruptCore
             }
         }
 
+        private static long GetIntensity(long overrideIntensity)
+        {
+            var intensity = RtcCore.Intensity; //general RTC intensity
+
+            if (overrideIntensity != -1)
+            {
+                intensity = overrideIntensity;
+            }
+
+            // Capping intensity at engine-specific maximums
+            if ((RtcCore.SelectedEngine == CorruptionEngine.HELLGENIE ||
+                RtcCore.SelectedEngine == CorruptionEngine.FREEZE ||
+                RtcCore.SelectedEngine == CorruptionEngine.PIPE ||
+                (RtcCore.SelectedEngine == CorruptionEngine.CUSTOM && RTC_CustomEngine.Lifetime == 0)) &&
+                intensity > StepActions.MaxInfiniteBlastUnits)
+            {
+                intensity = StepActions.MaxInfiniteBlastUnits; //Capping for cheat max
+            }
+
+            return intensity;
+        }
+
         //Generates or applies a blast layer using one of the multiple BlastRadius algorithms
 
         public static BlastLayer GenerateBlastLayer(string[] selectedDomains, long overrideIntensity = -1)
@@ -687,22 +709,7 @@ namespace RTCV.CorruptCore
                         return null;
                     }
 
-                    var intensity = RtcCore.Intensity; //general RTC intensity
-
-                    if (overrideIntensity != -1)
-                    {
-                        intensity = overrideIntensity;
-                    }
-
-                    // Capping intensity at engine-specific maximums
-                    if ((RtcCore.SelectedEngine == CorruptionEngine.HELLGENIE ||
-                        RtcCore.SelectedEngine == CorruptionEngine.FREEZE ||
-                        RtcCore.SelectedEngine == CorruptionEngine.PIPE ||
-                        RtcCore.SelectedEngine == CorruptionEngine.CUSTOM && RTC_CustomEngine.Lifetime == 0) &&
-                        intensity > StepActions.MaxInfiniteBlastUnits)
-                    {
-                        intensity = StepActions.MaxInfiniteBlastUnits; //Capping for cheat max
-                    }
+                    var intensity = GetIntensity(overrideIntensity);
 
                     //Spec lookups add up really fast if you have a high intensity so we cache stuff we're going to be looking up over and over again
                     var cachedPrecision = CurrentPrecision;
@@ -710,7 +717,7 @@ namespace RTCV.CorruptCore
                     var cachedEngine = RtcCore.SelectedEngine;
                     var cachedAlignment = RtcCore.Alignment;
 
-                    for (int i = 0; i < selectedDomains.Length; i++)
+                    for (var i = 0; i < selectedDomains.Length; i++)
                     {
                         cachedDomainSizes[i] = MemoryDomains.GetInterface(selectedDomains[i]).Size;
                     }
@@ -719,7 +726,7 @@ namespace RTCV.CorruptCore
                     {
                         case BlastRadius.SPREAD: //Randomly spreads all corruption bytes to all selected domains
                             {
-                                for (int i = 0; i < intensity; i++)
+                                for (var i = 0; i < intensity; i++)
                                 {
                                     var r = RtcCore.RND.Next(selectedDomains.Length);
                                     domain = selectedDomains[r];
@@ -744,7 +751,7 @@ namespace RTCV.CorruptCore
 
                                 maxAddress = cachedDomainSizes[r];
 
-                                for (int i = 0; i < intensity; i++)
+                                for (var i = 0; i < intensity; i++)
                                 {
                                     randomAddress = RtcCore.RND.NextLong(0, maxAddress - cachedPrecision);
 
@@ -759,14 +766,14 @@ namespace RTCV.CorruptCore
                             }
                         case BlastRadius.BURST: // 10 shots of 10% chunk
                             {
-                                for (int j = 0; j < 10; j++)
+                                for (var j = 0; j < 10; j++)
                                 {
                                     var r = RtcCore.RND.Next(selectedDomains.Length);
                                     domain = selectedDomains[r];
 
                                     maxAddress = cachedDomainSizes[r];
 
-                                    for (int i = 0; i < (int)((double)intensity / 10); i++)
+                                    for (var i = 0; i < (int)((double)intensity / 10); i++)
                                     {
                                         randomAddress = RtcCore.RND.NextLong(0, maxAddress - cachedPrecision);
 
@@ -786,8 +793,8 @@ namespace RTCV.CorruptCore
                                 //Find the smallest domain and base our normalization around it
                                 //Domains aren't IComparable so I used keys
 
-                                long[] domainSize = new long[selectedDomains.Length];
-                                for (int i = 0; i < selectedDomains.Length; i++)
+                                var domainSize = new long[selectedDomains.Length];
+                                for (var i = 0; i < selectedDomains.Length; i++)
                                 {
                                     domain = selectedDomains[i];
                                     domainSize[i] = MemoryDomains.GetInterface(domain)
@@ -797,14 +804,14 @@ namespace RTCV.CorruptCore
                                 //Sort the arrays
                                 Array.Sort(domainSize, selectedDomains);
 
-                                for (int i = 0; i < selectedDomains.Length; i++)
+                                for (var i = 0; i < selectedDomains.Length; i++)
                                 {
                                     domain = selectedDomains[i];
 
                                     //Get the intensity divider. The size of the largest domain divided by the size of the current domain
-                                    long normalized = ((domainSize[selectedDomains.Length - 1] / (domainSize[i])));
+                                    var normalized = (domainSize[selectedDomains.Length - 1] / (domainSize[i]));
 
-                                    for (int j = 0; j < (intensity / normalized); j++)
+                                    for (var j = 0; j < (intensity / normalized); j++)
                                     {
                                         maxAddress = domainSize[i];
                                         randomAddress = RtcCore.RND.NextLong(0, maxAddress - cachedPrecision);
@@ -822,20 +829,20 @@ namespace RTCV.CorruptCore
 
                         case BlastRadius.PROPORTIONAL: //Blasts proportionally based on the total size of all selected domains
 
-                            long totalSize = cachedDomainSizes.Sum(); //Gets the total size of all selected domains
+                            var totalSize = cachedDomainSizes.Sum(); //Gets the total size of all selected domains
 
-                            long[] normalizedIntensity = new long[selectedDomains.Length]; //matches the index of selectedDomains
-                            for (int i = 0; i < selectedDomains.Length; i++)
+                            var normalizedIntensity = new long[selectedDomains.Length]; //matches the index of selectedDomains
+                            for (var i = 0; i < selectedDomains.Length; i++)
                             {   //calculates the proportionnal normalized Intensity based on total selected domains size
-                                double proportion = cachedDomainSizes[i] / (double)totalSize;
+                                var proportion = cachedDomainSizes[i] / (double)totalSize;
                                 normalizedIntensity[i] = Convert.ToInt64(intensity * proportion);
                             }
 
-                            for (int i = 0; i < selectedDomains.Length; i++)
+                            for (var i = 0; i < selectedDomains.Length; i++)
                             {
                                 domain = selectedDomains[i];
 
-                                for (int j = 0; j < normalizedIntensity[i]; j++)
+                                for (var j = 0; j < normalizedIntensity[i]; j++)
                                 {
                                     maxAddress = cachedDomainSizes[i];
                                     randomAddress = RtcCore.RND.NextLong(0, maxAddress - cachedPrecision);
@@ -852,11 +859,11 @@ namespace RTCV.CorruptCore
 
                         case BlastRadius.EVEN: //Evenly distributes the blasts through all selected domains
 
-                            for (int i = 0; i < selectedDomains.Length; i++)
+                            for (var i = 0; i < selectedDomains.Length; i++)
                             {
                                 domain = selectedDomains[i];
 
-                                for (int j = 0; j < (intensity / selectedDomains.Length); j++)
+                                for (var j = 0; j < (intensity / selectedDomains.Length); j++)
                                 {
                                     maxAddress = cachedDomainSizes[i];
                                     randomAddress = RtcCore.RND.NextLong(0, maxAddress - cachedPrecision);
@@ -886,7 +893,7 @@ namespace RTCV.CorruptCore
                 }
                 catch (Exception ex)
                 {
-                    string additionalInfo = "";
+                    var additionalInfo = "";
 
                     if (MemoryDomains.GetInterface(domain) == null)
                     {
@@ -919,26 +926,19 @@ namespace RTCV.CorruptCore
         public static BlastTarget GetBlastTarget()
         {
             //Standalone version of BlastRadius SPREAD
+            var selectedDomains = (string[])AllSpec.UISpec["SELECTEDDOMAINS"];
+            var domain = selectedDomains[RtcCore.RND.Next(selectedDomains.Length)];
+            var maxAddress = MemoryDomains.GetInterface(domain).Size;
+            var randomAddress = RtcCore.RND.NextLong(0, maxAddress - 1);
 
-            string Domain = null;
-            long MaxAddress = -1;
-            long RandomAddress = -1;
-
-            string[] _selectedDomains = (string[])AllSpec.UISpec["SELECTEDDOMAINS"];
-
-            Domain = _selectedDomains[RtcCore.RND.Next(_selectedDomains.Length)];
-
-            MaxAddress = MemoryDomains.GetInterface(Domain).Size;
-            RandomAddress = RtcCore.RND.NextLong(0, MaxAddress - 1);
-
-            return new BlastTarget(Domain, RandomAddress);
+            return new BlastTarget(domain, randomAddress);
         }
 
         public static string GetRandomKey()
         {
             //Generates unique string ids that are human-readable, unlike GUIDs
-            string Key = RtcCore.RND.Next(1, 9999).ToString() + RtcCore.RND.Next(1, 9999).ToString() + RtcCore.RND.Next(1, 9999).ToString() + RtcCore.RND.Next(1, 9999).ToString();
-            return Key;
+            var key = RtcCore.RND.Next(1, 9999).ToString() + RtcCore.RND.Next(1, 9999).ToString() + RtcCore.RND.Next(1, 9999).ToString() + RtcCore.RND.Next(1, 9999).ToString();
+            return key;
         }
 
         public static void GenerateAndBlast()
@@ -958,13 +958,13 @@ namespace RTCV.CorruptCore
                 else
                 {
                     //if emulator supports multithreaded access of the domains, disregard the emulation thread and just span threads...
-                    long reminder = RtcCore.Intensity % (cpus - 1);
-                    long splitintensity = (RtcCore.Intensity - reminder) / (cpus - 1);
+                    var reminder = RtcCore.Intensity % (cpus - 1);
+                    var splitintensity = (RtcCore.Intensity - reminder) / (cpus - 1);
 
-                    Task<BlastLayer>[] tasks = new Task<BlastLayer>[cpus];
-                    for (int i = 0; i < cpus; i++)
+                    var tasks = new Task<BlastLayer>[cpus];
+                    for (var i = 0; i < cpus; i++)
                     {
-                        long requestedIntensity = splitintensity;
+                        var requestedIntensity = splitintensity;
 
                         if (i == 0 && reminder != 0)
                         {
@@ -980,7 +980,7 @@ namespace RTCV.CorruptCore
 
                     if (tasks.Length > 1)
                     {
-                        for (int i = 1; i < tasks.Length; i++)
+                        for (var i = 1; i < tasks.Length; i++)
                         {
                             if (tasks[i].Result != null)
                             {

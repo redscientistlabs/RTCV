@@ -96,7 +96,7 @@ namespace RTCV.UI
                                     UICore.LoadLists(Path.Combine(RtcCore.EmuDir, "LISTS"));
                                 }
 
-                                UICore.LoadLists(CorruptCore.RtcCore.listsDir);
+                                UICore.LoadLists(CorruptCore.RtcCore.ListsDir);
 
                                 Panel sidebar = S.GET<UI_CoreForm>().pnSideBar;
                                 foreach (Control c in sidebar.Controls)

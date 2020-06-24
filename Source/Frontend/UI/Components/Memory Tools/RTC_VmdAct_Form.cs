@@ -134,7 +134,7 @@
 
         public byte[] GetDumpFromFile(string key)
         {
-            return File.ReadAllBytes(Path.Combine(CorruptCore.RtcCore.workingDir, "MEMORYDUMPS", key + ".dmp"));
+            return File.ReadAllBytes(Path.Combine(CorruptCore.RtcCore.WorkingDir, "MEMORYDUMPS", key + ".dmp"));
         }
 
         public long[] CapActiveTable(long[] tempActiveTable)
@@ -310,7 +310,7 @@
 
             ActiveTableDumps = new List<string>();
 
-            foreach (string file in Directory.GetFiles(Path.Combine(CorruptCore.RtcCore.workingDir, "MEMORYDUMPS")))
+            foreach (string file in Directory.GetFiles(Path.Combine(CorruptCore.RtcCore.WorkingDir, "MEMORYDUMPS")))
             {
                 File.Delete(file);
             }

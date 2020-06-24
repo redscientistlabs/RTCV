@@ -40,7 +40,7 @@
 
         public byte[] GetDumpFromFile(string key)
         {
-            return File.ReadAllBytes(Path.Combine(CorruptCore.RtcCore.workingDir, "MEMORYDUMPS", key + ".dmp"));
+            return File.ReadAllBytes(Path.Combine(CorruptCore.RtcCore.WorkingDir, "MEMORYDUMPS", key + ".dmp"));
         }
 
         private void btnActiveTableAddDump_Click(object sender, EventArgs e)
@@ -57,7 +57,7 @@
 
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_DOMAIN_ACTIVETABLE_MAKEDUMP, new object[] { cbSelectedMemoryDomain.SelectedItem.ToString(), key }, true);
 
-            var keyPath = Path.Combine(RtcCore.workingDir, "MEMORYDUMPS", key + ".dmp");
+            var keyPath = Path.Combine(RtcCore.WorkingDir, "MEMORYDUMPS", key + ".dmp");
             MemoryDumps.Add(keyPath);
             lbNbMemoryDumps.Text = "Memory dumps collected: " + MemoryDumps.Count.ToString();
 
@@ -101,7 +101,7 @@
 
             MemoryDumps = new List<string>();
 
-            foreach (string file in Directory.GetFiles(Path.Combine(CorruptCore.RtcCore.workingDir, "MEMORYDUMPS")))
+            foreach (string file in Directory.GetFiles(Path.Combine(CorruptCore.RtcCore.WorkingDir, "MEMORYDUMPS")))
                 File.Delete(file);
 
             btnSendToAnalytics.Enabled = false;

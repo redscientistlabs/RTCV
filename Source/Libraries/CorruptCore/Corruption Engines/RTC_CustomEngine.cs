@@ -375,12 +375,12 @@
 
         public static void LoadUserTemplates()
         {
-            if (!Directory.Exists(RtcCore.engineTemplateDir))
+            if (!Directory.Exists(RtcCore.EngineTemplateDir))
             {
-                Directory.CreateDirectory(RtcCore.engineTemplateDir);
+                Directory.CreateDirectory(RtcCore.EngineTemplateDir);
             }
 
-            string[] paths = System.IO.Directory.GetFiles(RtcCore.engineTemplateDir);
+            string[] paths = System.IO.Directory.GetFiles(RtcCore.EngineTemplateDir);
             paths = paths.OrderBy(x => x).ToArray();
             foreach (var p in paths)
             {
