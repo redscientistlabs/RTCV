@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Threading;
     using System.Windows.Forms;
+    using RTCV.NetCore.NetCore_Extensions;
 
     public static class SyncObjectSingleton
     {

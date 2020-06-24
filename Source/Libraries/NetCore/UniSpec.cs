@@ -11,7 +11,7 @@
     using Ceras;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
-    using RTCV.NetCore.NetCore_Extensions2;
+    using RTCV.NetCore.NetCore_Extensions;
 
     public class FullSpec : BaseSpec
     {

@@ -17,7 +17,7 @@ namespace RTCV.CorruptCore
     using System.Windows.Forms;
     using Ceras;
     using Newtonsoft.Json;
-    using RTCV.NetCore;
+    using RTCV.NetCore.NetCore_Extensions;
 
     public static class CorruptCore_Extensions
     {
