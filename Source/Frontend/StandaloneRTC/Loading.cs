@@ -6,6 +6,7 @@
     using System.Reflection;
     using System.Windows.Forms;
     using RTCV.UI;
+    using RTCV.NetCore.NetCore_Extensions2;
 
     public partial class Loader : UI_Extensions.RTC_Standalone_Form
     {
@@ -21,15 +22,15 @@
             //Create the RTC log next to the executable
             string rtcLogPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "RTC", "RTC_LOG.txt");
 
-            RTCV.NetCore.NetCore_Extensions.ConsoleHelper.CreateConsole();
+            ConsoleHelper.CreateConsole();
             RTCV.Common.Logging.StartLogging(rtcLogPath);
             if (args.Contains("-CONSOLE"))
             {
-                RTCV.NetCore.NetCore_Extensions.ConsoleHelper.ShowConsole();
+                ConsoleHelper.ShowConsole();
             }
             else
             {
-                RTCV.NetCore.NetCore_Extensions.ConsoleHelper.HideConsole();
+                ConsoleHelper.HideConsole();
             }
 
             UICore.Start(this);

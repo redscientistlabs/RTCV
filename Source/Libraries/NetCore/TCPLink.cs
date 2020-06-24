@@ -9,6 +9,7 @@ namespace RTCV.NetCore
     using System.Runtime.Serialization;
     using System.Threading;
     using Ceras;
+    using RTCV.NetCore.NetCore_Extensions2;
 
     public class TCPLink
     {
@@ -111,7 +112,7 @@ namespace RTCV.NetCore
             {
                 if (t == typeof(HashSet<byte[]>))
                 {
-                    return new NetCore.NetCore_Extensions.HashSetFormatterThatKeepsItsComparer();
+                    return new HashSetFormatterThatKeepsItsComparer();
                 }
                 else if (t == typeof(HashSet<byte?[]>))
                 {
