@@ -397,14 +397,13 @@ namespace RTCV.UI
     {
         public static Point GetMouseLocation(this MouseEventArgs e, object sender)
         {
-            Control ctr = (sender as Control);
-            if (ctr == null)
+            if (!(sender is Control ctr))
             {
                 return new Point(e.Location.X, e.Location.Y);
             }
 
-            int x = e.Location.X;
-            int y = e.Location.Y;
+            var x = e.Location.X;
+            var y = e.Location.Y;
 
             do
             {
