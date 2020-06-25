@@ -617,6 +617,7 @@ namespace RTCV.CorruptCore
                     }
                 }
             }
+
             //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
             if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
             {
