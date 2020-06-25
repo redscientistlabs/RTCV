@@ -164,20 +164,7 @@ namespace RTCV.UI.Components.Controls
                 return false;
             }
 
-            return str.All(IsHex);
-        }
-
-        /// <summary>
-        /// Validates the char is 0-9, A-F or a-f
-        /// </summary>
-        public static bool IsHex(this char c)
-        {
-            if (char.IsDigit(c))
-            {
-                return true;
-            }
-
-            return char.ToUpperInvariant(c) >= 'A' && char.ToUpperInvariant(c) <= 'F';
+            return str.All(System.Uri.IsHexDigit);
         }
 
         #endregion
@@ -253,7 +240,7 @@ namespace RTCV.UI.Components.Controls
                 return;
             }
 
-            if (!e.KeyChar.IsHex())
+            if (!Uri.IsHexDigit(e.KeyChar))
             {
                 e.Handled = true;
             }
