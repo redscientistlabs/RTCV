@@ -9,9 +9,6 @@
         where T : new()
     {
         internal bool GeneralUpdateFlag = false; //makes other events ignore firing
-        internal Timer updater;
-        internal int updateThreshold = 50;
-        internal bool FirstLoadDone = false;
 
         internal List<SpecControl<T>> slaveComps = new List<SpecControl<T>>();
         internal SpecControl<T> _parent = null;
@@ -38,26 +35,10 @@
             }
         }
 
-        public SpecControl()
-        {
-            updater = new Timer
-            {
-                Interval = updateThreshold
-            };
-            updater.Tick += Updater_Tick;
-            this.Load += SpecControl_Load;
-        }
-
         internal abstract void UpdateAllControls(T value, Control setter, bool ignore = false);
-
-        private void SpecControl_Load(object sender, EventArgs e)
-        {
-            FirstLoadDone = true;
-        }
 
         internal virtual void Updater_Tick(object sender, EventArgs e)
         {
-            updater.Stop();
             OnValueChanged(new ValueUpdateEventArgs<T>(Value));
         }
 
@@ -71,8 +52,6 @@
         {
             UpdateAllControls(value, setter);
             Value = value;
-            updater.Stop();
-            updater.Start();
         }
     }
 

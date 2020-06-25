@@ -18,24 +18,14 @@
         public decimal Minimum
         {
             get => updown.Minimum;
-            set
-            {
-                //If the minimum is going to change the current value, we need to mark initialized as false at the end
-                bool reinit = value < updown.Value;
-                updown.Minimum = value;
-            }
+            set => updown.Minimum = value;
         }
 
         [Description("The maximum value of the NumericUpDown"), Category("Data")]
         public decimal Maximum
         {
             get => updown.Maximum;
-            set
-            {
-                //If the minimum is going to change the current value, we need to mark initialized as false at the end
-                bool reinit = value > updown.Value;
-                updown.Maximum = value;
-            }
+            set => updown.Maximum = value;
         }
 
         public MultiUpDown()
@@ -70,10 +60,7 @@
                     slave.UpdateAllControls(value, this);
                 }
 
-                if (_parent != null)
-                {
-                    _parent.UpdateAllControls(value, setter);
-                }
+                _parent?.UpdateAllControls(value, setter);
             }
 
             GeneralUpdateFlag = false;

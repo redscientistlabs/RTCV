@@ -34,18 +34,18 @@
 
             if (ModifierKeys.HasFlag(Keys.Shift) && this.SelectedIndices.Count != 0)
             {
-                int lastSelected = this.SelectedIndices[this.SelectedIndices.Count - 1];
+                var lastSelected = this.SelectedIndices[this.SelectedIndices.Count - 1];
 
                 if (lastSelected < lastClicked)
                 {
-                    for (int i = lastSelected; i < lastClicked; i++)
+                    for (var i = lastSelected; i < lastClicked; i++)
                     {
                         this.SetSelected(i, true);
                     }
                 }
                 else
                 {
-                    for (int i = lastSelected; i > lastClicked; i--)
+                    for (var i = lastSelected; i > lastClicked; i--)
                     {
                         this.SetSelected(i, true);
                     }
@@ -62,7 +62,7 @@
                     return;
                 }
 
-                int toSelect = this.IndexFromPoint(e.X, e.Y);
+                var toSelect = this.IndexFromPoint(e.X, e.Y);
                 if (toSelect != -1 && toSelect != lastClicked)
                 {
                     this.SetSelected(toSelect, true);

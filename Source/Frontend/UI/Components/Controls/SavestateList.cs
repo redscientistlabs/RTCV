@@ -71,14 +71,14 @@
         {
             if (_DataSource.Position == -1)
             {
-                for (int i = 0; i < controlList.Count; i++)
+                for (var i = 0; i < controlList.Count; i++)
                 {
                     controlList[i].SetStashKey(null, i + _DataSource.Position + 1);
                 }
             }
             else
             {
-                for (int i = 0; i < controlList.Count; i++)
+                for (var i = 0; i < controlList.Count; i++)
                 {
                     //Update it
                     if (i + _DataSource.Position < _DataSource.Count)
@@ -113,14 +113,14 @@
             selectedHolder?.SetSelected(false);
             selectedHolder = null;
 
-            int ssHeight = 22;
-            int padding = 3;
+            const int ssHeight = 22;
+            const int padding = 3;
             //Calculate how many we can fit within the space we have.
             numPerPage = (flowPanel.Height / (ssHeight + padding)) - 1;
             //Create the list
             flowPanel.Controls.Clear();
             controlList = new List<SavestateHolder>();
-            for (int i = 0; i < numPerPage; i++)
+            for (var i = 0; i < numPerPage; i++)
             {
                 var ssh = new SavestateHolder(i);
                 ssh.btnSavestate.MouseDown += BtnSavestate_MouseDown;
@@ -131,7 +131,7 @@
 
         public void BtnSavestate_MouseDown(object sender, MouseEventArgs e)
         {
-            Point locate = new Point(((Control)sender).Location.X + e.Location.X, ((Control)sender).Location.Y + e.Location.Y);
+            var locate = new Point(((Control)sender).Location.X + e.Location.X, ((Control)sender).Location.Y + e.Location.Y);
 
             if (e.Button == MouseButtons.Left)
             {
@@ -155,8 +155,8 @@
                     }
                 }
 
-                var smForm = (Parent as RTC_SavestateManager_Form);
-                if (smForm != null && smForm.cbSavestateLoadOnClick.Checked)
+                var smForm = Parent as RTC_SavestateManager_Form;
+                if (smForm?.cbSavestateLoadOnClick.Checked == true)
                 {
                     btnSaveLoad.Text = "LOAD";
                     btnSaveLoad_Click(null, null);
@@ -164,7 +164,7 @@
             }
             else if (e.Button == MouseButtons.Right)
             {
-                ContextMenuStrip cms = new ContextMenuStrip();
+                var cms = new ContextMenuStrip();
                 cms.Items.Add("Delete entry", null, (ob, ev) =>
                 {
                     var holder = (SavestateHolder)((Button)sender).Parent;
@@ -188,20 +188,20 @@
         {
             if (_DataSource.Position + NumPerPage <= _DataSource.Count)
             {
-                _DataSource.Position = _DataSource.Position + NumPerPage;
+                _DataSource.Position += NumPerPage;
             }
 
             selectedHolder?.SetSelected(false);
-            selectedHolder = controlList.First();
+            selectedHolder = controlList[0];
             selectedHolder.SetSelected(true);
         }
 
         private void BtnBack_Click(object sender, EventArgs e)
         {
-            _DataSource.Position = _DataSource.Position - NumPerPage;
+            _DataSource.Position -= NumPerPage;
 
             selectedHolder?.SetSelected(false);
-            selectedHolder = controlList.First();
+            selectedHolder = controlList[0];
             selectedHolder.SetSelected(true);
         }
 
@@ -230,7 +230,7 @@
             {
                 if (DialogResult.Yes == MessageBox.Show($"Can't find file {psk.RomFilename}\nGame name: {psk.GameName}\nSystem name: {psk.SystemName}\n\n Would you like to provide a new file for replacement?", "Error: File not found", MessageBoxButtons.YesNo))
                 {
-                    OpenFileDialog ofd = new OpenFileDialog
+                    var ofd = new OpenFileDialog
                     {
                         DefaultExt = "*",
                         Title = "Select Replacement File",
@@ -239,8 +239,8 @@
                     };
                     if (ofd.ShowDialog() == DialogResult.OK)
                     {
-                        string filename = ofd.FileName;
-                        string oldFilename = psk.RomFilename;
+                        var filename = ofd.FileName;
+                        var oldFilename = psk.RomFilename;
                         foreach (var item in _DataSource.List.OfType<SaveStateKey>().Where(x => x.StashKey.RomFilename == oldFilename))
                         {
                             item.StashKey.RomFilename = filename;
@@ -276,7 +276,7 @@
 
         public void btnSaveLoad_Click(object sender, EventArgs e)
         {
-            object renameSaveStateWord = AllSpec.VanguardSpec[VSPEC.RENAME_SAVESTATE];
+            var renameSaveStateWord = AllSpec.VanguardSpec[VSPEC.RENAME_SAVESTATE];
             if (renameSaveStateWord != null && renameSaveStateWord is string s)
             {
                 saveStateWord = s;
@@ -310,7 +310,7 @@
                 //Replace if there'a already a sk
                 if (selectedHolder?.sk != null)
                 {
-                    int indexToReplace = controlList.IndexOf(selectedHolder) + _DataSource.Position;
+                    var indexToReplace = controlList.IndexOf(selectedHolder) + _DataSource.Position;
                     if (sk != null)
                     {
                         var oldpos = _DataSource.Position; //We do this to prevent weird shifts when you insert over the something at the top of the last page
@@ -326,7 +326,7 @@
                     {
                         _DataSource.Add(new SaveStateKey(sk, ""));
                         selectedHolder?.SetSelected(false);
-                        selectedHolder = controlList.Where(x => x.sk == sk).First() ?? null;
+                        selectedHolder = controlList.First(x => x.sk == sk) ?? null;
                         selectedHolder?.SetSelected(true);
                     }
                 }

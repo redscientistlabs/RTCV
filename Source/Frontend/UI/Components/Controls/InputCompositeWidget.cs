@@ -39,7 +39,7 @@ namespace RTCV.UI.Components.Controls
 
         public void RefreshTooltip()
         {
-            string widgetText = $"Current Binding: {widget.Text}";
+            var widgetText = $"Current Binding: {widget.Text}";
             if (_bindingTooltipText != null)
             {
                 widgetText = $"{widgetText}\r\n---\r\n{_bindingTooltipText}";
@@ -82,7 +82,7 @@ namespace RTCV.UI.Components.Controls
 
         private void DropdownMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            Input.Input.ModifierKeys mods = new Input.Input.ModifierKeys();
+            var mods = new Input.Input.ModifierKeys();
 
             if ((ModifierKeys & Keys.Shift) != 0)
             {
