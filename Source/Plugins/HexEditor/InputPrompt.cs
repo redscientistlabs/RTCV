@@ -74,7 +74,7 @@ namespace RTCV.Plugins.HexEditor
                         return;
                     }
 
-                    if (!e.KeyChar.IsHex())
+                    if (!Uri.IsHexDigit(e.KeyChar))
                     {
                         e.Handled = true;
                     }
