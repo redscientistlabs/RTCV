@@ -98,7 +98,7 @@ namespace RTCV.Plugins.HexEditor
                         return;
                     }
 
-                    if (!e.KeyChar.IsUnsigned())
+                    if (!char.IsDigit(e.KeyChar))
                     {
                         e.Handled = true;
                     }

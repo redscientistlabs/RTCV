@@ -152,8 +152,6 @@ namespace RTCV.UI.Components.Controls
 
     public static class StringExtensions
     {
-        #region String and Char validation extensions
-
         /// <summary>
         /// Validates all chars are 0-9, A-F or a-f
         /// </summary>
@@ -166,8 +164,6 @@ namespace RTCV.UI.Components.Controls
 
             return str.All(System.Uri.IsHexDigit);
         }
-
-        #endregion
     }
 
     public class HexTextBox : TextBox, INumberBox
