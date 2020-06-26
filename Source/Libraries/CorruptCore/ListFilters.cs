@@ -13,7 +13,7 @@ namespace RTCV.CorruptCore
     {
         public string GetHash();
         public bool ContainsValue(byte[] bytes);
-        public byte[] GetRandomValue(string hash, int precision);
+        public byte[] GetRandomValue(string hash, int precision, byte[] passthrough = null);
         public string Initialize(string filePath, string[] dataLines, bool flipBytes, bool syncListViaNetcore);
 
         public List<string> GetStringList();
@@ -90,7 +90,7 @@ namespace RTCV.CorruptCore
         {
             return hashSet.Contains(bytes);
         }
-        public byte[] GetRandomValue(string hash, int precision)
+        public byte[] GetRandomValue(string hash, int precision, byte[] passthrough)
         {
             //Get a random line in the list and grab the value
             int line = RtcCore.RND.Next(byteList.Count);
@@ -222,7 +222,7 @@ namespace RTCV.CorruptCore
         {
             return Filtering.NullableByteArrayContains(hashSet, bytes);
         }
-        public byte[] GetRandomValue(string hash, int precision)
+        public byte[] GetRandomValue(string hash, int precision, byte[] passthrough)
         {
             //Get a random line in the list and grab the value
             int line = RtcCore.RND.Next(byteList.Count);
