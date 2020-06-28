@@ -223,9 +223,6 @@ dotnet_diagnostic.CA1001.severity = none
 # Catch more specific exception type
 dotnet_diagnostic.CA1031.severity = none
 
-# Add constructor to class
-dotnet_diagnostic.CA1032.severity = none
-
 # Do not nest type
 dotnet_diagnostic.CA1034.severity = none
 
@@ -331,9 +328,6 @@ dotnet_diagnostic.CA2227.severity = none
 
 # Call a different method
 dotnet_diagnostic.CA2234.severity = none
-
-# Add [Serializable] to class
-dotnet_diagnostic.CA2237.severity = none
 
 # Don't use MD5
 dotnet_diagnostic.CA5351.severity = none

@@ -277,11 +277,7 @@
                 }
                 catch (Exception ex)
                 {
-                    string additionalInfo = "Loading Failure ->\n\n";
-
-                    var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
-
-                    if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                    if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                     {
                         throw new RTCV.NetCore.AbortEverythingException();
                     }
@@ -298,11 +294,7 @@
                 }
                 catch (Exception ex)
                 {
-                    string additionalInfo = "Loading Settings Failure ->\n\n";
-
-                    var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
-
-                    if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                    if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                     {
                         throw new RTCV.NetCore.AbortEverythingException();
                     }

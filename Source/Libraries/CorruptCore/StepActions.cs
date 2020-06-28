@@ -393,7 +393,7 @@ namespace RTCV.CorruptCore
                                 isRunning = false;
                                 if (dr == DialogResult.Yes)
                                 {
-                                    throw new CustomException("BlastUnit appliedLifetime Execute threw up. Check the log for more info.", Environment.StackTrace);
+                                    throw new Exception("BlastUnit appliedLifetime Execute threw up. Check the log for more info.");
                                 }
 
                                 return;
@@ -424,7 +424,7 @@ namespace RTCV.CorruptCore
                                 isRunning = false;
                                 if (dr == DialogResult.Yes)
                                 {
-                                    throw new CustomException("BlastUnit appliedInfinite Execute threw up. Check the log for more info.", Environment.StackTrace);
+                                    throw new Exception("BlastUnit appliedInfinite Execute threw up. Check the log for more info.");
                                 }
 
                                 return;

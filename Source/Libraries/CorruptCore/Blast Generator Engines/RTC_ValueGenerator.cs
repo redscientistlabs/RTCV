@@ -217,7 +217,7 @@ namespace RTCV.CorruptCore
             }
             catch (Exception ex)
             {
-                throw new NetCore.CustomException("Something went wrong in the RTC ValueGenerator Generator. " + ex.Message, ex.StackTrace);
+                throw new Exception("Something went wrong in the RTC ValueGenerator Generator. " + ex.Message);
             }
         }
     }

@@ -587,7 +587,7 @@ namespace RTCV.CorruptCore
             }
             catch (Exception ex)
             {
-                throw new CustomException("Unable to empty a temp folder! If your stockpile has any CD based games, close them before saving the stockpile! If this isn't the case, report this bug to the RTC developers." + ex.Message, ex.StackTrace);
+                throw new Exception("Unable to empty a temp folder! If your stockpile has any CD based games, close them before saving the stockpile! If this isn't the case, report this bug to the RTC developers." + ex.Message);
             }
         }
 
@@ -647,7 +647,7 @@ namespace RTCV.CorruptCore
             string[] configPaths = AllSpec.VanguardSpec[VSPEC.CONFIG_PATHS] as string[];
             if (configPaths == null)
             {
-                throw new CustomException("ConfigMode was set but ConfigPath was null!", Environment.StackTrace);
+                throw new Exception("ConfigMode was set but ConfigPath was null!");
             }
 
             string filename;
@@ -743,7 +743,7 @@ namespace RTCV.CorruptCore
             string[] configPaths = AllSpec.VanguardSpec[VSPEC.CONFIG_PATHS] as string[];
             if (configPaths == null)
             {
-                throw new CustomException("ConfigMode was set but ConfigPath was null!", Environment.StackTrace);
+                throw new Exception("ConfigMode was set but ConfigPath was null!");
             }
 
             Dictionary<string, string> name2filedico = new Dictionary<string, string>();
@@ -1097,10 +1097,9 @@ namespace RTCV.CorruptCore
             }
             catch (Exception ex)
             {
-                throw new CustomException(
+                throw new Exception(
                             "An error occurred in RTC while applying a BlastLayer to the game.\n\n" +
-                            "The operation was cancelled\n\n" + ex.Message,
-                            ex.StackTrace
+                            "The operation was cancelled\n\n" + ex.Message
                             );
             }
             finally
