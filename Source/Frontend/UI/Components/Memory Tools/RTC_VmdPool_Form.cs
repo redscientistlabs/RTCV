@@ -283,7 +283,7 @@ namespace RTCV.UI
                 proto = JsonHelper.Deserialize<VmdPrototype>(fs);
 
                 string filePath = path.Substring(path.LastIndexOf('\\') + 1);
-                proto.VmdName = filePath.Replace(".vmd","").Replace(".VMD", "");
+                proto.VmdName = filePath.Replace(".vmd", "").Replace(".VMD", "");
 
                 MemoryDomains.AddVMD(proto);
             }

@@ -232,8 +232,8 @@ namespace RTCV.CorruptCore
             {
                 try
                 {
-                    if (!byte.TryParse(temp.Substring(i, 2), NumberStyles.HexNumber, CultureInfo.CurrentCulture
-                        , out byte b))
+                    if (!byte.TryParse(temp.Substring(i, 2), NumberStyles.HexNumber, CultureInfo.CurrentCulture,
+                        out byte b))
                     {
                         return null;
                     }
@@ -429,19 +429,19 @@ namespace RTCV.CorruptCore
 
                 case 2:
                     {
-                        UInt16 int16Value = BitConverter.ToUInt16(value, 0);
-                        UInt16 addInt16Value = (bigintAddValueAbs > ushort.MaxValue ? ushort.MaxValue : (ushort)bigintAddValueAbs);
+                        ushort ushortValue = BitConverter.ToUInt16(value, 0);
+                        ushort addushortValue = (bigintAddValueAbs > ushort.MaxValue ? ushort.MaxValue : (ushort)bigintAddValueAbs);
 
                         if (isAdd)
                         {
-                            unchecked { int16Value += addInt16Value; }
+                            unchecked { ushortValue += addushortValue; }
                         }
                         else
                         {
-                            unchecked { int16Value -= addInt16Value; }
+                            unchecked { ushortValue -= addushortValue; }
                         }
 
-                        value = BitConverter.GetBytes(int16Value);
+                        value = BitConverter.GetBytes(ushortValue);
 
                         if (isInputBigEndian)
                         {
@@ -452,19 +452,19 @@ namespace RTCV.CorruptCore
                     }
                 case 4:
                     {
-                        UInt32 int32Value = BitConverter.ToUInt32(value, 0);
-                        UInt32 addInt32Value = (bigintAddValueAbs > uint.MaxValue ? uint.MaxValue : (uint)bigintAddValueAbs);
+                        uint uintValue = BitConverter.ToUInt32(value, 0);
+                        uint adduintValue = (bigintAddValueAbs > uint.MaxValue ? uint.MaxValue : (uint)bigintAddValueAbs);
 
                         if (isAdd)
                         {
-                            unchecked { int32Value += addInt32Value; }
+                            unchecked { uintValue += adduintValue; }
                         }
                         else
                         {
-                            unchecked { int32Value -= addInt32Value; }
+                            unchecked { uintValue -= adduintValue; }
                         }
 
-                        value = BitConverter.GetBytes(int32Value);
+                        value = BitConverter.GetBytes(uintValue);
 
                         if (isInputBigEndian)
                         {
@@ -475,19 +475,19 @@ namespace RTCV.CorruptCore
                     }
                 case 8:
                     {
-                        UInt64 int64Value = BitConverter.ToUInt64(value, 0);
-                        UInt64 addInt64Value = (bigintAddValueAbs > ulong.MaxValue ? ulong.MaxValue : (ulong)bigintAddValueAbs);
+                        ulong ulongValue = BitConverter.ToUInt64(value, 0);
+                        ulong addulongValue = (bigintAddValueAbs > ulong.MaxValue ? ulong.MaxValue : (ulong)bigintAddValueAbs);
 
                         if (isAdd)
                         {
-                            unchecked { int64Value += addInt64Value; }
+                            unchecked { ulongValue += addulongValue; }
                         }
                         else
                         {
-                            unchecked { int64Value -= addInt64Value; }
+                            unchecked { ulongValue -= addulongValue; }
                         }
 
-                        value = BitConverter.GetBytes(int64Value);
+                        value = BitConverter.GetBytes(ulongValue);
 
                         if (isInputBigEndian)
                         {
@@ -922,7 +922,8 @@ namespace RTCV.CorruptCore
         /// <param name="min">Minimum allowed</param>
         /// <param name="max">Maximum allowed</param>
         /// <returns>The value if strictly between min and max; otherwise min (or max depending of what is passed)</returns>
-        public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T>
+        public static T Clamp<T>(this T val, T min, T max)
+            where T : IComparable<T>
         {
             if (val.CompareTo(min) < 0)
             {
@@ -1065,7 +1066,7 @@ namespace RTCV.CorruptCore
 
             if (range <= 0)
             {
-                throw new ArgumentOutOfRangeException("Max must be greater than min when inclusiveUpperBound is false, and greater than or equal to when true", "max");
+                throw new ArgumentOutOfRangeException(nameof(max), "Max must be greater than min when inclusiveUpperBound is false, and greater than or equal to when true");
             }
 
             ulong limit = ulong.MaxValue - ulong.MaxValue % range;
@@ -1131,7 +1132,7 @@ namespace RTCV.CorruptCore
             }
 
             //Return default of a null object
-            if (Object.ReferenceEquals(source, null))
+            if (object.ReferenceEquals(source, null))
             {
                 return default(T);
             }
@@ -1160,7 +1161,7 @@ namespace RTCV.CorruptCore
             }
 
             //Return default of a null object
-            if (Object.ReferenceEquals(source, null))
+            if (object.ReferenceEquals(source, null))
             {
                 return default(T);
             }
@@ -1439,7 +1440,7 @@ namespace RTCV.CorruptCore
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
         public static extern IntPtr GetCommandLine();
 
-        public enum FileType : uint
+        public enum FileType : int
         {
             FileTypeChar = 0x0002,
             FileTypeDisk = 0x0001,

@@ -390,7 +390,7 @@ namespace RTCV.NetCore
 
             try
             {
-                if (Object.ReferenceEquals(clientRef, client))
+                if (object.ReferenceEquals(clientRef, client))
                 {
                     client?.Close();
                     client = null;
@@ -531,7 +531,7 @@ namespace RTCV.NetCore
 
                 try
                 {
-                    if (Object.ReferenceEquals(clientRef, client))
+                    if (object.ReferenceEquals(clientRef, client))
                     {
                         client?.Close();
                         client = null;

@@ -5,7 +5,8 @@
     using System.ComponentModel;
     using System.Windows.Forms;
 
-    public abstract class SpecControl<T> : UserControl where T : new()
+    public abstract class SpecControl<T> : UserControl
+        where T : new()
     {
         internal bool GeneralUpdateFlag = false; //makes other events ignore firing
         internal Timer updater;

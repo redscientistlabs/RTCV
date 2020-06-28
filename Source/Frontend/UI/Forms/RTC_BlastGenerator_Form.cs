@@ -175,7 +175,7 @@ namespace RTCV.UI
                 ((DataGridViewNumericUpDownCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvExecuteFrame"]).Value = 0M;
 
                 //Generate a random Seed
-                ((DataGridViewTextBoxCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvSeed"]).Value = CorruptCore.RtcCore.RND.Next(Int32.MinValue, Int32.MaxValue);
+                ((DataGridViewTextBoxCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvSeed"]).Value = CorruptCore.RtcCore.RND.Next(int.MinValue, int.MaxValue);
 
                 PopulateDomainCombobox(dgvBlastGenerator.Rows[lastrow]);
                 PopulateModeCombobox(dgvBlastGenerator.Rows[lastrow]);
@@ -333,8 +333,7 @@ namespace RTCV.UI
                     {
                         RomFilename = psk.RomFilename,
                         SystemName = psk.SystemName,
-                        SystemCore = psk.SystemCore
-                        ,
+                        SystemCore = psk.SystemCore,
                         GameName = psk.GameName,
                         SyncSettings = psk.SyncSettings,
                         StateLocation = psk.StateLocation

@@ -999,13 +999,13 @@ namespace RTCV.UI
             VisibleColumns = new List<string>();
             var blastUnitSource = Enum.GetValues(typeof(BlastUnitSource));
 
-            var enabled = CreateColumn(BuProperty.isEnabled.ToString(), BuProperty.isEnabled.ToString(), "Enabled"
-                , new DataGridViewCheckBoxColumn());
+            var enabled = CreateColumn(BuProperty.isEnabled.ToString(), BuProperty.isEnabled.ToString(), "Enabled",
+                new DataGridViewCheckBoxColumn());
             enabled.SortMode = DataGridViewColumnSortMode.Automatic;
             dgvBlastEditor.Columns.Add(enabled);
 
-            var locked = CreateColumn(BuProperty.isLocked.ToString(), BuProperty.isLocked.ToString(), "Locked"
-                , new DataGridViewCheckBoxColumn());
+            var locked = CreateColumn(BuProperty.isLocked.ToString(), BuProperty.isLocked.ToString(), "Locked",
+                new DataGridViewCheckBoxColumn());
             locked.SortMode = DataGridViewColumnSortMode.Automatic;
             dgvBlastEditor.Columns.Add(locked);
 
@@ -1036,33 +1036,33 @@ namespace RTCV.UI
             precision.SortMode = DataGridViewColumnSortMode.Automatic;
             dgvBlastEditor.Columns.Add(precision);
 
-            var valuestring = CreateColumn(BuProperty.ValueString.ToString(), BuProperty.ValueString.ToString(), "Value"
-                , new DataGridViewTextBoxColumn());
+            var valuestring = CreateColumn(BuProperty.ValueString.ToString(), BuProperty.ValueString.ToString(),
+                "Value", new DataGridViewTextBoxColumn());
             valuestring.DefaultCellStyle.Tag = "numeric";
             valuestring.SortMode = DataGridViewColumnSortMode.Automatic;
             ((DataGridViewTextBoxColumn)valuestring).MaxInputLength = 16348; //textbox doesn't like larger than ~20k
             dgvBlastEditor.Columns.Add(valuestring);
 
-            var executeFrame = CreateColumn(BuProperty.ExecuteFrame.ToString(), BuProperty.ExecuteFrame.ToString()
-                , "Execute Frame", new DataGridViewNumericUpDownColumn());
+            var executeFrame = CreateColumn(BuProperty.ExecuteFrame.ToString(), BuProperty.ExecuteFrame.ToString(),
+                "Execute Frame", new DataGridViewNumericUpDownColumn());
             executeFrame.SortMode = DataGridViewColumnSortMode.Automatic;
             ((DataGridViewNumericUpDownColumn)(executeFrame)).Maximum = int.MaxValue;
             dgvBlastEditor.Columns.Add(executeFrame);
 
-            var loopTimng = CreateColumn(BuProperty.LoopTiming.ToString(), BuProperty.LoopTiming.ToString()
-            , "Loop Timing", new DataGridViewNumericUpDownColumn());
+            var loopTimng = CreateColumn(BuProperty.LoopTiming.ToString(), BuProperty.LoopTiming.ToString(),
+                "Loop Timing", new DataGridViewNumericUpDownColumn());
             loopTimng.SortMode = DataGridViewColumnSortMode.Automatic;
             ((DataGridViewNumericUpDownColumn)(loopTimng)).Maximum = int.MaxValue;
             dgvBlastEditor.Columns.Add(loopTimng);
 
-            var lifetime = CreateColumn(BuProperty.Lifetime.ToString(), BuProperty.Lifetime.ToString(), "Lifetime"
-                , new DataGridViewNumericUpDownColumn());
+            var lifetime = CreateColumn(BuProperty.Lifetime.ToString(), BuProperty.Lifetime.ToString(),
+                "Lifetime", new DataGridViewNumericUpDownColumn());
             lifetime.SortMode = DataGridViewColumnSortMode.Automatic;
             ((DataGridViewNumericUpDownColumn)(lifetime)).Maximum = int.MaxValue;
             dgvBlastEditor.Columns.Add(lifetime);
 
-            var loop = CreateColumn(BuProperty.Loop.ToString(), BuProperty.Loop.ToString(), "Loop"
-                , new DataGridViewCheckBoxColumn());
+            var loop = CreateColumn(BuProperty.Loop.ToString(), BuProperty.Loop.ToString(),
+                "Loop", new DataGridViewCheckBoxColumn());
             loop.SortMode = DataGridViewColumnSortMode.Automatic;
             dgvBlastEditor.Columns.Add(loop);
 
@@ -1268,7 +1268,7 @@ namespace RTCV.UI
                 this.Close();
                 return;
             }
-            List<String> buDomains = new List<string>();
+            List<string> buDomains = new List<string>();
             foreach (var bu in sk.BlastLayer.Layer)
             {
                 if (!buDomains.Contains(bu.Domain))
@@ -1779,7 +1779,7 @@ namespace RTCV.UI
         private void saveToFileblToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //If there's no blastlayer file already set, don't quicksave
-            if (CurrentBlastLayerFile == "")
+            if (CurrentBlastLayerFile.Length == 0)
             {
                 BlastTools.SaveBlastLayerToFile(currentSK.BlastLayer);
             }
@@ -1842,8 +1842,8 @@ namespace RTCV.UI
                                             $"Domain: {bu.Domain}" +
                                             $"SourceDomain {bu.SourceDomain ?? "EMPTY"}\n\n" +
                                             $"Silence warning & continue importing valid units?",
-                                "Invalid Domain in Imported Unit"
-                                , MessageBoxButtons.OKCancel) == DialogResult.OK)
+                                "Invalid Domain in Imported Unit",
+                                MessageBoxButtons.OKCancel) == DialogResult.OK)
                         {
                             warned.Add(bu.Domain);
                             if (!string.IsNullOrWhiteSpace(bu.SourceDomain))

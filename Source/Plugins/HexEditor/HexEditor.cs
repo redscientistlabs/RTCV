@@ -702,7 +702,7 @@ namespace RTCV.Plugins.HexEditor
                 Text += " - Editing Address 0x" + string.Format(_numDigitsStr, _addressHighlighted);
                 if (_secondaryHighlightedAddresses.Any())
                 {
-                    Text += $" (Selected 0x{_secondaryHighlightedAddresses.Count() + (_secondaryHighlightedAddresses.Contains(_addressHighlighted) ? 0 : 1):X})";
+                    Text += $" (Selected 0x{_secondaryHighlightedAddresses.Count + (_secondaryHighlightedAddresses.Contains(_addressHighlighted) ? 0 : 1):X})";
                 }
             }
         }

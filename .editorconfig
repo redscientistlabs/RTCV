@@ -217,6 +217,9 @@ csharp_preserve_single_line_statements = true
 [*.{cs,vb}]
 
 
+# Class owns disposable fields but is not disposable
+dotnet_diagnostic.CA1001.severity = none
+
 # If possible, make the underlying type of FileType System.Int32 instead of uint
 dotnet_diagnostic.CA1028.severity = none
 
@@ -295,24 +298,12 @@ dotnet_diagnostic.CA1816.severity = none
 # Properties should not return arrays
 dotnet_diagnostic.CA1819.severity = none
 
-# Test for empty strings not using Equality check
-dotnet_diagnostic.CA1820.severity = none
-
 # Member can be marked as static
 # NOTE: Fixing this requires a simultaneous fix in Bizhawk-Vanguard
 dotnet_diagnostic.CA1822.severity = none
 
-# Mark assemblies with NeutralResourcesLanguageAttribute
-dotnet_diagnostic.CA1824.severity = none
-
 # Avoid unnecessary zero-length array allocations
 dotnet_diagnostic.CA1825.severity = none
-
-# Count() is used where Any() could be used instead to improve performance
-dotnet_diagnostic.CA1827.severity = none
-
-# Use the "Count" property instead of Enumerable.Count()
-dotnet_diagnostic.CA1829.severity = none
 
 # Call on object before all references to it are out of scope
 dotnet_diagnostic.CA2000.severity = none
@@ -332,9 +323,6 @@ dotnet_diagnostic.CA2101.severity = none
 # Re-throwing caught exception changes stack information
 dotnet_diagnostic.CA2200.severity = none
 
-# Method passes parameter as the message argument
-dotnet_diagnostic.CA2208.severity = none
-
 # Non-constant fields should not be visible
 dotnet_diagnostic.CA2211.severity = none
 
@@ -352,9 +340,6 @@ dotnet_diagnostic.CA5351.severity = none
 
 # XML comments
 dotnet_diagnostic.SA0001.severity = none
-
-# Commas should be followed by whitespace
-dotnet_diagnostic.SA1001.severity = none
 
 # Single line comment should begin with a space
 dotnet_diagnostic.SA1005.severity = none
@@ -395,17 +380,11 @@ dotnet_diagnostic.SA1118.severity = none
 # Statement should not use unnecessary parenthesis
 dotnet_diagnostic.SA1119.severity = none
 
-# Use built-in type alias
-dotnet_diagnostic.SA1121.severity = none
-
 # Use string.Empty for empty strings
 dotnet_diagnostic.SA1122.severity = none
 
 # Do not use regions
 dotnet_diagnostic.SA1124.severity = none
-
-# Generic type constraints should be on their own line
-dotnet_diagnostic.SA1127.severity = none
 
 # Put constructor initializers on their own line
 dotnet_diagnostic.SA1128.severity = none

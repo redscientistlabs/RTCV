@@ -78,7 +78,7 @@ namespace RTCV.NetCore
         }
 
         #pragma warning disable CS1998
-        internal async Task<Object> GetValueTask(Guid WatchedGuid, string type, CancellationToken token)
+        internal async Task<object> GetValueTask(Guid WatchedGuid, string type, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
             logger.Trace("GetValue called on {guid}", guid);

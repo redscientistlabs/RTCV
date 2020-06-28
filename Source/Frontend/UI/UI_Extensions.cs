@@ -542,7 +542,8 @@ namespace RTCV.UI
         /// <param name="min">Minimum allowed</param>
         /// <param name="max">Maximum allowed</param>
         /// <returns>The value if strictly between min and max; otherwise min (or max depending of what is passed)</returns>
-        public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T>
+        public static T Clamp<T>(this T val, T min, T max)
+            where T : IComparable<T>
         {
             if (val.CompareTo(min) < 0)
             {
@@ -1017,7 +1018,7 @@ namespace RTCV.UI
             {
                 if (value < 0 || value > 99)
                 {
-                    throw new ArgumentOutOfRangeException("The DecimalPlaces property cannot be smaller than 0 or larger than 99.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "The DecimalPlaces property cannot be smaller than 0 or larger than 99.");
                 }
                 if (this.decimalPlaces != value)
                 {
@@ -1048,7 +1049,7 @@ namespace RTCV.UI
             {
                 if (value < (decimal)0.0)
                 {
-                    throw new ArgumentOutOfRangeException("The Increment property cannot be smaller than 0.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "The Increment property cannot be smaller than 0.");
                 }
                 SetIncrement(this.RowIndex, value);
                 // No call to OnCommonChange is needed since the increment value does not affect the rendering of the cell.
@@ -1271,8 +1272,8 @@ namespace RTCV.UI
         {
             if (this.Hexadecimal)
             {
-                UInt64 valueuint64 = System.Convert.ToUInt64(value);
-                return valueuint64.ToString("X");
+                ulong valueulong = System.Convert.ToUInt64(value);
+                return valueulong.ToString("X");
             }
             else
             {
@@ -1281,8 +1282,8 @@ namespace RTCV.UI
                 string formattedNumber = formattedValue as string;
                 if (!string.IsNullOrEmpty(formattedNumber) && value != null)
                 {
-                    Decimal unformattedDecimal = System.Convert.ToDecimal(value);
-                    Decimal formattedDecimal = System.Convert.ToDecimal(formattedNumber);
+                    decimal unformattedDecimal = System.Convert.ToDecimal(value);
+                    decimal formattedDecimal = System.Convert.ToDecimal(formattedNumber);
                     if (unformattedDecimal == formattedDecimal)
                     {
                         // The base implementation of GetFormattedValue (which triggers the CellFormatting event) did nothing else than
@@ -1640,8 +1641,8 @@ namespace RTCV.UI
             object cellValue = GetValue(rowIndex);
             if (cellValue != null)
             {
-                Decimal currentValue = System.Convert.ToDecimal(cellValue);
-                Decimal constrainedValue = Constrain(currentValue);
+                decimal currentValue = System.Convert.ToDecimal(cellValue);
+                decimal constrainedValue = Constrain(currentValue);
                 if (constrainedValue != currentValue)
                 {
                     SetValue(rowIndex, constrainedValue);
@@ -1671,8 +1672,8 @@ namespace RTCV.UI
             {
                 if (Hexadecimal)
                 {
-                    Decimal currentValue = System.Convert.ToDecimal(cellValue);
-                    Decimal constrainedValue = Constrain(currentValue);
+                    decimal currentValue = System.Convert.ToDecimal(cellValue);
+                    decimal constrainedValue = Constrain(currentValue);
                     if (constrainedValue != currentValue)
                     {
                         SetValue(rowIndex, constrainedValue);
@@ -1680,8 +1681,8 @@ namespace RTCV.UI
                 }
                 else
                 {
-                    Decimal currentValue = System.Convert.ToDecimal(cellValue);
-                    Decimal constrainedValue = Constrain(currentValue);
+                    decimal currentValue = System.Convert.ToDecimal(cellValue);
+                    decimal constrainedValue = Constrain(currentValue);
                     if (constrainedValue != currentValue)
                     {
                         SetValue(rowIndex, constrainedValue);
@@ -2457,7 +2458,7 @@ internal static class RandomExtensions
 
         if (range <= 0)
         {
-            throw new ArgumentOutOfRangeException("Max must be greater than min when inclusiveUpperBound is false, and greater than or equal to when true", "max");
+            throw new ArgumentOutOfRangeException(nameof(max), "Max must be greater than min when inclusiveUpperBound is false, and greater than or equal to when true");
         }
 
         ulong limit = ulong.MaxValue - ulong.MaxValue % range;
@@ -2500,7 +2501,7 @@ internal static class RandomExtensions
 
         if (range <= 0)
         {
-            throw new ArgumentOutOfRangeException("Max must be greater than min when inclusiveUpperBound is false, and greater than or equal to when true", "max");
+            throw new ArgumentOutOfRangeException(nameof(max), "Max must be greater than min when inclusiveUpperBound is false, and greater than or equal to when true");
         }
 
         ulong limit = ulong.MaxValue - ulong.MaxValue % range;
@@ -2519,7 +2520,8 @@ internal static class RandomExtensions
 /// If the elements are IComparable it uses that; otherwise compares the ToString()
 /// </summary>
 /// <typeparam name="T">The type of elements in the list.</typeparam>
-public class SortableBindingList<T> : BindingList<T> where T : class
+public class SortableBindingList<T> : BindingList<T>
+    where T : class
 {
     private bool _isSorted;
     private ListSortDirection _sortDirection = ListSortDirection.Ascending;
@@ -2638,7 +2640,8 @@ public class SortableBindingList<T> : BindingList<T> where T : class
 /// <typeparam name="TKey">dictionary keys</typeparam>
 /// <typeparam name="TValue">dictionary values</typeparam>
 [Serializable]
-public class WorkingDictionary<TKey, TValue> : Dictionary<TKey, TValue> where TValue : new()
+public class WorkingDictionary<TKey, TValue> : Dictionary<TKey, TValue>
+    where TValue : new()
 {
     public new TValue this[TKey key]
     {

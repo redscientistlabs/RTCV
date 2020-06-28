@@ -133,7 +133,8 @@ namespace RTCV.Plugins.HexEditor
         /// <param name="min">Minimum allowed</param>
         /// <param name="max">Maximum allowed</param>
         /// <returns>The value if strictly between min and max; otherwise min (or max depending of what is passed)</returns>
-        public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T>
+        public static T Clamp<T>(this T val, T min, T max)
+            where T : IComparable<T>
         {
             if (val.CompareTo(min) < 0)
             {
