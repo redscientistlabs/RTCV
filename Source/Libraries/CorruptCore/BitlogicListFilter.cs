@@ -4,6 +4,7 @@ namespace RTCV.CorruptCore
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Numerics;
     using System.Security.Cryptography;
     using System.Windows.Forms;
     using Ceras;
@@ -20,7 +21,6 @@ namespace RTCV.CorruptCore
         //Could be moved to a common location
         const char CHAR_WILD = '?';
         const char CHAR_PASS = '#';
-
         const char CHAR_FLAG = '@';
 
         public string Initialize(string filePath, string[] dataLines, bool flipBytes, bool syncListViaNetcore)
@@ -34,13 +34,15 @@ namespace RTCV.CorruptCore
                 {
                     if (inHeader && ((!string.IsNullOrWhiteSpace(dataLines[j])) && dataLines[j].Length > 1 && dataLines[j][0] == CHAR_FLAG))
                     {
+                        string flagOrig = dataLines[j];
                         string flag = dataLines[j].Substring(1).Trim().ToLower();
 
                         if (flag == "v1.0")
                         {
                             doFlipBytes = true;
                         }
-                        options.Add(flag); //add as flag to hashset
+
+                        options.Add(flagOrig); //add as flag to hashset
                     }
                     else
                     {
@@ -112,13 +114,23 @@ namespace RTCV.CorruptCore
             return precision;
         }
 
-        public byte[] GetRandomValue(string hash /*unused*/, int precision /*, byte[] bytes*/)
+        public byte[] GetRandomValue(string hash, int precision, byte[] passthrough)
         {
-            //When passthrough is implemented, work here
-            var rval = entries[RtcCore.RND.Next(entries.Count)];
-            var outValue = BitConverter.GetBytes(rval.GetRandom(/*BytesToUlong(bytes)*/)); //Bitconverter as little endian
-            Array.Resize(ref outValue, rval.Precision); //discard the last bytes
+            //Uniform distribution is mega slow so none of that
+            var randomEntry = entries[RtcCore.RND.Next(entries.Count)];
+            byte[] outValue = null;
 
+            if (passthrough == null || passthrough.Length > 8)
+            {
+                outValue = BitConverter.GetBytes(randomEntry.GetRandomLegacy()); //Bitconverter as little endian
+            }
+            else
+            {
+                ulong passUlong = BytesToUlong(passthrough);
+                outValue = BitConverter.GetBytes(randomEntry.GetRandom(passUlong)); //Bitconverter as little endian
+            }
+
+            Array.Resize(ref outValue, randomEntry.Precision); //discard the last bytes
             //Copied and pasted from other list implementations
             if (outValue.Length < precision)
             {
@@ -285,7 +297,7 @@ namespace RTCV.CorruptCore
             return res;
         }
 
-        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] //Inline hint
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] //Inline hint (does it do anything here? idk)
         private ulong CharToUlongHex(char c)
         {
             //Ascii format
@@ -338,10 +350,8 @@ namespace RTCV.CorruptCore
                     template |= CharToUlongHex(line[j]) << curLeftShift; //Convert char to ulong and shift
                     reserved |= digitMask << curLeftShift; //Also add to reserved mask
                 }
-
                 curLeftShift += 4; //add half byte shift
             }
-
             return new BitlogicFilterEntry(template, wildcard, passthrough, reserved, GetPrecision(line, 4));
         }
 
@@ -369,13 +379,12 @@ namespace RTCV.CorruptCore
 
                 curLeftShift++;
             }
-
             return new BitlogicFilterEntry(template, wildcard, passthrough, reserved, GetPrecision(line, 1));
         }
     }
 
     /// <summary>
-    /// Represents an entry for bit filter list
+    /// Represents an entry for bit filter list.
     /// </summary>
     [Serializable]
     [Ceras.MemberConfig(TargetMember.All)]
@@ -390,9 +399,6 @@ namespace RTCV.CorruptCore
         public int Precision { get; private set; }
         public string OriginalLine { get; set; }
 
-        //Ideal random
-        //static Redzen.Random.Xoshiro256StarStarRandom rand = new Redzen.Random.Xoshiro256StarStarRandom();
-
         //Current random, slow, replace eventually
         static byte[] byteBuffer = new byte[sizeof(ulong)];
         static ulong NextULong()
@@ -400,7 +406,6 @@ namespace RTCV.CorruptCore
             RtcCore.RND.NextBytes(byteBuffer);
             return BitConverter.ToUInt64(byteBuffer, 0);
         }
-
 
         public BitlogicFilterEntry(ulong template, ulong wildcard, ulong passthrough, ulong reserved, int precision)
         {
@@ -429,10 +434,15 @@ namespace RTCV.CorruptCore
             return template == (data & reserved);
         }
 
-        public ulong GetRandom(/*ulong data*/)
+        public ulong GetRandom(ulong data)
         {
             //When passthrough is implemented, uncomment this line and remove the other
-            //return (NextULong() & wildcard) | (data & passthrough) | template;
+            return (NextULong() & wildcard) | (data & passthrough) | template;
+            //return (NextULong() & unreserved) | template;
+        }
+
+        public ulong GetRandomLegacy()
+        {
             return (NextULong() & unreserved) | template;
         }
 
