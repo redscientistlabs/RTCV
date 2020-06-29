@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Collections.Generic;
@@ -9,6 +9,7 @@
     using Newtonsoft.Json;
     using RTCV.Common;
     using RTCV.UI.Components.Controls;
+    using RTCV.UI.Input;
     using static RTCV.UI.UI_Extensions;
 
     public partial class RTC_SettingsHotkeyConfig_Form : ComponentForm, IAutoColorize, IBlockable
@@ -61,6 +62,17 @@
             RTCV.NetCore.Params.SetParam("HOTKEYS", binds);
         }
 
+        private static void AddMissingHotKeys()
+        {
+            var def = BindingCollection.DefaultValues;
+
+            //fetches all default bindings that aren't contained in the current bindings
+            var missing = def.Where(it => UICore.HotkeyBindings.FirstOrDefault(it2 => it2.DisplayName == it.DisplayName) == null);
+
+            foreach (var bind in missing)
+                UICore.HotkeyBindings.Add(bind);
+        }
+
         private static void LoadHotkeys()
         {
             if (RTCV.NetCore.Params.IsParamSet("HOTKEYS"))
@@ -70,6 +82,8 @@
                     var binds = JsonConvert.DeserializeObject<Input.BindingCollection>(NetCore.Params.ReadParam("HOTKEYS"));
 
                     UICore.HotkeyBindings = binds;
+
+                    AddMissingHotKeys();
 
                     foreach (var b in UICore.HotkeyBindings)
                     {
