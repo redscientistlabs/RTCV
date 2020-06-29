@@ -1,4 +1,4 @@
-﻿//Based on code from https://github.com/TASVideos/BizHawk/
+//Based on code from https://github.com/TASVideos/BizHawk/
 namespace RTCV.UI.Input
 {
     using System.Collections;
@@ -165,6 +165,7 @@ namespace RTCV.UI.Input
                         Bind("Glitch Harvester", "Stash->Stockpile", toolTip: "Sends an entry from the stash to the stockpile" ),
                         Bind("Glitch Harvester", "Blast+RawStash", toolTip: "Manual blasts then sends raw to stash" ),
                         Bind("Glitch Harvester", "Send Raw to Stash", toolTip: "Sends raw to stash" ),
+                        Bind("Glitch Harvester", "Reload Corruption", toolTip: "Reloads the selected item in the stockpile or stockpile" ),
                         Bind("RTC", "BlastLayer Toggle", toolTip: "Toggles the current blastlayer" ),
                         Bind("RTC", "BlastLayer Re-Blast", toolTip: "Reblasts the current blastlayer" ),
                         Bind("RTC", "Game Protect Back", toolTip: "Jumps back in game protection" ),
