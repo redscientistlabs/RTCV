@@ -1,14 +1,14 @@
-name: Build Bizhawk and CemuStub
+name: Build dependants
 on:
   push:
     branches:
-      - '505' # Bizhawk and CemuStub depend on RTCV 505
+      - '505'
   pull_request:
     branches:
-      - '505' # Bizhawk and CemuStub depend on RTCV 505
+      - '505'
 
 jobs:
-  buildAll:
+  Bizhawk:
     runs-on: windows-2019
     steps:
     # Checkout relevant code
@@ -16,13 +16,40 @@ jobs:
       uses: actions/checkout@v2
       with:
         path: 'RTCV'
-    - name: Checkout consumer - Bizhawk
+    - name: Checkout Bizhawk
       uses: actions/checkout@v2
       with:
         repository: 'ircluzar/Bizhawk-Vanguard'
         ref: 'master'
         path: 'Bizhawk-Vanguard'
-    - name: Checkout consumer - CemuStub
+
+    # Setup Tooling
+    - name: Setup Nuget
+      uses: nuget/setup-nuget@v1.0.2
+      with:
+        nuget-version: 'latest'
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.0
+
+    # Restore nuget packages for all targets
+    - name: Restore Nuget packages in current build target
+      run: nuget restore '.\RTCV\'
+    - name: Restore Nuget packages in Bizhawk
+      run: nuget restore '.\Bizhawk-Vanguard\Real-Time Corruptor\BizHawk_RTC\BizHawk.sln'
+
+    # Build Bizhawk
+    - name: Build Bizhawk-Vanguard
+      run: msbuild '.\Bizhawk-Vanguard\Real-Time Corruptor\BizHawk_RTC\BizHawk.sln'
+
+  CemuStub:
+    runs-on: windows-2019
+    steps:
+    # Checkout relevant code
+    - name: Checkout current build target
+      uses: actions/checkout@v2
+      with:
+        path: 'RTCV'
+    - name: Checkout CemuStub
       uses: actions/checkout@v2
       with:
         repository: 'ircluzar/CemuStub-Vanguard'
@@ -40,13 +67,175 @@ jobs:
     # Restore nuget packages for all targets
     - name: Restore Nuget packages in current build target
       run: nuget restore '.\RTCV\'
-    - name: Restore Nuget packages in consumer - Bizhawk
-      run: nuget restore '.\Bizhawk-Vanguard\Real-Time Corruptor\BizHawk_RTC\BizHawk.sln'
-    - name: Restore Nuget packages in consumer - CemuStub
+    - name: Restore Nuget packages in CemuStub
       run: nuget restore '.\CemuStub-Vanguard\'
 
-    # Build consumers  of RTCV
-    - name: Build Bizhawk-Vanguard
-      run: msbuild '.\Bizhawk-Vanguard\Real-Time Corruptor\BizHawk_RTC\BizHawk.sln'
+    # Build CemuStub
     - name: Build CemuStub-Vanguard
       run: msbuild '.\CemuStub-Vanguard\'
+
+  FileStub:
+    runs-on: windows-2019
+    steps:
+    # Checkout relevant code
+    - name: Checkout current build target
+      uses: actions/checkout@v2
+      with:
+        path: 'RTCV'
+    - name: Checkout FileStub
+      uses: actions/checkout@v2
+      with:
+        repository: 'ircluzar/FileStub-Vanguard'
+        ref: 'master'
+        path: 'FileStub-Vanguard'
+
+    # Setup Tooling
+    - name: Setup Nuget
+      uses: nuget/setup-nuget@v1.0.2
+      with:
+        nuget-version: 'latest'
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.0
+
+    # Restore nuget packages for all targets
+    - name: Restore Nuget packages in current build target
+      run: nuget restore '.\RTCV\'
+    - name: Restore Nuget packages in FileStub
+      run: nuget restore '.\FileStub-Vanguard\FileStub-Vanguard.sln'
+
+    # Build FileStub
+    - name: Build FileStub-Vanguard
+      run: msbuild '.\FileStub-Vanguard\FileStub-Vanguard.sln'
+
+  UnityStub:
+    runs-on: windows-2019
+    steps:
+    # Checkout relevant code
+    - name: Checkout current build target
+      uses: actions/checkout@v2
+      with:
+        path: 'RTCV'
+    - name: Checkout UnityStub
+      uses: actions/checkout@v2
+      with:
+        repository: 'ircluzar/UnityStub-Vanguard'
+        ref: 'master'
+        path: 'UnityStub-Vanguard'
+
+    # Setup Tooling
+    - name: Setup Nuget
+      uses: nuget/setup-nuget@v1.0.2
+      with:
+        nuget-version: 'latest'
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.0
+
+    # Restore nuget packages for all targets
+    - name: Restore Nuget packages in current build target
+      run: nuget restore '.\RTCV\'
+    - name: Restore Nuget packages in UnityStub
+      run: nuget restore '.\UnityStub-Vanguard\UnityStub-Vanguard.sln'
+
+    # Build UnityStub
+    - name: Build UnityStub-Vanguard
+      run: msbuild '.\UnityStub-Vanguard\UnityStub-Vanguard.sln'
+
+  ProcessStub:
+    runs-on: windows-2019
+    steps:
+    # Checkout relevant code
+    - name: Checkout current build target
+      uses: actions/checkout@v2
+      with:
+        path: 'RTCV'
+    - name: Checkout ProcessStub
+      uses: actions/checkout@v2
+      with:
+        repository: 'NarryG/ProcessStub-Vanguard'
+        ref: 'master'
+        path: 'ProcessStub-Vanguard'
+
+    # Setup Tooling
+    - name: Setup Nuget
+      uses: nuget/setup-nuget@v1.0.2
+      with:
+        nuget-version: 'latest'
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.0
+
+    # Restore nuget packages for all targets
+    - name: Restore Nuget packages in current build target
+      run: nuget restore '.\RTCV\'
+    - name: Restore Nuget packages in ProcessStub
+      run: nuget restore '.\ProcessStub-Vanguard\ProcessStub-Vanguard.sln'
+
+    # Build ProcessStub
+    - name: Build ProcessStub-Vanguard
+      run: msbuild '.\ProcessStub-Vanguard\ProcessStub-Vanguard.sln'
+
+  Dolphin:
+    runs-on: windows-2019
+    steps:
+    # Checkout relevant code
+    - name: Checkout current build target
+      uses: actions/checkout@v2
+      with:
+        path: 'RTCV'
+    - name: Checkout Dolphin
+      uses: actions/checkout@v2
+      with:
+        repository: 'NarryG/dolphin-vanguard'
+        ref: 'Vanguard'
+        path: 'dolphin-vanguard'
+        submodules: 'true'
+
+    # Setup Tooling
+    - name: Setup Nuget
+      uses: nuget/setup-nuget@v1.0.2
+      with:
+        nuget-version: 'latest'
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.0
+
+    # Restore nuget packages for all targets
+    - name: Restore Nuget packages in current build target
+      run: nuget restore '.\RTCV\'
+    - name: Restore Nuget packages in Dolphin
+      run: nuget restore '.\dolphin-vanguard\Source\dolphin-emu.sln'
+
+    # Build Dolphin
+    - name: Build dolphin-vanguard
+      run: msbuild '.\dolphin-vanguard\Source\dolphin-emu.sln'
+
+  PCSX2:
+    runs-on: windows-2019
+    steps:
+    # Checkout relevant code
+    - name: Checkout current build target
+      uses: actions/checkout@v2
+      with:
+        path: 'RTCV'
+    - name: Checkout PCSX2
+      uses: actions/checkout@v2
+      with:
+        repository: 'NarryG/pcsx2-vanguard'
+        ref: 'Vanguard'
+        path: 'pcsx2-vanguard'
+        submodules: 'recursive'
+
+    # Setup Tooling
+    - name: Setup Nuget
+      uses: nuget/setup-nuget@v1.0.2
+      with:
+        nuget-version: 'latest'
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.0
+
+    # Restore nuget packages for all targets
+    - name: Restore Nuget packages in current build target
+      run: nuget restore '.\RTCV\'
+    - name: Restore Nuget packages in PCSX2
+      run: nuget restore .\pcsx2-vanguard\PCSX2_suite.sln
+
+    - name: Build PCSX2
+      run: msbuild .\pcsx2-vanguard\PCSX2_suite.sln
