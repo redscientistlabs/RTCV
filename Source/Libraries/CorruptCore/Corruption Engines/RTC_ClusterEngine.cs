@@ -5,7 +5,6 @@ namespace RTCV.CorruptCore
 
     public static class RTC_ClusterEngine
     {
-
         const string rand = "Random";
         const string reverse = "Reverse";
         const string rotFW = "Rotate Forwards";
@@ -78,7 +77,6 @@ namespace RTCV.CorruptCore
 
         public static BlastUnit[] GenerateUnit(string domain, long address, int alignment)
         {
-
             if (domain == null)
             {
                 return null;
@@ -123,7 +121,7 @@ namespace RTCV.CorruptCore
             if (Direction == backwards)
             {
                 srcUnit = chunkSize - 1;
-                filterAddress = safeAddress + (precision * (chunkSize-1));
+                filterAddress = safeAddress + (precision * (chunkSize - 1));
             }
 
             //do not swap endianess
@@ -179,7 +177,7 @@ namespace RTCV.CorruptCore
             {
                 for (int j = 0; j < chunkSize; j++)
                 {
-                    if (!Filtering.LimiterPeekBytes(safeAddress + (j*precision), safeAddress + (j * precision) + precision, domain, LimiterListHash, mi))
+                    if (!Filtering.LimiterPeekBytes(safeAddress + (j * precision), safeAddress + (j * precision) + precision, domain, LimiterListHash, mi))
                     {
                         return null;
                     }

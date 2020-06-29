@@ -2,12 +2,12 @@ namespace RTCV.UI
 {
     using System;
     using System.Drawing;
+    using System.Linq;
     using System.Windows.Forms;
+    using RTCV.Common;
     using RTCV.CorruptCore;
     using RTCV.NetCore;
-    using RTCV.Common;
     using static RTCV.UI.UI_Extensions;
-    using System.Linq;
 
     public partial class RTC_CorruptionEngine_Form : ComponentForm, IAutoColorize, IBlockable
     {
