@@ -173,40 +173,6 @@ jobs:
     - name: Build ProcessStub-Vanguard
       run: msbuild '.\ProcessStub-Vanguard\ProcessStub-Vanguard.sln'
 
-  Dolphin:
-    runs-on: windows-2019
-    steps:
-    # Checkout relevant code
-    - name: Checkout current build target
-      uses: actions/checkout@v2
-      with:
-        path: 'RTCV'
-    - name: Checkout Dolphin
-      uses: actions/checkout@v2
-      with:
-        repository: 'NarryG/dolphin-vanguard'
-        ref: 'Vanguard'
-        path: 'dolphin-vanguard'
-        submodules: 'true'
-
-    # Setup Tooling
-    - name: Setup Nuget
-      uses: nuget/setup-nuget@v1.0.2
-      with:
-        nuget-version: 'latest'
-    - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.0
-
-    # Restore nuget packages for all targets
-    - name: Restore Nuget packages in current build target
-      run: nuget restore '.\RTCV\'
-    - name: Restore Nuget packages in Dolphin
-      run: nuget restore '.\dolphin-vanguard\Source\dolphin-emu.sln'
-
-    # Build Dolphin
-    - name: Build dolphin-vanguard
-      run: msbuild '.\dolphin-vanguard\Source\dolphin-emu.sln'
-
   PCSX2:
     runs-on: windows-2019
     steps:
