@@ -1,4 +1,4 @@
-﻿namespace RTCV.CorruptCore
+namespace RTCV.CorruptCore
 {
     using System;
     using System.Collections.Concurrent;
@@ -167,6 +167,7 @@
         /// Registers a list as a limiter and value list in the dictionaries
         /// </summary>
         /// <param name="list"></param>
+        /// <param name="name"></param>
         /// <param name="syncListsViaNetcore"></param>
         /// <returns>The hash of the list being registereds</returns>
         public static string RegisterList(IListFilter list, string name, bool syncListsViaNetcore)
@@ -233,6 +234,39 @@
             }
 
             return false;
+        }
+
+        public static byte[] LimiterPeekAndGetBytes(long startAddress, long endAddress, string domain, string hash, MemoryInterface mi)
+        {
+            //If we go outside of the domain, just return false
+            if (endAddress > mi.Size)
+            {
+                return null;
+            }
+
+            //Find the precision
+            long precision = endAddress - startAddress;
+            byte[] values = new byte[precision];
+
+            //Peek the memory
+            for (long i = 0; i < precision; i++)
+            {
+                values[i] = mi.PeekByte(startAddress + i);
+            }
+
+            //The compare is done as little endian
+            if (mi.BigEndian)
+            {
+                values = values.FlipBytes();
+            }
+
+            //If the limiter contains the value we peeked, return true
+            if (LimiterContainsValue(values, hash))
+            {
+                return values;
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -325,7 +359,7 @@
         /// <param name="hash"></param>
         /// <param name="precision"></param>
         /// <returns></returns>
-        public static byte[] GetRandomConstant(string hash, int precision)
+        public static byte[] GetRandomConstant(string hash, int precision, byte[] passthrough = null)
         {
             //If the value dico doesn't exist, return false
             if (Hash2ValueDico == null)
@@ -341,7 +375,7 @@
 
             var list = Hash2ValueDico[hash];
 
-            return list.GetRandomValue(hash, precision);
+            return list.GetRandomValue(hash, precision, passthrough);
         }
 
         /// <summary>

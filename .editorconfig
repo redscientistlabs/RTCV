@@ -209,21 +209,26 @@ csharp_preserve_single_line_statements = true
 
 # NOTE: Requires **VS2019 16.3** or later
 
-# StyleCop Rules
-# Description: StyleCop.ruleset
-
 # Code files
 [*.{cs,vb}]
 
+# Remove original exception from throw statement
+dotnet_diagnostic.RCS1044.severity = none
+
+# Remove original exception from throw statement
+dotnet_diagnostic.RCS1059.severity = none
+
+# Lock on private field instead of locking on `this`
+dotnet_diagnostic.RCS1059.severity = none
+
+# Add summary element to documentation comment
+dotnet_diagnostic.RCS1139.severity = none
 
 # Class owns disposable fields but is not disposable
 dotnet_diagnostic.CA1001.severity = none
 
 # Catch more specific exception type
 dotnet_diagnostic.CA1031.severity = none
-
-# Add constructor to class
-dotnet_diagnostic.CA1032.severity = none
 
 # Do not nest type
 dotnet_diagnostic.CA1034.severity = none
@@ -331,14 +336,14 @@ dotnet_diagnostic.CA2227.severity = none
 # Call a different method
 dotnet_diagnostic.CA2234.severity = none
 
-# Add [Serializable] to class
-dotnet_diagnostic.CA2237.severity = none
-
 # Don't use MD5
 dotnet_diagnostic.CA5351.severity = none
 
 # XML comments
 dotnet_diagnostic.SA0001.severity = none
+
+# Documentation line should begin with a space
+dotnet_diagnostic.SA1004.severity = none
 
 # Single line comment should begin with a space
 dotnet_diagnostic.SA1005.severity = none
@@ -408,6 +413,9 @@ dotnet_diagnostic.SA1136.severity = none
 
 # Use literal suffix notation instead of casting
 dotnet_diagnostic.SA1139.severity = none
+
+# Use tuple syntax
+dotnet_diagnostic.SA1141.severity = none
 
 # Elements should appear in the correct order
 dotnet_diagnostic.SA1201.severity = none
@@ -502,6 +510,9 @@ dotnet_diagnostic.SA1503.severity = none
 # All accessors should be single-line or multi-line
 dotnet_diagnostic.SA1504.severity = none
 
+# Element documentation headers should not be followed by blank line [CorruptCore]
+dotnet_diagnostic.SA1506.severity = none
+
 # Code should not contain multiple blank lines in a row
 dotnet_diagnostic.SA1507.severity = none
 
@@ -510,6 +521,9 @@ dotnet_diagnostic.SA1512.severity = none
 
 # Closing brace should be followed by blank line
 dotnet_diagnostic.SA1513.severity = none
+
+# Element documentation header should be preceded by blank line
+dotnet_diagnostic.SA1514.severity = none
 
 # Single-line comment should be preceded by blank line
 dotnet_diagnostic.SA1515.severity = none
@@ -547,7 +561,29 @@ dotnet_diagnostic.SA1649.severity = none
 # The file header should contain a copyright tag.
 dotnet_diagnostic.SA1634.severity = none
 
+# Constructor summary documentation should begin with standard text
+dotnet_diagnostic.SA1642.severity = none
+
+# The property's documentation summary text should begin with: 'Gets or sets a value indicating whether'
+dotnet_diagnostic.SA1623.severity = none
+
+# Single-line comments should not use documentation style slashes
+dotnet_diagnostic.SA1626.severity = none
+
+# Document text should end with a period
+dotnet_diagnostic.SA1629.severity = none
+
+# Element return value should be documented
+dotnet_diagnostic.SA1615.severity = none
+
+# Element return value documentation should have text
+dotnet_diagnostic.SA1616.severity = none
+
+# Documentation for parameter is missing
+dotnet_diagnostic.SA1611.severity = none
+
+# Tuple element name should use correct casing
+dotnet_diagnostic.SA1316.severity = none
+
 # The property's documentation summary text should begin with: 'Gets or sets a value indicating whether
 dotnet_diagnostic.1623.severity = none
-
-

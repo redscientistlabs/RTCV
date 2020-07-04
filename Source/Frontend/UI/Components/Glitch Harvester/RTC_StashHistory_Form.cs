@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Collections.Generic;
@@ -249,7 +249,7 @@
             lbStashHistory.SelectedIndex = lbStashHistory.Items.Count - 1;
         }
 
-        private void lbStashHistory_SelectedIndexChanged(object sender, EventArgs e)
+        public void lbStashHistory_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
             {

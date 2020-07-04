@@ -658,6 +658,34 @@ namespace RTCV.UI
                     });
                     break;
 
+                case "Reload Corruption":
+
+                    SyncObjectSingleton.FormExecute(() =>
+                    {
+                        var sh = S.GET<RTC_StashHistory_Form>();
+                        var sm = S.GET<RTC_StockpileManager_Form>();
+                        var ghb = S.GET<RTC_GlitchHarvesterBlast_Form>();
+
+                        if (sh.lbStashHistory.SelectedIndex != -1)
+                            sh.lbStashHistory_SelectedIndexChanged(null, null);
+                        else
+                        {
+                            var rows = sm.dgvStockpile.SelectedRows;
+                            var mainRow = rows[0];
+
+                            if (rows.Count > 1)
+                            {
+                                ghb.btnCorrupt_Click(null, null);
+                            }
+                            else
+                            {
+                                sm.dgvStockpile_CellClick(sm.dgvStockpile, new DataGridViewCellEventArgs(0, mainRow.Index));
+                            }
+                        }
+                    });
+
+                    break;
+
                 case "Reroll":
                     SyncObjectSingleton.FormExecute(() =>
                     {

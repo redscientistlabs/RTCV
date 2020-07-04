@@ -483,7 +483,7 @@ namespace RTCV.Plugins.HexEditor
                     addrStr.Append("  ");
                 }
 
-                addrStr.AppendLine($"{_addr.ToHexString(_numDigits)} |");
+                addrStr.AppendLine($"{string.Format("{0:X" + _numDigits + "}", _addr)} |");
             }
 
             return addrStr.ToString();

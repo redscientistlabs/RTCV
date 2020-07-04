@@ -226,7 +226,7 @@ namespace RTCV.UI
                 {
                     if (StockpileManager_UISide.CurrentStashkey == null)
                     {
-                        throw new CustomException("CurrentStashkey in inject was somehow null! Report this to the devs and tell them how you caused this.", Environment.StackTrace);
+                        throw new Exception("CurrentStashkey in inject was somehow null! Report this to the devs and tell them how you caused this.");
                     }
 
                     S.GET<RTC_StashHistory_Form>().DontLoadSelectedStash = true;
@@ -238,7 +238,7 @@ namespace RTCV.UI
                 {
                     if (StockpileManager_UISide.CurrentStashkey == null)
                     {
-                        throw new CustomException("CurrentStashkey in original was somehow null! Report this to the devs and tell them how you caused this.", Environment.StackTrace);
+                        throw new Exception("CurrentStashkey in original was somehow null! Report this to the devs and tell them how you caused this.");
                     }
 
                     S.GET<RTC_StashHistory_Form>().DontLoadSelectedStash = true;
