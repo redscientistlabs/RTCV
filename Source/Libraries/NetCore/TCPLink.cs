@@ -139,41 +139,9 @@ namespace RTCV.NetCore
                         }
 
                         NetCoreAdvancedMessage message = null;
-
                         try
                         {
-                            using (var ms = new MemoryStream())
-                            {
-                                var sw = new Stopwatch();
-                                sw.Start();
-
-                                //Read the size
-                                var lengthToReceive = 0;
-                                var _lengthToReceive = new byte[4];
-                                networkStream.Read(_lengthToReceive, 0, _lengthToReceive.Length);
-                                lengthToReceive = BitConverter.ToInt32(_lengthToReceive, 0);
-
-                                //Console.WriteLine("I want this many bytes: " + lengthToReceive);
-                                //Now read until we have that many bytes
-                                var bytesRead = CopyBytes(lengthToReceive, networkStream, ms);
-                                //Console.WriteLine("I got this many bytes: " + bytesRead);
-
-                                //Deserialize it
-                                ms.Position = 0;
-
-                                //cmd = (RTC_Command)binaryFormatter.Deserialize(ms);
-                                var temp = ms.ToArray();
-                                lock (serializationLock)
-                                {
-                                    message = serializer.Deserialize<NetCoreAdvancedMessage>(temp);
-                                }
-
-                                sw.Stop();
-                                if (message.Type != "{BOOP}" && sw.ElapsedMilliseconds > 50)
-                                {
-                                    logger.Info($"It took {sw.ElapsedMilliseconds} ms to deserialize cmd {message.Type} of {temp.Length} bytes");
-                                }
-                            }
+                            message = ReadMessageFromNetworkStream(ref networkStream, ref serializer);
                         }
                         catch { throw; }
 
@@ -285,6 +253,44 @@ namespace RTCV.NetCore
                 return null; // continue searching
             });
             return new CerasSerializer(config);
+        }
+
+        private NetCoreAdvancedMessage ReadMessageFromNetworkStream(ref NetworkStream networkStream, CerasSerializer serializer)
+        {
+            NetCoreAdvancedMessage message = null;
+            using (var ms = new MemoryStream())
+            {
+                var sw = new Stopwatch();
+                sw.Start();
+
+                //Read the size
+                var buffer = new byte[4];
+                networkStream.Read(buffer, 0, buffer.Length);
+                var lengthToReceive = BitConverter.ToInt32(buffer, 0);
+
+                //Console.WriteLine("I want this many bytes: " + lengthToReceive);
+                //Now read until we have that many bytes
+                var bytesRead = CopyBytes(lengthToReceive, networkStream, ms);
+                //Console.WriteLine("I got this many bytes: " + bytesRead);
+
+                //Deserialize it
+                ms.Position = 0;
+
+                //cmd = (RTC_Command)binaryFormatter.Deserialize(ms);
+                var temp = ms.ToArray();
+                lock (serializationLock)
+                {
+                    message = serializer.Deserialize<NetCoreAdvancedMessage>(temp);
+                }
+
+                sw.Stop();
+                if (message.Type != "{BOOP}" && sw.ElapsedMilliseconds > 50)
+                {
+                    logger.Info($"It took {sw.ElapsedMilliseconds} ms to deserialize cmd {message.Type} of {temp.Length} bytes");
+                }
+            }
+
+            return message;
         }
 
         //returns true if the thread should be stopped
