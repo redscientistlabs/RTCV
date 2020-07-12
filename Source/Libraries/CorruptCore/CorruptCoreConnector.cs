@@ -182,7 +182,106 @@ namespace RTCV.CorruptCore
 
                     case GENERATEBLASTLAYER:
                         {
-                            GenerateBlastLayer(advancedMessage, ref e);
+                            var val = advancedMessage.objectValue as object[];
+                            var sk = val[0] as StashKey;
+                            var loadBeforeCorrupt = (bool)val[1];
+                            var applyBlastLayer = (bool)val[2];
+                            var backup = (bool)val[3];
+
+                            BlastLayer bl = null;
+
+                            var useSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
+
+                            void a()
+                            {
+                                lock (loadLock)
+                                {
+                                    //Load the game from the main thread
+                                    if (useSavestates && loadBeforeCorrupt)
+                                    {
+                                        SyncObjectSingleton.FormExecute(() => StockpileManager_EmuSide.LoadRom_NET(sk));
+                                    }
+
+                                    if (useSavestates && loadBeforeCorrupt)
+                                    {
+                                        StockpileManager_EmuSide.LoadState_NET(sk, false);
+                                    }
+
+                                    //We pull the domains here because if the syncsettings changed, there's a chance the domains changed
+                                    var domains = (string[])AllSpec.UISpec["SELECTEDDOMAINS"];
+
+                                    var cpus = Environment.ProcessorCount;
+
+                                    if (cpus == 1 || AllSpec.VanguardSpec[VSPEC.SUPPORTS_MULTITHREAD] == null)
+                                    {
+                                        bl = RtcCore.GenerateBlastLayer(domains);
+                                    }
+                                    else
+                                    {
+                                        //if emulator supports multithreaded access of the domains, disregard the emulation thread and just span threads...
+                                        var reminder = RtcCore.Intensity % (cpus - 1);
+                                        var splitintensity = (RtcCore.Intensity - reminder) / (cpus - 1);
+                                        var tasks = new Task<BlastLayer>[cpus];
+                                        for (var i = 0; i < cpus; i++)
+                                        {
+                                            var requestedIntensity = splitintensity;
+
+                                            if (i == 0 && reminder != 0)
+                                            {
+                                                requestedIntensity = reminder;
+                                            }
+
+                                            tasks[i] = Task.Factory.StartNew(() =>
+                                                RtcCore.GenerateBlastLayer(domains, requestedIntensity));
+                                        }
+
+                                        Task.WaitAll(tasks);
+
+                                        bl = tasks[0]
+                                            .Result ?? new BlastLayer();
+
+                                        if (tasks.Length > 1)
+                                        {
+                                            for (var i = 1; i < tasks.Length; i++)
+                                            {
+                                                if (tasks[i]
+                                                    .Result != null)
+                                                {
+                                                    bl.Layer.AddRange(tasks[i]
+                                                        .Result.Layer);
+                                                }
+                                            }
+                                        }
+
+                                        if (bl.Layer.Count == 0)
+                                        {
+                                            bl = null;
+                                        }
+                                    }
+
+                                    if (applyBlastLayer)
+                                    {
+                                        bl?.Apply(backup);
+                                    }
+                                }
+                            }
+
+                            //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
+                            if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
+                            {
+                                SyncObjectSingleton.FormExecute(a);
+                                e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
+                            }
+                            else //We can just do everything on the emulation thread as it'll block
+                            {
+                                SyncObjectSingleton.EmuThreadExecute(a, true);
+                            }
+
+                            if (advancedMessage.requestGuid != null)
+                            {
+                                e.setReturnValue(bl);
+                            }
+
                             break;
                         }
                     case APPLYBLASTLAYER:
@@ -529,109 +628,6 @@ namespace RTCV.CorruptCore
                 }
 
                 return e.returnMessage;
-            }
-        }
-
-        private void GenerateBlastLayer(NetCoreAdvancedMessage advancedMessage, ref NetCoreEventArgs e)
-        {
-            var val = advancedMessage.objectValue as object[];
-            var sk = val[0] as StashKey;
-            var loadBeforeCorrupt = (bool)val[1];
-            var applyBlastLayer = (bool)val[2];
-            var backup = (bool)val[3];
-
-            BlastLayer bl = null;
-
-            var useSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
-
-            void a()
-            {
-                lock (loadLock)
-                {
-                    //Load the game from the main thread
-                    if (useSavestates && loadBeforeCorrupt)
-                    {
-                        SyncObjectSingleton.FormExecute(() => StockpileManager_EmuSide.LoadRom_NET(sk));
-                    }
-
-                    if (useSavestates && loadBeforeCorrupt)
-                    {
-                        StockpileManager_EmuSide.LoadState_NET(sk, false);
-                    }
-
-                    //We pull the domains here because if the syncsettings changed, there's a chance the domains changed
-                    var domains = (string[])AllSpec.UISpec["SELECTEDDOMAINS"];
-
-                    var cpus = Environment.ProcessorCount;
-
-                    if (cpus == 1 || AllSpec.VanguardSpec[VSPEC.SUPPORTS_MULTITHREAD] == null)
-                    {
-                        bl = RtcCore.GenerateBlastLayer(domains);
-                    }
-                    else
-                    {
-                        //if emulator supports multithreaded access of the domains, disregard the emulation thread and just span threads...
-                        var reminder = RtcCore.Intensity % (cpus - 1);
-                        var splitintensity = (RtcCore.Intensity - reminder) / (cpus - 1);
-                        var tasks = new Task<BlastLayer>[cpus];
-                        for (var i = 0; i < cpus; i++)
-                        {
-                            var requestedIntensity = splitintensity;
-
-                            if (i == 0 && reminder != 0)
-                            {
-                                requestedIntensity = reminder;
-                            }
-
-                            tasks[i] = Task.Factory.StartNew(() =>
-                                RtcCore.GenerateBlastLayer(domains, requestedIntensity));
-                        }
-
-                        Task.WaitAll(tasks);
-
-                        bl = tasks[0]
-                            .Result ?? new BlastLayer();
-
-                        if (tasks.Length > 1)
-                        {
-                            for (var i = 1; i < tasks.Length; i++)
-                            {
-                                if (tasks[i]
-                                    .Result != null)
-                                {
-                                    bl.Layer.AddRange(tasks[i]
-                                        .Result.Layer);
-                                }
-                            }
-                        }
-
-                        if (bl.Layer.Count == 0)
-                        {
-                            bl = null;
-                        }
-                    }
-
-                    if (applyBlastLayer)
-                    {
-                        bl?.Apply(backup);
-                    }
-                }
-            }
-
-            //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
-            if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
-            {
-                SyncObjectSingleton.FormExecute(a);
-                e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
-            }
-            else //We can just do everything on the emulation thread as it'll block
-            {
-                SyncObjectSingleton.EmuThreadExecute(a, true);
-            }
-
-            if (advancedMessage.requestGuid != null)
-            {
-                e.setReturnValue(bl);
             }
         }
 
