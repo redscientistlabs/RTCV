@@ -228,9 +228,6 @@ dotnet_diagnostic.RCS1139.severity = none
 # Class owns disposable fields but is not disposable
 dotnet_diagnostic.CA1001.severity = none
 
-# If possible, make the underlying type of FileType System.Int32 instead of uint
-dotnet_diagnostic.CA1028.severity = none
-
 # Catch more specific exception type
 dotnet_diagnostic.CA1031.severity = none
 
@@ -330,6 +327,9 @@ dotnet_diagnostic.CA2200.severity = none
 
 # Non-constant fields should not be visible
 dotnet_diagnostic.CA2211.severity = none
+
+# Change Dispore method to call Close or Dispose
+dotnet_diagnostic.CA2213.severity = none
 
 # Change to be read-only by removing the property setter
 dotnet_diagnostic.CA2227.severity = none

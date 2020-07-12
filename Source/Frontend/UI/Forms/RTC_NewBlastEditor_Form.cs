@@ -53,7 +53,6 @@ namespace RTCV.UI
     using RTCV.NetCore;
     using RTCV.Common;
 
-    #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class RTC_NewBlastEditor_Form : Form, IAutoColorize
     {
         private static Dictionary<string, MemoryInterface> _domainToMiDico;

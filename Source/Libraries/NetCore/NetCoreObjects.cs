@@ -82,7 +82,7 @@ namespace RTCV.NetCore
         }
     }
 
-    public class NetCoreSpec : IDisposable
+    public class NetCoreSpec
     {
         // This is a parameters object that must be passed to netcore in order to establish a link
         // The values here will determine the behavior of the Link
@@ -472,12 +472,6 @@ namespace RTCV.NetCore
             {
                 logger.Trace(ex, "Exception!");
             }
-        }
-
-        public void Dispose()
-        {
-            Connector?.Dispose();
-            StatusEventLockout?.Dispose();
         }
     }
 
