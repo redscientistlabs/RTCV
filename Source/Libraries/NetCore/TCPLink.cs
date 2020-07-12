@@ -141,7 +141,7 @@ namespace RTCV.NetCore
                         NetCoreAdvancedMessage message = null;
                         try
                         {
-                            message = ReadMessageFromNetworkStream(ref networkStream, ref serializer);
+                            message = ReadMessageFromNetworkStream(ref serializer, ref networkStream);
                         }
                         catch { throw; }
 
@@ -255,7 +255,7 @@ namespace RTCV.NetCore
             return new CerasSerializer(config);
         }
 
-        private NetCoreAdvancedMessage ReadMessageFromNetworkStream(ref NetworkStream networkStream, ref CerasSerializer serializer)
+        private NetCoreAdvancedMessage ReadMessageFromNetworkStream(ref CerasSerializer serializer, ref NetworkStream networkStream)
         {
             NetCoreAdvancedMessage message = null;
             using (var ms = new MemoryStream())
