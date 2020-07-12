@@ -10,7 +10,7 @@ namespace RTCV.NetCore
     using System.Threading;
     using Ceras;
 
-    public class TCPLink
+    public class TCPLink : IDisposable
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private NetCoreSpec spec;
@@ -356,6 +356,15 @@ namespace RTCV.NetCore
         {
             linkWatch?.Kill();
             StopNetworking(false);
+        }
+
+        public void Dispose()
+        {
+            BoopMonitoringTimer.Dispose();
+            client.Dispose();
+            clientStream.Dispose();
+            linkWatch.Dispose();
+            spec.Dispose();
         }
 
         private void KillConnections(TcpClient clientRef)
