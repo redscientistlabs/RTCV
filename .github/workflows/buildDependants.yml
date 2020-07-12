@@ -219,7 +219,7 @@ jobs:
     - name: Checkout dolhpin
       uses: actions/checkout@v2
       with:
-        repo: 'NarryG/dolphin-vanguard'
+        repository: 'NarryG/dolphin-vanguard'
         ref: 'Vanguard'
         path: 'dolphin-vanguard'
         submodules: 'true'
