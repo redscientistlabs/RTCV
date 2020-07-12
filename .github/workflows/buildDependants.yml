@@ -212,3 +212,30 @@ jobs:
       run: |
         cd ${{runner.workspace}}\melonDS-Vanguard\melonDS-Vanguard\build
         msbuild melonDS.sln
+
+  dolphin:
+    runs-on: windows-2019
+    steps:
+    - name: Checkout dolhpin
+      uses: actions/checkout@v2
+      with:
+        repo: 'NarryG/dolphin-vanguard'
+        ref: 'Vanguard'
+        path: 'dolphin-vanguard'
+        submodules: 'true'
+    - name: Checkout current build target
+      uses: actions/checkout@v2
+      with:
+        path: 'RTCV'
+    - name: Setup Nuget
+      uses: nuget/setup-nuget@v1.0.2
+      with:
+        nuget-version: 'latest'
+    - name: Restore Nuget packages in RTCV
+      run: nuget restore '.\RTCV\'
+    - name: Restore Nuget packages in dolphin-vanguard
+      run: nuget restore '.\dolphin-vanguard\Source\dolphin-emu.sln'
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.0
+    - name: Build with MSBuild
+      run: msbuild '.\dolphin-vanguard\Source\dolphin-emu.sln' /property:Configuration=Debug /property:Platform=x64 /p:TreatWarningAsError=false
