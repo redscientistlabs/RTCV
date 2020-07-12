@@ -172,3 +172,43 @@ jobs:
     # Build ProcessStub
     - name: Build ProcessStub-Vanguard
       run: msbuild '.\ProcessStub-Vanguard\ProcessStub-Vanguard.sln'
+
+  melonDS:
+    runs-on: windows-2019
+    steps:
+    # Setup tooling
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.0
+    - name: Setup Nuget
+      uses: nuget/setup-nuget@v1.0.2
+      with:
+        nuget-version: 'latest'
+
+    # Setup RTCV
+    - name: Checkout current build target
+      uses: actions/checkout@v2
+      with:
+        path: 'RTCV'
+    - name: Restore Nuget packages in RTCV
+      run: nuget restore '.\RTCV\'
+    - name: Build RTCV
+      run: msbuild '.\RTCV\'
+
+    # Build melonDS
+    - name: Checkout melonDS-Vanguard
+      uses: actions/checkout@v2
+      with:
+        repository: 'NarryG/melonDS-Vanguard'
+        ref: 'Vanguard'
+        path: 'melonDS-Vanguard'
+    - name: Create build directory
+      run: |
+        New-Item -ItemType directory -Path ${{runner.workspace}}\melonDS-Vanguard\melonDS-Vanguard\build
+    - name: Configure
+      run: |
+        cd ${{runner.workspace}}\melonDS-Vanguard\melonDS-Vanguard\build
+        cmake .. -DENABLE_LTO=false -DDONT_COPY_FIRMWARE=true -DDONT_BUILD_EXTRA_SDL_CODE=true -DCI_BUILD_SHARED_LIBS=true -DCI_INCLUDE_EXTRA_LIBUI_LIBS=true
+    - name: Build melonDS-Vanguard
+      run: |
+        cd ${{runner.workspace}}\melonDS-Vanguard\melonDS-Vanguard\build
+        msbuild melonDS.sln
