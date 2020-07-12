@@ -205,11 +205,6 @@ namespace RTCV.NetCore
                         fileStream.Close();
                         fileStream = null;
                     }
-                    if (doubleWriter != null)
-                    {
-                        doubleWriter.Dispose();
-                        doubleWriter = null;
-                    }
                 }
             }
         }

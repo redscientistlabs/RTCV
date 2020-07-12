@@ -4,7 +4,7 @@ namespace RTCV.NetCore
     using System.Linq;
     using System.Threading;
 
-    public class NetCoreConnector : IRoutable, IDisposable
+    public class NetCoreConnector : IRoutable
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         public NetCoreSpec spec = null;
@@ -157,16 +157,6 @@ namespace RTCV.NetCore
         {
             Kill();
             Initialize();
-        }
-
-        public void Dispose()
-        {
-            Stop(true);
-            spec?.Dispose();
-            udp?.Dispose();
-            tcp?.Dispose();
-            hub?.Dispose();
-            watch?.Dispose();
         }
     }
 }

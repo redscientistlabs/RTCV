@@ -4,7 +4,6 @@
     using System.Windows.Forms;
     using static RTCV.UI.UI_Extensions;
 
-    #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class UI_ComponentFormTile : Form, ITileForm
     {
         public Form childForm = null;

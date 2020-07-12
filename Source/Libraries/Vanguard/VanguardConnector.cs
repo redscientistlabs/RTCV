@@ -6,7 +6,7 @@ namespace RTCV.Vanguard
     using RTCV.NetCore;
     using NetworkSide = RTCV.NetCore.NetworkSide;
 
-    public class VanguardConnector : IRoutable, IDisposable
+    public class VanguardConnector : IRoutable
     {
         public NetCoreReceiver receiver;
 
@@ -78,11 +78,6 @@ namespace RTCV.Vanguard
 
         public void Kill()
         {
-        }
-
-        public void Dispose()
-        {
-            netConn?.Dispose();
         }
 
         public static void PushVanguardSpecRef(FullSpec spec) => RTCV.NetCore.AllSpec.VanguardSpec = spec;

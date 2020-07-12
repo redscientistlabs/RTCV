@@ -8,7 +8,7 @@ namespace RTCV.PluginHost
     using System.Reflection;
     using NLog;
 
-    public class Host : IDisposable
+    public class Host
     {
         #pragma warning disable CS0649 //plugins are assigned by MEF, so "never assigned to" warning doesn't apply
         [ImportMany(typeof(IPlugin))]
@@ -93,11 +93,6 @@ namespace RTCV.PluginHost
             {
                 p.Stop();
             }
-        }
-
-        public void Dispose()
-        {
-            _container?.Dispose();
         }
 
         //We want people to be able to pack their plugins into singular binaries and Costura Fody seems like a good option

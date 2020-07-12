@@ -1,9 +1,8 @@
 ﻿namespace RTCV.NetCore
 {
-    using System;
     using System.Threading;
 
-    public class TCPLinkWatch : IDisposable
+    public class TCPLinkWatch
     {
         private volatile System.Timers.Timer watchdog = null;
         private object watchLock = new object();
@@ -38,11 +37,6 @@
         {
             watchdog?.Stop();
             watchdog = null;
-        }
-
-        public void Dispose()
-        {
-            watchdog?.Dispose();
         }
     }
 }
