@@ -676,6 +676,11 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.", "About"); }
 
+        private void btnTutorials_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://rtctutorialvideo.r5x.cc/");
+        }
+
         Rectangle RectRight => new Rectangle(this.ClientSize.Width - grabBorderSize, 0, grabBorderSize, this.ClientSize.Height);
         Rectangle RectTopLeft => new Rectangle(0, 0, grabBorderSize, grabBorderSize);
         Rectangle RectTopRight => new Rectangle(this.ClientSize.Width - grabBorderSize, 0, grabBorderSize, grabBorderSize);
