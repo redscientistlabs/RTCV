@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Data;
@@ -265,7 +265,7 @@
                 LimiterListHash = cbItem.Value;
             }
 
-            tbVmdName.Text = $"{mi} -> {limiter}";
+            tbVmdName.Text = $"{mi} -- {limiter}";
 
             GenerateVMD(true);
         }
