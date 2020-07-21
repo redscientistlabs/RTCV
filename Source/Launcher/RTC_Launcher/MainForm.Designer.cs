@@ -33,10 +33,11 @@
             this.lbMOTD = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.pnLeftSide = new System.Windows.Forms.Panel();
-            this.pbNewVersionNotification = new System.Windows.Forms.PictureBox();
             this.btnVersionDownloader = new System.Windows.Forms.Button();
             this.pnAnchorRight = new System.Windows.Forms.Panel();
+            this.pbNewVersionNotification = new System.Windows.Forms.PictureBox();
             this.pnTopPanel = new System.Windows.Forms.Panel();
+            this.btnTutorials = new System.Windows.Forms.Button();
             this.btnDiscord = new System.Windows.Forms.Button();
             this.btnMinimize = new System.Windows.Forms.Button();
             this.btnQuit = new System.Windows.Forms.Button();
@@ -100,18 +101,6 @@
             this.pnLeftSide.Size = new System.Drawing.Size(170, 509);
             this.pnLeftSide.TabIndex = 134;
             // 
-            // pbNewVersionNotification
-            // 
-            this.pbNewVersionNotification.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbNewVersionNotification.Image = global::RTCV.Launcher.Properties.Resources.notificationBadge;
-            this.pbNewVersionNotification.InitialImage = global::RTCV.Launcher.Properties.Resources.notificationBadge;
-            this.pbNewVersionNotification.Location = new System.Drawing.Point(142, 469);
-            this.pbNewVersionNotification.Name = "pbNewVersionNotification";
-            this.pbNewVersionNotification.Size = new System.Drawing.Size(14, 14);
-            this.pbNewVersionNotification.TabIndex = 131;
-            this.pbNewVersionNotification.TabStop = false;
-            this.pbNewVersionNotification.Visible = false;
-            // 
             // btnVersionDownloader
             // 
             this.btnVersionDownloader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
@@ -143,11 +132,24 @@
             this.pnAnchorRight.TabIndex = 133;
             this.pnAnchorRight.Paint += new System.Windows.Forms.PaintEventHandler(this.pnAnchorRight_Paint);
             // 
+            // pbNewVersionNotification
+            // 
+            this.pbNewVersionNotification.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbNewVersionNotification.Image = global::RTCV.Launcher.Properties.Resources.notificationBadge;
+            this.pbNewVersionNotification.InitialImage = global::RTCV.Launcher.Properties.Resources.notificationBadge;
+            this.pbNewVersionNotification.Location = new System.Drawing.Point(142, 469);
+            this.pbNewVersionNotification.Name = "pbNewVersionNotification";
+            this.pbNewVersionNotification.Size = new System.Drawing.Size(14, 14);
+            this.pbNewVersionNotification.TabIndex = 131;
+            this.pbNewVersionNotification.TabStop = false;
+            this.pbNewVersionNotification.Visible = false;
+            // 
             // pnTopPanel
             // 
             this.pnTopPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))));
             this.pnTopPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pnTopPanel.BackgroundImage")));
             this.pnTopPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pnTopPanel.Controls.Add(this.btnTutorials);
             this.pnTopPanel.Controls.Add(this.btnDiscord);
             this.pnTopPanel.Controls.Add(this.btnMinimize);
             this.pnTopPanel.Controls.Add(this.btnQuit);
@@ -157,6 +159,28 @@
             this.pnTopPanel.Name = "pnTopPanel";
             this.pnTopPanel.Size = new System.Drawing.Size(935, 41);
             this.pnTopPanel.TabIndex = 131;
+            // 
+            // btnTutorials
+            // 
+            this.btnTutorials.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnTutorials.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnTutorials.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnTutorials.FlatAppearance.BorderSize = 0;
+            this.btnTutorials.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnTutorials.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
+            this.btnTutorials.ForeColor = System.Drawing.Color.White;
+            this.btnTutorials.Image = global::RTCV.Launcher.Properties.Resources.youtube;
+            this.btnTutorials.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnTutorials.Location = new System.Drawing.Point(685, 8);
+            this.btnTutorials.Name = "btnTutorials";
+            this.btnTutorials.Size = new System.Drawing.Size(81, 24);
+            this.btnTutorials.TabIndex = 132;
+            this.btnTutorials.TabStop = false;
+            this.btnTutorials.Tag = "";
+            this.btnTutorials.Text = " Tutorials";
+            this.btnTutorials.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnTutorials.UseVisualStyleBackColor = false;
+            this.btnTutorials.Click += new System.EventHandler(this.btnTutorials_Click);
             // 
             // btnDiscord
             // 
@@ -169,7 +193,7 @@
             this.btnDiscord.ForeColor = System.Drawing.Color.White;
             this.btnDiscord.Image = global::RTCV.Launcher.Properties.Resources.discord;
             this.btnDiscord.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnDiscord.Location = new System.Drawing.Point(693, 8);
+            this.btnDiscord.Location = new System.Drawing.Point(606, 8);
             this.btnDiscord.Name = "btnDiscord";
             this.btnDiscord.Size = new System.Drawing.Size(73, 24);
             this.btnDiscord.TabIndex = 131;
@@ -281,6 +305,7 @@
         private System.Windows.Forms.Panel pnAnchorRight;
         private System.Windows.Forms.PictureBox pbNewVersionNotification;
         public System.Windows.Forms.Button btnVersionDownloader;
+        private System.Windows.Forms.Button btnTutorials;
     }
 }
 

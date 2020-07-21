@@ -39,10 +39,10 @@
             this.groupBox1.ForeColor = System.Drawing.Color.White;
             this.groupBox1.Location = new System.Drawing.Point(0, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(366, 74);
+            this.groupBox1.Size = new System.Drawing.Size(205, 49);
             this.groupBox1.TabIndex = 138;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Tag = "color:dark1";
+            this.groupBox1.Tag = "color:dark3";
             this.groupBox1.Text = "Tool";
             // 
             // btnOpenTool
@@ -52,9 +52,9 @@
             this.btnOpenTool.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOpenTool.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnOpenTool.ForeColor = System.Drawing.Color.White;
-            this.btnOpenTool.Location = new System.Drawing.Point(6, 26);
+            this.btnOpenTool.Location = new System.Drawing.Point(7, 16);
             this.btnOpenTool.Name = "btnOpenTool";
-            this.btnOpenTool.Size = new System.Drawing.Size(354, 30);
+            this.btnOpenTool.Size = new System.Drawing.Size(190, 23);
             this.btnOpenTool.TabIndex = 136;
             this.btnOpenTool.TabStop = false;
             this.btnOpenTool.Tag = "color:light1";
@@ -68,8 +68,8 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Controls.Add(this.groupBox1);
             this.Name = "OpenToolButton";
-            this.Size = new System.Drawing.Size(372, 83);
-            this.Tag = "color:dark1";
+            this.Size = new System.Drawing.Size(211, 57);
+            this.Tag = "color:dark3";
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
