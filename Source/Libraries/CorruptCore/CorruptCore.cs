@@ -13,6 +13,7 @@ namespace RTCV.CorruptCore
     using System.Threading.Tasks;
     using System.Windows.Forms;
     using Newtonsoft.Json;
+    using RTCV.Common.CustomExtensions;
     using RTCV.NetCore;
     using RTCV.PluginHost;
     using Timer = System.Windows.Forms.Timer;
