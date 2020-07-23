@@ -59,26 +59,6 @@
             currentDomainSize = Convert.ToInt64(mi.Size);
         }
 
-        public long SafeStringToLong(string input)
-        {
-            try
-            {
-                if (input.IndexOf("0X", StringComparison.OrdinalIgnoreCase) >= 0)
-                {
-                    return long.Parse(input.Substring(2), NumberStyles.HexNumber);
-                }
-                else
-                {
-                    return long.Parse(input, NumberStyles.HexNumber);
-                }
-            }
-            catch (FormatException e)
-            {
-                Console.Write(e);
-                return -1;
-            }
-        }
-
         public void btnGenerateVMD_Click(object sender, EventArgs e)
         {
             GenerateVMD();
@@ -145,48 +125,7 @@
                     trimmedLine = trimmedLine.Substring(1);
                 }
 
-                string[] lineParts = trimmedLine.Split('-');
-
-                if (lineParts.Length > 1)
-                {
-                    long start = SafeStringToLong(lineParts[0]);
-                    long end = SafeStringToLong(lineParts[1]);
-
-                    if (end < start)
-                    {
-                        continue;
-                    }
-
-                    if (end >= currentDomainSize)
-                    {
-                        end = Convert.ToInt64(currentDomainSize - 1);
-                    }
-
-                    if (remove)
-                    {
-                        proto.RemoveRanges.Add(new long[] { start, end });
-                    }
-                    else
-                    {
-                        proto.AddRanges.Add(new long[] { start, end });
-                    }
-                }
-                else
-                {
-                    long address = SafeStringToLong(lineParts[0]);
-
-                    if (address > 0 && address < currentDomainSize)
-                    {
-                        if (remove)
-                        {
-                            proto.RemoveSingles.Add(address);
-                        }
-                        else
-                        {
-                            proto.AddSingles.Add(address);
-                        }
-                    }
-                }
+                proto.AddFromTrimmedLine(trimmedLine, currentDomainSize, remove);
             }
 
             if (proto.AddRanges.Count == 0 && proto.AddSingles.Count == 0)
