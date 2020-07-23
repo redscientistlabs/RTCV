@@ -12,6 +12,7 @@
     using RTCV.CorruptCore;
     using RTCV.NetCore;
     using RTCV.Common;
+    using RTCV.Common.CustomExtensions;
     using static RTCV.UI.UI_Extensions;
 
     public partial class RTC_VmdAct_Form : ComponentForm, IAutoColorize, IBlockable
