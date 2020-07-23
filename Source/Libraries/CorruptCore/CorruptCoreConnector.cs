@@ -215,60 +215,7 @@ namespace RTCV.CorruptCore
                                         StockpileManager_EmuSide.LoadState_NET(sk, false);
                                     }
 
-                                    //We pull the domains here because if the syncsettings changed, there's a chance the domains changed
-                                    string[] domains = (string[])AllSpec.UISpec["SELECTEDDOMAINS"];
-
-                                    var cpus = Environment.ProcessorCount;
-
-                                    if (cpus == 1 || AllSpec.VanguardSpec[VSPEC.SUPPORTS_MULTITHREAD] == null)
-                                    {
-                                        bl = RtcCore.GenerateBlastLayer(domains);
-                                    }
-                                    else
-                                    {
-                                        //if emulator supports multithreaded access of the domains, disregard the emulation thread and just span threads...
-
-                                        long reminder = RtcCore.Intensity % (cpus - 1);
-
-                                        long splitintensity = (RtcCore.Intensity - reminder) / (cpus - 1);
-
-                                        Task<BlastLayer>[] tasks = new Task<BlastLayer>[cpus];
-                                        for (int i = 0; i < cpus; i++)
-                                        {
-                                            long requestedIntensity = splitintensity;
-
-                                            if (i == 0 && reminder != 0)
-                                            {
-                                                requestedIntensity = reminder;
-                                            }
-
-                                            tasks[i] = Task.Factory.StartNew(() =>
-                                                RtcCore.GenerateBlastLayer(domains, requestedIntensity));
-                                        }
-
-                                        Task.WaitAll(tasks);
-
-                                        bl = tasks[0]
-                                            .Result ?? new BlastLayer();
-
-                                        if (tasks.Length > 1)
-                                        {
-                                            for (int i = 1; i < tasks.Length; i++)
-                                            {
-                                                if (tasks[i]
-                                                    .Result != null)
-                                                {
-                                                    bl.Layer.AddRange(tasks[i]
-                                                        .Result.Layer);
-                                                }
-                                            }
-                                        }
-
-                                        if (bl.Layer.Count == 0)
-                                        {
-                                            bl = null;
-                                        }
-                                    }
+                                    bl = RtcCore.GenerateBlastLayerOnAllThreads();
 
                                     if (applyBlastLayer)
                                     {
