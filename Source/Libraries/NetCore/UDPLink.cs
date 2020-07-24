@@ -6,7 +6,7 @@ namespace RTCV.NetCore
     using System.Text;
     using System.Threading;
 
-    public class UDPLink
+    public class UDPLink : IDisposable
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private NetCoreSpec spec;
@@ -46,6 +46,12 @@ namespace RTCV.NetCore
             ReaderThread = null;
 
             try { Sender.Close(); } catch { }
+        }
+
+        public void Dispose()
+        {
+            Sender?.Dispose();
+            spec?.Dispose();
         }
 
         internal void SendMessage(NetCoreSimpleMessage message)

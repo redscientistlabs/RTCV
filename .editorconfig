@@ -327,9 +327,6 @@ dotnet_diagnostic.CA2200.severity = none
 # Non-constant fields should not be visible
 dotnet_diagnostic.CA2211.severity = none
 
-# Change Dispore method to call Close or Dispose
-dotnet_diagnostic.CA2213.severity = none
-
 # Change to be read-only by removing the property setter
 dotnet_diagnostic.CA2227.severity = none
 

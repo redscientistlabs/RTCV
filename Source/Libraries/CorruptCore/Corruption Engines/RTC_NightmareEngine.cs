@@ -1,6 +1,7 @@
 ﻿namespace RTCV.CorruptCore
 {
     using System.Windows.Forms;
+    using RTCV.Common.CustomExtensions;
     using RTCV.NetCore;
 
     public static class RTC_NightmareEngine

@@ -13,6 +13,7 @@ namespace RTCV.CorruptCore
     using System.Threading.Tasks;
     using System.Windows.Forms;
     using Newtonsoft.Json;
+    using RTCV.Common.CustomExtensions;
     using RTCV.NetCore;
     using RTCV.PluginHost;
     using Timer = System.Windows.Forms.Timer;
@@ -656,6 +657,53 @@ namespace RTCV.CorruptCore
             }
         }
 
+        public static BlastLayer GenerateBlastLayerOnAllThreads()
+        {
+            //We pull the domains here because if the syncsettings changed, there's a chance the domains changed
+            var domains = (string[])AllSpec.UISpec["SELECTEDDOMAINS"];
+            var cpus = Environment.ProcessorCount;
+
+            //If there is only one thread, only generate a single BlastLayer.
+            if (cpus == 1 || AllSpec.VanguardSpec[VSPEC.SUPPORTS_MULTITHREAD] == null)
+            {
+                return GenerateBlastLayer(domains);
+            }
+
+            //if emulator supports multithreaded access of the domains, disregard the emulation thread and just span threads...
+            var reminder = Intensity % (cpus - 1);
+            var splitintensity = (Intensity - reminder) / (cpus - 1);
+            var tasks = new Task<BlastLayer>[cpus];
+            for (var i = 0; i < cpus; i++)
+            {
+                var requestedIntensity = splitintensity;
+                if (i == 0 && reminder != 0)
+                {
+                    requestedIntensity = reminder;
+                }
+
+                tasks[i] = Task.Factory.StartNew(() => GenerateBlastLayer(domains, requestedIntensity));
+            }
+
+            Task.WaitAll(tasks);
+
+            BlastLayer bl = tasks[0].Result ?? new BlastLayer();
+
+            for (var i = 1; i < tasks.Length; i++)
+            {
+                if (tasks[i].Result != null)
+                {
+                    bl.Layer.AddRange(tasks[i].Result.Layer);
+                }
+            }
+
+            if (bl.Layer.Count == 0)
+            {
+                bl = null;
+            }
+
+            return bl;
+        }
+
         private static long GetIntensity(long overrideIntensity)
         {
             var intensity = RtcCore.Intensity; //general RTC intensity
@@ -953,55 +1001,7 @@ namespace RTCV.CorruptCore
             BlastLayer bl = null;
             void _generateAndBlast()
             {
-                //We pull the domains here because if the syncsettings changed, there's a chance the domains changed
-                string[] domains = (string[])AllSpec.UISpec["SELECTEDDOMAINS"];
-
-                var cpus = Environment.ProcessorCount;
-
-                if (cpus == 1 || AllSpec.VanguardSpec[VSPEC.SUPPORTS_MULTITHREAD] == null)
-                {
-                    bl = RtcCore.GenerateBlastLayer(domains);
-                }
-                else
-                {
-                    //if emulator supports multithreaded access of the domains, disregard the emulation thread and just span threads...
-                    var reminder = RtcCore.Intensity % (cpus - 1);
-                    var splitintensity = (RtcCore.Intensity - reminder) / (cpus - 1);
-
-                    var tasks = new Task<BlastLayer>[cpus];
-                    for (var i = 0; i < cpus; i++)
-                    {
-                        var requestedIntensity = splitintensity;
-
-                        if (i == 0 && reminder != 0)
-                        {
-                            requestedIntensity = reminder;
-                        }
-
-                        tasks[i] = Task.Factory.StartNew(() => RtcCore.GenerateBlastLayer(domains, requestedIntensity));
-                    }
-
-                    Task.WaitAll(tasks);
-
-                    bl = tasks[0].Result ?? new BlastLayer();
-
-                    if (tasks.Length > 1)
-                    {
-                        for (var i = 1; i < tasks.Length; i++)
-                        {
-                            if (tasks[i].Result != null)
-                            {
-                                bl.Layer.AddRange(tasks[i].Result.Layer);
-                            }
-                        }
-                    }
-
-                    if (bl.Layer.Count == 0)
-                    {
-                        bl = null;
-                    }
-                }
-
+                bl = GenerateBlastLayerOnAllThreads();
                 bl?.Apply(false, true);
             }
             //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation

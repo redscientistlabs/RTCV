@@ -14,6 +14,7 @@ namespace RTCV.CorruptCore
     using Ceras;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
+    using RTCV.Common.CustomExtensions;
     using RTCV.Common.Objects;
     using RTCV.NetCore;
     using Exception = System.Exception;
