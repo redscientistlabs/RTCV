@@ -4,20 +4,6 @@ namespace RTCV.CorruptCore
     using System.Collections.Generic;
     using Ceras;
 
-    [Serializable]
-    [Ceras.MemberConfig(TargetMember.All)]
-    public class BlastTarget
-    {
-        public string Domain = null;
-        public long Address = 0;
-
-        public BlastTarget(string _domain, long _address)
-        {
-            Domain = _domain;
-            Address = _address;
-        }
-    }
-
     /// <summary>
     /// Working data for BlastUnits.
     /// Not serialized
