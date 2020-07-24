@@ -113,8 +113,9 @@
     <Compile Include="Enums.cs" />
     <Compile Include="CorruptCore_Extensions.cs" />
     <Compile Include="Filtering.cs" />
+    <Compile Include="INote.cs" />
     <Compile Include="MemoryDomains.cs" />
-    <Compile Include="Objects.cs" />
+    <Compile Include="ProgressBar.cs" />
     <Compile Include="Render.cs" />
     <Compile Include="BlastDiff.cs" />
     <Compile Include="SaveStateKey.cs" />
