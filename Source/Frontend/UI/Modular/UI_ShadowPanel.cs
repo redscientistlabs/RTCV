@@ -4,6 +4,7 @@
     using System.Drawing;
     using System.Windows.Forms;
 
+    #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class UI_ShadowPanel : Form
     {
         public UI_CanvasForm parentForm;
