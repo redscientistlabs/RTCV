@@ -2,6 +2,7 @@ namespace RTCV.CorruptCore
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using System.IO.Compression;
     using System.Linq;
@@ -600,6 +601,72 @@ namespace RTCV.CorruptCore
             }
 
             return false;
+        }
+
+        public void AddFromTrimmedLine(string trimmedLine, long currentDomainSize, bool remove)
+        {
+            var lineParts = trimmedLine.Split('-');
+
+            if (lineParts.Length > 1)
+            {
+                var start = SafeStringToLong(lineParts[0]);
+                var end = SafeStringToLong(lineParts[1]);
+
+                if (end < start)
+                {
+                    return;
+                }
+
+                if (end >= currentDomainSize)
+                {
+                    end = Convert.ToInt64(currentDomainSize - 1);
+                }
+
+                if (remove)
+                {
+                    RemoveRanges.Add(new long[] { start, end });
+                }
+                else
+                {
+                    AddRanges.Add(new long[] { start, end });
+                }
+            }
+            else
+            {
+                var address = SafeStringToLong(lineParts[0]);
+
+                if (address > 0 && address < currentDomainSize)
+                {
+                    if (remove)
+                    {
+                        RemoveSingles.Add(address);
+                    }
+                    else
+                    {
+                        AddSingles.Add(address);
+                    }
+                }
+            }
+        }
+
+        private static long SafeStringToLong(string input)
+        {
+            try
+            {
+                if (input.IndexOf("0X", StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    return long.Parse(input.Substring(2), NumberStyles.HexNumber);
+                }
+                else
+                {
+                    return long.Parse(input, NumberStyles.HexNumber);
+                }
+            }
+            catch (FormatException e)
+            {
+                Console.Write(e);
+                return -1;
+            }
         }
     }
 

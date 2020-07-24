@@ -362,6 +362,11 @@ namespace RTCV.Common
                     fileStream.Close();
                     fileStream = null;
                 }
+                if (doubleWriter != null)
+                {
+                    doubleWriter.Dispose();
+                    doubleWriter = null;
+                }
             }
         }
     }

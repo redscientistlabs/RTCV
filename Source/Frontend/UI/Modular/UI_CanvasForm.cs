@@ -6,6 +6,7 @@
     using System.Windows.Forms;
     using RTCV.Common;
 
+    #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class UI_CanvasForm : Form, IBlockable
     {
         public static UI_CanvasForm mainForm;

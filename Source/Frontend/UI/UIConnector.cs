@@ -7,7 +7,7 @@ namespace RTCV.UI
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public class UIConnector : IRoutable
+    public class UIConnector : IRoutable, IDisposable
     {
         private NetCoreReceiver receiver;
         public NetCoreConnector netConn;
@@ -127,6 +127,11 @@ namespace RTCV.UI
         public void Restart()
         {
             netConn.Restart();
+        }
+
+        public void Dispose()
+        {
+            netConn?.Dispose();
         }
     }
 }
