@@ -1640,11 +1640,11 @@ namespace RTCV.CorruptCore
             //Todo - Change this to a more unique marker than [V]?
             if (Domain.Contains(vmdToRasterize))
             {
-                breakDown = SetDomainAndAddress(false);
+                breakDown = SetRealDomainAndAddress(false);
             }
             if (SourceDomain?.Contains(vmdToRasterize) ?? false)
             {
-                breakDown = SetDomainAndAddress(true);
+                breakDown = SetRealDomainAndAddress(true);
             }
 
             if (breakDown)
@@ -1664,7 +1664,7 @@ namespace RTCV.CorruptCore
             return l.Layer;
         }
 
-        private bool SetDomainAndAddress(bool useSourceDomain)
+        private bool SetRealDomainAndAddress(bool useSourceDomain)
         {
             var breakDown = false;
             var localDomain = useSourceDomain ? (string)SourceDomain.Clone() : (string)Domain.Clone();
