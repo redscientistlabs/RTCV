@@ -32,7 +32,7 @@ namespace RTCV.UI
             {
                 if (f.Contains(".vmd"))
                 {
-                    importVmd(f);
+                    ImportVMD(f);
                 }
             }
             RefreshVMDs();
@@ -161,24 +161,13 @@ namespace RTCV.UI
             }
         }
 
-        private void importVmd(string path)
+        private void ImportVMD(string filename)
         {
-            string shortPath = path.Substring(path.LastIndexOf('\\') + 1);
-            string targetPath = Path.Combine(RtcCore.vmdsDir, shortPath);
-
-            if (File.Exists(targetPath))
+            var operationCancelled = Common.CopyFileWithOverwritePrompt(filename, RtcCore.vmdsDir);
+            if (!operationCancelled)
             {
-                var result = MessageBox.Show("This file already exist in your VMDs folder, do you want to overwrite it?", "Overwrite file?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (result == DialogResult.No)
-                    return;
-
-                File.Delete(targetPath);
+                RefreshVMDs();
             }
-
-            File.Copy(path, targetPath);
-
-
-            RefreshVMDs();
         }
 
 
@@ -240,7 +229,7 @@ namespace RTCV.UI
                 {
                     try
                     {
-                        importVmd(filename);
+                        ImportVMD(filename);
                     }
                     catch (Exception ex)
                     {
