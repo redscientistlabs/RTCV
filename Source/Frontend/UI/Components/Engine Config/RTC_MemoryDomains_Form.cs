@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Data;
@@ -11,6 +11,7 @@
     using RTCV.Common;
     using static RTCV.UI.UI_Extensions;
 
+    #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class RTC_MemoryDomains_Form : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
@@ -228,7 +229,7 @@
                         var menu = new ToolStripMenuItem();
 
                         string extraVector = "";
-                        if (MemoryDomains.VmdPool.ContainsKey($"[V]{mi.Value} -> {vectorLimiter}"))
+                        if (MemoryDomains.VmdPool.ContainsKey($"[V]{mi.Value} -- {vectorLimiter}"))
                             extraVector = " (Regenerate)";
 
                         var currentListMenuItem = new ToolStripMenuItem();
@@ -250,7 +251,7 @@
                             var subMenuItem = new ToolStripMenuItem();
 
                             string extra = "";
-                            if (MemoryDomains.VmdPool.ContainsKey($"[V]{mi.Value} -> {listName}"))
+                            if (MemoryDomains.VmdPool.ContainsKey($"[V]{mi.Value} -- {listName}"))
                                 extra = " (Regenerate)";
 
                             subMenuItem.Text = "-> " + listName + extra;

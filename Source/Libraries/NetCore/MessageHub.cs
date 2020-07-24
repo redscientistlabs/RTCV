@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Timers;
 
-    public class MessageHub
+    public class MessageHub : IDisposable
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private NetCoreSpec spec;
@@ -137,6 +137,12 @@
             {
                 hubTimer.Stop();
             }
+        }
+
+        public void Dispose()
+        {
+            Kill();
+            hubTimer?.Dispose();
         }
     }
 
