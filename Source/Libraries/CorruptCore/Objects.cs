@@ -95,27 +95,6 @@ namespace RTCV.CorruptCore
         string Note { get; set; }
     }
 
-    /// <summary>
-    /// A generic object for combobox purposes.
-    /// Has a name and a value of type T for storing any object.
-    /// </summary>
-    /// <typeparam name="T">The type of object you want the comboxbox value to be</typeparam>
-    public class ComboBoxItem<T>
-    {
-        public string Name { get; set; }
-        public T Value { get; set; }
-
-        public ComboBoxItem(string name, T value)
-        {
-            Name = name;
-            Value = value;
-        }
-
-        public ComboBoxItem()
-        {
-        }
-    }
-
     public delegate void ProgressBarEventHandler(object source, ProgressBarEventArgs e);
 
     public class ProgressBarEventArgs : EventArgs
