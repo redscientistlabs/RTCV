@@ -1664,11 +1664,11 @@ namespace RTCV.CorruptCore
             return l.Layer;
         }
 
-        private bool SetRealDomainAndAddress(bool useSourceDomain)
+        private bool SetRealDomainAndAddress(bool setSourceDomain)
         {
             var breakDown = false;
-            var localDomain = useSourceDomain ? (string)SourceDomain.Clone() : (string)Domain.Clone();
-            var localAddress = useSourceDomain ? SourceAddress : Address;
+            var localDomain = setSourceDomain ? (string)SourceDomain.Clone() : (string)Domain.Clone();
+            var localAddress = setSourceDomain ? SourceAddress : Address;
 
             if (MemoryDomains.VmdPool[localDomain] is VirtualMemoryDomain vmd)
             {
@@ -1689,7 +1689,7 @@ namespace RTCV.CorruptCore
 
                 if (!breakDown)
                 {
-                    if (useSourceDomain)
+                    if (setSourceDomain)
                     {
                         SourceDomain = vmd.GetRealDomain(localAddress);
                         SourceAddress = vmd.GetRealAddress(localAddress);
