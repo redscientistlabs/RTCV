@@ -116,6 +116,7 @@
     <Compile Include="Objects.cs" />
     <Compile Include="Render.cs" />
     <Compile Include="BlastDiff.cs" />
+    <Compile Include="SaveStateKey.cs" />
     <Compile Include="StashKey.cs" />
     <Compile Include="StepActions.cs" />
     <Compile Include="Stockpile.cs" />
