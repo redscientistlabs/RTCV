@@ -1,8 +1,6 @@
 namespace RTCV.CorruptCore
 {
     using System;
-    using System.Collections.Generic;
-    using Ceras;
 
     [Serializable]
     public class ActiveTableObject
