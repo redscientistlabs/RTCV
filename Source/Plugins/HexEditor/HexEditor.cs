@@ -1290,39 +1290,7 @@ namespace RTCV.Plugins.HexEditor
         }
 
         private void PokeAddressMenuItem_Click(object sender, EventArgs e)
-        {/*
-            var addresses = new List<long>();
-            if (HighlightedAddress.HasValue)
-            {
-                addresses.Add(HighlightedAddress.Value);
-            }
-
-            if (_secondaryHighlightedAddresses.Any())
-            {
-                addresses.AddRange(_secondaryHighlightedAddresses);
-            }
-
-            if (addresses.Any())
-            {
-                BlastUnit bu = new BlastUnit(StoreType.ONCE, StoreTime.IMMEDIATE, _domain.Name, address, _domain.Name, address, DataSize, _domain.BigEndian, 0, 0);;
-                var poke = new RamPoke
-                {
-                    InitialLocation = this.ChildPointToScreen(AddressLabel),
-                    ParentTool = this
-                };
-
-                var watches = addresses.Select(
-                    address => Watch.GenerateWatch(
-                        _domain,
-                        address,
-                        (WatchSize)DataSize,
-                        Client.Common.DisplayType.Hex,
-                        BigEndian));
-
-                poke.SetWatch(watches);
-                poke.ShowHawkDialog();
-                UpdateValues();
-            }*/
+        {
         }
 
         #endregion
