@@ -275,16 +275,9 @@ namespace RTCV.Plugins.HexEditor
 
             var numByte = search.Length / 2;
 
-            long startByte;
-            if (_addressHighlighted == -1)
-            {
-                startByte = 0;
-            }
-            else if (_addressHighlighted >= (_domain.Size - 1 - numByte))
-            {
-                startByte = 0;
-            }
-            else
+            var startByte = 0L;
+            if (_addressHighlighted != -1 &&
+                _addressHighlighted < (_domain.Size - 1 - numByte))
             {
                 startByte = _addressHighlighted + DataSize;
             }
