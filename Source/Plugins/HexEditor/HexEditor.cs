@@ -1219,10 +1219,6 @@ namespace RTCV.Plugins.HexEditor
             }
         }
 
-        private void MemoryDomainsMenuItem_DropDown(object sender, EventArgs e)
-        {
-        }
-
         private void DataSizeByteMenuItem_Click(object sender, EventArgs e)
         {
             SetDataSize(1);
