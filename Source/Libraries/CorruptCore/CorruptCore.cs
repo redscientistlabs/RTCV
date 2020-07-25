@@ -18,6 +18,12 @@ namespace RTCV.CorruptCore
     using RTCV.PluginHost;
     using Timer = System.Windows.Forms.Timer;
 
+    public class ProblematicProcess
+    {
+        public string Name { get; set; }
+        public string Message { get; set; }
+    }
+
     public static class RtcCore
     {
         //General RTC Values
