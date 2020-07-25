@@ -12,6 +12,7 @@ namespace RTCV.Plugins.HexEditor
     using System.Threading.Tasks;
     using System.Windows.Forms;
     using RTCV.NetCore;
+    using RTCV.Common.CustomExtensions;
     using RTCV.CorruptCore;
     using NLog;
 
