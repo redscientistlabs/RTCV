@@ -34,7 +34,7 @@ namespace RTCV.UI
             {
                 if (f.Contains(".txt"))
                 {
-                    importList(f);
+                    ImportList(f);
                 }
             }
             RefreshLists();
@@ -171,34 +171,22 @@ namespace RTCV.UI
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                string filename = saveFileDialog1.FileName;
-
-                if (File.Exists(filename))
-                    File.Delete(filename);
-
-                File.Copy(path, filename);
+                var filename = saveFileDialog1.FileName;
+                Common.ReplaceFile(path, filename);
             }
         }
 
-        private void importList(string path)
+        private void ImportList(string filename)
         {
-            string shortPath = path.Substring(path.LastIndexOf('\\') + 1);
-            string targetPath = Path.Combine(RtcCore.ListsDir, shortPath);
-
-            if (File.Exists(targetPath))
+            try
             {
-                var result = MessageBox.Show("This file already exist in your VMDs folder, do you want to overwrite it?", "Overwrite file?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (result == DialogResult.No)
-                    return;
-
-                File.Delete(targetPath);
+                Common.CopyFile(filename, RtcCore.ListsDir, true);
+                RefreshLists();
             }
-
-            File.Copy(path, targetPath);
-
-            RefreshLists();
+            catch (Common.OverwriteCancelledException)
+            {
+            }
         }
-
 
         private void btnLoadVmd_Click(object sender, EventArgs e)
         {
@@ -282,7 +270,7 @@ namespace RTCV.UI
                 {
                     try
                     {
-                        importList(filename);
+                        ImportList(filename);
                     }
                     catch (Exception ex)
                     {

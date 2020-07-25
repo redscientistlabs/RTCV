@@ -198,6 +198,7 @@
     <Compile Include="Components\Glitch Harvester\RTC_StockpileManager_Form.designer.cs">
       <DependentUpon>RTC_StockpileManager_Form.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\Memory Tools\Common.cs" />
     <Compile Include="Components\Memory Tools\RTC_DomainAnalytics_Form.cs">
       <SubType>Form</SubType>
     </Compile>
