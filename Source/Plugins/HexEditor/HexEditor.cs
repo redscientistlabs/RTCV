@@ -394,12 +394,7 @@ namespace RTCV.Plugins.HexEditor
             }
             else
             {
-                if (val < ' ')
-                {
-                    return '.';
-                }
-
-                if (val >= 0x7F)
+                if (val < ' ' || val >= 0x7F)
                 {
                     return '.';
                 }
