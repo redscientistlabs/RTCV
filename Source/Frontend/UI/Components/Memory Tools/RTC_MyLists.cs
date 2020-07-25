@@ -2,6 +2,7 @@ namespace RTCV.UI
 {
     using System;
     using System.Data;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Windows.Forms;
@@ -171,18 +172,14 @@ namespace RTCV.UI
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                string filename = saveFileDialog1.FileName;
-
-                if (File.Exists(filename))
-                    File.Delete(filename);
-
-                File.Copy(path, filename);
+                var filename = saveFileDialog1.FileName;
+                Debug.Assert(!Common.ReplaceFile(path, filename));
             }
         }
 
         private void ImportList(string filename)
         {
-            var operationCancelled = Common.CopyFileWithOverwritePrompt(filename, RtcCore.listsDir);
+            var operationCancelled = Common.CopyFile(filename, RtcCore.listsDir, true);
             if (!operationCancelled)
             {
                 RefreshLists();

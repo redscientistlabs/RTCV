@@ -1,6 +1,7 @@
 namespace RTCV.UI
 {
     using System;
+    using System.Diagnostics;
     using System.IO;
     using System.Windows.Forms;
     using RTCV.CorruptCore;
@@ -151,19 +152,14 @@ namespace RTCV.UI
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                string filename = saveFileDialog1.FileName;
-
-
-                if (File.Exists(filename))
-                    File.Delete(filename);
-
-                File.Copy(path, filename);
+                var filename = saveFileDialog1.FileName;
+                Debug.Assert(!Common.ReplaceFile(path, filename));
             }
         }
 
         private void ImportVMD(string filename)
         {
-            var operationCancelled = Common.CopyFileWithOverwritePrompt(filename, RtcCore.vmdsDir);
+            var operationCancelled = Common.CopyFile(filename, RtcCore.vmdsDir, true);
             if (!operationCancelled)
             {
                 RefreshVMDs();
