@@ -837,7 +837,7 @@ namespace RTCV.Plugins.HexEditor
 
         private int GetTextOffset()
         {
-            int start = (16 / DataSize) * _fontWidth * (DataSize * 2 + 1);
+            var start = (16 / DataSize) * _fontWidth * (DataSize * 2 + 1);
             start += AddressesLabel.Location.X + _fontWidth / 2;
             start += _fontWidth * 2;
             return start;
@@ -883,7 +883,7 @@ namespace RTCV.Plugins.HexEditor
                 return;
             }
 
-            List<long> allAddresses = new List<long>() { HighlightedAddress.Value };
+            var allAddresses = new List<long>() { HighlightedAddress.Value };
             allAddresses.AddRange(_secondaryHighlightedAddresses);
             CreateVmdFromSelected(_domain.Name, allAddresses, DataSize);
 
@@ -913,15 +913,11 @@ namespace RTCV.Plugins.HexEditor
 
             foreach (var item in ordered)
             {
-                if (lastAddress != null) //not the first one
+                if (lastAddress != null && //not the first one
+                    i != (ordered.Length - 1) && //not the last one
+                    item != lastAddress.Value + 1) //checks expected address
                 {
-                    if (i != (ordered.Length - 1)) //not the last one
-                    {
-                        if (item != lastAddress.Value + 1) //checks expected address
-                        {
-                            contiguous = false;
-                        }
-                    }
+                    contiguous = false;
                 }
 
                 lastAddress = item;
