@@ -453,15 +453,6 @@ namespace RTCV.Plugins.HexEditor
             this.Activate();
         }
 
-        // TODO: rename me
-        private void SaveConfigSettings()
-        {
-            if (_hexFind.IsHandleCreated || !_hexFind.IsDisposed)
-            {
-                _hexFind.Close();
-            }
-        }
-
         private string GenerateAddressString()
         {
             var addrStr = new StringBuilder();
@@ -894,24 +885,6 @@ namespace RTCV.Plugins.HexEditor
             return _nibbles.Any(x => x != 'G');
         }
 
-        private string MakeNibbles()
-        {
-            var str = "";
-            for (var x = 0; x < (DataSize * 2); x++)
-            {
-                if (_nibbles[x] != 'G')
-                {
-                    str += _nibbles[x];
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            return str;
-        }
-
         private void AddToSecondaryHighlights(long address)
         {
             if (address >= 0 && address < _domain.Size && !_secondaryHighlightedAddresses.Contains(address))
@@ -1062,35 +1035,6 @@ namespace RTCV.Plugins.HexEditor
             {
                 _secondaryHighlightedAddresses.Add(found + DataSize + i);
             }
-        }
-
-        private bool LoadTable(string path)
-        {
-            if (string.IsNullOrWhiteSpace(path))
-            {
-                return false;
-            }
-
-            var file = new FileInfo(path);
-            if (!file.Exists)
-            {
-                return false;
-            }
-
-            using (var sr = file.OpenText())
-            {
-                string line;
-
-                while ((line = sr.ReadLine()) != null)
-                {
-                    var parts = line.Split('=');
-                    _textTable.Add(
-                        int.Parse(parts[0],
-                        NumberStyles.HexNumber), parts[1].First());
-                }
-            }
-
-            return true;
         }
 
         #region Events
