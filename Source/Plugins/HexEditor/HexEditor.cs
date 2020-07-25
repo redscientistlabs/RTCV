@@ -737,23 +737,6 @@ namespace RTCV.Plugins.HexEditor
             }
         }
 
-        private void SaveFileBinary(string path)
-        {
-            var file = new FileInfo(path);
-            using (var binWriter = new BinaryWriter(File.Open(file.FullName, FileMode.Create)))
-            {
-                for (var i = 0; i < _domain.Size; i++)
-                {
-                    binWriter.Write(_domain.PeekByte(i));
-                }
-            }
-        }
-
-        private string GetSaveFileFilter()
-        {
-            return "Binary (*.bin)|*.bin|All Files|*.*";
-        }
-
         private void ResetScrollBar()
         {
             HexScrollBar.Value = 0;
