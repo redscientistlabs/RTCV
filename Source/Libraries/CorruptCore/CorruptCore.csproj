@@ -69,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivationTableObject.cs" />
     <Compile Include="BitlogicListFilter.cs" />
     <Compile Include="Blast Generator Engines\RTC_ValueGenerator.cs" />
     <Compile Include="Blast Generator Engines\RTC_StoreGenerator.cs" />
