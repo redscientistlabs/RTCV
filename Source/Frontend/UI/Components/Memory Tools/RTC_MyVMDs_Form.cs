@@ -153,16 +153,19 @@ namespace RTCV.UI
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 var filename = saveFileDialog1.FileName;
-                Debug.Assert(!Common.ReplaceFile(path, filename));
+                Common.ReplaceFile(path, filename);
             }
         }
 
         private void ImportVMD(string filename)
         {
-            var operationCancelled = Common.CopyFile(filename, RtcCore.vmdsDir, true);
-            if (!operationCancelled)
+            try
             {
+                Common.CopyFile(filename, RtcCore.vmdsDir, true);
                 RefreshVMDs();
+            }
+            catch (Common.OverwriteCancelledException)
+            {
             }
         }
 

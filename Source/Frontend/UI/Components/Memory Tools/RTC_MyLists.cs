@@ -173,16 +173,19 @@ namespace RTCV.UI
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 var filename = saveFileDialog1.FileName;
-                Debug.Assert(!Common.ReplaceFile(path, filename));
+                Common.ReplaceFile(path, filename);
             }
         }
 
         private void ImportList(string filename)
         {
-            var operationCancelled = Common.CopyFile(filename, RtcCore.listsDir, true);
-            if (!operationCancelled)
+            try
             {
+                Common.CopyFile(filename, RtcCore.listsDir, true);
                 RefreshLists();
+            }
+            catch (Common.OverwriteCancelledException)
+            {
             }
         }
 
