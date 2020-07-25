@@ -194,23 +194,19 @@ namespace RTCV.NetCore.NetCore_Extensions
                 Console.SetOut(oldOut);
                 if (FileWriter != null)
                 {
-                    Console.SetOut(oldOut);
-                    if (FileWriter != null)
-                    {
-                        FileWriter.Flush();
-                        FileWriter.Close();
-                        FileWriter = null;
-                    }
-                    if (fileStream != null)
-                    {
-                        fileStream.Close();
-                        fileStream = null;
-                    }
-                    if (doubleWriter != null)
-                    {
-                        doubleWriter.Dispose();
-                        doubleWriter = null;
-                    }
+                    FileWriter.Flush();
+                    FileWriter.Close();
+                    FileWriter = null;
+                }
+                if (fileStream != null)
+                {
+                    fileStream.Close();
+                    fileStream = null;
+                }
+                if (doubleWriter != null)
+                {
+                    doubleWriter.Dispose();
+                    doubleWriter = null;
                 }
             }
         }
