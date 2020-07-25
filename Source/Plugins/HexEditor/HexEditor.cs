@@ -1382,15 +1382,13 @@ namespace RTCV.Plugins.HexEditor
                         {
                             AddToSecondaryHighlights(i);
                         }
-
-                        GoToAddress(newHighlighted);
                     }
                     else
                     {
                         _secondaryHighlightedAddresses.Clear();
-                        GoToAddress(newHighlighted);
                     }
 
+                    GoToAddress(newHighlighted);
                     break;
                 case Keys.Down:
                     newHighlighted = _addressHighlighted + 16;
@@ -1400,43 +1398,39 @@ namespace RTCV.Plugins.HexEditor
                         {
                             AddToSecondaryHighlights(i);
                         }
-
-                        GoToAddress(newHighlighted);
                     }
                     else
                     {
                         _secondaryHighlightedAddresses.Clear();
-                        GoToAddress(newHighlighted);
                     }
 
+                    GoToAddress(newHighlighted);
                     break;
                 case Keys.Left:
                     newHighlighted = _addressHighlighted - (1 * DataSize);
                     if (e.Modifiers == Keys.Shift)
                     {
                         AddToSecondaryHighlights(_addressHighlighted);
-                        GoToAddress(newHighlighted);
                     }
                     else
                     {
                         _secondaryHighlightedAddresses.Clear();
-                        GoToAddress(newHighlighted);
                     }
 
+                    GoToAddress(newHighlighted);
                     break;
                 case Keys.Right:
                     newHighlighted = _addressHighlighted + (1 * DataSize);
                     if (e.Modifiers == Keys.Shift)
                     {
                         AddToSecondaryHighlights(_addressHighlighted);
-                        GoToAddress(newHighlighted);
                     }
                     else
                     {
                         _secondaryHighlightedAddresses.Clear();
-                        GoToAddress(newHighlighted);
                     }
 
+                    GoToAddress(newHighlighted);
                     break;
                 case Keys.PageUp:
                     newHighlighted = _addressHighlighted - (_rowsVisible * 16);
@@ -1446,15 +1440,13 @@ namespace RTCV.Plugins.HexEditor
                         {
                             AddToSecondaryHighlights(i);
                         }
-
-                        GoToAddress(newHighlighted);
                     }
                     else
                     {
                         _secondaryHighlightedAddresses.Clear();
-                        GoToAddress(newHighlighted);
                     }
 
+                    GoToAddress(newHighlighted);
                     break;
                 case Keys.PageDown:
                     newHighlighted = _addressHighlighted + (_rowsVisible * 16);
@@ -1464,15 +1456,13 @@ namespace RTCV.Plugins.HexEditor
                         {
                             AddToSecondaryHighlights(i);
                         }
-
-                        GoToAddress(newHighlighted);
                     }
                     else
                     {
                         _secondaryHighlightedAddresses.Clear();
-                        GoToAddress(newHighlighted);
                     }
 
+                    GoToAddress(newHighlighted);
                     break;
                 case Keys.Tab:
                     _secondaryHighlightedAddresses.Clear();
@@ -1493,15 +1483,13 @@ namespace RTCV.Plugins.HexEditor
                         {
                             AddToSecondaryHighlights(i);
                         }
-
-                        GoToAddress(0);
                     }
                     else
                     {
                         _secondaryHighlightedAddresses.Clear();
-                        GoToAddress(0);
                     }
 
+                    GoToAddress(0);
                     break;
                 case Keys.End:
                     newHighlighted = _domain.Size - DataSize;
@@ -1511,15 +1499,13 @@ namespace RTCV.Plugins.HexEditor
                         {
                             AddToSecondaryHighlights(i);
                         }
-
-                        GoToAddress(newHighlighted);
                     }
                     else
                     {
                         _secondaryHighlightedAddresses.Clear();
-                        GoToAddress(newHighlighted);
                     }
 
+                    GoToAddress(newHighlighted);
                     break;
                 case Keys.Add:
                     IncrementContextItem_Click(sender, e);
