@@ -848,11 +848,6 @@ namespace RTCV.Plugins.HexEditor
             return GetTextOffset() + ((address % 16) * _fontWidth);
         }
 
-        private bool HasNibbles()
-        {
-            return _nibbles.Any(x => x != 'G');
-        }
-
         private void AddToSecondaryHighlights(long address)
         {
             if (address >= 0 && address < _domain.Size && !_secondaryHighlightedAddresses.Contains(address))
