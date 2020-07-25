@@ -12,8 +12,10 @@
     using RTCV.CorruptCore;
     using RTCV.NetCore;
     using RTCV.Common;
+    using RTCV.Common.CustomExtensions;
     using static RTCV.UI.UI_Extensions;
 
+    #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class RTC_VmdAct_Form : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);

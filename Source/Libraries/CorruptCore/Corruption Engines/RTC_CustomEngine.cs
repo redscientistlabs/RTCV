@@ -7,6 +7,7 @@
     using System.Linq;
     using System.Numerics;
     using System.Windows.Forms;
+    using RTCV.Common.CustomExtensions;
     using RTCV.NetCore;
     using RTCV.NetCore.NetCore_Extensions;
 

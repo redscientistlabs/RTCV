@@ -6,7 +6,7 @@ namespace RTCV.NetCore
     using System.Threading.Tasks;
     using RTCV.NetCore.NetCore_Extensions;
 
-    public class ReturnWatch
+    public class ReturnWatch : IDisposable
     {
         //This is a component that allows to freeze the thread that asked for a value from a Synced Message
         //This makes inter-process calls able to block and wait for return values to keep code linearity
@@ -37,6 +37,11 @@ namespace RTCV.NetCore
             SyncReturns.Clear();
             cts.Cancel();
             cts = new CancellationTokenSource();
+        }
+
+        public void Dispose()
+        {
+            cts.Dispose();
         }
 
         public void AddReturn(NetCoreAdvancedMessage message)

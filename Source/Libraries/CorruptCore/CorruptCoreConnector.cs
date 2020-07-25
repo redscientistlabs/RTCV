@@ -29,7 +29,7 @@ namespace RTCV.CorruptCore
                 switch (e.message.Type)
                 {
                     case "GETSPECDUMPS":
-                        StringBuilder sb = new StringBuilder();
+                        var sb = new StringBuilder();
                         sb.AppendLine("Spec Dump from CorruptCore");
                         sb.AppendLine();
                         sb.AppendLine("UISpec");
@@ -43,19 +43,13 @@ namespace RTCV.CorruptCore
                     //UI sent its spec
                     case REMOTE_PUSHUISPEC:
                         {
-                            SyncObjectSingleton.FormExecute(() =>
-                            {
-                                RTCV.NetCore.AllSpec.UISpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
-                            });
+                            SyncObjectSingleton.FormExecute(() => RTCV.NetCore.AllSpec.UISpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached));
                             break;
                         }
 
                     //UI sent a spec update
                     case REMOTE_PUSHUISPECUPDATE:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            RTCV.NetCore.AllSpec.UISpec?.Update((PartialSpec)advancedMessage.objectValue);
-                        });
+                        SyncObjectSingleton.FormExecute(() => RTCV.NetCore.AllSpec.UISpec?.Update((PartialSpec)advancedMessage.objectValue));
                         break;
 
                     //Vanguard sent a copy of its spec
@@ -100,10 +94,7 @@ namespace RTCV.CorruptCore
 
                     //UI sent an update of the CorruptCore spec
                     case REMOTE_PUSHCORRUPTCORESPECUPDATE:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            RTCV.NetCore.AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
-                        });
+                        SyncObjectSingleton.FormExecute(() => RTCV.NetCore.AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false));
                         break;
 
                     case REMOTE_EVENT_DOMAINSUPDATED:
@@ -151,7 +142,9 @@ namespace RTCV.CorruptCore
                             {
                                 //Route it to the plugin if loaded
                                 if (RtcCore.PluginHost.LoadedPlugins.Any(x => x.Name == "Hex Editor"))
+                                {
                                     LocalNetCoreRouter.Route("HEXEDITOR", NetcoreCommands.REMOTE_OPENHEXEDITOR, true);
+                                }
                                 else
                                 {
                                     MessageBox.Show("The current Vanguard implementation does not include a\n hex editor & the hex editor plugin isn't loaded. Aborting.");
@@ -170,7 +163,9 @@ namespace RTCV.CorruptCore
                             {
                                 //Route it to the plugin if loaded
                                 if (RtcCore.PluginHost.LoadedPlugins.Any(x => x.Name == "Hex Editor"))
+                                {
                                     LocalNetCoreRouter.Route("HEXEDITOR", NetcoreCommands.EMU_OPEN_HEXEDITOR_ADDRESS, advancedMessage.objectValue, true);
+                                }
                                 else
                                 {
                                     MessageBox.Show("The current Vanguard implementation does not include a\n hex editor & the hex editor plugin isn't loaded. Aborting.");
@@ -188,87 +183,31 @@ namespace RTCV.CorruptCore
                     case GENERATEBLASTLAYER:
                         {
                             var val = advancedMessage.objectValue as object[];
-                            StashKey sk = val[0] as StashKey;
-                            bool loadBeforeCorrupt = (bool)val[1];
-                            bool applyBlastLayer = (bool)val[2];
-                            bool backup = (bool)val[3];
+                            var sk = val[0] as StashKey;
+                            var loadBeforeCorrupt = (bool)val[1];
+                            var applyBlastLayer = (bool)val[2];
+                            var backup = (bool)val[3];
 
                             BlastLayer bl = null;
 
-                            bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
+                            var useSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
 
                             void a()
                             {
                                 lock (loadLock)
                                 {
                                     //Load the game from the main thread
-                                    if (UseSavestates && loadBeforeCorrupt)
+                                    if (useSavestates && loadBeforeCorrupt)
                                     {
-                                        SyncObjectSingleton.FormExecute(() =>
-                                        {
-                                            StockpileManager_EmuSide.LoadRom_NET(sk);
-                                        });
+                                        SyncObjectSingleton.FormExecute(() => StockpileManager_EmuSide.LoadRom_NET(sk));
                                     }
 
-                                    if (UseSavestates && loadBeforeCorrupt)
+                                    if (useSavestates && loadBeforeCorrupt)
                                     {
                                         StockpileManager_EmuSide.LoadState_NET(sk, false);
                                     }
 
-                                    //We pull the domains here because if the syncsettings changed, there's a chance the domains changed
-                                    string[] domains = (string[])AllSpec.UISpec["SELECTEDDOMAINS"];
-
-                                    var cpus = Environment.ProcessorCount;
-
-                                    if (cpus == 1 || AllSpec.VanguardSpec[VSPEC.SUPPORTS_MULTITHREAD] == null)
-                                    {
-                                        bl = RtcCore.GenerateBlastLayer(domains);
-                                    }
-                                    else
-                                    {
-                                        //if emulator supports multithreaded access of the domains, disregard the emulation thread and just span threads...
-
-                                        long reminder = RtcCore.Intensity % (cpus - 1);
-
-                                        long splitintensity = (RtcCore.Intensity - reminder) / (cpus - 1);
-
-                                        Task<BlastLayer>[] tasks = new Task<BlastLayer>[cpus];
-                                        for (int i = 0; i < cpus; i++)
-                                        {
-                                            long requestedIntensity = splitintensity;
-
-                                            if (i == 0 && reminder != 0)
-                                            {
-                                                requestedIntensity = reminder;
-                                            }
-
-                                            tasks[i] = Task.Factory.StartNew(() =>
-                                                RtcCore.GenerateBlastLayer(domains, requestedIntensity));
-                                        }
-
-                                        Task.WaitAll(tasks);
-
-                                        bl = tasks[0]
-                                            .Result ?? new BlastLayer();
-
-                                        if (tasks.Length > 1)
-                                        {
-                                            for (int i = 1; i < tasks.Length; i++)
-                                            {
-                                                if (tasks[i]
-                                                    .Result != null)
-                                                {
-                                                    bl.Layer.AddRange(tasks[i]
-                                                        .Result.Layer);
-                                                }
-                                            }
-                                        }
-
-                                        if (bl.Layer.Count == 0)
-                                        {
-                                            bl = null;
-                                        }
-                                    }
+                                    bl = RtcCore.GenerateBlastLayerOnAllThreads();
 
                                     if (applyBlastLayer)
                                     {
@@ -276,6 +215,7 @@ namespace RTCV.CorruptCore
                                     }
                                 }
                             }
+
                             //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
                             if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
                             {
@@ -291,20 +231,15 @@ namespace RTCV.CorruptCore
                             {
                                 e.setReturnValue(bl);
                             }
+
                             break;
                         }
                     case APPLYBLASTLAYER:
                         {
                             var temp = advancedMessage.objectValue as object[];
-                            BlastLayer bl = (BlastLayer)temp[0];
-                            bool storeUncorruptBackup = (bool)temp[1];
-
-                            bool merge = false;
-
-                            if (temp.Length > 2)
-                                 merge = (bool)temp[2];
-
-
+                            var bl = (BlastLayer)temp[0];
+                            var storeUncorruptBackup = (bool)temp[1];
+                            var merge = (temp.Length > 2) && (bool)temp[2];
                             void a()
                             {
                                 bl.Apply(storeUncorruptBackup, true, merge);
@@ -345,20 +280,18 @@ namespace RTCV.CorruptCore
                     case BLASTGENERATOR_BLAST:
                         {
                             List<BlastGeneratorProto> returnList = null;
-                            StashKey sk = (StashKey)(advancedMessage.objectValue as object[])[0];
-                            List<BlastGeneratorProto> blastGeneratorProtos = (List<BlastGeneratorProto>)(advancedMessage.objectValue as object[])[1];
-                            bool loadBeforeCorrupt = (bool)(advancedMessage.objectValue as object[])[2];
-                            bool applyAfterCorrupt = (bool)(advancedMessage.objectValue as object[])[3];
-                            bool resumeAfter = (bool)(advancedMessage.objectValue as object[])[4];
+                            var valueAsObjectArr = advancedMessage.objectValue as object[];
+                            var sk = (StashKey)valueAsObjectArr[0];
+                            var blastGeneratorProtos = (List<BlastGeneratorProto>)valueAsObjectArr[1];
+                            var loadBeforeCorrupt = (bool)valueAsObjectArr[2];
+                            var applyAfterCorrupt = (bool)valueAsObjectArr[3];
+                            var resumeAfter = (bool)valueAsObjectArr[4];
                             void a()
                             {
                                 //Load the game from the main thread
                                 if (loadBeforeCorrupt)
                                 {
-                                    SyncObjectSingleton.FormExecute(() =>
-                                    {
-                                        StockpileManager_EmuSide.LoadRom_NET(sk);
-                                    });
+                                    SyncObjectSingleton.FormExecute(() => StockpileManager_EmuSide.LoadRom_NET(sk));
                                 }
 
                                 if (loadBeforeCorrupt)
@@ -369,7 +302,7 @@ namespace RTCV.CorruptCore
                                 returnList = BlastTools.GenerateBlastLayersFromBlastGeneratorProtos(blastGeneratorProtos, sk);
                                 if (applyAfterCorrupt)
                                 {
-                                    BlastLayer bl = new BlastLayer();
+                                    var bl = new BlastLayer();
                                     foreach (var p in returnList.Where(x => x != null))
                                     {
                                         bl.Layer.AddRange(p.bl.Layer);
@@ -400,19 +333,17 @@ namespace RTCV.CorruptCore
                         {
                             lock (loadLock)
                             {
-                                StashKey sk = (StashKey)(advancedMessage.objectValue as object[])[0];
-                                bool reloadRom = (bool)(advancedMessage.objectValue as object[])[1];
-                                bool runBlastLayer = (bool)(advancedMessage.objectValue as object[])[2];
+                                var valueAsObjectArr = advancedMessage.objectValue as object[];
+                                var sk = (StashKey)valueAsObjectArr[0];
+                                var reloadRom = (bool)valueAsObjectArr[1];
+                                var runBlastLayer = (bool)valueAsObjectArr[2];
 
-                                bool returnValue = false;
+                                var returnValue = false;
 
                                 //Load the game from the main thread
                                 if (reloadRom)
                                 {
-                                    SyncObjectSingleton.FormExecute(() =>
-                                    {
-                                        StockpileManager_EmuSide.LoadRom_NET(sk);
-                                    });
+                                    SyncObjectSingleton.FormExecute(() => StockpileManager_EmuSide.LoadRom_NET(sk));
                                 }
                                 void a()
                                 {
@@ -463,10 +394,7 @@ namespace RTCV.CorruptCore
 
                             StashKey sk = null;
                             //We send an unsynced command back
-                            SyncObjectSingleton.FormExecute(() =>
-                            {
-                                sk = StockpileManager_EmuSide.SaveState_NET();
-                            });
+                            SyncObjectSingleton.FormExecute(() => sk = StockpileManager_EmuSide.SaveState_NET());
 
                             if (sk != null)
                             {
@@ -530,9 +458,9 @@ namespace RTCV.CorruptCore
                             lock (loadLock)
                             {
                                 var objValues = (advancedMessage.objectValue as object[]);
-                                string domain = (string)objValues[0];
-                                string LimiterListHash = (string)objValues[1];
-                                StashKey sk = objValues[2] as StashKey; //Intentionally nullable
+                                var domain = (string)objValues[0];
+                                var limiterListHash = (string)objValues[1];
+                                var sk = objValues[2] as StashKey; //Intentionally nullable
 
                                 void a()
                                 {
@@ -542,15 +470,15 @@ namespace RTCV.CorruptCore
                                     }
 
                                     MemoryInterface mi = MemoryDomains.MemoryInterfaces[domain];
-                                    List<long> allLegalAdresses = new List<long>();
+                                    var allLegalAdresses = new List<long>();
 
-                                    int listItemSize = Filtering.GetPrecisionFromHash(LimiterListHash);
+                                    var listItemSize = Filtering.GetPrecisionFromHash(limiterListHash);
 
                                     for (long i = 0; i < mi.Size; i += listItemSize)
                                     {
-                                        if (Filtering.LimiterPeekBytes(i, i + listItemSize, mi.Name, LimiterListHash, mi))
+                                        if (Filtering.LimiterPeekBytes(i, i + listItemSize, mi.Name, limiterListHash, mi))
                                         {
-                                            for (int j = 0; j < listItemSize; j++)
+                                            for (var j = 0; j < listItemSize; j++)
                                             {
                                                 allLegalAdresses.Add(i + j);
                                             }
@@ -584,7 +512,7 @@ namespace RTCV.CorruptCore
 
                     case REMOTE_BL_GETDIFFBLASTLAYER:
                         {
-                            string filename = (advancedMessage.objectValue as string);
+                            var filename = advancedMessage.objectValue as string;
                             void a()
                             { e.setReturnValue(BlastDiff.GetBlastLayer(filename)); }
                             SyncObjectSingleton.EmuThreadExecute(a, false);
@@ -595,10 +523,7 @@ namespace RTCV.CorruptCore
                         {
                             void a()
                             {
-                                if (StockpileManager_EmuSide.UnCorruptBL != null)
-                                {
-                                    StockpileManager_EmuSide.UnCorruptBL.Apply(true);
-                                }
+                                StockpileManager_EmuSide.UnCorruptBL?.Apply(true);
                             }
                             SyncObjectSingleton.EmuThreadExecute(a, false);
                         }
@@ -608,26 +533,20 @@ namespace RTCV.CorruptCore
                         {
                             void a()
                             {
-                                if (StockpileManager_EmuSide.CorruptBL != null)
-                                {
-                                    StockpileManager_EmuSide.CorruptBL.Apply(false);
-                                }
+                                StockpileManager_EmuSide.CorruptBL?.Apply(false);
                             }
                             SyncObjectSingleton.EmuThreadExecute(a, false);
                         }
                         break;
 
                     case REMOTE_CLEARSTEPBLASTUNITS:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            StepActions.ClearStepBlastUnits();
-                        });
+                        SyncObjectSingleton.FormExecute(() => StepActions.ClearStepBlastUnits());
                         break;
 
                     case REMOTE_LOADPLUGINS:
                         SyncObjectSingleton.FormExecute(() =>
                         {
-                            string emuPluginDir = "";
+                            var emuPluginDir = string.Empty;
                             try
                             {
                                 emuPluginDir = System.IO.Path.Combine(RtcCore.EmuDir, "RTC", "PLUGINS");
@@ -641,10 +560,7 @@ namespace RTCV.CorruptCore
 
                         break;
                     case REMOTE_REMOVEEXCESSINFINITESTEPUNITS:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            StepActions.RemoveExcessInfiniteStepUnits();
-                        });
+                        SyncObjectSingleton.FormExecute(() => StepActions.RemoveExcessInfiniteStepUnits());
                         break;
 
                     default:
