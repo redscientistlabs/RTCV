@@ -1732,25 +1732,23 @@ namespace RTCV.Plugins.HexEditor
             var infiniteUnits = StepActions.GetAppliedInfiniteUnits();
             foreach (var bu in infiniteUnits.Layer)
             {
-                if (IsVisible(bu.Address))
+                if (IsVisible(bu.Address) &&
+                    _domain.ToString() == bu.Domain)
                 {
-                    if (_domain.ToString() == bu.Domain)
+                    var gaps = bu.Precision - DataSize;
+
+                    if (bu.Precision == 4 && DataSize == 2)
                     {
-                        var gaps = bu.Precision - DataSize;
-
-                        if (bu.Precision == 4 && DataSize == 2)
-                        {
-                            gaps -= 1;
-                        }
-
-                        if (gaps < 0) { gaps = 0; }
-
-                        var width = (_fontWidth * 2 * bu.Precision) + (gaps * _fontWidth);
-
-                        var rect = new Rectangle(GetAddressCoordinates(bu.Address), new Size(width, _fontHeight));
-                        e.Graphics.DrawRectangle(new Pen(Brushes.Black), rect);
-                        e.Graphics.FillRectangle(new SolidBrush(Color.Cyan), rect);
+                        gaps -= 1;
                     }
+
+                    if (gaps < 0) { gaps = 0; }
+
+                    var width = (_fontWidth * 2 * bu.Precision) + (gaps * _fontWidth);
+
+                    var rect = new Rectangle(GetAddressCoordinates(bu.Address), new Size(width, _fontHeight));
+                    e.Graphics.DrawRectangle(new Pen(Brushes.Black), rect);
+                    e.Graphics.FillRectangle(new SolidBrush(Color.Cyan), rect);
                 }
             }
 
@@ -1794,11 +1792,6 @@ namespace RTCV.Plugins.HexEditor
                     e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(0x44, Color.LightPink)), rect);
                     e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(0x44, Color.LightPink)), textrect);
                 }
-            }
-
-            if (HasNibbles())
-            {
-                //e.Graphics.DrawString(MakeNibbles(), new Font("Courier New", 8, FontStyle.Italic), Brushes.Black, new Point(158, 4));
             }
         }
 
