@@ -1605,11 +1605,10 @@ namespace RTCV.UI
         }
         public void BakeROMBlastunitsToFile(string filename = null)
         {
-            string[] originalFilename = currentSK.RomFilename.Split('\\');
-
             if (filename == null)
             {
-                SaveFileDialog sfd = new SaveFileDialog
+                var originalFilename = currentSK.RomFilename.Split('\\');
+                var saveRomDialog = new SaveFileDialog
                 {
                     //DefaultExt = "rom";
                     FileName = originalFilename[originalFilename.Length - 1],
@@ -1618,45 +1617,40 @@ namespace RTCV.UI
                     RestoreDirectory = true
                 };
 
-                if (sfd.ShowDialog() == DialogResult.OK)
-                {
-                    filename = sfd.FileName;
-                }
-                else
+                if (saveRomDialog.ShowDialog() != DialogResult.OK)
                 {
                     return;
                 }
-            }
 
+                filename = saveRomDialog.FileName;
+            }
 
             RomParts rp = MemoryDomains.GetRomParts(currentSK.SystemName, currentSK.RomFilename);
 
             File.Copy(currentSK.RomFilename, filename, true);
-            using (FileStream output = new FileStream(filename, FileMode.Open))
+            using var output = new FileStream(filename, FileMode.Open);
+            foreach (BlastUnit bu in currentSK.BlastLayer.Layer)
             {
-                foreach (BlastUnit bu in currentSK.BlastLayer.Layer)
+                if (bu.Source == BlastUnitSource.VALUE)
                 {
-                    if (bu.Source == BlastUnitSource.VALUE)
+                    //We don't want to modify the original
+                    var outvalue = (byte[])bu.Value.Clone();
+                    CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref outvalue, bu.TiltValue, bu.BigEndian);
+                    //Flip it if it's big endian
+                    if (bu.BigEndian)
                     {
-                        //We don't want to modify the original
-                        byte[] outvalue = (byte[])bu.Value.Clone();
-                        CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref outvalue, bu.TiltValue, bu.BigEndian);
-                        //Flip it if it's big endian
-                        if (bu.BigEndian)
-                        {
-                            outvalue.FlipBytes();
-                        }
+                        outvalue.FlipBytes();
+                    }
 
-                        if (bu.Domain == rp.PrimaryDomain)
-                        {
-                            output.Position = bu.Address + rp.SkipBytes;
-                            output.Write(outvalue, 0, outvalue.Length);
-                        }
-                        else if (bu.Domain == rp.SecondDomain)
-                        {
-                            output.Position = bu.Address + MemoryDomains.MemoryInterfaces[rp.SecondDomain].Size + rp.SkipBytes;
-                            output.Write(outvalue, 0, outvalue.Length);
-                        }
+                    if (bu.Domain == rp.PrimaryDomain)
+                    {
+                        output.Position = bu.Address + rp.SkipBytes;
+                        output.Write(outvalue, 0, outvalue.Length);
+                    }
+                    else if (bu.Domain == rp.SecondDomain)
+                    {
+                        output.Position = bu.Address + MemoryDomains.MemoryInterfaces[rp.SecondDomain].Size + rp.SkipBytes;
+                        output.Write(outvalue, 0, outvalue.Length);
                     }
                 }
             }
@@ -2155,7 +2149,6 @@ namespace RTCV.UI
 
         public void ImportBlastlayerFromCorruptedFile(string filename = null)
         {
-
             if (filename == null)
             {
                 OpenFileDialog ofd = new OpenFileDialog
@@ -2208,6 +2201,5 @@ namespace RTCV.UI
         private void bakeBlastunitsToVALUEToolStripMenuItem_Click(object sender, EventArgs e) => BakeBlastUnitsToValue();
         private void runRomWithoutBlastlayerToolStripMenuItem_Click(object sender, EventArgs e) => currentSK.RunOriginal();
         public void rasterizeVMDsToolStripMenuItem_Click(object sender, EventArgs e) => RasterizeVMDs();
-
     }
 }
