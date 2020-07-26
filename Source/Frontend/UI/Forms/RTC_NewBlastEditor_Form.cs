@@ -319,16 +319,12 @@ namespace RTCV.UI
         private void dgvBlastEditor_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             // Note handling
-            if (e != null && e.RowIndex != -1)
+            if (e != null && e.RowIndex != -1 &&
+                e.ColumnIndex == dgvBlastEditor.Columns[BuProperty.Note.ToString()]?.Index &&
+                dgvBlastEditor.Rows[e.RowIndex].DataBoundItem is BlastUnit bu)
             {
-                if (e.ColumnIndex == dgvBlastEditor.Columns[BuProperty.Note.ToString()]?.Index)
-                {
-                    if (dgvBlastEditor.Rows[e.RowIndex].DataBoundItem is BlastUnit bu)
-                    {
-                        S.SET(new RTC_NoteEditor_Form(bu, dgvBlastEditor[e.ColumnIndex, e.RowIndex]));
-                        S.GET<RTC_NoteEditor_Form>().Show();
-                    }
-                }
+                S.SET(new RTC_NoteEditor_Form(bu, dgvBlastEditor[e.ColumnIndex, e.RowIndex]));
+                S.GET<RTC_NoteEditor_Form>().Show();
             }
 
             if (e.Button == MouseButtons.Left)
@@ -442,7 +438,7 @@ namespace RTCV.UI
         {
             ((ToolStripMenuItem)cms.Items.Add("Open Selected Address in Hex Editor", null, new EventHandler((ob, ev) =>
             {
-                BlastUnit bu = dgvBlastEditor.Rows[cell.RowIndex]?.DataBoundItem as BlastUnit;
+                var bu = dgvBlastEditor.Rows[cell.RowIndex]?.DataBoundItem as BlastUnit;
                 if (bu == null)
                 {
                     return;
@@ -762,7 +758,7 @@ namespace RTCV.UI
                 headerStrip = new ContextMenuStrip();
                 headerStrip.Items.Add("Select columns to show", null, new EventHandler((ob, ev) =>
                 {
-                    ColumnSelector cs = new ColumnSelector();
+                    var cs = new ColumnSelector();
                     cs.LoadColumnSelector(dgvBlastEditor.Columns);
                 }));
 
@@ -776,9 +772,9 @@ namespace RTCV.UI
         {
             foreach (DataGridViewRow row in rows)
             {
-                BlastUnit bu = row.DataBoundItem as BlastUnit;
-                string domain = bu.Domain;
-                string sourceDomain = bu.SourceDomain;
+                var bu = row.DataBoundItem as BlastUnit;
+                var domain = bu.Domain;
+                var sourceDomain = bu.SourceDomain;
 
                 if (domain != null && DomainToMiDico.ContainsKey(bu.Domain ?? ""))
                 {
