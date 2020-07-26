@@ -1571,25 +1571,23 @@ namespace RTCV.UI
             DialogResult dialogResult = MessageBox.Show("Loading this rom will invalidate the associated savestate. You'll need to set a new savestate for the Blastlayer. Continue?", "Invalidate State?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                string filename;
-                OpenFileDialog ofd = new OpenFileDialog
+                var ofd = new OpenFileDialog
                 {
                     Title = "Open ROM File",
                     Filter = "any file|*.*",
                     RestoreDirectory = true
                 };
-                if (ofd.ShowDialog() == DialogResult.OK)
-                {
-                    filename = ofd.FileName;
-                }
-                else
+
+                if (ofd.ShowDialog() != DialogResult.OK)
                 {
                     return;
                 }
 
+                var filename = ofd.FileName;
+
                 LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_LOADROM, filename, true);
 
-                StashKey temp = new StashKey(CorruptCore.RtcCore.GetRandomKey(), currentSK.ParentKey, currentSK.BlastLayer);
+                var temp = new StashKey(CorruptCore.RtcCore.GetRandomKey(), currentSK.ParentKey, currentSK.BlastLayer);
 
                 // We have to null this as to properly create a stashkey, we need to use it in the constructor,
                 // but then the user needs to provide a savestate
