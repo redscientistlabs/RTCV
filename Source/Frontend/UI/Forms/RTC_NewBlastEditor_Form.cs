@@ -64,7 +64,7 @@ namespace RTCV.UI
             set => _domainToMiDico = value;
         }
 
-        private string[] domains = null;
+        private string[] _domains = null;
         public List<string> VisibleColumns;
         private string CurrentBlastLayerFile = "";
         private bool batchOperation = false;
@@ -203,7 +203,7 @@ namespace RTCV.UI
         private void RTC_NewBlastEditorForm_Load(object sender, EventArgs e)
         {
             UICore.SetRTCColor(UICore.GeneralColor, this);
-            domains = MemoryDomains.MemoryInterfaces?.Keys?.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
+            _domains = MemoryDomains.MemoryInterfaces?.Keys?.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
 
             dgvBlastEditor.AllowUserToOrderColumns = true;
             SetDisplayOrder();
@@ -241,7 +241,7 @@ namespace RTCV.UI
 
             if (dgvBlastEditor.CurrentCell == owningRow?.Cells[BuProperty.ValueString.ToString()] && dgvBlastEditor.IsCurrentCellInEditMode)
             {
-                int precision = (int)dgvBlastEditor.CurrentCell.OwningRow.Cells[BuProperty.Precision.ToString()].Value;
+                var precision = (int)dgvBlastEditor.CurrentCell.OwningRow.Cells[BuProperty.Precision.ToString()].Value;
                 dgvCellValueScroll(dgvBlastEditor.EditingControl, e, precision);
 
                 ((HandledMouseEventArgs)e).Handled = true;
@@ -252,11 +252,10 @@ namespace RTCV.UI
         {
             if (sender is TextBox tb)
             {
-                var negative = (e.Delta < 0);
                 var scrollBy = 1;
-                if (negative)
+                if (e.Delta < 0)
                 {
-                    scrollBy *= -1;
+                    scrollBy = -1;
                 }
 
                 tb.Text = getShiftedHexString(tb.Text, scrollBy, precision);
@@ -282,7 +281,7 @@ namespace RTCV.UI
             var order = s.Split(',');
 
             //Use a foreach and keep track in-case the number of entries changes
-            int i = 0;
+            var i = 0;
             foreach (var c in order)
             {
                 if (dgvBlastEditor.Columns.Cast<DataGridViewColumn>().Any(x => x.Name == c))
@@ -296,7 +295,7 @@ namespace RTCV.UI
         private void SaveDisplayOrder()
         {
             var cols = dgvBlastEditor.Columns.Cast<DataGridViewColumn>().OrderBy(x => x.DisplayIndex);
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             foreach (var c in cols)
             {
                 sb.Append(c.Name + ",");
@@ -727,7 +726,7 @@ namespace RTCV.UI
         {
             var value = cbDomain.SelectedItem;
 
-            if (!domains.Contains(value))
+            if (!_domains.Contains(value))
             {
                 return;
             }
@@ -916,10 +915,10 @@ namespace RTCV.UI
             var blastUnitSource = Enum.GetValues(typeof(BlastUnitSource));
 
             cbDomain.BindingContext = new BindingContext();
-            cbDomain.DataSource = domains;
+            cbDomain.DataSource = _domains;
 
             cbSourceDomain.BindingContext = new BindingContext();
-            cbSourceDomain.DataSource = domains;
+            cbSourceDomain.DataSource = _domains;
 
             foreach (var item in Enum.GetValues(typeof(LimiterTime)))
             {
@@ -992,7 +991,7 @@ namespace RTCV.UI
 
             //Do this one separately as we need to populate the Combobox
             var domain = CreateColumn(BuProperty.Domain.ToString(), BuProperty.Domain.ToString(), "Domain", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
-            domain.DataSource = domains;
+            domain.DataSource = _domains;
             domain.SortMode = DataGridViewColumnSortMode.Automatic;
             dgvBlastEditor.Columns.Add(domain);
 
@@ -1079,7 +1078,7 @@ namespace RTCV.UI
 
             //Do this one separately as we need to populate the Combobox
             var sourceDomain = CreateColumn(BuProperty.SourceDomain.ToString(), BuProperty.SourceDomain.ToString(), "Source Domain", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
-            sourceDomain.DataSource = domains;
+            sourceDomain.DataSource = _domains;
             sourceDomain.SortMode = DataGridViewColumnSortMode.Automatic;
             dgvBlastEditor.Columns.Add(sourceDomain);
 
@@ -1300,8 +1299,8 @@ namespace RTCV.UI
                     return false;
                 }
 
-                domains = MemoryDomains.MemoryInterfaces.Keys.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
-                foreach (var domain in domains)
+                _domains = MemoryDomains.MemoryInterfaces.Keys.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
+                foreach (var domain in _domains)
                 {
                     DomainToMiDico.Add(domain, MemoryDomains.GetInterface(domain));
                 }
@@ -1795,8 +1794,8 @@ namespace RTCV.UI
                 var unitsToLoad = new List<BlastUnit>();
                 foreach (BlastUnit bu in bl.Layer)
                 {
-                    if (domains.Contains(bu.Domain) &&
-                        (string.IsNullOrWhiteSpace(bu.SourceDomain) || domains.Contains(bu.SourceDomain)))
+                    if (_domains.Contains(bu.Domain) &&
+                        (string.IsNullOrWhiteSpace(bu.SourceDomain) || _domains.Contains(bu.SourceDomain)))
                     {
                         unitsToLoad.Add(bu);
                     }
@@ -2089,7 +2088,7 @@ namespace RTCV.UI
 
         private void BtnAddRow_Click(object sender, EventArgs e)
         {
-            var bu = new BlastUnit(new byte[] { 0 }, domains[0], 0, 1, MemoryDomains.GetInterface(domains[0]).BigEndian);
+            var bu = new BlastUnit(new byte[] { 0 }, _domains[0], 0, 1, MemoryDomains.GetInterface(_domains[0]).BigEndian);
             bs.Add(bu);
         }
 
