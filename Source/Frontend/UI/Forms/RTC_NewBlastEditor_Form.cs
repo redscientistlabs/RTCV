@@ -373,7 +373,7 @@ namespace RTCV.UI
             {
                 foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
                 {
-                    BlastUnit bu = (BlastUnit)row.DataBoundItem;
+                    var bu = (BlastUnit)row.DataBoundItem;
                     bu.Reroll();
                 }
                 dgvBlastEditor.Refresh();
@@ -1870,7 +1870,7 @@ namespace RTCV.UI
 
             if (filename == null)
             {
-                SaveFileDialog saveFileDialog1 = new SaveFileDialog
+                var saveCsvDialog = new SaveFileDialog
                 {
                     DefaultExt = "csv",
                     Title = "Export to csv",
@@ -1878,14 +1878,12 @@ namespace RTCV.UI
                     RestoreDirectory = true
                 };
 
-                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    filename = saveFileDialog1.FileName;
-                }
-                else
+                if (saveCsvDialog.ShowDialog() != DialogResult.OK)
                 {
                     return;
                 }
+
+                filename = saveCsvDialog.FileName;
             }
 
             var csv = new CSVGenerator();
@@ -1949,13 +1947,13 @@ namespace RTCV.UI
                 return;
             }
 
-            StashKey newSk = (StashKey)currentSK.Clone();
+            var newSk = (StashKey)currentSK.Clone();
             S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = newSk.Run();
         }
 
         public void btnCorrupt_Click(object sender, EventArgs e)
         {
-            StashKey newSk = (StashKey)currentSK.Clone();
+            var newSk = (StashKey)currentSK.Clone();
             S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newSk, false);
         }
 
@@ -2042,7 +2040,7 @@ namespace RTCV.UI
                 else if (cell.OwningColumn.Name == BuProperty.ValueString.ToString())
                 {
                     var _amount = shiftDown ? 0 - amount : amount;
-                    int precision = (int)row.Cells[BuProperty.Precision.ToString()].Value;
+                    var precision = (int)row.Cells[BuProperty.Precision.ToString()].Value;
                     cell.Value = getShiftedHexString((string)cell.Value, _amount, precision);
                 }
                 else
@@ -2116,7 +2114,7 @@ namespace RTCV.UI
         {
             if (filename == null)
             {
-                OpenFileDialog ofd = new OpenFileDialog
+                var ofd = new OpenFileDialog
                 {
                     DefaultExt = "*",
                     Title = "Open Corrupted File",
