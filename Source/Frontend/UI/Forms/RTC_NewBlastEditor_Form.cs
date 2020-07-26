@@ -2147,43 +2147,7 @@ namespace RTCV.UI
                 return;
             }
 
-            //this.Hide();
             RTC_SanitizeTool_Form.OpenSanitizeTool(currentSK?.BlastLayer);
-
-            /*
-            DialogResult lastAnswer = DialogResult.Ignore;
-
-            while(lastAnswer != DialogResult.Cancel && currentSK?.BlastLayer?.Layer?.Count > 1)
-            {
-                if (currentSK?.BlastLayer?.Layer == null)
-                    return;
-
-                dgvBlastEditor.ClearSelection();
-                switch (lastAnswer)
-                {
-                    case DialogResult.Ignore:
-                        break;
-                    case DialogResult.Yes:
-                        btnRemoveDisabled_Click(null, null);
-                        break;
-                    case DialogResult.No:
-                        btnInvertDisabled_Click(null, null);
-                        btnRemoveDisabled_Click(null, null);
-                        break;
-                    default:
-                        return;
-                }
-
-                dgvBlastEditor.ClearSelection();
-                btnDisable50_Click(null, null);
-                btnLoadCorrupt_Click(null, null);
-
-                if (currentSK?.BlastLayer?.Layer?.Count(x => x.IsLocked == false) <= 1)
-                    return;
-
-                lastAnswer = MessageBox.Show(@"Is the effect you are looking for still present?", "BlastLayer sanitization", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-            }
-            */
         }
 
         public StashKey[] GetStashKeys()
