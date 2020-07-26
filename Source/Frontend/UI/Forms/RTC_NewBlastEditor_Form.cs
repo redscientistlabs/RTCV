@@ -809,28 +809,7 @@ namespace RTCV.UI
             if (dgvBlastEditor.SelectedRows.Count > 0)
             {
                 var lastRow = dgvBlastEditor.SelectedRows[dgvBlastEditor.SelectedRows.Count - 1];
-
-                /*
-                cbDomain.SelectedItem = (String)(lastRow.Cells[buProperty.Domain.ToString()].Value);
-                cbEnabled.Checked = (bool)(lastRow.Cells[buProperty.isEnabled.ToString()].Value);
-                cbLocked.Checked = (bool)(lastRow.Cells[buProperty.isLocked.ToString()].Value);
-                upDownAddress.Value = (long)(lastRow.Cells[buProperty.Address.ToString()].Value);
-                upDownPrecision.Value = (int)(lastRow.Cells[buProperty.Precision.ToString()].Value);
-                tbValue.Text = (String)(lastRow.Cells[buProperty.ValueString.ToString()].Value);
-                upDownExecuteFrame.Value = (int)(lastRow.Cells[buProperty.ExecuteFrame.ToString()].Value);
-                upDownLifetime.Value = (int)(lastRow.Cells[buProperty.Lifetime.ToString()].Value);
-                cbLoop.Checked = (bool)(lastRow.Cells[buProperty.Loop.ToString()].Value);
-                cbLimiterTime.SelectedItem = (ActionTime)(lastRow.Cells[buProperty.LimiterTime.ToString()].Value);
-                cbLimiterList.SelectedItem = (String)(lastRow.Cells[buProperty.LimiterHash.ToString()].Value);
-                cbInvertLimiter.Checked = (bool)(lastRow.Cells[buProperty.InvertLimiter.ToString()].Value);
-                cbStoreTime.SelectedItem = (ActionTime)(lastRow.Cells[buProperty.StoreTime.ToString()].Value);
-                cbStoreType.SelectedItem = (StoreType)(lastRow.Cells[buProperty.StoreType.ToString()].Value);
-                cbSourceDomain.SelectedItem = (String)(lastRow.Cells[buProperty.SourceDomain.ToString()].Value);
-                cbSource.SelectedItem = (BlastUnitSource)(lastRow.Cells[buProperty.Source.ToString()].Value);
-                upDownSourceAddress.Value = (long)(lastRow.Cells[buProperty.SourceAddress.ToString()].Value);
-
-                tbTiltValue.Text = (lastRow.DataBoundItem as BlastUnit).TiltValue.ToString();*/
-                BlastUnit bu = (BlastUnit)lastRow.DataBoundItem;
+                var bu = (BlastUnit)lastRow.DataBoundItem;
 
                 if (DomainToMiDico.ContainsKey(bu.Domain ?? string.Empty))
                 {
@@ -882,7 +861,7 @@ namespace RTCV.UI
         {
             UpdateBottom();
 
-            List<DataGridViewRow> col = new List<DataGridViewRow>();
+            var col = new List<DataGridViewRow>();
             //For some reason DataGridViewRowCollection and DataGridViewSelectedRowCollection aren't directly compatible???
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
             {
@@ -909,7 +888,7 @@ namespace RTCV.UI
                 return;
             }
 
-            string value = ((ComboBoxItem<string>)cbFilterColumn?.SelectedItem)?.Value;
+            var value = ((ComboBoxItem<string>)cbFilterColumn?.SelectedItem)?.Value;
             if (value == null)
             {
                 return;
@@ -1007,7 +986,7 @@ namespace RTCV.UI
             dgvBlastEditor.Columns.Add(locked);
 
             //Do this one separately as we need to populate the Combobox
-            DataGridViewComboBoxColumn source = CreateColumn(BuProperty.Source.ToString(), BuProperty.Source.ToString(), "Source", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
+            var source = CreateColumn(BuProperty.Source.ToString(), BuProperty.Source.ToString(), "Source", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
             foreach (var item in blastUnitSource)
             {
                 source.Items.Add(item);
@@ -1016,18 +995,18 @@ namespace RTCV.UI
             dgvBlastEditor.Columns.Add(source);
 
             //Do this one separately as we need to populate the Combobox
-            DataGridViewComboBoxColumn domain = CreateColumn(BuProperty.Domain.ToString(), BuProperty.Domain.ToString(), "Domain", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
+            var domain = CreateColumn(BuProperty.Domain.ToString(), BuProperty.Domain.ToString(), "Domain", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
             domain.DataSource = domains;
             domain.SortMode = DataGridViewColumnSortMode.Automatic;
             dgvBlastEditor.Columns.Add(domain);
 
-            DataGridViewNumericUpDownColumn address = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.Address.ToString(), BuProperty.Address.ToString(), "Address", new DataGridViewNumericUpDownColumn());
+            var address = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.Address.ToString(), BuProperty.Address.ToString(), "Address", new DataGridViewNumericUpDownColumn());
             address.Hexadecimal = true;
             address.SortMode = DataGridViewColumnSortMode.Automatic;
             address.Increment = 1;
             dgvBlastEditor.Columns.Add(address);
 
-            DataGridViewNumericUpDownColumn precision = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.Precision.ToString(), BuProperty.Precision.ToString(), "Precision", new DataGridViewNumericUpDownColumn());
+            var precision = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.Precision.ToString(), BuProperty.Precision.ToString(), "Precision", new DataGridViewNumericUpDownColumn());
             precision.Minimum = 1;
             precision.Maximum = int.MaxValue;
             precision.SortMode = DataGridViewColumnSortMode.Automatic;
@@ -1063,7 +1042,7 @@ namespace RTCV.UI
             loop.SortMode = DataGridViewColumnSortMode.Automatic;
             dgvBlastEditor.Columns.Add(loop);
 
-            DataGridViewComboBoxColumn limiterTime = CreateColumn(BuProperty.LimiterTime.ToString(), BuProperty.LimiterTime.ToString(), "Limiter Time", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
+            var limiterTime = CreateColumn(BuProperty.LimiterTime.ToString(), BuProperty.LimiterTime.ToString(), "Limiter Time", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
             foreach (var item in Enum.GetValues(typeof(LimiterTime)))
             {
                 limiterTime.Items.Add(item);
@@ -1071,14 +1050,14 @@ namespace RTCV.UI
 
             dgvBlastEditor.Columns.Add(limiterTime);
 
-            DataGridViewComboBoxColumn limiterHash = CreateColumn(BuProperty.LimiterListHash.ToString(), BuProperty.LimiterListHash.ToString(), "Limiter List", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
+            var limiterHash = CreateColumn(BuProperty.LimiterListHash.ToString(), BuProperty.LimiterListHash.ToString(), "Limiter List", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
             limiterHash.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
             limiterHash.DisplayMember = "Name";
             limiterHash.ValueMember = "Value";
             limiterHash.MaxDropDownItems = 15;
             dgvBlastEditor.Columns.Add(limiterHash);
 
-            DataGridViewComboBoxColumn storeLimiterSource = CreateColumn(BuProperty.StoreLimiterSource.ToString(), BuProperty.StoreLimiterSource.ToString(), "Store Limiter Source", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
+            var storeLimiterSource = CreateColumn(BuProperty.StoreLimiterSource.ToString(), BuProperty.StoreLimiterSource.ToString(), "Store Limiter Source", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
             foreach (var item in Enum.GetValues(typeof(StoreLimiterSource)))
             {
                 storeLimiterSource.Items.Add(item);
@@ -1088,7 +1067,7 @@ namespace RTCV.UI
 
             dgvBlastEditor.Columns.Add(CreateColumn(BuProperty.InvertLimiter.ToString(), BuProperty.InvertLimiter.ToString(), "Invert Limiter", new DataGridViewCheckBoxColumn()));
 
-            DataGridViewComboBoxColumn storeTime = CreateColumn(BuProperty.StoreTime.ToString(), BuProperty.StoreTime.ToString(), "Store Time", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
+            var storeTime = CreateColumn(BuProperty.StoreTime.ToString(), BuProperty.StoreTime.ToString(), "Store Time", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
             foreach (var item in Enum.GetValues(typeof(StoreTime)))
             {
                 storeTime.Items.Add(item);
@@ -1097,18 +1076,18 @@ namespace RTCV.UI
             storeTime.SortMode = DataGridViewColumnSortMode.Automatic;
             dgvBlastEditor.Columns.Add(storeTime);
 
-            DataGridViewComboBoxColumn storeType = CreateColumn(BuProperty.StoreType.ToString(), BuProperty.StoreType.ToString(), "Store Type", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
+            var storeType = CreateColumn(BuProperty.StoreType.ToString(), BuProperty.StoreType.ToString(), "Store Type", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
             storeType.DataSource = Enum.GetValues(typeof(StoreType));
             storeType.SortMode = DataGridViewColumnSortMode.Automatic;
             dgvBlastEditor.Columns.Add(storeType);
 
             //Do this one separately as we need to populate the Combobox
-            DataGridViewComboBoxColumn sourceDomain = CreateColumn(BuProperty.SourceDomain.ToString(), BuProperty.SourceDomain.ToString(), "Source Domain", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
+            var sourceDomain = CreateColumn(BuProperty.SourceDomain.ToString(), BuProperty.SourceDomain.ToString(), "Source Domain", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
             sourceDomain.DataSource = domains;
             sourceDomain.SortMode = DataGridViewColumnSortMode.Automatic;
             dgvBlastEditor.Columns.Add(sourceDomain);
 
-            DataGridViewNumericUpDownColumn sourceAddress = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.SourceAddress.ToString(), BuProperty.SourceAddress.ToString(), "Source Address", new DataGridViewNumericUpDownColumn());
+            var sourceAddress = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.SourceAddress.ToString(), BuProperty.SourceAddress.ToString(), "Source Address", new DataGridViewNumericUpDownColumn());
             sourceAddress.Hexadecimal = true;
             sourceAddress.SortMode = DataGridViewColumnSortMode.Automatic;
             sourceAddress.Increment = 1;
@@ -1118,9 +1097,9 @@ namespace RTCV.UI
 
             if (RTCV.NetCore.Params.IsParamSet("BLASTEDITOR_VISIBLECOLUMNS"))
             {
-                string str = RTCV.NetCore.Params.ReadParam("BLASTEDITOR_VISIBLECOLUMNS");
-                string[] columns = str.Split(',');
-                foreach (string column in columns)
+                var str = RTCV.NetCore.Params.ReadParam("BLASTEDITOR_VISIBLECOLUMNS");
+                var columns = str.Split(',');
+                foreach (var column in columns)
                 {
                     VisibleColumns.Add(column);
                 }
@@ -1184,14 +1163,7 @@ namespace RTCV.UI
         {
             foreach (DataGridViewColumn column in dgvBlastEditor.Columns)
             {
-                if (VisibleColumns.Contains(column.Name))
-                {
-                    column.Visible = true;
-                }
-                else
-                {
-                    column.Visible = false;
-                }
+                column.Visible = VisibleColumns.Contains(column.Name);
             }
             dgvBlastEditor.Refresh();
         }
@@ -1265,7 +1237,7 @@ namespace RTCV.UI
                 this.Close();
                 return;
             }
-            List<string> buDomains = new List<string>();
+            var buDomains = new List<string>();
             foreach (var bu in sk.BlastLayer.Layer)
             {
                 if (!buDomains.Contains(bu.Domain))
@@ -1279,7 +1251,7 @@ namespace RTCV.UI
                 }
             }
 
-            foreach (string domain in buDomains)
+            foreach (var domain in buDomains)
             {
                 if (DomainToMiDico.ContainsKey(domain))
                 {
@@ -1333,7 +1305,7 @@ namespace RTCV.UI
                 }
 
                 domains = MemoryDomains.MemoryInterfaces.Keys.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
-                foreach (string domain in domains)
+                foreach (var domain in domains)
                 {
                     DomainToMiDico.Add(domain, MemoryDomains.GetInterface(domain));
                 }
@@ -1387,7 +1359,7 @@ namespace RTCV.UI
 
         public void btnRemoveDisabled_Click(object sender, EventArgs e)
         {
-            List<BlastUnit> buToRemove = new List<BlastUnit>();
+            var buToRemove = new List<BlastUnit>();
 
             dgvBlastEditor.SuspendLayout();
             batchOperation = true;
@@ -1466,7 +1438,7 @@ namespace RTCV.UI
             {
                 if ((row.DataBoundItem as BlastUnit).IsLocked == false)
                 {
-                    BlastUnit bu = ((row.DataBoundItem as BlastUnit).Clone() as BlastUnit);
+                    var bu = ((row.DataBoundItem as BlastUnit).Clone() as BlastUnit);
                     bs.Add(bu);
                 }
             }
@@ -1480,9 +1452,7 @@ namespace RTCV.UI
                 MessageBox.Show("There's no savestate associated with this Stashkey!\nAssociate one in the menu to send this to the stash.");
                 return;
             }
-            StashKey newSk = (StashKey)currentSK.Clone();
-            //newSk.Key = RTC_Core.GetRandomKey();
-            //newSk.Alias = null;
+            var newSk = (StashKey)currentSK.Clone();
 
             StockpileManager_UISide.StashHistory.Add(newSk);
 
@@ -1497,22 +1467,24 @@ namespace RTCV.UI
 
         public void btnNote_Click(object sender, EventArgs e)
         {
-            if (dgvBlastEditor.SelectedRows.Count > 0)
+            if (dgvBlastEditor.SelectedRows.Count == 0)
             {
-                BlastLayer temp = new BlastLayer();
-                List<DataGridViewCell> cellList = new List<DataGridViewCell>();
-                foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
-                {
-                    if (row.DataBoundItem is BlastUnit bu)
-                    {
-                        temp.Layer.Add(bu);
-                        cellList.Add(row.Cells[BuProperty.Note.ToString()]);
-                    }
-                }
-
-                S.SET(new RTC_NoteEditor_Form(temp, cellList));
-                S.GET<RTC_NoteEditor_Form>().Show();
+                return;
             }
+
+            var temp = new BlastLayer();
+            var cellList = new List<DataGridViewCell>();
+            foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
+            {
+                if (row.DataBoundItem is BlastUnit bu)
+                {
+                    temp.Layer.Add(bu);
+                    cellList.Add(row.Cells[BuProperty.Note.ToString()]);
+                }
+            }
+
+            S.SET(new RTC_NoteEditor_Form(temp, cellList));
+            S.GET<RTC_NoteEditor_Form>().Show();
         }
 
         public void sanitizeDuplicatesToolStripMenuItem_Click(object sender, EventArgs e)
