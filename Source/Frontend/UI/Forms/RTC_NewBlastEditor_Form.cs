@@ -1538,19 +1538,19 @@ namespace RTCV.UI
             DialogResult dialogResult = MessageBox.Show("Loading this rom will invalidate the associated savestate. You'll need to set a new savestate for the Blastlayer. Continue?", "Invalidate State?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                var ofd = new OpenFileDialog
+                var openRomDialog = new OpenFileDialog
                 {
                     Title = "Open ROM File",
                     Filter = "any file|*.*",
                     RestoreDirectory = true
                 };
 
-                if (ofd.ShowDialog() != DialogResult.OK)
+                if (openRomDialog.ShowDialog() != DialogResult.OK)
                 {
                     return;
                 }
 
-                var filename = ofd.FileName;
+                var filename = openRomDialog.FileName;
 
                 LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_LOADROM, filename, true);
 
@@ -1722,21 +1722,19 @@ namespace RTCV.UI
         {
             if (filename == null)
             {
-                SaveFileDialog ofd = new SaveFileDialog
+                var saveSavestateDialog = new SaveFileDialog
                 {
                     DefaultExt = "state",
                     Title = "Save Savestate File",
                     Filter = "state files|*.state",
                     RestoreDirectory = true
                 };
-                if (ofd.ShowDialog() == DialogResult.OK)
-                {
-                    filename = ofd.FileName;
-                }
-                else
+                if (saveSavestateDialog.ShowDialog() != DialogResult.OK)
                 {
                     return;
                 }
+
+                filename = saveSavestateDialog.FileName;
             }
 
             File.Copy(currentSK.GetSavestateFullPath(), filename, true);
@@ -2114,27 +2112,26 @@ namespace RTCV.UI
         {
             if (filename == null)
             {
-                var ofd = new OpenFileDialog
+                var openFileDialog = new OpenFileDialog
                 {
                     DefaultExt = "*",
                     Title = "Open Corrupted File",
                     Filter = "Any file|*.*",
                     RestoreDirectory = true
                 };
-                if (ofd.ShowDialog() == DialogResult.OK)
-                {
-                    filename = ofd.FileName;
-                }
-                else
+                if (openFileDialog.ShowDialog() != DialogResult.OK)
                 {
                     return;
                 }
+
+                filename = openFileDialog.FileName;
             }
 
             var bl = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_BL_GETDIFFBLASTLAYER, filename);
 
             ImportBlastLayer(bl);
         }
+
         private void importBlastlayerFromCorruptedFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ImportBlastlayerFromCorruptedFile(null);
