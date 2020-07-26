@@ -1,16 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using NLog;
-
 namespace RTCV.PluginHost
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.Composition;
+    using System.ComponentModel.Composition.Hosting;
+    using System.IO;
+    using System.Reflection;
+    using NLog;
+
     public class Host
     {
+        #pragma warning disable CS0649 //plugins are assigned by MEF, so "never assigned to" warning doesn't apply
         [ImportMany(typeof(IPlugin))]
         private IEnumerable<IPlugin> plugins;
         private List<IPlugin> _loadedPlugins;
@@ -33,7 +33,7 @@ namespace RTCV.PluginHost
             var catalog = new AggregateCatalog();
             foreach (var dir in pluginDirs)
             {
-                if(Directory.Exists(dir))
+                if (Directory.Exists(dir))
                     catalog.Catalogs.Add(new DirectoryCatalog(dir));
             }
             _container = new CompositionContainer(catalog);
@@ -68,9 +68,9 @@ namespace RTCV.PluginHost
                     //Start both sides and leave it up to the plugin dev to handle it for now if they're devving in attached mode (sorry Narry) //Narry 3-22-20
                     if (side == RTCSide.Both)
                     {
-                        if(p.Start(RTCSide.Client))
+                        if (p.Start(RTCSide.Client))
                             logger.Info("Loaded {pluginName} as client successfully", p.Name);
-                        if(p.Start(RTCSide.Server))
+                        if (p.Start(RTCSide.Server))
                             logger.Info("Loaded {pluginName} as server successfully", p.Name);
                         _loadedPlugins.Add(p);
                     }
@@ -83,14 +83,13 @@ namespace RTCV.PluginHost
                     {
                         logger.Error("Failed to load {pluginName}", p.Name);
                     }
-
                 }
             }
             initialized = true;
         }
         public void Shutdown()
         {
-            foreach(var p in _loadedPlugins)
+            foreach (var p in _loadedPlugins)
             {
                 p.Stop();
             }

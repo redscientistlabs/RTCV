@@ -44,7 +44,6 @@
     <PlatformTarget>x64</PlatformTarget>
     <LangVersion>latest</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>..\..\..\Build\</OutputPath>
@@ -55,7 +54,6 @@
     <PlatformTarget>x64</PlatformTarget>
     <LangVersion>latest</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -71,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BitlogicListFilter.cs" />
     <Compile Include="Blast Generator Engines\RTC_ValueGenerator.cs" />
     <Compile Include="Blast Generator Engines\RTC_StoreGenerator.cs" />
     <Compile Include="Coroutines\Conditionals\WaitFrames.cs" />
@@ -83,6 +82,7 @@
     <Compile Include="Corruption Engines\RTC_BlastGeneratorEngine.cs" />
     <Compile Include="Corruption Engines\RTC_CustomEngine.cs" />
     <Compile Include="Corruption Engines\RTC_DistortionEngine.cs" />
+    <Compile Include="Corruption Engines\RTC_ClusterEngine.cs" />
     <Compile Include="Corruption Engines\RTC_FreezeEngine.cs" />
     <Compile Include="Corruption Engines\RTC_HellgenieEngine.cs" />
     <Compile Include="Corruption Engines\RTC_NightmareEngine.cs" />
@@ -99,6 +99,7 @@
     <Compile Include="EventWarlock\WarlockAction.cs" />
     <Compile Include="EventWarlock\WarlockActions\WarlockActionEcho.cs" />
     <Compile Include="EventWarlock\WarlockConditions\FirstEqualsSecond.cs" />
+    <Compile Include="ListFilters.cs" />
     <Compile Include="MemoryBanks.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BlastTools.cs" />

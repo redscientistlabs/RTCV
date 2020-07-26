@@ -1,16 +1,16 @@
-using System;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-using RTCV.UI.Modular;
-using static RTCV.NetCore.NetcoreCommands;
-
 namespace RTCV.UI
 {
+    using System;
+    using System.Drawing;
+    using System.IO;
+    using System.Linq;
+    using System.Windows.Forms;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using RTCV.Common;
+    using RTCV.UI.Modular;
+    using static RTCV.NetCore.NetcoreCommands;
+
     public static class UI_VanguardImplementation
     {
         public static UIConnector connector = null;
@@ -68,7 +68,7 @@ namespace RTCV.UI
                         }
                         break;
 
-                    case REMOTE_ALLSPECSSENT: 
+                    case REMOTE_ALLSPECSSENT:
                         if (UICore.FirstConnect)
                         {
                             UICore.Initialized.WaitOne(10000);
@@ -113,16 +113,19 @@ namespace RTCV.UI
                                 string customLayoutPath = Path.Combine(RTCV.CorruptCore.RtcCore.RtcDir, "CustomLayout.txt");
                                 if (File.Exists(customLayoutPath))
                                 {
+                                    S.GET<UI_CoreForm>().SetCustomLayoutName(customLayoutPath);
                                     S.GET<UI_CoreForm>().btnOpenCustomLayout.Visible = true;
                                 }
 
                                 UI_DefaultGrids.engineConfig.LoadToMain();
 
                                 UI_DefaultGrids.glitchHarvester.LoadToNewWindow("Glitch Harvester", true);
-
                             }
                             else
                             {
+                                LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_LOADPLUGINS, true);
+                                //make sure the other side reloads the plugins
+
                                 var clientName = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
                                 if (clientName != lastVanguardClient)
                                 {
@@ -152,7 +155,7 @@ namespace RTCV.UI
                                 S.GET<UI_CoreForm>().previousGrid.LoadToMain();
                             }
 
-                            S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0;//remove this once core form is dead
+                            S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0; //remove this once core form is dead
 
                             if (!CorruptCore.RtcCore.Attached)
                             {
@@ -254,11 +257,10 @@ namespace RTCV.UI
 
                             if (RTCV.UI.UI_Extensions.GetInputBox("VMD Generation", "Enter the new VMD name:", ref value) == DialogResult.OK)
                             {
-                                if(!string.IsNullOrWhiteSpace(value))
+                                if (!string.IsNullOrWhiteSpace(value))
                                     vmdgenerator.tbVmdName.Text = value.Trim();
                                 vmdgenerator.btnGenerateVMD_Click(null, null);
                             }
-
                         });
                         e.setReturnValue(true);
                         break;

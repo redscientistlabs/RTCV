@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-using static RTCV.UI.UI_Extensions;
-
-namespace RTCV.UI
+﻿namespace RTCV.UI
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Drawing;
+    using System.IO;
+    using System.Linq;
+    using System.Windows.Forms;
+    using System.Xml;
+    using System.Xml.Serialization;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using RTCV.Common;
+    using static RTCV.UI.UI_Extensions;
+
     public partial class RTC_VmdAct_Form : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
@@ -340,7 +341,7 @@ namespace RTCV.UI
                 using (FileStream FS = File.Open(currentFilename, FileMode.OpenOrCreate))
                 {
                     XmlSerializer xs = new XmlSerializer(typeof(ActiveTableObject));
-                    ActiveTableObject act = (ActiveTableObject)xs.Deserialize(FS);
+                    ActiveTableObject act = (ActiveTableObject)xs.Deserialize(XmlReader.Create(FS));
                     FS.Close();
                     SetActiveTable(act);
                     ActLoadedFromFile = true;
@@ -388,7 +389,7 @@ namespace RTCV.UI
             using (FileStream FS = File.Open(tempFilename, FileMode.OpenOrCreate))
             {
                 XmlSerializer xs = new XmlSerializer(typeof(ActiveTableObject));
-                act = (ActiveTableObject)xs.Deserialize(FS);
+                act = (ActiveTableObject)xs.Deserialize(XmlReader.Create(FS));
                 FS.Close();
             }
             long[] subtractiveActiveTable = act.Data;
@@ -434,7 +435,7 @@ namespace RTCV.UI
                 using (FileStream FS = File.Open(tempFilename, FileMode.OpenOrCreate))
                 {
                     XmlSerializer xs = new XmlSerializer(typeof(ActiveTableObject));
-                    act = (ActiveTableObject)xs.Deserialize(FS);
+                    act = (ActiveTableObject)xs.Deserialize(XmlReader.Create(FS));
                     FS.Close();
                 }
                 long[] additiveActiveTable = act.Data;
@@ -498,12 +499,7 @@ namespace RTCV.UI
             }
             catch (Exception ex)
             {
-                string additionalInfo = "Something went wrong in when generating the active table. \n" +
-                    "This is an RTC error, so you should probably send this to the RTC devs with instructions on what you did to cause it.\n\n";
-
-                var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
-
-                if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
                     throw new RTCV.NetCore.AbortEverythingException();
                 }
@@ -549,7 +545,7 @@ namespace RTCV.UI
                                 proto.AddSingles.Add(safeaddress + i);
                             }
                             //[] _addresses = { safeaddress, safeaddress + mi.WordSize };
-                            //	proto.addRanges.Add(_addresses);
+                            //    proto.addRanges.Add(_addresses);
                         }
                     }
                 }
@@ -576,12 +572,7 @@ namespace RTCV.UI
             }
             catch (Exception ex)
             {
-                string additionalInfo = "Something went wrong in when generating the VMD table. \n" +
-                    "This is an RTC error, so you should probably send this to the RTC devs with instructions on what you did to cause it.\n\n";
-
-                var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
-
-                if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
                     throw new RTCV.NetCore.AbortEverythingException();
                 }

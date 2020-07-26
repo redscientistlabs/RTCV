@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.IO;
-using System.Text.RegularExpressions;
-
-namespace RTCV.CorruptCore
+﻿namespace RTCV.CorruptCore
 {
+    using System;
+    using System.Collections;
+    using System.IO;
+    using System.Text.RegularExpressions;
+
     //ALL OF THIS WAS OBTAINED HERE: http://www.mathertel.de/Diff/
 
     /// <summary>
@@ -99,7 +99,8 @@ namespace RTCV.CorruptCore
         /// </summary>
         private struct SMSRD
         {
-            internal int x, y;
+            internal int x;
+            internal int y;
             // internal int u, v;  // 2002.09.20: no need for 2 points
         }
 

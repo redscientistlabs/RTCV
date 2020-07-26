@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using RTCV.NetCore;
-
 namespace RTCV.CorruptCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Windows.Forms;
+    using RTCV.NetCore;
+
     public static class StockpileManager_UISide
     {
         //Object references
@@ -17,12 +17,13 @@ namespace RTCV.CorruptCore
         public static bool StashAfterOperation = true;
         public static volatile List<StashKey> StashHistory = new List<StashKey>();
 
-        private static void PreApplyStashkey()
+        private static void PreApplyStashkey(bool _clearUnitsBeforeApply = true)
         {
-            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_CLEARSTEPBLASTUNITS, null, true);
+            if (_clearUnitsBeforeApply)
+                LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_CLEARSTEPBLASTUNITS, null, true);
+
 
             bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
-
             LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_PRECORRUPTACTION, null, true);
         }
 
@@ -39,9 +40,9 @@ namespace RTCV.CorruptCore
             LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_POSTCORRUPTACTION);
         }
 
-        public static bool ApplyStashkey(StashKey sk, bool _loadBeforeOperation = true)
+        public static bool ApplyStashkey(StashKey sk, bool _loadBeforeOperation = true, bool _clearUnitsBeforeApply = true)
         {
-            PreApplyStashkey();
+            PreApplyStashkey(_clearUnitsBeforeApply);
 
             bool isCorruptionApplied = sk?.BlastLayer?.Layer?.Count > 0;
 
@@ -54,7 +55,13 @@ namespace RTCV.CorruptCore
             }
             else
             {
-                LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.APPLYBLASTLAYER, new object[] { sk?.BlastLayer, true }, true);
+                bool mergeWithCurrent = !_clearUnitsBeforeApply;
+
+                //APPLYBLASTLAYER
+                //Param 0 is BlastLayer
+                //Param 1 is storeUncorruptBackup
+                //Param 2 is MergeWithCurrent (for fixing blast toggle with inject)
+                LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.APPLYBLASTLAYER, new object[] { sk?.BlastLayer, true, mergeWithCurrent }, true);
             }
 
             PostApplyStashkey();
@@ -340,6 +347,7 @@ namespace RTCV.CorruptCore
         /// Takes a stashkey and a list of keys, fixing the path and if a list of keys is provided, it'll look for all shared references and update them
         /// </summary>
         /// <param name="psk"></param>
+        /// <param name="force"></param>
         /// <param name="keys"></param>
         /// <returns></returns>
         public static bool CheckAndFixMissingReference(StashKey psk, bool force = false, List<StashKey> keys = null, string customTitle = null, string customMessage = null)

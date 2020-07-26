@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
-
-namespace RTCV.NetCore
+﻿namespace RTCV.NetCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Windows.Forms;
+
     public static class LocalNetCoreRouter
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
@@ -97,11 +97,7 @@ namespace RTCV.NetCore
             }
             catch (Exception ex)
             {
-                string additionalInfo = "Error trapped from LocalRouter\n\n";
-
-                var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
-
-                if (CloudDebug.ShowErrorDialog(ex2) == DialogResult.Abort)
+                if (CloudDebug.ShowErrorDialog(ex) == DialogResult.Abort)
                 {
                     throw new RTCV.NetCore.AbortEverythingException();
                 }

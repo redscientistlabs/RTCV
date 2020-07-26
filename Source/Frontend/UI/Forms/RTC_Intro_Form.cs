@@ -1,10 +1,10 @@
-﻿using System;
-using System.Windows.Forms;
-using RTCV.NetCore;
-using RTCV.Common;
-
-namespace RTCV.UI
+﻿namespace RTCV.UI
 {
+    using System;
+    using System.Windows.Forms;
+    using RTCV.NetCore;
+    using RTCV.Common;
+
     public partial class RTC_Intro_Form : Form, IAutoColorize
     {
         public IntroAction selection = IntroAction.EXIT;
@@ -17,11 +17,7 @@ namespace RTCV.UI
             }
             catch (Exception ex)
             {
-                string additionalInfo = "An error occurred while opening the Intro Form\n\n";
-
-                var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
-
-                if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
                     throw new RTCV.NetCore.AbortEverythingException();
                 }

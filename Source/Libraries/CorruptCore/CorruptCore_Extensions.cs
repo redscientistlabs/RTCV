@@ -1,24 +1,24 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Drawing;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Numerics;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Windows.Forms;
-using Ceras;
-using Newtonsoft.Json;
-using RTCV.NetCore;
-
 namespace RTCV.CorruptCore
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Diagnostics;
+    using System.Drawing;
+    using System.Globalization;
+    using System.IO;
+    using System.Linq;
+    using System.Numerics;
+    using System.Reflection;
+    using System.Runtime.InteropServices;
+    using System.Runtime.Serialization.Formatters.Binary;
+    using System.Text;
+    using System.Windows.Forms;
+    using Ceras;
+    using Newtonsoft.Json;
+    using RTCV.NetCore;
+
     public static class CorruptCore_Extensions
     {
         public static void DirectoryRequired(string path)
@@ -157,7 +157,9 @@ namespace RTCV.CorruptCore
             {
                 try
                 {
-                    bytes[j] = (byte)Convert.ToUInt32(temp.Substring(i, 2), 16);
+                    string chars = temp.Substring(i, 2);
+
+                    bytes[j] = (byte)Convert.ToUInt32(chars, 16);
                 }
                 catch (FormatException e)
                 {
@@ -169,6 +171,46 @@ namespace RTCV.CorruptCore
             }
             return bytes;
         }
+
+        /// <summary>
+        /// Gets you a byte array from the CONTENTS of a string
+        /// </summary>
+        /// <param name="hex"></param>
+        /// <returns></returns>
+        public static byte?[] StringToNullableByteArray(string hex)
+        {
+            var lengthPadded = (hex.Length / 2) + (hex.Length % 2);
+            var bytes = new byte?[lengthPadded];
+            if (hex == null)
+            {
+                return null;
+            }
+
+            string temp = hex.PadLeft(lengthPadded * 2, '0'); //*2 since a byte is two characters
+
+            int j = 0;
+            for (var i = 0; i < lengthPadded * 2; i += 2)
+            {
+                try
+                {
+                    string chars = temp.Substring(i, 2);
+
+                    if (chars == "??")
+                        bytes[j] = null;
+                    else
+                        bytes[j] = (byte)Convert.ToUInt32(chars, 16);
+                }
+                catch (FormatException e)
+                {
+                    Console.Write(e);
+                    return null;
+                }
+
+                j++;
+            }
+            return bytes;
+        }
+
 
         /// <summary>
         /// Gets you a byte array from the CONTENTS of a string 0 padded on the left to a specific length
@@ -190,8 +232,8 @@ namespace RTCV.CorruptCore
             {
                 try
                 {
-                    if (!byte.TryParse(temp.Substring(i, 2), NumberStyles.HexNumber, CultureInfo.CurrentCulture
-                        , out byte b))
+                    if (!byte.TryParse(temp.Substring(i, 2), NumberStyles.HexNumber, CultureInfo.CurrentCulture,
+                        out byte b))
                     {
                         return null;
                     }
@@ -387,19 +429,19 @@ namespace RTCV.CorruptCore
 
                 case 2:
                     {
-                        UInt16 int16Value = BitConverter.ToUInt16(value, 0);
-                        UInt16 addInt16Value = (bigintAddValueAbs > ushort.MaxValue ? ushort.MaxValue : (ushort)bigintAddValueAbs);
+                        ushort ushortValue = BitConverter.ToUInt16(value, 0);
+                        ushort addushortValue = (bigintAddValueAbs > ushort.MaxValue ? ushort.MaxValue : (ushort)bigintAddValueAbs);
 
                         if (isAdd)
                         {
-                            unchecked { int16Value += addInt16Value; }
+                            unchecked { ushortValue += addushortValue; }
                         }
                         else
                         {
-                            unchecked { int16Value -= addInt16Value; }
+                            unchecked { ushortValue -= addushortValue; }
                         }
 
-                        value = BitConverter.GetBytes(int16Value);
+                        value = BitConverter.GetBytes(ushortValue);
 
                         if (isInputBigEndian)
                         {
@@ -410,19 +452,19 @@ namespace RTCV.CorruptCore
                     }
                 case 4:
                     {
-                        UInt32 int32Value = BitConverter.ToUInt32(value, 0);
-                        UInt32 addInt32Value = (bigintAddValueAbs > uint.MaxValue ? uint.MaxValue : (uint)bigintAddValueAbs);
+                        uint uintValue = BitConverter.ToUInt32(value, 0);
+                        uint adduintValue = (bigintAddValueAbs > uint.MaxValue ? uint.MaxValue : (uint)bigintAddValueAbs);
 
                         if (isAdd)
                         {
-                            unchecked { int32Value += addInt32Value; }
+                            unchecked { uintValue += adduintValue; }
                         }
                         else
                         {
-                            unchecked { int32Value -= addInt32Value; }
+                            unchecked { uintValue -= adduintValue; }
                         }
 
-                        value = BitConverter.GetBytes(int32Value);
+                        value = BitConverter.GetBytes(uintValue);
 
                         if (isInputBigEndian)
                         {
@@ -433,19 +475,19 @@ namespace RTCV.CorruptCore
                     }
                 case 8:
                     {
-                        UInt64 int64Value = BitConverter.ToUInt64(value, 0);
-                        UInt64 addInt64Value = (bigintAddValueAbs > ulong.MaxValue ? ulong.MaxValue : (ulong)bigintAddValueAbs);
+                        ulong ulongValue = BitConverter.ToUInt64(value, 0);
+                        ulong addulongValue = (bigintAddValueAbs > ulong.MaxValue ? ulong.MaxValue : (ulong)bigintAddValueAbs);
 
                         if (isAdd)
                         {
-                            unchecked { int64Value += addInt64Value; }
+                            unchecked { ulongValue += addulongValue; }
                         }
                         else
                         {
-                            unchecked { int64Value -= addInt64Value; }
+                            unchecked { ulongValue -= addulongValue; }
                         }
 
-                        value = BitConverter.GetBytes(int64Value);
+                        value = BitConverter.GetBytes(ulongValue);
 
                         if (isInputBigEndian)
                         {
@@ -470,7 +512,7 @@ namespace RTCV.CorruptCore
                             bigIntValue -= bigintAddValueAbs;
                         }
 
-                        //Calculate the max value you can store in this many bits 
+                        //Calculate the max value you can store in this many bits
                         BigInteger maxValue = BigInteger.Pow(2, value.Length * 8) - 1;
 
                         if (bigIntValue > maxValue)
@@ -619,6 +661,18 @@ namespace RTCV.CorruptCore
             return array;
         }
 
+        public static byte?[] FlipBytes(this byte?[] array)
+        {
+            byte?[] arrayClone = (byte?[])array.Clone();
+
+            for (int i = 0; i < arrayClone.Length; i++)
+            {
+                array[i] = arrayClone[(arrayClone.Length - 1) - i];
+            }
+
+            return array;
+        }
+
         public static byte[] PadLeft(this byte[] input, int length)
         {
             var newArray = new byte[length];
@@ -640,6 +694,24 @@ namespace RTCV.CorruptCore
             }
 
             return sb.ToString();
+        }
+
+        public static byte[] Flatten69(this byte?[] bytes)
+        {
+            if (bytes == null)
+                return null;
+
+            var newArray = new byte[bytes.Length];
+
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                if (bytes[i] == null)
+                    newArray[i] = 69;
+                else
+                    newArray[i] = bytes[i].Value;
+            }
+
+            return newArray;
         }
 
         #endregion BYTE ARRAY EXTENSIONS
@@ -850,7 +922,8 @@ namespace RTCV.CorruptCore
         /// <param name="min">Minimum allowed</param>
         /// <param name="max">Maximum allowed</param>
         /// <returns>The value if strictly between min and max; otherwise min (or max depending of what is passed)</returns>
-        public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T>
+        public static T Clamp<T>(this T val, T min, T max)
+            where T : IComparable<T>
         {
             if (val.CompareTo(min) < 0)
             {
@@ -883,6 +956,45 @@ namespace RTCV.CorruptCore
         #endregion
 
         [Serializable]
+        public class NullableByteArrayComparer : IEqualityComparer<byte?[]>
+        {
+            public bool Equals(byte?[] a, byte?[] b)
+            {
+                if (a.Length != b.Length)
+                {
+                    return false;
+                }
+
+                for (int i = 0; i < a.Length; i++)
+                {
+                    if (a[i] == null || b[i] == null) //wildcards
+                        return true;
+
+                    if (a[i].Value != b[i].Value)
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            public int GetHashCode(byte?[] a)
+            {
+                uint b = 0;
+                for (int i = 0; i < a.Length; i++)
+                {
+                    b = ((b << 23) | (b >> 9)) ^ (a[i] ?? 69);
+                }
+
+                return unchecked((int)b);
+            }
+
+            public NullableByteArrayComparer()
+            {
+            }
+        }
+
         public class ByteArrayComparer : IEqualityComparer<byte[]>
         {
             public bool Equals(byte[] a, byte[] b)
@@ -954,7 +1066,7 @@ namespace RTCV.CorruptCore
 
             if (range <= 0)
             {
-                throw new ArgumentOutOfRangeException("Max must be greater than min when inclusiveUpperBound is false, and greater than or equal to when true", "max");
+                throw new ArgumentOutOfRangeException(nameof(max), "Max must be greater than min when inclusiveUpperBound is false, and greater than or equal to when true");
             }
 
             ulong limit = ulong.MaxValue - ulong.MaxValue % range;
@@ -1016,11 +1128,11 @@ namespace RTCV.CorruptCore
         {
             if (!typeof(T).IsSerializable)
             {
-                throw new ArgumentException("The type must be serializable.", "source");
+                throw new ArgumentException("The type must be serializable.", nameof(source));
             }
 
             //Return default of a null object
-            if (Object.ReferenceEquals(source, null))
+            if (object.ReferenceEquals(source, null))
             {
                 return default(T);
             }
@@ -1045,11 +1157,11 @@ namespace RTCV.CorruptCore
             });
             if (!typeof(T).IsSerializable)
             {
-                throw new ArgumentException("The type must be serializable.", "source");
+                throw new ArgumentException("The type must be serializable.", nameof(source));
             }
 
             //Return default of a null object
-            if (Object.ReferenceEquals(source, null))
+            if (object.ReferenceEquals(source, null))
             {
                 return default(T);
             }
@@ -1183,7 +1295,8 @@ namespace RTCV.CorruptCore
             return path + " " + remainder;
         }
 
-        private static IntPtr oldOut, conOut;
+        private static IntPtr oldOut;
+        private static IntPtr conOut;
         private static bool hasConsole;
         private static bool attachedConsole;
         private static bool shouldRedirectStdout;
@@ -1226,8 +1339,8 @@ namespace RTCV.CorruptCore
                 if (Win32.AllocConsole())
                 {
                     //set icons for the console so we can tell them apart from the main window
-                    //		Win32.SendMessage(Win32.GetConsoleWindow(), 0x0080/*WM_SETICON*/, (IntPtr)0/*ICON_SMALL*/, Properties.Resources.console16x16.GetHicon());
-                    //		Win32.SendMessage(Win32.GetConsoleWindow(), 0x0080/*WM_SETICON*/, (IntPtr)1/*ICON_LARGE*/, Properties.Resources.console32x32.GetHicon());
+                    //    Win32.SendMessage(Win32.GetConsoleWindow(), 0x0080/*WM_SETICON*/, (IntPtr)0/*ICON_SMALL*/, Properties.Resources.console16x16.GetHicon());
+                    //    Win32.SendMessage(Win32.GetConsoleWindow(), 0x0080/*WM_SETICON*/, (IntPtr)1/*ICON_LARGE*/, Properties.Resources.console32x32.GetHicon());
                     hasConsole = true;
                 }
                 else
@@ -1327,7 +1440,7 @@ namespace RTCV.CorruptCore
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
         public static extern IntPtr GetCommandLine();
 
-        public enum FileType : uint
+        public enum FileType : int
         {
             FileTypeChar = 0x0002,
             FileTypeDisk = 0x0001,

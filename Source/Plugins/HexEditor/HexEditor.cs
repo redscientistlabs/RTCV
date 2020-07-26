@@ -1,21 +1,21 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using RTCV.NetCore;
-using RTCV.CorruptCore;
-using NLog;
-using NLog.Layouts;
-
 namespace RTCV.Plugins.HexEditor
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Data;
+    using System.Drawing;
+    using System.Globalization;
+    using System.IO;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+    using RTCV.NetCore;
+    using RTCV.CorruptCore;
+    using NLog;
+    using NLog.Layouts;
+
     //Based on the Hex Editor from Bizhawk, available under MIT.
     //https://github.com/tasvideos/bizhawk
     public partial class HexEditor : Form
@@ -23,7 +23,6 @@ namespace RTCV.Plugins.HexEditor
         private int fontWidth;
         private int fontHeight;
 
-        private readonly List<ToolStripMenuItem> _domainMenuItems = new List<ToolStripMenuItem>();
         private readonly char[] _nibbles = { 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G' };    // G = off 0-9 & A-F are acceptable values
         private readonly List<long> _secondaryHighlightedAddresses = new List<long>();
 
@@ -106,7 +105,7 @@ namespace RTCV.Plugins.HexEditor
             };
             CorruptCore.RtcCore.LoadGameDone += (o, e) =>
             {
-                if(this.Visible)
+                if (this.Visible)
                     Restart();
             };
 
@@ -166,8 +165,6 @@ namespace RTCV.Plugins.HexEditor
             return true;
         }
 
-        private volatile object updateValuesSyncObject = new object();
-
         public async void UpdateValues()
         {
             await Task.Run(() => SyncObjectSingleton.FormExecute(() =>
@@ -179,7 +176,7 @@ namespace RTCV.Plugins.HexEditor
                 }
                 catch (Exception e)
                 {
-                    logger.Error(e,"Failed to UpdateValues() in hex editor.");
+                    logger.Error(e, "Failed to UpdateValues() in hex editor.");
                 }
             }));
         }
@@ -486,7 +483,7 @@ namespace RTCV.Plugins.HexEditor
                     addrStr.Append("  ");
                 }
 
-                addrStr.AppendLine($"{_addr.ToHexString(_numDigits)} |");
+                addrStr.AppendLine($"{string.Format("{0:X" + _numDigits + "}", _addr)} |");
             }
 
             return addrStr.ToString();
@@ -705,7 +702,7 @@ namespace RTCV.Plugins.HexEditor
                 Text += " - Editing Address 0x" + string.Format(_numDigitsStr, _addressHighlighted);
                 if (_secondaryHighlightedAddresses.Any())
                 {
-                    Text += $" (Selected 0x{_secondaryHighlightedAddresses.Count() + (_secondaryHighlightedAddresses.Contains(_addressHighlighted) ? 0 : 1):X})";
+                    Text += $" (Selected 0x{_secondaryHighlightedAddresses.Count + (_secondaryHighlightedAddresses.Contains(_addressHighlighted) ? 0 : 1):X})";
                 }
             }
         }
@@ -1303,15 +1300,18 @@ namespace RTCV.Plugins.HexEditor
                 MemoryDomainsMenuItem.DropDownItems.Add(GetMenuItem(new NullMemoryInterface(), SetMemoryDomain, _domain.Name));
                 MemoryDomainsMenuItem.ShowDropDown();
             }
+            else
+            {
+                MemoryDomainsMenuItem.DropDownItems.Clear();
+                foreach (var k in AllDomains.Values)
+                {
+                    MemoryDomainsMenuItem.DropDownItems.Add(GetMenuItem(k, SetMemoryDomain, _domain.Name));
+                }
+            }
         }
 
         private void MemoryDomainsMenuItem_DropDown(object sender, EventArgs e)
         {
-            MemoryDomainsMenuItem.DropDownItems.Clear();
-            foreach (var k in AllDomains.Values)
-            {
-                MemoryDomainsMenuItem.DropDownItems.Add(GetMenuItem(k, SetMemoryDomain, _domain.Name));
-            }
         }
 
         private void DataSizeByteMenuItem_Click(object sender, EventArgs e)
@@ -1461,6 +1461,42 @@ namespace RTCV.Plugins.HexEditor
                 PokeAddressMenuItem_Click(sender, e);
                 return;
             }
+            if (e.Control && e.KeyCode == Keys.F)
+            {
+                FindMenuItem_Click(sender, e);
+                return;
+            }
+            if (e.Control && e.KeyCode == Keys.C)
+            {
+                CopyMenuItem_Click(sender, e);
+                return;
+            }
+            if (e.Control && e.KeyCode == Keys.E)
+            {
+                ExportMenuItem_Click(sender, e);
+                return;
+            }
+            if (e.Control && e.KeyCode == Keys.V)
+            {
+                PasteMenuItem_Click(sender, e);
+                return;
+            }
+            if (e.Shift && e.KeyCode == Keys.Delete)
+            {
+                UnfreezeAllMenuItem_Click(sender, e);
+                return;
+            }
+            if (e.KeyCode == Keys.F2)
+            {
+                FindNextMenuItem_Click(sender, e);
+                return;
+            }
+            if (e.KeyCode == Keys.F3)
+            {
+                FindPrevMenuItem_Click(sender, e);
+                return;
+            }
+
 
             long newHighlighted;
             switch (e.KeyCode)
@@ -2010,7 +2046,7 @@ namespace RTCV.Plugins.HexEditor
 
         private void FreezeAddress(long address)
         {
-            BlastUnit bu = new BlastUnit(StoreType.ONCE, StoreTime.IMMEDIATE, _domain.Name, address, _domain.Name, address, DataSize, _domain.BigEndian, 0, 0); ;
+            BlastUnit bu = new BlastUnit(StoreType.ONCE, StoreTime.IMMEDIATE, _domain.Name, address, _domain.Name, address, DataSize, _domain.BigEndian, 0, 0);
             bu.Apply(false);
         }
 

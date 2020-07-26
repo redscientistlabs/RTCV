@@ -1,18 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-using static RTCV.UI.UI_Extensions;
-
 namespace RTCV.UI
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Diagnostics;
+    using System.Drawing;
+    using System.IO;
+    using System.Linq;
+    using System.Windows.Forms;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using RTCV.Common;
+    using static RTCV.UI.UI_Extensions;
+
     public partial class RTC_GlitchHarvesterBlast_Form : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
@@ -226,7 +226,7 @@ namespace RTCV.UI
                 {
                     if (StockpileManager_UISide.CurrentStashkey == null)
                     {
-                        throw new CustomException("CurrentStashkey in inject was somehow null! Report this to the devs and tell them how you caused this.", Environment.StackTrace);
+                        throw new Exception("CurrentStashkey in inject was somehow null! Report this to the devs and tell them how you caused this.");
                     }
 
                     S.GET<RTC_StashHistory_Form>().DontLoadSelectedStash = true;
@@ -238,7 +238,7 @@ namespace RTCV.UI
                 {
                     if (StockpileManager_UISide.CurrentStashkey == null)
                     {
-                        throw new CustomException("CurrentStashkey in original was somehow null! Report this to the devs and tell them how you caused this.", Environment.StackTrace);
+                        throw new Exception("CurrentStashkey in original was somehow null! Report this to the devs and tell them how you caused this.");
                     }
 
                     S.GET<RTC_StashHistory_Form>().DontLoadSelectedStash = true;

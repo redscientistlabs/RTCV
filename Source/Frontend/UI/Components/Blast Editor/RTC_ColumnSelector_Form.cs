@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using RTCV.Common;
-
-namespace RTCV.UI
+﻿namespace RTCV.UI
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Linq;
+    using System.Text;
+    using System.Windows.Forms;
+    using RTCV.Common;
+
     public partial class ColumnSelector : Form, IAutoColorize
     {
         public ColumnSelector()
@@ -35,13 +35,13 @@ namespace RTCV.UI
 
         private void ColumnSelector_Closing(object sender, FormClosingEventArgs e)
         {
-            if (tablePanel.Controls.Cast<CheckBox>().Count(item => item.Checked) == 0)
+            if (!tablePanel.Controls.Cast<CheckBox>().Any(item => item.Checked))
             {
                 e.Cancel = true;
                 MessageBox.Show("Select at least one column");
                 return;
             }
-            List<String> temp = new List<string>();
+            List<string> temp = new List<string>();
             StringBuilder sb = new StringBuilder();
             foreach (CheckBox cb in tablePanel.Controls.Cast<CheckBox>().Where(item => item.Checked))
             {

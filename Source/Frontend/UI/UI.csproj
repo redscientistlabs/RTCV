@@ -48,7 +48,6 @@
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
@@ -59,19 +58,13 @@
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
+  <PropertyGroup>
+    <!-- https://stackoverflow.com/a/12672514 -->
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\TwitchControlRTCV\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\TwitchControlRTCV\packages\NLog.4.6.8\lib\net45\NLog.dll</HintPath>
-    </Reference>
-    <Reference Include="NLog.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\TwitchControlRTCV\packages\NLog.Windows.Forms.4.3.0\lib\net35\NLog.Windows.Forms.dll</HintPath>
-    </Reference>
     <Reference Include="SlimDX, Version=4.0.13.43, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Deps\SlimDX.dll</HintPath>
@@ -211,6 +204,12 @@
     <Compile Include="Components\Memory Tools\RTC_DomainAnalytics_Form.designer.cs">
       <DependentUpon>RTC_DomainAnalytics_Form.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\Memory Tools\RTC_MyLists.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Components\Memory Tools\RTC_MyLists.designer.cs">
+      <DependentUpon>RTC_MyLists.cs</DependentUpon>
+    </Compile>
     <Compile Include="Components\Memory Tools\RTC_OpenTools_Form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -222,6 +221,12 @@
     </Compile>
     <Compile Include="Components\Memory Tools\RTC_VmdLimiterProfiler_Form.designer.cs">
       <DependentUpon>RTC_VmdLimiterProfiler_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Components\Memory Tools\RTC_MyVMDs_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Components\Memory Tools\RTC_MyVMDs_Form.designer.cs">
+      <DependentUpon>RTC_MyVMDs_Form.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Memory Tools\RTC_VmdSimpleGen_Form.cs">
       <SubType>Form</SubType>
@@ -475,11 +480,17 @@
     <EmbeddedResource Include="Components\Memory Tools\RTC_DomainAnalytics_Form.resx">
       <DependentUpon>RTC_DomainAnalytics_Form.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Components\Memory Tools\RTC_MyLists.resx">
+      <DependentUpon>RTC_MyLists.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Components\Memory Tools\RTC_OpenTools_Form.resx">
       <DependentUpon>RTC_OpenTools_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Memory Tools\RTC_VmdLimiterProfiler_Form.resx">
       <DependentUpon>RTC_VmdLimiterProfiler_Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Memory Tools\RTC_MyVMDs_Form.resx">
+      <DependentUpon>RTC_MyVMDs_Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Memory Tools\RTC_VmdSimpleGen_Form.resx">
       <DependentUpon>RTC_VmdSimpleGen_Form.cs</DependentUpon>
@@ -581,7 +592,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -611,6 +621,17 @@
       <Project>{7e106aec-5614-4206-9e4d-25759c90e8ae}</Project>
       <Name>NetCore</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
+    </PackageReference>
+    <PackageReference Include="NLog">
+      <Version>4.6.8</Version>
+    </PackageReference>
+    <PackageReference Include="NLog.Windows.Forms">
+      <Version>4.3.0</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

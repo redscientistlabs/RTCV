@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -139,6 +139,7 @@ namespace RTCV.Launcher
     {
         public string LauncherAssetLocation;
         public string LauncherConfLocation;
+        public string[] LauncherAddonConfLocations;
         public string VersionLocation;
         public string Version;
 
@@ -149,6 +150,10 @@ namespace RTCV.Launcher
             Version = _version;
             LauncherAssetLocation = Path.Combine(MainForm.launcherDir, "VERSIONS", Version, "Launcher");
             LauncherConfLocation = Path.Combine(LauncherAssetLocation, "launcher.json");
+
+            if(Directory.Exists(LauncherAssetLocation))
+                LauncherAddonConfLocations = Directory.GetFiles(LauncherAssetLocation).Where(it => it.Contains("addon_") && it.Contains(".json")).ToArray();
+            
             VersionLocation = Path.Combine(MainForm.launcherDir, "VERSIONS", Version);
 
             if (!File.Exists(LauncherConfLocation))
@@ -157,8 +162,48 @@ namespace RTCV.Launcher
             Directory.SetCurrentDirectory(VersionLocation); //Move ourselves to this working directory
 
 
-            var json = File.ReadAllText(LauncherConfLocation);
-            Items = JsonConvert.DeserializeObject<LauncherConfJsonItem[]>(json);
+            var launcherJson = File.ReadAllText(LauncherConfLocation);
+            List<LauncherConfJsonItem> lcjiList = new List<LauncherConfJsonItem>();
+            lcjiList.AddRange(JsonConvert.DeserializeObject<LauncherConfJsonItem[]>(launcherJson));
+
+            foreach(var addonJsonConfLocation in LauncherAddonConfLocations)
+            {
+                try
+                {
+                    var addonJson = File.ReadAllText(addonJsonConfLocation);
+                    var addonConfigs = JsonConvert.DeserializeObject<LauncherConfJsonItem[]>(addonJson);
+
+                    foreach (var conf in addonConfigs)
+                    {
+                        conf.ConfigFilename = addonJsonConfLocation;
+                        conf.IsAddon = true;
+                    }
+
+                    lcjiList.AddRange(addonConfigs);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show($"Could not load addon json config file at\n{addonJsonConfLocation}\n\n{ex.ToString()}\n\n{(ex.InnerException != null ? ex.InnerException.ToString() : "")}");
+                    //eat it
+                }
+            }
+
+            if(lcjiList[0].ItemSubtitle != null) //means we can use metadata to reorder in categories
+            {
+                var vanguardImplementations = lcjiList.Where(it => it.ItemSubtitle != null && it.ItemSubtitle.ToUpper().Contains("VANGUARD")).ToList();
+                var stubVanguardImplementations = lcjiList.Where(it => it.ItemSubtitle != null && it.ItemSubtitle.ToUpper().Contains("STUB")).ToList();
+                var everythingElse = lcjiList.Where(it => it.ItemSubtitle != null && !it.ItemSubtitle.ToUpper().Contains("STUB") && !it.ItemSubtitle.ToUpper().Contains("VANGUARD")).ToList();
+                var addButton = lcjiList.FirstOrDefault(it => it.ImageName == "Add.png");
+
+                lcjiList.Clear();
+                lcjiList.AddRange(vanguardImplementations);
+                lcjiList.AddRange(stubVanguardImplementations);
+                lcjiList.AddRange(everythingElse);
+                lcjiList.Add(addButton);
+
+            }
+
+            Items = lcjiList.ToArray();
         }
     }
 
@@ -173,12 +218,36 @@ namespace RTCV.Launcher
         [JsonProperty] 
         public readonly ReadOnlyDictionary<string, ExecutableCommand> ExecutableCommands;
 
-        public LauncherConfJsonItem(string imageName, string downloadVersion, string folderName, ReadOnlyDictionary<string, ExecutableCommand> executableCommands)
+        //Used for the sidepanel and ordering of cards
+        [JsonProperty]
+        public readonly string ItemName;
+        [JsonProperty]
+        public readonly string ItemSubtitle;
+        [JsonProperty]
+        public readonly string ItemDescription;
+
+        [JsonProperty]
+        public readonly bool HideItem; //makes the card hide 
+
+        //Addon vars that are automatically set when the json is loaded
+        public bool IsAddon;
+        public string ConfigFilename;
+
+
+        public LauncherConfJsonItem(string imageName, string downloadVersion, string folderName, ReadOnlyDictionary<string, ExecutableCommand> executableCommands, string itemName, string itemSubtitle, string itemDescription, bool hideItem, bool isAddon, string configFilename)
         {
             ImageName = imageName;
             DownloadVersion = downloadVersion;
             FolderName = folderName;
             ExecutableCommands = executableCommands;
+
+            ItemName = itemName;
+            ItemSubtitle = itemSubtitle;
+            ItemDescription = itemDescription;
+
+            HideItem = hideItem;
+            IsAddon = isAddon;
+            ConfigFilename = configFilename;
         }
 
         public bool Execute(bool runPreExecute = true, bool runPostExecute = true)

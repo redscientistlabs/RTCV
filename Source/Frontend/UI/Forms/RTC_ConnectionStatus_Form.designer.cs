@@ -37,6 +37,7 @@
             this.lbRTCver = new System.Windows.Forms.Label();
             this.lbConnectionStatus = new System.Windows.Forms.Label();
             this.pbMonster = new System.Windows.Forms.PictureBox();
+            this.btnBreakCrashLoop = new System.Windows.Forms.Button();
             this.pnBlockedButtons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMonster)).BeginInit();
             this.SuspendLayout();
@@ -70,11 +71,12 @@
             // pnBlockedButtons
             // 
             this.pnBlockedButtons.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pnBlockedButtons.Controls.Add(this.btnBreakCrashLoop);
             this.pnBlockedButtons.Controls.Add(this.btnTriggerKillswitch);
             this.pnBlockedButtons.Controls.Add(this.btnEmergencySaveAs);
             this.pnBlockedButtons.Location = new System.Drawing.Point(22, 128);
             this.pnBlockedButtons.Name = "pnBlockedButtons";
-            this.pnBlockedButtons.Size = new System.Drawing.Size(191, 84);
+            this.pnBlockedButtons.Size = new System.Drawing.Size(191, 128);
             this.pnBlockedButtons.TabIndex = 137;
             this.pnBlockedButtons.Visible = false;
             // 
@@ -94,7 +96,7 @@
             // 
             this.btnEmergencySaveAs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnEmergencySaveAs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEmergencySaveAs.Location = new System.Drawing.Point(0, 43);
+            this.btnEmergencySaveAs.Location = new System.Drawing.Point(0, 73);
             this.btnEmergencySaveAs.Name = "btnEmergencySaveAs";
             this.btnEmergencySaveAs.Size = new System.Drawing.Size(168, 29);
             this.btnEmergencySaveAs.TabIndex = 136;
@@ -136,6 +138,19 @@
             this.pbMonster.TabIndex = 133;
             this.pbMonster.TabStop = false;
             // 
+            // btnBreakCrashLoop
+            // 
+            this.btnBreakCrashLoop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnBreakCrashLoop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBreakCrashLoop.Location = new System.Drawing.Point(0, 38);
+            this.btnBreakCrashLoop.Name = "btnBreakCrashLoop";
+            this.btnBreakCrashLoop.Size = new System.Drawing.Size(168, 29);
+            this.btnBreakCrashLoop.TabIndex = 137;
+            this.btnBreakCrashLoop.Tag = "color:dark1";
+            this.btnBreakCrashLoop.Text = "Emergency Break Crash-Loop";
+            this.btnBreakCrashLoop.UseVisualStyleBackColor = false;
+            this.btnBreakCrashLoop.Click += new System.EventHandler(this.btnBreakCrashLoop_Click);
+            // 
             // RTC_ConnectionStatus_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -174,5 +189,6 @@
         private System.Windows.Forms.Button btnEmergencySaveAs;
         public System.Windows.Forms.Panel pnBlockedButtons;
         public System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnBreakCrashLoop;
     }
 }

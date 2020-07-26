@@ -1,18 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.Text;
-using System.Threading.Tasks;
-using RTCV.PluginHost;
-
 namespace RTCV.Plugins
 {
+    using System;
+    using System.ComponentModel.Composition;
+    using RTCV.PluginHost;
+
     [Export(typeof(IPlugin))]
     public class TestPlugin : IPlugin
     {
         public string Name => "TestPlugin";
         public string Description => "Test plugin";
         public string Author => "Narry";
+
+        #pragma warning disable SA1001 //Avoiding spaces between commas makes version string more clear
         public Version Version => new Version(0,0,1);
         public RTCSide SupportedSide => RTCSide.Both;
 

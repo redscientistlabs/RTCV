@@ -1,15 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Net;
-using System.Net.Sockets;
-using System.Runtime.Serialization;
-using System.Threading;
-using Ceras;
-
 namespace RTCV.NetCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Net;
+    using System.Net.Sockets;
+    using System.Runtime.Serialization;
+    using System.Threading;
+    using Ceras;
+
     public class TCPLink
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
@@ -113,6 +113,10 @@ namespace RTCV.NetCore
                 {
                     return new NetCore.NetCore_Extensions.HashSetFormatterThatKeepsItsComparer();
                 }
+                else if (t == typeof(HashSet<byte?[]>))
+                {
+                    return new NetCore.NetCore_Extensions.NullableByteHashSetFormatterThatKeepsItsComparer();
+                }
 
                 return null; // continue searching
             });
@@ -139,7 +143,7 @@ namespace RTCV.NetCore
                     server.Stop();
                 }
 
-                networkStream.ReadTimeout = 20;
+                networkStream.ReadTimeout = 10000;
                 networkStream.WriteTimeout = int.MaxValue;  //Using {BOOP} commands routed through UDP/TCP
 
                 if (spec.Side == NetworkSide.CLIENT)
@@ -377,7 +381,7 @@ namespace RTCV.NetCore
 
             try
             {
-                if (Object.ReferenceEquals(clientRef, client))
+                if (object.ReferenceEquals(clientRef, client))
                 {
                     client?.Close();
                     client = null;
@@ -518,7 +522,7 @@ namespace RTCV.NetCore
 
                 try
                 {
-                    if (Object.ReferenceEquals(clientRef, client))
+                    if (object.ReferenceEquals(clientRef, client))
                     {
                         client?.Close();
                         client = null;

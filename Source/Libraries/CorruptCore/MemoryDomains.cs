@@ -1,18 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-using Ceras;
-using Newtonsoft.Json;
-using RTCV.NetCore;
-
 namespace RTCV.CorruptCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.IO.Compression;
+    using System.Linq;
+    using System.Runtime.Serialization.Formatters.Binary;
+    using System.Text;
+    using System.Windows.Forms;
+    using System.Xml.Serialization;
+    using Ceras;
+    using Newtonsoft.Json;
+    using RTCV.NetCore;
+
     public static class MemoryDomains
     {
         private static object miLock = new object();
@@ -645,7 +645,7 @@ namespace RTCV.CorruptCore
             List<string> domains = new List<string>();
             List<List<long>> domainAdresses = new List<List<long>>();
 
-            for (int i = 0; i < PointerAddresses.Count(); i++)
+            for (int i = 0; i < PointerAddresses.Count; i++)
             {
                 var dom = PointerDomains[i];
                 if (!domains.Contains(dom))
@@ -1111,7 +1111,6 @@ namespace RTCV.CorruptCore
 
         public long MultiFilePosition = 0;
         public long MultiFilePositionCeiling = 0;
-        private static readonly bool writeCopyMode = false;
 
         public string InterfaceUniquePrefix = "";
 
@@ -1269,7 +1268,7 @@ namespace RTCV.CorruptCore
 
         public string getCorruptFilename(bool overrideWriteCopyMode = false)
         {
-            if (overrideWriteCopyMode || FileInterface.writeCopyMode)
+            if (overrideWriteCopyMode)
             {
                 return Path.Combine(RtcCore.EmuDir, "FILEBACKUPS", getCompositeFilename("CORRUPT"));
             }
@@ -1318,27 +1317,6 @@ namespace RTCV.CorruptCore
         public override bool ApplyWorkingFile()
         {
             CloseStream();
-
-            if (FileInterface.writeCopyMode)
-            {
-                try
-                {
-                    if (File.Exists(Filename))
-                    {
-                        File.Delete(Filename);
-                    }
-
-                    if (File.Exists(getCorruptFilename()))
-                    {
-                        File.Move(getCorruptFilename(), Filename);
-                    }
-                }
-                catch
-                {
-                    MessageBox.Show($"Could not get access to {Filename} because some other program is probably using it. \n\nClose the file then press OK to try again", "WARNING");
-                    return false;
-                }
-            }
             return true;
         }
 
@@ -1480,7 +1458,6 @@ namespace RTCV.CorruptCore
                 for (int i = 0; i < data.Length; i++)
                     lastMemoryDump[address + i] = data[i];
             */
-
         }
 
         public override void PokeByte(long address, byte data)
@@ -1867,9 +1844,9 @@ namespace RTCV.CorruptCore
         */
 
             //return lastMemoryDump;
-
         }
 
+        #pragma warning disable CA1065
         public override byte[][] lastMemoryDump
         {
             get => throw new Exception("FORBIDDEN USE OF LASTMEMORYDUMP ON MULTIPLEFILEINTERFACE");

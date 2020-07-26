@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace RTCV.CorruptCore.EventWarlock
 {
+    using System.Collections.Generic;
 
     //todo: make easier for the editor to access all the conditionals
     [System.Serializable]
@@ -14,7 +9,7 @@ namespace RTCV.CorruptCore.EventWarlock
         /// <summary>
         /// The list of conditionals
         /// </summary>
-        public List<EWConditional> Conditionals = new List<EWConditional>(2);//try to make it as small as possible
+        public List<EWConditional> Conditionals = new List<EWConditional>(2); //try to make it as small as possible
 
         /// <summary>
         /// Adds a conditional. If an operator wasn't set on the last conditional it is automatically assigned a QuestionOp.AND
@@ -23,7 +18,7 @@ namespace RTCV.CorruptCore.EventWarlock
         public void AddConditional(EWConditional w)
         {
             Conditionals.Add(w);
-            if(Conditionals.Count > 1 && Conditionals[Conditionals.Count-1].NextOp == QuestionOp.NONE)
+            if (Conditionals.Count > 1 && Conditionals[Conditionals.Count - 1].NextOp == QuestionOp.NONE)
             {
                 Conditionals[Conditionals.Count - 1].NextOp = QuestionOp.AND;
             }
@@ -47,7 +42,7 @@ namespace RTCV.CorruptCore.EventWarlock
                 if (next == QuestionOp.AND) {
                     res = res && Conditionals[j].Evaluate(grimoire);
                 }
-                else if(next == QuestionOp.OR)
+                else if (next == QuestionOp.OR)
                 {
                     res = res || Conditionals[j].Evaluate(grimoire);
                 }

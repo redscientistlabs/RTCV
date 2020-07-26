@@ -1,22 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading;
-using System.Timers;
-using System.Windows.Forms;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-using RTCV.UI.Input;
-using RTCV.UI.Modular;
-using static RTCV.NetCore.NetcoreCommands;
-using static RTCV.UI.UI_Extensions;
-
 namespace RTCV.UI
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using System.Threading;
+    using System.Timers;
+    using System.Windows.Forms;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using RTCV.Common;
+    using RTCV.UI.Input;
+    using RTCV.UI.Modular;
+    using static RTCV.NetCore.NetcoreCommands;
+    using static RTCV.UI.UI_Extensions;
+
     public static class UICore
     {
         //Note Box Settings
@@ -394,7 +394,7 @@ namespace RTCV.UI
                 {
                     if (targetForm != null)
                     {
-                        foreach(var c in targetForm.Controls.getControlsWithTag())
+                        foreach (var c in targetForm.Controls.getControlsWithTag())
                             allControls.Add(c);
                         allControls.Add(targetForm);
                     }
@@ -658,6 +658,34 @@ namespace RTCV.UI
                     });
                     break;
 
+                case "Reload Corruption":
+
+                    SyncObjectSingleton.FormExecute(() =>
+                    {
+                        var sh = S.GET<RTC_StashHistory_Form>();
+                        var sm = S.GET<RTC_StockpileManager_Form>();
+                        var ghb = S.GET<RTC_GlitchHarvesterBlast_Form>();
+
+                        if (sh.lbStashHistory.SelectedIndex != -1)
+                            sh.lbStashHistory_SelectedIndexChanged(null, null);
+                        else
+                        {
+                            var rows = sm.dgvStockpile.SelectedRows;
+                            var mainRow = rows[0];
+
+                            if (rows.Count > 1)
+                            {
+                                ghb.btnCorrupt_Click(null, null);
+                            }
+                            else
+                            {
+                                sm.dgvStockpile_CellClick(sm.dgvStockpile, new DataGridViewCellEventArgs(0, mainRow.Index));
+                            }
+                        }
+                    });
+
+                    break;
+
                 case "Reroll":
                     SyncObjectSingleton.FormExecute(() =>
                     {
@@ -900,7 +928,11 @@ namespace RTCV.UI
                 return;
             }
 
-            string[] paths = System.IO.Directory.GetFiles(dir).Where(x => x.EndsWith(".txt", StringComparison.OrdinalIgnoreCase)).ToArray();
+
+            //x.Substring(x.LastIndexOf('\\')+1)[0] != '$'
+            //checks if first char is $
+
+            string[] paths = System.IO.Directory.GetFiles(dir).Where(x => x.EndsWith(".txt", StringComparison.OrdinalIgnoreCase) && x.Substring(x.LastIndexOf('\\') + 1)[0] != '$').ToArray();
             paths = paths.OrderBy(x => x).ToArray();
 
             List<string> hashes = Filtering.LoadListsFromPaths(paths);

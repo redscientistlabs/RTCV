@@ -8,3 +8,5 @@ x64
 x86
 build
 Output/*
+StyleCop.Cache
+.vscode

@@ -1,16 +1,15 @@
-using System;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-using static RTCV.UI.UI_Extensions;
-
 namespace RTCV.UI
 {
+    using System;
+    using System.Data;
+    using System.IO;
+    using System.Linq;
+    using System.Windows.Forms;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using RTCV.Common;
+    using static RTCV.UI.UI_Extensions;
+
     public partial class RTC_VmdPool_Form : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
@@ -45,9 +44,7 @@ namespace RTCV.UI
         private void btnUnloadVMD_Click(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
-            {
                 return;
-            }
 
             //Clear any active units to prevent bad things due to soon unloaded vmds
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_CLEARSTEPBLASTUNITS, null, true);
@@ -74,6 +71,11 @@ namespace RTCV.UI
 
             lbRealDomainValue.Text = "#####";
             lbVmdSizeValue.Text = "#####";
+
+            btnSendToMyVMDs.Enabled = false;
+            btnSaveVmd.Enabled = false;
+            btnRenameVmd.Enabled = false;
+            btnUnloadVmd.Enabled = false;
         }
 
         private static void RenameVMD(VirtualMemoryDomain VMD)
@@ -89,7 +91,7 @@ namespace RTCV.UI
             }
 
             string name = "";
-            string value = "";
+            string value = vmdName.Trim().Replace("[V]", "");
             if (UI_Extensions.GetInputBox("BlastLayer to VMD", "Enter the new VMD name:", ref value) == DialogResult.OK)
             {
                 name = value.Trim();
@@ -129,7 +131,7 @@ namespace RTCV.UI
                     bu.SourceDomain = "[V]" + name;
                 }
             }
-            //Go through the stash history and update any references 
+            //Go through the stash history and update any references
             foreach (StashKey sk in S.GET<RTC_StashHistory_Form>().lbStashHistory.Items)
             {
                 foreach (var bu in sk.BlastLayer.Layer)
@@ -169,10 +171,24 @@ namespace RTCV.UI
 
         private void lbLoadedVmdList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            btnSendToMyVMDs.Enabled = false;
+            btnSaveVmd.Enabled = false;
+            btnRenameVmd.Enabled = false;
+            btnUnloadVmd.Enabled = false;
+
+
             if (lbLoadedVmdList.SelectedItem == null)
-            {
                 return;
+
+
+            if (lbLoadedVmdList.SelectedItems.Count == 1)
+            {
+                btnSaveVmd.Enabled = true;
+                btnRenameVmd.Enabled = true;
             }
+
+            btnSendToMyVMDs.Enabled = true;
+            btnUnloadVmd.Enabled = true;
 
             string vmdName = lbLoadedVmdList.SelectedItem.ToString();
             MemoryInterface mi = MemoryDomains.VmdPool[vmdName];
@@ -196,14 +212,44 @@ namespace RTCV.UI
                     lbRealDomainValue.Text = vmd.PointerDomains.FirstOrDefault();
                 }
             }
+
+            //display proto here
+
+            tbVmdPrototype.Text = DisplayVMD(vmd);
+        }
+
+        private string DisplayVMD(VirtualMemoryDomain vmd)
+        {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+            sb.Append($"===Singles==={Environment.NewLine}");
+
+            foreach (var i in vmd.Proto.AddSingles)
+                sb.Append($"{i.ToHexString()}{Environment.NewLine}");
+
+            foreach (var i in vmd.Proto.RemoveSingles)
+                sb.Append($"-{i.ToHexString()}{Environment.NewLine}");
+
+
+            sb.Append($"{Environment.NewLine}");
+
+
+
+            sb.Append($"===Ranges==={Environment.NewLine}");
+
+            foreach (var i in vmd.Proto.AddRanges)
+                sb.Append($"{i[0].ToHexString()}-{i[1].ToHexString()}{Environment.NewLine}");
+
+            foreach (var i in vmd.Proto.RemoveRanges)
+                sb.Append($"-{i[0].ToHexString()}-{i[1].ToHexString()}{Environment.NewLine}");
+
+            return sb.ToString();
         }
 
         private void btnSaveVmd_Click(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
-            {
                 return;
-            }
 
             string vmdName = lbLoadedVmdList.SelectedItem.ToString();
             VirtualMemoryDomain vmd = MemoryDomains.VmdPool[vmdName];
@@ -213,6 +259,7 @@ namespace RTCV.UI
                 DefaultExt = "vmd",
                 Title = "Save VMD to File",
                 Filter = "VMD file|*.vmd",
+                FileName = vmdName.Trim().Replace("[V]", "") + ".vmd",
                 RestoreDirectory = true
             };
 
@@ -220,7 +267,7 @@ namespace RTCV.UI
             {
                 string filename = saveFileDialog1.FileName;
 
-                //creater stockpile.xml to temp folder from stockpile object
+                //create json file for vmd
                 using (FileStream fs = File.Open(filename, FileMode.Create))
                 {
                     JsonHelper.Serialize(vmd.Proto, fs);
@@ -228,12 +275,15 @@ namespace RTCV.UI
             }
         }
 
-        private void loadVmd(string path, bool refreshvmds)
+        internal void loadVmd(string path, bool refreshvmds)
         {
             using (FileStream fs = File.Open(path, FileMode.Open))
             {
                 VmdPrototype proto = null;
                 proto = JsonHelper.Deserialize<VmdPrototype>(fs);
+
+                string filePath = path.Substring(path.LastIndexOf('\\') + 1);
+                proto.VmdName = filePath.Replace(".vmd", "").Replace(".VMD", "");
 
                 MemoryDomains.AddVMD(proto);
             }
@@ -244,28 +294,6 @@ namespace RTCV.UI
             }
         }
 
-        private void loadLegacyVmd(string path)
-        {
-            //Fix int[] to long[]
-            string vmdXML = File.ReadAllText(path);
-            vmdXML = vmdXML.Replace("<int>", "<long>");
-            vmdXML = vmdXML.Replace("</int>", "</long>");
-            vmdXML = vmdXML.Replace("ArrayOfInt", "ArrayOfLong");
-            vmdXML = vmdXML.Replace("addRanges", "AddRanges");
-            vmdXML = vmdXML.Replace("addSingles", "AddSingles");
-            vmdXML = vmdXML.Replace("removeRanges", "RemoveRanges");
-            vmdXML = vmdXML.Replace("removeSingles", "removeSingles");
-            XmlSerializer xs = new XmlSerializer(typeof(VmdPrototype));
-            VmdPrototype proto = (VmdPrototype)xs.Deserialize(new StringReader(vmdXML));
-
-            var jsonFilename = Path.Combine(Path.GetDirectoryName(path), Path.GetFileNameWithoutExtension(path) + ".vmd");
-            using (FileStream _fs = File.Open(jsonFilename, FileMode.Create))
-            {
-                JsonHelper.Serialize(proto, _fs, Newtonsoft.Json.Formatting.Indented);
-            }
-
-            MemoryDomains.AddVMD(proto);
-        }
 
         private void btnLoadVmd_Click(object sender, EventArgs e)
         {
@@ -274,35 +302,21 @@ namespace RTCV.UI
                 DefaultExt = "vmd",
                 Multiselect = true,
                 Title = "Open VMD File",
-                Filter = "VMD files|*.vmd;*.xml",
+                Filter = "VMD files|*.vmd",
                 RestoreDirectory = true
             };
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                bool notified = false;
                 //string Filename = ofd.FileName.ToString();
                 foreach (string filename in ofd.FileNames)
                 {
                     try
                     {
-                        if (string.Equals(Path.GetExtension(filename), ".XML", StringComparison.OrdinalIgnoreCase))
-                        {
-                            if (!notified)
-                            {
-                                MessageBox.Show("Legacy XML VMD detected. We're going to drop support for these at some point.\nConverting to JSON and saving to the original folder.");
-                                notified = true;
-                            }
-
-                            loadLegacyVmd(filename);
-                        }
-                        else
-                        {
-                            loadVmd(filename, false);
-                        }
+                        loadVmd(filename, false);
                     }
                     catch (Exception ex)
                     {
-                        throw new NetCore.CustomException($"The VMD file {filename} could not be loaded." + ex.Message, ex.StackTrace);
+                        throw new Exception($"The VMD file {filename} could not be loaded." + ex.Message);
                     }
                 }
 
@@ -317,15 +331,93 @@ namespace RTCV.UI
         private void btnRenameVMD_Click(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
-            {
                 return;
-            }
 
             string vmdName = lbLoadedVmdList.SelectedItem.ToString();
 
             RenameVMD(vmdName);
 
             RefreshVMDs();
+        }
+
+        private void btnSendToMyVMDs_Click(object sender, EventArgs e)
+        {
+            if (lbLoadedVmdList.SelectedIndex == -1)
+                return;
+
+            if (lbLoadedVmdList.SelectedItems.Count == 1)
+            {
+                string vmdName = lbLoadedVmdList.SelectedItem.ToString();
+                VirtualMemoryDomain vmd = MemoryDomains.VmdPool[vmdName];
+
+                string value = lbLoadedVmdList.SelectedItem.ToString().Trim().Replace("[V]", "");
+                if (GetInputBox("Add to My VMDs", "Confirm VMD name:", ref value) == DialogResult.OK)
+                {
+                    if (string.IsNullOrWhiteSpace(value.Trim()))
+                    {
+                        MessageBox.Show("Invalid name");
+                        return;
+                    }
+
+
+                    string targetPath = Path.Combine(RtcCore.vmdsDir, value.Trim() + ".vmd");
+
+                    if (File.Exists(targetPath))
+                    {
+                        var result = MessageBox.Show("This file already exists in your VMDs folder, do you want to overwrite it?", "Overwrite file?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        if (result == DialogResult.No)
+                            return;
+
+                        File.Delete(targetPath);
+                    }
+
+                    //creates json file for vmd
+                    using (FileStream fs = File.Open(targetPath, FileMode.Create))
+                    {
+                        JsonHelper.Serialize(vmd.Proto, fs);
+                    }
+                }
+            }
+            else //multiple selected
+            {
+                foreach (var item in lbLoadedVmdList.SelectedItems)
+                {
+                    string vmdName = item.ToString();
+                    VirtualMemoryDomain vmd = MemoryDomains.VmdPool[vmdName];
+
+                    string itemValue = item.ToString().Trim().Replace("[V]", "");
+
+                    //string targetPath = Path.Combine(RtcCore.vmdsDir, value.Trim() + ".vmd");
+
+                    string itemTargetPath = Path.Combine(RtcCore.vmdsDir, itemValue.Trim() + ".vmd");
+
+                    if (File.Exists(itemTargetPath))
+                    {
+                        var result = MessageBox.Show("This file already exists in your VMDs folder, do you want to overwrite it?", "Overwrite file?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        if (result == DialogResult.No)
+                            return;
+
+                        File.Delete(itemTargetPath);
+                    }
+
+                    using (FileStream fs = File.Open(itemTargetPath, FileMode.Create))
+                    {
+                        JsonHelper.Serialize(vmd.Proto, fs);
+                    }
+                }
+            }
+
+            S.GET<RTC_MyVMDs_Form>().RefreshVMDs();
+
+            //switch to My VMDs
+            foreach (var item in UICore.mtForm.cbSelectBox.Items)
+            {
+                if (((dynamic)item).value is RTC_MyVMDs_Form)
+                {
+                    UICore.mtForm.cbSelectBox.SelectedItem = item;
+                    break;
+                }
+            }
         }
     }
 }

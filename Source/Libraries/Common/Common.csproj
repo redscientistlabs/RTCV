@@ -45,6 +45,9 @@
     <Compile Include="Controls\LogConsole.designer.cs">
       <DependentUpon>LogConsole.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ToolStripEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\LogConsoleForm.cs">
       <SubType>Form</SubType>
     </Compile>

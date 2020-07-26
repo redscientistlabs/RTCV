@@ -1,13 +1,13 @@
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.Media;
-using System.Windows.Forms;
-using RTCV.Common;
-using RTCV.NetCore;
-
 namespace RTCV.UI
 {
+    using System;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Media;
+    using System.Windows.Forms;
+    using RTCV.Common;
+    using RTCV.NetCore;
+
     public static class AutoKillSwitch
     {
         public static int MaxMissedPulses = 25;
@@ -75,7 +75,7 @@ namespace RTCV.UI
 
         public static void KillEmulator(bool forceBypass = false)
         {
-            logger.Trace("Entered KillEmulator {ShouldKillswitchFire} {UICore.FirstConnect} {!forceBypass} {!S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked} {!forceBypass}", ShouldKillswitchFire, UICore.FirstConnect, !forceBypass, !S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked, !forceBypass); 
+            logger.Trace("Entered KillEmulator {ShouldKillswitchFire} {UICore.FirstConnect} {!forceBypass} {!S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked} {!forceBypass}", ShouldKillswitchFire, UICore.FirstConnect, !forceBypass, !S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked, !forceBypass);
             if (!ShouldKillswitchFire || (UICore.FirstConnect && !forceBypass) || (!S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked && !forceBypass))
             {
                 logger.Trace("Exited KillEmulator {ShouldKillswitchFire} {UICore.FirstConnect} {!forceBypass} {!S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked} {!forceBypass}", ShouldKillswitchFire, UICore.FirstConnect, !forceBypass, !S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked, !forceBypass);

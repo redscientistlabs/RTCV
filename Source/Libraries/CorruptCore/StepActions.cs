@@ -1,12 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Windows.Forms;
-using RTCV.NetCore;
-using RTCV.Common;
-
 namespace RTCV.CorruptCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows.Forms;
+    using RTCV.NetCore;
+
     ///Rather than handling everything individually, we have a system here that works on collections of Blastunits
     ///In most usage, you're probably only going to have a small number of different lifetime/start time mixtures
     ///Rather than operating on every unit individually, we place everything into collections of Blastunits and then operate on them
@@ -17,7 +16,6 @@ namespace RTCV.CorruptCore
     ///appliedLifetime and appliedInfinite are the two collections where we store what we want to actually be applied
     public static class StepActions
     {
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private static List<List<BlastUnit>> buListCollection = new List<List<BlastUnit>>();
 
         private static LinkedList<List<BlastUnit>> queued = new LinkedList<List<BlastUnit>>();
@@ -170,9 +168,9 @@ namespace RTCV.CorruptCore
 
 
         /*
-		 Iterate over all the existing batches.
-		 If a batch that matches all the params already exists, return that. otherwise, create and return a new batch.
-		 */
+         Iterate over all the existing batches.
+         If a batch that matches all the params already exists, return that. otherwise, create and return a new batch.
+         */
         public static List<BlastUnit> GetBatchedLayer(BlastUnit bu)
         {
             List<BlastUnit> collection = null;
@@ -192,7 +190,7 @@ namespace RTCV.CorruptCore
             //Checks that the limiters match
             bool CheckLimitersMatch(BlastUnit bu1, BlastUnit bu2)
             {
-                //We only care if it's pre-execute because otherwise its limiter is independent from batching 
+                //We only care if it's pre-execute because otherwise its limiter is independent from batching
                 if (bu1.LimiterTime != LimiterTime.PREEXECUTE)
                 {
                     return true;
@@ -243,7 +241,7 @@ namespace RTCV.CorruptCore
             return collection;
         }
 
-        public static void AddBlastUnit(BlastUnit bu)
+        public static void AddBlastUnit(BlastUnit bu, bool overrideExecuteFrame)
         {
             lock (executeLock)
             {
@@ -255,9 +253,18 @@ namespace RTCV.CorruptCore
                 }
                 else
                 {
-                    bu.Working.ExecuteFrameQueued = bu.ExecuteFrame + currentFrame;
-                    //We subtract 1 here as we want lifetime to be exclusive. 1 means 1 apply, not applies 0 > applies 1 > done
-                    bu.Working.LastFrame = bu.Working.ExecuteFrameQueued + bu.Lifetime - 1;
+                    if (overrideExecuteFrame) //If a looping unit has a loop timing, use the loop timing instead of ExecuteFrame for subsequent loops
+                    {
+                        bu.Working.ExecuteFrameQueued = bu.LoopTiming.Value + currentFrame;
+                        //We subtract 1 here as we want lifetime to be exclusive. 1 means 1 apply, not applies 0 > applies 1 > done
+                        bu.Working.LastFrame = bu.Working.ExecuteFrameQueued + bu.Lifetime - 1;
+                    }
+                    else
+                    {
+                        bu.Working.ExecuteFrameQueued = bu.ExecuteFrame + currentFrame;
+                        //We subtract 1 here as we want lifetime to be exclusive. 1 means 1 apply, not applies 0 > applies 1 > done
+                        bu.Working.LastFrame = bu.Working.ExecuteFrameQueued + bu.Lifetime - 1;
+                    }
                 }
 
                 var collection = GetBatchedLayer(bu);
@@ -286,7 +293,7 @@ namespace RTCV.CorruptCore
                     queued.AddLast(buList);
                 }
 
-                //Nuke the list 
+                //Nuke the list
                 buListCollection = new List<List<BlastUnit>>();
 
                 //There's data so have the execute loop actually do something
@@ -320,7 +327,7 @@ namespace RTCV.CorruptCore
                 foreach (BlastUnit bu in buList)
                 {
                     //If it returns false, that means the layer shouldn't apply
-                    //This is primarily for if a limiter returns false 
+                    //This is primarily for if a limiter returns false
                     //If this happens, we need to remove it from the pool and then return out
                     if (!bu.EnteringExecution())
                     {
@@ -386,7 +393,7 @@ namespace RTCV.CorruptCore
                                 isRunning = false;
                                 if (dr == DialogResult.Yes)
                                 {
-                                    throw new CustomException("BlastUnit appliedLifetime Execute threw up. Check the log for more info.", Environment.StackTrace);
+                                    throw new Exception("BlastUnit appliedLifetime Execute threw up. Check the log for more info.");
                                 }
 
                                 return;
@@ -417,7 +424,7 @@ namespace RTCV.CorruptCore
                                 isRunning = false;
                                 if (dr == DialogResult.Yes)
                                 {
-                                    throw new CustomException("BlastUnit appliedInfinite Execute threw up. Check the log for more info.", Environment.StackTrace);
+                                    throw new Exception("BlastUnit appliedInfinite Execute threw up. Check the log for more info.");
                                 }
 
                                 return;
@@ -456,7 +463,8 @@ namespace RTCV.CorruptCore
                             needsRefilter = true;
                             foreach (BlastUnit bu in buList)
                             {
-                                bu.Apply(true);
+                                bool applyLoopTiming = (bu.LoopTiming != null && bu.LoopTiming != -1);
+                                bu.Apply(true, applyLoopTiming);
                             }
                         }
                     }

@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace RTCV.CorruptCore.Coroutines
 {
+    using System;
+    using System.Collections.Generic;
+
     //Can probably simplify logic or refactor
 
     /// <summary>
@@ -37,7 +34,7 @@ namespace RTCV.CorruptCore.Coroutines
 
         public void Dispose()
         {
-            if(coroutine != null)
+            if (coroutine != null)
             {
                 coroutine.Dispose();
             }
@@ -45,7 +42,7 @@ namespace RTCV.CorruptCore.Coroutines
 
         public void DoCycle()
         {
-            if(IsComplete)
+            if (IsComplete)
             {
                 //Do nothing
             }

@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Windows.Forms;
-using Newtonsoft.Json;
-
-namespace RTCV.CorruptCore
+﻿namespace RTCV.CorruptCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Windows.Forms;
+    using Newtonsoft.Json;
+
     public static class BlastTools
     {
         public static string LastBlastLayerSavePath { get; set; }
@@ -200,9 +200,8 @@ namespace RTCV.CorruptCore
         /// </summary>
         /// <param name="blastLayers"></param>
         /// <param name="sk"></param>
-        /// <param name="loadBeforeCorrupt"></param>
         /// <returns></returns>
-		public static List<BlastGeneratorProto> GenerateBlastLayersFromBlastGeneratorProtos(List<BlastGeneratorProto> blastLayers, StashKey sk)
+        public static List<BlastGeneratorProto> GenerateBlastLayersFromBlastGeneratorProtos(List<BlastGeneratorProto> blastLayers, StashKey sk)
         {
             foreach (BlastGeneratorProto bgp in blastLayers)
             {

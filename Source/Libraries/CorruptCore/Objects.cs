@@ -1,23 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Numerics;
-using System.Windows.Forms;
-using System.Xml.Serialization;
-using Ceras;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using RTCV.Common.Objects;
-using RTCV.NetCore;
-using Exception = System.Exception;
-
 namespace RTCV.CorruptCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Data;
+    using System.Diagnostics;
+    using System.IO;
+    using System.IO.Compression;
+    using System.Linq;
+    using System.Numerics;
+    using System.Windows.Forms;
+    using System.Xml.Serialization;
+    using Ceras;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using RTCV.Common.Objects;
+    using RTCV.NetCore;
+    using Exception = System.Exception;
+
     [Serializable]
     [Ceras.MemberConfig(TargetMember.All)]
     public class Stockpile
@@ -62,7 +62,7 @@ namespace RTCV.CorruptCore
                 return false;
             }
 
-            if ((AllSpec.VanguardSpec[VSPEC.CORE_DISKBASED] as bool? ?? false) && ((AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME] as string ?? "DEFAULT") != ""))
+            if ((AllSpec.VanguardSpec[VSPEC.CORE_DISKBASED] as bool? ?? false) && ((AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME] as string ?? "DEFAULT").Length != 0))
             {
                 var dr = MessageBox.Show("The currently loaded game is disk based and needs to be closed before saving. Press OK to close the game and continue saving.", "Saving requires closing game", MessageBoxButtons.OKCancel,
                     MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
@@ -186,7 +186,7 @@ namespace RTCV.CorruptCore
                         //If the file already exists, overwrite it.
                         if (File.Exists(romTempfilename))
                         {
-                            //Whack the attributes in case a rom is readonly 
+                            //Whack the attributes in case a rom is readonly
                             File.SetAttributes(romTempfilename, FileAttributes.Normal);
                             File.Delete(romTempfilename);
                             File.Copy(rom, romTempfilename);
@@ -277,7 +277,7 @@ namespace RTCV.CorruptCore
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Copying limiter lists to stockpile", saveProgress += 2));
                 File.WriteAllLines(Path.Combine(RtcCore.workingDir, "TEMP", l + ".limiter"), limiterLists[l]);
             }
-            //Create stockpile.xml to temp folder from stockpile object
+            //Create stockpile.json to temp folder from stockpile object
             using (FileStream fs = File.Open(Path.Combine(RtcCore.workingDir, "TEMP", "stockpile.json"), FileMode.OpenOrCreate))
             {
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Creating stockpile.json", saveProgress += 2));
@@ -359,7 +359,7 @@ namespace RTCV.CorruptCore
                 }
             }
 
-            //Update savestate location info 
+            //Update savestate location info
             percentPerFile = (5m) / (sks.StashKeys.Count + 1);
             foreach (StashKey sk in sks.StashKeys)
             {
@@ -378,7 +378,7 @@ namespace RTCV.CorruptCore
 
             decimal loadProgress = 0;
             decimal percentPerFile = 0;
-            if ((AllSpec.VanguardSpec[VSPEC.CORE_DISKBASED] as bool? ?? false) && ((AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME] as string ?? "DEFAULT") != ""))
+            if ((AllSpec.VanguardSpec[VSPEC.CORE_DISKBASED] as bool? ?? false) && ((AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME] as string ?? "DEFAULT").Length != 0))
             {
                 var dr = MessageBox.Show($"The currently loaded game is disk based and needs to be closed before {(import ? "importing" : "loading")}. Press OK to close the game and continue loading.", "Loading requires closing game",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
@@ -587,18 +587,18 @@ namespace RTCV.CorruptCore
             }
             catch (Exception ex)
             {
-                throw new CustomException("Unable to empty a temp folder! If your stockpile has any CD based games, close them before saving the stockpile! If this isn't the case, report this bug to the RTC developers." + ex.Message, ex.StackTrace);
+                throw new Exception("Unable to empty a temp folder! If your stockpile has any CD based games, close them before saving the stockpile! If this isn't the case, report this bug to the RTC developers." + ex.Message);
             }
         }
 
         /// <summary>
-		/// Extracts a stockpile into a folder and ensures a master file exists
-		/// </summary>
-		/// <param name="filename"></param>
-		/// <param name="folder"></param>
-		/// <param name="masterFile"></param>
-		/// <returns></returns>
-		public static OperationResults<bool> Extract(string filename, string folder, string masterFile)
+        /// Extracts a stockpile into a folder and ensures a master file exists
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="folder"></param>
+        /// <param name="masterFile"></param>
+        /// <returns></returns>
+        public static OperationResults<bool> Extract(string filename, string folder, string masterFile)
         {
             var r = new OperationResults<bool>();
             try
@@ -647,7 +647,7 @@ namespace RTCV.CorruptCore
             string[] configPaths = AllSpec.VanguardSpec[VSPEC.CONFIG_PATHS] as string[];
             if (configPaths == null)
             {
-                throw new CustomException("ConfigMode was set but ConfigPath was null!", Environment.StackTrace);
+                throw new Exception("ConfigMode was set but ConfigPath was null!");
             }
 
             string filename;
@@ -743,7 +743,7 @@ namespace RTCV.CorruptCore
             string[] configPaths = AllSpec.VanguardSpec[VSPEC.CONFIG_PATHS] as string[];
             if (configPaths == null)
             {
-                throw new CustomException("ConfigMode was set but ConfigPath was null!", Environment.StackTrace);
+                throw new Exception("ConfigMode was set but ConfigPath was null!");
             }
 
             Dictionary<string, string> name2filedico = new Dictionary<string, string>();
@@ -859,7 +859,7 @@ namespace RTCV.CorruptCore
         /// <summary>
         /// Can be called from UI Side
         /// </summary>
-		public bool Run()
+        public bool Run()
         {
             StockpileManager_UISide.CurrentStashkey = this;
             return StockpileManager_UISide.ApplyStashkey(this);
@@ -868,7 +868,7 @@ namespace RTCV.CorruptCore
         /// <summary>
         /// Can be called from UI Side
         /// </summary>
-		public void RunOriginal()
+        public void RunOriginal()
         {
             StockpileManager_UISide.CurrentStashkey = this;
             StockpileManager_UISide.OriginalFromStashkey(this);
@@ -919,7 +919,11 @@ namespace RTCV.CorruptCore
         //Todo - Replace this when compat is broken
         public void PopulateKnownLists()
         {
-            List<String> knownListKeys = new List<string>();
+            if (BlastLayer.Layer == null) {
+                MessageBox.Show($"Something went really wrong. Stashkey {Alias}.\nThere doesn't appear to be a linked blastlayer.\nWill attempt to continue saving. If save fails, remove {Alias} from your stockpile and save again.\nSend this stockpile and any info on how you got into this state to the devs.");
+                return;
+            }
+            List<string> knownListKeys = new List<string>();
             foreach (var bu in BlastLayer.Layer.Where(x => x.LimiterListHash != null))
             {
                 logger.Trace("Looking for knownlist {bu.LimiterListHash}", bu.LimiterListHash);
@@ -1016,12 +1020,43 @@ namespace RTCV.CorruptCore
             return ObjectCopierCeras.Clone(this);
         }
 
-        public void Apply(bool storeUncorruptBackup, bool followMaximums = false)
+        public void Apply(bool storeUncorruptBackup, bool followMaximums = false, bool mergeWithPrevious = false)
         {
             if (storeUncorruptBackup && this != StockpileManager_EmuSide.UnCorruptBL)
             {
+                BlastLayer UnCorruptBL_Backup = null;
+                BlastLayer CorruptBL_Backup = null;
+
+                if (mergeWithPrevious)
+                {
+                    //UnCorruptBL_Backup = (BlastLayer)StockpileManager_EmuSide.UnCorruptBL?.Clone();
+                    //CorruptBL_Backup = (BlastLayer)StockpileManager_EmuSide.CorruptBL?.Clone();
+
+                    UnCorruptBL_Backup = StockpileManager_EmuSide.UnCorruptBL;
+                    CorruptBL_Backup = StockpileManager_EmuSide.CorruptBL;
+                }
+
                 StockpileManager_EmuSide.UnCorruptBL = GetBackup();
                 StockpileManager_EmuSide.CorruptBL = this;
+
+                if (mergeWithPrevious)
+                {
+                    if (UnCorruptBL_Backup.Layer != null)
+                    {
+                        if (StockpileManager_EmuSide.UnCorruptBL.Layer == null)
+                            StockpileManager_EmuSide.UnCorruptBL.Layer = new List<BlastUnit>();
+
+                        StockpileManager_EmuSide.UnCorruptBL.Layer.AddRange(UnCorruptBL_Backup.Layer);
+                    }
+
+                    if (CorruptBL_Backup.Layer != null)
+                    {
+                        if (StockpileManager_EmuSide.CorruptBL.Layer == null)
+                            StockpileManager_EmuSide.CorruptBL.Layer = new List<BlastUnit>();
+
+                        StockpileManager_EmuSide.CorruptBL.Layer.AddRange(CorruptBL_Backup.Layer);
+                    }
+                }
             }
 
             bool success;
@@ -1062,10 +1097,9 @@ namespace RTCV.CorruptCore
             }
             catch (Exception ex)
             {
-                throw new CustomException(
+                throw new Exception(
                             "An error occurred in RTC while applying a BlastLayer to the game.\n\n" +
-                            "The operation was cancelled\n\n" + ex.Message,
-                            ex.StackTrace
+                            "The operation was cancelled\n\n" + ex.Message
                             );
             }
             finally
@@ -1159,7 +1193,7 @@ namespace RTCV.CorruptCore
                 {
                     usedAddresses.Add(new ValueTuple<string, long>(bu.Domain, bu.Address));
                 }
-                else if(!bu.IsLocked)
+                else if (!bu.IsLocked)
                 {
                     Layer.Remove(bu);
                 }
@@ -1358,7 +1392,7 @@ namespace RTCV.CorruptCore
             }
             set
             {
-                //If there's no precision, use the length of the string rounded up 
+                //If there's no precision, use the length of the string rounded up
                 int p = this.Precision;
                 if (p == 0 && value.Length != 0)
                 {
@@ -1390,6 +1424,8 @@ namespace RTCV.CorruptCore
         public int ExecuteFrame { get; set; }
         public int Lifetime { get; set; }
         public bool Loop { get; set; } = false;
+
+        public int? LoopTiming { get; set; } = null;
 
         [Category("Limiter")]
         [Description("What mode to use for the limiter in STORE mode")]
@@ -1427,7 +1463,7 @@ namespace RTCV.CorruptCore
         public BlastUnitWorkingData Working;
 
         /// <summary>
-        /// Creates a Blastunit that utilizes a backup. 
+        /// Creates a Blastunit that utilizes a backup.
         /// </summary>
         /// <param name="storeType">The type of store</param>
         /// <param name="storeTime">The time of the store</param>
@@ -1441,7 +1477,7 @@ namespace RTCV.CorruptCore
         /// <param name="isLocked"></param>
         public BlastUnit(StoreType storeType, StoreTime storeTime,
             string domain, long address, string sourceDomain, long sourceAddress, int precision, bool bigEndian, int executeFrame = 0, int lifetime = 1,
-            string note = null, bool isEnabled = true, bool isLocked = false)
+            string note = null, bool isEnabled = true, bool isLocked = false, int? loopTiming = null)
         {
             Source = BlastUnitSource.STORE;
             StoreTime = storeTime;
@@ -1458,6 +1494,7 @@ namespace RTCV.CorruptCore
             Note = note;
             IsEnabled = isEnabled;
             IsLocked = isLocked;
+            LoopTiming = loopTiming;
         }
 
         /// <summary>
@@ -1474,7 +1511,7 @@ namespace RTCV.CorruptCore
         /// <param name="isLocked"></param>
         public BlastUnit(byte[] value,
             string domain, long address, int precision, bool bigEndian, int executeFrame = 0, int lifetime = 1,
-            string note = null, bool isEnabled = true, bool isLocked = false, bool generatedUsingValueList = false)
+            string note = null, bool isEnabled = true, bool isLocked = false, bool generatedUsingValueList = false, int? loopTiming = null)
         {
             Source = BlastUnitSource.VALUE;
             //Precision has to be set before value
@@ -1490,6 +1527,7 @@ namespace RTCV.CorruptCore
             IsLocked = isLocked;
             GeneratedUsingValueList = generatedUsingValueList;
             BigEndian = bigEndian;
+            LoopTiming = loopTiming;
         }
 
         public BlastUnit()
@@ -1526,6 +1564,7 @@ namespace RTCV.CorruptCore
                 StoreType = this.StoreType,
                 IsEnabled = this.IsEnabled,
                 LimiterListHash = this.LimiterListHash,
+                LoopTiming = this.LoopTiming,
             };
 
             if (bu.Source == BlastUnitSource.STORE)
@@ -1552,7 +1591,7 @@ namespace RTCV.CorruptCore
                 {
                     if (BigEndian)
                     {
-                        bu.Value[i] = Value[end - (i +1)];
+                        bu.Value[i] = Value[end - (i + 1)];
                     }
                     else
                     {
@@ -1688,7 +1727,7 @@ namespace RTCV.CorruptCore
         /// Adds a blastunit to the execution pool
         /// </summary>
         /// <returns></returns>
-        public bool Apply(bool dontFilter)
+        public bool Apply(bool dontFilter, bool overrideExecuteFrame = false)
         {
             if (!IsEnabled)
             {
@@ -1700,7 +1739,7 @@ namespace RTCV.CorruptCore
             //We need to grab the value to freeze
             if (Source == BlastUnitSource.STORE && StoreTime == StoreTime.IMMEDIATE)
             {
-                //If it's one time, store the backup. Otherwise add it to the backup pool 
+                //If it's one time, store the backup. Otherwise add it to the backup pool
                 if (StoreType == StoreType.ONCE)
                 {
                     StoreBackup();
@@ -1711,7 +1750,7 @@ namespace RTCV.CorruptCore
                 }
             }
             //Add it to the execution pool
-            StepActions.AddBlastUnit(this);
+            StepActions.AddBlastUnit(this, overrideExecuteFrame);
 
             if (dontFilter)
             {
@@ -1726,7 +1765,7 @@ namespace RTCV.CorruptCore
         /// <summary>
         /// Executes (applies) a blastunit. This shouldn't be called manually.
         /// If you want to execute a blastunit, add it to the execution pool using Apply()
-        /// Returns false 
+        /// Returns false
         /// </summary>
         public ExecuteState Execute(bool UseRealtime = true)
         {
@@ -1978,12 +2017,12 @@ namespace RTCV.CorruptCore
         public BlastUnit GetBackup()
         {
             //TODO
-            //There's a todo here but I didn't leave a note please help someone tell me why there's a todo here oh god I'm the only one working on this code 
+            //There's a todo here but I didn't leave a note please help someone tell me why there's a todo here oh god I'm the only one working on this code
             return GetBakedUnit();
         }
 
         /// <summary>
-        /// Rerolls a blastunit and generates new values based on various params 
+        /// Rerolls a blastunit and generates new values based on various params
         /// </summary>
         public void Reroll()
         {
@@ -2009,7 +2048,7 @@ namespace RTCV.CorruptCore
                             return;
                         }
 
-                        //Generate a random value based on our precision. 
+                        //Generate a random value based on our precision.
                         //We use a BigInteger as we support arbitrary length, but we do use built in methods for 8,16,32 bit for performance reasons
                         BigInteger randomValue = 0;
                         if (RTC_CustomEngine.ValueSource == CustomValueSource.RANGE)
@@ -2074,7 +2113,7 @@ namespace RTCV.CorruptCore
                     }
                     else
                     {
-                        //Generate a random value based on our precision. 
+                        //Generate a random value based on our precision.
                         //We use a BigInteger as we support arbitrary length, but we do use built in methods for 8,16,32 bit for performance reasons
                         BigInteger randomValue;
                         switch (Precision)
@@ -2265,10 +2304,10 @@ namespace RTCV.CorruptCore
             switch (BlastType)
             {
                 case "Value":
-                    bl = RTC_ValueGenerator.GenerateLayer(Note, Domain, StepSize, StartAddress, EndAddress, Param1, Param2, Precision, Lifetime, ExecuteFrame, Loop, Seed, (BGValueModes)Enum.Parse(typeof(BGValueModes), Mode, true));
+                    bl = RTC_ValueGenerator.GenerateLayer(Note, Domain, StepSize, StartAddress, EndAddress, Param1, Param2, Precision, Lifetime, ExecuteFrame, Loop, Seed, (BGValueMode)Enum.Parse(typeof(BGValueMode), Mode, true));
                     break;
                 case "Store":
-                    bl = RTC_StoreGenerator.GenerateLayer(Note, Domain, StepSize, StartAddress, EndAddress, Param1, Param2, Precision, Lifetime, ExecuteFrame, Loop, Seed, (BGStoreModes)Enum.Parse(typeof(BGStoreModes), Mode, true));
+                    bl = RTC_StoreGenerator.GenerateLayer(Note, Domain, StepSize, StartAddress, EndAddress, Param1, Param2, Precision, Lifetime, ExecuteFrame, Loop, Seed, (BGStoreMode)Enum.Parse(typeof(BGStoreMode), Mode, true));
                     break;
                 default:
                     return null;

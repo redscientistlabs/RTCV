@@ -1,22 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Reflection.Emit;
-using System.Runtime.ExceptionServices;
-using System.Runtime.InteropServices;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading;
-using System.Windows.Forms;
-using Ceras;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-
 namespace RTCV.NetCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using System.Reflection.Emit;
+    using System.Runtime.ExceptionServices;
+    using System.Runtime.InteropServices;
+    using System.Runtime.Serialization.Formatters.Binary;
+    using System.Text;
+    using System.Threading;
+    using System.Windows.Forms;
+    using Ceras;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
+
     public static class NetCore_Extensions
     {
         public static class ObjectCopier
@@ -25,11 +25,11 @@ namespace RTCV.NetCore
             {
                 if (!typeof(T).IsSerializable)
                 {
-                    throw new ArgumentException("The type must be serializable.", "source");
+                    throw new ArgumentException("The type must be serializable.", nameof(source));
                 }
 
                 //Return default of a null object
-                if (Object.ReferenceEquals(source, null))
+                if (object.ReferenceEquals(source, null))
                 {
                     return default(T);
                 }
@@ -102,8 +102,6 @@ namespace RTCV.NetCore
             internal const int MF_ENABLED = 0x00000000;     //enabled button status
             internal const int MF_GRAYED = 0x1;             //disabled button status (enabled = false)
             internal const int MF_DISABLED = 0x00000002;    //disabled button status
-
-            private const uint StdOutputHandle = 0xFFFFFFF5;
 
             [DllImport("kernel32.dll")]
             private static extern IntPtr GetStdHandle(uint nStdHandle);
@@ -252,6 +250,53 @@ namespace RTCV.NetCore
                 for (int i = 0; i < count; i++)
                 {
                     byte[] ar = null;
+                    _byteArrayFormatter.Deserialize(buffer, ref offset, ref ar);
+
+                    set.Add(ar);
+                }
+            }
+        }
+
+        public class NullableByteHashSetFormatterThatKeepsItsComparer : Ceras.Formatters.IFormatter<HashSet<byte?[]>>
+        {
+            // Sub-formatters are automatically set by Ceras' dependency injection
+            public Ceras.Formatters.IFormatter<byte?[]> _byteArrayFormatter;
+            public Ceras.Formatters.IFormatter<IEqualityComparer<byte?[]>> _comparerFormatter; // auto-implemented by Ceras using DynamicObjectFormatter
+
+            public void Serialize(ref byte[] buffer, ref int offset, HashSet<byte?[]> set)
+            {
+                // What do we need?
+                // - The comparer
+                // - Number of entries
+                // - Actual content
+
+                // Comparer
+                _comparerFormatter.Serialize(ref buffer, ref offset, set.Comparer);
+
+                // Count
+                // We could use a 'IFormatter<int>' field, but Ceras will resolve it to this method anyway...
+                SerializerBinary.WriteInt32(ref buffer, ref offset, set.Count);
+
+                // Actual content
+                foreach (var array in set)
+                {
+                    _byteArrayFormatter.Serialize(ref buffer, ref offset, array);
+                }
+            }
+
+            public void Deserialize(byte[] buffer, ref int offset, ref HashSet<byte?[]> set)
+            {
+                IEqualityComparer<byte?[]> equalityComparer = null;
+                _comparerFormatter.Deserialize(buffer, ref offset, ref equalityComparer);
+
+                // We can already create the hashset
+                set = new HashSet<byte?[]>(equalityComparer);
+
+                // Read content...
+                int count = SerializerBinary.ReadInt32(buffer, ref offset);
+                for (int i = 0; i < count; i++)
+                {
+                    byte?[] ar = null;
                     _byteArrayFormatter.Deserialize(buffer, ref offset, ref ar);
 
                     set.Add(ar);

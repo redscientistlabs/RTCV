@@ -1,4 +1,4 @@
-﻿namespace RTCV.Launcher
+namespace RTCV.Launcher
 {
     partial class VersionDownloadPanel
     {
@@ -41,6 +41,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbOnlineVersions.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))));
             this.lbOnlineVersions.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lbOnlineVersions.DisplayMember = "key";
             this.lbOnlineVersions.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbOnlineVersions.ForeColor = System.Drawing.Color.White;
             this.lbOnlineVersions.FormattingEnabled = true;
@@ -51,6 +52,7 @@
             this.lbOnlineVersions.Size = new System.Drawing.Size(463, 185);
             this.lbOnlineVersions.TabIndex = 129;
             this.lbOnlineVersions.Tag = "color:normal";
+            this.lbOnlineVersions.ValueMember = "value";
             this.lbOnlineVersions.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lbOnlineVersions_MouseDoubleClick_1);
             this.lbOnlineVersions.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbOnlineVersions_MouseDown);
             // 
@@ -118,10 +120,6 @@
 
         }
 
-        private void LbOnlineVersions_MouseDoubleClick(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            throw new System.NotImplementedException();
-        }
 
         #endregion
 

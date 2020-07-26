@@ -1,16 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using Newtonsoft.Json;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-
 namespace RTCV.UI
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.IO;
+    using System.Linq;
+    using System.Windows.Forms;
+    using Newtonsoft.Json;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using RTCV.Common;
+
     // 0  dgvBlastProtoReference
     // 1  dgvRowDirty
     // 2  dgvEnabled
@@ -69,7 +69,7 @@ namespace RTCV.UI
         {
             InitializeComponent();
 
-            //For some godforsaken reason, xmlSerializer deserialization wont fill this in as a bool so just use a string god help us all 
+            //For some godforsaken reason, xmlSerializer deserialization wont fill this in as a bool so just use a string god help us all
             (dgvBlastGenerator.Columns["dgvEnabled"]).ValueType = typeof(string);
         }
 
@@ -146,7 +146,7 @@ namespace RTCV.UI
                 //Set up the DGV based on the current state of Bizhawk
                 (dgvBlastGenerator.Rows[lastrow].Cells["dgvRowDirty"]).Value = true;
 
-                //For some godforsaken reason, xmlSerializer deserialization wont fill this in as a bool so just use a string god help us all 
+                //For some godforsaken reason, xmlSerializer deserialization wont fill this in as a bool so just use a string god help us all
                 (dgvBlastGenerator.Rows[lastrow].Cells["dgvEnabled"]).ValueType = typeof(string);
                 ((DataGridViewCheckBoxCell)(dgvBlastGenerator.Rows[lastrow].Cells["dgvEnabled"])).TrueValue = "true";
                 ((DataGridViewCheckBoxCell)(dgvBlastGenerator.Rows[lastrow].Cells["dgvEnabled"])).FalseValue = "false";
@@ -174,7 +174,7 @@ namespace RTCV.UI
                 ((DataGridViewNumericUpDownCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvExecuteFrame"]).Value = 0M;
 
                 //Generate a random Seed
-                ((DataGridViewTextBoxCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvSeed"]).Value = CorruptCore.RtcCore.RND.Next(Int32.MinValue, Int32.MaxValue);
+                ((DataGridViewTextBoxCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvSeed"]).Value = CorruptCore.RtcCore.RND.Next(int.MinValue, int.MaxValue);
 
                 PopulateDomainCombobox(dgvBlastGenerator.Rows[lastrow]);
                 PopulateModeCombobox(dgvBlastGenerator.Rows[lastrow]);
@@ -263,13 +263,13 @@ namespace RTCV.UI
                 switch (row.Cells["dgvType"].Value.ToString())
                 {
                     case "Value":
-                        foreach (BGValueModes type in Enum.GetValues(typeof(BGValueModes)))
+                        foreach (BGValueMode type in Enum.GetValues(typeof(BGValueMode)))
                         {
                             cell.Items.Add(type.ToString());
                         }
                         break;
                     case "Store":
-                        foreach (BGStoreModes type in Enum.GetValues(typeof(BGStoreModes)))
+                        foreach (BGStoreMode type in Enum.GetValues(typeof(BGStoreMode)))
                         {
                             cell.Items.Add(type.ToString());
                         }
@@ -332,8 +332,7 @@ namespace RTCV.UI
                     {
                         RomFilename = psk.RomFilename,
                         SystemName = psk.SystemName,
-                        SystemCore = psk.SystemCore
-                        ,
+                        SystemCore = psk.SystemCore,
                         GameName = psk.GameName,
                         SyncSettings = psk.SyncSettings,
                         StateLocation = psk.StateLocation
@@ -880,7 +879,7 @@ namespace RTCV.UI
                     DataTable dt = null;
                     var settings = new JsonSerializerSettings
                     {
-                        //	NullValueHandling = NullValueHandling.Ignore,
+                        //    NullValueHandling = NullValueHandling.Ignore,
                     };
                     dt = JsonConvert.DeserializeObject<DataTable>(File.ReadAllText(ofd.FileName), settings);
                     if (!import)

@@ -1,13 +1,14 @@
-using System;
-using System.Drawing;
-using System.Windows.Forms;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-using static RTCV.UI.UI_Extensions;
-
 namespace RTCV.UI
 {
+    using System;
+    using System.Drawing;
+    using System.Linq;
+    using System.Windows.Forms;
+    using RTCV.Common;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using static RTCV.UI.UI_Extensions;
+
     public partial class RTC_CorruptionEngine_Form : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
@@ -15,6 +16,31 @@ namespace RTCV.UI
 
         //private int defaultPrecision = -1;
         private bool updatingMinMax = false;
+
+        public string CurrentVectorLimiterListName
+        {
+            get {
+                ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)cbVectorLimiterList).SelectedItem;
+
+                if (item == null) //this shouldn't ever happen unless the list files are missing
+                    MessageBox.Show("Error: No vector engine limiter list selected. Bad install?");
+
+                return item?.Name;
+            }
+        }
+
+        public string CurrentVectorValueListName
+        {
+            get
+            {
+                ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)cbVectorValueList).SelectedItem;
+
+                if (item == null) //this shouldn't ever happen unless the list files are missing
+                    MessageBox.Show("Error: No vector engine value list selected. Bad install?");
+
+                return item?.Name;
+            }
+        }
 
         public RTC_CorruptionEngine_Form()
         {
@@ -32,6 +58,7 @@ namespace RTCV.UI
             gbFreezeEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
             gbPipeEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
             gbVectorEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
+            gbClusterEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
             gbBlastGeneratorEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
             gbCustomEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
 
@@ -41,24 +68,44 @@ namespace RTCV.UI
 
             cbVectorValueList.DataSource = null;
             cbVectorLimiterList.DataSource = null;
+            cbClusterLimiterList.DataSource = null;
             cbVectorValueList.DisplayMember = "Name";
             cbVectorLimiterList.DisplayMember = "Name";
+            cbClusterLimiterList.DisplayMember = "Name";
 
             cbVectorValueList.ValueMember = "Value";
             cbVectorLimiterList.ValueMember = "Value";
+            cbClusterLimiterList.ValueMember = "Value";
 
             //Do this here as if it's stuck into the designer, it keeps defaulting out
             cbVectorValueList.DataSource = CorruptCore.RtcCore.ValueListBindingSource;
             cbVectorLimiterList.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
+            cbClusterLimiterList.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
 
             if (CorruptCore.RtcCore.LimiterListBindingSource.Count > 0)
             {
                 cbVectorLimiterList_SelectedIndexChanged(cbVectorLimiterList, null);
+                cbVectorLimiterList_SelectedIndexChanged(cbClusterLimiterList, null);
             }
             if (CorruptCore.RtcCore.ValueListBindingSource.Count > 0)
             {
                 cbVectorValueList_SelectedIndexChanged(cbVectorValueList, null);
             }
+
+            clusterChunkSize.ValueChanged += clusterChunkSize_ValueChanged;
+            clusterChunkModifier.ValueChanged += clusterChunkModifier_ValueChanged;
+
+            for (int j = 0; j < RTC_ClusterEngine.ShuffleTypes.Length; j++)
+            {
+                cbClusterMethod.Items.Add(RTC_ClusterEngine.ShuffleTypes[j]);
+            }
+            cbClusterMethod.SelectedIndex = 0;
+
+            for (int j = 0; j < RTC_ClusterEngine.Directions.Length; j++)
+            {
+                clusterDirection.Items.Add(RTC_ClusterEngine.Directions[j]);
+            }
+            clusterDirection.SelectedIndex = 0;
         }
 
         private void nmDistortionDelay_ValueChanged(object sender, EventArgs e)
@@ -79,6 +126,7 @@ namespace RTCV.UI
             gbFreezeEngine.Visible = false;
             gbPipeEngine.Visible = false;
             gbVectorEngine.Visible = false;
+            gbClusterEngine.Visible = false;
             gbBlastGeneratorEngine.Visible = false;
             gbCustomEngine.Visible = false;
             cbCustomPrecision.Enabled = false;
@@ -135,6 +183,14 @@ namespace RTCV.UI
                     CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.VECTOR;
                     nmAlignment.Maximum = 3;
                     gbVectorEngine.Visible = true;
+
+                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
+                    break;
+
+                case "Cluster Engine":
+                    CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.CLUSTER;
+                    nmAlignment.Maximum = 3;
+                    gbClusterEngine.Visible = true;
 
                     S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
@@ -510,6 +566,54 @@ namespace RTCV.UI
         {
             S.GET<RTC_CustomEngineConfig_Form>().Show();
             S.GET<RTC_CustomEngineConfig_Form>().Focus();
+        }
+
+        private void cbClusterLimiterList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
+            if (item != null)
+            {
+                RTC_ClusterEngine.LimiterListHash = item.Value;
+            }
+        }
+
+        private void clusterChunkSize_ValueChanged(object sender, EventArgs e)
+        {
+            RTC_ClusterEngine.ChunkSize = (int)clusterChunkSize.Value;
+        }
+
+        private void clusterChunkModifier_ValueChanged(object sender, EventArgs e)
+        {
+            RTC_ClusterEngine.Modifier = (int)clusterChunkModifier.Value;
+        }
+
+        private void cbClusterMethod_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RTC_ClusterEngine.ShuffleType = cbClusterMethod.SelectedItem.ToString();
+
+            if (cbClusterMethod.SelectedItem.ToString().ToLower().Contains("rotate"))
+            {
+                clusterChunkModifier.Enabled = true;
+            }
+            else
+            {
+                clusterChunkModifier.Enabled = false;
+            }
+        }
+
+        private void clusterSplitUnits_CheckedChanged(object sender, EventArgs e)
+        {
+            RTC_ClusterEngine.OutputMultipleUnits = clusterSplitUnits.Checked;
+        }
+
+        private void clusterDirection_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            RTC_ClusterEngine.Direction = clusterDirection.SelectedItem.ToString();
+        }
+
+        private void clusterFilterAll_CheckedChanged(object sender, EventArgs e)
+        {
+            RTC_ClusterEngine.FilterAll = clusterFilterAll.Checked;
         }
     }
 }

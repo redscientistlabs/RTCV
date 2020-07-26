@@ -1,15 +1,16 @@
-using System;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Windows.Forms;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-using RTCV.UI.Modular;
-
 namespace RTCV.UI
 {
+    using System;
+    using System.Diagnostics;
+    using System.Drawing;
+    using System.IO;
+    using System.Linq;
+    using System.Windows.Forms;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using RTCV.Common;
+    using RTCV.UI.Modular;
+
     public partial class UI_CoreForm : Form, IAutoColorize
     {
         //This form traps events and forwards them.
@@ -152,6 +153,23 @@ This message only appears once.";
             //UI_DefaultGrids.engineConfig.LoadToMain();
         }
 
+        internal void SetCustomLayoutName(string customLayoutPath)
+        {
+            string[] layoutFileData = File.ReadAllLines(customLayoutPath);
+
+            string gridNameLine = layoutFileData.FirstOrDefault(it => it.StartsWith("GridName:"));
+
+            if (gridNameLine == null)
+                return;
+
+            string[] parts = gridNameLine.Trim().Split(':');
+
+            if (parts.Length == 1 || string.IsNullOrWhiteSpace(parts[1]))
+                return;
+
+            btnOpenCustomLayout.Text = $"Load {parts[1]}";
+        }
+
         public void SetSize(int x, int y)
         {
             //this.Size = new Size(x + xPadding, y + yPadding + coreYPadding); //For Horizontal tab-style menu in coreform
@@ -160,7 +178,7 @@ This message only appears once.";
 
         private void UI_CoreForm_ResizeBegin(object sender, EventArgs e)
         {
-            //Sends event to SubForm 
+            //Sends event to SubForm
             if (cfForm.spForm != null)
             {
                 cfForm.spForm.Parent_ResizeBegin();
@@ -446,7 +464,7 @@ This message only appears once.";
                 btnGpJumpNow.Visible = false;
 
                 //Do this to prevent any potential race
-                var sk = StockpileManager_UISide.BackupedState; ;
+                var sk = StockpileManager_UISide.BackupedState;
 
                 if (sk != null)
                 {
@@ -473,7 +491,7 @@ This message only appears once.";
 
         public void StartEasyMode(bool useTemplate)
         {
-            //	if (RTC_NetcoreImplementation.isStandaloneUI && !S.GET<RTC_Core_Form>().cbUseGameProtection.Checked)
+            //if (RTC_NetcoreImplementation.isStandaloneUI && !S.GET<RTC_Core_Form>().cbUseGameProtection.Checked)
             S.GET<UI_CoreForm>().cbUseGameProtection.Checked = true;
 
             if (useTemplate)
@@ -612,7 +630,7 @@ This message only appears once.";
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣤⣽⣿⣿⣿⣿⣦⣰⣿⣿⣿⣿⣿⡿⠻⣿⣿⣿⣿⣶⣿⣿⣿⣿⣿⣿⣿⣿
 ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿";
 
-            var ex = new CustomException("SECRET CRASH DONT TELL ANYONE\n" + image, Environment.StackTrace);
+            var ex = new Exception("SECRET CRASH DONT TELL ANYONE\n" + image);
 
             Form error = new RTCV.NetCore.CloudDebug(ex, true);
             var result = error.ShowDialog();

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,7 +17,7 @@ namespace RTCV.Launcher
     public partial class VersionDownloadPanel : Form
     {
         public string latestVersionString = " (Latest version)";
-
+        List<dynamic> onlineVersionsObjects = null;
         public VersionDownloadPanel()
         {
             InitializeComponent();
@@ -43,7 +43,9 @@ namespace RTCV.Launcher
                 string str = Encoding.UTF8.GetString(versionFile);
                 List<string> onlineVersions = new List<string>(str.Split('|').Where(it => !it.Contains("Launcher")).ToArray());
 
-                return onlineVersions.OrderByNaturalDescending(x => x).Select(it => it.Replace(".zip", "")).ToArray()[0];
+                var returnValue = onlineVersions.OrderByNaturalDescending(x => x).Select(it => it.Replace(".zip", "")).ToArray()[0];
+
+                return returnValue;
             }
             catch
             {
@@ -68,12 +70,30 @@ namespace RTCV.Launcher
                 var onlineVersions = str.Split('|').Where(it => !it.Contains("Launcher")).OrderByNaturalDescending(x => x).Select(it => it.Replace(".zip", "")).ToArray();
                 this.Invoke(new MethodInvoker(() =>
                 {
+                    onlineVersionsObjects = new List<dynamic>();
+
                     lbOnlineVersions.Items.Clear();
                     if (onlineVersions.Length > 0)
                     {
-                        onlineVersions[0] += latestVersionString;
+                        for (int i = 0; i < onlineVersions.Length; i++)
+                        {
+                            string value = onlineVersions[i];
+
+                            if (i == 0)
+                                onlineVersions[i] += latestVersionString;
+
+                            string key = onlineVersions[i];
+
+                            onlineVersionsObjects.Add(new { key = key, value = value });
+                        }
+
+
                     }
-                    lbOnlineVersions.Items.AddRange(onlineVersions);
+
+                    lbOnlineVersions.DataSource = null;
+                    lbOnlineVersions.DataSource = onlineVersionsObjects;
+
+                    //lbOnlineVersions.Items.AddRange(onlineVersionsTuples);
                 }));
             };
             Task.Run(a);
@@ -93,7 +113,9 @@ namespace RTCV.Launcher
             if (lbOnlineVersions.SelectedIndex == -1)
                 return;
 
-            string version = lbOnlineVersions.SelectedItem.ToString();
+            dynamic itemData = lbOnlineVersions.SelectedItem;
+
+            string version = itemData.value;
             version = version.Replace(latestVersionString, "");
 
             if (Directory.Exists((MainForm.launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version)))

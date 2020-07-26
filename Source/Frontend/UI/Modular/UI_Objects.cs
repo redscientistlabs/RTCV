@@ -1,11 +1,11 @@
-﻿using System;
-using System.Drawing;
-using System.IO;
-using System.Windows.Forms;
-using RTCV.Common;
-
-namespace RTCV.UI
+﻿namespace RTCV.UI
 {
+    using System;
+    using System.Drawing;
+    using System.IO;
+    using System.Windows.Forms;
+    using RTCV.Common;
+
     public interface ISubForm
     {
         //Interface used for added contrals in SubForms
@@ -112,7 +112,7 @@ namespace RTCV.UI
             {
                 string line = allLines[i].Trim();
 
-                if (line == "" || line.StartsWith("//"))
+                if (line.Length == 0 || line.StartsWith("//"))
                 {
                     continue;
                 }
@@ -167,7 +167,7 @@ namespace RTCV.UI
 
                             AnchorStyles formGridAnchor = (AnchorStyles.Top | AnchorStyles.Left);
 
-                            if (subData.Length > 5)
+                            if (subData.Length > 5 && !string.IsNullOrWhiteSpace(subData[5]))
                             {
                                 formGridAnchor = (AnchorStyles)Convert.ToInt32(subData[5].Trim());
                             }
@@ -205,5 +205,3 @@ namespace RTCV.UI
         }
     }
 }
-
-

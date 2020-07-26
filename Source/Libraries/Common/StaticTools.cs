@@ -1,18 +1,19 @@
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
 namespace RTCV.Common
 {
+    using System;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Linq;
+    using System.Runtime.InteropServices;
+    using System.Text;
+    using System.Threading;
+    using System.Windows.Forms;
+    using NLog;
+
+    #pragma warning disable CA1040 // Allow this interface to be empty, since it's used to signal auto-coloriation for a class
     // Implementing this interface causes auto-coloration.
     public interface IAutoColorize { }
 
@@ -83,6 +84,37 @@ namespace RTCV.Common
         {
             Type typ = typeof(T);
             return !instances.ContainsKey(typ);
+        }
+
+        private static Type FINDTYPE(string name, bool any = false)
+        {
+            //thx https://stackoverflow.com/questions/4692340/find-types-in-all-assemblies
+
+            return
+            AppDomain.CurrentDomain.GetAssemblies()
+            .Where(a => !a.IsDynamic)
+            .SelectMany(a => a.GetTypes())
+            .FirstOrDefault(t => (any ? t.FullName.Contains(name) : t.FullName.Equals(name)));
+        }
+
+        public static object BLINDMAKE(string name)
+        {
+            //Returns a distinct new instance of an object using a string instead of type
+            //Will scan all loaded asemblies to fetch the needed type for creating the instance
+
+            //The instance is not registered in the singleton dictionary
+
+            try
+            {
+                Type typ = FINDTYPE(name, true);
+                var o = Activator.CreateInstance(typ);
+                return o;
+            }
+            catch (Exception ex)
+            {
+                LogManager.GetCurrentClassLogger().Error(ex);
+                return null;
+            }
         }
 
         public static T GET<T>()
@@ -170,7 +202,6 @@ namespace RTCV.Common
 
         public static void CreateConsole(string path = null)
         {
-
             if (!Debugger.IsAttached) //Don't override debugger's console
             {
                 ReleaseConsole();
@@ -228,7 +259,6 @@ namespace RTCV.Common
         internal const int MF_GRAYED = 0x1;             //disabled button status (enabled = false)
         internal const int MF_DISABLED = 0x00000002;    //disabled button status
 
-        private const uint StdOutputHandle = 0xFFFFFFF5;
 
         [DllImport("kernel32.dll")]
         private static extern IntPtr GetStdHandle(uint nStdHandle);

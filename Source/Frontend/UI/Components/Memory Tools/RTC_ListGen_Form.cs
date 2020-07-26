@@ -1,16 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
-using System.IO;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
-using RTCV.CorruptCore;
-using RTCV.Common;
-using static RTCV.UI.UI_Extensions;
-
 namespace RTCV.UI
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Globalization;
+    using System.IO;
+    using System.Text.RegularExpressions;
+    using System.Windows.Forms;
+    using RTCV.CorruptCore;
+    using RTCV.Common;
+    using static RTCV.UI.UI_Extensions;
+
     public partial class RTC_ListGen_Form : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
@@ -37,7 +37,7 @@ namespace RTCV.UI
 
         private bool isHex(string str)
         {
-            //Hex characters 
+            //Hex characters
             //Trim the 0x off
             string regex = "^((0[Xx])|([xX]))[0-9A-Fa-f]+$";
             return Regex.IsMatch(str, regex);
@@ -78,7 +78,7 @@ namespace RTCV.UI
             {
                 return false;
             }
-            List<String> newList = new List<string>();
+            List<string> newList = new List<string>();
             foreach (string line in tbListValues.Lines)
             {
                 if (string.IsNullOrWhiteSpace(line))
@@ -90,7 +90,7 @@ namespace RTCV.UI
 
                 string[] lineParts = trimmedLine.Split('-');
 
-                //We can't do a range on anything besides plain old numbers 
+                //We can't do a range on anything besides plain old numbers
                 if (lineParts.Length > 1)
                 {
                     //Hex
@@ -148,7 +148,7 @@ namespace RTCV.UI
                 }
             }
 
-            String filename = CorruptCore_Extensions.MakeSafeFilename(tbListName.Text, '-');
+            string filename = CorruptCore_Extensions.MakeSafeFilename(tbListName.Text, '-');
             //Handle saving the list to a file
             if (cbSaveFile.Checked)
             {
@@ -168,14 +168,30 @@ namespace RTCV.UI
                 filename = CorruptCore.RtcCore.GetRandomKey();
             }
 
-            //Register the list and update netcore
-            List<Byte[]> byteList = new List<byte[]>();
-            foreach (string t in newList)
+            //TODO fix this before i forget
+
+            IListFilter list;
+
+            if (newList.Contains("?"))
             {
-                byte[] bytes = CorruptCore_Extensions.StringToByteArray(t);
-                byteList.Add(bytes);
+                list = new NullableByteArrayList();
             }
-            string hash = Filtering.RegisterList(byteList, filename, true);
+            else
+            {
+                list = new ValueByteArrayList();
+            }
+
+            list.Initialize(filename + ".txt", newList.ToArray(), false, false);
+            Filtering.RegisterList(list, filename, true);
+            var hash = list.GetHash();
+            //Register the list and update netcore
+            //List<byte?[]> byteList = new List<byte?[]>();
+            //foreach (string t in newList)
+            //{
+            //    byte?[] bytes = CorruptCore_Extensions.StringToNullableByteArray(t);
+            //    byteList.Add(bytes);
+            //}
+            //string hash = Filtering.RegisterList(byteList, filename, true);
 
             //Register the list in the ui
             CorruptCore.Filtering.RegisterListInUI(filename, hash);

@@ -1,9 +1,9 @@
-﻿using System.Drawing;
-using System.Windows.Forms;
-using static RTCV.UI.UI_Extensions;
-
-namespace RTCV.UI
+﻿namespace RTCV.UI
 {
+    using System.Drawing;
+    using System.Windows.Forms;
+    using static RTCV.UI.UI_Extensions;
+
     public partial class UI_ComponentFormTile : Form, ITileForm
     {
         public Form childForm = null;

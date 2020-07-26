@@ -1,17 +1,18 @@
-using System;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Net;
-using System.Reflection;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Windows.Forms;
-using RTCV.Common;
-
 namespace RTCV.NetCore
 {
+    using System;
+    using System.Data;
+    using System.Diagnostics;
+    using System.Drawing;
+    using System.IO;
+    using System.Net;
+    using System.Reflection;
+    using System.Runtime.Serialization;
+    using System.Runtime.Serialization.Formatters.Binary;
+    using System.Text;
+    using System.Windows.Forms;
+    using RTCV.Common;
+
     public partial class CloudDebug : Form
     {
         private Exception ex;
@@ -239,7 +240,7 @@ namespace RTCV.NetCore
                     File.Delete(file);
                 }
 
-                
+
                 SevenZip.SevenZipCompressor.SetLibraryPath(szdll);
                 var decomp = new SevenZip.SevenZipExtractor(downloadfilepath, password, SevenZip.InArchiveFormat.SevenZip);
                 decomp.ExtractArchive(extractpath);
@@ -309,33 +310,24 @@ namespace RTCV.NetCore
         private void btnDebugInfo_Click(object sender, EventArgs e) => S.GET<DebugInfo_Form>().ShowDialog();
     }
 
-    public class SilentException : Exception
-    {
-    }
-
-    public class CustomException : Exception
-    {
-        private readonly string _additionalInfo = "";
-
-        public CustomException(string message, string additionalInfo) : base(message)
-        {
-            this._additionalInfo = additionalInfo;
-        }
-
-        public CustomException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        public CustomException(string message, string additionalInfo, Exception innerException) : base(message, innerException)
-        {
-            this._additionalInfo = additionalInfo;
-        }
-
-        public override string StackTrace => (string.IsNullOrEmpty(_additionalInfo) ? "" : $"{_additionalInfo}\n") + base.StackTrace;
-    }
-
+    [Serializable]
     public class AbortEverythingException : Exception
     {
+        public AbortEverythingException() : base()
+        {
+        }
+
+        public AbortEverythingException(string message) : base(message)
+        {
+        }
+
+        public AbortEverythingException(string message, Exception innerException) : base(message, innerException)
+        {
+        }
+
+        protected AbortEverythingException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
     }
 
     internal class WebClientTimeout : WebClient

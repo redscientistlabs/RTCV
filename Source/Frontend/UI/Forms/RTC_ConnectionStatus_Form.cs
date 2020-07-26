@@ -1,11 +1,11 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using RTCV.Common;
-using static RTCV.UI.UI_Extensions;
-
-namespace RTCV.UI
+﻿namespace RTCV.UI
 {
+    using System;
+    using System.Drawing;
+    using System.Windows.Forms;
+    using RTCV.Common;
+    using static RTCV.UI.UI_Extensions;
+
     public partial class RTC_ConnectionStatus_Form : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
@@ -69,6 +69,12 @@ namespace RTCV.UI
             }
 
             S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Maximum;
+            AutoKillSwitch.KillEmulator(true);
+        }
+
+        private void btnBreakCrashLoop_Click(object sender, EventArgs e)
+        {
+            S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked = false;
             AutoKillSwitch.KillEmulator(true);
         }
     }

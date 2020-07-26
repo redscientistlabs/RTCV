@@ -14,7 +14,15 @@ using Newtonsoft.Json;
 using static RTCV.UI.UI_Extensions;
 
 #pragma warning disable RCS1138 // Add summary element to documentation comment.
-#pragma warning disable RCS1139 // Add summary element to documentation comment.
+#pragma warning disable CA1200
+#pragma warning disable SA1611
+#pragma warning disable SA1629
+#pragma warning disable SA1642
+#pragma warning disable SA1615
+#pragma warning disable SA1514
+#pragma warning disable SA1626
+#pragma warning disable SA1623
+
 
 namespace RTCV.UI
 {
@@ -113,7 +121,7 @@ namespace RTCV.UI
             {
                 logger.Error(ex, $"Failed to get form screenshot.");
                 return new Bitmap(1, 1);
-            };
+            }
         }
 
         #region CONTROL EXTENSIONS
@@ -145,10 +153,6 @@ namespace RTCV.UI
             //Interface for Singleton Form
             T Me();
             T NewMe();
-        }
-
-        public interface IColorable
-        {
         }
 
         public class RTC_Standalone_Form : Form { }
@@ -267,21 +271,21 @@ namespace RTCV.UI
                 {
                     this.Hide();                //If the target panel hosts another ComponentForm, we won't override it
                 }
-                else                            //This is most likely going to happen if a VMD ComponentForm was changed to a window, 
+                else                            //This is most likely going to happen if a VMD ComponentForm was changed to a window,
                 {
                     AnchorToPanel(targetPanel); //then another VMD tool was selected and that window was closed
                 }
             }
 
             /* Note: Visual studio is so dumb, the designer won't allow to bind an event to a method in the base class
-			   Just paste the following code at the beginning of the ComponentForm class to fix this stupid shit
+               Just paste the following code at the beginning of the ComponentForm class to fix this stupid shit
 
-			public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-			public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+            public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+            public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-			ALSO, GroupBox does have an event handler for MouseDown but michaelsoft are too high on crack to let
-			us bind something to it in the properties panel. Gotta add it manually in the designer.cs ffs.
-			*/
+            ALSO, GroupBox does have an event handler for MouseDown but michaelsoft are too high on crack to let
+            us bind something to it in the properties panel. Gotta add it manually in the designer.cs ffs.
+            */
 
             public void HandleMouseDown(object sender, MouseEventArgs e)
             {
@@ -386,7 +390,6 @@ namespace RTCV.UI
 
             public bool AllowNegative { get; set; }
         }
-
     }
 
     //From Bizhawk
@@ -394,14 +397,13 @@ namespace RTCV.UI
     {
         public static Point GetMouseLocation(this MouseEventArgs e, object sender)
         {
-            Control ctr = (sender as Control);
-            if (ctr == null)
+            if (!(sender is Control ctr))
             {
                 return new Point(e.Location.X, e.Location.Y);
             }
 
-            int x = e.Location.X;
-            int y = e.Location.Y;
+            var x = e.Location.X;
+            var y = e.Location.Y;
 
             do
             {
@@ -423,112 +425,9 @@ namespace RTCV.UI
             return new Point(x, y);
         }
 
-        public static string ToHexString(this int n, int numdigits)
-        {
-            return string.Format("{0:X" + numdigits + "}", n);
-        }
-
-        public static string ToHexString(this uint n, int numdigits)
-        {
-            return string.Format("{0:X" + numdigits + "}", n);
-        }
-
-        public static string ToHexString(this byte n, int numdigits)
-        {
-            return string.Format("{0:X" + numdigits + "}", n);
-        }
-
-        public static string ToHexString(this ushort n, int numdigits)
-        {
-            return string.Format("{0:X" + numdigits + "}", n);
-        }
-
-        public static string ToHexString(this long n, int numdigits)
-        {
-            return string.Format("{0:X" + numdigits + "}", n);
-        }
-
         public static string ToHexString(this long n)
         {
             return $"{n:X}";
-        }
-
-        public static string ToHexString(this ulong n, int numdigits)
-        {
-            return string.Format("{0:X" + numdigits + "}", n);
-        }
-
-        public static bool Bit(this byte b, int index)
-        {
-            return (b & (1 << index)) != 0;
-        }
-
-        public static bool Bit(this int b, int index)
-        {
-            return (b & (1 << index)) != 0;
-        }
-
-        public static bool Bit(this ushort b, int index)
-        {
-            return (b & (1 << index)) != 0;
-        }
-
-        public static bool In(this int i, params int[] options)
-        {
-            return options.Any(j => i == j);
-        }
-
-        public static byte BinToBCD(this byte v)
-        {
-            return (byte)(((v / 10) * 16) + (v % 10));
-        }
-
-        public static byte BCDtoBin(this byte v)
-        {
-            return (byte)(((v / 16) * 10) + (v % 16));
-        }
-
-        /// <summary>
-        /// Receives a number and returns the number of hexadecimal digits it is
-        /// Note: currently only returns 2, 4, 6, or 8
-        /// </summary>
-        public static int NumHexDigits(this long i)
-        {
-            // now this is a bit of a trick. if it was less than 0, it mustve been >= 0x80000000 and so takes all 8 digits
-            if (i < 0)
-            {
-                return 8;
-            }
-
-            if (i < 0x100)
-            {
-                return 2;
-            }
-
-            if (i < 0x10000)
-            {
-                return 4;
-            }
-
-            if (i < 0x1000000)
-            {
-                return 6;
-            }
-
-            if (i < 0x100000000)
-            {
-                return 8;
-            }
-
-            return 16;
-        }
-
-        /// <summary>
-        /// The % operator is a remainder operator. (e.g. -1 mod 4 returns -1, not 3.)
-        /// </summary>
-        public static int Mod(this int a, int b)
-        {
-            return a - (b * (int)Math.Floor((float)a / b));
         }
 
         /// <summary>
@@ -539,7 +438,8 @@ namespace RTCV.UI
         /// <param name="min">Minimum allowed</param>
         /// <param name="max">Maximum allowed</param>
         /// <returns>The value if strictly between min and max; otherwise min (or max depending of what is passed)</returns>
-        public static T Clamp<T>(this T val, T min, T max) where T : IComparable<T>
+        public static T Clamp<T>(this T val, T min, T max)
+            where T : IComparable<T>
         {
             if (val.CompareTo(min) < 0)
             {
@@ -915,13 +815,13 @@ namespace RTCV.UI
         private static extern short VkKeyScan(char key);
 
         // Used in TranslateAlignment function
-        private static readonly DataGridViewContentAlignment anyRight = DataGridViewContentAlignment.TopRight |
-                                                                        DataGridViewContentAlignment.MiddleRight |
-                                                                        DataGridViewContentAlignment.BottomRight;
+        private const DataGridViewContentAlignment anyRight = DataGridViewContentAlignment.TopRight |
+                                                              DataGridViewContentAlignment.MiddleRight |
+                                                              DataGridViewContentAlignment.BottomRight;
 
-        private static readonly DataGridViewContentAlignment anyCenter = DataGridViewContentAlignment.TopCenter |
-                                                                         DataGridViewContentAlignment.MiddleCenter |
-                                                                         DataGridViewContentAlignment.BottomCenter;
+        private const DataGridViewContentAlignment anyCenter = DataGridViewContentAlignment.TopCenter |
+                                                               DataGridViewContentAlignment.MiddleCenter |
+                                                               DataGridViewContentAlignment.BottomCenter;
 
         // Default dimensions of the static rendering bitmap used for the painting of the non-edited cells
         private const int DATAGRIDVIEWNUMERICUPDOWNCELL_defaultRenderingBitmapWidth = 100;
@@ -1014,7 +914,7 @@ namespace RTCV.UI
             {
                 if (value < 0 || value > 99)
                 {
-                    throw new ArgumentOutOfRangeException("The DecimalPlaces property cannot be smaller than 0 or larger than 99.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "The DecimalPlaces property cannot be smaller than 0 or larger than 99.");
                 }
                 if (this.decimalPlaces != value)
                 {
@@ -1045,7 +945,7 @@ namespace RTCV.UI
             {
                 if (value < (decimal)0.0)
                 {
-                    throw new ArgumentOutOfRangeException("The Increment property cannot be smaller than 0.");
+                    throw new ArgumentOutOfRangeException(nameof(value), "The Increment property cannot be smaller than 0.");
                 }
                 SetIncrement(this.RowIndex, value);
                 // No call to OnCommonChange is needed since the increment value does not affect the rendering of the cell.
@@ -1268,8 +1168,8 @@ namespace RTCV.UI
         {
             if (this.Hexadecimal)
             {
-                UInt64 valueuint64 = System.Convert.ToUInt64(value);
-                return valueuint64.ToString("X");
+                ulong valueulong = System.Convert.ToUInt64(value);
+                return valueulong.ToString("X");
             }
             else
             {
@@ -1278,8 +1178,8 @@ namespace RTCV.UI
                 string formattedNumber = formattedValue as string;
                 if (!string.IsNullOrEmpty(formattedNumber) && value != null)
                 {
-                    Decimal unformattedDecimal = System.Convert.ToDecimal(value);
-                    Decimal formattedDecimal = System.Convert.ToDecimal(formattedNumber);
+                    decimal unformattedDecimal = System.Convert.ToDecimal(value);
+                    decimal formattedDecimal = System.Convert.ToDecimal(formattedNumber);
                     if (unformattedDecimal == formattedDecimal)
                     {
                         // The base implementation of GetFormattedValue (which triggers the CellFormatting event) did nothing else than
@@ -1468,12 +1368,12 @@ namespace RTCV.UI
                     bool cellSelected = (cellState & DataGridViewElementStates.Selected) != 0;
 
                     /*if (renderingBitmap.Width < valBounds.Width ||
-						renderingBitmap.Height < valBounds.Height)
-					{
-						// The static bitmap is too small, a bigger one needs to be allocated.
-						renderingBitmap.Dispose();
-						renderingBitmap = new Bitmap(valBounds.Width, valBounds.Height);
-					}*/
+                        renderingBitmap.Height < valBounds.Height)
+                    {
+                        // The static bitmap is too small, a bigger one needs to be allocated.
+                        renderingBitmap.Dispose();
+                        renderingBitmap = new Bitmap(valBounds.Width, valBounds.Height);
+                    }*/
 
                     //7/1/2018
                     //OPTIMIZE PAINTING BY REMOVING UNUSED FUNCTIONALITY
@@ -1481,14 +1381,14 @@ namespace RTCV.UI
 
                     // Make sure the NumericUpDown control is parented to a visible control
                     /*
-					if (paintingNumericUpDown.Parent == null || !paintingNumericUpDown.Parent.Visible)
-					{
-						paintingNumericUpDown.Parent = this.DataGridView;
-					}
-					paintingNumericUpDown.RightToLeft = this.DataGridView.RightToLeft;
-					paintingNumericUpDown.ThousandsSeparator = this.ThousandsSeparator;
-					paintingNumericUpDown.TextAlign = DataGridViewNumericUpDownCell.TranslateAlignment(cellStyle.Alignment);
-					paintingNumericUpDown.DecimalPlaces = this.DecimalPlaces;*/
+                    if (paintingNumericUpDown.Parent == null || !paintingNumericUpDown.Parent.Visible)
+                    {
+                        paintingNumericUpDown.Parent = this.DataGridView;
+                    }
+                    paintingNumericUpDown.RightToLeft = this.DataGridView.RightToLeft;
+                    paintingNumericUpDown.ThousandsSeparator = this.ThousandsSeparator;
+                    paintingNumericUpDown.TextAlign = DataGridViewNumericUpDownCell.TranslateAlignment(cellStyle.Alignment);
+                    paintingNumericUpDown.DecimalPlaces = this.DecimalPlaces;*/
 
                     // Set all the relevant properties
                     paintingNumericUpDown.Value = Convert.ToDecimal(value);
@@ -1540,14 +1440,14 @@ namespace RTCV.UI
                     }
                     // Finally paint the NumericUpDown control
                     /*
-					Rectangle srcRect = new Rectangle(0, 0, valBounds.Width, valBounds.Height);
-					if (srcRect.Width > 0 && srcRect.Height > 0)
-					{
-						
-						paintingNumericUpDown.DrawToBitmap(renderingBitmap, srcRect);
-						graphics.DrawImage(renderingBitmap, new Rectangle(valBounds.Location, valBounds.Size),
-										   srcRect, GraphicsUnit.Pixel);
-					}*/
+                    Rectangle srcRect = new Rectangle(0, 0, valBounds.Width, valBounds.Height);
+                    if (srcRect.Width > 0 && srcRect.Height > 0)
+                    {
+
+                        paintingNumericUpDown.DrawToBitmap(renderingBitmap, srcRect);
+                        graphics.DrawImage(renderingBitmap, new Rectangle(valBounds.Location, valBounds.Size),
+                                           srcRect, GraphicsUnit.Pixel);
+                    }*/
                 }
                 if (PartPainted(paintParts, DataGridViewPaintParts.ErrorIcon))
                 {
@@ -1637,8 +1537,8 @@ namespace RTCV.UI
             object cellValue = GetValue(rowIndex);
             if (cellValue != null)
             {
-                Decimal currentValue = System.Convert.ToDecimal(cellValue);
-                Decimal constrainedValue = Constrain(currentValue);
+                decimal currentValue = System.Convert.ToDecimal(cellValue);
+                decimal constrainedValue = Constrain(currentValue);
                 if (constrainedValue != currentValue)
                 {
                     SetValue(rowIndex, constrainedValue);
@@ -1668,8 +1568,8 @@ namespace RTCV.UI
             {
                 if (Hexadecimal)
                 {
-                    Decimal currentValue = System.Convert.ToDecimal(cellValue);
-                    Decimal constrainedValue = Constrain(currentValue);
+                    decimal currentValue = System.Convert.ToDecimal(cellValue);
+                    decimal constrainedValue = Constrain(currentValue);
                     if (constrainedValue != currentValue)
                     {
                         SetValue(rowIndex, constrainedValue);
@@ -1677,8 +1577,8 @@ namespace RTCV.UI
                 }
                 else
                 {
-                    Decimal currentValue = System.Convert.ToDecimal(cellValue);
-                    Decimal constrainedValue = Constrain(currentValue);
+                    decimal currentValue = System.Convert.ToDecimal(cellValue);
+                    decimal constrainedValue = Constrain(currentValue);
                     if (constrainedValue != currentValue)
                     {
                         SetValue(rowIndex, constrainedValue);
@@ -1993,7 +1893,7 @@ namespace RTCV.UI
             NotifyDataGridViewOfValueChange();
         }
 
-        //Handle OnLostFocus to update if you paste. 
+        //Handle OnLostFocus to update if you paste.
         //Intercepting paste doesn't work and OnValueChanged also doesn't
         protected override void OnLostFocus(EventArgs e)
         {
@@ -2002,48 +1902,48 @@ namespace RTCV.UI
         }
 
         /*
-		/// <summary>
-		/// Listen to the KeyPress notification to know when the value changed, and
-		/// notify the grid of the change.
-		/// </summary>
-		protected override void OnKeyPress(KeyPressEventArgs e)
-		{
-			base.OnKeyPress(e);
+        /// <summary>
+        /// Listen to the KeyPress notification to know when the value changed, and
+        /// notify the grid of the change.
+        /// </summary>
+        protected override void OnKeyPress(KeyPressEventArgs e)
+        {
+            base.OnKeyPress(e);
 
-			// The value changes when a digit, the decimal separator, the group separator or
-			// the negative sign is pressed.
-			bool notifyValueChange = false;
-			if (char.IsDigit(e.KeyChar) || (e.KeyChar >= 'a' && e.KeyChar <= 'f') || (e.KeyChar >= 'A' && e.KeyChar <= 'F') || (e.KeyChar == '\b' || (e.KeyChar == (char)Keys.ControlKey && e.KeyChar == (char)Keys.V)))
-			{
-				notifyValueChange = true;
-			}
-			else
-			{
-				System.Globalization.NumberFormatInfo numberFormatInfo = System.Globalization.CultureInfo.CurrentCulture.NumberFormat;
-				string decimalSeparatorStr = numberFormatInfo.NumberDecimalSeparator;
-				string groupSeparatorStr = numberFormatInfo.NumberGroupSeparator;
-				string negativeSignStr = numberFormatInfo.NegativeSign;
-				if (!string.IsNullOrEmpty(decimalSeparatorStr) && decimalSeparatorStr.Length == 1)
-				{
-					notifyValueChange = decimalSeparatorStr[0] == e.KeyChar;
-				}
-				if (!notifyValueChange && !string.IsNullOrEmpty(groupSeparatorStr) && groupSeparatorStr.Length == 1)
-				{
-					notifyValueChange = groupSeparatorStr[0] == e.KeyChar;
-				}
-				if (!notifyValueChange && !string.IsNullOrEmpty(negativeSignStr) && negativeSignStr.Length == 1)
-				{
-					notifyValueChange = negativeSignStr[0] == e.KeyChar;
-				}
-			}
+            // The value changes when a digit, the decimal separator, the group separator or
+            // the negative sign is pressed.
+            bool notifyValueChange = false;
+            if (char.IsDigit(e.KeyChar) || (e.KeyChar >= 'a' && e.KeyChar <= 'f') || (e.KeyChar >= 'A' && e.KeyChar <= 'F') || (e.KeyChar == '\b' || (e.KeyChar == (char)Keys.ControlKey && e.KeyChar == (char)Keys.V)))
+            {
+                notifyValueChange = true;
+            }
+            else
+            {
+                System.Globalization.NumberFormatInfo numberFormatInfo = System.Globalization.CultureInfo.CurrentCulture.NumberFormat;
+                string decimalSeparatorStr = numberFormatInfo.NumberDecimalSeparator;
+                string groupSeparatorStr = numberFormatInfo.NumberGroupSeparator;
+                string negativeSignStr = numberFormatInfo.NegativeSign;
+                if (!string.IsNullOrEmpty(decimalSeparatorStr) && decimalSeparatorStr.Length == 1)
+                {
+                    notifyValueChange = decimalSeparatorStr[0] == e.KeyChar;
+                }
+                if (!notifyValueChange && !string.IsNullOrEmpty(groupSeparatorStr) && groupSeparatorStr.Length == 1)
+                {
+                    notifyValueChange = groupSeparatorStr[0] == e.KeyChar;
+                }
+                if (!notifyValueChange && !string.IsNullOrEmpty(negativeSignStr) && negativeSignStr.Length == 1)
+                {
+                    notifyValueChange = negativeSignStr[0] == e.KeyChar;
+                }
+            }
 
-			if (notifyValueChange)
-			{
-				// Let the DataGridView know about the value change
-				NotifyDataGridViewOfValueChange();
-			}
-		}
-		*/
+            if (notifyValueChange)
+            {
+                // Let the DataGridView know about the value change
+                NotifyDataGridViewOfValueChange();
+            }
+        }
+        */
 
         /// <summary>
         /// Listen to the ValueChanged notification to forward the change to the grid.
@@ -2140,9 +2040,8 @@ namespace RTCV.UI
                 ChangingText = false;
             }
 
-            //	if(base.Hexadecimal)
-            //	base.Text = GetNumberText(base.Value);
-
+            //    if(base.Hexadecimal)
+            //    base.Text = GetNumberText(base.Value);
         }
 
         protected override void ValidateEditText()
@@ -2186,7 +2085,7 @@ namespace RTCV.UI
                     if (val > Maximum)
                     {
                         base.Text = string.Format("{0:X}", (uint)Maximum);
-                        //	val = (uint)Maximum;
+                        //    val = (uint)Maximum;
                     }
 
                     if (!string.IsNullOrEmpty(base.Text))
@@ -2259,9 +2158,9 @@ namespace RTCV.UI
 
                 if (rowIndex >= 0)
                 {
-                    // Remember the point where the mouse down occurred. 
-                    // The DragSize indicates the size that the mouse can move 
-                    // before a drag event should be started.                
+                    // Remember the point where the mouse down occurred.
+                    // The DragSize indicates the size that the mouse can move
+                    // before a drag event should be started.
                     Size dragSize = SystemInformation.DragSize;
 
                     // Create a rectangle using the DragSize, with the mouse position being
@@ -2316,7 +2215,7 @@ namespace RTCV.UI
 
         private new void DragDrop(object sender, DragEventArgs e)
         {
-            // The mouse locations are relative to the screen, so they must be 
+            // The mouse locations are relative to the screen, so they must be
             // converted to client coordinates.
             Point clientPoint = this.PointToClient(new Point(e.X, e.Y));
 
@@ -2337,7 +2236,7 @@ namespace RTCV.UI
                         this.Rows.Remove(row);
                     }
 
-                    // Get the row index of the item the mouse is below. 
+                    // Get the row index of the item the mouse is below.
                     var hitTest = this.HitTest(clientPoint.X, clientPoint.Y);
                     rowIndexOfItemUnderMouseToDrop = hitTest.RowIndex;
                     if (rowIndexOfItemUnderMouseToDrop == -1)
@@ -2455,7 +2354,7 @@ internal static class RandomExtensions
 
         if (range <= 0)
         {
-            throw new ArgumentOutOfRangeException("Max must be greater than min when inclusiveUpperBound is false, and greater than or equal to when true", "max");
+            throw new ArgumentOutOfRangeException(nameof(max), "Max must be greater than min when inclusiveUpperBound is false, and greater than or equal to when true");
         }
 
         ulong limit = ulong.MaxValue - ulong.MaxValue % range;
@@ -2498,7 +2397,7 @@ internal static class RandomExtensions
 
         if (range <= 0)
         {
-            throw new ArgumentOutOfRangeException("Max must be greater than min when inclusiveUpperBound is false, and greater than or equal to when true", "max");
+            throw new ArgumentOutOfRangeException(nameof(max), "Max must be greater than min when inclusiveUpperBound is false, and greater than or equal to when true");
         }
 
         ulong limit = ulong.MaxValue - ulong.MaxValue % range;
@@ -2517,7 +2416,8 @@ internal static class RandomExtensions
 /// If the elements are IComparable it uses that; otherwise compares the ToString()
 /// </summary>
 /// <typeparam name="T">The type of elements in the list.</typeparam>
-public class SortableBindingList<T> : BindingList<T> where T : class
+public class SortableBindingList<T> : BindingList<T>
+    where T : class
 {
     private bool _isSorted;
     private ListSortDirection _sortDirection = ListSortDirection.Ascending;
@@ -2631,20 +2531,21 @@ public class SortableBindingList<T> : BindingList<T> where T : class
 
 //From bizhawk
 /// <summary>
-/// A dictionary that creates new values on the fly as necessary so that any key you need will be defined. 
+/// A dictionary that creates new values on the fly as necessary so that any key you need will be defined.
 /// </summary>
-/// <typeparam name="K">dictionary keys</typeparam>
-/// <typeparam name="V">dictionary values</typeparam>
+/// <typeparam name="TKey">dictionary keys</typeparam>
+/// <typeparam name="TValue">dictionary values</typeparam>
 [Serializable]
-public class WorkingDictionary<K, V> : Dictionary<K, V> where V : new()
+public class WorkingDictionary<TKey, TValue> : Dictionary<TKey, TValue>
+    where TValue : new()
 {
-    public new V this[K key]
+    public new TValue this[TKey key]
     {
         get
         {
-            if (!TryGetValue(key, out V temp))
+            if (!TryGetValue(key, out TValue temp))
             {
-                temp = this[key] = new V();
+                temp = this[key] = new TValue();
             }
 
             return temp;

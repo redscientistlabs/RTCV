@@ -1,26 +1,25 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Newtonsoft.Json;
-using RTCV.CorruptCore;
-using RTCV.NetCore;
-using RTCV.Common;
-using static RTCV.UI.UI_Extensions;
-
 namespace RTCV.UI
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Data;
+    using System.Drawing;
+    using System.IO;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+    using Newtonsoft.Json;
+    using RTCV.CorruptCore;
+    using RTCV.NetCore;
+    using RTCV.Common;
+    using static RTCV.UI.UI_Extensions;
+
     public partial class RTC_SavestateManager_Form : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        private Dictionary<string, TextBox> StateBoxes = new Dictionary<string, TextBox>();
         private BindingSource savestateBindingSource = new BindingSource(new BindingList<SaveStateKey>(), null);
 
         private bool LoadSavestateOnClick = false;
@@ -62,7 +61,7 @@ namespace RTCV.UI
                 RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Committing used states to session", currentProgress += 5));
                 //Commit any used states to the SESSION folder
                 commitUsedStatesToSession();
-                SyncObjectSingleton.FormExecute(() => savestateBindingSource.Clear()); 
+                SyncObjectSingleton.FormExecute(() => savestateBindingSource.Clear());
             }
 
             var extractFolder = import ? "TEMP" : "SSK";
@@ -86,10 +85,7 @@ namespace RTCV.UI
             }
             catch (Exception ex)
             {
-                string additionalInfo = "The Savestate Keys file could not be loaded\n\n";
-                var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
-
-                if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
                     throw new RTCV.NetCore.AbortEverythingException();
                 }
@@ -205,7 +201,7 @@ namespace RTCV.UI
             var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
             try
             {
-                //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
+                //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs
                 //Thus, we want this to happen within the try block
                 SyncObjectSingleton.FormExecute(() =>
                 {
@@ -275,7 +271,7 @@ namespace RTCV.UI
                 }
                 catch (IOException e)
                 {
-                    throw new CustomException("Couldn't copy savestate " + sk.StateShortFilename + " to SESSION! " + e.Message, e.StackTrace);
+                    throw new Exception("Couldn't copy savestate " + sk.StateShortFilename + " to SESSION! " + e.Message);
                 }
             }
         }
@@ -406,11 +402,7 @@ namespace RTCV.UI
             }
             catch (Exception ex)
             {
-                string additionalInfo = "The Savestate Keys file could not be saved\n\n";
-
-                var ex2 = new CustomException(ex.Message, additionalInfo + ex.StackTrace);
-
-                if (CloudDebug.ShowErrorDialog(ex2, true) == DialogResult.Abort)
+                if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
                     throw new RTCV.NetCore.AbortEverythingException();
                 }
@@ -441,7 +433,7 @@ namespace RTCV.UI
             var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
             try
             {
-                //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs 
+                //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs
                 //Thus, we want this to happen within the try block
                 SyncObjectSingleton.FormExecute(() =>
                 {
@@ -484,7 +476,7 @@ namespace RTCV.UI
                 loadSavestateList(false, files[0]);
             }
 
-            //Bring the UI back to normal after a drag+drop to prevent weird merge stuff 
+            //Bring the UI back to normal after a drag+drop to prevent weird merge stuff
             S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
         }
 

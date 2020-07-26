@@ -10,7 +10,9 @@
     <!-- Download -->
     <a href="https://redscientist.com/rtc"><img src="https://img.shields.io/badge/download-RTC-red.svg" alt="Download badge" /></a>
     <!-- Discord -->
-    <a href="https://discord.corrupt.wiki"><img src="https://img.shields.io/discord/279664862836031488.svg" alt="Chat badge" /></a>
+    <a href="https://corrupt.wiki/corruptors/rtc/expert#rtc-dev-discord"><img src="https://img.shields.io/discord/279664862836031488.svg" alt="Chat badge" /></a>
+    <!-- Trello -->
+    <a href="https://trello.com/b/9QYo50OC/rtcv"><img src="https://img.shields.io/badge/planning-Trello-blue.svg" alt="Trello badge" /></a>
 </p>
 
 # RTCV - Real-Time Corruptor Vanguard
@@ -47,6 +49,6 @@ Icon graciously provided by [ShyGuyXXL](https://twitter.com/shyguyxxl)
 ### Without Visual Studio
 
 1. Install [chocolatey](https://chocolatey.org/install)
-1. `cinst -y visualstudio2019buildtools nuget.commandline`
+1. `cinst -y visualstudio2019buildtools nuget.commandline netfx-4.7.1-devpack`
 1. `nuget restore RTCV.sln`
 1. `msbuild.exe`

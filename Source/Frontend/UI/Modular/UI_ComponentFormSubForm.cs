@@ -1,8 +1,8 @@
-﻿using System;
-using static RTCV.UI.UI_Extensions;
-
-namespace RTCV.UI
+﻿namespace RTCV.UI
 {
+    using System;
+    using static RTCV.UI.UI_Extensions;
+
     public partial class UI_ComponentFormSubForm : ComponentForm, ISubForm, IBlockable
     {
         public UI_ComponentFormSubForm()

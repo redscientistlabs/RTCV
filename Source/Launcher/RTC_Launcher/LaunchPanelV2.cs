@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -27,9 +27,11 @@ namespace RTCV.Launcher
         public void DisplayVersion()
         {
             Size? btnSize = null;
-            int maxHorizontal = 4;
-            int positionX = 0;
-            int positionY = 0;
+
+            string folderPath = Path.Combine(MainForm.launcherDir, "VERSIONS", MainForm.SelectedVersion);
+            if (!Directory.Exists(folderPath))
+                return;
+
 
             foreach (LauncherConfItem lci in lc.items)
             {
@@ -223,7 +225,7 @@ namespace RTCV.Launcher
 
         private LauncherConf getFolderFromPreviousVersion(string downloadVersion)
         {
-            foreach(string ver in MainForm.mf.lbVersions.Items.Cast<string>())
+            foreach(string ver in MainForm.sideversionForm.lbVersions.Items.Cast<string>())
             {
                 if (downloadVersion == ver)
                     continue;

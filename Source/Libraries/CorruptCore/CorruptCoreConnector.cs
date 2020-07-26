@@ -1,14 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using RTCV.NetCore;
-using static RTCV.NetCore.NetcoreCommands;
-
 namespace RTCV.CorruptCore
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+    using RTCV.NetCore;
+    using static RTCV.NetCore.NetcoreCommands;
+
     public class CorruptCoreConnector : IRoutable
     {
         private static volatile object _loadLock = new object();
@@ -149,7 +149,6 @@ namespace RTCV.CorruptCore
                             }
                             else
                             {
-
                                 //Route it to the plugin if loaded
                                 if (RtcCore.PluginHost.LoadedPlugins.Any(x => x.Name == "Hex Editor"))
                                     LocalNetCoreRouter.Route("HEXEDITOR", NetcoreCommands.REMOTE_OPENHEXEDITOR, true);
@@ -298,11 +297,17 @@ namespace RTCV.CorruptCore
                         {
                             var temp = advancedMessage.objectValue as object[];
                             BlastLayer bl = (BlastLayer)temp[0];
-                            bool backup = (bool)temp[1];
+                            bool storeUncorruptBackup = (bool)temp[1];
+
+                            bool merge = false;
+
+                            if (temp.Length > 2)
+                                 merge = (bool)temp[2];
+
 
                             void a()
                             {
-                                bl.Apply(backup, true);
+                                bl.Apply(storeUncorruptBackup, true, merge);
                             }
 
                             SyncObjectSingleton.EmuThreadExecute(a, true);
@@ -497,7 +502,8 @@ namespace RTCV.CorruptCore
                         {
                             void a()
                             {
-                                MemoryDomains.GenerateActiveTableDump((string)(advancedMessage.objectValue as object[])[0],
+                                MemoryDomains.GenerateActiveTableDump(
+                                    (string)(advancedMessage.objectValue as object[])[0],
                                     (string)(advancedMessage.objectValue as object[])[1]);
                             }
 
@@ -620,7 +626,7 @@ namespace RTCV.CorruptCore
 
                     case REMOTE_LOADPLUGINS:
                         SyncObjectSingleton.FormExecute(() =>
-                        { 
+                        {
                             string emuPluginDir = "";
                             try
                             {
@@ -630,7 +636,7 @@ namespace RTCV.CorruptCore
                             {
                                 RTCV.Common.Logging.GlobalLogger.Error(e, "Unable to find plugin dir in {dir}", RtcCore.EmuDir + "\\RTC" + "\\PLUGINS");
                             }
-                            RtcCore.LoadPlugins(new[] { RtcCore.pluginDir,  emuPluginDir});
+                            RtcCore.LoadPlugins(new[] { RtcCore.pluginDir,  emuPluginDir });
                         });
 
                         break;

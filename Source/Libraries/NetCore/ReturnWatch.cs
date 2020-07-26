@@ -1,12 +1,10 @@
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-
 namespace RTCV.NetCore
 {
+    using System;
+    using System.Collections.Concurrent;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class ReturnWatch
     {
         //This is a component that allows to freeze the thread that asked for a value from a Synced Message
@@ -21,7 +19,7 @@ namespace RTCV.NetCore
 
         public bool IsWaitingForReturn
         {
-            get 
+            get
             {
                 return activeWatches > 0;
             }
@@ -58,9 +56,9 @@ namespace RTCV.NetCore
             {
                 result = GetValueTask(WatchedGuid, type, cts.Token).Result;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                if(e is OperationCanceledException
+                if (e is OperationCanceledException
                     || (e is AggregateException && (e.InnerException is OperationCanceledException || e.InnerException is TaskCanceledException)))
                 {
                     logger.Info("WatchedGuid {guid} was cancelled, returning null.", WatchedGuid);
@@ -74,7 +72,8 @@ namespace RTCV.NetCore
             return result;
         }
 
-        internal async Task<Object> GetValueTask(Guid WatchedGuid, string type, CancellationToken token)
+        #pragma warning disable CS1998
+        internal async Task<object> GetValueTask(Guid WatchedGuid, string type, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
             logger.Trace("GetValue called on {guid}", guid);
@@ -90,7 +89,7 @@ namespace RTCV.NetCore
             if (StackFrameHelper.GetCallStackDepth() > 2000)
             {
                 cts.Cancel();
-                throw new CustomException("A fatal error has occurred. Please send this to the devs. You should save your Stockpile then restart the RTC.", Environment.StackTrace);
+                throw new Exception("A fatal error has occurred. Please send this to the devs. You should save your Stockpile then restart the RTC.");
             }
 
             while (!SyncReturns.ContainsKey(WatchedGuid))

@@ -1,7 +1,7 @@
-﻿using RTCV.NetCore;
-
 namespace RTCV.CorruptCore
 {
+    using RTCV.NetCore;
+
     public static class RTC_VectorEngine
     {
         public static string LimiterListHash
@@ -46,9 +46,10 @@ namespace RTCV.CorruptCore
                 safeAddress = mi.Size - 8 + alignment; //If we're out of range, hit the last aligned address
             }
             //Enforce the safeaddress at generation
-            if (Filtering.LimiterPeekBytes(safeAddress, safeAddress + 4, domain, LimiterListHash, mi))
+            var matchBytes = Filtering.LimiterPeekAndGetBytes(safeAddress, safeAddress + 4, domain, LimiterListHash, mi);
+            if (matchBytes != null)
             {
-                return new BlastUnit(Filtering.GetRandomConstant(ValueListHash, 4), domain, safeAddress, 4,
+                return new BlastUnit(Filtering.GetRandomConstant(ValueListHash, 4, matchBytes), domain, safeAddress, 4,
                     mi.BigEndian, 0, 1, null, true, false, true);
             }
 

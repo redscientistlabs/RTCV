@@ -2,17 +2,17 @@
 //https://github.com/tasvideos/bizhawk
 //Thanks guys
 
-using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using RTCV.CorruptCore;
-using SlimDX.XInput;
-
 #pragma warning disable 169
 #pragma warning disable 414
 
 namespace RTCV.UI.Input
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Runtime.InteropServices;
+    using RTCV.CorruptCore;
+    using SlimDX.XInput;
+
     public class GamePad360
     {
         // ********************************** Static interface **********************************

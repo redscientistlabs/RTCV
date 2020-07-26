@@ -1,22 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
-using RTCV.CorruptCore.Coroutines;
-
 namespace RTCV.CorruptCore.EventWarlock
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using RTCV.CorruptCore.Coroutines;
+
     /// <summary>
     /// I'm a wizard?? If you rename this you can't see the magic
     /// </summary>
     public static class Warlock
     {
         /// <summary>
-        /// The list of grimoires 
+        /// The list of grimoires
         /// </summary>
         private static List<Grimoire> Grimoires = new List<Grimoire>();
 
@@ -37,7 +31,7 @@ namespace RTCV.CorruptCore.EventWarlock
         /// <returns></returns>
         public static bool AddGrimoire(Grimoire grimoire)
         {
-            if(grimoire.Name != "" && Grimoires.Any(x => x.Name == grimoire.Name))
+            if (grimoire.Name.Length != 0 && Grimoires.Any(x => x.Name == grimoire.Name))
             {
                 //Grimoire name already taken
                 return false;
@@ -103,8 +97,8 @@ namespace RTCV.CorruptCore.EventWarlock
         {
             for (int j = 0; j < Grimoires.Count; j++)
             {
-                ExecuteList(Grimoires[j], Grimoires[j].LoadSpells); 
-            }          
+                ExecuteList(Grimoires[j], Grimoires[j].LoadSpells);
+            }
         }
 
         public static void PreExecute()

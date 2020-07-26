@@ -1,10 +1,9 @@
 ﻿//https://github.com/TASVideos/BizHawk/blob/master/BizHawk.Client.EmuHawk/config/InputCompositeWidget.cs
-
-using System;
-using System.Windows.Forms;
-
 namespace RTCV.UI.Components.Controls
 {
+    using System;
+    using System.Windows.Forms;
+
     public partial class InputCompositeWidget : UserControl
     {
         public InputCompositeWidget()
@@ -26,7 +25,7 @@ namespace RTCV.UI.Components.Controls
             widget.CompositeWidget = this;
         }
 
-        private static readonly string WidgetTooltipText = "* Escape clears a key mapping\r\n* Disable Auto Tab to multiply bind";
+        private const string WidgetTooltipText = "* Escape clears a key mapping\r\n* Disable Auto Tab to multiply bind";
         private ToolTip _tooltip;
         private string _bindingTooltipText;
 
@@ -83,21 +82,21 @@ namespace RTCV.UI.Components.Controls
 
         private void DropdownMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            Input.Input.ModifierKey mods = new Input.Input.ModifierKey();
+            Input.Input.ModifierKeys mods = new Input.Input.ModifierKeys();
 
             if ((ModifierKeys & Keys.Shift) != 0)
             {
-                mods |= Input.Input.ModifierKey.Shift;
+                mods |= Input.Input.ModifierKeys.Shift;
             }
 
             if ((ModifierKeys & Keys.Control) != 0)
             {
-                mods |= Input.Input.ModifierKey.Control;
+                mods |= Input.Input.ModifierKeys.Control;
             }
 
             if ((ModifierKeys & Keys.Alt) != 0)
             {
-                mods |= Input.Input.ModifierKey.Alt;
+                mods |= Input.Input.ModifierKeys.Alt;
             }
 
             var lb = new Input.Input.LogicalButton(e.ClickedItem.Text, mods);

@@ -1,9 +1,9 @@
-using System.Windows.Forms;
-using RTCV.Common;
-using static RTCV.UI.UI_Extensions;
-
 namespace RTCV.UI.Modular
 {
+    using System.Windows.Forms;
+    using RTCV.Common;
+    using static RTCV.UI.UI_Extensions;
+
     public static class UI_DefaultGrids
     {
         private static CanvasGrid _connectionStatus = null;
@@ -37,10 +37,12 @@ namespace RTCV.UI.Modular
 
                     UICore.mtForm = new RTC_SelectBox_Form(new ComponentForm[] {
                         S.GET<RTC_VmdNoTool_Form>(),
+                        S.GET<RTC_MyVMDs_Form>(),
                         S.GET<RTC_VmdPool_Form>(),
                         S.GET<RTC_VmdGen_Form>(),
                         S.GET<RTC_VmdSimpleGen_Form>(),
                         S.GET<RTC_VmdAct_Form>(),
+                        S.GET<RTC_MyLists_Form>(),
                         S.GET<RTC_ListGen_Form>(),
                         S.GET<RTC_VmdLimiterProfiler_Form>(),
                         //S.GET<RTC_DomainAnalytics_Form>(),
