@@ -1716,25 +1716,23 @@ namespace RTCV.UI
         {
             if (filename == null)
             {
-                OpenFileDialog ofd = new OpenFileDialog
+                var openSavestateDialog = new OpenFileDialog
                 {
                     DefaultExt = "state",
                     Title = "Open Savestate File",
                     Filter = "state files|*.state",
                     RestoreDirectory = true
                 };
-                if (ofd.ShowDialog() == DialogResult.OK)
-                {
-                    filename = ofd.FileName;
-                }
-                else
+                if (openSavestateDialog.ShowDialog() != DialogResult.OK)
                 {
                     return;
                 }
+
+                filename = openSavestateDialog.FileName;
             }
 
-            string oldKey = currentSK.ParentKey;
-            string oldSS = currentSK.SyncSettings;
+            var oldKey = currentSK.ParentKey;
+            var oldSS = currentSK.SyncSettings;
 
             //Get a new key
             currentSK.ParentKey = CorruptCore.RtcCore.GetRandomKey();
@@ -1753,7 +1751,7 @@ namespace RTCV.UI
             }
 
             //Grab the syncsettings
-            StashKey temp = new StashKey(CorruptCore.RtcCore.GetRandomKey(), currentSK.ParentKey, currentSK.BlastLayer);
+            var temp = new StashKey(CorruptCore.RtcCore.GetRandomKey(), currentSK.ParentKey, currentSK.BlastLayer);
             currentSK.SyncSettings = temp.SyncSettings;
         }
         private void replaceSavestateFromFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1931,7 +1929,7 @@ namespace RTCV.UI
                 }
             }
 
-            CSVGenerator csv = new CSVGenerator();
+            var csv = new CSVGenerator();
             File.WriteAllText(filename, csv.GenerateFromDGV(dgvBlastEditor), Encoding.UTF8);
         }
 
@@ -1941,7 +1939,7 @@ namespace RTCV.UI
             try
             {
                 //Generate a blastlayer from the current selected rows
-                BlastLayer bl = new BlastLayer();
+                var bl = new BlastLayer();
 
                 IEnumerable<DataGridViewRow> targetRows;
 
@@ -1952,7 +1950,7 @@ namespace RTCV.UI
                 foreach (DataGridViewRow selected in targetRows
                     .Where((item => ((BlastUnit)item.DataBoundItem).IsLocked == false)))
                 {
-                    BlastUnit bu = (BlastUnit)selected.DataBoundItem;
+                    var bu = (BlastUnit)selected.DataBoundItem;
 
                     //They have to be enabled to get a backup
                     bu.IsEnabled = true;
@@ -1962,7 +1960,7 @@ namespace RTCV.UI
                 //Bake them
                 BlastLayer newBlastLayer = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_BLASTTOOLS_GETAPPLIEDBACKUPLAYER, new object[] { bl, currentSK }, true);
 
-                int i = 0;
+                var i = 0;
                 //Insert the new one where the old row was, then remove the old row.
                 foreach (DataGridViewRow selected in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>()
                     .Where((item => ((BlastUnit)item.DataBoundItem).IsLocked == false)))
@@ -2112,8 +2110,8 @@ namespace RTCV.UI
 
         private void btnHelp_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.ProcessStartInfo sInfo = new System.Diagnostics.ProcessStartInfo("https://corrupt.wiki/corruptors/rtc-real-time-corruptor/blast-editor.html");
-            System.Diagnostics.Process.Start(sInfo);
+            var startInfo = new System.Diagnostics.ProcessStartInfo("https://corrupt.wiki/corruptors/rtc-real-time-corruptor/blast-editor.html");
+            System.Diagnostics.Process.Start(startInfo);
         }
 
         private void OpenBlastGeneratorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2131,7 +2129,7 @@ namespace RTCV.UI
 
         private void BtnAddRow_Click(object sender, EventArgs e)
         {
-            BlastUnit bu = new BlastUnit(new byte[] { 0 }, domains[0], 0, 1, MemoryDomains.GetInterface(domains[0]).BigEndian);
+            var bu = new BlastUnit(new byte[] { 0 }, domains[0], 0, 1, MemoryDomains.GetInterface(domains[0]).BigEndian);
             bs.Add(bu);
         }
 
