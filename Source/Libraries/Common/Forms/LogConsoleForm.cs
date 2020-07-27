@@ -38,12 +38,14 @@ namespace RTCV.Common.Forms
             LogConsole.InitializeFromGlobalLogger();
         }
 
+        #pragma warning disable CA1801,IDE0060 //maxLines is unused but should be left in for external plugins
         /// <summary>
         /// Creates a LogConsoleForm using the global logger
         /// </summary>
+        /// <param name="maxLines">Maximum lines to display</param>
         /// <param name="layout">Layout</param>
         /// <param name="fileName">Optional file log</param>
-        public LogConsoleForm(Layout layout = null, string fileName = null)
+        public LogConsoleForm(int maxLines = 1000, Layout layout = null, string fileName = null)
         {
             InitializeComponent();
             LogConsole.InitializeCustomLogger(layout, fileName);
