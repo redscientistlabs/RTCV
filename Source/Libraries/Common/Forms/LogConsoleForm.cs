@@ -41,7 +41,6 @@ namespace RTCV.Common.Forms
         /// <summary>
         /// Creates a LogConsoleForm using the global logger
         /// </summary>
-        /// <param name="maxLines">Maximum lines to display</param>
         /// <param name="layout">Layout</param>
         /// <param name="fileName">Optional file log</param>
         public LogConsoleForm(Layout layout = null, string fileName = null)
