@@ -1901,50 +1901,6 @@ namespace RTCV.UI
             NotifyDataGridViewOfValueChange();
         }
 
-        /*
-        /// <summary>
-        /// Listen to the KeyPress notification to know when the value changed, and
-        /// notify the grid of the change.
-        /// </summary>
-        protected override void OnKeyPress(KeyPressEventArgs e)
-        {
-            base.OnKeyPress(e);
-
-            // The value changes when a digit, the decimal separator, the group separator or
-            // the negative sign is pressed.
-            bool notifyValueChange = false;
-            if (char.IsDigit(e.KeyChar) || (e.KeyChar >= 'a' && e.KeyChar <= 'f') || (e.KeyChar >= 'A' && e.KeyChar <= 'F') || (e.KeyChar == '\b' || (e.KeyChar == (char)Keys.ControlKey && e.KeyChar == (char)Keys.V)))
-            {
-                notifyValueChange = true;
-            }
-            else
-            {
-                System.Globalization.NumberFormatInfo numberFormatInfo = System.Globalization.CultureInfo.CurrentCulture.NumberFormat;
-                string decimalSeparatorStr = numberFormatInfo.NumberDecimalSeparator;
-                string groupSeparatorStr = numberFormatInfo.NumberGroupSeparator;
-                string negativeSignStr = numberFormatInfo.NegativeSign;
-                if (!string.IsNullOrEmpty(decimalSeparatorStr) && decimalSeparatorStr.Length == 1)
-                {
-                    notifyValueChange = decimalSeparatorStr[0] == e.KeyChar;
-                }
-                if (!notifyValueChange && !string.IsNullOrEmpty(groupSeparatorStr) && groupSeparatorStr.Length == 1)
-                {
-                    notifyValueChange = groupSeparatorStr[0] == e.KeyChar;
-                }
-                if (!notifyValueChange && !string.IsNullOrEmpty(negativeSignStr) && negativeSignStr.Length == 1)
-                {
-                    notifyValueChange = negativeSignStr[0] == e.KeyChar;
-                }
-            }
-
-            if (notifyValueChange)
-            {
-                // Let the DataGridView know about the value change
-                NotifyDataGridViewOfValueChange();
-            }
-        }
-        */
-
         /// <summary>
         /// Listen to the ValueChanged notification to forward the change to the grid.
         /// </summary>
@@ -2039,23 +1995,6 @@ namespace RTCV.UI
                 Text = GetNumberText(Value);
                 ChangingText = false;
             }
-
-            //    if(base.Hexadecimal)
-            //    base.Text = GetNumberText(base.Value);
-        }
-
-        protected override void ValidateEditText()
-        {
-            if (base.Hexadecimal)
-            {
-                HexParseEditText();
-            }
-            else
-            {
-                ParseEditText();
-            }
-
-            UpdateEditText();
         }
 
         private string GetNumberText(decimal num)
@@ -2289,33 +2228,6 @@ namespace RTCV.UI
                 this.FirstDisplayedScrollingRowIndex += 1;
             }
             //Cursor.Position = this.PointToScreen(new Point(Cursor.Position.X, this.Top + this.ColumnHeadersHeight));
-        }
-    }
-}
-
-public static class JsonHelper
-{
-    public static void Serialize(object value, Stream s, Formatting f = Formatting.Indented)
-    {
-        using (StreamWriter writer = new StreamWriter(s))
-        using (JsonTextWriter jsonWriter = new JsonTextWriter(writer))
-        {
-            JsonSerializer ser = new JsonSerializer
-            {
-                Formatting = f
-            };
-            ser.Serialize(jsonWriter, value);
-            jsonWriter.Flush();
-        }
-    }
-
-    public static T Deserialize<T>(Stream s)
-    {
-        using (StreamReader reader = new StreamReader(s))
-        using (JsonTextReader jsonReader = new JsonTextReader(reader))
-        {
-            JsonSerializer ser = new JsonSerializer();
-            return ser.Deserialize<T>(jsonReader);
         }
     }
 }
