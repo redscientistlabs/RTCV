@@ -4,13 +4,11 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Windows.Forms;
-using Newtonsoft.Json;
 using static RTCV.UI.UI_Extensions;
 
 #pragma warning disable RCS1138 // Add summary element to documentation comment.
@@ -23,7 +21,6 @@ using static RTCV.UI.UI_Extensions;
 #pragma warning disable SA1626
 #pragma warning disable SA1623
 
-
 namespace RTCV.UI
 {
     public static class UI_Extensions
@@ -32,11 +29,11 @@ namespace RTCV.UI
 
         public static DialogResult GetInputBox(string title, string promptText, ref string value)
         {
-            Form form = new Form();
-            Label label = new Label();
-            TextBox textBox = new TextBox();
-            Button buttonOk = new Button();
-            Button buttonCancel = new Button();
+            var form = new Form();
+            var label = new Label();
+            var textBox = new TextBox();
+            var buttonOk = new Button();
+            var buttonCancel = new Button();
 
             form.Text = title;
             label.Text = promptText;
@@ -87,7 +84,7 @@ namespace RTCV.UI
             {
                 g.DrawImage(bmp, rectSize);
 
-                SolidBrush darkBrush = new SolidBrush(col);
+                var darkBrush = new SolidBrush(col);
                 g.FillRectangle(darkBrush, rectSize);
             }
         }
@@ -106,7 +103,7 @@ namespace RTCV.UI
                 using (var bmpGraphics = Graphics.FromImage(bmp))
                 {
                     var bmpDC = bmpGraphics.GetHdc();
-                    using (Graphics formGraphics = Graphics.FromHwnd(con.Handle))
+                    using (var formGraphics = Graphics.FromHwnd(con.Handle))
                     {
                         var formDC = formGraphics.GetHdc();
                         BitBlt(bmpDC, 0, 0, con.ClientRectangle.Width, con.ClientRectangle.Height, formDC, 0, 0, SRCCOPY);
@@ -128,7 +125,7 @@ namespace RTCV.UI
 
         public static List<Control> getControlsWithTag(this Control.ControlCollection controls)
         {
-            List<Control> allControls = new List<Control>();
+            var allControls = new List<Control>();
 
             foreach (Control c in controls)
             {
@@ -189,7 +186,7 @@ namespace RTCV.UI
                 this.FormBorderStyle = FormBorderStyle.None;
 
                 //Remove ComponentForm from target panel if required
-                ComponentForm componentFormInTargetPanel = (pn?.Controls.Cast<Control>().FirstOrDefault(it => it is ComponentForm) as ComponentForm);
+                var componentFormInTargetPanel = (pn?.Controls.Cast<Control>().FirstOrDefault(it => it is ComponentForm) as ComponentForm);
                 if (componentFormInTargetPanel != null && componentFormInTargetPanel != this)
                 {
                     pn.Controls.Remove(componentFormInTargetPanel);
@@ -266,7 +263,7 @@ namespace RTCV.UI
                 this.WindowState = FormWindowState.Normal;
 
                 //This searches for a ComponentForm in the target Panel
-                ComponentForm componentFormInTargetPanel = (targetPanel?.Controls.Cast<Control>().FirstOrDefault(it => it is ComponentForm) as ComponentForm);
+                var componentFormInTargetPanel = (targetPanel?.Controls.Cast<Control>().FirstOrDefault(it => it is ComponentForm) as ComponentForm);
                 if (componentFormInTargetPanel != null && componentFormInTargetPanel != this)
                 {
                     this.Hide();                //If the target panel hosts another ComponentForm, we won't override it
@@ -296,15 +293,15 @@ namespace RTCV.UI
 
                 while (!(sender is ComponentForm))
                 {
-                    Control c = (Control)sender;
+                    var c = (Control)sender;
                     sender = c.Parent;
                     e = new MouseEventArgs(e.Button, e.Clicks, e.X + c.Location.X, e.Y + c.Location.Y, e.Delta);
                 }
 
                 if (popoutAllowed && e.Button == MouseButtons.Right && (sender as ComponentForm).FormBorderStyle == FormBorderStyle.None)
                 {
-                    Point locate = new Point(((Control)sender).Location.X + e.Location.X, ((Control)sender).Location.Y + e.Location.Y);
-                    ContextMenuStrip columnsMenu = new ContextMenuStrip();
+                    var locate = new Point(((Control)sender).Location.X + e.Location.X, ((Control)sender).Location.Y + e.Location.Y);
+                    var columnsMenu = new ContextMenuStrip();
                     columnsMenu.Items.Add("Detach to window", null, new EventHandler((ob, ev) =>
                     {
                         (sender as ComponentForm).SwitchToWindow();
@@ -480,7 +477,7 @@ namespace RTCV.UI
             get => base.CellTemplate;
             set
             {
-                DataGridViewNumericUpDownCell dataGridViewNumericUpDownCell = value as DataGridViewNumericUpDownCell;
+                var dataGridViewNumericUpDownCell = value as DataGridViewNumericUpDownCell;
                 if (value != null && dataGridViewNumericUpDownCell == null)
                 {
                     throw new InvalidCastException("Value provided for CellTemplate must be of type DataGridViewNumericUpDownElements.DataGridViewNumericUpDownCell or derive from it.");
@@ -519,8 +516,8 @@ namespace RTCV.UI
                 {
                     // Update all the existing DataGridViewNumericUpDownCell cells in the column accordingly.
                     DataGridViewRowCollection dataGridViewRows = this.DataGridView.Rows;
-                    int rowCount = dataGridViewRows.Count;
-                    for (int rowIndex = 0; rowIndex < rowCount; rowIndex++)
+                    var rowCount = dataGridViewRows.Count;
+                    for (var rowIndex = 0; rowIndex < rowCount; rowIndex++)
                     {
                         // Be careful not to unshare rows unnecessarily.
                         // This could have severe performance repercussions.
@@ -565,8 +562,8 @@ namespace RTCV.UI
                 if (this.DataGridView != null)
                 {
                     DataGridViewRowCollection dataGridViewRows = this.DataGridView.Rows;
-                    int rowCount = dataGridViewRows.Count;
-                    for (int rowIndex = 0; rowIndex < rowCount; rowIndex++)
+                    var rowCount = dataGridViewRows.Count;
+                    for (var rowIndex = 0; rowIndex < rowCount; rowIndex++)
                     {
                         DataGridViewRow dataGridViewRow = dataGridViewRows.SharedRow(rowIndex);
                         if (dataGridViewRow.Cells[this.Index] is DataGridViewNumericUpDownCell dataGridViewCell)
@@ -612,8 +609,8 @@ namespace RTCV.UI
                 if (this.DataGridView != null)
                 {
                     DataGridViewRowCollection dataGridViewRows = this.DataGridView.Rows;
-                    int rowCount = dataGridViewRows.Count;
-                    for (int rowIndex = 0; rowIndex < rowCount; rowIndex++)
+                    var rowCount = dataGridViewRows.Count;
+                    for (var rowIndex = 0; rowIndex < rowCount; rowIndex++)
                     {
                         DataGridViewRow dataGridViewRow = dataGridViewRows.SharedRow(rowIndex);
                         if (dataGridViewRow.Cells[this.Index] is DataGridViewNumericUpDownCell dataGridViewCell)
@@ -663,8 +660,8 @@ namespace RTCV.UI
                 if (this.DataGridView != null)
                 {
                     DataGridViewRowCollection dataGridViewRows = this.DataGridView.Rows;
-                    int rowCount = dataGridViewRows.Count;
-                    for (int rowIndex = 0; rowIndex < rowCount; rowIndex++)
+                    var rowCount = dataGridViewRows.Count;
+                    for (var rowIndex = 0; rowIndex < rowCount; rowIndex++)
                     {
                         DataGridViewRow dataGridViewRow = dataGridViewRows.SharedRow(rowIndex);
                         if (dataGridViewRow.Cells[this.Index] is DataGridViewNumericUpDownCell dataGridViewCell)
@@ -714,8 +711,8 @@ namespace RTCV.UI
                 if (this.DataGridView != null)
                 {
                     DataGridViewRowCollection dataGridViewRows = this.DataGridView.Rows;
-                    int rowCount = dataGridViewRows.Count;
-                    for (int rowIndex = 0; rowIndex < rowCount; rowIndex++)
+                    var rowCount = dataGridViewRows.Count;
+                    for (var rowIndex = 0; rowIndex < rowCount; rowIndex++)
                     {
                         DataGridViewRow dataGridViewRow = dataGridViewRows.SharedRow(rowIndex);
                         if (dataGridViewRow.Cells[this.Index] is DataGridViewNumericUpDownCell dataGridViewCell)
@@ -760,8 +757,8 @@ namespace RTCV.UI
                 if (this.DataGridView != null)
                 {
                     DataGridViewRowCollection dataGridViewRows = this.DataGridView.Rows;
-                    int rowCount = dataGridViewRows.Count;
-                    for (int rowIndex = 0; rowIndex < rowCount; rowIndex++)
+                    var rowCount = dataGridViewRows.Count;
+                    for (var rowIndex = 0; rowIndex < rowCount; rowIndex++)
                     {
                         DataGridViewRow dataGridViewRow = dataGridViewRows.SharedRow(rowIndex);
                         if (dataGridViewRow.Cells[this.Index] is DataGridViewNumericUpDownCell dataGridViewCell)
@@ -794,7 +791,7 @@ namespace RTCV.UI
         /// </summary>
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder(100);
+            var sb = new StringBuilder(100);
             sb.Append("DataGridViewNumericUpDownColumn { Name=");
             sb.Append(this.Name);
             sb.Append(", Index=");
@@ -1044,7 +1041,7 @@ namespace RTCV.UI
         /// </summary>
         public override object Clone()
         {
-            DataGridViewNumericUpDownCell dataGridViewCell = base.Clone() as DataGridViewNumericUpDownCell;
+            var dataGridViewCell = base.Clone() as DataGridViewNumericUpDownCell;
             if (dataGridViewCell != null)
             {
                 dataGridViewCell.DecimalPlaces = this.DecimalPlaces;
@@ -1114,7 +1111,7 @@ namespace RTCV.UI
             editingControlBounds.Width = Math.Max(0, editingControlBounds.Width - 2);
 
             // Adjust the vertical location of the editing control:
-            int preferredHeight = cellStyle.Font.Height + 3;
+            var preferredHeight = cellStyle.Font.Height + 3;
             if (preferredHeight < editingControlBounds.Height)
             {
                 switch (cellStyle.Alignment)
@@ -1168,18 +1165,18 @@ namespace RTCV.UI
         {
             if (this.Hexadecimal)
             {
-                ulong valueulong = System.Convert.ToUInt64(value);
+                var valueulong = System.Convert.ToUInt64(value);
                 return valueulong.ToString("X");
             }
             else
             {
                 // By default, the base implementation converts the Decimal 1234.5 into the string "1234.5"
-                object formattedValue = base.GetFormattedValue(value, rowIndex, ref cellStyle, valueTypeConverter, formattedValueTypeConverter, context);
-                string formattedNumber = formattedValue as string;
+                var formattedValue = base.GetFormattedValue(value, rowIndex, ref cellStyle, valueTypeConverter, formattedValueTypeConverter, context);
+                var formattedNumber = formattedValue as string;
                 if (!string.IsNullOrEmpty(formattedNumber) && value != null)
                 {
-                    decimal unformattedDecimal = System.Convert.ToDecimal(value);
-                    decimal formattedDecimal = System.Convert.ToDecimal(formattedNumber);
+                    var unformattedDecimal = System.Convert.ToDecimal(value);
+                    var formattedDecimal = System.Convert.ToDecimal(formattedNumber);
                     if (unformattedDecimal == formattedDecimal)
                     {
                         // The base implementation of GetFormattedValue (which triggers the CellFormatting event) did nothing else than
@@ -1250,7 +1247,7 @@ namespace RTCV.UI
         {
             NumberFormatInfo numberFormatInfo = System.Globalization.CultureInfo.CurrentCulture.NumberFormat;
             Keys negativeSignKey = Keys.None;
-            string negativeSignStr = numberFormatInfo.NegativeSign;
+            var negativeSignStr = numberFormatInfo.NegativeSign;
             if (!string.IsNullOrEmpty(negativeSignStr) && negativeSignStr.Length == 1)
             {
                 negativeSignKey = (Keys)(VkKeyScan(negativeSignStr[0]));
@@ -1333,8 +1330,8 @@ namespace RTCV.UI
                        paintParts & ~(DataGridViewPaintParts.ErrorIcon | DataGridViewPaintParts.ContentForeground));
 
             Point ptCurrentCell = this.DataGridView.CurrentCellAddress;
-            bool cellCurrent = ptCurrentCell.X == this.ColumnIndex && ptCurrentCell.Y == rowIndex;
-            bool cellEdited = cellCurrent && this.DataGridView.EditingControl != null;
+            var cellCurrent = ptCurrentCell.X == this.ColumnIndex && ptCurrentCell.Y == rowIndex;
+            var cellEdited = cellCurrent && this.DataGridView.EditingControl != null;
 
             // If the cell is in editing mode, there is nothing else to paint
             if (!cellEdited)
