@@ -209,7 +209,7 @@ namespace RTCV.CorruptCore
 
             bool isCorruptionApplied = false;
 
-            if (!LoadState(sk, true, false))
+            if (!LoadState(sk, false))
             {
                 return isCorruptionApplied;
             }
@@ -304,13 +304,13 @@ namespace RTCV.CorruptCore
             return false;
         }
 
-        public static bool LoadState(StashKey sk, bool reloadRom = true, bool applyBlastLayer = true)
+        public static bool LoadState(StashKey sk, bool applyBlastLayer = true)
         {
             bool success = LocalNetCoreRouter.QueryRoute<bool>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_LOADSTATE, new object[] { sk, true, applyBlastLayer }, true);
             return success;
         }
 
-        public static StashKey SaveState(StashKey sk = null, bool threadSave = false)
+        public static StashKey SaveState(StashKey sk = null)
         {
             bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
 

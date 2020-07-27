@@ -177,13 +177,13 @@ namespace RTCV.CorruptCore
             {
                 for (int j = 0; j < chunkSize; j++)
                 {
-                    if (!Filtering.LimiterPeekBytes(safeAddress + (j * precision), safeAddress + (j * precision) + precision, domain, LimiterListHash, mi))
+                    if (!Filtering.LimiterPeekBytes(safeAddress + (j * precision), safeAddress + (j * precision) + precision, LimiterListHash, mi))
                     {
                         return null;
                     }
                 }
             }
-            else if (!Filtering.LimiterPeekBytes(filterAddress, filterAddress + precision, domain, LimiterListHash, mi))
+            else if (!Filtering.LimiterPeekBytes(filterAddress, filterAddress + precision, LimiterListHash, mi))
             {
                 return null;
             }

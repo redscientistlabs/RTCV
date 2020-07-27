@@ -44,10 +44,10 @@ namespace RTCV.Common.Forms
         /// <param name="maxLines">Maximum lines to display</param>
         /// <param name="layout">Layout</param>
         /// <param name="fileName">Optional file log</param>
-        public LogConsoleForm(int maxLines = 1000, Layout layout = null, string fileName = null)
+        public LogConsoleForm(Layout layout = null, string fileName = null)
         {
             InitializeComponent();
-            LogConsole.InitializeCustomLogger(maxLines, layout, fileName);
+            LogConsole.InitializeCustomLogger(layout, fileName);
             this.FormClosing += LogConsoleForm_FormClosing;
         }
 

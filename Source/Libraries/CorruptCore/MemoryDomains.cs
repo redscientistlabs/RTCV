@@ -1257,7 +1257,7 @@ namespace RTCV.CorruptCore
             }
         }
 
-        public string getCompositeFilename(string prefix)
+        public string getCompositeFilename()
         {
             if (CompositeFilenameDico.ContainsKey(Filename))
             {
@@ -1337,7 +1337,7 @@ namespace RTCV.CorruptCore
         {
             if (overrideWriteCopyMode)
             {
-                return Path.Combine(RtcCore.EmuDir, "FILEBACKUPS", getCompositeFilename("CORRUPT"));
+                return Path.Combine(RtcCore.EmuDir, "FILEBACKUPS", getCompositeFilename());
             }
             else
             {
@@ -1347,7 +1347,7 @@ namespace RTCV.CorruptCore
 
         public string getBackupFilename()
         {
-            return Path.Combine(RtcCore.EmuDir, "FILEBACKUPS", getCompositeFilename("BACKUP"));
+            return Path.Combine(RtcCore.EmuDir, "FILEBACKUPS", getCompositeFilename());
         }
 
         public override bool ResetWorkingFile()
@@ -1729,9 +1729,9 @@ namespace RTCV.CorruptCore
             return "Multiple Files";
         }
 
-        public string getCompositeFilename(string prefix)
+        public string getCompositeFilename()
         {
-            return string.Join("|", FileInterfaces.Select(it => it.getCompositeFilename(prefix)));
+            return string.Join("|", FileInterfaces.Select(it => it.getCompositeFilename()));
         }
 
         public string getCorruptFilename(bool overrideWriteCopyMode = false)

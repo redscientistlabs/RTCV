@@ -46,7 +46,7 @@ namespace RTCV.CorruptCore
                 safeAddress = mi.Size - 8 + alignment; //If we're out of range, hit the last aligned address
             }
             //Enforce the safeaddress at generation
-            var matchBytes = Filtering.LimiterPeekAndGetBytes(safeAddress, safeAddress + 4, domain, LimiterListHash, mi);
+            var matchBytes = Filtering.LimiterPeekAndGetBytes(safeAddress, safeAddress + 4, LimiterListHash, mi);
             if (matchBytes != null)
             {
                 return new BlastUnit(Filtering.GetRandomConstant(ValueListHash, 4, matchBytes), domain, safeAddress, 4,

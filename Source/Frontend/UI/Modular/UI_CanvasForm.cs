@@ -114,7 +114,7 @@
             return outForm;
         }
 
-        public void ResizeCanvas(UI_CanvasForm targetForm, CanvasGrid canvasGrid)
+        public void ResizeCanvas(CanvasGrid canvasGrid)
         {
             this.SetSize(getTilePos(canvasGrid.x), getTilePos(canvasGrid.y));
         }
@@ -133,7 +133,7 @@
 
         public static void loadTileForm(UI_CanvasForm targetForm, CanvasGrid canvasGrid)
         {
-            targetForm.ResizeCanvas(targetForm, canvasGrid);
+            targetForm.ResizeCanvas(canvasGrid);
 
             for (int x = 0; x < canvasGrid.x; x++)
             {
