@@ -1,5 +1,6 @@
 ﻿namespace RTCV.CorruptCore
 {
+    using RTCV.Common.CustomExtensions;
     using RTCV.NetCore;
 
     public static class RTC_HellgenieEngine

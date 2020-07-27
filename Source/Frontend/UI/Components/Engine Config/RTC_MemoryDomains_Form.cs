@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Data;
@@ -229,7 +229,7 @@
                         var menu = new ToolStripMenuItem();
 
                         string extraVector = "";
-                        if (MemoryDomains.VmdPool.ContainsKey($"[V]{mi.Value} -> {vectorLimiter}"))
+                        if (MemoryDomains.VmdPool.ContainsKey($"[V]{mi.Value} -- {vectorLimiter}"))
                             extraVector = " (Regenerate)";
 
                         var currentListMenuItem = new ToolStripMenuItem();
@@ -251,7 +251,7 @@
                             var subMenuItem = new ToolStripMenuItem();
 
                             string extra = "";
-                            if (MemoryDomains.VmdPool.ContainsKey($"[V]{mi.Value} -> {listName}"))
+                            if (MemoryDomains.VmdPool.ContainsKey($"[V]{mi.Value} -- {listName}"))
                                 extra = " (Regenerate)";
 
                             subMenuItem.Text = "-> " + listName + extra;
