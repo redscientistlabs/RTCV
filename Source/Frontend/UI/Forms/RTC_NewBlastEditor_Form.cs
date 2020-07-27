@@ -425,7 +425,7 @@ namespace RTCV.UI
                 }
             }
 
-            bs = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
+            bs = new BindingSource { DataSource = new BindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
             batchOperation = false;
             dgvBlastEditor.DataSource = bs;
             updateMaximum(dgvBlastEditor.Rows.Cast<DataGridViewRow>().ToList());
@@ -1261,7 +1261,7 @@ namespace RTCV.UI
             originalSK = sk;
             currentSK = sk.Clone() as StashKey;
 
-            bs = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
+            bs = new BindingSource { DataSource = new BindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
 
             bs.CurrentChanged += (o, e) =>
             {
@@ -1489,7 +1489,7 @@ namespace RTCV.UI
             dgvBlastEditor.DataSource = null;
             batchOperation = true;
             currentSK.BlastLayer.SanitizeDuplicates();
-            bs = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
+            bs = new BindingSource { DataSource = new BindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
             batchOperation = false;
             dgvBlastEditor.DataSource = bs;
             dgvBlastEditor.Refresh();
@@ -1503,7 +1503,7 @@ namespace RTCV.UI
             dgvBlastEditor.DataSource = null;
             batchOperation = true;
             currentSK.BlastLayer.RasterizeVMDs();
-            bs = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
+            bs = new BindingSource { DataSource = new BindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
 
             batchOperation = false;
             dgvBlastEditor.DataSource = bs;
@@ -1847,7 +1847,7 @@ namespace RTCV.UI
             else
             {
                 currentSK.BlastLayer = new BlastLayer(l);
-                bs = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
+                bs = new BindingSource { DataSource = new BindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
                 dgvBlastEditor.DataSource = bs;
             }
             dgvBlastEditor.ResetBindings();
