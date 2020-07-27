@@ -1593,29 +1593,31 @@ namespace RTCV.UI
             RomParts rp = MemoryDomains.GetRomParts(currentSK.SystemName, currentSK.RomFilename);
 
             File.Copy(currentSK.RomFilename, filename, true);
-            using var output = new FileStream(filename, FileMode.Open);
-            foreach (BlastUnit bu in currentSK.BlastLayer.Layer)
+            using (var output = new FileStream(filename, FileMode.Open))
             {
-                if (bu.Source == BlastUnitSource.VALUE)
+                foreach (BlastUnit bu in currentSK.BlastLayer.Layer)
                 {
-                    //We don't want to modify the original
-                    var outvalue = (byte[])bu.Value.Clone();
-                    CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref outvalue, bu.TiltValue, bu.BigEndian);
-                    //Flip it if it's big endian
-                    if (bu.BigEndian)
+                    if (bu.Source == BlastUnitSource.VALUE)
                     {
-                        outvalue.FlipBytes();
-                    }
+                        //We don't want to modify the original
+                        var outvalue = (byte[])bu.Value.Clone();
+                        CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref outvalue, bu.TiltValue, bu.BigEndian);
+                        //Flip it if it's big endian
+                        if (bu.BigEndian)
+                        {
+                            outvalue.FlipBytes();
+                        }
 
-                    if (bu.Domain == rp.PrimaryDomain)
-                    {
-                        output.Position = bu.Address + rp.SkipBytes;
-                        output.Write(outvalue, 0, outvalue.Length);
-                    }
-                    else if (bu.Domain == rp.SecondDomain)
-                    {
-                        output.Position = bu.Address + MemoryDomains.MemoryInterfaces[rp.SecondDomain].Size + rp.SkipBytes;
-                        output.Write(outvalue, 0, outvalue.Length);
+                        if (bu.Domain == rp.PrimaryDomain)
+                        {
+                            output.Position = bu.Address + rp.SkipBytes;
+                            output.Write(outvalue, 0, outvalue.Length);
+                        }
+                        else if (bu.Domain == rp.SecondDomain)
+                        {
+                            output.Position = bu.Address + MemoryDomains.MemoryInterfaces[rp.SecondDomain].Size + rp.SkipBytes;
+                            output.Write(outvalue, 0, outvalue.Length);
+                        }
                     }
                 }
             }
