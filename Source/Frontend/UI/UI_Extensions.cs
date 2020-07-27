@@ -2187,15 +2187,7 @@ namespace RTCV.UI
                         }
                         else
                         {
-                            int temp = this.Rows.Count;
-                            if (temp >= 0)
-                            {
-                                rowIndexOfItemUnderMouseToDrop = temp;
-                            }
-                            else
-                            {
-                                rowIndexOfItemUnderMouseToDrop = 0;
-                            }
+                            rowIndexOfItemUnderMouseToDrop = Math.Max(this.Rows.Count, 0);
                         }
                     }
 
@@ -2204,7 +2196,7 @@ namespace RTCV.UI
 
                     //Re-select the new rows
                     this.ClearSelection();
-                    for (int i = rowIndexOfItemUnderMouseToDrop; i < (rowIndexOfItemUnderMouseToDrop + _rows.Length); i++)
+                    for (var i = rowIndexOfItemUnderMouseToDrop; i < (rowIndexOfItemUnderMouseToDrop + _rows.Length); i++)
                     {
                         this.Rows[i].Selected = true;
                     }
@@ -2215,7 +2207,7 @@ namespace RTCV.UI
         private new void DragOver(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Move;
-            int headeroffset = this.Top + this.ColumnHeadersHeight;
+            var headeroffset = this.Top + this.ColumnHeadersHeight;
 
             Point clientPoint = this.PointToClient(new Point(e.X, e.Y));
 
@@ -2227,7 +2219,6 @@ namespace RTCV.UI
             {
                 this.FirstDisplayedScrollingRowIndex += 1;
             }
-            //Cursor.Position = this.PointToScreen(new Point(Cursor.Position.X, this.Top + this.ColumnHeadersHeight));
         }
     }
 }
