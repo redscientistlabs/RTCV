@@ -220,7 +220,7 @@ namespace RTCV.NetCore
                 string filename = keyparts[0];
                 string password = keyparts[1];
 
-                string downloadfilepath = CloudTransfer.CloudLoad(filename, password);
+                string downloadfilepath = CloudTransfer.CloudLoad(filename);
 
                 if (downloadfilepath == null)
                 {
@@ -344,7 +344,7 @@ namespace RTCV.NetCore
     {
         private static string CorruptCloudServer = "http://cc.r5x.cc/rtc/debug";
 
-        public static string CloudLoad(string filename, string password)
+        public static string CloudLoad(string filename)
         {
             string remoteUri = CorruptCloudServer + "/FILES/";
 

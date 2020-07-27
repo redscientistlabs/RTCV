@@ -48,7 +48,7 @@ namespace RTCV.Common.Forms
         public LogConsoleForm(int maxLines = 1000, Layout layout = null, string fileName = null)
         {
             InitializeComponent();
-            LogConsole.InitializeCustomLogger(layout, fileName);
+            LogConsole.InitializeCustomLogger(maxLines, layout, fileName);
             this.FormClosing += LogConsoleForm_FormClosing;
         }
 

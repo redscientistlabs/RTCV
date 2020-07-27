@@ -86,7 +86,9 @@ namespace RTCV.Common.Forms
             config.AddRule(LogLevel.Trace, LogLevel.Fatal, t);
             _logger = new LogFactory(config).GetCurrentClassLogger();
         }
-        public void InitializeCustomLogger(Layout layout, string fileName = null)
+
+        #pragma warning disable CA1801,IDE0060 //maxLines is unused but should be left in for external plugins
+        public void InitializeCustomLogger(int maxLines, Layout layout, string fileName = null)
         {
             if (layout == null)
                 layout = "${level} ${logger} ${message} ${onexception:|${newline}EXCEPTION OCCURRED\\:${exception:format=type,message,method:maxInnerExceptionLevel=5:innerFormat=shortType,message,method}${newline}";
@@ -110,10 +112,10 @@ namespace RTCV.Common.Forms
         {
             InitializeComponent();
         }
-        public LogConsole(Layout customLayout, string fileName = null)
+        public LogConsole(int maxLines, Layout customLayout, string fileName = null)
         {
             InitializeComponent();
-            InitializeCustomLogger(customLayout, fileName);
+            InitializeCustomLogger(maxLines, customLayout, fileName);
         }
     }
 }
