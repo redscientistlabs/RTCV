@@ -288,9 +288,6 @@ dotnet_diagnostic.CA1812.severity = none
 # .ctor uses a multidimensional array. Replace it with a jagged array if possible.
 dotnet_diagnostic.CA1814.severity = none
 
-# KeyEvent should override method
-dotnet_diagnostic.CA1815.severity = none
-
 # Change Dispose() to call GC.SuppressFinalize(object). This will prevent derived types that introduce a finalizer from needing to re-implement 'IDisposable' to call it.
 dotnet_diagnostic.CA1816.severity = none
 
