@@ -12,10 +12,6 @@ using System.Windows.Forms;
 using static RTCV.UI.UI_Extensions;
 
 #pragma warning disable RCS1138 // Add summary element to documentation comment.
-#pragma warning disable CA1200
-#pragma warning disable SA1611
-#pragma warning disable SA1629
-#pragma warning disable SA1642
 #pragma warning disable SA1615
 #pragma warning disable SA1514
 #pragma warning disable SA1626
@@ -78,9 +74,9 @@ namespace RTCV.UI
 
         public static void Tint(this Bitmap bmp, Color col)
         {
-            Rectangle rectSize = new Rectangle(0, 0, bmp.Width, bmp.Height);
+            var rectSize = new Rectangle(0, 0, bmp.Width, bmp.Height);
 
-            using (Graphics g = Graphics.FromImage(bmp))
+            using (var g = Graphics.FromImage(bmp))
             {
                 g.DrawImage(bmp, rectSize);
 
@@ -654,12 +650,6 @@ namespace RTCV.UI
                     //       column headers / row headers as needed.
                 }
             }
-        }
-
-        /// Indicates whether the Maximum property should be persisted.
-        private bool ShouldSerializeHexadecimal()
-        {
-            return !this.Hexadecimal.Equals(DataGridViewNumericUpDownCell.DATAGRIDVIEWNUMERICUPDOWNCELL_defaultHexadecimal);
         }
 
         /// <summary>
