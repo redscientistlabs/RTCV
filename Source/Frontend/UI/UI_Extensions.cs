@@ -1365,31 +1365,6 @@ namespace RTCV.UI
                     // Determine the NumericUpDown control location
                     valBounds = GetAdjustedEditingControlBounds(valBounds, cellStyle);
 
-                    bool cellSelected = (cellState & DataGridViewElementStates.Selected) != 0;
-
-                    /*if (renderingBitmap.Width < valBounds.Width ||
-                        renderingBitmap.Height < valBounds.Height)
-                    {
-                        // The static bitmap is too small, a bigger one needs to be allocated.
-                        renderingBitmap.Dispose();
-                        renderingBitmap = new Bitmap(valBounds.Width, valBounds.Height);
-                    }*/
-
-                    //7/1/2018
-                    //OPTIMIZE PAINTING BY REMOVING UNUSED FUNCTIONALITY
-                    //IF ANY OF THESE FUNCTIONS ARE USED, THEY NEED TO BE RE-ENABLED
-
-                    // Make sure the NumericUpDown control is parented to a visible control
-                    /*
-                    if (paintingNumericUpDown.Parent == null || !paintingNumericUpDown.Parent.Visible)
-                    {
-                        paintingNumericUpDown.Parent = this.DataGridView;
-                    }
-                    paintingNumericUpDown.RightToLeft = this.DataGridView.RightToLeft;
-                    paintingNumericUpDown.ThousandsSeparator = this.ThousandsSeparator;
-                    paintingNumericUpDown.TextAlign = DataGridViewNumericUpDownCell.TranslateAlignment(cellStyle.Alignment);
-                    paintingNumericUpDown.DecimalPlaces = this.DecimalPlaces;*/
-
                     // Set all the relevant properties
                     paintingNumericUpDown.Value = Convert.ToDecimal(value);
                     paintingNumericUpDown.Hexadecimal = this.Hexadecimal;
@@ -1399,6 +1374,7 @@ namespace RTCV.UI
                     paintingNumericUpDown.Location = new Point(0, -paintingNumericUpDown.Height - 100);
 
                     Color foreColor;
+                    var cellSelected = (cellState & DataGridViewElementStates.Selected) != 0;
                     if (PartPainted(paintParts, DataGridViewPaintParts.SelectionBackground) && cellSelected)
                     {
                         foreColor = cellStyle.SelectionForeColor;
@@ -1534,11 +1510,11 @@ namespace RTCV.UI
             {
                 this.minimum = this.maximum;
             }
-            object cellValue = GetValue(rowIndex);
+            var cellValue = GetValue(rowIndex);
             if (cellValue != null)
             {
-                decimal currentValue = System.Convert.ToDecimal(cellValue);
-                decimal constrainedValue = Constrain(currentValue);
+                var currentValue = System.Convert.ToDecimal(cellValue);
+                var constrainedValue = Constrain(currentValue);
                 if (constrainedValue != currentValue)
                 {
                     SetValue(rowIndex, constrainedValue);
@@ -1563,13 +1539,13 @@ namespace RTCV.UI
             {
                 this.maximum = value;
             }
-            object cellValue = GetValue(rowIndex);
+            var cellValue = GetValue(rowIndex);
             if (cellValue != null)
             {
                 if (Hexadecimal)
                 {
-                    decimal currentValue = System.Convert.ToDecimal(cellValue);
-                    decimal constrainedValue = Constrain(currentValue);
+                    var currentValue = System.Convert.ToDecimal(cellValue);
+                    var constrainedValue = Constrain(currentValue);
                     if (constrainedValue != currentValue)
                     {
                         SetValue(rowIndex, constrainedValue);
@@ -1577,8 +1553,8 @@ namespace RTCV.UI
                 }
                 else
                 {
-                    decimal currentValue = System.Convert.ToDecimal(cellValue);
-                    decimal constrainedValue = Constrain(currentValue);
+                    var currentValue = System.Convert.ToDecimal(cellValue);
+                    var constrainedValue = Constrain(currentValue);
                     if (constrainedValue != currentValue)
                     {
                         SetValue(rowIndex, constrainedValue);
@@ -1732,7 +1708,7 @@ namespace RTCV.UI
             if (dataGridViewCellStyle.BackColor.A < 255)
             {
                 // The NumericUpDown control does not support transparent back colors
-                Color opaqueBackColor = Color.FromArgb(255, dataGridViewCellStyle.BackColor);
+                var opaqueBackColor = Color.FromArgb(255, dataGridViewCellStyle.BackColor);
                 this.BackColor = opaqueBackColor;
                 this.dataGridView.EditingPanel.BackColor = opaqueBackColor;
             }
@@ -1958,7 +1934,7 @@ namespace RTCV.UI
 
         protected override void OnMouseWheel(MouseEventArgs e)
         {
-            HandledMouseEventArgs hme = e as HandledMouseEventArgs;
+            var hme = e as HandledMouseEventArgs;
             if (hme != null)
             {
                 hme.Handled = true;
