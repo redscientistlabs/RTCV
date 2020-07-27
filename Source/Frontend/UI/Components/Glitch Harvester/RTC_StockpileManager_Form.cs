@@ -329,7 +329,7 @@ namespace RTCV.UI
             RemoveSelected();
         }
 
-        public void RemoveSelected(bool force = false)
+        public void RemoveSelected()
         {
             if (Control.ModifierKeys == Keys.Control || (dgvStockpile.SelectedRows.Count != 0 && (MessageBox.Show("Are you sure you want to remove the selected stockpile entries?", "Delete Stockpile Entry?", MessageBoxButtons.YesNo) == DialogResult.Yes)))
             {

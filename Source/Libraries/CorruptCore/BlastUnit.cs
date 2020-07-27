@@ -543,7 +543,7 @@ namespace RTCV.CorruptCore
         /// If you want to execute a blastunit, add it to the execution pool using Apply()
         /// Returns false
         /// </summary>
-        public ExecuteState Execute(bool UseRealtime = true)
+        public ExecuteState Execute()
         {
             if (!IsEnabled)
             {
@@ -737,7 +737,7 @@ namespace RTCV.CorruptCore
                 if (StoreLimiterSource == StoreLimiterSource.ADDRESS || StoreLimiterSource == StoreLimiterSource.BOTH)
                 {
                     if (Filtering.LimiterPeekBytes(Address,
-                        Address + Precision, Domain, LimiterListHash, destMI))
+                        Address + Precision, LimiterListHash, destMI))
                     {
                         if (InvertLimiter)
                         {
@@ -757,7 +757,7 @@ namespace RTCV.CorruptCore
                     }
 
                     if (Filtering.LimiterPeekBytes(SourceAddress,
-                        SourceAddress + Precision, Domain, LimiterListHash, sourceMI))
+                        SourceAddress + Precision, LimiterListHash, sourceMI))
                     {
                         if (InvertLimiter)
                         {
@@ -771,7 +771,7 @@ namespace RTCV.CorruptCore
             else
             {
                 if (Filtering.LimiterPeekBytes(Address,
-                    Address + Precision, Domain, LimiterListHash, destMI))
+                    Address + Precision, LimiterListHash, destMI))
                 {
                     if (InvertLimiter)
                     {

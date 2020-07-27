@@ -223,7 +223,8 @@ namespace RTCV.UI
                 lastItem = lbSteps.Items[lbSteps.Items.Count - 2];
             }
 
-            T Cast<T>(object obj, T type) { return (T)obj; }
+            #pragma warning disable CA1801,IDE0060 //type is used for templating
+            static T Cast<T>(object obj, T type) { return (T)obj; }
             var modified = Cast(lastItem, new { Text = "", Value = new BlastLayer() });
 
             BlastLayer bl = (BlastLayer)modified.Value.Clone();

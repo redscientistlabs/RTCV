@@ -5,7 +5,7 @@ namespace RTCV.CorruptCore
     public static class RTC_StoreGenerator
     {
         public static BlastLayer GenerateLayer(string note, string domain, long stepSize, long startAddress, long endAddress,
-            ulong param1, ulong param2, int precision, int lifetime, int executeFrame, bool loop, int seed, BGStoreMode mode)
+            ulong param1, int precision, int lifetime, int executeFrame, bool loop, int seed, BGStoreMode mode)
         {
             BlastLayer bl = new BlastLayer();
 
@@ -13,7 +13,7 @@ namespace RTCV.CorruptCore
             //We subtract 1 at the end as precision is 1,2,4, and we need to go 0,1,3
             for (long address = startAddress; address < endAddress; address = address + stepSize + precision - 1)
             {
-                BlastUnit bu = GenerateUnit(domain, address, param1, param2, stepSize, precision, lifetime, executeFrame, loop, mode, note, rand);
+                BlastUnit bu = GenerateUnit(domain, address, param1, stepSize, precision, lifetime, executeFrame, loop, mode, note, rand);
                 if (bu != null)
                 {
                     bl.Layer.Add(bu);
@@ -23,7 +23,7 @@ namespace RTCV.CorruptCore
             return bl;
         }
 
-        private static BlastUnit GenerateUnit(string domain, long address, ulong param1, ulong param2, long stepSize,
+        private static BlastUnit GenerateUnit(string domain, long address, ulong param1, long stepSize,
             int precision, int lifetime, int executeFrame, bool loop, BGStoreMode mode, string note, Random rand)
         {
             try

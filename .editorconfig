@@ -273,9 +273,6 @@ dotnet_diagnostic.CA1720.severity = none
 # Naming conflict
 dotnet_diagnostic.CA1724.severity = none
 
-# Parameter list of method is never used. Remove the parameter or use it in the method body
-dotnet_diagnostic.CA1801.severity = none
-
 # Using method without reference to error
 dotnet_diagnostic.CA1806.severity = none
 
