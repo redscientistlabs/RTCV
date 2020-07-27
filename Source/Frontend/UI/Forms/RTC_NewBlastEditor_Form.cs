@@ -209,10 +209,11 @@ namespace RTCV.UI
             SetDisplayOrder();
         }
 
-        private void RTC_NewBlastEditorForm_Closing(object sender, FormClosingEventArgs e)
-        {
-            SaveDisplayOrder();
-        }
+        private void RTC_NewBlastEditorForm_Closing(object sender, FormClosingEventArgs e) => SaveDisplayOrder();
+
+
+
+
 
         private void RTC_NewBlastEditorForm_Close(object sender, FormClosedEventArgs e)
         {
@@ -386,7 +387,7 @@ namespace RTCV.UI
 
             ((ToolStripMenuItem)cms.Items.Add("Break Down Selected Unit(s)", null, new EventHandler((ob, ev) =>
             {
-                breakDownUnits(true);
+                BreakDownUnits(true);
             }))).Enabled = dgvBlastEditor.SelectedRows.Count > 0;
 
             ((ToolStripMenuItem)cms.Items.Add("Bake Selected Unit(s) to VALUE", null, new EventHandler((ob, ev) =>
@@ -395,7 +396,7 @@ namespace RTCV.UI
             }))).Enabled = dgvBlastEditor.SelectedRows.Count > 0;
         }
 
-        private void breakDownUnits(bool breakSelected = false)
+        public void BreakDownUnits(bool breakSelected = false)
         {
             List<DataGridViewRow> targetRows;
 
@@ -1351,7 +1352,7 @@ namespace RTCV.UI
             }
         }
 
-        private void dgvBlastLayer_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        public void dgvBlastLayer_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             MessageBox.Show(e.Exception.ToString() + "\nRow:" + e.RowIndex + "\nColumn" + e.ColumnIndex + "\n" + e.Context + "\n" + dgvBlastEditor[e.ColumnIndex, e.RowIndex].Value?.ToString());
         }
@@ -1414,7 +1415,7 @@ namespace RTCV.UI
             dgvBlastEditor.ResumeLayout();
         }
 
-        private void btnDisableEverything_Click(object sender, EventArgs e)
+        public void btnDisableEverything_Click(object sender, EventArgs e)
         {
             foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
                 Where(x =>
@@ -1425,7 +1426,7 @@ namespace RTCV.UI
             dgvBlastEditor.Refresh();
         }
 
-        private void btnEnableEverything_Click(object sender, EventArgs e)
+        public void btnEnableEverything_Click(object sender, EventArgs e)
         {
             foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
                 Where(x =>
@@ -1453,7 +1454,7 @@ namespace RTCV.UI
             }
         }
 
-        private void btnDuplicateSelected_Click(object sender, EventArgs e)
+        public void btnDuplicateSelected_Click(object sender, EventArgs e)
         {
             if (dgvBlastEditor.SelectedRows.Count == 0)
             {
@@ -1494,7 +1495,7 @@ namespace RTCV.UI
             StockpileManager_UISide.CurrentStashkey = StockpileManager_UISide.StashHistory[S.GET<RTC_StashHistory_Form>().lbStashHistory.SelectedIndex];
         }
 
-        private void btnNote_Click(object sender, EventArgs e)
+        public void btnNote_Click(object sender, EventArgs e)
         {
             if (dgvBlastEditor.SelectedRows.Count > 0)
             {
@@ -1514,7 +1515,7 @@ namespace RTCV.UI
             }
         }
 
-        private void sanitizeDuplicatesToolStripMenuItem_Click(object sender, EventArgs e)
+        public void sanitizeDuplicatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             dgvBlastEditor.ClearSelection();
 
@@ -1528,7 +1529,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void rasterizeVMDsToolStripMenuItem_Click(object sender, EventArgs e)
+        public void RasterizeVMDs()
         {
             dgvBlastEditor.ClearSelection();
 
@@ -1544,12 +1545,9 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void runRomWithoutBlastlayerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            currentSK.RunOriginal();
-        }
 
-        private void replaceRomFromGHToolStripMenuItem_Click(object sender, EventArgs e)
+
+        public void replaceRomFromGHToolStripMenuItem_Click(object sender, EventArgs e)
         {
             StashKey temp = StockpileManager_UISide.CurrentSavestateStashKey;
 
@@ -1568,7 +1566,7 @@ namespace RTCV.UI
             currentSK.SyncSettings = temp.SyncSettings;
         }
 
-        private void replaceRomFromFileToolStripMenuItem_Click(object sender, EventArgs e)
+        public void replaceRomFromFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("Loading this rom will invalidate the associated savestate. You'll need to set a new savestate for the Blastlayer. Continue?", "Invalidate State?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
@@ -1605,28 +1603,31 @@ namespace RTCV.UI
                 currentSK.SyncSettings = temp.SyncSettings;
             }
         }
-
-        private void bakeROMBlastunitsToFileToolStripMenuItem_Click(object sender, EventArgs e)
+        public void BakeROMBlastunitsToFile(string filename = null)
         {
             string[] originalFilename = currentSK.RomFilename.Split('\\');
-            string filename;
-            SaveFileDialog sfd = new SaveFileDialog
-            {
-                //DefaultExt = "rom";
-                FileName = originalFilename[originalFilename.Length - 1],
-                Title = "Save Rom File",
-                Filter = "rom files|*.*",
-                RestoreDirectory = true
-            };
 
-            if (sfd.ShowDialog() == DialogResult.OK)
+            if (filename == null)
             {
-                filename = sfd.FileName;
+                SaveFileDialog sfd = new SaveFileDialog
+                {
+                    //DefaultExt = "rom";
+                    FileName = originalFilename[originalFilename.Length - 1],
+                    Title = "Save Rom File",
+                    Filter = "rom files|*.*",
+                    RestoreDirectory = true
+                };
+
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    filename = sfd.FileName;
+                }
+                else
+                {
+                    return;
+                }
             }
-            else
-            {
-                return;
-            }
+
 
             RomParts rp = MemoryDomains.GetRomParts(currentSK.SystemName, currentSK.RomFilename);
 
@@ -1661,12 +1662,17 @@ namespace RTCV.UI
             }
         }
 
+        private void bakeROMBlastunitsToFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BakeROMBlastunitsToFile(null);
+        }
+
         private void runOriginalSavestateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             originalSK.RunOriginal();
         }
 
-        private void replaceSavestateFromGHToolStripMenuItem_Click(object sender, EventArgs e)
+        public void replaceSavestateFromGHToolStripMenuItem_Click(object sender, EventArgs e)
         {
             StashKey temp = StockpileManager_UISide.CurrentSavestateStashKey;
             if (temp == null)
@@ -1706,24 +1712,25 @@ namespace RTCV.UI
             currentSK.StateLocation = temp.StateLocation;
         }
 
-        private void replaceSavestateFromFileToolStripMenuItem_Click(object sender, EventArgs e)
+        public void ReplaceSavestateFromFileToolStrip(string filename = null)
         {
-            string filename;
-
-            OpenFileDialog ofd = new OpenFileDialog
+            if (filename == null)
             {
-                DefaultExt = "state",
-                Title = "Open Savestate File",
-                Filter = "state files|*.state",
-                RestoreDirectory = true
-            };
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                filename = ofd.FileName;
-            }
-            else
-            {
-                return;
+                OpenFileDialog ofd = new OpenFileDialog
+                {
+                    DefaultExt = "state",
+                    Title = "Open Savestate File",
+                    Filter = "state files|*.state",
+                    RestoreDirectory = true
+                };
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    filename = ofd.FileName;
+                }
+                else
+                {
+                    return;
+                }
             }
 
             string oldKey = currentSK.ParentKey;
@@ -1749,30 +1756,41 @@ namespace RTCV.UI
             StashKey temp = new StashKey(CorruptCore.RtcCore.GetRandomKey(), currentSK.ParentKey, currentSK.BlastLayer);
             currentSK.SyncSettings = temp.SyncSettings;
         }
-
-        private void saveSavestateToToolStripMenuItem_Click(object sender, EventArgs e)
+        private void replaceSavestateFromFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string filename;
-            SaveFileDialog ofd = new SaveFileDialog
+            ReplaceSavestateFromFileToolStrip(null);
+        }
+
+        public void SaveSavestateTo(string filename = null)
+        {
+            if (filename == null)
             {
-                DefaultExt = "state",
-                Title = "Save Savestate File",
-                Filter = "state files|*.state",
-                RestoreDirectory = true
-            };
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                filename = ofd.FileName;
-            }
-            else
-            {
-                return;
+                SaveFileDialog ofd = new SaveFileDialog
+                {
+                    DefaultExt = "state",
+                    Title = "Save Savestate File",
+                    Filter = "state files|*.state",
+                    RestoreDirectory = true
+                };
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    filename = ofd.FileName;
+                }
+                else
+                {
+                    return;
+                }
             }
 
             File.Copy(currentSK.GetSavestateFullPath(), filename, true);
         }
 
-        private void saveToFileblToolStripMenuItem_Click(object sender, EventArgs e)
+        private void saveSavestateToToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveSavestateTo(null);
+        }
+
+        public void saveToFileblToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //If there's no blastlayer file already set, don't quicksave
             if (CurrentBlastLayerFile.Length == 0)
@@ -1787,19 +1805,19 @@ namespace RTCV.UI
             CurrentBlastLayerFile = BlastTools.LastBlastLayerSavePath;
         }
 
-        private void saveAsToFileblToolStripMenuItem_Click(object sender, EventArgs e)
+        public void saveAsToFileblToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BlastTools.SaveBlastLayerToFile(currentSK.BlastLayer);
             CurrentBlastLayerFile = BlastTools.LastBlastLayerSavePath;
         }
 
-        private void importBlastlayerblToolStripMenuItem_Click(object sender, EventArgs e)
+        public void importBlastlayerblToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BlastLayer temp = BlastTools.LoadBlastLayerFromFile();
             ImportBlastLayer(temp);
         }
 
-        private void loadFromFileblToolStripMenuItem_Click(object sender, EventArgs e)
+        public void loadFromFileblToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BlastLayer temp = BlastTools.LoadBlastLayerFromFile();
             if (temp != null)
@@ -1885,43 +1903,40 @@ namespace RTCV.UI
             LoadBlastlayer(bl, true);
         }
 
-        private void exportToCSVToolStripMenuItem_Click(object sender, EventArgs e)
+        public void ExportToCSV(string filename = null)
         {
-            string filename;
-
             if (currentSK.BlastLayer.Layer.Count == 0)
             {
                 MessageBox.Show("Can't save because the provided blastlayer is empty.");
                 return;
             }
 
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog
+            if (filename == null)
             {
-                DefaultExt = "csv",
-                Title = "Export to csv",
-                Filter = "csv files|*.csv",
-                RestoreDirectory = true
-            };
+                SaveFileDialog saveFileDialog1 = new SaveFileDialog
+                {
+                    DefaultExt = "csv",
+                    Title = "Export to csv",
+                    Filter = "csv files|*.csv",
+                    RestoreDirectory = true
+                };
 
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                filename = saveFileDialog1.FileName;
-            }
-            else
-            {
-                return;
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    filename = saveFileDialog1.FileName;
+                }
+                else
+                {
+                    return;
+                }
             }
 
             CSVGenerator csv = new CSVGenerator();
             File.WriteAllText(filename, csv.GenerateFromDGV(dgvBlastEditor), Encoding.UTF8);
         }
 
-        private void bakeBlastunitsToVALUEToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            BakeBlastUnitsToValue();
-        }
 
-        private void BakeBlastUnitsToValue(bool bakeSelected = false)
+        public void BakeBlastUnitsToValue(bool bakeSelected = false)
         {
             try
             {
@@ -2001,15 +2016,7 @@ namespace RTCV.UI
             RefreshNoteIcons(dgvBlastEditor.Rows);
         }
 
-        private void DgvBlastEditor_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
-        {
-            UpdateLayerSize();
-        }
 
-        private void DgvBlastEditor_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-        {
-            UpdateLayerSize();
-        }
 
         public void btnShiftBlastLayerDown_Click(object sender, EventArgs e)
         {
@@ -2184,9 +2191,8 @@ namespace RTCV.UI
             return new[] { currentSK, originalSK };
         }
 
-        private void ImportBlastlayerFromCorruptedFileToolStripMenuItem_Click(object sender, EventArgs e)
+        public void ImportBlastlayerFromCorruptedFile(string filename = null)
         {
-            string filename = null;
 
             if (filename == null)
             {
@@ -2211,6 +2217,10 @@ namespace RTCV.UI
 
             ImportBlastLayer(bl);
         }
+        private void importBlastlayerFromCorruptedFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ImportBlastlayerFromCorruptedFile(null);
+        }
 
         private void NewToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -2226,10 +2236,16 @@ namespace RTCV.UI
 
             return S.GET<RTC_StashHistory_Form>().btnAddStashToStockpile_Click();
         }
+
+
         public void btnAddStashToStockpile_Click(object sender, EventArgs e) => AddStashToStockpile();
-        private void breakDownAllBlastunitsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            breakDownUnits();
-        }
+        private void breakDownAllBlastunitsToolStripMenuItem_Click(object sender, EventArgs e) => BreakDownUnits();
+        private void DgvBlastEditor_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e) => UpdateLayerSize();
+        private void DgvBlastEditor_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e) => UpdateLayerSize();
+        private void exportToCSVToolStripMenuItem_Click(object sender, EventArgs e) => ExportToCSV(null);
+        private void bakeBlastunitsToVALUEToolStripMenuItem_Click(object sender, EventArgs e) => BakeBlastUnitsToValue();
+        private void runRomWithoutBlastlayerToolStripMenuItem_Click(object sender, EventArgs e) => currentSK.RunOriginal();
+        public void rasterizeVMDsToolStripMenuItem_Click(object sender, EventArgs e) => RasterizeVMDs();
+
     }
 }
