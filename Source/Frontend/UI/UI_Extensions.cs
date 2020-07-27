@@ -145,13 +145,6 @@ namespace RTCV.UI
 
         #endregion CONTROL EXTENSIONS
 
-        public interface ISF<T>
-        {
-            //Interface for Singleton Form
-            T Me();
-            T NewMe();
-        }
-
         public class RTC_Standalone_Form : Form { }
 
         public class ComponentForm : Form
@@ -336,11 +329,11 @@ namespace RTCV.UI
                 base.OnKeyPress(e);
 
                 var numberFormatInfo = CultureInfo.CurrentCulture.NumberFormat;
-                string decimalSeparator = numberFormatInfo.NumberDecimalSeparator;
-                string groupSeparator = numberFormatInfo.NumberGroupSeparator;
-                string negativeSign = numberFormatInfo.NegativeSign;
+                var decimalSeparator = numberFormatInfo.NumberDecimalSeparator;
+                var groupSeparator = numberFormatInfo.NumberGroupSeparator;
+                var negativeSign = numberFormatInfo.NegativeSign;
 
-                string keyInput = e.KeyChar.ToString();
+                var keyInput = e.KeyChar.ToString();
 
                 if (char.IsDigit(e.KeyChar))
                 {
@@ -487,55 +480,6 @@ namespace RTCV.UI
         }
 
         /// <summary>
-        /// Replicates the DecimalPlaces property of the DataGridViewNumericUpDownCell cell type.
-        /// </summary>
-        [
-            Category("Appearance"),
-            DefaultValue(DataGridViewNumericUpDownCell.DATAGRIDVIEWNUMERICUPDOWNCELL_defaultDecimalPlaces),
-            Description("Indicates the number of decimal places to display.")
-        ]
-        public int DecimalPlaces
-        {
-            get
-            {
-                if (this.NumericUpDownCellTemplate == null)
-                {
-                    throw new InvalidOperationException("Operation cannot be completed because this DataGridViewColumn does not have a CellTemplate.");
-                }
-                return this.NumericUpDownCellTemplate.DecimalPlaces;
-            }
-            set
-            {
-                if (this.NumericUpDownCellTemplate == null)
-                {
-                    throw new InvalidOperationException("Operation cannot be completed because this DataGridViewColumn does not have a CellTemplate.");
-                }
-                // Update the template cell so that subsequent cloned cells use the new value.
-                this.NumericUpDownCellTemplate.DecimalPlaces = value;
-                if (this.DataGridView != null)
-                {
-                    // Update all the existing DataGridViewNumericUpDownCell cells in the column accordingly.
-                    DataGridViewRowCollection dataGridViewRows = this.DataGridView.Rows;
-                    var rowCount = dataGridViewRows.Count;
-                    for (var rowIndex = 0; rowIndex < rowCount; rowIndex++)
-                    {
-                        // Be careful not to unshare rows unnecessarily.
-                        // This could have severe performance repercussions.
-                        DataGridViewRow dataGridViewRow = dataGridViewRows.SharedRow(rowIndex);
-                        if (dataGridViewRow.Cells[this.Index] is DataGridViewNumericUpDownCell dataGridViewCell)
-                        {
-                            // Call the internal SetDecimalPlaces method instead of the property to avoid invalidation
-                            // of each cell. The whole column is invalidated later in a single operation for better performance.
-                            dataGridViewCell.SetDecimalPlaces(rowIndex, value);
-                        }
-                    }
-                    this.DataGridView.InvalidateColumn(this.Index);
-                    // TODO: Call the grid's autosizing methods to autosize the column, rows, column headers / row headers as needed.
-                }
-            }
-        }
-
-        /// <summary>
         /// Replicates the Increment property of the DataGridViewNumericUpDownCell cell type.
         /// </summary>
         [
@@ -573,12 +517,6 @@ namespace RTCV.UI
                     }
                 }
             }
-        }
-
-        /// Indicates whether the Increment property should be persisted.
-        private bool ShouldSerializeIncrement()
-        {
-            return !this.Increment.Equals(DataGridViewNumericUpDownCell.DATAGRIDVIEWNUMERICUPDOWNCELL_defaultIncrement);
         }
 
         /// <summary>
@@ -626,12 +564,6 @@ namespace RTCV.UI
             }
         }
 
-        /// Indicates whether the Maximum property should be persisted.
-        private bool ShouldSerializeMaximum()
-        {
-            return !this.Maximum.Equals(DataGridViewNumericUpDownCell.DATAGRIDVIEWNUMERICUPDOWNCELL_defaultMaximum);
-        }
-
         /// <summary>
         /// Replicates the Minimum property of the DataGridViewNumericUpDownCell cell type.
         /// </summary>
@@ -675,12 +607,6 @@ namespace RTCV.UI
                     //       column headers / row headers as needed.
                 }
             }
-        }
-
-        /// Indicates whether the Maximum property should be persisted.
-        private bool ShouldSerializeMinimum()
-        {
-            return !this.Minimum.Equals(DataGridViewNumericUpDownCell.DATAGRIDVIEWNUMERICUPDOWNCELL_defaultMinimum);
         }
 
         /// <summary>
