@@ -412,9 +412,6 @@ dotnet_diagnostic.SA1136.severity = none
 # Use literal suffix notation instead of casting
 dotnet_diagnostic.SA1139.severity = none
 
-# Use tuple syntax
-dotnet_diagnostic.SA1141.severity = none
-
 # Elements should appear in the correct order
 dotnet_diagnostic.SA1201.severity = none
 
