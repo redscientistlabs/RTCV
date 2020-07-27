@@ -206,7 +206,7 @@ csharp_prefer_braces = true:silent
 csharp_preserve_single_line_blocks = true
 csharp_preserve_single_line_statements = true
 
-
+csharp_prefer_simple_using_statement = false # Prefer the old using statement format. See example: https://github.com/RehanSaeed/EditorConfig/pull/23
 
 # NOTE: Requires **VS2019 16.3** or later
 
