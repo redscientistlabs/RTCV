@@ -68,6 +68,50 @@ namespace RTCV.CorruptCore
             return isCorruptionApplied;
         }
 
+        public static void Import(BlastLayer _importedBlastLayer)
+        {
+            string saveStateWord = "Savestate";
+
+            object renameSaveStateWord = AllSpec.VanguardSpec[VSPEC.RENAME_SAVESTATE];
+            if (renameSaveStateWord != null && renameSaveStateWord is string s)
+            {
+                saveStateWord = s;
+            }
+
+            StashKey psk = CurrentSavestateStashKey;
+
+            bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
+            if (!UseSavestates)
+            {
+                psk = SaveState();
+            }
+
+            if (psk == null && UseSavestates)
+            {
+                MessageBox.Show($"The Glitch Harvester could not perform the IMPORT action\n\nEither no {saveStateWord} Box was selected in the {saveStateWord} Manager\nor the {saveStateWord} Box itself is empty.");
+                return;
+            }
+
+
+            //We make it without the blastlayer so we can send it across and use the cached version without needing a prototype
+            CurrentStashkey = new StashKey(RtcCore.GetRandomKey(), psk.ParentKey, null)
+            {
+                RomFilename = psk.RomFilename,
+                SystemName = psk.SystemName,
+                SystemCore = psk.SystemCore,
+                GameName = psk.GameName,
+                SyncSettings = psk.SyncSettings,
+                StateLocation = psk.StateLocation
+            };
+
+
+            BlastLayer bl = _importedBlastLayer;
+
+            CurrentStashkey.BlastLayer = bl;
+            StashHistory.Add(CurrentStashkey);
+
+        }
+
         public static bool Corrupt(bool _loadBeforeOperation = true)
         {
             string saveStateWord = "Savestate";
@@ -113,13 +157,13 @@ namespace RTCV.CorruptCore
 
 
             BlastLayer bl = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.GENERATEBLASTLAYER,
-                new object[]
-                {
+                    new object[]
+                    {
                     CurrentStashkey,
                     _loadBeforeOperation,
                     true,
                     true
-                }, true);
+                    }, true);
             bool isCorruptionApplied = bl?.Layer?.Count > 0;
 
             CurrentStashkey.BlastLayer = bl;

@@ -73,6 +73,30 @@ namespace RTCV.UI
             this.undockedSizable = false;
 
             //cbRenderType.SelectedIndex = 0;
+
+            //Registers the drag and drop with the blast edirot form
+            AllowDrop = true;
+            this.DragEnter += RTC_GlitchHarvesterBlast_Form_DragEnter;
+            this.DragDrop += RTC_GlitchHarvesterBlast_Form_DragDrop;
+        }
+
+        private void RTC_GlitchHarvesterBlast_Form_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            foreach (var f in files)
+            {
+                if (f.Contains(".bl"))
+                {
+                    BlastLayer bl = BlastTools.LoadBlastLayerFromFile(f);
+                    var newStashKey = new StashKey(RtcCore.GetRandomKey(), null, bl);
+                    S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newStashKey, false, false);
+                }
+            }
+        }
+
+        private void RTC_GlitchHarvesterBlast_Form_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Link;
         }
 
         public void OneTimeExecute()

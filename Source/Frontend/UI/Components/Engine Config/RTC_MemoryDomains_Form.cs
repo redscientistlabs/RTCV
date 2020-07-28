@@ -27,6 +27,12 @@ namespace RTCV.UI
                 Interval = 300,
             };
             updateTimer.Elapsed += UpdateSelectedMemoryDomains;
+
+
+            //Registers the drag and drop with RTC_MyVMDs_Form
+            AllowDrop = true;
+            this.DragEnter += S.GET<RTC_VmdPool_Form>().RTC_VmdPool_Form_DragEnter;
+            this.DragDrop += S.GET<RTC_VmdPool_Form>().RTC_VmdPool_Form_DragDrop;
         }
 
         private void UpdateSelectedMemoryDomains(object sender, EventArgs args)

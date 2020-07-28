@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI.Components.Controls
+namespace RTCV.UI.Components.Controls
 {
     using System;
     using System.Collections.Generic;
@@ -174,6 +174,28 @@
                         _DataSource.RemoveAt(indexToRemove);
                     }
                 });
+
+                cms.Items.Add("New Blastlayer from this Savestate (Blast Editor)", null, (ob, ev) =>
+                {
+                    var holder = (SavestateHolder)((Button)sender).Parent;
+                    var psk = holder.sk;
+
+                    var newStashkey = new StashKey(RtcCore.GetRandomKey(), psk.ParentKey, null)
+                    {
+                        RomFilename = psk.RomFilename,
+                        SystemName = psk.SystemName,
+                        SystemCore = psk.SystemCore,
+                        GameName = psk.GameName,
+                        SyncSettings = psk.SyncSettings,
+                        StateLocation = psk.StateLocation
+                    };
+
+                    newStashkey.BlastLayer = new BlastLayer();
+
+                    RTC_NewBlastEditor_Form.OpenBlastEditor(newStashkey);
+                });
+
+
                 cms.Show((Control)sender, locate);
             }
         }
