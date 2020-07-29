@@ -211,6 +211,7 @@ namespace RTCV.CorruptCore
         public static readonly string FILTERING_HASH2NAMEDICO = nameof(FILTERING_HASH2NAMEDICO);
         public static readonly string VECTOR_LIMITERLISTHASH = nameof(VECTOR_LIMITERLISTHASH);
         public static readonly string VECTOR_VALUELISTHASH = nameof(VECTOR_VALUELISTHASH);
+        public static readonly string VECTOR_UNLOCKPRECISION = nameof(VECTOR_UNLOCKPRECISION);
         public static readonly string RENDER_AT_LOAD = nameof(RENDER_AT_LOAD);
         public static readonly string RENDER_ISRENDERING = nameof(RENDER_ISRENDERING);
         public static readonly string RENDER_RENDERTYPE = nameof(RENDER_RENDERTYPE);
