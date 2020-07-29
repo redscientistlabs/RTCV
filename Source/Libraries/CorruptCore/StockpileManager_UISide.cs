@@ -11,7 +11,22 @@ namespace RTCV.CorruptCore
     {
         //Object references
         private static Stockpile CurrentStockpile { get; set; }
-        public static StashKey CurrentStashkey { get; set; }
+
+        private static StashKey _lastStashKey = null;
+        public static StashKey LastStashkey => _lastStashKey;
+        private static StashKey _currentStashKey = null;
+        public static StashKey CurrentStashkey
+        {
+            get
+            {
+                return _currentStashKey;
+            }
+            set
+            {
+                _lastStashKey = CurrentStashkey;
+                _currentStashKey = value;
+            }
+        }
         public static StashKey CurrentSavestateStashKey { get; set; }
         public static volatile StashKey BackupedState;
         public static bool StashAfterOperation = true;
