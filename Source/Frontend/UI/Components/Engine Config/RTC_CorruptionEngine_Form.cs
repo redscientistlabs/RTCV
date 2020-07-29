@@ -641,7 +641,6 @@ namespace RTCV.UI
                 cbCustomPrecision.Enabled = false;
                 RTC_VectorEngine.UnlockPrecision = true;
             }
-
         }
     }
 }

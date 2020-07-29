@@ -190,7 +190,6 @@ namespace RTCV.UI
                     ImportBlastLayer(temp);
                 }
             }
-
         }
 
         private void RTC_NewBlastEditor_Form_DragEnter(object sender, DragEventArgs e)

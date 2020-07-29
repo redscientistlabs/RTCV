@@ -56,8 +56,6 @@ namespace RTCV.CorruptCore
                 {
                     return null;
                 }
-
-
             }
 
             long safeAddress = address - (address % precision) + alignment; //32-bit trunk

@@ -109,7 +109,6 @@ namespace RTCV.CorruptCore
 
             CurrentStashkey.BlastLayer = bl;
             StashHistory.Add(CurrentStashkey);
-
         }
 
         public static bool Corrupt(bool _loadBeforeOperation = true)

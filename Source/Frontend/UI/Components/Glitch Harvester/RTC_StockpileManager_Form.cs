@@ -59,8 +59,6 @@ namespace RTCV.UI
             {
                 RefreshNoteIcons();
             };
-
-
         }
 
         public void dgvStockpile_CellClick(object sender, DataGridViewCellEventArgs e)

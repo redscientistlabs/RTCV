@@ -46,7 +46,6 @@ namespace RTCV.UI
                     S.GET<RTC_StashHistory_Form>().RefreshStashHistory();
                 }
             }
-
         }
 
         private void RTC_StashHistory_Form_DragEnter(object sender, DragEventArgs e)
