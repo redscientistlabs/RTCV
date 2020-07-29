@@ -87,6 +87,7 @@ namespace RTCV.NetCore
         public const string REMOTE_KEY_SETSYSTEMCORE = nameof(REMOTE_KEY_SETSYSTEMCORE);
 
         public const string EMU_OPEN_HEXEDITOR_ADDRESS = nameof(EMU_OPEN_HEXEDITOR_ADDRESS);
+        public const string EMU_GET_REALTIME_API = nameof(EMU_GET_REALTIME_API);
         public const string REMOTE_EVENT_EMU_MAINFORM_CLOSE = nameof(REMOTE_EVENT_EMU_MAINFORM_CLOSE);
         public const string REMOTE_EVENT_EMUSTARTED = nameof(REMOTE_EVENT_EMUSTARTED);
 
