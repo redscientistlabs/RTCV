@@ -200,9 +200,26 @@ namespace RTCV.UI
                     cms.Items.Add(new ToolStripSeparator());
                     cms.Items.Add($"Regenerate all Profiled VMDs", null, (ob, ev) =>
                     {
-                        foreach (var mi in MemoryDomains.AllMemoryInterfaces.Where(it => it.Value is VirtualMemoryDomain && it.Key.Contains("->")))
+                        foreach (var mi in MemoryDomains.AllMemoryInterfaces.Where(it => it.Value is VirtualMemoryDomain && it.Key.Contains("--")))
                         {
                             var vmd = (mi.Value as VirtualMemoryDomain);
+
+                            string realDomain = vmd.GetRealDomain(0);
+                            var realDomainInterface = MemoryDomains.AllMemoryInterfaces.Where(it => it.Key == realDomain).Count();
+                            if (realDomainInterface == 0)
+                            {
+                                //this is not very good, it only checks for the first domain referenced in the VMDs.
+                                //like, if you were to do "Regenerate all VMDs" and had a cross-domain VMD loaded and
+                                //you changed games and one of the domains isn't loaded but the first domain referenced in the VMD
+                                //is loaded, this will go through and shit itself when it tries to read from the domain that is unloaded
+
+                                //in order to fix this, we would have to store with each VMD a list of the domains it references so that
+                                //we don't have to check every single pointer address or range.
+
+                                MessageBox.Show($"The Memory Domain named {realDomain} does not appear to be loaded. {vmd} cannot be regenerated.");
+                                continue;
+                            }
+
                             string domain;
                             if (vmd.CompactPointerDomains.Length > 0)
                                 domain = vmd.CompactPointerDomains.FirstOrDefault();
