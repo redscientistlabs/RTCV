@@ -180,6 +180,12 @@ namespace RTCV.UI.Components.Controls
                     var holder = (SavestateHolder)((Button)sender).Parent;
                     var psk = holder.sk;
 
+                    if (psk == null)
+                    {
+                        MessageBox.Show("There is no savestate associated with this box. Make a savestate and try again.");
+                        return;
+                    }
+
                     var newStashkey = new StashKey(RtcCore.GetRandomKey(), psk.ParentKey, null)
                     {
                         RomFilename = psk.RomFilename,
