@@ -1921,7 +1921,7 @@ namespace RTCV.UI
                 // Select a range of new rows, if shift key is down
                 if ((Control.ModifierKeys & Keys.Shift) != 0)
                 {
-                    for (int i = currentRow; i != e.RowIndex; i += Math.Sign(e.RowIndex - currentRow))
+                    for (var i = currentRow; i != e.RowIndex; i += Math.Sign(e.RowIndex - currentRow))
                     {
                         this.Rows[i].Selected = true;
                     }
