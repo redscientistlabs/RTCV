@@ -23,12 +23,12 @@ namespace RTCV.UI
             this.DragDrop += RTC_VmdPool_Form_DragDrop;
         }
 
-        private void RTC_VmdPool_Form_DragEnter(object sender, DragEventArgs e)
+        public void RTC_VmdPool_Form_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Link;
         }
 
-        private void RTC_VmdPool_Form_DragDrop(object sender, DragEventArgs e)
+        public void RTC_VmdPool_Form_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             foreach (var f in files)
@@ -359,6 +359,8 @@ namespace RTCV.UI
                         return;
                     }
 
+                    if (!Directory.Exists(RtcCore.vmdsDir))
+                        Directory.CreateDirectory(RtcCore.vmdsDir);
 
                     string targetPath = Path.Combine(RtcCore.vmdsDir, value.Trim() + ".vmd");
 

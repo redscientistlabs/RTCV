@@ -164,6 +164,11 @@ namespace RTCV.UI
 
                 this.FormClosed += RTC_NewBlastEditorForm_Close;
                 this.FormClosing += RTC_NewBlastEditorForm_Closing;
+
+                //Registers the drag and drop with the blast editor form
+                AllowDrop = true;
+                this.DragEnter += RTC_NewBlastEditor_Form_DragEnter;
+                this.DragDrop += RTC_NewBlastEditor_Form_DragDrop;
             }
             catch (Exception ex)
             {
@@ -172,6 +177,24 @@ namespace RTCV.UI
                     throw new RTCV.NetCore.AbortEverythingException();
                 }
             }
+        }
+
+        private void RTC_NewBlastEditor_Form_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            foreach (var f in files)
+            {
+                if (f.Contains(".bl"))
+                {
+                    BlastLayer temp = BlastTools.LoadBlastLayerFromFile(f);
+                    ImportBlastLayer(temp);
+                }
+            }
+        }
+
+        private void RTC_NewBlastEditor_Form_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Link;
         }
 
         public static void OpenBlastEditor(StashKey sk = null, bool silent = false)
