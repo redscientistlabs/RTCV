@@ -101,6 +101,7 @@
     <Compile Include="EventWarlock\WarlockActions\WarlockActionEcho.cs" />
     <Compile Include="EventWarlock\WarlockConditions\FirstEqualsSecond.cs" />
     <Compile Include="Memory\FileInterface.cs" />
+    <Compile Include="Memory\FileMemoryInterface.cs" />
     <Compile Include="Memory\MemoryDomainProxy.cs" />
     <Compile Include="Memory\MemoryDomains.cs" />
     <Compile Include="Memory\MemoryInterface.cs" />
