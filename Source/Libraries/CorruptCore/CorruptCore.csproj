@@ -104,6 +104,7 @@
     <Compile Include="Memory\MemoryDomainProxy.cs" />
     <Compile Include="Memory\MemoryDomains.cs" />
     <Compile Include="Memory\MemoryInterface.cs" />
+    <Compile Include="Memory\MultipleFileInterface.cs" />
     <Compile Include="Memory\NullMemoryInterface.cs" />
     <Compile Include="Memory\VirtualMemoryDomain.cs" />
     <Compile Include="Memory\VmdPrototype.cs" />
