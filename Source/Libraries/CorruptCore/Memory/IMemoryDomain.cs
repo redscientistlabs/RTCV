@@ -1,14 +1,5 @@
 namespace RTCV.CorruptCore
 {
-    using System;
-
-    public enum FileInterfaceIdentity
-    {
-        SELF_DESCRIBE,
-        HASHED_PREFIX,
-        FULL_PATH,
-    }
-
     public interface IMemoryDomain
     {
         string Name { get; }

@@ -102,6 +102,7 @@
     <Compile Include="EventWarlock\WarlockConditions\FirstEqualsSecond.cs" />
     <Compile Include="Memory\FileInterface.cs" />
     <Compile Include="Memory\FileMemoryInterface.cs" />
+    <Compile Include="Memory\IMemoryDomain.cs" />
     <Compile Include="Memory\MemoryDomainProxy.cs" />
     <Compile Include="Memory\MemoryDomains.cs" />
     <Compile Include="Memory\MemoryInterface.cs" />
@@ -125,7 +126,6 @@
     <Compile Include="CorruptCore_Extensions.cs" />
     <Compile Include="Filtering.cs" />
     <Compile Include="INote.cs" />
-    <Compile Include="MemoryDomains.cs" />
     <Compile Include="ProgressBar.cs" />
     <Compile Include="Render.cs" />
     <Compile Include="RomParts.cs" />

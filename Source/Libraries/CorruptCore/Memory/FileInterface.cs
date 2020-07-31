@@ -6,6 +6,13 @@ namespace RTCV.CorruptCore
     using System.Windows.Forms;
     using Newtonsoft.Json;
 
+    public enum FileInterfaceIdentity
+    {
+        SELF_DESCRIBE,
+        HASHED_PREFIX,
+        FULL_PATH,
+    }
+
     [Serializable()]
     public class FileInterface : FileMemoryInterface
     {
