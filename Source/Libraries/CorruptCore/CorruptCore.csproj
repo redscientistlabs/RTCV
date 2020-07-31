@@ -105,6 +105,7 @@
     <Compile Include="Memory\MemoryInterface.cs" />
     <Compile Include="Memory\NullMemoryInterface.cs" />
     <Compile Include="Memory\VirtualMemoryDomain.cs" />
+    <Compile Include="Memory\VmdPrototype.cs" />
     <Compile Include="IRealTime.cs" />
     <Compile Include="ListFilters.cs" />
     <Compile Include="MemoryBanks.cs" />
