@@ -102,6 +102,7 @@
     <Compile Include="EventWarlock\WarlockConditions\FirstEqualsSecond.cs" />
     <Compile Include="MemoryDomains\MemoryDomainProxy.cs" />
     <Compile Include="MemoryDomains\MemoryInterface.cs" />
+    <Compile Include="MemoryDomains\NullMemoryInterface.cs" />
     <Compile Include="MemoryDomains\VirtualMemoryDomain.cs" />
     <Compile Include="IRealTime.cs" />
     <Compile Include="ListFilters.cs" />
