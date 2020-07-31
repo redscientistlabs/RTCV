@@ -124,6 +124,7 @@
     <Compile Include="MemoryDomains.cs" />
     <Compile Include="ProgressBar.cs" />
     <Compile Include="Render.cs" />
+    <Compile Include="RomParts.cs" />
     <Compile Include="BlastDiff.cs" />
     <Compile Include="SaveStateKey.cs" />
     <Compile Include="StashKey.cs" />

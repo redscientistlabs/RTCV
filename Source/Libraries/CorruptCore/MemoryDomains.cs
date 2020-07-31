@@ -10,14 +10,6 @@ namespace RTCV.CorruptCore
     using Ceras;
     using Newtonsoft.Json;
 
-    public class RomParts
-    {
-        public string Error { get; set; }
-        public string PrimaryDomain { get; set; }
-        public string SecondDomain { get; set; }
-        public int SkipBytes { get; set; } = 0;
-    }
-
     [XmlInclude(typeof(BlastLayer))]
     [XmlInclude(typeof(BlastUnit))]
     [Serializable]
