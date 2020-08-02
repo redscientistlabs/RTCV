@@ -99,7 +99,7 @@ namespace RTCV.UI.Components.Controls
                 mods |= Input.Input.ModifierKeys.Alt;
             }
 
-            var lb = new Input.Input.LogicalButton(e.ClickedItem.Text, mods);
+            var lb = new Input.LogicalButton(e.ClickedItem.Text, mods);
 
             widget.SetBinding(lb.ToString());
         }
