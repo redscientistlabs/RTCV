@@ -423,6 +423,8 @@
     <Compile Include="UICore.cs" />
     <Compile Include="UIConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Extensions\DataGridViewNumericUpDownCell.cs" />
+    <Compile Include="Extensions\DataGridViewNumericUpDownColumn.cs" />
     <Compile Include="UI_Extensions.cs" />
     <Compile Include="UI_VanguardImplementation.cs" />
     <EmbeddedResource Include="Components\Blast Editor\RTC_ColumnSelector_Form.resx">
