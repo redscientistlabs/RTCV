@@ -423,6 +423,7 @@
     <Compile Include="UICore.cs" />
     <Compile Include="UIConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Extensions\ComponentForm.cs" />
     <Compile Include="Extensions\DataGridViewNumericUpDownCell.cs" />
     <Compile Include="Extensions\DataGridViewNumericUpDownColumn.cs" />
     <Compile Include="Extensions\DataGridViewNumericUpDownEditingControl.cs" />
