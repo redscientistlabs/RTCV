@@ -130,7 +130,7 @@ namespace RTCV.NetCore
                         }
                         else
                         {
-                            throw ex;
+                            throw;
                         }
                     }
                     if (bytes != null)
