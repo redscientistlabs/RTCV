@@ -426,6 +426,7 @@
     <Compile Include="Extensions\DataGridViewNumericUpDownCell.cs" />
     <Compile Include="Extensions\DataGridViewNumericUpDownColumn.cs" />
     <Compile Include="Extensions\DataGridViewNumericUpDownEditingControl.cs" />
+    <Compile Include="Extensions\SortableBindingList.cs" />
     <Compile Include="UI_Extensions.cs" />
     <Compile Include="UI_VanguardImplementation.cs" />
     <EmbeddedResource Include="Components\Blast Editor\RTC_ColumnSelector_Form.resx">
