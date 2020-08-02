@@ -100,6 +100,16 @@
     <Compile Include="EventWarlock\WarlockAction.cs" />
     <Compile Include="EventWarlock\WarlockActions\WarlockActionEcho.cs" />
     <Compile Include="EventWarlock\WarlockConditions\FirstEqualsSecond.cs" />
+    <Compile Include="Memory\FileInterface.cs" />
+    <Compile Include="Memory\FileMemoryInterface.cs" />
+    <Compile Include="Memory\IMemoryDomain.cs" />
+    <Compile Include="Memory\MemoryDomainProxy.cs" />
+    <Compile Include="Memory\MemoryDomains.cs" />
+    <Compile Include="Memory\MemoryInterface.cs" />
+    <Compile Include="Memory\MultipleFileInterface.cs" />
+    <Compile Include="Memory\NullMemoryInterface.cs" />
+    <Compile Include="Memory\VirtualMemoryDomain.cs" />
+    <Compile Include="Memory\VmdPrototype.cs" />
     <Compile Include="IRealTime.cs" />
     <Compile Include="ListFilters.cs" />
     <Compile Include="MemoryBanks.cs" />
@@ -116,9 +126,9 @@
     <Compile Include="CorruptCore_Extensions.cs" />
     <Compile Include="Filtering.cs" />
     <Compile Include="INote.cs" />
-    <Compile Include="MemoryDomains.cs" />
     <Compile Include="ProgressBar.cs" />
     <Compile Include="Render.cs" />
+    <Compile Include="RomParts.cs" />
     <Compile Include="BlastDiff.cs" />
     <Compile Include="SaveStateKey.cs" />
     <Compile Include="StashKey.cs" />
