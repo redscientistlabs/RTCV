@@ -53,5 +53,4 @@ namespace RTCV.UI.Input
             return !(lhs == rhs);
         }
     }
-
 }
