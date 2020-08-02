@@ -1,24 +1,21 @@
 namespace RTCV.UI.Input
 {
     using System;
-    using System.Collections.Generic;
-    using System.Threading;
-    using RTCV.NetCore;
 
     public struct LogicalButton : IEquatable<LogicalButton>
     {
-        public LogicalButton(string button, Input.ModifierKeys modifiers)
+        public LogicalButton(string button, ModifierKeys modifiers)
         {
             Button = button;
             Modifiers = modifiers;
         }
 
         public readonly string Button;
-        public readonly Input.ModifierKeys Modifiers;
+        public readonly ModifierKeys Modifiers;
 
-        public bool Alt { get { return ((Modifiers & Input.ModifierKeys.Alt) != 0); } }
-        public bool Control { get { return ((Modifiers & Input.ModifierKeys.Control) != 0); } }
-        public bool Shift { get { return ((Modifiers & Input.ModifierKeys.Shift) != 0); } }
+        public bool Alt { get { return ((Modifiers & ModifierKeys.Alt) != 0); } }
+        public bool Control { get { return ((Modifiers & ModifierKeys.Control) != 0); } }
+        public bool Shift { get { return ((Modifiers & ModifierKeys.Shift) != 0); } }
 
         public override string ToString()
         {

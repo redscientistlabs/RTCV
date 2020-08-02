@@ -382,6 +382,7 @@
     <Compile Include="Input\IPCKeyInput.cs" />
     <Compile Include="Input\Keyboard.cs" />
     <Compile Include="Input\LogicalButton.cs" />
+    <Compile Include="Input\ModifierKeys.cs" />
     <Compile Include="Input\WorkingDictionary.cs" />
     <Compile Include="Modular\UI_CanvasForm.cs">
       <SubType>Form</SubType>
