@@ -75,7 +75,7 @@
             }
         }
 
-        public static void SyncObjectExecute(Form sync, Action<object, EventArgs> a, object[] args = null)
+        public static void SyncObjectExecute(Form sync, Action<object, EventArgs> a)
         {
             if (sync.InvokeRequired)
             {

@@ -86,6 +86,8 @@ namespace RTCV.Common.Forms
             config.AddRule(LogLevel.Trace, LogLevel.Fatal, t);
             _logger = new LogFactory(config).GetCurrentClassLogger();
         }
+
+        #pragma warning disable CA1801,IDE0060 //maxLines is unused but should be left in for external plugins
         public void InitializeCustomLogger(int maxLines, Layout layout, string fileName = null)
         {
             if (layout == null)

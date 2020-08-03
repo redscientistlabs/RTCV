@@ -299,7 +299,7 @@ namespace RTCV.CorruptCore
                                     StockpileManager_EmuSide.LoadState_NET(sk, false);
                                 }
 
-                                returnList = BlastTools.GenerateBlastLayersFromBlastGeneratorProtos(blastGeneratorProtos, sk);
+                                returnList = BlastTools.GenerateBlastLayersFromBlastGeneratorProtos(blastGeneratorProtos);
                                 if (applyAfterCorrupt)
                                 {
                                     var bl = new BlastLayer();
@@ -476,7 +476,7 @@ namespace RTCV.CorruptCore
 
                                     for (long i = 0; i < mi.Size; i += listItemSize)
                                     {
-                                        if (Filtering.LimiterPeekBytes(i, i + listItemSize, mi.Name, limiterListHash, mi))
+                                        if (Filtering.LimiterPeekBytes(i, i + listItemSize, limiterListHash, mi))
                                         {
                                             for (var j = 0; j < listItemSize; j++)
                                             {

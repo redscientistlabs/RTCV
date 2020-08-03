@@ -38,6 +38,7 @@ namespace RTCV.Common.Forms
             LogConsole.InitializeFromGlobalLogger();
         }
 
+        #pragma warning disable CA1801,IDE0060 //maxLines is unused but should be left in for external plugins
         /// <summary>
         /// Creates a LogConsoleForm using the global logger
         /// </summary>

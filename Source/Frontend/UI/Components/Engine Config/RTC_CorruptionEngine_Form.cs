@@ -184,6 +184,17 @@ namespace RTCV.UI
                     nmAlignment.Maximum = 3;
                     gbVectorEngine.Visible = true;
 
+                    if (cbVectorUnlockPrecision.Checked)
+                    {
+                        nmAlignment.Maximum = new decimal(new int[] { 0, 0, 0, 0 });
+                        cbCustomPrecision.Enabled = true;
+                    }
+                    else
+                    {
+                        nmAlignment.Maximum = 3;
+                        cbCustomPrecision.Enabled = false;
+                    }
+
                     S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
 
@@ -614,6 +625,22 @@ namespace RTCV.UI
         private void clusterFilterAll_CheckedChanged(object sender, EventArgs e)
         {
             RTC_ClusterEngine.FilterAll = clusterFilterAll.Checked;
+        }
+
+        private void cbVectorUnlockPrecision_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbVectorUnlockPrecision.Checked)
+            {
+                nmAlignment.Maximum = new decimal(new int[] { 0, 0, 0, 0 });
+                cbCustomPrecision.Enabled = true;
+                RTC_VectorEngine.UnlockPrecision = true;
+            }
+            else
+            {
+                nmAlignment.Maximum = 3;
+                cbCustomPrecision.Enabled = false;
+                RTC_VectorEngine.UnlockPrecision = true;
+            }
         }
     }
 }

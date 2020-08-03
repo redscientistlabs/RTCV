@@ -71,7 +71,7 @@ namespace RTCV.UI
             UICore.SetRTCColor(UICore.GeneralColor, this);
         }
 
-        private void btnReroll_Click(object sender, EventArgs e)
+        public void btnReroll_Click(object sender, EventArgs e)
         {
             pnBlastLayerSanitization.Visible = false;
             this.Refresh();
@@ -87,7 +87,7 @@ namespace RTCV.UI
             pnBlastLayerSanitization.Visible = true;
         }
 
-        private void btnYesEffect_Click(object sender, EventArgs e)
+        public void btnYesEffect_Click(object sender, EventArgs e)
         {
             pnBlastLayerSanitization.Visible = false;
             this.Refresh();
@@ -114,7 +114,7 @@ namespace RTCV.UI
             pnBlastLayerSanitization.Visible = true;
         }
 
-        private void btnNoEffect_Click(object sender, EventArgs e)
+        public void btnNoEffect_Click(object sender, EventArgs e)
         {
             pnBlastLayerSanitization.Visible = false;
             this.Refresh();
@@ -140,7 +140,7 @@ namespace RTCV.UI
             pnBlastLayerSanitization.Visible = true;
         }
 
-        private void btnReplayLast_Click(object sender, EventArgs e)
+        public void btnReplayLast_Click(object sender, EventArgs e)
         {
             pnBlastLayerSanitization.Visible = false;
             this.Refresh();
@@ -152,7 +152,7 @@ namespace RTCV.UI
             pnBlastLayerSanitization.Visible = true;
         }
 
-        private void btnLeaveWithChanges_Click(object sender, EventArgs e)
+        public void btnLeaveWithChanges_Click(object sender, EventArgs e)
         {
             ReopenBlastEditor();
             this.Close();
@@ -168,7 +168,7 @@ namespace RTCV.UI
             be.BringToFront();
         }
 
-        private void btnLeaveSubstractChanges_Click(object sender, EventArgs e)
+        public void btnLeaveSubstractChanges_Click(object sender, EventArgs e)
         {
             BlastLayer changes = (BlastLayer)S.GET<RTC_NewBlastEditor_Form>().currentSK.BlastLayer.Clone();
             BlastLayer modified = (BlastLayer)originalBlastLayer.Clone();
@@ -203,7 +203,7 @@ namespace RTCV.UI
             this.Close();
         }
 
-        private void btnLeaveWithoutChanges_Click(object sender, EventArgs e)
+        public void btnLeaveWithoutChanges_Click(object sender, EventArgs e)
         {
             S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(originalBlastLayer);
             ReopenBlastEditor();
@@ -223,7 +223,8 @@ namespace RTCV.UI
                 lastItem = lbSteps.Items[lbSteps.Items.Count - 2];
             }
 
-            T Cast<T>(object obj, T type) { return (T)obj; }
+            #pragma warning disable CA1801,IDE0060 //type is used for templating
+            static T Cast<T>(object obj, T type) { return (T)obj; }
             var modified = Cast(lastItem, new { Text = "", Value = new BlastLayer() });
 
             BlastLayer bl = (BlastLayer)modified.Value.Clone();
@@ -285,7 +286,7 @@ namespace RTCV.UI
             pbProgress.Value = original_maxsteps - current_maxsteps;
         }
 
-        private void btnStartSanitizing_Click(object sender, EventArgs e)
+        public void btnStartSanitizing_Click(object sender, EventArgs e)
         {
             btnStartSanitizing.Visible = false;
 

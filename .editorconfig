@@ -205,7 +205,7 @@ csharp_prefer_braces = true:silent
 csharp_preserve_single_line_blocks = true
 csharp_preserve_single_line_statements = true
 
-
+csharp_prefer_simple_using_statement = false # Prefer the old using statement format. See example: https://github.com/RehanSaeed/EditorConfig/pull/23
 
 # NOTE: Requires **VS2019 16.3** or later
 
@@ -223,9 +223,6 @@ dotnet_diagnostic.RCS1059.severity = none
 
 # Add summary element to documentation comment
 dotnet_diagnostic.RCS1139.severity = none
-
-# Class owns disposable fields but is not disposable
-dotnet_diagnostic.CA1001.severity = none
 
 # Catch more specific exception type
 dotnet_diagnostic.CA1031.severity = none
@@ -275,9 +272,6 @@ dotnet_diagnostic.CA1720.severity = none
 # Naming conflict
 dotnet_diagnostic.CA1724.severity = none
 
-# Parameter list of method is never used. Remove the parameter or use it in the method body
-dotnet_diagnostic.CA1801.severity = none
-
 # Using method without reference to error
 dotnet_diagnostic.CA1806.severity = none
 
@@ -289,9 +283,6 @@ dotnet_diagnostic.CA1812.severity = none
 
 # .ctor uses a multidimensional array. Replace it with a jagged array if possible.
 dotnet_diagnostic.CA1814.severity = none
-
-# KeyEvent should override method
-dotnet_diagnostic.CA1815.severity = none
 
 # Change Dispose() to call GC.SuppressFinalize(object). This will prevent derived types that introduce a finalizer from needing to re-implement 'IDisposable' to call it.
 dotnet_diagnostic.CA1816.severity = none
@@ -320,9 +311,6 @@ dotnet_diagnostic.CA2008.severity = none
 
 # Specify marshaling for P/Invoke string arguments
 dotnet_diagnostic.CA2101.severity = none
-
-# Re-throwing caught exception changes stack information
-dotnet_diagnostic.CA2200.severity = none
 
 # Non-constant fields should not be visible
 dotnet_diagnostic.CA2211.severity = none
@@ -410,9 +398,6 @@ dotnet_diagnostic.SA1136.severity = none
 
 # Use literal suffix notation instead of casting
 dotnet_diagnostic.SA1139.severity = none
-
-# Use tuple syntax
-dotnet_diagnostic.SA1141.severity = none
 
 # Elements should appear in the correct order
 dotnet_diagnostic.SA1201.severity = none

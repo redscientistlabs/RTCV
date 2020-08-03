@@ -1195,7 +1195,7 @@ namespace RTCV.UI
             this.importBlastlayerFromCorruptedFileToolStripMenuItem.Name = "importBlastlayerFromCorruptedFileToolStripMenuItem";
             this.importBlastlayerFromCorruptedFileToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
             this.importBlastlayerFromCorruptedFileToolStripMenuItem.Text = "Import Blastlayer From Corrupted &File";
-            this.importBlastlayerFromCorruptedFileToolStripMenuItem.Click += new System.EventHandler(this.ImportBlastlayerFromCorruptedFileToolStripMenuItem_Click);
+            this.importBlastlayerFromCorruptedFileToolStripMenuItem.Click += new System.EventHandler(this.importBlastlayerFromCorruptedFileToolStripMenuItem_Click);
             // 
             // saveStateToolStripMenuItem
             // 

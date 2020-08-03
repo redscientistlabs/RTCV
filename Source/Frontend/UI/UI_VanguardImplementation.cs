@@ -366,6 +366,80 @@ namespace RTCV.UI
                             S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked = false;
                         });
                         break;
+
+                    case REMOTE_BLASTEDITOR_STARTSANITIZETOOL:
+                        SyncObjectSingleton.FormExecute(() =>
+                        {
+                            var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
+                            blastEditor.btnSanitizeTool_Click(null, null);
+
+                        });
+                        break;
+
+                    case REMOTE_BLASTEDITOR_LOADCORRUPT:
+                        SyncObjectSingleton.FormExecute(() =>
+                        {
+                            var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
+                            blastEditor.btnLoadCorrupt_Click(null, null);
+
+                        });
+                        break;
+
+                    case REMOTE_SANITIZETOOL_STARTSANITIZING:
+                        SyncObjectSingleton.FormExecute(() =>
+                        {
+                            var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
+                            sanitizeTool.btnStartSanitizing_Click(null, null);
+
+                        });
+                        break;
+
+                    case REMOTE_SANITIZETOOL_LEAVEWITHCHANGES:
+                        SyncObjectSingleton.FormExecute(() =>
+                        {
+                            var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
+                            sanitizeTool.btnLeaveWithChanges_Click(null, null);
+
+                        });
+                        break;
+
+                    case REMOTE_SANITIZETOOL_LEAVESUBTRACTCHANGES:
+                        SyncObjectSingleton.FormExecute(() =>
+                        {
+                            var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
+                            sanitizeTool.btnLeaveSubstractChanges_Click(null, null);
+
+                        });
+                        break;
+
+                    case REMOTE_SANITIZETOOL_YESEFFECT:
+                        SyncObjectSingleton.FormExecute(() =>
+                        {
+                            var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
+                            sanitizeTool.btnYesEffect_Click(null, null);
+
+                        });
+                        break;
+
+                    case REMOTE_SANITIZETOOL_NOEFFECT:
+                        SyncObjectSingleton.FormExecute(() =>
+                        {
+                            var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
+                            sanitizeTool.btnNoEffect_Click(null, null);
+
+                        });
+                        break;
+
+                    case REMOTE_SANITIZETOOL_REROLL:
+                        SyncObjectSingleton.FormExecute(() =>
+                        {
+                            var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
+                            sanitizeTool.btnReroll_Click(null, null);
+
+                        });
+                        break;
+
+
                 }
             }
             catch (Exception ex)

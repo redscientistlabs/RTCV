@@ -39,6 +39,8 @@ namespace RTCV.CorruptCore
 
         public static bool Attached = false;
 
+        public static int CachedPrecision;
+
         public static List<ProblematicProcess> ProblematicProcesses;
 
         public static Timer KillswitchTimer = new Timer();
@@ -774,7 +776,7 @@ namespace RTCV.CorruptCore
                     var intensity = GetIntensity(overrideIntensity);
 
                     //Spec lookups add up really fast if you have a high intensity so we cache stuff we're going to be looking up over and over again
-                    var cachedPrecision = CurrentPrecision;
+                    CachedPrecision = CurrentPrecision;
                     var cachedDomainSizes = new long[selectedDomains.Length];
                     var cachedEngine = RtcCore.SelectedEngine;
                     var cachedAlignment = RtcCore.Alignment;
@@ -794,9 +796,9 @@ namespace RTCV.CorruptCore
                                     domain = selectedDomains[r];
 
                                     maxAddress = cachedDomainSizes[r];
-                                    randomAddress = RtcCore.RND.NextLong(0, maxAddress - cachedPrecision);
+                                    randomAddress = RtcCore.RND.NextLong(0, maxAddress - CachedPrecision);
 
-                                    bus = GetBlastUnits(domain, randomAddress, cachedPrecision, cachedAlignment, cachedEngine);
+                                    bus = GetBlastUnits(domain, randomAddress, CachedPrecision, cachedAlignment, cachedEngine);
                                     if (bus != null)
                                     {
                                         bl.Layer.AddRange(bus);
@@ -815,9 +817,9 @@ namespace RTCV.CorruptCore
 
                                 for (var i = 0; i < intensity; i++)
                                 {
-                                    randomAddress = RtcCore.RND.NextLong(0, maxAddress - cachedPrecision);
+                                    randomAddress = RtcCore.RND.NextLong(0, maxAddress - CachedPrecision);
 
-                                    bus = GetBlastUnits(domain, randomAddress, cachedPrecision, cachedAlignment, cachedEngine);
+                                    bus = GetBlastUnits(domain, randomAddress, CachedPrecision, cachedAlignment, cachedEngine);
                                     if (bus != null)
                                     {
                                         bl.Layer.AddRange(bus);
@@ -837,9 +839,9 @@ namespace RTCV.CorruptCore
 
                                     for (var i = 0; i < (int)((double)intensity / 10); i++)
                                     {
-                                        randomAddress = RtcCore.RND.NextLong(0, maxAddress - cachedPrecision);
+                                        randomAddress = RtcCore.RND.NextLong(0, maxAddress - CachedPrecision);
 
-                                        bus = GetBlastUnits(domain, randomAddress, cachedPrecision, cachedAlignment, cachedEngine);
+                                        bus = GetBlastUnits(domain, randomAddress, CachedPrecision, cachedAlignment, cachedEngine);
                                         if (bus != null)
                                         {
                                             bl.Layer.AddRange(bus);
@@ -876,9 +878,9 @@ namespace RTCV.CorruptCore
                                     for (var j = 0; j < (intensity / normalized); j++)
                                     {
                                         maxAddress = domainSize[i];
-                                        randomAddress = RtcCore.RND.NextLong(0, maxAddress - cachedPrecision);
+                                        randomAddress = RtcCore.RND.NextLong(0, maxAddress - CachedPrecision);
 
-                                        bus = GetBlastUnits(domain, randomAddress, cachedPrecision, cachedAlignment, cachedEngine);
+                                        bus = GetBlastUnits(domain, randomAddress, CachedPrecision, cachedAlignment, cachedEngine);
                                         if (bus != null)
                                         {
                                             bl.Layer.AddRange(bus);
@@ -907,9 +909,9 @@ namespace RTCV.CorruptCore
                                 for (var j = 0; j < normalizedIntensity[i]; j++)
                                 {
                                     maxAddress = cachedDomainSizes[i];
-                                    randomAddress = RtcCore.RND.NextLong(0, maxAddress - cachedPrecision);
+                                    randomAddress = RtcCore.RND.NextLong(0, maxAddress - CachedPrecision);
 
-                                    bus = GetBlastUnits(domain, randomAddress, cachedPrecision, cachedAlignment, cachedEngine);
+                                    bus = GetBlastUnits(domain, randomAddress, CachedPrecision, cachedAlignment, cachedEngine);
                                     if (bus != null)
                                     {
                                         bl.Layer.AddRange(bus);
@@ -928,9 +930,9 @@ namespace RTCV.CorruptCore
                                 for (var j = 0; j < (intensity / selectedDomains.Length); j++)
                                 {
                                     maxAddress = cachedDomainSizes[i];
-                                    randomAddress = RtcCore.RND.NextLong(0, maxAddress - cachedPrecision);
+                                    randomAddress = RtcCore.RND.NextLong(0, maxAddress - CachedPrecision);
 
-                                    bus = GetBlastUnits(domain, randomAddress, cachedPrecision, cachedAlignment, cachedEngine);
+                                    bus = GetBlastUnits(domain, randomAddress, CachedPrecision, cachedAlignment, cachedEngine);
                                     if (bus != null)
                                     {
                                         bl.Layer.AddRange(bus);

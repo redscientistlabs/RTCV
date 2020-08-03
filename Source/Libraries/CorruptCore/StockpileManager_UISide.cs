@@ -11,7 +11,22 @@ namespace RTCV.CorruptCore
     {
         //Object references
         private static Stockpile CurrentStockpile { get; set; }
-        public static StashKey CurrentStashkey { get; set; }
+
+        private static StashKey _lastStashKey = null;
+        public static StashKey LastStashkey => _lastStashKey;
+        private static StashKey _currentStashKey = null;
+        public static StashKey CurrentStashkey
+        {
+            get
+            {
+                return _currentStashKey;
+            }
+            set
+            {
+                _lastStashKey = CurrentStashkey;
+                _currentStashKey = value;
+            }
+        }
         public static StashKey CurrentSavestateStashKey { get; set; }
         public static volatile StashKey BackupedState;
         public static bool StashAfterOperation = true;
@@ -68,6 +83,49 @@ namespace RTCV.CorruptCore
             return isCorruptionApplied;
         }
 
+        public static void Import(BlastLayer _importedBlastLayer)
+        {
+            string saveStateWord = "Savestate";
+
+            object renameSaveStateWord = AllSpec.VanguardSpec[VSPEC.RENAME_SAVESTATE];
+            if (renameSaveStateWord != null && renameSaveStateWord is string s)
+            {
+                saveStateWord = s;
+            }
+
+            StashKey psk = CurrentSavestateStashKey;
+
+            bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
+            if (!UseSavestates)
+            {
+                psk = SaveState();
+            }
+
+            if (psk == null && UseSavestates)
+            {
+                MessageBox.Show($"The Glitch Harvester could not perform the IMPORT action\n\nEither no {saveStateWord} Box was selected in the {saveStateWord} Manager\nor the {saveStateWord} Box itself is empty.");
+                return;
+            }
+
+
+            //We make it without the blastlayer so we can send it across and use the cached version without needing a prototype
+            CurrentStashkey = new StashKey(RtcCore.GetRandomKey(), psk.ParentKey, null)
+            {
+                RomFilename = psk.RomFilename,
+                SystemName = psk.SystemName,
+                SystemCore = psk.SystemCore,
+                GameName = psk.GameName,
+                SyncSettings = psk.SyncSettings,
+                StateLocation = psk.StateLocation
+            };
+
+
+            BlastLayer bl = _importedBlastLayer;
+
+            CurrentStashkey.BlastLayer = bl;
+            StashHistory.Add(CurrentStashkey);
+        }
+
         public static bool Corrupt(bool _loadBeforeOperation = true)
         {
             string saveStateWord = "Savestate";
@@ -113,13 +171,13 @@ namespace RTCV.CorruptCore
 
 
             BlastLayer bl = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.GENERATEBLASTLAYER,
-                new object[]
-                {
+                    new object[]
+                    {
                     CurrentStashkey,
                     _loadBeforeOperation,
                     true,
                     true
-                }, true);
+                    }, true);
             bool isCorruptionApplied = bl?.Layer?.Count > 0;
 
             CurrentStashkey.BlastLayer = bl;
@@ -306,11 +364,11 @@ namespace RTCV.CorruptCore
 
         public static bool LoadState(StashKey sk, bool reloadRom = true, bool applyBlastLayer = true)
         {
-            bool success = LocalNetCoreRouter.QueryRoute<bool>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_LOADSTATE, new object[] { sk, true, applyBlastLayer }, true);
+            bool success = LocalNetCoreRouter.QueryRoute<bool>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_LOADSTATE, new object[] { sk, reloadRom, applyBlastLayer }, true);
             return success;
         }
 
-        public static StashKey SaveState(StashKey sk = null, bool threadSave = false)
+        public static StashKey SaveState(StashKey sk = null)
         {
             bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
 

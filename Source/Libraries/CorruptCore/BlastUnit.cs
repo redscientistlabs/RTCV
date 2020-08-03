@@ -429,71 +429,11 @@ namespace RTCV.CorruptCore
             //Todo - Change this to a more unique marker than [V]?
             if (Domain.Contains(vmdToRasterize))
             {
-                string domain = (string)Domain.Clone();
-                long address = Address;
-
-                if (MemoryDomains.VmdPool[domain] is VirtualMemoryDomain vmd)
-                {
-                    long lastAddress = vmd.GetRealAddress(address);
-                    string lastDomain = vmd.GetRealDomain(address);
-                    for (int i = 1; i < this.Precision; i++)
-                    {
-                        var a = vmd.GetRealAddress(address + i);
-                        var d = vmd.GetRealDomain(address + i);
-                        if (a != lastAddress + 1 || d != lastDomain)
-                        {
-                            breakDown = true;
-                            break;
-                        }
-
-                        lastAddress = a;
-                        lastDomain = d;
-                    }
-                    if (!breakDown)
-                    {
-                        Domain = vmd.GetRealDomain(address);
-                        Address = vmd.GetRealAddress(address);
-                    }
-                }
-                else
-                {
-                    Domain = "ERROR";
-                    Address = -1;
-                }
+                breakDown = SetRealDomainAndAddress(false);
             }
             if (SourceDomain?.Contains(vmdToRasterize) ?? false)
             {
-                string sourceDomain = (string)SourceDomain.Clone();
-                long sourceAddress = SourceAddress;
-
-                if (MemoryDomains.VmdPool[sourceDomain] is VirtualMemoryDomain vmd)
-                {
-                    long lastAddress = vmd.GetRealAddress(sourceAddress);
-                    string lastDomain = vmd.GetRealDomain(sourceAddress);
-                    for (int i = 1; i < this.Precision; i++)
-                    {
-                        var a = vmd.GetRealAddress(sourceAddress + i);
-                        var d = vmd.GetRealDomain(sourceAddress + i);
-                        if (a != lastAddress + 1 || d != lastDomain)
-                        {
-                            breakDown = true;
-                            break;
-                        }
-                        lastAddress = a;
-                        lastDomain = d;
-                    }
-
-                    if (!breakDown)
-                    {
-                        SourceDomain = vmd.GetRealDomain(sourceAddress);
-                        SourceAddress = vmd.GetRealAddress(sourceAddress);
-                    }
-                }
-                else
-                {
-                    Domain = "ERROR";
-                    Address = -1;
-                }
+                breakDown = SetRealDomainAndAddress(true);
             }
 
             if (breakDown)
@@ -511,6 +451,52 @@ namespace RTCV.CorruptCore
             }
 
             return l.Layer;
+        }
+
+        private bool SetRealDomainAndAddress(bool setSourceDomain)
+        {
+            var breakDown = false;
+            var localDomain = setSourceDomain ? (string)SourceDomain.Clone() : (string)Domain.Clone();
+            var localAddress = setSourceDomain ? SourceAddress : Address;
+
+            if (MemoryDomains.VmdPool[localDomain] is VirtualMemoryDomain vmd)
+            {
+                var lastAddress = vmd.GetRealAddress(localAddress);
+                var lastDomain = vmd.GetRealDomain(localAddress);
+                for (var i = 1; i < this.Precision; i++)
+                {
+                    var a = vmd.GetRealAddress(localAddress + i);
+                    var d = vmd.GetRealDomain(localAddress + i);
+                    if (a != lastAddress + 1 || d != lastDomain)
+                    {
+                        breakDown = true;
+                        break;
+                    }
+                    lastAddress = a;
+                    lastDomain = d;
+                }
+
+                if (!breakDown)
+                {
+                    if (setSourceDomain)
+                    {
+                        SourceDomain = vmd.GetRealDomain(localAddress);
+                        SourceAddress = vmd.GetRealAddress(localAddress);
+                    }
+                    else
+                    {
+                        Domain = vmd.GetRealDomain(localAddress);
+                        Address = vmd.GetRealAddress(localAddress);
+                    }
+                }
+            }
+            else
+            {
+                Domain = "ERROR";
+                Address = -1;
+            }
+
+            return breakDown;
         }
 
         /// <summary>
@@ -557,7 +543,7 @@ namespace RTCV.CorruptCore
         /// If you want to execute a blastunit, add it to the execution pool using Apply()
         /// Returns false
         /// </summary>
-        public ExecuteState Execute(bool UseRealtime = true)
+        public ExecuteState Execute()
         {
             if (!IsEnabled)
             {
@@ -751,7 +737,7 @@ namespace RTCV.CorruptCore
                 if (StoreLimiterSource == StoreLimiterSource.ADDRESS || StoreLimiterSource == StoreLimiterSource.BOTH)
                 {
                     if (Filtering.LimiterPeekBytes(Address,
-                        Address + Precision, Domain, LimiterListHash, destMI))
+                        Address + Precision, LimiterListHash, destMI))
                     {
                         if (InvertLimiter)
                         {
@@ -771,7 +757,7 @@ namespace RTCV.CorruptCore
                     }
 
                     if (Filtering.LimiterPeekBytes(SourceAddress,
-                        SourceAddress + Precision, Domain, LimiterListHash, sourceMI))
+                        SourceAddress + Precision, LimiterListHash, sourceMI))
                     {
                         if (InvertLimiter)
                         {
@@ -785,7 +771,7 @@ namespace RTCV.CorruptCore
             else
             {
                 if (Filtering.LimiterPeekBytes(Address,
-                    Address + Precision, Domain, LimiterListHash, destMI))
+                    Address + Precision, LimiterListHash, destMI))
                 {
                     if (InvertLimiter)
                     {

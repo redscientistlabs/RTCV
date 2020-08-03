@@ -203,7 +203,7 @@ namespace RTCV.CorruptCore
             return hashStr;
         }
 
-        public static bool LimiterPeekBytes(long startAddress, long endAddress, string domain, string hash, MemoryInterface mi)
+        public static bool LimiterPeekBytes(long startAddress, long endAddress, string hash, MemoryInterface mi)
         {
             //If we go outside of the domain, just return false
             if (endAddress > mi.Size)
@@ -236,7 +236,7 @@ namespace RTCV.CorruptCore
             return false;
         }
 
-        public static byte[] LimiterPeekAndGetBytes(long startAddress, long endAddress, string domain, string hash, MemoryInterface mi)
+        public static byte[] LimiterPeekAndGetBytes(long startAddress, long endAddress, string hash, MemoryInterface mi)
         {
             //If we go outside of the domain, just return false
             if (endAddress > mi.Size)
