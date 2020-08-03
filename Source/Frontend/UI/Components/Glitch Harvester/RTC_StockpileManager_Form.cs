@@ -329,7 +329,7 @@ namespace RTCV.UI
             RemoveSelected();
         }
 
-        public void RemoveSelected(bool force = false)
+        public void RemoveSelected()
         {
             if (Control.ModifierKeys == Keys.Control || (dgvStockpile.SelectedRows.Count != 0 && (MessageBox.Show("Are you sure you want to remove the selected stockpile entries?", "Delete Stockpile Entry?", MessageBoxButtons.YesNo) == DialogResult.Yes)))
             {
@@ -689,12 +689,32 @@ namespace RTCV.UI
 
         private void dgvStockpile_DragDrop(object sender, DragEventArgs e)
         {
+            bool alreadyLoadedAStockpile = false;
+
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-            if (files?.Length > 0 && files[0]
-                .Contains(".sks"))
+            foreach (var f in files)
             {
-                LoadStockpile(files[0]);
+                if (f.Contains(".bl"))
+                {
+                    BlastLayer temp = BlastTools.LoadBlastLayerFromFile(f);
+                    StockpileManager_UISide.Import(temp);
+                    S.GET<RTC_StashHistory_Form>().RefreshStashHistorySelectLast();
+                    S.GET<RTC_StashHistory_Form>().AddStashToStockpile(true);
+                }
+                else if (f.Contains(".sks"))
+                {
+                    if (!alreadyLoadedAStockpile)
+                    {
+                        LoadStockpile(f);
+                        alreadyLoadedAStockpile = true;
+                    }
+                    else
+                    {
+                        ImportStockpile(f);
+                    }
+                }
             }
+
 
             //Bring the UI back to normal after a drag+drop to prevent weird merge stuff
             S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();

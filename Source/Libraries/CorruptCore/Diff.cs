@@ -78,6 +78,7 @@
 
     public class Diff
     {
+        #pragma warning disable CA1815 //Item won't be used in comparison
         /// <summary>details of one difference.</summary>
         public struct Item
         {

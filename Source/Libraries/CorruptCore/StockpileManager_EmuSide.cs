@@ -81,7 +81,7 @@
             return true;
         }
 
-        public static StashKey SaveStateLess_NET(StashKey _sk = null, bool threadSave = false)
+        public static StashKey SaveStateLess_NET(StashKey _sk = null)
         {
             string Key;
             //string statePath = "";
@@ -111,7 +111,7 @@
             return sk;
         }
 
-        public static StashKey SaveState_NET(StashKey _sk = null, bool threadSave = false)
+        public static StashKey SaveState_NET(StashKey _sk = null)
         {
             string Key;
             string statePath;

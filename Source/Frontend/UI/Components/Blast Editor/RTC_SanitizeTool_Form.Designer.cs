@@ -455,26 +455,26 @@ namespace RTCV.UI
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label lbOriginalLayerSize;
         private Label lbCurrentLayerSize;
-        private Button btnYesEffect;
         private Panel pnBlastLayerSanitization;
-        private Button btnReplayLast;
-        private Label lbSanitizationText;
-        private Button btnNoEffect;
+        public Label lbSanitizationText;
         private Label label2;
         public Components.Controls.ListBoxExtended lbSteps;
         private Button btnBackPrevState;
         private Label label6;
         private Panel panel6;
-        private Button btnLeaveWithChanges;
-        private Button btnLeaveSubstractChanges;
-        private Button btnLeaveWithoutChanges;
-        private Button btnStartSanitizing;
-        private Button btnReroll;
         private Label label1;
         private ProgressBar pbProgress;
         public Button btnAddToStockpile;
         private Button btnLeaveNoChanges;
         private Label lbWorkingPleaseWait;
         public Button btnAddToStash;
+        public Button btnYesEffect;
+        public Button btnReplayLast;
+        public Button btnNoEffect;
+        public Button btnLeaveWithChanges;
+        public Button btnLeaveSubstractChanges;
+        public Button btnLeaveWithoutChanges;
+        public Button btnStartSanitizing;
+        public Button btnReroll;
     }
 }

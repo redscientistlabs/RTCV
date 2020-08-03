@@ -64,7 +64,7 @@ namespace RTCV.UI
             set => _domainToMiDico = value;
         }
 
-        private string[] domains = null;
+        private string[] _domains = null;
         public List<string> VisibleColumns;
         private string CurrentBlastLayerFile = "";
         private bool batchOperation = false;
@@ -164,6 +164,11 @@ namespace RTCV.UI
 
                 this.FormClosed += RTC_NewBlastEditorForm_Close;
                 this.FormClosing += RTC_NewBlastEditorForm_Closing;
+
+                //Registers the drag and drop with the blast editor form
+                AllowDrop = true;
+                this.DragEnter += RTC_NewBlastEditor_Form_DragEnter;
+                this.DragDrop += RTC_NewBlastEditor_Form_DragDrop;
             }
             catch (Exception ex)
             {
@@ -172,6 +177,24 @@ namespace RTCV.UI
                     throw new RTCV.NetCore.AbortEverythingException();
                 }
             }
+        }
+
+        private void RTC_NewBlastEditor_Form_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            foreach (var f in files)
+            {
+                if (f.Contains(".bl"))
+                {
+                    BlastLayer temp = BlastTools.LoadBlastLayerFromFile(f);
+                    ImportBlastLayer(temp);
+                }
+            }
+        }
+
+        private void RTC_NewBlastEditor_Form_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Link;
         }
 
         public static void OpenBlastEditor(StashKey sk = null, bool silent = false)
@@ -203,16 +226,17 @@ namespace RTCV.UI
         private void RTC_NewBlastEditorForm_Load(object sender, EventArgs e)
         {
             UICore.SetRTCColor(UICore.GeneralColor, this);
-            domains = MemoryDomains.MemoryInterfaces?.Keys?.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
+            _domains = MemoryDomains.MemoryInterfaces?.Keys?.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
 
             dgvBlastEditor.AllowUserToOrderColumns = true;
             SetDisplayOrder();
         }
 
-        private void RTC_NewBlastEditorForm_Closing(object sender, FormClosingEventArgs e)
-        {
-            SaveDisplayOrder();
-        }
+        private void RTC_NewBlastEditorForm_Closing(object sender, FormClosingEventArgs e) => SaveDisplayOrder();
+
+
+
+
 
         private void RTC_NewBlastEditorForm_Close(object sender, FormClosedEventArgs e)
         {
@@ -240,7 +264,7 @@ namespace RTCV.UI
 
             if (dgvBlastEditor.CurrentCell == owningRow?.Cells[BuProperty.ValueString.ToString()] && dgvBlastEditor.IsCurrentCellInEditMode)
             {
-                int precision = (int)dgvBlastEditor.CurrentCell.OwningRow.Cells[BuProperty.Precision.ToString()].Value;
+                var precision = (int)dgvBlastEditor.CurrentCell.OwningRow.Cells[BuProperty.Precision.ToString()].Value;
                 dgvCellValueScroll(dgvBlastEditor.EditingControl, e, precision);
 
                 ((HandledMouseEventArgs)e).Handled = true;
@@ -251,11 +275,10 @@ namespace RTCV.UI
         {
             if (sender is TextBox tb)
             {
-                var negative = (e.Delta < 0);
                 var scrollBy = 1;
-                if (negative)
+                if (e.Delta < 0)
                 {
-                    scrollBy *= -1;
+                    scrollBy = -1;
                 }
 
                 tb.Text = getShiftedHexString(tb.Text, scrollBy, precision);
@@ -281,7 +304,7 @@ namespace RTCV.UI
             var order = s.Split(',');
 
             //Use a foreach and keep track in-case the number of entries changes
-            int i = 0;
+            var i = 0;
             foreach (var c in order)
             {
                 if (dgvBlastEditor.Columns.Cast<DataGridViewColumn>().Any(x => x.Name == c))
@@ -295,7 +318,7 @@ namespace RTCV.UI
         private void SaveDisplayOrder()
         {
             var cols = dgvBlastEditor.Columns.Cast<DataGridViewColumn>().OrderBy(x => x.DisplayIndex);
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             foreach (var c in cols)
             {
                 sb.Append(c.Name + ",");
@@ -318,16 +341,12 @@ namespace RTCV.UI
         private void dgvBlastEditor_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             // Note handling
-            if (e != null && e.RowIndex != -1)
+            if (e != null && e.RowIndex != -1 &&
+                e.ColumnIndex == dgvBlastEditor.Columns[BuProperty.Note.ToString()]?.Index &&
+                dgvBlastEditor.Rows[e.RowIndex].DataBoundItem is BlastUnit bu)
             {
-                if (e.ColumnIndex == dgvBlastEditor.Columns[BuProperty.Note.ToString()]?.Index)
-                {
-                    if (dgvBlastEditor.Rows[e.RowIndex].DataBoundItem is BlastUnit bu)
-                    {
-                        S.SET(new RTC_NoteEditor_Form(bu, dgvBlastEditor[e.ColumnIndex, e.RowIndex]));
-                        S.GET<RTC_NoteEditor_Form>().Show();
-                    }
-                }
+                S.SET(new RTC_NoteEditor_Form(bu, dgvBlastEditor[e.ColumnIndex, e.RowIndex]));
+                S.GET<RTC_NoteEditor_Form>().Show();
             }
 
             if (e.Button == MouseButtons.Left)
@@ -377,7 +396,7 @@ namespace RTCV.UI
             {
                 foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
                 {
-                    BlastUnit bu = (BlastUnit)row.DataBoundItem;
+                    var bu = (BlastUnit)row.DataBoundItem;
                     bu.Reroll();
                 }
                 dgvBlastEditor.Refresh();
@@ -386,7 +405,7 @@ namespace RTCV.UI
 
             ((ToolStripMenuItem)cms.Items.Add("Break Down Selected Unit(s)", null, new EventHandler((ob, ev) =>
             {
-                breakDownUnits(true);
+                BreakDownUnits(true);
             }))).Enabled = dgvBlastEditor.SelectedRows.Count > 0;
 
             ((ToolStripMenuItem)cms.Items.Add("Bake Selected Unit(s) to VALUE", null, new EventHandler((ob, ev) =>
@@ -395,7 +414,7 @@ namespace RTCV.UI
             }))).Enabled = dgvBlastEditor.SelectedRows.Count > 0;
         }
 
-        private void breakDownUnits(bool breakSelected = false)
+        public void BreakDownUnits(bool breakSelected = false)
         {
             List<DataGridViewRow> targetRows;
 
@@ -441,7 +460,7 @@ namespace RTCV.UI
         {
             ((ToolStripMenuItem)cms.Items.Add("Open Selected Address in Hex Editor", null, new EventHandler((ob, ev) =>
             {
-                BlastUnit bu = dgvBlastEditor.Rows[cell.RowIndex]?.DataBoundItem as BlastUnit;
+                var bu = dgvBlastEditor.Rows[cell.RowIndex]?.DataBoundItem as BlastUnit;
                 if (bu == null)
                 {
                     return;
@@ -730,7 +749,7 @@ namespace RTCV.UI
         {
             var value = cbDomain.SelectedItem;
 
-            if (!domains.Contains(value))
+            if (!_domains.Contains(value))
             {
                 return;
             }
@@ -761,7 +780,7 @@ namespace RTCV.UI
                 headerStrip = new ContextMenuStrip();
                 headerStrip.Items.Add("Select columns to show", null, new EventHandler((ob, ev) =>
                 {
-                    ColumnSelector cs = new ColumnSelector();
+                    var cs = new ColumnSelector();
                     cs.LoadColumnSelector(dgvBlastEditor.Columns);
                 }));
 
@@ -775,9 +794,9 @@ namespace RTCV.UI
         {
             foreach (DataGridViewRow row in rows)
             {
-                BlastUnit bu = row.DataBoundItem as BlastUnit;
-                string domain = bu.Domain;
-                string sourceDomain = bu.SourceDomain;
+                var bu = row.DataBoundItem as BlastUnit;
+                var domain = bu.Domain;
+                var sourceDomain = bu.SourceDomain;
 
                 if (domain != null && DomainToMiDico.ContainsKey(bu.Domain ?? ""))
                 {
@@ -808,28 +827,7 @@ namespace RTCV.UI
             if (dgvBlastEditor.SelectedRows.Count > 0)
             {
                 var lastRow = dgvBlastEditor.SelectedRows[dgvBlastEditor.SelectedRows.Count - 1];
-
-                /*
-                cbDomain.SelectedItem = (String)(lastRow.Cells[buProperty.Domain.ToString()].Value);
-                cbEnabled.Checked = (bool)(lastRow.Cells[buProperty.isEnabled.ToString()].Value);
-                cbLocked.Checked = (bool)(lastRow.Cells[buProperty.isLocked.ToString()].Value);
-                upDownAddress.Value = (long)(lastRow.Cells[buProperty.Address.ToString()].Value);
-                upDownPrecision.Value = (int)(lastRow.Cells[buProperty.Precision.ToString()].Value);
-                tbValue.Text = (String)(lastRow.Cells[buProperty.ValueString.ToString()].Value);
-                upDownExecuteFrame.Value = (int)(lastRow.Cells[buProperty.ExecuteFrame.ToString()].Value);
-                upDownLifetime.Value = (int)(lastRow.Cells[buProperty.Lifetime.ToString()].Value);
-                cbLoop.Checked = (bool)(lastRow.Cells[buProperty.Loop.ToString()].Value);
-                cbLimiterTime.SelectedItem = (ActionTime)(lastRow.Cells[buProperty.LimiterTime.ToString()].Value);
-                cbLimiterList.SelectedItem = (String)(lastRow.Cells[buProperty.LimiterHash.ToString()].Value);
-                cbInvertLimiter.Checked = (bool)(lastRow.Cells[buProperty.InvertLimiter.ToString()].Value);
-                cbStoreTime.SelectedItem = (ActionTime)(lastRow.Cells[buProperty.StoreTime.ToString()].Value);
-                cbStoreType.SelectedItem = (StoreType)(lastRow.Cells[buProperty.StoreType.ToString()].Value);
-                cbSourceDomain.SelectedItem = (String)(lastRow.Cells[buProperty.SourceDomain.ToString()].Value);
-                cbSource.SelectedItem = (BlastUnitSource)(lastRow.Cells[buProperty.Source.ToString()].Value);
-                upDownSourceAddress.Value = (long)(lastRow.Cells[buProperty.SourceAddress.ToString()].Value);
-
-                tbTiltValue.Text = (lastRow.DataBoundItem as BlastUnit).TiltValue.ToString();*/
-                BlastUnit bu = (BlastUnit)lastRow.DataBoundItem;
+                var bu = (BlastUnit)lastRow.DataBoundItem;
 
                 if (DomainToMiDico.ContainsKey(bu.Domain ?? string.Empty))
                 {
@@ -881,7 +879,7 @@ namespace RTCV.UI
         {
             UpdateBottom();
 
-            List<DataGridViewRow> col = new List<DataGridViewRow>();
+            var col = new List<DataGridViewRow>();
             //For some reason DataGridViewRowCollection and DataGridViewSelectedRowCollection aren't directly compatible???
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
             {
@@ -908,7 +906,7 @@ namespace RTCV.UI
                 return;
             }
 
-            string value = ((ComboBoxItem<string>)cbFilterColumn?.SelectedItem)?.Value;
+            var value = ((ComboBoxItem<string>)cbFilterColumn?.SelectedItem)?.Value;
             if (value == null)
             {
                 return;
@@ -940,10 +938,10 @@ namespace RTCV.UI
             var blastUnitSource = Enum.GetValues(typeof(BlastUnitSource));
 
             cbDomain.BindingContext = new BindingContext();
-            cbDomain.DataSource = domains;
+            cbDomain.DataSource = _domains;
 
             cbSourceDomain.BindingContext = new BindingContext();
-            cbSourceDomain.DataSource = domains;
+            cbSourceDomain.DataSource = _domains;
 
             foreach (var item in Enum.GetValues(typeof(LimiterTime)))
             {
@@ -1006,7 +1004,7 @@ namespace RTCV.UI
             dgvBlastEditor.Columns.Add(locked);
 
             //Do this one separately as we need to populate the Combobox
-            DataGridViewComboBoxColumn source = CreateColumn(BuProperty.Source.ToString(), BuProperty.Source.ToString(), "Source", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
+            var source = CreateColumn(BuProperty.Source.ToString(), BuProperty.Source.ToString(), "Source", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
             foreach (var item in blastUnitSource)
             {
                 source.Items.Add(item);
@@ -1015,18 +1013,18 @@ namespace RTCV.UI
             dgvBlastEditor.Columns.Add(source);
 
             //Do this one separately as we need to populate the Combobox
-            DataGridViewComboBoxColumn domain = CreateColumn(BuProperty.Domain.ToString(), BuProperty.Domain.ToString(), "Domain", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
-            domain.DataSource = domains;
+            var domain = CreateColumn(BuProperty.Domain.ToString(), BuProperty.Domain.ToString(), "Domain", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
+            domain.DataSource = _domains;
             domain.SortMode = DataGridViewColumnSortMode.Automatic;
             dgvBlastEditor.Columns.Add(domain);
 
-            DataGridViewNumericUpDownColumn address = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.Address.ToString(), BuProperty.Address.ToString(), "Address", new DataGridViewNumericUpDownColumn());
+            var address = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.Address.ToString(), BuProperty.Address.ToString(), "Address", new DataGridViewNumericUpDownColumn());
             address.Hexadecimal = true;
             address.SortMode = DataGridViewColumnSortMode.Automatic;
             address.Increment = 1;
             dgvBlastEditor.Columns.Add(address);
 
-            DataGridViewNumericUpDownColumn precision = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.Precision.ToString(), BuProperty.Precision.ToString(), "Precision", new DataGridViewNumericUpDownColumn());
+            var precision = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.Precision.ToString(), BuProperty.Precision.ToString(), "Precision", new DataGridViewNumericUpDownColumn());
             precision.Minimum = 1;
             precision.Maximum = int.MaxValue;
             precision.SortMode = DataGridViewColumnSortMode.Automatic;
@@ -1062,7 +1060,7 @@ namespace RTCV.UI
             loop.SortMode = DataGridViewColumnSortMode.Automatic;
             dgvBlastEditor.Columns.Add(loop);
 
-            DataGridViewComboBoxColumn limiterTime = CreateColumn(BuProperty.LimiterTime.ToString(), BuProperty.LimiterTime.ToString(), "Limiter Time", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
+            var limiterTime = CreateColumn(BuProperty.LimiterTime.ToString(), BuProperty.LimiterTime.ToString(), "Limiter Time", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
             foreach (var item in Enum.GetValues(typeof(LimiterTime)))
             {
                 limiterTime.Items.Add(item);
@@ -1070,14 +1068,14 @@ namespace RTCV.UI
 
             dgvBlastEditor.Columns.Add(limiterTime);
 
-            DataGridViewComboBoxColumn limiterHash = CreateColumn(BuProperty.LimiterListHash.ToString(), BuProperty.LimiterListHash.ToString(), "Limiter List", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
+            var limiterHash = CreateColumn(BuProperty.LimiterListHash.ToString(), BuProperty.LimiterListHash.ToString(), "Limiter List", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
             limiterHash.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
             limiterHash.DisplayMember = "Name";
             limiterHash.ValueMember = "Value";
             limiterHash.MaxDropDownItems = 15;
             dgvBlastEditor.Columns.Add(limiterHash);
 
-            DataGridViewComboBoxColumn storeLimiterSource = CreateColumn(BuProperty.StoreLimiterSource.ToString(), BuProperty.StoreLimiterSource.ToString(), "Store Limiter Source", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
+            var storeLimiterSource = CreateColumn(BuProperty.StoreLimiterSource.ToString(), BuProperty.StoreLimiterSource.ToString(), "Store Limiter Source", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
             foreach (var item in Enum.GetValues(typeof(StoreLimiterSource)))
             {
                 storeLimiterSource.Items.Add(item);
@@ -1087,7 +1085,7 @@ namespace RTCV.UI
 
             dgvBlastEditor.Columns.Add(CreateColumn(BuProperty.InvertLimiter.ToString(), BuProperty.InvertLimiter.ToString(), "Invert Limiter", new DataGridViewCheckBoxColumn()));
 
-            DataGridViewComboBoxColumn storeTime = CreateColumn(BuProperty.StoreTime.ToString(), BuProperty.StoreTime.ToString(), "Store Time", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
+            var storeTime = CreateColumn(BuProperty.StoreTime.ToString(), BuProperty.StoreTime.ToString(), "Store Time", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
             foreach (var item in Enum.GetValues(typeof(StoreTime)))
             {
                 storeTime.Items.Add(item);
@@ -1096,18 +1094,18 @@ namespace RTCV.UI
             storeTime.SortMode = DataGridViewColumnSortMode.Automatic;
             dgvBlastEditor.Columns.Add(storeTime);
 
-            DataGridViewComboBoxColumn storeType = CreateColumn(BuProperty.StoreType.ToString(), BuProperty.StoreType.ToString(), "Store Type", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
+            var storeType = CreateColumn(BuProperty.StoreType.ToString(), BuProperty.StoreType.ToString(), "Store Type", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
             storeType.DataSource = Enum.GetValues(typeof(StoreType));
             storeType.SortMode = DataGridViewColumnSortMode.Automatic;
             dgvBlastEditor.Columns.Add(storeType);
 
             //Do this one separately as we need to populate the Combobox
-            DataGridViewComboBoxColumn sourceDomain = CreateColumn(BuProperty.SourceDomain.ToString(), BuProperty.SourceDomain.ToString(), "Source Domain", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
-            sourceDomain.DataSource = domains;
+            var sourceDomain = CreateColumn(BuProperty.SourceDomain.ToString(), BuProperty.SourceDomain.ToString(), "Source Domain", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
+            sourceDomain.DataSource = _domains;
             sourceDomain.SortMode = DataGridViewColumnSortMode.Automatic;
             dgvBlastEditor.Columns.Add(sourceDomain);
 
-            DataGridViewNumericUpDownColumn sourceAddress = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.SourceAddress.ToString(), BuProperty.SourceAddress.ToString(), "Source Address", new DataGridViewNumericUpDownColumn());
+            var sourceAddress = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.SourceAddress.ToString(), BuProperty.SourceAddress.ToString(), "Source Address", new DataGridViewNumericUpDownColumn());
             sourceAddress.Hexadecimal = true;
             sourceAddress.SortMode = DataGridViewColumnSortMode.Automatic;
             sourceAddress.Increment = 1;
@@ -1117,9 +1115,9 @@ namespace RTCV.UI
 
             if (RTCV.NetCore.Params.IsParamSet("BLASTEDITOR_VISIBLECOLUMNS"))
             {
-                string str = RTCV.NetCore.Params.ReadParam("BLASTEDITOR_VISIBLECOLUMNS");
-                string[] columns = str.Split(',');
-                foreach (string column in columns)
+                var str = RTCV.NetCore.Params.ReadParam("BLASTEDITOR_VISIBLECOLUMNS");
+                var columns = str.Split(',');
+                foreach (var column in columns)
                 {
                     VisibleColumns.Add(column);
                 }
@@ -1183,14 +1181,7 @@ namespace RTCV.UI
         {
             foreach (DataGridViewColumn column in dgvBlastEditor.Columns)
             {
-                if (VisibleColumns.Contains(column.Name))
-                {
-                    column.Visible = true;
-                }
-                else
-                {
-                    column.Visible = false;
-                }
+                column.Visible = VisibleColumns.Contains(column.Name);
             }
             dgvBlastEditor.Refresh();
         }
@@ -1264,7 +1255,7 @@ namespace RTCV.UI
                 this.Close();
                 return;
             }
-            List<string> buDomains = new List<string>();
+            var buDomains = new List<string>();
             foreach (var bu in sk.BlastLayer.Layer)
             {
                 if (!buDomains.Contains(bu.Domain))
@@ -1278,7 +1269,7 @@ namespace RTCV.UI
                 }
             }
 
-            foreach (string domain in buDomains)
+            foreach (var domain in buDomains)
             {
                 if (DomainToMiDico.ContainsKey(domain))
                 {
@@ -1331,8 +1322,8 @@ namespace RTCV.UI
                     return false;
                 }
 
-                domains = MemoryDomains.MemoryInterfaces.Keys.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
-                foreach (string domain in domains)
+                _domains = MemoryDomains.MemoryInterfaces.Keys.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
+                foreach (var domain in _domains)
                 {
                     DomainToMiDico.Add(domain, MemoryDomains.GetInterface(domain));
                 }
@@ -1351,7 +1342,7 @@ namespace RTCV.UI
             }
         }
 
-        private void dgvBlastLayer_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        public void dgvBlastLayer_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             MessageBox.Show(e.Exception.ToString() + "\nRow:" + e.RowIndex + "\nColumn" + e.ColumnIndex + "\n" + e.Context + "\n" + dgvBlastEditor[e.ColumnIndex, e.RowIndex].Value?.ToString());
         }
@@ -1386,7 +1377,7 @@ namespace RTCV.UI
 
         public void btnRemoveDisabled_Click(object sender, EventArgs e)
         {
-            List<BlastUnit> buToRemove = new List<BlastUnit>();
+            var buToRemove = new List<BlastUnit>();
 
             dgvBlastEditor.SuspendLayout();
             batchOperation = true;
@@ -1414,7 +1405,7 @@ namespace RTCV.UI
             dgvBlastEditor.ResumeLayout();
         }
 
-        private void btnDisableEverything_Click(object sender, EventArgs e)
+        public void btnDisableEverything_Click(object sender, EventArgs e)
         {
             foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
                 Where(x =>
@@ -1425,7 +1416,7 @@ namespace RTCV.UI
             dgvBlastEditor.Refresh();
         }
 
-        private void btnEnableEverything_Click(object sender, EventArgs e)
+        public void btnEnableEverything_Click(object sender, EventArgs e)
         {
             foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
                 Where(x =>
@@ -1453,7 +1444,7 @@ namespace RTCV.UI
             }
         }
 
-        private void btnDuplicateSelected_Click(object sender, EventArgs e)
+        public void btnDuplicateSelected_Click(object sender, EventArgs e)
         {
             if (dgvBlastEditor.SelectedRows.Count == 0)
             {
@@ -1465,7 +1456,7 @@ namespace RTCV.UI
             {
                 if ((row.DataBoundItem as BlastUnit).IsLocked == false)
                 {
-                    BlastUnit bu = ((row.DataBoundItem as BlastUnit).Clone() as BlastUnit);
+                    var bu = ((row.DataBoundItem as BlastUnit).Clone() as BlastUnit);
                     bs.Add(bu);
                 }
             }
@@ -1479,9 +1470,7 @@ namespace RTCV.UI
                 MessageBox.Show("There's no savestate associated with this Stashkey!\nAssociate one in the menu to send this to the stash.");
                 return;
             }
-            StashKey newSk = (StashKey)currentSK.Clone();
-            //newSk.Key = RTC_Core.GetRandomKey();
-            //newSk.Alias = null;
+            var newSk = (StashKey)currentSK.Clone();
 
             StockpileManager_UISide.StashHistory.Add(newSk);
 
@@ -1494,27 +1483,29 @@ namespace RTCV.UI
             StockpileManager_UISide.CurrentStashkey = StockpileManager_UISide.StashHistory[S.GET<RTC_StashHistory_Form>().lbStashHistory.SelectedIndex];
         }
 
-        private void btnNote_Click(object sender, EventArgs e)
+        public void btnNote_Click(object sender, EventArgs e)
         {
-            if (dgvBlastEditor.SelectedRows.Count > 0)
+            if (dgvBlastEditor.SelectedRows.Count == 0)
             {
-                BlastLayer temp = new BlastLayer();
-                List<DataGridViewCell> cellList = new List<DataGridViewCell>();
-                foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
-                {
-                    if (row.DataBoundItem is BlastUnit bu)
-                    {
-                        temp.Layer.Add(bu);
-                        cellList.Add(row.Cells[BuProperty.Note.ToString()]);
-                    }
-                }
-
-                S.SET(new RTC_NoteEditor_Form(temp, cellList));
-                S.GET<RTC_NoteEditor_Form>().Show();
+                return;
             }
+
+            var temp = new BlastLayer();
+            var cellList = new List<DataGridViewCell>();
+            foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
+            {
+                if (row.DataBoundItem is BlastUnit bu)
+                {
+                    temp.Layer.Add(bu);
+                    cellList.Add(row.Cells[BuProperty.Note.ToString()]);
+                }
+            }
+
+            S.SET(new RTC_NoteEditor_Form(temp, cellList));
+            S.GET<RTC_NoteEditor_Form>().Show();
         }
 
-        private void sanitizeDuplicatesToolStripMenuItem_Click(object sender, EventArgs e)
+        public void sanitizeDuplicatesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             dgvBlastEditor.ClearSelection();
 
@@ -1528,7 +1519,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void rasterizeVMDsToolStripMenuItem_Click(object sender, EventArgs e)
+        public void RasterizeVMDs()
         {
             dgvBlastEditor.ClearSelection();
 
@@ -1544,12 +1535,9 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void runRomWithoutBlastlayerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            currentSK.RunOriginal();
-        }
 
-        private void replaceRomFromGHToolStripMenuItem_Click(object sender, EventArgs e)
+
+        public void replaceRomFromGHToolStripMenuItem_Click(object sender, EventArgs e)
         {
             StashKey temp = StockpileManager_UISide.CurrentSavestateStashKey;
 
@@ -1568,30 +1556,28 @@ namespace RTCV.UI
             currentSK.SyncSettings = temp.SyncSettings;
         }
 
-        private void replaceRomFromFileToolStripMenuItem_Click(object sender, EventArgs e)
+        public void replaceRomFromFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("Loading this rom will invalidate the associated savestate. You'll need to set a new savestate for the Blastlayer. Continue?", "Invalidate State?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                string filename;
-                OpenFileDialog ofd = new OpenFileDialog
+                var openRomDialog = new OpenFileDialog
                 {
                     Title = "Open ROM File",
                     Filter = "any file|*.*",
                     RestoreDirectory = true
                 };
-                if (ofd.ShowDialog() == DialogResult.OK)
-                {
-                    filename = ofd.FileName;
-                }
-                else
+
+                if (openRomDialog.ShowDialog() != DialogResult.OK)
                 {
                     return;
                 }
 
+                var filename = openRomDialog.FileName;
+
                 LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_LOADROM, filename, true);
 
-                StashKey temp = new StashKey(CorruptCore.RtcCore.GetRandomKey(), currentSK.ParentKey, currentSK.BlastLayer);
+                var temp = new StashKey(CorruptCore.RtcCore.GetRandomKey(), currentSK.ParentKey, currentSK.BlastLayer);
 
                 // We have to null this as to properly create a stashkey, we need to use it in the constructor,
                 // but then the user needs to provide a savestate
@@ -1605,40 +1591,39 @@ namespace RTCV.UI
                 currentSK.SyncSettings = temp.SyncSettings;
             }
         }
-
-        private void bakeROMBlastunitsToFileToolStripMenuItem_Click(object sender, EventArgs e)
+        public void BakeROMBlastunitsToFile(string filename = null)
         {
-            string[] originalFilename = currentSK.RomFilename.Split('\\');
-            string filename;
-            SaveFileDialog sfd = new SaveFileDialog
+            if (filename == null)
             {
-                //DefaultExt = "rom";
-                FileName = originalFilename[originalFilename.Length - 1],
-                Title = "Save Rom File",
-                Filter = "rom files|*.*",
-                RestoreDirectory = true
-            };
+                var originalFilename = currentSK.RomFilename.Split('\\');
+                var saveRomDialog = new SaveFileDialog
+                {
+                    //DefaultExt = "rom";
+                    FileName = originalFilename[originalFilename.Length - 1],
+                    Title = "Save Rom File",
+                    Filter = "rom files|*.*",
+                    RestoreDirectory = true
+                };
 
-            if (sfd.ShowDialog() == DialogResult.OK)
-            {
-                filename = sfd.FileName;
-            }
-            else
-            {
-                return;
+                if (saveRomDialog.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+
+                filename = saveRomDialog.FileName;
             }
 
             RomParts rp = MemoryDomains.GetRomParts(currentSK.SystemName, currentSK.RomFilename);
 
             File.Copy(currentSK.RomFilename, filename, true);
-            using (FileStream output = new FileStream(filename, FileMode.Open))
+            using (var output = new FileStream(filename, FileMode.Open))
             {
                 foreach (BlastUnit bu in currentSK.BlastLayer.Layer)
                 {
                     if (bu.Source == BlastUnitSource.VALUE)
                     {
                         //We don't want to modify the original
-                        byte[] outvalue = (byte[])bu.Value.Clone();
+                        var outvalue = (byte[])bu.Value.Clone();
                         CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref outvalue, bu.TiltValue, bu.BigEndian);
                         //Flip it if it's big endian
                         if (bu.BigEndian)
@@ -1661,12 +1646,17 @@ namespace RTCV.UI
             }
         }
 
+        private void bakeROMBlastunitsToFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BakeROMBlastunitsToFile(null);
+        }
+
         private void runOriginalSavestateToolStripMenuItem_Click(object sender, EventArgs e)
         {
             originalSK.RunOriginal();
         }
 
-        private void replaceSavestateFromGHToolStripMenuItem_Click(object sender, EventArgs e)
+        public void replaceSavestateFromGHToolStripMenuItem_Click(object sender, EventArgs e)
         {
             StashKey temp = StockpileManager_UISide.CurrentSavestateStashKey;
             if (temp == null)
@@ -1706,28 +1696,27 @@ namespace RTCV.UI
             currentSK.StateLocation = temp.StateLocation;
         }
 
-        private void replaceSavestateFromFileToolStripMenuItem_Click(object sender, EventArgs e)
+        public void ReplaceSavestateFromFileToolStrip(string filename = null)
         {
-            string filename;
+            if (filename == null)
+            {
+                var openSavestateDialog = new OpenFileDialog
+                {
+                    DefaultExt = "state",
+                    Title = "Open Savestate File",
+                    Filter = "state files|*.state",
+                    RestoreDirectory = true
+                };
+                if (openSavestateDialog.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
 
-            OpenFileDialog ofd = new OpenFileDialog
-            {
-                DefaultExt = "state",
-                Title = "Open Savestate File",
-                Filter = "state files|*.state",
-                RestoreDirectory = true
-            };
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                filename = ofd.FileName;
-            }
-            else
-            {
-                return;
+                filename = openSavestateDialog.FileName;
             }
 
-            string oldKey = currentSK.ParentKey;
-            string oldSS = currentSK.SyncSettings;
+            var oldKey = currentSK.ParentKey;
+            var oldSS = currentSK.SyncSettings;
 
             //Get a new key
             currentSK.ParentKey = CorruptCore.RtcCore.GetRandomKey();
@@ -1746,33 +1735,42 @@ namespace RTCV.UI
             }
 
             //Grab the syncsettings
-            StashKey temp = new StashKey(CorruptCore.RtcCore.GetRandomKey(), currentSK.ParentKey, currentSK.BlastLayer);
+            var temp = new StashKey(CorruptCore.RtcCore.GetRandomKey(), currentSK.ParentKey, currentSK.BlastLayer);
             currentSK.SyncSettings = temp.SyncSettings;
         }
-
-        private void saveSavestateToToolStripMenuItem_Click(object sender, EventArgs e)
+        private void replaceSavestateFromFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string filename;
-            SaveFileDialog ofd = new SaveFileDialog
+            ReplaceSavestateFromFileToolStrip(null);
+        }
+
+        public void SaveSavestateTo(string filename = null)
+        {
+            if (filename == null)
             {
-                DefaultExt = "state",
-                Title = "Save Savestate File",
-                Filter = "state files|*.state",
-                RestoreDirectory = true
-            };
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                filename = ofd.FileName;
-            }
-            else
-            {
-                return;
+                var saveSavestateDialog = new SaveFileDialog
+                {
+                    DefaultExt = "state",
+                    Title = "Save Savestate File",
+                    Filter = "state files|*.state",
+                    RestoreDirectory = true
+                };
+                if (saveSavestateDialog.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+
+                filename = saveSavestateDialog.FileName;
             }
 
             File.Copy(currentSK.GetSavestateFullPath(), filename, true);
         }
 
-        private void saveToFileblToolStripMenuItem_Click(object sender, EventArgs e)
+        private void saveSavestateToToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveSavestateTo(null);
+        }
+
+        public void saveToFileblToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //If there's no blastlayer file already set, don't quicksave
             if (CurrentBlastLayerFile.Length == 0)
@@ -1787,19 +1785,19 @@ namespace RTCV.UI
             CurrentBlastLayerFile = BlastTools.LastBlastLayerSavePath;
         }
 
-        private void saveAsToFileblToolStripMenuItem_Click(object sender, EventArgs e)
+        public void saveAsToFileblToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BlastTools.SaveBlastLayerToFile(currentSK.BlastLayer);
             CurrentBlastLayerFile = BlastTools.LastBlastLayerSavePath;
         }
 
-        private void importBlastlayerblToolStripMenuItem_Click(object sender, EventArgs e)
+        public void importBlastlayerblToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BlastLayer temp = BlastTools.LoadBlastLayerFromFile();
             ImportBlastLayer(temp);
         }
 
-        private void loadFromFileblToolStripMenuItem_Click(object sender, EventArgs e)
+        public void loadFromFileblToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BlastLayer temp = BlastTools.LoadBlastLayerFromFile();
             if (temp != null)
@@ -1819,8 +1817,8 @@ namespace RTCV.UI
                 var unitsToLoad = new List<BlastUnit>();
                 foreach (BlastUnit bu in bl.Layer)
                 {
-                    if (domains.Contains(bu.Domain) &&
-                        (string.IsNullOrWhiteSpace(bu.SourceDomain) || domains.Contains(bu.SourceDomain)))
+                    if (_domains.Contains(bu.Domain) &&
+                        (string.IsNullOrWhiteSpace(bu.SourceDomain) || _domains.Contains(bu.SourceDomain)))
                     {
                         unitsToLoad.Add(bu);
                     }
@@ -1885,48 +1883,43 @@ namespace RTCV.UI
             LoadBlastlayer(bl, true);
         }
 
-        private void exportToCSVToolStripMenuItem_Click(object sender, EventArgs e)
+        public void ExportToCSV(string filename = null)
         {
-            string filename;
-
             if (currentSK.BlastLayer.Layer.Count == 0)
             {
                 MessageBox.Show("Can't save because the provided blastlayer is empty.");
                 return;
             }
 
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog
+            if (filename == null)
             {
-                DefaultExt = "csv",
-                Title = "Export to csv",
-                Filter = "csv files|*.csv",
-                RestoreDirectory = true
-            };
+                var saveCsvDialog = new SaveFileDialog
+                {
+                    DefaultExt = "csv",
+                    Title = "Export to csv",
+                    Filter = "csv files|*.csv",
+                    RestoreDirectory = true
+                };
 
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                filename = saveFileDialog1.FileName;
-            }
-            else
-            {
-                return;
+                if (saveCsvDialog.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+
+                filename = saveCsvDialog.FileName;
             }
 
-            CSVGenerator csv = new CSVGenerator();
+            var csv = new CSVGenerator();
             File.WriteAllText(filename, csv.GenerateFromDGV(dgvBlastEditor), Encoding.UTF8);
         }
 
-        private void bakeBlastunitsToVALUEToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            BakeBlastUnitsToValue();
-        }
 
-        private void BakeBlastUnitsToValue(bool bakeSelected = false)
+        public void BakeBlastUnitsToValue(bool bakeSelected = false)
         {
             try
             {
                 //Generate a blastlayer from the current selected rows
-                BlastLayer bl = new BlastLayer();
+                var bl = new BlastLayer();
 
                 IEnumerable<DataGridViewRow> targetRows;
 
@@ -1937,7 +1930,7 @@ namespace RTCV.UI
                 foreach (DataGridViewRow selected in targetRows
                     .Where((item => ((BlastUnit)item.DataBoundItem).IsLocked == false)))
                 {
-                    BlastUnit bu = (BlastUnit)selected.DataBoundItem;
+                    var bu = (BlastUnit)selected.DataBoundItem;
 
                     //They have to be enabled to get a backup
                     bu.IsEnabled = true;
@@ -1947,7 +1940,7 @@ namespace RTCV.UI
                 //Bake them
                 BlastLayer newBlastLayer = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_BLASTTOOLS_GETAPPLIEDBACKUPLAYER, new object[] { bl, currentSK }, true);
 
-                int i = 0;
+                var i = 0;
                 //Insert the new one where the old row was, then remove the old row.
                 foreach (DataGridViewRow selected in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>()
                     .Where((item => ((BlastUnit)item.DataBoundItem).IsLocked == false)))
@@ -1977,13 +1970,13 @@ namespace RTCV.UI
                 return;
             }
 
-            StashKey newSk = (StashKey)currentSK.Clone();
+            var newSk = (StashKey)currentSK.Clone();
             S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = newSk.Run();
         }
 
         public void btnCorrupt_Click(object sender, EventArgs e)
         {
-            StashKey newSk = (StashKey)currentSK.Clone();
+            var newSk = (StashKey)currentSK.Clone();
             S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newSk, false);
         }
 
@@ -2001,15 +1994,7 @@ namespace RTCV.UI
             RefreshNoteIcons(dgvBlastEditor.Rows);
         }
 
-        private void DgvBlastEditor_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
-        {
-            UpdateLayerSize();
-        }
 
-        private void DgvBlastEditor_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-        {
-            UpdateLayerSize();
-        }
 
         public void btnShiftBlastLayerDown_Click(object sender, EventArgs e)
         {
@@ -2078,7 +2063,7 @@ namespace RTCV.UI
                 else if (cell.OwningColumn.Name == BuProperty.ValueString.ToString())
                 {
                     var _amount = shiftDown ? 0 - amount : amount;
-                    int precision = (int)row.Cells[BuProperty.Precision.ToString()].Value;
+                    var precision = (int)row.Cells[BuProperty.Precision.ToString()].Value;
                     cell.Value = getShiftedHexString((string)cell.Value, _amount, precision);
                 }
                 else
@@ -2105,8 +2090,8 @@ namespace RTCV.UI
 
         private void btnHelp_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.ProcessStartInfo sInfo = new System.Diagnostics.ProcessStartInfo("https://corrupt.wiki/corruptors/rtc-real-time-corruptor/blast-editor.html");
-            System.Diagnostics.Process.Start(sInfo);
+            var startInfo = new System.Diagnostics.ProcessStartInfo("https://corrupt.wiki/corruptors/rtc-real-time-corruptor/blast-editor.html");
+            System.Diagnostics.Process.Start(startInfo);
         }
 
         private void OpenBlastGeneratorToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2124,7 +2109,7 @@ namespace RTCV.UI
 
         private void BtnAddRow_Click(object sender, EventArgs e)
         {
-            BlastUnit bu = new BlastUnit(new byte[] { 0 }, domains[0], 0, 1, MemoryDomains.GetInterface(domains[0]).BigEndian);
+            var bu = new BlastUnit(new byte[] { 0 }, _domains[0], 0, 1, MemoryDomains.GetInterface(_domains[0]).BigEndian);
             bs.Add(bu);
         }
 
@@ -2140,43 +2125,7 @@ namespace RTCV.UI
                 return;
             }
 
-            //this.Hide();
             RTC_SanitizeTool_Form.OpenSanitizeTool(currentSK?.BlastLayer);
-
-            /*
-            DialogResult lastAnswer = DialogResult.Ignore;
-
-            while(lastAnswer != DialogResult.Cancel && currentSK?.BlastLayer?.Layer?.Count > 1)
-            {
-                if (currentSK?.BlastLayer?.Layer == null)
-                    return;
-
-                dgvBlastEditor.ClearSelection();
-                switch (lastAnswer)
-                {
-                    case DialogResult.Ignore:
-                        break;
-                    case DialogResult.Yes:
-                        btnRemoveDisabled_Click(null, null);
-                        break;
-                    case DialogResult.No:
-                        btnInvertDisabled_Click(null, null);
-                        btnRemoveDisabled_Click(null, null);
-                        break;
-                    default:
-                        return;
-                }
-
-                dgvBlastEditor.ClearSelection();
-                btnDisable50_Click(null, null);
-                btnLoadCorrupt_Click(null, null);
-
-                if (currentSK?.BlastLayer?.Layer?.Count(x => x.IsLocked == false) <= 1)
-                    return;
-
-                lastAnswer = MessageBox.Show(@"Is the effect you are looking for still present?", "BlastLayer sanitization", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-            }
-            */
         }
 
         public StashKey[] GetStashKeys()
@@ -2184,32 +2133,33 @@ namespace RTCV.UI
             return new[] { currentSK, originalSK };
         }
 
-        private void ImportBlastlayerFromCorruptedFileToolStripMenuItem_Click(object sender, EventArgs e)
+        public void ImportBlastlayerFromCorruptedFile(string filename = null)
         {
-            string filename = null;
-
             if (filename == null)
             {
-                OpenFileDialog ofd = new OpenFileDialog
+                var openFileDialog = new OpenFileDialog
                 {
                     DefaultExt = "*",
                     Title = "Open Corrupted File",
                     Filter = "Any file|*.*",
                     RestoreDirectory = true
                 };
-                if (ofd.ShowDialog() == DialogResult.OK)
-                {
-                    filename = ofd.FileName;
-                }
-                else
+                if (openFileDialog.ShowDialog() != DialogResult.OK)
                 {
                     return;
                 }
+
+                filename = openFileDialog.FileName;
             }
 
             var bl = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_BL_GETDIFFBLASTLAYER, filename);
 
             ImportBlastLayer(bl);
+        }
+
+        private void importBlastlayerFromCorruptedFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ImportBlastlayerFromCorruptedFile(null);
         }
 
         private void NewToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2226,10 +2176,15 @@ namespace RTCV.UI
 
             return S.GET<RTC_StashHistory_Form>().btnAddStashToStockpile_Click();
         }
+
+
         public void btnAddStashToStockpile_Click(object sender, EventArgs e) => AddStashToStockpile();
-        private void breakDownAllBlastunitsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            breakDownUnits();
-        }
+        private void breakDownAllBlastunitsToolStripMenuItem_Click(object sender, EventArgs e) => BreakDownUnits();
+        private void DgvBlastEditor_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e) => UpdateLayerSize();
+        private void DgvBlastEditor_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e) => UpdateLayerSize();
+        private void exportToCSVToolStripMenuItem_Click(object sender, EventArgs e) => ExportToCSV(null);
+        private void bakeBlastunitsToVALUEToolStripMenuItem_Click(object sender, EventArgs e) => BakeBlastUnitsToValue();
+        private void runRomWithoutBlastlayerToolStripMenuItem_Click(object sender, EventArgs e) => currentSK.RunOriginal();
+        public void rasterizeVMDsToolStripMenuItem_Click(object sender, EventArgs e) => RasterizeVMDs();
     }
 }

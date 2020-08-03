@@ -199,9 +199,8 @@
         /// Call from emulator side only
         /// </summary>
         /// <param name="blastLayers"></param>
-        /// <param name="sk"></param>
         /// <returns></returns>
-        public static List<BlastGeneratorProto> GenerateBlastLayersFromBlastGeneratorProtos(List<BlastGeneratorProto> blastLayers, StashKey sk)
+        public static List<BlastGeneratorProto> GenerateBlastLayersFromBlastGeneratorProtos(List<BlastGeneratorProto> blastLayers)
         {
             foreach (BlastGeneratorProto bgp in blastLayers)
             {

@@ -73,6 +73,30 @@ namespace RTCV.UI
             this.undockedSizable = false;
 
             //cbRenderType.SelectedIndex = 0;
+
+            //Registers the drag and drop with the blast edirot form
+            AllowDrop = true;
+            this.DragEnter += RTC_GlitchHarvesterBlast_Form_DragEnter;
+            this.DragDrop += RTC_GlitchHarvesterBlast_Form_DragDrop;
+        }
+
+        private void RTC_GlitchHarvesterBlast_Form_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            foreach (var f in files)
+            {
+                if (f.Contains(".bl"))
+                {
+                    BlastLayer bl = BlastTools.LoadBlastLayerFromFile(f);
+                    var newStashKey = new StashKey(RtcCore.GetRandomKey(), null, bl);
+                    S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newStashKey, false, false);
+                }
+            }
+        }
+
+        private void RTC_GlitchHarvesterBlast_Form_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = DragDropEffects.Link;
         }
 
         public void OneTimeExecute()
@@ -226,7 +250,10 @@ namespace RTCV.UI
                 {
                     if (StockpileManager_UISide.CurrentStashkey == null)
                     {
-                        throw new Exception("CurrentStashkey in inject was somehow null! Report this to the devs and tell them how you caused this.");
+                        if (StockpileManager_UISide.LastStashkey != null)
+                            StockpileManager_UISide.CurrentStashkey = StockpileManager_UISide.LastStashkey;
+                        else
+                            throw new Exception("Inject tried to fetch the LastStashkey backup but this one was also null! Try to re-load your savestate and then re-select your corruption in the stash history or stockpile. That might fix it. If it still doesn't work after that, report to the devs pls");
                     }
 
                     S.GET<RTC_StashHistory_Form>().DontLoadSelectedStash = true;

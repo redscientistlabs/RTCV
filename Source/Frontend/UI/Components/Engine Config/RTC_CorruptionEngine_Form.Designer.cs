@@ -100,6 +100,7 @@ namespace RTCV.UI
             this.btnOpenCustomEngine = new System.Windows.Forms.Button();
             this.gbClusterEngine = new System.Windows.Forms.GroupBox();
             this.pnClusterLimiterList = new System.Windows.Forms.Panel();
+            this.clusterFilterAll = new System.Windows.Forms.CheckBox();
             this.label29 = new System.Windows.Forms.Label();
             this.clusterDirection = new System.Windows.Forms.ComboBox();
             this.clusterSplitUnits = new System.Windows.Forms.CheckBox();
@@ -113,7 +114,7 @@ namespace RTCV.UI
             this.label12 = new System.Windows.Forms.Label();
             this.comboBox9 = new System.Windows.Forms.ComboBox();
             this.label22 = new System.Windows.Forms.Label();
-            this.clusterFilterAll = new System.Windows.Forms.CheckBox();
+            this.cbVectorUnlockPrecision = new System.Windows.Forms.CheckBox();
             this.pnCustomPrecision.SuspendLayout();
             this.gbBlastGeneratorEngine.SuspendLayout();
             this.gbVectorEngine.SuspendLayout();
@@ -330,6 +331,7 @@ namespace RTCV.UI
             // 
             // gbVectorEngine
             // 
+            this.gbVectorEngine.Controls.Add(this.cbVectorUnlockPrecision);
             this.gbVectorEngine.Controls.Add(this.panel2);
             this.gbVectorEngine.Controls.Add(this.pnLimiterList);
             this.gbVectorEngine.Controls.Add(this.comboBox6);
@@ -478,9 +480,9 @@ namespace RTCV.UI
             this.label19.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
             this.label19.Location = new System.Drawing.Point(170, 16);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(158, 13);
+            this.label19.Size = new System.Drawing.Size(161, 13);
             this.label19.TabIndex = 77;
-            this.label19.Text = "Corrupts 32-bit floats using lists";
+            this.label19.Text = "Corrupts 32-bit values using lists";
             this.label19.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // gbPipeEngine
@@ -1283,6 +1285,19 @@ namespace RTCV.UI
             this.pnClusterLimiterList.Tag = "color:dark2";
             this.pnClusterLimiterList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
+            // clusterFilterAll
+            // 
+            this.clusterFilterAll.AutoSize = true;
+            this.clusterFilterAll.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.clusterFilterAll.ForeColor = System.Drawing.Color.White;
+            this.clusterFilterAll.Location = new System.Drawing.Point(296, 27);
+            this.clusterFilterAll.Name = "clusterFilterAll";
+            this.clusterFilterAll.Size = new System.Drawing.Size(68, 17);
+            this.clusterFilterAll.TabIndex = 151;
+            this.clusterFilterAll.Text = "Filter All";
+            this.clusterFilterAll.UseVisualStyleBackColor = true;
+            this.clusterFilterAll.CheckedChanged += new System.EventHandler(this.clusterFilterAll_CheckedChanged);
+            // 
             // label29
             // 
             this.label29.AutoSize = true;
@@ -1488,18 +1503,18 @@ namespace RTCV.UI
             this.label22.Text = "Swaps Values with neighbor Values";
             this.label22.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
-            // clusterFilterAll
+            // cbVectorUnlockPrecision
             // 
-            this.clusterFilterAll.AutoSize = true;
-            this.clusterFilterAll.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.clusterFilterAll.ForeColor = System.Drawing.Color.White;
-            this.clusterFilterAll.Location = new System.Drawing.Point(296, 27);
-            this.clusterFilterAll.Name = "clusterFilterAll";
-            this.clusterFilterAll.Size = new System.Drawing.Size(68, 17);
-            this.clusterFilterAll.TabIndex = 151;
-            this.clusterFilterAll.Text = "Filter All";
-            this.clusterFilterAll.UseVisualStyleBackColor = true;
-            this.clusterFilterAll.CheckedChanged += new System.EventHandler(this.clusterFilterAll_CheckedChanged);
+            this.cbVectorUnlockPrecision.AutoSize = true;
+            this.cbVectorUnlockPrecision.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
+            this.cbVectorUnlockPrecision.ForeColor = System.Drawing.Color.White;
+            this.cbVectorUnlockPrecision.Location = new System.Drawing.Point(357, 15);
+            this.cbVectorUnlockPrecision.Name = "cbVectorUnlockPrecision";
+            this.cbVectorUnlockPrecision.Size = new System.Drawing.Size(59, 17);
+            this.cbVectorUnlockPrecision.TabIndex = 144;
+            this.cbVectorUnlockPrecision.Text = "Unlock";
+            this.cbVectorUnlockPrecision.UseVisualStyleBackColor = true;
+            this.cbVectorUnlockPrecision.CheckedChanged += new System.EventHandler(this.cbVectorUnlockPrecision_CheckedChanged);
             // 
             // RTC_CorruptionEngine_Form
             // 
@@ -1646,5 +1661,6 @@ namespace RTCV.UI
         private System.Windows.Forms.Label label29;
         public System.Windows.Forms.ComboBox clusterDirection;
         public System.Windows.Forms.CheckBox clusterFilterAll;
+        public System.Windows.Forms.CheckBox cbVectorUnlockPrecision;
     }
 }

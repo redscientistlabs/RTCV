@@ -4,6 +4,7 @@ namespace RTCV.Plugins.HexEditor
     using System.Drawing;
     using System.Linq;
     using System.Windows.Forms;
+    using RTCV.Common.CustomExtensions;
 
     /// <summary>
     /// A simple form that prompts the user for a single line of input.
