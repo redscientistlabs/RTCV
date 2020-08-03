@@ -313,9 +313,6 @@ dotnet_diagnostic.CA2008.severity = none
 # Specify marshaling for P/Invoke string arguments
 dotnet_diagnostic.CA2101.severity = none
 
-# Re-throwing caught exception changes stack information
-dotnet_diagnostic.CA2200.severity = none
-
 # Non-constant fields should not be visible
 dotnet_diagnostic.CA2211.severity = none
 
