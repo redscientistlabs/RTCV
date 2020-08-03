@@ -359,8 +359,8 @@ namespace RTCV.UI
                         return;
                     }
 
-                    if (!Directory.Exists(RtcCore.vmdsDir))
-                        Directory.CreateDirectory(RtcCore.vmdsDir);
+                    if (!Directory.Exists(RtcCore.VmdsDir))
+                        Directory.CreateDirectory(RtcCore.VmdsDir);
 
                     string targetPath = Path.Combine(RtcCore.VmdsDir, value.Trim() + ".vmd");
 
