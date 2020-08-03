@@ -15,7 +15,6 @@ namespace RTCV.UI.Components.Controls
     public class HexTextBox : TextBox, INumberBox
     {
         private string _addressFormatStr = "";
-        private long? _maxSize;
         private bool _nullable = true;
 
         public HexTextBox()
@@ -26,11 +25,6 @@ namespace RTCV.UI.Components.Controls
         public bool Nullable { get => _nullable; set => _nullable = value; }
         public long GetMax()
         {
-            if (_maxSize.HasValue)
-            {
-                return _maxSize.Value;
-            }
-
             return ((long)1 << (4 * MaxLength)) - 1;
         }
 
