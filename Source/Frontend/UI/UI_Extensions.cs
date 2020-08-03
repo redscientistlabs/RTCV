@@ -16,7 +16,6 @@ namespace RTCV.UI
     using System.Runtime.InteropServices;
     using System.Text;
     using System.Windows.Forms;
-    using RTCV.UI.Modular;
 
     public static class UI_Extensions
     {
@@ -202,45 +201,6 @@ namespace RTCV.UI
             public bool AllowDecimal { get; set; }
 
             public bool AllowNegative { get; set; }
-        }
-    }
-
-    //From Bizhawk
-    public static class NumberExtensions
-    {
-        public static Point GetMouseLocation(this MouseEventArgs e, object sender)
-        {
-            if (!(sender is Control ctr))
-            {
-                return new Point(e.Location.X, e.Location.Y);
-            }
-
-            var x = e.Location.X;
-            var y = e.Location.Y;
-
-            do
-            {
-                if (ctr.Parent != null
-                    && !(ctr is UI_ComponentFormTile)
-                    && !(ctr is UI_CanvasForm)
-                    && !(ctr is ComponentPanel)
-                    && !(ctr is ComponentForm)
-                    )
-                {
-                    x += ctr.Location.X;
-                    y += ctr.Location.Y;
-                }
-
-                ctr = ctr.Parent;
-            }
-            while (ctr != null);
-
-            return new Point(x, y);
-        }
-
-        public static string ToHexString(this long n)
-        {
-            return $"{n:X}";
         }
     }
 

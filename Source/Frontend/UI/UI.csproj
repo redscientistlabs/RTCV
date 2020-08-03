@@ -376,6 +376,7 @@
     </Compile>
     <Compile Include="GameProtection.cs" />
     <Compile Include="SortableBindingList.cs" />
+    <Compile Include="Extensions\NumberExtensions.cs" />
     <Compile Include="Input\Bindings.cs" />
     <Compile Include="Input\Gamepad.cs" />
     <Compile Include="Input\Gamepad360.cs" />
