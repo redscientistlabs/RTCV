@@ -555,7 +555,7 @@ namespace RTCV.CorruptCore
                             {
                                 RTCV.Common.Logging.GlobalLogger.Error(e, "Unable to find plugin dir in {dir}", RtcCore.EmuDir + "\\RTC" + "\\PLUGINS");
                             }
-                            RtcCore.LoadPlugins(new[] { RtcCore.pluginDir,  emuPluginDir });
+                            RtcCore.LoadPlugins(new[] { RtcCore.PluginDir,  emuPluginDir });
                         });
 
                         break;
