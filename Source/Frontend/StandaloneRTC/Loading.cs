@@ -21,15 +21,15 @@
             //Create the RTC log next to the executable
             string rtcLogPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "RTC", "RTC_LOG.txt");
 
-            RTCV.NetCore.NetCore_Extensions.ConsoleHelper.CreateConsole();
+            RTCV.Common.ConsoleHelper.CreateConsole();
             RTCV.Common.Logging.StartLogging(rtcLogPath);
             if (args.Contains("-CONSOLE"))
             {
-                RTCV.NetCore.NetCore_Extensions.ConsoleHelper.ShowConsole();
+                RTCV.Common.ConsoleHelper.ShowConsole();
             }
             else
             {
-                RTCV.NetCore.NetCore_Extensions.ConsoleHelper.HideConsole();
+                RTCV.Common.ConsoleHelper.HideConsole();
             }
 
             UICore.Start(this);
