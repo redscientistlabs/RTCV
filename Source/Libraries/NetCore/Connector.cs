@@ -44,10 +44,10 @@ namespace RTCV.NetCore
                 tcp = new TCPLink(spec);
                 watch = new ReturnWatch(spec);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Kill();
-                throw ex;
+                throw;
             }
         }
 

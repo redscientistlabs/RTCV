@@ -45,7 +45,7 @@ namespace RTCV.UI
 
         public static SoundPlayer[] LoadedSounds = null;
 
-        public static void PlayCrashSound(bool forcePlay = false)
+        public static void PlayCrashSound()
         {
             if (LoadedSounds?.Length != 0)
             {
@@ -112,7 +112,7 @@ namespace RTCV.UI
                         killswitchSpamPreventTimer.Tick += KillswitchSpamPreventTimer_Tick;
                         killswitchSpamPreventTimer.Start();
 
-                        PlayCrashSound(true);
+                        PlayCrashSound();
 
                         if (CorruptCore.RtcCore.EmuDir == null)
                         {

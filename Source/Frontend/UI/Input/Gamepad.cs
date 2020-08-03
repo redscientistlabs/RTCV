@@ -245,7 +245,7 @@ namespace RTCV.UI.Input
         }
 
         // Note that this does not appear to work at this time. I probably need to have more infos.
-        public void SetVibration(int left, int right)
+        public void SetVibration(/*int left, int right*/)
         {
             int[] temp1, temp2;
             // my first clue that it doesnt work is that LEFT  and RIGHT _ARENT USED_

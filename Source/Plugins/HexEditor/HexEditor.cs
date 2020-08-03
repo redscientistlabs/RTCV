@@ -6,12 +6,12 @@ namespace RTCV.Plugins.HexEditor
     using System.Data;
     using System.Drawing;
     using System.Globalization;
-    using System.IO;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
     using System.Windows.Forms;
     using RTCV.NetCore;
+    using RTCV.Common.CustomExtensions;
     using RTCV.CorruptCore;
     using NLog;
 
@@ -20,8 +20,8 @@ namespace RTCV.Plugins.HexEditor
     //https://github.com/tasvideos/bizhawk
     public partial class HexEditor : Form
     {
-        private int fontWidth;
-        private int fontHeight;
+        private readonly int _fontWidth;
+        private readonly int _fontHeight;
 
         private readonly char[] _nibbles = { 'G', 'G', 'G', 'G', 'G', 'G', 'G', 'G' };    // G = off 0-9 & A-F are acceptable values
         private readonly List<long> _secondaryHighlightedAddresses = new List<long>();
@@ -54,11 +54,9 @@ namespace RTCV.Plugins.HexEditor
         private int DataSize { get; set; }
 
         private Dictionary<string, MemoryInterface> AllDomains => MemoryDomains.AllMemoryInterfaces;
-        public volatile bool UpdateOnStep = true;
         public volatile bool HideOnClose = true;
 
-        Logger logger = NLog.LogManager.GetCurrentClassLogger();
-
+        readonly Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
         public HexEditor()
         {
@@ -70,8 +68,8 @@ namespace RTCV.Plugins.HexEditor
             // character so we'll see how much the width increases on the second character.
             var fontSize1 = TextRenderer.MeasureText("0", font);
             var fontSize2 = TextRenderer.MeasureText("00", font);
-            fontWidth = fontSize2.Width - fontSize1.Width;
-            fontHeight = fontSize1.Height;
+            _fontWidth = fontSize2.Width - fontSize1.Width;
+            _fontHeight = fontSize1.Height;
 
             InitializeComponent();
             this.FormClosing += HexEditor_FormClosing;
@@ -176,7 +174,7 @@ namespace RTCV.Plugins.HexEditor
                 }
                 catch (Exception e)
                 {
-                    logger.Error(e, "Failed to UpdateValues() in hex editor.");
+                    _logger.Error(e, "Failed to UpdateValues() in hex editor.");
                 }
             }));
         }
@@ -255,9 +253,9 @@ namespace RTCV.Plugins.HexEditor
                 str += "0";
             }
 
-            byte[] bytes = new byte[str.Length / 2];
+            var bytes = new byte[str.Length / 2];
 
-            for (int i = 0; i < str.Length; i += 2)
+            for (var i = 0; i < str.Length; i += 2)
             {
                 bytes[i / 2] = Convert.ToByte(str.Substring(i, 2), 16);
             }
@@ -277,24 +275,17 @@ namespace RTCV.Plugins.HexEditor
 
             var numByte = search.Length / 2;
 
-            long startByte;
-            if (_addressHighlighted == -1)
-            {
-                startByte = 0;
-            }
-            else if (_addressHighlighted >= (_domain.Size - 1 - numByte))
-            {
-                startByte = 0;
-            }
-            else
+            var startByte = 0L;
+            if (_addressHighlighted != -1 &&
+                _addressHighlighted < (_domain.Size - 1 - numByte))
             {
                 startByte = _addressHighlighted + DataSize;
             }
 
-            byte[] searchBytes = ConvertHexStringToByteArray(search);
+            var searchBytes = ConvertHexStringToByteArray(search);
             for (var i = startByte; i < (_domain.Size - numByte); i++)
             {
-                bool differenceFound = false;
+                var differenceFound = false;
                 for (var j = 0; j < numByte; j++)
                 {
                     if (_domain.PeekByte(i + j) != searchBytes[j])
@@ -347,10 +338,10 @@ namespace RTCV.Plugins.HexEditor
                 startByte = _addressHighlighted - 1;
             }
 
-            byte[] searchBytes = ConvertHexStringToByteArray(search);
+            var searchBytes = ConvertHexStringToByteArray(search);
             for (var i = startByte; i >= 0; i--)
             {
-                bool differenceFound = false;
+                var differenceFound = false;
                 for (var j = 0; j < numByte; j++)
                 {
                     if (_domain.PeekByte(i + j) != searchBytes[j])
@@ -396,12 +387,7 @@ namespace RTCV.Plugins.HexEditor
             }
             else
             {
-                if (val < ' ')
-                {
-                    return '.';
-                }
-
-                if (val >= 0x7F)
+                if (val < ' ' || val >= 0x7F)
                 {
                     return '.';
                 }
@@ -452,15 +438,6 @@ namespace RTCV.Plugins.HexEditor
             this.Activate();
         }
 
-        // TODO: rename me
-        private void SaveConfigSettings()
-        {
-            if (_hexFind.IsHandleCreated || !_hexFind.IsDisposed)
-            {
-                _hexFind.Close();
-            }
-        }
-
         private string GenerateAddressString()
         {
             var addrStr = new StringBuilder();
@@ -509,7 +486,7 @@ namespace RTCV.Plugins.HexEditor
             }
             catch (Exception e)
             {
-                logger.Error(e, "Unable to MakeValue");
+                _logger.Error(e, "Unable to MakeValue");
                 return false;
             }
 
@@ -533,9 +510,9 @@ namespace RTCV.Plugins.HexEditor
                 {
                     if (_addr + j + DataSize <= _domain.Size)
                     {
-                        int t_val = 0;
-                        int t_next = 0;
-                        for (int k = 0; k < DataSize; k++)
+                        var t_val = 0;
+                        var t_next = 0;
+                        for (var k = 0; k < DataSize; k++)
                         {
                             if (!MakeValue(1, _addr + j + k, out t_next))
                             {
@@ -570,8 +547,8 @@ namespace RTCV.Plugins.HexEditor
                 {
                     if (_addr + k < _domain.Size)
                     {
-                        byte b = MakeByte(_addr + k);
-                        char c = Remap(b);
+                        var b = MakeByte(_addr + k);
+                        var c = Remap(b);
                         rowStr.Append(c);
                         //winforms will be using these as escape codes for hotkeys
                         if (forWindow)
@@ -745,23 +722,6 @@ namespace RTCV.Plugins.HexEditor
             }
         }
 
-        private void SaveFileBinary(string path)
-        {
-            var file = new FileInfo(path);
-            using (var binWriter = new BinaryWriter(File.Open(file.FullName, FileMode.Create)))
-            {
-                for (var i = 0; i < _domain.Size; i++)
-                {
-                    binWriter.Write(_domain.PeekByte(i));
-                }
-            }
-        }
-
-        private string GetSaveFileFilter()
-        {
-            return "Binary (*.bin)|*.bin|All Files|*.*";
-        }
-
         private void ResetScrollBar()
         {
             HexScrollBar.Value = 0;
@@ -771,7 +731,7 @@ namespace RTCV.Plugins.HexEditor
 
         private void SetUpScrollBar()
         {
-            _rowsVisible = (MemoryViewerBox.Height - (fontHeight * 2) - (fontHeight / 2)) / fontHeight;
+            _rowsVisible = (MemoryViewerBox.Height - (_fontHeight * 2) - (_fontHeight / 2)) / _fontHeight;
             var totalRows = (int)((_domain.Size + 15) / 16);
 
             if (totalRows < _rowsVisible)
@@ -792,17 +752,17 @@ namespace RTCV.Plugins.HexEditor
 
             // Scroll value determines the first row
             long i = HexScrollBar.Value;
-            var rowoffset = y / fontHeight;
+            var rowoffset = y / _fontHeight;
             i += rowoffset;
-            int colWidth = DataSize * 2 + 1;
+            var colWidth = DataSize * 2 + 1;
 
-            var column = x / (fontWidth * colWidth);
+            var column = x / (_fontWidth * colWidth);
 
             var innerOffset = AddressesLabel.Location.X - AddressLabel.Location.X + AddressesLabel.Margin.Left;
             var start = GetTextOffset() - innerOffset;
             if (x > start)
             {
-                column = (x - start) / (fontWidth * DataSize);
+                column = (x - start) / (_fontWidth * DataSize);
             }
 
             if (i >= 0 && i <= _maxRow && column >= 0 && column < (16 / DataSize))
@@ -859,13 +819,13 @@ namespace RTCV.Plugins.HexEditor
 
         private Point GetAddressCoordinates(long address)
         {
-            var extra = (address % DataSize) * fontWidth * 2;
-            var xOffset = AddressesLabel.Location.X + fontWidth / 2 - 2;
+            var extra = (address % DataSize) * _fontWidth * 2;
+            var xOffset = AddressesLabel.Location.X + _fontWidth / 2 - 2;
             var yOffset = AddressesLabel.Location.Y;
 
             return new Point(
-                (int)((((address % 16) / DataSize) * (fontWidth * (DataSize * 2 + 1))) + xOffset + extra),
-                (int)((((address / 16) - HexScrollBar.Value) * fontHeight) + yOffset)
+                (int)((((address % 16) / DataSize) * (_fontWidth * (DataSize * 2 + 1))) + xOffset + extra),
+                (int)((((address / 16) - HexScrollBar.Value) * _fontHeight) + yOffset)
                 );
         }
 
@@ -877,38 +837,15 @@ namespace RTCV.Plugins.HexEditor
 
         private int GetTextOffset()
         {
-            int start = (16 / DataSize) * fontWidth * (DataSize * 2 + 1);
-            start += AddressesLabel.Location.X + fontWidth / 2;
-            start += fontWidth * 2;
+            var start = (16 / DataSize) * _fontWidth * (DataSize * 2 + 1);
+            start += AddressesLabel.Location.X + _fontWidth / 2;
+            start += _fontWidth * 2;
             return start;
         }
 
         private long GetTextX(long address)
         {
-            return GetTextOffset() + ((address % 16) * fontWidth);
-        }
-
-        private bool HasNibbles()
-        {
-            return _nibbles.Any(x => x != 'G');
-        }
-
-        private string MakeNibbles()
-        {
-            var str = "";
-            for (var x = 0; x < (DataSize * 2); x++)
-            {
-                if (_nibbles[x] != 'G')
-                {
-                    str += _nibbles[x];
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            return str;
+            return GetTextOffset() + ((address % 16) * _fontWidth);
         }
 
         private void AddToSecondaryHighlights(long address)
@@ -941,7 +878,7 @@ namespace RTCV.Plugins.HexEditor
                 return;
             }
 
-            List<long> allAddresses = new List<long>() { HighlightedAddress.Value };
+            var allAddresses = new List<long>() { HighlightedAddress.Value };
             allAddresses.AddRange(_secondaryHighlightedAddresses);
             CreateVmdFromSelected(_domain.Name, allAddresses, DataSize);
 
@@ -950,14 +887,14 @@ namespace RTCV.Plugins.HexEditor
 
         public static void CreateVmdFromSelected(string domain, List<long> allAddresses, int wordSize)
         {
-            int allAddrCount = allAddresses.Count;
+            var allAddrCount = allAddresses.Count;
             if (wordSize > 1) //fills the gap caused by address spacing
             {
-                for (int addrPos = 0; addrPos < allAddrCount; addrPos++)
+                for (var addrPos = 0; addrPos < allAddrCount; addrPos++)
                 {
-                    for (int addedCount = 1; addedCount < wordSize; addedCount++)
+                    for (var addedCount = 1; addedCount < wordSize; addedCount++)
                     {
-                        long newAddr = allAddresses[addrPos] + addedCount;
+                        var newAddr = allAddresses[addrPos] + addedCount;
                         allAddresses.Add(newAddr);
                     }
                 }
@@ -965,21 +902,17 @@ namespace RTCV.Plugins.HexEditor
 
             var ordered = allAddresses.OrderBy(it => it).ToArray();
 
-            bool contiguous = true;
+            var contiguous = true;
             long? lastAddress = null;
-            int i = 0;
+            var i = 0;
 
-            foreach (long item in ordered)
+            foreach (var item in ordered)
             {
-                if (lastAddress != null) //not the first one
+                if (lastAddress != null && //not the first one
+                    i != (ordered.Length - 1) && //not the last one
+                    item != lastAddress.Value + 1) //checks expected address
                 {
-                    if (i != (ordered.Length - 1)) //not the last one
-                    {
-                        if (item != lastAddress.Value + 1) //checks expected address
-                        {
-                            contiguous = false;
-                        }
-                    }
+                    contiguous = false;
                 }
 
                 lastAddress = item;
@@ -1063,35 +996,6 @@ namespace RTCV.Plugins.HexEditor
             }
         }
 
-        private bool LoadTable(string path)
-        {
-            if (string.IsNullOrWhiteSpace(path))
-            {
-                return false;
-            }
-
-            var file = new FileInfo(path);
-            if (!file.Exists)
-            {
-                return false;
-            }
-
-            using (var sr = file.OpenText())
-            {
-                string line;
-
-                while ((line = sr.ReadLine()) != null)
-                {
-                    var parts = line.Split('=');
-                    _textTable.Add(
-                        int.Parse(parts[0],
-                        NumberStyles.HexNumber), parts[1].First());
-                }
-            }
-
-            return true;
-        }
-
         #region Events
 
         #region File Menu
@@ -1124,7 +1028,7 @@ namespace RTCV.Plugins.HexEditor
         private string MakeCopyExportString(bool export)
         {
             //make room for an array with _secondaryHighlightedAddresses and optionally HighlightedAddress
-            long[] addresses = new long[_secondaryHighlightedAddresses.Count + (HighlightedAddress.HasValue ? 1 : 0)];
+            var addresses = new long[_secondaryHighlightedAddresses.Count + (HighlightedAddress.HasValue ? 1 : 0)];
 
             //if there was actually nothing to do, return
             if (addresses.Length == 0)
@@ -1133,7 +1037,7 @@ namespace RTCV.Plugins.HexEditor
             }
 
             //fill the array with _secondaryHighlightedAddresses
-            for (int i = 0; i < _secondaryHighlightedAddresses.Count; i++)
+            for (var i = 0; i < _secondaryHighlightedAddresses.Count; i++)
             {
                 addresses[i] = _secondaryHighlightedAddresses[i];
             }
@@ -1147,13 +1051,13 @@ namespace RTCV.Plugins.HexEditor
             Array.Sort(addresses);
 
             //find the maximum length of the exported string
-            int maximumLength = addresses.Length * (export ? 3 : 2) + 8;
-            StringBuilder sb = new StringBuilder(maximumLength);
+            var maximumLength = addresses.Length * (export ? 3 : 2) + 8;
+            var sb = new StringBuilder(maximumLength);
 
             //generate it differently for export (as you see it) or copy (raw bytes)
             if (export)
             {
-                for (int i = 0; i < addresses.Length; i++)
+                for (var i = 0; i < addresses.Length; i++)
                 {
                     sb.Append(ValueString(addresses[i]));
                     if (i != addresses.Length - 1)
@@ -1164,13 +1068,13 @@ namespace RTCV.Plugins.HexEditor
             }
             else
             {
-                for (int i = 0; i < addresses.Length; i++)
+                for (var i = 0; i < addresses.Length; i++)
                 {
-                    long start = addresses[i];
-                    long end = addresses[i] + DataSize - 1;
-                    for (long a = start; a <= end; a++)
+                    var start = addresses[i];
+                    var end = addresses[i] + DataSize - 1;
+                    for (var a = start; a <= end; a++)
                     {
-                        MakeValue(1, a, out int val);
+                        MakeValue(1, a, out var val);
                         sb.AppendFormat("{0:X2}", val);
                     }
                 }
@@ -1310,10 +1214,6 @@ namespace RTCV.Plugins.HexEditor
             }
         }
 
-        private void MemoryDomainsMenuItem_DropDown(object sender, EventArgs e)
-        {
-        }
-
         private void DataSizeByteMenuItem_Click(object sender, EventArgs e)
         {
             SetDataSize(1);
@@ -1385,39 +1285,7 @@ namespace RTCV.Plugins.HexEditor
         }
 
         private void PokeAddressMenuItem_Click(object sender, EventArgs e)
-        {/*
-            var addresses = new List<long>();
-            if (HighlightedAddress.HasValue)
-            {
-                addresses.Add(HighlightedAddress.Value);
-            }
-
-            if (_secondaryHighlightedAddresses.Any())
-            {
-                addresses.AddRange(_secondaryHighlightedAddresses);
-            }
-
-            if (addresses.Any())
-            {
-                BlastUnit bu = new BlastUnit(StoreType.ONCE, StoreTime.IMMEDIATE, _domain.Name, address, _domain.Name, address, DataSize, _domain.BigEndian, 0, 0);;
-                var poke = new RamPoke
-                {
-                    InitialLocation = this.ChildPointToScreen(AddressLabel),
-                    ParentTool = this
-                };
-
-                var watches = addresses.Select(
-                    address => Watch.GenerateWatch(
-                        _domain,
-                        address,
-                        (WatchSize)DataSize,
-                        Client.Common.DisplayType.Hex,
-                        BigEndian));
-
-                poke.SetWatch(watches);
-                poke.ShowHawkDialog();
-                UpdateValues();
-            }*/
+        {
         }
 
         #endregion
@@ -1509,15 +1377,13 @@ namespace RTCV.Plugins.HexEditor
                         {
                             AddToSecondaryHighlights(i);
                         }
-
-                        GoToAddress(newHighlighted);
                     }
                     else
                     {
                         _secondaryHighlightedAddresses.Clear();
-                        GoToAddress(newHighlighted);
                     }
 
+                    GoToAddress(newHighlighted);
                     break;
                 case Keys.Down:
                     newHighlighted = _addressHighlighted + 16;
@@ -1527,43 +1393,39 @@ namespace RTCV.Plugins.HexEditor
                         {
                             AddToSecondaryHighlights(i);
                         }
-
-                        GoToAddress(newHighlighted);
                     }
                     else
                     {
                         _secondaryHighlightedAddresses.Clear();
-                        GoToAddress(newHighlighted);
                     }
 
+                    GoToAddress(newHighlighted);
                     break;
                 case Keys.Left:
                     newHighlighted = _addressHighlighted - (1 * DataSize);
                     if (e.Modifiers == Keys.Shift)
                     {
                         AddToSecondaryHighlights(_addressHighlighted);
-                        GoToAddress(newHighlighted);
                     }
                     else
                     {
                         _secondaryHighlightedAddresses.Clear();
-                        GoToAddress(newHighlighted);
                     }
 
+                    GoToAddress(newHighlighted);
                     break;
                 case Keys.Right:
                     newHighlighted = _addressHighlighted + (1 * DataSize);
                     if (e.Modifiers == Keys.Shift)
                     {
                         AddToSecondaryHighlights(_addressHighlighted);
-                        GoToAddress(newHighlighted);
                     }
                     else
                     {
                         _secondaryHighlightedAddresses.Clear();
-                        GoToAddress(newHighlighted);
                     }
 
+                    GoToAddress(newHighlighted);
                     break;
                 case Keys.PageUp:
                     newHighlighted = _addressHighlighted - (_rowsVisible * 16);
@@ -1573,15 +1435,13 @@ namespace RTCV.Plugins.HexEditor
                         {
                             AddToSecondaryHighlights(i);
                         }
-
-                        GoToAddress(newHighlighted);
                     }
                     else
                     {
                         _secondaryHighlightedAddresses.Clear();
-                        GoToAddress(newHighlighted);
                     }
 
+                    GoToAddress(newHighlighted);
                     break;
                 case Keys.PageDown:
                     newHighlighted = _addressHighlighted + (_rowsVisible * 16);
@@ -1591,15 +1451,13 @@ namespace RTCV.Plugins.HexEditor
                         {
                             AddToSecondaryHighlights(i);
                         }
-
-                        GoToAddress(newHighlighted);
                     }
                     else
                     {
                         _secondaryHighlightedAddresses.Clear();
-                        GoToAddress(newHighlighted);
                     }
 
+                    GoToAddress(newHighlighted);
                     break;
                 case Keys.Tab:
                     _secondaryHighlightedAddresses.Clear();
@@ -1620,15 +1478,13 @@ namespace RTCV.Plugins.HexEditor
                         {
                             AddToSecondaryHighlights(i);
                         }
-
-                        GoToAddress(0);
                     }
                     else
                     {
                         _secondaryHighlightedAddresses.Clear();
-                        GoToAddress(0);
                     }
 
+                    GoToAddress(0);
                     break;
                 case Keys.End:
                     newHighlighted = _domain.Size - DataSize;
@@ -1638,15 +1494,13 @@ namespace RTCV.Plugins.HexEditor
                         {
                             AddToSecondaryHighlights(i);
                         }
-
-                        GoToAddress(newHighlighted);
                     }
                     else
                     {
                         _secondaryHighlightedAddresses.Clear();
-                        GoToAddress(newHighlighted);
                     }
 
+                    GoToAddress(newHighlighted);
                     break;
                 case Keys.Add:
                     IncrementContextItem_Click(sender, e);
@@ -1873,25 +1727,23 @@ namespace RTCV.Plugins.HexEditor
             var infiniteUnits = StepActions.GetAppliedInfiniteUnits();
             foreach (var bu in infiniteUnits.Layer)
             {
-                if (IsVisible(bu.Address))
+                if (IsVisible(bu.Address) &&
+                    _domain.ToString() == bu.Domain)
                 {
-                    if (_domain.ToString() == bu.Domain)
+                    var gaps = bu.Precision - DataSize;
+
+                    if (bu.Precision == 4 && DataSize == 2)
                     {
-                        var gaps = bu.Precision - DataSize;
-
-                        if (bu.Precision == 4 && DataSize == 2)
-                        {
-                            gaps -= 1;
-                        }
-
-                        if (gaps < 0) { gaps = 0; }
-
-                        var width = (fontWidth * 2 * bu.Precision) + (gaps * fontWidth);
-
-                        var rect = new Rectangle(GetAddressCoordinates(bu.Address), new Size(width, fontHeight));
-                        e.Graphics.DrawRectangle(new Pen(Brushes.Black), rect);
-                        e.Graphics.FillRectangle(new SolidBrush(Color.Cyan), rect);
+                        gaps -= 1;
                     }
+
+                    if (gaps < 0) { gaps = 0; }
+
+                    var width = (_fontWidth * 2 * bu.Precision) + (gaps * _fontWidth);
+
+                    var rect = new Rectangle(GetAddressCoordinates(bu.Address), new Size(width, _fontHeight));
+                    e.Graphics.DrawRectangle(new Pen(Brushes.Black), rect);
+                    e.Graphics.FillRectangle(new SolidBrush(Color.Cyan), rect);
                 }
             }
 
@@ -1902,10 +1754,10 @@ namespace RTCV.Plugins.HexEditor
                 var textX = (int)GetTextX(_addressHighlighted);
                 var textpoint = new Point(textX, point.Y);
 
-                var rect = new Rectangle(point, new Size(fontWidth * 2 * DataSize + (NeedsExtra(_addressHighlighted) ? fontWidth : 0) + 3, fontHeight));
+                var rect = new Rectangle(point, new Size(_fontWidth * 2 * DataSize + (NeedsExtra(_addressHighlighted) ? _fontWidth : 0) + 3, _fontHeight));
                 e.Graphics.DrawRectangle(new Pen(Brushes.Black), rect);
 
-                var textrect = new Rectangle(textpoint, new Size(fontWidth * DataSize, fontHeight));
+                var textrect = new Rectangle(textpoint, new Size(_fontWidth * DataSize, _fontHeight));
 
                 if (CorruptCore.StepActions.InfiniteUnitExists(_domain.Name, _addressHighlighted))
                 {
@@ -1927,19 +1779,14 @@ namespace RTCV.Plugins.HexEditor
                     var textX = (int)GetTextX(address);
                     var textpoint = new Point(textX, point.Y);
 
-                    var rect = new Rectangle(point, new Size(fontWidth * 2 * DataSize + 3, fontHeight));
+                    var rect = new Rectangle(point, new Size(_fontWidth * 2 * DataSize + 3, _fontHeight));
                     e.Graphics.DrawRectangle(new Pen(Brushes.Black), rect);
 
-                    var textrect = new Rectangle(textpoint, new Size(fontWidth * DataSize, fontHeight));
+                    var textrect = new Rectangle(textpoint, new Size(_fontWidth * DataSize, _fontHeight));
 
                     e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(0x44, Color.LightPink)), rect);
                     e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(0x44, Color.LightPink)), textrect);
                 }
-            }
-
-            if (HasNibbles())
-            {
-                //e.Graphics.DrawString(MakeNibbles(), new Font("Courier New", 8, FontStyle.Italic), Brushes.Black, new Point(158, 4));
             }
         }
 
@@ -2046,7 +1893,7 @@ namespace RTCV.Plugins.HexEditor
 
         private void FreezeAddress(long address)
         {
-            BlastUnit bu = new BlastUnit(StoreType.ONCE, StoreTime.IMMEDIATE, _domain.Name, address, _domain.Name, address, DataSize, _domain.BigEndian, 0, 0);
+            var bu = new BlastUnit(StoreType.ONCE, StoreTime.IMMEDIATE, _domain.Name, address, _domain.Name, address, DataSize, _domain.BigEndian, 0, 0);
             bu.Apply(false);
         }
 
