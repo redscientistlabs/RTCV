@@ -295,7 +295,7 @@ jobs:
         path: 'citra-vanguard'
         submodules: 'recursive'
     - name: Create Citra build directory
-      working-directory: ${{runner.workspace}}\citra-vanguard\citra-vanguard
+      working-directory: ${{runner.workspace}}\RTCV\citra-vanguard
       run: New-Item -ItemType Directory -Path build
     - name: Citra prebuild
       run: |
