@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     partial class RTC_SettingsGeneral_Form
     {
@@ -89,7 +89,7 @@
             this.cbAllowCrossCoreCorruption.Name = "cbAllowCrossCoreCorruption";
             this.cbAllowCrossCoreCorruption.Size = new System.Drawing.Size(172, 17);
             this.cbAllowCrossCoreCorruption.TabIndex = 1;
-            this.cbAllowCrossCoreCorruption.Text = "Allow Cross-Core corruption";
+            this.cbAllowCrossCoreCorruption.Text = "Allow Cross-Core / Cross-Game corruption";
             this.cbAllowCrossCoreCorruption.UseVisualStyleBackColor = true;
             this.cbAllowCrossCoreCorruption.CheckedChanged += new System.EventHandler(this.cbAllowCrossCoreCorruption_CheckedChanged);
             // 

@@ -304,15 +304,16 @@ namespace RTCV.CorruptCore
                     return false;
                 }
 
-                foreach (StashKey item in sks)
-                {
-                    if (item.GameName != master.GameName)
+                if (!RtcCore.AllowCrossCoreCorruption)
+                    foreach (StashKey item in sks)
                     {
-                        MessageBox.Show("Merge attempt failed: game mismatch\n\n" + string.Join("\n", sks.Select(it => $"{it.GameName} -> {it.SystemName} -> {it.SystemCore}")));
+                        if (item.GameName != master.GameName)
+                        {
+                            MessageBox.Show("Merge attempt failed: game mismatch\n\n" + string.Join("\n", sks.Select(it => $"{it.GameName} -> {it.SystemName} -> {it.SystemCore}")));
 
-                        return false;
+                            return false;
+                        }
                     }
-                }
 
                 BlastLayer bl = new BlastLayer();
 
