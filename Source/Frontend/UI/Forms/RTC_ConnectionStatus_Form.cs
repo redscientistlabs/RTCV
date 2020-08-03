@@ -4,7 +4,7 @@
     using System.Drawing;
     using System.Windows.Forms;
     using RTCV.Common;
-    using static RTCV.UI.UI_Extensions;
+    using RTCV.UI.Modular;
 
     public partial class RTC_ConnectionStatus_Form : ComponentForm, IAutoColorize, IBlockable
     {

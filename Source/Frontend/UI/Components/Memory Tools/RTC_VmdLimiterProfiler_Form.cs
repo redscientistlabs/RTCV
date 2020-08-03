@@ -8,7 +8,7 @@ namespace RTCV.UI
     using RTCV.CorruptCore;
     using RTCV.NetCore;
     using RTCV.Common;
-    using static RTCV.UI.UI_Extensions;
+    using RTCV.UI.Modular;
 
     public partial class RTC_VmdLimiterProfiler_Form : ComponentForm, IAutoColorize, IBlockable
     {

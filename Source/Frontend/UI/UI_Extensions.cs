@@ -16,6 +16,7 @@ namespace RTCV.UI
     using System.Runtime.InteropServices;
     using System.Text;
     using System.Windows.Forms;
+    using RTCV.UI.Modular;
 
     public static class UI_Extensions
     {

@@ -4,7 +4,7 @@
     using System.Windows.Forms;
     using RTCV.CorruptCore;
     using RTCV.Common;
-    using static RTCV.UI.UI_Extensions;
+    using RTCV.UI.Modular;
 
     public partial class RTC_SettingsAbout_Form : ComponentForm, IAutoColorize, IBlockable
     {
