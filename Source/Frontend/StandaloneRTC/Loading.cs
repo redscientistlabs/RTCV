@@ -4,16 +4,25 @@
     using System.IO;
     using System.Linq;
     using System.Reflection;
+    using System.Runtime.InteropServices;
     using System.Windows.Forms;
     using RTCV.UI;
+    using RTCV.NetCore.NetCore_Extensions;
 
     public partial class Loader : UI_Extensions.RTC_Standalone_Form
     {
+        private static bool IsGDIEnhancedScalingAvailable() => (Environment.OSVersion.Version.Major == 10 &
+                    Environment.OSVersion.Version.Build >= 17763);
+
+        [DllImport("User32.dll")]
+        public static extern DPI_AWARENESS_CONTEXT SetThreadDpiAwarenessContext(
+            DPI_AWARENESS_CONTEXT dpiContext);
+
         public Loader(string[] args)
         {
-            if (RTCV.NetCore.NetCore_Extensions.IsGDIEnhancedScalingAvailable())
+            if (IsGDIEnhancedScalingAvailable())
             {
-                RTCV.NetCore.NetCore_Extensions.SetThreadDpiAwarenessContext(RTCV.NetCore.NetCore_Extensions.DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED);
+                SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED);
                 Application.EnableVisualStyles();
             }
 

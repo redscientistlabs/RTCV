@@ -9,6 +9,7 @@ namespace RTCV.NetCore
     using System.Runtime.Serialization;
     using System.Threading;
     using Ceras;
+    using RTCV.NetCore.NetCore_Extensions;
 
     public class TCPLink : IDisposable
     {

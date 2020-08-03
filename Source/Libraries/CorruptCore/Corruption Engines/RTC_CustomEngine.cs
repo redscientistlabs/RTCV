@@ -9,6 +9,7 @@
     using System.Windows.Forms;
     using RTCV.Common.CustomExtensions;
     using RTCV.NetCore;
+    using RTCV.NetCore.NetCore_Extensions;
 
     public static class RTC_CustomEngine
     {
