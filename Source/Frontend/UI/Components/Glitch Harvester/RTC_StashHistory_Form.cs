@@ -7,6 +7,7 @@ namespace RTCV.UI
     using RTCV.CorruptCore;
     using RTCV.NetCore;
     using RTCV.Common;
+    using RTCV.UI.Modular;
     using static RTCV.UI.UI_Extensions;
 
     public partial class RTC_StashHistory_Form : ComponentForm, IAutoColorize, IBlockable

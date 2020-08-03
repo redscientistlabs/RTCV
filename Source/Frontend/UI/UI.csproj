@@ -572,6 +572,7 @@
     <EmbeddedResource Include="Modular\UI_CanvasForm.resx">
       <DependentUpon>UI_CanvasForm.cs</DependentUpon>
     </EmbeddedResource>
+    <Compile Include="Modular\ComponentForm.cs" />
     <EmbeddedResource Include="Modular\UI_ComponentFormSubForm.resx">
       <DependentUpon>UI_ComponentFormSubForm.cs</DependentUpon>
     </EmbeddedResource>

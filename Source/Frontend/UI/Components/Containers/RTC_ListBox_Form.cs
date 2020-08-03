@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Windows.Forms;
     using RTCV.CorruptCore;
-    using static RTCV.UI.UI_Extensions;
+    using RTCV.UI.Modular;
 
     public partial class RTC_ListBox_Form : ComponentForm, IBlockable
     {

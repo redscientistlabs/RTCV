@@ -13,7 +13,7 @@
     using RTCV.NetCore;
     using RTCV.Common;
     using RTCV.Common.CustomExtensions;
-    using static RTCV.UI.UI_Extensions;
+    using RTCV.UI.Modular;
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class RTC_VmdAct_Form : ComponentForm, IAutoColorize, IBlockable
