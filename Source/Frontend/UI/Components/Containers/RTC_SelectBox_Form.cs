@@ -2,7 +2,7 @@
 {
     using System;
     using System.Windows.Forms;
-    using static RTCV.UI.UI_Extensions;
+    using RTCV.UI.Modular;
 
     public partial class RTC_SelectBox_Form : ComponentForm, IBlockable
     {

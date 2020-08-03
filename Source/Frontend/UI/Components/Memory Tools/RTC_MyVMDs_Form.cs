@@ -5,7 +5,7 @@ namespace RTCV.UI
     using System.Windows.Forms;
     using RTCV.CorruptCore;
     using RTCV.Common;
-    using static RTCV.UI.UI_Extensions;
+    using RTCV.UI.Modular;
 
     public partial class RTC_MyVMDs_Form : ComponentForm, IAutoColorize, IBlockable
     {
@@ -45,7 +45,7 @@ namespace RTCV.UI
 
             foreach (var item in lbLoadedVmdList.SelectedItems)
             {
-                string vmdPath = Path.Combine(RtcCore.vmdsDir, item.ToString());
+                string vmdPath = Path.Combine(RtcCore.VmdsDir, item.ToString());
 
                 if (File.Exists(vmdPath))
                     File.Delete(vmdPath);
@@ -58,10 +58,10 @@ namespace RTCV.UI
         {
             lbLoadedVmdList.Items.Clear();
 
-            if (!Directory.Exists(RtcCore.vmdsDir))
-                Directory.CreateDirectory(RtcCore.vmdsDir);
+            if (!Directory.Exists(RtcCore.VmdsDir))
+                Directory.CreateDirectory(RtcCore.VmdsDir);
 
-            var files = Directory.GetFiles(RtcCore.vmdsDir);
+            var files = Directory.GetFiles(RtcCore.VmdsDir);
             foreach (var file in files)
             {
                 string shortfile = file.Substring(file.LastIndexOf('\\') + 1);
@@ -77,7 +77,7 @@ namespace RTCV.UI
 
         private static void RenameVMD(string vmdName)
         {
-            string vmdPath = Path.Combine(RtcCore.vmdsDir, vmdName);
+            string vmdPath = Path.Combine(RtcCore.VmdsDir, vmdName);
             string name = "";
             string value = vmdName.Trim().Replace("[V]", "");
             string path = "";
@@ -85,7 +85,7 @@ namespace RTCV.UI
             {
                 name = value.Trim();
 
-                path = Path.Combine(RtcCore.vmdsDir, name + ".vmd");
+                path = Path.Combine(RtcCore.VmdsDir, name + ".vmd");
             }
             else
             {
@@ -138,7 +138,7 @@ namespace RTCV.UI
                 return;
 
             string vmdName = lbLoadedVmdList.SelectedItem.ToString();
-            string path = Path.Combine(RtcCore.vmdsDir, vmdName);
+            string path = Path.Combine(RtcCore.VmdsDir, vmdName);
 
             SaveFileDialog saveFileDialog1 = new SaveFileDialog
             {
@@ -160,14 +160,13 @@ namespace RTCV.UI
         {
             try
             {
-                Common.CopyFile(filename, RtcCore.vmdsDir, true);
+                Common.CopyFile(filename, RtcCore.VmdsDir, true);
                 RefreshVMDs();
             }
             catch (Common.OverwriteCancelledException)
             {
             }
         }
-
 
         private void btnLoadVmd_Click(object sender, EventArgs e)
         {
@@ -177,7 +176,7 @@ namespace RTCV.UI
             foreach (var item in lbLoadedVmdList.SelectedItems)
             {
                 string vmdName = item.ToString();
-                string path = Path.Combine(RtcCore.vmdsDir, vmdName);
+                string path = Path.Combine(RtcCore.VmdsDir, vmdName);
 
                 S.GET<RTC_VmdPool_Form>().loadVmd(path, true);
             }

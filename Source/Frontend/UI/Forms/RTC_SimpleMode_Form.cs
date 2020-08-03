@@ -7,7 +7,7 @@
     using RTCV.NetCore;
     using RTCV.Common;
     using RTCV.UI.Components.Controls;
-    using static RTCV.UI.UI_Extensions;
+    using RTCV.UI.Modular;
 
     public partial class RTC_SimpleMode_Form : ComponentForm, IAutoColorize, IBlockable
     {

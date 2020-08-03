@@ -1,0 +1,307 @@
+name: Build dependants
+on:
+  push:
+    branches:
+      - '506'
+  pull_request:
+    branches:
+      - '506'
+
+jobs:
+  Bizhawk:
+    runs-on: windows-2019
+    steps:
+    # Checkout relevant code
+    - name: Checkout current build target
+      uses: actions/checkout@v2
+      with:
+        path: 'RTCV'
+    - name: Checkout Bizhawk
+      uses: actions/checkout@v2
+      with:
+        repository: 'ircluzar/Bizhawk-Vanguard'
+        ref: 'master'
+        path: 'Bizhawk-Vanguard'
+
+    # Setup Tooling
+    - name: Setup Nuget
+      uses: nuget/setup-nuget@v1.0.2
+      with:
+        nuget-version: 'latest'
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.0
+
+    # Restore nuget packages for all targets
+    - name: Restore Nuget packages in current build target
+      run: nuget restore '.\RTCV\'
+    - name: Restore Nuget packages in Bizhawk
+      run: nuget restore '.\Bizhawk-Vanguard\Real-Time Corruptor\BizHawk_RTC\BizHawk.sln'
+
+    # Build Bizhawk
+    - name: Build Bizhawk-Vanguard
+      run: msbuild '.\Bizhawk-Vanguard\Real-Time Corruptor\BizHawk_RTC\BizHawk.sln'
+
+  CemuStub:
+    runs-on: windows-2019
+    steps:
+    # Checkout relevant code
+    - name: Checkout current build target
+      uses: actions/checkout@v2
+      with:
+        path: 'RTCV'
+    - name: Checkout CemuStub
+      uses: actions/checkout@v2
+      with:
+        repository: 'ircluzar/CemuStub-Vanguard'
+        ref: 'master'
+        path: 'CemuStub-Vanguard'
+
+    # Setup Tooling
+    - name: Setup Nuget
+      uses: nuget/setup-nuget@v1.0.2
+      with:
+        nuget-version: 'latest'
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.0
+
+    # Restore nuget packages for all targets
+    - name: Restore Nuget packages in current build target
+      run: nuget restore '.\RTCV\'
+    - name: Restore Nuget packages in CemuStub
+      run: nuget restore '.\CemuStub-Vanguard\'
+
+    # Build CemuStub
+    - name: Build CemuStub-Vanguard
+      run: msbuild '.\CemuStub-Vanguard\'
+
+  FileStub:
+    runs-on: windows-2019
+    steps:
+    # Checkout relevant code
+    - name: Checkout current build target
+      uses: actions/checkout@v2
+      with:
+        path: 'RTCV'
+    - name: Checkout FileStub
+      uses: actions/checkout@v2
+      with:
+        repository: 'ircluzar/FileStub-Vanguard'
+        ref: 'master'
+        path: 'FileStub-Vanguard'
+
+    # Setup Tooling
+    - name: Setup Nuget
+      uses: nuget/setup-nuget@v1.0.2
+      with:
+        nuget-version: 'latest'
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.0
+
+    # Restore nuget packages for all targets
+    - name: Restore Nuget packages in current build target
+      run: nuget restore '.\RTCV\'
+    - name: Restore Nuget packages in FileStub
+      run: nuget restore '.\FileStub-Vanguard\FileStub-Vanguard.sln'
+
+    # Build FileStub
+    - name: Build FileStub-Vanguard
+      run: msbuild '.\FileStub-Vanguard\FileStub-Vanguard.sln'
+
+  UnityStub:
+    runs-on: windows-2019
+    steps:
+    # Checkout relevant code
+    - name: Checkout current build target
+      uses: actions/checkout@v2
+      with:
+        path: 'RTCV'
+    - name: Checkout UnityStub
+      uses: actions/checkout@v2
+      with:
+        repository: 'ircluzar/UnityStub-Vanguard'
+        ref: 'master'
+        path: 'UnityStub-Vanguard'
+
+    # Setup Tooling
+    - name: Setup Nuget
+      uses: nuget/setup-nuget@v1.0.2
+      with:
+        nuget-version: 'latest'
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.0
+
+    # Restore nuget packages for all targets
+    - name: Restore Nuget packages in current build target
+      run: nuget restore '.\RTCV\'
+    - name: Restore Nuget packages in UnityStub
+      run: nuget restore '.\UnityStub-Vanguard\UnityStub-Vanguard.sln'
+
+    # Build UnityStub
+    - name: Build UnityStub-Vanguard
+      run: msbuild '.\UnityStub-Vanguard\UnityStub-Vanguard.sln'
+
+  ProcessStub:
+    runs-on: windows-2019
+    steps:
+    # Checkout relevant code
+    - name: Checkout current build target
+      uses: actions/checkout@v2
+      with:
+        path: 'RTCV'
+    - name: Checkout ProcessStub
+      uses: actions/checkout@v2
+      with:
+        repository: 'NarryG/ProcessStub-Vanguard'
+        ref: 'master'
+        path: 'ProcessStub-Vanguard'
+
+    # Setup Tooling
+    - name: Setup Nuget
+      uses: nuget/setup-nuget@v1.0.2
+      with:
+        nuget-version: 'latest'
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.0
+
+    # Restore nuget packages for all targets
+    - name: Restore Nuget packages in current build target
+      run: nuget restore '.\RTCV\'
+    - name: Restore Nuget packages in ProcessStub
+      run: nuget restore '.\ProcessStub-Vanguard\ProcessStub-Vanguard.sln'
+
+    # Build ProcessStub
+    - name: Build ProcessStub-Vanguard
+      run: msbuild '.\ProcessStub-Vanguard\ProcessStub-Vanguard.sln'
+
+  melonDS:
+    runs-on: windows-2019
+    steps:
+    # Setup tooling
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.0
+    - name: Setup Nuget
+      uses: nuget/setup-nuget@v1.0.2
+      with:
+        nuget-version: 'latest'
+
+    # Setup RTCV
+    - name: Checkout current build target
+      uses: actions/checkout@v2
+      with:
+        path: 'RTCV'
+    - name: Restore Nuget packages in RTCV
+      run: nuget restore '.\RTCV\'
+    - name: Build RTCV
+      run: msbuild '.\RTCV\'
+
+    # Build melonDS
+    - name: Checkout melonDS-Vanguard
+      uses: actions/checkout@v2
+      with:
+        repository: 'NarryG/melonDS-Vanguard'
+        ref: 'Vanguard'
+        path: 'melonDS-Vanguard'
+    - name: Create build directory
+      run: |
+        New-Item -ItemType directory -Path ${{runner.workspace}}\RTCV\melonDS-Vanguard\build
+    - name: Configure
+      run: |
+        cd ${{runner.workspace}}\RTCV\melonDS-Vanguard\build
+        cmake .. -DENABLE_LTO=false -DDONT_COPY_FIRMWARE=true -DDONT_BUILD_EXTRA_SDL_CODE=true -DCI_BUILD_SHARED_LIBS=true -DCI_INCLUDE_EXTRA_LIBUI_LIBS=true
+    - name: Build melonDS-Vanguard
+      run: |
+        cd ${{runner.workspace}}\RTCV\melonDS-Vanguard\build
+        msbuild melonDS.sln
+
+  dolphin:
+    runs-on: windows-2019
+    steps:
+    - name: Checkout dolphin
+      uses: actions/checkout@v2
+      with:
+        repository: 'NarryG/dolphin-vanguard'
+        ref: 'Vanguard'
+        path: 'dolphin-vanguard'
+        submodules: 'true'
+    - name: Checkout current build target
+      uses: actions/checkout@v2
+      with:
+        path: 'RTCV'
+    - name: Setup Nuget
+      uses: nuget/setup-nuget@v1.0.2
+      with:
+        nuget-version: 'latest'
+    - name: Restore Nuget packages in RTCV
+      run: nuget restore '.\RTCV\'
+    - name: Restore Nuget packages in dolphin-vanguard
+      run: nuget restore '.\dolphin-vanguard\Source\dolphin-emu.sln'
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.0
+    - name: Build with MSBuild
+      run: msbuild '.\dolphin-vanguard\Source\dolphin-emu.sln' /property:Configuration=Debug /property:Platform=x64 /p:TreatWarningAsError=false
+
+  pcsx2:
+    runs-on: windows-2019
+    steps:
+    - name: Checkout pcsx2
+      uses: actions/checkout@v2
+      with:
+        repository: 'NarryG/pcsx2-Vanguard'
+        ref: 'Vanguard'
+        path: 'pcsx2-Vanguard'
+        submodules: 'recursive'
+    - name: Checkout current build target
+      uses: actions/checkout@v2
+      with:
+        path: 'RTCV'
+    - name: Setup Nuget
+      uses: nuget/setup-nuget@v1.0.2
+      with:
+        nuget-version: 'latest'
+    - name: Restore Nuget packages in RTCV
+      run: nuget restore '.\RTCV\'
+    - name: Restore Nuget packages in pcsx2-Vanguard
+      run: nuget restore '.\pcsx2-Vanguard\PCSX2_suite.sln'
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.0
+    - name: Build with MSBuild
+      run: msbuild '.\pcsx2-Vanguard\PCSX2_suite.sln' /property:Configuration=Debug /property:Platform=Win32
+
+  citra:
+    runs-on: windows-2019
+    steps:
+    # RTCV
+    - name: Checkout current build target
+      uses: actions/checkout@v2
+      with:
+        path: 'RTCV'
+    - name: Setup Nuget
+      uses: nuget/setup-nuget@v1.0.2
+      with:
+        nuget-version: 'latest'
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.0
+    - name: Restore Nuget packages in RTCV
+      run: nuget restore '.\RTCV\'
+    - name: Build RTCV
+      run: msbuild '.\RTCV\RTCV.sln'
+
+    # citra
+    - name: Checkout citra
+      uses: actions/checkout@v2
+      with:
+        repository: 'NarryG/citra-vanguard'
+        ref: 'vanguard'
+        path: 'citra-vanguard'
+        submodules: 'recursive'
+    - name: Create Citra build directory
+      working-directory: ${{runner.workspace}}\RTCV\citra-vanguard
+      run: New-Item -ItemType Directory -Path build
+    - name: Citra prebuild
+      run: |
+        cd citra-vanguard\build
+        cmake .. -DCITRA_DONT_BUILD_DEDICATED_ROOM=true -DCITRA_DONT_BUILD_TESTS=true -DENABLE_SDL2=false -DCITRA_USE_BUNDLED_QT=1
+    - name: Citra build
+      run: |
+        cd citra-vanguard\build
+        msbuild citra.sln

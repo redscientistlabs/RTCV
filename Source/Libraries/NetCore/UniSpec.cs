@@ -11,6 +11,7 @@
     using Ceras;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
+    using RTCV.NetCore.NetCore_Extensions;
 
     public class FullSpec : BaseSpec
     {
@@ -289,7 +290,7 @@
         }
 
         public void Reset() => specDico.Clear();
-        public object Clone() => NetCore_Extensions.ObjectCopier.Clone(this);
+        public object Clone() => ObjectCopier.Clone(this);
     }
 
     public class SpecUpdateEventArgs : EventArgs

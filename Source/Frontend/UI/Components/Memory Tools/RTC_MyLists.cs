@@ -7,7 +7,7 @@ namespace RTCV.UI
     using System.Windows.Forms;
     using RTCV.CorruptCore;
     using RTCV.Common;
-    using static RTCV.UI.UI_Extensions;
+    using RTCV.UI.Modular;
 
     public partial class RTC_MyLists_Form : ComponentForm, IAutoColorize, IBlockable
     {
@@ -47,7 +47,7 @@ namespace RTCV.UI
 
             foreach (var item in lbKnownLists.SelectedItems)
             {
-                string listPath = Path.Combine(RtcCore.listsDir, item.ToString().Replace("[DISABLED] ", "$"));
+                string listPath = Path.Combine(RtcCore.ListsDir, item.ToString().Replace("[DISABLED] ", "$"));
 
                 if (File.Exists(listPath))
                     File.Delete(listPath);
@@ -60,10 +60,10 @@ namespace RTCV.UI
         {
             lbKnownLists.Items.Clear();
 
-            if (!Directory.Exists(RtcCore.listsDir))
-                Directory.CreateDirectory(RtcCore.listsDir);
+            if (!Directory.Exists(RtcCore.ListsDir))
+                Directory.CreateDirectory(RtcCore.ListsDir);
 
-            var files = Directory.GetFiles(RtcCore.listsDir).OrderBy(it => it.Replace("$", ""));
+            var files = Directory.GetFiles(RtcCore.ListsDir).OrderBy(it => it.Replace("$", ""));
             foreach (var file in files)
             {
                 string shortfile = file.Substring(file.LastIndexOf('\\') + 1);
@@ -79,7 +79,7 @@ namespace RTCV.UI
 
         private static void RenameList(string listName)
         {
-            string listPath = Path.Combine(RtcCore.listsDir, listName);
+            string listPath = Path.Combine(RtcCore.ListsDir, listName);
             string name = "";
             string value = listName.Trim();
             string path = "";
@@ -87,7 +87,7 @@ namespace RTCV.UI
             {
                 name = value.Trim();
 
-                path = Path.Combine(RtcCore.listsDir, name + ".txt");
+                path = Path.Combine(RtcCore.ListsDir, name + ".txt");
             }
             else
             {
@@ -158,7 +158,7 @@ namespace RTCV.UI
                 return;
 
             string listName = lbKnownLists.SelectedItem.ToString().Replace("[DISABLED] ", "");
-            string path = Path.Combine(RtcCore.listsDir, listName);
+            string path = Path.Combine(RtcCore.ListsDir, listName);
 
             SaveFileDialog saveFileDialog1 = new SaveFileDialog
             {
@@ -180,7 +180,7 @@ namespace RTCV.UI
         {
             try
             {
-                Common.CopyFile(filename, RtcCore.listsDir, true);
+                Common.CopyFile(filename, RtcCore.ListsDir, true);
                 RefreshLists();
             }
             catch (Common.OverwriteCancelledException)
@@ -202,8 +202,8 @@ namespace RTCV.UI
                 if (cleanListName[0] == '$')
                     cleanListName = cleanListName.Substring(1);
 
-                string pathDisabled = Path.Combine(RtcCore.listsDir, "$" + cleanListName);
-                string pathEnabled = Path.Combine(RtcCore.listsDir, cleanListName);
+                string pathDisabled = Path.Combine(RtcCore.ListsDir, "$" + cleanListName);
+                string pathEnabled = Path.Combine(RtcCore.ListsDir, cleanListName);
 
                 if (btnEnableDisableList.Text.Contains("Disable"))
                 {
@@ -224,7 +224,7 @@ namespace RTCV.UI
             CorruptCore.Filtering.ResetLoadedListsInUI();
 
             //reload lists
-            UICore.LoadLists(RtcCore.listsDir);
+            UICore.LoadLists(RtcCore.ListsDir);
             UICore.LoadLists(Path.Combine(RtcCore.EmuDir, "LISTS"));
 
             RefreshLists();
@@ -247,7 +247,7 @@ namespace RTCV.UI
             CorruptCore.Filtering.ResetLoadedListsInUI();
 
             //reload lists
-            UICore.LoadLists(RtcCore.listsDir);
+            UICore.LoadLists(RtcCore.ListsDir);
             UICore.LoadLists(Path.Combine(RtcCore.EmuDir, "LISTS"));
 
             RefreshLists();

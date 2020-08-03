@@ -9,7 +9,7 @@ namespace RTCV.UI
     using System.Windows.Forms;
     using RTCV.CorruptCore;
     using RTCV.Common;
-    using static RTCV.UI.UI_Extensions;
+    using RTCV.UI.Modular;
 
     public partial class RTC_ListGen_Form : ComponentForm, IAutoColorize, IBlockable
     {
@@ -201,7 +201,7 @@ namespace RTCV.UI
 
         private void btnRefreshListsFromFile_Click(object sender, EventArgs e)
         {
-            UICore.LoadLists(RtcCore.listsDir);
+            UICore.LoadLists(RtcCore.ListsDir);
             UICore.LoadLists(Path.Combine(RtcCore.EmuDir, "LISTS"));
         }
 
