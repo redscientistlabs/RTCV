@@ -5,7 +5,7 @@ namespace RTCV.UI
     using RTCV.Common;
     using RTCV.CorruptCore;
     using RTCV.NetCore;
-    using static RTCV.UI.UI_Extensions;
+    using RTCV.UI.Modular;
 
     public partial class RTC_GeneralParameters_Form : ComponentForm, IAutoColorize, IBlockable
     {

@@ -1,7 +1,7 @@
 ﻿namespace RTCV.UI
 {
     using System;
-    using static RTCV.UI.UI_Extensions;
+    using RTCV.UI.Modular;
 
     public partial class UI_ComponentFormSubForm : ComponentForm, ISubForm, IBlockable
     {

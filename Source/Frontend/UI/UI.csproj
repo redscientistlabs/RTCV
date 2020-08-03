@@ -375,6 +375,7 @@
       <DependentUpon>RTC_Test_Form.cs</DependentUpon>
     </Compile>
     <Compile Include="GameProtection.cs" />
+    <Compile Include="SortableBindingList.cs" />
     <Compile Include="Input\Bindings.cs" />
     <Compile Include="Input\Gamepad.cs" />
     <Compile Include="Input\Gamepad360.cs" />
@@ -571,6 +572,7 @@
     <EmbeddedResource Include="Modular\UI_CanvasForm.resx">
       <DependentUpon>UI_CanvasForm.cs</DependentUpon>
     </EmbeddedResource>
+    <Compile Include="Modular\ComponentForm.cs" />
     <EmbeddedResource Include="Modular\UI_ComponentFormSubForm.resx">
       <DependentUpon>UI_ComponentFormSubForm.cs</DependentUpon>
     </EmbeddedResource>

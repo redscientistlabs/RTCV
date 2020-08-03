@@ -10,7 +10,7 @@
     using RTCV.CorruptCore;
     using RTCV.NetCore;
     using RTCV.Common;
-    using static RTCV.UI.UI_Extensions;
+    using RTCV.UI.Modular;
 
     public partial class RTC_StockpilePlayer_Form : ComponentForm, IAutoColorize, IBlockable
     {

@@ -2,8 +2,6 @@ namespace RTCV.CorruptCore
 {
     using System;
 
-    public delegate void ProgressBarEventHandler(object source, ProgressBarEventArgs e);
-
     public class ProgressBarEventArgs : EventArgs
     {
         public string CurrentTask;

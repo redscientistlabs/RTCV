@@ -8,6 +8,7 @@ namespace RTCV.UI
     using RTCV.CorruptCore;
     using RTCV.NetCore;
     using RTCV.Common;
+    using RTCV.UI.Modular;
     using static RTCV.UI.UI_Extensions;
 
     public partial class RTC_VmdPool_Form : ComponentForm, IAutoColorize, IBlockable
@@ -359,10 +360,10 @@ namespace RTCV.UI
                         return;
                     }
 
-                    if (!Directory.Exists(RtcCore.vmdsDir))
-                        Directory.CreateDirectory(RtcCore.vmdsDir);
+                    if (!Directory.Exists(RtcCore.VmdsDir))
+                        Directory.CreateDirectory(RtcCore.VmdsDir);
 
-                    string targetPath = Path.Combine(RtcCore.vmdsDir, value.Trim() + ".vmd");
+                    string targetPath = Path.Combine(RtcCore.VmdsDir, value.Trim() + ".vmd");
 
                     if (File.Exists(targetPath))
                     {
@@ -391,7 +392,7 @@ namespace RTCV.UI
 
                     //string targetPath = Path.Combine(RtcCore.vmdsDir, value.Trim() + ".vmd");
 
-                    string itemTargetPath = Path.Combine(RtcCore.vmdsDir, itemValue.Trim() + ".vmd");
+                    string itemTargetPath = Path.Combine(RtcCore.VmdsDir, itemValue.Trim() + ".vmd");
 
                     if (File.Exists(itemTargetPath))
                     {

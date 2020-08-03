@@ -7,7 +7,7 @@
     using System.Media;
     using System.Windows.Forms;
     using RTCV.Common;
-    using static RTCV.UI.UI_Extensions;
+    using RTCV.UI.Modular;
 
     public partial class RTC_SettingsNetCore_Form : ComponentForm, IAutoColorize, IBlockable
     {
@@ -24,18 +24,18 @@
             switch (cbCrashSoundEffect.SelectedIndex)
             {
                 case 0:
-                    var PlatesHdFiles = Directory.GetFiles(Path.Combine(CorruptCore.RtcCore.assetsDir, "PLATESHD"));
+                    var PlatesHdFiles = Directory.GetFiles(Path.Combine(CorruptCore.RtcCore.AssetsDir, "PLATESHD"));
                     AutoKillSwitch.LoadedSounds = PlatesHdFiles.Select(it => new SoundPlayer(it)).ToArray();
                     break;
                 case 1:
-                    AutoKillSwitch.LoadedSounds = new SoundPlayer[] { new SoundPlayer(Path.Combine(CorruptCore.RtcCore.assetsDir, "crash.wav")) };
+                    AutoKillSwitch.LoadedSounds = new SoundPlayer[] { new SoundPlayer(Path.Combine(CorruptCore.RtcCore.AssetsDir, "crash.wav")) };
                     break;
 
                 case 2:
                     AutoKillSwitch.LoadedSounds = null;
                     break;
                 case 3:
-                    var CrashSoundsFiles = Directory.GetFiles(Path.Combine(CorruptCore.RtcCore.assetsDir, "CRASHSOUNDS"));
+                    var CrashSoundsFiles = Directory.GetFiles(Path.Combine(CorruptCore.RtcCore.AssetsDir, "CRASHSOUNDS"));
                     AutoKillSwitch.LoadedSounds = CrashSoundsFiles.Select(it => new SoundPlayer(it)).ToArray();
                     break;
             }

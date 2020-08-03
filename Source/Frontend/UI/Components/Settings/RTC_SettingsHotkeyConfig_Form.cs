@@ -10,7 +10,7 @@ namespace RTCV.UI
     using RTCV.Common;
     using RTCV.UI.Components.Controls;
     using RTCV.UI.Input;
-    using static RTCV.UI.UI_Extensions;
+    using RTCV.UI.Modular;
 
     public partial class RTC_SettingsHotkeyConfig_Form : ComponentForm, IAutoColorize, IBlockable
     {

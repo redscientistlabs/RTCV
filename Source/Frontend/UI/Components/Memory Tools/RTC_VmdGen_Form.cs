@@ -2,12 +2,11 @@
 {
     using System;
     using System.Data;
-    using System.Globalization;
     using System.Linq;
     using System.Windows.Forms;
     using RTCV.CorruptCore;
     using RTCV.Common;
-    using static RTCV.UI.UI_Extensions;
+    using RTCV.UI.Modular;
 
     public partial class RTC_VmdGen_Form : ComponentForm, IAutoColorize, IBlockable
     {
