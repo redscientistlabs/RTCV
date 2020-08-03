@@ -266,3 +266,42 @@ jobs:
       uses: microsoft/setup-msbuild@v1.0.0
     - name: Build with MSBuild
       run: msbuild '.\pcsx2-Vanguard\PCSX2_suite.sln' /property:Configuration=Debug /property:Platform=Win32
+
+  citra:
+    runs-on: windows-2019
+    steps:
+    # RTCV
+    - name: Checkout current build target
+      uses: actions/checkout@v2
+      with:
+        path: 'RTCV'
+    - name: Setup Nuget
+      uses: nuget/setup-nuget@v1.0.2
+      with:
+        nuget-version: 'latest'
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.0
+    - name: Restore Nuget packages in RTCV
+      run: nuget restore '.\RTCV\'
+    - name: Build RTCV
+      run: msbuild '.\RTCV\RTCV.sln'
+
+    # citra
+    - name: Checkout citra
+      uses: actions/checkout@v2
+      with:
+        repository: 'NarryG/citra-vanguard'
+        ref: 'vanguard'
+        path: 'citra-vanguard'
+        submodules: 'recursive'
+    - name: Create Citra build directory
+      working-directory: ${{runner.workspace}}\citra-vanguard\citra-vanguard
+      run: New-Item -ItemType Directory -Path build
+    - name: Citra prebuild
+      run: |
+        cd citra-vanguard\build
+        cmake .. -DCITRA_DONT_BUILD_DEDICATED_ROOM=true -DCITRA_DONT_BUILD_TESTS=true -DENABLE_SDL2=false -DCITRA_USE_BUNDLED_QT=1
+    - name: Citra build
+      run: |
+        cd citra-vanguard\build
+        msbuild citra.sln
