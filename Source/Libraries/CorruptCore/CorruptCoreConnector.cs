@@ -178,41 +178,13 @@ namespace RTCV.CorruptCore
                         {
                             var valueAsObjectArr = advancedMessage.objectValue as object[];
                             BlastGeneratorBlast(valueAsObjectArr, ref e);
-                            break;
                         }
+                        break;
 
                     case REMOTE_LOADSTATE:
                         {
-                            lock (loadLock)
-                            {
-                                var valueAsObjectArr = advancedMessage.objectValue as object[];
-                                var sk = (StashKey)valueAsObjectArr[0];
-                                var reloadRom = (bool)valueAsObjectArr[1];
-                                var runBlastLayer = (bool)valueAsObjectArr[2];
-
-                                var returnValue = false;
-
-                                //Load the game from the main thread
-                                if (reloadRom)
-                                {
-                                    SyncObjectSingleton.FormExecute(() => StockpileManager_EmuSide.LoadRom_NET(sk));
-                                }
-                                void a()
-                                {
-                                    returnValue = StockpileManager_EmuSide.LoadState_NET(sk, runBlastLayer);
-                                }
-                                //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
-                                if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
-                                {
-                                    SyncObjectSingleton.FormExecute(a);
-                                    e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
-                                }
-                                else //We're loading on the emulator thread which'll block
-                                {
-                                    SyncObjectSingleton.EmuThreadExecute(a, false);
-                                }
-                                e.setReturnValue(returnValue);
-                            }
+                            var valueAsObjectArr = advancedMessage.objectValue as object[];
+                            LoadState(valueAsObjectArr);
                         }
                         break;
                     case REMOTE_SAVESTATE:
@@ -453,6 +425,39 @@ namespace RTCV.CorruptCore
             if (!RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_GAMEPROTECTION) ?? true)
             {
                 LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_DISABLEGAMEPROTECTIONSUPPORT);
+            }
+        }
+
+        private void LoadState(object[] valueAsObjectArr)
+        {
+            lock (loadLock)
+            {
+                var sk = (StashKey)valueAsObjectArr[0];
+                var reloadRom = (bool)valueAsObjectArr[1];
+                var runBlastLayer = (bool)valueAsObjectArr[2];
+
+                var returnValue = false;
+
+                //Load the game from the main thread
+                if (reloadRom)
+                {
+                    SyncObjectSingleton.FormExecute(() => StockpileManager_EmuSide.LoadRom_NET(sk));
+                }
+                void a()
+                {
+                    returnValue = StockpileManager_EmuSide.LoadState_NET(sk, runBlastLayer);
+                }
+                //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
+                if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
+                {
+                    SyncObjectSingleton.FormExecute(a);
+                    e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
+                }
+                else //We're loading on the emulator thread which'll block
+                {
+                    SyncObjectSingleton.EmuThreadExecute(a, false);
+                }
+                e.setReturnValue(returnValue);
             }
         }
 
