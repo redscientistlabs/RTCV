@@ -371,8 +371,7 @@ namespace RTCV.UI
                         SyncObjectSingleton.FormExecute(() =>
                         {
                             var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
-                            blastEditor.btnSanitizeTool_Click(null, null);
-
+                            blastEditor.OpenSanitizeTool(false);
                         });
                         break;
 
@@ -381,16 +380,40 @@ namespace RTCV.UI
                         {
                             var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
                             blastEditor.btnLoadCorrupt_Click(null, null);
-
                         });
                         break;
+
+                    case REMOTE_BLASTEDITOR_LOADORIGINAL:
+                        SyncObjectSingleton.FormExecute(() =>
+                        {
+                            var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
+                            blastEditor.LoadOriginal();
+                        });
+                        break;
+
+                    case REMOTE_BLASTEDITOR_GETLAYERSIZE_UNLOCKEDUNITS:
+                        SyncObjectSingleton.FormExecute(() =>
+                        {   // this is what the sanitize tool uses to judge how many units there are left to sanitize.
+                        var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
+                        int units = blastEditor.currentSK?.BlastLayer?.Layer.Count(x => !x.IsLocked) ?? -1;
+
+                        e.setReturnValue(units);
+                        });
+                        break;
+
+                    case REMOTE_BLASTEDITOR_GETLAYERSIZE:
+                        SyncObjectSingleton.FormExecute(() =>
+                        {
+                            e.setReturnValue(S.GET<RTC_NewBlastEditor_Form>().currentSK?.BlastLayer?.Layer?.Count ?? -1);
+                        });
+                        break;
+
 
                     case REMOTE_SANITIZETOOL_STARTSANITIZING:
                         SyncObjectSingleton.FormExecute(() =>
                         {
                             var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
                             sanitizeTool.btnStartSanitizing_Click(null, null);
-
                         });
                         break;
 
@@ -398,8 +421,8 @@ namespace RTCV.UI
                         SyncObjectSingleton.FormExecute(() =>
                         {
                             var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
+                            sanitizeTool.lbSteps.Items.Clear();//this is a hack for leaving in automation
                             sanitizeTool.btnLeaveWithChanges_Click(null, null);
-
                         });
                         break;
 
@@ -407,8 +430,8 @@ namespace RTCV.UI
                         SyncObjectSingleton.FormExecute(() =>
                         {
                             var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
+                            sanitizeTool.lbSteps.Items.Clear();//this is a hack for leaving in automation
                             sanitizeTool.btnLeaveSubstractChanges_Click(null, null);
-
                         });
                         break;
 
@@ -417,7 +440,6 @@ namespace RTCV.UI
                         {
                             var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
                             sanitizeTool.btnYesEffect_Click(null, null);
-
                         });
                         break;
 
@@ -426,7 +448,6 @@ namespace RTCV.UI
                         {
                             var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
                             sanitizeTool.btnNoEffect_Click(null, null);
-
                         });
                         break;
 
@@ -435,7 +456,6 @@ namespace RTCV.UI
                         {
                             var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
                             sanitizeTool.btnReroll_Click(null, null);
-
                         });
                         break;
 

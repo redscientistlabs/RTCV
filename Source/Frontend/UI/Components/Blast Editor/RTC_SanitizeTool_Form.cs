@@ -27,7 +27,7 @@ namespace RTCV.UI
             }
         }
 
-        public static void OpenSanitizeTool(BlastLayer bl = null)
+        public static void OpenSanitizeTool(BlastLayer bl = null, bool lockUI = true)
         {
             S.GET<RTC_SanitizeTool_Form>().Close();
             var stf = new RTC_SanitizeTool_Form();
@@ -63,7 +63,11 @@ namespace RTCV.UI
             stf.workBlastLayer = bl;
 
             stf.UpdateSanitizeProgress();
-            stf.ShowDialog();
+
+            if (lockUI)
+                stf.ShowDialog();
+            else
+                stf.Show();
         }
 
         private void RTC_NewBlastEditorForm_Load(object sender, EventArgs e)
