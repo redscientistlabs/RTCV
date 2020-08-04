@@ -16,7 +16,6 @@ namespace RTCV.CorruptCore
 
         public CorruptCoreConnector()
         {
-            //spec.Side = RTCV.NetCore.NetworkSide.CLIENT;
         }
 
         public object OnMessageReceived(object sender, NetCoreEventArgs e)
@@ -177,53 +176,8 @@ namespace RTCV.CorruptCore
 
                     case BLASTGENERATOR_BLAST:
                         {
-                            List<BlastGeneratorProto> returnList = null;
                             var valueAsObjectArr = advancedMessage.objectValue as object[];
-                            var sk = (StashKey)valueAsObjectArr[0];
-                            var blastGeneratorProtos = (List<BlastGeneratorProto>)valueAsObjectArr[1];
-                            var loadBeforeCorrupt = (bool)valueAsObjectArr[2];
-                            var applyAfterCorrupt = (bool)valueAsObjectArr[3];
-                            var resumeAfter = (bool)valueAsObjectArr[4];
-                            void a()
-                            {
-                                //Load the game from the main thread
-                                if (loadBeforeCorrupt)
-                                {
-                                    SyncObjectSingleton.FormExecute(() => StockpileManager_EmuSide.LoadRom_NET(sk));
-                                }
-
-                                if (loadBeforeCorrupt)
-                                {
-                                    StockpileManager_EmuSide.LoadState_NET(sk, false);
-                                }
-
-                                returnList = BlastTools.GenerateBlastLayersFromBlastGeneratorProtos(blastGeneratorProtos);
-                                if (applyAfterCorrupt)
-                                {
-                                    var bl = new BlastLayer();
-                                    foreach (var p in returnList.Where(x => x != null))
-                                    {
-                                        bl.Layer.AddRange(p.bl.Layer);
-                                    }
-                                    bl.Apply(true);
-                                }
-                            }
-                            //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
-                            if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
-                            {
-                                SyncObjectSingleton.FormExecute(a);
-                                if (resumeAfter)
-                                {
-                                    e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
-                                }
-                            }
-                            else
-                            {
-                                SyncObjectSingleton.EmuThreadExecute(a, false);
-                            }
-
-                            e.setReturnValue(returnList);
-
+                            BlastGeneratorBlast(valueAsObjectArr, ref e);
                             break;
                         }
 
@@ -500,6 +454,55 @@ namespace RTCV.CorruptCore
             {
                 LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_DISABLEGAMEPROTECTIONSUPPORT);
             }
+        }
+
+        private void BlastGeneratorBlast(object[] valueAsObjectArr, ref NetCoreEventArgs e)
+        {
+            List<BlastGeneratorProto> returnList = null;
+            var sk = (StashKey)valueAsObjectArr[0];
+            var blastGeneratorProtos = (List<BlastGeneratorProto>)valueAsObjectArr[1];
+            var loadBeforeCorrupt = (bool)valueAsObjectArr[2];
+            var applyAfterCorrupt = (bool)valueAsObjectArr[3];
+            var resumeAfter = (bool)valueAsObjectArr[4];
+            void a()
+            {
+                //Load the game from the main thread
+                if (loadBeforeCorrupt)
+                {
+                    SyncObjectSingleton.FormExecute(() => StockpileManager_EmuSide.LoadRom_NET(sk));
+                }
+
+                if (loadBeforeCorrupt)
+                {
+                    StockpileManager_EmuSide.LoadState_NET(sk, false);
+                }
+
+                returnList = BlastTools.GenerateBlastLayersFromBlastGeneratorProtos(blastGeneratorProtos);
+                if (applyAfterCorrupt)
+                {
+                    var bl = new BlastLayer();
+                    foreach (var p in returnList.Where(x => x != null))
+                    {
+                        bl.Layer.AddRange(p.bl.Layer);
+                    }
+                    bl.Apply(true);
+                }
+            }
+            //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
+            if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
+            {
+                SyncObjectSingleton.FormExecute(a);
+                if (resumeAfter)
+                {
+                    e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
+                }
+            }
+            else
+            {
+                SyncObjectSingleton.EmuThreadExecute(a, false);
+            }
+
+            e.setReturnValue(returnList);
         }
 
         private void GenerateBlastLayer(NetCoreAdvancedMessage advancedMessage, ref NetCoreEventArgs e)
