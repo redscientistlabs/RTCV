@@ -182,56 +182,7 @@ namespace RTCV.CorruptCore
 
                     case GENERATEBLASTLAYER:
                         {
-                            var val = advancedMessage.objectValue as object[];
-                            var sk = val[0] as StashKey;
-                            var loadBeforeCorrupt = (bool)val[1];
-                            var applyBlastLayer = (bool)val[2];
-                            var backup = (bool)val[3];
-
-                            BlastLayer bl = null;
-
-                            var useSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
-
-                            void a()
-                            {
-                                lock (loadLock)
-                                {
-                                    //Load the game from the main thread
-                                    if (useSavestates && loadBeforeCorrupt)
-                                    {
-                                        SyncObjectSingleton.FormExecute(() => StockpileManager_EmuSide.LoadRom_NET(sk));
-                                    }
-
-                                    if (useSavestates && loadBeforeCorrupt)
-                                    {
-                                        StockpileManager_EmuSide.LoadState_NET(sk, false);
-                                    }
-
-                                    bl = RtcCore.GenerateBlastLayerOnAllThreads();
-
-                                    if (applyBlastLayer)
-                                    {
-                                        bl?.Apply(backup);
-                                    }
-                                }
-                            }
-
-                            //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
-                            if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
-                            {
-                                SyncObjectSingleton.FormExecute(a);
-                                e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
-                            }
-                            else //We can just do everything on the emulation thread as it'll block
-                            {
-                                SyncObjectSingleton.EmuThreadExecute(a, true);
-                            }
-
-                            if (advancedMessage.requestGuid != null)
-                            {
-                                e.setReturnValue(bl);
-                            }
-
+                            GenerateBlastLayer(advancedMessage, ref e);
                             break;
                         }
                     case APPLYBLASTLAYER:
@@ -559,6 +510,59 @@ namespace RTCV.CorruptCore
                 }
 
                 return e.returnMessage;
+            }
+        }
+
+        private void GenerateBlastLayer(NetCoreAdvancedMessage advancedMessage, ref NetCoreEventArgs e)
+        {
+            var val = advancedMessage.objectValue as object[];
+            var sk = val[0] as StashKey;
+            var loadBeforeCorrupt = (bool)val[1];
+            var applyBlastLayer = (bool)val[2];
+            var backup = (bool)val[3];
+
+            BlastLayer bl = null;
+
+            var useSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
+
+            void a()
+            {
+                lock (loadLock)
+                {
+                    //Load the game from the main thread
+                    if (useSavestates && loadBeforeCorrupt)
+                    {
+                        SyncObjectSingleton.FormExecute(() => StockpileManager_EmuSide.LoadRom_NET(sk));
+                    }
+
+                    if (useSavestates && loadBeforeCorrupt)
+                    {
+                        StockpileManager_EmuSide.LoadState_NET(sk, false);
+                    }
+
+                    bl = RtcCore.GenerateBlastLayerOnAllThreads();
+
+                    if (applyBlastLayer)
+                    {
+                        bl?.Apply(backup);
+                    }
+                }
+            }
+
+            //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
+            if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
+            {
+                SyncObjectSingleton.FormExecute(a);
+                e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
+            }
+            else //We can just do everything on the emulation thread as it'll block
+            {
+                SyncObjectSingleton.EmuThreadExecute(a, true);
+            }
+
+            if (advancedMessage.requestGuid != null)
+            {
+                e.setReturnValue(bl);
             }
         }
 
