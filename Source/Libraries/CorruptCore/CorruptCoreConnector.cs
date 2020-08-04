@@ -308,7 +308,7 @@ namespace RTCV.CorruptCore
             }
         }
 
-        private void PushCorruptCoreSpec(PartialSpec partialSpec, ref NetCoreEventArgs e)
+        private static void PushCorruptCoreSpec(PartialSpec partialSpec, ref NetCoreEventArgs e)
         {
             SyncObjectSingleton.FormExecute(() =>
             {
@@ -354,7 +354,7 @@ namespace RTCV.CorruptCore
             }
         }
 
-        private void LoadState(object[] valueAsObjectArr, ref NetCoreEventArgs e)
+        private static void LoadState(object[] valueAsObjectArr, ref NetCoreEventArgs e)
         {
             lock (loadLock)
             {
@@ -427,7 +427,7 @@ namespace RTCV.CorruptCore
             }
         }
 
-        private void BlastGeneratorBlast(object[] valueAsObjectArr, ref NetCoreEventArgs e)
+        private static void BlastGeneratorBlast(object[] valueAsObjectArr, ref NetCoreEventArgs e)
         {
             List<BlastGeneratorProto> returnList = null;
             var sk = (StashKey)valueAsObjectArr[0];
@@ -476,7 +476,7 @@ namespace RTCV.CorruptCore
             e.setReturnValue(returnList);
         }
 
-        private void GenerateBlastLayer(NetCoreAdvancedMessage advancedMessage, ref NetCoreEventArgs e)
+        private static void GenerateBlastLayer(NetCoreAdvancedMessage advancedMessage, ref NetCoreEventArgs e)
         {
             var val = advancedMessage.objectValue as object[];
             var sk = val[0] as StashKey;
@@ -529,7 +529,7 @@ namespace RTCV.CorruptCore
             }
         }
 
-        private void ApplyBlastLayer(NetCoreAdvancedMessage advancedMessage)
+        private static void ApplyBlastLayer(NetCoreAdvancedMessage advancedMessage)
         {
             var temp = advancedMessage.objectValue as object[];
             var bl = (BlastLayer)temp[0];
