@@ -97,25 +97,8 @@ namespace RTCV.CorruptCore
                         break;
 
                     case EMU_OPEN_HEXEDITOR_ADDRESS:
-                        {
-                            if ((bool?)AllSpec.VanguardSpec[VSPEC.USE_INTEGRATED_HEXEDITOR] ?? false)
-                            {
-                                LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.EMU_OPEN_HEXEDITOR_ADDRESS, advancedMessage.objectValue, true);
-                            }
-                            else
-                            {
-                                //Route it to the plugin if loaded
-                                if (RtcCore.PluginHost.LoadedPlugins.Any(x => x.Name == "Hex Editor"))
-                                {
-                                    LocalNetCoreRouter.Route("HEXEDITOR", NetcoreCommands.EMU_OPEN_HEXEDITOR_ADDRESS, advancedMessage.objectValue, true);
-                                }
-                                else
-                                {
-                                    MessageBox.Show("The current Vanguard implementation does not include a\n hex editor & the hex editor plugin isn't loaded. Aborting.");
-                                }
-                            }
-                            break;
-                        }
+                        OpenHexEditorAddress(advancedMessage.objectValue);
+                        break;
 
                     case MANUALBLAST:
                         RtcCore.GenerateAndBlast();
@@ -460,6 +443,26 @@ namespace RTCV.CorruptCore
                 if (RtcCore.PluginHost.LoadedPlugins.Any(x => x.Name == "Hex Editor"))
                 {
                     LocalNetCoreRouter.Route("HEXEDITOR", NetcoreCommands.REMOTE_OPENHEXEDITOR, true);
+                }
+                else
+                {
+                    MessageBox.Show("The current Vanguard implementation does not include a\n hex editor & the hex editor plugin isn't loaded. Aborting.");
+                }
+            }
+        }
+
+        private static void OpenHexEditorAddress(object objectValue)
+        {
+            if ((bool?)AllSpec.VanguardSpec[VSPEC.USE_INTEGRATED_HEXEDITOR] ?? false)
+            {
+                LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.EMU_OPEN_HEXEDITOR_ADDRESS, objectValue, true);
+            }
+            else
+            {
+                //Route it to the plugin if loaded
+                if (RtcCore.PluginHost.LoadedPlugins.Any(x => x.Name == "Hex Editor"))
+                {
+                    LocalNetCoreRouter.Route("HEXEDITOR", NetcoreCommands.EMU_OPEN_HEXEDITOR_ADDRESS, objectValue, true);
                 }
                 else
                 {
