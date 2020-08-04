@@ -67,7 +67,7 @@
             set => cbControlName.Checked = value;
         }
 
-        public bool FirstLoadDone = false;
+        private bool FirstLoadDone = false;
 
         private long _Minimum = 0;
         [Description("Minimum value of the control"), Category("Data")]
@@ -295,6 +295,14 @@
             Value = nmValue;
             updater.Stop();
             updater.Start();
+        }
+
+        public void SetMaximumWithoutChangeHandler(int maximum)
+        {
+            var prevState = FirstLoadDone;
+            FirstLoadDone = false;
+            Maximum = maximum;
+            FirstLoadDone = prevState;
         }
 
         private void tbControlValue_ValueChanged(object sender, EventArgs e)
