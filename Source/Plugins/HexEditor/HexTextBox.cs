@@ -14,8 +14,8 @@ namespace RTCV.Plugins.HexEditor
 
     public class HexTextBox : TextBox, INumberBox
     {
-        private string _addressFormatStr = "";
-        private long? _maxSize;
+        private readonly string _addressFormatStr = "";
+        private readonly long? _maxSize;
         private bool _nullable = true;
 
         public HexTextBox()
