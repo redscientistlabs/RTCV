@@ -4,7 +4,6 @@ namespace RTCV.CorruptCore
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using System.Threading.Tasks;
     using System.Windows.Forms;
     using RTCV.NetCore;
     using static RTCV.NetCore.NetcoreCommands;
@@ -70,25 +69,7 @@ namespace RTCV.CorruptCore
 
                     //UI sent a copy of the CorruptCore spec
                     case REMOTE_PUSHCORRUPTCORESPEC:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            //So here's the deal. The UI doesn't actually have the full memory domains (md isn't sent across) so if we take them from it, it results in them going null
-                            //Instead, we stick with what we have, then tell the UI to use that.
-
-                            var temp = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
-
-                            //Stick with what we have if it exists to prevent any exceptions if autocorrupt was on or something, then call refresh
-                            temp.Update("MEMORYINTERFACES", AllSpec.CorruptCoreSpec?["MEMORYINTERFACES"] ?? new Dictionary<string, MemoryDomainProxy>());
-
-                            RTCV.NetCore.AllSpec.CorruptCoreSpec = new FullSpec(temp.GetPartialSpec(), !RtcCore.Attached);
-                            RTCV.NetCore.AllSpec.CorruptCoreSpec.SpecUpdated += (ob, eas) =>
-                            {
-                                PartialSpec partial = eas.partialSpec;
-                                LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_PUSHCORRUPTCORESPECUPDATE, partial, true);
-                            };
-                            RTCV.CorruptCore.MemoryDomains.RefreshDomains();
-                        });
-                        e.setReturnValue(true);
+                        PushCorruptCoreSpec((PartialSpec)advancedMessage.objectValue);
                         break;
 
                     //UI sent an update of the CorruptCore spec
@@ -403,6 +384,29 @@ namespace RTCV.CorruptCore
 
                 return e.returnMessage;
             }
+        }
+
+        private void PushCorruptCoreSpec(PartialSpec partialSpec)
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                //So here's the deal. The UI doesn't actually have the full memory domains (md isn't sent across) so if we take them from it, it results in them going null
+                //Instead, we stick with what we have, then tell the UI to use that.
+
+                var temp = new FullSpec(partialSpec, !RtcCore.Attached);
+
+                //Stick with what we have if it exists to prevent any exceptions if autocorrupt was on or something, then call refresh
+                temp.Update("MEMORYINTERFACES", AllSpec.CorruptCoreSpec?["MEMORYINTERFACES"] ?? new Dictionary<string, MemoryDomainProxy>());
+
+                RTCV.NetCore.AllSpec.CorruptCoreSpec = new FullSpec(temp.GetPartialSpec(), !RtcCore.Attached);
+                RTCV.NetCore.AllSpec.CorruptCoreSpec.SpecUpdated += (ob, eas) =>
+                {
+                    PartialSpec partial = eas.partialSpec;
+                    LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_PUSHCORRUPTCORESPECUPDATE, partial, true);
+                };
+                RTCV.CorruptCore.MemoryDomains.RefreshDomains();
+            });
+            e.setReturnValue(true);
         }
 
         private static void RestrictFeatures()
