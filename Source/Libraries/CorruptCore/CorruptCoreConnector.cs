@@ -175,30 +175,16 @@ namespace RTCV.CorruptCore
                         }
 
                     case MANUALBLAST:
-                        {
-                            RtcCore.GenerateAndBlast();
-                        }
+                        RtcCore.GenerateAndBlast();
                         break;
 
                     case GENERATEBLASTLAYER:
-                        {
-                            GenerateBlastLayer(advancedMessage, ref e);
-                            break;
-                        }
-                    case APPLYBLASTLAYER:
-                        {
-                            var temp = advancedMessage.objectValue as object[];
-                            var bl = (BlastLayer)temp[0];
-                            var storeUncorruptBackup = (bool)temp[1];
-                            var merge = (temp.Length > 2) && (bool)temp[2];
-                            void a()
-                            {
-                                bl.Apply(storeUncorruptBackup, true, merge);
-                            }
+                        GenerateBlastLayer(advancedMessage, ref e);
+                        break;
 
-                            SyncObjectSingleton.EmuThreadExecute(a, true);
-                            break;
-                        }
+                    case APPLYBLASTLAYER:
+                        ApplyBlastLayer(advancedMessage);
+                        break;
 
                     case REMOTE_PUSHRTCSPEC:
                         RTCV.NetCore.AllSpec.CorruptCoreSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
@@ -564,6 +550,20 @@ namespace RTCV.CorruptCore
             {
                 e.setReturnValue(bl);
             }
+        }
+
+        private void ApplyBlastLayer(NetCoreAdvancedMessage advancedMessage)
+        {
+            var temp = advancedMessage.objectValue as object[];
+            var bl = (BlastLayer)temp[0];
+            var storeUncorruptBackup = (bool)temp[1];
+            var merge = (temp.Length > 2) && (bool)temp[2];
+            void a()
+            {
+                bl.Apply(storeUncorruptBackup, true, merge);
+            }
+
+            SyncObjectSingleton.EmuThreadExecute(a, true);
         }
 
         public void Kill()
