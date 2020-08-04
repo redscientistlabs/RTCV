@@ -64,7 +64,7 @@ namespace RTCV.CorruptCore
 
                     //Vanguard sent a spec update
                     case REMOTE_PUSHVANGUARDSPECUPDATE:
-                        RTCV.NetCore.AllSpec.VanguardSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
+                        AllSpec.VanguardSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
                         break;
 
                     //UI sent a copy of the CorruptCore spec
@@ -93,24 +93,7 @@ namespace RTCV.CorruptCore
                         }
 
                     case REMOTE_OPENHEXEDITOR:
-                        {
-                            if ((bool?)AllSpec.VanguardSpec[VSPEC.USE_INTEGRATED_HEXEDITOR] ?? false)
-                            {
-                              LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_OPENHEXEDITOR, true);
-                            }
-                            else
-                            {
-                                //Route it to the plugin if loaded
-                                if (RtcCore.PluginHost.LoadedPlugins.Any(x => x.Name == "Hex Editor"))
-                                {
-                                    LocalNetCoreRouter.Route("HEXEDITOR", NetcoreCommands.REMOTE_OPENHEXEDITOR, true);
-                                }
-                                else
-                                {
-                                    MessageBox.Show("The current Vanguard implementation does not include a\n hex editor & the hex editor plugin isn't loaded. Aborting.");
-                                }
-                            }
-                        }
+                        OpenHexEditor();
                         break;
 
                     case EMU_OPEN_HEXEDITOR_ADDRESS:
@@ -165,7 +148,7 @@ namespace RTCV.CorruptCore
                     case REMOTE_LOADSTATE:
                         {
                             var valueAsObjectArr = advancedMessage.objectValue as object[];
-                            LoadState(valueAsObjectArr);
+                            LoadState(valueAsObjectArr, ref e);
                         }
                         break;
                     case REMOTE_SAVESTATE:
@@ -432,7 +415,7 @@ namespace RTCV.CorruptCore
             }
         }
 
-        private void LoadState(object[] valueAsObjectArr)
+        private void LoadState(object[] valueAsObjectArr, ref NetCoreEventArgs e)
         {
             lock (loadLock)
             {
@@ -462,6 +445,26 @@ namespace RTCV.CorruptCore
                     SyncObjectSingleton.EmuThreadExecute(a, false);
                 }
                 e.setReturnValue(returnValue);
+            }
+        }
+
+        private static void OpenHexEditor()
+        {
+            if ((bool?)AllSpec.VanguardSpec[VSPEC.USE_INTEGRATED_HEXEDITOR] ?? false)
+            {
+                LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_OPENHEXEDITOR, true);
+            }
+            else
+            {
+                //Route it to the plugin if loaded
+                if (RtcCore.PluginHost.LoadedPlugins.Any(x => x.Name == "Hex Editor"))
+                {
+                    LocalNetCoreRouter.Route("HEXEDITOR", NetcoreCommands.REMOTE_OPENHEXEDITOR, true);
+                }
+                else
+                {
+                    MessageBox.Show("The current Vanguard implementation does not include a\n hex editor & the hex editor plugin isn't loaded. Aborting.");
+                }
             }
         }
 
