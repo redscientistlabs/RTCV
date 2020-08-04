@@ -26,7 +26,7 @@
 
             if (paramValue != null && paramValue is int maxintensity)
             {
-                multiTB_Intensity.SetMaximumWithoutChangeHandler(maxintensity);
+                multiTB_Intensity.SetMaximum(maxintensity, false);
             }
         }
     }
