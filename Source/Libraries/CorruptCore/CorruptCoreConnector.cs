@@ -27,16 +27,7 @@ namespace RTCV.CorruptCore
                 switch (e.message.Type)
                 {
                     case "GETSPECDUMPS":
-                        var sb = new StringBuilder();
-                        sb.AppendLine("Spec Dump from CorruptCore");
-                        sb.AppendLine();
-                        sb.AppendLine("UISpec");
-                        RTCV.NetCore.AllSpec.UISpec?.GetDump().ForEach(x => sb.AppendLine(x));
-                        sb.AppendLine("CorruptCoreSpec");
-                        RTCV.NetCore.AllSpec.CorruptCoreSpec?.GetDump().ForEach(x => sb.AppendLine(x));
-                        sb.AppendLine("VanguardSpec");
-                        RTCV.NetCore.AllSpec.VanguardSpec?.GetDump().ForEach(x => sb.AppendLine(x));
-                        e.setReturnValue(sb.ToString());
+                        GetSpecDumps(ref e);
                         break;
                     //UI sent its spec
                     case REMOTE_PUSHUISPEC:
@@ -293,6 +284,20 @@ namespace RTCV.CorruptCore
 
                 return e.returnMessage;
             }
+        }
+
+        private static void GetSpecDumps(ref NetCoreEventArgs e)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("Spec Dump from CorruptCore");
+            sb.AppendLine();
+            sb.AppendLine("UISpec");
+            RTCV.NetCore.AllSpec.UISpec?.GetDump().ForEach(x => sb.AppendLine(x));
+            sb.AppendLine("CorruptCoreSpec");
+            RTCV.NetCore.AllSpec.CorruptCoreSpec?.GetDump().ForEach(x => sb.AppendLine(x));
+            sb.AppendLine("VanguardSpec");
+            RTCV.NetCore.AllSpec.VanguardSpec?.GetDump().ForEach(x => sb.AppendLine(x));
+            e.setReturnValue(sb.ToString());
         }
 
         private static void PushCorruptCoreSpec(PartialSpec partialSpec, ref NetCoreEventArgs e)
