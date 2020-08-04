@@ -87,10 +87,8 @@ namespace RTCV.CorruptCore
                         break;
 
                     case REMOTE_EVENT_SHUTDOWN:
-                        {
-                            RtcCore.Shutdown();
-                            break;
-                        }
+                        RtcCore.Shutdown();
+                        break;
 
                     case REMOTE_OPENHEXEDITOR:
                         OpenHexEditor();
@@ -226,50 +224,8 @@ namespace RTCV.CorruptCore
 
                     case REMOTE_LONGARRAY_FILTERDOMAIN:
                         {
-                            lock (loadLock)
-                            {
-                                var objValues = (advancedMessage.objectValue as object[]);
-                                var domain = (string)objValues[0];
-                                var limiterListHash = (string)objValues[1];
-                                var sk = objValues[2] as StashKey; //Intentionally nullable
-
-                                void a()
-                                {
-                                    if (sk != null) //If a stashkey was passed in, we want to load then profile
-                                    {
-                                        StockpileManager_EmuSide.LoadState_NET(sk, false);
-                                    }
-
-                                    MemoryInterface mi = MemoryDomains.MemoryInterfaces[domain];
-                                    var allLegalAdresses = new List<long>();
-
-                                    var listItemSize = Filtering.GetPrecisionFromHash(limiterListHash);
-
-                                    for (long i = 0; i < mi.Size; i += listItemSize)
-                                    {
-                                        if (Filtering.LimiterPeekBytes(i, i + listItemSize, limiterListHash, mi))
-                                        {
-                                            for (var j = 0; j < listItemSize; j++)
-                                            {
-                                                allLegalAdresses.Add(i + j);
-                                            }
-                                        }
-                                    }
-
-                                    e.setReturnValue(allLegalAdresses.ToArray());
-                                }
-
-                                //If the emulator uses callbacks and we're loading a state, we do everything on the main thread and once we're done, we unpause emulation
-                                if (sk != null && ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false))
-                                {
-                                    SyncObjectSingleton.FormExecute(a);
-                                    LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true);
-                                }
-                                else //We can just do everything on the emulation thread as it'll block
-                                {
-                                    SyncObjectSingleton.EmuThreadExecute(a, true);
-                                }
-                            }
+                            var objValues = (advancedMessage.objectValue as object[]);
+                            FilterDomain(objValues, ref e);
                         }
                         break;
 
@@ -585,6 +541,53 @@ namespace RTCV.CorruptCore
             }
 
             SyncObjectSingleton.EmuThreadExecute(a, true);
+        }
+
+        private static void FilterDomain(object[] objValues, ref NetCoreEventArgs e)
+        {
+            lock (loadLock)
+            {
+                var domain = (string)objValues[0];
+                var limiterListHash = (string)objValues[1];
+                var sk = objValues[2] as StashKey; //Intentionally nullable
+                var allLegalAdresses = new List<long>();
+
+                void a()
+                {
+                    if (sk != null) //If a stashkey was passed in, we want to load then profile
+                    {
+                        StockpileManager_EmuSide.LoadState_NET(sk, false);
+                    }
+
+                    MemoryInterface mi = MemoryDomains.MemoryInterfaces[domain];
+
+                    var listItemSize = Filtering.GetPrecisionFromHash(limiterListHash);
+
+                    for (long i = 0; i < mi.Size; i += listItemSize)
+                    {
+                        if (Filtering.LimiterPeekBytes(i, i + listItemSize, limiterListHash, mi))
+                        {
+                            for (var j = 0; j < listItemSize; j++)
+                            {
+                                allLegalAdresses.Add(i + j);
+                            }
+                        }
+                    }
+                }
+
+                //If the emulator uses callbacks and we're loading a state, we do everything on the main thread and once we're done, we unpause emulation
+                if (sk != null && ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false))
+                {
+                    SyncObjectSingleton.FormExecute(a);
+                    LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true);
+                }
+                else //We can just do everything on the emulation thread as it'll block
+                {
+                    SyncObjectSingleton.EmuThreadExecute(a, true);
+                }
+
+                e.setReturnValue(allLegalAdresses.ToArray());
+            }
         }
 
         public void Kill()
