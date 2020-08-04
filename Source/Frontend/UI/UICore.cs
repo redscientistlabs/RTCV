@@ -566,7 +566,7 @@ namespace RTCV.UI
                         var triggers = Input.Bindings.SearchBindings(ie.LogicalButton.ToString());
 
                         bool handled = false;
-                        if (ie.EventType == RTCV.UI.Input.Input.InputEventType.Press)
+                        if (ie.EventType == RTCV.UI.Input.InputEventType.Press)
                         {
                             triggers.Aggregate(handled, (current, trigger) => current | CheckHotkey(trigger));
                         }
