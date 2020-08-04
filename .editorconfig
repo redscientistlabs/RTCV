@@ -228,7 +228,7 @@ dotnet_diagnostic.RCS1139.severity = none
 dotnet_diagnostic.CA1031.severity = none
 
 # Do not nest type
-# dotnet_diagnostic.CA1034.severity = none
+dotnet_diagnostic.CA1034.severity = none
 
 # Do not declare visible instance fields
 dotnet_diagnostic.CA1051.severity = none
