@@ -69,7 +69,7 @@ namespace RTCV.CorruptCore
 
                     //UI sent a copy of the CorruptCore spec
                     case REMOTE_PUSHCORRUPTCORESPEC:
-                        PushCorruptCoreSpec((PartialSpec)advancedMessage.objectValue);
+                        PushCorruptCoreSpec((PartialSpec)advancedMessage.objectValue, ref e);
                         break;
 
                     //UI sent an update of the CorruptCore spec
@@ -369,7 +369,7 @@ namespace RTCV.CorruptCore
             }
         }
 
-        private void PushCorruptCoreSpec(PartialSpec partialSpec)
+        private void PushCorruptCoreSpec(PartialSpec partialSpec, ref NetCoreEventArgs e)
         {
             SyncObjectSingleton.FormExecute(() =>
             {
