@@ -249,25 +249,6 @@ namespace RTCV.CorruptCore
                             break;
                         }
 
-                    /*
-                    case STASHKEY:
-                        {
-                            var temp = advancedMessage.objectValue as object[];
-
-                            var sk = temp[0] as StashKey;
-                            var romFilename = temp[1] as String;
-                            var romData = temp[2] as Byte[];
-
-                            if (!File.Exists(CorruptCore.rtcDir + Path.DirectorySeparatorChar + "WORKING" + Path.DirectorySeparatorChar + "SKS" + Path.DirectorySeparatorChar + romFilename))
-                                File.WriteAllBytes(CorruptCore.rtcDir + Path.DirectorySeparatorChar + "WORKING" + Path.DirectorySeparatorChar + "SKS" + Path.DirectorySeparatorChar + romFilename, romData);
-
-                            sk.RomFilename = CorruptCore.rtcDir + Path.DirectorySeparatorChar + "WORKING" + Path.DirectorySeparatorChar + "SKS" + Path.DirectorySeparatorChar + CorruptCore_Extensions.getShortFilenameFromPath(romFilename);
-                            sk.DeployState();
-                            sk.Run();
-                        }
-                        break;
-                        */
-
                     case REMOTE_PUSHRTCSPEC:
                         RTCV.NetCore.AllSpec.CorruptCoreSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
                         e.setReturnValue(true);
