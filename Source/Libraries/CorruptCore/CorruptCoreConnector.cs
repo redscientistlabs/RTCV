@@ -271,20 +271,7 @@ namespace RTCV.CorruptCore
                         break;
 
                     case REMOTE_LOADPLUGINS:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            var emuPluginDir = string.Empty;
-                            try
-                            {
-                                emuPluginDir = System.IO.Path.Combine(RtcCore.EmuDir, "RTC", "PLUGINS");
-                            }
-                            catch (Exception e)
-                            {
-                                RTCV.Common.Logging.GlobalLogger.Error(e, "Unable to find plugin dir in {dir}", RtcCore.EmuDir + "\\RTC" + "\\PLUGINS");
-                            }
-                            RtcCore.LoadPlugins(new[] { RtcCore.PluginDir,  emuPluginDir });
-                        });
-
+                        LoadPlugins();
                         break;
                     case REMOTE_REMOVEEXCESSINFINITESTEPUNITS:
                         SyncObjectSingleton.FormExecute(() => StepActions.RemoveExcessInfiniteStepUnits());
@@ -588,6 +575,23 @@ namespace RTCV.CorruptCore
 
                 e.setReturnValue(allLegalAdresses.ToArray());
             }
+        }
+
+        private static void LoadPlugins()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+                {
+                    var emuPluginDir = string.Empty;
+                    try
+                    {
+                        emuPluginDir = System.IO.Path.Combine(RtcCore.EmuDir, "RTC", "PLUGINS");
+                    }
+                    catch (Exception e)
+                    {
+                        RTCV.Common.Logging.GlobalLogger.Error(e, "Unable to find plugin dir in {dir}", RtcCore.EmuDir + "\\RTC" + "\\PLUGINS");
+                    }
+                    RtcCore.LoadPlugins(new[] { RtcCore.PluginDir,  emuPluginDir });
+                });
         }
 
         public void Kill()
