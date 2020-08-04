@@ -4,6 +4,7 @@ namespace RTCV.Plugins.HexEditor
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Data;
+    using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
     using System.Globalization;
     using System.Linq;
@@ -1173,7 +1174,8 @@ namespace RTCV.Plugins.HexEditor
             PokeAddressMenuItem.Enabled = true;
         }
 
-        private void DataSizeToolStripMenuItem_DropDownOpened(object sender, EventArgs e)
+        [SuppressMessage("Microsoft.Design", "IDE1006", Justification = "Designer-originated method")]
+        private void dataSizeToolStripMenuItem_DropDownOpened(object sender, EventArgs e)
         {
             DataSizeByteMenuItem.Checked = DataSize == 1;
             DataSizeWordMenuItem.Checked = DataSize == 2;
