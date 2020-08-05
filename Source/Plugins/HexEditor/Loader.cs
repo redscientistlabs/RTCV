@@ -37,7 +37,7 @@ namespace RTCV.Plugins.HexEditor
         {
             if (!S.ISNULL<HexEditor>())
             {
-                S.GET<HexEditor>().HideOnClose = false;
+                S.GET<HexEditor>()._hideOnClose = false;
                 S.GET<HexEditor>().Close();
             }
             return true;

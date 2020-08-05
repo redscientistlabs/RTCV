@@ -4,6 +4,7 @@ namespace RTCV.Plugins.HexEditor
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Data;
+    using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
     using System.Globalization;
     using System.Linq;
@@ -45,8 +46,6 @@ namespace RTCV.Plugins.HexEditor
         private bool _mouseIsDown;
         private HexFind _hexFind = new HexFind();
 
-        private string LastDomain { get; set; }
-
         private bool SwapBytes { get; set; }
 
         private bool BigEndian { get; set; }
@@ -54,7 +53,7 @@ namespace RTCV.Plugins.HexEditor
         private int DataSize { get; set; }
 
         private Dictionary<string, MemoryInterface> AllDomains => MemoryDomains.AllMemoryInterfaces;
-        public volatile bool HideOnClose = true;
+        public volatile bool _hideOnClose = true;
 
         readonly Logger _logger = NLog.LogManager.GetCurrentClassLogger();
 
@@ -95,7 +94,7 @@ namespace RTCV.Plugins.HexEditor
             {
                 if (e.FullyClosed)
                 {
-                    HideOnClose = false;
+                    _hideOnClose = false;
                     this.Close();
                 }
                 else if (this.Visible)
@@ -133,7 +132,7 @@ namespace RTCV.Plugins.HexEditor
 
         private void HexEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (HideOnClose)
+            if (_hideOnClose)
             {
                 this.Hide();
                 _domain = new NullMemoryInterface();
@@ -510,26 +509,25 @@ namespace RTCV.Plugins.HexEditor
                 {
                     if (_addr + j + DataSize <= _domain.Size)
                     {
-                        var t_val = 0;
-                        var t_next = 0;
+                        var val = 0;
                         for (var k = 0; k < DataSize; k++)
                         {
-                            if (!MakeValue(1, _addr + j + k, out t_next))
+                            if (!MakeValue(1, _addr + j + k, out var next))
                             {
                                 return "ERROR";
                             }
 
                             if (SwapBytes)
                             {
-                                t_val += (t_next << (k * 8));
+                                val += (next << (k * 8));
                             }
                             else
                             {
-                                t_val += (t_next << ((DataSize - k - 1) * 8));
+                                val += (next << ((DataSize - k - 1) * 8));
                             }
                         }
 
-                        rowStr.AppendFormat(_digitFormatString, t_val);
+                        rowStr.AppendFormat(_digitFormatString, val);
                     }
                     else
                     {
@@ -605,7 +603,6 @@ namespace RTCV.Plugins.HexEditor
             UpdateGroupBoxTitle();
             SetHeader();
             UpdateValues();
-            LastDomain = _domain.Name;
             this.Refresh();
         }
 
@@ -857,17 +854,17 @@ namespace RTCV.Plugins.HexEditor
         }
 
         // TODO: obsolete me
-        private void PokeWord(long address, byte _1, byte _2)
+        private void PokeWord(long address, byte firstByte, byte secondByte)
         {
             if (BigEndian)
             {
-                _domain.PokeByte(address, _2);
-                _domain.PokeByte(address + 1, _1);
+                _domain.PokeByte(address, secondByte);
+                _domain.PokeByte(address + 1, firstByte);
             }
             else
             {
-                _domain.PokeByte(address, _1);
-                _domain.PokeByte(address + 1, _2);
+                _domain.PokeByte(address, firstByte);
+                _domain.PokeByte(address + 1, secondByte);
             }
         }
 
@@ -1177,6 +1174,7 @@ namespace RTCV.Plugins.HexEditor
             PokeAddressMenuItem.Enabled = true;
         }
 
+        [SuppressMessage("Microsoft.Design", "IDE1006", Justification = "Designer-originated method")]
         private void dataSizeToolStripMenuItem_DropDownOpened(object sender, EventArgs e)
         {
             DataSizeByteMenuItem.Checked = DataSize == 1;
