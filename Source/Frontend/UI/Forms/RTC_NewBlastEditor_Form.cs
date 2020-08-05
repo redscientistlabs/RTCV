@@ -1974,6 +1974,19 @@ namespace RTCV.UI
             S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = newSk.Run();
         }
 
+        public void LoadOriginal()
+        {
+            if (currentSK.ParentKey == null)
+            {
+                MessageBox.Show("There's no savestate associated with this Stashkey!\nAssociate one in the menu to be able to load.");
+                return;
+            }
+
+            var newSk = (StashKey)currentSK.Clone();
+            newSk.BlastLayer.Layer.Clear();
+            newSk.Run();
+        }
+
         public void btnCorrupt_Click(object sender, EventArgs e)
         {
             var newSk = (StashKey)currentSK.Clone();
@@ -2120,12 +2133,17 @@ namespace RTCV.UI
 
         public void btnSanitizeTool_Click(object sender, EventArgs e)
         {
+            OpenSanitizeTool();
+        }
+
+        public void OpenSanitizeTool(bool lockUI = true)
+        {
             if (currentSK?.BlastLayer?.Layer == null)
             {
                 return;
             }
 
-            RTC_SanitizeTool_Form.OpenSanitizeTool(currentSK?.BlastLayer);
+            RTC_SanitizeTool_Form.OpenSanitizeTool(currentSK?.BlastLayer, lockUI);
         }
 
         public StashKey[] GetStashKeys()

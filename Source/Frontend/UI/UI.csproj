@@ -381,6 +381,7 @@
     <Compile Include="Input\Gamepad.cs" />
     <Compile Include="Input\Gamepad360.cs" />
     <Compile Include="Input\Input.cs" />
+    <Compile Include="Input\InputEvent.cs" />
     <Compile Include="Input\IPCKeyInput.cs" />
     <Compile Include="Input\Keyboard.cs" />
     <Compile Include="Input\LogicalButton.cs" />
