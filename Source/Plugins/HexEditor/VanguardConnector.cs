@@ -35,8 +35,8 @@ namespace RTCV.Plugins.HexEditor
                 case NetcoreCommands.EMU_OPEN_HEXEDITOR_ADDRESS:
                     {
                         var temp = advancedMessage.objectValue as object[];
-                        string domain = (string)temp[0];
-                        long address = (long)temp[1];
+                        var domain = (string)temp[0];
+                        var address = (long)temp[1];
 
                         MemoryInterface mi = MemoryDomains.GetInterface(domain);
                         if (mi == null)

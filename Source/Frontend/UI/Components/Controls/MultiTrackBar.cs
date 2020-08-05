@@ -67,7 +67,7 @@
             set => cbControlName.Checked = value;
         }
 
-        public bool FirstLoadDone = false;
+        private bool FirstLoadDone = false;
 
         private long _Minimum = 0;
         [Description("Minimum value of the control"), Category("Data")]
@@ -90,13 +90,15 @@
         public long Maximum
         {
             get => _Maximum;
-            set
+            set => SetMaximum(value, true);
+        }
+
+        public void SetMaximum(long value, bool useChangeHandler = true)
+        {
+            _Maximum = value;
+            if (FirstLoadDone && useChangeHandler)
             {
-                _Maximum = value;
-                if (FirstLoadDone)
-                {
-                    tbControlValue_ValueChanged(null, null);
-                }
+                tbControlValue_ValueChanged(null, null);
             }
         }
 
