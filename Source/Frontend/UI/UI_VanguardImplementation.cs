@@ -121,12 +121,7 @@ namespace RTCV.UI
                         break;
 
                     case REMOTE_SANITIZETOOL_LEAVEWITHCHANGES:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
-                            sanitizeTool.lbSteps.Items.Clear(); //this is a hack for leaving in automation
-                            sanitizeTool.btnLeaveWithChanges_Click(null, null);
-                        });
+                        LeaveWithChanges();
                         break;
 
                     case REMOTE_SANITIZETOOL_LEAVESUBTRACTCHANGES:
@@ -567,6 +562,16 @@ namespace RTCV.UI
             {
                 var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
                 sanitizeTool.btnStartSanitizing_Click(null, null);
+            });
+        }
+
+        private static void LeaveWithChanges()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
+                sanitizeTool.lbSteps.Items.Clear(); //this is a hack for leaving in automation
+                sanitizeTool.btnLeaveWithChanges_Click(null, null);
             });
         }
     }
