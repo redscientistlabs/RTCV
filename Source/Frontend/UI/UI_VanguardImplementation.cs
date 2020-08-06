@@ -63,57 +63,11 @@ namespace RTCV.UI
                         break;
 
                     case REMOTE_GENERATEVMDTEXT:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            object[] objs = (object[])advancedMessage.objectValue;
-                            string domain = (string)objs[0];
-                            string text = (string)objs[1];
-
-                            var vmdgenerator = S.GET<RTC_VmdGen_Form>();
-
-                            vmdgenerator.btnSelectAll_Click(null, null);
-
-                            var cbitems = vmdgenerator.cbSelectedMemoryDomain.Items;
-                            object domainFound = null;
-                            for (int i = 0; i < cbitems.Count; i++)
-                            {
-                                var item = cbitems[i];
-
-                                if (item.ToString() == domain)
-                                {
-                                    domainFound = item;
-                                    vmdgenerator.cbSelectedMemoryDomain.SelectedIndex = i;
-                                    break;
-                                }
-                            }
-
-                            if (domainFound == null)
-                            {
-                                throw new Exception($"Domain {domain} could not be selected in the VMD Generator. Aborting procedure.");
-                                //return;
-                            }
-
-                            vmdgenerator.tbCustomAddresses.Text = text;
-
-                            string value = "";
-
-                            if (RTCV.UI.UI_Extensions.GetInputBox("VMD Generation", "Enter the new VMD name:", ref value) == DialogResult.OK)
-                            {
-                                if (!string.IsNullOrWhiteSpace(value))
-                                    vmdgenerator.tbVmdName.Text = value.Trim();
-                                vmdgenerator.btnGenerateVMD_Click(null, null);
-                            }
-                        });
-                        e.setReturnValue(true);
+                        GenerateVmdText(advancedMessage, ref e);
                         break;
 
                     case REMOTE_EVENT_DOMAINSUPDATED:
-
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            S.GET<RTC_MemoryDomains_Form>().RefreshDomains();
-                            S.GET<RTC_MemoryDomains_Form>().SetMemoryDomainsAllButSelectedDomains(RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] as string[] ?? new string[] { });
-                        });
+                        DomainsUpdated();
                         break;
 
                     case REMOTE_GETBLASTGENERATOR_LAYER:
@@ -489,6 +443,61 @@ namespace RTCV.UI
                             RTCV.NetCore.AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
                         });
             e.setReturnValue(true);
+        }
+
+        private static void GenerateVmdText(NetCoreAdvancedMessage advancedMessage, ref NetCoreEventArgs e)
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                object[] objs = (object[])advancedMessage.objectValue;
+                string domain = (string)objs[0];
+                string text = (string)objs[1];
+
+                var vmdgenerator = S.GET<RTC_VmdGen_Form>();
+
+                vmdgenerator.btnSelectAll_Click(null, null);
+
+                var cbitems = vmdgenerator.cbSelectedMemoryDomain.Items;
+                object domainFound = null;
+                for (int i = 0; i < cbitems.Count; i++)
+                {
+                    var item = cbitems[i];
+
+                    if (item.ToString() == domain)
+                    {
+                        domainFound = item;
+                        vmdgenerator.cbSelectedMemoryDomain.SelectedIndex = i;
+                        break;
+                    }
+                }
+
+                if (domainFound == null)
+                {
+                    throw new Exception($"Domain {domain} could not be selected in the VMD Generator. Aborting procedure.");
+                                            //return;
+                                        }
+
+                vmdgenerator.tbCustomAddresses.Text = text;
+
+                string value = "";
+
+                if (RTCV.UI.UI_Extensions.GetInputBox("VMD Generation", "Enter the new VMD name:", ref value) == DialogResult.OK)
+                {
+                    if (!string.IsNullOrWhiteSpace(value))
+                        vmdgenerator.tbVmdName.Text = value.Trim();
+                    vmdgenerator.btnGenerateVMD_Click(null, null);
+                }
+            });
+            e.setReturnValue(true);
+        }
+
+        private static void DomainsUpdated()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                S.GET<RTC_MemoryDomains_Form>().RefreshDomains();
+                S.GET<RTC_MemoryDomains_Form>().SetMemoryDomainsAllButSelectedDomains(RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] as string[] ?? new string[] { });
+            });
         }
     }
 }
