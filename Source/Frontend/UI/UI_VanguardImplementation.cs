@@ -76,10 +76,7 @@ namespace RTCV.UI
                         DisableAutoCorrupt();
                         break;
                     case REMOTE_RENDER_DISPLAY:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            S.GET<RTC_GlitchHarvesterBlast_Form>().refreshRenderOutputButton();
-                        });
+                        RenderDisplay();
                         break;
                     case REMOTE_BACKUPKEY_STASH:
                         if (advancedMessage?.objectValue is StashKey sk)
@@ -506,6 +503,14 @@ namespace RTCV.UI
             SyncObjectSingleton.FormExecute(() =>
             {
                 S.GET<UI_CoreForm>().AutoCorrupt = false;
+            });
+        }
+
+        private static void RenderDisplay()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                S.GET<RTC_GlitchHarvesterBlast_Form>().refreshRenderOutputButton();
             });
         }
     }
