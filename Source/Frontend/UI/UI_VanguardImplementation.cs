@@ -50,138 +50,7 @@ namespace RTCV.UI
                         break;
 
                     case REMOTE_ALLSPECSSENT:
-                        if (UICore.FirstConnect)
-                        {
-                            UICore.Initialized.WaitOne(10000);
-                        }
-
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            if (UICore.FirstConnect)
-                            {
-                                lastVanguardClient = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
-                                UICore.FirstConnect = false;
-
-                                //Load plugins on both sides
-                                CorruptCore.RtcCore.LoadPlugins();
-                                LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_LOADPLUGINS, true);
-
-                                //Configure the UI based on the vanguard spec
-                                UICore.ConfigureUIFromVanguardSpec();
-
-                                S.GET<UI_CoreForm>().Show();
-
-                                //Pull any lists from the vanguard implementation
-                                if (RtcCore.EmuDir != null)
-                                {
-                                    UICore.LoadLists(Path.Combine(RtcCore.EmuDir, "LISTS"));
-                                }
-
-                                UICore.LoadLists(CorruptCore.RtcCore.ListsDir);
-
-                                Panel sidebar = S.GET<UI_CoreForm>().pnSideBar;
-                                foreach (Control c in sidebar.Controls)
-                                {
-                                    if (c is Button b)
-                                    {
-                                        if (!b.Text.Contains("Test") && !b.Text.Contains("Custom Layout") && b.ForeColor != Color.OrangeRed)
-                                        {
-                                            b.Visible = true;
-                                        }
-                                    }
-                                }
-
-                                string customLayoutPath = Path.Combine(RTCV.CorruptCore.RtcCore.RtcDir, "CustomLayout.txt");
-                                if (File.Exists(customLayoutPath))
-                                {
-                                    S.GET<UI_CoreForm>().SetCustomLayoutName(customLayoutPath);
-                                    S.GET<UI_CoreForm>().btnOpenCustomLayout.Visible = true;
-                                }
-
-                                UI_DefaultGrids.engineConfig.LoadToMain();
-
-                                UI_DefaultGrids.glitchHarvester.LoadToNewWindow("Glitch Harvester", true);
-                            }
-                            else
-                            {
-                                LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_LOADPLUGINS, true);
-                                //make sure the other side reloads the plugins
-
-                                var clientName = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
-                                if (clientName != lastVanguardClient)
-                                {
-                                    MessageBox.Show($"Error: Found {clientName} when previously connected to {lastVanguardClient}.\nPlease restart the RTC to swap clients.");
-                                    return;
-                                }
-
-                                //Push the VMDs since we store them out of spec
-                                var vmdProtos = MemoryDomains.VmdPool.Values.Cast<VirtualMemoryDomain>().Select(x => x.Proto).ToArray();
-                                LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHVMDPROTOS, vmdProtos, true);
-
-                                S.GET<UI_CoreForm>().Show();
-
-                                //Configure the UI based on the vanguard spec
-                                UICore.ConfigureUIFromVanguardSpec();
-
-                                //Unblock the controls in the GH
-                                S.GET<RTC_GlitchHarvesterBlast_Form>().SetBlastButtonVisibility(true);
-
-                                //Return to the main form. If the form is null for some reason, default to engineconfig
-                                if (S.GET<UI_CoreForm>().previousGrid == null)
-                                {
-                                    S.GET<UI_CoreForm>().previousGrid = UI_DefaultGrids.engineConfig;
-                                }
-
-                                UICore.UnlockInterface();
-                                S.GET<UI_CoreForm>().previousGrid.LoadToMain();
-                            }
-
-                            S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0; //remove this once core form is dead
-
-                            if (!CorruptCore.RtcCore.Attached)
-                            {
-                                AutoKillSwitch.Enabled = true;
-                            }
-
-                            //Restart game protection
-                            if (S.GET<UI_CoreForm>().cbUseGameProtection.Checked)
-                            {
-                                if (CorruptCore.StockpileManager_UISide.BackupedState != null)
-                                {
-                                    CorruptCore.StockpileManager_UISide.BackupedState.Run();
-                                }
-
-                                if (CorruptCore.StockpileManager_UISide.BackupedState != null)
-                                {
-                                    S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected(CorruptCore.StockpileManager_UISide.BackupedState.SelectedDomains.ToArray());
-                                }
-
-                                GameProtection.Start();
-                                if (GameProtection.WasAutoCorruptRunning)
-                                {
-                                    S.GET<UI_CoreForm>().AutoCorrupt = true;
-                                }
-                            }
-
-                            S.GET<UI_CoreForm>().Show();
-
-                            if (NetCore.Params.IsParamSet("SIMPLE_MODE"))
-                            {
-                                bool isSpec = (AllSpec.VanguardSpec[VSPEC.NAME] as string)?.ToUpper().Contains("SPEC") ?? false;
-
-                                if (isSpec) //Simple Mode cannot run on Stubs
-                                {
-                                    MessageBox.Show("Unfortunately, Simple Mode is not compatible with Stubs. RTC will now switch to Normal Mode.");
-                                    NetCore.Params.RemoveParam("SIMPLE_MODE");
-                                }
-                                else
-                                {
-                                    UI_DefaultGrids.simpleMode.LoadToMain();
-                                    RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
-                                    smForm.EnteringSimpleMode();
-                                }
-                            }
-                        });
+                        AllSpecSent();
                         break;
 
                     case REMOTE_PUSHVANGUARDSPECUPDATE:
@@ -474,6 +343,142 @@ namespace RTCV.UI
             });
             //Specs are all set up so UI is clear.
             LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_ALLSPECSSENT, true);
+        }
+
+        private static void AllSpecSent()
+        {
+            if (UICore.FirstConnect)
+            {
+                UICore.Initialized.WaitOne(10000);
+            }
+
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                if (UICore.FirstConnect)
+                {
+                    lastVanguardClient = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
+                    UICore.FirstConnect = false;
+
+                    //Load plugins on both sides
+                    CorruptCore.RtcCore.LoadPlugins();
+                    LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_LOADPLUGINS, true);
+
+                    //Configure the UI based on the vanguard spec
+                    UICore.ConfigureUIFromVanguardSpec();
+
+                    S.GET<UI_CoreForm>().Show();
+
+                    //Pull any lists from the vanguard implementation
+                    if (RtcCore.EmuDir != null)
+                    {
+                        UICore.LoadLists(Path.Combine(RtcCore.EmuDir, "LISTS"));
+                    }
+
+                    UICore.LoadLists(CorruptCore.RtcCore.ListsDir);
+
+                    Panel sidebar = S.GET<UI_CoreForm>().pnSideBar;
+                    foreach (Control c in sidebar.Controls)
+                    {
+                        if (c is Button b)
+                        {
+                            if (!b.Text.Contains("Test") && !b.Text.Contains("Custom Layout") && b.ForeColor != Color.OrangeRed)
+                            {
+                                b.Visible = true;
+                            }
+                        }
+                    }
+
+                    string customLayoutPath = Path.Combine(RTCV.CorruptCore.RtcCore.RtcDir, "CustomLayout.txt");
+                    if (File.Exists(customLayoutPath))
+                    {
+                        S.GET<UI_CoreForm>().SetCustomLayoutName(customLayoutPath);
+                        S.GET<UI_CoreForm>().btnOpenCustomLayout.Visible = true;
+                    }
+
+                    UI_DefaultGrids.engineConfig.LoadToMain();
+
+                    UI_DefaultGrids.glitchHarvester.LoadToNewWindow("Glitch Harvester", true);
+                }
+                else
+                {
+                    LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_LOADPLUGINS, true);
+                    //make sure the other side reloads the plugins
+
+                    var clientName = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
+                    if (clientName != lastVanguardClient)
+                    {
+                        MessageBox.Show($"Error: Found {clientName} when previously connected to {lastVanguardClient}.\nPlease restart the RTC to swap clients.");
+                        return;
+                    }
+
+                    //Push the VMDs since we store them out of spec
+                    var vmdProtos = MemoryDomains.VmdPool.Values.Cast<VirtualMemoryDomain>().Select(x => x.Proto).ToArray();
+                    LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHVMDPROTOS, vmdProtos, true);
+
+                    S.GET<UI_CoreForm>().Show();
+
+                    //Configure the UI based on the vanguard spec
+                    UICore.ConfigureUIFromVanguardSpec();
+
+                    //Unblock the controls in the GH
+                    S.GET<RTC_GlitchHarvesterBlast_Form>().SetBlastButtonVisibility(true);
+
+                    //Return to the main form. If the form is null for some reason, default to engineconfig
+                    if (S.GET<UI_CoreForm>().previousGrid == null)
+                    {
+                        S.GET<UI_CoreForm>().previousGrid = UI_DefaultGrids.engineConfig;
+                    }
+
+                    UICore.UnlockInterface();
+                    S.GET<UI_CoreForm>().previousGrid.LoadToMain();
+                }
+
+                S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0; //remove this once core form is dead
+
+                if (!CorruptCore.RtcCore.Attached)
+                {
+                    AutoKillSwitch.Enabled = true;
+                }
+
+                //Restart game protection
+                if (S.GET<UI_CoreForm>().cbUseGameProtection.Checked)
+                {
+                    if (CorruptCore.StockpileManager_UISide.BackupedState != null)
+                    {
+                        CorruptCore.StockpileManager_UISide.BackupedState.Run();
+                    }
+
+                    if (CorruptCore.StockpileManager_UISide.BackupedState != null)
+                    {
+                        S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected(CorruptCore.StockpileManager_UISide.BackupedState.SelectedDomains.ToArray());
+                    }
+
+                    GameProtection.Start();
+                    if (GameProtection.WasAutoCorruptRunning)
+                    {
+                        S.GET<UI_CoreForm>().AutoCorrupt = true;
+                    }
+                }
+
+                S.GET<UI_CoreForm>().Show();
+
+                if (NetCore.Params.IsParamSet("SIMPLE_MODE"))
+                {
+                    bool isSpec = (AllSpec.VanguardSpec[VSPEC.NAME] as string)?.ToUpper().Contains("SPEC") ?? false;
+
+                    if (isSpec) //Simple Mode cannot run on Stubs
+                    {
+                        MessageBox.Show("Unfortunately, Simple Mode is not compatible with Stubs. RTC will now switch to Normal Mode.");
+                        NetCore.Params.RemoveParam("SIMPLE_MODE");
+                    }
+                    else
+                    {
+                        UI_DefaultGrids.simpleMode.LoadToMain();
+                        RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
+                        smForm.EnteringSimpleMode();
+                    }
+                }
+            });
         }
     }
 }
