@@ -48,27 +48,21 @@ namespace RTCV.UI
                     case REMOTE_PUSHVANGUARDSPEC:
                         PushVanguardSpec(advancedMessage, ref e);
                         break;
-
                     case REMOTE_ALLSPECSSENT:
                         AllSpecSent();
                         break;
-
                     case REMOTE_PUSHVANGUARDSPECUPDATE:
                         PushVanguardSpecUpdate(advancedMessage, ref e);
                         break;
-
                     case REMOTE_PUSHCORRUPTCORESPECUPDATE:
                         PushCorruptCoreSpecUpdate(advancedMessage, ref e);
                         break;
-
                     case REMOTE_GENERATEVMDTEXT:
                         GenerateVmdText(advancedMessage, ref e);
                         break;
-
                     case REMOTE_EVENT_DOMAINSUPDATED:
                         DomainsUpdated();
                         break;
-
                     case REMOTE_GETBLASTGENERATOR_LAYER:
                         GetBlastGeneratorLayer(ref e);
                         break;
