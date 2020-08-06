@@ -1,4 +1,4 @@
-﻿namespace RTCV.CorruptCore
+namespace RTCV.CorruptCore
 {
     using System.Windows.Forms;
     using RTCV.NetCore;
@@ -27,6 +27,8 @@
             set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_RENDERTYPE, value);
         }
 
+        public static IRenderer Renderer = null;
+
         public static PartialSpec getDefaultPartial()
         {
             var partial = new PartialSpec("RTCSpec");
@@ -38,7 +40,9 @@
 
         public static bool StartRender()
         {
-            if (!((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_RENDERING] ?? false))
+            bool vanguardSupportsRendering = ((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_RENDERING] ?? false);
+
+            if (!vanguardSupportsRendering && Renderer == null)
             {
                 MessageBox.Show("Rendering isn't supported by this Emulator");
                 return false;
@@ -47,18 +51,31 @@
 
             if (IsRendering)
             {
-                StopRender();
+                if (vanguardSupportsRendering)
+                    StopRender();
+                else if (Renderer != null)
+                    Renderer.StopRender();
             }
 
             IsRendering = true;
-            LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RENDER_START, true);
+
+            if (vanguardSupportsRendering)
+                LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RENDER_START, true);
+            else
+                Renderer.StopRender();
+
+
             return true;
         }
 
         public static void StopRender()
         {
+            bool vanguardSupportsRendering = ((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_RENDERING] ?? false);
+
             IsRendering = false;
-            LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RENDER_STOP, true);
+
+            if (vanguardSupportsRendering)
+                LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RENDER_STOP, true);
         }
 
         public enum RENDERTYPE

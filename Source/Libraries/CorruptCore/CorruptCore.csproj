@@ -100,6 +100,7 @@
     <Compile Include="EventWarlock\WarlockAction.cs" />
     <Compile Include="EventWarlock\WarlockActions\WarlockActionEcho.cs" />
     <Compile Include="EventWarlock\WarlockConditions\FirstEqualsSecond.cs" />
+    <Compile Include="IRenderer.cs" />
     <Compile Include="Memory\FileInterface.cs" />
     <Compile Include="Memory\FileMemoryInterface.cs" />
     <Compile Include="Memory\IMemoryDomain.cs" />
