@@ -116,13 +116,8 @@ namespace RTCV.UI
                         GetLayerSize(ref e);
                         break;
 
-
                     case REMOTE_SANITIZETOOL_STARTSANITIZING:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
-                            sanitizeTool.btnStartSanitizing_Click(null, null);
-                        });
+                        StartSanitizing();
                         break;
 
                     case REMOTE_SANITIZETOOL_LEAVEWITHCHANGES:
@@ -564,6 +559,15 @@ namespace RTCV.UI
             });
 
             e.setReturnValue(layerSize);
+        }
+
+        private static void StartSanitizing()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
+                sanitizeTool.btnStartSanitizing_Click(null, null);
+            });
         }
     }
 }
