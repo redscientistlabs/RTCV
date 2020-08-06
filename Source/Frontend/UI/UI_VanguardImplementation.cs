@@ -113,10 +113,7 @@ namespace RTCV.UI
                         break;
 
                     case REMOTE_BLASTEDITOR_GETLAYERSIZE:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            e.setReturnValue(S.GET<RTC_NewBlastEditor_Form>().currentSK?.BlastLayer?.Layer?.Count ?? -1);
-                        });
+                        GetLayerSize(ref e);
                         break;
 
 
@@ -556,6 +553,17 @@ namespace RTCV.UI
             });
 
             e.setReturnValue(units);
+        }
+
+        private static void GetLayerSize(ref NetCoreEventArgs e)
+        {
+            var layerSize = 0;
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                layerSize = S.GET<RTC_NewBlastEditor_Form>().currentSK?.BlastLayer?.Layer?.Count ?? -1;
+            });
+
+            e.setReturnValue(layerSize);
         }
     }
 }
