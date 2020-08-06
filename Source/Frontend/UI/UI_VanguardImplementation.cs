@@ -86,10 +86,7 @@ namespace RTCV.UI
                         break;
 
                     case REMOTE_DISABLEGAMEPROTECTIONSUPPORT:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            S.GET<UI_CoreForm>().pnCrashProtection.Visible = false;
-                        });
+                        DisableGameProtectionSupport();
                         break;
 
                     case REMOTE_DISABLEREALTIMESUPPORT:
@@ -518,6 +515,14 @@ namespace RTCV.UI
             SyncObjectSingleton.FormExecute(() =>
             {
                 S.GET<RTC_SavestateManager_Form>().DisableFeature();
+                S.GET<UI_CoreForm>().pnCrashProtection.Visible = false;
+            });
+        }
+
+        private static void DisableGameProtectionSupport()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
                 S.GET<UI_CoreForm>().pnCrashProtection.Visible = false;
             });
         }
