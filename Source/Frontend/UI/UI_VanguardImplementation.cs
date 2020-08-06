@@ -93,11 +93,7 @@ namespace RTCV.UI
                         DisableRealTimeSupport();
                         break;
                     case REMOTE_DISABLEKILLSWITCHSUPPORT:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            S.GET<UI_CoreForm>().pnAutoKillSwitch.Visible = false;
-                            S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked = false;
-                        });
+                        DisableKillSwitchSupport();
                         break;
 
                     case REMOTE_BLASTEDITOR_STARTSANITIZETOOL:
@@ -529,6 +525,15 @@ namespace RTCV.UI
                 S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Remove("Distortion Engine");
                 S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Remove("Pipe Engine");
                 S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Remove("Freeze Engine");
+            });
+        }
+
+        private static void DisableKillSwitchSupport()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                S.GET<UI_CoreForm>().pnAutoKillSwitch.Visible = false;
+                S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked = false;
             });
         }
     }
