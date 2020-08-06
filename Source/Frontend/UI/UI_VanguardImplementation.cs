@@ -101,11 +101,7 @@ namespace RTCV.UI
                         break;
 
                     case REMOTE_BLASTEDITOR_LOADCORRUPT:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
-                            blastEditor.btnLoadCorrupt_Click(null, null);
-                        });
+                        LoadCorrupt();
                         break;
 
                     case REMOTE_BLASTEDITOR_LOADORIGINAL:
@@ -539,6 +535,15 @@ namespace RTCV.UI
             {
                 var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
                 blastEditor.OpenSanitizeTool(false);
+            });
+        }
+
+        private static void LoadCorrupt()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
+                blastEditor.btnLoadCorrupt_Click(null, null);
             });
         }
     }
