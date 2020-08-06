@@ -81,13 +81,8 @@ namespace RTCV.UI
                     case RESET_GAME_PROTECTION_IF_RUNNING:
                         ResetGameProtectionIfRunning();
                         break;
-
                     case REMOTE_DISABLESAVESTATESUPPORT:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            S.GET<RTC_SavestateManager_Form>().DisableFeature();
-                            S.GET<UI_CoreForm>().pnCrashProtection.Visible = false;
-                        });
+                        DisableSavestateSupport();
                         break;
 
                     case REMOTE_DISABLEGAMEPROTECTIONSUPPORT:
@@ -516,6 +511,15 @@ namespace RTCV.UI
                     S.GET<UI_CoreForm>().cbUseGameProtection.Checked = true;
                 });
             }
+        }
+
+        private static void DisableSavestateSupport()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                S.GET<RTC_SavestateManager_Form>().DisableFeature();
+                S.GET<UI_CoreForm>().pnCrashProtection.Visible = false;
+            });
         }
     }
 }
