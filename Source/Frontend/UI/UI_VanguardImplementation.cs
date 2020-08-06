@@ -90,29 +90,7 @@ namespace RTCV.UI
                         break;
 
                     case REMOTE_DISABLEREALTIMESUPPORT:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            Button btnManual = S.GET<UI_CoreForm>().btnManualBlast;
-                            if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null)
-                            {
-                                btnManual.Text = "  Corrupt";
-                            }
-                            else
-                            {
-                                btnManual.Visible = false;
-                            }
-
-                            S.GET<UI_CoreForm>().btnAutoCorrupt.Enabled = false;
-                            S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
-                            S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Enabled = false;
-                            S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw.Enabled = false;
-                            S.GET<RTC_GlitchHarvesterBlast_Form>().btnBlastToggle.Enabled = false;
-
-                            S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Remove("Hellgenie Engine");
-                            S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Remove("Distortion Engine");
-                            S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Remove("Pipe Engine");
-                            S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Remove("Freeze Engine");
-                        });
+                        DisableRealTimeSupport();
                         break;
                     case REMOTE_DISABLEKILLSWITCHSUPPORT:
                         SyncObjectSingleton.FormExecute(() =>
@@ -524,6 +502,33 @@ namespace RTCV.UI
             SyncObjectSingleton.FormExecute(() =>
             {
                 S.GET<UI_CoreForm>().pnCrashProtection.Visible = false;
+            });
+        }
+
+        private static void DisableRealTimeSupport()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                Button btnManual = S.GET<UI_CoreForm>().btnManualBlast;
+                if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null)
+                {
+                    btnManual.Text = "  Corrupt";
+                }
+                else
+                {
+                    btnManual.Visible = false;
+                }
+
+                S.GET<UI_CoreForm>().btnAutoCorrupt.Enabled = false;
+                S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
+                S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Enabled = false;
+                S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw.Enabled = false;
+                S.GET<RTC_GlitchHarvesterBlast_Form>().btnBlastToggle.Enabled = false;
+
+                S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Remove("Hellgenie Engine");
+                S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Remove("Distortion Engine");
+                S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Remove("Pipe Engine");
+                S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Remove("Freeze Engine");
             });
         }
     }
