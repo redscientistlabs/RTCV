@@ -137,11 +137,7 @@ namespace RTCV.UI
                         break;
 
                     case REMOTE_SANITIZETOOL_REROLL:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
-                            sanitizeTool.btnReroll_Click(null, null);
-                        });
+                        Reroll();
                         break;
                 }
             }
@@ -587,6 +583,15 @@ namespace RTCV.UI
             {
                 var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
                 sanitizeTool.btnNoEffect_Click(null, null);
+            });
+        }
+
+        private static void Reroll()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
+                sanitizeTool.btnReroll_Click(null, null);
             });
         }
     }
