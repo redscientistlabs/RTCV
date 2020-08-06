@@ -97,11 +97,7 @@ namespace RTCV.UI
                         break;
 
                     case REMOTE_BLASTEDITOR_STARTSANITIZETOOL:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
-                            blastEditor.OpenSanitizeTool(false);
-                        });
+                        StartSanitizeTool();
                         break;
 
                     case REMOTE_BLASTEDITOR_LOADCORRUPT:
@@ -534,6 +530,15 @@ namespace RTCV.UI
             {
                 S.GET<UI_CoreForm>().pnAutoKillSwitch.Visible = false;
                 S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked = false;
+            });
+        }
+
+        private static void StartSanitizeTool()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
+                blastEditor.OpenSanitizeTool(false);
             });
         }
     }
