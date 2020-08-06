@@ -40,7 +40,6 @@ namespace RTCV.UI
             try
             {
                 var message = e.message;
-                var simpleMessage = message as NetCoreSimpleMessage;
                 var advancedMessage = message as NetCoreAdvancedMessage;
 
                 switch (message.Type) //Handle received messages here
