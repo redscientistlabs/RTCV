@@ -71,11 +71,7 @@ namespace RTCV.UI
                         break;
 
                     case REMOTE_GETBLASTGENERATOR_LAYER:
-
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            e.setReturnValue(S.GET<RTC_BlastGenerator_Form>().GenerateBlastLayers(true, true, false));
-                        });
+                        GetBlastGeneratorLayer(ref e);
                         break;
                     case ERROR_DISABLE_AUTOCORRUPT:
                         SyncObjectSingleton.FormExecute(() =>
@@ -498,6 +494,16 @@ namespace RTCV.UI
                 S.GET<RTC_MemoryDomains_Form>().RefreshDomains();
                 S.GET<RTC_MemoryDomains_Form>().SetMemoryDomainsAllButSelectedDomains(RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] as string[] ?? new string[] { });
             });
+        }
+
+        private static void GetBlastGeneratorLayer(ref NetCoreEventArgs e)
+        {
+            BlastLayer bl = null;
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                bl = S.GET<RTC_BlastGenerator_Form>().GenerateBlastLayers(true, true, false);
+            });
+            e.setReturnValue(bl);
         }
     }
 }
