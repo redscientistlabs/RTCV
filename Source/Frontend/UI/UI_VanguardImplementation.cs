@@ -79,14 +79,7 @@ namespace RTCV.UI
                         AutoKillSwitch.Pulse();
                         break;
                     case RESET_GAME_PROTECTION_IF_RUNNING:
-                        if (GameProtection.isRunning)
-                        {
-                            SyncObjectSingleton.FormExecute(() =>
-                            {
-                                S.GET<UI_CoreForm>().cbUseGameProtection.Checked = false;
-                                S.GET<UI_CoreForm>().cbUseGameProtection.Checked = true;
-                            });
-                        }
+                        ResetGameProtectionIfRunning();
                         break;
 
                     case REMOTE_DISABLESAVESTATESUPPORT:
@@ -509,6 +502,18 @@ namespace RTCV.UI
                 {
                     S.GET<UI_CoreForm>().btnGpJumpBack.Visible = true;
                     S.GET<UI_CoreForm>().btnGpJumpNow.Visible = true;
+                });
+            }
+        }
+
+        private static void ResetGameProtectionIfRunning()
+        {
+            if (GameProtection.isRunning)
+            {
+                SyncObjectSingleton.FormExecute(() =>
+                {
+                    S.GET<UI_CoreForm>().cbUseGameProtection.Checked = false;
+                    S.GET<UI_CoreForm>().cbUseGameProtection.Checked = true;
                 });
             }
         }
