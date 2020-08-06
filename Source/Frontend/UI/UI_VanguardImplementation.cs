@@ -76,7 +76,7 @@ namespace RTCV.UI
                         BackupKeyStash(advancedMessage);
                         break;
                     case KILLSWITCH_PULSE:
-                        AutoKillSwitch.Pulse();
+                        KillSwitchPulse();
                         break;
                     case RESET_GAME_PROTECTION_IF_RUNNING:
                         ResetGameProtectionIfRunning();
@@ -593,6 +593,11 @@ namespace RTCV.UI
                 var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
                 sanitizeTool.btnReroll_Click(null, null);
             });
+        }
+
+        private static void KillSwitchPulse()
+        {
+            AutoKillSwitch.Pulse();
         }
     }
 }
