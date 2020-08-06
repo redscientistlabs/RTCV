@@ -54,11 +54,7 @@ namespace RTCV.UI
                         break;
 
                     case REMOTE_PUSHVANGUARDSPECUPDATE:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            RTCV.NetCore.AllSpec.VanguardSpec?.Update((PartialSpec)advancedMessage.objectValue);
-                        });
-                        e.setReturnValue(true);
+                        PushVanguardSpecUpdate(advancedMessage, ref e);
                         break;
 
                     //CorruptCore pushed its spec. Note the false on propogate (since we don't want a recursive loop)
@@ -479,6 +475,15 @@ namespace RTCV.UI
                     }
                 }
             });
+        }
+
+        private static void PushVanguardSpecUpdate(NetCoreAdvancedMessage advancedMessage, ref NetCoreEventArgs e)
+        {
+            SyncObjectSingleton.FormExecute(() =>
+                        {
+                            RTCV.NetCore.AllSpec.VanguardSpec?.Update((PartialSpec)advancedMessage.objectValue);
+                        });
+            e.setReturnValue(true);
         }
     }
 }
