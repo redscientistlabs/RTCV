@@ -59,11 +59,7 @@ namespace RTCV.UI
 
                     //CorruptCore pushed its spec. Note the false on propogate (since we don't want a recursive loop)
                     case REMOTE_PUSHCORRUPTCORESPECUPDATE:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            RTCV.NetCore.AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
-                        });
-                        e.setReturnValue(true);
+                        PushCorruptCoreSpecUpdate(advancedMessage, ref e);
                         break;
 
                     case REMOTE_GENERATEVMDTEXT:
@@ -482,6 +478,15 @@ namespace RTCV.UI
             SyncObjectSingleton.FormExecute(() =>
                         {
                             RTCV.NetCore.AllSpec.VanguardSpec?.Update((PartialSpec)advancedMessage.objectValue);
+                        });
+            e.setReturnValue(true);
+        }
+
+        private static void PushCorruptCoreSpecUpdate(NetCoreAdvancedMessage advancedMessage, ref NetCoreEventArgs e)
+        {
+            SyncObjectSingleton.FormExecute(() =>
+                        {
+                            RTCV.NetCore.AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
                         });
             e.setReturnValue(true);
         }
