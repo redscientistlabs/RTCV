@@ -105,11 +105,7 @@ namespace RTCV.UI
                         break;
 
                     case REMOTE_BLASTEDITOR_LOADORIGINAL:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
-                            blastEditor.LoadOriginal();
-                        });
+                        LoadOriginal();
                         break;
 
                     case REMOTE_BLASTEDITOR_GETLAYERSIZE_UNLOCKEDUNITS:
@@ -544,6 +540,15 @@ namespace RTCV.UI
             {
                 var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
                 blastEditor.btnLoadCorrupt_Click(null, null);
+            });
+        }
+
+        private static void LoadOriginal()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
+                blastEditor.LoadOriginal();
             });
         }
     }
