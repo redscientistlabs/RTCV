@@ -57,7 +57,6 @@ namespace RTCV.UI
                         PushVanguardSpecUpdate(advancedMessage, ref e);
                         break;
 
-                    //CorruptCore pushed its spec. Note the false on propogate (since we don't want a recursive loop)
                     case REMOTE_PUSHCORRUPTCORESPECUPDATE:
                         PushCorruptCoreSpecUpdate(advancedMessage, ref e);
                         break;
@@ -74,10 +73,7 @@ namespace RTCV.UI
                         GetBlastGeneratorLayer(ref e);
                         break;
                     case ERROR_DISABLE_AUTOCORRUPT:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            S.GET<UI_CoreForm>().AutoCorrupt = false;
-                        });
+                        DisableAutoCorrupt();
                         break;
                     case REMOTE_RENDER_DISPLAY:
                         SyncObjectSingleton.FormExecute(() =>
@@ -213,7 +209,7 @@ namespace RTCV.UI
                         SyncObjectSingleton.FormExecute(() =>
                         {
                             var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
-                            sanitizeTool.lbSteps.Items.Clear();//this is a hack for leaving in automation
+                            sanitizeTool.lbSteps.Items.Clear(); //this is a hack for leaving in automation
                             sanitizeTool.btnLeaveWithChanges_Click(null, null);
                         });
                         break;
@@ -222,7 +218,7 @@ namespace RTCV.UI
                         SyncObjectSingleton.FormExecute(() =>
                         {
                             var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
-                            sanitizeTool.lbSteps.Items.Clear();//this is a hack for leaving in automation
+                            sanitizeTool.lbSteps.Items.Clear(); //this is a hack for leaving in automation
                             sanitizeTool.btnLeaveSubstractChanges_Click(null, null);
                         });
                         break;
@@ -250,8 +246,6 @@ namespace RTCV.UI
                             sanitizeTool.btnReroll_Click(null, null);
                         });
                         break;
-
-
                 }
             }
             catch (Exception ex)
@@ -432,6 +426,7 @@ namespace RTCV.UI
             e.setReturnValue(true);
         }
 
+        //CorruptCore pushed its spec. Note the false on propogate (since we don't want a recursive loop)
         private static void PushCorruptCoreSpecUpdate(NetCoreAdvancedMessage advancedMessage, ref NetCoreEventArgs e)
         {
             SyncObjectSingleton.FormExecute(() =>
@@ -504,6 +499,14 @@ namespace RTCV.UI
                 bl = S.GET<RTC_BlastGenerator_Form>().GenerateBlastLayers(true, true, false);
             });
             e.setReturnValue(bl);
+        }
+
+        private static void DisableAutoCorrupt()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                S.GET<UI_CoreForm>().AutoCorrupt = false;
+            });
         }
     }
 }
