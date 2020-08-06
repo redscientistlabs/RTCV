@@ -109,13 +109,7 @@ namespace RTCV.UI
                         break;
 
                     case REMOTE_BLASTEDITOR_GETLAYERSIZE_UNLOCKEDUNITS:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {   // this is what the sanitize tool uses to judge how many units there are left to sanitize.
-                        var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
-                        int units = blastEditor.currentSK?.BlastLayer?.Layer.Count(x => !x.IsLocked) ?? -1;
-
-                        e.setReturnValue(units);
-                        });
+                        GetLayerSizeUnlockedUnits(ref e);
                         break;
 
                     case REMOTE_BLASTEDITOR_GETLAYERSIZE:
@@ -550,6 +544,18 @@ namespace RTCV.UI
                 var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
                 blastEditor.LoadOriginal();
             });
+        }
+
+        private static void GetLayerSizeUnlockedUnits(ref NetCoreEventArgs e)
+        {
+            var units = 0;
+            SyncObjectSingleton.FormExecute(() =>
+            {   // this is what the sanitize tool uses to judge how many units there are left to sanitize.
+                var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
+                units = blastEditor.currentSK?.BlastLayer?.Layer.Count(x => !x.IsLocked) ?? -1;
+            });
+
+            e.setReturnValue(units);
         }
     }
 }
