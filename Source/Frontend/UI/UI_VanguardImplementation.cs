@@ -46,26 +46,7 @@ namespace RTCV.UI
                 switch (message.Type) //Handle received messages here
                 {
                     case REMOTE_PUSHVANGUARDSPEC:
-                        {
-                            if (!CorruptCore.RtcCore.Attached)
-                            {
-                                RTCV.NetCore.AllSpec.VanguardSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !CorruptCore.RtcCore.Attached);
-                            }
-
-                            e.setReturnValue(true);
-
-                            //Push the UI and CorruptCore spec (since we're master)
-                            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHUISPEC, RTCV.NetCore.AllSpec.UISpec.GetPartialSpec(), true);
-                            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHCORRUPTCORESPEC, RTCV.NetCore.AllSpec.CorruptCoreSpec.GetPartialSpec(), true);
-
-                            SyncObjectSingleton.FormExecute(() =>
-                            {
-                                S.GET<UI_CoreForm>().pnAutoKillSwitch.Visible = true;
-                                S.GET<UI_CoreForm>().pnCrashProtection.Visible = true;
-                            });
-                            //Specs are all set up so UI is clear.
-                            LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_ALLSPECSSENT, true);
-                        }
+                        PushVanguardSpec(advancedMessage, ref e);
                         break;
 
                     case REMOTE_ALLSPECSSENT:
@@ -471,6 +452,28 @@ namespace RTCV.UI
 
                 return;
             }
+        }
+
+        private static void PushVanguardSpec(NetCoreAdvancedMessage advancedMessage, ref NetCoreEventArgs e)
+        {
+            if (!CorruptCore.RtcCore.Attached)
+            {
+                RTCV.NetCore.AllSpec.VanguardSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !CorruptCore.RtcCore.Attached);
+            }
+
+            e.setReturnValue(true);
+
+            //Push the UI and CorruptCore spec (since we're master)
+            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHUISPEC, RTCV.NetCore.AllSpec.UISpec.GetPartialSpec(), true);
+            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHCORRUPTCORESPEC, RTCV.NetCore.AllSpec.CorruptCoreSpec.GetPartialSpec(), true);
+
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                S.GET<UI_CoreForm>().pnAutoKillSwitch.Visible = true;
+                S.GET<UI_CoreForm>().pnCrashProtection.Visible = true;
+            });
+            //Specs are all set up so UI is clear.
+            LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_ALLSPECSSENT, true);
         }
     }
 }
