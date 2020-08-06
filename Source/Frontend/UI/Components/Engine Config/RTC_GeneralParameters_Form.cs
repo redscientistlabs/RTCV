@@ -99,10 +99,7 @@ namespace RTCV.UI
 
             if (paramValue != null && paramValue is int maxintensity)
             {
-                var prevState = multiTB_Intensity.FirstLoadDone;
-                multiTB_Intensity.FirstLoadDone = false;
-                multiTB_Intensity.Maximum = maxintensity;
-                multiTB_Intensity.FirstLoadDone = prevState;
+                multiTB_Intensity.SetMaximum(maxintensity, false);
             }
         }
     }

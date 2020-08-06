@@ -65,9 +65,9 @@ namespace RTCV.CorruptCore
             var name = Path.GetFileNameWithoutExtension(filePath);
 
             //var hash = Filtering.RegisterList(byteList, name, syncListViaNetcore);
-            byteList = byteList.Distinct(new CorruptCore_Extensions.ByteArrayComparer()).ToList();
+            byteList = byteList.Distinct(new Extensions.ByteArrayComparer()).ToList();
 
-            hashSet = new HashSet<byte[]>(byteList, new CorruptCore_Extensions.ByteArrayComparer());
+            hashSet = new HashSet<byte[]>(byteList, new Extensions.ByteArrayComparer());
             string hash = Filtering.RegisterList(this, name, syncListViaNetcore);
 
             return hash;
@@ -198,7 +198,7 @@ namespace RTCV.CorruptCore
             var name = Path.GetFileNameWithoutExtension(filePath);
 
             string hash = GetHash();
-            hashSet = new HashSet<byte?[]>(byteList, new CorruptCore_Extensions.NullableByteArrayComparer());
+            hashSet = new HashSet<byte?[]>(byteList, new Extensions.NullableByteArrayComparer());
 
             Filtering.RegisterList(this, name, syncListViaNetcore);
 
