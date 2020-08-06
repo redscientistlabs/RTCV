@@ -73,16 +73,7 @@ namespace RTCV.UI
                         RenderDisplay();
                         break;
                     case REMOTE_BACKUPKEY_STASH:
-                        if (advancedMessage?.objectValue is StashKey sk)
-                        {
-                            StockpileManager_UISide.BackupedState = sk;
-                            GameProtection.AddBackupState(sk);
-                            SyncObjectSingleton.FormExecute(() =>
-                            {
-                                S.GET<UI_CoreForm>().btnGpJumpBack.Visible = true;
-                                S.GET<UI_CoreForm>().btnGpJumpNow.Visible = true;
-                            });
-                        }
+                        BackupKeyStash(advancedMessage);
                         break;
                     case KILLSWITCH_PULSE:
                         AutoKillSwitch.Pulse();
@@ -506,6 +497,20 @@ namespace RTCV.UI
             {
                 S.GET<RTC_GlitchHarvesterBlast_Form>().refreshRenderOutputButton();
             });
+        }
+
+        private static void BackupKeyStash(NetCoreAdvancedMessage advancedMessage)
+        {
+            if (advancedMessage?.objectValue is StashKey sk)
+            {
+                StockpileManager_UISide.BackupedState = sk;
+                GameProtection.AddBackupState(sk);
+                SyncObjectSingleton.FormExecute(() =>
+                {
+                    S.GET<UI_CoreForm>().btnGpJumpBack.Visible = true;
+                    S.GET<UI_CoreForm>().btnGpJumpNow.Visible = true;
+                });
+            }
         }
     }
 }
