@@ -129,19 +129,11 @@ namespace RTCV.UI
                         break;
 
                     case REMOTE_SANITIZETOOL_YESEFFECT:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
-                            sanitizeTool.btnYesEffect_Click(null, null);
-                        });
+                        YesEffect();
                         break;
 
                     case REMOTE_SANITIZETOOL_NOEFFECT:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
-                            sanitizeTool.btnNoEffect_Click(null, null);
-                        });
+                        NoEffect();
                         break;
 
                     case REMOTE_SANITIZETOOL_REROLL:
@@ -577,6 +569,24 @@ namespace RTCV.UI
                 var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
                 sanitizeTool.lbSteps.Items.Clear(); //this is a hack for leaving in automation
                 sanitizeTool.btnLeaveSubstractChanges_Click(null, null);
+            });
+        }
+
+        private static void YesEffect()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
+                sanitizeTool.btnYesEffect_Click(null, null);
+            });
+        }
+
+        private static void NoEffect()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
+                sanitizeTool.btnNoEffect_Click(null, null);
             });
         }
     }
