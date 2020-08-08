@@ -24,6 +24,9 @@ namespace RTCV.CorruptCore
         public override long Size => lastMemorySize.GetValueOrDefault(0);
 
         public override bool BigEndian { get; }
+
+        public long StartPadding { get; }
+        public long EndPadding { get; }
         public override int WordSize => 4;
 
         public string Filename;
@@ -58,7 +61,7 @@ namespace RTCV.CorruptCore
             }
         }
 
-        public FileInterface(string _targetId, bool _bigEndian, bool _useAutomaticFileBackups = false)
+        public FileInterface(string _targetId, bool _bigEndian, bool _useAutomaticFileBackups = false, long _startPadding = 0, long _endPadding = 0)
         {
             try
             {
@@ -67,6 +70,9 @@ namespace RTCV.CorruptCore
                 var fi = new FileInfo(Filename);
                 ShortFilename = fi.Name;
                 BigEndian = _bigEndian;
+                StartPadding = 0;
+                EndPadding = 0;
+
                 InterfaceUniquePrefix = Filename.CreateMD5().Substring(0, 4).ToUpper();
                 useAutomaticFileBackups = _useAutomaticFileBackups;
 
@@ -347,7 +353,7 @@ namespace RTCV.CorruptCore
                 return (long)lastMemorySize;
             }
 
-            lastRealMemorySize = new FileInfo(Filename).Length;
+            lastRealMemorySize = new FileInfo(Filename).Length - (StartPadding + EndPadding);
 
             long Alignment32bitReminder = lastRealMemorySize.Value % 4;
 
@@ -365,7 +371,9 @@ namespace RTCV.CorruptCore
 
         public override void PokeBytes(long address, byte[] data)
         {
-            if (address + data.Length >= lastRealMemorySize)
+            long offsetAddress = address + StartPadding;
+
+            if (offsetAddress + data.Length >= lastRealMemorySize)
             {
                 return;
             }
@@ -375,12 +383,12 @@ namespace RTCV.CorruptCore
                 stream = File.Open(SetWorkingFile(), FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
             }
 
-            stream.Position = address;
+            stream.Position = offsetAddress;
             stream.Write(data, 0, data.Length);
 
             if (cacheEnabled)
             {
-                MemoryBanks.PokeBytes(lastMemoryDump, address, data);
+                MemoryBanks.PokeBytes(lastMemoryDump, offsetAddress, data);
             }
 
             /*
@@ -392,7 +400,9 @@ namespace RTCV.CorruptCore
 
         public override void PokeByte(long address, byte data)
         {
-            if (address >= lastRealMemorySize)
+            long offsetAddress = address + StartPadding;
+
+            if (offsetAddress >= lastRealMemorySize)
             {
                 return;
             }
@@ -404,7 +414,7 @@ namespace RTCV.CorruptCore
                     stream = File.Open(SetWorkingFile(), FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
                 }
 
-                stream.Position = address;
+                stream.Position = offsetAddress;
                 stream.WriteByte(data);
             }
             catch (IOException e)
@@ -421,21 +431,23 @@ namespace RTCV.CorruptCore
 
             if (cacheEnabled)
             {
-                MemoryBanks.PokeByte(lastMemoryDump, address, data);
+                MemoryBanks.PokeByte(lastMemoryDump, offsetAddress, data);
             }
             //lastMemoryDump[address] = data;
         }
 
         public override byte PeekByte(long address)
         {
-            if (address >= lastRealMemorySize)
+            long offsetAddress = address + StartPadding;
+
+            if (offsetAddress >= lastRealMemorySize)
             {
                 return 0;
             }
 
             if (cacheEnabled)
             {
-                return MemoryBanks.PeekByte(lastMemoryDump, address);
+                return MemoryBanks.PeekByte(lastMemoryDump, offsetAddress);
             }
             //return lastMemoryDump[address];
             try
@@ -447,7 +459,7 @@ namespace RTCV.CorruptCore
                     stream = File.Open(SetWorkingFile(), FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
                 }
 
-                stream.Position = address;
+                stream.Position = offsetAddress;
                 stream.Read(readBytes, 0, 1);
 
                 //fs.Close();
@@ -469,14 +481,16 @@ namespace RTCV.CorruptCore
 
         public override byte[] PeekBytes(long address, int length)
         {
-            if (address + length > lastRealMemorySize)
+            long offsetAddress = address + StartPadding;
+
+            if (offsetAddress + length > lastRealMemorySize)
             {
                 return new byte[length];
             }
 
             if (cacheEnabled)
             {
-                return MemoryBanks.PeekBytes(lastMemoryDump, address, length);
+                return MemoryBanks.PeekBytes(lastMemoryDump, offsetAddress, length);
             }
             //return lastMemoryDump.SubArray(address, range);
 
@@ -487,7 +501,7 @@ namespace RTCV.CorruptCore
                 stream = File.Open(SetWorkingFile(), FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
             }
 
-            stream.Position = address;
+            stream.Position = offsetAddress;
             stream.Read(readBytes, 0, length);
 
             //fs.Close();
