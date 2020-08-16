@@ -104,9 +104,7 @@
     <Compile Include="Components\Containers\RTC_SelectBox_Form.designer.cs">
       <DependentUpon>RTC_SelectBox_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Controls\HexTextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Components\Controls\HexTextBox.cs" />
     <Compile Include="Components\Controls\InputCompositeWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -576,9 +574,7 @@
     <EmbeddedResource Include="Modular\UI_CanvasForm.resx">
       <DependentUpon>UI_CanvasForm.cs</DependentUpon>
     </EmbeddedResource>
-    <Compile Include="Modular\ComponentForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Modular\ComponentForm.cs" />
     <EmbeddedResource Include="Modular\UI_ComponentFormSubForm.resx">
       <DependentUpon>UI_ComponentFormSubForm.cs</DependentUpon>
     </EmbeddedResource>
