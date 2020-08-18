@@ -40,426 +40,104 @@ namespace RTCV.UI
             try
             {
                 var message = e.message;
-                var simpleMessage = message as NetCoreSimpleMessage;
                 var advancedMessage = message as NetCoreAdvancedMessage;
 
                 switch (message.Type) //Handle received messages here
                 {
                     case REMOTE_PUSHVANGUARDSPEC:
-                        {
-                            if (!CorruptCore.RtcCore.Attached)
-                            {
-                                RTCV.NetCore.AllSpec.VanguardSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !CorruptCore.RtcCore.Attached);
-                            }
-
-                            e.setReturnValue(true);
-
-                            //Push the UI and CorruptCore spec (since we're master)
-                            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHUISPEC, RTCV.NetCore.AllSpec.UISpec.GetPartialSpec(), true);
-                            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHCORRUPTCORESPEC, RTCV.NetCore.AllSpec.CorruptCoreSpec.GetPartialSpec(), true);
-
-                            SyncObjectSingleton.FormExecute(() =>
-                            {
-                                S.GET<UI_CoreForm>().pnAutoKillSwitch.Visible = true;
-                                S.GET<UI_CoreForm>().pnCrashProtection.Visible = true;
-                            });
-                            //Specs are all set up so UI is clear.
-                            LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_ALLSPECSSENT, true);
-                        }
+                        PushVanguardSpec(advancedMessage, ref e);
                         break;
-
                     case REMOTE_ALLSPECSSENT:
-                        if (UICore.FirstConnect)
-                        {
-                            UICore.Initialized.WaitOne(10000);
-                        }
-
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            if (UICore.FirstConnect)
-                            {
-                                lastVanguardClient = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
-                                UICore.FirstConnect = false;
-
-                                //Load plugins on both sides
-                                CorruptCore.RtcCore.LoadPlugins();
-                                LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_LOADPLUGINS, true);
-
-                                //Configure the UI based on the vanguard spec
-                                UICore.ConfigureUIFromVanguardSpec();
-
-                                S.GET<UI_CoreForm>().Show();
-
-                                //Pull any lists from the vanguard implementation
-                                if (RtcCore.EmuDir != null)
-                                {
-                                    UICore.LoadLists(Path.Combine(RtcCore.EmuDir, "LISTS"));
-                                }
-
-                                UICore.LoadLists(CorruptCore.RtcCore.ListsDir);
-
-                                Panel sidebar = S.GET<UI_CoreForm>().pnSideBar;
-                                foreach (Control c in sidebar.Controls)
-                                {
-                                    if (c is Button b)
-                                    {
-                                        if (!b.Text.Contains("Test") && !b.Text.Contains("Custom Layout") && b.ForeColor != Color.OrangeRed)
-                                        {
-                                            b.Visible = true;
-                                        }
-                                    }
-                                }
-
-                                string customLayoutPath = Path.Combine(RTCV.CorruptCore.RtcCore.RtcDir, "CustomLayout.txt");
-                                if (File.Exists(customLayoutPath))
-                                {
-                                    S.GET<UI_CoreForm>().SetCustomLayoutName(customLayoutPath);
-                                    S.GET<UI_CoreForm>().btnOpenCustomLayout.Visible = true;
-                                }
-
-                                UI_DefaultGrids.engineConfig.LoadToMain();
-
-                                UI_DefaultGrids.glitchHarvester.LoadToNewWindow("Glitch Harvester", true);
-                            }
-                            else
-                            {
-                                LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_LOADPLUGINS, true);
-                                //make sure the other side reloads the plugins
-
-                                var clientName = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
-                                if (clientName != lastVanguardClient)
-                                {
-                                    MessageBox.Show($"Error: Found {clientName} when previously connected to {lastVanguardClient}.\nPlease restart the RTC to swap clients.");
-                                    return;
-                                }
-
-                                //Push the VMDs since we store them out of spec
-                                var vmdProtos = MemoryDomains.VmdPool.Values.Cast<VirtualMemoryDomain>().Select(x => x.Proto).ToArray();
-                                LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHVMDPROTOS, vmdProtos, true);
-
-                                S.GET<UI_CoreForm>().Show();
-
-                                //Configure the UI based on the vanguard spec
-                                UICore.ConfigureUIFromVanguardSpec();
-
-                                //Unblock the controls in the GH
-                                S.GET<RTC_GlitchHarvesterBlast_Form>().SetBlastButtonVisibility(true);
-
-                                //Return to the main form. If the form is null for some reason, default to engineconfig
-                                if (S.GET<UI_CoreForm>().previousGrid == null)
-                                {
-                                    S.GET<UI_CoreForm>().previousGrid = UI_DefaultGrids.engineConfig;
-                                }
-
-                                UICore.UnlockInterface();
-                                S.GET<UI_CoreForm>().previousGrid.LoadToMain();
-                            }
-
-                            S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0; //remove this once core form is dead
-
-                            if (!CorruptCore.RtcCore.Attached)
-                            {
-                                AutoKillSwitch.Enabled = true;
-                            }
-
-                            //Restart game protection
-                            if (S.GET<UI_CoreForm>().cbUseGameProtection.Checked)
-                            {
-                                if (CorruptCore.StockpileManager_UISide.BackupedState != null)
-                                {
-                                    CorruptCore.StockpileManager_UISide.BackupedState.Run();
-                                }
-
-                                if (CorruptCore.StockpileManager_UISide.BackupedState != null)
-                                {
-                                    S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected(CorruptCore.StockpileManager_UISide.BackupedState.SelectedDomains.ToArray());
-                                }
-
-                                GameProtection.Start();
-                                if (GameProtection.WasAutoCorruptRunning)
-                                {
-                                    S.GET<UI_CoreForm>().AutoCorrupt = true;
-                                }
-                            }
-
-                            S.GET<UI_CoreForm>().Show();
-
-                            if (NetCore.Params.IsParamSet("SIMPLE_MODE"))
-                            {
-                                bool isSpec = (AllSpec.VanguardSpec[VSPEC.NAME] as string)?.ToUpper().Contains("SPEC") ?? false;
-
-                                if (isSpec) //Simple Mode cannot run on Stubs
-                                {
-                                    MessageBox.Show("Unfortunately, Simple Mode is not compatible with Stubs. RTC will now switch to Normal Mode.");
-                                    NetCore.Params.RemoveParam("SIMPLE_MODE");
-                                }
-                                else
-                                {
-                                    UI_DefaultGrids.simpleMode.LoadToMain();
-                                    RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
-                                    smForm.EnteringSimpleMode();
-                                }
-                            }
-                        });
+                        AllSpecSent();
                         break;
-
                     case REMOTE_PUSHVANGUARDSPECUPDATE:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            RTCV.NetCore.AllSpec.VanguardSpec?.Update((PartialSpec)advancedMessage.objectValue);
-                        });
-                        e.setReturnValue(true);
+                        PushVanguardSpecUpdate(advancedMessage, ref e);
                         break;
-
-                    //CorruptCore pushed its spec. Note the false on propogate (since we don't want a recursive loop)
                     case REMOTE_PUSHCORRUPTCORESPECUPDATE:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            RTCV.NetCore.AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
-                        });
-                        e.setReturnValue(true);
+                        PushCorruptCoreSpecUpdate(advancedMessage, ref e);
                         break;
-
                     case REMOTE_GENERATEVMDTEXT:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            object[] objs = (object[])advancedMessage.objectValue;
-                            string domain = (string)objs[0];
-                            string text = (string)objs[1];
-
-                            var vmdgenerator = S.GET<RTC_VmdGen_Form>();
-
-                            vmdgenerator.btnSelectAll_Click(null, null);
-
-                            var cbitems = vmdgenerator.cbSelectedMemoryDomain.Items;
-                            object domainFound = null;
-                            for (int i = 0; i < cbitems.Count; i++)
-                            {
-                                var item = cbitems[i];
-
-                                if (item.ToString() == domain)
-                                {
-                                    domainFound = item;
-                                    vmdgenerator.cbSelectedMemoryDomain.SelectedIndex = i;
-                                    break;
-                                }
-                            }
-
-                            if (domainFound == null)
-                            {
-                                throw new Exception($"Domain {domain} could not be selected in the VMD Generator. Aborting procedure.");
-                                //return;
-                            }
-
-                            vmdgenerator.tbCustomAddresses.Text = text;
-
-                            string value = "";
-
-                            if (RTCV.UI.UI_Extensions.GetInputBox("VMD Generation", "Enter the new VMD name:", ref value) == DialogResult.OK)
-                            {
-                                if (!string.IsNullOrWhiteSpace(value))
-                                    vmdgenerator.tbVmdName.Text = value.Trim();
-                                vmdgenerator.btnGenerateVMD_Click(null, null);
-                            }
-                        });
-                        e.setReturnValue(true);
+                        GenerateVmdText(advancedMessage, ref e);
                         break;
-
                     case REMOTE_EVENT_DOMAINSUPDATED:
-
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            S.GET<RTC_MemoryDomains_Form>().RefreshDomains();
-                            S.GET<RTC_MemoryDomains_Form>().SetMemoryDomainsAllButSelectedDomains(RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] as string[] ?? new string[] { });
-                        });
+                        DomainsUpdated();
                         break;
-
                     case REMOTE_GETBLASTGENERATOR_LAYER:
-
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            e.setReturnValue(S.GET<RTC_BlastGenerator_Form>().GenerateBlastLayers(true, true, false));
-                        });
+                        GetBlastGeneratorLayer(ref e);
                         break;
                     case ERROR_DISABLE_AUTOCORRUPT:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            S.GET<UI_CoreForm>().AutoCorrupt = false;
-                        });
+                        DisableAutoCorrupt();
                         break;
                     case REMOTE_RENDER_DISPLAY:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            S.GET<RTC_GlitchHarvesterBlast_Form>().refreshRenderOutputButton();
-                        });
+                        RenderDisplay();
                         break;
                     case REMOTE_BACKUPKEY_STASH:
-                        if (advancedMessage?.objectValue is StashKey sk)
-                        {
-                            StockpileManager_UISide.BackupedState = sk;
-                            GameProtection.AddBackupState(sk);
-                            SyncObjectSingleton.FormExecute(() =>
-                            {
-                                S.GET<UI_CoreForm>().btnGpJumpBack.Visible = true;
-                                S.GET<UI_CoreForm>().btnGpJumpNow.Visible = true;
-                            });
-                        }
+                        BackupKeyStash(advancedMessage);
                         break;
                     case KILLSWITCH_PULSE:
-                        AutoKillSwitch.Pulse();
+                        KillSwitchPulse();
                         break;
                     case RESET_GAME_PROTECTION_IF_RUNNING:
-                        if (GameProtection.isRunning)
-                        {
-                            SyncObjectSingleton.FormExecute(() =>
-                            {
-                                S.GET<UI_CoreForm>().cbUseGameProtection.Checked = false;
-                                S.GET<UI_CoreForm>().cbUseGameProtection.Checked = true;
-                            });
-                        }
+                        ResetGameProtectionIfRunning();
                         break;
-
                     case REMOTE_DISABLESAVESTATESUPPORT:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            S.GET<RTC_SavestateManager_Form>().DisableFeature();
-                            S.GET<UI_CoreForm>().pnCrashProtection.Visible = false;
-                        });
+                        DisableSavestateSupport();
                         break;
 
                     case REMOTE_DISABLEGAMEPROTECTIONSUPPORT:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            S.GET<UI_CoreForm>().pnCrashProtection.Visible = false;
-                        });
+                        DisableGameProtectionSupport();
                         break;
 
                     case REMOTE_DISABLEREALTIMESUPPORT:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            Button btnManual = S.GET<UI_CoreForm>().btnManualBlast;
-                            if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null)
-                            {
-                                btnManual.Text = "  Corrupt";
-                            }
-                            else
-                            {
-                                btnManual.Visible = false;
-                            }
-
-                            S.GET<UI_CoreForm>().btnAutoCorrupt.Enabled = false;
-                            S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
-                            S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Enabled = false;
-                            S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw.Enabled = false;
-                            S.GET<RTC_GlitchHarvesterBlast_Form>().btnBlastToggle.Enabled = false;
-
-                            S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Remove("Hellgenie Engine");
-                            S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Remove("Distortion Engine");
-                            S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Remove("Pipe Engine");
-                            S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Remove("Freeze Engine");
-                        });
+                        DisableRealTimeSupport();
                         break;
                     case REMOTE_DISABLEKILLSWITCHSUPPORT:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            S.GET<UI_CoreForm>().pnAutoKillSwitch.Visible = false;
-                            S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked = false;
-                        });
+                        DisableKillSwitchSupport();
                         break;
 
                     case REMOTE_BLASTEDITOR_STARTSANITIZETOOL:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
-                            blastEditor.OpenSanitizeTool(false);
-                        });
+                        StartSanitizeTool();
                         break;
 
                     case REMOTE_BLASTEDITOR_LOADCORRUPT:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
-                            blastEditor.btnLoadCorrupt_Click(null, null);
-                        });
+                        LoadCorrupt();
                         break;
 
                     case REMOTE_BLASTEDITOR_LOADORIGINAL:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
-                            blastEditor.LoadOriginal();
-                        });
+                        LoadOriginal();
                         break;
 
                     case REMOTE_BLASTEDITOR_GETLAYERSIZE_UNLOCKEDUNITS:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {   // this is what the sanitize tool uses to judge how many units there are left to sanitize.
-                        var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
-                        int units = blastEditor.currentSK?.BlastLayer?.Layer.Count(x => !x.IsLocked) ?? -1;
-
-                        e.setReturnValue(units);
-                        });
+                        GetLayerSizeUnlockedUnits(ref e);
                         break;
 
                     case REMOTE_BLASTEDITOR_GETLAYERSIZE:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            e.setReturnValue(S.GET<RTC_NewBlastEditor_Form>().currentSK?.BlastLayer?.Layer?.Count ?? -1);
-                        });
+                        GetLayerSize(ref e);
                         break;
 
-
                     case REMOTE_SANITIZETOOL_STARTSANITIZING:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
-                            sanitizeTool.btnStartSanitizing_Click(null, null);
-                        });
+                        StartSanitizing();
                         break;
 
                     case REMOTE_SANITIZETOOL_LEAVEWITHCHANGES:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
-                            sanitizeTool.lbSteps.Items.Clear();//this is a hack for leaving in automation
-                            sanitizeTool.btnLeaveWithChanges_Click(null, null);
-                        });
+                        LeaveWithChanges();
                         break;
 
                     case REMOTE_SANITIZETOOL_LEAVESUBTRACTCHANGES:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
-                            sanitizeTool.lbSteps.Items.Clear();//this is a hack for leaving in automation
-                            sanitizeTool.btnLeaveSubstractChanges_Click(null, null);
-                        });
+                        LeaveSubtractChanges();
                         break;
 
                     case REMOTE_SANITIZETOOL_YESEFFECT:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
-                            sanitizeTool.btnYesEffect_Click(null, null);
-                        });
+                        YesEffect();
                         break;
 
                     case REMOTE_SANITIZETOOL_NOEFFECT:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
-                            sanitizeTool.btnNoEffect_Click(null, null);
-                        });
+                        NoEffect();
                         break;
 
                     case REMOTE_SANITIZETOOL_REROLL:
-                        SyncObjectSingleton.FormExecute(() =>
-                        {
-                            var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
-                            sanitizeTool.btnReroll_Click(null, null);
-                        });
+                        Reroll();
                         break;
-
-
                 }
             }
             catch (Exception ex)
@@ -471,6 +149,454 @@ namespace RTCV.UI
 
                 return;
             }
+        }
+
+        private static void PushVanguardSpec(NetCoreAdvancedMessage advancedMessage, ref NetCoreEventArgs e)
+        {
+            if (!CorruptCore.RtcCore.Attached)
+            {
+                RTCV.NetCore.AllSpec.VanguardSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !CorruptCore.RtcCore.Attached);
+            }
+
+            e.setReturnValue(true);
+
+            //Push the UI and CorruptCore spec (since we're master)
+            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHUISPEC, RTCV.NetCore.AllSpec.UISpec.GetPartialSpec(), true);
+            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHCORRUPTCORESPEC, RTCV.NetCore.AllSpec.CorruptCoreSpec.GetPartialSpec(), true);
+
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                S.GET<UI_CoreForm>().pnAutoKillSwitch.Visible = true;
+                S.GET<UI_CoreForm>().pnCrashProtection.Visible = true;
+            });
+            //Specs are all set up so UI is clear.
+            LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_ALLSPECSSENT, true);
+        }
+
+        private static void AllSpecSent()
+        {
+            if (UICore.FirstConnect)
+            {
+                UICore.Initialized.WaitOne(10000);
+            }
+
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                if (UICore.FirstConnect)
+                {
+                    lastVanguardClient = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
+                    UICore.FirstConnect = false;
+
+                    //Load plugins on both sides
+                    CorruptCore.RtcCore.LoadPlugins();
+                    LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_LOADPLUGINS, true);
+
+                    //Configure the UI based on the vanguard spec
+                    UICore.ConfigureUIFromVanguardSpec();
+
+                    S.GET<UI_CoreForm>().Show();
+
+                    //Pull any lists from the vanguard implementation
+                    if (RtcCore.EmuDir != null)
+                    {
+                        UICore.LoadLists(Path.Combine(RtcCore.EmuDir, "LISTS"));
+                    }
+
+                    UICore.LoadLists(CorruptCore.RtcCore.ListsDir);
+
+                    Panel sidebar = S.GET<UI_CoreForm>().pnSideBar;
+                    foreach (Control c in sidebar.Controls)
+                    {
+                        if (c is Button b)
+                        {
+                            if (!b.Text.Contains("Test") && !b.Text.Contains("Custom Layout") && b.ForeColor != Color.OrangeRed)
+                            {
+                                b.Visible = true;
+                            }
+                        }
+                    }
+
+                    string customLayoutPath = Path.Combine(RTCV.CorruptCore.RtcCore.RtcDir, "CustomLayout.txt");
+                    if (File.Exists(customLayoutPath))
+                    {
+                        S.GET<UI_CoreForm>().SetCustomLayoutName(customLayoutPath);
+                        S.GET<UI_CoreForm>().btnOpenCustomLayout.Visible = true;
+                    }
+
+                    UI_DefaultGrids.engineConfig.LoadToMain();
+
+                    UI_DefaultGrids.glitchHarvester.LoadToNewWindow("Glitch Harvester", true);
+                }
+                else
+                {
+                    LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_LOADPLUGINS, true);
+                    //make sure the other side reloads the plugins
+
+                    var clientName = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
+                    if (clientName != lastVanguardClient)
+                    {
+                        MessageBox.Show($"Error: Found {clientName} when previously connected to {lastVanguardClient}.\nPlease restart the RTC to swap clients.");
+                        return;
+                    }
+
+                    //Push the VMDs since we store them out of spec
+                    var vmdProtos = MemoryDomains.VmdPool.Values.Cast<VirtualMemoryDomain>().Select(x => x.Proto).ToArray();
+                    LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHVMDPROTOS, vmdProtos, true);
+
+                    S.GET<UI_CoreForm>().Show();
+
+                    //Configure the UI based on the vanguard spec
+                    UICore.ConfigureUIFromVanguardSpec();
+
+                    //Unblock the controls in the GH
+                    S.GET<RTC_GlitchHarvesterBlast_Form>().SetBlastButtonVisibility(true);
+
+                    //Return to the main form. If the form is null for some reason, default to engineconfig
+                    if (S.GET<UI_CoreForm>().previousGrid == null)
+                    {
+                        S.GET<UI_CoreForm>().previousGrid = UI_DefaultGrids.engineConfig;
+                    }
+
+                    UICore.UnlockInterface();
+                    S.GET<UI_CoreForm>().previousGrid.LoadToMain();
+                }
+
+                S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0; //remove this once core form is dead
+
+                if (!CorruptCore.RtcCore.Attached)
+                {
+                    AutoKillSwitch.Enabled = true;
+                }
+
+                //Restart game protection
+                if (S.GET<UI_CoreForm>().cbUseGameProtection.Checked)
+                {
+                    if (CorruptCore.StockpileManager_UISide.BackupedState != null)
+                    {
+                        CorruptCore.StockpileManager_UISide.BackupedState.Run();
+                    }
+
+                    if (CorruptCore.StockpileManager_UISide.BackupedState != null)
+                    {
+                        S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected(CorruptCore.StockpileManager_UISide.BackupedState.SelectedDomains.ToArray());
+                    }
+
+                    GameProtection.Start();
+                    if (GameProtection.WasAutoCorruptRunning)
+                    {
+                        S.GET<UI_CoreForm>().AutoCorrupt = true;
+                    }
+                }
+
+                S.GET<UI_CoreForm>().Show();
+
+                if (NetCore.Params.IsParamSet("SIMPLE_MODE"))
+                {
+                    bool isSpec = (AllSpec.VanguardSpec[VSPEC.NAME] as string)?.ToUpper().Contains("SPEC") ?? false;
+
+                    if (isSpec) //Simple Mode cannot run on Stubs
+                    {
+                        MessageBox.Show("Unfortunately, Simple Mode is not compatible with Stubs. RTC will now switch to Normal Mode.");
+                        NetCore.Params.RemoveParam("SIMPLE_MODE");
+                    }
+                    else
+                    {
+                        UI_DefaultGrids.simpleMode.LoadToMain();
+                        RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
+                        smForm.EnteringSimpleMode();
+                    }
+                }
+            });
+        }
+
+        private static void PushVanguardSpecUpdate(NetCoreAdvancedMessage advancedMessage, ref NetCoreEventArgs e)
+        {
+            SyncObjectSingleton.FormExecute(() =>
+                        {
+                            RTCV.NetCore.AllSpec.VanguardSpec?.Update((PartialSpec)advancedMessage.objectValue);
+                        });
+            e.setReturnValue(true);
+        }
+
+        //CorruptCore pushed its spec. Note the false on propogate (since we don't want a recursive loop)
+        private static void PushCorruptCoreSpecUpdate(NetCoreAdvancedMessage advancedMessage, ref NetCoreEventArgs e)
+        {
+            SyncObjectSingleton.FormExecute(() =>
+                        {
+                            RTCV.NetCore.AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
+                        });
+            e.setReturnValue(true);
+        }
+
+        private static void GenerateVmdText(NetCoreAdvancedMessage advancedMessage, ref NetCoreEventArgs e)
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                object[] objs = (object[])advancedMessage.objectValue;
+                string domain = (string)objs[0];
+                string text = (string)objs[1];
+
+                var vmdgenerator = S.GET<RTC_VmdGen_Form>();
+
+                vmdgenerator.btnSelectAll_Click(null, null);
+
+                var cbitems = vmdgenerator.cbSelectedMemoryDomain.Items;
+                object domainFound = null;
+                for (int i = 0; i < cbitems.Count; i++)
+                {
+                    var item = cbitems[i];
+
+                    if (item.ToString() == domain)
+                    {
+                        domainFound = item;
+                        vmdgenerator.cbSelectedMemoryDomain.SelectedIndex = i;
+                        break;
+                    }
+                }
+
+                if (domainFound == null)
+                {
+                    throw new Exception($"Domain {domain} could not be selected in the VMD Generator. Aborting procedure.");
+                                            //return;
+                                        }
+
+                vmdgenerator.tbCustomAddresses.Text = text;
+
+                string value = "";
+
+                if (RTCV.UI.UI_Extensions.GetInputBox("VMD Generation", "Enter the new VMD name:", ref value) == DialogResult.OK)
+                {
+                    if (!string.IsNullOrWhiteSpace(value))
+                        vmdgenerator.tbVmdName.Text = value.Trim();
+                    vmdgenerator.btnGenerateVMD_Click(null, null);
+                }
+            });
+            e.setReturnValue(true);
+        }
+
+        private static void DomainsUpdated()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                S.GET<RTC_MemoryDomains_Form>().RefreshDomains();
+                S.GET<RTC_MemoryDomains_Form>().SetMemoryDomainsAllButSelectedDomains(RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] as string[] ?? new string[] { });
+            });
+        }
+
+        private static void GetBlastGeneratorLayer(ref NetCoreEventArgs e)
+        {
+            BlastLayer bl = null;
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                bl = S.GET<RTC_BlastGenerator_Form>().GenerateBlastLayers(true, true, false);
+            });
+            e.setReturnValue(bl);
+        }
+
+        private static void DisableAutoCorrupt()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                S.GET<UI_CoreForm>().AutoCorrupt = false;
+            });
+        }
+
+        private static void RenderDisplay()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                S.GET<RTC_GlitchHarvesterBlast_Form>().refreshRenderOutputButton();
+            });
+        }
+
+        private static void BackupKeyStash(NetCoreAdvancedMessage advancedMessage)
+        {
+            if (advancedMessage?.objectValue is StashKey sk)
+            {
+                StockpileManager_UISide.BackupedState = sk;
+                GameProtection.AddBackupState(sk);
+                SyncObjectSingleton.FormExecute(() =>
+                {
+                    S.GET<UI_CoreForm>().btnGpJumpBack.Visible = true;
+                    S.GET<UI_CoreForm>().btnGpJumpNow.Visible = true;
+                });
+            }
+        }
+
+        private static void ResetGameProtectionIfRunning()
+        {
+            if (GameProtection.isRunning)
+            {
+                SyncObjectSingleton.FormExecute(() =>
+                {
+                    S.GET<UI_CoreForm>().cbUseGameProtection.Checked = false;
+                    S.GET<UI_CoreForm>().cbUseGameProtection.Checked = true;
+                });
+            }
+        }
+
+        private static void DisableSavestateSupport()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                S.GET<RTC_SavestateManager_Form>().DisableFeature();
+                S.GET<UI_CoreForm>().pnCrashProtection.Visible = false;
+            });
+        }
+
+        private static void DisableGameProtectionSupport()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                S.GET<UI_CoreForm>().pnCrashProtection.Visible = false;
+            });
+        }
+
+        private static void DisableRealTimeSupport()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                Button btnManual = S.GET<UI_CoreForm>().btnManualBlast;
+                if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null)
+                {
+                    btnManual.Text = "  Corrupt";
+                }
+                else
+                {
+                    btnManual.Visible = false;
+                }
+
+                S.GET<UI_CoreForm>().btnAutoCorrupt.Enabled = false;
+                S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
+                S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Enabled = false;
+                S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw.Enabled = false;
+                S.GET<RTC_GlitchHarvesterBlast_Form>().btnBlastToggle.Enabled = false;
+
+                S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Remove("Hellgenie Engine");
+                S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Remove("Distortion Engine");
+                S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Remove("Pipe Engine");
+                S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Remove("Freeze Engine");
+            });
+        }
+
+        private static void DisableKillSwitchSupport()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                S.GET<UI_CoreForm>().pnAutoKillSwitch.Visible = false;
+                S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked = false;
+            });
+        }
+
+        private static void StartSanitizeTool()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
+                blastEditor.OpenSanitizeTool(false);
+            });
+        }
+
+        private static void LoadCorrupt()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
+                blastEditor.btnLoadCorrupt_Click(null, null);
+            });
+        }
+
+        private static void LoadOriginal()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
+                blastEditor.LoadOriginal();
+            });
+        }
+
+        private static void GetLayerSizeUnlockedUnits(ref NetCoreEventArgs e)
+        {
+            var units = 0;
+            SyncObjectSingleton.FormExecute(() =>
+            {   // this is what the sanitize tool uses to judge how many units there are left to sanitize.
+                var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
+                units = blastEditor.currentSK?.BlastLayer?.Layer.Count(x => !x.IsLocked) ?? -1;
+            });
+
+            e.setReturnValue(units);
+        }
+
+        private static void GetLayerSize(ref NetCoreEventArgs e)
+        {
+            var layerSize = 0;
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                layerSize = S.GET<RTC_NewBlastEditor_Form>().currentSK?.BlastLayer?.Layer?.Count ?? -1;
+            });
+
+            e.setReturnValue(layerSize);
+        }
+
+        private static void StartSanitizing()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
+                sanitizeTool.btnStartSanitizing_Click(null, null);
+            });
+        }
+
+        private static void LeaveWithChanges()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
+                sanitizeTool.lbSteps.Items.Clear(); //this is a hack for leaving in automation
+                sanitizeTool.btnLeaveWithChanges_Click(null, null);
+            });
+        }
+
+        private static void LeaveSubtractChanges()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
+                sanitizeTool.lbSteps.Items.Clear(); //this is a hack for leaving in automation
+                sanitizeTool.btnLeaveSubstractChanges_Click(null, null);
+            });
+        }
+
+        private static void YesEffect()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
+                sanitizeTool.btnYesEffect_Click(null, null);
+            });
+        }
+
+        private static void NoEffect()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
+                sanitizeTool.btnNoEffect_Click(null, null);
+            });
+        }
+
+        private static void Reroll()
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
+                sanitizeTool.btnReroll_Click(null, null);
+            });
+        }
+
+        private static void KillSwitchPulse()
+        {
+            AutoKillSwitch.Pulse();
         }
     }
 }
