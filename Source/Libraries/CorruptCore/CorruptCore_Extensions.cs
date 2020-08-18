@@ -720,6 +720,17 @@ namespace RTCV.CorruptCore
                 return ser.Deserialize<T>(jsonReader);
             }
         }
+
+        //Wrap JsonConvert so we can access this in vanguard implementations without importing json.net directly
+        public static string Serialize(object value)
+        {
+            return JsonConvert.SerializeObject(value);
+        }
+
+        public static T Deserialize<T>(string str)
+        {
+            return JsonConvert.DeserializeObject<T>(str);
+        }
     }
 
     //Lifted from Bizhawk https://github.com/TASVideos/BizHawk
