@@ -305,3 +305,36 @@ jobs:
       run: |
         cd citra-vanguard\build
         msbuild citra.sln
+
+  Dosbox:
+    runs-on: windows-2019
+    steps:
+    # Checkout relevant code
+    - name: Checkout current build target
+      uses: actions/checkout@v2
+      with:
+        path: 'RTCV'
+    - name: Checkout DosboxStub
+      uses: actions/checkout@v2
+      with:
+        repository: 'ircluzar/DosboxStub-Vanguard'
+        ref: 'master'
+        path: 'DosboxStub-Vanguard'
+
+    # Setup Tooling
+    - name: Setup Nuget
+      uses: nuget/setup-nuget@v1.0.2
+      with:
+        nuget-version: 'latest'
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.0
+
+    # Restore nuget packages for all targets
+    - name: Restore Nuget packages in current build target
+      run: nuget restore '.\RTCV\'
+    - name: Restore Nuget packages in DosboxStub
+      run: nuget restore '.\DosboxStub-Vanguard\DosboxStub-Vanguard.sln'
+
+    # Build DosboxStub
+    - name: Build DosboxStub-Vanguard
+      run: msbuild '.\DosboxStub-Vanguard\DosboxStub-Vanguard.sln'
