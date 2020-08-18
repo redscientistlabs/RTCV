@@ -12,8 +12,8 @@ namespace RTCV.CorruptCore
     using Newtonsoft.Json;
     using RTCV.Common.Objects;
     using RTCV.NetCore;
+    using RTCV.CorruptCore.StockpileNS;
     using Exception = System.Exception;
-    using StockpileNS;
 
     [Serializable]
     [Ceras.MemberConfig(TargetMember.All)]
@@ -71,7 +71,7 @@ namespace RTCV.CorruptCore
                 sks.RtcVersion = RtcCore.RtcVersion;
                 sks.VanguardImplementation = (string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "ERROR";
 
-                CopyReferencedFiles(ref sks, includeReferencedFiles, ref saveProgress);
+                CopyReferencedFiles(sks, includeReferencedFiles, ref saveProgress);
 
                 CopySavestates(ref sks, ref saveProgress);
 
@@ -131,7 +131,7 @@ namespace RTCV.CorruptCore
             }
         }
 
-        private static void CopyReferencedFiles(ref Stockpile sks, bool includeReferencedFiles, ref decimal saveProgress)
+        private static void CopyReferencedFiles(Stockpile sks, bool includeReferencedFiles, ref decimal saveProgress)
         {
             List<string> allRoms = new List<string>();
             if (includeReferencedFiles && ((bool?)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.SUPPORTS_REFERENCES] ?? false))
@@ -271,7 +271,6 @@ namespace RTCV.CorruptCore
                     throw new SaveException("Missing file reference");
                 }
             }
-
         }
 
         private static void CopySavestates(ref Stockpile sks, ref decimal saveProgress)
