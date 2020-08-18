@@ -50,8 +50,6 @@ namespace RTCV.CorruptCore
 
         public static bool Save(Stockpile sks, string filename, bool includeReferencedFiles = false, bool compress = true)
         {
-            decimal saveProgress = 0;
-            decimal percentPerFile = 0;
             if (sks.StashKeys.Count == 0)
             {
                 MessageBox.Show("Can't save because the Current Stockpile is empty");
@@ -75,6 +73,7 @@ namespace RTCV.CorruptCore
             sks.Filename = filename;
             sks.ShortFilename = Path.GetFileName(sks.Filename);
 
+            decimal saveProgress = 0;
             //clean temp folder
             try
             {
@@ -162,7 +161,7 @@ namespace RTCV.CorruptCore
                     }
                 }
 
-                percentPerFile = 20m / (allRoms.Count + 1);
+                decimal percentPerFile = 20m / (allRoms.Count + 1);
                 //populating temp folder with roms
                 foreach (string str in allRoms)
                 {
