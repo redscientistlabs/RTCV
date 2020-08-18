@@ -37,59 +37,6 @@ namespace RTCV.CorruptCore
             }
         }
 
-        #region ARRAY EXTENSIONS
-
-        public static int IndexOf<T>(this T[] haystack, T[] needle)
-        {
-            if ((needle != null) && (haystack.Length >= needle.Length))
-            {
-                for (int l = 0; l < haystack.Length - needle.Length + 1; l++)
-                {
-                    if (!needle.Where((data, index) => !haystack[l + index].Equals(data)).Any())
-                    {
-                        return l;
-                    }
-                }
-            }
-
-            return -1;
-        }
-
-        public static T[] SubArray<T>(this T[] data, long index, long length)
-        {
-            T[] result = new T[length];
-
-            if (data == null)
-            {
-                return null;
-            }
-
-            Array.Copy(data, index, result, 0, length);
-            return result;
-        }
-
-        public static T[] FlipWords<T>(this T[] data, int wordSize)
-        {
-            //2 : 16-bit
-            //4 : 32-bit
-            //8 : 64-bit
-
-            T[] result = new T[data.Length];
-
-            for (int i = 0; i < data.Length; i++)
-            {
-                int wordPos = i % wordSize;
-                int wordAddress = i - wordPos;
-                int newPos = wordAddress + (wordSize - (wordPos + 1));
-
-                result[newPos] = data[i];
-            }
-
-            return result;
-        }
-
-        #endregion ARRAY EXTENSIONS
-
         #region STRING EXTENSIONS
 
         public static string ToBase64(this string str)
