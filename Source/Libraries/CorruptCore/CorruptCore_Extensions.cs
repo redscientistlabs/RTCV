@@ -31,7 +31,7 @@ namespace RTCV.CorruptCore
 
         public static void DirectoryRequired(string[] paths)
         {
-            foreach (string path in paths)
+            foreach (var path in paths)
             {
                 DirectoryRequired(path);
             }
@@ -43,14 +43,14 @@ namespace RTCV.CorruptCore
         public static string CreateMD5(this string input)
         {
             // Use input string to calculate MD5 hash
-            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+            using (var md5 = System.Security.Cryptography.MD5.Create())
             {
-                byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
-                byte[] hashBytes = md5.ComputeHash(inputBytes);
+                var inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+                var hashBytes = md5.ComputeHash(inputBytes);
 
                 // Convert the byte array to hexadecimal string
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < hashBytes.Length; i++)
+                var sb = new StringBuilder();
+                for (var i = 0; i < hashBytes.Length; i++)
                 {
                     sb.Append(hashBytes[i].ToString("X2"));
                 }
@@ -72,14 +72,14 @@ namespace RTCV.CorruptCore
                 return null;
             }
 
-            string temp = hex.PadLeft(lengthPadded * 2, '0'); //*2 since a byte is two characters
+            var temp = hex.PadLeft(lengthPadded * 2, '0'); //*2 since a byte is two characters
 
-            int j = 0;
+            var j = 0;
             for (var i = 0; i < lengthPadded * 2; i += 2)
             {
                 try
                 {
-                    string chars = temp.Substring(i, 2);
+                    var chars = temp.Substring(i, 2);
 
                     bytes[j] = (byte)Convert.ToUInt32(chars, 16);
                 }
@@ -108,14 +108,14 @@ namespace RTCV.CorruptCore
                 return null;
             }
 
-            string temp = hex.PadLeft(lengthPadded * 2, '0'); //*2 since a byte is two characters
+            var temp = hex.PadLeft(lengthPadded * 2, '0'); //*2 since a byte is two characters
 
-            int j = 0;
+            var j = 0;
             for (var i = 0; i < lengthPadded * 2; i += 2)
             {
                 try
                 {
-                    string chars = temp.Substring(i, 2);
+                    var chars = temp.Substring(i, 2);
 
                     if (chars == "??")
                         bytes[j] = null;
@@ -147,15 +147,15 @@ namespace RTCV.CorruptCore
                 return null;
             }
 
-            string temp = hex.PadLeft(precision * 2, '0'); //*2 since a byte is two characters
+            var temp = hex.PadLeft(precision * 2, '0'); //*2 since a byte is two characters
 
-            int j = 0;
+            var j = 0;
             for (var i = 0; i < precision * 2; i += 2)
             {
                 try
                 {
                     if (!byte.TryParse(temp.Substring(i, 2), NumberStyles.HexNumber, CultureInfo.CurrentCulture,
-                        out byte b))
+                        out var b))
                     {
                         return null;
                     }
@@ -175,7 +175,7 @@ namespace RTCV.CorruptCore
 
         public static string MakeSafeFilename(string filename, char replaceChar)
         {
-            foreach (char c in Path.GetInvalidFileNameChars())
+            foreach (var c in Path.GetInvalidFileNameChars())
             {
                 filename = filename.Replace(c, replaceChar);
             }
@@ -193,7 +193,7 @@ namespace RTCV.CorruptCore
         /// <param name="bytes">The byte array to rotate.</param>
         public static void RotateLeft(byte[] bytes)
         {
-            bool carryFlag = ShiftLeft(bytes);
+            var carryFlag = ShiftLeft(bytes);
 
             if (carryFlag == true)
             {
@@ -207,7 +207,7 @@ namespace RTCV.CorruptCore
         /// <param name="bytes">The byte array to rotate.</param>
         public static void RotateRight(byte[] bytes)
         {
-            bool carryFlag = ShiftRight(bytes);
+            var carryFlag = ShiftRight(bytes);
 
             if (carryFlag == true)
             {
@@ -221,13 +221,13 @@ namespace RTCV.CorruptCore
         /// <param name="bytes">The byte array to shift.</param>
         public static bool ShiftLeft(byte[] bytes)
         {
-            bool leftMostCarryFlag = false;
+            var leftMostCarryFlag = false;
 
             // Iterate through the elements of the array from left to right.
-            for (int index = 0; index < bytes.Length; index++)
+            for (var index = 0; index < bytes.Length; index++)
             {
                 // If the leftmost bit of the current byte is 1 then we have a carry.
-                bool carryFlag = (bytes[index] & 0x80) > 0;
+                var carryFlag = (bytes[index] & 0x80) > 0;
 
                 if (index > 0)
                 {
@@ -254,14 +254,14 @@ namespace RTCV.CorruptCore
         /// <param name="bytes">The byte array to shift.</param>
         public static bool ShiftRight(byte[] bytes)
         {
-            bool rightMostCarryFlag = false;
-            int rightEnd = bytes.Length - 1;
+            var rightMostCarryFlag = false;
+            var rightEnd = bytes.Length - 1;
 
             // Iterate through the elements of the array right to left.
-            for (int index = rightEnd; index >= 0; index--)
+            for (var index = rightEnd; index >= 0; index--)
             {
                 // If the rightmost bit of the current byte is 1 then we have a carry.
-                bool carryFlag = (bytes[index] & 0x01) > 0;
+                var carryFlag = (bytes[index] & 0x01) > 0;
 
                 if (index < rightEnd)
                 {
@@ -284,26 +284,21 @@ namespace RTCV.CorruptCore
 
         public static decimal GetDecimalValue(byte[] value, bool needsBytesFlipped)
         {
-            byte[] _value = (byte[])value.Clone();
+            var valueClone = (byte[])value.Clone();
 
             if (needsBytesFlipped)
             {
-                Array.Reverse(_value);
+                Array.Reverse(valueClone);
             }
 
-            switch (value.Length)
+            return value.Length switch
             {
-                case 1:
-                    return _value[0];
-                case 2:
-                    return BitConverter.ToUInt16(_value, 0);
-                case 4:
-                    return BitConverter.ToUInt32(_value, 0);
-                case 8:
-                    return BitConverter.ToUInt64(_value, 0);
-            }
-
-            return 0;
+                1 => valueClone[0],
+                2 => BitConverter.ToUInt16(valueClone, 0),
+                4 => BitConverter.ToUInt32(valueClone, 0),
+                8 => BitConverter.ToUInt64(valueClone, 0),
+                _ => 0
+            };
         }
 
         public static byte[] AddValueToByteArrayUnchecked(ref byte[] value, BigInteger addValue, bool isInputBigEndian)
