@@ -122,6 +122,7 @@
     <Compile Include="BlastTarget.cs" />
     <Compile Include="BlastTools.cs" />
     <Compile Include="BlastUnit.cs" />
+    <Compile Include="BlastUnitWorkingData.cs" />
     <Compile Include="ComboBoxItem.cs" />
     <Compile Include="CorruptCore.cs" />
     <Compile Include="Diff.cs" />
