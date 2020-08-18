@@ -426,7 +426,7 @@ namespace RTCV.CorruptCore
 
                         var added = bigIntValue.ToByteArray();
 
-                        var length = 0;
+                        int length;
                         //So with BigInteger, it returns a signed value. That means there's a chance we get a fun 0 appended at the end of added[]
                         //There's also a chance we get a value with less bytes than we put in. If this is the case, we want to copy it over left to right still
                         //So that means if added is larger we want that & if added is smaller we want added's Length
@@ -610,9 +610,9 @@ namespace RTCV.CorruptCore
 
         public static string GetRelativePath(string rootPath, string fullPath)
         {
-            var _rootPath = new Uri(rootPath + "\\");
-            var _fullPath = new Uri(fullPath);
-            Uri diff = _rootPath.MakeRelativeUri(_fullPath);
+            var rootPathAsUri = new Uri(rootPath + "\\");
+            var fullPathAsUri = new Uri(fullPath);
+            Uri diff = rootPathAsUri.MakeRelativeUri(fullPathAsUri);
             return Uri.UnescapeDataString(diff.OriginalString).Replace('/', '\\');
         }
         //https://stackoverflow.com/a/23354773
@@ -664,9 +664,9 @@ namespace RTCV.CorruptCore
             }
 
             //Return default of a null object
-            if (object.ReferenceEquals(source, null))
+            if (source == null)
             {
-                return default(T);
+                return default;
             }
 
             return ser.Deserialize<T>(ser.Serialize(source));
