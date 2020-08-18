@@ -59,19 +59,6 @@ namespace RTCV.CorruptCore
         }
 
         /// <summary>
-        /// Gets you a byte array representing the characters in a string.
-        /// THIS DOES NOT CONVERT A STRING TO A BYTE ARRAY CONTAINING THE SAME CHARACTERS
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        public static byte[] GetBytes(this string str)
-        {
-            byte[] bytes = new byte[str.Length * sizeof(char)];
-            System.Buffer.BlockCopy(str.ToCharArray(), 0, bytes, 0, bytes.Length);
-            return bytes;
-        }
-
-        /// <summary>
         /// Gets you a byte array from the CONTENTS of a string
         /// </summary>
         /// <param name="hex"></param>
@@ -295,23 +282,6 @@ namespace RTCV.CorruptCore
             return rightMostCarryFlag;
         }
 
-        public static ulong GetNumericMaxValue(byte[] Value)
-        {
-            switch (Value.Length)
-            {
-                case 1:
-                    return byte.MaxValue;
-                case 2:
-                    return ushort.MaxValue;
-                case 4:
-                    return uint.MaxValue;
-                case 8:
-                    return ulong.MaxValue;
-            }
-
-            return 0;
-        }
-
         public static decimal GetDecimalValue(byte[] value, bool needsBytesFlipped)
         {
             byte[] _value = (byte[])value.Clone();
@@ -492,55 +462,9 @@ namespace RTCV.CorruptCore
             //return null;
         }
 
-        private static decimal Mod(decimal x, long m)
-        {
-            return (x % m + m) % m;
-        }
-
         private static BigInteger Mod(BigInteger x, BigInteger m)
         {
             return (x % m + m) % m;
-        }
-
-        public static byte[] GetByteArrayValue(int precision, decimal newValue, bool needsBytesFlipped = false)
-        {
-            switch (precision)
-            {
-                case 1:
-                    return new byte[] { (byte)newValue };
-                case 2:
-                    {
-                        byte[] value = BitConverter.GetBytes(Convert.ToUInt16(newValue));
-                        if (needsBytesFlipped)
-                        {
-                            Array.Reverse(value);
-                        }
-
-                        return value;
-                    }
-                case 4:
-                    {
-                        byte[] value = BitConverter.GetBytes(Convert.ToUInt32(newValue));
-                        if (needsBytesFlipped)
-                        {
-                            Array.Reverse(value);
-                        }
-
-                        return value;
-                    }
-                case 8:
-                    {
-                        byte[] value = BitConverter.GetBytes(Convert.ToUInt64(newValue));
-                        if (needsBytesFlipped)
-                        {
-                            Array.Reverse(value);
-                        }
-
-                        return value;
-                    }
-            }
-
-            return null;
         }
 
         public static byte[] GetByteArrayValue(int precision, ulong newValue, bool needsBytesFlipped = false)
