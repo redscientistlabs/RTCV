@@ -90,7 +90,7 @@
         private void btnCreateGhSavestate_Click(object sender, EventArgs e)
         {
             //Select first savestate slot if none is selected
-            var selectedHolder = S.GET<RTC_SavestateManager_Form>().savestateList.selectedHolder;
+            var selectedHolder = S.GET<RTC_SavestateManager_Form>().savestateList.SelectedHolder;
             if (selectedHolder == null)
             {
                 //Generate object sender and MouseEventArgs e data for the button click
@@ -377,7 +377,7 @@
         private void btnLoadGhSavestate_Click(object sender, EventArgs e)
         {
             //Select first savestate slot if none is selected
-            var selectedHolder = S.GET<RTC_SavestateManager_Form>().savestateList.selectedHolder;
+            var selectedHolder = S.GET<RTC_SavestateManager_Form>().savestateList.SelectedHolder;
             if (selectedHolder == null)
             {
                 //Generate object sender and MouseEventArgs e data for the button click

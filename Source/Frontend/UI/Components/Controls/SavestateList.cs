@@ -4,6 +4,7 @@ namespace RTCV.UI.Components.Controls
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Data;
+    using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
     using System.Drawing.Design;
     using System.IO;
@@ -15,11 +16,11 @@ namespace RTCV.UI.Components.Controls
 
     public partial class SavestateList : UserControl
     {
-        public List<SavestateHolder> controlList;
+        public List<SavestateHolder> _controlList;
         private SavestateHolder _selectedHolder;
-        private string saveStateWord = "Savestate";
+        private string _saveStateWord = "Savestate";
 
-        public SavestateHolder selectedHolder
+        public SavestateHolder SelectedHolder
         {
             get => _selectedHolder;
             set
@@ -29,66 +30,64 @@ namespace RTCV.UI.Components.Controls
             }
         }
 
-        public StashKey CurrentSaveStateStashKey => selectedHolder?.sk ?? null;
+        public StashKey CurrentSaveStateStashKey => SelectedHolder?.sk ?? null;
 
-        private int numPerPage;
+        private int _numPerPage;
 
-        public int NumPerPage => numPerPage;
+        public int NumPerPage => _numPerPage;
 
-        //private BindingSource pagedSource;
-
-        private BindingSource _DataSource;
+        private BindingSource _dataSource;
 
         [TypeConverter("System.Windows.Forms.Design.DataSourceConverter, System.Design")]
         [Editor("System.Windows.Forms.Design.DataSourceListEditor, System.Design", typeof(UITypeEditor))]
         [AttributeProvider(typeof(IListSource))]
         public object DataSource
         {
-            get => _DataSource;
+            get => _dataSource;
             set
             {
                 //Detach from old DataSource
-                if (_DataSource != null)
+                if (_dataSource != null)
                 {
-                    _DataSource.ListChanged -= _DataSource_ListChanged;
+                    _dataSource.ListChanged -= DataSource_ListChanged;
                 }
 
-                _DataSource = value as BindingSource;
+                _dataSource = value as BindingSource;
 
                 InitializeSavestateHolder();
 
                 //Attach to new one
-                if (_DataSource != null)
+                if (_dataSource != null)
                 {
-                    _DataSource.ListChanged += _DataSource_ListChanged;
-                    _DataSource.PositionChanged += _DataSource_PositionChanged;
-                    _DataSource_PositionChanged(null, null);
+                    _dataSource.ListChanged += DataSource_ListChanged;
+                    _dataSource.PositionChanged += DataSource_PositionChanged;
+                    DataSource_PositionChanged(null, null);
                 }
             }
         }
 
-        private void _DataSource_PositionChanged(object sender, EventArgs e)
+        private void DataSource_PositionChanged(object sender, EventArgs e)
         {
-            if (_DataSource.Position == -1)
+            if (_dataSource.Position == -1)
             {
-                for (int i = 0; i < controlList.Count; i++)
+                for (var i = 0; i < _controlList.Count; i++)
                 {
-                    controlList[i].SetStashKey(null, i + _DataSource.Position + 1);
+                    _controlList[i].SetStashKey(null, i + _dataSource.Position + 1);
                 }
             }
             else
             {
-                for (int i = 0; i < controlList.Count; i++)
+                for (var i = 0; i < _controlList.Count; i++)
                 {
                     //Update it
-                    if (i + _DataSource.Position < _DataSource.Count)
+                    if (i + _dataSource.Position < _dataSource.Count)
                     {
-                        var x = (SaveStateKey)_DataSource[i + _DataSource.Position];
-                        controlList[i].SetStashKey(x, i + _DataSource.Position);
+                        var x = (SaveStateKey)_dataSource[i + _dataSource.Position];
+                        _controlList[i].SetStashKey(x, i + _dataSource.Position);
                     }
                     else
                     {
-                        controlList[i].SetStashKey(null, i + _DataSource.Position);
+                        _controlList[i].SetStashKey(null, i + _dataSource.Position);
                     }
                 }
             }
@@ -96,10 +95,10 @@ namespace RTCV.UI.Components.Controls
             RefreshForwardBackwardButtons();
         }
 
-        private void _DataSource_ListChanged(object sender, ListChangedEventArgs e)
+        private void DataSource_ListChanged(object sender, ListChangedEventArgs e)
         {
             //Just refresh as it's cleaner and we're not dealing with so many that it causes perf problems
-            _DataSource_PositionChanged(null, null);
+            DataSource_PositionChanged(null, null);
         }
 
         public SavestateList()
@@ -110,47 +109,47 @@ namespace RTCV.UI.Components.Controls
         private void InitializeSavestateHolder()
         {
             //Nuke any old holder if it exists
-            selectedHolder?.SetSelected(false);
-            selectedHolder = null;
+            SelectedHolder?.SetSelected(false);
+            SelectedHolder = null;
 
-            int ssHeight = 22;
-            int padding = 3;
+            var ssHeight = 22;
+            var padding = 3;
             //Calculate how many we can fit within the space we have.
-            numPerPage = (flowPanel.Height / (ssHeight + padding)) - 1;
+            _numPerPage = (flowPanel.Height / (ssHeight + padding)) - 1;
             //Create the list
             flowPanel.Controls.Clear();
-            controlList = new List<SavestateHolder>();
-            for (int i = 0; i < numPerPage; i++)
+            _controlList = new List<SavestateHolder>();
+            for (var i = 0; i < _numPerPage; i++)
             {
                 var ssh = new SavestateHolder(i);
                 ssh.btnSavestate.MouseDown += BtnSavestate_MouseDown;
                 flowPanel.Controls.Add(ssh);
-                controlList.Add(ssh);
+                _controlList.Add(ssh);
             }
         }
 
         public void BtnSavestate_MouseDown(object sender, MouseEventArgs e)
         {
-            Point locate = new Point(((Control)sender).Location.X + e.Location.X, ((Control)sender).Location.Y + e.Location.Y);
+            var locate = new Point(((Control)sender).Location.X + e.Location.X, ((Control)sender).Location.Y + e.Location.Y);
 
             if (e.Button == MouseButtons.Left)
             {
-                selectedHolder?.SetSelected(false);
-                selectedHolder = (SavestateHolder)((Button)sender).Parent;
-                selectedHolder.SetSelected(true);
+                SelectedHolder?.SetSelected(false);
+                SelectedHolder = (SavestateHolder)((Button)sender).Parent;
+                SelectedHolder.SetSelected(true);
 
-                if (selectedHolder.sk == null)
+                if (SelectedHolder.sk == null)
                 {
                     return;
                 }
 
-                StashKey psk = selectedHolder.sk;
+                StashKey psk = SelectedHolder.sk;
 
                 if (psk != null && !File.Exists(psk.RomFilename))
                 {
-                    if (!checkAndFixingMissingStates(psk))
+                    if (!CheckAndFixingMissingStates(psk))
                     {
-                        selectedHolder?.SetSelected(false);
+                        SelectedHolder?.SetSelected(false);
                         return;
                     }
                 }
@@ -164,14 +163,14 @@ namespace RTCV.UI.Components.Controls
             }
             else if (e.Button == MouseButtons.Right)
             {
-                ContextMenuStrip cms = new ContextMenuStrip();
+                var cms = new ContextMenuStrip();
                 cms.Items.Add("Delete entry", null, (ob, ev) =>
                 {
                     var holder = (SavestateHolder)((Button)sender).Parent;
-                    int indexToRemove = controlList.IndexOf(holder) + _DataSource.Position;
-                    if (indexToRemove <= _DataSource.Count)
+                    var indexToRemove = _controlList.IndexOf(holder) + _dataSource.Position;
+                    if (indexToRemove <= _dataSource.Count)
                     {
-                        _DataSource.RemoveAt(indexToRemove);
+                        _dataSource.RemoveAt(indexToRemove);
                     }
                 });
 
@@ -208,34 +207,34 @@ namespace RTCV.UI.Components.Controls
 
         private void RefreshForwardBackwardButtons()
         {
-            btnForward.Enabled = _DataSource.Count >= _DataSource.Position + NumPerPage;
-            btnBack.Enabled = _DataSource.Position > 0;
+            btnForward.Enabled = _dataSource.Count >= _dataSource.Position + NumPerPage;
+            btnBack.Enabled = _dataSource.Position > 0;
         }
 
         private void BtnForward_Click(object sender, EventArgs e)
         {
-            if (_DataSource.Position + NumPerPage <= _DataSource.Count)
+            if (_dataSource.Position + NumPerPage <= _dataSource.Count)
             {
-                _DataSource.Position = _DataSource.Position + NumPerPage;
+                _dataSource.Position += NumPerPage;
             }
 
-            selectedHolder?.SetSelected(false);
-            selectedHolder = controlList.First();
-            selectedHolder.SetSelected(true);
+            SelectedHolder?.SetSelected(false);
+            SelectedHolder = _controlList.First();
+            SelectedHolder.SetSelected(true);
         }
 
         private void BtnBack_Click(object sender, EventArgs e)
         {
-            _DataSource.Position = _DataSource.Position - NumPerPage;
+            _dataSource.Position -= NumPerPage;
 
-            selectedHolder?.SetSelected(false);
-            selectedHolder = controlList.First();
-            selectedHolder.SetSelected(true);
+            SelectedHolder?.SetSelected(false);
+            SelectedHolder = _controlList.First();
+            SelectedHolder.SetSelected(true);
         }
 
         public StashKey GetSelectedStashkey()
         {
-            return selectedHolder?.sk;
+            return SelectedHolder?.sk;
         }
 
         private void BtnToggleSaveLoad_Click(object sender, EventArgs e)
@@ -252,13 +251,13 @@ namespace RTCV.UI.Components.Controls
             }
         }
 
-        private bool checkAndFixingMissingStates(StashKey psk)
+        private bool CheckAndFixingMissingStates(StashKey psk)
         {
             if (!File.Exists(psk.RomFilename))
             {
                 if (DialogResult.Yes == MessageBox.Show($"Can't find file {psk.RomFilename}\nGame name: {psk.GameName}\nSystem name: {psk.SystemName}\n\n Would you like to provide a new file for replacement?", "Error: File not found", MessageBoxButtons.YesNo))
                 {
-                    OpenFileDialog ofd = new OpenFileDialog
+                    var ofd = new OpenFileDialog
                     {
                         DefaultExt = "*",
                         Title = "Select Replacement File",
@@ -267,9 +266,9 @@ namespace RTCV.UI.Components.Controls
                     };
                     if (ofd.ShowDialog() == DialogResult.OK)
                     {
-                        string filename = ofd.FileName;
-                        string oldFilename = psk.RomFilename;
-                        foreach (var item in _DataSource.List.OfType<SaveStateKey>().Where(x => x.StashKey.RomFilename == oldFilename))
+                        var filename = ofd.FileName;
+                        var oldFilename = psk.RomFilename;
+                        foreach (var item in _dataSource.List.OfType<SaveStateKey>().Where(x => x.StashKey.RomFilename == oldFilename))
                         {
                             item.StashKey.RomFilename = filename;
                         }
@@ -286,10 +285,10 @@ namespace RTCV.UI.Components.Controls
 
         public void LoadCurrentState()
         {
-            StashKey psk = selectedHolder?.sk;
+            StashKey psk = SelectedHolder?.sk;
             if (psk != null)
             {
-                if (!checkAndFixingMissingStates(psk))
+                if (!CheckAndFixingMissingStates(psk))
                 {
                     return;
                 }
@@ -298,16 +297,17 @@ namespace RTCV.UI.Components.Controls
             }
             else
             {
-                MessageBox.Show($"{saveStateWord} box is empty");
+                MessageBox.Show($"{_saveStateWord} box is empty");
             }
         }
 
+        [SuppressMessage("Microsoft.Design", "IDE1006", Justification = "Designer-originated method")]
         public void btnSaveLoad_Click(object sender, EventArgs e)
         {
-            object renameSaveStateWord = AllSpec.VanguardSpec[VSPEC.RENAME_SAVESTATE];
+            var renameSaveStateWord = AllSpec.VanguardSpec[VSPEC.RENAME_SAVESTATE];
             if (renameSaveStateWord != null && renameSaveStateWord is string s)
             {
-                saveStateWord = s;
+                _saveStateWord = s;
             }
 
             if (btnSaveLoad.Text == "LOAD")
@@ -318,9 +318,9 @@ namespace RTCV.UI.Components.Controls
             }
             else
             {
-                if (selectedHolder == null)
+                if (SelectedHolder == null)
                 {
-                    MessageBox.Show($"No {saveStateWord} Box is currently selected in the Glitch Harvester's {saveStateWord} Manager");
+                    MessageBox.Show($"No {_saveStateWord} Box is currently selected in the Glitch Harvester's {_saveStateWord} Manager");
                     return;
                 }
 
@@ -336,15 +336,15 @@ namespace RTCV.UI.Components.Controls
                 StockpileManager_UISide.CurrentSavestateStashKey = sk;
 
                 //Replace if there'a already a sk
-                if (selectedHolder?.sk != null)
+                if (SelectedHolder?.sk != null)
                 {
-                    int indexToReplace = controlList.IndexOf(selectedHolder) + _DataSource.Position;
+                    var indexToReplace = _controlList.IndexOf(SelectedHolder) + _dataSource.Position;
                     if (sk != null)
                     {
-                        var oldpos = _DataSource.Position; //We do this to prevent weird shifts when you insert over the something at the top of the last page
-                        _DataSource.RemoveAt(indexToReplace);
-                        _DataSource.Insert(indexToReplace, new SaveStateKey(sk, ""));
-                        _DataSource.Position = oldpos;
+                        var oldpos = _dataSource.Position; //We do this to prevent weird shifts when you insert over the something at the top of the last page
+                        _dataSource.RemoveAt(indexToReplace);
+                        _dataSource.Insert(indexToReplace, new SaveStateKey(sk, ""));
+                        _dataSource.Position = oldpos;
                     }
                 }
                 //Otherwise add to the last box
@@ -352,10 +352,10 @@ namespace RTCV.UI.Components.Controls
                 {
                     if (sk != null)
                     {
-                        _DataSource.Add(new SaveStateKey(sk, ""));
-                        selectedHolder?.SetSelected(false);
-                        selectedHolder = controlList.Where(x => x.sk == sk).First() ?? null;
-                        selectedHolder?.SetSelected(true);
+                        _dataSource.Add(new SaveStateKey(sk, ""));
+                        SelectedHolder?.SetSelected(false);
+                        SelectedHolder = _controlList.Where(x => x.sk == sk).First() ?? null;
+                        SelectedHolder?.SetSelected(true);
                     }
                 }
 
