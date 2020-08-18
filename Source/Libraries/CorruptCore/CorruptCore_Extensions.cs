@@ -805,7 +805,7 @@ namespace RTCV.CorruptCore
         public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
         [DllImport("user32.dll")]
-        public static extern IntPtr GetSystemMenu(IntPtr HWNDValue, bool isRevert);
+        public static extern IntPtr GetSystemMenu(IntPtr hWndValue, bool isRevert);
 
         [DllImport("user32.dll")]
         public static extern int EnableMenuItem(IntPtr tMenu, int targetItem, int targetStatus);
