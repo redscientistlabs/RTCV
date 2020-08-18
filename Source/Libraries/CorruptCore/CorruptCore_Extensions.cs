@@ -39,18 +39,6 @@ namespace RTCV.CorruptCore
 
         #region STRING EXTENSIONS
 
-        public static string ToBase64(this string str)
-        {
-            var bytes = Encoding.UTF8.GetBytes(str);
-            return Convert.ToBase64String(bytes);
-        }
-
-        public static string FromBase64(this string base64)
-        {
-            var data = Convert.FromBase64String(base64);
-            return Encoding.UTF8.GetString(data);
-        }
-
         //taken from https://stackoverflow.com/questions/11454004/calculate-a-md5-hash-from-a-string
         public static string CreateMD5(this string input)
         {
