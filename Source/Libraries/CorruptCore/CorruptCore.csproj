@@ -136,9 +136,9 @@
     <Compile Include="SaveStateKey.cs" />
     <Compile Include="StashKey.cs" />
     <Compile Include="StepActions.cs" />
-    <Compile Include="Stockpile.cs" />
-    <Compile Include="StockpileManager_UISide.cs" />
-    <Compile Include="StockpileManager_EmuSide.cs" />
+    <Compile Include="Stockpile/Stockpile.cs" />
+    <Compile Include="Stockpile/StockpileManager_UISide.cs" />
+    <Compile Include="Stockpile/StockpileManager_EmuSide.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
