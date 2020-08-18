@@ -101,6 +101,7 @@
     <Compile Include="EventWarlock\WarlockActions\WarlockActionEcho.cs" />
     <Compile Include="EventWarlock\WarlockConditions\FirstEqualsSecond.cs" />
     <Compile Include="IRenderer.cs" />
+    <Compile Include="Exceptions\StockpileSaveException.cs" />
     <Compile Include="Extensions\ByteArrayComparer.cs" />
     <Compile Include="Extensions\NullableByteArrayComparer.cs" />
     <Compile Include="Memory\FileInterface.cs" />
@@ -136,10 +137,9 @@
     <Compile Include="SaveStateKey.cs" />
     <Compile Include="StashKey.cs" />
     <Compile Include="StepActions.cs" />
-    <Compile Include="Stockpile/SaveException.cs" />
-    <Compile Include="Stockpile/Stockpile.cs" />
-    <Compile Include="Stockpile/StockpileManager_UISide.cs" />
-    <Compile Include="Stockpile/StockpileManager_EmuSide.cs" />
+    <Compile Include="Stockpile\Stockpile.cs" />
+    <Compile Include="Stockpile\StockpileManager_UISide.cs" />
+    <Compile Include="Stockpile\StockpileManager_EmuSide.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

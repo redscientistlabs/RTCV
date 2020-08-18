@@ -12,7 +12,7 @@ namespace RTCV.CorruptCore
     using Newtonsoft.Json;
     using RTCV.Common.Objects;
     using RTCV.NetCore;
-    using RTCV.CorruptCore.StockpileNS;
+    using RTCV.CorruptCore.Exceptions;
     using Exception = System.Exception;
 
     [Serializable]
@@ -56,7 +56,7 @@ namespace RTCV.CorruptCore
                 if (sks.StashKeys.Count == 0)
                 {
                     MessageBox.Show("Can't save because the Current Stockpile is empty");
-                    throw new SaveException("Can't save because the Current Stockpile is empty");
+                    throw new StockpileSaveException("Can't save because the Current Stockpile is empty");
                 }
 
                 CheckForDiskBasedGame();
@@ -91,7 +91,7 @@ namespace RTCV.CorruptCore
 
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Done", saveProgress = 100));
             }
-            catch (SaveException)
+            catch (StockpileSaveException)
             {
                 return false;
             }
@@ -112,7 +112,7 @@ namespace RTCV.CorruptCore
                 }
                 else
                 {
-                    throw new SaveException();
+                    throw new StockpileSaveException();
                 }
             }
         }
@@ -127,7 +127,7 @@ namespace RTCV.CorruptCore
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
-                throw new SaveException(e.Message);
+                throw new StockpileSaveException(e.Message);
             }
         }
 
@@ -216,7 +216,7 @@ namespace RTCV.CorruptCore
                     {
                         if (MessageBox.Show($"Include referenced files was set but we couldn't find {rom}. Continue saving? (You'll need to reassociate the file at runtime)", "Couldn't find file.", MessageBoxButtons.YesNo) == DialogResult.No)
                         {
-                            throw new SaveException("Included referenced files weren't found");
+                            throw new StockpileSaveException("Included referenced files weren't found");
                         }
                     }
                     else
@@ -268,7 +268,7 @@ namespace RTCV.CorruptCore
 
                 if (failure)
                 {
-                    throw new SaveException("Missing file reference");
+                    throw new StockpileSaveException("Missing file reference");
                 }
             }
         }
@@ -325,7 +325,7 @@ namespace RTCV.CorruptCore
             var limiterLists = Filtering.GetAllLimiterListsFromStockpile(sks);
             if (limiterLists == null)
             {
-                throw new SaveException("Limiter lists don't exist");
+                throw new StockpileSaveException("Limiter lists don't exist");
             }
 
             //Write them to a file
@@ -350,7 +350,7 @@ namespace RTCV.CorruptCore
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                throw new SaveException(ex.Message);
+                throw new StockpileSaveException(ex.Message);
             }
 
             CompressionLevel comp = CompressionLevel.Fastest;
@@ -375,7 +375,7 @@ namespace RTCV.CorruptCore
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                throw new SaveException(ex.Message);
+                throw new StockpileSaveException(ex.Message);
             }
 
             //Move us to the destination
