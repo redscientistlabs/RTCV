@@ -308,13 +308,13 @@ namespace RTCV.CorruptCore
                 Array.Reverse(value);
             }
 
-            bool isAdd = addValue >= 0;
-            BigInteger bigintAddValueAbs = BigInteger.Abs(addValue);
+            var isAdd = addValue >= 0;
+            var bigintAddValueAbs = BigInteger.Abs(addValue);
 
             switch (value.Length)
             {
                 case 1:
-                    byte addByteValue = (bigintAddValueAbs > byte.MaxValue ? byte.MaxValue : (byte)bigintAddValueAbs);
+                    var addByteValue = (bigintAddValueAbs > byte.MaxValue ? byte.MaxValue : (byte)bigintAddValueAbs);
 
                     if (isAdd)
                     {
@@ -329,8 +329,8 @@ namespace RTCV.CorruptCore
 
                 case 2:
                     {
-                        ushort ushortValue = BitConverter.ToUInt16(value, 0);
-                        ushort addushortValue = (bigintAddValueAbs > ushort.MaxValue ? ushort.MaxValue : (ushort)bigintAddValueAbs);
+                        var ushortValue = BitConverter.ToUInt16(value, 0);
+                        var addushortValue = (bigintAddValueAbs > ushort.MaxValue ? ushort.MaxValue : (ushort)bigintAddValueAbs);
 
                         if (isAdd)
                         {
@@ -352,8 +352,8 @@ namespace RTCV.CorruptCore
                     }
                 case 4:
                     {
-                        uint uintValue = BitConverter.ToUInt32(value, 0);
-                        uint adduintValue = (bigintAddValueAbs > uint.MaxValue ? uint.MaxValue : (uint)bigintAddValueAbs);
+                        var uintValue = BitConverter.ToUInt32(value, 0);
+                        var adduintValue = (bigintAddValueAbs > uint.MaxValue ? uint.MaxValue : (uint)bigintAddValueAbs);
 
                         if (isAdd)
                         {
@@ -375,8 +375,8 @@ namespace RTCV.CorruptCore
                     }
                 case 8:
                     {
-                        ulong ulongValue = BitConverter.ToUInt64(value, 0);
-                        ulong addulongValue = (bigintAddValueAbs > ulong.MaxValue ? ulong.MaxValue : (ulong)bigintAddValueAbs);
+                        var ulongValue = BitConverter.ToUInt64(value, 0);
+                        var addulongValue = (bigintAddValueAbs > ulong.MaxValue ? ulong.MaxValue : (ulong)bigintAddValueAbs);
 
                         if (isAdd)
                         {
@@ -399,9 +399,9 @@ namespace RTCV.CorruptCore
                 default:
                     {
                         //Gets us a positive value
-                        byte[] temp = new byte[value.Length + 1];
+                        var temp = new byte[value.Length + 1];
                         value.CopyTo(temp, 0);
-                        BigInteger bigIntValue = new BigInteger(temp);
+                        var bigIntValue = new BigInteger(temp);
 
                         if (isAdd)
                         {
@@ -424,7 +424,7 @@ namespace RTCV.CorruptCore
                             bigIntValue = Mod(maxValue, bigIntValue); //% means remainder in c#
                         }
 
-                        byte[] added = bigIntValue.ToByteArray();
+                        var added = bigIntValue.ToByteArray();
 
                         var length = 0;
                         //So with BigInteger, it returns a signed value. That means there's a chance we get a fun 0 appended at the end of added[]
@@ -440,7 +440,7 @@ namespace RTCV.CorruptCore
                         }
 
                         //Don't use copyto as we actually want to copy a trimmed array out (left aligned)
-                        for (int i = 0; i < length; i++)
+                        for (var i = 0; i < length; i++)
                         {
                             value[i] = added[i];
                         }
@@ -470,7 +470,7 @@ namespace RTCV.CorruptCore
                     return new byte[] { (byte)newValue };
                 case 2:
                     {
-                        byte[] value = BitConverter.GetBytes(Convert.ToUInt16(newValue));
+                        var value = BitConverter.GetBytes(Convert.ToUInt16(newValue));
                         if (needsBytesFlipped)
                         {
                             Array.Reverse(value);
@@ -480,7 +480,7 @@ namespace RTCV.CorruptCore
                     }
                 case 4:
                     {
-                        byte[] value = BitConverter.GetBytes(Convert.ToUInt32(newValue));
+                        var value = BitConverter.GetBytes(Convert.ToUInt32(newValue));
                         if (needsBytesFlipped)
                         {
                             Array.Reverse(value);
@@ -490,7 +490,7 @@ namespace RTCV.CorruptCore
                     }
                 case 8:
                     {
-                        byte[] value = BitConverter.GetBytes(newValue);
+                        var value = BitConverter.GetBytes(newValue);
                         if (needsBytesFlipped)
                         {
                             Array.Reverse(value);
@@ -505,9 +505,9 @@ namespace RTCV.CorruptCore
 
         public static byte[] FlipBytes(this byte[] array)
         {
-            byte[] arrayClone = (byte[])array.Clone();
+            var arrayClone = (byte[])array.Clone();
 
-            for (int i = 0; i < arrayClone.Length; i++)
+            for (var i = 0; i < arrayClone.Length; i++)
             {
                 array[i] = arrayClone[(arrayClone.Length - 1) - i];
             }
@@ -517,9 +517,9 @@ namespace RTCV.CorruptCore
 
         public static byte?[] FlipBytes(this byte?[] array)
         {
-            byte?[] arrayClone = (byte?[])array.Clone();
+            var arrayClone = (byte?[])array.Clone();
 
-            for (int i = 0; i < arrayClone.Length; i++)
+            for (var i = 0; i < arrayClone.Length; i++)
             {
                 array[i] = arrayClone[(arrayClone.Length - 1) - i];
             }
@@ -557,7 +557,7 @@ namespace RTCV.CorruptCore
 
             var newArray = new byte[bytes.Length];
 
-            for (int i = 0; i < bytes.Length; i++)
+            for (var i = 0; i < bytes.Length; i++)
             {
                 if (bytes[i] == null)
                     newArray[i] = 69;
@@ -610,8 +610,8 @@ namespace RTCV.CorruptCore
 
         public static string GetRelativePath(string rootPath, string fullPath)
         {
-            Uri _rootPath = new Uri(rootPath + "\\");
-            Uri _fullPath = new Uri(fullPath);
+            var _rootPath = new Uri(rootPath + "\\");
+            var _fullPath = new Uri(fullPath);
             Uri diff = _rootPath.MakeRelativeUri(_fullPath);
             return Uri.UnescapeDataString(diff.OriginalString).Replace('/', '\\');
         }
@@ -654,7 +654,7 @@ namespace RTCV.CorruptCore
     {
         public static T Clone<T>(T source)
         {
-            CerasSerializer ser = new CerasSerializer(new SerializerConfig()
+            var ser = new CerasSerializer(new SerializerConfig()
             {
                 DefaultTargets = TargetMember.All
             });
@@ -694,10 +694,10 @@ namespace RTCV.CorruptCore
     {
         public static void Serialize(object value, Stream s, Formatting f = Formatting.None, SafeJsonTypeSerialization.JsonKnownTypesBinder binder = null)
         {
-            using (StreamWriter writer = new StreamWriter(s))
-            using (JsonTextWriter jsonWriter = new JsonTextWriter(writer))
+            using (var writer = new StreamWriter(s))
+            using (var jsonWriter = new JsonTextWriter(writer))
             {
-                JsonSerializer ser = new JsonSerializer
+                var ser = new JsonSerializer
                 {
                     Formatting = f,
                     SerializationBinder = binder ?? new SafeJsonTypeSerialization.JsonKnownTypesBinder()
@@ -710,10 +710,10 @@ namespace RTCV.CorruptCore
 
         public static T Deserialize<T>(Stream s, SafeJsonTypeSerialization.JsonKnownTypesBinder binder = null)
         {
-            using (StreamReader reader = new StreamReader(s))
-            using (JsonTextReader jsonReader = new JsonTextReader(reader))
+            using (var reader = new StreamReader(s))
+            using (var jsonReader = new JsonTextReader(reader))
             {
-                JsonSerializer ser = new JsonSerializer()
+                var ser = new JsonSerializer()
                 {
                     SerializationBinder = binder ?? new SafeJsonTypeSerialization.JsonKnownTypesBinder()
                 };
