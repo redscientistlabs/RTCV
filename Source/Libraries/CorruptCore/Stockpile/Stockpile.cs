@@ -364,7 +364,7 @@ namespace RTCV.CorruptCore
             //Create the file into temp
             ZipFile.CreateFromDirectory(Path.Combine(RtcCore.workingDir, "TEMP"), tempFilename, comp, false);
 
-            // Remove old stockpile
+            //Remove the old stockpile
             try
             {
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Removing old stockpile", saveProgress += 2));
