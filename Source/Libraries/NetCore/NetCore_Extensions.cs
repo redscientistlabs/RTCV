@@ -42,12 +42,12 @@ namespace RTCV.NetCore.NetCore_Extensions
         }
     }
 
-        //Thanks to Riki, dev of Ceras for writing this
-        public class HashSetFormatterThatKeepsItsComparer : Ceras.Formatters.IFormatter<HashSet<byte[]>>
-        {
-            // Sub-formatters are automatically set by Ceras' dependency injection
-            public Ceras.Formatters.IFormatter<byte[]> _byteArrayFormatter;
-            public Ceras.Formatters.IFormatter<IEqualityComparer<byte[]>> _comparerFormatter; // auto-implemented by Ceras using DynamicObjectFormatter
+    //Thanks to Riki, dev of Ceras for writing this
+    public class HashSetFormatterThatKeepsItsComparer : Ceras.Formatters.IFormatter<HashSet<byte[]>>
+    {
+        // Sub-formatters are automatically set by Ceras' dependency injection
+        public Ceras.Formatters.IFormatter<byte[]> _byteArrayFormatter;
+        public Ceras.Formatters.IFormatter<IEqualityComparer<byte[]>> _comparerFormatter; // auto-implemented by Ceras using DynamicObjectFormatter
 
         public void Serialize(ref byte[] buffer, ref int offset, HashSet<byte[]> set)
         {
