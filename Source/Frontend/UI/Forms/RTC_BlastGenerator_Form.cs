@@ -10,6 +10,7 @@ namespace RTCV.UI
     using RTCV.CorruptCore;
     using RTCV.NetCore;
     using RTCV.Common;
+    using RTCV.UI.Components;
 
     // 0  dgvBlastProtoReference
     // 1  dgvRowDirty
