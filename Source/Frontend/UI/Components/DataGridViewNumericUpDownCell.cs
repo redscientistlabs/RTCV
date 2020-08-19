@@ -822,5 +822,4 @@ namespace RTCV.UI.Components
             }
         }
     }
-
 }
