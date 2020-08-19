@@ -76,25 +76,8 @@
     /// 2008.10.08 Fixing a test case and adding a new test case.
     /// </summary>
 
-    public class Diff
+    public static class Diff
     {
-        #pragma warning disable CA1815 //Item won't be used in comparison
-        /// <summary>details of one difference.</summary>
-        public struct Item
-        {
-            /// <summary>Start Line number in Data A.</summary>
-            public int StartA;
-
-            /// <summary>Start Line number in Data B.</summary>
-            public int StartB;
-
-            /// <summary>Number of changes in Data A.</summary>
-            public int deletedA;
-
-            /// <summary>Number of changes in Data B.</summary>
-            public int insertedB;
-        } // Item
-
         /// <summary>
         /// Shortest Middle Snake Return Data
         /// </summary>
@@ -208,7 +191,7 @@
         /// <param name="TextA">A-version of the text (usualy the old one)</param>
         /// <param name="TextB">B-version of the text (usualy the new one)</param>
         /// <returns>Returns a array of Items that describe the differences.</returns>
-        public Item[] DiffText(string TextA, string TextB)
+        public static DiffItem[] DiffText(string TextA, string TextB)
         {
             return (DiffText(TextA, TextB, false, false, false));
         } // DiffText
@@ -226,7 +209,7 @@
         /// <param name="ignoreSpace">When set to true, all whitespace characters are converted to a single space character before the comparation is done.</param>
         /// <param name="ignoreCase">When set to true, all characters are converted to their lowercase equivivalence before the comparation is done.</param>
         /// <returns>Returns a array of Items that describe the differences.</returns>
-        public static Item[] DiffText(string TextA, string TextB, bool trimSpace, bool ignoreSpace, bool ignoreCase)
+        public static DiffItem[] DiffText(string TextA, string TextB, bool trimSpace, bool ignoreSpace, bool ignoreCase)
         {
             // prepare the input-text and convert to comparable numbers.
             Hashtable h = new Hashtable(TextA.Length + TextB.Length);
@@ -295,7 +278,7 @@
         /// <param name="ArrayA">A-version of the numbers (usualy the old one)</param>
         /// <param name="ArrayB">B-version of the numbers (usualy the new one)</param>
         /// <returns>Returns a array of Items that describe the differences.</returns>
-        public static Item[] DiffInt(int[] ArrayA, int[] ArrayB)
+        public static DiffItem[] DiffInt(int[] ArrayA, int[] ArrayB)
         {
             // The A-Version of the data (original data) to be compared.
             DiffData DataA = new DiffData(ArrayA);
@@ -557,11 +540,11 @@
         /// producing an edit script in forward order.
         /// </summary>
         /// dynamic array
-        private static Item[] CreateDiffs(DiffData DataA, DiffData DataB)
+        private static DiffItem[] CreateDiffs(DiffData DataA, DiffData DataB)
         {
             ArrayList a = new ArrayList();
-            Item aItem;
-            Item[] result;
+            DiffItem aItem;
+            DiffItem[] result;
 
             int StartA, StartB;
             int LineA, LineB;
@@ -598,7 +581,7 @@
                     if ((StartA < LineA) || (StartB < LineB))
                     {
                         // store a new difference-item
-                        aItem = new Item
+                        aItem = new DiffItem
                         {
                             StartA = StartA,
                             StartB = StartB,
@@ -610,12 +593,29 @@
                 } // if
             } // while
 
-            result = new Item[a.Count];
+            result = new DiffItem[a.Count];
             a.CopyTo(result);
 
             return (result);
         }
     } // class Diff
+
+    #pragma warning disable CA1815 //Item won't be used in comparison
+    /// <summary>details of one difference.</summary>
+    public struct DiffItem
+    {
+        /// <summary>Start Line number in Data A.</summary>
+        public int StartA;
+
+        /// <summary>Start Line number in Data B.</summary>
+        public int StartB;
+
+        /// <summary>Number of changes in Data A.</summary>
+        public int deletedA;
+
+        /// <summary>Number of changes in Data B.</summary>
+        public int insertedB;
+    } // Item
 
     /// <summary>Data on one input file being compared.
     /// </summary>
