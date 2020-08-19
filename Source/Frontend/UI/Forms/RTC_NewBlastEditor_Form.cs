@@ -1018,13 +1018,13 @@ namespace RTCV.UI
             domain.SortMode = DataGridViewColumnSortMode.Automatic;
             dgvBlastEditor.Columns.Add(domain);
 
-            var address = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.Address.ToString(), BuProperty.Address.ToString(), "Address", new DataGridViewNumericUpDownColumn());
+            var address = (RTCV.UI.Components.DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.Address.ToString(), BuProperty.Address.ToString(), "Address", new RTCV.UI.Components.DataGridViewNumericUpDownColumn());
             address.Hexadecimal = true;
             address.SortMode = DataGridViewColumnSortMode.Automatic;
             address.Increment = 1;
             dgvBlastEditor.Columns.Add(address);
 
-            var precision = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.Precision.ToString(), BuProperty.Precision.ToString(), "Precision", new DataGridViewNumericUpDownColumn());
+            var precision = (RTCV.UI.Components.DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.Precision.ToString(), BuProperty.Precision.ToString(), "Precision", new RTCV.UI.Components.DataGridViewNumericUpDownColumn());
             precision.Minimum = 1;
             precision.Maximum = int.MaxValue;
             precision.SortMode = DataGridViewColumnSortMode.Automatic;
@@ -1038,21 +1038,21 @@ namespace RTCV.UI
             dgvBlastEditor.Columns.Add(valuestring);
 
             var executeFrame = CreateColumn(BuProperty.ExecuteFrame.ToString(), BuProperty.ExecuteFrame.ToString(),
-                "Execute Frame", new DataGridViewNumericUpDownColumn());
+                "Execute Frame", new RTCV.UI.Components.DataGridViewNumericUpDownColumn());
             executeFrame.SortMode = DataGridViewColumnSortMode.Automatic;
-            ((DataGridViewNumericUpDownColumn)(executeFrame)).Maximum = int.MaxValue;
+            ((RTCV.UI.Components.DataGridViewNumericUpDownColumn)(executeFrame)).Maximum = int.MaxValue;
             dgvBlastEditor.Columns.Add(executeFrame);
 
             var loopTimng = CreateColumn(BuProperty.LoopTiming.ToString(), BuProperty.LoopTiming.ToString(),
-                "Loop Timing", new DataGridViewNumericUpDownColumn());
+                "Loop Timing", new RTCV.UI.Components.DataGridViewNumericUpDownColumn());
             loopTimng.SortMode = DataGridViewColumnSortMode.Automatic;
-            ((DataGridViewNumericUpDownColumn)(loopTimng)).Maximum = int.MaxValue;
+            ((RTCV.UI.Components.DataGridViewNumericUpDownColumn)(loopTimng)).Maximum = int.MaxValue;
             dgvBlastEditor.Columns.Add(loopTimng);
 
             var lifetime = CreateColumn(BuProperty.Lifetime.ToString(), BuProperty.Lifetime.ToString(),
-                "Lifetime", new DataGridViewNumericUpDownColumn());
+                "Lifetime", new RTCV.UI.Components.DataGridViewNumericUpDownColumn());
             lifetime.SortMode = DataGridViewColumnSortMode.Automatic;
-            ((DataGridViewNumericUpDownColumn)(lifetime)).Maximum = int.MaxValue;
+            ((RTCV.UI.Components.DataGridViewNumericUpDownColumn)(lifetime)).Maximum = int.MaxValue;
             dgvBlastEditor.Columns.Add(lifetime);
 
             var loop = CreateColumn(BuProperty.Loop.ToString(), BuProperty.Loop.ToString(),
@@ -1105,7 +1105,7 @@ namespace RTCV.UI
             sourceDomain.SortMode = DataGridViewColumnSortMode.Automatic;
             dgvBlastEditor.Columns.Add(sourceDomain);
 
-            var sourceAddress = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.SourceAddress.ToString(), BuProperty.SourceAddress.ToString(), "Source Address", new DataGridViewNumericUpDownColumn());
+            var sourceAddress = (RTCV.UI.Components.DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.SourceAddress.ToString(), BuProperty.SourceAddress.ToString(), "Source Address", new RTCV.UI.Components.DataGridViewNumericUpDownColumn());
             sourceAddress.Hexadecimal = true;
             sourceAddress.SortMode = DataGridViewColumnSortMode.Automatic;
             sourceAddress.Increment = 1;
@@ -1205,7 +1205,7 @@ namespace RTCV.UI
                     case DataGridViewTextBoxColumn s:
                         s.FillWeight = textBoxFillWeight;
                         break;
-                    case DataGridViewNumericUpDownColumn s:
+                    case RTCV.UI.Components.DataGridViewNumericUpDownColumn s:
                         s.FillWeight = numericUpDownFillWeight;
                         break;
                 }
