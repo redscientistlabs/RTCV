@@ -12,6 +12,7 @@ namespace RTCV.CorruptCore
     using Newtonsoft.Json;
     using RTCV.Common.Objects;
     using RTCV.NetCore;
+    using RTCV.CorruptCore.Exceptions;
     using Exception = System.Exception;
 
     [Serializable]
@@ -50,14 +51,57 @@ namespace RTCV.CorruptCore
 
         public static bool Save(Stockpile sks, string filename, bool includeReferencedFiles = false, bool compress = true)
         {
-            decimal saveProgress = 0;
-            decimal percentPerFile = 0;
-            if (sks.StashKeys.Count == 0)
+            try
             {
-                MessageBox.Show("Can't save because the Current Stockpile is empty");
+                if (sks.StashKeys.Count == 0)
+                {
+                    MessageBox.Show("Can't save because the Current Stockpile is empty");
+                    throw new StockpileSaveException("Can't save because the Current Stockpile is empty");
+                }
+
+                CheckForDiskBasedGame();
+
+                sks.Filename = filename;
+                sks.ShortFilename = Path.GetFileName(sks.Filename);
+
+                decimal saveProgress = 0;
+                CleanTempFolder(ref sks, ref saveProgress);
+
+                //Watermarking RTC Version
+                sks.RtcVersion = RtcCore.RtcVersion;
+                sks.VanguardImplementation = (string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "ERROR";
+
+                CopyReferencedFiles(sks, includeReferencedFiles, ref saveProgress);
+
+                CopySavestates(ref sks, ref saveProgress);
+
+                CopyConfigs(ref sks, ref saveProgress);
+
+                WriteLimiterLists(ref sks, ref saveProgress);
+
+                CreateStockpileJson(ref sks, ref saveProgress);
+
+                CreateAndReplaceStockpileZip(ref sks, compress, ref saveProgress);
+
+                CleanOutStockpileFolder(ref sks, ref saveProgress);
+
+                CopyLimiterListsToStockpile(ref sks, ref saveProgress);
+
+                UpdateSavestateLocationInfo(ref sks, ref saveProgress);
+
+                RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Done", saveProgress = 100));
+            }
+            catch (StockpileSaveException)
+            {
                 return false;
             }
 
+            return true;
+        }
+
+
+        private static void CheckForDiskBasedGame()
+        {
             if ((AllSpec.VanguardSpec[VSPEC.CORE_DISKBASED] as bool? ?? false) && ((AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME] as string ?? "DEFAULT").Length != 0))
             {
                 var dr = MessageBox.Show("The currently loaded game is disk based and needs to be closed before saving. Press OK to close the game and continue saving.", "Saving requires closing game", MessageBoxButtons.OKCancel,
@@ -68,14 +112,13 @@ namespace RTCV.CorruptCore
                 }
                 else
                 {
-                    return false;
+                    throw new StockpileSaveException();
                 }
             }
+        }
 
-            sks.Filename = filename;
-            sks.ShortFilename = Path.GetFileName(sks.Filename);
-
-            //clean temp folder
+        private static void CleanTempFolder(ref Stockpile sks, ref decimal saveProgress)
+        {
             try
             {
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs("Emptying TEMP", saveProgress += 2));
@@ -84,13 +127,12 @@ namespace RTCV.CorruptCore
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
-                return false;
+                throw new StockpileSaveException(e.Message);
             }
+        }
 
-            //Watermarking RTC Version
-            sks.RtcVersion = RtcCore.RtcVersion;
-            sks.VanguardImplementation = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "ERROR";
-
+        private static void CopyReferencedFiles(Stockpile sks, bool includeReferencedFiles, ref decimal saveProgress)
+        {
             List<string> allRoms = new List<string>();
             if (includeReferencedFiles && ((bool?)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.SUPPORTS_REFERENCES] ?? false))
             {
@@ -162,7 +204,7 @@ namespace RTCV.CorruptCore
                     }
                 }
 
-                percentPerFile = 20m / (allRoms.Count + 1);
+                decimal percentPerFile = 20m / (allRoms.Count + 1);
                 //populating temp folder with roms
                 foreach (string str in allRoms)
                 {
@@ -174,7 +216,7 @@ namespace RTCV.CorruptCore
                     {
                         if (MessageBox.Show($"Include referenced files was set but we couldn't find {rom}. Continue saving? (You'll need to reassociate the file at runtime)", "Couldn't find file.", MessageBoxButtons.YesNo) == DialogResult.No)
                         {
-                            return false;
+                            throw new StockpileSaveException("Included referenced files weren't found");
                         }
                     }
                     else
@@ -226,13 +268,16 @@ namespace RTCV.CorruptCore
 
                 if (failure)
                 {
-                    return false;
+                    throw new StockpileSaveException("Missing file reference");
                 }
             }
+        }
 
+        private static void CopySavestates(ref Stockpile sks, ref decimal saveProgress)
+        {
             if ((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] ?? false)
             {
-                percentPerFile = (20m) / (sks.StashKeys.Count + 1);
+                decimal percentPerFile = (20m) / (sks.StashKeys.Count + 1);
                 //Copy all the savestates
                 foreach (StashKey key in sks.StashKeys)
                 {
@@ -244,7 +289,10 @@ namespace RTCV.CorruptCore
                         Path.Combine(RtcCore.workingDir, "TEMP", stateFilename), true); // copy savestates to temp folder
                 }
             }
+        }
 
+        private static void CopyConfigs(ref Stockpile sks, ref decimal saveProgress)
+        {
             if ((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_CONFIG_MANAGEMENT] ?? false)
             {
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Copying configs to stockpile", saveProgress += 2));
@@ -258,13 +306,26 @@ namespace RTCV.CorruptCore
                     }
                 }
             }
+        }
 
-            //Get all the limiter lists
+        private static void CreateStockpileJson(ref Stockpile sks, ref decimal saveProgress)
+        {
+            //Create stockpile.json to temp folder from stockpile object
+            using (FileStream fs = File.Open(Path.Combine(RtcCore.workingDir, "TEMP", "stockpile.json"), FileMode.OpenOrCreate))
+            {
+                RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Creating stockpile.json", saveProgress += 2));
+                JsonHelper.Serialize(sks, fs, Formatting.Indented);
+            }
+        }
+
+        private static void WriteLimiterLists(ref Stockpile sks, ref decimal saveProgress)
+        {
+                        //Get all the limiter lists
             RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Finding limiter lists to copy", saveProgress += 5));
             var limiterLists = Filtering.GetAllLimiterListsFromStockpile(sks);
             if (limiterLists == null)
             {
-                return false;
+                throw new StockpileSaveException("Limiter lists don't exist");
             }
 
             //Write them to a file
@@ -273,13 +334,10 @@ namespace RTCV.CorruptCore
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Copying limiter lists to stockpile", saveProgress += 2));
                 File.WriteAllLines(Path.Combine(RtcCore.workingDir, "TEMP", l + ".limiter"), limiterLists[l]);
             }
-            //Create stockpile.json to temp folder from stockpile object
-            using (FileStream fs = File.Open(Path.Combine(RtcCore.workingDir, "TEMP", "stockpile.json"), FileMode.OpenOrCreate))
-            {
-                RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Creating stockpile.json", saveProgress += 2));
-                JsonHelper.Serialize(sks, fs, Formatting.Indented);
-            }
+        }
 
+        private static void CreateAndReplaceStockpileZip(ref Stockpile sks, bool compress, ref decimal saveProgress)
+        {
             string tempFilename = sks.Filename + ".temp";
             //If there's already a temp file from a previous failed save, delete it
             try
@@ -292,7 +350,7 @@ namespace RTCV.CorruptCore
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                return false;
+                throw new StockpileSaveException(ex.Message);
             }
 
             CompressionLevel comp = CompressionLevel.Fastest;
@@ -317,14 +375,16 @@ namespace RTCV.CorruptCore
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                return false;
+                throw new StockpileSaveException(ex.Message);
             }
 
             //Move us to the destination
             RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Moving SKS to destination", saveProgress += 2));
             File.Move(tempFilename, sks.Filename);
+        }
 
-            //Clean out SKS
+        private static void CleanOutStockpileFolder(ref Stockpile sks, ref decimal saveProgress)
+        {
             try
             {
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Emptying SKS", saveProgress += 2));
@@ -335,9 +395,12 @@ namespace RTCV.CorruptCore
                 Console.Write(e);
                 MessageBox.Show("Unable to empty the stockpile folder. There's probably something locking a file inside it (iso based game loaded?)\n. Your stockpile is saved, but your current session is bunk.\nRe-load the file");
             }
+        }
 
+        private static void CopyLimiterListsToStockpile(ref Stockpile sks, ref decimal saveProgress)
+        {
             var files = Directory.GetFiles(Path.Combine(RtcCore.workingDir, "TEMP"));
-            percentPerFile = (10m) / (files.Length + 1);
+            decimal percentPerFile = (10m) / (files.Length + 1);
             foreach (var file in files)
             {
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Copying limiter lists to stockpile", saveProgress += percentPerFile));
@@ -354,17 +417,17 @@ namespace RTCV.CorruptCore
                                     "If the file you're seeing here has changed since the stockpile was last saved (rom edited manually), you should probably reload your stockpile from the file.");
                 }
             }
+        }
 
+        private static void UpdateSavestateLocationInfo(ref Stockpile sks, ref decimal saveProgress)
+        {
             //Update savestate location info
-            percentPerFile = (5m) / (sks.StashKeys.Count + 1);
+            decimal percentPerFile = (5m) / (sks.StashKeys.Count + 1);
             foreach (StashKey sk in sks.StashKeys)
             {
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Updating StashKeySaveState Location for {sk.Alias}", saveProgress += percentPerFile));
                 sk.StateLocation = StashKeySavestateLocation.SKS;
             }
-
-            RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Done", saveProgress = 100));
-            return true;
         }
 
         public static OperationResults<Stockpile> Load(string filename, bool import = false)
