@@ -179,29 +179,6 @@ namespace RTCV.UI
             }
         }
 
-        private static bool isAnyRTCFormFocused()
-        {
-            bool ExternalForm = Form.ActiveForm == null;
-
-            if (ExternalForm)
-            {
-                return false;
-            }
-
-            var form = Form.ActiveForm;
-            var t = form.GetType();
-
-            focus = (
-                typeof(IAutoColorize).IsAssignableFrom(t) ||
-                typeof(CloudDebug).IsAssignableFrom(t) ||
-                typeof(DebugInfo_Form).IsAssignableFrom(t)
-            );
-
-            bool isAllowedForm = focus;
-
-            return isAllowedForm;
-        }
-
         public static void LockInterface(bool focusCoreForm = true, bool blockMainForm = false)
         {
             if (interfaceLocked || lockPending)
