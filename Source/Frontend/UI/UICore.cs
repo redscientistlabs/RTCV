@@ -316,7 +316,6 @@ namespace RTCV.UI
         }
 
         public static volatile bool isClosing = false;
-        private static bool focus;
 
         public static void CloseAllRtcForms() //This allows every form to get closed to prevent RTC from hanging
         {
