@@ -348,12 +348,12 @@ namespace RTCV.UI
             Environment.Exit(0);
         }
 
-        public static Color Light1Color;
-        public static Color Light2Color;
-        public static Color NormalColor;
-        public static Color Dark1Color;
-        public static Color Dark2Color;
-        public static Color Dark3Color;
+        private static Color Light1Color;
+        private static Color Light2Color;
+        private static Color NormalColor;
+        private static Color Dark1Color;
+        private static Color Dark2Color;
+        private static Color Dark3Color;
         public static Color Dark4Color;
         private static bool interfaceLocked;
         private static bool lockPending;
