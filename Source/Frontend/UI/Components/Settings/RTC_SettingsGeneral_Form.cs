@@ -66,7 +66,7 @@
 
         private void btnChangeRTCColor_Click(object sender, EventArgs e)
         {
-            UICore.SelectRTCColor();
+            Colors.SelectRTCColor();
         }
 
         private void cbDisableBizhawkOSD_CheckedChanged(object sender, EventArgs e)

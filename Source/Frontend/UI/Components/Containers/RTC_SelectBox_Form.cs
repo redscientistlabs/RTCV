@@ -15,7 +15,7 @@
         {
             InitializeComponent();
 
-            UICore.SetRTCColor(UICore.GeneralColor, this);
+            Colors.SetRTCColor(Colors.GeneralColor, this);
 
             childForms = _childForms;
 

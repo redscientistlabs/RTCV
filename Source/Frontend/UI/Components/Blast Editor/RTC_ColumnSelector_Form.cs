@@ -13,7 +13,7 @@
         public ColumnSelector()
         {
             InitializeComponent();
-            UICore.SetRTCColor(UICore.GeneralColor, this);
+            Colors.SetRTCColor(Colors.GeneralColor, this);
             this.FormClosing += this.ColumnSelector_Closing;
         }
 

@@ -9,7 +9,7 @@
         {
             InitializeComponent();
 
-            UICore.SetRTCColor(UICore.GeneralColor, this);
+            Colors.SetRTCColor(Colors.GeneralColor, this);
         }
 
         public bool SubForm_HasLeftButton => true;

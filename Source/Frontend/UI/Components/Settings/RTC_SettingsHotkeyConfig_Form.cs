@@ -101,7 +101,7 @@ namespace RTCV.UI
 
         private void RTC_SettingsHotkeyConfig_Form_Load(object sender, EventArgs e)
         {
-            UICore.SetRTCColor(UICore.GeneralColor, this.Parent);
+            Colors.SetRTCColor(Colors.GeneralColor, this.Parent);
         }
 
         private void HotkeyHotkeyTabControlSelectedIndexChanged(object sender, EventArgs e)

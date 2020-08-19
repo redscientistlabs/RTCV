@@ -81,7 +81,7 @@ namespace RTCV.UI
             dgvBlastGenerator.CellMouseClick += dgvBlastGenerator_CellMouseClick;
             dgvBlastGenerator.CellMouseDoubleClick += DgvBlastGenerator_CellMouseDoubleClick;
 
-            UICore.SetRTCColor(UICore.GeneralColor, this);
+            Colors.SetRTCColor(Colors.GeneralColor, this);
             getAllControls(this);
         }
 

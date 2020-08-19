@@ -14,7 +14,7 @@
         public UI_ComponentFormTile()
         {
             InitializeComponent();
-            UICore.SetRTCColor(UICore.GeneralColor, this);
+            Colors.SetRTCColor(Colors.GeneralColor, this);
         }
 
         public void SetCompoentForm(Form _childForm, int _sizeX, int _sizeY, bool DisplayHeader)

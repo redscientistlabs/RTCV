@@ -76,7 +76,7 @@ namespace RTCV.UI
             corePadding = pnSideBar.Width;
             xPadding = (Width - cfForm.Width) - corePadding;
 
-            //UICore.SetRTCColor(UICore.GeneralColor);
+            //Colors.SetRTCColor(Colors.GeneralColor);
         }
 
         private void UI_CoreForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -243,7 +243,7 @@ This message only appears once.";
                 {
                     Size = pnSideBar.Size,
                     Location = new Point(0, 0),
-                    BackColor = UICore.Dark4Color,
+                    BackColor = Colors.Dark4Color,
                     Visible = false,
                 };
                 pnSideBar.Controls.Add(pnLockSidebar);
@@ -256,7 +256,7 @@ This message only appears once.";
             PrepareLockSideBar();
 
             Bitmap bmp = pnSideBar.getFormScreenShot();
-            bmp.Tint(Color.FromArgb(0xF0, UICore.Dark4Color));
+            bmp.Tint(Color.FromArgb(0xF0, Colors.Dark4Color));
             pnLockSidebar.BackgroundImage = bmp;
             pnLockSidebar.Visible = true;
         }

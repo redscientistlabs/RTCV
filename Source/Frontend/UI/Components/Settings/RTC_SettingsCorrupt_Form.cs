@@ -15,7 +15,7 @@ namespace RTCV.UI
         {
             InitializeComponent();
 
-            UICore.SetRTCColor(UICore.GeneralColor, this);
+            Colors.SetRTCColor(Colors.GeneralColor, this);
 
             Load += RTC_SettingRerollForm_Load;
 
