@@ -1,23 +1,18 @@
 namespace RTCV.CorruptCore
 {
     using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.ComponentModel;
     using System.Diagnostics;
     using System.Drawing;
     using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Numerics;
-    using System.Reflection;
     using System.Runtime.InteropServices;
-    using System.Runtime.Serialization.Formatters.Binary;
     using System.Text;
     using System.Windows.Forms;
     using Ceras;
     using Newtonsoft.Json;
-    using RTCV.NetCore.NetCore_Extensions;
+    using RTCV.NetCore.SafeJsonTypeSerialization;
 
     public static class CorruptCore_Extensions
     {
@@ -692,7 +687,7 @@ namespace RTCV.CorruptCore
 
     public static class JsonHelper
     {
-        public static void Serialize(object value, Stream s, Formatting f = Formatting.None, SafeJsonTypeSerialization.JsonKnownTypesBinder binder = null)
+        public static void Serialize(object value, Stream s, Formatting f = Formatting.None, JsonKnownTypesBinder binder = null)
         {
             using (var writer = new StreamWriter(s))
             using (var jsonWriter = new JsonTextWriter(writer))
@@ -700,7 +695,7 @@ namespace RTCV.CorruptCore
                 var ser = new JsonSerializer
                 {
                     Formatting = f,
-                    SerializationBinder = binder ?? new SafeJsonTypeSerialization.JsonKnownTypesBinder()
+                    SerializationBinder = binder ?? new JsonKnownTypesBinder()
                 };
                 ser.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
                 ser.Serialize(jsonWriter, value);
@@ -708,14 +703,14 @@ namespace RTCV.CorruptCore
             }
         }
 
-        public static T Deserialize<T>(Stream s, SafeJsonTypeSerialization.JsonKnownTypesBinder binder = null)
+        public static T Deserialize<T>(Stream s, JsonKnownTypesBinder binder = null)
         {
             using (var reader = new StreamReader(s))
             using (var jsonReader = new JsonTextReader(reader))
             {
                 var ser = new JsonSerializer()
                 {
-                    SerializationBinder = binder ?? new SafeJsonTypeSerialization.JsonKnownTypesBinder()
+                    SerializationBinder = binder ?? new JsonKnownTypesBinder()
                 };
                 return ser.Deserialize<T>(jsonReader);
             }
