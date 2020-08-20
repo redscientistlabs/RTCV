@@ -19,8 +19,8 @@ namespace RTCV.UI.Input
             t.Start();
         }
 
-        static List<KeyInput.KeyEvent> PendingEventList = new List<KeyInput.KeyEvent>();
-        static List<KeyInput.KeyEvent> EventList = new List<KeyInput.KeyEvent>();
+        static List<KeyEvent> PendingEventList = new List<KeyEvent>();
+        static List<KeyEvent> EventList = new List<KeyEvent>();
 
         static void IPCThread()
         {
@@ -41,7 +41,7 @@ namespace RTCV.UI.Input
                             int e = br.ReadInt32();
                             bool pressed = (e & 0x80000000) != 0;
                             lock (PendingEventList)
-                                PendingEventList.Add(new KeyInput.KeyEvent { Key = (Key)(e & 0x7FFFFFFF), Pressed = pressed });
+                                PendingEventList.Add(new KeyEvent { Key = (Key)(e & 0x7FFFFFFF), Pressed = pressed });
                         }
                     }
                     catch { }
@@ -49,7 +49,7 @@ namespace RTCV.UI.Input
             }
         }
 
-        public static IEnumerable<KeyInput.KeyEvent> Update()
+        public static IEnumerable<KeyEvent> Update()
         {
             EventList.Clear();
 

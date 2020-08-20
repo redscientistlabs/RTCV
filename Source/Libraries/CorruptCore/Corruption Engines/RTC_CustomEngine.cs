@@ -9,7 +9,6 @@
     using System.Windows.Forms;
     using RTCV.Common.CustomExtensions;
     using RTCV.NetCore;
-    using RTCV.NetCore.NetCore_Extensions;
 
     public static class RTC_CustomEngine
     {
@@ -675,9 +674,9 @@
             set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.CUSTOM_PATH, value);
         }
 
-        private static SafeJsonTypeSerialization.JsonKnownTypesBinder InitSpecKnownTypes()
+        private static NetCore.SafeJsonTypeSerialization.JsonKnownTypesBinder InitSpecKnownTypes()
         {
-            var t = new SafeJsonTypeSerialization.JsonKnownTypesBinder();
+            var t = new NetCore.SafeJsonTypeSerialization.JsonKnownTypesBinder();
             t.KnownTypes.Add(typeof(long));
             t.KnownTypes.Add(typeof(string));
             return t;

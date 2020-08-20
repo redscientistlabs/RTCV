@@ -74,12 +74,12 @@ namespace RTCV.UI.Input
                 return _eventList;
             }
         }
+    }
 
-        #pragma warning disable CA1815 //KeyEvent won't be used in comparison
-        public struct KeyEvent
-        {
-            public Key Key;
-            public bool Pressed;
-        }
+    #pragma warning disable CA1815 //KeyEvent won't be used in comparison
+    public struct KeyEvent
+    {
+        public Key Key;
+        public bool Pressed;
     }
 }
