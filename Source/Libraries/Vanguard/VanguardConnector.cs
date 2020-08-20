@@ -1,7 +1,6 @@
 namespace RTCV.Vanguard
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using RTCV.CorruptCore;
     using RTCV.NetCore;
@@ -77,9 +76,9 @@ namespace RTCV.Vanguard
         public object SendSyncedMessage(string message) => netConn.SendSyncedMessage(message);
         public object SendSyncedMessage(string message, object value) => netConn.SendSyncedMessage(message, value);
 
-        [SuppressMessage("Microsoft.Design", "CA1822", Justification = "Method is used outside of RTCV, so changing this is higher cost")]
         public void Kill()
         {
+            netConn?.Kill();
         }
 
         public void Dispose()
