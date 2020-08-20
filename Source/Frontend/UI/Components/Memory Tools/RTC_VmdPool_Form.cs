@@ -219,7 +219,7 @@ namespace RTCV.UI
             tbVmdPrototype.Text = DisplayVMD(vmd);
         }
 
-        private string DisplayVMD(VirtualMemoryDomain vmd)
+        private static string DisplayVMD(VirtualMemoryDomain vmd)
         {
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
 

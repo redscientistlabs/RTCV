@@ -551,7 +551,7 @@ namespace RTCV.UI
                 {
                     while (true)
                     {
-                        Input.Input.Instance.Update();
+                        Input.Input.Update();
                         // loop through all available events
                         var ie = Input.Input.Instance.DequeueEvent();
                         if (ie == null)

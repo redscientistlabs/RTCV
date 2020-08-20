@@ -69,7 +69,7 @@ namespace RTCV.UI
             btnGenerateVMD.Enabled = true;
         }
 
-        public long SafeStringToLong(string input)
+        public static long SafeStringToLong(string input)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace RTCV.UI
             }
         }
 
-        public void ProfileDomain()
+        public static void ProfileDomain()
         {
         }
 

@@ -348,7 +348,7 @@ This message only appears once.";
 
                 smForm.EnteringSimpleMode();
             }))).Enabled = !simpleModeVisible;
-            (easyButtonMenu.Items.Add("Start Auto-Corrupt with Recommended Settings for loaded game", null, new EventHandler(((ob, ev) => { S.GET<UI_CoreForm>().StartEasyMode(true); })))).Enabled = ((bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] == true) && !simpleModeVisible;
+            (easyButtonMenu.Items.Add("Start Auto-Corrupt with Recommended Settings for loaded game", null, new EventHandler(((ob, ev) => {UI_CoreForm.StartEasyMode(true); })))).Enabled = ((bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] == true) && !simpleModeVisible;
             easyButtonMenu.Items.Add(new ToolStripSeparator());
             //EasyButtonMenu.Items.Add("Watch a tutorial video", null, new EventHandler((ob,ev) => Process.Start("https://www.youtube.com/watch?v=sIELpn4-Umw"))).Enabled = false;
             easyButtonMenu.Items.Add("Open the online wiki", null, new EventHandler((ob, ev) => Process.Start("https://corrupt.wiki/")));
@@ -490,7 +490,7 @@ This message only appears once.";
             UI_DefaultGrids.connectionStatus.LoadToMain();
         }
 
-        public void StartEasyMode(bool useTemplate)
+        public static void StartEasyMode(bool useTemplate)
         {
             //if (RTC_NetcoreImplementation.isStandaloneUI && !S.GET<RTC_Core_Form>().cbUseGameProtection.Checked)
             S.GET<UI_CoreForm>().cbUseGameProtection.Checked = true;
@@ -568,7 +568,7 @@ This message only appears once.";
             S.GET<UI_CoreForm>().AutoCorrupt = true;
         }
 
-        public void SetEngineByName(string name)
+        public static void SetEngineByName(string name)
         {
             //Selects an engine from a given string name
 
@@ -582,7 +582,7 @@ This message only appears once.";
             }
         }
 
-        private void BlastRawStash()
+        private static void BlastRawStash()
         {
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.MANUALBLAST, true);
             S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw_Click(null, null);

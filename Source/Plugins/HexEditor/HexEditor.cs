@@ -52,7 +52,7 @@ namespace RTCV.Plugins.HexEditor
 
         private int DataSize { get; set; }
 
-        private Dictionary<string, MemoryInterface> AllDomains => MemoryDomains.AllMemoryInterfaces;
+        private static Dictionary<string, MemoryInterface> AllDomains => MemoryDomains.AllMemoryInterfaces;
         public volatile bool _hideOnClose = true;
 
         readonly Logger _logger = NLog.LogManager.GetCurrentClassLogger();
@@ -155,9 +155,9 @@ namespace RTCV.Plugins.HexEditor
 
         #region API
 
-        public bool UpdateBefore => false;
+        public static bool UpdateBefore => false;
 
-        public bool AskSaveChanges()
+        public static bool AskSaveChanges()
         {
             return true;
         }
@@ -239,7 +239,7 @@ namespace RTCV.Plugins.HexEditor
             return str.Select(Convert.ToByte).ToArray();
         }
 
-        public byte[] ConvertHexStringToByteArray(string str)
+        public static byte[] ConvertHexStringToByteArray(string str)
         {
             if (string.IsNullOrWhiteSpace(str))
             {
@@ -1182,7 +1182,7 @@ namespace RTCV.Plugins.HexEditor
             DataSizeDWordMenuItem.Checked = DataSize == 4;
         }
 
-        private ToolStripItem GetMenuItem(MemoryInterface domain, Action<string> setCallback, string selected = "", int? maxSize = null)
+        private static ToolStripItem GetMenuItem(MemoryInterface domain, Action<string> setCallback, string selected = "", int? maxSize = null)
         {
             var name = domain.Name;
             var item = new ToolStripMenuItem

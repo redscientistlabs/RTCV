@@ -290,10 +290,6 @@ dotnet_diagnostic.CA1816.severity = none
 # Properties should not return arrays
 dotnet_diagnostic.CA1819.severity = none
 
-# Member can be marked as static
-# NOTE: Fixing this requires a simultaneous fix in Bizhawk-Vanguard
-dotnet_diagnostic.CA1822.severity = none
-
 # Avoid unnecessary zero-length array allocations
 dotnet_diagnostic.CA1825.severity = none
 

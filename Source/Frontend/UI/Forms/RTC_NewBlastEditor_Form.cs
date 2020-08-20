@@ -272,7 +272,7 @@ namespace RTCV.UI
             }
         }
 
-        private void dgvCellValueScroll(object sender, MouseEventArgs e, int precision)
+        private static void dgvCellValueScroll(object sender, MouseEventArgs e, int precision)
         {
             if (sender is TextBox tb)
             {
@@ -791,7 +791,7 @@ namespace RTCV.UI
             RefreshAllNoteIcons();
         }
 
-        private void updateMaximum(List<DataGridViewRow> rows)
+        private static void updateMaximum(List<DataGridViewRow> rows)
         {
             foreach (DataGridViewRow row in rows)
             {
@@ -811,7 +811,7 @@ namespace RTCV.UI
             }
         }
 
-        private void updateMaximum(DataGridViewNumericUpDownCell cell, string domain)
+        private static void updateMaximum(DataGridViewNumericUpDownCell cell, string domain)
         {
             if (DomainToMiDico.ContainsKey(domain))
             {
@@ -1187,7 +1187,7 @@ namespace RTCV.UI
             dgvBlastEditor.Refresh();
         }
 
-        private DataGridViewColumn CreateColumn(string dataPropertyName, string columnName, string displayName,
+        private static DataGridViewColumn CreateColumn(string dataPropertyName, string columnName, string displayName,
             DataGridViewColumn column, int fillWeight = -1)
         {
             if (fillWeight == -1)
@@ -1910,8 +1910,7 @@ namespace RTCV.UI
                 filename = saveCsvDialog.FileName;
             }
 
-            var csv = new CSVGenerator();
-            File.WriteAllText(filename, csv.GenerateFromDGV(dgvBlastEditor), Encoding.UTF8);
+            File.WriteAllText(filename, CSVGenerator.GenerateFromDGV(dgvBlastEditor), Encoding.UTF8);
         }
 
 
@@ -1994,7 +1993,7 @@ namespace RTCV.UI
             S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newSk, false);
         }
 
-        public void RefreshNoteIcons(DataGridViewRowCollection rows)
+        public static void RefreshNoteIcons(DataGridViewRowCollection rows)
         {
             foreach (DataGridViewRow row in rows)
             {
@@ -2089,7 +2088,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private string getShiftedHexString(string value, decimal amount, int precision)
+        private static string getShiftedHexString(string value, decimal amount, int precision)
         {
             //Convert the string we have into a byte array
             var valueBytes = CorruptCore_Extensions.StringToByteArrayPadLeft(value, precision);

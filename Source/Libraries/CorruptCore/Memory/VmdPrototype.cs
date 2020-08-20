@@ -95,7 +95,7 @@ namespace RTCV.CorruptCore
             return VMD;
         }
 
-        public bool IsAddressInRanges(long address, List<long> singles, List<long[]> ranges)
+        public static bool IsAddressInRanges(long address, List<long> singles, List<long[]> ranges)
         {
             if (singles.Contains(address))
             {

@@ -226,7 +226,7 @@ namespace RTCV.UI
             }
         }
 
-        private void commitUsedStatesToSession()
+        private static void commitUsedStatesToSession()
         {
             var allStashKeys = new List<StashKey>();
             //Commit any used states to SESSION so we can safely unload the sk

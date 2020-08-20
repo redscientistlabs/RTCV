@@ -134,7 +134,7 @@
             lbActiveTableSize.Text = "Active table size (0x" + ActiveTableGenerated.Length.ToString("X") + ")";
         }
 
-        public byte[] GetDumpFromFile(string key)
+        public static byte[] GetDumpFromFile(string key)
         {
             return File.ReadAllBytes(Path.Combine(CorruptCore.RtcCore.workingDir, "MEMORYDUMPS", key + ".dmp"));
         }

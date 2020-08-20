@@ -599,7 +599,7 @@ namespace RTCV.CorruptCore
                 });
         }
 
-        public void Kill()
+        public static void Kill()
         {
         }
     }
