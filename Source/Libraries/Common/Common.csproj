@@ -54,7 +54,7 @@
     <Compile Include="Forms\LogConsoleForm.Designer.cs">
       <DependentUpon>LogConsoleForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Console.cs" />
+    <Compile Include="ConsoleHelper.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="Extensions\RandomExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
