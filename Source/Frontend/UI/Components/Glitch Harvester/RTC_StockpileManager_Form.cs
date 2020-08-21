@@ -154,7 +154,7 @@ namespace RTCV.UI
 
             S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
         }
-        private bool IsControlDown()
+        private static bool IsControlDown()
         {
             return (Control.ModifierKeys & Keys.Control) != 0;
         }
@@ -292,7 +292,7 @@ namespace RTCV.UI
             }
         }
 
-        public bool RenameStashKey(StashKey sk)
+        public static bool RenameStashKey(StashKey sk)
         {
             string value = sk.Alias;
 

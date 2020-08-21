@@ -310,7 +310,7 @@ namespace RTCV.UI.Components
         /// <summary>
         /// Adjusts the location and size of the editing control given the alignment characteristics of the cell
         /// </summary>
-        private Rectangle GetAdjustedEditingControlBounds(Rectangle editingControlBounds, DataGridViewCellStyle cellStyle)
+        private static Rectangle GetAdjustedEditingControlBounds(Rectangle editingControlBounds, DataGridViewCellStyle cellStyle)
         {
             // Add a 1 pixel padding on the left and right of the editing control
             editingControlBounds.X += 1;

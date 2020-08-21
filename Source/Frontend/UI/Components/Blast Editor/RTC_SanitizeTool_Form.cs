@@ -162,7 +162,7 @@ namespace RTCV.UI
             this.Close();
         }
 
-        private void ReopenBlastEditor()
+        private static void ReopenBlastEditor()
         {
             var be = S.GET<RTC_NewBlastEditor_Form>();
             be.RefreshAllNoteIcons();
@@ -303,7 +303,7 @@ namespace RTCV.UI
             lbWorkingPleaseWait.Visible = true;
         }
 
-        public void RunSanitizeAlgo()
+        public static void RunSanitizeAlgo()
         {
             S.GET<RTC_NewBlastEditor_Form>().dgvBlastEditor.ClearSelection();
             S.GET<RTC_NewBlastEditor_Form>().btnDisable50_Click(null, null);

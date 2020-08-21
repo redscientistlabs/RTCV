@@ -23,7 +23,7 @@ namespace RTCV.UI
             InitializeComponent();
         }
 
-        private ulong safeStringToULongHex(string input)
+        private static ulong safeStringToULongHex(string input)
         {
             if (input.IndexOf("0X", StringComparison.OrdinalIgnoreCase) >= 0)
             {
@@ -35,7 +35,7 @@ namespace RTCV.UI
             }
         }
 
-        private bool isHex(string str)
+        private static bool isHex(string str)
         {
             //Hex characters
             //Trim the 0x off
@@ -43,13 +43,13 @@ namespace RTCV.UI
             return Regex.IsMatch(str, regex);
         }
 
-        private bool isWholeNumber(string str)
+        private static bool isWholeNumber(string str)
         {
             string regex = "^[0-9]+$";
             return Regex.IsMatch(str, regex);
         }
 
-        private bool isDecimalNumber(string str)
+        private static bool isDecimalNumber(string str)
         {
             string regex = "^(\\d*\\.){1}\\d+$";
             return Regex.IsMatch(str, regex);

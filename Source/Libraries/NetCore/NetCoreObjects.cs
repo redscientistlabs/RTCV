@@ -283,7 +283,7 @@ namespace RTCV.NetCore
             ConsoleWritten += registrant.Invoke; //We trick the eventhandler in executing the registrant instead
         }
 
-        public void Unregister()
+        public static void Unregister()
         {
             //finds any delegate referencing ConsoleWritten and dereferences it
 

@@ -58,7 +58,7 @@
             UpdateGameProtectionDelay();
         }
 
-        public void UpdateGameProtectionDelay()
+        public static void UpdateGameProtectionDelay()
         {
             GameProtection.BackupInterval = Convert.ToInt32(S.GET<RTC_SettingsNetCore_Form>().nmGameProtectionDelay.Value);
             if (GameProtection.isRunning)

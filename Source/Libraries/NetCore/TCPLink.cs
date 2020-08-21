@@ -235,7 +235,7 @@ namespace RTCV.NetCore
             }
         }
 
-        private CerasSerializer CreateSerializer()
+        private static CerasSerializer CreateSerializer()
         {
             var config = new SerializerConfig();
             config.Advanced.PersistTypeCache = true;

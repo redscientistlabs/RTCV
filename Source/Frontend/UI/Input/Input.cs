@@ -341,7 +341,7 @@
             }
         }
 
-        public void Update()
+        public static void Update()
         {
             //TODO - for some reason, we may want to control when the next event processing step happens
             //so i will leave this method here for now..

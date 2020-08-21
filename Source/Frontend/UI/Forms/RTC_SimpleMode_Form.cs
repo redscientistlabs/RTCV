@@ -48,7 +48,7 @@
             NetCore.Params.SetParam("SIMPLE_MODE"); //Set RTC in Simple Mode
         }
 
-        public void LeavingSimpleMode()
+        public static void LeavingSimpleMode()
         {
             NetCore.Params.RemoveParam("SIMPLE_MODE"); //Set RTC in Normal Mode
 
@@ -220,7 +220,7 @@
                                        $"and 2d games made for 3d-era consoles.";
         }
 
-        public void SelectComboBoxRandomItem(ComboBox cb)
+        public static void SelectComboBoxRandomItem(ComboBox cb)
         {
             Random RND = new Random((int)DateTime.Now.Ticks);
             int nbItems = cb.Items.Count;
@@ -228,7 +228,7 @@
             cb.SelectedIndex = SelectIndex;
         }
 
-        public void SelectEngineByName(string name)
+        public static void SelectEngineByName(string name)
         {
             int selectedEngineIndex = -1;
 

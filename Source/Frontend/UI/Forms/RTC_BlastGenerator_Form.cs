@@ -643,7 +643,7 @@ namespace RTCV.UI
             }
         }
 
-        private string GetPrecisionNameFromSize(int precision)
+        private static string GetPrecisionNameFromSize(int precision)
         {
             switch (precision)
             {
@@ -664,7 +664,7 @@ namespace RTCV.UI
             }
         }
 
-        private int GetPrecisionSizeFromName(string precision)
+        private static int GetPrecisionSizeFromName(string precision)
         {
             switch (precision)
             {
@@ -812,7 +812,7 @@ namespace RTCV.UI
             RefreshDomains();
         }
 
-        private void SaveDataGridView(DataGridView dgv)
+        private static void SaveDataGridView(DataGridView dgv)
         {
             DataTable dt = new DataTable();
             foreach (DataGridViewColumn column in dgv.Columns)

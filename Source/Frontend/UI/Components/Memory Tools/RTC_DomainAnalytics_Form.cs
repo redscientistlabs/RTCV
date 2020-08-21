@@ -39,7 +39,7 @@
 
         public string _currentFilename = null;
 
-        public byte[] GetDumpFromFile(string key)
+        public static byte[] GetDumpFromFile(string key)
         {
             return File.ReadAllBytes(Path.Combine(CorruptCore.RtcCore.workingDir, "MEMORYDUMPS", key + ".dmp"));
         }

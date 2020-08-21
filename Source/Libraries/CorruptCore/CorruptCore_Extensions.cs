@@ -668,9 +668,9 @@ namespace RTCV.CorruptCore
         }
     }
     //Export dgv to csv
-    public class CSVGenerator
+    public static class CSVGenerator
     {
-        public string GenerateFromDGV(DataGridView dgv)
+        public static string GenerateFromDGV(DataGridView dgv)
         {
             var sb = new StringBuilder();
             var headers = dgv.Columns.Cast<DataGridViewColumn>();

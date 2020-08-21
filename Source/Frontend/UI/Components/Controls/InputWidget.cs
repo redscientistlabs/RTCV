@@ -129,7 +129,7 @@ namespace RTCV.UI.Components.Controls
         /// </summary>
         private void ReadKeys()
         {
-            Input.Input.Instance.Update();
+            Input.Input.Update();
             var bindingStr = Input.Input.Instance.GetNextBindEvent();
             if (!string.IsNullOrEmpty(_wasPressed) && bindingStr == _wasPressed)
             {

@@ -219,7 +219,7 @@ namespace RTCV.UI
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Rename selected item", null, new EventHandler((ob, ev) =>
                 {
                     StashKey sk = StockpileManager_UISide.StashHistory[lbStashHistory.SelectedIndex];
-                    S.GET<RTC_StockpileManager_Form>().RenameStashKey(sk);
+                    RTC_StockpileManager_Form.RenameStashKey(sk);
                     RefreshStashHistory();
                 }))).Enabled = lbStashHistory.SelectedIndex != -1;
 

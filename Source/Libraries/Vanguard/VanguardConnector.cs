@@ -78,6 +78,7 @@ namespace RTCV.Vanguard
 
         public void Kill()
         {
+            netConn?.Kill();
         }
 
         public void Dispose()
