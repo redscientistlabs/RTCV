@@ -102,6 +102,7 @@
     <Compile Include="EventWarlock\WarlockConditions\FirstEqualsSecond.cs" />
     <Compile Include="IRenderer.cs" />
     <Compile Include="Exceptions\StockpileSaveException.cs" />
+    <Compile Include="Exceptions\UnitExecutionException.cs" />
     <Compile Include="Extensions\ByteArrayComparer.cs" />
     <Compile Include="Extensions\NullableByteArrayComparer.cs" />
     <Compile Include="Memory\FileInterface.cs" />
