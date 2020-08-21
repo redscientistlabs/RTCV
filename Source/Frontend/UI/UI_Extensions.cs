@@ -61,19 +61,6 @@ namespace RTCV.UI
             return dialogResult;
         }
 
-        public static void Tint(this Bitmap bmp, Color col)
-        {
-            var rectSize = new Rectangle(0, 0, bmp.Width, bmp.Height);
-
-            using (var g = Graphics.FromImage(bmp))
-            {
-                g.DrawImage(bmp, rectSize);
-
-                var darkBrush = new SolidBrush(col);
-                g.FillRectangle(darkBrush, rectSize);
-            }
-        }
-
         public class RTC_Standalone_Form : Form { }
     }
 }
