@@ -101,6 +101,7 @@
     <Compile Include="EventWarlock\WarlockActions\WarlockActionEcho.cs" />
     <Compile Include="EventWarlock\WarlockConditions\FirstEqualsSecond.cs" />
     <Compile Include="IRenderer.cs" />
+    <Compile Include="JsonHelper.cs" />
     <Compile Include="Exceptions\StockpileSaveException.cs" />
     <Compile Include="Exceptions\UnitExecutionException.cs" />
     <Compile Include="Extensions\ByteArrayComparer.cs" />
