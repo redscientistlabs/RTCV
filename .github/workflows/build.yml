@@ -25,9 +25,9 @@ jobs:
       uses: nuget/setup-nuget@v1.0.2
       with:
         nuget-version: 'latest'
-    - name: Restore packages # Use packages.config file since packages don't use PackageReference
-      run: nuget restore .\Source\Launcher\RTC_Launcher\packages.config -PackagesDirectory .\Source\Launcher\packages
+    - name: Restore packages
+      run: nuget restore .\Source\Launcher\RTC_Launcher.sln
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.0
     - name: Build with MSBuild
-      run: msbuild Source\Launcher\RTC_Launcher.sln
+      run: msbuild .\Source\Launcher\RTC_Launcher.sln
