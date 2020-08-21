@@ -1,15 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-
 namespace RTCV.Launcher
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Linq;
+    using System.Windows.Forms;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+
     public class LauncherConf
     {
         public string launcherAssetLocation;
@@ -153,7 +153,7 @@ namespace RTCV.Launcher
 
             if(Directory.Exists(LauncherAssetLocation))
                 LauncherAddonConfLocations = Directory.GetFiles(LauncherAssetLocation).Where(it => it.Contains("addon_") && it.Contains(".json")).ToArray();
-            
+
             VersionLocation = Path.Combine(MainForm.launcherDir, "VERSIONS", Version);
 
             if (!File.Exists(LauncherConfLocation))
@@ -215,7 +215,7 @@ namespace RTCV.Launcher
         public readonly string ImageName;
         [JsonProperty]
         public readonly string DownloadVersion;
-        [JsonProperty] 
+        [JsonProperty]
         public readonly ReadOnlyDictionary<string, ExecutableCommand> ExecutableCommands;
 
         //Used for the sidepanel and ordering of cards
@@ -227,7 +227,7 @@ namespace RTCV.Launcher
         public readonly string ItemDescription;
 
         [JsonProperty]
-        public readonly bool HideItem; //makes the card hide 
+        public readonly bool HideItem; //makes the card hide
 
         //Addon vars that are automatically set when the json is loaded
         public bool IsAddon;

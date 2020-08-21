@@ -1,17 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
 namespace RTCV.Launcher
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Diagnostics;
+    using System.IO;
+    using System.Linq;
+    using System.Windows.Forms;
+
     public partial class LaunchPanelV1 : Form
     {
         public Button[] buttons;
@@ -89,7 +85,7 @@ namespace RTCV.Launcher
             }
             btnStart.Visible = isDefaultStartPresent;
 
-                
+
             lbSelectedVersion.Text = MainForm.SelectedVersion;
             lbSelectedVersion.Visible = true;
             pnVersionBatchFiles.Visible = true;

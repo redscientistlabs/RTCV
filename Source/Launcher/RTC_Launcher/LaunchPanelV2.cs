@@ -1,17 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
 namespace RTCV.Launcher
 {
+    using System;
+    using System.Data;
+    using System.Diagnostics;
+    using System.Drawing;
+    using System.IO;
+    using System.Linq;
+    using System.Windows.Forms;
+
     public partial class LaunchPanelV2 : Form
     {
         LauncherConf lc;
@@ -108,7 +104,7 @@ namespace RTCV.Launcher
                 newButton.Visible = true;
                 flowLayoutPanel1.Controls.Add(newButton);
             }
-            
+
 
             lbSelectedVersion.Text = lc.version;
             lbSelectedVersion.Visible = true;

@@ -1,19 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
 namespace RTCV.Launcher
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Drawing;
+    using System.IO;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+
     public partial class VersionDownloadPanel : Form
     {
         public string latestVersionString = " (Latest version)";
@@ -35,7 +31,7 @@ namespace RTCV.Launcher
 
         public static string getLatestVersion()
         {
-            try { 
+            try {
                 var versionFile = MainForm.GetFileViaHttp($"{MainForm.webRessourceDomain}/rtc/releases/version.php");
                 if (versionFile == null)
                     return null;
@@ -156,7 +152,7 @@ namespace RTCV.Launcher
             devCounter++;
 
 
-            
+
 
             if (devCounter >= 20 || devOn)
             {

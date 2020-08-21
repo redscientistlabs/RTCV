@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace RTCV.Launcher
+﻿namespace RTCV.Launcher
 {
+    using System;
+    using System.Drawing;
+    using System.IO;
+    using System.Net;
+    using System.Windows.Forms;
+
     public partial class DownloadForm : Form
     {
         WebClient webClient;
@@ -35,7 +29,7 @@ namespace RTCV.Launcher
 
             webClient.DownloadFileCompleted += (ov, ev) =>
             {
-                
+
                 MainForm.mf.InvokeUI(() => {
                     lbDownloadProgress.Text = $"Uncompressing files...";
                     MainForm.mf.DownloadComplete(downloadedFile, extractDirectory); });
