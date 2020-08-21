@@ -448,12 +448,14 @@ namespace RTCV.CorruptCore
                     GetStoreBackups();
                     StepPreCorrupt?.Invoke(null, new EventArgs());
 
-                    //Execute all temp units
                     var itemsToRemove = new List<List<BlastUnit>>();
                     try
                     {
+                        //Execute all temp units and store the expired ones for removal
                         itemsToRemove.AddRange(ExecuteUnits(appliedLifetime, nameof(appliedLifetime)));
-                        itemsToRemove.AddRange(ExecuteUnits(appliedInfinite, nameof(appliedInfinite)));
+
+                        //Execute all infinite units. These are never removed
+                        ExecuteUnits(appliedInfinite, nameof(appliedInfinite));
                     }
                     catch (UnitExecutionException)
                     {
