@@ -26,7 +26,7 @@
 
         private void RTC_Intro_Form_Load(object sender, EventArgs e)
         {
-            UICore.SetRTCColor(UICore.GeneralColor, this);
+            Colors.SetRTCColor(Colors.GeneralColor, this);
         }
 
         private void RTC_Intro_Form_FormClosing(object sender, FormClosingEventArgs e)

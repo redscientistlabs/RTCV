@@ -30,10 +30,8 @@ namespace RTCV.UI
         private static System.Timers.Timer inputCheckTimer;
 
         //RTC Main Forms
-        //public static Color generalColor = Color.FromArgb(60, 45, 70);
-        public static Color GeneralColor = Color.LightSteelBlue;
-
         public static RTC_SelectBox_Form mtForm = null;
+
         public static BindingCollection HotkeyBindings = new BindingCollection();
 
         public static void Start(Form standaloneForm = null)
@@ -89,10 +87,10 @@ namespace RTCV.UI
                 UI_DefaultGrids.connectionStatus.LoadToMain();
             }
 
-            LoadRTCColor();
+            Colors.LoadRTCColor();
             S.GET<UI_CoreForm>().Show();
             Initialized.Set();
-            LoadRTCColor();
+            Colors.LoadRTCColor();
         }
 
         private static void FormRegister_FormRegistered(object sender, FormRegisteredEventArgs e)
@@ -177,29 +175,6 @@ namespace RTCV.UI
                 //This is a non-synced spec update to prevent jittering. Shouldn't have any other noticeable impact
                 RTCV.NetCore.AllSpec.UISpec.Update(RTC_INFOCUS, currentState, true, false);
             }
-        }
-
-        private static bool isAnyRTCFormFocused()
-        {
-            bool ExternalForm = Form.ActiveForm == null;
-
-            if (ExternalForm)
-            {
-                return false;
-            }
-
-            var form = Form.ActiveForm;
-            var t = form.GetType();
-
-            focus = (
-                typeof(IAutoColorize).IsAssignableFrom(t) ||
-                typeof(CloudDebug).IsAssignableFrom(t) ||
-                typeof(DebugInfo_Form).IsAssignableFrom(t)
-            );
-
-            bool isAllowedForm = focus;
-
-            return isAllowedForm;
         }
 
         public static void LockInterface(bool focusCoreForm = true, bool blockMainForm = false)
@@ -296,7 +271,7 @@ namespace RTCV.UI
                 ib.blockPanel.BringToFront();
 
                 var bmp = c.getFormScreenShot();
-                bmp.Tint(Color.FromArgb(0xCC, UICore.Dark4Color));
+                bmp.Tint(Color.FromArgb(0xCC, Colors.Dark4Color));
 
                 ib.blockPanel.BackgroundImage = bmp;
             }
@@ -339,7 +314,6 @@ namespace RTCV.UI
         }
 
         public static volatile bool isClosing = false;
-        private static bool focus;
 
         public static void CloseAllRtcForms() //This allows every form to get closed to prevent RTC from hanging
         {
@@ -372,174 +346,9 @@ namespace RTCV.UI
             Environment.Exit(0);
         }
 
-        public static Color Light1Color;
-        public static Color Light2Color;
-        public static Color NormalColor;
-        public static Color Dark1Color;
-        public static Color Dark2Color;
-        public static Color Dark3Color;
-        public static Color Dark4Color;
         private static bool interfaceLocked;
         private static bool lockPending;
         private static object lockObject = new object();
-
-
-        public static void SetRTCColor(Color color, Control ctr = null)
-        {
-            HashSet<Control> allControls = new HashSet<Control>();
-
-            if (ctr == null)
-            {
-                foreach (Form targetForm in UICore.AllColorizedSingletons())
-                {
-                    if (targetForm != null)
-                    {
-                        foreach (var c in targetForm.Controls.getControlsWithTag())
-                            allControls.Add(c);
-                        allControls.Add(targetForm);
-                    }
-                }
-
-                //Get the extraforms
-                foreach (UI_CanvasForm targetForm in UI_CanvasForm.extraForms)
-                {
-                    foreach (var c in targetForm.Controls.getControlsWithTag())
-                        allControls.Add(c);
-                    allControls.Add(targetForm);
-                }
-
-                //We have to manually add the etform because it's not singleton, not an extraForm, and not owned by any specific form
-                //Todo - Refactor this so we don't need to add it separately
-                if (mtForm != null)
-                {
-                    foreach (var c in mtForm.Controls.getControlsWithTag())
-                        allControls.Add(c);
-                    allControls.Add(mtForm);
-                }
-            }
-            else if (ctr is Form || ctr is UserControl)
-            {
-                foreach (var c in ctr.Controls.getControlsWithTag())
-                    allControls.Add(c);
-                allControls.Add(ctr);
-            }
-            else if (ctr is Form)
-            {
-                allControls.Add(ctr);
-            }
-
-            float generalDarken = -0.50f;
-            float light1 = 0.10f;
-            float light2 = 0.45f;
-            float dark1 = -0.20f;
-            float dark2 = -0.35f;
-            float dark3 = -0.50f;
-            float dark4 = -0.85f;
-
-            color = color.ChangeColorBrightness(generalDarken);
-
-            Light1Color = color.ChangeColorBrightness(light1);
-            Light2Color = color.ChangeColorBrightness(light2);
-            NormalColor = color;
-            Dark1Color = color.ChangeColorBrightness(dark1);
-            Dark2Color = color.ChangeColorBrightness(dark2);
-            Dark3Color = color.ChangeColorBrightness(dark3);
-            Dark4Color = color.ChangeColorBrightness(dark4);
-
-            var tag2ColorDico = new Dictionary<string, Color>
-            {
-                { "color:light2", Light2Color },
-                { "color:light1", Light1Color },
-                { "color:normal", NormalColor },
-                { "color:dark1", Dark1Color },
-                { "color:dark2", Dark2Color },
-                { "color:dark3", Dark3Color },
-                { "color:dark4", Dark4Color }
-            };
-
-            foreach (var c in allControls)
-            {
-                var tag = c.Tag?.ToString().Split(' ');
-
-                if (tag == null || tag.Length == 0)
-                {
-                    continue;
-                }
-
-                //Snag the tag and look for the color.
-                var ctag = tag.FirstOrDefault(x => x.Contains("color:"));
-
-                //We didn't find a valid color
-                if (ctag == null || !tag2ColorDico.TryGetValue(ctag, out Color _color))
-                {
-                    continue;
-                }
-
-                if (c is Label l && l.BackColor != Color.FromArgb(30, 31, 32))
-                {
-                    c.ForeColor = _color;
-                }
-                else
-                {
-                    c.BackColor = _color;
-                }
-
-                if (c is Button btn)
-                {
-                    btn.FlatAppearance.BorderColor = _color;
-                }
-
-                if (c is DataGridView dgv)
-                {
-                    dgv.BackgroundColor = _color;
-                }
-
-                c.Invalidate();
-            }
-        }
-
-        public static void SelectRTCColor()
-        {
-            // Show the color dialog.
-            Color color;
-            ColorDialog cd = new ColorDialog();
-            DialogResult result = cd.ShowDialog();
-            // See if user pressed ok.
-            if (result == DialogResult.OK)
-            {
-                // Set form background to the selected color.
-                color = cd.Color;
-            }
-            else
-            {
-                return;
-            }
-
-            GeneralColor = color;
-            SetRTCColor(color);
-
-            SaveRTCColor(color);
-        }
-
-        public static void LoadRTCColor()
-        {
-            if (RTCV.NetCore.Params.IsParamSet("COLOR"))
-            {
-                string[] bytes = RTCV.NetCore.Params.ReadParam("COLOR").Split(',');
-                UICore.GeneralColor = Color.FromArgb(Convert.ToByte(bytes[0]), Convert.ToByte(bytes[1]), Convert.ToByte(bytes[2]));
-            }
-            else
-            {
-                UICore.GeneralColor = Color.FromArgb(110, 150, 193);
-            }
-
-            UICore.SetRTCColor(UICore.GeneralColor);
-        }
-
-        public static void SaveRTCColor(Color color)
-        {
-            RTCV.NetCore.Params.SetParam("COLOR", color.R.ToString() + "," + color.G.ToString() + "," + color.B.ToString());
-        }
 
         public static object InputLock = new object();
         //Borrowed from Bizhawk. Thanks guys

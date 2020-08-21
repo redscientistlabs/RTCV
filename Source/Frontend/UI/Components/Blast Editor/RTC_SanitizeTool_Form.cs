@@ -72,7 +72,7 @@ namespace RTCV.UI
 
         private void RTC_NewBlastEditorForm_Load(object sender, EventArgs e)
         {
-            UICore.SetRTCColor(UICore.GeneralColor, this);
+            Colors.SetRTCColor(Colors.GeneralColor, this);
         }
 
         public void btnReroll_Click(object sender, EventArgs e)

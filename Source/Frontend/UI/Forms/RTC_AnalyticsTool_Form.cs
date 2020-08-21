@@ -84,7 +84,7 @@
 
         private void RTC_AnalyticsToolForm_Load(object sender, EventArgs e)
         {
-            UICore.SetRTCColor(UICore.GeneralColor, this);
+            Colors.SetRTCColor(Colors.GeneralColor, this);
         }
 
         private void RTC_SanitizeTool_Form_FormClosing(object sender, FormClosingEventArgs e)

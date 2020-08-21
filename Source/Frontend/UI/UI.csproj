@@ -428,6 +428,7 @@
     <Compile Include="Modular\UI_ShadowPanel.Designer.cs">
       <DependentUpon>UI_ShadowPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Colors.cs" />
     <Compile Include="UICore.cs" />
     <Compile Include="UIConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

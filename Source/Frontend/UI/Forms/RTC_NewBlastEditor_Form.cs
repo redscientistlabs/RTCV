@@ -226,7 +226,7 @@ namespace RTCV.UI
 
         private void RTC_NewBlastEditorForm_Load(object sender, EventArgs e)
         {
-            UICore.SetRTCColor(UICore.GeneralColor, this);
+            Colors.SetRTCColor(Colors.GeneralColor, this);
             _domains = MemoryDomains.MemoryInterfaces?.Keys?.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
 
             dgvBlastEditor.AllowUserToOrderColumns = true;

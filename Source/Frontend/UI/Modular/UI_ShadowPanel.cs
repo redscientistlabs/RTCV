@@ -25,7 +25,7 @@
                 Opacity = 0.2f
             };
 
-            UICore.SetRTCColor(UICore.GeneralColor, this);
+            Colors.SetRTCColor(Colors.GeneralColor, this);
 
             parentForm = _parentForm;
             UpdateBackground();
@@ -101,7 +101,7 @@
             }
 
             Bitmap bmp = parentForm.getFormScreenShot();
-            bmp.Tint(Color.FromArgb(0x7F, UICore.Dark4Color));
+            bmp.Tint(Color.FromArgb(0x7F, Colors.Dark4Color));
 
             this.Size = parentForm.Size;
             this.BackgroundImage = bmp;
