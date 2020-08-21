@@ -126,7 +126,6 @@
     <Compile Include="BlastUnitWorkingData.cs" />
     <Compile Include="ComboBoxItem.cs" />
     <Compile Include="CorruptCore.cs" />
-    <Compile Include="Diff.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="CorruptCore_Extensions.cs" />
     <Compile Include="Filtering.cs" />
