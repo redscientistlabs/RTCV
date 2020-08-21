@@ -78,6 +78,7 @@
     <Compile Include="MessageHub.cs" />
     <Compile Include="NetcoreCommands.cs" />
     <Compile Include="NetCoreObjects.cs" />
+    <Compile Include="NetCoreSpec.cs" />
     <Compile Include="Params.cs" />
     <Compile Include="ReturnWatch.cs" />
     <Compile Include="DebugInfo\DebugInfo_Form.cs">
