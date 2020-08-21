@@ -7,25 +7,16 @@
 
     public class Input
     {
-        [Flags]
-        public enum InputFocusTypes
-        {
-            None = 0,
-            Mouse = 1,
-            Keyboard = 2,
-            Pad = 4
-        }
-
         /// <summary>
         /// If your form needs this kind of input focus, be sure to say so.
         /// Really, this only makes sense for mouse, but I've started building it out for other things
         /// Why is this receiving a control, but actually using it as a Form (where the WantingMouseFocus is checked?)
         /// Because later we might change it to work off the control, specifically, if a control is supplied (normally actually a Form will be supplied)
         /// </summary>
-        public void ControlInputFocus(System.Windows.Forms.Control c, InputFocusTypes types, bool wants)
+        public void ControlInputFocus(System.Windows.Forms.Control c, FocusTypes types, bool wants)
         {
-            if (types.HasFlag(InputFocusTypes.Mouse) && wants) WantingMouseFocus.Add(c);
-            if (types.HasFlag(InputFocusTypes.Mouse) && !wants) WantingMouseFocus.Remove(c);
+            if (types.HasFlag(FocusTypes.Mouse) && wants) WantingMouseFocus.Add(c);
+            if (types.HasFlag(FocusTypes.Mouse) && !wants) WantingMouseFocus.Remove(c);
         }
 
         readonly HashSet<System.Windows.Forms.Control> WantingMouseFocus = new HashSet<System.Windows.Forms.Control>();
