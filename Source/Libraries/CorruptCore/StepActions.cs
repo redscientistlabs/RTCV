@@ -5,6 +5,7 @@ namespace RTCV.CorruptCore
     using System.Linq;
     using System.Windows.Forms;
     using RTCV.NetCore;
+    using RTCV.CorruptCore.Exceptions;
 
     ///Rather than handling everything individually, we have a system here that works on collections of Blastunits
     ///In most usage, you're probably only going to have a small number of different lifetime/start time mixtures
@@ -363,6 +364,76 @@ namespace RTCV.CorruptCore
             }
         }
 
+        // Execute all of the units. Return a list of elements to remove
+        private static List<List<BlastUnit>> ExecuteUnits(List<List<BlastUnit>> unitLists, string name)
+        {
+            List<List<BlastUnit>> itemsToRemove = new List<List<BlastUnit>>();
+            foreach (List<BlastUnit> buList in unitLists)
+            {
+                foreach (BlastUnit bu in buList)
+                {
+                    var result = bu.Execute();
+                    if (result == ExecuteState.ERROR)
+                    {
+                        var dr = MessageBox.Show(
+                            "Something went horribly wrong during BlastUnit execute. Aborting. Would you like to send this to the devs?",
+                            "A fatal error occurred", MessageBoxButtons.YesNo);
+                        if (dr == DialogResult.Yes)
+                        {
+                            throw new Exception($"BlastUnit {name} Execute threw up. Check the log for more info.");
+                        }
+
+                        isRunning = false;
+                        throw new UnitExecutionException();
+                    }
+                    if (result == ExecuteState.HANDLEDERROR)
+                    {
+                        isRunning = false;
+                        throw new UnitExecutionException();
+                    }
+                }
+                if (buList[0].Working.LastFrame == currentFrame)
+                {
+                    itemsToRemove.Add(buList);
+                }
+            }
+
+            return itemsToRemove;
+        }
+
+        private static bool RemoveUnits(List<List<BlastUnit>> itemsToRemove)
+        {
+            var needsRefilter = false;
+            foreach (List<BlastUnit> buList in itemsToRemove)
+            {
+                //Remove it
+                appliedLifetime.Remove(buList);
+
+                foreach (BlastUnit bu in buList)
+                {
+                    bu.Working = null;
+                    //Remove it from the store pool
+                    if (bu.Source == BlastUnitSource.STORE)
+                    {
+                        StoreDataPool.Remove(bu);
+                    }
+                }
+
+                //If there's a loop, re-apply all the units
+                if (buList[0].Loop)
+                {
+                    needsRefilter = true;
+                    foreach (BlastUnit bu in buList)
+                    {
+                        bool applyLoopTiming = (bu.LoopTiming != null && bu.LoopTiming != -1);
+                        bu.Apply(true, applyLoopTiming);
+                    }
+                }
+            }
+
+            return needsRefilter;
+        }
+
         public static void Execute()
         {
             lock (executeLock)
@@ -370,7 +441,6 @@ namespace RTCV.CorruptCore
                 StepStart?.Invoke(null, new EventArgs());
                 if (isRunning)
                 {
-                    bool needsRefilter = false;
                     //Queue everything up
                     CheckApply();
 
@@ -379,62 +449,15 @@ namespace RTCV.CorruptCore
                     StepPreCorrupt?.Invoke(null, new EventArgs());
 
                     //Execute all temp units
-                    List<List<BlastUnit>> itemsToRemove = new List<List<BlastUnit>>();
-                    foreach (List<BlastUnit> buList in appliedLifetime)
+                    var itemsToRemove = new List<List<BlastUnit>>();
+                    try
                     {
-                        foreach (BlastUnit bu in buList)
-                        {
-                            var result = bu.Execute();
-                            if (result == ExecuteState.ERROR)
-                            {
-                                var dr = MessageBox.Show(
-                                    "Something went horribly wrong during BlastUnit execute. Aborting. Would you like to send this to the devs?",
-                                    "A fatal error occurred", MessageBoxButtons.YesNo);
-                                isRunning = false;
-                                if (dr == DialogResult.Yes)
-                                {
-                                    throw new Exception("BlastUnit appliedLifetime Execute threw up. Check the log for more info.");
-                                }
-
-                                return;
-                            }
-                            if (result == ExecuteState.HANDLEDERROR)
-                            {
-                                isRunning = false;
-                                return;
-                            }
-                        }
-                        if (buList[0].Working.LastFrame == currentFrame)
-                        {
-                            itemsToRemove.Add(buList);
-                        }
+                        itemsToRemove.AddRange(ExecuteUnits(appliedLifetime, nameof(appliedLifetime)));
+                        itemsToRemove.AddRange(ExecuteUnits(appliedInfinite, nameof(appliedInfinite)));
                     }
-
-                    //Execute all infinite lifetime units
-                    foreach (List<BlastUnit> buList in appliedInfinite)
+                    catch (UnitExecutionException)
                     {
-                        foreach (BlastUnit bu in buList)
-                        {
-                            var result = bu.Execute();
-                            if (result == ExecuteState.ERROR)
-                            {
-                                var dr = MessageBox.Show(
-                                    "Something went horribly wrong during BlastUnit execute. Aborting. Would you like to send this to the devs?",
-                                    "A fatal error occurred", MessageBoxButtons.YesNo);
-                                isRunning = false;
-                                if (dr == DialogResult.Yes)
-                                {
-                                    throw new Exception("BlastUnit appliedInfinite Execute threw up. Check the log for more info.");
-                                }
-
-                                return;
-                            }
-                            if (result == ExecuteState.HANDLEDERROR)
-                            {
-                                isRunning = false;
-                                return;
-                            }
-                        }
+                        return;
                     }
 
                     StepPostCorrupt?.Invoke(null, new EventArgs());
@@ -442,32 +465,8 @@ namespace RTCV.CorruptCore
                     currentFrame++;
 
                     //Remove any temp units that have expired
-                    foreach (List<BlastUnit> buList in itemsToRemove)
-                    {
-                        //Remove it
-                        appliedLifetime.Remove(buList);
+                    var needsRefilter = RemoveUnits(itemsToRemove);
 
-                        foreach (BlastUnit bu in buList)
-                        {
-                            bu.Working = null;
-                            //Remove it from the store pool
-                            if (bu.Source == BlastUnitSource.STORE)
-                            {
-                                StoreDataPool.Remove(bu);
-                            }
-                        }
-
-                        //If there's a loop, re-apply all the units
-                        if (buList[0].Loop)
-                        {
-                            needsRefilter = true;
-                            foreach (BlastUnit bu in buList)
-                            {
-                                bool applyLoopTiming = (bu.LoopTiming != null && bu.LoopTiming != -1);
-                                bu.Apply(true, applyLoopTiming);
-                            }
-                        }
-                    }
                     //We only call this if there's a loop
                     if (needsRefilter)
                     {
