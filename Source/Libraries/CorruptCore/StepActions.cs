@@ -365,7 +365,7 @@ namespace RTCV.CorruptCore
         }
 
         // Execute all of the units. Return a list of elements to remove
-        private static List<List<BlastUnit>> ExecuteUnits(List<List<BlastUnit>> unitLists, string name)
+        private static List<List<BlastUnit>> ExecuteUnits(List<List<BlastUnit>> unitLists, string name, bool removeExpiredUnits)
         {
             List<List<BlastUnit>> itemsToRemove = new List<List<BlastUnit>>();
             foreach (List<BlastUnit> buList in unitLists)
@@ -392,7 +392,7 @@ namespace RTCV.CorruptCore
                         throw new UnitExecutionException();
                     }
                 }
-                if (buList[0].Working.LastFrame == currentFrame)
+                if (removeExpiredUnits && buList[0].Working.LastFrame == currentFrame)
                 {
                     itemsToRemove.Add(buList);
                 }
@@ -452,10 +452,10 @@ namespace RTCV.CorruptCore
                     try
                     {
                         //Execute all temp units and store the expired ones for removal
-                        itemsToRemove.AddRange(ExecuteUnits(appliedLifetime, nameof(appliedLifetime)));
+                        itemsToRemove.AddRange(ExecuteUnits(appliedLifetime, nameof(appliedLifetime), true));
 
                         //Execute all infinite units. These are never removed
-                        ExecuteUnits(appliedInfinite, nameof(appliedInfinite));
+                        ExecuteUnits(appliedInfinite, nameof(appliedInfinite), false);
                     }
                     catch (UnitExecutionException)
                     {
