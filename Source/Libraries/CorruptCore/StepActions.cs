@@ -401,7 +401,7 @@ namespace RTCV.CorruptCore
             return itemsToRemove;
         }
 
-        private static bool RemoveUnits(List<List<BlastUnit>> itemsToRemove)
+        private static bool RemoveAppliedLifetimeUnits(List<List<BlastUnit>> itemsToRemove)
         {
             var needsRefilter = false;
             foreach (List<BlastUnit> buList in itemsToRemove)
@@ -467,7 +467,7 @@ namespace RTCV.CorruptCore
                     currentFrame++;
 
                     //Remove any temp units that have expired
-                    var needsRefilter = RemoveUnits(itemsToRemove);
+                    var needsRefilter = RemoveAppliedLifetimeUnits(itemsToRemove);
 
                     //We only call this if there's a loop
                     if (needsRefilter)
