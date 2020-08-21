@@ -48,7 +48,7 @@ namespace RTCV.UI
             this.cbShiftBlastlayer = new System.Windows.Forms.ComboBox();
             this.btnShiftBlastLayerDown = new System.Windows.Forms.Button();
             this.btnShiftBlastLayerUp = new System.Windows.Forms.Button();
-            this.updownShiftBlastLayerAmount = new RTCV.UI.NumericUpDownHexFix();
+            this.updownShiftBlastLayerAmount = new RTCV.UI.Components.NumericUpDownHexFix();
             this.pnMemoryTargetting = new System.Windows.Forms.Panel();
             this.lbBlastLayerSize = new System.Windows.Forms.Label();
             this.btnHelp = new System.Windows.Forms.Button();
@@ -63,9 +63,9 @@ namespace RTCV.UI
             this.panelBottom = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
             this.label16 = new System.Windows.Forms.Label();
-            this.upDownLifetime = new RTCV.UI.NumericUpDownHexFix();
+            this.upDownLifetime = new RTCV.UI.Components.NumericUpDownHexFix();
             this.label1 = new System.Windows.Forms.Label();
-            this.upDownExecuteFrame = new RTCV.UI.NumericUpDownHexFix();
+            this.upDownExecuteFrame = new RTCV.UI.Components.NumericUpDownHexFix();
             this.cbLoop = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
@@ -87,7 +87,7 @@ namespace RTCV.UI
             this.tbValue = new RTCV.UI.Components.Controls.HexTextBox();
             this.panel7 = new System.Windows.Forms.Panel();
             this.cbSourceDomain = new System.Windows.Forms.ComboBox();
-            this.upDownSourceAddress = new RTCV.UI.NumericUpDownHexFix();
+            this.upDownSourceAddress = new RTCV.UI.Components.NumericUpDownHexFix();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.cbStoreTime = new System.Windows.Forms.ComboBox();
@@ -95,9 +95,9 @@ namespace RTCV.UI
             this.cbStoreType = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.upDownPrecision = new RTCV.UI.NumericUpDownHexFix();
+            this.upDownPrecision = new RTCV.UI.Components.NumericUpDownHexFix();
             this.label9 = new System.Windows.Forms.Label();
-            this.upDownAddress = new RTCV.UI.NumericUpDownHexFix();
+            this.upDownAddress = new RTCV.UI.Components.NumericUpDownHexFix();
             this.label8 = new System.Windows.Forms.Label();
             this.cbDomain = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -130,7 +130,7 @@ namespace RTCV.UI
             this.bakeBlastunitsToVALUEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.breakDownAllBlastunitsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openBlastGeneratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.upDownLoopTiming = new RTCV.UI.NumericUpDownHexFix();
+            this.upDownLoopTiming = new RTCV.UI.Components.NumericUpDownHexFix();
             this.label20 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBlastEditor)).BeginInit();
             this.panelSidebar.SuspendLayout();
@@ -1421,7 +1421,7 @@ namespace RTCV.UI
 		private System.Windows.Forms.ComboBox cbShiftBlastlayer;
 		private System.Windows.Forms.Button btnShiftBlastLayerDown;
 		private System.Windows.Forms.Button btnShiftBlastLayerUp;
-		private NumericUpDownHexFix updownShiftBlastLayerAmount;
+		private Components.NumericUpDownHexFix updownShiftBlastLayerAmount;
 		private System.Windows.Forms.Button btnRemoveDisabled;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Button btnDisable50;
@@ -1462,7 +1462,7 @@ namespace RTCV.UI
 		private System.Windows.Forms.ComboBox cbDomain;
 		private System.Windows.Forms.CheckBox cbBigEndian;
 		private System.Windows.Forms.Label label9;
-		private NumericUpDownHexFix upDownAddress;
+		private Components.NumericUpDownHexFix upDownAddress;
 		private System.Windows.Forms.Panel panel6;
 		private System.Windows.Forms.Label label12;
 		private RTCV.UI.Components.Controls.HexTextBox tbValue;
@@ -1474,11 +1474,11 @@ namespace RTCV.UI
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.ComboBox cbSource;
 		private System.Windows.Forms.Label label10;
-		private NumericUpDownHexFix upDownPrecision;
+		private Components.NumericUpDownHexFix upDownPrecision;
 		private System.Windows.Forms.Label label13;
 		private System.Windows.Forms.Label label14;
 		private System.Windows.Forms.ComboBox cbSourceDomain;
-		private NumericUpDownHexFix upDownSourceAddress;
+		private Components.NumericUpDownHexFix upDownSourceAddress;
 		private System.Windows.Forms.Panel panel8;
 		private System.Windows.Forms.CheckBox cbInvertLimiter;
 		private System.Windows.Forms.ComboBox cbLimiterTime;
@@ -1492,9 +1492,9 @@ namespace RTCV.UI
 		private System.Windows.Forms.TextBox tbFilter;
 		private System.Windows.Forms.Panel panel9;
 		private System.Windows.Forms.Label label16;
-		private NumericUpDownHexFix upDownLifetime;
+		private Components.NumericUpDownHexFix upDownLifetime;
 		private System.Windows.Forms.Label label1;
-		private NumericUpDownHexFix upDownExecuteFrame;
+		private Components.NumericUpDownHexFix upDownExecuteFrame;
 		private System.Windows.Forms.CheckBox cbLoop;
 		private System.Windows.Forms.Button btnNote;
 		private System.Windows.Forms.ToolStripMenuItem bakeBlastunitsToVALUEToolStripMenuItem;
@@ -1508,6 +1508,6 @@ namespace RTCV.UI
         public Button btnAddStashToStockpile;
         private ToolStripMenuItem breakDownAllBlastunitsToolStripMenuItem;
         private Label label20;
-        private NumericUpDownHexFix upDownLoopTiming;
+        private Components.NumericUpDownHexFix upDownLoopTiming;
     }
 }

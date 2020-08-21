@@ -435,6 +435,7 @@
     <Compile Include="Components\DataGridViewNumericUpDownColumn.cs" />
     <Compile Include="Components\DataGridViewNumericUpDownEditingControl.cs" />
     <Compile Include="Components\NumericTextBox.cs" />
+    <Compile Include="Components\NumericUpDownHexFix.cs" />
     <Compile Include="UI_Extensions.cs" />
     <Compile Include="UI_VanguardImplementation.cs" />
     <EmbeddedResource Include="Components\Blast Editor\RTC_ColumnSelector_Form.resx">
