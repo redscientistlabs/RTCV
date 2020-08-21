@@ -149,7 +149,7 @@ namespace RTCV.UI
                 }
             }
 
-            string filename = tbListName.Text.MakeSafeFilename('-');
+            string filename = StringExtensions.MakeSafeFilename(tbListName.Text, '-');
             //Handle saving the list to a file
             if (cbSaveFile.Checked)
             {

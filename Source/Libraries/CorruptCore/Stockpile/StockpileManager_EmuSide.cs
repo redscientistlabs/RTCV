@@ -53,7 +53,7 @@
             {
                 StashKey.SetCore(sk);
                 string gameSystem = sk.SystemName;
-                string gameName = sk.GameName.MakeSafeFilename('-');
+                string gameName = StringExtensions.MakeSafeFilename(sk.GameName, '-');
                 string key = sk.ParentKey;
                 StashKeySavestateLocation stateLocation = sk.StateLocation;
 

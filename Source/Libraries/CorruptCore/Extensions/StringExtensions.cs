@@ -141,7 +141,7 @@ namespace RTCV.CorruptCore.Extensions
             return bytes;
         }
 
-        public static string MakeSafeFilename(this string filename, char replaceChar)
+        public static string MakeSafeFilename(string filename, char replaceChar)
         {
             foreach (var c in Path.GetInvalidFileNameChars())
             {
