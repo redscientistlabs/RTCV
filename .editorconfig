@@ -275,9 +275,6 @@ dotnet_diagnostic.CA1724.severity = none
 # Using method without reference to error
 dotnet_diagnostic.CA1806.severity = none
 
-# Remove the explicit static constructor
-dotnet_diagnostic.CA1810.severity = none
-
 # internal class never instatiated
 dotnet_diagnostic.CA1812.severity = none
 

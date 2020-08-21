@@ -9,6 +9,7 @@ namespace RTCV.UI.Input
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Runtime.InteropServices;
     using RTCV.CorruptCore;
     using SlimDX.XInput;
@@ -47,6 +48,7 @@ namespace RTCV.UI.Input
             public XINPUT_GAMEPAD Gamepad;
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1810", Justification = "Static constructor used to catch Exceptions")]
         static GamePad360()
         {
             try
