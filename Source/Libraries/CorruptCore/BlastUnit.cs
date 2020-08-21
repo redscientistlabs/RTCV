@@ -12,6 +12,7 @@ namespace RTCV.CorruptCore
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
     using RTCV.Common.CustomExtensions;
+    using RTCV.CorruptCore.Extensions;
     using Exception = System.Exception;
 
     [Serializable]
@@ -188,7 +189,7 @@ namespace RTCV.CorruptCore
                 {
                     p = (value.Length / 2) + (Value.Length % 2);
                 }
-                var temp = CorruptCore_Extensions.StringToByteArrayPadLeft(value, p);
+                var temp = value.ToByteArrayPadLeft(p);
                 if (temp != null)
                 {
                     this.Value = temp;

@@ -5,6 +5,7 @@ namespace RTCV.CorruptCore
     using System.IO;
     using System.Windows.Forms;
     using Newtonsoft.Json;
+    using RTCV.CorruptCore.Extensions;
 
     public enum FileInterfaceIdentity
     {

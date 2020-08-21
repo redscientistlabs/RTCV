@@ -8,6 +8,7 @@ namespace RTCV.UI
     using System.Text.RegularExpressions;
     using System.Windows.Forms;
     using RTCV.CorruptCore;
+    using RTCV.CorruptCore.Extensions;
     using RTCV.Common;
     using RTCV.UI.Modular;
 
@@ -148,7 +149,7 @@ namespace RTCV.UI
                 }
             }
 
-            string filename = CorruptCore_Extensions.MakeSafeFilename(tbListName.Text, '-');
+            string filename = tbListName.Text.MakeSafeFilename('-');
             //Handle saving the list to a file
             if (cbSaveFile.Checked)
             {

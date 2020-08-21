@@ -50,6 +50,7 @@ namespace RTCV.UI
     using System.Text;
     using System.Windows.Forms;
     using RTCV.CorruptCore;
+    using RTCV.CorruptCore.Extensions;
     using RTCV.NetCore;
     using RTCV.Common;
     using RTCV.UI.Components;
@@ -2091,7 +2092,7 @@ namespace RTCV.UI
         private static string getShiftedHexString(string value, decimal amount, int precision)
         {
             //Convert the string we have into a byte array
-            var valueBytes = CorruptCore_Extensions.StringToByteArrayPadLeft(value, precision);
+            var valueBytes = value.ToByteArrayPadLeft(precision);
             if (valueBytes == null)
             {
                 return value;
