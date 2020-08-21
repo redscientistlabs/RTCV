@@ -12,6 +12,7 @@ namespace RTCV.UI
     using RTCV.CorruptCore;
     using RTCV.NetCore;
     using RTCV.Common;
+    using RTCV.UI.Extensions;
     using RTCV.UI.Input;
     using RTCV.UI.Modular;
     using static RTCV.NetCore.NetcoreCommands;

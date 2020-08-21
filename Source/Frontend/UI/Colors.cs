@@ -6,6 +6,7 @@ namespace RTCV.UI
     using System.Linq;
     using System.Windows.Forms;
     using RTCV.CorruptCore;
+    using RTCV.UI.Extensions;
 
     public static class Colors
     {
