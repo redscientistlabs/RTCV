@@ -1,18 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
 namespace RTCV.Launcher
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Diagnostics;
+    using System.Drawing;
+    using System.IO;
+    using System.IO.Compression;
+    using System.Linq;
+    using System.Windows.Forms;
+
     public partial class LaunchPanelV3 : Form
     {
         private LauncherConfJson lc;
@@ -103,7 +100,7 @@ namespace RTCV.Launcher
 
                                 if(Directory.Exists(addonFolderPath))
                                     Process.Start(addonFolderPath);
-                                
+
                             })).Enabled = AddonInstalled;
                             columnsMenu.Show(this, locate);
                         }
@@ -143,7 +140,7 @@ namespace RTCV.Launcher
                 flowLayoutPanel1.Controls.Add(newButton);
 
             }
-            
+
 
             lbSelectedVersion.Text = lc.Version;
             lbSelectedVersion.Visible = true;
@@ -367,7 +364,7 @@ namespace RTCV.Launcher
 
             try
             {
-                
+
 
                 if(lcji.IsAddon)
                 {
@@ -408,7 +405,7 @@ namespace RTCV.Launcher
             Button currentButton = (Button)sender;
 
             var lcji = (LauncherConfJsonItem) currentButton.Tag;
-            
+
 
             if(!String.IsNullOrEmpty(lcji.FolderName) && !Directory.Exists(Path.Combine(lc.VersionLocation, lcji.FolderName)))
             {

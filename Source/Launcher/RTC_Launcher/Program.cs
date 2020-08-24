@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System.Windows.Forms;
-
-namespace RTCV.Launcher
+﻿namespace RTCV.Launcher
 {
+    using System;
+    using System.Diagnostics;
+    using System.Runtime.InteropServices;
+    using System.Threading;
+    using System.Windows.Forms;
+
     static class Program
     {
 

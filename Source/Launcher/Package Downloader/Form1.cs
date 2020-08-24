@@ -1,18 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
 namespace Package_Downloader
 {
+    using System;
+    using System.IO;
+    using System.IO.Compression;
+    using System.Net;
+    using System.Windows.Forms;
+
     public partial class PackageDownloader : Form
     {
         public string RtcVer = "TEST";

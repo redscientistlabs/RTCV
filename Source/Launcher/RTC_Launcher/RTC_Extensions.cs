@@ -1,16 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
-
 namespace RTCV.Launcher
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.IO;
+    using System.Linq;
+    using System.Runtime.Serialization;
+    using System.Runtime.Serialization.Formatters.Binary;
+    using System.Text;
+    using System.Text.RegularExpressions;
+    using System.Windows.Forms;
+
     public static class RTC_Extensions
     {
 
@@ -118,7 +118,7 @@ namespace RTCV.Launcher
         /// Creates color with corrected brightness.
         /// </summary>
         /// <param name="color">Color to correct.</param>
-        /// <param name="correctionFactor">The brightness correction factor. Must be between -1 and 1. 
+        /// <param name="correctionFactor">The brightness correction factor. Must be between -1 and 1.
         /// Negative values produce darker colors.</param>
         /// <returns>
         /// Corrected <see cref="Color"/> structure.

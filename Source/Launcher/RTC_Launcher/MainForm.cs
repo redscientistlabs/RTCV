@@ -1,22 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Windows.Forms;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
-using Microsoft.Win32;
-
 namespace RTCV.Launcher
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Data;
+    using System.Diagnostics;
+    using System.Drawing;
+    using System.IO;
+    using System.IO.Compression;
+    using System.Linq;
+    using System.Net;
+    using System.Net.Http;
+    using System.Text;
+    using System.Windows.Forms;
+    using System.Runtime.InteropServices;
+    using System.Threading.Tasks;
+
     public partial class MainForm : Form
     {
         private const int WM_NCLBUTTONDOWN = 0xA1;
@@ -30,7 +28,7 @@ namespace RTCV.Launcher
             HT_BOTTOM = 0xF,
             HT_BOTTOMLEFT = 0x10,
             HT_BOTTOMRIGHT = 0x11;
-        
+
 
 
         [DllImportAttribute("user32.dll")]
@@ -87,7 +85,7 @@ namespace RTCV.Launcher
             sideinfoForm.Size = preAnchorLeftPanelSize;
             sideinfoForm.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
 
-            
+
 
             RewireMouseMove();
 
@@ -121,7 +119,7 @@ namespace RTCV.Launcher
                 control.MouseMove -= RedirectMouseMove;
                 control.MouseMove += RedirectMouseMove;
             }
-                
+
 
             this.MouseMove -= MainForm_MouseMove;
             this.MouseMove += MainForm_MouseMove;
@@ -230,7 +228,7 @@ namespace RTCV.Launcher
             Action a = () =>
             {
                 string latestVersion = VersionDownloadPanel.getLatestVersion();
-                this.Invoke(new MethodInvoker(() => { 
+                this.Invoke(new MethodInvoker(() => {
                     pbNewVersionNotification.Visible = !versions.Select(it => it.Substring(it.LastIndexOf('\\') + 1)).Contains(latestVersion);
                 }));
             };
@@ -364,7 +362,7 @@ namespace RTCV.Launcher
                 //This checks every extracted files against the contents of the zip file
                 using (ZipArchive za = System.IO.Compression.ZipFile.OpenRead(downloadedFile))
                 {
-                    bool foundLockBefore = false; //this flag prompts a message to skip all 
+                    bool foundLockBefore = false; //this flag prompts a message to skip all
                     bool skipLock = false; //file locked messages and sents the flag below
 
                     foreach (var entry in za.Entries.Where(it => !it.FullName.EndsWith("/")))
