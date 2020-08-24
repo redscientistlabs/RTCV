@@ -1,6 +1,7 @@
 namespace RTCV.NetCore.SafeJsonTypeSerialization
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using Newtonsoft.Json.Serialization;
 
     //https://stackoverflow.com/a/38340375
@@ -13,7 +14,7 @@ namespace RTCV.NetCore.SafeJsonTypeSerialization
         // See also https://stackoverflow.com/questions/33557737/does-json-net-cache-types-serialization-information
         private static UntypedToTypedValueContractResolver instance;
 
-        // Explicit static constructor to tell C# compiler not to mark type as beforefieldinit
+        [SuppressMessage("Microsoft.Design", "CA1810", Justification = "Explicit static constructor to tell C# compiler not to mark type as beforefieldinit")]
         static UntypedToTypedValueContractResolver() { instance = new UntypedToTypedValueContractResolver(); }
 
         public static UntypedToTypedValueContractResolver Instance => instance;
