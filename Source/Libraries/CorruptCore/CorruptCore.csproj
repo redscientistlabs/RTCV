@@ -106,6 +106,7 @@
     <Compile Include="Exceptions\UnitExecutionException.cs" />
     <Compile Include="Extensions\ByteArrayComparer.cs" />
     <Compile Include="Extensions\NullableByteArrayComparer.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Memory\FileInterface.cs" />
     <Compile Include="Memory\FileMemoryInterface.cs" />
     <Compile Include="Memory\IMemoryDomain.cs" />

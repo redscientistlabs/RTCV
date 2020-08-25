@@ -5,6 +5,7 @@
     using System.IO;
     using System.Windows.Forms;
     using RTCV.NetCore;
+    using RTCV.CorruptCore.Extensions;
 
     public static class StockpileManager_EmuSide
     {
@@ -52,7 +53,7 @@
             {
                 StashKey.SetCore(sk);
                 string gameSystem = sk.SystemName;
-                string gameName = CorruptCore_Extensions.MakeSafeFilename(sk.GameName, '-');
+                string gameName = StringExtensions.MakeSafeFilename(sk.GameName, '-');
                 string key = sk.ParentKey;
                 StashKeySavestateLocation stateLocation = sk.StateLocation;
 

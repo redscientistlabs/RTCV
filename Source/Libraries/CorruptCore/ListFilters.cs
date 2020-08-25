@@ -8,6 +8,7 @@ namespace RTCV.CorruptCore
     using System.Text;
     using System.Windows.Forms;
     using Ceras;
+    using RTCV.CorruptCore.Extensions;
 
     public interface IListFilter
     {
@@ -40,7 +41,7 @@ namespace RTCV.CorruptCore
                 try
                 {
                     //Get the string as a byte array
-                    if ((bytes = CorruptCore_Extensions.StringToByteArray(t)) == null)
+                    if ((bytes = t.ToByteArray()) == null)
                     {
                         throw new Exception($"Error reading list {Path.GetFileName(filePath)}. Valid format is a list of raw hexadecimal values.\nLine{(i + 1)}.\nValue: {t}\n");
                     }
@@ -173,7 +174,7 @@ namespace RTCV.CorruptCore
                 try
                 {
                     //Get the string as a byte array
-                    if ((bytes = CorruptCore_Extensions.StringToNullableByteArray(t)) == null)
+                    if ((bytes = t.ToNullableByteArray()) == null)
                     {
                         throw new Exception($"Error reading list {Path.GetFileName(filePath)}. Valid format is a list of raw hexadecimal values.\nLine{(i + 1)}.\nValue: {t}\n");
                     }
