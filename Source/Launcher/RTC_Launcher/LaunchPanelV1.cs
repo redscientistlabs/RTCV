@@ -34,7 +34,6 @@ namespace RTCV.Launcher
             pnVersionBatchFiles.Visible = false;
 
             DisplayVersion();
-
         }
 
         public void DisplayVersion()
@@ -95,7 +94,6 @@ namespace RTCV.Launcher
 
         private void OldLaunchPanel_Load(object sender, EventArgs e)
         {
-
         }
 
         private void btnBatchfile_Click(object sender, EventArgs e)

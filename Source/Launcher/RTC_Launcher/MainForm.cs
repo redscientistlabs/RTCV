@@ -187,8 +187,6 @@ namespace RTCV.Launcher
 
                 allControls.AddRange(this.Controls.getControlsWithTag());
                 allControls.Add(this);
-
-
             }
             else
                 allControls.AddRange(form.Controls.getControlsWithTag());
@@ -212,9 +210,7 @@ namespace RTCV.Launcher
 
             foreach (Control c in darkerColorControls)
                 c.BackColor = color.ChangeColorBrightness(-0.75f);
-
         }
-
 
         public void RefreshInstalledVersions()
         {
@@ -464,7 +460,6 @@ namespace RTCV.Launcher
             }
             finally
             {
-
                 sideversionForm.lbVersions.SelectedIndex = -1;
 
                 RefreshInstalledVersions();
@@ -484,7 +479,6 @@ namespace RTCV.Launcher
                 RefreshKeepSelectedVersion();
             }
         }
-
 
         public void RefreshKeepSelectedVersion()
         {
@@ -543,7 +537,7 @@ namespace RTCV.Launcher
             RefreshInstalledVersions();
         }
 
-        public void OpenFolder()
+        public static void OpenFolder()
         {
             if (sideversionForm.lbVersions.SelectedIndex == -1)
                 return;
@@ -563,7 +557,7 @@ namespace RTCV.Launcher
             if (!Directory.Exists((launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version)))
                 return;
 
-                if (e.Button == MouseButtons.Right)
+            if (e.Button == MouseButtons.Right)
             {
                 Point locate = new Point((sender as Control).Location.X + e.Location.X, (sender as Control).Location.Y + e.Location.Y + pnTopPanel.Height);
 
@@ -610,12 +604,10 @@ namespace RTCV.Launcher
 
         private void label2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void pnAnchorRight_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
 

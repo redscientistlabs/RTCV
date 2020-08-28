@@ -8,7 +8,6 @@
 
     static class Program
     {
-
         [DllImport("user32.dll")]
         static extern bool SetForegroundWindow(IntPtr hWnd);
         /// <summary>

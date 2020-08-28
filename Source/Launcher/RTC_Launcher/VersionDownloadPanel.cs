@@ -21,7 +21,6 @@ namespace RTCV.Launcher
 
             if (cbDevBuids.Checked)
                 lbOnlineVersions.BackColor = Color.FromArgb(32, 16, 16);
-
         }
 
         private void VersionDownloadPanel_Load(object sender, EventArgs e)
@@ -82,8 +81,6 @@ namespace RTCV.Launcher
 
                             onlineVersionsObjects.Add(new { key = key, value = value });
                         }
-
-
                     }
 
                     lbOnlineVersions.DataSource = null;
@@ -101,7 +98,6 @@ namespace RTCV.Launcher
                 return;
 
             btnDownloadVersion.Visible = true;
-
         }
 
         private void btnDownloadVersion_Click(object sender, EventArgs e)
@@ -133,9 +129,6 @@ namespace RTCV.Launcher
             MainForm.lastSelectedVersion = version;
 
             MainForm.mf.DownloadFile(downloadUrl, downloadedFile, extractDirectory);
-
-
-
         }
 
         int devCounter = 0;
@@ -162,7 +155,6 @@ namespace RTCV.Launcher
                     Console.Beep(300, 100);
                     Console.Beep(400, 100);
                     Console.Beep(520, 108);
-
                 }
 
                 if (!devOn && MessageBox.Show((File.Exists(MainForm.launcherDir + Path.DirectorySeparatorChar + "PACKAGES\\dev.txt") ? "Do you want to stay connected to the Dev Server?" : "Do you want to connect to the Dev Server?"), "Dev mode activation", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) == DialogResult.Yes)
@@ -190,7 +182,6 @@ namespace RTCV.Launcher
             {
                 cbDevBuids.Checked = devOn;
             }
-
         }
 
         private void lbOnlineVersions_MouseDoubleClick_1(object sender, MouseEventArgs e)

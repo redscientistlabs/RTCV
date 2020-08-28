@@ -16,7 +16,7 @@ namespace Package_Downloader
 
             var currentDir = new DirectoryInfo(Directory.GetCurrentDirectory());
 
-            if(currentDir.Name == "Launcher")
+            if (currentDir.Name == "Launcher")
             {
                 RtcVer = currentDir.Parent.Name;
                 RtcDir = currentDir.Parent;
@@ -31,7 +31,6 @@ namespace Package_Downloader
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
         }
 
         private bool bCancel = false;
@@ -90,8 +89,6 @@ namespace Package_Downloader
                                 {
                                     entry.ExtractToFile(entryPath, true);
                                 }
-
-
                             }
                         }
 
@@ -110,8 +107,6 @@ namespace Package_Downloader
                         if (File.Exists(pkgPath))
                             File.Delete(pkgPath);
                     }
-
-
                 }
             }
         }

@@ -43,7 +43,7 @@ namespace RTCV.Launcher
                 using (var bmpTemp = new Bitmap(Path.Combine(lc.LauncherAssetLocation, lcji.ImageName)))
                 {
                     btnImage = new Bitmap(bmpTemp);
-                    if(btnSize == null)
+                    if (btnSize == null)
                         btnSize = new Size(btnImage.Width + 1, btnImage.Height + 1);
                 }
 
@@ -61,7 +61,7 @@ namespace RTCV.Launcher
                 newButton.Text = "";
                 newButton.UseVisualStyleBackColor = false;
 
-                if(lcji.ImageName == "Add.png")
+                if (lcji.ImageName == "Add.png")
                 {
                     newButton.AllowDrop = true;
                     newButton.MouseDown += AddButton_MouseDown;
@@ -98,9 +98,8 @@ namespace RTCV.Launcher
                             {
                                 string addonFolderPath = Path.Combine(MainForm.launcherDir, "VERSIONS", lc.Version, lcji.FolderName);
 
-                                if(Directory.Exists(addonFolderPath))
+                                if (Directory.Exists(addonFolderPath))
                                     Process.Start(addonFolderPath);
-
                             })).Enabled = AddonInstalled;
                             columnsMenu.Show(this, locate);
                         }
@@ -112,7 +111,7 @@ namespace RTCV.Launcher
                     Pen p = new Pen((AddonInstalled ? Color.FromArgb(57, 255, 20) : Color.Red), 2);
 
                     int x1 = 8;
-                    int y1 = btnImage.Height-8;
+                    int y1 = btnImage.Height - 8;
                     int x2 = 24;
                     int y2 = btnImage.Height - 8;
                     // Draw line to screen.
@@ -121,7 +120,6 @@ namespace RTCV.Launcher
                         graphics.DrawLine(p, x1, y1, x2, y2);
                     }
                 }
-
 
                 newButton.Image = btnImage;
 
@@ -132,20 +130,16 @@ namespace RTCV.Launcher
 
                     HiddenButtons.Add(newButton);
                     continue;
-
                 }
-
 
                 newButton.Visible = true;
                 flowLayoutPanel1.Controls.Add(newButton);
-
             }
-
 
             lbSelectedVersion.Text = lc.Version;
             lbSelectedVersion.Visible = true;
-
         }
+
         public void InstallCustomPackages()
         {
             string[] fileNames = null;
@@ -210,8 +204,6 @@ namespace RTCV.Launcher
                             {
                                 entry.ExtractToFile(entryPath, true);
                             }
-
-
                         }
                     }
 
@@ -225,7 +217,6 @@ namespace RTCV.Launcher
                 }
 
                 MainForm.mf.RefreshPanel();
-
             }
         }
 
@@ -235,8 +226,6 @@ namespace RTCV.Launcher
             e.Effect = DragDropEffects.Move;
 
             string[] fd = (string[])e.Data.GetData(DataFormats.FileDrop); //file drop
-
-
 
             InstallCustomPackages(fd);
         }
@@ -267,7 +256,6 @@ namespace RTCV.Launcher
                                 btnBatchfile_Click(btn, e);
                             }));
                         }
-
                     }
 
             if(columnsMenu.Items.Count == 0)
@@ -319,9 +307,7 @@ namespace RTCV.Launcher
                 MainForm.sideinfoForm.lbName.Text = (lcji.ItemName != null ? lcji.ItemName : "");
                 MainForm.sideinfoForm.lbSubtitle.Text = (lcji.ItemSubtitle != null ? lcji.ItemSubtitle : "");
                 MainForm.sideinfoForm.lbDescription.Text = (lcji.ItemDescription != null ? lcji.ItemDescription : "");
-
             }
-
         }
 
         private void NewButton_MouseEnter(object sender, EventArgs e)
@@ -360,12 +346,8 @@ namespace RTCV.Launcher
                     return;
             }
 
-
-
             try
             {
-
-
                 if(lcji.IsAddon)
                 {
 
@@ -407,14 +389,14 @@ namespace RTCV.Launcher
             var lcji = (LauncherConfJsonItem) currentButton.Tag;
 
 
-            if(!String.IsNullOrEmpty(lcji.FolderName) && !Directory.Exists(Path.Combine(lc.VersionLocation, lcji.FolderName)))
+            if (!string.IsNullOrEmpty(lcji.FolderName) && !Directory.Exists(Path.Combine(lc.VersionLocation, lcji.FolderName)))
             {
                 LauncherConfJson lcCandidateForPull = getFolderFromPreviousVersion(lcji.DownloadVersion);
-                if(lcCandidateForPull != null)
+                if (lcCandidateForPull != null)
                 {
 
                     var resultAskPull = MessageBox.Show($"The component {lcji.FolderName} could be imported from {lcCandidateForPull.Version}\nDo you wish import it?", "Import candidate found", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if(resultAskPull == DialogResult.Yes)
+                    if (resultAskPull == DialogResult.Yes)
                     {
                         LauncherConfJsonItem candidate = lcCandidateForPull.Items.FirstOrDefault(it => it.DownloadVersion == lcji.DownloadVersion);
                         //handle it here
@@ -446,21 +428,18 @@ namespace RTCV.Launcher
                         }
                         MainForm.mf.RefreshKeepSelectedVersion();
                         return;
-
                     }
-
                 }
 
-                if(lcji.IsAddon)
+                if (lcji.IsAddon)
                 {
                     MessageBox.Show("This is a card for a missing Custom Package. You can reinstall the package with the PKG file or delete this addon.", "Missing folder", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-
                 var result = MessageBox.Show($"The following component is missing: {lcji.FolderName}\nDo you wish to download it?", "Additional download required", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                if(result == DialogResult.Yes)
+                if (result == DialogResult.Yes)
                 {
                     string downloadUrl = $"{MainForm.webRessourceDomain}/rtc/addons/" + lcji.DownloadVersion + ".zip";
                     string downloadedFile = Path.Combine(MainForm.launcherDir, "PACKAGES", lcji.DownloadVersion + ".zip");
@@ -477,7 +456,7 @@ namespace RTCV.Launcher
 
         private LauncherConfJson getFolderFromPreviousVersion(string downloadVersion)
         {
-            foreach(string ver in MainForm.sideversionForm.lbVersions.Items.Cast<string>())
+            foreach (string ver in MainForm.sideversionForm.lbVersions.Items.Cast<string>())
             {
                 if (downloadVersion == ver)
                     continue;

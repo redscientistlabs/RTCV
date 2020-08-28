@@ -24,28 +24,26 @@
                 if (ev.BytesReceived == ev.TotalBytesToReceive)
                     lbDownloadProgress.Text = "Extracting files...";
                 else
-                    lbDownloadProgress.Text = $"{String.Format("{0:0.##}", (Convert.ToDouble(ev.BytesReceived)/(1024d*1024d)))}/{String.Format("{0:0.##}", (Convert.ToDouble(ev.TotalBytesToReceive) / (1024d * 1024d)))}MB";
+                    lbDownloadProgress.Text = $"{string.Format("{0:0.##}", (Convert.ToDouble(ev.BytesReceived) / (1024d * 1024d)))}/{string.Format("{0:0.##}", (Convert.ToDouble(ev.TotalBytesToReceive) / (1024d * 1024d)))}MB";
             };
 
             webClient.DownloadFileCompleted += (ov, ev) =>
             {
-
                 MainForm.mf.InvokeUI(() => {
                     lbDownloadProgress.Text = $"Uncompressing files...";
                     MainForm.mf.DownloadComplete(downloadedFile, extractDirectory); });
-                    MainForm.mf.btnVersionDownloader.Enabled = true;
+                MainForm.mf.btnVersionDownloader.Enabled = true;
             };
 
             if (File.Exists(downloadedFile))
                 File.Delete(downloadedFile);
 
             webClient.DownloadFileAsync(new Uri(downloadURL), downloadedFile);
-
         }
 
         private void DownloadForm_Load(object sender, EventArgs e)
         {
-            Point loc = new Point((this.Width- pnDownloadBar.Width)/2, (this.Height - pnDownloadBar.Height) / 2);
+            var loc = new Point((this.Width - pnDownloadBar.Width) / 2, (this.Height - pnDownloadBar.Height) / 2);
             pnDownloadBar.Location = loc;
             pnDownloadBar.Visible = true;
         }
