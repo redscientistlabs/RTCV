@@ -238,7 +238,7 @@ jobs:
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.0
     - name: Build with MSBuild
-      run: msbuild '.\dolphin-vanguard\Source\dolphin-emu.sln' /property:Configuration=Debug /property:Platform=x64 /p:TreatWarningAsError=false
+      run: msbuild '.\dolphin-vanguard\Source\dolphin-emu.sln' /property:Configuration=Release /property:Platform=x64 /p:TreatWarningAsError=false
 
   pcsx2:
     runs-on: windows-2019
