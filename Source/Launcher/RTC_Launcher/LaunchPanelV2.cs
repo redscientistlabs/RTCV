@@ -190,7 +190,7 @@ namespace RTCV.Launcher
                     string downloadedFile = Path.Combine(MainForm.launcherDir, "PACKAGES", lci.downloadVersion + ".zip");
                     string extractDirectory = lci.folderLocation;
 
-                    MainForm.DownloadFile(downloadUrl, downloadedFile, extractDirectory);
+                    MainForm.DownloadFile(new Uri(downloadUrl), downloadedFile, extractDirectory);
                 }
 
                 return;
@@ -208,7 +208,7 @@ namespace RTCV.Launcher
             Process.Start(psi);
         }
 
-        private LauncherConf getFolderFromPreviousVersion(string downloadVersion)
+        private static LauncherConf getFolderFromPreviousVersion(string downloadVersion)
         {
             foreach (string ver in MainForm.sideversionForm.lbVersions.Items.Cast<string>())
             {

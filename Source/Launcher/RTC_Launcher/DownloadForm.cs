@@ -11,7 +11,7 @@
     {
         WebClient webClient;
 
-        public DownloadForm(string downloadURL, string downloadedFile, string extractDirectory)
+        public DownloadForm(Uri downloadURL, string downloadedFile, string extractDirectory)
         {
             InitializeComponent();
             this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
@@ -39,7 +39,7 @@
             if (File.Exists(downloadedFile))
                 File.Delete(downloadedFile);
 
-            webClient.DownloadFileAsync(new Uri(downloadURL), downloadedFile);
+            webClient.DownloadFileAsync(downloadURL, downloadedFile);
         }
 
         private void DownloadForm_Load(object sender, EventArgs e)

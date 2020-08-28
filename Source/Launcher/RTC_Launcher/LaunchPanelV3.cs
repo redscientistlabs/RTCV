@@ -441,7 +441,7 @@ namespace RTCV.Launcher
                     string downloadedFile = Path.Combine(MainForm.launcherDir, "PACKAGES", lcji.DownloadVersion + ".zip");
                     string extractDirectory = Path.Combine(lc.VersionLocation, lcji.FolderName);
 
-                    MainForm.DownloadFile(downloadUrl, downloadedFile, extractDirectory);
+                    MainForm.DownloadFile(new Uri(downloadUrl), downloadedFile, extractDirectory);
                 }
 
                 return;

@@ -31,7 +31,7 @@ namespace RTCV.Launcher
         public static string getLatestVersion()
         {
             try {
-                var versionFile = MainForm.GetFileViaHttp($"{MainForm.webRessourceDomain}/rtc/releases/version.php");
+                var versionFile = MainForm.GetFileViaHttp(new Uri($"{MainForm.webRessourceDomain}/rtc/releases/version.php"));
                 if (versionFile == null)
                     return null;
 
@@ -54,7 +54,7 @@ namespace RTCV.Launcher
         {
             Action a = () =>
             {
-                var versionFile = MainForm.GetFileViaHttp($"{MainForm.webRessourceDomain}/rtc/releases/version.php");
+                var versionFile = MainForm.GetFileViaHttp(new Uri($"{MainForm.webRessourceDomain}/rtc/releases/version.php"));
 
                 if (versionFile == null)
                     return;
@@ -128,7 +128,7 @@ namespace RTCV.Launcher
 
             MainForm.lastSelectedVersion = version;
 
-            MainForm.DownloadFile(downloadUrl, downloadedFile, extractDirectory);
+            MainForm.DownloadFile(new Uri(downloadUrl), downloadedFile, extractDirectory);
         }
 
         int devCounter = 0;

@@ -123,7 +123,7 @@ namespace RTCV.Launcher
             this.MouseMove += MainForm_MouseMove;
         }
 
-        public static void DownloadFile(string downloadURL, string downloadedFile, string extractDirectory)
+        public static void DownloadFile(Uri downloadURL, string downloadedFile, string extractDirectory)
         {
             MainForm.mf.clearAnchorRight();
 
@@ -153,7 +153,7 @@ namespace RTCV.Launcher
             {
                 Action a = () =>
                 {
-                    var motdFile = GetFileViaHttp($"{MainForm.webRessourceDomain}/rtc/releases/MOTD.txt");
+                    var motdFile = GetFileViaHttp(new Uri($"{MainForm.webRessourceDomain}/rtc/releases/MOTD.txt"));
                     string motd = "";
                     if (motdFile == null)
                         motd = "Couldn't load the RTC MOTD from Redscientist.com";
@@ -245,7 +245,7 @@ namespace RTCV.Launcher
             RefreshKeepSelectedVersion();
         }
 
-        public static byte[] GetFileViaHttp(string url)
+        public static byte[] GetFileViaHttp(Uri url)
         {
             //Windows does the big dumb: part 11
             WebRequest.DefaultWebProxy = null;
