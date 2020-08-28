@@ -369,6 +369,7 @@
     <Compile Include="Forms\RTC_StockpilePlayer_Form.designer.cs">
       <DependentUpon>RTC_StockpilePlayer_Form.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\RTC_Standalone_Form.cs" />
     <Compile Include="AutoKillSwitch.cs" />
     <Compile Include="Forms\RTC_Test_Form.cs">
       <SubType>Form</SubType>

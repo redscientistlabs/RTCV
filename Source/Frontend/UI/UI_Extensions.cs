@@ -60,7 +60,5 @@ namespace RTCV.UI
             value = textBox.Text;
             return dialogResult;
         }
-
-        public class RTC_Standalone_Form : Form { }
     }
 }
