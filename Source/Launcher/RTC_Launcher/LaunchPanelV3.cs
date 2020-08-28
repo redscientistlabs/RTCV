@@ -10,6 +10,7 @@ namespace RTCV.Launcher
     using System.Linq;
     using System.Windows.Forms;
 
+    #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class LaunchPanelV3 : Form
     {
         private LauncherConfJson lc;
@@ -87,7 +88,6 @@ namespace RTCV.Launcher
 
                     newButton.MouseDown += (sender, e) =>
                     {
-
                         if (e.Button == MouseButtons.Right)
                         {
                             Point locate = new Point((sender as Control).Location.X + e.Location.X, (sender as Control).Location.Y + e.Location.Y);
@@ -276,7 +276,6 @@ namespace RTCV.Launcher
             columnsMenu.Items.Insert(0, title);
 
             columnsMenu.Show(this, locate);
-
         }
 
         private void AddButton_DragEnter(object sender, DragEventArgs e)
@@ -372,7 +371,7 @@ namespace RTCV.Launcher
                 }
             }
 
-            MainForm.mf.RefreshKeepSelectedVersion();
+            MainForm.RefreshKeepSelectedVersion();
             //MainForm.mf.RefreshInterface();
         }
 
@@ -385,8 +384,7 @@ namespace RTCV.Launcher
         {
             Button currentButton = (Button)sender;
 
-            var lcji = (LauncherConfJsonItem) currentButton.Tag;
-
+            var lcji = (LauncherConfJsonItem)currentButton.Tag;
 
             if (!string.IsNullOrEmpty(lcji.FolderName) && !Directory.Exists(Path.Combine(lc.VersionLocation, lcji.FolderName)))
             {
@@ -424,7 +422,7 @@ namespace RTCV.Launcher
                             MessageBox.Show($"Failed to delete old version {Path.Combine(lcCandidateForPull.VersionLocation, candidate?.FolderName ?? "NULL") ?? "NULL"}. Is the file in use?\nException:{ex.Message}");
                             return;
                         }
-                        MainForm.mf.RefreshKeepSelectedVersion();
+                        MainForm.RefreshKeepSelectedVersion();
                         return;
                     }
                 }
@@ -443,7 +441,7 @@ namespace RTCV.Launcher
                     string downloadedFile = Path.Combine(MainForm.launcherDir, "PACKAGES", lcji.DownloadVersion + ".zip");
                     string extractDirectory = Path.Combine(lc.VersionLocation, lcji.FolderName);
 
-                    MainForm.mf.DownloadFile(downloadUrl, downloadedFile, extractDirectory);
+                    MainForm.DownloadFile(downloadUrl, downloadedFile, extractDirectory);
                 }
 
                 return;
@@ -452,7 +450,7 @@ namespace RTCV.Launcher
             lcji.Execute();
         }
 
-        private LauncherConfJson getFolderFromPreviousVersion(string downloadVersion)
+        private static LauncherConfJson getFolderFromPreviousVersion(string downloadVersion)
         {
             foreach (string ver in MainForm.sideversionForm.lbVersions.Items.Cast<string>())
             {

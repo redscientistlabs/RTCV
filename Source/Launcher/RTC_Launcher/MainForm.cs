@@ -108,7 +108,6 @@ namespace RTCV.Launcher
                 if (File.Exists(launcherDir + Path.DirectorySeparatorChar + "PACKAGES" + Path.DirectorySeparatorChar + "Update_Launcher.zip"))
                     File.Delete(launcherDir + Path.DirectorySeparatorChar + "PACKAGES" + Path.DirectorySeparatorChar + "Update_Launcher.zip");
             }
-
         }
 
         private void RewireMouseMove()
@@ -124,7 +123,7 @@ namespace RTCV.Launcher
             this.MouseMove += MainForm_MouseMove;
         }
 
-        public void DownloadFile(string downloadURL, string downloadedFile, string extractDirectory)
+        public static void DownloadFile(string downloadURL, string downloadedFile, string extractDirectory)
         {
             MainForm.mf.clearAnchorRight();
 
@@ -183,7 +182,6 @@ namespace RTCV.Launcher
 
             if (form == null)
             {
-
                 allControls.AddRange(this.Controls.getControlsWithTag());
                 allControls.Add(this);
             }
@@ -270,12 +268,12 @@ namespace RTCV.Launcher
             }
         }
 
-        public string getFilenameFromFullFilename(string fullFilename)
+        public static string getFilenameFromFullFilename(string fullFilename)
         {
             return fullFilename.Substring(fullFilename.LastIndexOf('\\') + 1);
         }
 
-        public string removeExtension(string filename)
+        public static string removeExtension(string filename)
         {
             return filename.Substring(0, filename.LastIndexOf('.'));
         }
@@ -322,7 +320,7 @@ namespace RTCV.Launcher
             this.BeginInvoke(new MethodInvoker(a));
         }
 
-        private void UpdateLauncher(string extractDirectory)
+        private static void UpdateLauncher(string extractDirectory)
         {
             string batchLocation = extractDirectory + Path.DirectorySeparatorChar + "Launcher\\update.bat";
             ProcessStartInfo psi = new ProcessStartInfo();
@@ -334,7 +332,6 @@ namespace RTCV.Launcher
 
         public void DownloadComplete(string downloadedFile, string extractDirectory)
         {
-
             try
             {
                 if (!Directory.Exists(extractDirectory))
@@ -404,8 +401,6 @@ namespace RTCV.Launcher
                             if (Directory.Exists(extractDirectory))
                                 RTC_Extensions.RecursiveDeleteNukeReadOnly(extractDirectory);
                         }
-
-
                     }
                 }
 
@@ -429,7 +424,6 @@ namespace RTCV.Launcher
                     int newVer = Convert.ToInt32(File.ReadAllText(Path.Combine(extractDirectory, "Launcher", "ver.ini")));
                     if (newVer > launcherVer)
                     {
-
                         if (File.Exists(Path.Combine(extractDirectory, "Launcher", "minver.ini")) && //Do we have minver
                             Convert.ToInt32(File.ReadAllText(Path.Combine(extractDirectory, "Launcher", "minver.ini"))) > launcherVer) //Is minver > launcherVer
                         {
@@ -479,7 +473,7 @@ namespace RTCV.Launcher
             }
         }
 
-        public void RefreshKeepSelectedVersion()
+        public static void RefreshKeepSelectedVersion()
         {
             if (lastSelectedVersion != null)
             {
@@ -671,7 +665,7 @@ THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
         }
 
         Rectangle RectRight => new Rectangle(this.ClientSize.Width - grabBorderSize, 0, grabBorderSize, this.ClientSize.Height);
-        Rectangle RectTopLeft => new Rectangle(0, 0, grabBorderSize, grabBorderSize);
+        static Rectangle RectTopLeft => new Rectangle(0, 0, grabBorderSize, grabBorderSize);
         Rectangle RectTopRight => new Rectangle(this.ClientSize.Width - grabBorderSize, 0, grabBorderSize, grabBorderSize);
         Rectangle RectBottomLeft => new Rectangle(0, this.ClientSize.Height - grabBorderSize, grabBorderSize, grabBorderSize);
         Rectangle RectBottomRight => new Rectangle(this.ClientSize.Width - grabBorderSize, this.ClientSize.Height - grabBorderSize, grabBorderSize, grabBorderSize);

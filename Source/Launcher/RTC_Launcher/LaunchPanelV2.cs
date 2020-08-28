@@ -127,7 +127,7 @@ namespace RTCV.Launcher
                 }
             }
 
-            MainForm.mf.RefreshKeepSelectedVersion();
+            MainForm.RefreshKeepSelectedVersion();
             //MainForm.mf.RefreshInterface();
         }
 
@@ -164,7 +164,7 @@ namespace RTCV.Launcher
                         {
                             RTC_Extensions.RecursiveCopyNukeReadOnly(new DirectoryInfo(candidate.folderLocation), new DirectoryInfo(lci.folderLocation));
                             RTC_Extensions.RecursiveDeleteNukeReadOnly(new DirectoryInfo(candidate.folderLocation));
-                            MainForm.mf.RefreshKeepSelectedVersion();
+                            MainForm.RefreshKeepSelectedVersion();
                         }
                         catch (Exception ex)
                         {
@@ -190,7 +190,7 @@ namespace RTCV.Launcher
                     string downloadedFile = Path.Combine(MainForm.launcherDir, "PACKAGES", lci.downloadVersion + ".zip");
                     string extractDirectory = lci.folderLocation;
 
-                    MainForm.mf.DownloadFile(downloadUrl, downloadedFile, extractDirectory);
+                    MainForm.DownloadFile(downloadUrl, downloadedFile, extractDirectory);
                 }
 
                 return;

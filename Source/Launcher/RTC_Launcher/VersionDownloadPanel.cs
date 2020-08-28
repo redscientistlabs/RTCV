@@ -128,7 +128,7 @@ namespace RTCV.Launcher
 
             MainForm.lastSelectedVersion = version;
 
-            MainForm.mf.DownloadFile(downloadUrl, downloadedFile, extractDirectory);
+            MainForm.DownloadFile(downloadUrl, downloadedFile, extractDirectory);
         }
 
         int devCounter = 0;

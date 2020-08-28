@@ -43,7 +43,7 @@ namespace RTCV.Launcher
                 return;
 
             List<string> batchFiles = new List<string>(Directory.GetFiles(folderPath));
-            List<string> batchFileNames = new List<string>(batchFiles.Select(it => MainForm.mf.removeExtension(MainForm.mf.getFilenameFromFullFilename(it))));
+            List<string> batchFileNames = new List<string>(batchFiles.Select(it => MainForm.removeExtension(MainForm.getFilenameFromFullFilename(it))));
 
             bool isDefaultStartPresent = false;
 
