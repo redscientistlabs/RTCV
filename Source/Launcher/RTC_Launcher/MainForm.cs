@@ -18,16 +18,15 @@ namespace RTCV.Launcher
     public partial class MainForm : Form
     {
         private const int WM_NCLBUTTONDOWN = 0xA1;
-        private const int
-            HT_CAPTION = 0x2,
-            HT_LEFT = 0xA,
-            HT_RIGHT = 0xB,
-            HT_TOP = 0xC,
-            HT_TOPLEFT = 0xD,
-            HT_TOPRIGHT = 0xE,
-            HT_BOTTOM = 0xF,
-            HT_BOTTOMLEFT = 0x10,
-            HT_BOTTOMRIGHT = 0x11;
+        private const int HT_CAPTION = 0x2;
+        private const int HT_LEFT = 0xA;
+        private const int HT_RIGHT = 0xB;
+        private const int HT_TOP = 0xC;
+        private const int HT_TOPLEFT = 0xD;
+        private const int HT_TOPRIGHT = 0xE;
+        private const int HT_BOTTOM = 0xF;
+        private const int HT_BOTTOMLEFT = 0x10;
+        private const int HT_BOTTOMRIGHT = 0x11;
 
 
 

@@ -223,7 +223,6 @@ namespace RTCV.Launcher
                     if (Directory.Exists(lci.folderLocation))
                         return lc;
                 }
-
             }
 
             return null;

@@ -177,7 +177,7 @@ namespace RTCV.Launcher
                 }
             }
 
-                if (files.Length == 0)
+            if (files.Length == 0)
                 return;
             else if (files.Length == 1 && MessageBox.Show("You are about to install a custom package in your RTC installation. Any changes done by the package will overwrite files in the installation.\n\nDo you wish to continue?", "Custom packge install", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
                 return;
@@ -258,8 +258,8 @@ namespace RTCV.Launcher
                         }
                     }
 
-            if(columnsMenu.Items.Count == 0)
-                columnsMenu.Items.Add("No available addons", null, new EventHandler((ob, ev) =>{})).Enabled = false;
+            if (columnsMenu.Items.Count == 0)
+                columnsMenu.Items.Add("No available addons", null, new EventHandler((ob, ev) => { })).Enabled = false;
 
             columnsMenu.Items.Add(new ToolStripSeparator());
             columnsMenu.Items.Add("Load Custom Package..", null, new EventHandler((ob, ev) =>
@@ -348,9 +348,8 @@ namespace RTCV.Launcher
 
             try
             {
-                if(lcji.IsAddon)
+                if (lcji.IsAddon)
                 {
-
                     string ImageFilename = Path.Combine(MainForm.launcherDir, "VERSIONS", "Launcher", lcji.ImageName);
 
                     if (File.Exists(lcji.ConfigFilename))
@@ -394,7 +393,6 @@ namespace RTCV.Launcher
                 LauncherConfJson lcCandidateForPull = getFolderFromPreviousVersion(lcji.DownloadVersion);
                 if (lcCandidateForPull != null)
                 {
-
                     var resultAskPull = MessageBox.Show($"The component {lcji.FolderName} could be imported from {lcCandidateForPull.Version}\nDo you wish import it?", "Import candidate found", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (resultAskPull == DialogResult.Yes)
                     {
