@@ -44,7 +44,7 @@ namespace RTCV.UI
 
             if (!RtcCore.Attached)
             {
-                S.SET((RTC_Standalone_Form)standaloneForm);
+                S.SET((Forms.RTC_Standalone_Form)standaloneForm);
             }
 
             Form dummy = new Form();
@@ -333,9 +333,9 @@ namespace RTCV.UI
                 }
             }
 
-            if (S.GET<RTC_Standalone_Form>() != null)
+            if (S.GET<Forms.RTC_Standalone_Form>() != null)
             {
-                S.GET<RTC_Standalone_Form>().Close();
+                S.GET<Forms.RTC_Standalone_Form>().Close();
             }
 
             //Clean out the working folders

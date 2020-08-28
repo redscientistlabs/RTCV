@@ -9,7 +9,7 @@
     using RTCV.UI;
     using RTCV.NetCore.NetCore_Extensions;
 
-    public partial class Loader : UI_Extensions.RTC_Standalone_Form
+    public partial class Loader : RTCV.UI.Forms.RTC_Standalone_Form
     {
         private static bool IsGDIEnhancedScalingAvailable() => (Environment.OSVersion.Version.Major == 10 &
                     Environment.OSVersion.Version.Build >= 17763);
