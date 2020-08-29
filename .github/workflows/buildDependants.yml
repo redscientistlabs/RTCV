@@ -203,14 +203,14 @@ jobs:
         path: 'melonDS-Vanguard'
     - name: Create build directory
       run: |
-        New-Item -ItemType directory -Path ${{runner.workspace}}\RTCV\melonDS-Vanguard\build
+        New-Item -ItemType directory -Path ${{runner.workspace}}\RTCV\melonDS-Vanguard\out\build\x64-Debug
     - name: Configure
       run: |
-        cd ${{runner.workspace}}\RTCV\melonDS-Vanguard\build
-        cmake .. -DENABLE_LTO=false -DDONT_COPY_FIRMWARE=true -DDONT_BUILD_EXTRA_SDL_CODE=true -DCI_BUILD_SHARED_LIBS=true -DCI_INCLUDE_EXTRA_LIBUI_LIBS=true
+        cd ${{runner.workspace}}\RTCV\melonDS-Vanguard\out\build\x64-Debug
+        cmake ..\..\..\ -DENABLE_LTO=false -DDONT_COPY_FIRMWARE=true -DDONT_BUILD_EXTRA_SDL_CODE=true -DCI_BUILD_SHARED_LIBS=true -DCI_INCLUDE_EXTRA_LIBUI_LIBS=true
     - name: Build melonDS-Vanguard
       run: |
-        cd ${{runner.workspace}}\RTCV\melonDS-Vanguard\build
+        cd ${{runner.workspace}}\RTCV\melonDS-Vanguard\out\build\x64-Debug
         msbuild melonDS.sln
 
   dolphin:
@@ -238,7 +238,7 @@ jobs:
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.0
     - name: Build with MSBuild
-      run: msbuild '.\dolphin-vanguard\Source\dolphin-emu.sln' /property:Configuration=Debug /property:Platform=x64 /p:TreatWarningAsError=false
+      run: msbuild '.\dolphin-vanguard\Source\dolphin-emu.sln' /property:Configuration=Release /property:Platform=x64 /p:TreatWarningAsError=false
 
   pcsx2:
     runs-on: windows-2019
