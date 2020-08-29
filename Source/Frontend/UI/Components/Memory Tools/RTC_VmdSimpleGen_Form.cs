@@ -267,7 +267,7 @@ address is excluded from the range.
 pointer spacer parameter");
         }
 
-        private void MtbStartAddress_ValueChanged(object sender, Components.Controls.MultiTrackBar.ValueUpdateEventArgs e)
+        private void MtbStartAddress_ValueChanged(object sender, ValueUpdateEventArgs e)
         {
             ComputeRangeExpression();
         }
@@ -277,7 +277,7 @@ pointer spacer parameter");
             ComputeRangeExpression();
         }
 
-        private void MtbRange_ValueChanged(object sender, MultiTrackBar.ValueUpdateEventArgs e)
+        private void MtbRange_ValueChanged(object sender, ValueUpdateEventArgs e)
         {
             ComputeRangeExpression();
         }

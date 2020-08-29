@@ -24,6 +24,15 @@ namespace RTCV.CorruptCore
         public string Message { get; set; }
     }
 
+    public class GameClosedEventArgs : EventArgs
+    {
+        public bool FullyClosed;
+        public GameClosedEventArgs(bool fullyClosed)
+        {
+            FullyClosed = fullyClosed;
+        }
+    }
+
     public static class RtcCore
     {
         //General RTC Values
@@ -225,14 +234,6 @@ namespace RTCV.CorruptCore
         public static bool IsStandaloneUI;
         public static bool IsEmulatorSide;
 
-        public class GameClosedEventArgs : EventArgs
-        {
-            public bool FullyClosed;
-            public GameClosedEventArgs(bool fullyClosed)
-            {
-                FullyClosed = fullyClosed;
-            }
-        }
         public static EventHandler CorruptCoreExiting;
         public static EventHandler<GameClosedEventArgs> GameClosed;
         public static EventHandler LoadGameDone;
