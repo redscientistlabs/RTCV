@@ -34,7 +34,6 @@ namespace RTCV.Launcher
             pnVersionBatchFiles.Visible = false;
 
             DisplayVersion();
-
         }
 
         public void DisplayVersion()
@@ -44,7 +43,7 @@ namespace RTCV.Launcher
                 return;
 
             List<string> batchFiles = new List<string>(Directory.GetFiles(folderPath));
-            List<string> batchFileNames = new List<string>(batchFiles.Select(it => MainForm.mf.removeExtension(MainForm.mf.getFilenameFromFullFilename(it))));
+            List<string> batchFileNames = new List<string>(batchFiles.Select(it => MainForm.removeExtension(MainForm.getFilenameFromFullFilename(it))));
 
             bool isDefaultStartPresent = false;
 
@@ -95,7 +94,6 @@ namespace RTCV.Launcher
 
         private void OldLaunchPanel_Load(object sender, EventArgs e)
         {
-
         }
 
         private void btnBatchfile_Click(object sender, EventArgs e)

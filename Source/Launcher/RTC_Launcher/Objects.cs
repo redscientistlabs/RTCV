@@ -57,7 +57,6 @@ namespace RTCV.Launcher
             folderName = lineItems[2];
             folderLocation = Path.Combine(lc.batchFilesLocation, folderName);
             downloadVersion = lineItems[3];
-
         }
     }
 
@@ -68,7 +67,7 @@ namespace RTCV.Launcher
         public string FileName;
         public string Arguments;
         public bool WaitForExit;
-        public int WaitForExitTimeout = Int32.MaxValue;
+        public int WaitForExitTimeout = int.MaxValue;
         [JsonConverter(typeof(StringEnumConverter))]
         public ProcessWindowStyle WindowStyle = ProcessWindowStyle.Normal;
         public List<ExecutableCommand> PreExecuteCommands = new List<ExecutableCommand>();
@@ -151,7 +150,7 @@ namespace RTCV.Launcher
             LauncherAssetLocation = Path.Combine(MainForm.launcherDir, "VERSIONS", Version, "Launcher");
             LauncherConfLocation = Path.Combine(LauncherAssetLocation, "launcher.json");
 
-            if(Directory.Exists(LauncherAssetLocation))
+            if (Directory.Exists(LauncherAssetLocation))
                 LauncherAddonConfLocations = Directory.GetFiles(LauncherAssetLocation).Where(it => it.Contains("addon_") && it.Contains(".json")).ToArray();
 
             VersionLocation = Path.Combine(MainForm.launcherDir, "VERSIONS", Version);
@@ -166,7 +165,7 @@ namespace RTCV.Launcher
             List<LauncherConfJsonItem> lcjiList = new List<LauncherConfJsonItem>();
             lcjiList.AddRange(JsonConvert.DeserializeObject<LauncherConfJsonItem[]>(launcherJson));
 
-            foreach(var addonJsonConfLocation in LauncherAddonConfLocations)
+            foreach (var addonJsonConfLocation in LauncherAddonConfLocations)
             {
                 try
                 {
@@ -181,14 +180,14 @@ namespace RTCV.Launcher
 
                     lcjiList.AddRange(addonConfigs);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show($"Could not load addon json config file at\n{addonJsonConfLocation}\n\n{ex.ToString()}\n\n{(ex.InnerException != null ? ex.InnerException.ToString() : "")}");
                     //eat it
                 }
             }
 
-            if(lcjiList[0].ItemSubtitle != null) //means we can use metadata to reorder in categories
+            if (lcjiList[0].ItemSubtitle != null) //means we can use metadata to reorder in categories
             {
                 var vanguardImplementations = lcjiList.Where(it => it.ItemSubtitle != null && it.ItemSubtitle.ToUpper().Contains("VANGUARD")).ToList();
                 var stubVanguardImplementations = lcjiList.Where(it => it.ItemSubtitle != null && it.ItemSubtitle.ToUpper().Contains("STUB")).ToList();
@@ -200,7 +199,6 @@ namespace RTCV.Launcher
                 lcjiList.AddRange(stubVanguardImplementations);
                 lcjiList.AddRange(everythingElse);
                 lcjiList.Add(addButton);
-
             }
 
             Items = lcjiList.ToArray();

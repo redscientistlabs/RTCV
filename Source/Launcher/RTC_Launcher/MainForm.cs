@@ -18,16 +18,15 @@ namespace RTCV.Launcher
     public partial class MainForm : Form
     {
         private const int WM_NCLBUTTONDOWN = 0xA1;
-        private const int
-            HT_CAPTION = 0x2,
-            HT_LEFT = 0xA,
-            HT_RIGHT = 0xB,
-            HT_TOP = 0xC,
-            HT_TOPLEFT = 0xD,
-            HT_TOPRIGHT = 0xE,
-            HT_BOTTOM = 0xF,
-            HT_BOTTOMLEFT = 0x10,
-            HT_BOTTOMRIGHT = 0x11;
+        private const int HT_CAPTION = 0x2;
+        private const int HT_LEFT = 0xA;
+        private const int HT_RIGHT = 0xB;
+        private const int HT_TOP = 0xC;
+        private const int HT_TOPLEFT = 0xD;
+        private const int HT_TOPRIGHT = 0xE;
+        private const int HT_BOTTOM = 0xF;
+        private const int HT_BOTTOMLEFT = 0x10;
+        private const int HT_BOTTOMRIGHT = 0x11;
 
 
 
@@ -109,7 +108,6 @@ namespace RTCV.Launcher
                 if (File.Exists(launcherDir + Path.DirectorySeparatorChar + "PACKAGES" + Path.DirectorySeparatorChar + "Update_Launcher.zip"))
                     File.Delete(launcherDir + Path.DirectorySeparatorChar + "PACKAGES" + Path.DirectorySeparatorChar + "Update_Launcher.zip");
             }
-
         }
 
         private void RewireMouseMove()
@@ -125,7 +123,7 @@ namespace RTCV.Launcher
             this.MouseMove += MainForm_MouseMove;
         }
 
-        public void DownloadFile(string downloadURL, string downloadedFile, string extractDirectory)
+        public static void DownloadFile(Uri downloadURL, string downloadedFile, string extractDirectory)
         {
             MainForm.mf.clearAnchorRight();
 
@@ -155,7 +153,7 @@ namespace RTCV.Launcher
             {
                 Action a = () =>
                 {
-                    var motdFile = GetFileViaHttp($"{MainForm.webRessourceDomain}/rtc/releases/MOTD.txt");
+                    var motdFile = GetFileViaHttp(new Uri($"{MainForm.webRessourceDomain}/rtc/releases/MOTD.txt"));
                     string motd = "";
                     if (motdFile == null)
                         motd = "Couldn't load the RTC MOTD from Redscientist.com";
@@ -184,11 +182,8 @@ namespace RTCV.Launcher
 
             if (form == null)
             {
-
                 allControls.AddRange(this.Controls.getControlsWithTag());
                 allControls.Add(this);
-
-
             }
             else
                 allControls.AddRange(form.Controls.getControlsWithTag());
@@ -212,9 +207,7 @@ namespace RTCV.Launcher
 
             foreach (Control c in darkerColorControls)
                 c.BackColor = color.ChangeColorBrightness(-0.75f);
-
         }
-
 
         public void RefreshInstalledVersions()
         {
@@ -252,7 +245,7 @@ namespace RTCV.Launcher
             RefreshKeepSelectedVersion();
         }
 
-        public static byte[] GetFileViaHttp(string url)
+        public static byte[] GetFileViaHttp(Uri url)
         {
             //Windows does the big dumb: part 11
             WebRequest.DefaultWebProxy = null;
@@ -275,12 +268,12 @@ namespace RTCV.Launcher
             }
         }
 
-        public string getFilenameFromFullFilename(string fullFilename)
+        public static string getFilenameFromFullFilename(string fullFilename)
         {
             return fullFilename.Substring(fullFilename.LastIndexOf('\\') + 1);
         }
 
-        public string removeExtension(string filename)
+        public static string removeExtension(string filename)
         {
             return filename.Substring(0, filename.LastIndexOf('.'));
         }
@@ -327,7 +320,7 @@ namespace RTCV.Launcher
             this.BeginInvoke(new MethodInvoker(a));
         }
 
-        private void UpdateLauncher(string extractDirectory)
+        private static void UpdateLauncher(string extractDirectory)
         {
             string batchLocation = extractDirectory + Path.DirectorySeparatorChar + "Launcher\\update.bat";
             ProcessStartInfo psi = new ProcessStartInfo();
@@ -339,7 +332,6 @@ namespace RTCV.Launcher
 
         public void DownloadComplete(string downloadedFile, string extractDirectory)
         {
-
             try
             {
                 if (!Directory.Exists(extractDirectory))
@@ -409,8 +401,6 @@ namespace RTCV.Launcher
                             if (Directory.Exists(extractDirectory))
                                 RTC_Extensions.RecursiveDeleteNukeReadOnly(extractDirectory);
                         }
-
-
                     }
                 }
 
@@ -434,7 +424,6 @@ namespace RTCV.Launcher
                     int newVer = Convert.ToInt32(File.ReadAllText(Path.Combine(extractDirectory, "Launcher", "ver.ini")));
                     if (newVer > launcherVer)
                     {
-
                         if (File.Exists(Path.Combine(extractDirectory, "Launcher", "minver.ini")) && //Do we have minver
                             Convert.ToInt32(File.ReadAllText(Path.Combine(extractDirectory, "Launcher", "minver.ini"))) > launcherVer) //Is minver > launcherVer
                         {
@@ -464,7 +453,6 @@ namespace RTCV.Launcher
             }
             finally
             {
-
                 sideversionForm.lbVersions.SelectedIndex = -1;
 
                 RefreshInstalledVersions();
@@ -485,8 +473,7 @@ namespace RTCV.Launcher
             }
         }
 
-
-        public void RefreshKeepSelectedVersion()
+        public static void RefreshKeepSelectedVersion()
         {
             if (lastSelectedVersion != null)
             {
@@ -543,7 +530,7 @@ namespace RTCV.Launcher
             RefreshInstalledVersions();
         }
 
-        public void OpenFolder()
+        public static void OpenFolder()
         {
             if (sideversionForm.lbVersions.SelectedIndex == -1)
                 return;
@@ -563,7 +550,7 @@ namespace RTCV.Launcher
             if (!Directory.Exists((launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version)))
                 return;
 
-                if (e.Button == MouseButtons.Right)
+            if (e.Button == MouseButtons.Right)
             {
                 Point locate = new Point((sender as Control).Location.X + e.Location.X, (sender as Control).Location.Y + e.Location.Y + pnTopPanel.Height);
 
@@ -610,12 +597,10 @@ namespace RTCV.Launcher
 
         private void label2_Click(object sender, EventArgs e)
         {
-
         }
 
         private void pnAnchorRight_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
 
@@ -680,7 +665,7 @@ THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
         }
 
         Rectangle RectRight => new Rectangle(this.ClientSize.Width - grabBorderSize, 0, grabBorderSize, this.ClientSize.Height);
-        Rectangle RectTopLeft => new Rectangle(0, 0, grabBorderSize, grabBorderSize);
+        static Rectangle RectTopLeft => new Rectangle(0, 0, grabBorderSize, grabBorderSize);
         Rectangle RectTopRight => new Rectangle(this.ClientSize.Width - grabBorderSize, 0, grabBorderSize, grabBorderSize);
         Rectangle RectBottomLeft => new Rectangle(0, this.ClientSize.Height - grabBorderSize, grabBorderSize, grabBorderSize);
         Rectangle RectBottomRight => new Rectangle(this.ClientSize.Width - grabBorderSize, this.ClientSize.Height - grabBorderSize, grabBorderSize, grabBorderSize);

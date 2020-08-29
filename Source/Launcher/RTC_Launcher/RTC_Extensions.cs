@@ -13,7 +13,6 @@ namespace RTCV.Launcher
 
     public static class RTC_Extensions
     {
-
         public static IEnumerable<T> OrderByNatural<T>(this IEnumerable<T> items, Func<T, string> selector, StringComparer stringComparer = null)
         {
             var regex = new Regex(@"\d+", RegexOptions.Compiled);
@@ -171,7 +170,7 @@ namespace RTCV.Launcher
         {
             foreach (DirectoryInfo dir in source.GetDirectories())
                 RecursiveCopyNukeReadOnly(dir, target.CreateSubdirectory(dir.Name));
-            if(!target.Exists)
+            if (!target.Exists)
                 target.Create();
             foreach (FileInfo file in source.GetFiles())
             {
@@ -186,9 +185,7 @@ namespace RTCV.Launcher
 
                     _ = ex;
                 }
-
             }
-
         }
         public static List<string> RecursiveDeleteNukeReadOnly(string path)
         {
@@ -196,7 +193,7 @@ namespace RTCV.Launcher
         }
         public static List<string> RecursiveDeleteNukeReadOnly(DirectoryInfo target)
         {
-            List<String> failedList = new List<string>();
+            var failedList = new List<string>();
             foreach (DirectoryInfo dir in target.GetDirectories())
             {
                 failedList.AddRange(RecursiveDeleteNukeReadOnly(dir));
@@ -213,7 +210,8 @@ namespace RTCV.Launcher
                     {
                         File.SetAttributes(file.FullName, FileAttributes.Normal);
                         File.Delete(file.FullName);
-                    }catch(Exception ex2)
+                    }
+                    catch (Exception ex2)
                     {
                         failedList.Add(file.FullName);
                         _ = ex2;
@@ -299,11 +297,11 @@ namespace RTCV.Launcher
         {
             if (!typeof(T).IsSerializable)
             {
-                throw new ArgumentException("The type must be serializable.", "source");
+                throw new ArgumentException("The type must be serializable.", nameof(source));
             }
 
             // Don't serialize a null object, simply return the default for that object
-            if (Object.ReferenceEquals(source, null))
+            if (source == null)
             {
                 return default(T);
             }
@@ -317,9 +315,5 @@ namespace RTCV.Launcher
                 return (T)formatter.Deserialize(stream);
             }
         }
-
-
-
-
     }
 }
