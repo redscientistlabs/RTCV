@@ -498,8 +498,14 @@ namespace RTCV.Launcher
             if (sideversionForm.lbVersions.SelectedIndex == -1)
                 return;
 
+            var version = sideversionForm.lbVersions.SelectedItem.ToString();
+            var result = MessageBox.Show($"Are you sure you want to delete version {version}?", "Build Deletion", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation);
+            if (result == DialogResult.Cancel)
+            {
+                return;
+            }
+
             Directory.SetCurrentDirectory(launcherDir); //Move our working dir back
-            string version = sideversionForm.lbVersions.SelectedItem.ToString();
 
             if (File.Exists(launcherDir + Path.DirectorySeparatorChar + "PACKAGES" + Path.DirectorySeparatorChar + version + ".zip"))
                 File.Delete(launcherDir + Path.DirectorySeparatorChar + "PACKAGES" + Path.DirectorySeparatorChar + version + ".zip");
