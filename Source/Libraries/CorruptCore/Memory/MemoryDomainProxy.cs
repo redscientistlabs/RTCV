@@ -3,6 +3,7 @@ namespace RTCV.CorruptCore
     using System;
     using System.Collections.Generic;
     using Ceras;
+    using RTCV.CorruptCore.Extensions;
 
     [Serializable]
     [Ceras.MemberConfig(TargetMember.All)]

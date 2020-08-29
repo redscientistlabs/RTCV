@@ -14,6 +14,7 @@ namespace RTCV.Plugins.HexEditor
     using RTCV.NetCore;
     using RTCV.Common.CustomExtensions;
     using RTCV.CorruptCore;
+    using RTCV.CorruptCore.Extensions;
     using NLog;
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method

@@ -7,6 +7,7 @@ namespace RTCV.CorruptCore
     using System.Linq;
     using System.Runtime.Serialization.Formatters.Binary;
     using Ceras;
+    using RTCV.CorruptCore.Extensions;
 
     [Serializable]
     [Ceras.MemberConfig(TargetMember.All)]

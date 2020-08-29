@@ -1,4 +1,4 @@
-namespace RTCV.CorruptCore
+namespace RTCV.CorruptCore.Extensions
 {
     using System;
     using System.Numerics;

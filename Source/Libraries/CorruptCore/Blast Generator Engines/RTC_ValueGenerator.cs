@@ -4,6 +4,7 @@ namespace RTCV.CorruptCore
     using System.Linq;
     using System.Numerics;
     using RTCV.Common.CustomExtensions;
+    using RTCV.CorruptCore.Extensions;
 
     public static class RTC_ValueGenerator
     {

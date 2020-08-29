@@ -8,6 +8,7 @@ namespace RTCV.CorruptCore
     using System.Threading.Tasks;
     using System.Windows.Forms;
     using RTCV.Common;
+    using RTCV.CorruptCore.Extensions;
     using RTCV.NetCore;
 
     public static class Filtering
