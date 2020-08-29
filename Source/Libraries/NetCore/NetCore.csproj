@@ -78,6 +78,7 @@
     <Compile Include="LocalRouter.cs" />
     <Compile Include="MessageHub.cs" />
     <Compile Include="NetcoreCommands.cs" />
+    <Compile Include="NetCoreMessages.cs" />
     <Compile Include="NetCoreObjects.cs" />
     <Compile Include="NetCoreSpec.cs" />
     <Compile Include="Params.cs" />
