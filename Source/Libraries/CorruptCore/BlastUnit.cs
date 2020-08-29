@@ -621,7 +621,7 @@ namespace RTCV.CorruptCore
                                 Working.ApplyValue = (byte[])Value.Clone();
 
                                 //Calculate the actual value to apply
-                                CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref Working.ApplyValue, TiltValue, false); //We don't use the endianess toggle here as we always store value units as little endian
+                                ByteArrayExtensions.AddValueToByteArrayUnchecked(ref Working.ApplyValue, TiltValue, false); //We don't use the endianess toggle here as we always store value units as little endian
 
                                 //Flip it if it's big endian
                                 if (this.BigEndian)
@@ -682,7 +682,7 @@ namespace RTCV.CorruptCore
             //Calculate the final value after adding the tilt value
             if (TiltValue != 0)
             {
-                CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref value, TiltValue, this.BigEndian);
+                ByteArrayExtensions.AddValueToByteArrayUnchecked(ref value, TiltValue, this.BigEndian);
             }
 
             //Enqueue it
@@ -878,7 +878,7 @@ namespace RTCV.CorruptCore
                         }
                         byte[] temp = new byte[Precision];
                         //We use this as it properly handles the length for us
-                        CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref temp, randomValue, false);
+                        ByteArrayExtensions.AddValueToByteArrayUnchecked(ref temp, randomValue, false);
                         Value = temp;
                     }
                 }
@@ -917,7 +917,7 @@ namespace RTCV.CorruptCore
 
                         byte[] temp = new byte[Precision];
                         //We use this as it properly handles the length for us
-                        CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref temp, randomValue, false);
+                        ByteArrayExtensions.AddValueToByteArrayUnchecked(ref temp, randomValue, false);
                         Value = temp;
                     }
                 }

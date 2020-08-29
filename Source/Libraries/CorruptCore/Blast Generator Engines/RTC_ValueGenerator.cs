@@ -176,7 +176,7 @@ namespace RTCV.CorruptCore
                         value = mi.PeekBytes(address, address + precision, mi.BigEndian);
                         for (int i = 0; i < (long)param1; i++)
                         {
-                            CorruptCore_Extensions.ShiftLeft(value);
+                            ByteArrayExtensions.ShiftLeft(value);
                         }
 
                         break;
@@ -184,7 +184,7 @@ namespace RTCV.CorruptCore
                         value = mi.PeekBytes(address, address + precision, mi.BigEndian);
                         for (int i = 0; i < (long)param1; i++)
                         {
-                            CorruptCore_Extensions.ShiftRight(value);
+                            ByteArrayExtensions.ShiftRight(value);
                         }
 
                         break;
@@ -192,7 +192,7 @@ namespace RTCV.CorruptCore
                         value = mi.PeekBytes(address, address + precision, mi.BigEndian);
                         for (int i = 0; i < (long)param1; i++)
                         {
-                            CorruptCore_Extensions.RotateLeft(value);
+                            ByteArrayExtensions.RotateLeft(value);
                         }
 
                         break;
@@ -200,7 +200,7 @@ namespace RTCV.CorruptCore
                         value = mi.PeekBytes(address, address + precision, mi.BigEndian);
                         for (int i = 0; i < (long)param1; i++)
                         {
-                            CorruptCore_Extensions.RotateRight(value);
+                            ByteArrayExtensions.RotateRight(value);
                         }
 
                         break;

@@ -1626,7 +1626,7 @@ namespace RTCV.UI
                     {
                         //We don't want to modify the original
                         var outvalue = (byte[])bu.Value.Clone();
-                        CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref outvalue, bu.TiltValue, bu.BigEndian);
+                        ByteArrayExtensions.AddValueToByteArrayUnchecked(ref outvalue, bu.TiltValue, bu.BigEndian);
                         //Flip it if it's big endian
                         if (bu.BigEndian)
                         {
@@ -2098,7 +2098,7 @@ namespace RTCV.UI
                 return value;
             }
 
-            CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref valueBytes, new BigInteger(amount), true);
+            ByteArrayExtensions.AddValueToByteArrayUnchecked(ref valueBytes, new BigInteger(amount), true);
             return BitConverter.ToString(valueBytes).Replace("-", string.Empty);
         }
 

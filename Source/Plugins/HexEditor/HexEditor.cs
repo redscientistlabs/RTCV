@@ -941,14 +941,14 @@ namespace RTCV.Plugins.HexEditor
         private void IncrementAddress(long address)
         {
             var bytes = _domain.PeekBytes(address, address + DataSize, false);
-            CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref bytes, 1, _domain.BigEndian);
+            ByteArrayExtensions.AddValueToByteArrayUnchecked(ref bytes, 1, _domain.BigEndian);
             _domain.PokeBytes(address, bytes, _domain.BigEndian);
         }
 
         private void DecrementAddress(long address)
         {
             var bytes = _domain.PeekBytes(address, address + DataSize, false);
-            CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref bytes, -1, _domain.BigEndian);
+            ByteArrayExtensions.AddValueToByteArrayUnchecked(ref bytes, -1, _domain.BigEndian);
             _domain.PokeBytes(address, bytes, _domain.BigEndian);
         }
 
@@ -957,7 +957,7 @@ namespace RTCV.Plugins.HexEditor
             if (address != -1)
             {
                 var bytes = _domain.PeekBytes(address, address + DataSize, _domain.BigEndian);
-                return CorruptCore_Extensions.BytesToHexString(bytes);
+                return ByteArrayExtensions.BytesToHexString(bytes);
             }
 
             return "";
