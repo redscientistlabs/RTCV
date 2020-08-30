@@ -8,7 +8,6 @@ namespace RTCV.UI
     using RTCV.NetCore;
     using RTCV.Common;
     using RTCV.UI.Modular;
-    using static RTCV.UI.UI_Extensions;
 
     public partial class RTC_StashHistory_Form : ComponentForm, IAutoColorize, IBlockable
     {
@@ -98,7 +97,7 @@ namespace RTCV.UI
 
             if (askForName)
             {
-                if (GetInputBox("Glitch Harvester", "Enter the new Stash name:", ref value) == DialogResult.OK)
+                if (RTCV.UI.Forms.InputBox.ShowDialog("Glitch Harvester", "Enter the new Stash name:", ref value) == DialogResult.OK)
                 {
                     Name = value.Trim();
                 }

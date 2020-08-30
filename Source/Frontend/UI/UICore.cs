@@ -16,7 +16,6 @@ namespace RTCV.UI
     using RTCV.UI.Input;
     using RTCV.UI.Modular;
     using static RTCV.NetCore.NetcoreCommands;
-    using static RTCV.UI.UI_Extensions;
 
     public static class UICore
     {

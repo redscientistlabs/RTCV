@@ -12,7 +12,6 @@ namespace RTCV.UI
     using RTCV.CorruptCore;
     using RTCV.Common;
     using RTCV.UI.Modular;
-    using static RTCV.UI.UI_Extensions;
 
     public partial class RTC_StockpileManager_Form : ComponentForm, IAutoColorize, IBlockable
     {
@@ -296,7 +295,7 @@ namespace RTCV.UI
         {
             string value = sk.Alias;
 
-            if (GetInputBox("Glitch Harvester", "Enter the new Stash name:", ref value) == DialogResult.OK && !string.IsNullOrWhiteSpace(value))
+            if (RTCV.UI.Forms.InputBox.ShowDialog("Glitch Harvester", "Enter the new Stash name:", ref value) == DialogResult.OK && !string.IsNullOrWhiteSpace(value))
             {
                 sk.Alias = value.Trim();
                 return true;
