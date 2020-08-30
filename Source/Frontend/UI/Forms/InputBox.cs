@@ -1,6 +1,5 @@
 namespace RTCV.UI.Forms
 {
-    using System;
     using System.Windows.Forms;
 
     public partial class InputBox : Form
