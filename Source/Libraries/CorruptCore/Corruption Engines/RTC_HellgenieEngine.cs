@@ -2,6 +2,7 @@
 {
     using RTCV.Common.CustomExtensions;
     using RTCV.NetCore;
+    using RTCV.CorruptCore.Extensions;
 
     public static class RTC_HellgenieEngine
     {
@@ -119,7 +120,7 @@
             }
             else
             {
-                value = CorruptCore_Extensions.GetByteArrayValue(precision, randomValue, true);
+                value = ByteArrayExtensions.GetByteArrayValue(precision, randomValue, true);
             }
 
             return new BlastUnit(value, domain, safeAddress, precision, mi.BigEndian, 0, 0);

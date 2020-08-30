@@ -4,10 +4,10 @@ namespace RTCV.CorruptCore
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Numerics;
     using System.Security.Cryptography;
     using System.Windows.Forms;
     using Ceras;
+    using RTCV.CorruptCore.Extensions;
 
     [Serializable]
     [Ceras.MemberConfig(TargetMember.All)]

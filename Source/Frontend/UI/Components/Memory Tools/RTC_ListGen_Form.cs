@@ -128,19 +128,19 @@ namespace RTCV.UI
                     {
                         float f = Convert<float>(trimmedLine.Substring(0, trimmedLine.Length - 1));
                         byte[] t = BitConverter.GetBytes(f);
-                        newList.Add(CorruptCore_Extensions.BytesToHexString(t));
+                        newList.Add(ByteArrayExtensions.BytesToHexString(t));
                     }
                     else if (Regex.IsMatch(trimmedLine, "^[0-9]+[dD]$")) //123d double
                     {
                         double d = Convert<double>(trimmedLine.Substring(0, trimmedLine.Length - 1));
                         byte[] t = BitConverter.GetBytes(d);
-                        newList.Add(CorruptCore_Extensions.BytesToHexString(t));
+                        newList.Add(ByteArrayExtensions.BytesToHexString(t));
                     }
                     else if (isDecimalNumber(trimmedLine)) //double no suffix
                     {
                         double d = Convert<double>(trimmedLine);
                         byte[] t = BitConverter.GetBytes(d);
-                        newList.Add(CorruptCore_Extensions.BytesToHexString(t));
+                        newList.Add(ByteArrayExtensions.BytesToHexString(t));
                     }
                     else if (isWholeNumber(trimmedLine)) //plain old number
                     {

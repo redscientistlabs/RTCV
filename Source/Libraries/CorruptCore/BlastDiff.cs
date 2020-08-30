@@ -4,6 +4,7 @@ namespace RTCV.CorruptCore
     using System.Linq;
     using System.Windows.Forms;
     using RTCV.NetCore;
+    using RTCV.CorruptCore.Extensions;
 
     public static class BlastDiff
     {
