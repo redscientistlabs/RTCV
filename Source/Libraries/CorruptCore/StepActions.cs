@@ -40,20 +40,20 @@ namespace RTCV.CorruptCore
 
         public static int MaxInfiniteBlastUnits
         {
-            get => (int)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.STEP_MAXINFINITEBLASTUNITS];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_MAXINFINITEBLASTUNITS, value);
+            get => (int)AllSpec.CorruptCoreSpec[RTCSPEC.STEP_MAXINFINITEBLASTUNITS];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_MAXINFINITEBLASTUNITS, value);
         }
 
         public static bool LockExecution
         {
-            get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.STEP_LOCKEXECUTION];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_LOCKEXECUTION, value);
+            get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.STEP_LOCKEXECUTION];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_LOCKEXECUTION, value);
         }
 
         public static bool ClearStepActionsOnRewind
         {
-            get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.STEP_CLEARSTEPACTIONSONREWIND];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_CLEARSTEPACTIONSONREWIND, value);
+            get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.STEP_CLEARSTEPACTIONSONREWIND];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_CLEARSTEPACTIONSONREWIND, value);
         }
 
         public static PartialSpec getDefaultPartial()

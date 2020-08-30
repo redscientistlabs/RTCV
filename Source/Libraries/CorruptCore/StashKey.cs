@@ -12,11 +12,11 @@ namespace RTCV.CorruptCore
     using RTCV.NetCore;
 
     [Serializable]
-    [Ceras.MemberConfig(TargetMember.AllPublic)]
+    [MemberConfig(TargetMember.AllPublic)]
     public class StashKey : ICloneable, INote
     {
         [NonSerialized]
-        [Ceras.Exclude]
+        [Exclude]
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public string RomFilename { get; set; }
@@ -70,13 +70,13 @@ namespace RTCV.CorruptCore
             ParentKey = parentkey;
             BlastLayer = blastlayer;
 
-            RomFilename = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.OPENROMFILENAME] ?? "ERROR";
-            SystemName = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.SYSTEM] ?? "ERROR";
-            SystemCore = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.SYSTEMCORE] ?? "ERROR";
-            GameName = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.GAMENAME] ?? "ERROR";
-            SyncSettings = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.SYNCSETTINGS] ?? "";
+            RomFilename = (string)AllSpec.VanguardSpec?[VSPEC.OPENROMFILENAME] ?? "ERROR";
+            SystemName = (string)AllSpec.VanguardSpec?[VSPEC.SYSTEM] ?? "ERROR";
+            SystemCore = (string)AllSpec.VanguardSpec?[VSPEC.SYSTEMCORE] ?? "ERROR";
+            GameName = (string)AllSpec.VanguardSpec?[VSPEC.GAMENAME] ?? "ERROR";
+            SyncSettings = (string)AllSpec.VanguardSpec?[VSPEC.SYNCSETTINGS] ?? "";
 
-            this.SelectedDomains = ((string[])RTCV.NetCore.AllSpec.UISpec["SELECTEDDOMAINS"]).ToList();
+            this.SelectedDomains = ((string[])AllSpec.UISpec["SELECTEDDOMAINS"]).ToList();
         }
 
         public object Clone()

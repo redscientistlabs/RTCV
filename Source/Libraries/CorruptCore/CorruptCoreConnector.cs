@@ -28,13 +28,13 @@ namespace RTCV.CorruptCore
                     //UI sent its spec
                     case REMOTE_PUSHUISPEC:
                         {
-                            SyncObjectSingleton.FormExecute(() => RTCV.NetCore.AllSpec.UISpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached));
+                            SyncObjectSingleton.FormExecute(() => AllSpec.UISpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached));
                             break;
                         }
 
                     //UI sent a spec update
                     case REMOTE_PUSHUISPECUPDATE:
-                        SyncObjectSingleton.FormExecute(() => RTCV.NetCore.AllSpec.UISpec?.Update((PartialSpec)advancedMessage.objectValue));
+                        SyncObjectSingleton.FormExecute(() => AllSpec.UISpec?.Update((PartialSpec)advancedMessage.objectValue));
                         break;
 
                     //Vanguard sent a copy of its spec
@@ -44,7 +44,7 @@ namespace RTCV.CorruptCore
                         {
                             if (!RtcCore.Attached)
                             {
-                                RTCV.NetCore.AllSpec.VanguardSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
+                                AllSpec.VanguardSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
                             }
                         });
                         break;
@@ -61,7 +61,7 @@ namespace RTCV.CorruptCore
 
                     //UI sent an update of the CorruptCore spec
                     case REMOTE_PUSHCORRUPTCORESPECUPDATE:
-                        SyncObjectSingleton.FormExecute(() => RTCV.NetCore.AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false));
+                        SyncObjectSingleton.FormExecute(() => AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false));
                         break;
 
                     case REMOTE_EVENT_DOMAINSUPDATED:
@@ -98,12 +98,12 @@ namespace RTCV.CorruptCore
                         break;
 
                     case REMOTE_PUSHRTCSPEC:
-                        RTCV.NetCore.AllSpec.CorruptCoreSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
+                        AllSpec.CorruptCoreSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
                         e.setReturnValue(true);
                         break;
 
                     case REMOTE_PUSHRTCSPECUPDATE:
-                        RTCV.NetCore.AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
+                        AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
                         break;
 
                     case BLASTGENERATOR_BLAST:
@@ -154,13 +154,13 @@ namespace RTCV.CorruptCore
 
                             if (sk != null)
                             {
-                                LocalNetCoreRouter.Route(NetcoreCommands.UI, REMOTE_BACKUPKEY_STASH, sk, false);
+                                LocalNetCoreRouter.Route(UI, REMOTE_BACKUPKEY_STASH, sk, false);
                             }
 
                             break;
                         }
                     case REMOTE_DOMAIN_GETDOMAINS:
-                        e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_DOMAIN_GETDOMAINS, true));
+                        e.setReturnValue(LocalNetCoreRouter.Route(VANGUARD, REMOTE_DOMAIN_GETDOMAINS, true));
                         break;
                     case REMOTE_PUSHVMDPROTOS:
                         MemoryDomains.VmdPool.Clear();
@@ -275,7 +275,7 @@ namespace RTCV.CorruptCore
             {
                 if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
-                    throw new RTCV.NetCore.AbortEverythingException();
+                    throw new AbortEverythingException();
                 }
 
                 return e.returnMessage;
@@ -288,11 +288,11 @@ namespace RTCV.CorruptCore
             sb.AppendLine("Spec Dump from CorruptCore");
             sb.AppendLine();
             sb.AppendLine("UISpec");
-            RTCV.NetCore.AllSpec.UISpec?.GetDump().ForEach(x => sb.AppendLine(x));
+            AllSpec.UISpec?.GetDump().ForEach(x => sb.AppendLine(x));
             sb.AppendLine("CorruptCoreSpec");
-            RTCV.NetCore.AllSpec.CorruptCoreSpec?.GetDump().ForEach(x => sb.AppendLine(x));
+            AllSpec.CorruptCoreSpec?.GetDump().ForEach(x => sb.AppendLine(x));
             sb.AppendLine("VanguardSpec");
-            RTCV.NetCore.AllSpec.VanguardSpec?.GetDump().ForEach(x => sb.AppendLine(x));
+            AllSpec.VanguardSpec?.GetDump().ForEach(x => sb.AppendLine(x));
             e.setReturnValue(sb.ToString());
         }
 
@@ -308,37 +308,37 @@ namespace RTCV.CorruptCore
                 //Stick with what we have if it exists to prevent any exceptions if autocorrupt was on or something, then call refresh
                 temp.Update("MEMORYINTERFACES", AllSpec.CorruptCoreSpec?["MEMORYINTERFACES"] ?? new Dictionary<string, MemoryDomainProxy>());
 
-                RTCV.NetCore.AllSpec.CorruptCoreSpec = new FullSpec(temp.GetPartialSpec(), !RtcCore.Attached);
-                RTCV.NetCore.AllSpec.CorruptCoreSpec.SpecUpdated += (ob, eas) =>
+                AllSpec.CorruptCoreSpec = new FullSpec(temp.GetPartialSpec(), !RtcCore.Attached);
+                AllSpec.CorruptCoreSpec.SpecUpdated += (ob, eas) =>
                 {
                     PartialSpec partial = eas.partialSpec;
-                    LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_PUSHCORRUPTCORESPECUPDATE, partial, true);
+                    LocalNetCoreRouter.Route(UI, REMOTE_PUSHCORRUPTCORESPECUPDATE, partial, true);
                 };
-                RTCV.CorruptCore.MemoryDomains.RefreshDomains();
+                MemoryDomains.RefreshDomains();
             });
             e.setReturnValue(true);
         }
 
         private static void RestrictFeatures()
         {
-            if (!RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_SAVESTATES) ?? true)
+            if (!AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_SAVESTATES) ?? true)
             {
-                LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_DISABLESAVESTATESUPPORT);
+                LocalNetCoreRouter.Route(UI, REMOTE_DISABLESAVESTATESUPPORT);
             }
 
-            if (!RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true)
+            if (!AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true)
             {
-                LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_DISABLEREALTIMESUPPORT);
+                LocalNetCoreRouter.Route(UI, REMOTE_DISABLEREALTIMESUPPORT);
             }
 
-            if (!RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_KILLSWITCH) ?? true)
+            if (!AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_KILLSWITCH) ?? true)
             {
-                LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_DISABLEKILLSWITCHSUPPORT);
+                LocalNetCoreRouter.Route(UI, REMOTE_DISABLEKILLSWITCHSUPPORT);
             }
 
-            if (!RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_GAMEPROTECTION) ?? true)
+            if (!AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_GAMEPROTECTION) ?? true)
             {
-                LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_DISABLEGAMEPROTECTIONSUPPORT);
+                LocalNetCoreRouter.Route(UI, REMOTE_DISABLEGAMEPROTECTIONSUPPORT);
             }
         }
 
@@ -365,7 +365,7 @@ namespace RTCV.CorruptCore
                 if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
                 {
                     SyncObjectSingleton.FormExecute(a);
-                    e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
+                    e.setReturnValue(LocalNetCoreRouter.Route(VANGUARD, REMOTE_RESUMEEMULATION, true));
                 }
                 else //We're loading on the emulator thread which'll block
                 {
@@ -379,14 +379,14 @@ namespace RTCV.CorruptCore
         {
             if ((bool?)AllSpec.VanguardSpec[VSPEC.USE_INTEGRATED_HEXEDITOR] ?? false)
             {
-                LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_OPENHEXEDITOR, true);
+                LocalNetCoreRouter.Route(VANGUARD, REMOTE_OPENHEXEDITOR, true);
             }
             else
             {
                 //Route it to the plugin if loaded
                 if (RtcCore.PluginHost.LoadedPlugins.Any(x => x.Name == "Hex Editor"))
                 {
-                    LocalNetCoreRouter.Route("HEXEDITOR", NetcoreCommands.REMOTE_OPENHEXEDITOR, true);
+                    LocalNetCoreRouter.Route("HEXEDITOR", REMOTE_OPENHEXEDITOR, true);
                 }
                 else
                 {
@@ -399,14 +399,14 @@ namespace RTCV.CorruptCore
         {
             if ((bool?)AllSpec.VanguardSpec[VSPEC.USE_INTEGRATED_HEXEDITOR] ?? false)
             {
-                LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.EMU_OPEN_HEXEDITOR_ADDRESS, objectValue, true);
+                LocalNetCoreRouter.Route(VANGUARD, EMU_OPEN_HEXEDITOR_ADDRESS, objectValue, true);
             }
             else
             {
                 //Route it to the plugin if loaded
                 if (RtcCore.PluginHost.LoadedPlugins.Any(x => x.Name == "Hex Editor"))
                 {
-                    LocalNetCoreRouter.Route("HEXEDITOR", NetcoreCommands.EMU_OPEN_HEXEDITOR_ADDRESS, objectValue, true);
+                    LocalNetCoreRouter.Route("HEXEDITOR", EMU_OPEN_HEXEDITOR_ADDRESS, objectValue, true);
                 }
                 else
                 {
@@ -453,7 +453,7 @@ namespace RTCV.CorruptCore
                 SyncObjectSingleton.FormExecute(a);
                 if (resumeAfter)
                 {
-                    e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
+                    e.setReturnValue(LocalNetCoreRouter.Route(VANGUARD, REMOTE_RESUMEEMULATION, true));
                 }
             }
             else
@@ -504,7 +504,7 @@ namespace RTCV.CorruptCore
             if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
             {
                 SyncObjectSingleton.FormExecute(a);
-                e.setReturnValue(LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true));
+                e.setReturnValue(LocalNetCoreRouter.Route(VANGUARD, REMOTE_RESUMEEMULATION, true));
             }
             else //We can just do everything on the emulation thread as it'll block
             {
@@ -567,7 +567,7 @@ namespace RTCV.CorruptCore
                 if (sk != null && ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false))
                 {
                     SyncObjectSingleton.FormExecute(a);
-                    LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RESUMEEMULATION, true);
+                    LocalNetCoreRouter.Route(VANGUARD, REMOTE_RESUMEEMULATION, true);
                 }
                 else //We can just do everything on the emulation thread as it'll block
                 {
@@ -589,7 +589,7 @@ namespace RTCV.CorruptCore
                     }
                     catch (Exception e)
                     {
-                        RTCV.Common.Logging.GlobalLogger.Error(e, "Unable to find plugin dir in {dir}", RtcCore.EmuDir + "\\RTC" + "\\PLUGINS");
+                        Common.Logging.GlobalLogger.Error(e, "Unable to find plugin dir in {dir}", RtcCore.EmuDir + "\\RTC" + "\\PLUGINS");
                     }
                     RtcCore.LoadPlugins(new[] { RtcCore.PluginDir,  emuPluginDir });
                 });

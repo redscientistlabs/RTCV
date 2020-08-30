@@ -5,7 +5,7 @@ namespace RTCV.CorruptCore
     using Ceras;
 
     [Serializable]
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     public class SaveStateKey
     {
         public StashKey StashKey { get; set; }
@@ -19,7 +19,7 @@ namespace RTCV.CorruptCore
     }
 
     [Serializable]
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     public class SaveStateKeys
     {
         public string VanguardImplementation { get; set; }
@@ -30,7 +30,7 @@ namespace RTCV.CorruptCore
         {
             StashKeys = new List<StashKey>();
             Text = new List<string>();
-            VanguardImplementation = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "ERROR";
+            VanguardImplementation = (string)NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "ERROR";
         }
     }
 }

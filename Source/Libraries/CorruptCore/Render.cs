@@ -13,18 +13,18 @@ namespace RTCV.CorruptCore
 
         public static bool IsRendering
         {
-            get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.RENDER_ISRENDERING];
+            get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.RENDER_ISRENDERING];
             set
             {
-                RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_ISRENDERING, value);
+                AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_ISRENDERING, value);
                 LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_RENDER_DISPLAY);
             }
         }
 
         public static RENDERTYPE RenderType
         {
-            get => (RENDERTYPE)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.RENDER_RENDERTYPE];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_RENDERTYPE, value);
+            get => (RENDERTYPE)AllSpec.CorruptCoreSpec[RTCSPEC.RENDER_RENDERTYPE];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_RENDERTYPE, value);
         }
 
         public static IRenderer Renderer = null;
