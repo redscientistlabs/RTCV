@@ -10,9 +10,9 @@ namespace RTCV.UI.Forms
             {
                 Text = title
             };
-            form.label1.Text = promptText;
+            form.label.Text = promptText;
             var result = form.ShowDialog();
-            value = form.textBox1.Text;
+            value = form.inputTextBox.Text;
             return result;
         }
 
