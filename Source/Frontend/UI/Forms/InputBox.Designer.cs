@@ -82,6 +82,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "InputBox";
+            this.ShowIcon = false;
             this.Text = "InputBox";
             this.ResumeLayout(false);
             this.PerformLayout();
