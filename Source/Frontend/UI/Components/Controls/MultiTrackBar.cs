@@ -5,6 +5,16 @@
     using System.ComponentModel;
     using System.Windows.Forms;
 
+    public class ValueUpdateEventArgs : EventArgs
+    {
+        public long value;
+
+        public ValueUpdateEventArgs(long _value)
+        {
+            value = _value;
+        }
+    }
+
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class MultiTrackBar : UserControl
     {
@@ -358,16 +368,6 @@
             int tbValue = nmValueToTbValueQuadScale(nmControlValue.Value);
 
             PropagateValue(nmValue, tbValue, nmControlValue);
-        }
-
-        public class ValueUpdateEventArgs : EventArgs
-        {
-            public long value;
-
-            public ValueUpdateEventArgs(long _value)
-            {
-                value = _value;
-            }
         }
 
         private void tbControlValue_Scroll(object sender, EventArgs e)
