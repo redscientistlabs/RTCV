@@ -4,8 +4,8 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Windows.Forms;
-    using NetCore;
-    using Extensions;
+    using RTCV.NetCore;
+    using RTCV.CorruptCore.Extensions;
 
     public static class StockpileManager_EmuSide
     {
@@ -30,7 +30,7 @@
             StashKey.SetCore(sk);
             LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_LOADROM, sk.RomFilename, true);
 
-            string ss = (string)AllSpec.VanguardSpec[VSPEC.SYNCSETTINGS];
+            string ss = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.SYNCSETTINGS];
             //If the syncsettings are different, update them and load it again. Otheriwse, leave as is
             if (sk.SyncSettings != ss && sk.SyncSettings != null)
             {
@@ -163,8 +163,8 @@
 
             bl.Layer.AddRange(StepActions.GetRawBlastLayer().Layer);
 
-            string thisSystem = (string)AllSpec.VanguardSpec[VSPEC.SYSTEM];
-            string romFilename = (string)AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME];
+            string thisSystem = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.SYSTEM];
+            string romFilename = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME];
 
             var rp = MemoryDomains.GetRomParts(thisSystem, romFilename);
 

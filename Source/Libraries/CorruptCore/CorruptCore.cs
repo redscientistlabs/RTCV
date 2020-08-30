@@ -1004,19 +1004,20 @@ namespace RTCV.CorruptCore
 
         public static void GenerateAndBlast()
         {
-            void GenerateAndBlast()
+            BlastLayer bl = null;
+            void _generateAndBlast()
             {
-                BlastLayer bl = GenerateBlastLayerOnAllThreads();
+                bl = GenerateBlastLayerOnAllThreads();
                 bl?.Apply(false, true);
             }
             //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
             if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
             {
-                SyncObjectSingleton.FormExecute(GenerateAndBlast);
+                SyncObjectSingleton.FormExecute(_generateAndBlast);
             }
             else //We can just do everything on the emulation thread as it'll block
             {
-                SyncObjectSingleton.EmuThreadExecute(GenerateAndBlast, true);
+                SyncObjectSingleton.EmuThreadExecute(_generateAndBlast, true);
             }
         }
 
@@ -1032,19 +1033,16 @@ namespace RTCV.CorruptCore
             ProgressBarHandler?.Invoke(sender, e);
         }
 
-        //This code is called from a Vanguard implementation. It is not unused.
         public static void LOAD_GAME_DONE()
         {
             LoadGameDone?.Invoke(null, null);
         }
 
-        //This code is called from a Vanguard implementation. It is not unused.
         public static void GAME_CLOSED(bool fullyClosed = false)
         {
             GameClosed?.Invoke(null, new GameClosedEventArgs(fullyClosed));
         }
 
-        //This code is called from a Vanguard implementation. It is not unused.
         public static void KILL_HEX_EDITOR()
         {
         }

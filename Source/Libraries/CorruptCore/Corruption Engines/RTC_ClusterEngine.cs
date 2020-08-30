@@ -1,7 +1,7 @@
 namespace RTCV.CorruptCore
 {
     using System.Collections.Generic;
-    using NetCore;
+    using RTCV.NetCore;
 
     public static class RTC_ClusterEngine
     {

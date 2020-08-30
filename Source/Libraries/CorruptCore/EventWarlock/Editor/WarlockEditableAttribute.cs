@@ -5,7 +5,7 @@ namespace RTCV.CorruptCore.EventWarlock.Editor
     /// <summary>
     /// Used to link parameters to constructor arguments for the editor
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
+    [System.AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
     public sealed class WarlockEditableAttribute : Attribute
     {
         readonly string customEditorID;

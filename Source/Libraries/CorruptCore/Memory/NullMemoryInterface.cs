@@ -4,10 +4,10 @@ namespace RTCV.CorruptCore
     using Ceras;
 
     [Serializable]
-    [MemberConfig(TargetMember.All)]
+    [Ceras.MemberConfig(TargetMember.All)]
     public sealed class NullMemoryInterface : MemoryInterface
     {
-        [Exclude]
+        [Ceras.Exclude]
         public override long Size { get; set; }
 
         public override string ToString()

@@ -1,6 +1,6 @@
 namespace RTCV.CorruptCore
 {
-    using NetCore;
+    using RTCV.NetCore;
 
     public static class RTC_VectorEngine
     {

@@ -4,7 +4,7 @@ namespace RTCV.CorruptCore
     using Ceras;
 
     [Serializable]
-    [MemberConfig(TargetMember.All)]
+    [Ceras.MemberConfig(TargetMember.All)]
     public abstract class MemoryInterface
     {
         public virtual long Size { get; set; }

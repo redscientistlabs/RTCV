@@ -11,12 +11,12 @@ namespace RTCV.CorruptCore
     using Ceras;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
-    using Common.CustomExtensions;
-    using Extensions;
+    using RTCV.Common.CustomExtensions;
+    using RTCV.CorruptCore.Extensions;
     using Exception = System.Exception;
 
     [Serializable]
-    [MemberConfig(TargetMember.All)]
+    [Ceras.MemberConfig(TargetMember.All)]
     public class BlastUnit : INote
     {
         public object Clone()
@@ -169,7 +169,7 @@ namespace RTCV.CorruptCore
         [Category("Value")]
         [Description("Gets and sets Value[] through a string. Used for Textboxes")]
         [DisplayName("ValueString")]
-        [Exclude]
+        [Ceras.Exclude]
         public string ValueString
         {
             get
@@ -250,7 +250,7 @@ namespace RTCV.CorruptCore
         public string Note { get; set; }
 
         //Don't serialize this
-        [NonSerialized, XmlIgnore, JsonIgnore, Exclude]
+        [NonSerialized, XmlIgnore, JsonIgnore, Ceras.Exclude]
         public BlastUnitWorkingData Working;
 
         /// <summary>
@@ -576,7 +576,7 @@ namespace RTCV.CorruptCore
                         throw new Exception("wtf");
                     }
 
-                    Common.Logging.GlobalLogger.Error("Blastunit: WORKING WAS NULL {this}", this);
+                    RTCV.Common.Logging.GlobalLogger.Error("Blastunit: WORKING WAS NULL {this}", this);
                     return ExecuteState.SILENTERROR;
                 }
                 switch (Source)
@@ -585,7 +585,7 @@ namespace RTCV.CorruptCore
                         {
                             if (Working.StoreData == null)
                             {
-                                Common.Logging.GlobalLogger.Error("Blastunit: STOREDATA WAS NULL {this}", this);
+                                RTCV.Common.Logging.GlobalLogger.Error("Blastunit: STOREDATA WAS NULL {this}", this);
                                 return ExecuteState.SILENTERROR;
                             }
 
@@ -924,7 +924,7 @@ namespace RTCV.CorruptCore
             }
             else if (Source == BlastUnitSource.STORE)
             {
-                string[] _selectedDomains = (string[])NetCore.AllSpec.UISpec["SELECTEDDOMAINS"];
+                string[] _selectedDomains = (string[])RTCV.NetCore.AllSpec.UISpec["SELECTEDDOMAINS"];
 
                 //Always reroll domain before address
                 if (RtcCore.RerollSourceDomain)

@@ -9,7 +9,7 @@ namespace RTCV.CorruptCore
     [XmlInclude(typeof(BlastLayer))]
     [XmlInclude(typeof(BlastUnit))]
     [Serializable]
-    [MemberConfig(TargetMember.All)]
+    [Ceras.MemberConfig(TargetMember.All)]
     public class VmdPrototype
     {
         public string VmdName { get; set; }

@@ -28,9 +28,9 @@ namespace RTCV.CorruptCore
 
         public SaveStateKeys()
         {
-            VanguardImplementation = (string)NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "ERROR";
             StashKeys = new List<StashKey>();
             Text = new List<string>();
+            VanguardImplementation = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "ERROR";
         }
     }
 }

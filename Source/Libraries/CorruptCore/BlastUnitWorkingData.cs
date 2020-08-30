@@ -8,7 +8,7 @@ namespace RTCV.CorruptCore
     /// Working data for BlastUnits.
     /// Not serialized
     /// </summary>
-    [MemberConfig(TargetMember.None)]
+    [Ceras.MemberConfig(TargetMember.None)]
     public class BlastUnitWorkingData
     {
         //We Calculate a LastFrame at the beginning of execute

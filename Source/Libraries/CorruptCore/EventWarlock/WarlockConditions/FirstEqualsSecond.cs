@@ -1,8 +1,8 @@
 namespace RTCV.CorruptCore.EventWarlock.WarlockConditions
 {
     using System;
-    using EventWarlock;
-    using Editor;
+    using RTCV.CorruptCore.EventWarlock;
+    using RTCV.CorruptCore.EventWarlock.Editor;
 
     /// <summary>
     /// Example conditional
