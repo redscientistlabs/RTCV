@@ -4,6 +4,7 @@
     using System.Drawing;
     using System.Windows.Forms;
     using RTCV.UI.Extensions;
+    using RTCV.UI.Modular;
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class UI_ShadowPanel : Form
