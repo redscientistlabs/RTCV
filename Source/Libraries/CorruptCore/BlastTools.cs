@@ -5,7 +5,7 @@
     using System.IO;
     using System.Windows.Forms;
     using Newtonsoft.Json;
-    using RTCV.CorruptCore.Extensions;
+    using Extensions;
 
     public static class BlastTools
     {
@@ -153,8 +153,8 @@
         {
             BlastLayer bl = new BlastLayer();
 
-            string thisSystem = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.SYSTEM];
-            string romFilename = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME];
+            string thisSystem = (string)NetCore.AllSpec.VanguardSpec[VSPEC.SYSTEM];
+            string romFilename = (string)NetCore.AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME];
 
             var rp = MemoryDomains.GetRomParts(thisSystem, romFilename);
 

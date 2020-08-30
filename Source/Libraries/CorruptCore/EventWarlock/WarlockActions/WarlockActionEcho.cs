@@ -1,7 +1,7 @@
 namespace RTCV.CorruptCore.EventWarlock.WarlockActions
 {
     using System;
-    using RTCV.CorruptCore.EventWarlock.Editor;
+    using Editor;
 
     /// <summary>
     /// Example action

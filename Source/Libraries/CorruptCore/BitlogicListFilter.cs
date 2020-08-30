@@ -7,10 +7,10 @@ namespace RTCV.CorruptCore
     using System.Security.Cryptography;
     using System.Windows.Forms;
     using Ceras;
-    using RTCV.CorruptCore.Extensions;
+    using Extensions;
 
     [Serializable]
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     public class BitlogicListFilter : IListFilter
     {
         List<BitlogicFilterEntry> entries = new List<BitlogicFilterEntry>();
@@ -387,7 +387,7 @@ namespace RTCV.CorruptCore
     /// Represents an entry for bit filter list.
     /// </summary>
     [Serializable]
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     public class BitlogicFilterEntry
     {
         ulong template;

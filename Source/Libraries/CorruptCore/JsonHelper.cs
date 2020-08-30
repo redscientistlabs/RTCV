@@ -2,7 +2,7 @@ namespace RTCV.CorruptCore
 {
     using System.IO;
     using Newtonsoft.Json;
-    using RTCV.NetCore.SafeJsonTypeSerialization;
+    using NetCore.SafeJsonTypeSerialization;
 
     public static class JsonHelper
     {

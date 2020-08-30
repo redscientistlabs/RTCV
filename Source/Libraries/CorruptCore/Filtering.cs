@@ -7,9 +7,9 @@ namespace RTCV.CorruptCore
     using System.Linq;
     using System.Threading.Tasks;
     using System.Windows.Forms;
-    using RTCV.Common;
-    using RTCV.CorruptCore.Extensions;
-    using RTCV.NetCore;
+    using Common;
+    using Extensions;
+    using NetCore;
 
     public static class Filtering
     {
@@ -17,20 +17,20 @@ namespace RTCV.CorruptCore
 
         public static ConcurrentDictionary<string, IListFilter> Hash2LimiterDico
         {
-            get => (ConcurrentDictionary<string, IListFilter>)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2LIMITERDICO];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.FILTERING_HASH2VALUEDICO, value);
+            get => (ConcurrentDictionary<string, IListFilter>)AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2LIMITERDICO];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.FILTERING_HASH2VALUEDICO, value);
         }
 
         public static ConcurrentDictionary<string, IListFilter> Hash2ValueDico
         {
-            get => (ConcurrentDictionary<string, IListFilter>)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2VALUEDICO];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.FILTERING_HASH2VALUEDICO, value);
+            get => (ConcurrentDictionary<string, IListFilter>)AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2VALUEDICO];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.FILTERING_HASH2VALUEDICO, value);
         }
 
         public static ConcurrentDictionary<string, string> Hash2NameDico
         {
-            get => (ConcurrentDictionary<string, string>)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2NAMEDICO];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.FILTERING_HASH2NAMEDICO, value);
+            get => (ConcurrentDictionary<string, string>)AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2NAMEDICO];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.FILTERING_HASH2NAMEDICO, value);
         }
 
         public static int StockpileListCount = 0;
@@ -106,7 +106,7 @@ namespace RTCV.CorruptCore
             PartialSpec update = new PartialSpec("RTCSpec");
             update[RTCSPEC.FILTERING_HASH2LIMITERDICO] = Hash2LimiterDico;
             update[RTCSPEC.FILTERING_HASH2VALUEDICO] = Hash2ValueDico;
-            RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(update);
+            AllSpec.CorruptCoreSpec.Update(update);
 
             return h.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value).Keys.ToList(); //Return the hashes ordered by their name
         }
@@ -198,7 +198,7 @@ namespace RTCV.CorruptCore
                 update[RTCSPEC.FILTERING_HASH2LIMITERDICO] = Hash2LimiterDico;
                 update[RTCSPEC.FILTERING_HASH2VALUEDICO] = Hash2ValueDico;
                 update[RTCSPEC.FILTERING_HASH2NAMEDICO] = Hash2NameDico;
-                RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(update);
+                AllSpec.CorruptCoreSpec.Update(update);
             }
 
             return hashStr;

@@ -3,7 +3,7 @@ namespace RTCV.CorruptCore.EventWarlock
     using System;
     using System.Collections.Generic;
 
-    [System.Serializable]
+    [Serializable]
     public class Grimoire
     {
         public string Name = null;

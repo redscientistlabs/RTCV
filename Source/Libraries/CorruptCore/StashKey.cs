@@ -70,13 +70,13 @@ namespace RTCV.CorruptCore
             ParentKey = parentkey;
             BlastLayer = blastlayer;
 
-            RomFilename = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.OPENROMFILENAME] ?? "ERROR";
-            SystemName = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.SYSTEM] ?? "ERROR";
-            SystemCore = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.SYSTEMCORE] ?? "ERROR";
-            GameName = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.GAMENAME] ?? "ERROR";
-            SyncSettings = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.SYNCSETTINGS] ?? "";
+            RomFilename = (string)AllSpec.VanguardSpec?[VSPEC.OPENROMFILENAME] ?? "ERROR";
+            SystemName = (string)AllSpec.VanguardSpec?[VSPEC.SYSTEM] ?? "ERROR";
+            SystemCore = (string)AllSpec.VanguardSpec?[VSPEC.SYSTEMCORE] ?? "ERROR";
+            GameName = (string)AllSpec.VanguardSpec?[VSPEC.GAMENAME] ?? "ERROR";
+            SyncSettings = (string)AllSpec.VanguardSpec?[VSPEC.SYNCSETTINGS] ?? "";
 
-            this.SelectedDomains = ((string[])RTCV.NetCore.AllSpec.UISpec["SELECTEDDOMAINS"]).ToList();
+            SelectedDomains = ((string[])AllSpec.UISpec["SELECTEDDOMAINS"]).ToList();
         }
 
         public object Clone()

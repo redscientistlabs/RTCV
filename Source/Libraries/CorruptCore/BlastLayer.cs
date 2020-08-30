@@ -7,10 +7,10 @@ namespace RTCV.CorruptCore
     using System.Xml.Serialization;
     using Ceras;
     using Newtonsoft.Json;
-    using RTCV.NetCore;
+    using NetCore;
     using Exception = System.Exception;
 
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     [Serializable]
     [XmlInclude(typeof(BlastUnit))]
     public class BlastLayer : ICloneable, INote

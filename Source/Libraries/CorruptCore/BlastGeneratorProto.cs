@@ -4,7 +4,7 @@ namespace RTCV.CorruptCore
     using Ceras;
 
     [Serializable]
-    [Ceras.MemberConfig(TargetMember.AllPublic)]
+    [MemberConfig(TargetMember.AllPublic)]
     public class BlastGeneratorProto : INote
     {
         public string BlastType { get; set; }

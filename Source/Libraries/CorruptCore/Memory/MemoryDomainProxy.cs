@@ -3,13 +3,13 @@ namespace RTCV.CorruptCore
     using System;
     using System.Collections.Generic;
     using Ceras;
-    using RTCV.CorruptCore.Extensions;
+    using Extensions;
 
     [Serializable]
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     public sealed class MemoryDomainProxy : MemoryInterface
     {
-        [NonSerialized, Ceras.Exclude]
+        [NonSerialized, Exclude]
         public IMemoryDomain MD = null;
 
         public override long Size { get; set; }

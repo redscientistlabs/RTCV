@@ -5,7 +5,7 @@ namespace RTCV.CorruptCore
     using System.IO;
     using System.Windows.Forms;
     using Newtonsoft.Json;
-    using RTCV.CorruptCore.Extensions;
+    using Extensions;
 
     public enum FileInterfaceIdentity
     {
@@ -82,7 +82,7 @@ namespace RTCV.CorruptCore
                     throw new FileNotFoundException("The file " + Filename + " doesn't exist! Cancelling load");
                 }
 
-                FileInfo info = new System.IO.FileInfo(Filename);
+                FileInfo info = new FileInfo(Filename);
 
                 if (info.IsReadOnly)
                 {

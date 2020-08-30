@@ -2,7 +2,7 @@ namespace RTCV.CorruptCore.EventWarlock
 {
     using System.Collections.Generic;
     using System.Linq;
-    using RTCV.CorruptCore.Coroutines;
+    using Coroutines;
 
     /// <summary>
     /// I'm a wizard?? If you rename this you can't see the magic

@@ -3,8 +3,8 @@ namespace RTCV.CorruptCore
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows.Forms;
-    using RTCV.NetCore;
-    using RTCV.CorruptCore.Extensions;
+    using NetCore;
+    using Extensions;
 
     public static class BlastDiff
     {
@@ -17,7 +17,7 @@ namespace RTCV.CorruptCore
 
             (Corrupt as FileInterface).getMemoryDump(); //gotta cache it otherwise it's going to be super slow
 
-            string[] selectedDomains = RTCV.NetCore.AllSpec.UISpec["SELECTEDDOMAINS"] as string[];
+            string[] selectedDomains = AllSpec.UISpec["SELECTEDDOMAINS"] as string[];
 
             if (selectedDomains == null || selectedDomains.Length == 0)
             {
