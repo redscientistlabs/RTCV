@@ -4,6 +4,7 @@ namespace RTCV.UI
     using System.Linq;
     using RTCV.CorruptCore;
     using RTCV.NetCore;
+    using RTCV.NetCore.Enums;
     using RTCV.Common;
     using RTCV.UI.Modular;
 

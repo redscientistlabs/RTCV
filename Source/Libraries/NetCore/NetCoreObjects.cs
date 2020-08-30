@@ -2,22 +2,6 @@ namespace RTCV.NetCore
 {
     using System;
 
-    public enum NetworkSide
-    {
-        NONE,
-        CLIENT,
-        SERVER
-    }
-
-    public enum NetworkStatus
-    {
-        DISCONNECTED,
-        CONNECTIONLOST,
-        CONNECTING,
-        CONNECTED,
-        LISTENING
-    }
-
     public class NetCoreReceiver
     {
         public bool Attached = false;

@@ -3,6 +3,7 @@ namespace RTCV.NetCore
     using System;
     using System.Linq;
     using System.Threading;
+    using RTCV.NetCore.Enums;
 
     public class NetCoreConnector : IRoutable, IDisposable
     {

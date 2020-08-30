@@ -8,6 +8,7 @@ namespace RTCV.UI
     using System.Windows.Forms;
     using RTCV.CorruptCore;
     using RTCV.NetCore;
+    using RTCV.NetCore.Enums;
     using RTCV.Common;
     using RTCV.UI.Extensions;
     using RTCV.UI.Modular;
