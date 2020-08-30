@@ -12,7 +12,7 @@ namespace RTCV.CorruptCore
             CurrentTask = text;
             Progress = progress;
 
-            RTCV.Common.Logging.GlobalLogger.Log(NLog.LogLevel.Info, $"ProgressBarEventArgs: {text}");
+            Common.Logging.GlobalLogger.Log(NLog.LogLevel.Info, $"ProgressBarEventArgs: {text}");
         }
     }
 }

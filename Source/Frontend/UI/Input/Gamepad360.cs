@@ -74,7 +74,7 @@ namespace RTCV.UI.Input
 
                     //don't remove this code. it's important to catch errors on systems with broken xinput installs.
                     //(probably, checking for the library was adequate, but lets not get rid of this anyway)
-                    var test = new SlimDX.XInput.Controller(UserIndex.One).IsConnected;
+                    var test = new Controller(UserIndex.One).IsConnected;
                     _isAvailable = true;
                 }
             }

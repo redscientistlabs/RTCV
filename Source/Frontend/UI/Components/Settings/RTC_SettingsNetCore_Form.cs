@@ -40,7 +40,7 @@
                     break;
             }
 
-            RTCV.NetCore.Params.SetParam("CRASHSOUND", cbCrashSoundEffect.SelectedIndex.ToString());
+            NetCore.Params.SetParam("CRASHSOUND", cbCrashSoundEffect.SelectedIndex.ToString());
         }
 
         private void nmGameProtectionDelay_ValueChanged(object sender, KeyPressEventArgs e)

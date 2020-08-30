@@ -156,7 +156,7 @@ namespace RTCV.UI
         }
         private static bool IsControlDown()
         {
-            return (Control.ModifierKeys & Keys.Control) != 0;
+            return (ModifierKeys & Keys.Control) != 0;
         }
 
         private void dgvStockpile_MouseDown(object sender, MouseEventArgs e)
@@ -332,7 +332,7 @@ namespace RTCV.UI
 
         public void RemoveSelected()
         {
-            if (Control.ModifierKeys == Keys.Control || (dgvStockpile.SelectedRows.Count != 0 && (MessageBox.Show("Are you sure you want to remove the selected stockpile entries?", "Delete Stockpile Entry?", MessageBoxButtons.YesNo) == DialogResult.Yes)))
+            if (ModifierKeys == Keys.Control || (dgvStockpile.SelectedRows.Count != 0 && (MessageBox.Show("Are you sure you want to remove the selected stockpile entries?", "Delete Stockpile Entry?", MessageBoxButtons.YesNo) == DialogResult.Yes)))
             {
                 foreach (DataGridViewRow row in dgvStockpile.SelectedRows)
                 {
@@ -481,7 +481,7 @@ namespace RTCV.UI
 
         private async void SaveStockpile(Stockpile sks, string path)
         {
-            logger.Trace("Entering SaveStockpile {0}\n{1}", System.Threading.Thread.CurrentThread.ManagedThreadId, Environment.StackTrace);
+            logger.Trace("Entering SaveStockpile {0}\n{1}", Thread.CurrentThread.ManagedThreadId, Environment.StackTrace);
             var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
             try
             {
@@ -492,7 +492,7 @@ namespace RTCV.UI
                 S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
                 ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
 
-                var r = await Task.Run(() => Stockpile.Save(sks, path, RTCV.NetCore.Params.IsParamSet("INCLUDE_REFERENCED_FILES"), RTCV.NetCore.Params.IsParamSet("COMPRESS_STOCKPILE")));
+                var r = await Task.Run(() => Stockpile.Save(sks, path, NetCore.Params.IsParamSet("INCLUDE_REFERENCED_FILES"), NetCore.Params.IsParamSet("COMPRESS_STOCKPILE")));
 
                 if (r)
                 {
@@ -512,8 +512,8 @@ namespace RTCV.UI
 
         private void btnLoadStockpile_Click(object sender, MouseEventArgs e)
         {
-            logger.Trace("Entering LoadStockpile {0}", System.Threading.Thread.CurrentThread.ManagedThreadId);
-            CorruptCore.RtcCore.CheckForProblematicProcesses();
+            logger.Trace("Entering LoadStockpile {0}", Thread.CurrentThread.ManagedThreadId);
+            RtcCore.CheckForProblematicProcesses();
 
             Point locate = new Point(((Control)sender).Location.X + e.Location.X, ((Control)sender).Location.Y + e.Location.Y);
 
@@ -576,7 +576,7 @@ namespace RTCV.UI
                 finally
                 {
                 }
-            })).Enabled = (File.Exists(Path.Combine(CorruptCore.RtcCore.EmuDir, "backup_config.ini")));
+            })).Enabled = (File.Exists(Path.Combine(RtcCore.EmuDir, "backup_config.ini")));
 
             loadMenuItems.Show(this, locate);
         }
@@ -806,27 +806,27 @@ namespace RTCV.UI
 
             ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Compress Stockpiles", null, new EventHandler((ob, ev) =>
             {
-                if (RTCV.NetCore.Params.IsParamSet("COMPRESS_STOCKPILE"))
+                if (NetCore.Params.IsParamSet("COMPRESS_STOCKPILE"))
                 {
-                    RTCV.NetCore.Params.RemoveParam("COMPRESS_STOCKPILE");
+                    NetCore.Params.RemoveParam("COMPRESS_STOCKPILE");
                 }
                 else
                 {
-                    RTCV.NetCore.Params.SetParam("COMPRESS_STOCKPILE");
+                    NetCore.Params.SetParam("COMPRESS_STOCKPILE");
                 }
-            }))).Checked = RTCV.NetCore.Params.IsParamSet("COMPRESS_STOCKPILE");
+            }))).Checked = NetCore.Params.IsParamSet("COMPRESS_STOCKPILE");
 
             ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Include referenced files", null, new EventHandler((ob, ev) =>
             {
-                if (RTCV.NetCore.Params.IsParamSet("INCLUDE_REFERENCED_FILES"))
+                if (NetCore.Params.IsParamSet("INCLUDE_REFERENCED_FILES"))
                 {
-                    RTCV.NetCore.Params.RemoveParam("INCLUDE_REFERENCED_FILES");
+                    NetCore.Params.RemoveParam("INCLUDE_REFERENCED_FILES");
                 }
                 else
                 {
-                    RTCV.NetCore.Params.SetParam("INCLUDE_REFERENCED_FILES");
+                    NetCore.Params.SetParam("INCLUDE_REFERENCED_FILES");
                 }
-            }))).Checked = RTCV.NetCore.Params.IsParamSet("INCLUDE_REFERENCED_FILES");
+            }))).Checked = NetCore.Params.IsParamSet("INCLUDE_REFERENCED_FILES");
 
             ghSettingsMenu.Show(this, locate);
         }

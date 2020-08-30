@@ -371,7 +371,7 @@ namespace RTCV.UI.Components
         {
             if (this.Hexadecimal)
             {
-                var valueulong = System.Convert.ToUInt64(value);
+                var valueulong = Convert.ToUInt64(value);
                 return valueulong.ToString("X");
             }
             else
@@ -381,8 +381,8 @@ namespace RTCV.UI.Components
                 var formattedNumber = formattedValue as string;
                 if (!string.IsNullOrEmpty(formattedNumber) && value != null)
                 {
-                    var unformattedDecimal = System.Convert.ToDecimal(value);
-                    var formattedDecimal = System.Convert.ToDecimal(formattedNumber);
+                    var unformattedDecimal = Convert.ToDecimal(value);
+                    var formattedDecimal = Convert.ToDecimal(formattedNumber);
                     if (unformattedDecimal == formattedDecimal)
                     {
                         // The base implementation of GetFormattedValue (which triggers the CellFormatting event) did nothing else than
@@ -451,7 +451,7 @@ namespace RTCV.UI.Components
         /// </summary>
         public override bool KeyEntersEditMode(KeyEventArgs e)
         {
-            NumberFormatInfo numberFormatInfo = System.Globalization.CultureInfo.CurrentCulture.NumberFormat;
+            NumberFormatInfo numberFormatInfo = CultureInfo.CurrentCulture.NumberFormat;
             Keys negativeSignKey = Keys.None;
             var negativeSignStr = numberFormatInfo.NegativeSign;
             if (!string.IsNullOrEmpty(negativeSignStr) && negativeSignStr.Length == 1)
@@ -716,7 +716,7 @@ namespace RTCV.UI.Components
             var cellValue = GetValue(rowIndex);
             if (cellValue != null)
             {
-                var currentValue = System.Convert.ToDecimal(cellValue);
+                var currentValue = Convert.ToDecimal(cellValue);
                 var constrainedValue = Constrain(currentValue);
                 if (constrainedValue != currentValue)
                 {
@@ -747,7 +747,7 @@ namespace RTCV.UI.Components
             {
                 if (Hexadecimal)
                 {
-                    var currentValue = System.Convert.ToDecimal(cellValue);
+                    var currentValue = Convert.ToDecimal(cellValue);
                     var constrainedValue = Constrain(currentValue);
                     if (constrainedValue != currentValue)
                     {
@@ -756,7 +756,7 @@ namespace RTCV.UI.Components
                 }
                 else
                 {
-                    var currentValue = System.Convert.ToDecimal(cellValue);
+                    var currentValue = Convert.ToDecimal(cellValue);
                     var constrainedValue = Constrain(currentValue);
                     if (constrainedValue != currentValue)
                     {

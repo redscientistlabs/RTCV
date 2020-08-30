@@ -17,7 +17,7 @@
             InitializeComponent();
             popoutAllowed = true;
 
-            multiTB_Intensity.ValueChanged += (sender, args) => CorruptCore.RtcCore.Intensity = multiTB_Intensity.Value;
+            multiTB_Intensity.ValueChanged += (sender, args) => RtcCore.Intensity = multiTB_Intensity.Value;
         }
 
         private void RTC_GlitchHarvesterIntensity_Form_Shown(object sender, EventArgs e)

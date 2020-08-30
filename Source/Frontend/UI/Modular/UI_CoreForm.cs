@@ -32,7 +32,7 @@ namespace RTCV.UI
 
         public bool AutoCorrupt
         {
-            get => CorruptCore.RtcCore.AutoCorrupt;
+            get => RtcCore.AutoCorrupt;
             set
             {
                 if (value)
@@ -46,7 +46,7 @@ namespace RTCV.UI
                     S.GET<RTC_SimpleMode_Form>().btnAutoCorrupt.Text = " Start Auto-Corrupt";
                 }
 
-                CorruptCore.RtcCore.AutoCorrupt = value;
+                RtcCore.AutoCorrupt = value;
             }
         }
 
@@ -99,9 +99,9 @@ namespace RTCV.UI
 
         private void UI_CoreForm_Load(object sender, EventArgs e)
         {
-            btnLogo.Text = "RTCV " + CorruptCore.RtcCore.RtcVersion;
+            btnLogo.Text = "RTCV " + RtcCore.RtcVersion;
 
-            if (!NetCore.Params.IsParamSet("DISCLAIMER_READ"))
+            if (!Params.IsParamSet("DISCLAIMER_READ"))
             {
                 string disclaimer = @"Welcome to the Real-Time Corruptor
 Version [ver]
@@ -121,7 +121,7 @@ Known facts(and warnings):
 
 This message only appears once.";
 
-                string disclaimerPath = Path.Combine(CorruptCore.RtcCore.RtcDir, "LICENSES", "DISCLAIMER.TXT");
+                string disclaimerPath = Path.Combine(RtcCore.RtcDir, "LICENSES", "DISCLAIMER.TXT");
 
                 //Use the text file if it exists
                 if (File.Exists(disclaimerPath))
@@ -129,14 +129,14 @@ This message only appears once.";
                     disclaimer = File.ReadAllText(disclaimerPath);
                 }
 
-                S.GET<RTC_Intro_Form>().DisplayRtcvDisclaimer(disclaimer.Replace("[ver]", CorruptCore.RtcCore.RtcVersion));
+                S.GET<RTC_Intro_Form>().DisplayRtcvDisclaimer(disclaimer.Replace("[ver]", RtcCore.RtcVersion));
                 //MessageBox.Show(disclaimer.Replace("[ver]", CorruptCore.RtcCore.RtcVersion), "RTC", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                NetCore.Params.SetParam("DISCLAIMER_READ");
+                Params.SetParam("DISCLAIMER_READ");
 
                 if (S.GET<RTC_Intro_Form>().selection == IntroAction.SIMPLEMODE)
                 {
-                    NetCore.Params.SetParam("SIMPLE_MODE"); //Set RTC in Simple Mode
+                    Params.SetParam("SIMPLE_MODE"); //Set RTC in Simple Mode
 
                     if (UI_VanguardImplementation.connector.netConn.status == NetworkStatus.CONNECTED)
                     {
@@ -146,11 +146,11 @@ This message only appears once.";
                     }
                 }
 
-                NetCore.Params.SetParam("COMPRESS_STOCKPILE"); //Default param
-                NetCore.Params.SetParam("INCLUDE_REFERENCED_FILES"); //Default param
+                Params.SetParam("COMPRESS_STOCKPILE"); //Default param
+                Params.SetParam("INCLUDE_REFERENCED_FILES"); //Default param
             }
 
-            CorruptCore.RtcCore.DownloadProblematicProcesses();
+            RtcCore.DownloadProblematicProcesses();
 
             //UI_DefaultGrids.engineConfig.LoadToMain();
         }
@@ -272,7 +272,7 @@ This message only appears once.";
 
         public void btnEngineConfig_Click(object sender, EventArgs e)
         {
-            if (NetCore.Params.IsParamSet("SIMPLE_MODE"))
+            if (Params.IsParamSet("SIMPLE_MODE"))
             {
                 UI_DefaultGrids.simpleMode.LoadToMain();
                 RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
@@ -313,7 +313,7 @@ This message only appears once.";
             AutoCorrupt = !AutoCorrupt;
             if (AutoCorrupt)
             {
-                RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_RUNBEFORE, true);
+                AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_RUNBEFORE, true);
             }
         }
 
@@ -349,7 +349,7 @@ This message only appears once.";
 
                 smForm.EnteringSimpleMode();
             }))).Enabled = !simpleModeVisible;
-            (easyButtonMenu.Items.Add("Start Auto-Corrupt with Recommended Settings for loaded game", null, new EventHandler(((ob, ev) => {UI_CoreForm.StartEasyMode(true); })))).Enabled = ((bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] == true) && !simpleModeVisible;
+            (easyButtonMenu.Items.Add("Start Auto-Corrupt with Recommended Settings for loaded game", null, new EventHandler(((ob, ev) => {StartEasyMode(true); })))).Enabled = ((bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] == true) && !simpleModeVisible;
             easyButtonMenu.Items.Add(new ToolStripSeparator());
             //EasyButtonMenu.Items.Add("Watch a tutorial video", null, new EventHandler((ob,ev) => Process.Start("https://www.youtube.com/watch?v=sIELpn4-Umw"))).Enabled = false;
             easyButtonMenu.Items.Add("Open the online wiki", null, new EventHandler((ob, ev) => Process.Start("https://corrupt.wiki/")));
@@ -362,15 +362,15 @@ This message only appears once.";
         }
 
         private int settingsRightClickTimer = 0;
-        private System.Windows.Forms.Timer testErrorTimer = null;
+        private Timer testErrorTimer = null;
 
         public void btnSettings_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
-                if (testErrorTimer == null && !RTCV.NetCore.Params.IsParamSet("DEBUG_FETCHMODE"))
+                if (testErrorTimer == null && !Params.IsParamSet("DEBUG_FETCHMODE"))
                 {
-                    testErrorTimer = new System.Windows.Forms.Timer
+                    testErrorTimer = new Timer
                     {
                         Interval = 3000
                     };
@@ -383,7 +383,7 @@ This message only appears once.";
                 Point locate = e.GetMouseLocation(sender);
                 ContextMenuStrip columnsMenu = new ContextMenuStrip();
 
-                if (RTCV.NetCore.Params.IsParamSet("DEBUG_FETCHMODE") || settingsRightClickTimer > 2)
+                if (Params.IsParamSet("DEBUG_FETCHMODE") || settingsRightClickTimer > 2)
                 {
                     columnsMenu.Items.Add("Open Debug window", null, new EventHandler((ob, ev) =>
                     {
@@ -499,7 +499,7 @@ This message only appears once.";
             if (useTemplate)
             {
                 //Put Console templates HERE
-                string thisSystem = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.SYSTEM];
+                string thisSystem = (string)AllSpec.VanguardSpec[VSPEC.SYSTEM];
 
                 switch (thisSystem)
                 {
@@ -634,7 +634,7 @@ This message only appears once.";
 
             var ex = new Exception("SECRET CRASH DONT TELL ANYONE\n" + image);
 
-            Form error = new RTCV.NetCore.CloudDebug(ex, true);
+            Form error = new CloudDebug(ex, true);
             var result = error.ShowDialog();
         }
 

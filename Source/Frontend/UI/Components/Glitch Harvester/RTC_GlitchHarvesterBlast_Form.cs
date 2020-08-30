@@ -197,7 +197,7 @@ namespace RTCV.UI
             {
                 SetBlastButtonVisibility(false);
 
-                var domains = RTCV.NetCore.AllSpec.UISpec["SELECTEDDOMAINS"] as string[];
+                var domains = AllSpec.UISpec["SELECTEDDOMAINS"] as string[];
                 if (domains == null || domains.Length == 0)
                 {
                     MessageBox.Show("Can't corrupt with no domains selected.");
@@ -234,7 +234,7 @@ namespace RTCV.UI
 
                 if (ghMode == GlitchHarvesterMode.CORRUPT)
                 {
-                    string romFilename = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME];
+                    string romFilename = (string)AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME];
 
                     if (romFilename?.Contains("|") ?? false)
                     {
@@ -294,7 +294,7 @@ namespace RTCV.UI
 
         private void btnOpenRenderFolder_Click(object sender, EventArgs e)
         {
-            Process.Start(Path.Combine(CorruptCore.RtcCore.RtcDir, "RENDEROUTPUT"));
+            Process.Start(Path.Combine(RtcCore.RtcDir, "RENDEROUTPUT"));
         }
 
         private void BlastRawStash()
@@ -329,7 +329,7 @@ namespace RTCV.UI
             {
                 SetBlastButtonVisibility(false);
 
-                string romFilename = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME];
+                string romFilename = (string)AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME];
                 if (romFilename == null)
                 {
                     return;
@@ -538,7 +538,7 @@ namespace RTCV.UI
 
             ghSettingsMenu.Items.Add("Open RENDEROUTPUT Folder", null, new EventHandler((ob, ev) =>
             {
-                Process.Start(Path.Combine(CorruptCore.RtcCore.RtcDir, "RENDEROUTPUT"));
+                Process.Start(Path.Combine(RtcCore.RtcDir, "RENDEROUTPUT"));
             }));
 
             ghSettingsMenu.Items.Add(new ToolStripSeparator());

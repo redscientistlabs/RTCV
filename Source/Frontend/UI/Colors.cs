@@ -160,9 +160,9 @@ namespace RTCV.UI
 
         public static void LoadRTCColor()
         {
-            if (RTCV.NetCore.Params.IsParamSet("COLOR"))
+            if (NetCore.Params.IsParamSet("COLOR"))
             {
-                string[] bytes = RTCV.NetCore.Params.ReadParam("COLOR").Split(',');
+                string[] bytes = NetCore.Params.ReadParam("COLOR").Split(',');
                 GeneralColor = Color.FromArgb(Convert.ToByte(bytes[0]), Convert.ToByte(bytes[1]), Convert.ToByte(bytes[2]));
             }
             else
@@ -175,7 +175,7 @@ namespace RTCV.UI
 
         public static void SaveRTCColor(Color color)
         {
-            RTCV.NetCore.Params.SetParam("COLOR", color.R.ToString() + "," + color.G.ToString() + "," + color.B.ToString());
+            NetCore.Params.SetParam("COLOR", color.R.ToString() + "," + color.G.ToString() + "," + color.B.ToString());
         }
     }
 }

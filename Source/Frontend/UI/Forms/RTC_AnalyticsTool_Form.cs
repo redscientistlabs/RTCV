@@ -26,7 +26,7 @@
             {
                 if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
-                    throw new RTCV.NetCore.AbortEverythingException();
+                    throw new AbortEverythingException();
                 }
             }
         }

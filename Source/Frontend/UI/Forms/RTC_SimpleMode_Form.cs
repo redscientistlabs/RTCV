@@ -45,12 +45,12 @@
                 rbModernPlatforms_CheckedChanged(null, null);
             }
 
-            NetCore.Params.SetParam("SIMPLE_MODE"); //Set RTC in Simple Mode
+            Params.SetParam("SIMPLE_MODE"); //Set RTC in Simple Mode
         }
 
         public static void LeavingSimpleMode()
         {
-            NetCore.Params.RemoveParam("SIMPLE_MODE"); //Set RTC in Normal Mode
+            Params.RemoveParam("SIMPLE_MODE"); //Set RTC in Normal Mode
 
             //S.GET<UI_CoreForm>().btnEngineConfig.Visible = true;
             S.GET<UI_CoreForm>().btnEngineConfig.Text = " Engine Config";

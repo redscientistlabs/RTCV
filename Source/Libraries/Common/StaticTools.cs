@@ -127,7 +127,7 @@ namespace RTCV.Common
                         o = Activator.CreateInstance(typ);
                         instances[typ] = o;
 
-                        if (typ.IsSubclassOf(typeof(System.Windows.Forms.Form)))
+                        if (typ.IsSubclassOf(typeof(Form)))
                         {
                             formRegister.OnFormRegistered(new FormRegisteredEventArgs((Form)instances[typ]));
                         }
@@ -160,7 +160,7 @@ namespace RTCV.Common
                         o = Activator.CreateInstance(typ);
                         instances[typ] = o;
 
-                        if (typ.IsSubclassOf(typeof(System.Windows.Forms.Form)))
+                        if (typ.IsSubclassOf(typeof(Form)))
                         {
                             formRegister.OnFormRegistered(new FormRegisteredEventArgs((Form)instances[typ]));
                         }
@@ -184,7 +184,7 @@ namespace RTCV.Common
                     instances[typ] = newTyp;
                 }
 
-                if (typ.IsSubclassOf(typeof(System.Windows.Forms.Form)))
+                if (typ.IsSubclassOf(typeof(Form)))
                 {
                     formRegister.OnFormRegistered(new FormRegisteredEventArgs((Form)instances[typ]));
                 }

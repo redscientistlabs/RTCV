@@ -80,7 +80,7 @@ namespace RTCV.UI
                 RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Reading keys.json", currentProgress += 5));
                 using (FileStream fs = File.Open(Path.Combine(RtcCore.workingDir, extractFolder, "keys.json"), FileMode.OpenOrCreate))
                 {
-                    ssk = CorruptCore.JsonHelper.Deserialize<SaveStateKeys>(fs);
+                    ssk = JsonHelper.Deserialize<SaveStateKeys>(fs);
                     fs.Close();
                 }
             }
@@ -88,7 +88,7 @@ namespace RTCV.UI
             {
                 if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
-                    throw new RTCV.NetCore.AbortEverythingException();
+                    throw new AbortEverythingException();
                 }
 
                 return;
@@ -100,7 +100,7 @@ namespace RTCV.UI
                 return;
             }
 
-            var s = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "ERROR";
+            var s = (string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "ERROR";
             if (!string.IsNullOrEmpty(ssk.VanguardImplementation) && !ssk.VanguardImplementation.Equals(s, StringComparison.OrdinalIgnoreCase) && ssk.VanguardImplementation != "ERROR")
             {
                 MessageBox.Show($"The ssk you loaded is for a different Vanguard implementation.\nThe ssk reported {ssk.VanguardImplementation} but you're connected to {s}.\nThis is a fatal error. Aborting load.");
@@ -163,7 +163,7 @@ namespace RTCV.UI
                 key.StateLocation = StashKeySavestateLocation.SSK;
 
                 string statefilename = key.GameName + "." + key.ParentKey + ".timejump.State"; // get savestate name
-                string newStatePath = Path.Combine(CorruptCore.RtcCore.workingDir, key.StateLocation.ToString(), statefilename);
+                string newStatePath = Path.Combine(RtcCore.workingDir, key.StateLocation.ToString(), statefilename);
 
                 key.StateFilename = newStatePath;
                 key.StateShortFilename = Path.GetFileName(newStatePath);
@@ -246,19 +246,19 @@ namespace RTCV.UI
                 try
                 {
                     var stateName = sk.GameName + "." + sk.ParentKey + ".timejump.State"; // get savestate name
-                    if (File.Exists(Path.Combine(CorruptCore.RtcCore.workingDir, "SSK", stateName))) //it SHOULD be here. If it's not, let's hunt for it
+                    if (File.Exists(Path.Combine(RtcCore.workingDir, "SSK", stateName))) //it SHOULD be here. If it's not, let's hunt for it
                     {
-                        File.Copy(Path.Combine(CorruptCore.RtcCore.workingDir, "SSK", stateName), Path.Combine(CorruptCore.RtcCore.workingDir, "SESSION", stateName), true);
+                        File.Copy(Path.Combine(RtcCore.workingDir, "SSK", stateName), Path.Combine(RtcCore.workingDir, "SESSION", stateName), true);
                     }
-                    else if (File.Exists(Path.Combine(CorruptCore.RtcCore.workingDir, "TEMP", stateName)))
+                    else if (File.Exists(Path.Combine(RtcCore.workingDir, "TEMP", stateName)))
                     {
-                        File.Copy(Path.Combine(CorruptCore.RtcCore.workingDir, "TEMP", stateName), Path.Combine(CorruptCore.RtcCore.workingDir, "SESSION", stateName), true);
+                        File.Copy(Path.Combine(RtcCore.workingDir, "TEMP", stateName), Path.Combine(RtcCore.workingDir, "SESSION", stateName), true);
                     }
-                    else if (File.Exists(Path.Combine(CorruptCore.RtcCore.workingDir, "SKS", stateName)))
+                    else if (File.Exists(Path.Combine(RtcCore.workingDir, "SKS", stateName)))
                     {
-                        File.Copy(Path.Combine(CorruptCore.RtcCore.workingDir, "SKS", stateName), Path.Combine(CorruptCore.RtcCore.workingDir, "SESSION", stateName), true);
+                        File.Copy(Path.Combine(RtcCore.workingDir, "SKS", stateName), Path.Combine(RtcCore.workingDir, "SESSION", stateName), true);
                     }
-                    else if (File.Exists(Path.Combine(CorruptCore.RtcCore.workingDir, "SESSION", stateName)))
+                    else if (File.Exists(Path.Combine(RtcCore.workingDir, "SESSION", stateName)))
                     {
                         continue;
                     }
@@ -325,8 +325,8 @@ namespace RTCV.UI
                     RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Copying {key.GameName + "." + key.ParentKey + ".timejump.State"} to TEMP", currentProgress += percentPerFile));
                     string stateFilename = key.GameName + "." + key.ParentKey + ".timejump.State"; // get savestate name
 
-                    string statePath = Path.Combine(CorruptCore.RtcCore.workingDir, key.StateLocation.ToString(), stateFilename);
-                    string tempPath = Path.Combine(CorruptCore.RtcCore.workingDir, "TEMP", stateFilename);
+                    string statePath = Path.Combine(RtcCore.workingDir, key.StateLocation.ToString(), stateFilename);
+                    string tempPath = Path.Combine(RtcCore.workingDir, "TEMP", stateFilename);
 
                     if (File.Exists(statePath))
                     {
@@ -355,7 +355,7 @@ namespace RTCV.UI
 
                 //Create keys.json
                 RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Creating keys.json", currentProgress += 10));
-                using (FileStream fs = File.Open(Path.Combine(CorruptCore.RtcCore.workingDir, "TEMP", "keys.json"), FileMode.OpenOrCreate))
+                using (FileStream fs = File.Open(Path.Combine(RtcCore.workingDir, "TEMP", "keys.json"), FileMode.OpenOrCreate))
                 {
                     JsonHelper.Serialize(ssk, fs, Formatting.Indented);
                     fs.Close();
@@ -376,7 +376,7 @@ namespace RTCV.UI
                     return;
                 }
 
-                string tempFolderPath = Path.Combine(CorruptCore.RtcCore.workingDir, "TEMP");
+                string tempFolderPath = Path.Combine(RtcCore.workingDir, "TEMP");
 
                 RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Creating SSK", currentProgress += 20));
                 System.IO.Compression.ZipFile.CreateFromDirectory(tempFolderPath, tempFilename, System.IO.Compression.CompressionLevel.Fastest, false);
@@ -398,14 +398,14 @@ namespace RTCV.UI
                 foreach (string file in files)
                 {
                     RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Moving {Path.GetFileName(file)} to SSK", currentProgress += percentPerFile));
-                    File.Move(file, Path.Combine(CorruptCore.RtcCore.workingDir, "SSK", Path.GetFileName(file)));
+                    File.Move(file, Path.Combine(RtcCore.workingDir, "SSK", Path.GetFileName(file)));
                 }
             }
             catch (Exception ex)
             {
                 if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
-                    throw new RTCV.NetCore.AbortEverythingException();
+                    throw new AbortEverythingException();
                 }
 
                 return;

@@ -387,7 +387,7 @@ namespace RTCV.CorruptCore
     /// Represents an entry for bit filter list.
     /// </summary>
     [Serializable]
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     public class BitlogicFilterEntry
     {
         ulong template;

@@ -9,7 +9,7 @@ namespace RTCV.CorruptCore.EventWarlock
     /// <summary>
     /// Holds conditionals and actions to be executed if conditionals evaluates to true
     /// </summary>
-    [System.Serializable]
+    [Serializable]
     public class Spell
     {
         //encapsulation will need to be figured out later

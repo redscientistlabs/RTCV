@@ -72,11 +72,11 @@ namespace RTCV.NetCore
             sb.AppendLine("Spec Dump from UICore");
             sb.AppendLine();
             sb.AppendLine("UISpec");
-            RTCV.NetCore.AllSpec.UISpec?.GetDump().ForEach(x => sb.AppendLine(x));
+            AllSpec.UISpec?.GetDump().ForEach(x => sb.AppendLine(x));
             sb.AppendLine("CorruptCoreSpec");
-            RTCV.NetCore.AllSpec.CorruptCoreSpec?.GetDump().ForEach(x => sb.AppendLine(x));
+            AllSpec.CorruptCoreSpec?.GetDump().ForEach(x => sb.AppendLine(x));
             sb.AppendLine("VanguardSpec");
-            RTCV.NetCore.AllSpec.VanguardSpec?.GetDump().ForEach(x => sb.AppendLine(x));
+            AllSpec.VanguardSpec?.GetDump().ForEach(x => sb.AppendLine(x));
 
             return sb.ToString();
         }
@@ -129,7 +129,7 @@ namespace RTCV.NetCore
 
                 //Exporting side
                 string sideFile = Path.Combine(tempdebugdir, "SIDE.txt");
-                File.WriteAllText(sideFile, System.Diagnostics.Process.GetCurrentProcess().ProcessName);
+                File.WriteAllText(sideFile, Process.GetCurrentProcess().ProcessName);
 
                 //Exporting Stacktrace
                 var _ex = ex;
@@ -241,7 +241,7 @@ namespace RTCV.NetCore
                 }
 
 
-                SevenZip.SevenZipCompressor.SetLibraryPath(szdll);
+                SevenZip.SevenZipBase.SetLibraryPath(szdll);
                 var decomp = new SevenZip.SevenZipExtractor(downloadfilepath, password, SevenZip.InArchiveFormat.SevenZip);
                 decomp.ExtractArchive(extractpath);
 
@@ -256,7 +256,7 @@ namespace RTCV.NetCore
             Close();
         }
 
-        public static DialogResult ShowErrorDialog(Exception ex, bool canContinue = false) => new RTCV.NetCore.CloudDebug(ex, canContinue).Start();
+        public static DialogResult ShowErrorDialog(Exception ex, bool canContinue = false) => new CloudDebug(ex, canContinue).Start();
 
         private void btnContinue_Click(object sender, EventArgs e)
         {
@@ -281,7 +281,7 @@ namespace RTCV.NetCore
                         {
                             tbKey.ReadOnly = false;
                             btnSendDebug.Text = "Fetch data";
-                            RTCV.NetCore.Params.SetParam("DEBUG_FETCHMODE");
+                            Params.SetParam("DEBUG_FETCHMODE");
                         }));
                     }
                     else
@@ -290,7 +290,7 @@ namespace RTCV.NetCore
                         {
                             tbKey.ReadOnly = false;
                             btnSendDebug.Text = "Send debug info to devs";
-                            RTCV.NetCore.Params.RemoveParam("DEBUG_FETCHMODE");
+                            Params.RemoveParam("DEBUG_FETCHMODE");
                         }));
                     }
                 }
@@ -300,7 +300,7 @@ namespace RTCV.NetCore
 
         private void CloudDebug_Load(object sender, EventArgs e)
         {
-            if (RTCV.NetCore.Params.IsParamSet("DEBUG_FETCHMODE"))
+            if (Params.IsParamSet("DEBUG_FETCHMODE"))
             {
                 btnSendDebug.Text = "Fetch data";
                 tbKey.ReadOnly = false;

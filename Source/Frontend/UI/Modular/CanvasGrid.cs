@@ -68,7 +68,7 @@ namespace RTCV.UI
 
         internal static void LoadCustomLayout()
         {
-            string customLayoutPath = Path.Combine(RTCV.CorruptCore.RtcCore.RtcDir, "CustomLayout.txt");
+            string customLayoutPath = Path.Combine(CorruptCore.RtcCore.RtcDir, "CustomLayout.txt");
             string[] allLines = File.ReadAllLines(customLayoutPath);
 
             int gridSizeX = 26;

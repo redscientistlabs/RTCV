@@ -24,7 +24,7 @@ namespace RTCV.UI
             var spec = new NetCoreReceiver();
             spec.MessageReceived += OnMessageReceived;
 
-            spec.Attached = CorruptCore.RtcCore.Attached;
+            spec.Attached = RtcCore.Attached;
 
             connector = new UIConnector(spec);
         }
@@ -144,7 +144,7 @@ namespace RTCV.UI
             {
                 if (CloudDebug.ShowErrorDialog(ex) == DialogResult.Abort)
                 {
-                    throw new RTCV.NetCore.AbortEverythingException();
+                    throw new AbortEverythingException();
                 }
 
                 return;
@@ -153,16 +153,16 @@ namespace RTCV.UI
 
         private static void PushVanguardSpec(NetCoreAdvancedMessage advancedMessage, ref NetCoreEventArgs e)
         {
-            if (!CorruptCore.RtcCore.Attached)
+            if (!RtcCore.Attached)
             {
-                RTCV.NetCore.AllSpec.VanguardSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !CorruptCore.RtcCore.Attached);
+                AllSpec.VanguardSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
             }
 
             e.setReturnValue(true);
 
             //Push the UI and CorruptCore spec (since we're master)
-            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHUISPEC, RTCV.NetCore.AllSpec.UISpec.GetPartialSpec(), true);
-            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHCORRUPTCORESPEC, RTCV.NetCore.AllSpec.CorruptCoreSpec.GetPartialSpec(), true);
+            LocalNetCoreRouter.Route(CORRUPTCORE, REMOTE_PUSHUISPEC, AllSpec.UISpec.GetPartialSpec(), true);
+            LocalNetCoreRouter.Route(CORRUPTCORE, REMOTE_PUSHCORRUPTCORESPEC, AllSpec.CorruptCoreSpec.GetPartialSpec(), true);
 
             SyncObjectSingleton.FormExecute(() =>
             {
@@ -170,7 +170,7 @@ namespace RTCV.UI
                 S.GET<UI_CoreForm>().pnCrashProtection.Visible = true;
             });
             //Specs are all set up so UI is clear.
-            LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_ALLSPECSSENT, true);
+            LocalNetCoreRouter.Route(VANGUARD, REMOTE_ALLSPECSSENT, true);
         }
 
         private static void AllSpecSent()
@@ -184,12 +184,12 @@ namespace RTCV.UI
             {
                 if (UICore.FirstConnect)
                 {
-                    lastVanguardClient = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
+                    lastVanguardClient = (string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
                     UICore.FirstConnect = false;
 
                     //Load plugins on both sides
-                    CorruptCore.RtcCore.LoadPlugins();
-                    LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_LOADPLUGINS, true);
+                    RtcCore.LoadPlugins();
+                    LocalNetCoreRouter.Route(CORRUPTCORE, REMOTE_LOADPLUGINS, true);
 
                     //Configure the UI based on the vanguard spec
                     UICore.ConfigureUIFromVanguardSpec();
@@ -202,7 +202,7 @@ namespace RTCV.UI
                         UICore.LoadLists(Path.Combine(RtcCore.EmuDir, "LISTS"));
                     }
 
-                    UICore.LoadLists(CorruptCore.RtcCore.ListsDir);
+                    UICore.LoadLists(RtcCore.ListsDir);
 
                     Panel sidebar = S.GET<UI_CoreForm>().pnSideBar;
                     foreach (Control c in sidebar.Controls)
@@ -216,7 +216,7 @@ namespace RTCV.UI
                         }
                     }
 
-                    string customLayoutPath = Path.Combine(RTCV.CorruptCore.RtcCore.RtcDir, "CustomLayout.txt");
+                    string customLayoutPath = Path.Combine(RtcCore.RtcDir, "CustomLayout.txt");
                     if (File.Exists(customLayoutPath))
                     {
                         S.GET<UI_CoreForm>().SetCustomLayoutName(customLayoutPath);
@@ -229,10 +229,10 @@ namespace RTCV.UI
                 }
                 else
                 {
-                    LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_LOADPLUGINS, true);
+                    LocalNetCoreRouter.Route(CORRUPTCORE, REMOTE_LOADPLUGINS, true);
                     //make sure the other side reloads the plugins
 
-                    var clientName = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
+                    var clientName = (string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
                     if (clientName != lastVanguardClient)
                     {
                         MessageBox.Show($"Error: Found {clientName} when previously connected to {lastVanguardClient}.\nPlease restart the RTC to swap clients.");
@@ -241,7 +241,7 @@ namespace RTCV.UI
 
                     //Push the VMDs since we store them out of spec
                     var vmdProtos = MemoryDomains.VmdPool.Values.Cast<VirtualMemoryDomain>().Select(x => x.Proto).ToArray();
-                    LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHVMDPROTOS, vmdProtos, true);
+                    LocalNetCoreRouter.Route(CORRUPTCORE, REMOTE_PUSHVMDPROTOS, vmdProtos, true);
 
                     S.GET<UI_CoreForm>().Show();
 
@@ -263,7 +263,7 @@ namespace RTCV.UI
 
                 S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0; //remove this once core form is dead
 
-                if (!CorruptCore.RtcCore.Attached)
+                if (!RtcCore.Attached)
                 {
                     AutoKillSwitch.Enabled = true;
                 }
@@ -271,14 +271,14 @@ namespace RTCV.UI
                 //Restart game protection
                 if (S.GET<UI_CoreForm>().cbUseGameProtection.Checked)
                 {
-                    if (CorruptCore.StockpileManager_UISide.BackupedState != null)
+                    if (StockpileManager_UISide.BackupedState != null)
                     {
-                        CorruptCore.StockpileManager_UISide.BackupedState.Run();
+                        StockpileManager_UISide.BackupedState.Run();
                     }
 
-                    if (CorruptCore.StockpileManager_UISide.BackupedState != null)
+                    if (StockpileManager_UISide.BackupedState != null)
                     {
-                        S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected(CorruptCore.StockpileManager_UISide.BackupedState.SelectedDomains.ToArray());
+                        S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected(StockpileManager_UISide.BackupedState.SelectedDomains.ToArray());
                     }
 
                     GameProtection.Start();
@@ -290,14 +290,14 @@ namespace RTCV.UI
 
                 S.GET<UI_CoreForm>().Show();
 
-                if (NetCore.Params.IsParamSet("SIMPLE_MODE"))
+                if (Params.IsParamSet("SIMPLE_MODE"))
                 {
                     bool isSpec = (AllSpec.VanguardSpec[VSPEC.NAME] as string)?.ToUpper().Contains("SPEC") ?? false;
 
                     if (isSpec) //Simple Mode cannot run on Stubs
                     {
                         MessageBox.Show("Unfortunately, Simple Mode is not compatible with Stubs. RTC will now switch to Normal Mode.");
-                        NetCore.Params.RemoveParam("SIMPLE_MODE");
+                        Params.RemoveParam("SIMPLE_MODE");
                     }
                     else
                     {
@@ -313,7 +313,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
                         {
-                            RTCV.NetCore.AllSpec.VanguardSpec?.Update((PartialSpec)advancedMessage.objectValue);
+                            AllSpec.VanguardSpec?.Update((PartialSpec)advancedMessage.objectValue);
                         });
             e.setReturnValue(true);
         }
@@ -323,7 +323,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
                         {
-                            RTCV.NetCore.AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
+                            AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
                         });
             e.setReturnValue(true);
         }
@@ -364,7 +364,7 @@ namespace RTCV.UI
 
                 string value = "";
 
-                if (RTCV.UI.UI_Extensions.GetInputBox("VMD Generation", "Enter the new VMD name:", ref value) == DialogResult.OK)
+                if (UI_Extensions.GetInputBox("VMD Generation", "Enter the new VMD name:", ref value) == DialogResult.OK)
                 {
                     if (!string.IsNullOrWhiteSpace(value))
                         vmdgenerator.tbVmdName.Text = value.Trim();
@@ -379,7 +379,7 @@ namespace RTCV.UI
             SyncObjectSingleton.FormExecute(() =>
             {
                 S.GET<RTC_MemoryDomains_Form>().RefreshDomains();
-                S.GET<RTC_MemoryDomains_Form>().SetMemoryDomainsAllButSelectedDomains(RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] as string[] ?? new string[] { });
+                S.GET<RTC_MemoryDomains_Form>().SetMemoryDomainsAllButSelectedDomains(AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] as string[] ?? new string[] { });
             });
         }
 

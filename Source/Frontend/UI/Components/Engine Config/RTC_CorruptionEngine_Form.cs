@@ -78,16 +78,16 @@ namespace RTCV.UI
             cbClusterLimiterList.ValueMember = "Value";
 
             //Do this here as if it's stuck into the designer, it keeps defaulting out
-            cbVectorValueList.DataSource = CorruptCore.RtcCore.ValueListBindingSource;
-            cbVectorLimiterList.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
-            cbClusterLimiterList.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
+            cbVectorValueList.DataSource = RtcCore.ValueListBindingSource;
+            cbVectorLimiterList.DataSource = RtcCore.LimiterListBindingSource;
+            cbClusterLimiterList.DataSource = RtcCore.LimiterListBindingSource;
 
-            if (CorruptCore.RtcCore.LimiterListBindingSource.Count > 0)
+            if (RtcCore.LimiterListBindingSource.Count > 0)
             {
                 cbVectorLimiterList_SelectedIndexChanged(cbVectorLimiterList, null);
                 cbVectorLimiterList_SelectedIndexChanged(cbClusterLimiterList, null);
             }
-            if (CorruptCore.RtcCore.ValueListBindingSource.Count > 0)
+            if (RtcCore.ValueListBindingSource.Count > 0)
             {
                 cbVectorValueList_SelectedIndexChanged(cbVectorValueList, null);
             }
@@ -130,7 +130,7 @@ namespace RTCV.UI
             gbBlastGeneratorEngine.Visible = false;
             gbCustomEngine.Visible = false;
             cbCustomPrecision.Enabled = false;
-            nmAlignment.Maximum = CorruptCore.RtcCore.CurrentPrecision - 1;
+            nmAlignment.Maximum = RtcCore.CurrentPrecision - 1;
 
             //S.GET<RTC_GlitchHarvesterIntensity_Form>().Visible = true;
             S.GET<RTC_GeneralParameters_Form>().Show();
@@ -140,47 +140,47 @@ namespace RTCV.UI
             switch (cbSelectedEngine.SelectedItem.ToString())
             {
                 case "Nightmare Engine":
-                    CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.NIGHTMARE;
+                    RtcCore.SelectedEngine = CorruptionEngine.NIGHTMARE;
                     gbNightmareEngine.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
-                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
+                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
 
                 case "Hellgenie Engine":
-                    CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.HELLGENIE;
+                    RtcCore.SelectedEngine = CorruptionEngine.HELLGENIE;
                     gbHellgenieEngine.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
-                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
+                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
 
                 case "Distortion Engine":
-                    CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.DISTORTION;
+                    RtcCore.SelectedEngine = CorruptionEngine.DISTORTION;
                     gbDistortionEngine.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
-                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
+                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
 
                 case "Freeze Engine":
-                    CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.FREEZE;
+                    RtcCore.SelectedEngine = CorruptionEngine.FREEZE;
                     gbFreezeEngine.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
-                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
+                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
 
                 case "Pipe Engine":
-                    CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.PIPE;
+                    RtcCore.SelectedEngine = CorruptionEngine.PIPE;
                     gbPipeEngine.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
-                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
+                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
 
                 case "Vector Engine":
-                    CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.VECTOR;
+                    RtcCore.SelectedEngine = CorruptionEngine.VECTOR;
                     nmAlignment.Maximum = 3;
                     gbVectorEngine.Visible = true;
 
@@ -195,27 +195,27 @@ namespace RTCV.UI
                         cbCustomPrecision.Enabled = false;
                     }
 
-                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
+                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
 
                 case "Cluster Engine":
-                    CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.CLUSTER;
+                    RtcCore.SelectedEngine = CorruptionEngine.CLUSTER;
                     nmAlignment.Maximum = 3;
                     gbClusterEngine.Visible = true;
 
-                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
+                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
 
                 case "Custom Engine":
-                    CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.CUSTOM;
+                    RtcCore.SelectedEngine = CorruptionEngine.CUSTOM;
                     gbCustomEngine.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
-                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = RTCV.NetCore.AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
+                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
 
                 case "Blast Generator":
-                    CorruptCore.RtcCore.SelectedEngine = CorruptionEngine.BLASTGENERATORENGINE;
+                    RtcCore.SelectedEngine = CorruptionEngine.BLASTGENERATORENGINE;
                     gbBlastGeneratorEngine.Visible = true;
 
                     S.GET<UI_CoreForm>().AutoCorrupt = false;
@@ -410,7 +410,7 @@ namespace RTCV.UI
                             precision = 8;
                             break;
                     }
-                    CorruptCore.RtcCore.CurrentPrecision = precision;
+                    RtcCore.CurrentPrecision = precision;
 
                     UpdateMinMaxBoxes(precision);
                     nmAlignment.Maximum = precision - 1;
@@ -427,7 +427,7 @@ namespace RTCV.UI
 
         private void nmAlignment_ValueChanged(object sender, EventArgs e)
         {
-            CorruptCore.RtcCore.Alignment = Convert.ToInt32(nmAlignment.Value);
+            RtcCore.Alignment = Convert.ToInt32(nmAlignment.Value);
         }
 
         private void btnOpenBlastGenerator_Click(object sender, EventArgs e)
@@ -451,7 +451,7 @@ namespace RTCV.UI
 
             ulong value = Convert.ToUInt64(nmMinValueNightmare.Value);
 
-            switch (CorruptCore.RtcCore.CurrentPrecision)
+            switch (RtcCore.CurrentPrecision)
             {
                 case 1:
                     RTC_NightmareEngine.MinValue8Bit = value;
@@ -478,7 +478,7 @@ namespace RTCV.UI
 
             ulong value = Convert.ToUInt64(nmMaxValueNightmare.Value);
 
-            switch (CorruptCore.RtcCore.CurrentPrecision)
+            switch (RtcCore.CurrentPrecision)
             {
                 case 1:
                     RTC_NightmareEngine.MaxValue8Bit = value;
@@ -505,7 +505,7 @@ namespace RTCV.UI
 
             ulong value = Convert.ToUInt64(nmMinValueHellgenie.Value);
 
-            switch (CorruptCore.RtcCore.CurrentPrecision)
+            switch (RtcCore.CurrentPrecision)
             {
                 case 1:
                     RTC_HellgenieEngine.MinValue8Bit = value;
@@ -532,7 +532,7 @@ namespace RTCV.UI
 
             ulong value = Convert.ToUInt64(nmMaxValueHellgenie.Value);
 
-            switch (CorruptCore.RtcCore.CurrentPrecision)
+            switch (RtcCore.CurrentPrecision)
             {
                 case 1:
                     RTC_HellgenieEngine.MaxValue8Bit = value;

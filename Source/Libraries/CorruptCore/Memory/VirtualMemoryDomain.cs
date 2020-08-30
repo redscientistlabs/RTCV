@@ -10,7 +10,7 @@ namespace RTCV.CorruptCore
     using RTCV.CorruptCore.Extensions;
 
     [Serializable]
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     public class VirtualMemoryDomain : MemoryInterface
     {
         public List<string> PointerDomains { get; set; } = new List<string>();

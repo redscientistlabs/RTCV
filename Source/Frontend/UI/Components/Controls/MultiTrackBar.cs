@@ -375,7 +375,7 @@
         }
     }
 
-    internal class NoFocusTrackBar : System.Windows.Forms.TrackBar
+    internal class NoFocusTrackBar : TrackBar
     {
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, uint msg, int wParam, int lParam);

@@ -23,7 +23,7 @@ namespace RTCV.CorruptCore
     }
 
     [Serializable]
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     public class ValueByteArrayList : IListFilter
     {
         List<byte[]> byteList { get; set; } = null;
@@ -66,9 +66,9 @@ namespace RTCV.CorruptCore
             var name = Path.GetFileNameWithoutExtension(filePath);
 
             //var hash = Filtering.RegisterList(byteList, name, syncListViaNetcore);
-            byteList = byteList.Distinct(new Extensions.ByteArrayComparer()).ToList();
+            byteList = byteList.Distinct(new ByteArrayComparer()).ToList();
 
-            hashSet = new HashSet<byte[]>(byteList, new Extensions.ByteArrayComparer());
+            hashSet = new HashSet<byte[]>(byteList, new ByteArrayComparer());
             string hash = Filtering.RegisterList(this, name, syncListViaNetcore);
 
             return hash;
@@ -156,7 +156,7 @@ namespace RTCV.CorruptCore
     }
 
     [Serializable]
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     public class NullableByteArrayList : IListFilter
     {
         List<byte?[]> byteList { get; set; } = null;
@@ -199,7 +199,7 @@ namespace RTCV.CorruptCore
             var name = Path.GetFileNameWithoutExtension(filePath);
 
             string hash = GetHash();
-            hashSet = new HashSet<byte?[]>(byteList, new Extensions.NullableByteArrayComparer());
+            hashSet = new HashSet<byte?[]>(byteList, new NullableByteArrayComparer());
 
             Filtering.RegisterList(this, name, syncListViaNetcore);
 

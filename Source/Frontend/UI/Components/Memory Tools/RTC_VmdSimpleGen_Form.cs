@@ -123,7 +123,7 @@
 
             if (string.IsNullOrWhiteSpace(tbVmdName.Text))
             {
-                proto.VmdName = CorruptCore.RtcCore.GetRandomKey();
+                proto.VmdName = RtcCore.GetRandomKey();
             }
             else
             {

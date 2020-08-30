@@ -17,7 +17,7 @@ namespace RTCV.CorruptCore
 
             (Corrupt as FileInterface).getMemoryDump(); //gotta cache it otherwise it's going to be super slow
 
-            string[] selectedDomains = RTCV.NetCore.AllSpec.UISpec["SELECTEDDOMAINS"] as string[];
+            string[] selectedDomains = AllSpec.UISpec["SELECTEDDOMAINS"] as string[];
 
             if (selectedDomains == null || selectedDomains.Length == 0)
             {

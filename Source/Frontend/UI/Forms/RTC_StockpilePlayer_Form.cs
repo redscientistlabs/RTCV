@@ -279,7 +279,7 @@
                 {
                     if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                     {
-                        throw new RTCV.NetCore.AbortEverythingException();
+                        throw new AbortEverythingException();
                     }
                 }
             }));
@@ -296,7 +296,7 @@
                 {
                     if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                     {
-                        throw new RTCV.NetCore.AbortEverythingException();
+                        throw new AbortEverythingException();
                     }
                 }
             }));
@@ -312,7 +312,7 @@
                 finally
                 {
                 }
-            })).Enabled = (File.Exists(Path.Combine(CorruptCore.RtcCore.EmuDir, "backup_config.ini")));
+            })).Enabled = (File.Exists(Path.Combine(RtcCore.EmuDir, "backup_config.ini")));
 
             LoadMenuItems.Show(this, locate);
         }

@@ -93,7 +93,7 @@ namespace RTCV.UI
 
             string name = "";
             string value = vmdName.Trim().Replace("[V]", "");
-            if (UI_Extensions.GetInputBox("BlastLayer to VMD", "Enter the new VMD name:", ref value) == DialogResult.OK)
+            if (GetInputBox("BlastLayer to VMD", "Enter the new VMD name:", ref value) == DialogResult.OK)
             {
                 name = value.Trim();
             }
@@ -104,7 +104,7 @@ namespace RTCV.UI
 
             if (string.IsNullOrWhiteSpace(name))
             {
-                name = CorruptCore.RtcCore.GetRandomKey();
+                name = RtcCore.GetRandomKey();
             }
 
             if (MemoryDomains.VmdPool.ContainsKey(name))

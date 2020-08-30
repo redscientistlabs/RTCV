@@ -126,7 +126,7 @@ namespace RTCV.UI
 
             if (string.IsNullOrWhiteSpace(tbVmdName.Text))
             {
-                proto.VmdName = CorruptCore.RtcCore.GetRandomKey();
+                proto.VmdName = RtcCore.GetRandomKey();
             }
             else
             {
@@ -277,9 +277,9 @@ namespace RTCV.UI
             cbVectorLimiterList.ValueMember = "Value";
 
             //Do this here as if it's stuck into the designer, it keeps defaulting out
-            cbVectorLimiterList.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
+            cbVectorLimiterList.DataSource = RtcCore.LimiterListBindingSource;
 
-            if (CorruptCore.RtcCore.LimiterListBindingSource.Count > 0)
+            if (RtcCore.LimiterListBindingSource.Count > 0)
             {
                 CbVectorLimiterList_SelectedIndexChanged(cbVectorLimiterList, null);
             }

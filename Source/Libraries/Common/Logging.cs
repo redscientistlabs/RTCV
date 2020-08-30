@@ -17,8 +17,8 @@ namespace RTCV.Common
     {
         public static Logger GlobalLogger = LogManager.GetLogger("Global");
 
-        private static readonly SimpleLayout defaultLayout = new NLog.Layouts.SimpleLayout("${longdate}|${level:uppercase=true}|${logger}|${message}${onexception:|${newline}EXCEPTION OCCURRED\\:${InvariantCulture:${exception:format=type,message,method:maxInnerExceptionLevel=5:innerFormat=shortType,message,method}${newline}");
-        private static readonly SimpleLayout traceLayout = new NLog.Layouts.SimpleLayout("${longdate}|${level:uppercase=true}|${logger}|${callsite}|${message}${onexception:|${newline}EXCEPTION OCCURRED\\:${InvariantCulture:${exception:format=type,message,method:maxInnerExceptionLevel=5:innerFormat=shortType,message,method}${newline}");
+        private static readonly SimpleLayout defaultLayout = new SimpleLayout("${longdate}|${level:uppercase=true}|${logger}|${message}${onexception:|${newline}EXCEPTION OCCURRED\\:${InvariantCulture:${exception:format=type,message,method:maxInnerExceptionLevel=5:innerFormat=shortType,message,method}${newline}");
+        private static readonly SimpleLayout traceLayout = new SimpleLayout("${longdate}|${level:uppercase=true}|${logger}|${callsite}|${message}${onexception:|${newline}EXCEPTION OCCURRED\\:${InvariantCulture:${exception:format=type,message,method:maxInnerExceptionLevel=5:innerFormat=shortType,message,method}${newline}");
 
         public static Layout CurrentLayout = defaultLayout;
         private static readonly LogLevel minLevel = LogLevel.Trace;
@@ -27,7 +27,7 @@ namespace RTCV.Common
         public static void StartLogging(string filename)
         {
             ConfigurationItemFactory.Default.LayoutRenderers.RegisterDefinition("InvariantCulture", typeof(InvariantCultureLayoutRendererWrapper));
-            var config = new NLog.Config.LoggingConfiguration();
+            var config = new LoggingConfiguration();
 
 
             for (int i = logsToKeep; i >= 0; i--)
@@ -80,11 +80,11 @@ namespace RTCV.Common
             //config.AddRule(LogLevel.Trace, LogLevel.Fatal, logfile);
 
             // Apply config
-            NLog.LogManager.Configuration = config;
-            Common.ConsoleHelper.CreateConsole(filename);
+            LogManager.Configuration = config;
+            ConsoleHelper.CreateConsole(filename);
             if (!Environment.GetCommandLineArgs().Any(x => string.Equals(x, "-CONSOLE", StringComparison.OrdinalIgnoreCase)))
             {
-                Common.ConsoleHelper.HideConsole();
+                ConsoleHelper.HideConsole();
             }
 
             GlobalLogger = LogManager.GetLogger("Global");

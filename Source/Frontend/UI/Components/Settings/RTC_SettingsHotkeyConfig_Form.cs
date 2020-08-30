@@ -49,17 +49,17 @@ namespace RTCV.UI
 
         private void Save()
         {
-            Input.Bindings.ClearBindings();
+            Bindings.ClearBindings();
             foreach (var w in InputWidgets)
             {
                 var b = UICore.HotkeyBindings.FirstOrDefault(x => x.DisplayName == w.WidgetName);
                 b.Bindings = w.Bindings;
                 //Rebind
-                Input.Bindings.BindMulti(b.DisplayName, b.Bindings);
+                Bindings.BindMulti(b.DisplayName, b.Bindings);
             }
 
             var binds = JsonConvert.SerializeObject(UICore.HotkeyBindings, Formatting.Indented);
-            RTCV.NetCore.Params.SetParam("HOTKEYS", binds);
+            NetCore.Params.SetParam("HOTKEYS", binds);
         }
 
         private static void AddMissingHotKeys()
@@ -75,11 +75,11 @@ namespace RTCV.UI
 
         private static void LoadHotkeys()
         {
-            if (RTCV.NetCore.Params.IsParamSet("HOTKEYS"))
+            if (NetCore.Params.IsParamSet("HOTKEYS"))
             {
                 try
                 {
-                    var binds = JsonConvert.DeserializeObject<Input.BindingCollection>(NetCore.Params.ReadParam("HOTKEYS"));
+                    var binds = JsonConvert.DeserializeObject<BindingCollection>(NetCore.Params.ReadParam("HOTKEYS"));
 
                     UICore.HotkeyBindings = binds;
 
@@ -87,7 +87,7 @@ namespace RTCV.UI
 
                     foreach (var b in UICore.HotkeyBindings)
                     {
-                        Input.Bindings.BindMulti(b.DisplayName, b.Bindings);
+                        Bindings.BindMulti(b.DisplayName, b.Bindings);
                     }
                 }
                 catch (Exception e)

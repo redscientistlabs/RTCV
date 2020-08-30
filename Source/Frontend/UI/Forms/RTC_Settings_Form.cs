@@ -37,7 +37,7 @@
         {
             Process p = new Process();
             p.StartInfo.FileName = "FactoryClean.bat";
-            p.StartInfo.WorkingDirectory = CorruptCore.RtcCore.EmuDir;
+            p.StartInfo.WorkingDirectory = RtcCore.EmuDir;
             p.Start();
         }
 
@@ -69,7 +69,7 @@
 
         private void btnDebugInfo_Click(object sender, EventArgs e)
         {
-            S.GET<RTCV.NetCore.DebugInfo_Form>().ShowDialog();
+            S.GET<NetCore.DebugInfo_Form>().ShowDialog();
         }
 
         private void BtnTestForm_Click(object sender, EventArgs e)

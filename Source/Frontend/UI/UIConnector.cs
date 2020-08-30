@@ -23,9 +23,9 @@ namespace RTCV.UI
                 return;
             }
 
-            var netCoreSpec = new NetCore.NetCoreSpec
+            var netCoreSpec = new NetCoreSpec
             {
-                Side = NetCore.NetworkSide.SERVER,
+                Side = NetworkSide.SERVER,
                 Attached = receiver.Attached,
                 Loopback = true
             };
@@ -61,7 +61,7 @@ namespace RTCV.UI
 
                 S.GET<RTC_VmdAct_Form>()
                     .cbAutoAddDump.Checked = false;
-                GameProtection.WasAutoCorruptRunning = CorruptCore.RtcCore.AutoCorrupt;
+                GameProtection.WasAutoCorruptRunning = RtcCore.AutoCorrupt;
                 S.GET<UI_CoreForm>().AutoCorrupt = false;
             });
             GameProtection.Stop(false);
@@ -97,7 +97,7 @@ namespace RTCV.UI
                 string endpoint = msgParts[0];
                 e.message.Type = msgParts[1]; //remove endpoint from type
 
-                return NetCore.LocalNetCoreRouter.Route(endpoint, e);
+                return LocalNetCoreRouter.Route(endpoint, e);
             }
             else
             {   //This is for the Vanguard Implementation

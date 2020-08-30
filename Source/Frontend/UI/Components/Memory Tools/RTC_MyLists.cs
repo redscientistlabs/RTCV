@@ -96,7 +96,7 @@ namespace RTCV.UI
 
             if (string.IsNullOrWhiteSpace(name))
             {
-                name = CorruptCore.RtcCore.GetRandomKey();
+                name = RtcCore.GetRandomKey();
             }
 
             if (File.Exists(path))
@@ -221,7 +221,7 @@ namespace RTCV.UI
                 }
             }
 
-            CorruptCore.Filtering.ResetLoadedListsInUI();
+            Filtering.ResetLoadedListsInUI();
 
             //reload lists
             UICore.LoadLists(RtcCore.ListsDir);
@@ -244,7 +244,7 @@ namespace RTCV.UI
 
         private void btnRefreshVmdFiles_Click(object sender, EventArgs e)
         {
-            CorruptCore.Filtering.ResetLoadedListsInUI();
+            Filtering.ResetLoadedListsInUI();
 
             //reload lists
             UICore.LoadLists(RtcCore.ListsDir);

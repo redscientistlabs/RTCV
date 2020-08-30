@@ -19,7 +19,7 @@
             {
                 ControlBox = false,
                 MinimizeBox = false,
-                FormBorderStyle = System.Windows.Forms.FormBorderStyle.None,
+                FormBorderStyle = FormBorderStyle.None,
                 Text = "",
                 Size = Size,
                 BackColor = Color.DarkSlateBlue,

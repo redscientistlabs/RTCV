@@ -4,14 +4,14 @@ namespace RTCV.NetCore
     using Ceras;
 
     [Serializable()]
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     public abstract class NetCoreMessage
     {
         public string Type;
     }
 
     [Serializable()]
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     public class NetCoreSimpleMessage : NetCoreMessage
     {
         public NetCoreSimpleMessage()
@@ -24,7 +24,7 @@ namespace RTCV.NetCore
     }
 
     [Serializable()]
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     public class NetCoreAdvancedMessage : NetCoreMessage
     {
         public string ReturnedFrom;

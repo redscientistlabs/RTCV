@@ -205,7 +205,7 @@
     }
 
     [Serializable]
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     public class PartialSpec : BaseSpec
     {
         public string Name;
@@ -239,7 +239,7 @@
     }
 
     [Serializable]
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     public abstract class BaseSpec
     {
         internal int version { get; set; }

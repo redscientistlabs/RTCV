@@ -58,22 +58,22 @@ namespace RTCV.UI
 
             p["SELECTEDDOMAINS"] = new string[] { };
 
-            RTCV.NetCore.AllSpec.UISpec = new FullSpec(p, !CorruptCore.RtcCore.Attached);
-            RTCV.NetCore.AllSpec.UISpec.SpecUpdated += (o, e) =>
+            AllSpec.UISpec = new FullSpec(p, !RtcCore.Attached);
+            AllSpec.UISpec.SpecUpdated += (o, e) =>
             {
                 PartialSpec partial = e.partialSpec;
 
                 LocalNetCoreRouter.Route(CORRUPTCORE, REMOTE_PUSHUISPECUPDATE, partial, e.syncedUpdate);
             };
 
-            CorruptCore.RtcCore.StartUISide();
+            RtcCore.StartUISide();
 
             //Loading RTC Params
 
-            S.GET<RTC_SettingsGeneral_Form>().cbDisableEmulatorOSD.Checked = RTCV.NetCore.Params.IsParamSet(RTCSPEC.CORE_EMULATOROSDDISABLED);
-            S.GET<RTC_SettingsGeneral_Form>().cbAllowCrossCoreCorruption.Checked = RTCV.NetCore.Params.IsParamSet("ALLOW_CROSS_CORE_CORRUPTION");
-            S.GET<RTC_SettingsGeneral_Form>().cbDontCleanAtQuit.Checked = RTCV.NetCore.Params.IsParamSet("DONT_CLEAN_SAVESTATES_AT_QUIT");
-            S.GET<RTC_SettingsGeneral_Form>().cbUncapIntensity.Checked = RTCV.NetCore.Params.IsParamSet("UNCAP_INTENSITY");
+            S.GET<RTC_SettingsGeneral_Form>().cbDisableEmulatorOSD.Checked = Params.IsParamSet(RTCSPEC.CORE_EMULATOROSDDISABLED);
+            S.GET<RTC_SettingsGeneral_Form>().cbAllowCrossCoreCorruption.Checked = Params.IsParamSet("ALLOW_CROSS_CORE_CORRUPTION");
+            S.GET<RTC_SettingsGeneral_Form>().cbDontCleanAtQuit.Checked = Params.IsParamSet("DONT_CLEAN_SAVESTATES_AT_QUIT");
+            S.GET<RTC_SettingsGeneral_Form>().cbUncapIntensity.Checked = Params.IsParamSet("UNCAP_INTENSITY");
 
             //Initialize input code. Poll every 16ms
             Input.Input.Initialize();
@@ -161,12 +161,12 @@ namespace RTCV.UI
 
         public static void UpdateFormFocusStatus(bool? forceSet = null)
         {
-            if (RTCV.NetCore.AllSpec.UISpec == null)
+            if (AllSpec.UISpec == null)
             {
                 return;
             }
 
-            bool previousState = (bool?)RTCV.NetCore.AllSpec.UISpec[RTC_INFOCUS] ?? false;
+            bool previousState = (bool?)AllSpec.UISpec[RTC_INFOCUS] ?? false;
             //bool currentState = forceSet ?? isAnyRTCFormFocused();
             bool currentState = (Form.ActiveForm != null && forceSet == null) || (forceSet ?? false);
 
@@ -174,7 +174,7 @@ namespace RTCV.UI
             {
                 logger.Trace($"Swapping focus state {previousState} => {currentState}");
                 //This is a non-synced spec update to prevent jittering. Shouldn't have any other noticeable impact
-                RTCV.NetCore.AllSpec.UISpec.Update(RTC_INFOCUS, currentState, true, false);
+                AllSpec.UISpec.Update(RTC_INFOCUS, currentState, true, false);
             }
         }
 
@@ -298,7 +298,7 @@ namespace RTCV.UI
         {
             if (baseType == null)
             {
-                baseType = typeof(RTCV.UI.UI_CoreForm);
+                baseType = typeof(UI_CoreForm);
             }
             //This fetches all singletons interface IAutoColorized
 
@@ -325,7 +325,7 @@ namespace RTCV.UI
 
             isClosing = true;
 
-            foreach (Form frm in UICore.AllColorizedSingletons())
+            foreach (Form frm in AllColorizedSingletons())
             {
                 if (frm != null)
                 {
@@ -339,7 +339,7 @@ namespace RTCV.UI
             }
 
             //Clean out the working folders
-            if (!CorruptCore.RtcCore.DontCleanSavestatesOnQuit)
+            if (!RtcCore.DontCleanSavestatesOnQuit)
             {
                 Stockpile.EmptyFolder("WORKING");
             }
@@ -373,10 +373,10 @@ namespace RTCV.UI
                         //Console.WriteLine(ie);
 
                         // look for hotkey bindings for this key
-                        var triggers = Input.Bindings.SearchBindings(ie.LogicalButton.ToString());
+                        var triggers = Bindings.SearchBindings(ie.LogicalButton.ToString());
 
                         bool handled = false;
-                        if (ie.EventType == RTCV.UI.Input.InputEventType.Press)
+                        if (ie.EventType == InputEventType.Press)
                         {
                             triggers.Aggregate(handled, (current, trigger) => current | CheckHotkey(trigger));
                         }
@@ -457,7 +457,7 @@ namespace RTCV.UI
                     break;
 
                 case "Just Corrupt":
-                    RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(VSPEC.STEP_RUNBEFORE, true);
+                    AllSpec.CorruptCoreSpec.Update(VSPEC.STEP_RUNBEFORE, true);
 
                     SyncObjectSingleton.FormExecute(() =>
                     {
@@ -533,7 +533,7 @@ namespace RTCV.UI
                 case "Blast+RawStash":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(VSPEC.STEP_RUNBEFORE, true);
+                        AllSpec.CorruptCoreSpec.Update(VSPEC.STEP_RUNBEFORE, true);
                         S.GET<UI_CoreForm>().btnManualBlast_Click(null, null);
                         S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw_Click(null, null);
                     });
@@ -707,19 +707,19 @@ namespace RTCV.UI
             {
                 S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.DisplayMember = "Name";
                 S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.ValueMember = "Value";
-                S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
+                S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.DataSource = RtcCore.LimiterListBindingSource;
 
                 S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DisplayMember = "Name";
                 S.GET<RTC_CustomEngineConfig_Form>().cbValueList.ValueMember = "Value";
-                S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DataSource = CorruptCore.RtcCore.ValueListBindingSource;
+                S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DataSource = RtcCore.ValueListBindingSource;
 
                 S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.DisplayMember = "Name";
                 S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.ValueMember = "Value";
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
+                S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.DataSource = RtcCore.LimiterListBindingSource;
 
                 S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.DisplayMember = "Name";
                 S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.ValueMember = "Value";
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.DataSource = CorruptCore.RtcCore.ValueListBindingSource;
+                S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.DataSource = RtcCore.ValueListBindingSource;
             }
             else
             {
@@ -742,7 +742,7 @@ namespace RTCV.UI
             //x.Substring(x.LastIndexOf('\\')+1)[0] != '$'
             //checks if first char is $
 
-            string[] paths = System.IO.Directory.GetFiles(dir).Where(x => x.EndsWith(".txt", StringComparison.OrdinalIgnoreCase) && x.Substring(x.LastIndexOf('\\') + 1)[0] != '$').ToArray();
+            string[] paths = Directory.GetFiles(dir).Where(x => x.EndsWith(".txt", StringComparison.OrdinalIgnoreCase) && x.Substring(x.LastIndexOf('\\') + 1)[0] != '$').ToArray();
             paths = paths.OrderBy(x => x).ToArray();
 
             List<string> hashes = Filtering.LoadListsFromPaths(paths);

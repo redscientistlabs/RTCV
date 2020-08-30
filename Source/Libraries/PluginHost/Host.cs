@@ -18,7 +18,7 @@ namespace RTCV.PluginHost
 
 
         private CompositionContainer _container;
-        private static Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         private bool initialized = false;
 
         public Host()

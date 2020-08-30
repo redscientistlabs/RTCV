@@ -15,10 +15,10 @@ namespace RTCV.UI
         public RTC_GeneralParameters_Form()
         {
             InitializeComponent();
-            multiTB_Intensity.ValueChanged += (sender, args) => CorruptCore.RtcCore.Intensity = multiTB_Intensity.Value;
+            multiTB_Intensity.ValueChanged += (sender, args) => RtcCore.Intensity = multiTB_Intensity.Value;
             multiTB_Intensity.registerSlave(S.GET<RTC_GlitchHarvesterIntensity_Form>().multiTB_Intensity);
 
-            multiTB_ErrorDelay.ValueChanged += (sender, args) => CorruptCore.RtcCore.ErrorDelay = multiTB_ErrorDelay.Value;
+            multiTB_ErrorDelay.ValueChanged += (sender, args) => RtcCore.ErrorDelay = multiTB_ErrorDelay.Value;
         }
 
         private void RTC_GeneralParameters_Form_Load(object sender, EventArgs e)
@@ -34,27 +34,27 @@ namespace RTCV.UI
             switch (cbBlastRadius.SelectedItem.ToString())
             {
                 case "SPREAD":
-                    CorruptCore.RtcCore.Radius = BlastRadius.SPREAD;
+                    RtcCore.Radius = BlastRadius.SPREAD;
                     break;
 
                 case "CHUNK":
-                    CorruptCore.RtcCore.Radius = BlastRadius.CHUNK;
+                    RtcCore.Radius = BlastRadius.CHUNK;
                     break;
 
                 case "BURST":
-                    CorruptCore.RtcCore.Radius = BlastRadius.BURST;
+                    RtcCore.Radius = BlastRadius.BURST;
                     break;
 
                 case "NORMALIZED":
-                    CorruptCore.RtcCore.Radius = BlastRadius.NORMALIZED;
+                    RtcCore.Radius = BlastRadius.NORMALIZED;
                     break;
 
                 case "PROPORTIONAL":
-                    CorruptCore.RtcCore.Radius = BlastRadius.PROPORTIONAL;
+                    RtcCore.Radius = BlastRadius.PROPORTIONAL;
                     break;
 
                 case "EVEN":
-                    CorruptCore.RtcCore.Radius = BlastRadius.EVEN;
+                    RtcCore.Radius = BlastRadius.EVEN;
                     break;
             }
         }

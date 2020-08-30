@@ -94,7 +94,7 @@ namespace RTCV.UI
 
             if (string.IsNullOrWhiteSpace(name))
             {
-                name = CorruptCore.RtcCore.GetRandomKey();
+                name = RtcCore.GetRandomKey();
             }
 
             if (File.Exists(path))

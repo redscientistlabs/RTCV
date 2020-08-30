@@ -7,8 +7,8 @@ namespace RTCV.CorruptCore
     {
         public static bool RenderAtLoad
         {
-            get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.RENDER_AT_LOAD];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_AT_LOAD, value);
+            get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.RENDER_AT_LOAD];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_AT_LOAD, value);
         }
 
         public static bool IsRendering

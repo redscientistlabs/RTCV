@@ -39,12 +39,12 @@ namespace RTCV.NetCore
             //finds any delegate referencing ConsoleWritten and dereferences it
 
             FieldInfo eventFieldInfo = typeof(ConsoleEx).GetField("ConsoleWritten", BindingFlags.NonPublic | BindingFlags.Instance);
-            MulticastDelegate eventInstance = (MulticastDelegate)eventFieldInfo.GetValue(ConsoleEx.singularity);
+            MulticastDelegate eventInstance = (MulticastDelegate)eventFieldInfo.GetValue(singularity);
             Delegate[] invocationList = eventInstance?.GetInvocationList() ?? new Delegate[] { };
             MethodInfo eventRemoveMethodInfo = typeof(ConsoleEx).GetEvent("ConsoleWritten").GetRemoveMethod(true);
             foreach (Delegate eventHandler in invocationList)
             {
-                eventRemoveMethodInfo.Invoke(ConsoleEx.singularity, new object[] { eventHandler });
+                eventRemoveMethodInfo.Invoke(singularity, new object[] { eventHandler });
             }
         }
 
@@ -74,7 +74,7 @@ namespace RTCV.NetCore
 
             string consoleLine = "[" + DateTime.Now.ToString("hh:mm:ss.ffff") + "] " + message;
 
-            ConsoleEx.singularity.OnConsoleWritten(new NetCoreEventArgs() { message = new NetCoreSimpleMessage(consoleLine) });
+            singularity.OnConsoleWritten(new NetCoreEventArgs() { message = new NetCoreSimpleMessage(consoleLine) });
 
             logger.Info(consoleLine);
             Console.WriteLine(consoleLine);

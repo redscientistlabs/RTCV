@@ -176,7 +176,7 @@ namespace RTCV.UI
                 ((DataGridViewNumericUpDownCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvExecuteFrame"]).Value = 0M;
 
                 //Generate a random Seed
-                ((DataGridViewTextBoxCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvSeed"]).Value = CorruptCore.RtcCore.RND.Next(int.MinValue, int.MaxValue);
+                ((DataGridViewTextBoxCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvSeed"]).Value = RtcCore.RND.Next(int.MinValue, int.MaxValue);
 
                 PopulateDomainCombobox(dgvBlastGenerator.Rows[lastrow]);
                 PopulateModeCombobox(dgvBlastGenerator.Rows[lastrow]);
@@ -330,7 +330,7 @@ namespace RTCV.UI
                         return;
                     }
 
-                    newSk = new StashKey(CorruptCore.RtcCore.GetRandomKey(), psk.ParentKey, null)
+                    newSk = new StashKey(RtcCore.GetRandomKey(), psk.ParentKey, null)
                     {
                         RomFilename = psk.RomFilename,
                         SystemName = psk.SystemName,
@@ -385,7 +385,7 @@ namespace RTCV.UI
                         MessageBox.Show($"Could not perform the CORRUPT action\n\nEither no {saveStateWord} Box was selected in the {saveStateWord} Manager\nor the {saveStateWord} Box itself is empty.");
                         return;
                     }
-                    newSk = new StashKey(CorruptCore.RtcCore.GetRandomKey(), psk.ParentKey, null)
+                    newSk = new StashKey(RtcCore.GetRandomKey(), psk.ParentKey, null)
                     {
                         RomFilename = psk.RomFilename,
                         SystemName = psk.SystemName,
@@ -509,7 +509,7 @@ namespace RTCV.UI
                                 $"The Blast Generator could not perform the CORRUPT action\n\nEither no {saveStateWord} Box was selected in the {saveStateWord} Manager\nor the {saveStateWord} Box itself is empty.");
                             return null;
                         }
-                        newSk = new StashKey(CorruptCore.RtcCore.GetRandomKey(), psk.ParentKey, bl)
+                        newSk = new StashKey(RtcCore.GetRandomKey(), psk.ParentKey, bl)
                         {
                             RomFilename = psk.RomFilename,
                             SystemName = psk.SystemName,
@@ -552,7 +552,7 @@ namespace RTCV.UI
 
                 List<BlastGeneratorProto> returnList = new List<BlastGeneratorProto>();
 
-                returnList = NetCore.LocalNetCoreRouter.QueryRoute<List<BlastGeneratorProto>>(NetCore.NetcoreCommands.CORRUPTCORE, NetCore.NetcoreCommands.BLASTGENERATOR_BLAST, new object[] { newSk, protoList, loadBeforeCorrupt, applyAfterCorrupt, resumeAfter }, true);
+                returnList = LocalNetCoreRouter.QueryRoute<List<BlastGeneratorProto>>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.BLASTGENERATOR_BLAST, new object[] { newSk, protoList, loadBeforeCorrupt, applyAfterCorrupt, resumeAfter }, true);
 
                 if (returnList == null)
                 {

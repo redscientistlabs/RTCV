@@ -56,7 +56,7 @@ namespace RTCV.Plugins.HexEditor
         private static Dictionary<string, MemoryInterface> AllDomains => MemoryDomains.AllMemoryInterfaces;
         public volatile bool _hideOnClose = true;
 
-        readonly Logger _logger = NLog.LogManager.GetCurrentClassLogger();
+        readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public HexEditor()
         {
@@ -86,12 +86,12 @@ namespace RTCV.Plugins.HexEditor
 
             Restart();
 
-            CorruptCore.StepActions.StepEnd += (o, e) =>
+            StepActions.StepEnd += (o, e) =>
             {
                 if (this.Visible)
                     UpdateValues();
             };
-            CorruptCore.RtcCore.GameClosed += (o, e) =>
+            RtcCore.GameClosed += (o, e) =>
             {
                 if (e.FullyClosed)
                 {
@@ -101,7 +101,7 @@ namespace RTCV.Plugins.HexEditor
                 else if (this.Visible)
                     Restart();
             };
-            CorruptCore.RtcCore.LoadGameDone += (o, e) =>
+            RtcCore.LoadGameDone += (o, e) =>
             {
                 if (this.Visible)
                     Restart();
@@ -1758,7 +1758,7 @@ namespace RTCV.Plugins.HexEditor
 
                 var textrect = new Rectangle(textpoint, new Size(_fontWidth * DataSize, _fontHeight));
 
-                if (CorruptCore.StepActions.InfiniteUnitExists(_domain.Name, _addressHighlighted))
+                if (StepActions.InfiniteUnitExists(_domain.Name, _addressHighlighted))
                 {
                     e.Graphics.FillRectangle(new SolidBrush(Color.Cyan), rect);
                     e.Graphics.FillRectangle(new SolidBrush(Color.Cyan), textrect);

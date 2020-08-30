@@ -244,11 +244,11 @@ namespace RTCV.NetCore
             {
                 if (t == typeof(HashSet<byte[]>))
                 {
-                    return new NetCore.NetCore_Extensions.HashSetFormatterThatKeepsItsComparer();
+                    return new HashSetFormatterThatKeepsItsComparer();
                 }
                 else if (t == typeof(HashSet<byte?[]>))
                 {
-                    return new NetCore.NetCore_Extensions.NullableByteHashSetFormatterThatKeepsItsComparer();
+                    return new NullableByteHashSetFormatterThatKeepsItsComparer();
                 }
 
                 return null; // continue searching
@@ -406,7 +406,7 @@ namespace RTCV.NetCore
 
             try
             {
-                if (object.ReferenceEquals(clientRef, client))
+                if (ReferenceEquals(clientRef, client))
                 {
                     client?.Close();
                     client = null;
@@ -547,7 +547,7 @@ namespace RTCV.NetCore
 
                 try
                 {
-                    if (object.ReferenceEquals(clientRef, client))
+                    if (ReferenceEquals(clientRef, client))
                     {
                         client?.Close();
                         client = null;

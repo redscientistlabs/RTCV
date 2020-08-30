@@ -26,7 +26,7 @@ namespace RTCV.UI.Components.Controls
             set
             {
                 _selectedHolder = value;
-                CorruptCore.StockpileManager_UISide.CurrentSavestateStashKey = value?.sk;
+                StockpileManager_UISide.CurrentSavestateStashKey = value?.sk;
             }
         }
 

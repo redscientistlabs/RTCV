@@ -41,7 +41,7 @@ namespace RTCV.UI
         }
 
         private static volatile int pulseCount = MaxMissedPulses;
-        private static System.Windows.Forms.Timer BoopMonitoringTimer = null;
+        private static Timer BoopMonitoringTimer = null;
 
         public static SoundPlayer[] LoadedSounds = null;
 
@@ -163,7 +163,7 @@ namespace RTCV.UI
             }
             catch { }
 
-            BoopMonitoringTimer = new System.Windows.Forms.Timer
+            BoopMonitoringTimer = new Timer
             {
                 Interval = 500
             };
@@ -178,7 +178,7 @@ namespace RTCV.UI
 
         private static void BoopMonitoringTimer_Tick(object sender, EventArgs e)
         {
-            if (!Enabled || (UI_VanguardImplementation.connector?.netConn?.status != NetCore.NetworkStatus.CONNECTED))
+            if (!Enabled || (UI_VanguardImplementation.connector?.netConn?.status != NetworkStatus.CONNECTED))
             {
                 return;
             }

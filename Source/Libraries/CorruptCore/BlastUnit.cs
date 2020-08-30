@@ -16,7 +16,7 @@ namespace RTCV.CorruptCore
     using Exception = System.Exception;
 
     [Serializable]
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     public class BlastUnit : INote
     {
         public object Clone()
@@ -169,7 +169,7 @@ namespace RTCV.CorruptCore
         [Category("Value")]
         [Description("Gets and sets Value[] through a string. Used for Textboxes")]
         [DisplayName("ValueString")]
-        [Ceras.Exclude]
+        [Exclude]
         public string ValueString
         {
             get
@@ -250,7 +250,7 @@ namespace RTCV.CorruptCore
         public string Note { get; set; }
 
         //Don't serialize this
-        [NonSerialized, XmlIgnore, JsonIgnore, Ceras.Exclude]
+        [NonSerialized, XmlIgnore, JsonIgnore, Exclude]
         public BlastUnitWorkingData Working;
 
         /// <summary>
@@ -576,7 +576,7 @@ namespace RTCV.CorruptCore
                         throw new Exception("wtf");
                     }
 
-                    RTCV.Common.Logging.GlobalLogger.Error("Blastunit: WORKING WAS NULL {this}", this);
+                    Common.Logging.GlobalLogger.Error("Blastunit: WORKING WAS NULL {this}", this);
                     return ExecuteState.SILENTERROR;
                 }
                 switch (Source)
@@ -585,7 +585,7 @@ namespace RTCV.CorruptCore
                         {
                             if (Working.StoreData == null)
                             {
-                                RTCV.Common.Logging.GlobalLogger.Error("Blastunit: STOREDATA WAS NULL {this}", this);
+                                Common.Logging.GlobalLogger.Error("Blastunit: STOREDATA WAS NULL {this}", this);
                                 return ExecuteState.SILENTERROR;
                             }
 
@@ -924,7 +924,7 @@ namespace RTCV.CorruptCore
             }
             else if (Source == BlastUnitSource.STORE)
             {
-                string[] _selectedDomains = (string[])RTCV.NetCore.AllSpec.UISpec["SELECTEDDOMAINS"];
+                string[] _selectedDomains = (string[])NetCore.AllSpec.UISpec["SELECTEDDOMAINS"];
 
                 //Always reroll domain before address
                 if (RtcCore.RerollSourceDomain)

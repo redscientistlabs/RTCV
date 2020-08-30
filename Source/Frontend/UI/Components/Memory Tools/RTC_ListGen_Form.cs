@@ -155,7 +155,7 @@ namespace RTCV.UI
             {
                 if (!string.IsNullOrWhiteSpace(filename))
                 {
-                    File.WriteAllLines(Path.Combine(CorruptCore.RtcCore.RtcDir, "LISTS", filename + ".txt"), newList);
+                    File.WriteAllLines(Path.Combine(RtcCore.RtcDir, "LISTS", filename + ".txt"), newList);
                 }
                 else
                 {
@@ -166,7 +166,7 @@ namespace RTCV.UI
             //If there's no name just generate one
             if (string.IsNullOrWhiteSpace(filename))
             {
-                filename = CorruptCore.RtcCore.GetRandomKey();
+                filename = RtcCore.GetRandomKey();
             }
 
             //TODO fix this before i forget
@@ -195,7 +195,7 @@ namespace RTCV.UI
             //string hash = Filtering.RegisterList(byteList, filename, true);
 
             //Register the list in the ui
-            CorruptCore.Filtering.RegisterListInUI(filename, hash);
+            Filtering.RegisterListInUI(filename, hash);
 
             return true;
         }

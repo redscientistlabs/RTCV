@@ -39,7 +39,7 @@ namespace RTCV.CorruptCore
                     }
                     catch
                     {
-                        if (MultipleFileInterface.LoadAnything)
+                        if (LoadAnything)
                         {
                             break;
                         }

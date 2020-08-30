@@ -176,7 +176,7 @@ namespace RTCV.UI
             {
                 if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
-                    throw new RTCV.NetCore.AbortEverythingException();
+                    throw new AbortEverythingException();
                 }
             }
         }
@@ -864,7 +864,7 @@ namespace RTCV.UI
                 cbLimiterTime.SelectedItem = bu.LimiterTime;
                 cbStoreLimiterSource.SelectedItem = bu.StoreLimiterSource;
 
-                cbLimiterList.SelectedItem = CorruptCore.RtcCore.LimiterListBindingSource.FirstOrDefault(x => x.Value == bu.LimiterListHash);
+                cbLimiterList.SelectedItem = RtcCore.LimiterListBindingSource.FirstOrDefault(x => x.Value == bu.LimiterListHash);
 
                 cbInvertLimiter.Checked = bu.InvertLimiter;
                 cbStoreTime.SelectedItem = bu.StoreTime;
@@ -962,7 +962,7 @@ namespace RTCV.UI
                 cbSource.Items.Add(item);
             }
 
-            cbLimiterList.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
+            cbLimiterList.DataSource = RtcCore.LimiterListBindingSource;
             cbLimiterList.DisplayMember = "Name";
             cbLimiterList.ValueMember = "Value";
 
@@ -1020,13 +1020,13 @@ namespace RTCV.UI
             domain.SortMode = DataGridViewColumnSortMode.Automatic;
             dgvBlastEditor.Columns.Add(domain);
 
-            var address = (RTCV.UI.Components.DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.Address.ToString(), BuProperty.Address.ToString(), "Address", new RTCV.UI.Components.DataGridViewNumericUpDownColumn());
+            var address = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.Address.ToString(), BuProperty.Address.ToString(), "Address", new DataGridViewNumericUpDownColumn());
             address.Hexadecimal = true;
             address.SortMode = DataGridViewColumnSortMode.Automatic;
             address.Increment = 1;
             dgvBlastEditor.Columns.Add(address);
 
-            var precision = (RTCV.UI.Components.DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.Precision.ToString(), BuProperty.Precision.ToString(), "Precision", new RTCV.UI.Components.DataGridViewNumericUpDownColumn());
+            var precision = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.Precision.ToString(), BuProperty.Precision.ToString(), "Precision", new DataGridViewNumericUpDownColumn());
             precision.Minimum = 1;
             precision.Maximum = int.MaxValue;
             precision.SortMode = DataGridViewColumnSortMode.Automatic;
@@ -1040,21 +1040,21 @@ namespace RTCV.UI
             dgvBlastEditor.Columns.Add(valuestring);
 
             var executeFrame = CreateColumn(BuProperty.ExecuteFrame.ToString(), BuProperty.ExecuteFrame.ToString(),
-                "Execute Frame", new RTCV.UI.Components.DataGridViewNumericUpDownColumn());
+                "Execute Frame", new DataGridViewNumericUpDownColumn());
             executeFrame.SortMode = DataGridViewColumnSortMode.Automatic;
-            ((RTCV.UI.Components.DataGridViewNumericUpDownColumn)(executeFrame)).Maximum = int.MaxValue;
+            ((DataGridViewNumericUpDownColumn)(executeFrame)).Maximum = int.MaxValue;
             dgvBlastEditor.Columns.Add(executeFrame);
 
             var loopTimng = CreateColumn(BuProperty.LoopTiming.ToString(), BuProperty.LoopTiming.ToString(),
-                "Loop Timing", new RTCV.UI.Components.DataGridViewNumericUpDownColumn());
+                "Loop Timing", new DataGridViewNumericUpDownColumn());
             loopTimng.SortMode = DataGridViewColumnSortMode.Automatic;
-            ((RTCV.UI.Components.DataGridViewNumericUpDownColumn)(loopTimng)).Maximum = int.MaxValue;
+            ((DataGridViewNumericUpDownColumn)(loopTimng)).Maximum = int.MaxValue;
             dgvBlastEditor.Columns.Add(loopTimng);
 
             var lifetime = CreateColumn(BuProperty.Lifetime.ToString(), BuProperty.Lifetime.ToString(),
-                "Lifetime", new RTCV.UI.Components.DataGridViewNumericUpDownColumn());
+                "Lifetime", new DataGridViewNumericUpDownColumn());
             lifetime.SortMode = DataGridViewColumnSortMode.Automatic;
-            ((RTCV.UI.Components.DataGridViewNumericUpDownColumn)(lifetime)).Maximum = int.MaxValue;
+            ((DataGridViewNumericUpDownColumn)(lifetime)).Maximum = int.MaxValue;
             dgvBlastEditor.Columns.Add(lifetime);
 
             var loop = CreateColumn(BuProperty.Loop.ToString(), BuProperty.Loop.ToString(),
@@ -1071,7 +1071,7 @@ namespace RTCV.UI
             dgvBlastEditor.Columns.Add(limiterTime);
 
             var limiterHash = CreateColumn(BuProperty.LimiterListHash.ToString(), BuProperty.LimiterListHash.ToString(), "Limiter List", new DataGridViewComboBoxColumn()) as DataGridViewComboBoxColumn;
-            limiterHash.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
+            limiterHash.DataSource = RtcCore.LimiterListBindingSource;
             limiterHash.DisplayMember = "Name";
             limiterHash.ValueMember = "Value";
             limiterHash.MaxDropDownItems = 15;
@@ -1107,7 +1107,7 @@ namespace RTCV.UI
             sourceDomain.SortMode = DataGridViewColumnSortMode.Automatic;
             dgvBlastEditor.Columns.Add(sourceDomain);
 
-            var sourceAddress = (RTCV.UI.Components.DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.SourceAddress.ToString(), BuProperty.SourceAddress.ToString(), "Source Address", new RTCV.UI.Components.DataGridViewNumericUpDownColumn());
+            var sourceAddress = (DataGridViewNumericUpDownColumn)CreateColumn(BuProperty.SourceAddress.ToString(), BuProperty.SourceAddress.ToString(), "Source Address", new DataGridViewNumericUpDownColumn());
             sourceAddress.Hexadecimal = true;
             sourceAddress.SortMode = DataGridViewColumnSortMode.Automatic;
             sourceAddress.Increment = 1;
@@ -1115,9 +1115,9 @@ namespace RTCV.UI
 
             dgvBlastEditor.Columns.Add(CreateColumn("", BuProperty.Note.ToString(), "Note", new DataGridViewButtonColumn()));
 
-            if (RTCV.NetCore.Params.IsParamSet("BLASTEDITOR_VISIBLECOLUMNS"))
+            if (Params.IsParamSet("BLASTEDITOR_VISIBLECOLUMNS"))
             {
-                var str = RTCV.NetCore.Params.ReadParam("BLASTEDITOR_VISIBLECOLUMNS");
+                var str = Params.ReadParam("BLASTEDITOR_VISIBLECOLUMNS");
                 var columns = str.Split(',');
                 foreach (var column in columns)
                 {
@@ -1207,7 +1207,7 @@ namespace RTCV.UI
                     case DataGridViewTextBoxColumn s:
                         s.FillWeight = textBoxFillWeight;
                         break;
-                    case RTCV.UI.Components.DataGridViewNumericUpDownColumn s:
+                    case DataGridViewNumericUpDownColumn s:
                         s.FillWeight = numericUpDownFillWeight;
                         break;
                 }
@@ -1579,7 +1579,7 @@ namespace RTCV.UI
 
                 LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_LOADROM, filename, true);
 
-                var temp = new StashKey(CorruptCore.RtcCore.GetRandomKey(), currentSK.ParentKey, currentSK.BlastLayer);
+                var temp = new StashKey(RtcCore.GetRandomKey(), currentSK.ParentKey, currentSK.BlastLayer);
 
                 // We have to null this as to properly create a stashkey, we need to use it in the constructor,
                 // but then the user needs to provide a savestate
@@ -1721,7 +1721,7 @@ namespace RTCV.UI
             var oldSS = currentSK.SyncSettings;
 
             //Get a new key
-            currentSK.ParentKey = CorruptCore.RtcCore.GetRandomKey();
+            currentSK.ParentKey = RtcCore.GetRandomKey();
             //Null the syncsettings out
             currentSK.SyncSettings = null;
 
@@ -1737,7 +1737,7 @@ namespace RTCV.UI
             }
 
             //Grab the syncsettings
-            var temp = new StashKey(CorruptCore.RtcCore.GetRandomKey(), currentSK.ParentKey, currentSK.BlastLayer);
+            var temp = new StashKey(RtcCore.GetRandomKey(), currentSK.ParentKey, currentSK.BlastLayer);
             currentSK.SyncSettings = temp.SyncSettings;
         }
         private void replaceSavestateFromFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1953,7 +1953,7 @@ namespace RTCV.UI
             }
             catch (Exception ex)
             {
-                throw new System.Exception("Something went wrong in when baking to VALUE.\n" +
+                throw new Exception("Something went wrong in when baking to VALUE.\n" +
                                            "Your blast editor session may be broke depending on when it failed.\n" +
                                            "You should probably send a copy of this error and what you did to cause it to the RTC devs.\n\n" +
                                            ex.ToString());

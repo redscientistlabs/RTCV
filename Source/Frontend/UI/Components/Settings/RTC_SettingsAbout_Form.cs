@@ -20,8 +20,8 @@
 
         private void RTC_SettingsAbout_Form_Load(object sender, EventArgs e)
         {
-            lbVersion.Text += CorruptCore.RtcCore.RtcVersion;
-            lbProcess.Text += (CorruptCore.RtcCore.Attached ? "Attached mode" : "Detached mode");
+            lbVersion.Text += RtcCore.RtcVersion;
+            lbProcess.Text += (RtcCore.Attached ? "Attached mode" : "Detached mode");
             lbConnectedTo.Text += (string)NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Not Connected";
         }
 

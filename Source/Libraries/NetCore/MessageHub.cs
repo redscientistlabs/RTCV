@@ -27,7 +27,7 @@
             hubTimer.Start();
         }
 
-        private void CheckMessages(object sender, System.Timers.ElapsedEventArgs e)
+        private void CheckMessages(object sender, ElapsedEventArgs e)
         {
             while (true) //checks all messages
             {
@@ -172,7 +172,7 @@
 
             if (returnMessage != null)
             {
-                RTCV.Common.Logging.GlobalLogger.Warn($"NetCoreEventArgs: ReturnValue was already set but was overriden with another value");
+                Common.Logging.GlobalLogger.Warn($"NetCoreEventArgs: ReturnValue was already set but was overriden with another value");
             }
 
             _returnMessage = message;

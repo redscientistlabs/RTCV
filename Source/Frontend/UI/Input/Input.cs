@@ -278,7 +278,7 @@
                         }
                     }
 
-                    bool allowInput = ((bool?)RTCV.NetCore.AllSpec.UISpec?[NetcoreCommands.RTC_INFOCUS] ?? true) || ((bool?)RTCV.NetCore.AllSpec.VanguardSpec?[NetcoreCommands.EMU_INFOCUS] ?? true);
+                    bool allowInput = ((bool?)AllSpec.UISpec?[NetcoreCommands.RTC_INFOCUS] ?? true) || ((bool?)AllSpec.VanguardSpec?[NetcoreCommands.EMU_INFOCUS] ?? true);
 
                     bool swallow = !allowInput;
 
@@ -345,7 +345,7 @@
             lock (this)
             {
                 if (InputEvents.Count == 0) return null;
-                if (!(bool?)RTCV.NetCore.AllSpec.UISpec[NetcoreCommands.RTC_INFOCUS] ?? true) return null;
+                if (!(bool?)AllSpec.UISpec[NetcoreCommands.RTC_INFOCUS] ?? true) return null;
 
                 //we only listen to releases for input binding, because we need to distinguish releases of pure modifierkeys from modified keys
                 //if you just pressed ctrl, wanting to bind ctrl, we'd see: pressed:ctrl, unpressed:ctrl
