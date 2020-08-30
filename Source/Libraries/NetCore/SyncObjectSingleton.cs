@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Threading;
+    using System.Runtime.ExceptionServices;
     using System.Windows.Forms;
-    using RTCV.NetCore.NetCore_Extensions;
 
     public static class SyncObjectSingleton
     {
@@ -86,6 +86,29 @@
             {
                 a.Invoke(null, null);
             }
+        }
+
+        //https://stackoverflow.com/a/56931457
+        private static object InvokeCorrectly(this Control control, Delegate method, params object[] args)
+        {
+            Exception failure = null;
+            var result = control.Invoke(new Func<object>(() =>
+            {
+                try
+                {
+                    return method.DynamicInvoke(args);
+                }
+                catch (Exception ex)
+                {
+                    failure = ex.InnerException;
+                    return failure;
+                }
+            }));
+            if (failure != null)
+            {
+                ExceptionDispatchInfo.Capture(failure).Throw();
+            }
+            return result;
         }
     }
 
