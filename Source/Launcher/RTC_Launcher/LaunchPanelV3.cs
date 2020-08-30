@@ -1,3 +1,5 @@
+using RTCV.Launcher.Components;
+
 namespace RTCV.Launcher
 {
     using System;
@@ -90,17 +92,17 @@ namespace RTCV.Launcher
                     {
                         if (e.Button == MouseButtons.Right)
                         {
-                            Point locate = new Point((sender as Control).Location.X + e.Location.X, (sender as Control).Location.Y + e.Location.Y);
+                            Point locate = new Point(((Control) sender).Location.X + e.Location.X, ((Control) sender).Location.Y + e.Location.Y);
 
-                            ContextMenuStrip columnsMenu = new ContextMenuStrip();
-                            columnsMenu.Items.Add("Delete Addon", null, new EventHandler((ob, ev) => { DeleteAddon(lcji); })).Enabled = (lcji.IsAddon || AddonInstalled);
-                            columnsMenu.Items.Add("Open Folder in Explorer", null, new EventHandler((ob, ev) =>
+                            var columnsMenu = new Components.BuildContextMenu();
+                            columnsMenu.Items.Add("Delete Addon", null, (ob, ev) => { DeleteAddon(lcji); }).Enabled = (lcji.IsAddon || AddonInstalled);
+                            columnsMenu.Items.Add("Open Folder in Explorer", null, (ob, ev) =>
                             {
                                 string addonFolderPath = Path.Combine(MainForm.launcherDir, "VERSIONS", lc.Version, lcji.FolderName);
 
                                 if (Directory.Exists(addonFolderPath))
                                     Process.Start(addonFolderPath);
-                            })).Enabled = AddonInstalled;
+                            }).Enabled = AddonInstalled;
                             columnsMenu.Show(this, locate);
                         }
                     };
@@ -236,7 +238,7 @@ namespace RTCV.Launcher
             //{
             Point locate = new Point((sender as Control).Location.X + e.Location.X, (sender as Control).Location.Y + e.Location.Y);
 
-            ContextMenuStrip columnsMenu = new ContextMenuStrip();
+            var columnsMenu = new BuildContextMenu();
 
             var allControls = new List<Control>();
 

@@ -1,3 +1,5 @@
+using RTCV.Launcher.Components;
+
 namespace RTCV.Launcher
 {
     using System;
@@ -195,7 +197,7 @@ namespace RTCV.Launcher
             {
                 Point locate = new Point((sender as Control).Location.X + e.Location.X, (sender as Control).Location.Y + e.Location.Y);
 
-                ContextMenuStrip columnsMenu = new ContextMenuStrip();
+                var columnsMenu = new BuildContextMenu();
                 columnsMenu.Items.Add("Download", null, new EventHandler((ob, ev) => { btnDownloadVersion_Click(sender, e); }));
                 columnsMenu.Show(this, locate);
             }
