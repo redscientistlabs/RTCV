@@ -512,9 +512,6 @@ namespace RTCV.Launcher
 
             if (Directory.Exists((launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version)))
             {
-            }
-
-            {
                 var failed = RTC_Extensions.RecursiveDeleteNukeReadOnly(launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version);
                 if (failed.Count > 0)
                 {
@@ -527,6 +524,7 @@ namespace RTCV.Launcher
                     MessageBox.Show($"Failed to delete some files!\nSomething may be locking them (is the RTC still running?)\n\nList of failed files:\n{sb.ToString()}");
                 }
             }
+
             RefreshInterface();
         }
 
