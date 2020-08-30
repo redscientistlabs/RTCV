@@ -384,6 +384,8 @@
       <DependentUpon>RTC_Test_Form.cs</DependentUpon>
     </Compile>
     <Compile Include="GameProtection.cs" />
+    <Compile Include="IBlockable.cs" />
+    <Compile Include="ITileForm.cs" />
     <Compile Include="SortableBindingList.cs" />
     <Compile Include="Extensions\BitmapExtensions.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
@@ -426,7 +428,6 @@
     <Compile Include="Modular\UI_DefaultGrids.cs" />
     <Compile Include="Modular\CanvasGrid.cs" />
     <Compile Include="Modular\ISubForm.cs" />
-    <Compile Include="Modular\UI_Objects.cs" />
     <Compile Include="Modular\UI_SaveProgress_Form.cs">
       <SubType>Form</SubType>
     </Compile>
