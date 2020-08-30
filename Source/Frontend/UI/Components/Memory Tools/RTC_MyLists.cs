@@ -83,7 +83,7 @@ namespace RTCV.UI
             string name = "";
             string value = listName.Trim();
             string path = "";
-            if (UI_Extensions.GetInputBox("Renaming List", "Enter the new List name:", ref value) == DialogResult.OK)
+            if (RTCV.UI.Forms.InputBox.ShowDialog("Renaming List", "Enter the new List name:", ref value) == DialogResult.OK)
             {
                 name = value.Trim();
 

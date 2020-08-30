@@ -303,6 +303,12 @@
     <Compile Include="Components\Settings\RTC_SettingsHotkeyConfig_Form.designer.cs">
       <DependentUpon>RTC_SettingsHotkeyConfig_Form.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\InputBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\InputBox.designer.cs">
+      <DependentUpon>InputBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\RTC_AnalyticsTool_Form.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -442,7 +448,6 @@
     <Compile Include="Components\DataGridViewNumericUpDownEditingControl.cs" />
     <Compile Include="Components\NumericTextBox.cs" />
     <Compile Include="Components\NumericUpDownHexFix.cs" />
-    <Compile Include="UI_Extensions.cs" />
     <Compile Include="UI_VanguardImplementation.cs" />
     <EmbeddedResource Include="Components\Blast Editor\RTC_ColumnSelector_Form.resx">
       <DependentUpon>RTC_ColumnSelector_Form.cs</DependentUpon>
