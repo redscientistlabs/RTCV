@@ -214,6 +214,8 @@ namespace RTCV.Launcher
             sideversionForm.lbVersions.Items.Clear();
             List<string> versions = new List<string>(Directory.GetDirectories(launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar));
             sideversionForm.lbVersions.Items.AddRange(versions.OrderByNaturalDescending(x => x).Select(it => getFilenameFromFullFilename(it)).ToArray<object>());
+            sideversionForm.lbDefaultText.Visible = versions.Count == 0;
+            sideversionForm.lbVersions.Visible = versions.Count > 0;
             this.PerformLayout();
             SelectedVersion = null;
 
