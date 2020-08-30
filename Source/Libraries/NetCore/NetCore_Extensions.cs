@@ -6,11 +6,9 @@ namespace RTCV.NetCore.NetCore_Extensions
     using System.IO;
     using System.Reflection;
     using System.Reflection.Emit;
-    using System.Runtime.ExceptionServices;
     using System.Runtime.InteropServices;
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Threading;
-    using System.Windows.Forms;
     using Ceras;
 
     public static class ObjectCopier
@@ -130,32 +128,6 @@ namespace RTCV.NetCore.NetCore_Extensions
 
                 set.Add(ar);
             }
-        }
-    }
-
-    public static class Helpers
-    {
-        //https://stackoverflow.com/a/56931457
-        public static object InvokeCorrectly(this Control control, Delegate method, params object[] args)
-        {
-            Exception failure = null;
-            var result = control.Invoke(new Func<object>(() =>
-            {
-                try
-                {
-                    return method.DynamicInvoke(args);
-                }
-                catch (Exception ex)
-                {
-                    failure = ex.InnerException;
-                    return failure;
-                }
-            }));
-            if (failure != null)
-            {
-                ExceptionDispatchInfo.Capture(failure).Throw();
-            }
-            return result;
         }
     }
 
