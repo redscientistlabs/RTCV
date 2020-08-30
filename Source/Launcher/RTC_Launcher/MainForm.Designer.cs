@@ -1,4 +1,4 @@
-﻿namespace RTCV.Launcher
+namespace RTCV.Launcher
 {
     partial class MainForm
     {
@@ -130,7 +130,6 @@
             this.pnAnchorRight.Name = "pnAnchorRight";
             this.pnAnchorRight.Size = new System.Drawing.Size(765, 464);
             this.pnAnchorRight.TabIndex = 133;
-            this.pnAnchorRight.Paint += new System.Windows.Forms.PaintEventHandler(this.pnAnchorRight_Paint);
             // 
             // pbNewVersionNotification
             // 

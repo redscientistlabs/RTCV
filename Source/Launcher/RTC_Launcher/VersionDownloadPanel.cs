@@ -15,7 +15,8 @@ namespace RTCV.Launcher
     public partial class VersionDownloadPanel : Form
     {
         public string latestVersionString = " (Latest version)";
-        List<dynamic> onlineVersionsObjects = null;
+        private List<dynamic> onlineVersionsObjects = null;
+
         public VersionDownloadPanel()
         {
             InitializeComponent();
@@ -32,13 +33,14 @@ namespace RTCV.Launcher
 
         public static string getLatestVersion()
         {
-            try {
-                var versionFile = MainForm.GetFileViaHttp(new Uri($"{MainForm.webRessourceDomain}/rtc/releases/version.php"));
+            try
+            {
+                byte[] versionFile = MainForm.GetFileViaHttp(new Uri($"{MainForm.webRessourceDomain}/rtc/releases/version.php"));
                 if (versionFile == null)
                     return null;
 
-                string str = Encoding.UTF8.GetString(versionFile);
-                List<string> onlineVersions = new List<string>(str.Split('|').Where(it => !it.Contains("Launcher")).ToArray());
+                var str = Encoding.UTF8.GetString(versionFile);
+                var onlineVersions = new List<string>(str.Split('|').Where(it => !it.Contains("Launcher")).ToArray());
 
                 var returnValue = onlineVersions.OrderByNaturalDescending(x => x).Select(it => it.Replace(".zip", "")).ToArray()[0];
 
@@ -51,37 +53,36 @@ namespace RTCV.Launcher
         }
 
 
-
         public void refreshVersions()
         {
             Action a = () =>
             {
-                var versionFile = MainForm.GetFileViaHttp(new Uri($"{MainForm.webRessourceDomain}/rtc/releases/version.php"));
+                byte[] versionFile = MainForm.GetFileViaHttp(new Uri($"{MainForm.webRessourceDomain}/rtc/releases/version.php"));
 
                 if (versionFile == null)
                     return;
 
-                string str = Encoding.UTF8.GetString(versionFile);
+                var str = Encoding.UTF8.GetString(versionFile);
 
                 //Ignores any build containing the word Launcher in it
-                var onlineVersions = str.Split('|').Where(it => !it.Contains("Launcher")).OrderByNaturalDescending(x => x).Select(it => it.Replace(".zip", "")).ToArray();
-                this.Invoke(new MethodInvoker(() =>
+                string[] onlineVersions = str.Split('|').Where(it => !it.Contains("Launcher")).OrderByNaturalDescending(x => x).Select(it => it.Replace(".zip", "")).ToArray();
+                Invoke(new MethodInvoker(() =>
                 {
                     onlineVersionsObjects = new List<dynamic>();
 
                     lbOnlineVersions.Items.Clear();
                     if (onlineVersions.Length > 0)
                     {
-                        for (int i = 0; i < onlineVersions.Length; i++)
+                        for (var i = 0; i < onlineVersions.Length; i++)
                         {
-                            string value = onlineVersions[i];
+                            var value = onlineVersions[i];
 
                             if (i == 0)
                                 onlineVersions[i] += latestVersionString;
 
-                            string key = onlineVersions[i];
+                            var key = onlineVersions[i];
 
-                            onlineVersionsObjects.Add(new { key = key, value = value });
+                            onlineVersionsObjects.Add(new {key = key, value = value});
                         }
                     }
 
@@ -112,9 +113,10 @@ namespace RTCV.Launcher
             string version = itemData.value;
             version = version.Replace(latestVersionString, "");
 
-            if (Directory.Exists((MainForm.launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version)))
+            if (Directory.Exists(MainForm.launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version))
             {
-                if (MessageBox.Show($"The version {version} is already installed.\nThis will DELETE version {version} and redownload it.\n\nWould you like to continue?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MessageBox.Show($"The version {version} is already installed.\nThis will DELETE version {version} and redownload it.\n\nWould you like to continue?", "WARNING", MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
+                    DialogResult.Yes)
                 {
                     Directory.Delete(MainForm.launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version, true);
                 }
@@ -124,29 +126,28 @@ namespace RTCV.Launcher
                 }
             }
 
-            string downloadUrl = $"{MainForm.webRessourceDomain}/rtc/releases/" + version + ".zip";
-            string downloadedFile = MainForm.launcherDir + Path.DirectorySeparatorChar + "PACKAGES" + Path.DirectorySeparatorChar + version + ".zip";
-            string extractDirectory = MainForm.launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version;
+            var downloadUrl = $"{MainForm.webRessourceDomain}/rtc/releases/" + version + ".zip";
+            var downloadedFile = MainForm.launcherDir + Path.DirectorySeparatorChar + "PACKAGES" + Path.DirectorySeparatorChar + version + ".zip";
+            var extractDirectory = MainForm.launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version;
 
             MainForm.lastSelectedVersion = version;
 
             MainForm.DownloadFile(new Uri(downloadUrl), downloadedFile, extractDirectory);
         }
 
-        int devCounter = 0;
+        private int devCounter = 0;
+
         private void cbDevBuids_CheckedChanged(object sender, EventArgs e)
         {
-            if (!this.Visible)
+            if (!Visible)
                 return;
 
-            bool devOn = File.Exists(MainForm.launcherDir + Path.DirectorySeparatorChar + "PACKAGES\\dev.txt");
+            var devOn = File.Exists(MainForm.launcherDir + Path.DirectorySeparatorChar + "PACKAGES\\dev.txt");
 
             if (!devOn && devCounter % 2 == 0)
-                Console.Beep(220 + (20 * devCounter), 100);
+                Console.Beep(220 + 20 * devCounter, 100);
 
             devCounter++;
-
-
 
 
             if (devCounter >= 20 || devOn)
@@ -159,7 +160,8 @@ namespace RTCV.Launcher
                     Console.Beep(520, 108);
                 }
 
-                if (!devOn && MessageBox.Show((File.Exists(MainForm.launcherDir + Path.DirectorySeparatorChar + "PACKAGES\\dev.txt") ? "Do you want to stay connected to the Dev Server?" : "Do you want to connect to the Dev Server?"), "Dev mode activation", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) == DialogResult.Yes)
+                if (!devOn && MessageBox.Show(File.Exists(MainForm.launcherDir + Path.DirectorySeparatorChar + "PACKAGES\\dev.txt") ? "Do you want to stay connected to the Dev Server?" : "Do you want to connect to the Dev Server?",
+                    "Dev mode activation", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) == DialogResult.Yes)
                 {
                     File.WriteAllText(MainForm.launcherDir + Path.DirectorySeparatorChar + "PACKAGES\\dev.txt", "DEV MODE ACTIVATED");
                     Application.Restart();
@@ -195,7 +197,7 @@ namespace RTCV.Launcher
         {
             if (e.Button == MouseButtons.Right)
             {
-                Point locate = new Point((sender as Control).Location.X + e.Location.X, (sender as Control).Location.Y + e.Location.Y);
+                var locate = new Point(((Control)sender).Location.X + e.Location.X, ((Control)sender).Location.Y + e.Location.Y);
 
                 var columnsMenu = new BuildContextMenu();
                 columnsMenu.Items.Add("Download", null, new EventHandler((ob, ev) => { btnDownloadVersion_Click(sender, e); }));

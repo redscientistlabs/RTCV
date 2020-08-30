@@ -29,13 +29,11 @@ namespace RTCV.Launcher
         private const int HT_BOTTOMRIGHT = 0x11;
 
 
-
         [DllImportAttribute("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
         [DllImportAttribute("user32.dll")]
         public static extern bool ReleaseCapture();
-
 
 
         public static string launcherDir = Path.GetDirectoryName(Application.ExecutablePath);
@@ -68,10 +66,9 @@ namespace RTCV.Launcher
             sideversionForm.BackColor = pnLeftSide.BackColor;
             sideversionForm.TopLevel = false;
             pnLeftSide.Controls.Add(sideversionForm);
-            //sideversionForm.Dock = DockStyle.Fill;
             sideversionForm.Location = new Point(0, 0);
             sideversionForm.Size = preAnchorLeftPanelSize;
-            sideversionForm.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
+            sideversionForm.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
 
             sideversionForm.Show();
 
@@ -79,16 +76,12 @@ namespace RTCV.Launcher
             sideinfoForm.BackColor = pnLeftSide.BackColor;
             sideinfoForm.TopLevel = false;
             pnLeftSide.Controls.Add(sideinfoForm);
-            //sideinfoForm.Dock = DockStyle.Fill;
             sideinfoForm.Location = new Point(0, 0);
             sideinfoForm.Size = preAnchorLeftPanelSize;
-            sideinfoForm.Anchor = (AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
-
-
+            sideinfoForm.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
 
             RewireMouseMove();
-
-
+            
             //creating default folders
             if (!Directory.Exists(launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar))
                 Directory.CreateDirectory(launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar);
@@ -98,7 +91,6 @@ namespace RTCV.Launcher
 
             if (File.Exists(launcherDir + Path.DirectorySeparatorChar + "PACKAGES\\dev.txt"))
                 webRessourceDomain = "http://cc.r5x.cc";
-
 
 
             //Will trigger after an update from the original launcher
@@ -118,28 +110,27 @@ namespace RTCV.Launcher
                 control.MouseMove += RedirectMouseMove;
             }
 
-
-            this.MouseMove -= MainForm_MouseMove;
-            this.MouseMove += MainForm_MouseMove;
+            MouseMove -= MainForm_MouseMove;
+            MouseMove += MainForm_MouseMove;
         }
 
         public static void DownloadFile(Uri downloadURL, string downloadedFile, string extractDirectory)
         {
-            MainForm.mf.clearAnchorRight();
+            mf.clearAnchorRight();
 
-            MainForm.dForm = new DownloadForm(downloadURL, downloadedFile, extractDirectory);
+            dForm = new DownloadForm(downloadURL, downloadedFile, extractDirectory);
 
-            MainForm.mf.pnLeftSide.Visible = false;
+            mf.pnLeftSide.Visible = false;
 
-            MainForm.mf.btnVersionDownloader.Enabled = false;
+            mf.btnVersionDownloader.Enabled = false;
 
-            MainForm.dForm.TopLevel = false;
-            MainForm.dForm.Location = new Point(0, 0);
-            MainForm.dForm.Dock = DockStyle.Fill;
-            MainForm.mf.Controls.Add(MainForm.dForm);
-            MainForm.dForm.Show();
-            MainForm.dForm.Focus();
-            MainForm.dForm.BringToFront();
+            dForm.TopLevel = false;
+            dForm.Location = new Point(0, 0);
+            dForm.Dock = DockStyle.Fill;
+            mf.Controls.Add(dForm);
+            dForm.Show();
+            dForm.Focus();
+            dForm.BringToFront();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -153,14 +144,14 @@ namespace RTCV.Launcher
             {
                 Action a = () =>
                 {
-                    var motdFile = GetFileViaHttp(new Uri($"{MainForm.webRessourceDomain}/rtc/releases/MOTD.txt"));
-                    string motd = "";
+                    byte[] motdFile = GetFileViaHttp(new Uri($"{webRessourceDomain}/rtc/releases/MOTD.txt"));
+                    var motd = "";
                     if (motdFile == null)
                         motd = "Couldn't load the RTC MOTD from Redscientist.com";
                     else
                         motd = Encoding.UTF8.GetString(motdFile);
 
-                    this.Invoke(new MethodInvoker(() => { lbMOTD.Text = motd; }));
+                    Invoke(new MethodInvoker(() => { lbMOTD.Text = motd; }));
                 };
                 Task.Run(a);
             }
@@ -178,20 +169,20 @@ namespace RTCV.Launcher
         {
             //Recolors all the RTC Forms using the general skin color
 
-            List<Control> allControls = new List<Control>();
+            var allControls = new List<Control>();
 
             if (form == null)
             {
-                allControls.AddRange(this.Controls.getControlsWithTag());
+                allControls.AddRange(Controls.getControlsWithTag());
                 allControls.Add(this);
             }
             else
                 allControls.AddRange(form.Controls.getControlsWithTag());
 
-            var lightColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:light"));
-            var normalColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:normal"));
-            var darkColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:dark"));
-            var darkerColorControls = allControls.FindAll(it => ((it.Tag as string) ?? "").Contains("color:darker"));
+            List<Control> lightColorControls = allControls.FindAll(it => (it.Tag as string ?? "").Contains("color:light"));
+            List<Control> normalColorControls = allControls.FindAll(it => (it.Tag as string ?? "").Contains("color:normal"));
+            List<Control> darkColorControls = allControls.FindAll(it => (it.Tag as string ?? "").Contains("color:dark"));
+            List<Control> darkerColorControls = allControls.FindAll(it => (it.Tag as string ?? "").Contains("color:darker"));
 
             foreach (Control c in lightColorControls)
                 c.BackColor = color.ChangeColorBrightness(0.30f);
@@ -212,18 +203,21 @@ namespace RTCV.Launcher
         public void RefreshInstalledVersions()
         {
             sideversionForm.lbVersions.Items.Clear();
-            List<string> versions = new List<string>(Directory.GetDirectories(launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar));
+            var versions = new List<string>(Directory.GetDirectories(launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar));
             sideversionForm.lbVersions.Items.AddRange(versions.OrderByNaturalDescending(x => x).Select(it => getFilenameFromFullFilename(it)).ToArray<object>());
+
             sideversionForm.lbDefaultText.Visible = versions.Count == 0;
             sideversionForm.lbVersions.Visible = versions.Count > 0;
-            this.PerformLayout();
+
+            PerformLayout();
             SelectedVersion = null;
 
 
             Action a = () =>
             {
-                string latestVersion = VersionDownloadPanel.getLatestVersion();
-                this.Invoke(new MethodInvoker(() => {
+                var latestVersion = VersionDownloadPanel.getLatestVersion();
+                Invoke(new MethodInvoker(() =>
+                {
                     pbNewVersionNotification.Visible = !versions.Select(it => it.Substring(it.LastIndexOf('\\') + 1)).Contains(latestVersion);
                 }));
             };
@@ -236,12 +230,12 @@ namespace RTCV.Launcher
 
             RefreshInstalledVersions();
 
-            MainForm.mf.pnLeftSide.Visible = true;
+            mf.pnLeftSide.Visible = true;
 
-            if (MainForm.vdppForm != null)
+            if (vdppForm != null)
             {
-                MainForm.vdppForm.lbOnlineVersions.SelectedIndex = -1;
-                MainForm.vdppForm.btnDownloadVersion.Visible = false;
+                vdppForm.lbOnlineVersions.SelectedIndex = -1;
+                vdppForm.btnDownloadVersion.Visible = false;
             }
 
             RefreshKeepSelectedVersion();
@@ -252,7 +246,7 @@ namespace RTCV.Launcher
             //Windows does the big dumb: part 11
             WebRequest.DefaultWebProxy = null;
 
-            using (HttpClient client = new HttpClient())
+            using (var client = new HttpClient())
             {
                 client.Timeout = TimeSpan.FromMilliseconds(60000);
                 byte[] b = null;
@@ -296,36 +290,35 @@ namespace RTCV.Launcher
             }
 
 
-            if (File.Exists(Path.Combine(MainForm.launcherDir, "VERSIONS", SelectedVersion, "Launcher", "launcher.json")))
-                MainForm.lpForm = new LaunchPanelV3();
-            else if (File.Exists(Path.Combine(MainForm.launcherDir, "VERSIONS", SelectedVersion, "Launcher", "launcher.ini")))
-                MainForm.lpForm = new LaunchPanelV2();
+            if (File.Exists(Path.Combine(launcherDir, "VERSIONS", SelectedVersion, "Launcher", "launcher.json")))
+                lpForm = new LaunchPanelV3();
+            else if (File.Exists(Path.Combine(launcherDir, "VERSIONS", SelectedVersion, "Launcher", "launcher.ini")))
+                lpForm = new LaunchPanelV2();
             else
-                MainForm.lpForm = new LaunchPanelV1();
+                lpForm = new LaunchPanelV1();
 
 
-            MainForm.lpForm.Size = pnAnchorRight.Size;
-            MainForm.lpForm.TopLevel = false;
-            pnAnchorRight.Controls.Add(MainForm.lpForm);
-            foreach (Control c in MainForm.lpForm.Controls)
+            lpForm.Size = pnAnchorRight.Size;
+            lpForm.TopLevel = false;
+            pnAnchorRight.Controls.Add(lpForm);
+            foreach (Control c in lpForm.Controls)
                 c.MouseMove += MainForm_MouseMove;
-            MainForm.lpForm.MouseMove += MainForm_MouseMove;
+            lpForm.MouseMove += MainForm_MouseMove;
 
-            MainForm.lpForm.Dock = DockStyle.Fill;
-            MainForm.lpForm.Show();
+            lpForm.Dock = DockStyle.Fill;
+            lpForm.Show();
         }
-
 
 
         public void InvokeUI(Action a)
         {
-            this.BeginInvoke(new MethodInvoker(a));
+            BeginInvoke(new MethodInvoker(a));
         }
 
         private static void UpdateLauncher(string extractDirectory)
         {
-            string batchLocation = extractDirectory + Path.DirectorySeparatorChar + "Launcher\\update.bat";
-            ProcessStartInfo psi = new ProcessStartInfo();
+            var batchLocation = extractDirectory + Path.DirectorySeparatorChar + "Launcher\\update.bat";
+            var psi = new ProcessStartInfo();
             psi.FileName = Path.GetFileName(batchLocation);
             psi.WorkingDirectory = Path.GetDirectoryName(batchLocation);
             Process.Start(psi);
@@ -341,7 +334,7 @@ namespace RTCV.Launcher
 
                 try
                 {
-                    System.IO.Compression.ZipFile.ExtractToDirectory(downloadedFile, extractDirectory);
+                    ZipFile.ExtractToDirectory(downloadedFile, extractDirectory);
                 }
                 catch (Exception ex)
                 {
@@ -354,17 +347,17 @@ namespace RTCV.Launcher
 
 
                 //This checks every extracted files against the contents of the zip file
-                using (ZipArchive za = System.IO.Compression.ZipFile.OpenRead(downloadedFile))
+                using (ZipArchive za = ZipFile.OpenRead(downloadedFile))
                 {
-                    bool foundLockBefore = false; //this flag prompts a message to skip all
-                    bool skipLock = false; //file locked messages and sents the flag below
+                    var foundLockBefore = false; //this flag prompts a message to skip all
+                    var skipLock = false; //file locked messages and sents the flag below
 
-                    foreach (var entry in za.Entries.Where(it => !it.FullName.EndsWith("/")))
+                    foreach (ZipArchiveEntry entry in za.Entries.Where(it => !it.FullName.EndsWith("/")))
                     {
-                        string targetFile = Path.Combine(extractDirectory, entry.FullName.Replace("/", "\\"));
+                        var targetFile = Path.Combine(extractDirectory, entry.FullName.Replace("/", "\\"));
                         if (File.Exists(targetFile))
                         {
-                            string ext = entry.FullName.ToUpper().Substring(entry.FullName.Length - 3);
+                            var ext = entry.FullName.ToUpper().Substring(entry.FullName.Length - 3);
                             if (ext == "EXE" || ext == "DLL")
                             {
                                 FileStream readCheck = null;
@@ -380,7 +373,7 @@ namespace RTCV.Launcher
                                         if (foundLockBefore)
                                         {
                                             if (MessageBox.Show($"Another file has been found locked/inaccessible.\nThere might be many more messages like this coming up.\n\nWould you like skip any remaining lock messages?", "Error",
-                                                    MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
+                                                MessageBoxButtons.YesNo, MessageBoxIcon.Error) == DialogResult.Yes)
                                                 skipLock = true;
                                         }
                                     }
@@ -415,7 +408,7 @@ namespace RTCV.Launcher
                 var preReqChecker = Path.Combine(extractDirectory, "Launcher", "PrereqChecker.exe");
                 if (File.Exists(preReqChecker))
                 {
-                    ProcessStartInfo psi = new ProcessStartInfo();
+                    var psi = new ProcessStartInfo();
                     psi.FileName = Path.GetFileName(preReqChecker);
                     psi.WorkingDirectory = Path.GetDirectoryName(preReqChecker);
                     Process.Start(psi)?.WaitForExit();
@@ -423,18 +416,18 @@ namespace RTCV.Launcher
 
                 if (File.Exists(Path.Combine(extractDirectory, "Launcher", "ver.ini")))
                 {
-                    int newVer = Convert.ToInt32(File.ReadAllText(Path.Combine(extractDirectory, "Launcher", "ver.ini")));
+                    var newVer = Convert.ToInt32(File.ReadAllText(Path.Combine(extractDirectory, "Launcher", "ver.ini")));
                     if (newVer > launcherVer)
                     {
                         if (File.Exists(Path.Combine(extractDirectory, "Launcher", "minver.ini")) && //Do we have minver
                             Convert.ToInt32(File.ReadAllText(Path.Combine(extractDirectory, "Launcher", "minver.ini"))) > launcherVer) //Is minver > launcherVer
                         {
                             if (MessageBox.Show("A mandatory launcher update is required to use this version. Click \"OK\" to update the launcher.",
-                                    "Launcher update required",
-                                    MessageBoxButtons.OKCancel,
-                                    MessageBoxIcon.Exclamation,
-                                    MessageBoxDefaultButton.Button1,
-                                    MessageBoxOptions.DefaultDesktopOnly) == DialogResult.OK)
+                                "Launcher update required",
+                                MessageBoxButtons.OKCancel,
+                                MessageBoxIcon.Exclamation,
+                                MessageBoxDefaultButton.Button1,
+                                MessageBoxOptions.DefaultDesktopOnly) == DialogResult.OK)
                             {
                                 UpdateLauncher(extractDirectory);
                             }
@@ -459,12 +452,12 @@ namespace RTCV.Launcher
 
                 RefreshInstalledVersions();
 
-                MainForm.mf.pnLeftSide.Visible = true;
+                mf.pnLeftSide.Visible = true;
 
-                if (MainForm.vdppForm != null)
+                if (vdppForm != null)
                 {
-                    MainForm.vdppForm.lbOnlineVersions.SelectedIndex = -1;
-                    MainForm.vdppForm.btnDownloadVersion.Visible = false;
+                    vdppForm.lbOnlineVersions.SelectedIndex = -1;
+                    vdppForm.btnDownloadVersion.Visible = false;
                 }
 
 
@@ -479,10 +472,10 @@ namespace RTCV.Launcher
         {
             if (lastSelectedVersion != null)
             {
-                int index = -1;
-                for (int i = 0; i < sideversionForm.lbVersions.Items.Count; i++)
+                var index = -1;
+                for (var i = 0; i < sideversionForm.lbVersions.Items.Count; i++)
                 {
-                    var item = sideversionForm.lbVersions.Items[i];
+                    object item = sideversionForm.lbVersions.Items[i];
                     if (item.ToString() == lastSelectedVersion)
                     {
                         index = i;
@@ -501,7 +494,7 @@ namespace RTCV.Launcher
                 return;
 
             var version = sideversionForm.lbVersions.SelectedItem.ToString();
-            var result = MessageBox.Show($"Are you sure you want to delete version {version}?", "Build Deletion", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation);
+            DialogResult result = MessageBox.Show($"Are you sure you want to delete version {version}?", "Build Deletion", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation);
             if (result == DialogResult.Cancel)
             {
                 return;
@@ -512,12 +505,12 @@ namespace RTCV.Launcher
             if (File.Exists(launcherDir + Path.DirectorySeparatorChar + "PACKAGES" + Path.DirectorySeparatorChar + version + ".zip"))
                 File.Delete(launcherDir + Path.DirectorySeparatorChar + "PACKAGES" + Path.DirectorySeparatorChar + version + ".zip");
 
-            if (Directory.Exists((launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version)))
+            if (Directory.Exists(launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version))
             {
-                var failed = RTC_Extensions.RecursiveDeleteNukeReadOnly(launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version);
+                List<string> failed = RTC_Extensions.RecursiveDeleteNukeReadOnly(launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version);
                 if (failed.Count > 0)
                 {
-                    StringBuilder sb = new StringBuilder();
+                    var sb = new StringBuilder();
                     foreach (var l in failed)
                     {
                         sb.AppendLine(Path.GetFileName(l));
@@ -541,9 +534,9 @@ namespace RTCV.Launcher
             if (sideversionForm.lbVersions.SelectedIndex == -1)
                 return;
 
-            string version = sideversionForm.lbVersions.SelectedItem.ToString();
+            var version = sideversionForm.lbVersions.SelectedItem.ToString();
 
-            if (Directory.Exists((launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version)))
+            if (Directory.Exists(launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version))
                 Process.Start(launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version);
         }
 
@@ -552,13 +545,13 @@ namespace RTCV.Launcher
             if (sideversionForm.lbVersions.SelectedIndex == -1)
                 return;
 
-            string version = sideversionForm.lbVersions.SelectedItem.ToString();
-            if (!Directory.Exists((launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version)))
+            var version = sideversionForm.lbVersions.SelectedItem.ToString();
+            if (!Directory.Exists(launcherDir + Path.DirectorySeparatorChar + "VERSIONS" + Path.DirectorySeparatorChar + version))
                 return;
 
             if (e.Button == MouseButtons.Right)
             {
-                Point locate = new Point((sender as Control).Location.X + e.Location.X, (sender as Control).Location.Y + e.Location.Y + pnTopPanel.Height);
+                var locate = new Point((sender as Control).Location.X + e.Location.X, (sender as Control).Location.Y + e.Location.Y + pnTopPanel.Height);
 
                 var columnsMenu = new Components.BuildContextMenu();
                 columnsMenu.Items.Add("Open Folder", null, new EventHandler((ob, ev) => { OpenFolder(); }));
@@ -591,21 +584,12 @@ namespace RTCV.Launcher
 
             clearAnchorRight();
 
-            MainForm.vdppForm = new VersionDownloadPanel();
-            MainForm.vdppForm.TopLevel = false;
-            pnAnchorRight.Controls.Add(MainForm.vdppForm);
-            MainForm.vdppForm.Dock = DockStyle.Fill;
-            MainForm.vdppForm.Show();
+            vdppForm = new VersionDownloadPanel();
+            vdppForm.TopLevel = false;
+            pnAnchorRight.Controls.Add(vdppForm);
+            vdppForm.Dock = DockStyle.Fill;
+            vdppForm.Show();
         }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void pnAnchorRight_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
 
         private void btnQuit_Click(object sender, EventArgs e)
         {
@@ -623,7 +607,7 @@ namespace RTCV.Launcher
 
         private void btnMinimize_Click(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Minimized;
+            WindowState = FormWindowState.Minimized;
         }
 
         private void btnQuit_MouseEnter(object sender, EventArgs e)
@@ -641,11 +625,11 @@ namespace RTCV.Launcher
             Process.Start("https://discord.corrupt.wiki/");
         }
 
-        const int grabBorderSize = 10; // size of the area where you can grab the borderless window
+        private const int grabBorderSize = 10; // size of the area where you can grab the borderless window
 
-        Rectangle RectTop => new Rectangle(0, 0, this.ClientSize.Width, grabBorderSize);
-        Rectangle RectLeft => new Rectangle(0, 0, grabBorderSize, this.ClientSize.Height);
-        Rectangle RectBottom => new Rectangle(0, this.ClientSize.Height - grabBorderSize, this.ClientSize.Width, grabBorderSize);
+        private Rectangle RectTop => new Rectangle(0, 0, ClientSize.Width, grabBorderSize);
+        private Rectangle RectLeft => new Rectangle(0, 0, grabBorderSize, ClientSize.Height);
+        private Rectangle RectBottom => new Rectangle(0, ClientSize.Height - grabBorderSize, ClientSize.Width, grabBorderSize);
 
         private void label5_Click(object sender, EventArgs e)
         {
@@ -660,19 +644,20 @@ Copyright(c) 2007 James Newton - King
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files(the ""Software""), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and / or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.", "About"); }
+THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.",
+                "About");
+        }
 
         private void btnTutorials_Click(object sender, EventArgs e)
         {
             Process.Start("http://rtctutorialvideo.r5x.cc/");
         }
 
-        Rectangle RectRight => new Rectangle(this.ClientSize.Width - grabBorderSize, 0, grabBorderSize, this.ClientSize.Height);
-        static Rectangle RectTopLeft => new Rectangle(0, 0, grabBorderSize, grabBorderSize);
-        Rectangle RectTopRight => new Rectangle(this.ClientSize.Width - grabBorderSize, 0, grabBorderSize, grabBorderSize);
-        Rectangle RectBottomLeft => new Rectangle(0, this.ClientSize.Height - grabBorderSize, grabBorderSize, grabBorderSize);
-        Rectangle RectBottomRight => new Rectangle(this.ClientSize.Width - grabBorderSize, this.ClientSize.Height - grabBorderSize, grabBorderSize, grabBorderSize);
-
+        private Rectangle RectRight => new Rectangle(ClientSize.Width - grabBorderSize, 0, grabBorderSize, ClientSize.Height);
+        private static Rectangle RectTopLeft => new Rectangle(0, 0, grabBorderSize, grabBorderSize);
+        private Rectangle RectTopRight => new Rectangle(ClientSize.Width - grabBorderSize, 0, grabBorderSize, grabBorderSize);
+        private Rectangle RectBottomLeft => new Rectangle(0, ClientSize.Height - grabBorderSize, grabBorderSize, grabBorderSize);
+        private Rectangle RectBottomRight => new Rectangle(ClientSize.Width - grabBorderSize, ClientSize.Height - grabBorderSize, grabBorderSize, grabBorderSize);
 
 
         private void ResizeWindow(MouseEventArgs e, int wParam)
@@ -683,12 +668,13 @@ THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
                 SendMessage(Handle, WM_NCLBUTTONDOWN, wParam, 0);
             }
         }
+
         private void RedirectMouseMove(object sender, MouseEventArgs e)
         {
-            Control control = (Control)sender;
+            var control = (Control)sender;
             Point screenPoint = control.PointToScreen(new Point(e.X, e.Y));
             Point formPoint = PointToClient(screenPoint);
-            MouseEventArgs args = new MouseEventArgs(e.Button, e.Clicks,
+            var args = new MouseEventArgs(e.Button, e.Clicks,
                 formPoint.X, formPoint.Y, e.Delta);
             OnMouseMove(args);
         }
@@ -696,7 +682,7 @@ THE SOFTWARE IS PROVIDED ""AS IS"", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMP
         private void MainForm_MouseMove(object sender, MouseEventArgs e)
         {
             Cursor.Current = Cursors.Default;
-            var cursor = this.PointToClient(Cursor.Position);
+            Point cursor = PointToClient(Cursor.Position);
             if (RectTopLeft.Contains(cursor))
             {
                 Cursor.Current = Cursors.SizeNWSE;

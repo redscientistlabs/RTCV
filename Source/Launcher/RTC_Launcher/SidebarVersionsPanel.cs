@@ -8,14 +8,11 @@ namespace RTCV.Launcher
         public SidebarVersionsPanel()
         {
             InitializeComponent();
-            //lbVersions.AutoSize = true;
         }
-
 
         private void lbVersions_SelectedIndexChanged(object sender, EventArgs e) => MainForm.mf.lbVersions_SelectedIndexChanged(sender, e);
 
         private void lbVersions_MouseDown(object sender, MouseEventArgs e) => MainForm.mf.lbVersions_MouseDown(sender, e);
-
 
         private void SidebarVersionsPanel_Load(object sender, EventArgs e)
         {
