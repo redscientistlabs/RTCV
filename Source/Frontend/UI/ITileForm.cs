@@ -1,5 +1,6 @@
 ﻿namespace RTCV.UI
-{    public interface ITileForm
+{
+    public interface ITileForm
     {
         //Interface used for added contrals in TileForms
 
