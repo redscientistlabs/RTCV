@@ -560,15 +560,13 @@ namespace RTCV.Launcher
             {
                 Point locate = new Point((sender as Control).Location.X + e.Location.X, (sender as Control).Location.Y + e.Location.Y + pnTopPanel.Height);
 
-                ContextMenuStrip columnsMenu = new ContextMenuStrip();
+                var columnsMenu = new Components.BuildContextMenu();
                 columnsMenu.Items.Add("Open Folder", null, new EventHandler((ob, ev) => { OpenFolder(); }));
                 columnsMenu.Items.Add(new ToolStripSeparator());
                 columnsMenu.Items.Add("Delete", null, new EventHandler((ob, ev) => { DeleteSelected(); }));
                 columnsMenu.Show(this, locate);
             }
         }
-
-
 
         private void btnOnlineGuide_Click(object sender, EventArgs e)
         {
@@ -584,7 +582,6 @@ namespace RTCV.Launcher
                     (c as Form).Close();
                 }
         }
-
 
         private void btnVersionDownloader_Click(object sender, EventArgs e)
         {
