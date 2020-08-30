@@ -425,6 +425,7 @@
     </Compile>
     <Compile Include="Modular\UI_DefaultGrids.cs" />
     <Compile Include="Modular\CanvasGrid.cs" />
+    <Compile Include="Modular\ISubForm.cs" />
     <Compile Include="Modular\UI_Objects.cs" />
     <Compile Include="Modular\UI_SaveProgress_Form.cs">
       <SubType>Form</SubType>
