@@ -10,12 +10,8 @@ namespace RTCV.CorruptCore
 
     public class CorruptCoreConnector : IRoutable
     {
-        private static volatile object _loadLock = new object();
-        private static object loadLock => _loadLock;
-
-        public CorruptCoreConnector()
-        {
-        }
+        private static volatile object loadLock = new object();
+        private static object LoadLock => loadLock;
 
         public object OnMessageReceived(object sender, NetCoreEventArgs e)
         {
@@ -348,7 +344,7 @@ namespace RTCV.CorruptCore
 
         private static void LoadState(object[] valueAsObjectArr, ref NetCoreEventArgs e)
         {
-            lock (loadLock)
+            lock (LoadLock)
             {
                 var sk = (StashKey)valueAsObjectArr[0];
                 var reloadRom = (bool)valueAsObjectArr[1];
@@ -482,7 +478,7 @@ namespace RTCV.CorruptCore
 
             void a()
             {
-                lock (loadLock)
+                lock (LoadLock)
                 {
                     //Load the game from the main thread
                     if (useSavestates && loadBeforeCorrupt)
@@ -537,7 +533,7 @@ namespace RTCV.CorruptCore
 
         private static void FilterDomain(object[] objValues, ref NetCoreEventArgs e)
         {
-            lock (loadLock)
+            lock (LoadLock)
             {
                 var domain = (string)objValues[0];
                 var limiterListHash = (string)objValues[1];

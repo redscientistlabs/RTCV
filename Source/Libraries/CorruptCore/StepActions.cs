@@ -30,7 +30,7 @@ namespace RTCV.CorruptCore
         private static int nextFrame = -1;
 
         private static bool isRunning = false;
-        private static object executeLock = new object();
+        private static readonly object executeLock = new object();
 
         public static event EventHandler StepStart;
         public static event EventHandler StepPreCorrupt;
@@ -131,11 +131,9 @@ namespace RTCV.CorruptCore
             lock (executeLock)
             {
                 return appliedInfinite.Any(x => x.Exists(y =>
-                {
-                    return y.Lifetime == 0 &&
-                           y.Domain == domain &&
-                           y.Address == address;
-                }));
+                                                                            y.Lifetime == 0 &&
+                                                                            y.Domain == domain &&
+                                                                            y.Address == address));
             }
         }
 
@@ -152,11 +150,7 @@ namespace RTCV.CorruptCore
             lock (executeLock)
             {
                 BlastLayer bl = new BlastLayer();
-                var tempList = new List<List<BlastUnit>>();
-                tempList.AddRange(appliedInfinite);
-                tempList.AddRange(appliedLifetime);
-
-                foreach (List<BlastUnit> buList in (buListCollection))
+                foreach (List<BlastUnit> buList in buListCollection)
                 {
                     foreach (BlastUnit bu in buList)
                     {
@@ -177,9 +171,9 @@ namespace RTCV.CorruptCore
             List<BlastUnit> collection = null;
             foreach (List<BlastUnit> it in buListCollection)
             {
-                if ((it[0].Working.ExecuteFrameQueued == bu.Working.ExecuteFrameQueued) &&
-                    (it[0].Lifetime == bu.Lifetime) &&
-                    (it[0].Loop == bu.Loop) &&
+                if (it[0].Working.ExecuteFrameQueued == bu.Working.ExecuteFrameQueued &&
+                    it[0].Lifetime == bu.Lifetime &&
+                    it[0].Loop == bu.Loop &&
                     CheckLimitersMatch(it[0], bu))
                 {
                     //We found one that matches so return that
@@ -246,8 +240,8 @@ namespace RTCV.CorruptCore
         {
             lock (executeLock)
             {
-                bool UseRealtime = (AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME] as bool? ?? true);
-                if (!UseRealtime)
+                var useRealtime = (AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME] as bool? ?? true);
+                if (!useRealtime)
                 {
                     bu.Working.ExecuteFrameQueued = 0;
                     bu.Working.LastFrame = 1;
@@ -323,7 +317,7 @@ namespace RTCV.CorruptCore
             {
                 List<BlastUnit> buList = queued.First();
 
-                bool dontApply = false;
+                var dontApply = false;
                 //This is our EnteringExecution
                 foreach (BlastUnit bu in buList)
                 {
@@ -425,7 +419,7 @@ namespace RTCV.CorruptCore
                     needsRefilter = true;
                     foreach (BlastUnit bu in buList)
                     {
-                        bool applyLoopTiming = (bu.LoopTiming != null && bu.LoopTiming != -1);
+                        var applyLoopTiming = (bu.LoopTiming != null && bu.LoopTiming != -1);
                         bu.Apply(true, applyLoopTiming);
                     }
                 }

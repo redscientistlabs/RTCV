@@ -44,16 +44,16 @@ namespace RTCV.CorruptCore
         public string ParentKey { get; set; }
         public BlastLayer BlastLayer { get; set; }
 
-        private string alias;
+        private string _alias;
         public string Alias
         {
-            get => alias ?? Key;
-            set => alias = value;
+            get => _alias ?? Key;
+            set => _alias = value;
         }
 
         public StashKey()
         {
-            string key = RtcCore.GetRandomKey();
+            var key = RtcCore.GetRandomKey();
             string parentkey = null;
             BlastLayer blastlayer = new BlastLayer();
             StashKeyConstructor(key, parentkey, blastlayer);
@@ -145,7 +145,7 @@ namespace RTCV.CorruptCore
                 return false;
             }
 
-            string deployedStatePath = GetSavestateFullPath();
+            var deployedStatePath = GetSavestateFullPath();
 
             if (File.Exists(deployedStatePath))
             {
