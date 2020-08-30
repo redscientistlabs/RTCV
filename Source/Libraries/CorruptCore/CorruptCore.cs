@@ -39,12 +39,9 @@ namespace RTCV.CorruptCore
         public const string RtcVersion = "5.0.6-b3";
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        private static volatile int seed = DateTime.Now.Millisecond;
-        public static int Seed => ++seed;
-
-        [ThreadStatic]
-        private static Random _RND = null;
-        public static Random RND => _RND ??= new Random(Seed);
+        private static int seed = DateTime.Now.Millisecond;
+        private static readonly ThreadLocal<Random> rnd = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref seed)));
+        public static Random RND => rnd.Value;
 
         public static bool Attached = false;
 
