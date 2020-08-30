@@ -3,6 +3,7 @@
     using System.Windows.Forms;
     using RTCV.Common.CustomExtensions;
     using RTCV.NetCore;
+    using RTCV.CorruptCore.Extensions;
 
     public static class RTC_NightmareEngine
     {
@@ -185,7 +186,7 @@
                     }
                     else
                     {
-                        value = CorruptCore_Extensions.GetByteArrayValue(precision, randomValue, true);
+                        value = ByteArrayExtensions.GetByteArrayValue(precision, randomValue, true);
                     }
                 }
                 else

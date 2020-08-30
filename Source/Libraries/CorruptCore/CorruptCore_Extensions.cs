@@ -30,47 +30,6 @@ namespace RTCV.CorruptCore
             }
         }
 
-        public static byte[] GetByteArrayValue(int precision, ulong newValue, bool needsBytesFlipped = false)
-        {
-            switch (precision)
-            {
-                case 1:
-                    return new byte[] { (byte)newValue };
-                case 2:
-                    {
-                        var value = BitConverter.GetBytes(Convert.ToUInt16(newValue));
-                        if (needsBytesFlipped)
-                        {
-                            Array.Reverse(value);
-                        }
-
-                        return value;
-                    }
-                case 4:
-                    {
-                        var value = BitConverter.GetBytes(Convert.ToUInt32(newValue));
-                        if (needsBytesFlipped)
-                        {
-                            Array.Reverse(value);
-                        }
-
-                        return value;
-                    }
-                case 8:
-                    {
-                        var value = BitConverter.GetBytes(newValue);
-                        if (needsBytesFlipped)
-                        {
-                            Array.Reverse(value);
-                        }
-
-                        return value;
-                    }
-            }
-
-            return null;
-        }
-
         #region COLOR EXTENSIONS
 
         /// <summary>
