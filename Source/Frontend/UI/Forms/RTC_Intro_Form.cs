@@ -93,22 +93,6 @@
             selection = IntroAction.EXIT;
             this.ShowDialog();
         }
-
-        internal void DisplayGenericDisclaimer(string disclaimer, string windowTitle)
-        {
-            cbAgree.Checked = false;
-            btnSimpleMode.Visible = false;
-            lbStartupMode.Visible = false;
-            btnNormalMode.Visible = false;
-
-            this.Text = windowTitle;
-
-            tbDisclaimerText.Text = disclaimer;
-            btnSimpleMode.Text = "Continue";
-
-            selection = IntroAction.EXIT;
-            this.ShowDialog();
-        }
     }
 
     public enum IntroAction { EXIT, SIMPLEMODE, NORMALMODE }
