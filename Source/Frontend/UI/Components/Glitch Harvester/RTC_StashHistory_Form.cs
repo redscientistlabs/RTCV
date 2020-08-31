@@ -19,6 +19,7 @@ namespace RTCV.UI
         public RTC_StashHistory_Form()
         {
             InitializeComponent();
+
             popoutAllowed = true;
             this.undockedSizable = true;
 
