@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_Settings_Form));
             this.lbSettingsAndTools = new System.Windows.Forms.Label();
             this.btnRtcFactoryClean = new System.Windows.Forms.Button();
-            this.btnCloseSettings = new System.Windows.Forms.Button();
             this.pnListBoxForm = new System.Windows.Forms.Panel();
             this.btnOpenConsole = new System.Windows.Forms.Button();
             this.btnDebugInfo = new System.Windows.Forms.Button();
@@ -69,28 +68,6 @@
             this.btnRtcFactoryClean.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnRtcFactoryClean.UseVisualStyleBackColor = false;
             this.btnRtcFactoryClean.Click += new System.EventHandler(this.btnRtcFactoryClean_Click);
-            // 
-            // btnCloseSettings
-            // 
-            this.btnCloseSettings.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCloseSettings.BackColor = System.Drawing.Color.Gray;
-            this.btnCloseSettings.FlatAppearance.BorderSize = 0;
-            this.btnCloseSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCloseSettings.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnCloseSettings.ForeColor = System.Drawing.Color.White;
-            this.btnCloseSettings.Image = ((System.Drawing.Image)(resources.GetObject("btnCloseSettings.Image")));
-            this.btnCloseSettings.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnCloseSettings.Location = new System.Drawing.Point(19, 465);
-            this.btnCloseSettings.Name = "btnCloseSettings";
-            this.btnCloseSettings.Size = new System.Drawing.Size(215, 29);
-            this.btnCloseSettings.TabIndex = 127;
-            this.btnCloseSettings.Tag = "color:light1";
-            this.btnCloseSettings.Text = " UNUSED";
-            this.btnCloseSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnCloseSettings.UseVisualStyleBackColor = false;
-            this.btnCloseSettings.Visible = false;
-            this.btnCloseSettings.Click += new System.EventHandler(this.btnCloseSettings_Click);
             // 
             // pnListBoxForm
             // 
@@ -169,7 +146,6 @@
             this.Controls.Add(this.btnDebugInfo);
             this.Controls.Add(this.btnOpenConsole);
             this.Controls.Add(this.pnListBoxForm);
-            this.Controls.Add(this.btnCloseSettings);
             this.Controls.Add(this.btnRtcFactoryClean);
             this.Controls.Add(this.lbSettingsAndTools);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -186,7 +162,6 @@
         #endregion
         private System.Windows.Forms.Label lbSettingsAndTools;
         public System.Windows.Forms.Button btnRtcFactoryClean;
-        public System.Windows.Forms.Button btnCloseSettings;
 		private System.Windows.Forms.Panel pnListBoxForm;
 		public System.Windows.Forms.Button btnOpenConsole;
 		public System.Windows.Forms.Button btnDebugInfo;
