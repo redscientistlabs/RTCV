@@ -26,7 +26,7 @@ namespace RTCV.CorruptCore
         public List<long[]> AddRanges { get; set; } = new List<long[]>();
         public List<long[]> RemoveRanges { get; set; } = new List<long[]>();
 
-        public BlastLayer SuppliedBlastLayer = null;
+        public BlastLayer SuppliedBlastLayer { get; set; } = null;
 
         public VmdPrototype()
         {

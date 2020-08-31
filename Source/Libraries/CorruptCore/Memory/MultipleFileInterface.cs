@@ -16,10 +16,9 @@ namespace RTCV.CorruptCore
         public override bool BigEndian { get; }
         public override int WordSize => 4;
 
-        public string Filename;
-        public string ShortFilename;
+        public string ShortFilename { get; set; }
 
-        public List<FileInterface> FileInterfaces = new List<FileInterface>();
+        public List<FileInterface> FileInterfaces { get; private set; } = new List<FileInterface>();
 
         public MultipleFileInterface(string _targetId, bool _bigEndian, bool _useAutomaticFileBackups = false)
         {
@@ -50,7 +49,6 @@ namespace RTCV.CorruptCore
                     }
                 }
 
-                Filename = "MultipleFiles";
                 ShortFilename = "MultipleFiles";
 
                 if (_useAutomaticFileBackups)

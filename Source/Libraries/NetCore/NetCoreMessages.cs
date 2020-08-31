@@ -7,7 +7,7 @@ namespace RTCV.NetCore
     [MemberConfig(TargetMember.All)]
     public abstract class NetCoreMessage
     {
-        public string Type;
+        public string Type { get; set; }
     }
 
     [Serializable()]
@@ -27,10 +27,8 @@ namespace RTCV.NetCore
     [MemberConfig(TargetMember.All)]
     public class NetCoreAdvancedMessage : NetCoreMessage
     {
-        public string ReturnedFrom;
-        public bool Priority = false;
-        public Guid? requestGuid = null;
-        public object objectValue = null;
+        public Guid? requestGuid { get; set; } = null;
+        public object objectValue { get; set; } = null;
 
         public NetCoreAdvancedMessage()
         {

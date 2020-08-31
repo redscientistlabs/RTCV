@@ -16,7 +16,7 @@ namespace RTCV.NetCore
         private volatile ConcurrentDictionary<Guid, object> SyncReturns = new ConcurrentDictionary<Guid, object>();
         private volatile int activeWatches = 0;
         private CancellationTokenSource cts = new CancellationTokenSource();
-        public Guid guid = Guid.NewGuid();
+        public Guid guid { get; private set; } = Guid.NewGuid();
 
         public bool IsWaitingForReturn
         {

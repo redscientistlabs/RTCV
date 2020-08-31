@@ -7,8 +7,8 @@ namespace RTCV.UI.Input
 
     public class InputEvent
     {
-        public LogicalButton LogicalButton;
-        public InputEventType EventType;
+        public LogicalButton LogicalButton { get; set; }
+        public InputEventType EventType { get; set; }
 
         public override string ToString()
         {

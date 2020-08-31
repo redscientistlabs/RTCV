@@ -7,9 +7,9 @@
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class UI_ComponentFormTile : Form, ITileForm
     {
-        public Form childForm = null;
-        public int SizeX = 2;
-        public int SizeY = 2;
+        public Form childForm { get; private set; } = null;
+        private int SizeX = 2;
+        private int SizeY = 2;
 
         public UI_ComponentFormTile()
         {

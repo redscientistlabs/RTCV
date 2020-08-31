@@ -28,9 +28,9 @@
             this.undockedSizable = false;
         }
 
-        public bool ActLoadedFromFile = false;
-        public bool FirstInit = false;
-        public bool _activeTableReady = false;
+        private bool ActLoadedFromFile = false;
+        private bool FirstInit = false;
+        private bool _activeTableReady = false;
 
         public bool ActiveTableReady
         {
@@ -66,14 +66,14 @@
             }
         }
 
-        public bool UseActiveTable = false;
-        public bool UseCorePrecision = false;
-        public List<string> ActiveTableDumps = null;
-        public long[] ActiveTableActivity = null;
-        public long[] ActiveTableGenerated = null;
-        public double ActivityThreshold = 0;
-        public Timer ActiveTableAutodump = null;
+        private bool UseCorePrecision = false;
+        private List<string> ActiveTableDumps = null;
+        private long[] ActiveTableActivity = null;
+        private long[] ActiveTableGenerated = null;
+        private double ActivityThreshold = 0;
+        private Timer ActiveTableAutodump = null;
 
+        private string _currentFilename = null;
         public string currentFilename
         {
             get => _currentFilename;
@@ -90,8 +90,6 @@
                 _currentFilename = value;
             }
         }
-
-        public string _currentFilename = null;
 
         public void SaveActiveTable(bool IsQuickSave)
         {

@@ -7,7 +7,7 @@
 
     public partial class RTC_Intro_Form : Form, IAutoColorize
     {
-        public IntroAction selection = IntroAction.EXIT;
+        public IntroAction selection { get; private set; } = IntroAction.EXIT;
 
         public RTC_Intro_Form()
         {

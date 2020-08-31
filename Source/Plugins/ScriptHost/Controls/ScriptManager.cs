@@ -66,8 +66,7 @@ namespace RTCV.Plugins.ScriptHost.Controls
             }
         }
 
-        public string FilePath;
-
+        public string FilePath { get; private set; }
 
         public ScriptManager(bool darkTheme = true)
         {

@@ -71,7 +71,6 @@
         void HandleButton(string button, bool newState)
         {
             bool isModifier = IgnoreKeys.Contains(button);
-            if (EnableIgnoreModifiers && isModifier) return;
             if (LastState[button] && newState) return;
             if (!LastState[button] && !newState) return;
 
@@ -380,11 +379,6 @@
                 return null;
             }
         }
-
-        //controls whether modifier keys will be ignored as key press events
-        //this should be used by hotkey binders, but we may want modifier key events
-        //to get triggered in the main form
-        public bool EnableIgnoreModifiers = false;
 
         //sets a key as unpressed for the binding system
         public void BindUnpress(System.Windows.Forms.Keys key)

@@ -7,8 +7,8 @@ namespace RTCV.CorruptCore
     [MemberConfig(TargetMember.All)]
     public class BlastTarget
     {
-        public string Domain = null;
-        public long Address = 0;
+        public string Domain { get; private set; } = null;
+        public long Address { get; private set; } = 0;
 
         public BlastTarget(string _domain, long _address)
         {

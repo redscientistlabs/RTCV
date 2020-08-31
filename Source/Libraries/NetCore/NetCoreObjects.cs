@@ -20,7 +20,7 @@ namespace RTCV.NetCore
 
     public class NetCoreReceiver
     {
-        public bool Attached = false;
+        public bool Attached { get; set; } = false;
         public event EventHandler<NetCoreEventArgs> MessageReceived;
         public virtual void OnMessageReceived(NetCoreEventArgs e)
         {

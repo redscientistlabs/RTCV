@@ -15,7 +15,7 @@ namespace RTCV.CorruptCore
     [XmlInclude(typeof(BlastUnit))]
     public class BlastLayer : ICloneable, INote
     {
-        public List<BlastUnit> Layer;
+        public List<BlastUnit> Layer { get; set; }
 
         public BlastLayer()
         {

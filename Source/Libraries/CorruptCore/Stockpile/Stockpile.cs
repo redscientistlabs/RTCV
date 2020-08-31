@@ -23,14 +23,12 @@ namespace RTCV.CorruptCore
         [Exclude]
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public List<StashKey> StashKeys = new List<StashKey>();
+        public List<StashKey> StashKeys { get; private set; } = new List<StashKey>();
 
-        public string Name;
-        public string Filename;
-        public string ShortFilename;
-        public string RtcVersion;
-        public string VanguardImplementation;
-        public bool MissingLimiter;
+        public string Filename { get; private set; }
+        private string RtcVersion;
+        private string VanguardImplementation;
+        public bool MissingLimiter { get; set; }
 
         public Stockpile(DataGridView dgvStockpile)
         {
@@ -46,7 +44,7 @@ namespace RTCV.CorruptCore
 
         public override string ToString()
         {
-            return Name ?? string.Empty;
+            return string.Empty;
         }
 
         public static bool Save(Stockpile sks, string filename, bool includeReferencedFiles = false, bool compress = true)
@@ -62,7 +60,6 @@ namespace RTCV.CorruptCore
                 CheckForDiskBasedGame();
 
                 sks.Filename = filename;
-                sks.ShortFilename = Path.GetFileName(sks.Filename);
 
                 decimal saveProgress = 0;
                 CleanTempFolder(ref sks, ref saveProgress);

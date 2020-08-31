@@ -2,10 +2,12 @@ namespace RTCV.Common
 {
     using System;
     using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
     using System.Runtime.InteropServices;
 
     public static class ConsoleHelper
     {
+        [SuppressMessage("Microsoft.Design", "CA1801", Justification = "Parameter is set in dependent projects")]
         public static void CreateConsole(string path = null)
         {
             if (!Debugger.IsAttached) //Don't override debugger's console

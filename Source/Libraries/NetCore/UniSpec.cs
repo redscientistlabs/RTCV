@@ -19,8 +19,8 @@
         public virtual void OnSpecUpdated(SpecUpdateEventArgs e) => SpecUpdated?.Invoke(this, e);
 
         private PartialSpec template = null;
-        public string name = "UnnamedSpec";
-        public bool propagationIsEnabled;
+        public string name { get; private set; } = "UnnamedSpec";
+        private bool propagationIsEnabled;
 
         public new object this[string key]  //FullSpec is readonly, must update with partials
         {
@@ -96,11 +96,7 @@
 
             if (propagationIsEnabled && propagate)
             {
-                OnSpecUpdated(new SpecUpdateEventArgs()
-                {
-                    partialSpec = _partialSpec,
-                    syncedUpdate = synced
-                });
+                OnSpecUpdated(new SpecUpdateEventArgs(_partialSpec, synced));
             }
         }
 
@@ -208,7 +204,7 @@
     [MemberConfig(TargetMember.All)]
     public class PartialSpec : BaseSpec
     {
-        public string Name;
+        public string Name { get; private set; }
 
         public PartialSpec(string _name)
         {
@@ -295,7 +291,13 @@
 
     public class SpecUpdateEventArgs : EventArgs
     {
-        public PartialSpec partialSpec = null;
-        public bool syncedUpdate = true;
+        public PartialSpec partialSpec { get; private set; } = null;
+        public bool syncedUpdate { get; private set; } = true;
+
+        public SpecUpdateEventArgs(PartialSpec _partialSpec, bool _syncedUpdate)
+        {
+            partialSpec = _partialSpec;
+            syncedUpdate = _syncedUpdate;
+        }
     }
 }

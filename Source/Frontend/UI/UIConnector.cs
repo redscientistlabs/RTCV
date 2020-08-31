@@ -10,7 +10,7 @@ namespace RTCV.UI
     public class UIConnector : IRoutable, IDisposable
     {
         private NetCoreReceiver receiver;
-        public NetCoreConnector netConn;
+        public NetCoreConnector netConn { get; private set; }
 
         public UIConnector(NetCoreReceiver _receiver)
         {

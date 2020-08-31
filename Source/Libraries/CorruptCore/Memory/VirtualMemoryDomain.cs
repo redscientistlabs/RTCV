@@ -22,7 +22,7 @@ namespace RTCV.CorruptCore
 
         public VmdPrototype Proto { get; set; }
 
-        public bool Compacted = false;
+        public bool Compacted { get; private set; } = false;
 
         public VirtualMemoryDomain()
         {

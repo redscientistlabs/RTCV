@@ -126,35 +126,35 @@ namespace RTCV.CorruptCore.Extensions
             return (x % m + m) % m;
         }
 
-        public static byte[] AddValueToByteArrayUnchecked(ref byte[] value, BigInteger addValue, bool isInputBigEndian)
+        public static byte[] AddValueToByteArrayUnchecked(this byte[] input, BigInteger addValue, bool isInputBigEndian)
         {
             if (isInputBigEndian)
             {
-                Array.Reverse(value);
+                Array.Reverse(input);
             }
 
             var isAdd = addValue >= 0;
             var bigintAddValueAbs = BigInteger.Abs(addValue);
 
-            switch (value.Length)
+            switch (input.Length)
             {
                 case 1:
                     var addByteValue = (bigintAddValueAbs > byte.MaxValue ? byte.MaxValue : (byte)bigintAddValueAbs);
 
                     if (isAdd)
                     {
-                        unchecked { value[0] += addByteValue; }
+                        unchecked { input[0] += addByteValue; }
                     }
                     else
                     {
-                        unchecked { value[0] -= addByteValue; }
+                        unchecked { input[0] -= addByteValue; }
                     }
 
-                    return value;
+                    return input;
 
                 case 2:
                     {
-                        var ushortValue = BitConverter.ToUInt16(value, 0);
+                        var ushortValue = BitConverter.ToUInt16(input, 0);
                         var addushortValue = (bigintAddValueAbs > ushort.MaxValue ? ushort.MaxValue : (ushort)bigintAddValueAbs);
 
                         if (isAdd)
@@ -166,18 +166,18 @@ namespace RTCV.CorruptCore.Extensions
                             unchecked { ushortValue -= addushortValue; }
                         }
 
-                        value = BitConverter.GetBytes(ushortValue);
+                        input = BitConverter.GetBytes(ushortValue);
 
                         if (isInputBigEndian)
                         {
-                            Array.Reverse(value);
+                            Array.Reverse(input);
                         }
 
-                        return value;
+                        return input;
                     }
                 case 4:
                     {
-                        var uintValue = BitConverter.ToUInt32(value, 0);
+                        var uintValue = BitConverter.ToUInt32(input, 0);
                         var adduintValue = (bigintAddValueAbs > uint.MaxValue ? uint.MaxValue : (uint)bigintAddValueAbs);
 
                         if (isAdd)
@@ -189,18 +189,18 @@ namespace RTCV.CorruptCore.Extensions
                             unchecked { uintValue -= adduintValue; }
                         }
 
-                        value = BitConverter.GetBytes(uintValue);
+                        input = BitConverter.GetBytes(uintValue);
 
                         if (isInputBigEndian)
                         {
-                            Array.Reverse(value);
+                            Array.Reverse(input);
                         }
 
-                        return value;
+                        return input;
                     }
                 case 8:
                     {
-                        var ulongValue = BitConverter.ToUInt64(value, 0);
+                        var ulongValue = BitConverter.ToUInt64(input, 0);
                         var addulongValue = (bigintAddValueAbs > ulong.MaxValue ? ulong.MaxValue : (ulong)bigintAddValueAbs);
 
                         if (isAdd)
@@ -212,20 +212,20 @@ namespace RTCV.CorruptCore.Extensions
                             unchecked { ulongValue -= addulongValue; }
                         }
 
-                        value = BitConverter.GetBytes(ulongValue);
+                        input = BitConverter.GetBytes(ulongValue);
 
                         if (isInputBigEndian)
                         {
-                            Array.Reverse(value);
+                            Array.Reverse(input);
                         }
 
-                        return value;
+                        return input;
                     }
                 default:
                     {
                         //Gets us a positive value
-                        var temp = new byte[value.Length + 1];
-                        value.CopyTo(temp, 0);
+                        var temp = new byte[input.Length + 1];
+                        input.CopyTo(temp, 0);
                         var bigIntValue = new BigInteger(temp);
 
                         if (isAdd)
@@ -238,7 +238,7 @@ namespace RTCV.CorruptCore.Extensions
                         }
 
                         //Calculate the max value you can store in this many bits
-                        BigInteger maxValue = BigInteger.Pow(2, value.Length * 8) - 1;
+                        BigInteger maxValue = BigInteger.Pow(2, input.Length * 8) - 1;
 
                         if (bigIntValue > maxValue)
                         {
@@ -255,9 +255,9 @@ namespace RTCV.CorruptCore.Extensions
                         //So with BigInteger, it returns a signed value. That means there's a chance we get a fun 0 appended at the end of added[]
                         //There's also a chance we get a value with less bytes than we put in. If this is the case, we want to copy it over left to right still
                         //So that means if added is larger we want that & if added is smaller we want added's Length
-                        if (added.Length > value.Length)
+                        if (added.Length > input.Length)
                         {
-                            length = value.Length;
+                            length = input.Length;
                         }
                         else
                         {
@@ -267,15 +267,15 @@ namespace RTCV.CorruptCore.Extensions
                         //Don't use copyto as we actually want to copy a trimmed array out (left aligned)
                         for (var i = 0; i < length; i++)
                         {
-                            value[i] = added[i];
+                            input[i] = added[i];
                         }
 
                         if (isInputBigEndian)
                         {
-                            Array.Reverse(value);
+                            Array.Reverse(input);
                         }
 
-                        return value;
+                        return input;
                     }
             }
 

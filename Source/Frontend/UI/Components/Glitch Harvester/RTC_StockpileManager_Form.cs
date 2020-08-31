@@ -18,8 +18,6 @@ namespace RTCV.UI
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        public bool DontLoadSelectedStockpile = false;
-
         private Color? originalSaveButtonColor = null;
         private bool _UnsavedEdits = false;
         public bool UnsavedEdits
