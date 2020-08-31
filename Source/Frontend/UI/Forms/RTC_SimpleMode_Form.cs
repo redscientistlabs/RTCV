@@ -416,10 +416,6 @@
 
             StepActions.ClearStepActionsOnRewind = cbClearRewind.Checked;
         }
-
-        private void cbClearRewind_CheckedChanged(object sender, EventArgs e)
-        {
-        }
     }
 
     public enum PlatformType { CLASSIC, MODERN }
