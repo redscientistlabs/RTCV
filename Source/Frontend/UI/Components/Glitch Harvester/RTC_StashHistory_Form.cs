@@ -14,12 +14,11 @@ namespace RTCV.UI
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        public bool DontLoadSelectedStash { get; set; }
+        public bool DontLoadSelectedStash { get; set; } = false;
 
         public RTC_StashHistory_Form()
         {
             InitializeComponent();
-            DontLoadSelectedStash = false;
             popoutAllowed = true;
             this.undockedSizable = true;
 
