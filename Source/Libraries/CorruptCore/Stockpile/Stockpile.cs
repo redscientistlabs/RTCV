@@ -25,7 +25,9 @@ namespace RTCV.CorruptCore
 
         public List<StashKey> StashKeys { get; private set; } = new List<StashKey>();
 
+        private string Name;
         public string Filename { get; private set; }
+        private string ShortFilename;
         private string RtcVersion;
         private string VanguardImplementation;
         public bool MissingLimiter { get; set; }
@@ -44,7 +46,7 @@ namespace RTCV.CorruptCore
 
         public override string ToString()
         {
-            return string.Empty;
+            return Name ?? string.Empty;
         }
 
         public static bool Save(Stockpile sks, string filename, bool includeReferencedFiles = false, bool compress = true)
@@ -60,6 +62,7 @@ namespace RTCV.CorruptCore
                 CheckForDiskBasedGame();
 
                 sks.Filename = filename;
+                sks.ShortFilename = Path.GetFileName(sks.Filename);
 
                 decimal saveProgress = 0;
                 CleanTempFolder(ref sks, ref saveProgress);

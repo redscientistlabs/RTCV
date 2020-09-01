@@ -1,13 +1,15 @@
 namespace RTCV.NetCore
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using Ceras;
 
     [Serializable()]
     [MemberConfig(TargetMember.All)]
     public abstract class NetCoreMessage
     {
-        public string Type { get; set; }
+        [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
+        public string Type;
     }
 
     [Serializable()]

@@ -61,6 +61,7 @@ namespace RTCV.NetCore
             DefaultBoopMonitoringCounter = spec.DefaultBoopMonitoringCounter;
             BoopMonitoringCounter = spec.DefaultBoopMonitoringCounter;
 
+            // Remove an explicit StartNetworking() call with https://github.com/ircluzar/RTCV/pull/133
             linkWatch = new TCPLinkWatch(this, spec);
         }
 
