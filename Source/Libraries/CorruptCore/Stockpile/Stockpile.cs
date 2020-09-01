@@ -27,12 +27,19 @@ namespace RTCV.CorruptCore
         [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
         public List<StashKey> StashKeys = new List<StashKey>();
 
+        [JsonPropertyAttribute]
         private string Name;
 
         [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
         public string Filename;
+
+        [JsonPropertyAttribute]
         private string ShortFilename;
+
+        [JsonPropertyAttribute]
         private string RtcVersion;
+
+        [JsonPropertyAttribute]
         private string VanguardImplementation;
 
         [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
