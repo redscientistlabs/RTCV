@@ -4,6 +4,7 @@ namespace RTCV.CorruptCore
     using System.Collections.Generic;
     using System.Data;
     using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.IO.Compression;
     using System.Linq;
@@ -23,14 +24,19 @@ namespace RTCV.CorruptCore
         [Exclude]
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public List<StashKey> StashKeys { get; private set; } = new List<StashKey>();
+        [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
+        public List<StashKey> StashKeys = new List<StashKey>();
 
         private string Name;
-        public string Filename { get; private set; }
+
+        [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
+        public string Filename;
         private string ShortFilename;
         private string RtcVersion;
         private string VanguardImplementation;
-        public bool MissingLimiter { get; set; }
+
+        [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
+        public bool MissingLimiter;
 
         public Stockpile(DataGridView dgvStockpile)
         {
