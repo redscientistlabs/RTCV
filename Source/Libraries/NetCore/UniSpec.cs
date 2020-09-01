@@ -4,6 +4,7 @@
     using System.Collections;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Reflection;
     using System.Runtime.Serialization;
@@ -204,7 +205,8 @@
     [MemberConfig(TargetMember.All)]
     public class PartialSpec : BaseSpec
     {
-        public string Name { get; private set; }
+        [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
+        public string Name;
 
         public PartialSpec(string _name)
         {
