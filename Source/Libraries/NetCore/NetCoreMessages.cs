@@ -29,8 +29,11 @@ namespace RTCV.NetCore
     [MemberConfig(TargetMember.All)]
     public class NetCoreAdvancedMessage : NetCoreMessage
     {
-        public Guid? requestGuid { get; set; } = null;
-        public object objectValue { get; set; } = null;
+        [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
+        public Guid? requestGuid = null;
+
+        [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
+        public object objectValue = null;
 
         public NetCoreAdvancedMessage()
         {
