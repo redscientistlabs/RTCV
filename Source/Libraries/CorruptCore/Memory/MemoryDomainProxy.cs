@@ -9,7 +9,7 @@ namespace RTCV.CorruptCore
     [MemberConfig(TargetMember.All)]
     public sealed class MemoryDomainProxy : MemoryInterface
     {
-        [field:NonSerialized, Exclude]
+        [Exclude]
         public IMemoryDomain MD { get; private set; } = null;
 
         public override long Size { get; set; }
