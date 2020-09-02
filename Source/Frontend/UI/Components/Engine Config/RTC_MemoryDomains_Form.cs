@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace RTCV.UI
 {
     using System;
@@ -17,6 +19,8 @@ namespace RTCV.UI
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
         private System.Timers.Timer updateTimer;
+        private BindingList<string> _domains = new BindingList<string>();
+        private BindingSource _bs;
 
         public RTC_MemoryDomains_Form()
         {
@@ -28,6 +32,8 @@ namespace RTCV.UI
             };
             updateTimer.Elapsed += UpdateSelectedMemoryDomains;
 
+            _bs = new BindingSource { DataSource = _domains };
+            lbMemoryDomains.DataSource = _bs;
 
             //Registers the drag and drop with RTC_MyVMDs_Form
             AllowDrop = true;
@@ -35,70 +41,76 @@ namespace RTCV.UI
             this.DragDrop += S.GET<RTC_VmdPool_Form>().RTC_VmdPool_Form_DragDrop;
         }
 
+
         private void UpdateSelectedMemoryDomains(object sender, EventArgs args)
         {
-            SyncObjectSingleton.FormExecute(() =>
+            //So this is technically not thread safe but it's Safe Enough TM...
+            //Todo - Make this safe
+            StringBuilder sb = new StringBuilder();
+            foreach (var s in lbMemoryDomains.SelectedItems.Cast<string>().ToArray())
             {
-                StringBuilder sb = new StringBuilder();
-                foreach (var s in lbMemoryDomains.SelectedItems.Cast<string>().ToArray())
-                {
-                    sb.Append($"{s},");
-                }
+                sb.Append($"{s},");
+            }
 
-                logger.Trace("UpdateSelectedMemoryDomains Setting SELECTEDDOMAINS domains to {domains}", sb);
-                AllSpec.UISpec.Update("SELECTEDDOMAINS", lbMemoryDomains.SelectedItems.Cast<string>().Distinct().ToArray());
-            });
+            logger.Trace("UpdateSelectedMemoryDomains Setting SELECTEDDOMAINS domains to {domains}", sb);
+            AllSpec.UISpec.Update("SELECTEDDOMAINS", lbMemoryDomains.SelectedItems.Cast<string>().Distinct().ToArray());
         }
 
         public void SetMemoryDomainsSelectedDomains(string[] _domains)
         {
-            var oldState = this.Visible;
-
-            for (int i = 0; i < lbMemoryDomains.Items.Count; i++)
+            SyncObjectSingleton.FormExecute(() =>
             {
-                if (_domains.Contains(lbMemoryDomains.Items[i].ToString()))
+                var oldState = this.Visible;
+                for (int i = 0; i < _domains.Length; i++)
                 {
-                    lbMemoryDomains.SetSelected(i, true);
+                    if (_domains.Contains(_domains[i]))
+                    {
+                        lbMemoryDomains.SetSelected(i, true);
+                    }
+                    else
+                    {
+                        lbMemoryDomains.SetSelected(i, false);
+                    }
                 }
-                else
-                {
-                    lbMemoryDomains.SetSelected(i, false);
-                }
-            }
-
+                this.Visible = oldState;
+            });
             UpdateSelectedMemoryDomains(null, null);
-            this.Visible = oldState;
         }
 
         public void SetMemoryDomainsAllButSelectedDomains(string[] _blacklistedDomains)
         {
-            var oldState = this.Visible;
-
-            for (int i = 0; i < lbMemoryDomains.Items.Count; i++)
+            SyncObjectSingleton.FormExecute(() =>
             {
-                if (_blacklistedDomains?.Contains(lbMemoryDomains.Items[i].ToString()) ?? false)
+                var oldState = this.Visible;
+
+                for (int i = 0; i < _domains.Count; i++)
                 {
-                    lbMemoryDomains.SetSelected(i, false);
+                    if (_blacklistedDomains?.Contains(_domains[i]) ?? false)
+                    {
+                        lbMemoryDomains.SetSelected(i, false);
+                    }
+                    else
+                    {
+                        lbMemoryDomains.SetSelected(i, true);
+                    }
                 }
-                else
-                {
-                    lbMemoryDomains.SetSelected(i, true);
-                }
-            }
+                this.Visible = oldState;
+            });
 
             UpdateSelectedMemoryDomains(null, null);
-            this.Visible = oldState;
         }
 
         private void btnSelectAll_Click(object sender, EventArgs e)
         {
-            RefreshDomains();
-
-            for (int i = 0; i < lbMemoryDomains.Items.Count; i++)
+            SyncObjectSingleton.FormExecute(() =>
             {
-                lbMemoryDomains.SetSelected(i, true);
-            }
+                RefreshDomains();
 
+                for (int i = 0; i < _domains.Count; i++)
+                {
+                    lbMemoryDomains.SetSelected(i, true);
+                }
+            });
             UpdateSelectedMemoryDomains(null, null);
         }
 

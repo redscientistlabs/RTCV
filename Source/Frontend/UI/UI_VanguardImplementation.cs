@@ -311,20 +311,14 @@ namespace RTCV.UI
 
         private static void PushVanguardSpecUpdate(NetCoreAdvancedMessage advancedMessage, ref NetCoreEventArgs e)
         {
-            SyncObjectSingleton.FormExecute(() =>
-                        {
-                            AllSpec.VanguardSpec?.Update((PartialSpec)advancedMessage.objectValue);
-                        });
+            AllSpec.VanguardSpec?.Update((PartialSpec)advancedMessage.objectValue);
             e.setReturnValue(true);
         }
 
         //CorruptCore pushed its spec. Note the false on propogate (since we don't want a recursive loop)
         private static void PushCorruptCoreSpecUpdate(NetCoreAdvancedMessage advancedMessage, ref NetCoreEventArgs e)
         {
-            SyncObjectSingleton.FormExecute(() =>
-                        {
-                            AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
-                        });
+            AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
             e.setReturnValue(true);
         }
 
@@ -379,8 +373,10 @@ namespace RTCV.UI
             SyncObjectSingleton.FormExecute(() =>
             {
                 S.GET<RTC_MemoryDomains_Form>().RefreshDomains();
-                S.GET<RTC_MemoryDomains_Form>().SetMemoryDomainsAllButSelectedDomains(AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] as string[] ?? new string[] { });
             });
+            //We explicitly don't invoke this on the main thread to avoid deadlock.
+            //The main thread invoke for the form will happen further down the chain
+            S.GET<RTC_MemoryDomains_Form>().SetMemoryDomainsAllButSelectedDomains(AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] as string[] ?? new string[] { });
         }
 
         private static void GetBlastGeneratorLayer(ref NetCoreEventArgs e)

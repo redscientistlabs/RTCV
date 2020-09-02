@@ -109,10 +109,10 @@ namespace RTCV.NetCore
                 }
 
                 attemptsAtReading++;
-                if (attemptsAtReading % 5 == 0)
-                {
-                    System.Windows.Forms.Application.DoEvents(); //This is a horrible hack we need due to the fact we have synchronous calls that invoke the main thread
-                }
+            //    if (attemptsAtReading % 5 == 0)
+            //    {
+            //        System.Windows.Forms.Application.DoEvents(); //This is a horrible hack we need due to the fact we have synchronous calls that invoke the main thread
+            //    }
 
                 Thread.Sleep(spec.messageReadTimerDelay);
             }

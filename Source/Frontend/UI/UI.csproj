@@ -113,15 +113,11 @@
     <Compile Include="Components\Controls\InputCompositeWidget.Designer.cs">
       <DependentUpon>InputCompositeWidget.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Controls\InputWidget.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Components\Controls\InputWidget.cs" />
     <Compile Include="Components\Controls\ListBoxExtended.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Components\Controls\MultiTrackBar.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="Components\Controls\MultiTrackBar.cs" />
     <Compile Include="Components\Controls\MultiTrackBar.designer.cs">
       <DependentUpon>MultiTrackBar.cs</DependentUpon>
     </Compile>
@@ -375,7 +371,9 @@
     <Compile Include="Forms\RTC_StockpilePlayer_Form.designer.cs">
       <DependentUpon>RTC_StockpilePlayer_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\RTC_Standalone_Form.cs" />
+    <Compile Include="Forms\RTC_Standalone_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="AutoKillSwitch.cs" />
     <Compile Include="Forms\RTC_Test_Form.cs">
       <SubType>Form</SubType>

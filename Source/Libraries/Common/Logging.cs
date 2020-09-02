@@ -17,8 +17,8 @@ namespace RTCV.Common
     {
         public static Logger GlobalLogger = LogManager.GetLogger("Global");
 
-        private static readonly SimpleLayout defaultLayout = new SimpleLayout("${longdate}|${level:uppercase=true}|${logger}|${message}${onexception:|${newline}EXCEPTION OCCURRED\\:${InvariantCulture:${exception:format=type,message,method:maxInnerExceptionLevel=5:innerFormat=shortType,message,method}${newline}");
-        private static readonly SimpleLayout traceLayout = new SimpleLayout("${longdate}|${level:uppercase=true}|${logger}|${callsite}|${message}${onexception:|${newline}EXCEPTION OCCURRED\\:${InvariantCulture:${exception:format=type,message,method:maxInnerExceptionLevel=5:innerFormat=shortType,message,method}${newline}");
+        private static readonly SimpleLayout defaultLayout = new SimpleLayout("${longdate}|${level:uppercase=true}|${logger}|${message}${onexception:|${newline}EXCEPTION OCCURRED\\:${exception:format=type,message,method:maxInnerExceptionLevel=5:innerFormat=shortType,message,method}${newline}");
+        private static readonly SimpleLayout traceLayout = new SimpleLayout("${longdate}|${level:uppercase=true}|${logger}|${callsite}|${message}${onexception:|${newline}EXCEPTION OCCURRED\\:${exception:format=type,message,method:maxInnerExceptionLevel=5:innerFormat=shortType,message,method}${newline}");
 
         public static Layout CurrentLayout = defaultLayout;
         private static readonly LogLevel minLevel = LogLevel.Trace;
