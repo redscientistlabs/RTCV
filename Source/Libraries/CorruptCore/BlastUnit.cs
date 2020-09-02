@@ -250,7 +250,7 @@ namespace RTCV.CorruptCore
         public string Note { get; set; }
 
         //Don't serialize this
-        [field:NonSerialized, XmlIgnore, JsonIgnore, Exclude]
+        [JsonIgnore, Exclude]
         public BlastUnitWorkingData Working { get; private set; }
 
         /// <summary>

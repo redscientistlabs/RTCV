@@ -18,9 +18,9 @@ namespace RTCV.CorruptCore.EventWarlock
         //Todo: add other wanted data here
 
         //Static variables
-        [NonSerialized]
+        [Ceras.Exclude]
         public static HashSet<string> StaticFlags = new HashSet<string>();
-        [NonSerialized]
+        [Ceras.Exclude]
         public static Dictionary<string, object> StaticVariables = new Dictionary<string, object>();
 
         //Non static variables

@@ -5,7 +5,6 @@ namespace RTCV.CorruptCore
     [Serializable()]
     public abstract class FileMemoryInterface : IMemoryDomain
     {
-        [NonSerialized]
         [Ceras.Exclude]
         internal static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 

@@ -20,26 +20,25 @@ namespace RTCV.CorruptCore
     [MemberConfig(TargetMember.All)]
     public class Stockpile
     {
-        [NonSerialized]
         [Exclude]
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
         public List<StashKey> StashKeys = new List<StashKey>();
 
-        [JsonPropertyAttribute]
+        [JsonProperty]
         private string Name;
 
         [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
         public string Filename;
 
-        [JsonPropertyAttribute]
+        [JsonProperty]
         private string ShortFilename;
 
-        [JsonPropertyAttribute]
+        [JsonProperty]
         private string RtcVersion;
 
-        [JsonPropertyAttribute]
+        [JsonProperty]
         private string VanguardImplementation;
 
         [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]

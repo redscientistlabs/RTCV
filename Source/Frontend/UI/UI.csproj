@@ -375,7 +375,9 @@
     <Compile Include="Forms\RTC_StockpilePlayer_Form.designer.cs">
       <DependentUpon>RTC_StockpilePlayer_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\RTC_Standalone_Form.cs" />
+    <Compile Include="Forms\RTC_Standalone_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="AutoKillSwitch.cs" />
     <Compile Include="Forms\RTC_Test_Form.cs">
       <SubType>Form</SubType>
@@ -444,12 +446,20 @@
     <Compile Include="UICore.cs" />
     <Compile Include="UIConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Components\DataGridViewDraggable.cs" />
+    <Compile Include="Components\DataGridViewDraggable.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Components\DataGridViewNumericUpDownCell.cs" />
     <Compile Include="Components\DataGridViewNumericUpDownColumn.cs" />
-    <Compile Include="Components\DataGridViewNumericUpDownEditingControl.cs" />
-    <Compile Include="Components\NumericTextBox.cs" />
-    <Compile Include="Components\NumericUpDownHexFix.cs" />
+    <Compile Include="Components\DataGridViewNumericUpDownEditingControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\NumericTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\NumericUpDownHexFix.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI_VanguardImplementation.cs" />
     <EmbeddedResource Include="Components\Blast Editor\RTC_ColumnSelector_Form.resx">
       <DependentUpon>RTC_ColumnSelector_Form.cs</DependentUpon>
