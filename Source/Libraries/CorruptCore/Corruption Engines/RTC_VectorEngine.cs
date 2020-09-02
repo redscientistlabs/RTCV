@@ -40,7 +40,7 @@ namespace RTCV.CorruptCore
                 return null;
             }
 
-            long precision = 4;
+            int precision = 4;
 
             if (UnlockPrecision)
             {
@@ -66,15 +66,16 @@ namespace RTCV.CorruptCore
                 return null;
             }
 
-            if (safeAddress > mi.Size - alignment)
+            if (safeAddress >= mi.Size - precision)
             {
-                safeAddress = mi.Size - (2 * alignment) + alignment; //If we're out of range, hit the last aligned address
+                safeAddress = mi.Size - (2 * precision) + alignment; //If we're out of range, hit the last aligned address
             }
+
             //Enforce the safeaddress at generation
-            var matchBytes = Filtering.LimiterPeekAndGetBytes(safeAddress, safeAddress + 4, LimiterListHash, mi);
+            var matchBytes = Filtering.LimiterPeekAndGetBytes(safeAddress, safeAddress + precision, LimiterListHash, mi);
             if (matchBytes != null)
             {
-                return new BlastUnit(Filtering.GetRandomConstant(ValueListHash, 4, matchBytes), domain, safeAddress, 4,
+                return new BlastUnit(Filtering.GetRandomConstant(ValueListHash, precision, matchBytes), domain, safeAddress, precision,
                     mi.BigEndian, 0, 1, null, true, false, true);
             }
 
