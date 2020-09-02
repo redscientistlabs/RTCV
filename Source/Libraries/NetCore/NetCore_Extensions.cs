@@ -40,8 +40,8 @@ namespace RTCV.NetCore.NetCore_Extensions
     public class HashSetFormatterThatKeepsItsComparer : Ceras.Formatters.IFormatter<HashSet<byte[]>>
     {
         // Sub-formatters are automatically set by Ceras' dependency injection
-        public Ceras.Formatters.IFormatter<byte[]> _byteArrayFormatter;
-        public Ceras.Formatters.IFormatter<IEqualityComparer<byte[]>> _comparerFormatter; // auto-implemented by Ceras using DynamicObjectFormatter
+        public Ceras.Formatters.IFormatter<byte[]> _byteArrayFormatter { get; private set; }
+        public Ceras.Formatters.IFormatter<IEqualityComparer<byte[]>> _comparerFormatter { get; private set; } // auto-implemented by Ceras using DynamicObjectFormatter
 
         public void Serialize(ref byte[] buffer, ref int offset, HashSet<byte[]> set)
         {
@@ -87,8 +87,8 @@ namespace RTCV.NetCore.NetCore_Extensions
     public class NullableByteHashSetFormatterThatKeepsItsComparer : Ceras.Formatters.IFormatter<HashSet<byte?[]>>
     {
         // Sub-formatters are automatically set by Ceras' dependency injection
-        public Ceras.Formatters.IFormatter<byte?[]> _byteArrayFormatter;
-        public Ceras.Formatters.IFormatter<IEqualityComparer<byte?[]>> _comparerFormatter; // auto-implemented by Ceras using DynamicObjectFormatter
+        public Ceras.Formatters.IFormatter<byte?[]> _byteArrayFormatter { get; }
+        public Ceras.Formatters.IFormatter<IEqualityComparer<byte?[]>> _comparerFormatter { get; } // auto-implemented by Ceras using DynamicObjectFormatter
 
         public void Serialize(ref byte[] buffer, ref int offset, HashSet<byte?[]> set)
         {

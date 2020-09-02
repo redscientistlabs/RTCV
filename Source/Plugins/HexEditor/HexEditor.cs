@@ -54,7 +54,11 @@ namespace RTCV.Plugins.HexEditor
         private int DataSize { get; set; }
 
         private static Dictionary<string, MemoryInterface> AllDomains => MemoryDomains.AllMemoryInterfaces;
-        public volatile bool _hideOnClose = true;
+        private volatile bool _hideOnClose = true;
+        public bool HideOnClose {
+            get { return _hideOnClose; }
+            set { _hideOnClose = value; }
+        }
 
         readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
@@ -95,7 +99,7 @@ namespace RTCV.Plugins.HexEditor
             {
                 if (e.FullyClosed)
                 {
-                    _hideOnClose = false;
+                    HideOnClose = false;
                     this.Close();
                 }
                 else if (this.Visible)
@@ -133,7 +137,7 @@ namespace RTCV.Plugins.HexEditor
 
         private void HexEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (_hideOnClose)
+            if (HideOnClose)
             {
                 this.Hide();
                 _domain = new NullMemoryInterface();
@@ -942,14 +946,14 @@ namespace RTCV.Plugins.HexEditor
         private void IncrementAddress(long address)
         {
             var bytes = _domain.PeekBytes(address, address + DataSize, false);
-            ByteArrayExtensions.AddValueToByteArrayUnchecked(ref bytes, 1, _domain.BigEndian);
+            bytes.AddValueToByteArrayUnchecked(1, _domain.BigEndian);
             _domain.PokeBytes(address, bytes, _domain.BigEndian);
         }
 
         private void DecrementAddress(long address)
         {
             var bytes = _domain.PeekBytes(address, address + DataSize, false);
-            ByteArrayExtensions.AddValueToByteArrayUnchecked(ref bytes, -1, _domain.BigEndian);
+            bytes.AddValueToByteArrayUnchecked(-1, _domain.BigEndian);
             _domain.PokeBytes(address, bytes, _domain.BigEndian);
         }
 

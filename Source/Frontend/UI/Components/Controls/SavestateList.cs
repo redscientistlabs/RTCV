@@ -16,7 +16,7 @@ namespace RTCV.UI.Components.Controls
 
     public partial class SavestateList : UserControl
     {
-        public List<SavestateHolder> _controlList;
+        private List<SavestateHolder> _controlList;
         private SavestateHolder _selectedHolder;
         private string _saveStateWord = "Savestate";
 

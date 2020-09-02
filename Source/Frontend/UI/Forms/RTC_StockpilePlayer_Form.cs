@@ -17,7 +17,6 @@
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        public bool DontLoadSelectedStockpile = false;
         private bool currentlyLoading = false;
 
         public RTC_StockpilePlayer_Form()
@@ -254,8 +253,6 @@
             {
                 try
                 {
-                    DontLoadSelectedStockpile = true;
-
                     string filename = "";
                     OpenFileDialog ofd = new OpenFileDialog
                     {

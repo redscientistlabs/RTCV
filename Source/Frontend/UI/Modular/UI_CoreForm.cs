@@ -21,14 +21,14 @@ namespace RTCV.UI
         public static UI_CoreForm thisForm;
         public static UI_CanvasForm cfForm;
 
-        public CanvasGrid previousGrid = null;
+        public CanvasGrid previousGrid { get; set; } = null;
 
         //Vallues used for padding and scaling properly in high dpi
         public static int xPadding;
         public static int corePadding; // height of the top bar
         public static int yPadding;
 
-        public Panel pnLockSidebar = null;
+        private Panel pnLockSidebar = null;
 
         public bool AutoCorrupt
         {
@@ -349,7 +349,7 @@ This message only appears once.";
 
                 smForm.EnteringSimpleMode();
             }))).Enabled = !simpleModeVisible;
-            (easyButtonMenu.Items.Add("Start Auto-Corrupt with Recommended Settings for loaded game", null, new EventHandler(((ob, ev) => {StartEasyMode(true); })))).Enabled = ((bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] == true) && !simpleModeVisible;
+            (easyButtonMenu.Items.Add("Start Auto-Corrupt with Recommended Settings for loaded game", null, new EventHandler(((ob, ev) => { StartEasyMode(true); })))).Enabled = ((bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] == true) && !simpleModeVisible;
             easyButtonMenu.Items.Add(new ToolStripSeparator());
             //EasyButtonMenu.Items.Add("Watch a tutorial video", null, new EventHandler((ob,ev) => Process.Start("https://www.youtube.com/watch?v=sIELpn4-Umw"))).Enabled = false;
             easyButtonMenu.Items.Add("Open the online wiki", null, new EventHandler((ob, ev) => Process.Start("https://corrupt.wiki/")));

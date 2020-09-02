@@ -68,7 +68,7 @@ namespace RTCV.UI
         }
 
         private string[] _domains = null;
-        public List<string> VisibleColumns;
+        public List<string> VisibleColumns { get; set; }
         private string CurrentBlastLayerFile = "";
         private bool batchOperation = false;
         private ContextMenuStrip headerStrip;
@@ -1627,7 +1627,7 @@ namespace RTCV.UI
                     {
                         //We don't want to modify the original
                         var outvalue = (byte[])bu.Value.Clone();
-                        ByteArrayExtensions.AddValueToByteArrayUnchecked(ref outvalue, bu.TiltValue, bu.BigEndian);
+                        outvalue.AddValueToByteArrayUnchecked(bu.TiltValue, bu.BigEndian);
                         //Flip it if it's big endian
                         if (bu.BigEndian)
                         {
@@ -2113,7 +2113,7 @@ namespace RTCV.UI
                 return value;
             }
 
-            ByteArrayExtensions.AddValueToByteArrayUnchecked(ref valueBytes, new BigInteger(amount), true);
+            valueBytes.AddValueToByteArrayUnchecked(new BigInteger(amount), true);
             return BitConverter.ToString(valueBytes).Replace("-", string.Empty);
         }
 

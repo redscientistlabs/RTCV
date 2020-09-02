@@ -19,8 +19,8 @@ namespace RTCV.CorruptCore
 
     public class RealTimeEventArgs : EventArgs
     {
-        public bool isForwarding = false;
-        public bool isRewinding = false;
-        public bool isFastForwarding = false;
+        public bool isForwarding { get; set; } = false;
+        public bool isRewinding { get; set; } = false;
+        public bool isFastForwarding { get; set; } = false;
     }
 }

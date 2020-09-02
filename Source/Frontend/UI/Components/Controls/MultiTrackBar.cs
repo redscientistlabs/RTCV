@@ -7,7 +7,7 @@
 
     public class ValueUpdateEventArgs : EventArgs
     {
-        public long value;
+        private long value;
 
         public ValueUpdateEventArgs(long _value)
         {

@@ -250,8 +250,8 @@ namespace RTCV.CorruptCore
         public string Note { get; set; }
 
         //Don't serialize this
-        [NonSerialized, XmlIgnore, JsonIgnore, Exclude]
-        public BlastUnitWorkingData Working;
+        [field:NonSerialized, XmlIgnore, JsonIgnore, Exclude]
+        public BlastUnitWorkingData Working { get; private set; }
 
         /// <summary>
         /// Creates a Blastunit that utilizes a backup.
@@ -621,7 +621,7 @@ namespace RTCV.CorruptCore
                                 Working.ApplyValue = (byte[])Value.Clone();
 
                                 //Calculate the actual value to apply
-                                ByteArrayExtensions.AddValueToByteArrayUnchecked(ref Working.ApplyValue, TiltValue, false); //We don't use the endianess toggle here as we always store value units as little endian
+                                Working.ApplyValue.AddValueToByteArrayUnchecked(TiltValue, false); //We don't use the endianess toggle here as we always store value units as little endian
 
                                 //Flip it if it's big endian
                                 if (this.BigEndian)
@@ -682,7 +682,7 @@ namespace RTCV.CorruptCore
             //Calculate the final value after adding the tilt value
             if (TiltValue != 0)
             {
-                ByteArrayExtensions.AddValueToByteArrayUnchecked(ref value, TiltValue, this.BigEndian);
+                value.AddValueToByteArrayUnchecked(TiltValue, this.BigEndian);
             }
 
             //Enqueue it
@@ -878,7 +878,7 @@ namespace RTCV.CorruptCore
                         }
                         byte[] temp = new byte[Precision];
                         //We use this as it properly handles the length for us
-                        ByteArrayExtensions.AddValueToByteArrayUnchecked(ref temp, randomValue, false);
+                        temp.AddValueToByteArrayUnchecked(randomValue, false);
                         Value = temp;
                     }
                 }
@@ -917,7 +917,7 @@ namespace RTCV.CorruptCore
 
                         byte[] temp = new byte[Precision];
                         //We use this as it properly handles the length for us
-                        ByteArrayExtensions.AddValueToByteArrayUnchecked(ref temp, randomValue, false);
+                        temp.AddValueToByteArrayUnchecked(randomValue, false);
                         Value = temp;
                     }
                 }
@@ -947,6 +947,11 @@ namespace RTCV.CorruptCore
                     Address = RtcCore.RND.NextLong(0, maxAddress - 1);
                 }
             }
+        }
+
+        public void ClearWorkingData()
+        {
+            Working = null;
         }
 
         public override string ToString()

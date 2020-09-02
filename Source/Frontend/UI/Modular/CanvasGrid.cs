@@ -10,13 +10,13 @@ namespace RTCV.UI
     {
         //grid that represents the layout of a single form
 
-        public int x = 0;
-        public int y = 0;
-        public Form[,] gridComponent;
-        public Size?[,] gridComponentSize;
-        public bool?[,] gridComponentDisplayHeader;
+        public int x { get; private set; } = 0;
+        public int y { get; private set; } = 0;
+        public Form[,] gridComponent { get; private set; }
+        public Size?[,] gridComponentSize { get; private set; }
+        public bool?[,] gridComponentDisplayHeader { get; private set; }
 
-        public string GridName = "";
+        public string GridName { get; private set; } = "";
         internal bool isResizable = false;
 
         public CanvasGrid(int _x, int _y, string _GridName)

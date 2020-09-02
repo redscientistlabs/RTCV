@@ -79,7 +79,6 @@
                     //send command back or return value if from bizhawk to bizhawk
                     if (args._returnMessage != null)
                     {
-                        (args._returnMessage as NetCoreAdvancedMessage).ReturnedFrom = message.Type;
                         (args._returnMessage as NetCoreAdvancedMessage).requestGuid = (message as NetCoreAdvancedMessage).requestGuid;
                         SendMessage(args._returnMessage);
                     }

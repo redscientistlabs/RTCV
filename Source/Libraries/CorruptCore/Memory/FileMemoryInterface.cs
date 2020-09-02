@@ -38,6 +38,11 @@ namespace RTCV.CorruptCore
         public abstract bool ResetWorkingFile();
         public abstract bool ApplyWorkingFile();
 
-        public volatile System.IO.Stream stream = null;
+        private volatile System.IO.Stream _stream = null;
+        public System.IO.Stream stream
+        {
+            get => _stream;
+            set => _stream = value;
+        }
     }
 }

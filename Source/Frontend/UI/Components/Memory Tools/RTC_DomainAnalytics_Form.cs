@@ -25,24 +25,10 @@
             this.undockedSizable = false;
         }
 
-        public bool ActLoadedFromFile = false;
-        public bool FirstInit = false;
-        public bool _activeTableReady = false;
+        private bool FirstInit = false;
 
-        public bool UseActiveTable = false;
-        public bool UseCorePrecision = false;
-        public List<string> MemoryDumps = null;
-        public long[] ActiveTableActivity = null;
-        public long[] ActiveTableGenerated = null;
-        public double ActivityThreshold = 0;
-        public Timer ActiveTableAutodump = null;
-
-        public string _currentFilename = null;
-
-        public static byte[] GetDumpFromFile(string key)
-        {
-            return File.ReadAllBytes(Path.Combine(RtcCore.workingDir, "MEMORYDUMPS", key + ".dmp"));
-        }
+        private List<string> MemoryDumps = null;
+        private Timer ActiveTableAutodump = null;
 
         private void btnActiveTableAddDump_Click(object sender, EventArgs e)
         {
@@ -68,8 +54,6 @@
 
         private void btnActiveTableDumpsReset_Click(object sender, EventArgs e)
         {
-            ActLoadedFromFile = false;
-
             if (!FirstInit)
             {
                 FirstInit = true;
@@ -97,8 +81,6 @@
 
             lbDomainAddressSize.Text = "Domain size: 0x" + mi.Size.ToString("X");
             lbNbMemoryDumps.Text = "Memory dumps collected: 0";
-
-            ActiveTableGenerated = null;
 
             MemoryDumps = new List<string>();
 

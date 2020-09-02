@@ -12,7 +12,6 @@
 
     public partial class RTC_AnalyticsTool_Form : Form, IAutoColorize
     {
-        public BlastLayer originalBlastLayer = null;
         private MemoryInterface MemoryInterface;
         private List<string> ActiveTableDumps;
 

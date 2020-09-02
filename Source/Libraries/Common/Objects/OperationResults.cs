@@ -8,9 +8,9 @@
 
     public class OperationResult
     {
-        public readonly string Message;
-        public readonly Exception Exception;
-        public readonly NLog.LogLevel Severity;
+        public string Message { get; private set; }
+        public Exception Exception { get; private set; }
+        public NLog.LogLevel Severity { get; private set; }
 
         public OperationResult(string message, NLog.LogLevel severity, Exception e = null)
         {
@@ -31,7 +31,7 @@
     public class OperationResults
     {
         private List<OperationResult> messages;
-        public readonly ReadOnlyCollection<OperationResult> Messages;
+        private readonly ReadOnlyCollection<OperationResult> Messages;
 
         public ReadOnlyCollection<OperationResult> Warnings => messages.Where(x => x.Severity == NLog.LogLevel.Warn).ToList().AsReadOnly();
         public ReadOnlyCollection<OperationResult> Errors => messages.Where(x => x.Severity == NLog.LogLevel.Error).ToList().AsReadOnly();
@@ -97,7 +97,7 @@
 
     public class OperationResults<T> : OperationResults
     {
-        public T Result;
+        public T Result { get; set; }
 
         public OperationResults() : base()
         {

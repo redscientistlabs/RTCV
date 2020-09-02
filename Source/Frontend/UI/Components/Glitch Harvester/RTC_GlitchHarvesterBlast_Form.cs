@@ -18,13 +18,13 @@ namespace RTCV.UI
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        public bool MergeMode = false;
-        public GlitchHarvesterMode ghMode = GlitchHarvesterMode.CORRUPT;
+        public bool MergeMode { get; private set; } = false;
+        public GlitchHarvesterMode ghMode { get; set; } = GlitchHarvesterMode.CORRUPT;
 
-        public bool LoadOnSelect = true;
-        public bool loadBeforeOperation = true;
+        public bool LoadOnSelect { get; set; } = true;
+        public bool loadBeforeOperation { get; set; } = true;
 
-        public Color? originalRenderOutputButtonColor = null;
+        private Color? originalRenderOutputButtonColor = null;
 
         private bool isCorruptionApplied;
         public bool IsCorruptionApplied
