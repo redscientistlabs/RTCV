@@ -113,11 +113,15 @@
     <Compile Include="Components\Controls\InputCompositeWidget.Designer.cs">
       <DependentUpon>InputCompositeWidget.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Controls\InputWidget.cs" />
+    <Compile Include="Components\Controls\InputWidget.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Components\Controls\ListBoxExtended.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Components\Controls\MultiTrackBar.cs" />
+    <Compile Include="Components\Controls\MultiTrackBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Components\Controls\MultiTrackBar.designer.cs">
       <DependentUpon>MultiTrackBar.cs</DependentUpon>
     </Compile>
@@ -442,12 +446,20 @@
     <Compile Include="UICore.cs" />
     <Compile Include="UIConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Components\DataGridViewDraggable.cs" />
+    <Compile Include="Components\DataGridViewDraggable.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Components\DataGridViewNumericUpDownCell.cs" />
     <Compile Include="Components\DataGridViewNumericUpDownColumn.cs" />
-    <Compile Include="Components\DataGridViewNumericUpDownEditingControl.cs" />
-    <Compile Include="Components\NumericTextBox.cs" />
-    <Compile Include="Components\NumericUpDownHexFix.cs" />
+    <Compile Include="Components\DataGridViewNumericUpDownEditingControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\NumericTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Components\NumericUpDownHexFix.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI_VanguardImplementation.cs" />
     <EmbeddedResource Include="Components\Blast Editor\RTC_ColumnSelector_Form.resx">
       <DependentUpon>RTC_ColumnSelector_Form.cs</DependentUpon>

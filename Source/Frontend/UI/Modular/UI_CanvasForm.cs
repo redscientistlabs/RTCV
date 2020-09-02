@@ -13,7 +13,7 @@
         public static UI_CanvasForm mainForm;
         public static List<UI_CanvasForm> extraForms = new List<UI_CanvasForm>();
         private static Dictionary<string, UI_CanvasForm> allExtraForms = new Dictionary<string, UI_CanvasForm>();
-        public UI_ShadowPanel spForm;
+        public UI_ShadowPanel spForm { get; private set; }
 
         public Panel blockPanel { get; set; } = null;
 

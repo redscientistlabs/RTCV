@@ -5,7 +5,7 @@ namespace RTCV.CorruptCore.EventWarlock
     [Serializable]
     public abstract class EWConditional
     {
-        public QuestionOp NextOp = QuestionOp.NONE;
+        public QuestionOp NextOp { get; set; } = QuestionOp.NONE;
         public EWConditional SetNextOp(QuestionOp op) { NextOp = op; return this; }
         public abstract bool Evaluate(Grimoire grimoire);
 

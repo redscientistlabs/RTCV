@@ -77,14 +77,14 @@ namespace RTCV.CorruptCore
                 {
                     foreach (BlastUnit bu in buList)
                     {
-                        bu.Working = null;
+                        bu.ClearWorkingData();
                     }
                 }
                 foreach (List<BlastUnit> buList in appliedInfinite)
                 {
                     foreach (BlastUnit bu in buList)
                     {
-                        bu.Working = null;
+                        bu.ClearWorkingData();
                     }
                 }
 
@@ -405,7 +405,7 @@ namespace RTCV.CorruptCore
 
                 foreach (BlastUnit bu in buList)
                 {
-                    bu.Working = null;
+                    bu.ClearWorkingData();
                     //Remove it from the store pool
                     if (bu.Source == BlastUnitSource.STORE)
                     {

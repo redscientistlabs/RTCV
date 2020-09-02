@@ -8,12 +8,12 @@ namespace RTCV.Vanguard
 
     public class VanguardConnector : IRoutable, IDisposable
     {
-        public NetCoreReceiver receiver;
+        private NetCoreReceiver receiver;
 
-        public NetCoreConnector netConn;
-        public CorruptCoreConnector corruptConn;
+        public NetCoreConnector netConn { get; private set; }
+        private CorruptCoreConnector corruptConn;
 
-        public NetworkStatus netcoreStatus => netConn.status;
+        public NetworkStatus netcoreStatus { get => netConn.status; }
 
         public VanguardConnector(NetCoreReceiver _receiver)
         {

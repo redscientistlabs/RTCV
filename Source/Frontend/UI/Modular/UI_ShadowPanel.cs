@@ -9,14 +9,13 @@
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class UI_ShadowPanel : Form
     {
-        public UI_CanvasForm parentForm;
-        public Form subForm = null;
-        public Form blockerForm = null;
+        private UI_CanvasForm parentForm;
+        public Form subForm { get; set; } = null;
 
         public UI_ShadowPanel(UI_CanvasForm _parentForm, ISubForm reqForm)
         {
             InitializeComponent();
-            blockerForm = new Form
+            var blockerForm = new Form
             {
                 ControlBox = false,
                 MinimizeBox = false,

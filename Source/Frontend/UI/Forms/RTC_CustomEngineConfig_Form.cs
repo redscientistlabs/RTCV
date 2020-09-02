@@ -11,7 +11,7 @@
     public partial class RTC_CustomEngineConfig_Form : Form, IAutoColorize
     {
         private bool updatingMinMax = false;
-        public bool DontUpdateSpec = false;
+        private bool DontUpdateSpec = false;
 
         public RTC_CustomEngineConfig_Form()
         {

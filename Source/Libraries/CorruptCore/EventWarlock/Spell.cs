@@ -14,16 +14,16 @@ namespace RTCV.CorruptCore.EventWarlock
     {
         //encapsulation will need to be figured out later
 
-        public bool Enabled = true;
-        public string Name;
+        public bool Enabled { get; private set; } = true;
+        // public string Name;
         private EWConditional conditional = null;
         public EWConditional Conditional { get => conditional; }
-        public List<WarlockAction> Actions = new List<WarlockAction>();
-        public bool isElse = false;
+        private List<WarlockAction> Actions = new List<WarlockAction>();
+        private bool isElse = false;
 
-        public Spell(string name = "Unnamed")
+        public Spell(/*string name = "Unnamed"*/)
         {
-            this.Name = name;
+            // this.Name = name;
         }
 
         public void SetEnabled(bool enabled = true)

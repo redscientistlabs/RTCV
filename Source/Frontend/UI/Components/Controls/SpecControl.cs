@@ -78,7 +78,7 @@
 
     public class ValueUpdateEventArgs<T> : EventArgs
     {
-        public T _value;
+        private T _value;
 
         public ValueUpdateEventArgs(T value)
         {

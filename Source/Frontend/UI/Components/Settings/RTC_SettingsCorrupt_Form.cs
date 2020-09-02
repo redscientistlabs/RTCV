@@ -108,7 +108,7 @@ namespace RTCV.UI
             DontUpdateSpec = false;
         }
 
-        public bool DontUpdateSpec;
+        private bool DontUpdateSpec;
 
         private void CbClearStepUnitsOnRewind_CheckedChanged(object sender, EventArgs e)
         {

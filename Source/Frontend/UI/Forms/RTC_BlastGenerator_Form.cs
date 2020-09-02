@@ -57,8 +57,7 @@ namespace RTCV.UI
         }
 
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-        public static BlastLayer CurrentBlastLayer = null;
-        public bool OpenedFromBlastEditor = false;
+        private bool OpenedFromBlastEditor = false;
         private StashKey sk = null;
         private ContextMenuStrip cms = new ContextMenuStrip();
         private bool initialized = false;

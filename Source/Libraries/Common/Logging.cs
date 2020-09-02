@@ -16,11 +16,8 @@ namespace RTCV.Common
     public static class Logging
     {
         public static Logger GlobalLogger = LogManager.GetLogger("Global");
+        public static Layout CurrentLayout;
 
-        private static readonly SimpleLayout defaultLayout = new SimpleLayout("${longdate}|${level:uppercase=true}|${logger}|${message}${onexception:|${newline}EXCEPTION OCCURRED\\:${exception:format=type,message,method:maxInnerExceptionLevel=5:innerFormat=shortType,message,method}${newline}");
-        private static readonly SimpleLayout traceLayout = new SimpleLayout("${longdate}|${level:uppercase=true}|${logger}|${callsite}|${message}${onexception:|${newline}EXCEPTION OCCURRED\\:${exception:format=type,message,method:maxInnerExceptionLevel=5:innerFormat=shortType,message,method}${newline}");
-
-        public static Layout CurrentLayout = defaultLayout;
         private static readonly LogLevel minLevel = LogLevel.Trace;
         private const int logsToKeep = 5;
 
@@ -29,13 +26,17 @@ namespace RTCV.Common
             ConfigurationItemFactory.Default.LayoutRenderers.RegisterDefinition("InvariantCulture", typeof(InvariantCultureLayoutRendererWrapper));
             var config = new LoggingConfiguration();
 
+            //We have to define these after we register InvariantCulture
+            var defaultLayout = new SimpleLayout("${longdate}|${level:uppercase=true}|${logger}|${message}${onexception:|${newline}EXCEPTION OCCURRED\\:${InvariantCulture:${exception:format=type,message,method:maxInnerExceptionLevel=5:innerFormat=shortType,message,method}${newline}");
+            var traceLayout = new SimpleLayout("${longdate}|${level:uppercase=true}|${logger}|${callsite}|${message}${onexception:|${newline}EXCEPTION OCCURRED\\:${InvariantCulture:${exception:format=type,message,method:maxInnerExceptionLevel=5:innerFormat=shortType,message,method}${newline}");
+            CurrentLayout = defaultLayout;
 
-            for (int i = logsToKeep; i >= 0; i--)
+            for (var i = logsToKeep; i >= 0; i--)
             {
-                var _filename = getFormattedLogFilename(filename, i - 1);
-                if (File.Exists(_filename))
+                var formattedFilename = GetFormattedLogFilename(filename, i - 1);
+                if (File.Exists(formattedFilename))
                 {
-                    var newName = getFormattedLogFilename(filename, i);
+                    var newName = GetFormattedLogFilename(filename, i);
 
                     if (string.IsNullOrEmpty(newName)) //If something went wrong generating the name, just give up
                     {
@@ -44,11 +45,11 @@ namespace RTCV.Common
 
                     try
                     {
-                        File.Copy(_filename, newName, true);
+                        File.Copy(formattedFilename, newName, true);
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine($"Failed to rotate log file {_filename} to {newName}\n{e}");
+                        Console.WriteLine($"Failed to rotate log file {formattedFilename} to {newName}\n{e}");
                     }
                 }
             }
@@ -68,9 +69,9 @@ namespace RTCV.Common
             }
 
             // var logfile = new NLog.Targets.FileTarget("logfile") { FileName = filename, Layout = layout };
-            var logconsole = new NLog.Targets.ColoredConsoleTarget("logconsole") { Layout = CurrentLayout };
+            var logconsole = new NLog.Targets.ColoredConsoleTarget("logconsole") {Layout = CurrentLayout};
 
-            bool isDebug = false;
+            var isDebug = false;
             Debug.Assert(isDebug = true);
             if (Environment.GetCommandLineArgs().Contains("-TRACE") || isDebug)
                 config.AddRule(LogLevel.Trace, LogLevel.Fatal, logconsole);
@@ -91,7 +92,7 @@ namespace RTCV.Common
         }
 
 
-        private static string getFormattedLogFilename(string path, int num)
+        private static string GetFormattedLogFilename(string path, int num)
         {
             try
             {
@@ -129,7 +130,7 @@ namespace RTCV.Common
 
         protected override string RenderInner(LogEventInfo logEvent)
         {
-            var currentCulture = Thread.CurrentThread.CurrentUICulture;
+            CultureInfo currentCulture = Thread.CurrentThread.CurrentUICulture;
             try
             {
                 Thread.CurrentThread.CurrentUICulture = CultureInfo.InvariantCulture;

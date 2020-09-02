@@ -1,12 +1,14 @@
 namespace RTCV.NetCore
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using Ceras;
 
     [Serializable()]
     [MemberConfig(TargetMember.All)]
     public abstract class NetCoreMessage
     {
+        [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
         public string Type;
     }
 
@@ -27,9 +29,10 @@ namespace RTCV.NetCore
     [MemberConfig(TargetMember.All)]
     public class NetCoreAdvancedMessage : NetCoreMessage
     {
-        public string ReturnedFrom;
-        public bool Priority = false;
+        [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
         public Guid? requestGuid = null;
+
+        [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
         public object objectValue = null;
 
         public NetCoreAdvancedMessage()

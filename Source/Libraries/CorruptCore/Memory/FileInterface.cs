@@ -2,6 +2,7 @@ namespace RTCV.CorruptCore
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Windows.Forms;
     using Newtonsoft.Json;
@@ -30,10 +31,10 @@ namespace RTCV.CorruptCore
         public long EndPadding { get; }
         public override int WordSize => 4;
 
-        public string Filename;
-        public string ShortFilename = null;
+        public string Filename { get; set; }
+        public string ShortFilename { get; private set; } = null;
 
-        public MultipleFileInterface parent = null;
+        public MultipleFileInterface parent { get; set; } = null;
         public override byte[][] lastMemoryDump { get; set; } = null;
         public override bool cacheEnabled => lastMemoryDump != null;
 
@@ -43,10 +44,10 @@ namespace RTCV.CorruptCore
         public long? lastRealMemorySize { get; set; }
         public bool useAutomaticFileBackups { get; set; } = false;
 
-        public long MultiFilePosition = 0;
-        public long MultiFilePositionCeiling = 0;
+        public long MultiFilePosition { get; set; } = 0;
+        public long MultiFilePositionCeiling { get; set; } = 0;
 
-        public string InterfaceUniquePrefix = "";
+        private string InterfaceUniquePrefix = "";
 
         public override string ToString()
         {
@@ -62,6 +63,7 @@ namespace RTCV.CorruptCore
             }
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1801", Justification = "_startPadding and _endPadding will be used eventually")]
         public FileInterface(string _targetId, bool _bigEndian, bool _useAutomaticFileBackups = false, long _startPadding = 0, long _endPadding = 0)
         {
             try

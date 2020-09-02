@@ -9,18 +9,17 @@ namespace RTCV.NetCore
         // This is a parameters object that must be passed to netcore in order to establish a link
         // The values here will determine the behavior of the Link
 
-        public NetCoreConnector Connector = null;
-        public NetworkSide Side = NetworkSide.NONE;
-        public bool AutoReconnect = true;
-        public int ClientReconnectDelay = 1500;
-        public int DefaultBoopMonitoringCounter = System.Diagnostics.Debugger.IsAttached ? 1500 : 20;
+        public NetCoreConnector Connector { get; set; } = null;
+        public NetworkSide Side { get; set; } = NetworkSide.NONE;
+        public int ClientReconnectDelay { get; set; } = 1500;
+        public int DefaultBoopMonitoringCounter { get; } = System.Diagnostics.Debugger.IsAttached ? 1500 : 20;
 
-        public bool Attached = true;
-        public bool Loopback = true;
-        public string IP = "127.0.0.1";
-        public int Port = 42069;
+        public bool Attached { get; set; } = true;
+        public bool Loopback { get; set; } = true;
+        public string IP { get; } = "127.0.0.1";
+        public int Port { get; } = 42069;
 
-        public int messageReadTimerDelay = 5; //represents how often the messages are read (ms) (15ms = ~66fps)
+        public int messageReadTimerDelay { get; } = 5; //represents how often the messages are read (ms) (15ms = ~66fps)
         private Mutex StatusEventLockout = new Mutex();
         private protected static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 

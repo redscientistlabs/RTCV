@@ -7,7 +7,7 @@
 
     public partial class RTC_Intro_Form : Form, IAutoColorize
     {
-        public IntroAction selection = IntroAction.EXIT;
+        public IntroAction selection { get; private set; } = IntroAction.EXIT;
 
         public RTC_Intro_Form()
         {
@@ -89,22 +89,6 @@
             this.Text = "Welcome to RTCV";
 
             tbDisclaimerText.Text = disclaimer;
-
-            selection = IntroAction.EXIT;
-            this.ShowDialog();
-        }
-
-        internal void DisplayGenericDisclaimer(string disclaimer, string windowTitle)
-        {
-            cbAgree.Checked = false;
-            btnSimpleMode.Visible = false;
-            lbStartupMode.Visible = false;
-            btnNormalMode.Visible = false;
-
-            this.Text = windowTitle;
-
-            tbDisclaimerText.Text = disclaimer;
-            btnSimpleMode.Text = "Continue";
 
             selection = IntroAction.EXIT;
             this.ShowDialog();

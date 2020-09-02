@@ -15,7 +15,6 @@ namespace RTCV.CorruptCore
     [MemberConfig(TargetMember.AllPublic)]
     public class StashKey : ICloneable, INote
     {
-        [NonSerialized]
         [Exclude]
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 

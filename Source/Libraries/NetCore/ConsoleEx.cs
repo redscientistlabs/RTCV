@@ -24,7 +24,7 @@ namespace RTCV.NetCore
         }
 
         private static ConsoleEx _singularity = null;
-        public ISynchronizeInvoke syncObject = null; //This can contain the form or anything that implements it.
+        private ISynchronizeInvoke syncObject = null; //This can contain the form or anything that implements it.
 
         public void Register(Action<object, NetCoreEventArgs> registrant, ISynchronizeInvoke _syncObject = null)
         {

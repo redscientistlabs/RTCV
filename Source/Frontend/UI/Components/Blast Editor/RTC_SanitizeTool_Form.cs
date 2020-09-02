@@ -9,8 +9,8 @@ namespace RTCV.UI
 
     public partial class RTC_SanitizeTool_Form : Form, IAutoColorize
     {
-        public BlastLayer originalBlastLayer = null;
-        public BlastLayer workBlastLayer = null;
+        private BlastLayer originalBlastLayer = null;
+        private BlastLayer workBlastLayer = null;
 
         public RTC_SanitizeTool_Form()
         {

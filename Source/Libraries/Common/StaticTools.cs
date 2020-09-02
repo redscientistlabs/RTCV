@@ -15,7 +15,7 @@ namespace RTCV.Common
 
     public class FormRegisteredEventArgs : EventArgs
     {
-        public Form Form;
+        public Form Form { get; private set; }
         public FormRegisteredEventArgs(Form form)
         {
             Form = form;

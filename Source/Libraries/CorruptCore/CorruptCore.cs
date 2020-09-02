@@ -26,7 +26,7 @@ namespace RTCV.CorruptCore
 
     public class GameClosedEventArgs : EventArgs
     {
-        public bool FullyClosed;
+        public bool FullyClosed { get; private set; }
         public GameClosedEventArgs(bool fullyClosed)
         {
             FullyClosed = fullyClosed;

@@ -269,7 +269,7 @@ namespace RTCV.UI
             dontUpdate = false;
         }
 
-        public bool dontUpdate = false;
+        private bool dontUpdate = false;
 
         private void cbClearRewind_CheckedChanged(object sender, EventArgs e)
         {

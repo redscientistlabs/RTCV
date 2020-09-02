@@ -7,8 +7,6 @@ namespace RTCV.Common.Forms
 
     public partial class LogConsoleForm : Form
     {
-        public bool HideOnClose = false;
-
         public override Color ForeColor
         {
             get => base.ForeColor;
@@ -54,11 +52,6 @@ namespace RTCV.Common.Forms
 
         private void LogConsoleForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (HideOnClose)
-            {
-                this.Hide();
-                e.Cancel = true;
-            }
         }
 
         public Logger Logger => LogConsole.Logger;

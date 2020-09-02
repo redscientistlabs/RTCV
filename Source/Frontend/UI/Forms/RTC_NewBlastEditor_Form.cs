@@ -44,6 +44,7 @@ namespace RTCV.UI
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Data;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Numerics;
@@ -67,7 +68,7 @@ namespace RTCV.UI
         }
 
         private string[] _domains = null;
-        public List<string> VisibleColumns;
+        public List<string> VisibleColumns { get; set; }
         private string CurrentBlastLayerFile = "";
         private bool batchOperation = false;
         private ContextMenuStrip headerStrip;
@@ -1626,7 +1627,7 @@ namespace RTCV.UI
                     {
                         //We don't want to modify the original
                         var outvalue = (byte[])bu.Value.Clone();
-                        ByteArrayExtensions.AddValueToByteArrayUnchecked(ref outvalue, bu.TiltValue, bu.BigEndian);
+                        outvalue.AddValueToByteArrayUnchecked(bu.TiltValue, bu.BigEndian);
                         //Flip it if it's big endian
                         if (bu.BigEndian)
                         {
@@ -1885,6 +1886,20 @@ namespace RTCV.UI
             LoadBlastlayer(bl, true);
         }
 
+        private static string GenerateCSV(DataGridView dgv)
+        {
+            var sb = new StringBuilder();
+            var headers = dgv.Columns.Cast<DataGridViewColumn>();
+
+            sb.AppendLine(string.Join(CultureInfo.CurrentCulture.TextInfo.ListSeparator, headers.Select(column => "\"" + column.HeaderText + "\"").ToArray()));
+            foreach (DataGridViewRow row in dgv.Rows)
+            {
+                var cells = row.Cells.Cast<DataGridViewCell>();
+                sb.AppendLine(string.Join(CultureInfo.CurrentCulture.TextInfo.ListSeparator, cells.Select(cell => "\"" + cell.Value + "\"").ToArray()));
+            }
+            return sb.ToString();
+        }
+
         public void ExportToCSV(string filename = null)
         {
             if (currentSK.BlastLayer.Layer.Count == 0)
@@ -1911,7 +1926,7 @@ namespace RTCV.UI
                 filename = saveCsvDialog.FileName;
             }
 
-            File.WriteAllText(filename, CSVGenerator.GenerateFromDGV(dgvBlastEditor), Encoding.UTF8);
+            File.WriteAllText(filename, GenerateCSV(dgvBlastEditor), Encoding.UTF8);
         }
 
 
@@ -2098,7 +2113,7 @@ namespace RTCV.UI
                 return value;
             }
 
-            ByteArrayExtensions.AddValueToByteArrayUnchecked(ref valueBytes, new BigInteger(amount), true);
+            valueBytes.AddValueToByteArrayUnchecked(new BigInteger(amount), true);
             return BitConverter.ToString(valueBytes).Replace("-", string.Empty);
         }
 

@@ -14,10 +14,9 @@
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        public bool DontLoadSelectedStockpile = false;
         private PlatformType platform = PlatformType.CLASSIC;
 
-        public bool DontUpdateSpec = false;
+        private bool DontUpdateSpec = false;
 
         public RTC_SimpleMode_Form()
         {
@@ -415,10 +414,6 @@
             S.GET<RTC_CustomEngineConfig_Form>().SetRewindBoxes(cbClearRewind.Checked);
 
             StepActions.ClearStepActionsOnRewind = cbClearRewind.Checked;
-        }
-
-        private void cbClearRewind_CheckedChanged(object sender, EventArgs e)
-        {
         }
     }
 

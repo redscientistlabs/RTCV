@@ -4,6 +4,7 @@ namespace RTCV.CorruptCore
     using System.Collections.Generic;
     using System.Data;
     using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.IO.Compression;
     using System.Linq;
@@ -19,17 +20,28 @@ namespace RTCV.CorruptCore
     [MemberConfig(TargetMember.All)]
     public class Stockpile
     {
-        [NonSerialized]
         [Exclude]
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
+        [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
         public List<StashKey> StashKeys = new List<StashKey>();
 
-        public string Name;
+        [JsonProperty]
+        private string Name;
+
+        [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
         public string Filename;
-        public string ShortFilename;
-        public string RtcVersion;
-        public string VanguardImplementation;
+
+        [JsonProperty]
+        private string ShortFilename;
+
+        [JsonProperty]
+        private string RtcVersion;
+
+        [JsonProperty]
+        private string VanguardImplementation;
+
+        [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
         public bool MissingLimiter;
 
         public Stockpile(DataGridView dgvStockpile)

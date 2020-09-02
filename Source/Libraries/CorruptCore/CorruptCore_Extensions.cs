@@ -3,13 +3,8 @@ namespace RTCV.CorruptCore
     using System;
     using System.Diagnostics;
     using System.Drawing;
-    using System.Globalization;
     using System.IO;
-    using System.Linq;
-    using System.Numerics;
     using System.Runtime.InteropServices;
-    using System.Text;
-    using System.Windows.Forms;
     using Ceras;
 
     public static class CorruptCore_Extensions
@@ -130,23 +125,6 @@ namespace RTCV.CorruptCore
             }
 
             return ser.Deserialize<T>(ser.Serialize(source));
-        }
-    }
-    //Export dgv to csv
-    public static class CSVGenerator
-    {
-        public static string GenerateFromDGV(DataGridView dgv)
-        {
-            var sb = new StringBuilder();
-            var headers = dgv.Columns.Cast<DataGridViewColumn>();
-
-            sb.AppendLine(string.Join(CultureInfo.CurrentCulture.TextInfo.ListSeparator, headers.Select(column => "\"" + column.HeaderText + "\"").ToArray()));
-            foreach (DataGridViewRow row in dgv.Rows)
-            {
-                var cells = row.Cells.Cast<DataGridViewCell>();
-                sb.AppendLine(string.Join(CultureInfo.CurrentCulture.TextInfo.ListSeparator, cells.Select(cell => "\"" + cell.Value + "\"").ToArray()));
-            }
-            return sb.ToString();
         }
     }
 
