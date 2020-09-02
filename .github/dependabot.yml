@@ -1,0 +1,10 @@
+version: 2
+updates:
+- package-ecosystem: nuget
+  directory: "/"
+  schedule:
+    interval: weekly
+  open-pull-requests-limit: 10
+  target-branch: "506"
+  ignore:
+    - dependency-name: "System.Runtime.CompilerServices.Unsafe"
