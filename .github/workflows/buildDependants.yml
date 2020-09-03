@@ -19,7 +19,7 @@ jobs:
     - name: Checkout Bizhawk
       uses: actions/checkout@v2
       with:
-        repository: 'ircluzar/Bizhawk-Vanguard'
+        repository: 'redscientistlabs/Bizhawk-Vanguard'
         ref: 'master'
         path: 'Bizhawk-Vanguard'
 
@@ -52,7 +52,7 @@ jobs:
     - name: Checkout CemuStub
       uses: actions/checkout@v2
       with:
-        repository: 'ircluzar/CemuStub-Vanguard'
+        repository: 'redscientistlabs/CemuStub-Vanguard'
         ref: 'master'
         path: 'CemuStub-Vanguard'
 
@@ -85,7 +85,7 @@ jobs:
     - name: Checkout FileStub
       uses: actions/checkout@v2
       with:
-        repository: 'ircluzar/FileStub-Vanguard'
+        repository: 'redscientistlabs/FileStub-Vanguard'
         ref: 'master'
         path: 'FileStub-Vanguard'
 
@@ -118,7 +118,7 @@ jobs:
     - name: Checkout UnityStub
       uses: actions/checkout@v2
       with:
-        repository: 'ircluzar/UnityStub-Vanguard'
+        repository: 'redscientistlabs/UnityStub-Vanguard'
         ref: 'master'
         path: 'UnityStub-Vanguard'
 
@@ -151,7 +151,7 @@ jobs:
     - name: Checkout ProcessStub
       uses: actions/checkout@v2
       with:
-        repository: 'NarryG/ProcessStub-Vanguard'
+        repository: 'redscientistlabs/ProcessStub-Vanguard'
         ref: 'master'
         path: 'ProcessStub-Vanguard'
 
@@ -198,7 +198,7 @@ jobs:
     - name: Checkout melonDS-Vanguard
       uses: actions/checkout@v2
       with:
-        repository: 'NarryG/melonDS-Vanguard'
+        repository: 'redscientistlabs/melonDS-Vanguard'
         ref: 'Vanguard'
         path: 'melonDS-Vanguard'
     - name: Create build directory
@@ -219,7 +219,7 @@ jobs:
     - name: Checkout dolphin
       uses: actions/checkout@v2
       with:
-        repository: 'NarryG/dolphin-vanguard'
+        repository: 'redscientistlabs/dolphin-vanguard'
         ref: 'Vanguard'
         path: 'dolphin-vanguard'
         submodules: 'true'
@@ -246,7 +246,7 @@ jobs:
     - name: Checkout pcsx2
       uses: actions/checkout@v2
       with:
-        repository: 'NarryG/pcsx2-Vanguard'
+        repository: 'redscientistlabs/pcsx2-Vanguard'
         ref: 'Vanguard'
         path: 'pcsx2-Vanguard'
         submodules: 'recursive'
@@ -290,7 +290,7 @@ jobs:
     - name: Checkout citra
       uses: actions/checkout@v2
       with:
-        repository: 'NarryG/citra-vanguard'
+        repository: 'redscientistlabs/citra-vanguard'
         ref: 'vanguard'
         path: 'citra-vanguard'
         submodules: 'recursive'
@@ -317,7 +317,7 @@ jobs:
     - name: Checkout DosboxStub
       uses: actions/checkout@v2
       with:
-        repository: 'ircluzar/DosboxStub-Vanguard'
+        repository: 'redscientistlabs/DosboxStub-Vanguard'
         ref: 'master'
         path: 'DosboxStub-Vanguard'
 
