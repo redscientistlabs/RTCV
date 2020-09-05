@@ -4,14 +4,14 @@
     using System.Windows.Forms;
     using RTCV.UI.Modular;
 
-    public partial class RTC_SelectBox_Form : ComponentForm, IBlockable
+    public partial class SelectBoxForm : ComponentForm, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         private ComponentForm[] childForms;
 
-        public RTC_SelectBox_Form(ComponentForm[] _childForms)
+        public SelectBoxForm(ComponentForm[] _childForms)
         {
             InitializeComponent();
 
@@ -28,35 +28,14 @@
             }
         }
 
-        private void cbSelectBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void AnchorSelectedItemToPanel(object sender, EventArgs e)
         {
             ((cbSelectBox.SelectedItem as dynamic)?.value as ComponentForm)?.AnchorToPanel(pnComponentForm);
         }
 
-        private void RTC_SelectBox_Form_Load(object sender, EventArgs e)
+        private void OnLoad(object sender, EventArgs e)
         {
             cbSelectBox.SelectedIndex = 0;
-        }
-
-        private void RTC_SelectBox_Form_Resize(object sender, EventArgs e)
-        {
-            cbSelectBox_SelectedIndexChanged(sender, e);
-            /*
-            var cf = pnComponentForm.Controls.OfType<ComponentForm>().FirstOrDefault();
-
-            if(cf != null)
-            {
-                cf.
-            }
-            */
-            /*
-            var controls = new ArrayList().AddRange(pnComponentForm.Controls);
-            var query = from element in pnComponentForm.Controls
-                        where element is ComponentForm
-                        select element;
-
-            var result = query.FirstOrDefault();
-            */
         }
     }
 }

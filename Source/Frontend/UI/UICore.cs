@@ -30,7 +30,7 @@ namespace RTCV.UI
         private static System.Timers.Timer inputCheckTimer;
 
         //RTC Main Forms
-        public static RTC_SelectBox_Form mtForm = null;
+        public static SelectBoxForm mtForm = null;
 
         public static BindingCollection HotkeyBindings = new BindingCollection();
 
