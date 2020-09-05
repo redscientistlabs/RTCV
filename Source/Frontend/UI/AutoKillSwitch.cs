@@ -178,7 +178,7 @@ namespace RTCV.UI
 
         private static void BoopMonitoringTimer_Tick(object sender, EventArgs e)
         {
-            if (!Enabled || (UI_VanguardImplementation.connector?.netConn?.status != NetworkStatus.CONNECTED))
+            if (!Enabled || (UI_VanguardImplementation.connector?.netConn?.status != NetCore.Enums.NetworkStatus.CONNECTED))
             {
                 return;
             }

@@ -5,6 +5,7 @@ namespace RTCV.NetCore
     using System.Net.Sockets;
     using System.Text;
     using System.Threading;
+    using RTCV.NetCore.Enums;
 
     public class UDPLink : IDisposable
     {

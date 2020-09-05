@@ -38,7 +38,7 @@
 
             if (selection == IntroAction.EXIT)
             {
-                if (UI_VanguardImplementation.connector.netConn.status == NetworkStatus.CONNECTED)
+                if (UI_VanguardImplementation.connector.netConn.status == NetCore.Enums.NetworkStatus.CONNECTED)
                 {
                     LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_EVENT_CLOSEEMULATOR);
                 }
