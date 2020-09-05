@@ -105,7 +105,7 @@ namespace RTCV.UI.Modular
                 {
                     var stGrid = new CanvasGrid(15, 12, "Settings and Tools");
 
-                    Form stForm = S.GET<RTC_Settings_Form>();
+                    Form stForm = S.GET<SettingsForm>();
                     stGrid.SetTileForm(stForm, 0, 0, 15, 12, false);
                     _settings = stGrid;
                 }
