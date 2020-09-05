@@ -7,14 +7,14 @@
     using RTCV.CorruptCore;
     using RTCV.UI.Modular;
 
-    public partial class RTC_ListBox_Form : ComponentForm, IBlockable
+    public partial class ListBoxForm : ComponentForm, IBlockable
     {
         private ComponentForm[] childForms;
 
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        public RTC_ListBox_Form(ComponentForm[] _childForms)
+        public ListBoxForm(ComponentForm[] _childForms)
         {
             InitializeComponent();
 
@@ -32,12 +32,12 @@
             }
         }
 
-        private void lbComponentForms_SelectedIndexChanged(object sender, EventArgs e)
+        private void OnComponentFormsSelectedIndexChanged(object sender, EventArgs e)
         {
             ((lbComponentForms.SelectedItem as ComboBoxItem<Form>)?.Value as ComponentForm)?.AnchorToPanel(pnTargetComponentForm);
         }
 
-        private void RTC_ListBox_Form_Load(object sender, EventArgs e)
+        private void OnFormLoad(object sender, EventArgs e)
         {
             lbComponentForms.SelectedIndex = 0;
         }
