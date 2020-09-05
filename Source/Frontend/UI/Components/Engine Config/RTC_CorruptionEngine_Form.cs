@@ -133,7 +133,7 @@ namespace RTCV.UI
             nmAlignment.Maximum = RtcCore.CurrentPrecision - 1;
 
             //S.GET<RTC_GlitchHarvesterIntensity_Form>().Visible = true;
-            S.GET<RTC_GeneralParameters_Form>().Show();
+            S.GET<GeneralParametersForm>().Show();
             S.GET<RTC_MemoryDomains_Form>().Show();
             S.GET<RTC_GlitchHarvesterIntensity_Form>().Show();
 
@@ -220,7 +220,7 @@ namespace RTCV.UI
 
                     S.GET<UI_CoreForm>().AutoCorrupt = false;
                     S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
-                    S.GET<RTC_GeneralParameters_Form>().Hide();
+                    S.GET<GeneralParametersForm>().Hide();
                     S.GET<RTC_MemoryDomains_Form>().Hide();
                     S.GET<RTC_GlitchHarvesterIntensity_Form>().Hide();
                     break;
@@ -231,18 +231,18 @@ namespace RTCV.UI
 
             if (cbSelectedEngine.SelectedItem.ToString() == "Blast Generator")
             {
-                S.GET<RTC_GeneralParameters_Form>().labelBlastRadius.Visible = false;
-                S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Visible = false;
-                S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Visible = false;
-                S.GET<RTC_GeneralParameters_Form>().cbBlastRadius.Visible = false;
+                S.GET<GeneralParametersForm>().labelBlastRadius.Visible = false;
+                S.GET<GeneralParametersForm>().multiTB_Intensity.Visible = false;
+                S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Visible = false;
+                S.GET<GeneralParametersForm>().cbBlastRadius.Visible = false;
                 S.GET<RTC_MemoryDomains_Form>().lbMemoryDomains.Visible = false;
             }
             else
             {
-                S.GET<RTC_GeneralParameters_Form>().labelBlastRadius.Visible = true;
-                S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Visible = true;
-                S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Visible = true;
-                S.GET<RTC_GeneralParameters_Form>().cbBlastRadius.Visible = true;
+                S.GET<GeneralParametersForm>().labelBlastRadius.Visible = true;
+                S.GET<GeneralParametersForm>().multiTB_Intensity.Visible = true;
+                S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Visible = true;
+                S.GET<GeneralParametersForm>().cbBlastRadius.Visible = true;
                 S.GET<RTC_MemoryDomains_Form>().lbMemoryDomains.Visible = true;
             }
 

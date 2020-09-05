@@ -122,7 +122,7 @@
                 NetCore.Params.RemoveParam("UNCAP_INTENSITY");
             }
 
-            S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.UncapNumericBox = cbUncapIntensity.Checked;
+            S.GET<GeneralParametersForm>().multiTB_Intensity.UncapNumericBox = cbUncapIntensity.Checked;
             S.GET<RTC_GlitchHarvesterIntensity_Form>().multiTB_Intensity.UncapNumericBox = cbUncapIntensity.Checked;
         }
 

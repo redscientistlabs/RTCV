@@ -158,11 +158,11 @@
     <Compile Include="Components\Engine Config\RTC_CorruptionEngine_Form.Designer.cs">
       <DependentUpon>RTC_CorruptionEngine_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Engine Config\RTC_GeneralParameters_Form.cs">
+    <Compile Include="Components\Engine Config\GeneralParametersForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Engine Config\RTC_GeneralParameters_Form.Designer.cs">
-      <DependentUpon>RTC_GeneralParameters_Form.cs</DependentUpon>
+    <Compile Include="Components\Engine Config\GeneralParametersForm.Designer.cs">
+      <DependentUpon>GeneralParametersForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Engine Config\RTC_MemoryDomains_Form.cs">
       <SubType>Form</SubType>
@@ -494,8 +494,8 @@
     <EmbeddedResource Include="Components\Engine Config\RTC_CorruptionEngine_Form.resx">
       <DependentUpon>RTC_CorruptionEngine_Form.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Engine Config\RTC_GeneralParameters_Form.resx">
-      <DependentUpon>RTC_GeneralParameters_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Engine Config\GeneralParametersForm.resx">
+      <DependentUpon>GeneralParametersForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Engine Config\RTC_MemoryDomains_Form.resx">
       <DependentUpon>RTC_MemoryDomains_Form.cs</DependentUpon>

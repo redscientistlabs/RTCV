@@ -410,9 +410,9 @@ namespace RTCV.UI
                 case "Error Delay--":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        if (S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value > 1)
+                        if (S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Value > 1)
                         {
-                            S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value--;
+                            S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Value--;
                         }
                     });
                     break;
@@ -420,9 +420,9 @@ namespace RTCV.UI
                 case "Error Delay++":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        if (S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value < S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Maximum)
+                        if (S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Value < S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Maximum)
                         {
-                            S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value++;
+                            S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Value++;
                         }
                     });
                     break;
@@ -430,9 +430,9 @@ namespace RTCV.UI
                 case "Intensity--":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        if (S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value > 1)
+                        if (S.GET<GeneralParametersForm>().multiTB_Intensity.Value > 1)
                         {
-                            S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value--;
+                            S.GET<GeneralParametersForm>().multiTB_Intensity.Value--;
                         }
                     });
                     break;
@@ -440,9 +440,9 @@ namespace RTCV.UI
                 case "Intensity++":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        if (S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value < S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Maximum)
+                        if (S.GET<GeneralParametersForm>().multiTB_Intensity.Value < S.GET<GeneralParametersForm>().multiTB_Intensity.Maximum)
                         {
-                            S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value++;
+                            S.GET<GeneralParametersForm>().multiTB_Intensity.Value++;
                         }
                     });
                     break;
