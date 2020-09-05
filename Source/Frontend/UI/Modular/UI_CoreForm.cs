@@ -130,12 +130,12 @@ This message only appears once.";
                     disclaimer = File.ReadAllText(disclaimerPath);
                 }
 
-                S.GET<RTC_Intro_Form>().DisplayRtcvDisclaimer(disclaimer.Replace("[ver]", RtcCore.RtcVersion));
+                S.GET<IntroForm>().DisplayRtcvDisclaimer(disclaimer.Replace("[ver]", RtcCore.RtcVersion));
                 //MessageBox.Show(disclaimer.Replace("[ver]", CorruptCore.RtcCore.RtcVersion), "RTC", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 Params.SetParam("DISCLAIMER_READ");
 
-                if (S.GET<RTC_Intro_Form>().selection == IntroAction.SIMPLEMODE)
+                if (S.GET<IntroForm>().selection == IntroAction.SIMPLEMODE)
                 {
                     Params.SetParam("SIMPLE_MODE"); //Set RTC in Simple Mode
 
