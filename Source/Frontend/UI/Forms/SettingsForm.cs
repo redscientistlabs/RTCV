@@ -61,7 +61,7 @@
 
         private void ShowTestForm(object sender, EventArgs e)
         {
-            var testform = new RTC_Test_Form();
+            var testform = new TestForm();
             testform.Show();
         }
     }
