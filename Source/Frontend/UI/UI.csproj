@@ -207,11 +207,11 @@
     <Compile Include="Components\Memory Tools\RTC_DomainAnalytics_Form.designer.cs">
       <DependentUpon>RTC_DomainAnalytics_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_MyLists.cs">
+    <Compile Include="Components\Memory Tools\MyListsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_MyLists.designer.cs">
-      <DependentUpon>RTC_MyLists.cs</DependentUpon>
+    <Compile Include="Components\Memory Tools\MyListsForm.designer.cs">
+      <DependentUpon>MyListsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Memory Tools\RTC_OpenTools_Form.cs">
       <SubType>Form</SubType>
@@ -518,8 +518,8 @@
     <EmbeddedResource Include="Components\Memory Tools\RTC_DomainAnalytics_Form.resx">
       <DependentUpon>RTC_DomainAnalytics_Form.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\RTC_MyLists.resx">
-      <DependentUpon>RTC_MyLists.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Memory Tools\MyListsForm.resx">
+      <DependentUpon>MyListsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Memory Tools\RTC_OpenTools_Form.resx">
       <DependentUpon>RTC_OpenTools_Form.cs</DependentUpon>
