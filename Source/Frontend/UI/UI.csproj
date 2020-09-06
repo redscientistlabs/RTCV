@@ -152,11 +152,11 @@
     <Compile Include="Components\Controls\SpecControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Components\Engine Config\RTC_CorruptionEngine_Form.cs">
+    <Compile Include="Components\Engine Config\CorruptionEngineForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Engine Config\RTC_CorruptionEngine_Form.Designer.cs">
-      <DependentUpon>RTC_CorruptionEngine_Form.cs</DependentUpon>
+    <Compile Include="Components\Engine Config\CorruptionEngineForm.Designer.cs">
+      <DependentUpon>CorruptionEngineForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Engine Config\RTC_GeneralParameters_Form.cs">
       <SubType>Form</SubType>
@@ -491,8 +491,8 @@
     <EmbeddedResource Include="Components\Controls\SpecControl.resx">
       <DependentUpon>SpecControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Engine Config\RTC_CorruptionEngine_Form.resx">
-      <DependentUpon>RTC_CorruptionEngine_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Engine Config\CorruptionEngineForm.resx">
+      <DependentUpon>CorruptionEngineForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Engine Config\RTC_GeneralParameters_Form.resx">
       <DependentUpon>RTC_GeneralParameters_Form.cs</DependentUpon>

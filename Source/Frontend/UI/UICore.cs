@@ -712,21 +712,21 @@ namespace RTCV.UI
                 S.GET<RTC_CustomEngineConfig_Form>().cbValueList.ValueMember = "Value";
                 S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DataSource = RtcCore.ValueListBindingSource;
 
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.DisplayMember = "Name";
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.ValueMember = "Value";
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.DataSource = RtcCore.LimiterListBindingSource;
+                S.GET<CorruptionEngineForm>().cbVectorLimiterList.DisplayMember = "Name";
+                S.GET<CorruptionEngineForm>().cbVectorLimiterList.ValueMember = "Value";
+                S.GET<CorruptionEngineForm>().cbVectorLimiterList.DataSource = RtcCore.LimiterListBindingSource;
 
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.DisplayMember = "Name";
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.ValueMember = "Value";
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.DataSource = RtcCore.ValueListBindingSource;
+                S.GET<CorruptionEngineForm>().cbVectorValueList.DisplayMember = "Name";
+                S.GET<CorruptionEngineForm>().cbVectorValueList.ValueMember = "Value";
+                S.GET<CorruptionEngineForm>().cbVectorValueList.DataSource = RtcCore.ValueListBindingSource;
             }
             else
             {
                 S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.DataSource = null;
                 S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DataSource = null;
 
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.DataSource = null;
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.DataSource = null;
+                S.GET<CorruptionEngineForm>().cbVectorLimiterList.DataSource = null;
+                S.GET<CorruptionEngineForm>().cbVectorValueList.DataSource = null;
             }
         }
 
