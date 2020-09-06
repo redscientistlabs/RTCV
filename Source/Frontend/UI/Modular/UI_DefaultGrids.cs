@@ -34,7 +34,7 @@ namespace RTCV.UI.Modular
                     Form mdForm = S.GET<RTC_MemoryDomains_Form>();
                     Form ceForm = S.GET<CorruptionEngineForm>();
 
-                    UICore.mtForm = new RTC_SelectBox_Form(new ComponentForm[] {
+                    UICore.mtForm = new SelectBoxForm(new ComponentForm[] {
                         S.GET<RTC_VmdNoTool_Form>(),
                         S.GET<RTC_MyVMDs_Form>(),
                         S.GET<RTC_VmdPool_Form>(),

@@ -98,11 +98,11 @@
     <Compile Include="Components\Containers\ListBoxForm.designer.cs">
       <DependentUpon>ListBoxForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Containers\RTC_SelectBox_Form.cs">
+    <Compile Include="Components\Containers\SelectBoxForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Containers\RTC_SelectBox_Form.designer.cs">
-      <DependentUpon>RTC_SelectBox_Form.cs</DependentUpon>
+    <Compile Include="Components\Containers\SelectBoxForm.designer.cs">
+      <DependentUpon>SelectBoxForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Controls\HexTextBox.cs">
       <SubType>Component</SubType>
@@ -467,8 +467,8 @@
     <EmbeddedResource Include="Components\Containers\ListBoxForm.resx">
       <DependentUpon>ListBoxForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Containers\RTC_SelectBox_Form.resx">
-      <DependentUpon>RTC_SelectBox_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Containers\SelectBoxForm.resx">
+      <DependentUpon>SelectBoxForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Controls\InputCompositeWidget.resx">
       <DependentUpon>InputCompositeWidget.cs</DependentUpon>
