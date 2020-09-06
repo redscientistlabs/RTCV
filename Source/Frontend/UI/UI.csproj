@@ -379,11 +379,11 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="AutoKillSwitch.cs" />
-    <Compile Include="Forms\RTC_Test_Form.cs">
+    <Compile Include="Forms\TestForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\RTC_Test_Form.Designer.cs">
-      <DependentUpon>RTC_Test_Form.cs</DependentUpon>
+    <Compile Include="Forms\TestForm.Designer.cs">
+      <DependentUpon>TestForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GameProtection.cs" />
     <Compile Include="IBlockable.cs" />
@@ -599,8 +599,8 @@
     <EmbeddedResource Include="Forms\RTC_StockpilePlayer_Form.resx">
       <DependentUpon>RTC_StockpilePlayer_Form.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RTC_Test_Form.resx">
-      <DependentUpon>RTC_Test_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\TestForm.resx">
+      <DependentUpon>TestForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modular\UI_CanvasForm.resx">
       <DependentUpon>UI_CanvasForm.cs</DependentUpon>
