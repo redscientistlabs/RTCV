@@ -9,25 +9,25 @@ namespace RTCV.UI
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class RTC_MyLists_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class MyListsForm : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        public RTC_MyLists_Form()
+        public MyListsForm()
         {
             InitializeComponent();
             AllowDrop = true;
-            this.DragEnter += RTC_MyLists_Form_DragEnter;
-            this.DragDrop += RTC_MyLists_Form_DragDrop;
+            this.DragEnter += OnFormDragEnter;
+            this.DragDrop += OnFormDragDrop;
         }
 
-        private void RTC_MyLists_Form_DragEnter(object sender, DragEventArgs e)
+        private void OnFormDragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Link;
         }
 
-        private void RTC_MyLists_Form_DragDrop(object sender, DragEventArgs e)
+        private void OnFormDragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             foreach (var f in files)
@@ -40,10 +40,12 @@ namespace RTCV.UI
             RefreshLists();
         }
 
-        private void btnRemoveList_Click(object sender, EventArgs e)
+        private void RemoveSelectedList(object sender, EventArgs e)
         {
             if (lbKnownLists.SelectedIndex == -1)
+            {
                 return;
+            }
 
             foreach (var item in lbKnownLists.SelectedItems)
             {
@@ -108,12 +110,12 @@ namespace RTCV.UI
             File.Move(listPath, path);
         }
 
-        private void RTC_MyLists_Form_Load(object sender, EventArgs e)
+        private void OnFormLoad(object sender, EventArgs e)
         {
             RefreshLists();
         }
 
-        private void lbLoadedVmdList_SelectedIndexChanged(object sender, EventArgs e)
+        private void OnKnownListSelectedIndexChanged(object sender, EventArgs e)
         {
             btnImportList.Enabled = false;
             btnSaveList.Enabled = false;
@@ -152,7 +154,7 @@ namespace RTCV.UI
             }
         }
 
-        private void btnSaveList_Click(object sender, EventArgs e)
+        private void SaveSelectedList(object sender, EventArgs e)
         {
             if (lbKnownLists.SelectedIndex == -1)
                 return;
@@ -188,7 +190,7 @@ namespace RTCV.UI
             }
         }
 
-        private void btnLoadVmd_Click(object sender, EventArgs e)
+        private void LoadSelectedList(object sender, EventArgs e)
         {
             if (lbKnownLists.SelectedIndex == -1)
                 return;
@@ -230,7 +232,7 @@ namespace RTCV.UI
             RefreshLists();
         }
 
-        private void btnRenameVMD_Click(object sender, EventArgs e)
+        private void RenameSelectedList(object sender, EventArgs e)
         {
             if (lbKnownLists.SelectedIndex == -1)
                 return;
@@ -242,7 +244,7 @@ namespace RTCV.UI
             RefreshLists();
         }
 
-        private void btnRefreshVmdFiles_Click(object sender, EventArgs e)
+        private void RefreshVMDFiles(object sender, EventArgs e)
         {
             Filtering.ResetLoadedListsInUI();
 
@@ -253,7 +255,7 @@ namespace RTCV.UI
             RefreshLists();
         }
 
-        private void btnImportVmd_Click_1(object sender, EventArgs e)
+        private void ImportVMD(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog
             {
