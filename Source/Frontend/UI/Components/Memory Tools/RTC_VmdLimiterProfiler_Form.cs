@@ -243,7 +243,7 @@ namespace RTCV.UI
         {
             btnLoadDomains_Click(null, null);
 
-            var ceForm = S.GET<RTC_CorruptionEngine_Form>();
+            var ceForm = S.GET<CorruptionEngineForm>();
 
             foreach (var item in cbSelectedMemoryDomain.Items)
                 if (item.ToString() == mi.ToString())

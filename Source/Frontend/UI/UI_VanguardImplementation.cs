@@ -472,10 +472,10 @@ namespace RTCV.UI
                 S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw.Enabled = false;
                 S.GET<RTC_GlitchHarvesterBlast_Form>().btnBlastToggle.Enabled = false;
 
-                S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Remove("Hellgenie Engine");
-                S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Remove("Distortion Engine");
-                S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Remove("Pipe Engine");
-                S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Remove("Freeze Engine");
+                S.GET<CorruptionEngineForm>().cbSelectedEngine.Items.Remove("Hellgenie Engine");
+                S.GET<CorruptionEngineForm>().cbSelectedEngine.Items.Remove("Distortion Engine");
+                S.GET<CorruptionEngineForm>().cbSelectedEngine.Items.Remove("Pipe Engine");
+                S.GET<CorruptionEngineForm>().cbSelectedEngine.Items.Remove("Freeze Engine");
             });
         }
 

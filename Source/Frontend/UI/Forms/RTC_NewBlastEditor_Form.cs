@@ -348,8 +348,8 @@ namespace RTCV.UI
                 e.ColumnIndex == dgvBlastEditor.Columns[BuProperty.Note.ToString()]?.Index &&
                 dgvBlastEditor.Rows[e.RowIndex].DataBoundItem is BlastUnit bu)
             {
-                S.SET(new RTC_NoteEditor_Form(bu, dgvBlastEditor[e.ColumnIndex, e.RowIndex]));
-                S.GET<RTC_NoteEditor_Form>().Show();
+                S.SET(new NoteEditorForm(bu, dgvBlastEditor[e.ColumnIndex, e.RowIndex]));
+                S.GET<NoteEditorForm>().Show();
             }
 
             if (e.Button == MouseButtons.Left)
@@ -1504,8 +1504,8 @@ namespace RTCV.UI
                 }
             }
 
-            S.SET(new RTC_NoteEditor_Form(temp, cellList));
-            S.GET<RTC_NoteEditor_Form>().Show();
+            S.SET(new NoteEditorForm(temp, cellList));
+            S.GET<NoteEditorForm>().Show();
         }
 
         public void sanitizeDuplicatesToolStripMenuItem_Click(object sender, EventArgs e)

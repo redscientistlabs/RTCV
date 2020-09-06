@@ -1,6 +1,6 @@
 ﻿namespace RTCV.UI
 {
-	partial class RTC_NoteEditor_Form
+	partial class NoteEditorForm
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -28,14 +28,14 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_NoteEditor_Form));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NoteEditorForm));
             this.tbNote = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
-            // 
+            //
             // tbNote
-            // 
-            this.tbNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.tbNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbNote.BackColor = System.Drawing.Color.WhiteSmoke;
             this.tbNote.Location = new System.Drawing.Point(0, 0);
@@ -44,9 +44,9 @@
             this.tbNote.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tbNote.Size = new System.Drawing.Size(384, 361);
             this.tbNote.TabIndex = 0;
-            // 
-            // RTC_NoteEditor_Form
-            // 
+            //
+            // NoteEditorForm
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
@@ -57,11 +57,11 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "RTC_NoteEditor_Form";
+            this.Name = "NoteEditorForm";
             this.Text = "Note:";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RTC_NE_Form_FormClosing);
-            this.Load += new System.EventHandler(this.RTC_NE_Form_Load);
-            this.Shown += new System.EventHandler(this.RTC_NE_Form_Shown);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
+            this.Load += new System.EventHandler(this.OnFormLoad);
+            this.Shown += new System.EventHandler(this.OnFormShown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

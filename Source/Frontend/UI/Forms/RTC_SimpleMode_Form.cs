@@ -206,11 +206,11 @@
 
         public void ShuffleModern()
         {
-            SelectComboBoxRandomItem(S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList);
-            SelectComboBoxRandomItem(S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList);
+            SelectComboBoxRandomItem(S.GET<CorruptionEngineForm>().cbVectorLimiterList);
+            SelectComboBoxRandomItem(S.GET<CorruptionEngineForm>().cbVectorValueList);
 
-            string limiter = S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.Text;
-            string value = S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.Text;
+            string limiter = S.GET<CorruptionEngineForm>().cbVectorLimiterList.Text;
+            string value = S.GET<CorruptionEngineForm>().cbVectorValueList.Text;
 
             lbEngineDescription.Text = $"Auto-Selected Engine: Vector Engine\n" +
                                        $"Parameters: Limiter:{limiter} , Value:{value}\n" +
@@ -231,7 +231,7 @@
         {
             int selectedEngineIndex = -1;
 
-            ComboBox cb = S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine;
+            ComboBox cb = S.GET<CorruptionEngineForm>().cbSelectedEngine;
 
             for (int i = 0; i < cb.Items.Count; i++)
             {
@@ -329,18 +329,18 @@
             SelectEngineByName("Vector Engine");
             SetInfiniteUnitVisibility(false);
 
-            if (S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.Items.Count > 0)
+            if (S.GET<CorruptionEngineForm>().cbVectorLimiterList.Items.Count > 0)
             {
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.SelectedIndex = 0;
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.SelectedIndex = 0;
+                S.GET<CorruptionEngineForm>().cbVectorLimiterList.SelectedIndex = 0;
+                S.GET<CorruptionEngineForm>().cbVectorValueList.SelectedIndex = 0;
             }
             else
             {
                 throw new Exception("No vector lists could be found. Your RTCV installation might be broken.");
             }
 
-            string limiter = S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.Text;
-            string value = S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.Text;
+            string limiter = S.GET<CorruptionEngineForm>().cbVectorLimiterList.Text;
+            string value = S.GET<CorruptionEngineForm>().cbVectorValueList.Text;
 
             lbEngineDescription.Text = $"Auto-Selected Engine: Vector Engine\n" +
                                        $"Parameters: Limiter:{limiter} , Value:{value}\n" +
@@ -410,7 +410,7 @@
                 return;
             }
 
-            S.GET<RTC_CorruptionEngine_Form>().SetRewindBoxes(cbClearRewind.Checked);
+            S.GET<CorruptionEngineForm>().SetRewindBoxes(cbClearRewind.Checked);
             S.GET<RTC_CustomEngineConfig_Form>().SetRewindBoxes(cbClearRewind.Checked);
 
             StepActions.ClearStepActionsOnRewind = cbClearRewind.Checked;

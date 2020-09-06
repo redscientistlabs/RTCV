@@ -12,19 +12,17 @@ namespace RTCV.UI
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class RTC_ListGen_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class ListGenForm : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        //long currentDomainSize = 0;
-
-        public RTC_ListGen_Form()
+        public ListGenForm()
         {
             InitializeComponent();
         }
 
-        private static ulong safeStringToULongHex(string input)
+        private static ulong SafeStringToULongHex(string input)
         {
             if (input.IndexOf("0X", StringComparison.OrdinalIgnoreCase) >= 0)
             {
@@ -36,7 +34,7 @@ namespace RTCV.UI
             }
         }
 
-        private static bool isHex(string str)
+        private static bool IsHex(string str)
         {
             //Hex characters
             //Trim the 0x off
@@ -44,13 +42,13 @@ namespace RTCV.UI
             return Regex.IsMatch(str, regex);
         }
 
-        private static bool isWholeNumber(string str)
+        private static bool IsWholeNumber(string str)
         {
             string regex = "^[0-9]+$";
             return Regex.IsMatch(str, regex);
         }
 
-        private static bool isDecimalNumber(string str)
+        private static bool IsDecimalNumber(string str)
         {
             string regex = "^(\\d*\\.){1}\\d+$";
             return Regex.IsMatch(str, regex);
@@ -67,18 +65,13 @@ namespace RTCV.UI
             return default(T);
         }
 
-        private void btnGenerateList_Click(object sender, EventArgs e)
-        {
-            GenerateList();
-            tbListValues.Clear();
-        }
-
-        private bool GenerateList()
+        private void GenerateList(object sender, EventArgs e)
         {
             if (tbListValues.Lines.Length == 0)
             {
-                return false;
+                return;
             }
+
             List<string> newList = new List<string>();
             foreach (string line in tbListValues.Lines)
             {
@@ -95,10 +88,10 @@ namespace RTCV.UI
                 if (lineParts.Length > 1)
                 {
                     //Hex
-                    if (isHex(lineParts[0]) && isHex(lineParts[1]))
+                    if (IsHex(lineParts[0]) && IsHex(lineParts[1]))
                     {
-                        ulong start = safeStringToULongHex(lineParts[0]);
-                        ulong end = safeStringToULongHex(lineParts[1]);
+                        ulong start = SafeStringToULongHex(lineParts[0]);
+                        ulong end = SafeStringToULongHex(lineParts[1]);
 
                         for (ulong i = start; i < end; i++)
                         {
@@ -106,7 +99,7 @@ namespace RTCV.UI
                         }
                     }
                     //Decimal
-                    else if (isWholeNumber(lineParts[0]) && isWholeNumber(lineParts[1]))
+                    else if (IsWholeNumber(lineParts[0]) && IsWholeNumber(lineParts[1]))
                     {
                         ulong start = ulong.Parse(lineParts[0]);
                         ulong end = ulong.Parse(lineParts[1]);
@@ -120,7 +113,7 @@ namespace RTCV.UI
                 else
                 {
                     //If it's not a range we parse for both prefixes and suffixes then see the type
-                    if (isHex(trimmedLine)) //Hex with 0x prefix
+                    if (IsHex(trimmedLine)) //Hex with 0x prefix
                     {
                         newList.Add(lineParts[0].Substring(2));
                     }
@@ -136,13 +129,13 @@ namespace RTCV.UI
                         byte[] t = BitConverter.GetBytes(d);
                         newList.Add(ByteArrayExtensions.BytesToHexString(t));
                     }
-                    else if (isDecimalNumber(trimmedLine)) //double no suffix
+                    else if (IsDecimalNumber(trimmedLine)) //double no suffix
                     {
                         double d = Convert<double>(trimmedLine);
                         byte[] t = BitConverter.GetBytes(d);
                         newList.Add(ByteArrayExtensions.BytesToHexString(t));
                     }
-                    else if (isWholeNumber(trimmedLine)) //plain old number
+                    else if (IsWholeNumber(trimmedLine)) //plain old number
                     {
                         newList.Add(ulong.Parse(trimmedLine).ToString("X"));
                     }
@@ -185,28 +178,20 @@ namespace RTCV.UI
             list.Initialize(filename + ".txt", newList.ToArray(), false, false);
             Filtering.RegisterList(list, filename, true);
             var hash = list.GetHash();
-            //Register the list and update netcore
-            //List<byte?[]> byteList = new List<byte?[]>();
-            //foreach (string t in newList)
-            //{
-            //    byte?[] bytes = CorruptCore_Extensions.StringToNullableByteArray(t);
-            //    byteList.Add(bytes);
-            //}
-            //string hash = Filtering.RegisterList(byteList, filename, true);
 
             //Register the list in the ui
             Filtering.RegisterListInUI(filename, hash);
 
-            return true;
+            tbListValues.Clear();
         }
 
-        private void btnRefreshListsFromFile_Click(object sender, EventArgs e)
+        private void RefreshListsFromFile(object sender, EventArgs e)
         {
             UICore.LoadLists(RtcCore.ListsDir);
             UICore.LoadLists(Path.Combine(RtcCore.EmuDir, "LISTS"));
         }
 
-        private void btnHelp_Click(object sender, EventArgs e)
+        private void ShowHelpMessage(object sender, EventArgs e)
         {
             MessageBox.Show(
 @"List Generator instructions help and examples

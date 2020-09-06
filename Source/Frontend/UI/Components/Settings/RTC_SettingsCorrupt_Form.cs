@@ -21,9 +21,9 @@ namespace RTCV.UI
 
             var handler = new EventHandler<Components.Controls.ValueUpdateEventArgs<decimal>>(nmMaxInfiniteStepUnits_ValueChanged);
             nmMaxInfiniteStepUnits.ValueChanged += handler;
-            nmMaxInfiniteStepUnits.registerSlave(S.GET<RTC_CorruptionEngine_Form>().updownMaxCheats, handler);
-            nmMaxInfiniteStepUnits.registerSlave(S.GET<RTC_CorruptionEngine_Form>().updownMaxFreeze, handler);
-            nmMaxInfiniteStepUnits.registerSlave(S.GET<RTC_CorruptionEngine_Form>().updownMaxPipes, handler);
+            nmMaxInfiniteStepUnits.registerSlave(S.GET<CorruptionEngineForm>().updownMaxCheats, handler);
+            nmMaxInfiniteStepUnits.registerSlave(S.GET<CorruptionEngineForm>().updownMaxFreeze, handler);
+            nmMaxInfiniteStepUnits.registerSlave(S.GET<CorruptionEngineForm>().updownMaxPipes, handler);
             nmMaxInfiniteStepUnits.registerSlave(S.GET<RTC_CustomEngineConfig_Form>().updownMaxInfiniteUnits, handler);
             nmMaxInfiniteStepUnits.registerSlave(S.GET<RTC_SimpleMode_Form>().updownMaxInfiniteUnits, handler);
 
@@ -117,7 +117,7 @@ namespace RTCV.UI
                 return;
             }
 
-            S.GET<RTC_CorruptionEngine_Form>().SetRewindBoxes(cbClearStepUnitsOnRewind.Checked);
+            S.GET<CorruptionEngineForm>().SetRewindBoxes(cbClearStepUnitsOnRewind.Checked);
             S.GET<RTC_CustomEngineConfig_Form>().SetRewindBoxes(cbClearStepUnitsOnRewind.Checked);
             S.GET<RTC_SimpleMode_Form>().SetRewindBoxes(cbClearStepUnitsOnRewind.Checked);
 
@@ -131,7 +131,7 @@ namespace RTCV.UI
                 return;
             }
 
-            S.GET<RTC_CorruptionEngine_Form>().SetLockBoxes(cbLockUnits.Checked);
+            S.GET<CorruptionEngineForm>().SetLockBoxes(cbLockUnits.Checked);
 
             StepActions.LockExecution = cbLockUnits.Checked;
         }

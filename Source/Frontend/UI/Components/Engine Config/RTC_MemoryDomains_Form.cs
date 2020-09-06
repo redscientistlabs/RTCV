@@ -186,7 +186,7 @@ namespace RTCV.UI
 
             if (e.Button == MouseButtons.Right)
             {
-                string vectorLimiter = S.GET<RTC_CorruptionEngine_Form>().CurrentVectorLimiterListName;
+                string vectorLimiter = S.GET<CorruptionEngineForm>().CurrentVectorLimiterListName;
                 var AutoLimitedDomains = MemoryDomains.AllMemoryInterfaces.Where(it => it.Value is VirtualMemoryDomain vmd && vmd.Name.Contains("->")).ToList();
 
                 if (vectorLimiter != null)
@@ -268,7 +268,7 @@ namespace RTCV.UI
                         currentListMenuItem.DropDownItems.Add(vectorMenuItem);
                         currentListMenuItem.DropDownItems.Add(new ToolStripSeparator());
 
-                        foreach (ComboBoxItem<string> listItem in S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.Items)
+                        foreach (ComboBoxItem<string> listItem in S.GET<CorruptionEngineForm>().cbVectorLimiterList.Items)
                         {
                             var listName = listItem.Name;
                             var subMenuItem = new ToolStripMenuItem();

@@ -32,9 +32,9 @@ namespace RTCV.UI.Modular
 
                     Form gpForm = S.GET<RTC_GeneralParameters_Form>();
                     Form mdForm = S.GET<RTC_MemoryDomains_Form>();
-                    Form ceForm = S.GET<RTC_CorruptionEngine_Form>();
+                    Form ceForm = S.GET<CorruptionEngineForm>();
 
-                    UICore.mtForm = new RTC_SelectBox_Form(new ComponentForm[] {
+                    UICore.mtForm = new SelectBoxForm(new ComponentForm[] {
                         S.GET<RTC_VmdNoTool_Form>(),
                         S.GET<RTC_MyVMDs_Form>(),
                         S.GET<RTC_VmdPool_Form>(),
@@ -42,7 +42,7 @@ namespace RTCV.UI.Modular
                         S.GET<RTC_VmdSimpleGen_Form>(),
                         S.GET<RTC_VmdAct_Form>(),
                         S.GET<MyListsForm>(),
-                        S.GET<RTC_ListGen_Form>(),
+                        S.GET<ListGenForm>(),
                         S.GET<RTC_VmdLimiterProfiler_Form>(),
                         //S.GET<RTC_DomainAnalytics_Form>(),
                         S.GET<RTC_OpenTools_Form>(),

@@ -5,9 +5,9 @@
     using System.Windows.Forms;
     using RTCV.Common;
 
-    public partial class RTC_Test_Form : Form, IAutoColorize
+    public partial class TestForm : Form, IAutoColorize
     {
-        public RTC_Test_Form()
+        public TestForm()
         {
             InitializeComponent();
         }

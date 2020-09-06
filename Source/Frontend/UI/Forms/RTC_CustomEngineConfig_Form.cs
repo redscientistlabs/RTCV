@@ -34,13 +34,13 @@
         private void NmAlignment_ValueChanged(object sender, Components.Controls.ValueUpdateEventArgs<decimal> e)
         {
             RtcCore.Alignment = Convert.ToInt32(nmAlignment.Value);
-            S.GET<RTC_CorruptionEngine_Form>().nmAlignment.Value = nmAlignment.Value;
+            S.GET<CorruptionEngineForm>().nmAlignment.Value = nmAlignment.Value;
         }
 
         private void CbCustomPrecision_SelectedIndexChanged(object sender, EventArgs e)
         {
             cbCustomPrecision.Enabled = false;
-            S.GET<RTC_CorruptionEngine_Form>().cbCustomPrecision.Enabled = false;
+            S.GET<CorruptionEngineForm>().cbCustomPrecision.Enabled = false;
             try
             {
                 if (cbCustomPrecision.SelectedIndex != -1)
@@ -68,13 +68,13 @@
 
                     UpdateMinMaxBoxes(precision);
                     nmAlignment.Maximum = precision - 1;
-                    S.GET<RTC_CorruptionEngine_Form>().cbCustomPrecision.SelectedIndex = cbCustomPrecision.SelectedIndex;
+                    S.GET<CorruptionEngineForm>().cbCustomPrecision.SelectedIndex = cbCustomPrecision.SelectedIndex;
                 }
             }
             finally
             {
                 cbCustomPrecision.Enabled = true;
-                S.GET<RTC_CorruptionEngine_Form>().cbCustomPrecision.Enabled = true;
+                S.GET<CorruptionEngineForm>().cbCustomPrecision.Enabled = true;
             }
         }
 
@@ -310,7 +310,7 @@
                 return;
             }
 
-            S.GET<RTC_CorruptionEngine_Form>().SetRewindBoxes(cbClearRewind.Checked);
+            S.GET<CorruptionEngineForm>().SetRewindBoxes(cbClearRewind.Checked);
             S.GET<RTC_SimpleMode_Form>().SetRewindBoxes(cbClearRewind.Checked);
 
             StepActions.ClearStepActionsOnRewind = cbClearRewind.Checked;
@@ -671,16 +671,16 @@
                 switch (RtcCore.CurrentPrecision)
                 {
                     case 1:
-                        S.GET<RTC_CorruptionEngine_Form>().cbCustomPrecision.SelectedIndex = 0;
+                        S.GET<CorruptionEngineForm>().cbCustomPrecision.SelectedIndex = 0;
                         break;
                     case 2:
-                        S.GET<RTC_CorruptionEngine_Form>().cbCustomPrecision.SelectedIndex = 1;
+                        S.GET<CorruptionEngineForm>().cbCustomPrecision.SelectedIndex = 1;
                         break;
                     case 4:
-                        S.GET<RTC_CorruptionEngine_Form>().cbCustomPrecision.SelectedIndex = 2;
+                        S.GET<CorruptionEngineForm>().cbCustomPrecision.SelectedIndex = 2;
                         break;
                     case 8:
-                        S.GET<RTC_CorruptionEngine_Form>().cbCustomPrecision.SelectedIndex = 3;
+                        S.GET<CorruptionEngineForm>().cbCustomPrecision.SelectedIndex = 3;
                         break;
                 }
 
