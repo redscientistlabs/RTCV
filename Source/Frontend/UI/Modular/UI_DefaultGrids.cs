@@ -30,7 +30,7 @@ namespace RTCV.UI.Modular
                 {
                     var ecGrid = new CanvasGrid(15, 12, "Engine Config");
 
-                    Form gpForm = S.GET<RTC_GeneralParameters_Form>();
+                    Form gpForm = S.GET<GeneralParametersForm>();
                     Form mdForm = S.GET<RTC_MemoryDomains_Form>();
                     Form ceForm = S.GET<CorruptionEngineForm>();
 
