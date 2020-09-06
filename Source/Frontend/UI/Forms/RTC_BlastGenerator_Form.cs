@@ -975,8 +975,8 @@ namespace RTCV.UI
 
                             NoteItem note = new NoteItem(textCell.Value == null ? "" : textCell.Value.ToString());
                             textCell.Value = note;
-                            S.SET(new RTC_NoteEditor_Form(note, buttonCell));
-                            S.GET<RTC_NoteEditor_Form>().Show();
+                            S.SET(new NoteEditorForm(note, buttonCell));
+                            S.GET<NoteEditorForm>().Show();
                             return;
                         }
                     }

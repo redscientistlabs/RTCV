@@ -344,8 +344,8 @@
                     if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                         e.RowIndex >= 0)
                     {
-                        S.SET(new RTC_NoteEditor_Form(sk, senderGrid.Rows[e.RowIndex].Cells["Note"]));
-                        S.GET<RTC_NoteEditor_Form>().Show();
+                        S.SET(new NoteEditorForm(sk, senderGrid.Rows[e.RowIndex].Cells["Note"]));
+                        S.GET<NoteEditorForm>().Show();
                         return;
                     }
                 }
