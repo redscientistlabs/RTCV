@@ -5,11 +5,11 @@
     using RTCV.NetCore;
     using RTCV.Common;
 
-    public partial class RTC_Intro_Form : Form, IAutoColorize
+    public partial class IntroForm : Form, IAutoColorize
     {
         public IntroAction selection { get; private set; } = IntroAction.EXIT;
 
-        public RTC_Intro_Form()
+        public IntroForm()
         {
             try
             {
@@ -24,12 +24,12 @@
             }
         }
 
-        private void RTC_Intro_Form_Load(object sender, EventArgs e)
+        private void OnLoad(object sender, EventArgs e)
         {
             Colors.SetRTCColor(Colors.GeneralColor, this);
         }
 
-        private void RTC_Intro_Form_FormClosing(object sender, FormClosingEventArgs e)
+        private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason != CloseReason.UserClosing)
             {
@@ -47,25 +47,25 @@
             }
         }
 
-        private void btnExit_Click(object sender, EventArgs e)
+        private void Exit(object sender, EventArgs e)
         {
             selection = IntroAction.EXIT;
             this.Close();
         }
 
-        private void btnSimpleMode_Click(object sender, EventArgs e)
+        private void SelectSimpleMode(object sender, EventArgs e)
         {
             selection = IntroAction.SIMPLEMODE;
             Close();
         }
 
-        private void btnNormalMode_Click(object sender, EventArgs e)
+        private void SelectNormalMode(object sender, EventArgs e)
         {
             selection = IntroAction.NORMALMODE;
             Close();
         }
 
-        private void cbAgree_CheckedChanged(object sender, EventArgs e)
+        private void CheckDisclaimerAgreement(object sender, EventArgs e)
         {
             if (cbAgree.Checked)
             {

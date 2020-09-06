@@ -82,8 +82,8 @@ namespace RTCV.UI
                         e.RowIndex >= 0)
                     {
                         StashKey sk = (StashKey)senderGrid.Rows[e.RowIndex].Cells["Item"].Value;
-                        S.SET(new RTC_NoteEditor_Form(sk, senderGrid.Rows[e.RowIndex].Cells["Note"]));
-                        S.GET<RTC_NoteEditor_Form>().Show();
+                        S.SET(new NoteEditorForm(sk, senderGrid.Rows[e.RowIndex].Cells["Note"]));
+                        S.GET<NoteEditorForm>().Show();
 
                         return;
                     }

@@ -1,6 +1,6 @@
 ﻿namespace RTCV.UI
 {
-    partial class RTC_SelectBox_Form
+    partial class SelectBoxForm
 	{
         /// <summary>
         /// Required designer variable.
@@ -28,16 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_SelectBox_Form));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SelectBoxForm));
             this.pnComponentForm = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.cbSelectBox = new System.Windows.Forms.ComboBox();
             this.pnComponentForm.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // pnComponentForm
-            // 
-            this.pnComponentForm.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.pnComponentForm.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnComponentForm.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.pnComponentForm.Controls.Add(this.label8);
@@ -46,9 +46,9 @@
             this.pnComponentForm.Size = new System.Drawing.Size(390, 250);
             this.pnComponentForm.TabIndex = 117;
             this.pnComponentForm.Tag = "color:normal";
-            // 
+            //
             // label8
-            // 
+            //
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.label8.ForeColor = System.Drawing.Color.Silver;
@@ -58,10 +58,10 @@
             this.label8.TabIndex = 120;
             this.label8.Tag = "color:normal";
             this.label8.Text = "Component is detached/unavailable";
-            // 
+            //
             // cbSelectBox
-            // 
-            this.cbSelectBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.cbSelectBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cbSelectBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.cbSelectBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -75,10 +75,10 @@
             this.cbSelectBox.TabIndex = 116;
             this.cbSelectBox.TabStop = false;
             this.cbSelectBox.Tag = "color:normal";
-            this.cbSelectBox.SelectedIndexChanged += new System.EventHandler(this.cbSelectBox_SelectedIndexChanged);
-            // 
-            // RTC_SelectBox_Form
-            // 
+            this.cbSelectBox.SelectedIndexChanged += new System.EventHandler(this.AnchorSelectedItemToPanel);
+            //
+            // SelectBoxForm
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -88,13 +88,13 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "RTC_SelectBox_Form";
+            this.Name = "SelectBoxForm";
             this.Tag = "color:dark1";
             this.Text = "SelectBox Component";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
-            this.Load += new System.EventHandler(this.RTC_SelectBox_Form_Load);
+            this.Load += new System.EventHandler(this.OnLoad);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            this.Resize += new System.EventHandler(this.RTC_SelectBox_Form_Resize);
+            this.Resize += new System.EventHandler(this.AnchorSelectedItemToPanel);
             this.pnComponentForm.ResumeLayout(false);
             this.pnComponentForm.PerformLayout();
             this.ResumeLayout(false);

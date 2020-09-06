@@ -3,7 +3,7 @@ using RTCV.UI;
 
 namespace RTCV.UI
 {
-	partial class RTC_Intro_Form
+	partial class IntroForm
     {
 		/// <summary>
 		/// Required designer variable.
@@ -31,7 +31,7 @@ namespace RTCV.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_Intro_Form));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(IntroForm));
             this.lbWelcome = new System.Windows.Forms.Label();
             this.btnSimpleMode = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
@@ -40,10 +40,10 @@ namespace RTCV.UI
             this.cbAgree = new System.Windows.Forms.CheckBox();
             this.lbStartupMode = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
+            //
             // lbWelcome
-            // 
-            this.lbWelcome.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.lbWelcome.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbWelcome.Font = new System.Drawing.Font("Segoe UI Symbol", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbWelcome.Location = new System.Drawing.Point(12, 5);
@@ -52,9 +52,9 @@ namespace RTCV.UI
             this.lbWelcome.TabIndex = 187;
             this.lbWelcome.Text = "Please take a bit of time to read the following:";
             this.lbWelcome.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
+            //
             // btnSimpleMode
-            // 
+            //
             this.btnSimpleMode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnSimpleMode.BackColor = System.Drawing.Color.Gray;
             this.btnSimpleMode.FlatAppearance.BorderSize = 0;
@@ -70,10 +70,10 @@ namespace RTCV.UI
             this.btnSimpleMode.Text = "Simple Mode";
             this.btnSimpleMode.UseVisualStyleBackColor = false;
             this.btnSimpleMode.Visible = false;
-            this.btnSimpleMode.Click += new System.EventHandler(this.btnSimpleMode_Click);
-            // 
+            this.btnSimpleMode.Click += new System.EventHandler(this.SelectSimpleMode);
+            //
             // btnExit
-            // 
+            //
             this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnExit.FlatAppearance.BorderSize = 0;
@@ -88,12 +88,12 @@ namespace RTCV.UI
             this.btnExit.Tag = "color:dark2";
             this.btnExit.Text = "Exit";
             this.btnExit.UseVisualStyleBackColor = false;
-            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
-            // 
+            this.btnExit.Click += new System.EventHandler(this.Exit);
+            //
             // tbDisclaimerText
-            // 
-            this.tbDisclaimerText.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.tbDisclaimerText.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbDisclaimerText.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbDisclaimerText.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -107,9 +107,9 @@ namespace RTCV.UI
             this.tbDisclaimerText.TabIndex = 198;
             this.tbDisclaimerText.Tag = "color:dark2";
             this.tbDisclaimerText.Text = "disclaimer text";
-            // 
+            //
             // btnNormalMode
-            // 
+            //
             this.btnNormalMode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnNormalMode.BackColor = System.Drawing.Color.Gray;
             this.btnNormalMode.FlatAppearance.BorderSize = 0;
@@ -125,10 +125,10 @@ namespace RTCV.UI
             this.btnNormalMode.Text = "Normal Mode";
             this.btnNormalMode.UseVisualStyleBackColor = false;
             this.btnNormalMode.Visible = false;
-            this.btnNormalMode.Click += new System.EventHandler(this.btnNormalMode_Click);
-            // 
+            this.btnNormalMode.Click += new System.EventHandler(this.SelectNormalMode);
+            //
             // cbAgree
-            // 
+            //
             this.cbAgree.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbAgree.AutoSize = true;
             this.cbAgree.Font = new System.Drawing.Font("Segoe UI Symbol", 9.75F);
@@ -138,10 +138,10 @@ namespace RTCV.UI
             this.cbAgree.TabIndex = 200;
             this.cbAgree.Text = "I have read the above warning, let me in";
             this.cbAgree.UseVisualStyleBackColor = true;
-            this.cbAgree.CheckedChanged += new System.EventHandler(this.cbAgree_CheckedChanged);
-            // 
+            this.cbAgree.CheckedChanged += new System.EventHandler(this.CheckDisclaimerAgreement);
+            //
             // lbStartupMode
-            // 
+            //
             this.lbStartupMode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lbStartupMode.Font = new System.Drawing.Font("Segoe UI Symbol", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbStartupMode.Location = new System.Drawing.Point(9, 393);
@@ -151,9 +151,9 @@ namespace RTCV.UI
             this.lbStartupMode.Text = "Select the startup mode of RTC";
             this.lbStartupMode.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lbStartupMode.Visible = false;
-            // 
-            // RTC_Intro_Form
-            // 
+            //
+            // IntroForm
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -170,11 +170,11 @@ namespace RTCV.UI
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.Name = "RTC_Intro_Form";
+            this.Name = "IntroForm";
             this.Tag = "color:dark1";
             this.Text = "Welcome to RTCV";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RTC_Intro_Form_FormClosing);
-            this.Load += new System.EventHandler(this.RTC_Intro_Form_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
+            this.Load += new System.EventHandler(this.OnLoad);
             this.ResumeLayout(false);
             this.PerformLayout();
 

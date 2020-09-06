@@ -13,13 +13,13 @@
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        public RTC_ListBox_Form lbForm { get; private set; }
+        public ListBoxForm lbForm { get; private set; }
 
         public SettingsForm()
         {
             InitializeComponent();
 
-            lbForm = new RTC_ListBox_Form(new ComponentForm[] {
+            lbForm = new ListBoxForm(new ComponentForm[] {
                 S.GET<RTC_SettingsGeneral_Form>(),
                 S.GET<RTC_SettingsCorrupt_Form>(),
                 S.GET<RTC_SettingsHotkeyConfig_Form>(),
@@ -61,7 +61,7 @@
 
         private void ShowTestForm(object sender, EventArgs e)
         {
-            var testform = new RTC_Test_Form();
+            var testform = new TestForm();
             testform.Show();
         }
     }
