@@ -9,13 +9,10 @@ namespace RTCV.UI
     using RTCV.NetCore;
     using RTCV.UI.Modular;
 
-    public partial class RTC_CorruptionEngine_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class CorruptionEngineForm : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
-
-        //private int defaultPrecision = -1;
-        private bool updatingMinMax = false;
 
         public string CurrentVectorLimiterListName
         {
@@ -42,14 +39,14 @@ namespace RTCV.UI
             }
         }
 
-        public RTC_CorruptionEngine_Form()
+        public CorruptionEngineForm()
         {
             InitializeComponent();
 
             this.undockedSizable = false;
         }
 
-        private void RTC_CorruptionEngine_Form_Load(object sender, EventArgs e)
+        private void OnFormLoad(object sender, EventArgs e)
         {
             nmAlignment.registerSlave(S.GET<RTC_CustomEngineConfig_Form>().nmAlignment);
             gbNightmareEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
@@ -84,16 +81,16 @@ namespace RTCV.UI
 
             if (RtcCore.LimiterListBindingSource.Count > 0)
             {
-                cbVectorLimiterList_SelectedIndexChanged(cbVectorLimiterList, null);
-                cbVectorLimiterList_SelectedIndexChanged(cbClusterLimiterList, null);
+                UpdateVectorLimiterList(cbVectorLimiterList, null);
+                UpdateVectorLimiterList(cbClusterLimiterList, null);
             }
             if (RtcCore.ValueListBindingSource.Count > 0)
             {
-                cbVectorValueList_SelectedIndexChanged(cbVectorValueList, null);
+                UpdateVectorValueList(cbVectorValueList, null);
             }
 
-            clusterChunkSize.ValueChanged += clusterChunkSize_ValueChanged;
-            clusterChunkModifier.ValueChanged += clusterChunkModifier_ValueChanged;
+            clusterChunkSize.ValueChanged += UpdateClusterChunkSize;
+            clusterChunkModifier.ValueChanged += UpdateClusterModifier;
 
             for (int j = 0; j < RTC_ClusterEngine.ShuffleTypes.Length; j++)
             {
@@ -108,17 +105,12 @@ namespace RTCV.UI
             clusterDirection.SelectedIndex = 0;
         }
 
-        private void nmDistortionDelay_ValueChanged(object sender, EventArgs e)
-        {
-            RTC_DistortionEngine.Delay = Convert.ToInt32(nmDistortionDelay.Value);
-        }
-
-        private void btnResyncDistortionEngine_Click(object sender, EventArgs e)
+        private void ResyncDistortionEngine(object sender, EventArgs e)
         {
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_CLEARSTEPBLASTUNITS, null, true);
         }
 
-        private void cbSelectedEngine_SelectedIndexChanged(object sender, EventArgs e)
+        private void UpdateEngine(object sender, EventArgs e)
         {
             gbNightmareEngine.Visible = false;
             gbHellgenieEngine.Visible = false;
@@ -271,7 +263,7 @@ namespace RTCV.UI
 
         private bool dontUpdate = false;
 
-        private void cbClearRewind_CheckedChanged(object sender, EventArgs e)
+        private void OnClearRewindToggle(object sender, EventArgs e)
         {
             if (dontUpdate)
             {
@@ -286,18 +278,18 @@ namespace RTCV.UI
             StepActions.ClearStepActionsOnRewind = cbClearFreezesOnRewind.Checked;
         }
 
-        private void btnClearPipes_Click(object sender, EventArgs e)
+        private void ClearPipes(object sender, EventArgs e)
         {
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_CLEARSTEPBLASTUNITS, null, true);
         }
 
-        private void cbLockPipes_CheckedChanged(object sender, EventArgs e)
+        private void OnLockPipesToggle(object sender, EventArgs e)
         {
             S.GET<RTC_SettingsCorrupt_Form>().SetLockBoxes(cbLockPipes.Checked);
             StepActions.LockExecution = cbLockPipes.Checked;
         }
 
-        private void cbVectorLimiterList_SelectedIndexChanged(object sender, EventArgs e)
+        private void UpdateVectorLimiterList(object sender, EventArgs e)
         {
             ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
             if (item != null)
@@ -306,7 +298,7 @@ namespace RTCV.UI
             }
         }
 
-        private void cbVectorValueList_SelectedIndexChanged(object sender, EventArgs e)
+        private void UpdateVectorValueList(object sender, EventArgs e)
         {
             ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
             if (item != null)
@@ -315,14 +307,13 @@ namespace RTCV.UI
             }
         }
 
-        private void btnClearCheats_Click(object sender, EventArgs e)
+        private void ClearCheats(object sender, EventArgs e)
         {
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_CLEARSTEPBLASTUNITS, null, true);
         }
 
-        public void UpdateMinMaxBoxes(int precision)
+        private void UpdateMinMaxBoxes(int precision)
         {
-            updatingMinMax = true;
             switch (precision)
             {
                 case 1:
@@ -383,10 +374,9 @@ namespace RTCV.UI
 
                     break;
             }
-            updatingMinMax = false;
         }
 
-        private void cbCustomPrecision_SelectedIndexChanged(object sender, EventArgs e)
+        private void UpdateCustomPrecision(object sender, EventArgs e)
         {
             cbCustomPrecision.Enabled = false;
             S.GET<RTC_CustomEngineConfig_Form>().cbCustomPrecision.Enabled = false;
@@ -425,12 +415,7 @@ namespace RTCV.UI
             }
         }
 
-        private void nmAlignment_ValueChanged(object sender, EventArgs e)
-        {
-            RtcCore.Alignment = Convert.ToInt32(nmAlignment.Value);
-        }
-
-        private void btnOpenBlastGenerator_Click(object sender, EventArgs e)
+        private void OpenBlastGenerator(object sender, EventArgs e)
         {
             if (S.GET<RTC_BlastGenerator_Form>() != null)
             {
@@ -441,115 +426,7 @@ namespace RTCV.UI
             S.GET<RTC_BlastGenerator_Form>().LoadNoStashKey();
         }
 
-        private void nmMinValueNightmare_ValueChanged(object sender, EventArgs e)
-        {
-            //We don't want to trigger this if it caps when stepping downwards
-            if (updatingMinMax)
-            {
-                return;
-            }
-
-            ulong value = Convert.ToUInt64(nmMinValueNightmare.Value);
-
-            switch (RtcCore.CurrentPrecision)
-            {
-                case 1:
-                    RTC_NightmareEngine.MinValue8Bit = value;
-                    break;
-                case 2:
-                    RTC_NightmareEngine.MinValue16Bit = value;
-                    break;
-                case 4:
-                    RTC_NightmareEngine.MinValue32Bit = value;
-                    break;
-                case 8:
-                    RTC_NightmareEngine.MinValue64Bit = value;
-                    break;
-            }
-        }
-
-        private void nmMaxValueNightmare_ValueChanged(object sender, EventArgs e)
-        {
-            //We don't want to trigger this if it caps when stepping downwards
-            if (updatingMinMax)
-            {
-                return;
-            }
-
-            ulong value = Convert.ToUInt64(nmMaxValueNightmare.Value);
-
-            switch (RtcCore.CurrentPrecision)
-            {
-                case 1:
-                    RTC_NightmareEngine.MaxValue8Bit = value;
-                    break;
-                case 2:
-                    RTC_NightmareEngine.MaxValue16Bit = value;
-                    break;
-                case 4:
-                    RTC_NightmareEngine.MaxValue32Bit = value;
-                    break;
-                case 8:
-                    RTC_NightmareEngine.MaxValue64Bit = value;
-                    break;
-            }
-        }
-
-        private void nmMinValueHellgenie_ValueChanged(object sender, EventArgs e)
-        {
-            //We don't want to trigger this if it caps when stepping downwards
-            if (updatingMinMax)
-            {
-                return;
-            }
-
-            ulong value = Convert.ToUInt64(nmMinValueHellgenie.Value);
-
-            switch (RtcCore.CurrentPrecision)
-            {
-                case 1:
-                    RTC_HellgenieEngine.MinValue8Bit = value;
-                    break;
-                case 2:
-                    RTC_HellgenieEngine.MinValue16Bit = value;
-                    break;
-                case 4:
-                    RTC_HellgenieEngine.MinValue32Bit = value;
-                    break;
-                case 8:
-                    RTC_HellgenieEngine.MinValue64Bit = value;
-                    break;
-            }
-        }
-
-        private void nmMaxValueHellgenie_ValueChanged(object sender, EventArgs e)
-        {
-            //We don't want to trigger this if it caps when stepping downwards
-            if (updatingMinMax)
-            {
-                return;
-            }
-
-            ulong value = Convert.ToUInt64(nmMaxValueHellgenie.Value);
-
-            switch (RtcCore.CurrentPrecision)
-            {
-                case 1:
-                    RTC_HellgenieEngine.MaxValue8Bit = value;
-                    break;
-                case 2:
-                    RTC_HellgenieEngine.MaxValue16Bit = value;
-                    break;
-                case 4:
-                    RTC_HellgenieEngine.MaxValue32Bit = value;
-                    break;
-                case 8:
-                    RTC_HellgenieEngine.MaxValue64Bit = value;
-                    break;
-            }
-        }
-
-        private void cbBlastType_SelectedIndexChanged(object sender, EventArgs e)
+        private void UpdateBlastType(object sender, EventArgs e)
         {
             switch (cbBlastType.SelectedItem.ToString())
             {
@@ -573,13 +450,13 @@ namespace RTCV.UI
             }
         }
 
-        private void btnOpenCustomEngine_Click(object sender, EventArgs e)
+        private void OpenCustomEngine(object sender, EventArgs e)
         {
             S.GET<RTC_CustomEngineConfig_Form>().Show();
             S.GET<RTC_CustomEngineConfig_Form>().Focus();
         }
 
-        private void cbClusterLimiterList_SelectedIndexChanged(object sender, EventArgs e)
+        private void UpdateClusterLimiterList(object sender, EventArgs e)
         {
             ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
             if (item != null)
@@ -588,17 +465,17 @@ namespace RTCV.UI
             }
         }
 
-        private void clusterChunkSize_ValueChanged(object sender, EventArgs e)
+        private void UpdateClusterChunkSize(object sender, EventArgs e)
         {
             RTC_ClusterEngine.ChunkSize = (int)clusterChunkSize.Value;
         }
 
-        private void clusterChunkModifier_ValueChanged(object sender, EventArgs e)
+        private void UpdateClusterModifier(object sender, EventArgs e)
         {
             RTC_ClusterEngine.Modifier = (int)clusterChunkModifier.Value;
         }
 
-        private void cbClusterMethod_SelectedIndexChanged(object sender, EventArgs e)
+        private void UpdateClusterMethod(object sender, EventArgs e)
         {
             RTC_ClusterEngine.ShuffleType = cbClusterMethod.SelectedItem.ToString();
 
@@ -612,22 +489,22 @@ namespace RTCV.UI
             }
         }
 
-        private void clusterSplitUnits_CheckedChanged(object sender, EventArgs e)
+        private void UpdateClusterSplitUnits(object sender, EventArgs e)
         {
             RTC_ClusterEngine.OutputMultipleUnits = clusterSplitUnits.Checked;
         }
 
-        private void clusterDirection_SelectedIndexChanged(object sender, EventArgs e)
+        private void UpdateClusterDirection(object sender, EventArgs e)
         {
             RTC_ClusterEngine.Direction = clusterDirection.SelectedItem.ToString();
         }
 
-        private void clusterFilterAll_CheckedChanged(object sender, EventArgs e)
+        private void UpdateClusterFilterAll(object sender, EventArgs e)
         {
             RTC_ClusterEngine.FilterAll = clusterFilterAll.Checked;
         }
 
-        private void cbVectorUnlockPrecision_CheckedChanged(object sender, EventArgs e)
+        private void UpdateVectorUnlockPrecision(object sender, EventArgs e)
         {
             if (cbVectorUnlockPrecision.Checked)
             {

@@ -574,11 +574,11 @@ This message only appears once.";
         {
             //Selects an engine from a given string name
 
-            for (int i = 0; i < S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items.Count; i++)
+            for (int i = 0; i < S.GET<CorruptionEngineForm>().cbSelectedEngine.Items.Count; i++)
             {
-                if (S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.Items[i].ToString() == name)
+                if (S.GET<CorruptionEngineForm>().cbSelectedEngine.Items[i].ToString() == name)
                 {
-                    S.GET<RTC_CorruptionEngine_Form>().cbSelectedEngine.SelectedIndex = i;
+                    S.GET<CorruptionEngineForm>().cbSelectedEngine.SelectedIndex = i;
                     break;
                 }
             }
