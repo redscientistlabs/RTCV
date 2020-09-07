@@ -199,8 +199,8 @@
                 //Thus, we want this to happen within the try block
                 UICore.SetHotkeyTimer(false);
                 UICore.LockInterface(false, true);
-                S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
-                UI_CoreForm.cfForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
+                S.GET<SaveProgressForm>().Dock = DockStyle.Fill;
+                UI_CoreForm.cfForm?.OpenSubForm(S.GET<SaveProgressForm>());
 
                 StockpileManager_UISide.ClearCurrentStockpile();
 

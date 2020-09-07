@@ -430,11 +430,11 @@
     <Compile Include="Modular\UI_DefaultGrids.cs" />
     <Compile Include="Modular\CanvasGrid.cs" />
     <Compile Include="Modular\ISubForm.cs" />
-    <Compile Include="Modular\UI_SaveProgress_Form.cs">
+    <Compile Include="Modular\SaveProgressForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modular\UI_SaveProgress_Form.designer.cs">
-      <DependentUpon>UI_SaveProgress_Form.cs</DependentUpon>
+    <Compile Include="Modular\SaveProgressForm.designer.cs">
+      <DependentUpon>SaveProgressForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Modular\UI_ShadowPanel.cs">
       <SubType>Form</SubType>
@@ -617,8 +617,8 @@
     <EmbeddedResource Include="Modular\UI_CoreForm.resx">
       <DependentUpon>UI_CoreForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modular\UI_SaveProgress_Form.resx">
-      <DependentUpon>UI_SaveProgress_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Modular\SaveProgressForm.resx">
+      <DependentUpon>SaveProgressForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modular\UI_ShadowPanel.resx">
       <DependentUpon>UI_ShadowPanel.cs</DependentUpon>
