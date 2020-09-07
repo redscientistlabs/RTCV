@@ -141,7 +141,7 @@ This message only appears once.";
 
                     if (UI_VanguardImplementation.connector.netConn.status == NetworkStatus.CONNECTED)
                     {
-                        UI_DefaultGrids.simpleMode.LoadToMain();
+                        DefaultGrids.simpleMode.LoadToMain();
                         RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
                         smForm.EnteringSimpleMode();
                     }
@@ -153,7 +153,7 @@ This message only appears once.";
 
             RtcCore.DownloadProblematicProcesses();
 
-            //UI_DefaultGrids.engineConfig.LoadToMain();
+            //DefaultGrids.engineConfig.LoadToMain();
         }
 
         internal void SetCustomLayoutName(string customLayoutPath)
@@ -275,13 +275,13 @@ This message only appears once.";
         {
             if (Params.IsParamSet("SIMPLE_MODE"))
             {
-                UI_DefaultGrids.simpleMode.LoadToMain();
+                DefaultGrids.simpleMode.LoadToMain();
                 RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
                 smForm.EnteringSimpleMode();
             }
             else
             {
-                UI_DefaultGrids.engineConfig.LoadToMain();
+                DefaultGrids.engineConfig.LoadToMain();
             }
         }
 
@@ -301,7 +301,7 @@ This message only appears once.";
         {
             pnGlitchHarvesterOpen.Visible = true;
 
-            UI_DefaultGrids.glitchHarvester.LoadToNewWindow("Glitch Harvester");
+            DefaultGrids.glitchHarvester.LoadToNewWindow("Glitch Harvester");
         }
 
         public void btnAutoCorrupt_Click(object sender, EventArgs e)
@@ -345,7 +345,7 @@ This message only appears once.";
                     return;
                 }
 
-                UI_DefaultGrids.simpleMode.LoadToMain();
+                DefaultGrids.simpleMode.LoadToMain();
                 RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
 
                 smForm.EnteringSimpleMode();
@@ -359,7 +359,7 @@ This message only appears once.";
 
         private void btnStockpilePlayer_Click(object sender, EventArgs e)
         {
-            UI_DefaultGrids.stockpilePlayer.LoadToMain();
+            DefaultGrids.stockpilePlayer.LoadToMain();
         }
 
         private int settingsRightClickTimer = 0;
@@ -396,7 +396,7 @@ This message only appears once.";
             }
             else if (e.Button == MouseButtons.Left)
             {
-                UI_DefaultGrids.settings.LoadToMain();
+                DefaultGrids.settings.LoadToMain();
             }
         }
 
@@ -489,7 +489,7 @@ This message only appears once.";
 
         private void btnLogo_Click(object sender, EventArgs e)
         {
-            UI_DefaultGrids.connectionStatus.LoadToMain();
+            DefaultGrids.connectionStatus.LoadToMain();
         }
 
         public static void StartEasyMode(bool useTemplate)
@@ -649,7 +649,7 @@ This message only appears once.";
         private void Button1_Click_1(object sender, EventArgs e)
         {
             UICore.LockInterface();
-            UI_DefaultGrids.connectionStatus.LoadToMain();
+            DefaultGrids.connectionStatus.LoadToMain();
         }
 
         private void BtnGlitchHarvester_MouseDown(object sender, MouseEventArgs e)

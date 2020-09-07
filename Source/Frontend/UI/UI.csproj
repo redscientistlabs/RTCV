@@ -427,7 +427,7 @@
     <Compile Include="Modular\UI_CoreForm.Designer.cs">
       <DependentUpon>UI_CoreForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modular\UI_DefaultGrids.cs" />
+    <Compile Include="Modular\DefaultGrids.cs" />
     <Compile Include="Modular\CanvasGrid.cs" />
     <Compile Include="Modular\ISubForm.cs" />
     <Compile Include="Modular\UI_SaveProgress_Form.cs">
