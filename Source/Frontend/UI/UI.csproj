@@ -460,7 +460,7 @@
     <Compile Include="Components\NumericUpDownHexFix.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI_VanguardImplementation.cs" />
+    <Compile Include="VanguardImplementation.cs" />
     <EmbeddedResource Include="Components\Blast Editor\RTC_ColumnSelector_Form.resx">
       <DependentUpon>RTC_ColumnSelector_Form.cs</DependentUpon>
     </EmbeddedResource>

@@ -139,7 +139,7 @@ This message only appears once.";
                 {
                     Params.SetParam("SIMPLE_MODE"); //Set RTC in Simple Mode
 
-                    if (UI_VanguardImplementation.connector.netConn.status == NetworkStatus.CONNECTED)
+                    if (VanguardImplementation.connector.netConn.status == NetworkStatus.CONNECTED)
                     {
                         UI_DefaultGrids.simpleMode.LoadToMain();
                         RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
