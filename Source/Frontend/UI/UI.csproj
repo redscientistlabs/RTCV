@@ -170,11 +170,11 @@
     <Compile Include="Components\Engine Config\RTC_MemoryDomains_Form.Designer.cs">
       <DependentUpon>RTC_MemoryDomains_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Glitch Harvester\RTC_GlitchHarvesterBlast_Form.cs">
+    <Compile Include="Components\Glitch Harvester\GlitchHarvesterBlastForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Glitch Harvester\RTC_GlitchHarvesterBlast_Form.designer.cs">
-      <DependentUpon>RTC_GlitchHarvesterBlast_Form.cs</DependentUpon>
+    <Compile Include="Components\Glitch Harvester\GlitchHarvesterBlastForm.designer.cs">
+      <DependentUpon>GlitchHarvesterBlastForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Glitch Harvester\RTC_SavestateManager_Form.cs">
       <SubType>Form</SubType>
@@ -500,8 +500,8 @@
     <EmbeddedResource Include="Components\Engine Config\RTC_MemoryDomains_Form.resx">
       <DependentUpon>RTC_MemoryDomains_Form.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Glitch Harvester\RTC_GlitchHarvesterBlast_Form.resx">
-      <DependentUpon>RTC_GlitchHarvesterBlast_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Glitch Harvester\GlitchHarvesterBlastForm.resx">
+      <DependentUpon>GlitchHarvesterBlastForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Glitch Harvester\RTC_SavestateManager_Form.resx">
       <DependentUpon>RTC_SavestateManager_Form.cs</DependentUpon>

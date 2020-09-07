@@ -249,7 +249,7 @@ namespace RTCV.UI
                     UICore.ConfigureUIFromVanguardSpec();
 
                     //Unblock the controls in the GH
-                    S.GET<RTC_GlitchHarvesterBlast_Form>().SetBlastButtonVisibility(true);
+                    S.GET<GlitchHarvesterBlastForm>().SetBlastButtonVisibility(true);
 
                     //Return to the main form. If the form is null for some reason, default to engineconfig
                     if (S.GET<UI_CoreForm>().previousGrid == null)
@@ -405,7 +405,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                S.GET<RTC_GlitchHarvesterBlast_Form>().refreshRenderOutputButton();
+                S.GET<GlitchHarvesterBlastForm>().refreshRenderOutputButton();
             });
         }
 
@@ -469,8 +469,8 @@ namespace RTCV.UI
                 S.GET<UI_CoreForm>().btnAutoCorrupt.Enabled = false;
                 S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
                 S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Enabled = false;
-                S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw.Enabled = false;
-                S.GET<RTC_GlitchHarvesterBlast_Form>().btnBlastToggle.Enabled = false;
+                S.GET<GlitchHarvesterBlastForm>().btnSendRaw.Enabled = false;
+                S.GET<GlitchHarvesterBlastForm>().btnBlastToggle.Enabled = false;
 
                 S.GET<CorruptionEngineForm>().cbSelectedEngine.Items.Remove("Hellgenie Engine");
                 S.GET<CorruptionEngineForm>().cbSelectedEngine.Items.Remove("Distortion Engine");

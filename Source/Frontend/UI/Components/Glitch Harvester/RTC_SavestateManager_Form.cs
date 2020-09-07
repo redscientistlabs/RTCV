@@ -478,7 +478,7 @@ namespace RTCV.UI
             }
 
             //Bring the UI back to normal after a drag+drop to prevent weird merge stuff
-            S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
+            S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
         }
 
         private void cbSavestateLoadOnClick_CheckedChanged(object sender, EventArgs e)
