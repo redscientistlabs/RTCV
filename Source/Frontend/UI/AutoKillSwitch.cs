@@ -75,10 +75,10 @@ namespace RTCV.UI
 
         public static void KillEmulator(bool forceBypass = false)
         {
-            logger.Trace("Entered KillEmulator {ShouldKillswitchFire} {UICore.FirstConnect} {!forceBypass} {!S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked} {!forceBypass}", ShouldKillswitchFire, UICore.FirstConnect, !forceBypass, !S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked, !forceBypass);
-            if (!ShouldKillswitchFire || (UICore.FirstConnect && !forceBypass) || (!S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked && !forceBypass))
+            logger.Trace("Entered KillEmulator {ShouldKillswitchFire} {UICore.FirstConnect} {!forceBypass} {!S.GET<CoreForm>().cbUseAutoKillSwitch.Checked} {!forceBypass}", ShouldKillswitchFire, UICore.FirstConnect, !forceBypass, !S.GET<CoreForm>().cbUseAutoKillSwitch.Checked, !forceBypass);
+            if (!ShouldKillswitchFire || (UICore.FirstConnect && !forceBypass) || (!S.GET<CoreForm>().cbUseAutoKillSwitch.Checked && !forceBypass))
             {
-                logger.Trace("Exited KillEmulator {ShouldKillswitchFire} {UICore.FirstConnect} {!forceBypass} {!S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked} {!forceBypass}", ShouldKillswitchFire, UICore.FirstConnect, !forceBypass, !S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked, !forceBypass);
+                logger.Trace("Exited KillEmulator {ShouldKillswitchFire} {UICore.FirstConnect} {!forceBypass} {!S.GET<CoreForm>().cbUseAutoKillSwitch.Checked} {!forceBypass}", ShouldKillswitchFire, UICore.FirstConnect, !forceBypass, !S.GET<CoreForm>().cbUseAutoKillSwitch.Checked, !forceBypass);
                 return;
             }
             logger.Trace("Thread id {0} requesting KillEmulator lockObject...", System.Threading.Thread.CurrentThread.ManagedThreadId);
@@ -187,11 +187,11 @@ namespace RTCV.UI
 
             if (pulseCount < MaxMissedPulses - 1)
             {
-                S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.PerformStep();
+                S.GET<CoreForm>().pbAutoKillSwitchTimeout.PerformStep();
             }
-            else if (S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value != 0)
+            else if (S.GET<CoreForm>().pbAutoKillSwitchTimeout.Value != 0)
             {
-                S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0;
+                S.GET<CoreForm>().pbAutoKillSwitchTimeout.Value = 0;
             }
 
             if (pulseCount == 0)

@@ -14,12 +14,12 @@ namespace RTCV.UI
     using RTCV.UI.Modular;
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
-    public partial class UI_CoreForm : Form, IAutoColorize
+    public partial class CoreForm : Form, IAutoColorize
     {
         //This form traps events and forwards them.
         //It contains the single UI_CanvasForm instance.
 
-        public static UI_CoreForm thisForm;
+        public static CoreForm thisForm;
         public static UI_CanvasForm cfForm;
 
         public CanvasGrid previousGrid { get; set; } = null;
@@ -51,11 +51,11 @@ namespace RTCV.UI
             }
         }
 
-        public UI_CoreForm()
+        public CoreForm()
         {
             InitializeComponent();
             thisForm = this;
-            this.FormClosing += UI_CoreForm_FormClosing;
+            this.FormClosing += OnFormClosing;
 
             cfForm = new UI_CanvasForm
             {
@@ -81,7 +81,7 @@ namespace RTCV.UI
             //Colors.SetRTCColor(Colors.GeneralColor);
         }
 
-        private void UI_CoreForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
             if (S.GET<RTC_StockpileManager_Form>().UnsavedEdits && !UICore.isClosing && MessageBox.Show("You have unsaved edits in the Glitch Harvester Stockpile. \n\n Are you sure you want to close RTC without saving?", "Unsaved edits in Stockpile", MessageBoxButtons.YesNo) == DialogResult.No)
             {
@@ -98,7 +98,7 @@ namespace RTCV.UI
             UICore.CloseAllRtcForms();
         }
 
-        private void UI_CoreForm_Load(object sender, EventArgs e)
+        private void OnFormLoad(object sender, EventArgs e)
         {
             btnLogo.Text = "RTCV " + RtcCore.RtcVersion;
 
@@ -179,7 +179,7 @@ This message only appears once.";
             this.Size = new Size(x + xPadding + corePadding, y + yPadding); //For Vertical tab-style menu in coreform
         }
 
-        private void UI_CoreForm_ResizeBegin(object sender, EventArgs e)
+        private void OnResizeBegin(object sender, EventArgs e)
         {
             //Sends event to SubForm
             if (cfForm.spForm != null)
@@ -188,7 +188,7 @@ This message only appears once.";
             }
         }
 
-        private void UI_CoreForm_ResizeEnd(object sender, EventArgs e)
+        private void OnResizeEnd(object sender, EventArgs e)
         {
             //Sends event to SubForm
             if (cfForm.spForm != null)
@@ -199,7 +199,7 @@ This message only appears once.";
 
         private FormWindowState? LastWindowState = null;
 
-        private void UI_CoreForm_Resize(object sender, EventArgs e)
+        private void OnResize(object sender, EventArgs e)
         {
             // When window state changes
             if (WindowState != LastWindowState)
@@ -224,7 +224,7 @@ This message only appears once.";
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void OpenTestSubform(object sender, EventArgs e)
         {
             //test button, loads a dummy form in SubForm mode
 
@@ -232,7 +232,7 @@ This message only appears once.";
             cfForm.OpenSubForm(f, true);
         }
 
-        private void BtnOpenCustomLayout_Click(object sender, EventArgs e)
+        private void OpenCustomLayout(object sender, EventArgs e)
         {
             CanvasGrid.LoadCustomLayout();
         }
@@ -271,7 +271,7 @@ This message only appears once.";
             }
         }
 
-        public void btnEngineConfig_Click(object sender, EventArgs e)
+        public void OpenEngineConfig(object sender, EventArgs e)
         {
             if (Params.IsParamSet("SIMPLE_MODE"))
             {
@@ -285,26 +285,26 @@ This message only appears once.";
             }
         }
 
-        private void pnAutoKillSwitch_MouseHover(object sender, EventArgs e)
+        private void OnAutoKillSwitchButtonMouseHover(object sender, EventArgs e)
         {
             lbAks.ForeColor = Color.FromArgb(32, 32, 32);
             pnAutoKillSwitch.BackColor = Color.Salmon;
         }
 
-        private void pnAutoKillSwitch_MouseLeave(object sender, EventArgs e)
+        private void OnAutoKillSwitchButtonMouseLeave(object sender, EventArgs e)
         {
             lbAks.ForeColor = Color.White;
             pnAutoKillSwitch.BackColor = Color.Transparent;
         }
 
-        private void btnGlitchHarvester_Click(object sender, EventArgs e)
+        private void OpenGlitchHarvester(object sender, EventArgs e)
         {
             pnGlitchHarvesterOpen.Visible = true;
 
             UI_DefaultGrids.glitchHarvester.LoadToNewWindow("Glitch Harvester");
         }
 
-        public void btnAutoCorrupt_Click(object sender, EventArgs e)
+        public void StartAutoCorrupt(object sender, EventArgs e)
         {
             if (btnAutoCorrupt.ForeColor == Color.Silver)
             {
@@ -318,7 +318,7 @@ This message only appears once.";
             }
         }
 
-        public void btnManualBlast_Click(object sender, EventArgs e)
+        public void ManualBlast(object sender, EventArgs e)
         {
             if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null)
             {
@@ -330,7 +330,7 @@ This message only appears once.";
             }
         }
 
-        private void btnEasyMode_MouseDown(object sender, MouseEventArgs e)
+        private void OnStartEasyModeClick(object sender, MouseEventArgs e)
         {
             bool simpleModeVisible = S.GET<RTC_SimpleMode_Form>().Visible;
 
@@ -357,7 +357,7 @@ This message only appears once.";
             easyButtonMenu.Show(this, locate);
         }
 
-        private void btnStockpilePlayer_Click(object sender, EventArgs e)
+        private void OpenStockpilePlayer(object sender, EventArgs e)
         {
             UI_DefaultGrids.stockpilePlayer.LoadToMain();
         }
@@ -365,7 +365,7 @@ This message only appears once.";
         private int settingsRightClickTimer = 0;
         private Timer testErrorTimer = null;
 
-        public void btnSettings_MouseDown(object sender, MouseEventArgs e)
+        public void OpenSettings(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -375,7 +375,7 @@ This message only appears once.";
                     {
                         Interval = 3000
                     };
-                    testErrorTimer.Tick += TestErrorTimer_Tick;
+                    testErrorTimer.Tick += TestErrorTimerTick;
                     testErrorTimer.Start();
                 }
 
@@ -400,30 +400,30 @@ This message only appears once.";
             }
         }
 
-        private void pnAutoKillSwitch_MouseClick(object sender, MouseEventArgs e)
+        private void OnAutoKillSwitchClick(object sender, MouseEventArgs e)
         {
             //needed anymore?
-            S.GET<UI_CoreForm>().btnLogo_Click(sender, e);
+            S.GET<CoreForm>().OnLogoClick(sender, e);
 
-            S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Maximum;
+            S.GET<CoreForm>().pbAutoKillSwitchTimeout.Value = S.GET<CoreForm>().pbAutoKillSwitchTimeout.Maximum;
             AutoKillSwitch.ShouldKillswitchFire = true;
 
             //refactor this to not use string once old coreform is dead
             AutoKillSwitch.KillEmulator(true);
         }
 
-        private void cbUseAutoKillSwitch_CheckedChanged(object sender, EventArgs e)
+        private void OnAutoKillSwitchCheckboxChanged(object sender, EventArgs e)
         {
             pbAutoKillSwitchTimeout.Visible = cbUseAutoKillSwitch.Checked;
             AutoKillSwitch.Enabled = cbUseAutoKillSwitch.Checked;
         }
 
-        private void LbGameProtection_MouseClick(object sender, MouseEventArgs e)
+        private void ToggleGameProtection(object sender, MouseEventArgs e)
         {
             cbUseGameProtection.Checked = !cbUseGameProtection.Checked;
         }
 
-        private void cbUseGameProtection_CheckedChanged(object sender, EventArgs e)
+        private void OnUseGameProtectionCheckboxChanged(object sender, EventArgs e)
         {
             if (cbUseGameProtection.Checked)
             {
@@ -437,7 +437,7 @@ This message only appears once.";
             }
         }
 
-        public void btnGpJumpBack_Click(object sender, EventArgs e)
+        public void OnGameProtectionBack(object sender, EventArgs e)
         {
             try
             {
@@ -460,7 +460,7 @@ This message only appears once.";
             }
         }
 
-        public void btnGpJumpNow_Click(object sender, EventArgs e)
+        public void OnGameProtectionNow(object sender, EventArgs e)
         {
             try
             {
@@ -483,19 +483,15 @@ This message only appears once.";
             }
         }
 
-        private void btnLogo_MouseClick(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void btnLogo_Click(object sender, EventArgs e)
+        private void OnLogoClick(object sender, EventArgs e)
         {
             UI_DefaultGrids.connectionStatus.LoadToMain();
         }
 
-        public static void StartEasyMode(bool useTemplate)
+        private static void StartEasyMode(bool useTemplate)
         {
             //if (RTC_NetcoreImplementation.isStandaloneUI && !S.GET<RTC_Core_Form>().cbUseGameProtection.Checked)
-            S.GET<UI_CoreForm>().cbUseGameProtection.Checked = true;
+            S.GET<CoreForm>().cbUseGameProtection.Checked = true;
 
             if (useTemplate)
             {
@@ -567,7 +563,7 @@ This message only appears once.";
                 }
             }
 
-            S.GET<UI_CoreForm>().AutoCorrupt = true;
+            S.GET<CoreForm>().AutoCorrupt = true;
         }
 
         public static void SetEngineByName(string name)
@@ -590,7 +586,7 @@ This message only appears once.";
             S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw_Click(null, null);
         }
 
-        private void BtnManualBlast_MouseDown(object sender, MouseEventArgs e)
+        private void OnManualBlastMouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -639,20 +635,20 @@ This message only appears once.";
             var result = error.ShowDialog();
         }
 
-        private void TestErrorTimer_Tick(object sender, EventArgs e)
+        private void TestErrorTimerTick(object sender, EventArgs e)
         {
             testErrorTimer?.Stop();
             testErrorTimer = null;
             settingsRightClickTimer = 0;
         }
 
-        private void Button1_Click_1(object sender, EventArgs e)
+        private void OnTestLockdownClick(object sender, EventArgs e)
         {
             UICore.LockInterface();
             UI_DefaultGrids.connectionStatus.LoadToMain();
         }
 
-        private void BtnGlitchHarvester_MouseDown(object sender, MouseEventArgs e)
+        private void OnGlitchHarvesterMouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -668,7 +664,7 @@ This message only appears once.";
             }
         }
 
-        private void BtnNetcoreTest_Click(object sender, EventArgs e)
+        private void TestCommand(object sender, EventArgs e)
         {
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, "TEST");
         }

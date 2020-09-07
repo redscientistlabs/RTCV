@@ -136,7 +136,7 @@ namespace RTCV.UI
                     gbNightmareEngine.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
-                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
+                    S.GET<CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
 
                 case "Hellgenie Engine":
@@ -144,7 +144,7 @@ namespace RTCV.UI
                     gbHellgenieEngine.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
-                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
+                    S.GET<CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
 
                 case "Distortion Engine":
@@ -152,7 +152,7 @@ namespace RTCV.UI
                     gbDistortionEngine.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
-                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
+                    S.GET<CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
 
                 case "Freeze Engine":
@@ -160,7 +160,7 @@ namespace RTCV.UI
                     gbFreezeEngine.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
-                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
+                    S.GET<CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
 
                 case "Pipe Engine":
@@ -168,7 +168,7 @@ namespace RTCV.UI
                     gbPipeEngine.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
-                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
+                    S.GET<CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
 
                 case "Vector Engine":
@@ -187,7 +187,7 @@ namespace RTCV.UI
                         cbCustomPrecision.Enabled = false;
                     }
 
-                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
+                    S.GET<CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
 
                 case "Cluster Engine":
@@ -195,7 +195,7 @@ namespace RTCV.UI
                     nmAlignment.Maximum = 3;
                     gbClusterEngine.Visible = true;
 
-                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
+                    S.GET<CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
 
                 case "Custom Engine":
@@ -203,15 +203,15 @@ namespace RTCV.UI
                     gbCustomEngine.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
-                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
+                    S.GET<CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
 
                 case "Blast Generator":
                     RtcCore.SelectedEngine = CorruptionEngine.BLASTGENERATORENGINE;
                     gbBlastGeneratorEngine.Visible = true;
 
-                    S.GET<UI_CoreForm>().AutoCorrupt = false;
-                    S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
+                    S.GET<CoreForm>().AutoCorrupt = false;
+                    S.GET<CoreForm>().btnAutoCorrupt.Visible = false;
                     S.GET<GeneralParametersForm>().Hide();
                     S.GET<RTC_MemoryDomains_Form>().Hide();
                     S.GET<RTC_GlitchHarvesterIntensity_Form>().Hide();

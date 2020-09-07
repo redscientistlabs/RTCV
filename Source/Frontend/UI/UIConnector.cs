@@ -63,11 +63,11 @@ namespace RTCV.UI
                 S.GET<RTC_VmdAct_Form>()
                     .cbAutoAddDump.Checked = false;
                 GameProtection.WasAutoCorruptRunning = RtcCore.AutoCorrupt;
-                S.GET<UI_CoreForm>().AutoCorrupt = false;
+                S.GET<CoreForm>().AutoCorrupt = false;
             });
             GameProtection.Stop(false);
 
-            if (S.GET<UI_CoreForm>()
+            if (S.GET<CoreForm>()
                     .cbUseAutoKillSwitch.Checked && AllSpec.VanguardSpec != null)
             {
                 AutoKillSwitch.KillEmulator();

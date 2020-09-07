@@ -27,12 +27,12 @@
         {
             RTC_GlitchHarvesterIntensity_Form ghiForm = S.GET<RTC_GlitchHarvesterIntensity_Form>();
             ghiForm.AnchorToPanel(pnIntensity);
-            //S.GET<UI_CoreForm>().btnEngineConfig.Visible = false;
-            S.GET<UI_CoreForm>().btnEngineConfig.Text = " Simple Mode";
-            S.GET<UI_CoreForm>().btnGlitchHarvester.Visible = false;
-            S.GET<UI_CoreForm>().btnStockpilePlayer.Visible = false;
-            S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
-            S.GET<UI_CoreForm>().btnManualBlast.Visible = false;
+            //S.GET<CoreForm>().btnEngineConfig.Visible = false;
+            S.GET<CoreForm>().btnEngineConfig.Text = " Simple Mode";
+            S.GET<CoreForm>().btnGlitchHarvester.Visible = false;
+            S.GET<CoreForm>().btnStockpilePlayer.Visible = false;
+            S.GET<CoreForm>().btnAutoCorrupt.Visible = false;
+            S.GET<CoreForm>().btnManualBlast.Visible = false;
 
             if (rbClassicPlatforms.Checked)
             {
@@ -51,14 +51,14 @@
         {
             Params.RemoveParam("SIMPLE_MODE"); //Set RTC in Normal Mode
 
-            //S.GET<UI_CoreForm>().btnEngineConfig.Visible = true;
-            S.GET<UI_CoreForm>().btnEngineConfig.Text = " Engine Config";
-            S.GET<UI_CoreForm>().btnGlitchHarvester.Visible = true;
-            S.GET<UI_CoreForm>().btnStockpilePlayer.Visible = true;
-            S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = true;
-            S.GET<UI_CoreForm>().btnManualBlast.Visible = true;
+            //S.GET<CoreForm>().btnEngineConfig.Visible = true;
+            S.GET<CoreForm>().btnEngineConfig.Text = " Engine Config";
+            S.GET<CoreForm>().btnGlitchHarvester.Visible = true;
+            S.GET<CoreForm>().btnStockpilePlayer.Visible = true;
+            S.GET<CoreForm>().btnAutoCorrupt.Visible = true;
+            S.GET<CoreForm>().btnManualBlast.Visible = true;
 
-            S.GET<UI_CoreForm>().btnEngineConfig_Click(null, null);
+            S.GET<CoreForm>().OpenEngineConfig(null, null);
         }
 
         private void RTC_SimpleMode_Form_FormClosing(object sender, FormClosingEventArgs e)
@@ -77,13 +77,13 @@
 
         private void btnManualBlast_Click(object sender, EventArgs e)
         {
-            S.GET<UI_CoreForm>().btnManualBlast_Click(sender, e);
+            S.GET<CoreForm>().ManualBlast(sender, e);
         }
 
         private void btnAutoCorrupt_Click(object sender, EventArgs e)
         {
-            S.GET<UI_CoreForm>().btnAutoCorrupt_Click(sender, e);
-            //btnAutoCorrupt.Text = S.GET<UI_CoreForm>().btnAutoCorrupt.Text;
+            S.GET<CoreForm>().StartAutoCorrupt(sender, e);
+            //btnAutoCorrupt.Text = S.GET<CoreForm>().btnAutoCorrupt.Text;
         }
 
         private void btnCreateGhSavestate_Click(object sender, EventArgs e)
@@ -142,8 +142,8 @@
                     break;
             }
 
-            S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
-            S.GET<UI_CoreForm>().btnManualBlast.Visible = false;
+            S.GET<CoreForm>().btnAutoCorrupt.Visible = false;
+            S.GET<CoreForm>().btnManualBlast.Visible = false;
 
             platform = pt;
 
@@ -200,8 +200,8 @@
                 ShuffleClassic();
             }
 
-            S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
-            S.GET<UI_CoreForm>().btnManualBlast.Visible = false;
+            S.GET<CoreForm>().btnAutoCorrupt.Visible = false;
+            S.GET<CoreForm>().btnManualBlast.Visible = false;
         }
 
         public void ShuffleModern()
@@ -252,7 +252,7 @@
 
         public void ResetSession()
         {
-            var ui = S.GET<UI_CoreForm>();
+            var ui = S.GET<CoreForm>();
             if (ui.AutoCorrupt)
             {
                 btnAutoCorrupt_Click(null, null);

@@ -200,7 +200,7 @@
                 UICore.SetHotkeyTimer(false);
                 UICore.LockInterface(false, true);
                 S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
-                UI_CoreForm.cfForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
+                CoreForm.cfForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
 
                 StockpileManager_UISide.ClearCurrentStockpile();
 
@@ -238,7 +238,7 @@
             }
             finally
             {
-                UI_CoreForm.cfForm?.CloseSubForm();
+                CoreForm.cfForm?.CloseSubForm();
                 UICore.UnlockInterface();
                 UICore.SetHotkeyTimer(true);
             }
@@ -353,7 +353,7 @@
                 if (dgvStockpile.SelectedRows.Count > 0)
                 {
                     //Shut autocorrupt off because people (Vinny) kept turning it on to add to corruptions then forgetting to turn it off
-                    S.GET<UI_CoreForm>().AutoCorrupt = false;
+                    S.GET<CoreForm>().AutoCorrupt = false;
 
                     S.GET<RTC_GlitchHarvesterBlast_Form>().ghMode = GlitchHarvesterMode.CORRUPT;
                     StockpileManager_UISide.CurrentStashkey = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);

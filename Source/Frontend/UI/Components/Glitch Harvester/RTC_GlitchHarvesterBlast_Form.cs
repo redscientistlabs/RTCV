@@ -48,15 +48,15 @@ namespace RTCV.UI
                 }
                 else
                 {
-                    btnBlastToggle.BackColor = S.GET<UI_CoreForm>().btnLogo.BackColor;
+                    btnBlastToggle.BackColor = S.GET<CoreForm>().btnLogo.BackColor;
                     btnBlastToggle.ForeColor = Color.White;
                     btnBlastToggle.Text = "BlastLayer : OFF";
 
-                    S.GET<RTC_StockpilePlayer_Form>().btnBlastToggle.BackColor = S.GET<UI_CoreForm>().btnLogo.BackColor;
+                    S.GET<RTC_StockpilePlayer_Form>().btnBlastToggle.BackColor = S.GET<CoreForm>().btnLogo.BackColor;
                     S.GET<RTC_StockpilePlayer_Form>().btnBlastToggle.ForeColor = Color.White;
                     S.GET<RTC_StockpilePlayer_Form>().btnBlastToggle.Text = "BlastLayer : OFF    (Attempts to uncorrupt/recorrupt in real-time)";
 
-                    S.GET<RTC_SimpleMode_Form>().btnBlastToggle.BackColor = S.GET<UI_CoreForm>().btnLogo.BackColor;
+                    S.GET<RTC_SimpleMode_Form>().btnBlastToggle.BackColor = S.GET<CoreForm>().btnLogo.BackColor;
                     S.GET<RTC_SimpleMode_Form>().btnBlastToggle.ForeColor = Color.White;
                     S.GET<RTC_SimpleMode_Form>().btnBlastToggle.Text = "BlastLayer : OFF    (Attempts to uncorrupt/recorrupt in real-time)";
                 }
@@ -103,7 +103,7 @@ namespace RTCV.UI
         {
             logger.Trace("Entering OneTimeExecute()");
             //Disable autocorrupt
-            S.GET<UI_CoreForm>().AutoCorrupt = false;
+            S.GET<CoreForm>().AutoCorrupt = false;
 
             if (ghMode == GlitchHarvesterMode.CORRUPT)
             {
@@ -187,7 +187,7 @@ namespace RTCV.UI
 
             if (sender != null)
             {
-                if (!(btnCorrupt.Visible || AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null && S.GET<UI_CoreForm>().btnManualBlast.Visible))
+                if (!(btnCorrupt.Visible || AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null && S.GET<CoreForm>().btnManualBlast.Visible))
                 {
                     return;
                 }
@@ -206,9 +206,9 @@ namespace RTCV.UI
 
                 //Shut off autocorrupt if it's on.
                 //Leave this check here so we don't wastefully update the spec
-                if (S.GET<UI_CoreForm>().AutoCorrupt)
+                if (S.GET<CoreForm>().AutoCorrupt)
                 {
-                    S.GET<UI_CoreForm>().AutoCorrupt = false;
+                    S.GET<CoreForm>().AutoCorrupt = false;
                 }
 
                 StashKey psk = StockpileManager_UISide.CurrentSavestateStashKey;
@@ -389,9 +389,9 @@ namespace RTCV.UI
                 ContextMenuStrip rerollMenu = new ContextMenuStrip();
                 rerollMenu.Items.Add("Configure Reroll", null, new EventHandler((ob, ev) =>
                 {
-                    S.GET<UI_CoreForm>().btnSettings_MouseDown(null, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
+                    S.GET<CoreForm>().OpenSettings(null, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
                     S.GET<SettingsForm>().lbForm.SetFocusedForm(S.GET<RTC_SettingsCorrupt_Form>());
-                    S.GET<UI_CoreForm>().BringToFront();
+                    S.GET<CoreForm>().BringToFront();
                 }));
 
                 rerollMenu.Show(this, locate);
@@ -458,7 +458,7 @@ namespace RTCV.UI
 
             if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null)
             {
-                S.GET<UI_CoreForm>().btnManualBlast.Visible = visible;
+                S.GET<CoreForm>().btnManualBlast.Visible = visible;
             }
         }
 

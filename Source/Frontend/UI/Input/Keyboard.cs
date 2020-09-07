@@ -25,7 +25,7 @@ namespace RTCV.UI.Input
                 _dinput = new DirectInput();
 
                 _keyboard = new Keyboard(_dinput);
-                _keyboard.SetCooperativeLevel(S.GET<UI_CoreForm>().Handle, CooperativeLevel.Background | CooperativeLevel.Nonexclusive);
+                _keyboard.SetCooperativeLevel(S.GET<CoreForm>().Handle, CooperativeLevel.Background | CooperativeLevel.Nonexclusive);
                 _keyboard.Properties.BufferSize = 8;
             }
         }

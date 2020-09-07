@@ -98,9 +98,9 @@ namespace RTCV.UI
         public void SetSize(int x, int y)
         {
             if (this.TopLevel)
-                this.Size = new Size(x + UI_CoreForm.xPadding, y + UI_CoreForm.yPadding);
+                this.Size = new Size(x + CoreForm.xPadding, y + CoreForm.yPadding);
             else
-                UI_CoreForm.thisForm.SetSize(x, y);
+                CoreForm.thisForm.SetSize(x, y);
         }
 
         public static void loadMultiGrid(MultiGrid mg)
@@ -224,8 +224,8 @@ namespace RTCV.UI
 
         private void UI_CanvasForm_Load(object sender, EventArgs e)
         {
-            
+
         }
-        
+
     }
 }
