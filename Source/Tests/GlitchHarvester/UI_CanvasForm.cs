@@ -14,7 +14,7 @@ namespace RTCV.UI
     {
         public static UI_CanvasForm thisForm;
         public static List<UI_CanvasForm> extraForms = new List<UI_CanvasForm>();
-        public UI_ShadowPanel spForm;
+        public ShadowPanel spForm;
 
         public static int spacerSize;
         public static int tileSize;
@@ -198,7 +198,7 @@ namespace RTCV.UI
             if (spForm != null)
                 CloseSubForm();
 
-            spForm = new UI_ShadowPanel(thisForm, _type);
+            spForm = new ShadowPanel(thisForm, _type);
             spForm.TopLevel = false;
             thisForm.Controls.Add(spForm);
             spForm.Show();
@@ -210,9 +210,9 @@ namespace RTCV.UI
             //Closes subform and exists SubForm mode.
             //is automatically called when Cancel/Ok is pressed in SubForm.
 
-            if (UI_ShadowPanel.subForm != null) {
-                UI_ShadowPanel.subForm.Close();
-                UI_ShadowPanel.subForm = null;
+            if (ShadowPanel.subForm != null) {
+                ShadowPanel.subForm.Close();
+                ShadowPanel.subForm = null;
             }
 
             if (spForm != null)
@@ -224,8 +224,8 @@ namespace RTCV.UI
 
         private void UI_CanvasForm_Load(object sender, EventArgs e)
         {
-            
+
         }
-        
+
     }
 }

@@ -7,12 +7,12 @@
     using RTCV.UI.Modular;
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
-    public partial class UI_ShadowPanel : Form
+    public partial class ShadowPanel : Form
     {
         private UI_CanvasForm parentForm;
         public Form subForm { get; set; } = null;
 
-        public UI_ShadowPanel(UI_CanvasForm _parentForm, ISubForm reqForm)
+        public ShadowPanel(UI_CanvasForm _parentForm, ISubForm reqForm)
         {
             InitializeComponent();
             var blockerForm = new Form
@@ -36,13 +36,13 @@
             UpdateSubForm();
         }
 
-        public void Parent_ResizeBegin()
+        public void OnParentResizeBegin()
         {
             this.BackgroundImage = null;
             pnFloater.Visible = false;
         }
 
-        public void Parent_ResizeEnd()
+        public void OnParentResizeEnd()
         {
             UpdateBackground();
             pnFloater.Visible = true;
@@ -110,7 +110,7 @@
             pnFloater.Location = new Point((parentForm.Width - pnFloater.Width) / 2, (parentForm.Height - pnFloater.Height) / 2);
         }
 
-        private void btnRight_Click(object sender, EventArgs e)
+        private void OnRightButtonClick(object sender, EventArgs e)
         {
             //Fires SubForm_Ok() from Interface SubForm then Exits SubForm Mode
 
@@ -122,7 +122,7 @@
             parentForm.CloseSubForm();
         }
 
-        private void btnLeft_Click(object sender, EventArgs e)
+        private void OnLeftButtonClick(object sender, EventArgs e)
         {
             //Fires SubForm_Cancel() from Interface SubForm then Exits SubForm Mode
 
@@ -132,10 +132,6 @@
             }
 
             parentForm.CloseSubForm();
-        }
-
-        private void UI_ShadowPanel_Load(object sender, EventArgs e)
-        {
         }
     }
 }
