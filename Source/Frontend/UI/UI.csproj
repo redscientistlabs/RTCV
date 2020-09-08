@@ -403,11 +403,11 @@
     <Compile Include="Input\LogicalButton.cs" />
     <Compile Include="Input\ModifierKeys.cs" />
     <Compile Include="Input\WorkingDictionary.cs" />
-    <Compile Include="Modular\UI_CanvasForm.cs">
+    <Compile Include="Modular\CanvasForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modular\UI_CanvasForm.Designer.cs">
-      <DependentUpon>UI_CanvasForm.cs</DependentUpon>
+    <Compile Include="Modular\CanvasForm.Designer.cs">
+      <DependentUpon>CanvasForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Modular\UI_ComponentFormSubForm.cs">
       <SubType>Form</SubType>
@@ -602,8 +602,8 @@
     <EmbeddedResource Include="Forms\TestForm.resx">
       <DependentUpon>TestForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modular\UI_CanvasForm.resx">
-      <DependentUpon>UI_CanvasForm.cs</DependentUpon>
+    <EmbeddedResource Include="Modular\CanvasForm.resx">
+      <DependentUpon>CanvasForm.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Modular\ComponentForm.cs">
       <SubType>Form</SubType>

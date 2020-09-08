@@ -58,12 +58,12 @@ namespace RTCV.UI
 
         internal void LoadToMain()
         {
-            UI_CanvasForm.loadTileFormMain(this);
+            CanvasForm.loadTileFormMain(this);
         }
 
         internal void LoadToNewWindow(string GridID = null, bool silent = false)
         {
-            UI_CanvasForm.loadTileFormExtraWindow(this, GridID, silent);
+            CanvasForm.loadTileFormExtraWindow(this, GridID, silent);
         }
 
         internal static void LoadCustomLayout()
