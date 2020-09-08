@@ -1987,7 +1987,7 @@ namespace RTCV.UI
             }
 
             var newSk = (StashKey)currentSK.Clone();
-            S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = newSk.Run();
+            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = newSk.Run();
         }
 
         public void LoadOriginal()
@@ -2006,7 +2006,7 @@ namespace RTCV.UI
         public void btnCorrupt_Click(object sender, EventArgs e)
         {
             var newSk = (StashKey)currentSK.Clone();
-            S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newSk, false);
+            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newSk, false);
         }
 
         public static void RefreshNoteIcons(DataGridViewRowCollection rows)

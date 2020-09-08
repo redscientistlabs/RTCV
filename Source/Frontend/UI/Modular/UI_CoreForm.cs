@@ -322,7 +322,7 @@ This message only appears once.";
         {
             if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null)
             {
-                S.GET<RTC_GlitchHarvesterBlast_Form>().btnCorrupt_Click(sender, e);
+                S.GET<GlitchHarvesterBlastForm>().Corrupt(sender, e);
             }
             else
             {
@@ -587,7 +587,7 @@ This message only appears once.";
         private static void BlastRawStash()
         {
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.MANUALBLAST, true);
-            S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw_Click(null, null);
+            S.GET<GlitchHarvesterBlastForm>().SendRawToStash(null, null);
         }
 
         private void BtnManualBlast_MouseDown(object sender, MouseEventArgs e)
