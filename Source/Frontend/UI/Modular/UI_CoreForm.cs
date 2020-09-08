@@ -139,7 +139,7 @@ This message only appears once.";
                 {
                     Params.SetParam("SIMPLE_MODE"); //Set RTC in Simple Mode
 
-                    if (UI_VanguardImplementation.connector.netConn.status == NetworkStatus.CONNECTED)
+                    if (VanguardImplementation.connector.netConn.status == NetworkStatus.CONNECTED)
                     {
                         DefaultGrids.simpleMode.LoadToMain();
                         RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
@@ -184,7 +184,7 @@ This message only appears once.";
             //Sends event to SubForm
             if (cfForm.spForm != null)
             {
-                cfForm.spForm.Parent_ResizeBegin();
+                cfForm.spForm.OnParentResizeBegin();
             }
         }
 
@@ -193,7 +193,7 @@ This message only appears once.";
             //Sends event to SubForm
             if (cfForm.spForm != null)
             {
-                cfForm.spForm?.Parent_ResizeEnd();
+                cfForm.spForm?.OnParentResizeEnd();
             }
         }
 
@@ -217,7 +217,7 @@ This message only appears once.";
 
                 if (cfForm.spForm != null)
                 {
-                    cfForm.spForm?.Parent_ResizeEnd();
+                    cfForm.spForm?.OnParentResizeEnd();
                 }
 
                 LastWindowState = WindowState;

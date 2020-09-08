@@ -10,12 +10,12 @@ using System.Windows.Forms;
 
 namespace RTCV.UI
 {
-    public partial class UI_ShadowPanel : Form
+    public partial class ShadowPanel : Form
     {
         public static UI_CanvasForm parentForm;
         public static Form subForm = null;
 
-        public UI_ShadowPanel(UI_CanvasForm _parentForm, string _type)
+        public ShadowPanel(UI_CanvasForm _parentForm, string _type)
         {
             InitializeComponent();
 
