@@ -72,7 +72,7 @@
 
         private void btnBlastToggle_Click(object sender, EventArgs e)
         {
-            S.GET<RTC_GlitchHarvesterBlast_Form>().btnBlastToggle_Click(null, null);
+            S.GET<GlitchHarvesterBlastForm>().BlastLayerToggle(null, null);
         }
 
         private void btnManualBlast_Click(object sender, EventArgs e)
@@ -116,7 +116,7 @@
                 S.GET<RTC_StashHistory_Form>().RemoveFirstStashHistoryItem();
             }
 
-            S.GET<RTC_GlitchHarvesterBlast_Form>().btnCorrupt_Click(null, null);
+            S.GET<GlitchHarvesterBlastForm>().Corrupt(null, null);
         }
 
         private void rbClassicPlatforms_CheckedChanged(object sender, EventArgs e)

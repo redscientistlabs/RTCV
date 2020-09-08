@@ -53,9 +53,9 @@ namespace RTCV.UI
             ((System.ComponentModel.ISupportInitialize)(this.pbActivity)).BeginInit();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // btnSelectAllDumps
-            // 
+            //
             this.btnSelectAllDumps.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnSelectAllDumps.BackColor = System.Drawing.Color.Gray;
             this.btnSelectAllDumps.FlatAppearance.BorderSize = 0;
@@ -71,18 +71,18 @@ namespace RTCV.UI
             this.btnSelectAllDumps.Text = "Select All";
             this.btnSelectAllDumps.UseVisualStyleBackColor = false;
             this.btnSelectAllDumps.Click += new System.EventHandler(this.btnSelectAllDumps_Click);
-            // 
+            //
             // label6
-            // 
+            //
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(13, 13);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(87, 13);
             this.label6.TabIndex = 193;
             this.label6.Text = "Memory Dumps";
-            // 
+            //
             // btnSelectNoDumps
-            // 
+            //
             this.btnSelectNoDumps.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnSelectNoDumps.BackColor = System.Drawing.Color.Gray;
             this.btnSelectNoDumps.FlatAppearance.BorderSize = 0;
@@ -98,9 +98,9 @@ namespace RTCV.UI
             this.btnSelectNoDumps.Text = "Select None";
             this.btnSelectNoDumps.UseVisualStyleBackColor = false;
             this.btnSelectNoDumps.Click += new System.EventHandler(this.btnSelectNoDumps_Click);
-            // 
+            //
             // button2
-            // 
+            //
             this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.button2.FlatAppearance.BorderSize = 0;
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -114,9 +114,9 @@ namespace RTCV.UI
             this.button2.Tag = "color:dark2";
             this.button2.Text = "Generate VMD";
             this.button2.UseVisualStyleBackColor = false;
-            // 
+            //
             // label4
-            // 
+            //
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.ForeColor = System.Drawing.Color.White;
@@ -125,9 +125,9 @@ namespace RTCV.UI
             this.label4.Size = new System.Drawing.Size(137, 13);
             this.label4.TabIndex = 195;
             this.label4.Text = "Export Filtered Addresses";
-            // 
+            //
             // lbDomainSize
-            // 
+            //
             this.lbDomainSize.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lbDomainSize.Location = new System.Drawing.Point(165, 9);
             this.lbDomainSize.Name = "lbDomainSize";
@@ -135,9 +135,9 @@ namespace RTCV.UI
             this.lbDomainSize.TabIndex = 203;
             this.lbDomainSize.Text = "Domain size:";
             this.lbDomainSize.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
+            //
             // lbDumpsSelected
-            // 
+            //
             this.lbDumpsSelected.Font = new System.Drawing.Font("Segoe UI Symbol", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.lbDumpsSelected.Location = new System.Drawing.Point(303, 9);
             this.lbDumpsSelected.Name = "lbDumpsSelected";
@@ -145,20 +145,20 @@ namespace RTCV.UI
             this.lbDumpsSelected.TabIndex = 204;
             this.lbDumpsSelected.Text = "Dumps selected:";
             this.lbDumpsSelected.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
+            //
             // pbActivity
-            // 
-            this.pbActivity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.pbActivity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pbActivity.Location = new System.Drawing.Point(168, 173);
             this.pbActivity.Name = "pbActivity";
             this.pbActivity.Size = new System.Drawing.Size(486, 104);
             this.pbActivity.TabIndex = 202;
             this.pbActivity.TabStop = false;
-            // 
+            //
             // btnComputeActivity
-            // 
-            this.btnComputeActivity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.btnComputeActivity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnComputeActivity.BackColor = System.Drawing.Color.Gray;
             this.btnComputeActivity.FlatAppearance.BorderSize = 0;
@@ -174,9 +174,9 @@ namespace RTCV.UI
             this.btnComputeActivity.Text = "Compute activity";
             this.btnComputeActivity.UseVisualStyleBackColor = false;
             this.btnComputeActivity.Click += new System.EventHandler(this.btnComputeActivity_Click);
-            // 
+            //
             // cbWordSize
-            // 
+            //
             this.cbWordSize.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.cbWordSize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbWordSize.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -194,9 +194,9 @@ namespace RTCV.UI
             this.cbWordSize.TabIndex = 205;
             this.cbWordSize.Tag = "color:normal";
             this.cbWordSize.SelectedIndexChanged += new System.EventHandler(this.cbWordSize_SelectedIndexChanged);
-            // 
+            //
             // label5
-            // 
+            //
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F);
             this.label5.ForeColor = System.Drawing.Color.White;
@@ -205,10 +205,10 @@ namespace RTCV.UI
             this.label5.Size = new System.Drawing.Size(117, 13);
             this.label5.TabIndex = 206;
             this.label5.Text = "Word Size (Precision):";
-            // 
+            //
             // lbDumps
-            // 
-            this.lbDumps.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            //
+            this.lbDumps.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.lbDumps.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.lbDumps.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -227,10 +227,10 @@ namespace RTCV.UI
             this.lbDumps.Tag = "color:dark2";
             this.lbDumps.ValueMember = "value";
             this.lbDumps.SelectedIndexChanged += new System.EventHandler(this.lbDumps_SelectedIndexChanged);
-            // 
+            //
             // panel2
-            // 
-            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.label2);
@@ -241,9 +241,9 @@ namespace RTCV.UI
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(194, 94);
             this.panel2.TabIndex = 207;
-            // 
+            //
             // label2
-            // 
+            //
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F);
             this.label2.ForeColor = System.Drawing.Color.White;
@@ -252,9 +252,9 @@ namespace RTCV.UI
             this.label2.Size = new System.Drawing.Size(27, 13);
             this.label2.TabIndex = 211;
             this.label2.Text = "List:";
-            // 
+            //
             // radioButton2
-            // 
+            //
             this.radioButton2.AutoSize = true;
             this.radioButton2.Location = new System.Drawing.Point(8, 28);
             this.radioButton2.Name = "radioButton2";
@@ -262,9 +262,9 @@ namespace RTCV.UI
             this.radioButton2.TabIndex = 210;
             this.radioButton2.Text = "Against list";
             this.radioButton2.UseVisualStyleBackColor = true;
-            // 
+            //
             // radioButton1
-            // 
+            //
             this.radioButton1.AutoSize = true;
             this.radioButton1.Checked = true;
             this.radioButton1.Location = new System.Drawing.Point(8, 6);
@@ -274,9 +274,9 @@ namespace RTCV.UI
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "Against previous value";
             this.radioButton1.UseVisualStyleBackColor = true;
-            // 
+            //
             // comboBox1
-            // 
+            //
             this.comboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -293,9 +293,9 @@ namespace RTCV.UI
             this.comboBox1.Size = new System.Drawing.Size(136, 21);
             this.comboBox1.TabIndex = 208;
             this.comboBox1.Tag = "color:normal";
-            // 
+            //
             // label1
-            // 
+            //
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F);
             this.label1.ForeColor = System.Drawing.Color.White;
@@ -304,9 +304,9 @@ namespace RTCV.UI
             this.label1.Size = new System.Drawing.Size(111, 13);
             this.label1.TabIndex = 208;
             this.label1.Text = "Definition of activity";
-            // 
+            //
             // RTC_AnalyticsTool_Form
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -332,7 +332,7 @@ namespace RTCV.UI
             this.Name = "RTC_AnalyticsTool_Form";
             this.Tag = "color:dark1";
             this.Text = "Analytics Tool";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RTC_SanitizeTool_Form_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SanitizeToolForm_FormClosing);
             this.Load += new System.EventHandler(this.RTC_AnalyticsToolForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbActivity)).EndInit();
             this.panel2.ResumeLayout(false);

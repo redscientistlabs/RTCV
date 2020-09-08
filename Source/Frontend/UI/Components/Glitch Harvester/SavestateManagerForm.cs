@@ -199,7 +199,7 @@ namespace RTCV.UI
                 return;
             }
 
-            var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
+            var ghForm = CanvasForm.GetExtraForm("Glitch Harvester");
             try
             {
                 //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs
@@ -207,8 +207,8 @@ namespace RTCV.UI
                 SyncObjectSingleton.FormExecute(() =>
                 {
                     UICore.LockInterface(false, true);
-                    S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
-                    ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
+                    S.GET<SaveProgressForm>().Dock = DockStyle.Fill;
+                    ghForm?.OpenSubForm(S.GET<SaveProgressForm>());
                 });
 
                 await Task.Run(() =>
@@ -431,7 +431,7 @@ namespace RTCV.UI
                 return;
             }
 
-            var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
+            var ghForm = CanvasForm.GetExtraForm("Glitch Harvester");
             try
             {
                 //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs
@@ -439,8 +439,8 @@ namespace RTCV.UI
                 SyncObjectSingleton.FormExecute(() =>
                 {
                     UICore.LockInterface(false, true);
-                    S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
-                    ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
+                    S.GET<SaveProgressForm>().Dock = DockStyle.Fill;
+                    ghForm?.OpenSubForm(S.GET<SaveProgressForm>());
                 });
 
                 await Task.Run(() =>
@@ -478,7 +478,7 @@ namespace RTCV.UI
             }
 
             //Bring the UI back to normal after a drag+drop to prevent weird merge stuff
-            S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
+            S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
         }
 
         private void UpdateLoadSavestateOnClick(object sender, EventArgs e)

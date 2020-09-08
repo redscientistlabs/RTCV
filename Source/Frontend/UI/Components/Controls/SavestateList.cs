@@ -314,7 +314,7 @@ namespace RTCV.UI.Components.Controls
             {
                 LoadCurrentState();
                 StockpileManager_UISide.CurrentStashkey = null;
-                S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = false;
+                S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = false;
             }
             else
             {

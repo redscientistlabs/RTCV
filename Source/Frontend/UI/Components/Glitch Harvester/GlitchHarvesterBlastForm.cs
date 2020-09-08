@@ -13,7 +13,7 @@ namespace RTCV.UI
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class RTC_GlitchHarvesterBlast_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class GlitchHarvesterBlastForm : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
@@ -65,7 +65,7 @@ namespace RTCV.UI
             }
         }
 
-        public RTC_GlitchHarvesterBlast_Form()
+        public GlitchHarvesterBlastForm()
         {
             InitializeComponent();
 
@@ -76,11 +76,11 @@ namespace RTCV.UI
 
             //Registers the drag and drop with the blast edirot form
             AllowDrop = true;
-            this.DragEnter += RTC_GlitchHarvesterBlast_Form_DragEnter;
-            this.DragDrop += RTC_GlitchHarvesterBlast_Form_DragDrop;
+            this.DragEnter += OnDragEnter;
+            this.DragDrop += OnDragDrop;
         }
 
-        private void RTC_GlitchHarvesterBlast_Form_DragDrop(object sender, DragEventArgs e)
+        private void OnDragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             foreach (var f in files)
@@ -89,12 +89,12 @@ namespace RTCV.UI
                 {
                     BlastLayer bl = BlastTools.LoadBlastLayerFromFile(f);
                     var newStashKey = new StashKey(RtcCore.GetRandomKey(), null, bl);
-                    S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newStashKey, false, false);
+                    S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newStashKey, false, false);
                 }
             }
         }
 
-        private void RTC_GlitchHarvesterBlast_Form_DragEnter(object sender, DragEventArgs e)
+        private void OnDragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Link;
         }
@@ -181,7 +181,7 @@ namespace RTCV.UI
             }
         }
 
-        public void btnCorrupt_Click(object sender, EventArgs e)
+        public void Corrupt(object sender, EventArgs e)
         {
             logger.Trace("btnCorrupt Clicked");
 
@@ -292,18 +292,13 @@ namespace RTCV.UI
             }
         }
 
-        private void btnOpenRenderFolder_Click(object sender, EventArgs e)
-        {
-            Process.Start(Path.Combine(RtcCore.RtcDir, "RENDEROUTPUT"));
-        }
-
         private void BlastRawStash()
         {
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.MANUALBLAST, true);
-            btnSendRaw_Click(null, null);
+            SendRawToStash(null, null);
         }
 
-        private void btnCorrupt_MouseDown(object sender, MouseEventArgs e)
+        private void OnCorruptButtonMouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -318,7 +313,7 @@ namespace RTCV.UI
             }
         }
 
-        public void btnSendRaw_Click(object sender, EventArgs e)
+        public void SendRawToStash(object sender, EventArgs e)
         {
             if (!btnSendRaw.Visible)
             {
@@ -358,7 +353,7 @@ namespace RTCV.UI
             }
         }
 
-        public void btnBlastToggle_Click(object sender, EventArgs e)
+        public void BlastLayerToggle(object sender, EventArgs e)
         {
             if (StockpileManager_UISide.CurrentStashkey?.BlastLayer?.Layer == null || StockpileManager_UISide.CurrentStashkey?.BlastLayer?.Layer.Count == 0)
             {
@@ -381,7 +376,7 @@ namespace RTCV.UI
             }
         }
 
-        private void btnRerollSelected_MouseDown(object sender, MouseEventArgs e)
+        private void OnRerollButtonMouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -398,7 +393,7 @@ namespace RTCV.UI
             }
         }
 
-        public void btnRerollSelected_Click(object sender, EventArgs e)
+        public void RerollSelected(object sender, EventArgs e)
         {
             if (!btnRerollSelected.Visible)
             {
@@ -462,7 +457,7 @@ namespace RTCV.UI
             }
         }
 
-        private void btnGlitchHarvesterSettings_MouseDown(object sender, MouseEventArgs e)
+        private void OpenGlitchHarvesterSettings(object sender, MouseEventArgs e)
         {
             Point locate = e.GetMouseLocation(sender);
             ContextMenuStrip ghSettingsMenu = new ContextMenuStrip();
@@ -514,7 +509,7 @@ namespace RTCV.UI
             ghSettingsMenu.Show(this, locate);
         }
 
-        private void btnRenderOutput_MouseDown(object sender, MouseEventArgs e)
+        private void RenderOutput(object sender, MouseEventArgs e)
         {
             Point locate = e.GetMouseLocation(sender);
             ContextMenuStrip ghSettingsMenu = new ContextMenuStrip();

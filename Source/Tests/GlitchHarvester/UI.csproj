@@ -47,11 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UI_CanvasForm.cs">
+    <Compile Include="CanvasForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI_CanvasForm.Designer.cs">
-      <DependentUpon>UI_CanvasForm.cs</DependentUpon>
+    <Compile Include="CanvasForm.Designer.cs">
+      <DependentUpon>CanvasForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI_Objects.cs" />
     <Compile Include="ShadowPanel.cs">
@@ -81,8 +81,8 @@
     <Compile Include="UI_ComponentFormTile.Designer.cs">
       <DependentUpon>UI_ComponentFormTile.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="UI_CanvasForm.resx">
-      <DependentUpon>UI_CanvasForm.cs</DependentUpon>
+    <EmbeddedResource Include="CanvasForm.resx">
+      <DependentUpon>CanvasForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI_CoreForm.resx">
       <DependentUpon>UI_CoreForm.cs</DependentUpon>

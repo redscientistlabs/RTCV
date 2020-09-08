@@ -92,7 +92,7 @@ namespace RTCV.UI
                 S.GET<RTC_StashHistory_Form>().lbStashHistory.ClearSelected();
                 S.GET<RTC_StockpilePlayer_Form>().dgvStockpile.ClearSelection();
 
-                S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
+                S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
 
                 if (dgvStockpile.SelectedRows.Count == 0)
                 {
@@ -107,7 +107,7 @@ namespace RTCV.UI
                     return;
                 }
 
-                if (!S.GET<RTC_GlitchHarvesterBlast_Form>().LoadOnSelect)
+                if (!S.GET<GlitchHarvesterBlastForm>().LoadOnSelect)
                 {
                     return;
                 }
@@ -129,7 +129,7 @@ namespace RTCV.UI
                         sks.Reverse();
                     StockpileManager_UISide.MergeStashkeys(sks);
 
-                    if (Render.RenderAtLoad && S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation)
+                    if (Render.RenderAtLoad && S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation)
                     {
                         Render.StartRender();
                     }
@@ -138,7 +138,7 @@ namespace RTCV.UI
                     return;
                 }
 
-                S.GET<RTC_GlitchHarvesterBlast_Form>().OneTimeExecute();
+                S.GET<GlitchHarvesterBlastForm>().OneTimeExecute();
             }
             finally
             {
@@ -149,7 +149,7 @@ namespace RTCV.UI
                 S.GET<RTC_StashHistory_Form>().btnAddStashToStockpile.Enabled = true;
             }
 
-            S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
+            S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
         }
         private static bool IsControlDown()
         {
@@ -207,7 +207,7 @@ namespace RTCV.UI
                 {
                     var sk = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
                     StashKey newSk = (StashKey)sk.Clone();
-                    S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newSk, false, false);
+                    S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newSk, false, false);
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
                 columnsMenu.Items.Add(new ToolStripSeparator());
@@ -337,7 +337,7 @@ namespace RTCV.UI
                 }
                 StockpileManager_UISide.StockpileChanged();
                 UnsavedEdits = true;
-                S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
+                S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
             }
         }
 
@@ -357,7 +357,7 @@ namespace RTCV.UI
                 btnSaveStockpile.Enabled = false;
                 UnsavedEdits = false;
 
-                S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
+                S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
             }
         }
 
@@ -370,7 +370,7 @@ namespace RTCV.UI
                 return;
             }
 
-            var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
+            var ghForm = CanvasForm.GetExtraForm("Glitch Harvester");
             try
             {
                 //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs
@@ -382,8 +382,8 @@ namespace RTCV.UI
                 logger.Trace("UI Blocked");
 
                 logger.Trace("Opening SaveProgress Form");
-                S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
-                ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
+                S.GET<SaveProgressForm>().Dock = DockStyle.Fill;
+                ghForm?.OpenSubForm(S.GET<SaveProgressForm>());
 
                 logger.Trace("Clearing Current Stockpile");
                 StockpileManager_UISide.ClearCurrentStockpile();
@@ -440,13 +440,13 @@ namespace RTCV.UI
 
         private async void ImportStockpile(string filename)
         {
-            var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
+            var ghForm = CanvasForm.GetExtraForm("Glitch Harvester");
             try
             {
                 UICore.SetHotkeyTimer(false);
                 UICore.LockInterface(false, true);
-                S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
-                ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
+                S.GET<SaveProgressForm>().Dock = DockStyle.Fill;
+                ghForm?.OpenSubForm(S.GET<SaveProgressForm>());
 
                 var r = await Task.Run(() => Stockpile.Import(filename));
 
@@ -479,15 +479,15 @@ namespace RTCV.UI
         private async void SaveStockpile(Stockpile sks, string path)
         {
             logger.Trace("Entering SaveStockpile {0}\n{1}", Thread.CurrentThread.ManagedThreadId, Environment.StackTrace);
-            var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
+            var ghForm = CanvasForm.GetExtraForm("Glitch Harvester");
             try
             {
                 //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs
                 //Thus, we want this to happen within the try block
                 UICore.SetHotkeyTimer(false);
                 UICore.LockInterface(false, true);
-                S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
-                ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
+                S.GET<SaveProgressForm>().Dock = DockStyle.Fill;
+                ghForm?.OpenSubForm(S.GET<SaveProgressForm>());
 
                 var r = await Task.Run(() => Stockpile.Save(sks, path, NetCore.Params.IsParamSet("INCLUDE_REFERENCED_FILES"), NetCore.Params.IsParamSet("COMPRESS_STOCKPILE")));
 
@@ -650,7 +650,7 @@ namespace RTCV.UI
             UnsavedEdits = true;
 
             StockpileManager_UISide.StockpileChanged();
-            S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
+            S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
         }
 
         private void btnStockpileMoveSelectedDown_Click(object sender, EventArgs e)
@@ -682,7 +682,7 @@ namespace RTCV.UI
             UnsavedEdits = true;
 
             StockpileManager_UISide.StockpileChanged();
-            S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
+            S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
         }
 
         private void dgvStockpile_DragDrop(object sender, DragEventArgs e)
@@ -715,7 +715,7 @@ namespace RTCV.UI
 
 
             //Bring the UI back to normal after a drag+drop to prevent weird merge stuff
-            S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
+            S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
         }
 
         private void dgvStockpile_DragEnter(object sender, DragEventArgs e)

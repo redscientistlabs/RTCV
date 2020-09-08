@@ -7,12 +7,12 @@ namespace RTCV.UI
     using RTCV.NetCore;
     using RTCV.Common;
 
-    public partial class RTC_SanitizeTool_Form : Form, IAutoColorize
+    public partial class SanitizeToolForm : Form, IAutoColorize
     {
         private BlastLayer originalBlastLayer = null;
         private BlastLayer workBlastLayer = null;
 
-        public RTC_SanitizeTool_Form()
+        public SanitizeToolForm()
         {
             try
             {
@@ -29,8 +29,8 @@ namespace RTCV.UI
 
         public static void OpenSanitizeTool(BlastLayer bl = null, bool lockUI = true)
         {
-            S.GET<RTC_SanitizeTool_Form>().Close();
-            var stf = new RTC_SanitizeTool_Form();
+            S.GET<SanitizeToolForm>().Close();
+            var stf = new SanitizeToolForm();
             S.SET(stf);
 
             if (bl == null)
@@ -70,12 +70,12 @@ namespace RTCV.UI
                 stf.Show();
         }
 
-        private void RTC_NewBlastEditorForm_Load(object sender, EventArgs e)
+        private void OnFormLoad(object sender, EventArgs e)
         {
             Colors.SetRTCColor(Colors.GeneralColor, this);
         }
 
-        public void btnReroll_Click(object sender, EventArgs e)
+        public void Reroll(object sender, EventArgs e)
         {
             pnBlastLayerSanitization.Visible = false;
             this.Refresh();
@@ -91,7 +91,7 @@ namespace RTCV.UI
             pnBlastLayerSanitization.Visible = true;
         }
 
-        public void btnYesEffect_Click(object sender, EventArgs e)
+        public void YesEffect(object sender, EventArgs e)
         {
             pnBlastLayerSanitization.Visible = false;
             this.Refresh();
@@ -118,7 +118,7 @@ namespace RTCV.UI
             pnBlastLayerSanitization.Visible = true;
         }
 
-        public void btnNoEffect_Click(object sender, EventArgs e)
+        public void NoEffect(object sender, EventArgs e)
         {
             pnBlastLayerSanitization.Visible = false;
             this.Refresh();
@@ -144,7 +144,7 @@ namespace RTCV.UI
             pnBlastLayerSanitization.Visible = true;
         }
 
-        public void btnReplayLast_Click(object sender, EventArgs e)
+        private void ReplayCorruption(object sender, EventArgs e)
         {
             pnBlastLayerSanitization.Visible = false;
             this.Refresh();
@@ -156,7 +156,7 @@ namespace RTCV.UI
             pnBlastLayerSanitization.Visible = true;
         }
 
-        public void btnLeaveWithChanges_Click(object sender, EventArgs e)
+        public void LeaveAndKeepChanges(object sender, EventArgs e)
         {
             ReopenBlastEditor();
             this.Close();
@@ -172,7 +172,7 @@ namespace RTCV.UI
             be.BringToFront();
         }
 
-        public void btnLeaveSubstractChanges_Click(object sender, EventArgs e)
+        public void LeaveAndSubtractChanges(object sender, EventArgs e)
         {
             BlastLayer changes = (BlastLayer)S.GET<RTC_NewBlastEditor_Form>().currentSK.BlastLayer.Clone();
             BlastLayer modified = (BlastLayer)originalBlastLayer.Clone();
@@ -207,7 +207,7 @@ namespace RTCV.UI
             this.Close();
         }
 
-        public void btnLeaveWithoutChanges_Click(object sender, EventArgs e)
+        private void LeaveWithoutChanges(object sender, EventArgs e)
         {
             S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(originalBlastLayer);
             ReopenBlastEditor();
@@ -215,7 +215,7 @@ namespace RTCV.UI
             this.Close();
         }
 
-        private void btnBackPrevState_Click(object sender, EventArgs e)
+        private void GoBackToPreviousState(object sender, EventArgs e)
         {
             pnBlastLayerSanitization.Visible = false;
             this.Refresh();
@@ -265,35 +265,34 @@ namespace RTCV.UI
         {
             int originalSize = originalBlastLayer.Layer.Count(x => !x.IsLocked);
 
-            int original_remainder = originalSize;
-            int original_maxsteps = 0;
-            while (original_remainder > 1)
+            int originalRemainder = originalSize;
+            int originalMaxsteps = 0;
+            while (originalRemainder > 1)
             {
-                original_remainder = original_remainder / 2;
-                original_maxsteps++;
+                originalRemainder = originalRemainder / 2;
+                originalMaxsteps++;
             }
 
 
             int currentSize = S.GET<RTC_NewBlastEditor_Form>().currentSK.BlastLayer.Layer.Count(x => !x.IsLocked);
             //int currentSize = workBlastLayer
 
-            int current_remainder = currentSize;
-            int current_maxsteps = 0;
-            while (current_remainder > 1)
+            int currentRemainder = currentSize;
+            int currentMaxsteps = 0;
+            while (currentRemainder > 1)
             {
-                current_remainder = current_remainder / 2;
-                current_maxsteps++;
+                currentRemainder = currentRemainder / 2;
+                currentMaxsteps++;
             }
 
             lbCurrentLayerSize.Text = $"Current Layer size: {currentSize}";
-            pbProgress.Maximum = original_maxsteps;
-            pbProgress.Value = original_maxsteps - current_maxsteps;
+            pbProgress.Maximum = originalMaxsteps;
+            pbProgress.Value = originalMaxsteps - currentMaxsteps;
         }
 
-        public void btnStartSanitizing_Click(object sender, EventArgs e)
+        public void StartSanitizing(object sender, EventArgs e)
         {
             btnStartSanitizing.Visible = false;
-
 
             S.GET<RTC_NewBlastEditor_Form>().dgvBlastEditor.ClearSelection();
             S.GET<RTC_NewBlastEditor_Form>().btnDisable50_Click(null, null);
@@ -310,7 +309,7 @@ namespace RTCV.UI
             S.GET<RTC_NewBlastEditor_Form>().btnLoadCorrupt_Click(null, null);
         }
 
-        private void RTC_SanitizeTool_Form_FormClosing(object sender, FormClosingEventArgs e)
+        private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason != CloseReason.UserClosing)
             {
@@ -339,19 +338,18 @@ namespace RTCV.UI
             }
         }
 
-        private void btnAddToStockpile_Click(object sender, EventArgs e)
+        private void AddToStockpile(object sender, EventArgs e)
         {
             if (S.GET<RTC_NewBlastEditor_Form>().AddStashToStockpile())
                 this.Close();
         }
-        private void btnAddToStash_Click(object sender, EventArgs e)
+        private void AddToStash(object sender, EventArgs e)
         {
             S.GET<RTC_NewBlastEditor_Form>().btnSendToStash_Click(null, null);
             this.Close();
         }
-        private void btnLeaveNoChanges_Click(object sender, EventArgs e)
+        private void LeaveWithNoChanges(object sender, EventArgs e)
         {
-            //S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(originalBlastLayer);
             this.Close();
         }
     }
