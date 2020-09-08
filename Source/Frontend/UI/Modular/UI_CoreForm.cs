@@ -184,7 +184,7 @@ This message only appears once.";
             //Sends event to SubForm
             if (cfForm.spForm != null)
             {
-                cfForm.spForm.Parent_ResizeBegin();
+                cfForm.spForm.OnParentResizeBegin();
             }
         }
 
@@ -193,7 +193,7 @@ This message only appears once.";
             //Sends event to SubForm
             if (cfForm.spForm != null)
             {
-                cfForm.spForm?.Parent_ResizeEnd();
+                cfForm.spForm?.OnParentResizeEnd();
             }
         }
 
@@ -217,7 +217,7 @@ This message only appears once.";
 
                 if (cfForm.spForm != null)
                 {
-                    cfForm.spForm?.Parent_ResizeEnd();
+                    cfForm.spForm?.OnParentResizeEnd();
                 }
 
                 LastWindowState = WindowState;

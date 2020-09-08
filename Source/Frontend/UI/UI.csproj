@@ -182,11 +182,11 @@
     <Compile Include="Components\Glitch Harvester\SavestateManagerForm.designer.cs">
       <DependentUpon>SavestateManagerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Glitch Harvester\RTC_GlitchHarvesterIntensity_Form.cs">
+    <Compile Include="Components\Glitch Harvester\GlitchHarvesterIntensityForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Glitch Harvester\RTC_GlitchHarvesterIntensity_Form.designer.cs">
-      <DependentUpon>RTC_GlitchHarvesterIntensity_Form.cs</DependentUpon>
+    <Compile Include="Components\Glitch Harvester\GlitchHarvesterIntensityForm.designer.cs">
+      <DependentUpon>GlitchHarvesterIntensityForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Glitch Harvester\RTC_StashHistory_Form.cs">
       <SubType>Form</SubType>
@@ -436,11 +436,11 @@
     <Compile Include="Modular\UI_SaveProgress_Form.designer.cs">
       <DependentUpon>UI_SaveProgress_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modular\UI_ShadowPanel.cs">
+    <Compile Include="Modular\ShadowPanel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modular\UI_ShadowPanel.Designer.cs">
-      <DependentUpon>UI_ShadowPanel.cs</DependentUpon>
+    <Compile Include="Modular\ShadowPanel.Designer.cs">
+      <DependentUpon>ShadowPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Colors.cs" />
     <Compile Include="UICore.cs" />
@@ -506,8 +506,8 @@
     <EmbeddedResource Include="Components\Glitch Harvester\SavestateManagerForm.resx">
       <DependentUpon>SavestateManagerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Glitch Harvester\RTC_GlitchHarvesterIntensity_Form.resx">
-      <DependentUpon>RTC_GlitchHarvesterIntensity_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Glitch Harvester\GlitchHarvesterIntensityForm.resx">
+      <DependentUpon>GlitchHarvesterIntensityForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Glitch Harvester\RTC_StashHistory_Form.resx">
       <DependentUpon>RTC_StashHistory_Form.cs</DependentUpon>
@@ -620,8 +620,8 @@
     <EmbeddedResource Include="Modular\UI_SaveProgress_Form.resx">
       <DependentUpon>UI_SaveProgress_Form.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modular\UI_ShadowPanel.resx">
-      <DependentUpon>UI_ShadowPanel.cs</DependentUpon>
+    <EmbeddedResource Include="Modular\ShadowPanel.resx">
+      <DependentUpon>ShadowPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
