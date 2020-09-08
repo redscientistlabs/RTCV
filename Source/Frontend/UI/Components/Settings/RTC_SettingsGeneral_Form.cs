@@ -24,7 +24,7 @@
         private void btnImportKeyBindings_Click(object sender, EventArgs e)
         {
 
-            if (UI_VanguardImplementation.connector.netConn.status != NetworkStatus.CONNECTED)
+            if (VanguardImplementation.connector.netConn.status != NetworkStatus.CONNECTED)
             {
                 MessageBox.Show("Can't import keybindings when not connected to Bizhawk!");
                 return;
