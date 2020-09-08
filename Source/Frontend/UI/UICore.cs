@@ -38,8 +38,8 @@ namespace RTCV.UI
         {
             S.formRegister.FormRegistered += FormRegister_FormRegistered;
             //registerFormEvents(S.GET<RTC_Core_Form>());
-            registerFormEvents(S.GET<UI_CoreForm>());
-            registerHotkeyBlacklistControls(S.GET<UI_CoreForm>());
+            registerFormEvents(S.GET<CoreForm>());
+            registerHotkeyBlacklistControls(S.GET<CoreForm>());
 
             if (!RtcCore.Attached)
             {
@@ -88,7 +88,7 @@ namespace RTCV.UI
             }
 
             Colors.LoadRTCColor();
-            S.GET<UI_CoreForm>().Show();
+            S.GET<CoreForm>().Show();
             Initialized.Set();
             Colors.LoadRTCColor();
         }
@@ -191,7 +191,7 @@ namespace RTCV.UI
                 SetHotkeyTimer(false);
 
                 interfaceLocked = true;
-                var cf = S.GET<UI_CoreForm>();
+                var cf = S.GET<CoreForm>();
                 cf.LockSideBar();
 
                 S.GET<RTC_ConnectionStatus_Form>().pnBlockedButtons.Show();
@@ -228,7 +228,7 @@ namespace RTCV.UI
             lock (lockObject)
             {
                 interfaceLocked = false;
-                S.GET<UI_CoreForm>().UnlockSideBar();
+                S.GET<CoreForm>().UnlockSideBar();
 
                 S.GET<RTC_ConnectionStatus_Form>().pnBlockedButtons.Hide();
 
@@ -297,7 +297,7 @@ namespace RTCV.UI
         {
             if (baseType == null)
             {
-                baseType = typeof(UI_CoreForm);
+                baseType = typeof(CoreForm);
             }
             //This fetches all singletons interface IAutoColorized
 
@@ -396,14 +396,14 @@ namespace RTCV.UI
                 case "Manual Blast":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        S.GET<UI_CoreForm>().btnManualBlast_Click(null, null);
+                        S.GET<CoreForm>().ManualBlast(null, null);
                     });
                     break;
 
                 case "Auto-Corrupt":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        S.GET<UI_CoreForm>().btnAutoCorrupt_Click(null, null);
+                        S.GET<CoreForm>().StartAutoCorrupt(null, null);
                     });
                     break;
 
@@ -533,7 +533,7 @@ namespace RTCV.UI
                     SyncObjectSingleton.FormExecute(() =>
                     {
                         AllSpec.CorruptCoreSpec.Update(VSPEC.STEP_RUNBEFORE, true);
-                        S.GET<UI_CoreForm>().btnManualBlast_Click(null, null);
+                        S.GET<CoreForm>().ManualBlast(null, null);
                         S.GET<GlitchHarvesterBlastForm>().SendRawToStash(null, null);
                     });
                     break;
@@ -568,11 +568,11 @@ namespace RTCV.UI
                 case "Game Protect Back":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var f = S.GET<UI_CoreForm>();
+                        var f = S.GET<CoreForm>();
                         var b = f.btnGpJumpBack;
                         if (b.Visible && b.Enabled)
                         {
-                            f.btnGpJumpBack_Click(null, null);
+                            f.OnGameProtectionBack(null, null);
                         }
                     });
                     break;
@@ -580,11 +580,11 @@ namespace RTCV.UI
                 case "Game Protect Now":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var f = S.GET<UI_CoreForm>();
+                        var f = S.GET<CoreForm>();
                         var b = f.btnGpJumpNow;
                         if (b.Visible && b.Enabled)
                         {
-                            f.btnGpJumpNow_Click(null, null);
+                            f.OnGameProtectionNow(null, null);
                         }
                     });
                     break;
@@ -682,21 +682,21 @@ namespace RTCV.UI
         {
             if ((AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME] as bool?) ?? false)
             {
-                S.GET<UI_CoreForm>().btnManualBlast.Visible = true;
-                S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = true;
+                S.GET<CoreForm>().btnManualBlast.Visible = true;
+                S.GET<CoreForm>().btnAutoCorrupt.Visible = true;
             }
             else
             {
                 if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] == null)
                 {
-                    S.GET<UI_CoreForm>().btnManualBlast.Visible = false;
+                    S.GET<CoreForm>().btnManualBlast.Visible = false;
                 }
                 else
                 {
-                    S.GET<UI_CoreForm>().btnManualBlast.Visible = true;
+                    S.GET<CoreForm>().btnManualBlast.Visible = true;
                 }
 
-                S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
+                S.GET<CoreForm>().btnAutoCorrupt.Visible = false;
             }
         }
 

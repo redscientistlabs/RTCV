@@ -421,11 +421,11 @@
     <Compile Include="Modular\UI_ComponentFormTile.Designer.cs">
       <DependentUpon>UI_ComponentFormTile.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modular\UI_CoreForm.cs">
+    <Compile Include="Modular\CoreForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modular\UI_CoreForm.Designer.cs">
-      <DependentUpon>UI_CoreForm.cs</DependentUpon>
+    <Compile Include="Modular\CoreForm.Designer.cs">
+      <DependentUpon>CoreForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Modular\DefaultGrids.cs" />
     <Compile Include="Modular\CanvasGrid.cs" />
@@ -614,8 +614,8 @@
     <EmbeddedResource Include="Modular\UI_ComponentFormTile.resx">
       <DependentUpon>UI_ComponentFormTile.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modular\UI_CoreForm.resx">
-      <DependentUpon>UI_CoreForm.cs</DependentUpon>
+    <EmbeddedResource Include="Modular\CoreForm.resx">
+      <DependentUpon>CoreForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modular\SaveProgressForm.resx">
       <DependentUpon>SaveProgressForm.cs</DependentUpon>

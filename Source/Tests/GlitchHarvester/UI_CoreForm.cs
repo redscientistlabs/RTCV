@@ -9,12 +9,12 @@ using System.Windows.Forms;
 
 namespace RTCV.UI
 {
-    public partial class UI_CoreForm : Form
+    public partial class CoreForm : Form
     {
         //This form traps events and forwards them.
         //It contains the single CanvasForm instance.
 
-        public static UI_CoreForm thisForm;
+        public static CoreForm thisForm;
         public static CanvasForm cfForm;
 
 
@@ -24,7 +24,7 @@ namespace RTCV.UI
         public static int yPadding;
 
 
-        public UI_CoreForm()
+        public CoreForm()
         {
             InitializeComponent();
             thisForm = this;
@@ -50,7 +50,7 @@ namespace RTCV.UI
 
         }
 
-        private void UI_CoreForm_Load(object sender, EventArgs e)
+        private void CoreForm_Load(object sender, EventArgs e)
         {
             NetCoreServer.StartLoopback();
         }
@@ -61,7 +61,7 @@ namespace RTCV.UI
             this.Size = new Size(x + xPadding + corePadding, y + yPadding); //For Vertical tab-style menu in coreform
         }
 
-        private void UI_CoreForm_ResizeBegin(object sender, EventArgs e)
+        private void CoreForm_ResizeBegin(object sender, EventArgs e)
         {
             //Sends event to SubForm
             if(cfForm.spForm != null)
@@ -70,7 +70,7 @@ namespace RTCV.UI
         }
 
 
-        private void UI_CoreForm_ResizeEnd(object sender, EventArgs e)
+        private void CoreForm_ResizeEnd(object sender, EventArgs e)
         {
             //Sends event to SubForm
             if (cfForm.spForm != null)
@@ -78,7 +78,7 @@ namespace RTCV.UI
         }
 
         FormWindowState? LastWindowState = null;
-        private void UI_CoreForm_Resize(object sender, EventArgs e)
+        private void CoreForm_Resize(object sender, EventArgs e)
         {
             // When window state changes
             if (WindowState != LastWindowState)

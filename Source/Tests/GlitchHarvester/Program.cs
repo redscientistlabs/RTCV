@@ -15,7 +15,7 @@ namespace RTCV.UI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new UI_CoreForm());
+            Application.Run(new CoreForm());
         }
     }
 }

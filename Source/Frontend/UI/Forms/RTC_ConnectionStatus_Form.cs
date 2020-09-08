@@ -63,18 +63,18 @@
             {
                 Point locate = e.GetMouseLocation(sender);
                 ContextMenuStrip columnsMenu = new ContextMenuStrip();
-                columnsMenu.Items.Add("Open Debug window", null, new EventHandler((ob, ev) => { UI_CoreForm.ForceCloudDebug(); }));
+                columnsMenu.Items.Add("Open Debug window", null, new EventHandler((ob, ev) => { CoreForm.ForceCloudDebug(); }));
                 columnsMenu.Show(this, locate);
                 return;
             }
 
-            S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Maximum;
+            S.GET<CoreForm>().pbAutoKillSwitchTimeout.Value = S.GET<CoreForm>().pbAutoKillSwitchTimeout.Maximum;
             AutoKillSwitch.KillEmulator(true);
         }
 
         private void btnBreakCrashLoop_Click(object sender, EventArgs e)
         {
-            S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked = false;
+            S.GET<CoreForm>().cbUseAutoKillSwitch.Checked = false;
             AutoKillSwitch.KillEmulator(true);
         }
     }
