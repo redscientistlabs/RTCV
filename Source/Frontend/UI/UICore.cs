@@ -198,10 +198,10 @@ namespace RTCV.UI
 
                 if (blockMainForm)
                 {
-                    UI_CanvasForm.mainForm.BlockView();
+                    CanvasForm.mainForm.BlockView();
                 }
 
-                UI_CanvasForm.extraForms.ForEach(it => it.BlockView());
+                CanvasForm.extraForms.ForEach(it => it.BlockView());
 
                 var ifs = S.GETINTERFACES<IBlockable>();
 
@@ -232,8 +232,8 @@ namespace RTCV.UI
 
                 S.GET<RTC_ConnectionStatus_Form>().pnBlockedButtons.Hide();
 
-                UI_CanvasForm.mainForm.UnblockView();
-                UI_CanvasForm.extraForms.ForEach(it => it.UnblockView());
+                CanvasForm.mainForm.UnblockView();
+                CanvasForm.extraForms.ForEach(it => it.UnblockView());
                 var ifs = S.GETINTERFACES<IBlockable>();
                 foreach (var i in ifs)
                 {

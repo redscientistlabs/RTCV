@@ -12,10 +12,10 @@ namespace RTCV.UI
 {
     public partial class ShadowPanel : Form
     {
-        public static UI_CanvasForm parentForm;
+        public static CanvasForm parentForm;
         public static Form subForm = null;
 
-        public ShadowPanel(UI_CanvasForm _parentForm, string _type)
+        public ShadowPanel(CanvasForm _parentForm, string _type)
         {
             InitializeComponent();
 

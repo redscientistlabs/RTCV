@@ -17,10 +17,10 @@ namespace RTCV.UI
     public partial class UI_CoreForm : Form, IAutoColorize
     {
         //This form traps events and forwards them.
-        //It contains the single UI_CanvasForm instance.
+        //It contains the single CanvasForm instance.
 
         public static UI_CoreForm thisForm;
-        public static UI_CanvasForm cfForm;
+        public static CanvasForm cfForm;
 
         public CanvasGrid previousGrid { get; set; } = null;
 
@@ -57,7 +57,7 @@ namespace RTCV.UI
             thisForm = this;
             this.FormClosing += UI_CoreForm_FormClosing;
 
-            cfForm = new UI_CanvasForm
+            cfForm = new CanvasForm
             {
                 TopLevel = false,
                 Dock = DockStyle.Fill,

@@ -370,7 +370,7 @@ namespace RTCV.UI
                 return;
             }
 
-            var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
+            var ghForm = CanvasForm.GetExtraForm("Glitch Harvester");
             try
             {
                 //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs
@@ -440,7 +440,7 @@ namespace RTCV.UI
 
         private async void ImportStockpile(string filename)
         {
-            var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
+            var ghForm = CanvasForm.GetExtraForm("Glitch Harvester");
             try
             {
                 UICore.SetHotkeyTimer(false);
@@ -479,7 +479,7 @@ namespace RTCV.UI
         private async void SaveStockpile(Stockpile sks, string path)
         {
             logger.Trace("Entering SaveStockpile {0}\n{1}", Thread.CurrentThread.ManagedThreadId, Environment.StackTrace);
-            var ghForm = UI_CanvasForm.GetExtraForm("Glitch Harvester");
+            var ghForm = CanvasForm.GetExtraForm("Glitch Harvester");
             try
             {
                 //We do this here and invoke because our unlock runs at the end of the awaited method, but there's a chance an error occurs
