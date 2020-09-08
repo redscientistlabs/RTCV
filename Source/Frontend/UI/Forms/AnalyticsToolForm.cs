@@ -10,12 +10,12 @@
     using RTCV.NetCore;
     using RTCV.Common;
 
-    public partial class RTC_AnalyticsTool_Form : Form, IAutoColorize
+    public partial class AnalyticsToolForm : Form, IAutoColorize
     {
         private MemoryInterface MemoryInterface;
         private List<string> ActiveTableDumps;
 
-        public RTC_AnalyticsTool_Form()
+        public AnalyticsToolForm()
         {
             try
             {
@@ -35,8 +35,8 @@
 
         public static void OpenAnalyticsTool(MemoryInterface mi, List<string> memoryDumpPaths)
         {
-            S.GET<RTC_AnalyticsTool_Form>().Close();
-            var stf = new RTC_AnalyticsTool_Form();
+            S.GET<AnalyticsToolForm>().Close();
+            var stf = new AnalyticsToolForm();
             S.SET(stf);
 
             stf.MemoryInterface = mi;
@@ -56,7 +56,7 @@
             stf.lbDumps.DataSource = null;
             stf.lbDumps.DataSource = stf.DumpSource;
 
-            stf.btnSelectAllDumps_Click(null, null);
+            stf.SelectAllDumps(null, null);
 
             stf.lbDomainSize.Text = $"Domain size: {mi.Size}";
 
@@ -81,12 +81,12 @@
             stf.Show();
         }
 
-        private void RTC_AnalyticsToolForm_Load(object sender, EventArgs e)
+        private void OnFormLoad(object sender, EventArgs e)
         {
             Colors.SetRTCColor(Colors.GeneralColor, this);
         }
 
-        private void SanitizeToolForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason != CloseReason.UserClosing)
             {
@@ -101,23 +101,23 @@
             }
         }
 
-        private void btnSelectAllDumps_Click(object sender, EventArgs e)
+        private void SelectAllDumps(object sender, EventArgs e)
         {
             for (int i = 0; i < lbDumps.Items.Count; i++)
                 lbDumps.SetSelected(i, true);
         }
 
-        private void btnSelectNoDumps_Click(object sender, EventArgs e)
+        private void SelectNoDumps(object sender, EventArgs e)
         {
             lbDumps.ClearSelected();
         }
 
-        private void lbDumps_SelectedIndexChanged(object sender, EventArgs e)
+        private void UpdateSelectedDumps(object sender, EventArgs e)
         {
             lbDumpsSelected.Text = $"Dumps selected: {lbDumps.SelectedItems.Count}";
         }
 
-        private void cbWordSize_SelectedIndexChanged(object sender, EventArgs e)
+        private void UpdateSelectedWordSize(object sender, EventArgs e)
         {
             switch (cbWordSize.SelectedIndex)
             {
@@ -137,7 +137,7 @@
             }
         }
 
-        private void btnComputeActivity_Click(object sender, EventArgs e)
+        private void ComputeActivity(object sender, EventArgs e)
         {
             AnalyticsCube.Init();
 
@@ -168,16 +168,16 @@
             for (int i = 0; i < cpus; i++)
             {
                 //tuple params: cpuid, activity array, max activity
-                var task = new Task<(int, int[], int)>(function: (cpu_i) =>
+                var task = new Task<(int, int[], int)>(function: (cpuI) =>
                 {
-                    int real_i = (int)cpu_i;
+                    int realI = (int)cpuI;
 
                     int nbWordsInASlice = ((nbWords - remainderWords) / cpus);
-                    int nbWordsInThisOne = nbWordsInASlice + (real_i == (cpus - 1) ? remainderWords : 0);
+                    int nbWordsInThisOne = nbWordsInASlice + (realI == (cpus - 1) ? remainderWords : 0);
 
                     List<int> activity = new List<int>();
                     int maxActivity = 0;
-                    int wordStartIndex = (nbWordsInASlice * real_i);
+                    int wordStartIndex = (nbWordsInASlice * realI);
 
                     for (int y = wordStartIndex; y < wordStartIndex + nbWordsInThisOne; y++)
                     {
@@ -194,7 +194,7 @@
                         activity.Add(crunchedActivity);
                     }
 
-                    return (real_i, activity.ToArray(), maxActivity);
+                    return (realI, activity.ToArray(), maxActivity);
                 }, state: i);
 
                 tasks.Add(task);
@@ -202,7 +202,7 @@
             }
 
             Task.WaitAll(tasks.ToArray());
-            var returns = tasks.Select(it => (it as Task<(int cpu_i, int[] activity, int maxActivity)>).Result).OrderBy(it => it.cpu_i).ToArray();
+            var returns = tasks.Select(it => (it as Task<(int cpuI, int[] activity, int maxActivity)>).Result).OrderBy(it => it.cpuI).ToArray();
 
             int maxActivity = 0;
             List<int> fullActivity = new List<int>();

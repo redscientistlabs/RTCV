@@ -3,7 +3,7 @@ using RTCV.UI;
 
 namespace RTCV.UI
 {
-	partial class RTC_AnalyticsTool_Form
+	partial class AnalyticsToolForm
     {
 		/// <summary>
 		/// Required designer variable.
@@ -31,7 +31,7 @@ namespace RTCV.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_AnalyticsTool_Form));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AnalyticsToolForm));
             this.btnSelectAllDumps = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.btnSelectNoDumps = new System.Windows.Forms.Button();
@@ -70,7 +70,7 @@ namespace RTCV.UI
             this.btnSelectAllDumps.Tag = "color:light1";
             this.btnSelectAllDumps.Text = "Select All";
             this.btnSelectAllDumps.UseVisualStyleBackColor = false;
-            this.btnSelectAllDumps.Click += new System.EventHandler(this.btnSelectAllDumps_Click);
+            this.btnSelectAllDumps.Click += new System.EventHandler(this.SelectAllDumps);
             //
             // label6
             //
@@ -97,7 +97,7 @@ namespace RTCV.UI
             this.btnSelectNoDumps.Tag = "color:light1";
             this.btnSelectNoDumps.Text = "Select None";
             this.btnSelectNoDumps.UseVisualStyleBackColor = false;
-            this.btnSelectNoDumps.Click += new System.EventHandler(this.btnSelectNoDumps_Click);
+            this.btnSelectNoDumps.Click += new System.EventHandler(this.SelectNoDumps);
             //
             // button2
             //
@@ -173,7 +173,7 @@ namespace RTCV.UI
             this.btnComputeActivity.Tag = "color:light1";
             this.btnComputeActivity.Text = "Compute activity";
             this.btnComputeActivity.UseVisualStyleBackColor = false;
-            this.btnComputeActivity.Click += new System.EventHandler(this.btnComputeActivity_Click);
+            this.btnComputeActivity.Click += new System.EventHandler(this.ComputeActivity);
             //
             // cbWordSize
             //
@@ -193,7 +193,7 @@ namespace RTCV.UI
             this.cbWordSize.Size = new System.Drawing.Size(151, 21);
             this.cbWordSize.TabIndex = 205;
             this.cbWordSize.Tag = "color:normal";
-            this.cbWordSize.SelectedIndexChanged += new System.EventHandler(this.cbWordSize_SelectedIndexChanged);
+            this.cbWordSize.SelectedIndexChanged += new System.EventHandler(this.UpdateSelectedWordSize);
             //
             // label5
             //
@@ -226,7 +226,7 @@ namespace RTCV.UI
             this.lbDumps.TabIndex = 191;
             this.lbDumps.Tag = "color:dark2";
             this.lbDumps.ValueMember = "value";
-            this.lbDumps.SelectedIndexChanged += new System.EventHandler(this.lbDumps_SelectedIndexChanged);
+            this.lbDumps.SelectedIndexChanged += new System.EventHandler(this.UpdateSelectedDumps);
             //
             // panel2
             //
@@ -305,7 +305,7 @@ namespace RTCV.UI
             this.label1.TabIndex = 208;
             this.label1.Text = "Definition of activity";
             //
-            // RTC_AnalyticsTool_Form
+            // AnalyticsToolForm
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -329,11 +329,11 @@ namespace RTCV.UI
             this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.Name = "RTC_AnalyticsTool_Form";
+            this.Name = "AnalyticsToolForm";
             this.Tag = "color:dark1";
             this.Text = "Analytics Tool";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SanitizeToolForm_FormClosing);
-            this.Load += new System.EventHandler(this.RTC_AnalyticsToolForm_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
+            this.Load += new System.EventHandler(this.OnFormLoad);
             ((System.ComponentModel.ISupportInitialize)(this.pbActivity)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
