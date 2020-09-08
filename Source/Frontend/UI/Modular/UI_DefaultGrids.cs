@@ -30,7 +30,7 @@ namespace RTCV.UI.Modular
                 {
                     var ecGrid = new CanvasGrid(15, 12, "Engine Config");
 
-                    Form gpForm = S.GET<RTC_GeneralParameters_Form>();
+                    Form gpForm = S.GET<GeneralParametersForm>();
                     Form mdForm = S.GET<RTC_MemoryDomains_Form>();
                     Form ceForm = S.GET<CorruptionEngineForm>();
 
@@ -41,7 +41,7 @@ namespace RTCV.UI.Modular
                         S.GET<RTC_VmdGen_Form>(),
                         S.GET<RTC_VmdSimpleGen_Form>(),
                         S.GET<RTC_VmdAct_Form>(),
-                        S.GET<RTC_MyLists_Form>(),
+                        S.GET<MyListsForm>(),
                         S.GET<ListGenForm>(),
                         S.GET<RTC_VmdLimiterProfiler_Form>(),
                         //S.GET<RTC_DomainAnalytics_Form>(),
@@ -126,7 +126,7 @@ namespace RTCV.UI.Modular
                     };
 
                     Form ghbForm = S.GET<RTC_GlitchHarvesterBlast_Form>();
-                    Form ghiForm = S.GET<RTC_GlitchHarvesterIntensity_Form>();
+                    Form ghiForm = S.GET<GlitchHarvesterIntensityForm>();
                     Form ssmForm = S.GET<RTC_SavestateManager_Form>();
                     Form shForm = S.GET<RTC_StashHistory_Form>();
                     Form spmForm = S.GET<RTC_StockpileManager_Form>();
