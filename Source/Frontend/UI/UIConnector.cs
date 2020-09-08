@@ -57,7 +57,7 @@ namespace RTCV.UI
                         $"{(string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard"} connection timed out";
 
                     UICore.LockInterface();
-                    UI_DefaultGrids.connectionStatus.LoadToMain();
+                    DefaultGrids.connectionStatus.LoadToMain();
                 }
 
                 S.GET<RTC_VmdAct_Form>()

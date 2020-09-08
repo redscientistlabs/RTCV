@@ -84,7 +84,7 @@ namespace RTCV.UI
 
             if (FirstConnect)
             {
-                UI_DefaultGrids.connectionStatus.LoadToMain();
+                DefaultGrids.connectionStatus.LoadToMain();
             }
 
             Colors.LoadRTCColor();

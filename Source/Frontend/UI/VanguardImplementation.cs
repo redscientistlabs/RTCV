@@ -223,9 +223,9 @@ namespace RTCV.UI
                         S.GET<UI_CoreForm>().btnOpenCustomLayout.Visible = true;
                     }
 
-                    UI_DefaultGrids.engineConfig.LoadToMain();
+                    DefaultGrids.engineConfig.LoadToMain();
 
-                    UI_DefaultGrids.glitchHarvester.LoadToNewWindow("Glitch Harvester", true);
+                    DefaultGrids.glitchHarvester.LoadToNewWindow("Glitch Harvester", true);
                 }
                 else
                 {
@@ -254,7 +254,7 @@ namespace RTCV.UI
                     //Return to the main form. If the form is null for some reason, default to engineconfig
                     if (S.GET<UI_CoreForm>().previousGrid == null)
                     {
-                        S.GET<UI_CoreForm>().previousGrid = UI_DefaultGrids.engineConfig;
+                        S.GET<UI_CoreForm>().previousGrid = DefaultGrids.engineConfig;
                     }
 
                     UICore.UnlockInterface();
@@ -301,7 +301,7 @@ namespace RTCV.UI
                     }
                     else
                     {
-                        UI_DefaultGrids.simpleMode.LoadToMain();
+                        DefaultGrids.simpleMode.LoadToMain();
                         RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
                         smForm.EnteringSimpleMode();
                     }

@@ -3,7 +3,7 @@ namespace RTCV.UI.Modular
     using System.Windows.Forms;
     using RTCV.Common;
 
-    public static class UI_DefaultGrids
+    public static class DefaultGrids
     {
         private static CanvasGrid _connectionStatus = null;
         public static CanvasGrid connectionStatus
