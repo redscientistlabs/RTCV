@@ -200,7 +200,7 @@
                 UICore.SetHotkeyTimer(false);
                 UICore.LockInterface(false, true);
                 S.GET<SaveProgressForm>().Dock = DockStyle.Fill;
-                UI_CoreForm.cfForm?.OpenSubForm(S.GET<SaveProgressForm>());
+                CoreForm.cfForm?.OpenSubForm(S.GET<SaveProgressForm>());
 
                 StockpileManager_UISide.ClearCurrentStockpile();
 
