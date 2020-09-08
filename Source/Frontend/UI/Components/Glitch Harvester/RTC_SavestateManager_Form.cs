@@ -207,8 +207,8 @@ namespace RTCV.UI
                 SyncObjectSingleton.FormExecute(() =>
                 {
                     UICore.LockInterface(false, true);
-                    S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
-                    ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
+                    S.GET<SaveProgressForm>().Dock = DockStyle.Fill;
+                    ghForm?.OpenSubForm(S.GET<SaveProgressForm>());
                 });
 
                 await Task.Run(() =>
@@ -439,8 +439,8 @@ namespace RTCV.UI
                 SyncObjectSingleton.FormExecute(() =>
                 {
                     UICore.LockInterface(false, true);
-                    S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
-                    ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
+                    S.GET<SaveProgressForm>().Dock = DockStyle.Fill;
+                    ghForm?.OpenSubForm(S.GET<SaveProgressForm>());
                 });
 
                 await Task.Run(() =>

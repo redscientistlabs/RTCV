@@ -382,8 +382,8 @@ namespace RTCV.UI
                 logger.Trace("UI Blocked");
 
                 logger.Trace("Opening SaveProgress Form");
-                S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
-                ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
+                S.GET<SaveProgressForm>().Dock = DockStyle.Fill;
+                ghForm?.OpenSubForm(S.GET<SaveProgressForm>());
 
                 logger.Trace("Clearing Current Stockpile");
                 StockpileManager_UISide.ClearCurrentStockpile();
@@ -445,8 +445,8 @@ namespace RTCV.UI
             {
                 UICore.SetHotkeyTimer(false);
                 UICore.LockInterface(false, true);
-                S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
-                ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
+                S.GET<SaveProgressForm>().Dock = DockStyle.Fill;
+                ghForm?.OpenSubForm(S.GET<SaveProgressForm>());
 
                 var r = await Task.Run(() => Stockpile.Import(filename));
 
@@ -486,8 +486,8 @@ namespace RTCV.UI
                 //Thus, we want this to happen within the try block
                 UICore.SetHotkeyTimer(false);
                 UICore.LockInterface(false, true);
-                S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
-                ghForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
+                S.GET<SaveProgressForm>().Dock = DockStyle.Fill;
+                ghForm?.OpenSubForm(S.GET<SaveProgressForm>());
 
                 var r = await Task.Run(() => Stockpile.Save(sks, path, NetCore.Params.IsParamSet("INCLUDE_REFERENCED_FILES"), NetCore.Params.IsParamSet("COMPRESS_STOCKPILE")));
 
