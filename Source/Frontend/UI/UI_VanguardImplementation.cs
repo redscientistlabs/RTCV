@@ -439,7 +439,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                S.GET<RTC_SavestateManager_Form>().DisableFeature();
+                S.GET<SavestateManagerForm>().DisableFeature();
                 S.GET<UI_CoreForm>().pnCrashProtection.Visible = false;
             });
         }

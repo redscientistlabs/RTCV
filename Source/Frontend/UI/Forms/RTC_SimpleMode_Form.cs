@@ -89,24 +89,24 @@
         private void btnCreateGhSavestate_Click(object sender, EventArgs e)
         {
             //Select first savestate slot if none is selected
-            var selectedHolder = S.GET<RTC_SavestateManager_Form>().savestateList.SelectedHolder;
+            var selectedHolder = S.GET<SavestateManagerForm>().savestateList.SelectedHolder;
             if (selectedHolder == null)
             {
                 //Generate object sender and MouseEventArgs e data for the button click
-                SavestateHolder holder = (SavestateHolder)S.GET<RTC_SavestateManager_Form>().savestateList.flowPanel.Controls[0];
+                SavestateHolder holder = (SavestateHolder)S.GET<SavestateManagerForm>().savestateList.flowPanel.Controls[0];
                 Button _sender = holder.btnSavestate;
                 MouseEventArgs _e = new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0);
 
                 //Click first GH Savestate
-                S.GET<RTC_SavestateManager_Form>().savestateList.BtnSavestate_MouseDown(_sender, _e);
+                S.GET<SavestateManagerForm>().savestateList.BtnSavestate_MouseDown(_sender, _e);
             }
 
             //Switch to Save
-            S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad.Text = "SAVE";
-            S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad.ForeColor = Color.OrangeRed;
+            S.GET<SavestateManagerForm>().savestateList.btnSaveLoad.Text = "SAVE";
+            S.GET<SavestateManagerForm>().savestateList.btnSaveLoad.ForeColor = Color.OrangeRed;
 
             //Trigger Save button
-            S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad_Click(null, null);
+            S.GET<SavestateManagerForm>().savestateList.btnSaveLoad_Click(null, null);
         }
 
         private void btnGlitchHarvesterCorrupt_Click(object sender, EventArgs e)
@@ -376,24 +376,24 @@
         private void btnLoadGhSavestate_Click(object sender, EventArgs e)
         {
             //Select first savestate slot if none is selected
-            var selectedHolder = S.GET<RTC_SavestateManager_Form>().savestateList.SelectedHolder;
+            var selectedHolder = S.GET<SavestateManagerForm>().savestateList.SelectedHolder;
             if (selectedHolder == null)
             {
                 //Generate object sender and MouseEventArgs e data for the button click
-                SavestateHolder holder = (SavestateHolder)S.GET<RTC_SavestateManager_Form>().savestateList.flowPanel.Controls[0];
+                SavestateHolder holder = (SavestateHolder)S.GET<SavestateManagerForm>().savestateList.flowPanel.Controls[0];
                 Button _sender = holder.btnSavestate;
                 MouseEventArgs _e = new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0);
 
                 //Click first GH Savestate
-                S.GET<RTC_SavestateManager_Form>().savestateList.BtnSavestate_MouseDown(_sender, _e);
+                S.GET<SavestateManagerForm>().savestateList.BtnSavestate_MouseDown(_sender, _e);
             }
 
             //Switch to Save
-            S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad.Text = "LOAD";
-            S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad.ForeColor = Color.FromArgb(192, 255, 192);
+            S.GET<SavestateManagerForm>().savestateList.btnSaveLoad.Text = "LOAD";
+            S.GET<SavestateManagerForm>().savestateList.btnSaveLoad.ForeColor = Color.FromArgb(192, 255, 192);
 
             //Trigger Save button
-            S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad_Click(null, null);
+            S.GET<SavestateManagerForm>().savestateList.btnSaveLoad_Click(null, null);
         }
 
         public void SetRewindBoxes(bool enabled)

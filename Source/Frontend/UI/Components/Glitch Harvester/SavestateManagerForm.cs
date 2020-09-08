@@ -16,7 +16,7 @@ namespace RTCV.UI
     using RTCV.UI.Modular;
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
-    public partial class RTC_SavestateManager_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class SavestateManagerForm : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
@@ -26,7 +26,7 @@ namespace RTCV.UI
         private bool LoadSavestateOnClick = false;
         public StashKey CurrentSaveStateStashKey => savestateList.CurrentSaveStateStashKey;
 
-        public RTC_SavestateManager_Form()
+        public SavestateManagerForm()
         {
             InitializeComponent();
 
@@ -36,7 +36,7 @@ namespace RTCV.UI
             savestateList.DataSource = savestateBindingSource;
         }
 
-        private void btnLoadSavestateList_MouseClick(object sender, MouseEventArgs e)
+        private void OnLoadSavestateListButtonMouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -44,11 +44,11 @@ namespace RTCV.UI
             }
         }
 
-        private void RTC_SavestateManager_Form_Load(object sender, EventArgs e)
+        private void OnFormLoad(object sender, EventArgs e)
         {
             savestateList.AllowDrop = true;
-            savestateList.DragDrop += pnSavestateHolder_DragDrop;
-            savestateList.DragEnter += pnSavestateHolder_DragEnter;
+            savestateList.DragDrop += OnSavestateHolderDragDrop;
+            savestateList.DragEnter += OnSavestateHolderDragEnter;
         }
 
         private void loadSSK(bool import, string fileName)
@@ -277,7 +277,7 @@ namespace RTCV.UI
             }
         }
 
-        private void btnLoadSavestateList_MouseDown(object sender, MouseEventArgs e)
+        private void OnLoadSavestateListButtonMouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -412,7 +412,7 @@ namespace RTCV.UI
             }
         }
 
-        private async void btnSaveSavestateList_Click(object sender, EventArgs e)
+        private async void SaveSavestateList(object sender, EventArgs e)
         {
             string filename;
             SaveFileDialog saveFileDialog1 = new SaveFileDialog
@@ -463,12 +463,12 @@ namespace RTCV.UI
             Controls.Clear();
         }
 
-        private void pnSavestateHolder_DragEnter(object sender, DragEventArgs e)
+        private void OnSavestateHolderDragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Link;
         }
 
-        private void pnSavestateHolder_DragDrop(object sender, DragEventArgs e)
+        private void OnSavestateHolderDragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             if (files?.Length > 0 && files[0]
@@ -481,12 +481,12 @@ namespace RTCV.UI
             S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
         }
 
-        private void cbSavestateLoadOnClick_CheckedChanged(object sender, EventArgs e)
+        private void UpdateLoadSavestateOnClick(object sender, EventArgs e)
         {
             LoadSavestateOnClick = cbSavestateLoadOnClick.Checked;
         }
 
-        private void RTC_SavestateManager_Form_Shown(object sender, EventArgs e)
+        private void OnFormShown(object sender, EventArgs e)
         {
             object param = AllSpec.VanguardSpec[VSPEC.RENAME_SAVESTATE];
             if (param != null && param is string RenameTitle)

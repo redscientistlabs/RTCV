@@ -154,7 +154,7 @@ namespace RTCV.UI.Components.Controls
                     }
                 }
 
-                var smForm = (Parent as RTC_SavestateManager_Form);
+                var smForm = (Parent as SavestateManagerForm);
                 if (smForm != null && smForm.cbSavestateLoadOnClick.Checked)
                 {
                     btnSaveLoad.Text = "LOAD";

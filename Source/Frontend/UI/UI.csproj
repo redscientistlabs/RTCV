@@ -176,11 +176,11 @@
     <Compile Include="Components\Glitch Harvester\RTC_GlitchHarvesterBlast_Form.designer.cs">
       <DependentUpon>RTC_GlitchHarvesterBlast_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Glitch Harvester\RTC_SavestateManager_Form.cs">
+    <Compile Include="Components\Glitch Harvester\SavestateManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Glitch Harvester\RTC_SavestateManager_Form.designer.cs">
-      <DependentUpon>RTC_SavestateManager_Form.cs</DependentUpon>
+    <Compile Include="Components\Glitch Harvester\SavestateManagerForm.designer.cs">
+      <DependentUpon>SavestateManagerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Glitch Harvester\RTC_GlitchHarvesterIntensity_Form.cs">
       <SubType>Form</SubType>
@@ -503,8 +503,8 @@
     <EmbeddedResource Include="Components\Glitch Harvester\RTC_GlitchHarvesterBlast_Form.resx">
       <DependentUpon>RTC_GlitchHarvesterBlast_Form.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Glitch Harvester\RTC_SavestateManager_Form.resx">
-      <DependentUpon>RTC_SavestateManager_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Glitch Harvester\SavestateManagerForm.resx">
+      <DependentUpon>SavestateManagerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Glitch Harvester\RTC_GlitchHarvesterIntensity_Form.resx">
       <DependentUpon>RTC_GlitchHarvesterIntensity_Form.cs</DependentUpon>

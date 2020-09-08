@@ -137,7 +137,7 @@ namespace RTCV.UI
             proto.WordSize = mi.WordSize;
             proto.Padding = 0;
 
-            var sk = S.GET<RTC_SavestateManager_Form>().CurrentSaveStateStashKey;
+            var sk = S.GET<SavestateManagerForm>().CurrentSaveStateStashKey;
             if (sk == null && cbLoadBeforeGenerate.Checked && (AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] as bool? ?? false))
             {
                 MessageBox.Show("Load before generate is checked but no Savestate is selected in the Glitch Harvester!");
