@@ -1,6 +1,6 @@
 ﻿namespace RTCV.UI
 {
-    partial class RTC_GlitchHarvesterIntensity_Form
+    partial class GlitchHarvesterIntensityForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,17 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_GlitchHarvesterIntensity_Form));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GlitchHarvesterIntensityForm));
             this.pnIntensityHolder = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
             this.multiTB_Intensity = new RTCV.UI.Components.Controls.MultiTrackBar();
             this.pnIntensityHolder.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // pnIntensityHolder
-            // 
-            this.pnIntensityHolder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.pnIntensityHolder.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnIntensityHolder.BackColor = System.Drawing.Color.Gray;
             this.pnIntensityHolder.Controls.Add(this.multiTB_Intensity);
@@ -47,9 +47,9 @@
             this.pnIntensityHolder.Size = new System.Drawing.Size(231, 80);
             this.pnIntensityHolder.TabIndex = 125;
             this.pnIntensityHolder.Tag = "color:normal";
-            // 
+            //
             // label6
-            // 
+            //
             this.label6.AutoSize = true;
             this.label6.ForeColor = System.Drawing.Color.White;
             this.label6.Location = new System.Drawing.Point(53, 24);
@@ -58,11 +58,11 @@
             this.label6.TabIndex = 124;
             this.label6.Text = "Parameters unavailable with\ncurrent engine";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
+            //
             // multiTB_Intensity
-            // 
-            this.multiTB_Intensity.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.multiTB_Intensity.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.multiTB_Intensity.BackColor = System.Drawing.Color.Gray;
             this.multiTB_Intensity.DisplayCheckbox = false;
@@ -77,9 +77,9 @@
             this.multiTB_Intensity.Tag = "color:normal";
             this.multiTB_Intensity.UncapNumericBox = false;
             this.multiTB_Intensity.Value = ((long)(1));
-            // 
-            // RTC_GlitchHarvesterIntensity_Form
-            // 
+            //
+            // GlitchHarvesterIntensityForm
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -89,11 +89,11 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "RTC_GlitchHarvesterIntensity_Form";
+            this.Name = "GlitchHarvesterIntensityForm";
             this.Tag = "color:dark1";
             this.Text = "Generator Control";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
-            this.Shown += new System.EventHandler(this.RTC_GlitchHarvesterIntensity_Form_Shown);
+            this.Shown += new System.EventHandler(this.OnFormShown);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             this.pnIntensityHolder.ResumeLayout(false);
             this.ResumeLayout(false);
