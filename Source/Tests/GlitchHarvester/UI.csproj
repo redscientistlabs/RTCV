@@ -60,11 +60,11 @@
     <Compile Include="ShadowPanel.Designer.cs">
       <DependentUpon>ShadowPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI_CoreForm.cs">
+    <Compile Include="CoreForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI_CoreForm.Designer.cs">
-      <DependentUpon>UI_CoreForm.cs</DependentUpon>
+    <Compile Include="CoreForm.Designer.cs">
+      <DependentUpon>CoreForm.cs</DependentUpon>
     </Compile>
     <Compile Include="NetCoreServer.cs" />
     <Compile Include="Program.cs" />
@@ -84,8 +84,8 @@
     <EmbeddedResource Include="CanvasForm.resx">
       <DependentUpon>CanvasForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI_CoreForm.resx">
-      <DependentUpon>UI_CoreForm.cs</DependentUpon>
+    <EmbeddedResource Include="CoreForm.resx">
+      <DependentUpon>CoreForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ShadowPanel.resx">
       <DependentUpon>ShadowPanel.cs</DependentUpon>

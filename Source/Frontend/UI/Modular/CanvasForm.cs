@@ -106,11 +106,11 @@
         {
             if (this.TopLevel)
             {
-                this.Size = new Size(x + UI_CoreForm.xPadding, y + UI_CoreForm.yPadding);
+                this.Size = new Size(x + CoreForm.xPadding, y + CoreForm.yPadding);
             }
             else
             {
-                UI_CoreForm.thisForm.SetSize(x, y);
+                CoreForm.thisForm.SetSize(x, y);
             }
         }
 
@@ -224,7 +224,7 @@
 
             if (lockSidebar)
             {
-                S.GET<UI_CoreForm>().LockSideBar();
+                S.GET<CoreForm>().LockSideBar();
             }
 
             if (spForm != null)
@@ -248,7 +248,7 @@
             //Closes subform and exists SubForm mode.
             //is automatically called when Cancel/Ok is pressed in SubForm.
 
-            S.GET<UI_CoreForm>().UnlockSideBar();
+            S.GET<CoreForm>().UnlockSideBar();
 
             if (spForm != null)
             {
@@ -267,7 +267,7 @@
 
                 if (this.Text == "Glitch Harvester")
                 {
-                    S.GET<UI_CoreForm>().pnGlitchHarvesterOpen.Visible = false;
+                    S.GET<CoreForm>().pnGlitchHarvesterOpen.Visible = false;
                 }
 
                 e.Cancel = true;

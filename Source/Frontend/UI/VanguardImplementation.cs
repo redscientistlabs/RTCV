@@ -166,8 +166,8 @@ namespace RTCV.UI
 
             SyncObjectSingleton.FormExecute(() =>
             {
-                S.GET<UI_CoreForm>().pnAutoKillSwitch.Visible = true;
-                S.GET<UI_CoreForm>().pnCrashProtection.Visible = true;
+                S.GET<CoreForm>().pnAutoKillSwitch.Visible = true;
+                S.GET<CoreForm>().pnCrashProtection.Visible = true;
             });
             //Specs are all set up so UI is clear.
             LocalNetCoreRouter.Route(VANGUARD, REMOTE_ALLSPECSSENT, true);
@@ -194,7 +194,7 @@ namespace RTCV.UI
                     //Configure the UI based on the vanguard spec
                     UICore.ConfigureUIFromVanguardSpec();
 
-                    S.GET<UI_CoreForm>().Show();
+                    S.GET<CoreForm>().Show();
 
                     //Pull any lists from the vanguard implementation
                     if (RtcCore.EmuDir != null)
@@ -204,7 +204,7 @@ namespace RTCV.UI
 
                     UICore.LoadLists(RtcCore.ListsDir);
 
-                    Panel sidebar = S.GET<UI_CoreForm>().pnSideBar;
+                    Panel sidebar = S.GET<CoreForm>().pnSideBar;
                     foreach (Control c in sidebar.Controls)
                     {
                         if (c is Button b)
@@ -219,8 +219,8 @@ namespace RTCV.UI
                     string customLayoutPath = Path.Combine(RtcCore.RtcDir, "CustomLayout.txt");
                     if (File.Exists(customLayoutPath))
                     {
-                        S.GET<UI_CoreForm>().SetCustomLayoutName(customLayoutPath);
-                        S.GET<UI_CoreForm>().btnOpenCustomLayout.Visible = true;
+                        S.GET<CoreForm>().SetCustomLayoutName(customLayoutPath);
+                        S.GET<CoreForm>().btnOpenCustomLayout.Visible = true;
                     }
 
                     DefaultGrids.engineConfig.LoadToMain();
@@ -243,7 +243,7 @@ namespace RTCV.UI
                     var vmdProtos = MemoryDomains.VmdPool.Values.Cast<VirtualMemoryDomain>().Select(x => x.Proto).ToArray();
                     LocalNetCoreRouter.Route(CORRUPTCORE, REMOTE_PUSHVMDPROTOS, vmdProtos, true);
 
-                    S.GET<UI_CoreForm>().Show();
+                    S.GET<CoreForm>().Show();
 
                     //Configure the UI based on the vanguard spec
                     UICore.ConfigureUIFromVanguardSpec();
@@ -252,16 +252,16 @@ namespace RTCV.UI
                     S.GET<GlitchHarvesterBlastForm>().SetBlastButtonVisibility(true);
 
                     //Return to the main form. If the form is null for some reason, default to engineconfig
-                    if (S.GET<UI_CoreForm>().previousGrid == null)
+                    if (S.GET<CoreForm>().previousGrid == null)
                     {
-                        S.GET<UI_CoreForm>().previousGrid = DefaultGrids.engineConfig;
+                        S.GET<CoreForm>().previousGrid = DefaultGrids.engineConfig;
                     }
 
                     UICore.UnlockInterface();
-                    S.GET<UI_CoreForm>().previousGrid.LoadToMain();
+                    S.GET<CoreForm>().previousGrid.LoadToMain();
                 }
 
-                S.GET<UI_CoreForm>().pbAutoKillSwitchTimeout.Value = 0; //remove this once core form is dead
+                S.GET<CoreForm>().pbAutoKillSwitchTimeout.Value = 0; //remove this once core form is dead
 
                 if (!RtcCore.Attached)
                 {
@@ -269,7 +269,7 @@ namespace RTCV.UI
                 }
 
                 //Restart game protection
-                if (S.GET<UI_CoreForm>().cbUseGameProtection.Checked)
+                if (S.GET<CoreForm>().cbUseGameProtection.Checked)
                 {
                     if (StockpileManager_UISide.BackupedState != null)
                     {
@@ -284,11 +284,11 @@ namespace RTCV.UI
                     GameProtection.Start();
                     if (GameProtection.WasAutoCorruptRunning)
                     {
-                        S.GET<UI_CoreForm>().AutoCorrupt = true;
+                        S.GET<CoreForm>().AutoCorrupt = true;
                     }
                 }
 
-                S.GET<UI_CoreForm>().Show();
+                S.GET<CoreForm>().Show();
 
                 if (Params.IsParamSet("SIMPLE_MODE"))
                 {
@@ -397,7 +397,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                S.GET<UI_CoreForm>().AutoCorrupt = false;
+                S.GET<CoreForm>().AutoCorrupt = false;
             });
         }
 
@@ -417,8 +417,8 @@ namespace RTCV.UI
                 GameProtection.AddBackupState(sk);
                 SyncObjectSingleton.FormExecute(() =>
                 {
-                    S.GET<UI_CoreForm>().btnGpJumpBack.Visible = true;
-                    S.GET<UI_CoreForm>().btnGpJumpNow.Visible = true;
+                    S.GET<CoreForm>().btnGpJumpBack.Visible = true;
+                    S.GET<CoreForm>().btnGpJumpNow.Visible = true;
                 });
             }
         }
@@ -429,8 +429,8 @@ namespace RTCV.UI
             {
                 SyncObjectSingleton.FormExecute(() =>
                 {
-                    S.GET<UI_CoreForm>().cbUseGameProtection.Checked = false;
-                    S.GET<UI_CoreForm>().cbUseGameProtection.Checked = true;
+                    S.GET<CoreForm>().cbUseGameProtection.Checked = false;
+                    S.GET<CoreForm>().cbUseGameProtection.Checked = true;
                 });
             }
         }
@@ -440,7 +440,7 @@ namespace RTCV.UI
             SyncObjectSingleton.FormExecute(() =>
             {
                 S.GET<RTC_SavestateManager_Form>().DisableFeature();
-                S.GET<UI_CoreForm>().pnCrashProtection.Visible = false;
+                S.GET<CoreForm>().pnCrashProtection.Visible = false;
             });
         }
 
@@ -448,7 +448,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                S.GET<UI_CoreForm>().pnCrashProtection.Visible = false;
+                S.GET<CoreForm>().pnCrashProtection.Visible = false;
             });
         }
 
@@ -456,7 +456,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                Button btnManual = S.GET<UI_CoreForm>().btnManualBlast;
+                Button btnManual = S.GET<CoreForm>().btnManualBlast;
                 if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] != null)
                 {
                     btnManual.Text = "  Corrupt";
@@ -466,8 +466,8 @@ namespace RTCV.UI
                     btnManual.Visible = false;
                 }
 
-                S.GET<UI_CoreForm>().btnAutoCorrupt.Enabled = false;
-                S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
+                S.GET<CoreForm>().btnAutoCorrupt.Enabled = false;
+                S.GET<CoreForm>().btnAutoCorrupt.Visible = false;
                 S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Enabled = false;
                 S.GET<GlitchHarvesterBlastForm>().btnSendRaw.Enabled = false;
                 S.GET<GlitchHarvesterBlastForm>().btnBlastToggle.Enabled = false;
@@ -483,8 +483,8 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                S.GET<UI_CoreForm>().pnAutoKillSwitch.Visible = false;
-                S.GET<UI_CoreForm>().cbUseAutoKillSwitch.Checked = false;
+                S.GET<CoreForm>().pnAutoKillSwitch.Visible = false;
+                S.GET<CoreForm>().cbUseAutoKillSwitch.Checked = false;
             });
         }
 

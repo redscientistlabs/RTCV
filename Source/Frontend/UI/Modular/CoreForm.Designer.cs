@@ -1,6 +1,6 @@
 ﻿namespace RTCV.UI
 {
-    partial class UI_CoreForm
+    partial class CoreForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UI_CoreForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CoreForm));
             this.pnSideBar = new System.Windows.Forms.Panel();
             this.btnNetcoreTest = new System.Windows.Forms.Button();
             this.btnTestLockdown = new System.Windows.Forms.Button();
@@ -56,9 +56,9 @@
             this.pnCrashProtection.SuspendLayout();
             this.pnAutoKillSwitch.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // pnSideBar
-            // 
+            //
             this.pnSideBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.pnSideBar.Controls.Add(this.btnNetcoreTest);
             this.pnSideBar.Controls.Add(this.btnTestLockdown);
@@ -81,9 +81,9 @@
             this.pnSideBar.Size = new System.Drawing.Size(150, 581);
             this.pnSideBar.TabIndex = 7;
             this.pnSideBar.Tag = "color:dark3";
-            // 
+            //
             // btnNetcoreTest
-            // 
+            //
             this.btnNetcoreTest.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.btnNetcoreTest.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnNetcoreTest.FlatAppearance.BorderSize = 0;
@@ -102,10 +102,10 @@
             this.btnNetcoreTest.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnNetcoreTest.UseVisualStyleBackColor = false;
             this.btnNetcoreTest.Visible = false;
-            this.btnNetcoreTest.Click += new System.EventHandler(this.BtnNetcoreTest_Click);
-            // 
+            this.btnNetcoreTest.Click += new System.EventHandler(this.TestCommand);
+            //
             // btnTestLockdown
-            // 
+            //
             this.btnTestLockdown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.btnTestLockdown.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnTestLockdown.FlatAppearance.BorderSize = 0;
@@ -124,10 +124,10 @@
             this.btnTestLockdown.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnTestLockdown.UseVisualStyleBackColor = false;
             this.btnTestLockdown.Visible = false;
-            this.btnTestLockdown.Click += new System.EventHandler(this.Button1_Click_1);
-            // 
+            this.btnTestLockdown.Click += new System.EventHandler(this.OnTestLockdownClick);
+            //
             // pnGlitchHarvesterOpen
-            // 
+            //
             this.pnGlitchHarvesterOpen.BackColor = System.Drawing.Color.Gray;
             this.pnGlitchHarvesterOpen.Location = new System.Drawing.Point(-19, 137);
             this.pnGlitchHarvesterOpen.Name = "pnGlitchHarvesterOpen";
@@ -135,9 +135,9 @@
             this.pnGlitchHarvesterOpen.TabIndex = 8;
             this.pnGlitchHarvesterOpen.Tag = "color:light1";
             this.pnGlitchHarvesterOpen.Visible = false;
-            // 
+            //
             // pnCrashProtection
-            // 
+            //
             this.pnCrashProtection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.pnCrashProtection.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.pnCrashProtection.Controls.Add(this.btnGpJumpNow);
@@ -150,9 +150,9 @@
             this.pnCrashProtection.TabIndex = 128;
             this.pnCrashProtection.Tag = "color:dark3";
             this.pnCrashProtection.Visible = false;
-            // 
+            //
             // btnGpJumpNow
-            // 
+            //
             this.btnGpJumpNow.BackColor = System.Drawing.Color.Transparent;
             this.btnGpJumpNow.FlatAppearance.BorderSize = 0;
             this.btnGpJumpNow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -167,10 +167,10 @@
             this.btnGpJumpNow.Text = "Now ⏩";
             this.btnGpJumpNow.UseVisualStyleBackColor = false;
             this.btnGpJumpNow.Visible = false;
-            this.btnGpJumpNow.Click += new System.EventHandler(this.btnGpJumpNow_Click);
-            // 
+            this.btnGpJumpNow.Click += new System.EventHandler(this.OnGameProtectionNow);
+            //
             // btnGpJumpBack
-            // 
+            //
             this.btnGpJumpBack.BackColor = System.Drawing.Color.Transparent;
             this.btnGpJumpBack.FlatAppearance.BorderSize = 0;
             this.btnGpJumpBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -185,10 +185,10 @@
             this.btnGpJumpBack.Text = "⏪ Back";
             this.btnGpJumpBack.UseVisualStyleBackColor = false;
             this.btnGpJumpBack.Visible = false;
-            this.btnGpJumpBack.Click += new System.EventHandler(this.btnGpJumpBack_Click);
-            // 
+            this.btnGpJumpBack.Click += new System.EventHandler(this.OnGameProtectionBack);
+            //
             // lbGameProtection
-            // 
+            //
             this.lbGameProtection.AutoSize = true;
             this.lbGameProtection.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.lbGameProtection.ForeColor = System.Drawing.Color.White;
@@ -197,10 +197,10 @@
             this.lbGameProtection.Size = new System.Drawing.Size(105, 17);
             this.lbGameProtection.TabIndex = 111;
             this.lbGameProtection.Text = "Game Protection";
-            this.lbGameProtection.MouseClick += new System.Windows.Forms.MouseEventHandler(this.LbGameProtection_MouseClick);
-            // 
+            this.lbGameProtection.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ToggleGameProtection);
+            //
             // cbUseGameProtection
-            // 
+            //
             this.cbUseGameProtection.AutoSize = true;
             this.cbUseGameProtection.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbUseGameProtection.ForeColor = System.Drawing.Color.White;
@@ -209,10 +209,10 @@
             this.cbUseGameProtection.Size = new System.Drawing.Size(15, 14);
             this.cbUseGameProtection.TabIndex = 76;
             this.cbUseGameProtection.UseVisualStyleBackColor = true;
-            this.cbUseGameProtection.CheckedChanged += new System.EventHandler(this.cbUseGameProtection_CheckedChanged);
-            // 
+            this.cbUseGameProtection.CheckedChanged += new System.EventHandler(this.OnUseGameProtectionCheckboxChanged);
+            //
             // btnOpenCustomLayout
-            // 
+            //
             this.btnOpenCustomLayout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.btnOpenCustomLayout.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnOpenCustomLayout.FlatAppearance.BorderSize = 0;
@@ -231,10 +231,10 @@
             this.btnOpenCustomLayout.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnOpenCustomLayout.UseVisualStyleBackColor = false;
             this.btnOpenCustomLayout.Visible = false;
-            this.btnOpenCustomLayout.Click += new System.EventHandler(this.BtnOpenCustomLayout_Click);
-            // 
+            this.btnOpenCustomLayout.Click += new System.EventHandler(this.OpenCustomLayout);
+            //
             // btnTestSubform
-            // 
+            //
             this.btnTestSubform.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.btnTestSubform.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnTestSubform.FlatAppearance.BorderSize = 0;
@@ -253,10 +253,10 @@
             this.btnTestSubform.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnTestSubform.UseVisualStyleBackColor = false;
             this.btnTestSubform.Visible = false;
-            this.btnTestSubform.Click += new System.EventHandler(this.button1_Click);
-            // 
+            this.btnTestSubform.Click += new System.EventHandler(this.OpenTestSubform);
+            //
             // pnAutoKillSwitch
-            // 
+            //
             this.pnAutoKillSwitch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.pnAutoKillSwitch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.pnAutoKillSwitch.Controls.Add(this.cbUseAutoKillSwitch);
@@ -268,13 +268,13 @@
             this.pnAutoKillSwitch.TabIndex = 127;
             this.pnAutoKillSwitch.Tag = "color:dark3";
             this.pnAutoKillSwitch.Visible = false;
-            this.pnAutoKillSwitch.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnAutoKillSwitch_MouseClick);
-            this.pnAutoKillSwitch.MouseEnter += new System.EventHandler(this.pnAutoKillSwitch_MouseHover);
-            this.pnAutoKillSwitch.MouseLeave += new System.EventHandler(this.pnAutoKillSwitch_MouseLeave);
-            this.pnAutoKillSwitch.MouseHover += new System.EventHandler(this.pnAutoKillSwitch_MouseHover);
-            // 
+            this.pnAutoKillSwitch.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnAutoKillSwitchClick);
+            this.pnAutoKillSwitch.MouseEnter += new System.EventHandler(this.OnAutoKillSwitchButtonMouseHover);
+            this.pnAutoKillSwitch.MouseLeave += new System.EventHandler(this.OnAutoKillSwitchButtonMouseLeave);
+            this.pnAutoKillSwitch.MouseHover += new System.EventHandler(this.OnAutoKillSwitchButtonMouseHover);
+            //
             // cbUseAutoKillSwitch
-            // 
+            //
             this.cbUseAutoKillSwitch.AutoSize = true;
             this.cbUseAutoKillSwitch.Checked = true;
             this.cbUseAutoKillSwitch.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -285,13 +285,13 @@
             this.cbUseAutoKillSwitch.Size = new System.Drawing.Size(15, 14);
             this.cbUseAutoKillSwitch.TabIndex = 120;
             this.cbUseAutoKillSwitch.UseVisualStyleBackColor = true;
-            this.cbUseAutoKillSwitch.CheckedChanged += new System.EventHandler(this.cbUseAutoKillSwitch_CheckedChanged);
-            this.cbUseAutoKillSwitch.MouseEnter += new System.EventHandler(this.pnAutoKillSwitch_MouseHover);
-            this.cbUseAutoKillSwitch.MouseLeave += new System.EventHandler(this.pnAutoKillSwitch_MouseLeave);
-            this.cbUseAutoKillSwitch.MouseHover += new System.EventHandler(this.pnAutoKillSwitch_MouseHover);
-            // 
+            this.cbUseAutoKillSwitch.CheckedChanged += new System.EventHandler(this.OnAutoKillSwitchCheckboxChanged);
+            this.cbUseAutoKillSwitch.MouseEnter += new System.EventHandler(this.OnAutoKillSwitchButtonMouseHover);
+            this.cbUseAutoKillSwitch.MouseLeave += new System.EventHandler(this.OnAutoKillSwitchButtonMouseLeave);
+            this.cbUseAutoKillSwitch.MouseHover += new System.EventHandler(this.OnAutoKillSwitchButtonMouseHover);
+            //
             // pbAutoKillSwitchTimeout
-            // 
+            //
             this.pbAutoKillSwitchTimeout.Location = new System.Drawing.Point(10, 24);
             this.pbAutoKillSwitchTimeout.MarqueeAnimationSpeed = 1;
             this.pbAutoKillSwitchTimeout.Maximum = 13;
@@ -301,13 +301,13 @@
             this.pbAutoKillSwitchTimeout.TabIndex = 119;
             this.pbAutoKillSwitchTimeout.Tag = "17";
             this.pbAutoKillSwitchTimeout.Value = 13;
-            this.pbAutoKillSwitchTimeout.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnAutoKillSwitch_MouseClick);
-            this.pbAutoKillSwitchTimeout.MouseEnter += new System.EventHandler(this.pnAutoKillSwitch_MouseHover);
-            this.pbAutoKillSwitchTimeout.MouseLeave += new System.EventHandler(this.pnAutoKillSwitch_MouseLeave);
-            this.pbAutoKillSwitchTimeout.MouseHover += new System.EventHandler(this.pnAutoKillSwitch_MouseHover);
-            // 
+            this.pbAutoKillSwitchTimeout.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnAutoKillSwitchClick);
+            this.pbAutoKillSwitchTimeout.MouseEnter += new System.EventHandler(this.OnAutoKillSwitchButtonMouseHover);
+            this.pbAutoKillSwitchTimeout.MouseLeave += new System.EventHandler(this.OnAutoKillSwitchButtonMouseLeave);
+            this.pbAutoKillSwitchTimeout.MouseHover += new System.EventHandler(this.OnAutoKillSwitchButtonMouseHover);
+            //
             // lbAks
-            // 
+            //
             this.lbAks.AutoSize = true;
             this.lbAks.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.lbAks.ForeColor = System.Drawing.Color.White;
@@ -316,13 +316,13 @@
             this.lbAks.Size = new System.Drawing.Size(93, 17);
             this.lbAks.TabIndex = 111;
             this.lbAks.Text = "Auto-KillSwitch";
-            this.lbAks.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnAutoKillSwitch_MouseClick);
-            this.lbAks.MouseEnter += new System.EventHandler(this.pnAutoKillSwitch_MouseHover);
-            this.lbAks.MouseLeave += new System.EventHandler(this.pnAutoKillSwitch_MouseLeave);
-            this.lbAks.MouseHover += new System.EventHandler(this.pnAutoKillSwitch_MouseHover);
-            // 
+            this.lbAks.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnAutoKillSwitchClick);
+            this.lbAks.MouseEnter += new System.EventHandler(this.OnAutoKillSwitchButtonMouseHover);
+            this.lbAks.MouseLeave += new System.EventHandler(this.OnAutoKillSwitchButtonMouseLeave);
+            this.lbAks.MouseHover += new System.EventHandler(this.OnAutoKillSwitchButtonMouseHover);
+            //
             // btnSettings
-            // 
+            //
             this.btnSettings.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.btnSettings.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btnSettings.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
@@ -343,10 +343,10 @@
             this.btnSettings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSettings.UseVisualStyleBackColor = false;
-            this.btnSettings.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnSettings_MouseDown);
-            // 
+            this.btnSettings.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OpenSettings);
+            //
             // btnLogo
-            // 
+            //
             this.btnLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.btnLogo.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnLogo.FlatAppearance.BorderSize = 0;
@@ -364,11 +364,10 @@
             this.btnLogo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnLogo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnLogo.UseVisualStyleBackColor = false;
-            this.btnLogo.Click += new System.EventHandler(this.btnLogo_Click);
-            this.btnLogo.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btnLogo_MouseClick);
-            // 
+            this.btnLogo.Click += new System.EventHandler(this.OnLogoClick);
+            //
             // btnEngineConfig
-            // 
+            //
             this.btnEngineConfig.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.btnEngineConfig.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnEngineConfig.FlatAppearance.BorderSize = 0;
@@ -389,10 +388,10 @@
             this.btnEngineConfig.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnEngineConfig.UseVisualStyleBackColor = false;
             this.btnEngineConfig.Visible = false;
-            this.btnEngineConfig.Click += new System.EventHandler(this.btnEngineConfig_Click);
-            // 
+            this.btnEngineConfig.Click += new System.EventHandler(this.OpenEngineConfig);
+            //
             // btnEasyMode
-            // 
+            //
             this.btnEasyMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.btnEasyMode.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnEasyMode.FlatAppearance.BorderSize = 0;
@@ -413,10 +412,10 @@
             this.btnEasyMode.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnEasyMode.UseVisualStyleBackColor = false;
             this.btnEasyMode.Visible = false;
-            this.btnEasyMode.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnEasyMode_MouseDown);
-            // 
+            this.btnEasyMode.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnStartEasyModeClick);
+            //
             // btnStockpilePlayer
-            // 
+            //
             this.btnStockpilePlayer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.btnStockpilePlayer.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnStockpilePlayer.FlatAppearance.BorderSize = 0;
@@ -437,10 +436,10 @@
             this.btnStockpilePlayer.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnStockpilePlayer.UseVisualStyleBackColor = false;
             this.btnStockpilePlayer.Visible = false;
-            this.btnStockpilePlayer.Click += new System.EventHandler(this.btnStockpilePlayer_Click);
-            // 
+            this.btnStockpilePlayer.Click += new System.EventHandler(this.OpenStockpilePlayer);
+            //
             // btnGlitchHarvester
-            // 
+            //
             this.btnGlitchHarvester.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.btnGlitchHarvester.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnGlitchHarvester.FlatAppearance.BorderSize = 0;
@@ -461,11 +460,11 @@
             this.btnGlitchHarvester.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnGlitchHarvester.UseVisualStyleBackColor = false;
             this.btnGlitchHarvester.Visible = false;
-            this.btnGlitchHarvester.Click += new System.EventHandler(this.btnGlitchHarvester_Click);
-            this.btnGlitchHarvester.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BtnGlitchHarvester_MouseDown);
-            // 
+            this.btnGlitchHarvester.Click += new System.EventHandler(this.OpenGlitchHarvester);
+            this.btnGlitchHarvester.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnGlitchHarvesterMouseDown);
+            //
             // btnManualBlast
-            // 
+            //
             this.btnManualBlast.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.btnManualBlast.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnManualBlast.FlatAppearance.BorderSize = 0;
@@ -486,11 +485,11 @@
             this.btnManualBlast.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnManualBlast.UseVisualStyleBackColor = false;
             this.btnManualBlast.Visible = false;
-            this.btnManualBlast.Click += new System.EventHandler(this.btnManualBlast_Click);
-            this.btnManualBlast.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BtnManualBlast_MouseDown);
-            // 
+            this.btnManualBlast.Click += new System.EventHandler(this.ManualBlast);
+            this.btnManualBlast.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnManualBlastMouseDown);
+            //
             // btnAutoCorrupt
-            // 
+            //
             this.btnAutoCorrupt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.btnAutoCorrupt.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnAutoCorrupt.FlatAppearance.BorderSize = 0;
@@ -511,10 +510,10 @@
             this.btnAutoCorrupt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAutoCorrupt.UseVisualStyleBackColor = false;
             this.btnAutoCorrupt.Visible = false;
-            this.btnAutoCorrupt.Click += new System.EventHandler(this.btnAutoCorrupt_Click);
-            // 
-            // UI_CoreForm
-            // 
+            this.btnAutoCorrupt.Click += new System.EventHandler(this.StartAutoCorrupt);
+            //
+            // CoreForm
+            //
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
@@ -523,13 +522,13 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "UI_CoreForm";
+            this.Name = "CoreForm";
             this.Tag = "color:dark2";
             this.Text = "Real-Time Corruptor";
-            this.Load += new System.EventHandler(this.UI_CoreForm_Load);
-            this.ResizeBegin += new System.EventHandler(this.UI_CoreForm_ResizeBegin);
-            this.ResizeEnd += new System.EventHandler(this.UI_CoreForm_ResizeEnd);
-            this.Resize += new System.EventHandler(this.UI_CoreForm_Resize);
+            this.Load += new System.EventHandler(this.OnFormLoad);
+            this.ResizeBegin += new System.EventHandler(this.OnResizeBegin);
+            this.ResizeEnd += new System.EventHandler(this.OnResizeEnd);
+            this.Resize += new System.EventHandler(this.OnResize);
             this.pnSideBar.ResumeLayout(false);
             this.pnCrashProtection.ResumeLayout(false);
             this.pnCrashProtection.PerformLayout();
@@ -565,4 +564,3 @@
         private System.Windows.Forms.Button btnNetcoreTest;
     }
 }
-
