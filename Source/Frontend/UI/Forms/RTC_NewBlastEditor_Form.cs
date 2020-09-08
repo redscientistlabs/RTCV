@@ -2159,7 +2159,7 @@ namespace RTCV.UI
                 return;
             }
 
-            RTC_SanitizeTool_Form.OpenSanitizeTool(currentSK?.BlastLayer, lockUI);
+            SanitizeToolForm.OpenSanitizeTool(currentSK?.BlastLayer, lockUI);
         }
 
         public StashKey[] GetStashKeys()

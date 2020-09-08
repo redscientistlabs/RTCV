@@ -86,7 +86,7 @@
             Colors.SetRTCColor(Colors.GeneralColor, this);
         }
 
-        private void RTC_SanitizeTool_Form_FormClosing(object sender, FormClosingEventArgs e)
+        private void SanitizeToolForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason != CloseReason.UserClosing)
             {
