@@ -124,10 +124,10 @@ namespace RTCV.UI
             cbCustomPrecision.Enabled = false;
             nmAlignment.Maximum = RtcCore.CurrentPrecision - 1;
 
-            //S.GET<RTC_GlitchHarvesterIntensity_Form>().Visible = true;
+            //S.GET<GlitchHarvesterIntensityForm>().Visible = true;
             S.GET<GeneralParametersForm>().Show();
             S.GET<RTC_MemoryDomains_Form>().Show();
-            S.GET<RTC_GlitchHarvesterIntensity_Form>().Show();
+            S.GET<GlitchHarvesterIntensityForm>().Show();
 
             switch (cbSelectedEngine.SelectedItem.ToString())
             {
@@ -214,7 +214,7 @@ namespace RTCV.UI
                     S.GET<CoreForm>().btnAutoCorrupt.Visible = false;
                     S.GET<GeneralParametersForm>().Hide();
                     S.GET<RTC_MemoryDomains_Form>().Hide();
-                    S.GET<RTC_GlitchHarvesterIntensity_Form>().Hide();
+                    S.GET<GlitchHarvesterIntensityForm>().Hide();
                     break;
 
                 default:

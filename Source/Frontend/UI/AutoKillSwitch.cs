@@ -91,7 +91,7 @@ namespace RTCV.UI
 
                     //Nuke netcore
                     logger.Trace("Nuking Netcore");
-                    UI_VanguardImplementation.RestartServer();
+                    VanguardImplementation.RestartServer();
 
                     SyncObjectSingleton.FormExecute(() =>
                     {
@@ -178,7 +178,7 @@ namespace RTCV.UI
 
         private static void BoopMonitoringTimer_Tick(object sender, EventArgs e)
         {
-            if (!Enabled || (UI_VanguardImplementation.connector?.netConn?.status != NetCore.Enums.NetworkStatus.CONNECTED))
+            if (!Enabled || (VanguardImplementation.connector?.netConn?.status != NetCore.Enums.NetworkStatus.CONNECTED))
             {
                 return;
             }
