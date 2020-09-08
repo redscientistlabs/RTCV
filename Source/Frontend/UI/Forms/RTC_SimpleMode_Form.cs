@@ -25,7 +25,7 @@
 
         public void EnteringSimpleMode()
         {
-            RTC_GlitchHarvesterIntensity_Form ghiForm = S.GET<RTC_GlitchHarvesterIntensity_Form>();
+            GlitchHarvesterIntensityForm ghiForm = S.GET<GlitchHarvesterIntensityForm>();
             ghiForm.AnchorToPanel(pnIntensity);
             //S.GET<UI_CoreForm>().btnEngineConfig.Visible = false;
             S.GET<UI_CoreForm>().btnEngineConfig.Text = " Simple Mode";

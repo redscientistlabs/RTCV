@@ -1,6 +1,6 @@
 ﻿namespace RTCV.UI
 {
-    partial class UI_ShadowPanel
+    partial class ShadowPanel
     {
         /// <summary>
         /// Required designer variable.
@@ -34,9 +34,9 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.pnFloater.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // pnFloater
-            // 
+            //
             this.pnFloater.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.pnFloater.Controls.Add(this.pnContainer);
             this.pnFloater.Controls.Add(this.btnCancel);
@@ -45,17 +45,17 @@
             this.pnFloater.Name = "pnFloater";
             this.pnFloater.Size = new System.Drawing.Size(500, 400);
             this.pnFloater.TabIndex = 0;
-            // 
+            //
             // pnContainer
-            // 
+            //
             this.pnContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.pnContainer.Location = new System.Drawing.Point(11, 15);
             this.pnContainer.Name = "pnContainer";
             this.pnContainer.Size = new System.Drawing.Size(475, 320);
             this.pnContainer.TabIndex = 118;
-            // 
+            //
             // btnCancel
-            // 
+            //
             this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnCancel.FlatAppearance.BorderSize = 0;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -71,11 +71,11 @@
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Visible = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
+            //
             // btnOk
-            // 
-            this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOk.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnOk.FlatAppearance.BorderSize = 0;
@@ -91,16 +91,16 @@
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = false;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
-            // 
-            // UI_ShadowPanel
-            // 
+            //
+            // ShadowPanel
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(600, 500);
             this.Controls.Add(this.pnFloater);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "UI_ShadowPanel";
+            this.Name = "ShadowPanel";
             this.Text = "ShadowPanel";
             this.pnFloater.ResumeLayout(false);
             this.ResumeLayout(false);
