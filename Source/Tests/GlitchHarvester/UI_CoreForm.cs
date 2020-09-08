@@ -12,10 +12,10 @@ namespace RTCV.UI
     public partial class UI_CoreForm : Form
     {
         //This form traps events and forwards them.
-        //It contains the single UI_CanvasForm instance.
+        //It contains the single CanvasForm instance.
 
         public static UI_CoreForm thisForm;
-        public static UI_CanvasForm cfForm;
+        public static CanvasForm cfForm;
 
 
         //Vallues used for padding and scaling properly in high dpi
@@ -29,7 +29,7 @@ namespace RTCV.UI
             InitializeComponent();
             thisForm = this;
 
-            cfForm = new UI_CanvasForm();
+            cfForm = new CanvasForm();
             cfForm.TopLevel = false;
             cfForm.Dock = DockStyle.Fill;
             this.Controls.Add(cfForm);
@@ -63,10 +63,10 @@ namespace RTCV.UI
 
         private void UI_CoreForm_ResizeBegin(object sender, EventArgs e)
         {
-            //Sends event to SubForm 
+            //Sends event to SubForm
             if(cfForm.spForm != null)
                 cfForm.spForm.Parent_ResizeBegin();
-            
+
         }
 
 
@@ -155,7 +155,7 @@ namespace RTCV.UI
 
             //multiGrid.Load();
 
-            //var tileForm = (UI_ComponentFormTile)UI_CanvasForm.getTileForm("UI_ComponentFormTile");
+            //var tileForm = (UI_ComponentFormTile)CanvasForm.getTileForm("UI_ComponentFormTile");
             //tileForm.SetCompoentForm("ComponentForm host", 4, 4);
 
         }

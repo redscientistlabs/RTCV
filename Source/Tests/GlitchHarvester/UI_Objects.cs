@@ -45,9 +45,9 @@ namespace RTCV.UI
             for(int i=0;i<grids.Count();i++)
             {
                 if (i == 0)
-                    UI_CanvasForm.loadTileFormMain(grids[i]);
+                    CanvasForm.loadTileFormMain(grids[i]);
                 else
-                    UI_CanvasForm.loadTileFormExtraWindow(grids[i]);
+                    CanvasForm.loadTileFormExtraWindow(grids[i]);
 
             }
         }
@@ -99,12 +99,12 @@ namespace RTCV.UI
 
         internal void LoadToMain()
         {
-            UI_CanvasForm.loadTileFormMain(this);
+            CanvasForm.loadTileFormMain(this);
         }
 
         internal void LoadToNewWindow()
         {
-            UI_CanvasForm.loadTileFormExtraWindow(this);
+            CanvasForm.loadTileFormExtraWindow(this);
         }
     }
 

@@ -145,7 +145,7 @@
 
         private void btnBlastToggle_Click(object sender, EventArgs e)
         {
-            S.GET<RTC_GlitchHarvesterBlast_Form>().btnBlastToggle_Click(null, null);
+            S.GET<GlitchHarvesterBlastForm>().BlastLayerToggle(null, null);
         }
 
         private void dgvStockpile_MouseDown(object sender, MouseEventArgs e)
@@ -164,7 +164,7 @@
                 (columnsMenu.Items.Add("Show System Core", null, new EventHandler((ob, ev) => { dgvStockpile.Columns["SystemCore"].Visible ^= true; })) as ToolStripMenuItem).Checked = dgvStockpile.Columns["SystemCore"].Visible;
                 (columnsMenu.Items.Add("Show Note", null, new EventHandler((ob, ev) => { dgvStockpile.Columns["Note"].Visible ^= true; })) as ToolStripMenuItem).Checked = dgvStockpile.Columns["Note"].Visible;
                 columnsMenu.Items.Add(stripSeparator);
-                (columnsMenu.Items.Add("Load on Select", null, new EventHandler((ob, ev) => { S.GET<RTC_GlitchHarvesterBlast_Form>().LoadOnSelect ^= true; })) as ToolStripMenuItem).Checked = S.GET<RTC_GlitchHarvesterBlast_Form>().LoadOnSelect;
+                (columnsMenu.Items.Add("Load on Select", null, new EventHandler((ob, ev) => { S.GET<GlitchHarvesterBlastForm>().LoadOnSelect ^= true; })) as ToolStripMenuItem).Checked = S.GET<GlitchHarvesterBlastForm>().LoadOnSelect;
                 (columnsMenu.Items.Add("Clear Infinite Units on Rewind", null, new EventHandler((ob, ev) => { S.GET<CorruptionEngineForm>().cbClearCheatsOnRewind.Checked ^= true; })) as ToolStripMenuItem).Checked = S.GET<CorruptionEngineForm>().cbClearCheatsOnRewind.Checked;
 
                 columnsMenu.Items.Add(stripSeparator);
@@ -173,7 +173,7 @@
                 {
                     var sk = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
                     StashKey newSk = (StashKey)sk.Clone();
-                    S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newSk, false);
+                    S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newSk, false);
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
                 columnsMenu.Show(this, locate);
@@ -199,8 +199,8 @@
                 //Thus, we want this to happen within the try block
                 UICore.SetHotkeyTimer(false);
                 UICore.LockInterface(false, true);
-                S.GET<UI_SaveProgress_Form>().Dock = DockStyle.Fill;
-                UI_CoreForm.cfForm?.OpenSubForm(S.GET<UI_SaveProgress_Form>());
+                S.GET<SaveProgressForm>().Dock = DockStyle.Fill;
+                UI_CoreForm.cfForm?.OpenSubForm(S.GET<SaveProgressForm>());
 
                 StockpileManager_UISide.ClearCurrentStockpile();
 
@@ -316,7 +316,7 @@
 
         private void dgvStockpile_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (currentlyLoading || !S.GET<RTC_GlitchHarvesterBlast_Form>().LoadOnSelect || e?.RowIndex == -1)
+            if (currentlyLoading || !S.GET<GlitchHarvesterBlastForm>().LoadOnSelect || e?.RowIndex == -1)
             {
                 return;
             }
@@ -355,14 +355,14 @@
                     //Shut autocorrupt off because people (Vinny) kept turning it on to add to corruptions then forgetting to turn it off
                     S.GET<UI_CoreForm>().AutoCorrupt = false;
 
-                    S.GET<RTC_GlitchHarvesterBlast_Form>().ghMode = GlitchHarvesterMode.CORRUPT;
+                    S.GET<GlitchHarvesterBlastForm>().ghMode = GlitchHarvesterMode.CORRUPT;
                     StockpileManager_UISide.CurrentStashkey = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
                     StockpileManager_UISide.ApplyStashkey(StockpileManager_UISide.CurrentStashkey);
 
                     S.GET<RTC_StashHistory_Form>().lbStashHistory.ClearSelected();
                     S.GET<RTC_StockpileManager_Form>().dgvStockpile.ClearSelection();
 
-                    S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = !(StockpileManager_UISide.CurrentStashkey.BlastLayer == null || StockpileManager_UISide.CurrentStashkey.BlastLayer.Layer.Count == 0);
+                    S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = !(StockpileManager_UISide.CurrentStashkey.BlastLayer == null || StockpileManager_UISide.CurrentStashkey.BlastLayer.Layer.Count == 0);
                 }
             }
             finally

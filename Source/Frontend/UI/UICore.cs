@@ -198,10 +198,10 @@ namespace RTCV.UI
 
                 if (blockMainForm)
                 {
-                    UI_CanvasForm.mainForm.BlockView();
+                    CanvasForm.mainForm.BlockView();
                 }
 
-                UI_CanvasForm.extraForms.ForEach(it => it.BlockView());
+                CanvasForm.extraForms.ForEach(it => it.BlockView());
 
                 var ifs = S.GETINTERFACES<IBlockable>();
 
@@ -232,8 +232,8 @@ namespace RTCV.UI
 
                 S.GET<RTC_ConnectionStatus_Form>().pnBlockedButtons.Hide();
 
-                UI_CanvasForm.mainForm.UnblockView();
-                UI_CanvasForm.extraForms.ForEach(it => it.UnblockView());
+                CanvasForm.mainForm.UnblockView();
+                CanvasForm.extraForms.ForEach(it => it.UnblockView());
                 var ifs = S.GETINTERFACES<IBlockable>();
                 foreach (var i in ifs)
                 {
@@ -450,8 +450,8 @@ namespace RTCV.UI
                 case "Load and Corrupt":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation = true;
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().btnCorrupt_Click(null, null);
+                        S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation = true;
+                        S.GET<GlitchHarvesterBlastForm>().Corrupt(null, null);
                     });
                     break;
 
@@ -460,10 +460,10 @@ namespace RTCV.UI
 
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        bool isload = S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation;
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation = false;
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().btnCorrupt_Click(null, null);
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation = isload;
+                        bool isload = S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation;
+                        S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation = false;
+                        S.GET<GlitchHarvesterBlastForm>().Corrupt(null, null);
+                        S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation = isload;
                     });
                     break;
 
@@ -473,7 +473,7 @@ namespace RTCV.UI
                     {
                         var sh = S.GET<RTC_StashHistory_Form>();
                         var sm = S.GET<RTC_StockpileManager_Form>();
-                        var ghb = S.GET<RTC_GlitchHarvesterBlast_Form>();
+                        var ghb = S.GET<GlitchHarvesterBlastForm>();
 
                         if (sh.lbStashHistory.SelectedIndex != -1)
                             sh.lbStashHistory_SelectedIndexChanged(null, null);
@@ -484,7 +484,7 @@ namespace RTCV.UI
 
                             if (rows.Count > 1)
                             {
-                                ghb.btnCorrupt_Click(null, null);
+                                ghb.Corrupt(null, null);
                             }
                             else
                             {
@@ -498,7 +498,7 @@ namespace RTCV.UI
                 case "Reroll":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().btnRerollSelected_Click(null, null);
+                        S.GET<GlitchHarvesterBlastForm>().RerollSelected(null, null);
                     });
                     break;
 
@@ -534,21 +534,21 @@ namespace RTCV.UI
                     {
                         AllSpec.CorruptCoreSpec.Update(VSPEC.STEP_RUNBEFORE, true);
                         S.GET<UI_CoreForm>().btnManualBlast_Click(null, null);
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw_Click(null, null);
+                        S.GET<GlitchHarvesterBlastForm>().SendRawToStash(null, null);
                     });
                     break;
 
                 case "Send Raw to Stash":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw_Click(null, null);
+                        S.GET<GlitchHarvesterBlastForm>().SendRawToStash(null, null);
                     });
                     break;
 
                 case "BlastLayer Toggle":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().btnBlastToggle_Click(null, null);
+                        S.GET<GlitchHarvesterBlastForm>().BlastLayerToggle(null, null);
                     });
                     break;
 
@@ -557,10 +557,10 @@ namespace RTCV.UI
                     {
                         if (StockpileManager_UISide.CurrentStashkey == null || StockpileManager_UISide.CurrentStashkey.BlastLayer.Layer.Count == 0)
                         {
-                            S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = false;
+                            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = false;
                             return;
                         }
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = true;
+                        S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = true;
                         StockpileManager_UISide.ApplyStashkey(StockpileManager_UISide.CurrentStashkey, false);
                     });
                     break;

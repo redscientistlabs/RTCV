@@ -1,6 +1,6 @@
 ﻿namespace RTCV.UI
 {
-    partial class RTC_GlitchHarvesterBlast_Form
+    partial class GlitchHarvesterBlastForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_GlitchHarvesterBlast_Form));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GlitchHarvesterBlastForm));
             this.btnRenderOutput = new System.Windows.Forms.Button();
             this.btnGlitchHarvesterSettings = new System.Windows.Forms.Button();
             this.btnRerollSelected = new System.Windows.Forms.Button();
@@ -37,9 +37,9 @@
             this.btnSendRaw = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
+            //
             // btnRenderOutput
-            // 
+            //
             this.btnRenderOutput.BackColor = System.Drawing.Color.Gray;
             this.btnRenderOutput.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnRenderOutput.FlatAppearance.BorderSize = 0;
@@ -54,10 +54,10 @@
             this.btnRenderOutput.TabStop = false;
             this.btnRenderOutput.Tag = "color:light1";
             this.btnRenderOutput.UseVisualStyleBackColor = false;
-            this.btnRenderOutput.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnRenderOutput_MouseDown);
-            // 
+            this.btnRenderOutput.MouseDown += new System.Windows.Forms.MouseEventHandler(this.RenderOutput);
+            //
             // btnGlitchHarvesterSettings
-            // 
+            //
             this.btnGlitchHarvesterSettings.BackColor = System.Drawing.Color.Gray;
             this.btnGlitchHarvesterSettings.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnGlitchHarvesterSettings.FlatAppearance.BorderSize = 0;
@@ -72,10 +72,10 @@
             this.btnGlitchHarvesterSettings.TabStop = false;
             this.btnGlitchHarvesterSettings.Tag = "color:light1";
             this.btnGlitchHarvesterSettings.UseVisualStyleBackColor = false;
-            this.btnGlitchHarvesterSettings.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnGlitchHarvesterSettings_MouseDown);
-            // 
+            this.btnGlitchHarvesterSettings.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OpenGlitchHarvesterSettings);
+            //
             // btnRerollSelected
-            // 
+            //
             this.btnRerollSelected.BackColor = System.Drawing.Color.Gray;
             this.btnRerollSelected.FlatAppearance.BorderSize = 0;
             this.btnRerollSelected.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -89,11 +89,11 @@
             this.btnRerollSelected.Tag = "color:light1";
             this.btnRerollSelected.Text = "Reroll Selected";
             this.btnRerollSelected.UseVisualStyleBackColor = false;
-            this.btnRerollSelected.Click += new System.EventHandler(this.btnRerollSelected_Click);
-            this.btnRerollSelected.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnRerollSelected_MouseDown);
-            // 
+            this.btnRerollSelected.Click += new System.EventHandler(this.RerollSelected);
+            this.btnRerollSelected.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnRerollButtonMouseDown);
+            //
             // btnCorrupt
-            // 
+            //
             this.btnCorrupt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnCorrupt.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnCorrupt.FlatAppearance.BorderSize = 0;
@@ -113,11 +113,11 @@
             this.btnCorrupt.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCorrupt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCorrupt.UseVisualStyleBackColor = false;
-            this.btnCorrupt.Click += new System.EventHandler(this.btnCorrupt_Click);
-            this.btnCorrupt.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnCorrupt_MouseDown);
-            // 
+            this.btnCorrupt.Click += new System.EventHandler(this.Corrupt);
+            this.btnCorrupt.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnCorruptButtonMouseDown);
+            //
             // btnBlastToggle
-            // 
+            //
             this.btnBlastToggle.BackColor = System.Drawing.Color.Gray;
             this.btnBlastToggle.FlatAppearance.BorderSize = 0;
             this.btnBlastToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -131,10 +131,10 @@
             this.btnBlastToggle.Tag = "color:dark2";
             this.btnBlastToggle.Text = "BlastLayer : OFF";
             this.btnBlastToggle.UseVisualStyleBackColor = false;
-            this.btnBlastToggle.Click += new System.EventHandler(this.btnBlastToggle_Click);
-            // 
+            this.btnBlastToggle.Click += new System.EventHandler(this.BlastLayerToggle);
+            //
             // btnSendRaw
-            // 
+            //
             this.btnSendRaw.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnSendRaw.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnSendRaw.FlatAppearance.BorderSize = 0;
@@ -154,10 +154,10 @@
             this.btnSendRaw.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSendRaw.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSendRaw.UseVisualStyleBackColor = false;
-            this.btnSendRaw.Click += new System.EventHandler(this.btnSendRaw_Click);
-            // 
+            this.btnSendRaw.Click += new System.EventHandler(this.SendRawToStash);
+            //
             // label5
-            // 
+            //
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
@@ -165,9 +165,9 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(0, 14);
             this.label5.TabIndex = 138;
-            // 
-            // RTC_GlitchHarvesterBlast_Form
-            // 
+            //
+            // GlitchHarvesterBlastForm
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -182,7 +182,7 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "RTC_GlitchHarvesterBlast_Form";
+            this.Name = "GlitchHarvesterBlastForm";
             this.Tag = "color:dark1";
             this.Text = "Blast Tools";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);

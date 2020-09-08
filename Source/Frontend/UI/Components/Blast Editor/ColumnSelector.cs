@@ -14,7 +14,7 @@
         {
             InitializeComponent();
             Colors.SetRTCColor(Colors.GeneralColor, this);
-            this.FormClosing += this.ColumnSelector_Closing;
+            this.FormClosing += this.OnFormClosing;
         }
 
         public void LoadColumnSelector(DataGridViewColumnCollection columns)
@@ -33,7 +33,7 @@
             this.Show();
         }
 
-        private void ColumnSelector_Closing(object sender, FormClosingEventArgs e)
+        private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
             if (!tablePanel.Controls.Cast<CheckBox>().Any(item => item.Checked))
             {

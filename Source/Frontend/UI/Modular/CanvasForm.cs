@@ -8,11 +8,11 @@
     using RTCV.UI.Modular;
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
-    public partial class UI_CanvasForm : Form, IBlockable
+    public partial class CanvasForm : Form, IBlockable
     {
-        public static UI_CanvasForm mainForm;
-        public static List<UI_CanvasForm> extraForms = new List<UI_CanvasForm>();
-        private static Dictionary<string, UI_CanvasForm> allExtraForms = new Dictionary<string, UI_CanvasForm>();
+        public static CanvasForm mainForm;
+        public static List<CanvasForm> extraForms = new List<CanvasForm>();
+        private static Dictionary<string, CanvasForm> allExtraForms = new Dictionary<string, CanvasForm>();
         public ShadowPanel spForm { get; private set; }
 
         public Panel blockPanel { get; set; } = null;
@@ -21,19 +21,7 @@
         public static int tileSize;
         private static Dictionary<Form, UI_ComponentFormTile> loadedTileForms = new Dictionary<Form, UI_ComponentFormTile>();
 
-        public bool SubFormMode
-        {
-            get => (spForm != null);
-            set
-            {
-                if (value == false && spForm != null)
-                {
-                    CloseSubForm();
-                }
-            }
-        }
-
-        public UI_CanvasForm(bool extraForm = false)
+        public CanvasForm(bool extraForm = false)
         {
             InitializeComponent();
 
@@ -84,12 +72,6 @@
             return new Point(getTilePos(x), getTilePos(y));
         }
 
-        public static void unloadTileForms()
-        {
-            clearExtraTileForms();
-            loadedTileForms.Clear();
-        }
-
         public static void clearExtraTileForms()
         {
             foreach (Form frm in extraForms)
@@ -109,9 +91,9 @@
             loadedTileForms.Clear();
         }
 
-        public static UI_CanvasForm GetExtraForm(string windowTitle)
+        public static CanvasForm GetExtraForm(string windowTitle)
         {
-            allExtraForms.TryGetValue(windowTitle, out UI_CanvasForm outForm);
+            allExtraForms.TryGetValue(windowTitle, out CanvasForm outForm);
             return outForm;
         }
 
@@ -132,7 +114,7 @@
             }
         }
 
-        public static void loadTileForm(UI_CanvasForm targetForm, CanvasGrid canvasGrid)
+        public static void loadTileForm(CanvasForm targetForm, CanvasGrid canvasGrid)
         {
             targetForm.ResizeCanvas(canvasGrid);
 
@@ -165,7 +147,7 @@
 
         public static void loadTileFormExtraWindow(CanvasGrid canvasGrid, string WindowHeader, bool silent = false)
         {
-            UI_CanvasForm extraForm;
+            CanvasForm extraForm;
 
             if (allExtraForms.ContainsKey(WindowHeader))
             {
@@ -181,7 +163,7 @@
             }
             else
             {
-                extraForm = new UI_CanvasForm(true);
+                extraForm = new CanvasForm(true);
                 allExtraForms[WindowHeader] = extraForm;
                 extraForms.Add(extraForm);
             }
@@ -233,24 +215,6 @@
             //thisForm.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
         }
 
-        public int getTileSpacesX()
-        {
-            int sizeX = this.Size.Width;
-            int tilesSpace = sizeX - spacerSize;
-            int nbSpaces = (int)((double)tilesSpace / (spacerSize + tileSize));
-
-            return nbSpaces;
-        }
-
-        public int getTileSpacesY()
-        {
-            int sizeY = this.Size.Height;
-            int tilesSpace = sizeY - spacerSize;
-            int nbSpaces = (int)((double)tilesSpace / (spacerSize + tileSize));
-
-            return nbSpaces;
-        }
-
         public void OpenSubForm(ISubForm reqForm, bool lockSidebar = false)
         {
             //sets program to SubForm mode, darkens screen and displays flating form.
@@ -295,11 +259,7 @@
             }
         }
 
-        private void UI_CanvasForm_Load(object sender, EventArgs e)
-        {
-        }
-
-        private void UI_CanvasForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void OnClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason != CloseReason.FormOwnerClosing)
             {
