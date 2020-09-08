@@ -417,13 +417,13 @@ namespace RTCV.UI
 
         private void OpenBlastGenerator(object sender, EventArgs e)
         {
-            if (S.GET<RTC_BlastGenerator_Form>() != null)
+            if (S.GET<BlastGeneratorForm>() != null)
             {
-                S.GET<RTC_BlastGenerator_Form>().Close();
+                S.GET<BlastGeneratorForm>().Close();
             }
 
-            S.SET(new RTC_BlastGenerator_Form());
-            S.GET<RTC_BlastGenerator_Form>().LoadNoStashKey();
+            S.SET(new BlastGeneratorForm());
+            S.GET<BlastGeneratorForm>().LoadNoStashKey();
         }
 
         private void UpdateBlastType(object sender, EventArgs e)
