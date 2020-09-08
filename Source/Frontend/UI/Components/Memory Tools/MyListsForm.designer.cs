@@ -1,6 +1,6 @@
 namespace RTCV.UI
 {
-    partial class RTC_MyLists_Form
+    partial class MyListsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@ namespace RTCV.UI
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_MyLists_Form));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MyListsForm));
             this.lbKnownLists = new System.Windows.Forms.ListBox();
             this.btnRefreshListFiles = new System.Windows.Forms.Button();
             this.btnImportList = new System.Windows.Forms.Button();
@@ -37,11 +37,11 @@ namespace RTCV.UI
             this.btnRemoveList = new System.Windows.Forms.Button();
             this.btnEnableDisableList = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
+            //
             // lbKnownLists
-            // 
-            this.lbKnownLists.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.lbKnownLists.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbKnownLists.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.lbKnownLists.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -55,11 +55,11 @@ namespace RTCV.UI
             this.lbKnownLists.Size = new System.Drawing.Size(173, 223);
             this.lbKnownLists.TabIndex = 12;
             this.lbKnownLists.Tag = "color:dark1";
-            this.lbKnownLists.SelectedIndexChanged += new System.EventHandler(this.lbLoadedVmdList_SelectedIndexChanged);
+            this.lbKnownLists.SelectedIndexChanged += new System.EventHandler(this.OnKnownListSelectedIndexChanged);
             this.lbKnownLists.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // btnRefreshListFiles
-            // 
+            //
             this.btnRefreshListFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRefreshListFiles.BackColor = System.Drawing.Color.Gray;
             this.btnRefreshListFiles.FlatAppearance.BorderSize = 0;
@@ -74,10 +74,10 @@ namespace RTCV.UI
             this.btnRefreshListFiles.Tag = "color:light1";
             this.btnRefreshListFiles.Text = "Refresh List Files";
             this.btnRefreshListFiles.UseVisualStyleBackColor = false;
-            this.btnRefreshListFiles.Click += new System.EventHandler(this.btnRefreshVmdFiles_Click);
-            // 
+            this.btnRefreshListFiles.Click += new System.EventHandler(this.RefreshVMDFiles);
+            //
             // btnImportList
-            // 
+            //
             this.btnImportList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnImportList.BackColor = System.Drawing.Color.Gray;
             this.btnImportList.FlatAppearance.BorderSize = 0;
@@ -97,11 +97,11 @@ namespace RTCV.UI
             this.btnImportList.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnImportList.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnImportList.UseVisualStyleBackColor = false;
-            this.btnImportList.Click += new System.EventHandler(this.btnImportVmd_Click_1);
+            this.btnImportList.Click += new System.EventHandler(this.ImportVMD);
             this.btnImportList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // btnSaveList
-            // 
+            //
             this.btnSaveList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSaveList.BackColor = System.Drawing.Color.Gray;
             this.btnSaveList.Enabled = false;
@@ -121,11 +121,11 @@ namespace RTCV.UI
             this.btnSaveList.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSaveList.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSaveList.UseVisualStyleBackColor = false;
-            this.btnSaveList.Click += new System.EventHandler(this.btnSaveList_Click);
+            this.btnSaveList.Click += new System.EventHandler(this.SaveSelectedList);
             this.btnSaveList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // btnRenameList
-            // 
+            //
             this.btnRenameList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRenameList.BackColor = System.Drawing.Color.Gray;
             this.btnRenameList.Enabled = false;
@@ -145,11 +145,11 @@ namespace RTCV.UI
             this.btnRenameList.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnRenameList.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnRenameList.UseVisualStyleBackColor = false;
-            this.btnRenameList.Click += new System.EventHandler(this.btnRenameVMD_Click);
+            this.btnRenameList.Click += new System.EventHandler(this.RenameSelectedList);
             this.btnRenameList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // btnRemoveList
-            // 
+            //
             this.btnRemoveList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRemoveList.BackColor = System.Drawing.Color.Gray;
             this.btnRemoveList.Enabled = false;
@@ -170,11 +170,11 @@ namespace RTCV.UI
             this.btnRemoveList.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnRemoveList.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnRemoveList.UseVisualStyleBackColor = false;
-            this.btnRemoveList.Click += new System.EventHandler(this.btnRemoveList_Click);
+            this.btnRemoveList.Click += new System.EventHandler(this.RemoveSelectedList);
             this.btnRemoveList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // btnEnableDisableList
-            // 
+            //
             this.btnEnableDisableList.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnEnableDisableList.BackColor = System.Drawing.Color.Gray;
             this.btnEnableDisableList.FlatAppearance.BorderColor = System.Drawing.Color.Black;
@@ -193,11 +193,11 @@ namespace RTCV.UI
             this.btnEnableDisableList.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnEnableDisableList.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnEnableDisableList.UseVisualStyleBackColor = false;
-            this.btnEnableDisableList.Click += new System.EventHandler(this.btnLoadVmd_Click);
+            this.btnEnableDisableList.Click += new System.EventHandler(this.LoadSelectedList);
             this.btnEnableDisableList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // RTC_MyLists_Form
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -217,7 +217,7 @@ namespace RTCV.UI
             this.Tag = "color:dark3";
             this.Text = "My Lists";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
-            this.Load += new System.EventHandler(this.RTC_MyLists_Form_Load);
+            this.Load += new System.EventHandler(this.OnFormLoad);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             this.ResumeLayout(false);
 

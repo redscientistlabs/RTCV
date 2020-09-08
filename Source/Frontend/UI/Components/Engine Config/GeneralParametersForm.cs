@@ -7,29 +7,26 @@ namespace RTCV.UI
     using RTCV.NetCore;
     using RTCV.UI.Modular;
 
-    public partial class RTC_GeneralParameters_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class GeneralParametersForm : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        public RTC_GeneralParameters_Form()
+        public GeneralParametersForm()
         {
             InitializeComponent();
             multiTB_Intensity.ValueChanged += (sender, args) => RtcCore.Intensity = multiTB_Intensity.Value;
-            multiTB_Intensity.registerSlave(S.GET<RTC_GlitchHarvesterIntensity_Form>().multiTB_Intensity);
+            multiTB_Intensity.registerSlave(S.GET<GlitchHarvesterIntensityForm>().multiTB_Intensity);
 
             multiTB_ErrorDelay.ValueChanged += (sender, args) => RtcCore.ErrorDelay = multiTB_ErrorDelay.Value;
         }
 
-        private void RTC_GeneralParameters_Form_Load(object sender, EventArgs e)
+        private void OnFormLoad(object sender, EventArgs e)
         {
             cbBlastRadius.SelectedIndex = 0;
         }
 
-        //Guid? errorDelayToken = null;
-        //Guid? intensityToken = null;
-
-        private void cbBlastRadius_SelectedIndexChanged(object sender, EventArgs e)
+        private void OnBlastRadiusSelectedIndexChanged(object sender, EventArgs e)
         {
             switch (cbBlastRadius.SelectedItem.ToString())
             {
@@ -59,41 +56,7 @@ namespace RTCV.UI
             }
         }
 
-        private void RTC_GeneralParameters_Form_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (e.CloseReason != CloseReason.FormOwnerClosing)
-            {
-                e.Cancel = true;
-                this.RestoreToPreviousPanel();
-                return;
-            }
-        }
-
-        private void nmErrorDelay_ValueChanged(object sender, KeyPressEventArgs e)
-        {
-        }
-
-        private void nmErrorDelay_ValueChanged(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void nmIntensity_KeyDown(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void nmIntensity_KeyUp(object sender, KeyEventArgs e)
-        {
-        }
-
-        private void track_Intensity_MouseUp(object sender, KeyPressEventArgs e)
-        {
-        }
-
-        private void track_Intensity_MouseUp(object sender, MouseEventArgs e)
-        {
-        }
-
-        private void RTC_GeneralParameters_Form_Shown(object sender, EventArgs e)
+        private void OnFormShown(object sender, EventArgs e)
         {
             object paramValue = AllSpec.VanguardSpec[VSPEC.OVERRIDE_DEFAULTMAXINTENSITY];
 

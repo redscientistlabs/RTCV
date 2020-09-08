@@ -184,7 +184,7 @@ This message only appears once.";
             //Sends event to SubForm
             if (cfForm.spForm != null)
             {
-                cfForm.spForm.Parent_ResizeBegin();
+                cfForm.spForm.OnParentResizeBegin();
             }
         }
 
@@ -193,7 +193,7 @@ This message only appears once.";
             //Sends event to SubForm
             if (cfForm.spForm != null)
             {
-                cfForm.spForm?.Parent_ResizeEnd();
+                cfForm.spForm?.OnParentResizeEnd();
             }
         }
 
@@ -217,7 +217,7 @@ This message only appears once.";
 
                 if (cfForm.spForm != null)
                 {
-                    cfForm.spForm?.Parent_ResizeEnd();
+                    cfForm.spForm?.OnParentResizeEnd();
                 }
 
                 LastWindowState = WindowState;
@@ -506,39 +506,39 @@ This message only appears once.";
                 {
                     case "NES":     //Nintendo Entertainment system
                         SetEngineByName("Nightmare Engine");
-                        S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value = 2;
-                        S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value = 1;
+                        S.GET<GeneralParametersForm>().multiTB_Intensity.Value = 2;
+                        S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Value = 1;
                         break;
 
                     case "GB":      //Gameboy
                     case "GBC":     //Gameboy Color
                         SetEngineByName("Nightmare Engine");
-                        S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value = 1;
-                        S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value = 4;
+                        S.GET<GeneralParametersForm>().multiTB_Intensity.Value = 1;
+                        S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Value = 4;
                         break;
 
                     case "SNES":    //Super Nintendo
                         SetEngineByName("Nightmare Engine");
-                        S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value = 1;
-                        S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value = 2;
+                        S.GET<GeneralParametersForm>().multiTB_Intensity.Value = 1;
+                        S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Value = 2;
                         break;
 
                     case "GBA":     //Gameboy Advance
                         SetEngineByName("Nightmare Engine");
-                        S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value = 1;
-                        S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value = 1;
+                        S.GET<GeneralParametersForm>().multiTB_Intensity.Value = 1;
+                        S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Value = 1;
                         break;
 
                     case "N64":     //Nintendo 64
                         SetEngineByName("Vector Engine");
-                        S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value = 75;
-                        S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value = 1;
+                        S.GET<GeneralParametersForm>().multiTB_Intensity.Value = 75;
+                        S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Value = 1;
                         break;
 
                     case "Dolphin":     //GC/Wii
                         SetEngineByName("Vector Engine");
-                        S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value = 75;
-                        S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value = 1;
+                        S.GET<GeneralParametersForm>().multiTB_Intensity.Value = 75;
+                        S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Value = 1;
                         break;
 
                     case "SG":      //Sega SG-1000
