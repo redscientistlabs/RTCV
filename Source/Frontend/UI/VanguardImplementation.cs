@@ -249,7 +249,7 @@ namespace RTCV.UI
                     UICore.ConfigureUIFromVanguardSpec();
 
                     //Unblock the controls in the GH
-                    S.GET<RTC_GlitchHarvesterBlast_Form>().SetBlastButtonVisibility(true);
+                    S.GET<GlitchHarvesterBlastForm>().SetBlastButtonVisibility(true);
 
                     //Return to the main form. If the form is null for some reason, default to engineconfig
                     if (S.GET<CoreForm>().previousGrid == null)
@@ -405,7 +405,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                S.GET<RTC_GlitchHarvesterBlast_Form>().refreshRenderOutputButton();
+                S.GET<GlitchHarvesterBlastForm>().refreshRenderOutputButton();
             });
         }
 
@@ -469,8 +469,8 @@ namespace RTCV.UI
                 S.GET<CoreForm>().btnAutoCorrupt.Enabled = false;
                 S.GET<CoreForm>().btnAutoCorrupt.Visible = false;
                 S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Enabled = false;
-                S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw.Enabled = false;
-                S.GET<RTC_GlitchHarvesterBlast_Form>().btnBlastToggle.Enabled = false;
+                S.GET<GlitchHarvesterBlastForm>().btnSendRaw.Enabled = false;
+                S.GET<GlitchHarvesterBlastForm>().btnBlastToggle.Enabled = false;
 
                 S.GET<CorruptionEngineForm>().cbSelectedEngine.Items.Remove("Hellgenie Engine");
                 S.GET<CorruptionEngineForm>().cbSelectedEngine.Items.Remove("Distortion Engine");
@@ -542,8 +542,8 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
-                sanitizeTool.btnStartSanitizing_Click(null, null);
+                var sanitizeTool = S.GET<SanitizeToolForm>();
+                sanitizeTool.StartSanitizing(null, null);
             });
         }
 
@@ -551,9 +551,9 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
+                var sanitizeTool = S.GET<SanitizeToolForm>();
                 sanitizeTool.lbSteps.Items.Clear(); //this is a hack for leaving in automation
-                sanitizeTool.btnLeaveWithChanges_Click(null, null);
+                sanitizeTool.LeaveAndKeepChanges(null, null);
             });
         }
 
@@ -561,9 +561,9 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
+                var sanitizeTool = S.GET<SanitizeToolForm>();
                 sanitizeTool.lbSteps.Items.Clear(); //this is a hack for leaving in automation
-                sanitizeTool.btnLeaveSubstractChanges_Click(null, null);
+                sanitizeTool.LeaveAndSubtractChanges(null, null);
             });
         }
 
@@ -571,8 +571,8 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
-                sanitizeTool.btnYesEffect_Click(null, null);
+                var sanitizeTool = S.GET<SanitizeToolForm>();
+                sanitizeTool.YesEffect(null, null);
             });
         }
 
@@ -580,8 +580,8 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
-                sanitizeTool.btnNoEffect_Click(null, null);
+                var sanitizeTool = S.GET<SanitizeToolForm>();
+                sanitizeTool.NoEffect(null, null);
             });
         }
 
@@ -589,8 +589,8 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                var sanitizeTool = S.GET<RTC_SanitizeTool_Form>();
-                sanitizeTool.btnReroll_Click(null, null);
+                var sanitizeTool = S.GET<SanitizeToolForm>();
+                sanitizeTool.Reroll(null, null);
             });
         }
 

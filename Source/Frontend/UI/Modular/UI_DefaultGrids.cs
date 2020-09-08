@@ -125,7 +125,7 @@ namespace RTCV.UI.Modular
                         isResizable = true
                     };
 
-                    Form ghbForm = S.GET<RTC_GlitchHarvesterBlast_Form>();
+                    Form ghbForm = S.GET<GlitchHarvesterBlastForm>();
                     Form ghiForm = S.GET<GlitchHarvesterIntensityForm>();
                     Form ssmForm = S.GET<RTC_SavestateManager_Form>();
                     Form shForm = S.GET<RTC_StashHistory_Form>();

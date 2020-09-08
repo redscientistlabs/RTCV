@@ -10,10 +10,10 @@ using RTCV.UI;
 
 namespace RTCV.UI
 {
-    public partial class UI_CanvasForm : Form
+    public partial class CanvasForm : Form
     {
-        public static UI_CanvasForm thisForm;
-        public static List<UI_CanvasForm> extraForms = new List<UI_CanvasForm>();
+        public static CanvasForm thisForm;
+        public static List<CanvasForm> extraForms = new List<CanvasForm>();
         public ShadowPanel spForm;
 
         public static int spacerSize;
@@ -32,7 +32,7 @@ namespace RTCV.UI
                 }
         }
 
-        public UI_CanvasForm(bool extraForm = false)
+        public CanvasForm(bool extraForm = false)
         {
             InitializeComponent();
 
@@ -90,7 +90,7 @@ namespace RTCV.UI
 
         }
 
-        public void ResizeCanvas(UI_CanvasForm targetForm, CanvasGrid canvasGrid)
+        public void ResizeCanvas(CanvasForm targetForm, CanvasGrid canvasGrid)
         {
             this.SetSize(getTilePos(canvasGrid.x), getTilePos(canvasGrid.y));
         }
@@ -109,7 +109,7 @@ namespace RTCV.UI
         }
 
 
-        public static void loadTileForm(UI_CanvasForm targetForm, CanvasGrid canvasGrid)
+        public static void loadTileForm(CanvasForm targetForm, CanvasGrid canvasGrid)
         {
 
             targetForm.ResizeCanvas(targetForm, canvasGrid);
@@ -136,7 +136,7 @@ namespace RTCV.UI
 
         public static void loadTileFormExtraWindow(CanvasGrid canvasGrid, string WindowHeader = "RTC Extra Form")
         {
-            UI_CanvasForm extraForm = new UI_CanvasForm(true);
+            CanvasForm extraForm = new CanvasForm(true);
 
             extraForm.Controls.Clear();
             extraForms.Add(extraForm);
@@ -222,7 +222,7 @@ namespace RTCV.UI
             }
         }
 
-        private void UI_CanvasForm_Load(object sender, EventArgs e)
+        private void CanvasForm_Load(object sender, EventArgs e)
         {
 
         }

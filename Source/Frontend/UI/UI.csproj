@@ -86,11 +86,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\Blast Editor\RTC_ColumnSelector_Form.cs">
+    <Compile Include="Components\Blast Editor\ColumnSelector.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Blast Editor\RTC_ColumnSelector_Form.Designer.cs">
-      <DependentUpon>RTC_ColumnSelector_Form.cs</DependentUpon>
+    <Compile Include="Components\Blast Editor\ColumnSelector.Designer.cs">
+      <DependentUpon>ColumnSelector.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Containers\ListBoxForm.cs">
       <SubType>Form</SubType>
@@ -170,11 +170,11 @@
     <Compile Include="Components\Engine Config\RTC_MemoryDomains_Form.Designer.cs">
       <DependentUpon>RTC_MemoryDomains_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Glitch Harvester\RTC_GlitchHarvesterBlast_Form.cs">
+    <Compile Include="Components\Glitch Harvester\GlitchHarvesterBlastForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Glitch Harvester\RTC_GlitchHarvesterBlast_Form.designer.cs">
-      <DependentUpon>RTC_GlitchHarvesterBlast_Form.cs</DependentUpon>
+    <Compile Include="Components\Glitch Harvester\GlitchHarvesterBlastForm.designer.cs">
+      <DependentUpon>GlitchHarvesterBlastForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Glitch Harvester\RTC_SavestateManager_Form.cs">
       <SubType>Form</SubType>
@@ -339,11 +339,11 @@
     <Compile Include="Forms\IntroForm.Designer.cs">
       <DependentUpon>IntroForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Blast Editor\RTC_SanitizeTool_Form.cs">
+    <Compile Include="Components\Blast Editor\SanitizeToolForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Blast Editor\RTC_SanitizeTool_Form.Designer.cs">
-      <DependentUpon>RTC_SanitizeTool_Form.cs</DependentUpon>
+    <Compile Include="Components\Blast Editor\SanitizeToolForm.Designer.cs">
+      <DependentUpon>SanitizeToolForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\RTC_NewBlastEditor_Form.cs">
       <SubType>Form</SubType>
@@ -403,11 +403,11 @@
     <Compile Include="Input\LogicalButton.cs" />
     <Compile Include="Input\ModifierKeys.cs" />
     <Compile Include="Input\WorkingDictionary.cs" />
-    <Compile Include="Modular\UI_CanvasForm.cs">
+    <Compile Include="Modular\CanvasForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modular\UI_CanvasForm.Designer.cs">
-      <DependentUpon>UI_CanvasForm.cs</DependentUpon>
+    <Compile Include="Modular\CanvasForm.Designer.cs">
+      <DependentUpon>CanvasForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Modular\UI_ComponentFormSubForm.cs">
       <SubType>Form</SubType>
@@ -430,11 +430,11 @@
     <Compile Include="Modular\UI_DefaultGrids.cs" />
     <Compile Include="Modular\CanvasGrid.cs" />
     <Compile Include="Modular\ISubForm.cs" />
-    <Compile Include="Modular\UI_SaveProgress_Form.cs">
+    <Compile Include="Modular\SaveProgressForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modular\UI_SaveProgress_Form.designer.cs">
-      <DependentUpon>UI_SaveProgress_Form.cs</DependentUpon>
+    <Compile Include="Modular\SaveProgressForm.designer.cs">
+      <DependentUpon>SaveProgressForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Modular\ShadowPanel.cs">
       <SubType>Form</SubType>
@@ -461,8 +461,8 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="VanguardImplementation.cs" />
-    <EmbeddedResource Include="Components\Blast Editor\RTC_ColumnSelector_Form.resx">
-      <DependentUpon>RTC_ColumnSelector_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Blast Editor\ColumnSelector.resx">
+      <DependentUpon>ColumnSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Containers\ListBoxForm.resx">
       <DependentUpon>ListBoxForm.cs</DependentUpon>
@@ -500,8 +500,8 @@
     <EmbeddedResource Include="Components\Engine Config\RTC_MemoryDomains_Form.resx">
       <DependentUpon>RTC_MemoryDomains_Form.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Glitch Harvester\RTC_GlitchHarvesterBlast_Form.resx">
-      <DependentUpon>RTC_GlitchHarvesterBlast_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Glitch Harvester\GlitchHarvesterBlastForm.resx">
+      <DependentUpon>GlitchHarvesterBlastForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Glitch Harvester\RTC_SavestateManager_Form.resx">
       <DependentUpon>RTC_SavestateManager_Form.cs</DependentUpon>
@@ -581,8 +581,8 @@
     <EmbeddedResource Include="Forms\IntroForm.resx">
       <DependentUpon>IntroForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Blast Editor\RTC_SanitizeTool_Form.resx">
-      <DependentUpon>RTC_SanitizeTool_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Blast Editor\SanitizeToolForm.resx">
+      <DependentUpon>SanitizeToolForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RTC_NewBlastEditor_Form.resx">
       <DependentUpon>RTC_NewBlastEditor_Form.cs</DependentUpon>
@@ -602,8 +602,8 @@
     <EmbeddedResource Include="Forms\TestForm.resx">
       <DependentUpon>TestForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modular\UI_CanvasForm.resx">
-      <DependentUpon>UI_CanvasForm.cs</DependentUpon>
+    <EmbeddedResource Include="Modular\CanvasForm.resx">
+      <DependentUpon>CanvasForm.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Modular\ComponentForm.cs">
       <SubType>Form</SubType>
@@ -617,8 +617,8 @@
     <EmbeddedResource Include="Modular\CoreForm.resx">
       <DependentUpon>CoreForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modular\UI_SaveProgress_Form.resx">
-      <DependentUpon>UI_SaveProgress_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Modular\SaveProgressForm.resx">
+      <DependentUpon>SaveProgressForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modular\ShadowPanel.resx">
       <DependentUpon>ShadowPanel.cs</DependentUpon>
