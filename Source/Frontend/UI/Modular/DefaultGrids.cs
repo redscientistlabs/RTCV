@@ -13,7 +13,7 @@ namespace RTCV.UI.Modular
                 if (_connectionStatus == null)
                 {
                     var csGrid = new CanvasGrid(15, 12, "Connection Status");
-                    Form csForm = S.GET<RTC_ConnectionStatus_Form>();
+                    Form csForm = S.GET<ConnectionStatusForm>();
                     csGrid.SetTileForm(csForm, 0, 0, 15, 12, false);
                     _connectionStatus = csGrid;
                 }

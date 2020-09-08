@@ -49,10 +49,10 @@ namespace RTCV.UI
 
             SyncObjectSingleton.FormExecute(() =>
             {
-                if (S.GET<RTC_ConnectionStatus_Form>() != null && !S.GET<RTC_ConnectionStatus_Form>()
+                if (S.GET<ConnectionStatusForm>() != null && !S.GET<ConnectionStatusForm>()
                         .IsDisposed)
                 {
-                    S.GET<RTC_ConnectionStatus_Form>()
+                    S.GET<ConnectionStatusForm>()
                             .lbConnectionStatus.Text =
                         $"{(string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard"} connection timed out";
 
@@ -78,7 +78,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                S.GET<RTC_ConnectionStatus_Form>().lbConnectionStatus.Text =
+                S.GET<ConnectionStatusForm>().lbConnectionStatus.Text =
                     $"Connected to {(string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard"}";
             });
         }
