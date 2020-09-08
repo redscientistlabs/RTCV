@@ -86,11 +86,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\Blast Editor\RTC_ColumnSelector_Form.cs">
+    <Compile Include="Components\Blast Editor\ColumnSelector.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Blast Editor\RTC_ColumnSelector_Form.Designer.cs">
-      <DependentUpon>RTC_ColumnSelector_Form.cs</DependentUpon>
+    <Compile Include="Components\Blast Editor\ColumnSelector.Designer.cs">
+      <DependentUpon>ColumnSelector.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Containers\ListBoxForm.cs">
       <SubType>Form</SubType>
@@ -461,8 +461,8 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="VanguardImplementation.cs" />
-    <EmbeddedResource Include="Components\Blast Editor\RTC_ColumnSelector_Form.resx">
-      <DependentUpon>RTC_ColumnSelector_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Blast Editor\ColumnSelector.resx">
+      <DependentUpon>ColumnSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Containers\ListBoxForm.resx">
       <DependentUpon>ListBoxForm.cs</DependentUpon>
