@@ -51,7 +51,7 @@ namespace RTCV.UI
 
             SyncObjectSingleton.SyncObject = dummy;
 
-            UI_VanguardImplementation.StartServer();
+            VanguardImplementation.StartServer();
 
             PartialSpec p = new PartialSpec("UISpec");
 

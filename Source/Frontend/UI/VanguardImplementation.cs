@@ -11,7 +11,7 @@ namespace RTCV.UI
     using RTCV.UI.Modular;
     using static RTCV.NetCore.NetcoreCommands;
 
-    public static class UI_VanguardImplementation
+    public static class VanguardImplementation
     {
         public static UIConnector connector = null;
         private static string lastVanguardClient = "";
