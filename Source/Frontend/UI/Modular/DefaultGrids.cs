@@ -127,7 +127,7 @@ namespace RTCV.UI.Modular
 
                     Form ghbForm = S.GET<GlitchHarvesterBlastForm>();
                     Form ghiForm = S.GET<GlitchHarvesterIntensityForm>();
-                    Form ssmForm = S.GET<RTC_SavestateManager_Form>();
+                    Form ssmForm = S.GET<SavestateManagerForm>();
                     Form shForm = S.GET<RTC_StashHistory_Form>();
                     Form spmForm = S.GET<RTC_StockpileManager_Form>();
 
