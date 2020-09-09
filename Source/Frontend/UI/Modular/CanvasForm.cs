@@ -45,13 +45,13 @@
 
                 if (newSizeX != null && newSizeY != null)
                 {
-                    newForm.SetCompoentForm(componentForm, newSizeX.Value, newSizeY.Value, DisplayHeader);
+                    newForm.SetComponentForm(componentForm, newSizeX.Value, newSizeY.Value, DisplayHeader);
                 }
             }
             else
             {
                 var foundForm = loadedTileForms[componentForm];
-                foundForm.SetCompoentForm(componentForm, newSizeX.Value, newSizeY.Value, DisplayHeader);
+                foundForm.SetComponentForm(componentForm, newSizeX.Value, newSizeY.Value, DisplayHeader);
             }
             /*
             else

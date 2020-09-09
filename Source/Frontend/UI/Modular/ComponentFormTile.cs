@@ -17,7 +17,7 @@
             Colors.SetRTCColor(Colors.GeneralColor, this);
         }
 
-        public void SetCompoentForm(Form _childForm, int _sizeX, int _sizeY, bool DisplayHeader)
+        public void SetComponentForm(Form _childForm, int _sizeX, int _sizeY, bool DisplayHeader)
         {
             childForm = _childForm;
             SizeX = _sizeX;
@@ -51,7 +51,7 @@
         public int TilesX { get => SizeX; set => SizeX = value; }
         public int TilesY { get => SizeY; set => SizeY = value; }
 
-        private void ComponentFormTile_MouseDown(object sender, MouseEventArgs e)
+        private void OnFormTileMouseDown(object sender, MouseEventArgs e)
         {
             Point p = new Point(e.Location.X, e.Location.Y - pnComponentFormHost.Location.Y);
             var ea = new MouseEventArgs(e.Button, e.Clicks, p.X, p.Y, e.Delta);
