@@ -113,46 +113,10 @@ namespace RTCV.UI
             {
                 InitializeComponent();
 
-                dgvBlastEditor.DataError += OnBlastEditorDataError;
                 dgvBlastEditor.AutoGenerateColumns = false;
-                dgvBlastEditor.SelectionChanged += OnBlastEditorSelectionChange;
-                dgvBlastEditor.ColumnHeaderMouseClick += OnBlastEditorColumnHeaderMouseClick;
-                dgvBlastEditor.CellValueChanged += OnBlastEditorCellValueChanged;
-                dgvBlastEditor.CellMouseClick += OnBlastEditorCellMouseClick;
-                dgvBlastEditor.CellMouseDoubleClick += OnBlastEditorCellMouseDoubleClick;
-                dgvBlastEditor.RowsAdded += OnBlastEditorRowsAdded;
-                dgvBlastEditor.RowsRemoved += OnBlastEditorRowsRemoved;
-                dgvBlastEditor.CellFormatting += OnBlastEditorCellFormatting;
-                dgvBlastEditor.MouseClick += OnBlastEditorMouseClick;
 
                 cbFilterColumn.SelectedValueChanged += (o, e) => { tbFilter_TextChanged(null, null); };
                 tbFilter.TextChanged += tbFilter_TextChanged;
-
-                cbLocked.Validated += CbLocked_Validated;
-                cbBigEndian.Validated += CbBigEndian_Validated;
-                cbLoop.Validated += CbLoop_Validated;
-
-                cbDomain.Validated += cbDomain_Validated;
-                upDownAddress.Validated += UpDownAddress_Validated;
-                upDownPrecision.Validated += UpDownPrecision_Validated;
-                tbTiltValue.Validated += TbTiltValue_Validated;
-
-                upDownExecuteFrame.Validated += UpDownExecuteFrame_Validated;
-                upDownLoopTiming.Validated += UpDownLoopTiming_Validated;
-                upDownLifetime.Validated += UpDownLifetime_Validated;
-
-                cbSource.Validated += CbSource_Validated;
-                tbValue.Validated += TbValue_Validated;
-
-                cbInvertLimiter.Validated += CbInvertLimiter_Validated;
-                cbLimiterTime.Validated += CbLimiterTime_Validated;
-                cbStoreLimiterSource.Validated += cbStoreLimiterSource_Validated;
-                cbLimiterList.Validated += CbLimiterList_Validated;
-
-                upDownSourceAddress.Validated += UpDownSourceAddress_Validated;
-                cbStoreTime.Validated += CbStoreTime_Validated;
-                cbStoreType.Validated += CbStoreType_Validated;
-                cbSourceDomain.Validated += CbSourceDomain_Validated;
 
                 registerValueStringScrollEvents();
 
@@ -163,14 +127,6 @@ namespace RTCV.UI
                 upDownLifetime.Maximum = int.MaxValue;
                 upDownSourceAddress.Maximum = int.MaxValue;
                 upDownAddress.Maximum = int.MaxValue;
-
-                this.FormClosed += RTC_NewBlastEditorForm_Close;
-                this.FormClosing += RTC_NewBlastEditorForm_Closing;
-
-                //Registers the drag and drop with the blast editor form
-                AllowDrop = true;
-                this.DragEnter += NewBlastEditorForm_DragEnter;
-                this.DragDrop += NewBlastEditorForm_DragDrop;
             }
             catch (Exception ex)
             {
@@ -181,7 +137,7 @@ namespace RTCV.UI
             }
         }
 
-        private void NewBlastEditorForm_DragDrop(object sender, DragEventArgs e)
+        private void OnFormDragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             foreach (var f in files)
@@ -194,7 +150,7 @@ namespace RTCV.UI
             }
         }
 
-        private void NewBlastEditorForm_DragEnter(object sender, DragEventArgs e)
+        private void OnFormDragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Link;
         }
@@ -225,7 +181,7 @@ namespace RTCV.UI
             }
         }
 
-        private void RTC_NewBlastEditorForm_Load(object sender, EventArgs e)
+        private void OnFormLoad(object sender, EventArgs e)
         {
             Colors.SetRTCColor(Colors.GeneralColor, this);
             _domains = MemoryDomains.MemoryInterfaces?.Keys?.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
@@ -234,13 +190,9 @@ namespace RTCV.UI
             SetDisplayOrder();
         }
 
-        private void RTC_NewBlastEditorForm_Closing(object sender, FormClosingEventArgs e) => SaveDisplayOrder();
+        private void OnFormClosing(object sender, FormClosingEventArgs e) => SaveDisplayOrder();
 
-
-
-
-
-        private void RTC_NewBlastEditorForm_Close(object sender, FormClosedEventArgs e)
+        private void OnFormClosed(object sender, FormClosedEventArgs e)
         {
             //Clean up
             bs = null;
