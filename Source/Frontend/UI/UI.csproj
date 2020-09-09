@@ -309,11 +309,11 @@
     <Compile Include="Forms\InputBox.designer.cs">
       <DependentUpon>InputBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\RTC_AnalyticsTool_Form.cs">
+    <Compile Include="Forms\AnalyticsToolForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\RTC_AnalyticsTool_Form.Designer.cs">
-      <DependentUpon>RTC_AnalyticsTool_Form.cs</DependentUpon>
+    <Compile Include="Forms\AnalyticsToolForm.Designer.cs">
+      <DependentUpon>AnalyticsToolForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\RTC_BlastGenerator_Form.cs">
       <SubType>Form</SubType>
@@ -566,8 +566,8 @@
     <EmbeddedResource Include="Components\Settings\RTC_SettingsNetCore_Form.resx">
       <DependentUpon>RTC_SettingsNetCore_Form.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RTC_AnalyticsTool_Form.resx">
-      <DependentUpon>RTC_AnalyticsTool_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\AnalyticsToolForm.resx">
+      <DependentUpon>AnalyticsToolForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RTC_BlastGenerator_Form.resx">
       <DependentUpon>RTC_BlastGenerator_Form.cs</DependentUpon>
