@@ -166,7 +166,7 @@ namespace RTCV.UI
 
             if (cfForm.spForm == null)
             {
-                cfForm.ShowSubForm("UI_ComponentFormSubForm");
+                cfForm.ShowSubForm("ComponentFormSubForm");
             }
             else
                 cfForm.CloseSubForm();

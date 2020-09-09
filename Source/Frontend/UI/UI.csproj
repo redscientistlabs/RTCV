@@ -409,11 +409,11 @@
     <Compile Include="Modular\CanvasForm.Designer.cs">
       <DependentUpon>CanvasForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modular\UI_ComponentFormSubForm.cs">
+    <Compile Include="Modular\ComponentFormSubForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modular\UI_ComponentFormSubForm.Designer.cs">
-      <DependentUpon>UI_ComponentFormSubForm.cs</DependentUpon>
+    <Compile Include="Modular\ComponentFormSubForm.Designer.cs">
+      <DependentUpon>ComponentFormSubForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Modular\UI_ComponentFormTile.cs">
       <SubType>Form</SubType>
@@ -608,8 +608,8 @@
     <Compile Include="Modular\ComponentForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <EmbeddedResource Include="Modular\UI_ComponentFormSubForm.resx">
-      <DependentUpon>UI_ComponentFormSubForm.cs</DependentUpon>
+    <EmbeddedResource Include="Modular\ComponentFormSubForm.resx">
+      <DependentUpon>ComponentFormSubForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modular\UI_ComponentFormTile.resx">
       <DependentUpon>UI_ComponentFormTile.cs</DependentUpon>

@@ -1,6 +1,6 @@
 ﻿namespace RTCV.UI
 {
-    partial class UI_ComponentFormSubForm
+    partial class ComponentFormSubForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,9 +30,9 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
+            //
             // label1
-            // 
+            //
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI Semibold", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
@@ -41,9 +41,9 @@
             this.label1.Size = new System.Drawing.Size(239, 37);
             this.label1.TabIndex = 9;
             this.label1.Text = "Dummy Sub Form";
-            // 
+            //
             // UI_DummySubForm
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));

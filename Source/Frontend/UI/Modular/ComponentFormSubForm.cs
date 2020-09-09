@@ -3,9 +3,9 @@
     using System;
     using RTCV.UI.Modular;
 
-    public partial class UI_ComponentFormSubForm : ComponentForm, ISubForm, IBlockable
+    public partial class ComponentFormSubForm : ComponentForm, ISubForm, IBlockable
     {
-        public UI_ComponentFormSubForm()
+        public ComponentFormSubForm()
         {
             InitializeComponent();
 
@@ -33,7 +33,7 @@
         {
         }
 
-        private void UI_ComponentFormSubForm_Load(object sender, EventArgs e)
+        private void ComponentFormSubForm_Load(object sender, EventArgs e)
         {
         }
     }
