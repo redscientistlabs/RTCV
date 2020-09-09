@@ -12,18 +12,18 @@
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class RTC_StockpilePlayer_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class StockpilePlayerForm : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         private bool currentlyLoading = false;
 
-        public RTC_StockpilePlayer_Form()
+        public StockpilePlayerForm()
         {
             InitializeComponent();
-            dgvStockpile.DragDrop += dgvStockpile_DragDrop;
-            dgvStockpile.DragEnter += dgvStockpile_DragEnter;
+            dgvStockpile.DragDrop += OnStockpileDragDrop;
+            dgvStockpile.DragEnter += OnStockpileDragEnter;
             dgvStockpile.RowsAdded += (o, e) =>
             {
                 RefreshNoteIcons();
@@ -34,12 +34,12 @@
             };
         }
 
-        private void dgvStockpile_DragEnter(object sender, DragEventArgs e)
+        private void OnStockpileDragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Link;
         }
 
-        private void dgvStockpile_DragDrop(object sender, DragEventArgs e)
+        private void OnStockpileDragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             if (files.Length > 0 && files[0]
@@ -57,7 +57,7 @@
             }
         }
 
-        private void RTC_BE_Form_FormClosing(object sender, FormClosingEventArgs e)
+        private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason != CloseReason.FormOwnerClosing)
             {
@@ -66,7 +66,7 @@
             }
         }
 
-        private void btnPreviousItem_Click(object sender, EventArgs e)
+        private void TrySelectPrevious(object sender, EventArgs e)
         {
             try
             {
@@ -90,7 +90,7 @@
                     dgvStockpile.Rows[CurrentSelectedIndex - 1].Selected = true;
                 }
 
-                dgvStockpile_CellClick(dgvStockpile, new DataGridViewCellEventArgs(0, dgvStockpile.SelectedRows[0].Index));
+                OnStockpileCellClick(dgvStockpile, new DataGridViewCellEventArgs(0, dgvStockpile.SelectedRows[0].Index));
             }
             finally
             {
@@ -98,7 +98,7 @@
             }
         }
 
-        private void btnNextItem_Click(object sender, EventArgs e)
+        private void TrySelectNext(object sender, EventArgs e)
         {
             try
             {
@@ -122,7 +122,7 @@
                     dgvStockpile.Rows[CurrentSelectedIndex + 1].Selected = true;
                 }
 
-                dgvStockpile_CellClick(dgvStockpile, new DataGridViewCellEventArgs(0, dgvStockpile.SelectedRows[0].Index));
+                OnStockpileCellClick(dgvStockpile, new DataGridViewCellEventArgs(0, dgvStockpile.SelectedRows[0].Index));
             }
             finally
             {
@@ -130,12 +130,12 @@
             }
         }
 
-        private void btnReloadItem_Click(object sender, EventArgs e)
+        private void TryReload(object sender, EventArgs e)
         {
             try
             {
                 btnReloadItem.Visible = false;
-                dgvStockpile_CellClick(null, null);
+                OnStockpileCellClick(null, null);
             }
             finally
             {
@@ -143,19 +143,19 @@
             }
         }
 
-        private void btnBlastToggle_Click(object sender, EventArgs e)
+        private void BlastLayerToggle(object sender, EventArgs e)
         {
             S.GET<GlitchHarvesterBlastForm>().BlastLayerToggle(null, null);
         }
 
-        private void dgvStockpile_MouseDown(object sender, MouseEventArgs e)
+        private void OnStockpileMouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
                 Point locate = new Point((sender as Control).Location.X + e.Location.X, (sender as Control).Location.Y + e.Location.Y);
 
                 ToolStripSeparator stripSeparator = new ToolStripSeparator();
-                stripSeparator.Paint += stripSeparator_Paint;
+                stripSeparator.Paint += OnStripSeparatorPaint;
 
                 ContextMenuStrip columnsMenu = new ContextMenuStrip();
                 (columnsMenu.Items.Add("Show Item Name", null, new EventHandler((ob, ev) => { dgvStockpile.Columns["Item"].Visible ^= true; })) as ToolStripMenuItem).Checked = dgvStockpile.Columns["Item"].Visible;
@@ -180,7 +180,7 @@
             }
         }
 
-        private void stripSeparator_Paint(object sender, PaintEventArgs e)
+        private void OnStripSeparatorPaint(object sender, PaintEventArgs e)
         {
             ToolStripSeparator stripSeparator = sender as ToolStripSeparator;
             ContextMenuStrip menuStrip = stripSeparator.Owner as ContextMenuStrip;
@@ -244,7 +244,7 @@
             }
         }
 
-        private void btnLoadStockpile_MouseDown(object sender, MouseEventArgs e)
+        private void TryLoadStockpile(object sender, MouseEventArgs e)
         {
             Point locate = new Point((sender as Control).Location.X + e.Location.X, (sender as Control).Location.Y + e.Location.Y);
 
@@ -314,7 +314,7 @@
             LoadMenuItems.Show(this, locate);
         }
 
-        private void dgvStockpile_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void OnStockpileCellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (currentlyLoading || !S.GET<GlitchHarvesterBlastForm>().LoadOnSelect || e?.RowIndex == -1)
             {

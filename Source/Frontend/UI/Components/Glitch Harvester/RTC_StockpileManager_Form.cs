@@ -90,7 +90,7 @@ namespace RTCV.UI
                 }
 
                 S.GET<RTC_StashHistory_Form>().lbStashHistory.ClearSelected();
-                S.GET<RTC_StockpilePlayer_Form>().dgvStockpile.ClearSelection();
+                S.GET<StockpilePlayerForm>().dgvStockpile.ClearSelection();
 
                 S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
 
@@ -389,7 +389,7 @@ namespace RTCV.UI
                 StockpileManager_UISide.ClearCurrentStockpile();
                 dgvStockpile.Rows.Clear();
 
-                S.GET<RTC_StockpilePlayer_Form>().dgvStockpile.Rows.Clear();
+                S.GET<StockpilePlayerForm>().dgvStockpile.Rows.Clear();
                 logger.Trace("Starting Load Task");
                 var r = await Task.Run(() => Stockpile.Load(filename));
                 logger.Trace("Load Task Done");

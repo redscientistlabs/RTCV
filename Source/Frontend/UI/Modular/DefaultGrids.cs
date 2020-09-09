@@ -71,7 +71,7 @@ namespace RTCV.UI.Modular
                 if (_stockpilePlayer == null)
                 {
                     var spGrid = new CanvasGrid(15, 12, "Stockpile Player");
-                    Form spForm = S.GET<RTC_StockpilePlayer_Form>();
+                    Form spForm = S.GET<StockpilePlayerForm>();
                     spGrid.SetTileForm(spForm, 0, 0, 15, 12, false);
                     _stockpilePlayer = spGrid;
                 }

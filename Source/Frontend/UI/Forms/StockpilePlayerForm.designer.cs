@@ -2,7 +2,7 @@ namespace RTCV.UI
 {
     using System.Windows.Forms;
 
-    partial class RTC_StockpilePlayer_Form
+    partial class StockpilePlayerForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@ namespace RTCV.UI
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_StockpilePlayer_Form));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StockpilePlayerForm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btnNextItem = new System.Windows.Forms.Button();
@@ -67,7 +67,7 @@ namespace RTCV.UI
             this.btnNextItem.TabIndex = 127;
             this.btnNextItem.Text = "Next";
             this.btnNextItem.UseVisualStyleBackColor = false;
-            this.btnNextItem.Click += new System.EventHandler(this.btnNextItem_Click);
+            this.btnNextItem.Click += new System.EventHandler(this.TrySelectNext);
             //
             // btnReloadItem
             //
@@ -82,7 +82,7 @@ namespace RTCV.UI
             this.btnReloadItem.Size = new System.Drawing.Size(35, 32);
             this.btnReloadItem.TabIndex = 126;
             this.btnReloadItem.UseVisualStyleBackColor = false;
-            this.btnReloadItem.Click += new System.EventHandler(this.btnReloadItem_Click);
+            this.btnReloadItem.Click += new System.EventHandler(this.TryReload);
             //
             // btnPreviousItem
             //
@@ -98,7 +98,7 @@ namespace RTCV.UI
             this.btnPreviousItem.TabIndex = 124;
             this.btnPreviousItem.Text = "Previous";
             this.btnPreviousItem.UseVisualStyleBackColor = false;
-            this.btnPreviousItem.Click += new System.EventHandler(this.btnPreviousItem_Click);
+            this.btnPreviousItem.Click += new System.EventHandler(this.TrySelectPrevious);
             //
             // btnLoadStockpile
             //
@@ -114,7 +114,7 @@ namespace RTCV.UI
             this.btnLoadStockpile.TabIndex = 123;
             this.btnLoadStockpile.Text = "Load";
             this.btnLoadStockpile.UseVisualStyleBackColor = false;
-            this.btnLoadStockpile.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnLoadStockpile_MouseDown);
+            this.btnLoadStockpile.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TryLoadStockpile);
             //
             // btnBlastToggle
             //
@@ -133,7 +133,7 @@ namespace RTCV.UI
             this.btnBlastToggle.Tag = "color:dark2";
             this.btnBlastToggle.Text = "BlastLayer : OFF    (Attempts to uncorrupt/recorrupt in real-time)";
             this.btnBlastToggle.UseVisualStyleBackColor = false;
-            this.btnBlastToggle.Click += new System.EventHandler(this.btnBlastToggle_Click);
+            this.btnBlastToggle.Click += new System.EventHandler(this.BlastLayerToggle);
             //
             // dgvStockpile
             //
@@ -176,8 +176,8 @@ namespace RTCV.UI
             this.dgvStockpile.Size = new System.Drawing.Size(627, 319);
             this.dgvStockpile.TabIndex = 142;
             this.dgvStockpile.Tag = "color:normal";
-            this.dgvStockpile.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStockpile_CellClick);
-            this.dgvStockpile.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvStockpile_MouseDown);
+            this.dgvStockpile.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnStockpileCellClick);
+            this.dgvStockpile.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnStockpileMouseDown);
             //
             // Item
             //
@@ -276,7 +276,7 @@ namespace RTCV.UI
             this.label2.TabIndex = 83;
             this.label2.Text = "Stockpile Player";
             //
-            // RTC_StockpilePlayer_Form
+            // StockpilePlayerForm
             //
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -295,10 +295,10 @@ namespace RTCV.UI
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(655, 515);
-            this.Name = "RTC_StockpilePlayer_Form";
+            this.Name = "StockpilePlayerForm";
             this.Tag = "color:dark1";
             this.Text = "Stockpile Player";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RTC_BE_Form_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dgvStockpile)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
