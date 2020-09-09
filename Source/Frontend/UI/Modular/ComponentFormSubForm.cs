@@ -12,16 +12,16 @@
             Colors.SetRTCColor(Colors.GeneralColor, this);
         }
 
-        public bool SubForm_HasLeftButton => true;
-        public bool SubForm_HasRightButton => false;
-        public string SubForm_LeftButtonText => "Exit";
-        public string SubForm_RightButtonText => "Peter Griffin";
+        public bool HasLeftButton => true;
+        public bool HasRightButton => false;
+        public string LeftButtonText => "Exit";
+        public string RightButtonText => "Peter Griffin";
 
-        public void SubForm_LeftButton_Click()
+        public void LeftButtonClick()
         {
         }
 
-        public void SubForm_RightButton_Click()
+        public void RightButtonClick()
         {
         }
 
@@ -30,10 +30,6 @@
         }
 
         public void OnHidden()
-        {
-        }
-
-        private void ComponentFormSubForm_Load(object sender, EventArgs e)
         {
         }
     }
