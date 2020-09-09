@@ -309,23 +309,23 @@
     <Compile Include="Forms\InputBox.designer.cs">
       <DependentUpon>InputBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\RTC_AnalyticsTool_Form.cs">
+    <Compile Include="Forms\AnalyticsToolForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\RTC_AnalyticsTool_Form.Designer.cs">
-      <DependentUpon>RTC_AnalyticsTool_Form.cs</DependentUpon>
+    <Compile Include="Forms\AnalyticsToolForm.Designer.cs">
+      <DependentUpon>AnalyticsToolForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\RTC_BlastGenerator_Form.cs">
+    <Compile Include="Forms\BlastGeneratorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\RTC_BlastGenerator_Form.Designer.cs">
-      <DependentUpon>RTC_BlastGenerator_Form.cs</DependentUpon>
+    <Compile Include="Forms\BlastGeneratorForm.Designer.cs">
+      <DependentUpon>BlastGeneratorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\RTC_ConnectionStatus_Form.cs">
+    <Compile Include="Forms\ConnectionStatusForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\RTC_ConnectionStatus_Form.designer.cs">
-      <DependentUpon>RTC_ConnectionStatus_Form.cs</DependentUpon>
+    <Compile Include="Forms\ConnectionStatusForm.designer.cs">
+      <DependentUpon>ConnectionStatusForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\RTC_CustomEngineConfig_Form.cs">
       <SubType>Form</SubType>
@@ -363,17 +363,17 @@
     <Compile Include="Forms\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\RTC_SimpleMode_Form.cs">
+    <Compile Include="Forms\SimpleModeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\RTC_SimpleMode_Form.designer.cs">
-      <DependentUpon>RTC_SimpleMode_Form.cs</DependentUpon>
+    <Compile Include="Forms\SimpleModeForm.designer.cs">
+      <DependentUpon>SimpleModeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\RTC_StockpilePlayer_Form.cs">
+    <Compile Include="Forms\StockpilePlayerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\RTC_StockpilePlayer_Form.designer.cs">
-      <DependentUpon>RTC_StockpilePlayer_Form.cs</DependentUpon>
+    <Compile Include="Forms\StockpilePlayerForm.designer.cs">
+      <DependentUpon>StockpilePlayerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\RTC_Standalone_Form.cs">
       <SubType>Form</SubType>
@@ -409,17 +409,17 @@
     <Compile Include="Modular\CanvasForm.Designer.cs">
       <DependentUpon>CanvasForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modular\UI_ComponentFormSubForm.cs">
+    <Compile Include="Modular\ComponentFormSubForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modular\UI_ComponentFormSubForm.Designer.cs">
-      <DependentUpon>UI_ComponentFormSubForm.cs</DependentUpon>
+    <Compile Include="Modular\ComponentFormSubForm.Designer.cs">
+      <DependentUpon>ComponentFormSubForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modular\UI_ComponentFormTile.cs">
+    <Compile Include="Modular\ComponentFormTile.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Modular\UI_ComponentFormTile.Designer.cs">
-      <DependentUpon>UI_ComponentFormTile.cs</DependentUpon>
+    <Compile Include="Modular\ComponentFormTile.Designer.cs">
+      <DependentUpon>ComponentFormTile.cs</DependentUpon>
     </Compile>
     <Compile Include="Modular\CoreForm.cs">
       <SubType>Form</SubType>
@@ -566,14 +566,14 @@
     <EmbeddedResource Include="Components\Settings\RTC_SettingsNetCore_Form.resx">
       <DependentUpon>RTC_SettingsNetCore_Form.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RTC_AnalyticsTool_Form.resx">
-      <DependentUpon>RTC_AnalyticsTool_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\AnalyticsToolForm.resx">
+      <DependentUpon>AnalyticsToolForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RTC_BlastGenerator_Form.resx">
-      <DependentUpon>RTC_BlastGenerator_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\BlastGeneratorForm.resx">
+      <DependentUpon>BlastGeneratorForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RTC_ConnectionStatus_Form.resx">
-      <DependentUpon>RTC_ConnectionStatus_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ConnectionStatusForm.resx">
+      <DependentUpon>ConnectionStatusForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RTC_CustomEngineConfig_Form.resx">
       <DependentUpon>RTC_CustomEngineConfig_Form.cs</DependentUpon>
@@ -593,11 +593,11 @@
     <EmbeddedResource Include="Forms\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RTC_SimpleMode_Form.resx">
-      <DependentUpon>RTC_SimpleMode_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\SimpleModeForm.resx">
+      <DependentUpon>SimpleModeForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RTC_StockpilePlayer_Form.resx">
-      <DependentUpon>RTC_StockpilePlayer_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\StockpilePlayerForm.resx">
+      <DependentUpon>StockpilePlayerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TestForm.resx">
       <DependentUpon>TestForm.cs</DependentUpon>
@@ -608,11 +608,11 @@
     <Compile Include="Modular\ComponentForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <EmbeddedResource Include="Modular\UI_ComponentFormSubForm.resx">
-      <DependentUpon>UI_ComponentFormSubForm.cs</DependentUpon>
+    <EmbeddedResource Include="Modular\ComponentFormSubForm.resx">
+      <DependentUpon>ComponentFormSubForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Modular\UI_ComponentFormTile.resx">
-      <DependentUpon>UI_ComponentFormTile.cs</DependentUpon>
+    <EmbeddedResource Include="Modular\ComponentFormTile.resx">
+      <DependentUpon>ComponentFormTile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Modular\CoreForm.resx">
       <DependentUpon>CoreForm.cs</DependentUpon>

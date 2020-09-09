@@ -13,7 +13,7 @@ namespace RTCV.UI.Modular
                 if (_connectionStatus == null)
                 {
                     var csGrid = new CanvasGrid(15, 12, "Connection Status");
-                    Form csForm = S.GET<RTC_ConnectionStatus_Form>();
+                    Form csForm = S.GET<ConnectionStatusForm>();
                     csGrid.SetTileForm(csForm, 0, 0, 15, 12, false);
                     _connectionStatus = csGrid;
                 }
@@ -71,7 +71,7 @@ namespace RTCV.UI.Modular
                 if (_stockpilePlayer == null)
                 {
                     var spGrid = new CanvasGrid(15, 12, "Stockpile Player");
-                    Form spForm = S.GET<RTC_StockpilePlayer_Form>();
+                    Form spForm = S.GET<StockpilePlayerForm>();
                     spGrid.SetTileForm(spForm, 0, 0, 15, 12, false);
                     _stockpilePlayer = spGrid;
                 }
@@ -88,7 +88,7 @@ namespace RTCV.UI.Modular
                 if (_simpleMode == null)
                 {
                     var smGrid = new CanvasGrid(15, 12, "Simple Mode");
-                    Form smForm = S.GET<RTC_SimpleMode_Form>();
+                    Form smForm = S.GET<SimpleModeForm>();
                     smGrid.SetTileForm(smForm, 0, 0, 15, 12, false);
                     _simpleMode = smGrid;
                 }

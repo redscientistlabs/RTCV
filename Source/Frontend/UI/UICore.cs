@@ -194,7 +194,7 @@ namespace RTCV.UI
                 var cf = S.GET<CoreForm>();
                 cf.LockSideBar();
 
-                S.GET<RTC_ConnectionStatus_Form>().pnBlockedButtons.Show();
+                S.GET<ConnectionStatusForm>().pnBlockedButtons.Show();
 
                 if (blockMainForm)
                 {
@@ -230,7 +230,7 @@ namespace RTCV.UI
                 interfaceLocked = false;
                 S.GET<CoreForm>().UnlockSideBar();
 
-                S.GET<RTC_ConnectionStatus_Form>().pnBlockedButtons.Hide();
+                S.GET<ConnectionStatusForm>().pnBlockedButtons.Hide();
 
                 CanvasForm.mainForm.UnblockView();
                 CanvasForm.extraForms.ForEach(it => it.UnblockView());
@@ -253,7 +253,7 @@ namespace RTCV.UI
 
         public static void BlockView(this IBlockable ib)
         {
-            if (ib is RTC_ConnectionStatus_Form)
+            if (ib is ConnectionStatusForm)
             {
                 return;
             }
@@ -281,7 +281,7 @@ namespace RTCV.UI
 
         public static void UnblockView(this IBlockable ib)
         {
-            if (ib is RTC_ConnectionStatus_Form)
+            if (ib is ConnectionStatusForm)
             {
                 return;
             }

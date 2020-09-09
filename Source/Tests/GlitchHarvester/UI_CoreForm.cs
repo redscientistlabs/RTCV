@@ -155,7 +155,7 @@ namespace RTCV.UI
 
             //multiGrid.Load();
 
-            //var tileForm = (UI_ComponentFormTile)CanvasForm.getTileForm("UI_ComponentFormTile");
+            //var tileForm = (ComponentFormTile)CanvasForm.getTileForm("ComponentFormTile");
             //tileForm.SetCompoentForm("ComponentForm host", 4, 4);
 
         }
@@ -166,7 +166,7 @@ namespace RTCV.UI
 
             if (cfForm.spForm == null)
             {
-                cfForm.ShowSubForm("UI_ComponentFormSubForm");
+                cfForm.ShowSubForm("ComponentFormSubForm");
             }
             else
                 cfForm.CloseSubForm();

@@ -302,7 +302,7 @@ namespace RTCV.UI
                     else
                     {
                         DefaultGrids.simpleMode.LoadToMain();
-                        RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
+                        SimpleModeForm smForm = S.GET<SimpleModeForm>();
                         smForm.EnteringSimpleMode();
                     }
                 }
@@ -388,7 +388,7 @@ namespace RTCV.UI
             BlastLayer bl = null;
             SyncObjectSingleton.FormExecute(() =>
             {
-                bl = S.GET<RTC_BlastGenerator_Form>().GenerateBlastLayers(true, true, false);
+                bl = S.GET<BlastGeneratorForm>().GenerateBlastLayers(true, true, false);
             });
             e.setReturnValue(bl);
         }

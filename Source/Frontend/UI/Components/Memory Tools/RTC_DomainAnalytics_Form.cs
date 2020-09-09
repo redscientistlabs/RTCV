@@ -147,7 +147,7 @@
         {
             cbAutoAddDump.Checked = false;
             var mi = MemoryDomains.GetInterface(cbSelectedMemoryDomain.SelectedItem.ToString());
-            RTC_AnalyticsTool_Form.OpenAnalyticsTool(mi, MemoryDumps);
+            AnalyticsToolForm.OpenAnalyticsTool(mi, MemoryDumps);
         }
 
         private void cbSelectedMemoryDomain_SelectedIndexChanged(object sender, EventArgs e)

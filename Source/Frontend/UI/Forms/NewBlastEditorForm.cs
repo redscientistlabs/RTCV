@@ -2073,14 +2073,14 @@ namespace RTCV.UI
 
         private void OpenBlastGenerator(object sender, EventArgs e)
         {
-            if (S.GET<RTC_BlastGenerator_Form>() != null)
+            if (S.GET<BlastGeneratorForm>() != null)
             {
-                S.GET<RTC_BlastGenerator_Form>().Close();
+                S.GET<BlastGeneratorForm>().Close();
             }
 
-            S.SET(new RTC_BlastGenerator_Form());
+            S.SET(new BlastGeneratorForm());
 
-            var bgForm = S.GET<RTC_BlastGenerator_Form>();
+            var bgForm = S.GET<BlastGeneratorForm>();
             bgForm.LoadStashkey(currentSK);
         }
 

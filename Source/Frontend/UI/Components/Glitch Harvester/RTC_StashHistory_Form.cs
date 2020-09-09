@@ -290,7 +290,7 @@ namespace RTCV.UI
                 }
 
                 S.GET<RTC_StockpileManager_Form>().dgvStockpile.ClearSelection();
-                S.GET<RTC_StockpilePlayer_Form>().dgvStockpile.ClearSelection();
+                S.GET<StockpilePlayerForm>().dgvStockpile.ClearSelection();
 
                 var blastForm = S.GET<GlitchHarvesterBlastForm>();
 

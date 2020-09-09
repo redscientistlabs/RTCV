@@ -69,17 +69,17 @@
     <Compile Include="NetCoreServer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI_ComponentFormSubForm.cs">
+    <Compile Include="ComponentFormSubForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI_ComponentFormSubForm.Designer.cs">
-      <DependentUpon>UI_ComponentFormSubForm.cs</DependentUpon>
+    <Compile Include="ComponentFormSubForm.Designer.cs">
+      <DependentUpon>ComponentFormSubForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI_ComponentFormTile.cs">
+    <Compile Include="ComponentFormTile.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI_ComponentFormTile.Designer.cs">
-      <DependentUpon>UI_ComponentFormTile.cs</DependentUpon>
+    <Compile Include="ComponentFormTile.Designer.cs">
+      <DependentUpon>ComponentFormTile.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="CanvasForm.resx">
       <DependentUpon>CanvasForm.cs</DependentUpon>
@@ -100,11 +100,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="UI_ComponentFormSubForm.resx">
-      <DependentUpon>UI_ComponentFormSubForm.cs</DependentUpon>
+    <EmbeddedResource Include="ComponentFormSubForm.resx">
+      <DependentUpon>ComponentFormSubForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI_ComponentFormTile.resx">
-      <DependentUpon>UI_ComponentFormTile.cs</DependentUpon>
+    <EmbeddedResource Include="ComponentFormTile.resx">
+      <DependentUpon>ComponentFormTile.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">

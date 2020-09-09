@@ -29,17 +29,17 @@ namespace RTCV.UI
             });
         }
 
-        public bool SubForm_HasLeftButton => false;
-        public bool SubForm_HasRightButton => false;
-        public string SubForm_LeftButtonText { get; }
-        public string SubForm_RightButtonText { get; }
+        public bool HasLeftButton => false;
+        public bool HasRightButton => false;
+        public string LeftButtonText { get; }
+        public string RightButtonText { get; }
 
-        public void SubForm_LeftButton_Click()
+        public void LeftButtonClick()
         {
             throw new NotImplementedException();
         }
 
-        public void SubForm_RightButton_Click()
+        public void RightButtonClick()
         {
             throw new NotImplementedException();
         }
