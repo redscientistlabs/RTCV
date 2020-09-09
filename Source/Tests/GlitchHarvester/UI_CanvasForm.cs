@@ -19,7 +19,7 @@ namespace RTCV.UI
         public static int spacerSize;
         public static int tileSize;
 
-        static Dictionary<string, UI_ComponentFormTile> loadedTileForms = new Dictionary<string, UI_ComponentFormTile>();
+        static Dictionary<string, ComponentFormTile> loadedTileForms = new Dictionary<string, ComponentFormTile>();
 
         public bool SubFormMode
         {
@@ -47,12 +47,12 @@ namespace RTCV.UI
 
         }
 
-        public static UI_ComponentFormTile getTileForm(string componentFormName, int? newSizeX = null, int? newSizeY = null, bool DisplayHeader = true)
+        public static ComponentFormTile getTileForm(string componentFormName, int? newSizeX = null, int? newSizeY = null, bool DisplayHeader = true)
         {
 
             if (!loadedTileForms.ContainsKey(componentFormName))
             {
-                var newForm = (UI_ComponentFormTile)Activator.CreateInstance(typeof(UI_ComponentFormTile));
+                var newForm = (ComponentFormTile)Activator.CreateInstance(typeof(ComponentFormTile));
                 loadedTileForms[componentFormName] = newForm;
 
                 if (newSizeX != null && newSizeY != null)
@@ -121,7 +121,7 @@ namespace RTCV.UI
                         targetForm.Text = canvasGrid.GridName;
                         bool DisplayHeader = (canvasGrid.gridComponentDisplayHeader[x, y].HasValue ? canvasGrid.gridComponentDisplayHeader[x, y].Value : false);
                         var size = canvasGrid.gridComponentSize[x, y];
-                        UI_ComponentFormTile tileForm = getTileForm(canvasGrid.gridComponent[x, y], size?.Width, size?.Height, DisplayHeader);
+                        ComponentFormTile tileForm = getTileForm(canvasGrid.gridComponent[x, y], size?.Width, size?.Height, DisplayHeader);
                         tileForm.TopLevel = false;
                         targetForm.Controls.Add(tileForm);
                         tileForm.Location = getTileLocation(x, y);

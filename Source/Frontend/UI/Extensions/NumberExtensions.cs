@@ -20,7 +20,7 @@ namespace RTCV.UI
             do
             {
                 if (ctr.Parent != null
-                    && !(ctr is UI_ComponentFormTile)
+                    && !(ctr is ComponentFormTile)
                     && !(ctr is CanvasForm)
                     && !(ctr is ComponentPanel)
                     && !(ctr is ComponentForm)

@@ -9,14 +9,14 @@ using System.Windows.Forms;
 
 namespace RTCV.UI
 {
-    public partial class UI_ComponentFormTile : Form, ITileForm
+    public partial class ComponentFormTile : Form, ITileForm
     {
 
         string childForm = null; //change to ComponentForm
         public int SizeX = 2;
         public int SizeY = 2;
 
-        public UI_ComponentFormTile()
+        public ComponentFormTile()
         {
             InitializeComponent();
 
