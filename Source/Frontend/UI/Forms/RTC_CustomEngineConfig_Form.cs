@@ -311,7 +311,7 @@
             }
 
             S.GET<CorruptionEngineForm>().SetRewindBoxes(cbClearRewind.Checked);
-            S.GET<RTC_SimpleMode_Form>().SetRewindBoxes(cbClearRewind.Checked);
+            S.GET<SimpleModeForm>().SetRewindBoxes(cbClearRewind.Checked);
 
             StepActions.ClearStepActionsOnRewind = cbClearRewind.Checked;
         }

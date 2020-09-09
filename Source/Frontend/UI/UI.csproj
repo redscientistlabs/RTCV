@@ -363,11 +363,11 @@
     <Compile Include="Forms\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\RTC_SimpleMode_Form.cs">
+    <Compile Include="Forms\SimpleModeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\RTC_SimpleMode_Form.designer.cs">
-      <DependentUpon>RTC_SimpleMode_Form.cs</DependentUpon>
+    <Compile Include="Forms\SimpleModeForm.designer.cs">
+      <DependentUpon>SimpleModeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\RTC_StockpilePlayer_Form.cs">
       <SubType>Form</SubType>
@@ -593,8 +593,8 @@
     <EmbeddedResource Include="Forms\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RTC_SimpleMode_Form.resx">
-      <DependentUpon>RTC_SimpleMode_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\SimpleModeForm.resx">
+      <DependentUpon>SimpleModeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RTC_StockpilePlayer_Form.resx">
       <DependentUpon>RTC_StockpilePlayer_Form.cs</DependentUpon>

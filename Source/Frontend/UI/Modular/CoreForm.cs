@@ -39,12 +39,12 @@ namespace RTCV.UI
                 if (value)
                 {
                     btnAutoCorrupt.Text = " Stop Auto-Corrupt";
-                    S.GET<RTC_SimpleMode_Form>().btnAutoCorrupt.Text = " Stop Auto-Corrupt";
+                    S.GET<SimpleModeForm>().btnAutoCorrupt.Text = " Stop Auto-Corrupt";
                 }
                 else
                 {
                     btnAutoCorrupt.Text = " Start Auto-Corrupt";
-                    S.GET<RTC_SimpleMode_Form>().btnAutoCorrupt.Text = " Start Auto-Corrupt";
+                    S.GET<SimpleModeForm>().btnAutoCorrupt.Text = " Start Auto-Corrupt";
                 }
 
                 RtcCore.AutoCorrupt = value;
@@ -142,7 +142,7 @@ This message only appears once.";
                     if (VanguardImplementation.connector.netConn.status == NetworkStatus.CONNECTED)
                     {
                         DefaultGrids.simpleMode.LoadToMain();
-                        RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
+                        SimpleModeForm smForm = S.GET<SimpleModeForm>();
                         smForm.EnteringSimpleMode();
                     }
                 }
@@ -276,7 +276,7 @@ This message only appears once.";
             if (Params.IsParamSet("SIMPLE_MODE"))
             {
                 DefaultGrids.simpleMode.LoadToMain();
-                RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
+                SimpleModeForm smForm = S.GET<SimpleModeForm>();
                 smForm.EnteringSimpleMode();
             }
             else
@@ -332,7 +332,7 @@ This message only appears once.";
 
         private void OnStartEasyModeClick(object sender, MouseEventArgs e)
         {
-            bool simpleModeVisible = S.GET<RTC_SimpleMode_Form>().Visible;
+            bool simpleModeVisible = S.GET<SimpleModeForm>().Visible;
 
             Point locate = e.GetMouseLocation(sender);
 
@@ -346,7 +346,7 @@ This message only appears once.";
                 }
 
                 DefaultGrids.simpleMode.LoadToMain();
-                RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
+                SimpleModeForm smForm = S.GET<SimpleModeForm>();
 
                 smForm.EnteringSimpleMode();
             }))).Enabled = !simpleModeVisible;

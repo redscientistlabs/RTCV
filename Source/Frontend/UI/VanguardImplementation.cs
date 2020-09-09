@@ -302,7 +302,7 @@ namespace RTCV.UI
                     else
                     {
                         DefaultGrids.simpleMode.LoadToMain();
-                        RTC_SimpleMode_Form smForm = S.GET<RTC_SimpleMode_Form>();
+                        SimpleModeForm smForm = S.GET<SimpleModeForm>();
                         smForm.EnteringSimpleMode();
                     }
                 }

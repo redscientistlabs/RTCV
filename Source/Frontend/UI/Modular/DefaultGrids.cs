@@ -88,7 +88,7 @@ namespace RTCV.UI.Modular
                 if (_simpleMode == null)
                 {
                     var smGrid = new CanvasGrid(15, 12, "Simple Mode");
-                    Form smForm = S.GET<RTC_SimpleMode_Form>();
+                    Form smForm = S.GET<SimpleModeForm>();
                     smGrid.SetTileForm(smForm, 0, 0, 15, 12, false);
                     _simpleMode = smGrid;
                 }

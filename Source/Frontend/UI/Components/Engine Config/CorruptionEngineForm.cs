@@ -273,7 +273,7 @@ namespace RTCV.UI
             SetRewindBoxes(((CheckBox)sender).Checked);
 
             S.GET<RTC_CustomEngineConfig_Form>().SetRewindBoxes(((CheckBox)sender).Checked);
-            S.GET<RTC_SimpleMode_Form>().SetRewindBoxes(((CheckBox)sender).Checked);
+            S.GET<SimpleModeForm>().SetRewindBoxes(((CheckBox)sender).Checked);
 
             StepActions.ClearStepActionsOnRewind = cbClearFreezesOnRewind.Checked;
         }
