@@ -228,7 +228,7 @@ This message only appears once.";
         {
             //test button, loads a dummy form in SubForm mode
 
-            var f = S.GET<UI_ComponentFormSubForm>();
+            var f = S.GET<ComponentFormSubForm>();
             cfForm.OpenSubForm(f, true);
         }
 

@@ -68,23 +68,23 @@
 
             if (subForm is ISubForm sf)
             {
-                btnLeft.Visible = sf.SubForm_HasLeftButton;
-                btnRight.Visible = sf.SubForm_HasRightButton;
+                btnLeft.Visible = sf.HasLeftButton;
+                btnRight.Visible = sf.HasRightButton;
 
-                if (!sf.SubForm_HasLeftButton && !sf.SubForm_HasRightButton)
+                if (!sf.HasLeftButton && !sf.HasRightButton)
                 {
                     int newYSize = pnFloater.Size.Height - (pnContainer.Location.Y * 2);
                     pnContainer.Size = new Size(pnContainer.Size.Width, newYSize);
                 }
 
-                if (sf.SubForm_LeftButtonText != null)
+                if (sf.LeftButtonText != null)
                 {
-                    btnLeft.Text = sf.SubForm_LeftButtonText;
+                    btnLeft.Text = sf.LeftButtonText;
                 }
 
-                if (sf.SubForm_RightButtonText != null)
+                if (sf.RightButtonText != null)
                 {
-                    btnRight.Text = sf.SubForm_RightButtonText;
+                    btnRight.Text = sf.RightButtonText;
                 }
             }
         }
@@ -116,7 +116,7 @@
 
             if (subForm is ISubForm)
             {
-                (subForm as ISubForm).SubForm_RightButton_Click();
+                (subForm as ISubForm).RightButtonClick();
             }
 
             parentForm.CloseSubForm();
@@ -128,7 +128,7 @@
 
             if (subForm is ISubForm)
             {
-                (subForm as ISubForm).SubForm_LeftButton_Click();
+                (subForm as ISubForm).LeftButtonClick();
             }
 
             parentForm.CloseSubForm();

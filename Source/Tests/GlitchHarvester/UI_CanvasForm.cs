@@ -162,7 +162,7 @@ namespace RTCV.UI
 
             if (spForm == null)
             {
-                ShowSubForm("UI_ComponentFormSubForm");
+                ShowSubForm("ComponentFormSubForm");
             }
             else
                 CloseSubForm();
