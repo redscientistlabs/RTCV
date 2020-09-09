@@ -9,8 +9,7 @@ namespace RTCV.UI
 
     public partial class SanitizeToolForm : Form, IAutoColorize
     {
-        private BlastLayer originalBlastLayer = null;
-        private BlastLayer workBlastLayer = null;
+        private BlastLayer _originalBlastLayer = null;
 
         public SanitizeToolForm()
         {
@@ -59,8 +58,7 @@ namespace RTCV.UI
             stf.lbSteps.ValueMember = "Value";
             stf.lbSteps.Items.Add(new { Text = $"Original Layer [{clone.Layer.Count(x => !x.IsLocked)} Units]", Value = clone });
 
-            stf.originalBlastLayer = clone;
-            stf.workBlastLayer = bl;
+            stf._originalBlastLayer = clone;
 
             stf.UpdateSanitizeProgress();
 
@@ -175,7 +173,7 @@ namespace RTCV.UI
         public void LeaveAndSubtractChanges(object sender, EventArgs e)
         {
             BlastLayer changes = (BlastLayer)S.GET<RTC_NewBlastEditor_Form>().currentSK.BlastLayer.Clone();
-            BlastLayer modified = (BlastLayer)originalBlastLayer.Clone();
+            BlastLayer modified = (BlastLayer)_originalBlastLayer.Clone();
 
             foreach (var unit in changes.Layer.Where(it => it.IsEnabled))
             {
@@ -209,7 +207,7 @@ namespace RTCV.UI
 
         private void LeaveWithoutChanges(object sender, EventArgs e)
         {
-            S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(originalBlastLayer);
+            S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(_originalBlastLayer);
             ReopenBlastEditor();
 
             this.Close();
@@ -233,7 +231,6 @@ namespace RTCV.UI
 
             BlastLayer bl = (BlastLayer)modified.Value.Clone();
             S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(bl);
-            workBlastLayer = bl;
 
             UpdateSanitizeProgress();
 
@@ -263,7 +260,7 @@ namespace RTCV.UI
 
         public void UpdateSanitizeProgress()
         {
-            int originalSize = originalBlastLayer.Layer.Count(x => !x.IsLocked);
+            int originalSize = _originalBlastLayer.Layer.Count(x => !x.IsLocked);
 
             int originalRemainder = originalSize;
             int originalMaxsteps = 0;
@@ -326,7 +323,7 @@ namespace RTCV.UI
                 switch (dr)
                 {
                     case DialogResult.Yes:
-                        S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(originalBlastLayer);
+                        S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(_originalBlastLayer);
                         break;
                     case DialogResult.No:
                         break;
