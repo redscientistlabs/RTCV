@@ -594,7 +594,7 @@ namespace RTCV.UI
                         var bef = S.GET<NewBlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
-                            bef.btnDisable50_Click(null, null);
+                            bef.Disable50(null, null);
                         }
                     });
                     break;
@@ -605,7 +605,7 @@ namespace RTCV.UI
                         var bef = S.GET<NewBlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
-                            bef.btnRemoveDisabled_Click(null, null);
+                            bef.RemoveDisabled(null, null);
                         }
                     });
                     break;
@@ -616,7 +616,7 @@ namespace RTCV.UI
                         var bef = S.GET<NewBlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
-                            bef.btnInvertDisabled_Click(null, null);
+                            bef.InvertDisabled(null, null);
                         }
                     });
                     break;
@@ -626,7 +626,7 @@ namespace RTCV.UI
                         var bef = S.GET<NewBlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
-                            bef.btnShiftBlastLayerUp_Click(null, null);
+                            bef.ShiftBlastLayerUp(null, null);
                         }
                     });
                     break;
@@ -636,7 +636,7 @@ namespace RTCV.UI
                         var bef = S.GET<NewBlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
-                            bef.btnShiftBlastLayerDown_Click(null, null);
+                            bef.ShiftBlastLayerDown(null, null);
                         }
                     });
                     break;
@@ -646,7 +646,7 @@ namespace RTCV.UI
                         var bef = S.GET<NewBlastEditorForm>();
                         if (bef != null && bef.Focused)
                         {
-                            bef.btnLoadCorrupt_Click(null, null);
+                            bef.LoadCorrupt(null, null);
                         }
                     });
                     break;
@@ -656,7 +656,7 @@ namespace RTCV.UI
                         var bef = S.GET<NewBlastEditorForm>();
                         if (bef != null && bef.Focused)
                         {
-                            bef.btnCorrupt_Click(null, null);
+                            bef.Corrupt(null, null);
                         }
                     });
                     break;
@@ -666,7 +666,7 @@ namespace RTCV.UI
                         var bef = S.GET<NewBlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
-                            bef.btnSendToStash_Click(null, null);
+                            bef.SendToStash(null, null);
                         }
                     });
                     break;

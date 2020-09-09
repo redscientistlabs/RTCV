@@ -209,7 +209,7 @@ namespace RTCV.UI
                     {
                         StashKey sk = StockpileManager_UISide.StashHistory[lbStashHistory.SelectedIndex];
                         NewBlastEditorForm.OpenBlastEditor(sk, true);
-                        S.GET<NewBlastEditorForm>().btnSanitizeTool_Click(null, null);
+                        S.GET<NewBlastEditorForm>().OpenSanitizeTool(null, null);
                     }
                 }))).Enabled = lbStashHistory.SelectedIndex != -1;
 

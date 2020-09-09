@@ -502,7 +502,7 @@ namespace RTCV.UI
             SyncObjectSingleton.FormExecute(() =>
             {
                 var blastEditor = S.GET<NewBlastEditorForm>();
-                blastEditor.btnLoadCorrupt_Click(null, null);
+                blastEditor.LoadCorrupt(null, null);
             });
         }
 

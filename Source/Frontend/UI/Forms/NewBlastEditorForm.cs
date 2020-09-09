@@ -847,7 +847,7 @@ namespace RTCV.UI
             _ = dgvBlastEditor.Rows[e.RowIndex].Cells[0].Value;
         }
 
-        private void tbFilter_TextChanged(object sender, EventArgs e)
+        private void OnFilterTextChanged(object sender, EventArgs e)
         {
             if (tbFilter.Text.Length == 0)
             {
@@ -1298,7 +1298,7 @@ namespace RTCV.UI
             MessageBox.Show(e.Exception.ToString() + "\nRow:" + e.RowIndex + "\nColumn" + e.ColumnIndex + "\n" + e.Context + "\n" + dgvBlastEditor[e.ColumnIndex, e.RowIndex].Value?.ToString());
         }
 
-        public void btnDisable50_Click(object sender, EventArgs e)
+        public void Disable50(object sender, EventArgs e)
         {
             foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
                 Where(x => x.IsLocked == false))
@@ -1316,7 +1316,7 @@ namespace RTCV.UI
             dgvBlastEditor.Refresh();
         }
 
-        public void btnInvertDisabled_Click(object sender, EventArgs e)
+        public void InvertDisabled(object sender, EventArgs e)
         {
             foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
                 Where(x => !x.IsLocked))
@@ -1326,7 +1326,7 @@ namespace RTCV.UI
             dgvBlastEditor.Refresh();
         }
 
-        public void btnRemoveDisabled_Click(object sender, EventArgs e)
+        public void RemoveDisabled(object sender, EventArgs e)
         {
             var buToRemove = new List<BlastUnit>();
 
@@ -1356,7 +1356,7 @@ namespace RTCV.UI
             dgvBlastEditor.ResumeLayout();
         }
 
-        public void btnDisableEverything_Click(object sender, EventArgs e)
+        public void DisableEverything(object sender, EventArgs e)
         {
             foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
                 Where(x =>
@@ -1367,7 +1367,7 @@ namespace RTCV.UI
             dgvBlastEditor.Refresh();
         }
 
-        public void btnEnableEverything_Click(object sender, EventArgs e)
+        public void EnableEverything(object sender, EventArgs e)
         {
             foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
                 Where(x =>
@@ -1378,7 +1378,7 @@ namespace RTCV.UI
             dgvBlastEditor.Refresh();
         }
 
-        public void btnRemoveSelected_Click(object sender, EventArgs e)
+        public void RemoveSelected(object sender, EventArgs e)
         {
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
             {
@@ -1395,7 +1395,7 @@ namespace RTCV.UI
             }
         }
 
-        public void btnDuplicateSelected_Click(object sender, EventArgs e)
+        public void DuplicateSelected(object sender, EventArgs e)
         {
             if (dgvBlastEditor.SelectedRows.Count == 0)
             {
@@ -1414,7 +1414,7 @@ namespace RTCV.UI
             RefreshAllNoteIcons();
         }
 
-        public void btnSendToStash_Click(object sender, EventArgs e)
+        public void SendToStash(object sender, EventArgs e)
         {
             if (currentSK.ParentKey == null)
             {
@@ -1434,7 +1434,7 @@ namespace RTCV.UI
             StockpileManager_UISide.CurrentStashkey = StockpileManager_UISide.StashHistory[S.GET<RTC_StashHistory_Form>().lbStashHistory.SelectedIndex];
         }
 
-        public void btnNote_Click(object sender, EventArgs e)
+        public void OpenNoteEditor(object sender, EventArgs e)
         {
             if (dgvBlastEditor.SelectedRows.Count == 0)
             {
@@ -1456,7 +1456,7 @@ namespace RTCV.UI
             S.GET<NoteEditorForm>().Show();
         }
 
-        public void sanitizeDuplicatesToolStripMenuItem_Click(object sender, EventArgs e)
+        public void SanitizeDuplicates(object sender, EventArgs e)
         {
             dgvBlastEditor.ClearSelection();
 
@@ -1488,7 +1488,7 @@ namespace RTCV.UI
 
 
 
-        public void replaceRomFromGHToolStripMenuItem_Click(object sender, EventArgs e)
+        public void ReplaceRomFromGlitchHarvester(object sender, EventArgs e)
         {
             StashKey temp = StockpileManager_UISide.CurrentSavestateStashKey;
 
@@ -1507,7 +1507,7 @@ namespace RTCV.UI
             currentSK.SyncSettings = temp.SyncSettings;
         }
 
-        public void replaceRomFromFileToolStripMenuItem_Click(object sender, EventArgs e)
+        public void ReplaceRomFromFile(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("Loading this rom will invalidate the associated savestate. You'll need to set a new savestate for the Blastlayer. Continue?", "Invalidate State?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
@@ -1597,17 +1597,17 @@ namespace RTCV.UI
             }
         }
 
-        private void bakeROMBlastunitsToFileToolStripMenuItem_Click(object sender, EventArgs e)
+        private void BakeROMBlastunitsToFile(object sender, EventArgs e)
         {
             BakeROMBlastunitsToFile(null);
         }
 
-        private void runOriginalSavestateToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RunOriginalSavestate(object sender, EventArgs e)
         {
             originalSK.RunOriginal();
         }
 
-        public void replaceSavestateFromGHToolStripMenuItem_Click(object sender, EventArgs e)
+        public void ReplaceSavestateFromGlitchHarvester(object sender, EventArgs e)
         {
             StashKey temp = StockpileManager_UISide.CurrentSavestateStashKey;
             if (temp == null)
@@ -1689,12 +1689,12 @@ namespace RTCV.UI
             var temp = new StashKey(RtcCore.GetRandomKey(), currentSK.ParentKey, currentSK.BlastLayer);
             currentSK.SyncSettings = temp.SyncSettings;
         }
-        private void replaceSavestateFromFileToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ReplaceSavestateFromFile(object sender, EventArgs e)
         {
             ReplaceSavestateFromFileToolStrip(null);
         }
 
-        public void SaveSavestateTo(string filename = null)
+        private void SaveSavestateTo(string filename = null)
         {
             if (filename == null)
             {
@@ -1716,12 +1716,12 @@ namespace RTCV.UI
             File.Copy(currentSK.GetSavestateFullPath(), filename, true);
         }
 
-        private void saveSavestateToToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveSavestateTo(object sender, EventArgs e)
         {
             SaveSavestateTo(null);
         }
 
-        public void saveToFileblToolStripMenuItem_Click(object sender, EventArgs e)
+        public void SaveBlastLayerToFile(object sender, EventArgs e)
         {
             //If there's no blastlayer file already set, don't quicksave
             if (CurrentBlastLayerFile.Length == 0)
@@ -1736,19 +1736,19 @@ namespace RTCV.UI
             CurrentBlastLayerFile = BlastTools.LastBlastLayerSavePath;
         }
 
-        public void saveAsToFileblToolStripMenuItem_Click(object sender, EventArgs e)
+        public void SaveAsBlastLayerToFile(object sender, EventArgs e)
         {
             BlastTools.SaveBlastLayerToFile(currentSK.BlastLayer);
             CurrentBlastLayerFile = BlastTools.LastBlastLayerSavePath;
         }
 
-        public void importBlastlayerblToolStripMenuItem_Click(object sender, EventArgs e)
+        public void ImportBlastLayer(object sender, EventArgs e)
         {
             BlastLayer temp = BlastTools.LoadBlastLayerFromFile();
             ImportBlastLayer(temp);
         }
 
-        public void loadFromFileblToolStripMenuItem_Click(object sender, EventArgs e)
+        public void LoadBlastLayerFromFile(object sender, EventArgs e)
         {
             BlastLayer temp = BlastTools.LoadBlastLayerFromFile();
             if (temp != null)
@@ -1926,7 +1926,7 @@ namespace RTCV.UI
             }
         }
 
-        public void btnLoadCorrupt_Click(object sender, EventArgs e)
+        public void LoadCorrupt(object sender, EventArgs e)
         {
             if (currentSK.ParentKey == null)
             {
@@ -1951,7 +1951,7 @@ namespace RTCV.UI
             newSk.Run();
         }
 
-        public void btnCorrupt_Click(object sender, EventArgs e)
+        public void Corrupt(object sender, EventArgs e)
         {
             var newSk = (StashKey)currentSK.Clone();
             S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newSk, false);
@@ -1973,7 +1973,7 @@ namespace RTCV.UI
 
 
 
-        public void btnShiftBlastLayerDown_Click(object sender, EventArgs e)
+        public void ShiftBlastLayerDown(object sender, EventArgs e)
         {
             var amount = updownShiftBlastLayerAmount.Value;
             var column = ((ComboBoxItem<string>)cbShiftBlastlayer?.SelectedItem)?.Value;
@@ -1989,7 +1989,7 @@ namespace RTCV.UI
             ShiftBlastLayer(amount, column, rows, true);
         }
 
-        public void btnShiftBlastLayerUp_Click(object sender, EventArgs e)
+        public void ShiftBlastLayerUp(object sender, EventArgs e)
         {
             var amount = updownShiftBlastLayerAmount.Value;
             var column = ((ComboBoxItem<string>)cbShiftBlastlayer?.SelectedItem)?.Value;
@@ -2065,13 +2065,13 @@ namespace RTCV.UI
             return BitConverter.ToString(valueBytes).Replace("-", string.Empty);
         }
 
-        private void btnHelp_Click(object sender, EventArgs e)
+        private void ShowHelp(object sender, EventArgs e)
         {
             var startInfo = new System.Diagnostics.ProcessStartInfo("https://corrupt.wiki/corruptors/rtc-real-time-corruptor/blast-editor.html");
             System.Diagnostics.Process.Start(startInfo);
         }
 
-        private void OpenBlastGeneratorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenBlastGenerator(object sender, EventArgs e)
         {
             if (S.GET<RTC_BlastGenerator_Form>() != null)
             {
@@ -2084,7 +2084,7 @@ namespace RTCV.UI
             bgForm.LoadStashkey(currentSK);
         }
 
-        private void BtnAddRow_Click(object sender, EventArgs e)
+        private void AddRow(object sender, EventArgs e)
         {
             var bu = new BlastUnit(new byte[] { 0 }, _domains[0], 0, 1, MemoryDomains.GetInterface(_domains[0]).BigEndian);
             bs.Add(bu);
@@ -2095,7 +2095,7 @@ namespace RTCV.UI
             lbBlastLayerSize.Text = "Size: " + currentSK.BlastLayer.Layer.Count;
         }
 
-        public void btnSanitizeTool_Click(object sender, EventArgs e)
+        public void OpenSanitizeTool(object sender, EventArgs e)
         {
             OpenSanitizeTool();
         }
@@ -2144,7 +2144,7 @@ namespace RTCV.UI
             ImportBlastlayerFromCorruptedFile(null);
         }
 
-        private void NewToolStripMenuItem_Click(object sender, EventArgs e)
+        private void NewBlastLayer(object sender, EventArgs e)
         {
             bs.Clear();
             dgvBlastEditor.ResetBindings();
@@ -2154,19 +2154,18 @@ namespace RTCV.UI
 
         public bool AddStashToStockpile()
         {
-            btnSendToStash_Click(null, null);
+            SendToStash(null, null);
 
             return S.GET<RTC_StashHistory_Form>().btnAddStashToStockpile_Click();
         }
 
-
-        public void btnAddStashToStockpile_Click(object sender, EventArgs e) => AddStashToStockpile();
-        private void breakDownAllBlastunitsToolStripMenuItem_Click(object sender, EventArgs e) => BreakDownUnits();
+        private void AddStashToStockpile(object sender, EventArgs e) => AddStashToStockpile();
+        private void BreakDownAllBlastUnits(object sender, EventArgs e) => BreakDownUnits();
         private void OnBlastEditorRowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e) => UpdateLayerSize();
         private void OnBlastEditorRowsAdded(object sender, DataGridViewRowsAddedEventArgs e) => UpdateLayerSize();
-        private void exportToCSVToolStripMenuItem_Click(object sender, EventArgs e) => ExportToCSV(null);
-        private void bakeBlastunitsToVALUEToolStripMenuItem_Click(object sender, EventArgs e) => BakeBlastUnitsToValue();
-        private void runRomWithoutBlastlayerToolStripMenuItem_Click(object sender, EventArgs e) => currentSK.RunOriginal();
-        public void rasterizeVMDsToolStripMenuItem_Click(object sender, EventArgs e) => RasterizeVMDs();
+        private void ExportBlastLayerToCSV(object sender, EventArgs e) => ExportToCSV(null);
+        private void BakeBlastUnitsToValue(object sender, EventArgs e) => BakeBlastUnitsToValue();
+        private void RunRomWithoutBlastLayer(object sender, EventArgs e) => currentSK.RunOriginal();
+        private void RasterizeVMDs(object sender, EventArgs e) => RasterizeVMDs();
     }
 }

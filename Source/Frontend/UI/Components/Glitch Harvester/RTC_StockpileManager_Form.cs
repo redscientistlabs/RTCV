@@ -197,7 +197,7 @@ namespace RTCV.UI
                     {
                         var sk = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
                         NewBlastEditorForm.OpenBlastEditor(sk);
-                        S.GET<NewBlastEditorForm>().btnSanitizeTool_Click(null, null);
+                        S.GET<NewBlastEditorForm>().OpenSanitizeTool(null, null);
                     }
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
