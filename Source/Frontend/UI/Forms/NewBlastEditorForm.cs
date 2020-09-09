@@ -115,9 +115,6 @@ namespace RTCV.UI
 
                 dgvBlastEditor.AutoGenerateColumns = false;
 
-                cbFilterColumn.SelectedValueChanged += (o, e) => { tbFilter_TextChanged(null, null); };
-                tbFilter.TextChanged += tbFilter_TextChanged;
-
                 registerValueStringScrollEvents();
 
                 //On today's episode of "why is the designer overriding these values every time I build"
@@ -209,10 +206,10 @@ namespace RTCV.UI
         private void registerValueStringScrollEvents()
         {
             tbValue.MouseWheel += tbValueScroll;
-            dgvBlastEditor.MouseWheel += DgvBlastEditor_MouseWheel;
+            dgvBlastEditor.MouseWheel += OnBlastEditorMouseWheel;
         }
 
-        private void DgvBlastEditor_MouseWheel(object sender, MouseEventArgs e)
+        private void OnBlastEditorMouseWheel(object sender, MouseEventArgs e)
         {
             var owningRow = dgvBlastEditor.CurrentCell?.OwningRow;
 
@@ -448,7 +445,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void CbSourceDomain_Validated(object sender, EventArgs e)
+        private void OnSourceDomainValidated(object sender, EventArgs e)
         {
             var value = cbSourceDomain.SelectedItem;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
@@ -460,7 +457,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void CbStoreType_Validated(object sender, EventArgs e)
+        private void OnStoreTypeValidated(object sender, EventArgs e)
         {
             var value = cbStoreType.SelectedItem;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
@@ -471,7 +468,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void CbStoreTime_Validated(object sender, EventArgs e)
+        private void OnStoreTimeValidated(object sender, EventArgs e)
         {
             var value = cbStoreTime.SelectedItem;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
@@ -482,7 +479,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void CbLimiterList_Validated(object sender, EventArgs e)
+        private void OnLimiterListValidated(object sender, EventArgs e)
         {
             var value = ((ComboBoxItem<string>)(cbLimiterList?.SelectedItem))?.Value ?? null;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
@@ -493,7 +490,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void CbBigEndian_Validated(object sender, EventArgs e)
+        private void OnBigEndianValidated(object sender, EventArgs e)
         {
             var value = cbBigEndian.Checked;
             //Big Endian isn't available in the DGV so we operate on the actual BU then refresh
@@ -506,7 +503,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void TbValue_Validated(object sender, EventArgs e)
+        private void OnValueValidated(object sender, EventArgs e)
         {
             var value = tbValue.Text;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
@@ -517,7 +514,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void CbSource_Validated(object sender, EventArgs e)
+        private void OnSourceValidated(object sender, EventArgs e)
         {
             var value = cbSource.SelectedItem;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
@@ -528,7 +525,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void TbTiltValue_Validated(object sender, EventArgs e)
+        private void OnTiltValueValidated(object sender, EventArgs e)
         {
             if (!BigInteger.TryParse(tbTiltValue.Text, out BigInteger value))
             {
@@ -543,7 +540,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void UpDownLifetime_Validated(object sender, EventArgs e)
+        private void OnLifetimeValidated(object sender, EventArgs e)
         {
             var value = upDownLifetime.Value;
             if (value > int.MaxValue)
@@ -560,7 +557,7 @@ namespace RTCV.UI
             dgvBlastEditor.Refresh();
         }
 
-        private void UpDownExecuteFrame_Validated(object sender, EventArgs e)
+        private void OnExecuteFrameValidated(object sender, EventArgs e)
         {
             var value = upDownExecuteFrame.Value;
             if (value > int.MaxValue)
@@ -577,7 +574,7 @@ namespace RTCV.UI
             dgvBlastEditor.Refresh();
         }
 
-        private void UpDownLoopTiming_Validated(object sender, EventArgs e)
+        private void OnLoopTimingValidated(object sender, EventArgs e)
         {
             var value = upDownLoopTiming.Value;
             if (value > int.MaxValue)
@@ -594,7 +591,7 @@ namespace RTCV.UI
             dgvBlastEditor.Refresh();
         }
 
-        private void UpDownPrecision_Validated(object sender, EventArgs e)
+        private void OnPrecisionValidated(object sender, EventArgs e)
         {
             var value = upDownPrecision.Value;
 
@@ -612,7 +609,7 @@ namespace RTCV.UI
             dgvBlastEditor.Refresh();
         }
 
-        private void UpDownAddress_Validated(object sender, EventArgs e)
+        private void OnAddressValidated(object sender, EventArgs e)
         {
             var value = upDownAddress.Value;
             if (value > int.MaxValue)
@@ -628,7 +625,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void UpDownSourceAddress_Validated(object sender, EventArgs e)
+        private void OnSourceAddressValidated(object sender, EventArgs e)
         {
             var value = upDownSourceAddress.Value;
             if (value > int.MaxValue)
@@ -644,7 +641,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void CbLocked_Validated(object sender, EventArgs e)
+        private void OnLockedValidated(object sender, EventArgs e)
         {
             var value = cbLocked.Checked;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
@@ -655,7 +652,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void CbLimiterTime_Validated(object sender, EventArgs e)
+        private void OnLimiterTimeValidated(object sender, EventArgs e)
         {
             var value = cbLimiterTime.SelectedItem;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
@@ -666,7 +663,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void cbStoreLimiterSource_Validated(object sender, EventArgs e)
+        private void OnStoreLimiterSourceValidated(object sender, EventArgs e)
         {
             var value = cbStoreLimiterSource.SelectedItem;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
@@ -677,7 +674,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void CbInvertLimiter_Validated(object sender, EventArgs e)
+        private void OnInvertLimiterValidated(object sender, EventArgs e)
         {
             var value = cbInvertLimiter.Checked;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
@@ -688,7 +685,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void cbEnabled_Validated(object sender, EventArgs e)
+        private void OnEnabledValidated(object sender, EventArgs e)
         {
             var value = cbEnabled.Checked;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
@@ -699,7 +696,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void cbDomain_Validated(object sender, EventArgs e)
+        private void OnDomainValidated(object sender, EventArgs e)
         {
             var value = cbDomain.SelectedItem;
 
@@ -716,7 +713,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void CbLoop_Validated(object sender, EventArgs e)
+        private void OnLoopValidated(object sender, EventArgs e)
         {
             var value = cbLoop.Checked;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))

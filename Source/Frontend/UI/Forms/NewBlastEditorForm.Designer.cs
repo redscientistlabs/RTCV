@@ -594,6 +594,7 @@ namespace RTCV.UI
             this.cbFilterColumn.Name = "cbFilterColumn";
             this.cbFilterColumn.Size = new System.Drawing.Size(100, 21);
             this.cbFilterColumn.TabIndex = 149;
+            this.cbFilterColumn.SelectedValueChanged += new System.EventHandler(this.tbFilter_TextChanged);
             //
             // tbFilter
             //
@@ -602,6 +603,7 @@ namespace RTCV.UI
             this.tbFilter.Name = "tbFilter";
             this.tbFilter.Size = new System.Drawing.Size(100, 22);
             this.tbFilter.TabIndex = 7;
+            this.tbFilter.TextChanged += new System.EventHandler(this.tbFilter_TextChanged);
             //
             // panelBottom
             //
@@ -663,7 +665,7 @@ namespace RTCV.UI
             0,
             0,
             -2147483648});
-            this.upDownLoopTiming.Validated += new System.EventHandler(this.UpDownLoopTiming_Validated);
+            this.upDownLoopTiming.Validated += new System.EventHandler(this.OnLoopTimingValidated);
             //
             // label16
             //
@@ -684,7 +686,7 @@ namespace RTCV.UI
             this.upDownLifetime.Size = new System.Drawing.Size(109, 22);
             this.upDownLifetime.TabIndex = 25;
             this.upDownLifetime.Tag = "color:dark1";
-            this.upDownLifetime.Validated += new System.EventHandler(this.UpDownLifetime_Validated);
+            this.upDownLifetime.Validated += new System.EventHandler(this.OnLifetimeValidated);
             //
             // label1
             //
@@ -704,7 +706,7 @@ namespace RTCV.UI
             this.cbLoop.TabIndex = 0;
             this.cbLoop.Text = "Loop";
             this.cbLoop.UseVisualStyleBackColor = true;
-            this.cbLoop.Validated += new System.EventHandler(this.CbLoop_Validated);
+            this.cbLoop.Validated += new System.EventHandler(this.OnLoopValidated);
             //
             // upDownExecuteFrame
             //
@@ -716,7 +718,7 @@ namespace RTCV.UI
             this.upDownExecuteFrame.Size = new System.Drawing.Size(109, 22);
             this.upDownExecuteFrame.TabIndex = 12;
             this.upDownExecuteFrame.Tag = "color:dark1";
-            this.upDownExecuteFrame.Validated += new System.EventHandler(this.UpDownExecuteFrame_Validated);
+            this.upDownExecuteFrame.Validated += new System.EventHandler(this.OnExecuteFrameValidated);
             //
             // label5
             //
@@ -793,7 +795,7 @@ namespace RTCV.UI
             this.cbStoreLimiterSource.Size = new System.Drawing.Size(92, 21);
             this.cbStoreLimiterSource.TabIndex = 13;
             this.cbStoreLimiterSource.Tag = "color:dark1";
-            this.cbStoreLimiterSource.Validated += new System.EventHandler(this.cbStoreLimiterSource_Validated);
+            this.cbStoreLimiterSource.Validated += new System.EventHandler(this.OnStoreLimiterSourceValidated);
             //
             // label17
             //
@@ -813,7 +815,7 @@ namespace RTCV.UI
             this.cbInvertLimiter.TabIndex = 11;
             this.cbInvertLimiter.Text = "Invert Limiter";
             this.cbInvertLimiter.UseVisualStyleBackColor = true;
-            this.cbInvertLimiter.Validated += new System.EventHandler(this.CbInvertLimiter_Validated);
+            this.cbInvertLimiter.Validated += new System.EventHandler(this.OnInvertLimiterValidated);
             //
             // cbLimiterTime
             //
@@ -826,7 +828,7 @@ namespace RTCV.UI
             this.cbLimiterTime.Size = new System.Drawing.Size(92, 21);
             this.cbLimiterTime.TabIndex = 10;
             this.cbLimiterTime.Tag = "color:dark1";
-            this.cbLimiterTime.Validated += new System.EventHandler(this.CbLimiterTime_Validated);
+            this.cbLimiterTime.Validated += new System.EventHandler(this.OnLimiterTimeValidated);
             //
             // label18
             //
@@ -850,7 +852,7 @@ namespace RTCV.UI
             this.cbLimiterList.Size = new System.Drawing.Size(92, 21);
             this.cbLimiterList.TabIndex = 8;
             this.cbLimiterList.Tag = "color:dark1";
-            this.cbLimiterList.Validated += new System.EventHandler(this.CbLimiterList_Validated);
+            this.cbLimiterList.Validated += new System.EventHandler(this.OnLimiterListValidated);
             //
             // label19
             //
@@ -874,7 +876,7 @@ namespace RTCV.UI
             this.tbTiltValue.Size = new System.Drawing.Size(108, 22);
             this.tbTiltValue.TabIndex = 24;
             this.tbTiltValue.Tag = "color:dark1";
-            this.tbTiltValue.Validated += new System.EventHandler(this.TbTiltValue_Validated);
+            this.tbTiltValue.Validated += new System.EventHandler(this.OnTiltValueValidated);
             //
             // label15
             //
@@ -905,7 +907,7 @@ namespace RTCV.UI
             this.cbSource.Size = new System.Drawing.Size(109, 21);
             this.cbSource.TabIndex = 15;
             this.cbSource.Tag = "color:dark1";
-            this.cbSource.Validated += new System.EventHandler(this.CbSource_Validated);
+            this.cbSource.Validated += new System.EventHandler(this.OnSourceValidated);
             //
             // panel6
             //
@@ -941,7 +943,7 @@ namespace RTCV.UI
             this.tbValue.TabIndex = 0;
             this.tbValue.Tag = "color:dark1";
             this.tbValue.Text = "FFFFFFFF";
-            this.tbValue.Validated += new System.EventHandler(this.TbValue_Validated);
+            this.tbValue.Validated += new System.EventHandler(this.OnValueValidated);
             //
             // panel7
             //
@@ -970,7 +972,7 @@ namespace RTCV.UI
             this.cbSourceDomain.Size = new System.Drawing.Size(109, 21);
             this.cbSourceDomain.TabIndex = 11;
             this.cbSourceDomain.Tag = "color:dark1";
-            this.cbSourceDomain.Validated += new System.EventHandler(this.CbSourceDomain_Validated);
+            this.cbSourceDomain.Validated += new System.EventHandler(this.OnSourceDomainValidated);
             //
             // upDownSourceAddress
             //
@@ -984,7 +986,7 @@ namespace RTCV.UI
             this.upDownSourceAddress.Size = new System.Drawing.Size(109, 22);
             this.upDownSourceAddress.TabIndex = 13;
             this.upDownSourceAddress.Tag = "color:dark1";
-            this.upDownSourceAddress.Validated += new System.EventHandler(this.UpDownSourceAddress_Validated);
+            this.upDownSourceAddress.Validated += new System.EventHandler(this.OnSourceAddressValidated);
             //
             // label13
             //
@@ -1015,7 +1017,7 @@ namespace RTCV.UI
             this.cbStoreTime.Size = new System.Drawing.Size(83, 21);
             this.cbStoreTime.TabIndex = 10;
             this.cbStoreTime.Tag = "color:dark1";
-            this.cbStoreTime.Validated += new System.EventHandler(this.CbStoreTime_Validated);
+            this.cbStoreTime.Validated += new System.EventHandler(this.OnStoreTimeValidated);
             //
             // label6
             //
@@ -1037,7 +1039,7 @@ namespace RTCV.UI
             this.cbStoreType.Size = new System.Drawing.Size(83, 21);
             this.cbStoreType.TabIndex = 8;
             this.cbStoreType.Tag = "color:dark1";
-            this.cbStoreType.Validated += new System.EventHandler(this.CbStoreType_Validated);
+            this.cbStoreType.Validated += new System.EventHandler(this.OnStoreTypeValidated);
             //
             // label7
             //
@@ -1077,7 +1079,7 @@ namespace RTCV.UI
             0,
             0,
             0});
-            this.upDownPrecision.Validated += new System.EventHandler(this.UpDownPrecision_Validated);
+            this.upDownPrecision.Validated += new System.EventHandler(this.OnPrecisionValidated);
             //
             // label9
             //
@@ -1100,7 +1102,7 @@ namespace RTCV.UI
             this.upDownAddress.Size = new System.Drawing.Size(109, 22);
             this.upDownAddress.TabIndex = 9;
             this.upDownAddress.Tag = "color:dark1";
-            this.upDownAddress.Validated += new System.EventHandler(this.UpDownAddress_Validated);
+            this.upDownAddress.Validated += new System.EventHandler(this.OnAddressValidated);
             //
             // label8
             //
@@ -1122,7 +1124,7 @@ namespace RTCV.UI
             this.cbDomain.Size = new System.Drawing.Size(109, 21);
             this.cbDomain.TabIndex = 0;
             this.cbDomain.Tag = "color:dark1";
-            this.cbDomain.Validated += new System.EventHandler(this.cbDomain_Validated);
+            this.cbDomain.Validated += new System.EventHandler(this.OnDomainValidated);
             //
             // label2
             //
@@ -1153,7 +1155,7 @@ namespace RTCV.UI
             this.cbBigEndian.TabIndex = 2;
             this.cbBigEndian.Text = "Big Endian";
             this.cbBigEndian.UseVisualStyleBackColor = true;
-            this.cbBigEndian.Validated += new System.EventHandler(this.CbBigEndian_Validated);
+            this.cbBigEndian.Validated += new System.EventHandler(this.OnBigEndianValidated);
             //
             // cbLocked
             //
@@ -1164,7 +1166,7 @@ namespace RTCV.UI
             this.cbLocked.TabIndex = 1;
             this.cbLocked.Text = "Locked";
             this.cbLocked.UseVisualStyleBackColor = true;
-            this.cbLocked.Validated += new System.EventHandler(this.CbLocked_Validated);
+            this.cbLocked.Validated += new System.EventHandler(this.OnLockedValidated);
             //
             // cbEnabled
             //
@@ -1175,7 +1177,7 @@ namespace RTCV.UI
             this.cbEnabled.TabIndex = 0;
             this.cbEnabled.Text = "Enabled";
             this.cbEnabled.UseVisualStyleBackColor = true;
-            this.cbEnabled.Validated += new System.EventHandler(this.cbEnabled_Validated);
+            this.cbEnabled.Validated += new System.EventHandler(this.OnEnabledValidated);
             //
             // menuStripEx1
             //
