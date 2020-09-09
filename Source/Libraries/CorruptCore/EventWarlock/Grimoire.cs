@@ -3,31 +3,31 @@ namespace RTCV.CorruptCore.EventWarlock
     using System;
     using System.Collections.Generic;
 
-    [System.Serializable]
+    [Serializable]
     public class Grimoire
     {
-        public string Name = null;
+        public string Name { get; private set; } = null;
 
-        public List<Spell> LoadSpells = new List<Spell>();
-        public List<Spell> PreExecuteSpells = new List<Spell>();
-        public List<Spell> ExecuteSpells = new List<Spell>();
-        public List<Spell> PostExecuteSpells = new List<Spell>();
+        public List<Spell> LoadSpells { get; private set; } = new List<Spell>();
+        public List<Spell> PreExecuteSpells { get; private set; } = new List<Spell>();
+        public List<Spell> ExecuteSpells { get; private set; } = new List<Spell>();
+        public List<Spell> PostExecuteSpells { get; private set; } = new List<Spell>();
 
 
-        public BlastLayer Layer = null;
+        // public BlastLayer Layer = null;
         //Todo: add other wanted data here
 
         //Static variables
-        [NonSerialized]
+        [Ceras.Exclude]
         public static HashSet<string> StaticFlags = new HashSet<string>();
-        [NonSerialized]
+        [Ceras.Exclude]
         public static Dictionary<string, object> StaticVariables = new Dictionary<string, object>();
 
         //Non static variables
-        [NonSerialized]
-        public HashSet<string> Flags = new HashSet<string>();
-        [NonSerialized]
-        public Dictionary<string, object> Variables = new Dictionary<string, object>();
+        // [NonSerialized]
+        // public HashSet<string> Flags = new HashSet<string>();
+        // [NonSerialized]
+        // public Dictionary<string, object> Variables = new Dictionary<string, object>();
 
 
         public Grimoire(string name = "") {
@@ -44,10 +44,10 @@ namespace RTCV.CorruptCore.EventWarlock
         }
 
         //Likely not needed
-        public void ResetVariables()
+        public static void ResetVariables()
         {
-            Flags.Clear();
-            Variables.Clear();
+            // Flags.Clear();
+            // Variables.Clear();
         }
 
 

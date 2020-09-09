@@ -33,13 +33,13 @@ namespace RTCV.UI.Components
                 this.CurrentCell = this.Rows[e.RowIndex].Cells[e.ColumnIndex];
 
                 // Select previously selected rows, if control is down or the clicked row was already selected
-                if ((Control.ModifierKeys & Keys.Control) != 0 || clickedRowSelected)
+                if ((ModifierKeys & Keys.Control) != 0 || clickedRowSelected)
                 {
                     selectedRows.ForEach(row => row.Selected = true);
                 }
 
                 // Select a range of new rows, if shift key is down
-                if ((Control.ModifierKeys & Keys.Shift) != 0)
+                if ((ModifierKeys & Keys.Shift) != 0)
                 {
                     for (var i = currentRow; i != e.RowIndex; i += Math.Sign(e.RowIndex - currentRow))
                     {

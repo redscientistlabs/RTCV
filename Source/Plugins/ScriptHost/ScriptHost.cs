@@ -64,7 +64,7 @@ namespace RTCV.Plugins.ScriptHost
             }
             catch (Exception e)
             {
-                RTCV.Common.Logging.GlobalLogger.Error(e, "Unable to save file.");
+                Common.Logging.GlobalLogger.Error(e, "Unable to save file.");
                 MessageBox.Show($"Unable to save file. Error message: {e.Message}");
                 return;
             }
@@ -91,7 +91,7 @@ namespace RTCV.Plugins.ScriptHost
                     }
                     catch (Exception e)
                     {
-                        RTCV.Common.Logging.GlobalLogger.Error(e, "Unable to open file.");
+                        Common.Logging.GlobalLogger.Error(e, "Unable to open file.");
                         MessageBox.Show($"Unable to open file. Error message: {e.Message}");
                         return;
                     }
@@ -106,17 +106,17 @@ namespace RTCV.Plugins.ScriptHost
             tc.SelectedTab = tab;
         }
 
-        private void loadToolStripMenuItem_Click(object sender, System.EventArgs e)
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LoadScript();
         }
 
-        private void saveToolStripMenuItem_Click(object sender, System.EventArgs e)
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveScript(GetCurrentManager()?.FilePath);
         }
 
-        private void saveAsToolStripMenuItem_Click(object sender, System.EventArgs e)
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveScript();
         }

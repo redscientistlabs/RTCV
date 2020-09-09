@@ -12,7 +12,7 @@ namespace RTCV.UI.Components
     internal class DataGridViewNumericUpDownEditingControl : NumericUpDownHexFix, IDataGridViewEditingControl
     {
         // Needed to forward keyboard messages to the child TextBox control.
-        [DllImport("USER32.DLL", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+        [DllImport("USER32.DLL", CharSet = CharSet.Auto)]
         private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
 
         // The grid that owns this editing control

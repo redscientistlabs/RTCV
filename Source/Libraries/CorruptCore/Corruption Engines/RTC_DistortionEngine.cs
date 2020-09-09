@@ -6,8 +6,8 @@
     {
         public static int Delay
         {
-            get => (int)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.DISTORTION_DELAY];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.DISTORTION_DELAY, value);
+            get => (int)AllSpec.CorruptCoreSpec[RTCSPEC.DISTORTION_DELAY];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.DISTORTION_DELAY, value);
         }
 
         public static PartialSpec getDefaultPartial()

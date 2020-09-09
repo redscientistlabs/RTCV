@@ -7,25 +7,16 @@
 
     public class Input
     {
-        [Flags]
-        public enum InputFocusTypes
-        {
-            None = 0,
-            Mouse = 1,
-            Keyboard = 2,
-            Pad = 4
-        }
-
         /// <summary>
         /// If your form needs this kind of input focus, be sure to say so.
         /// Really, this only makes sense for mouse, but I've started building it out for other things
         /// Why is this receiving a control, but actually using it as a Form (where the WantingMouseFocus is checked?)
         /// Because later we might change it to work off the control, specifically, if a control is supplied (normally actually a Form will be supplied)
         /// </summary>
-        public void ControlInputFocus(System.Windows.Forms.Control c, InputFocusTypes types, bool wants)
+        public void ControlInputFocus(System.Windows.Forms.Control c, FocusTypes types, bool wants)
         {
-            if (types.HasFlag(InputFocusTypes.Mouse) && wants) WantingMouseFocus.Add(c);
-            if (types.HasFlag(InputFocusTypes.Mouse) && !wants) WantingMouseFocus.Remove(c);
+            if (types.HasFlag(FocusTypes.Mouse) && wants) WantingMouseFocus.Add(c);
+            if (types.HasFlag(FocusTypes.Mouse) && !wants) WantingMouseFocus.Remove(c);
         }
 
         readonly HashSet<System.Windows.Forms.Control> WantingMouseFocus = new HashSet<System.Windows.Forms.Control>();
@@ -80,7 +71,6 @@
         void HandleButton(string button, bool newState)
         {
             bool isModifier = IgnoreKeys.Contains(button);
-            if (EnableIgnoreModifiers && isModifier) return;
             if (LastState[button] && newState) return;
             if (!LastState[button] && !newState) return;
 
@@ -287,7 +277,7 @@
                         }
                     }
 
-                    bool allowInput = ((bool?)RTCV.NetCore.AllSpec.UISpec?[NetcoreCommands.RTC_INFOCUS] ?? true) || ((bool?)RTCV.NetCore.AllSpec.VanguardSpec?[NetcoreCommands.EMU_INFOCUS] ?? true);
+                    bool allowInput = ((bool?)AllSpec.UISpec?[NetcoreCommands.RTC_INFOCUS] ?? true) || ((bool?)AllSpec.VanguardSpec?[NetcoreCommands.EMU_INFOCUS] ?? true);
 
                     bool swallow = !allowInput;
 
@@ -341,7 +331,7 @@
             }
         }
 
-        public void Update()
+        public static void Update()
         {
             //TODO - for some reason, we may want to control when the next event processing step happens
             //so i will leave this method here for now..
@@ -354,7 +344,7 @@
             lock (this)
             {
                 if (InputEvents.Count == 0) return null;
-                if (!(bool?)RTCV.NetCore.AllSpec.UISpec[NetcoreCommands.RTC_INFOCUS] ?? true) return null;
+                if (!(bool?)AllSpec.UISpec[NetcoreCommands.RTC_INFOCUS] ?? true) return null;
 
                 //we only listen to releases for input binding, because we need to distinguish releases of pure modifierkeys from modified keys
                 //if you just pressed ctrl, wanting to bind ctrl, we'd see: pressed:ctrl, unpressed:ctrl
@@ -389,11 +379,6 @@
                 return null;
             }
         }
-
-        //controls whether modifier keys will be ignored as key press events
-        //this should be used by hotkey binders, but we may want modifier key events
-        //to get triggered in the main form
-        public bool EnableIgnoreModifiers = false;
 
         //sets a key as unpressed for the binding system
         public void BindUnpress(System.Windows.Forms.Keys key)

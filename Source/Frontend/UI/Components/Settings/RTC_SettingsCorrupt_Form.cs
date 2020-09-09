@@ -15,31 +15,31 @@ namespace RTCV.UI
         {
             InitializeComponent();
 
-            UICore.SetRTCColor(UICore.GeneralColor, this);
+            Colors.SetRTCColor(Colors.GeneralColor, this);
 
             Load += RTC_SettingRerollForm_Load;
 
             var handler = new EventHandler<Components.Controls.ValueUpdateEventArgs<decimal>>(nmMaxInfiniteStepUnits_ValueChanged);
             nmMaxInfiniteStepUnits.ValueChanged += handler;
-            nmMaxInfiniteStepUnits.registerSlave(S.GET<RTC_CorruptionEngine_Form>().updownMaxCheats, handler);
-            nmMaxInfiniteStepUnits.registerSlave(S.GET<RTC_CorruptionEngine_Form>().updownMaxFreeze, handler);
-            nmMaxInfiniteStepUnits.registerSlave(S.GET<RTC_CorruptionEngine_Form>().updownMaxPipes, handler);
+            nmMaxInfiniteStepUnits.registerSlave(S.GET<CorruptionEngineForm>().updownMaxCheats, handler);
+            nmMaxInfiniteStepUnits.registerSlave(S.GET<CorruptionEngineForm>().updownMaxFreeze, handler);
+            nmMaxInfiniteStepUnits.registerSlave(S.GET<CorruptionEngineForm>().updownMaxPipes, handler);
             nmMaxInfiniteStepUnits.registerSlave(S.GET<RTC_CustomEngineConfig_Form>().updownMaxInfiniteUnits, handler);
-            nmMaxInfiniteStepUnits.registerSlave(S.GET<RTC_SimpleMode_Form>().updownMaxInfiniteUnits, handler);
+            nmMaxInfiniteStepUnits.registerSlave(S.GET<SimpleModeForm>().updownMaxInfiniteUnits, handler);
 
-            cbRerollAddress.Checked = CorruptCore.RtcCore.RerollAddress;
-            cbRerollSourceAddress.Checked = CorruptCore.RtcCore.RerollSourceAddress;
+            cbRerollAddress.Checked = RtcCore.RerollAddress;
+            cbRerollSourceAddress.Checked = RtcCore.RerollSourceAddress;
 
-            cbRerollDomain.Checked = CorruptCore.RtcCore.RerollDomain;
-            cbRerollSourceDomain.Checked = CorruptCore.RtcCore.RerollSourceDomain;
+            cbRerollDomain.Checked = RtcCore.RerollDomain;
+            cbRerollSourceDomain.Checked = RtcCore.RerollSourceDomain;
 
-            cbRerollFollowsCustom.Checked = CorruptCore.RtcCore.RerollFollowsCustomEngine;
-            cbIgnoreUnitOrigin.Checked = CorruptCore.RtcCore.RerollIgnoresOriginalSource;
+            cbRerollFollowsCustom.Checked = RtcCore.RerollFollowsCustomEngine;
+            cbIgnoreUnitOrigin.Checked = RtcCore.RerollIgnoresOriginalSource;
         }
 
         private void nmMaxInfiniteStepUnits_ValueChanged(object sender, EventArgs e)
         {
-            CorruptCore.StepActions.MaxInfiniteBlastUnits = Convert.ToInt32(nmMaxInfiniteStepUnits.Value);
+            StepActions.MaxInfiniteBlastUnits = Convert.ToInt32(nmMaxInfiniteStepUnits.Value);
         }
 
         private void RTC_SettingRerollForm_Load(object sender, EventArgs e)
@@ -48,7 +48,7 @@ namespace RTCV.UI
 
         private void cbRerollSourceAddress_CheckedChanged(object sender, EventArgs e)
         {
-            CorruptCore.RtcCore.RerollSourceAddress = cbRerollSourceAddress.Checked;
+            RtcCore.RerollSourceAddress = cbRerollSourceAddress.Checked;
             if (!cbRerollSourceAddress.Checked)
             {
                 cbRerollSourceDomain.Checked = false;
@@ -62,17 +62,17 @@ namespace RTCV.UI
 
         private void cbRerollDomain_CheckedChanged(object sender, EventArgs e)
         {
-            CorruptCore.RtcCore.RerollDomain = cbRerollDomain.Checked;
+            RtcCore.RerollDomain = cbRerollDomain.Checked;
         }
 
         private void cbRerollSourceDomain_CheckedChanged(object sender, EventArgs e)
         {
-            CorruptCore.RtcCore.RerollSourceDomain = cbRerollSourceDomain.Checked;
+            RtcCore.RerollSourceDomain = cbRerollSourceDomain.Checked;
         }
 
         private void cbRerollAddress_CheckedChanged(object sender, EventArgs e)
         {
-            CorruptCore.RtcCore.RerollAddress = cbRerollAddress.Checked;
+            RtcCore.RerollAddress = cbRerollAddress.Checked;
             if (!cbRerollAddress.Checked)
             {
                 cbRerollDomain.Checked = false;
@@ -86,12 +86,12 @@ namespace RTCV.UI
 
         private void CbRerollFollowsCustom_CheckedChanged(object sender, EventArgs e)
         {
-            CorruptCore.RtcCore.RerollFollowsCustomEngine = cbRerollFollowsCustom.Checked;
+            RtcCore.RerollFollowsCustomEngine = cbRerollFollowsCustom.Checked;
         }
 
         private void CBRerollIgnoresOriginalSource(object sender, EventArgs e)
         {
-            CorruptCore.RtcCore.RerollIgnoresOriginalSource = cbIgnoreUnitOrigin.Checked;
+            RtcCore.RerollIgnoresOriginalSource = cbIgnoreUnitOrigin.Checked;
         }
 
         public void SetRewindBoxes(bool enabled)
@@ -108,7 +108,7 @@ namespace RTCV.UI
             DontUpdateSpec = false;
         }
 
-        public bool DontUpdateSpec;
+        private bool DontUpdateSpec;
 
         private void CbClearStepUnitsOnRewind_CheckedChanged(object sender, EventArgs e)
         {
@@ -117,9 +117,9 @@ namespace RTCV.UI
                 return;
             }
 
-            S.GET<RTC_CorruptionEngine_Form>().SetRewindBoxes(cbClearStepUnitsOnRewind.Checked);
+            S.GET<CorruptionEngineForm>().SetRewindBoxes(cbClearStepUnitsOnRewind.Checked);
             S.GET<RTC_CustomEngineConfig_Form>().SetRewindBoxes(cbClearStepUnitsOnRewind.Checked);
-            S.GET<RTC_SimpleMode_Form>().SetRewindBoxes(cbClearStepUnitsOnRewind.Checked);
+            S.GET<SimpleModeForm>().SetRewindBoxes(cbClearStepUnitsOnRewind.Checked);
 
             StepActions.ClearStepActionsOnRewind = cbClearStepUnitsOnRewind.Checked;
         }
@@ -131,7 +131,7 @@ namespace RTCV.UI
                 return;
             }
 
-            S.GET<RTC_CorruptionEngine_Form>().SetLockBoxes(cbLockUnits.Checked);
+            S.GET<CorruptionEngineForm>().SetLockBoxes(cbLockUnits.Checked);
 
             StepActions.LockExecution = cbLockUnits.Checked;
         }

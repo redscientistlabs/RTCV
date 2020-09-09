@@ -16,7 +16,7 @@ namespace RTCV.UI.Components.Controls
 
     public partial class SavestateList : UserControl
     {
-        public List<SavestateHolder> _controlList;
+        private List<SavestateHolder> _controlList;
         private SavestateHolder _selectedHolder;
         private string _saveStateWord = "Savestate";
 
@@ -26,7 +26,7 @@ namespace RTCV.UI.Components.Controls
             set
             {
                 _selectedHolder = value;
-                CorruptCore.StockpileManager_UISide.CurrentSavestateStashKey = value?.sk;
+                StockpileManager_UISide.CurrentSavestateStashKey = value?.sk;
             }
         }
 
@@ -154,7 +154,7 @@ namespace RTCV.UI.Components.Controls
                     }
                 }
 
-                var smForm = (Parent as RTC_SavestateManager_Form);
+                var smForm = (Parent as SavestateManagerForm);
                 if (smForm != null && smForm.cbSavestateLoadOnClick.Checked)
                 {
                     btnSaveLoad.Text = "LOAD";
@@ -314,7 +314,7 @@ namespace RTCV.UI.Components.Controls
             {
                 LoadCurrentState();
                 StockpileManager_UISide.CurrentStashkey = null;
-                S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = false;
+                S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = false;
             }
             else
             {

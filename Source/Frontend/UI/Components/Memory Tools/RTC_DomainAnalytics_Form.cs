@@ -25,24 +25,10 @@
             this.undockedSizable = false;
         }
 
-        public bool ActLoadedFromFile = false;
-        public bool FirstInit = false;
-        public bool _activeTableReady = false;
+        private bool FirstInit = false;
 
-        public bool UseActiveTable = false;
-        public bool UseCorePrecision = false;
-        public List<string> MemoryDumps = null;
-        public long[] ActiveTableActivity = null;
-        public long[] ActiveTableGenerated = null;
-        public double ActivityThreshold = 0;
-        public Timer ActiveTableAutodump = null;
-
-        public string _currentFilename = null;
-
-        public byte[] GetDumpFromFile(string key)
-        {
-            return File.ReadAllBytes(Path.Combine(CorruptCore.RtcCore.workingDir, "MEMORYDUMPS", key + ".dmp"));
-        }
+        private List<string> MemoryDumps = null;
+        private Timer ActiveTableAutodump = null;
 
         private void btnActiveTableAddDump_Click(object sender, EventArgs e)
         {
@@ -54,7 +40,7 @@
             if (MemoryDumps == null)
                 return;
 
-            string key = CorruptCore.RtcCore.GetRandomKey();
+            string key = RtcCore.GetRandomKey();
 
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_DOMAIN_ACTIVETABLE_MAKEDUMP, new object[] { cbSelectedMemoryDomain.SelectedItem.ToString(), key }, true);
 
@@ -68,8 +54,6 @@
 
         private void btnActiveTableDumpsReset_Click(object sender, EventArgs e)
         {
-            ActLoadedFromFile = false;
-
             if (!FirstInit)
             {
                 FirstInit = true;
@@ -98,11 +82,9 @@
             lbDomainAddressSize.Text = "Domain size: 0x" + mi.Size.ToString("X");
             lbNbMemoryDumps.Text = "Memory dumps collected: 0";
 
-            ActiveTableGenerated = null;
-
             MemoryDumps = new List<string>();
 
-            foreach (string file in Directory.GetFiles(Path.Combine(CorruptCore.RtcCore.workingDir, "MEMORYDUMPS")))
+            foreach (string file in Directory.GetFiles(Path.Combine(RtcCore.workingDir, "MEMORYDUMPS")))
                 File.Delete(file);
 
             btnSendToAnalytics.Enabled = false;
@@ -165,7 +147,7 @@
         {
             cbAutoAddDump.Checked = false;
             var mi = MemoryDomains.GetInterface(cbSelectedMemoryDomain.SelectedItem.ToString());
-            RTC_AnalyticsTool_Form.OpenAnalyticsTool(mi, MemoryDumps);
+            AnalyticsToolForm.OpenAnalyticsTool(mi, MemoryDumps);
         }
 
         private void cbSelectedMemoryDomain_SelectedIndexChanged(object sender, EventArgs e)

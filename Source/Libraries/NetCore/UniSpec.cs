@@ -4,6 +4,7 @@
     using System.Collections;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Reflection;
     using System.Runtime.Serialization;
@@ -19,8 +20,8 @@
         public virtual void OnSpecUpdated(SpecUpdateEventArgs e) => SpecUpdated?.Invoke(this, e);
 
         private PartialSpec template = null;
-        public string name = "UnnamedSpec";
-        public bool propagationIsEnabled;
+        public string name { get; private set; } = "UnnamedSpec";
+        private bool propagationIsEnabled;
 
         public new object this[string key]  //FullSpec is readonly, must update with partials
         {
@@ -96,11 +97,7 @@
 
             if (propagationIsEnabled && propagate)
             {
-                OnSpecUpdated(new SpecUpdateEventArgs()
-                {
-                    partialSpec = _partialSpec,
-                    syncedUpdate = synced
-                });
+                OnSpecUpdated(new SpecUpdateEventArgs(_partialSpec, synced));
             }
         }
 
@@ -205,9 +202,10 @@
     }
 
     [Serializable]
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     public class PartialSpec : BaseSpec
     {
+        [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
         public string Name;
 
         public PartialSpec(string _name)
@@ -239,7 +237,7 @@
     }
 
     [Serializable]
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     public abstract class BaseSpec
     {
         internal int version { get; set; }
@@ -295,7 +293,13 @@
 
     public class SpecUpdateEventArgs : EventArgs
     {
-        public PartialSpec partialSpec = null;
-        public bool syncedUpdate = true;
+        public PartialSpec partialSpec { get; private set; } = null;
+        public bool syncedUpdate { get; private set; } = true;
+
+        public SpecUpdateEventArgs(PartialSpec _partialSpec, bool _syncedUpdate)
+        {
+            partialSpec = _partialSpec;
+            syncedUpdate = _syncedUpdate;
+        }
     }
 }

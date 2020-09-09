@@ -5,6 +5,7 @@ namespace RTCV.CorruptCore
     using System.Linq;
     using System.Windows.Forms;
     using RTCV.NetCore;
+    using RTCV.CorruptCore.Exceptions;
 
     ///Rather than handling everything individually, we have a system here that works on collections of Blastunits
     ///In most usage, you're probably only going to have a small number of different lifetime/start time mixtures
@@ -29,7 +30,7 @@ namespace RTCV.CorruptCore
         private static int nextFrame = -1;
 
         private static bool isRunning = false;
-        private static object executeLock = new object();
+        private static readonly object executeLock = new object();
 
         public static event EventHandler StepStart;
         public static event EventHandler StepPreCorrupt;
@@ -39,20 +40,20 @@ namespace RTCV.CorruptCore
 
         public static int MaxInfiniteBlastUnits
         {
-            get => (int)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.STEP_MAXINFINITEBLASTUNITS];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_MAXINFINITEBLASTUNITS, value);
+            get => (int)AllSpec.CorruptCoreSpec[RTCSPEC.STEP_MAXINFINITEBLASTUNITS];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_MAXINFINITEBLASTUNITS, value);
         }
 
         public static bool LockExecution
         {
-            get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.STEP_LOCKEXECUTION];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_LOCKEXECUTION, value);
+            get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.STEP_LOCKEXECUTION];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_LOCKEXECUTION, value);
         }
 
         public static bool ClearStepActionsOnRewind
         {
-            get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.STEP_CLEARSTEPACTIONSONREWIND];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_CLEARSTEPACTIONSONREWIND, value);
+            get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.STEP_CLEARSTEPACTIONSONREWIND];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.STEP_CLEARSTEPACTIONSONREWIND, value);
         }
 
         public static PartialSpec getDefaultPartial()
@@ -76,14 +77,14 @@ namespace RTCV.CorruptCore
                 {
                     foreach (BlastUnit bu in buList)
                     {
-                        bu.Working = null;
+                        bu.ClearWorkingData();
                     }
                 }
                 foreach (List<BlastUnit> buList in appliedInfinite)
                 {
                     foreach (BlastUnit bu in buList)
                     {
-                        bu.Working = null;
+                        bu.ClearWorkingData();
                     }
                 }
 
@@ -130,11 +131,9 @@ namespace RTCV.CorruptCore
             lock (executeLock)
             {
                 return appliedInfinite.Any(x => x.Exists(y =>
-                {
-                    return y.Lifetime == 0 &&
-                           y.Domain == domain &&
-                           y.Address == address;
-                }));
+                                                                            y.Lifetime == 0 &&
+                                                                            y.Domain == domain &&
+                                                                            y.Address == address));
             }
         }
 
@@ -151,11 +150,7 @@ namespace RTCV.CorruptCore
             lock (executeLock)
             {
                 BlastLayer bl = new BlastLayer();
-                var tempList = new List<List<BlastUnit>>();
-                tempList.AddRange(appliedInfinite);
-                tempList.AddRange(appliedLifetime);
-
-                foreach (List<BlastUnit> buList in (buListCollection))
+                foreach (List<BlastUnit> buList in buListCollection)
                 {
                     foreach (BlastUnit bu in buList)
                     {
@@ -176,9 +171,9 @@ namespace RTCV.CorruptCore
             List<BlastUnit> collection = null;
             foreach (List<BlastUnit> it in buListCollection)
             {
-                if ((it[0].Working.ExecuteFrameQueued == bu.Working.ExecuteFrameQueued) &&
-                    (it[0].Lifetime == bu.Lifetime) &&
-                    (it[0].Loop == bu.Loop) &&
+                if (it[0].Working.ExecuteFrameQueued == bu.Working.ExecuteFrameQueued &&
+                    it[0].Lifetime == bu.Lifetime &&
+                    it[0].Loop == bu.Loop &&
                     CheckLimitersMatch(it[0], bu))
                 {
                     //We found one that matches so return that
@@ -245,8 +240,8 @@ namespace RTCV.CorruptCore
         {
             lock (executeLock)
             {
-                bool UseRealtime = (AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME] as bool? ?? true);
-                if (!UseRealtime)
+                var useRealtime = (AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME] as bool? ?? true);
+                if (!useRealtime)
                 {
                     bu.Working.ExecuteFrameQueued = 0;
                     bu.Working.LastFrame = 1;
@@ -322,7 +317,7 @@ namespace RTCV.CorruptCore
             {
                 List<BlastUnit> buList = queued.First();
 
-                bool dontApply = false;
+                var dontApply = false;
                 //This is our EnteringExecution
                 foreach (BlastUnit bu in buList)
                 {
@@ -363,6 +358,76 @@ namespace RTCV.CorruptCore
             }
         }
 
+        // Execute all of the units. Return a list of elements to remove
+        private static List<List<BlastUnit>> ExecuteUnits(List<List<BlastUnit>> unitLists, string name, bool removeExpiredUnits)
+        {
+            List<List<BlastUnit>> itemsToRemove = new List<List<BlastUnit>>();
+            foreach (List<BlastUnit> buList in unitLists)
+            {
+                foreach (BlastUnit bu in buList)
+                {
+                    var result = bu.Execute();
+                    if (result == ExecuteState.ERROR)
+                    {
+                        var dr = MessageBox.Show(
+                            "Something went horribly wrong during BlastUnit execute. Aborting. Would you like to send this to the devs?",
+                            "A fatal error occurred", MessageBoxButtons.YesNo);
+                        if (dr == DialogResult.Yes)
+                        {
+                            throw new Exception($"BlastUnit {name} Execute threw up. Check the log for more info.");
+                        }
+
+                        isRunning = false;
+                        throw new UnitExecutionException();
+                    }
+                    if (result == ExecuteState.HANDLEDERROR)
+                    {
+                        isRunning = false;
+                        throw new UnitExecutionException();
+                    }
+                }
+                if (removeExpiredUnits && buList[0].Working.LastFrame == currentFrame)
+                {
+                    itemsToRemove.Add(buList);
+                }
+            }
+
+            return itemsToRemove;
+        }
+
+        private static bool RemoveAppliedLifetimeUnits(List<List<BlastUnit>> itemsToRemove)
+        {
+            var needsRefilter = false;
+            foreach (List<BlastUnit> buList in itemsToRemove)
+            {
+                //Remove it
+                appliedLifetime.Remove(buList);
+
+                foreach (BlastUnit bu in buList)
+                {
+                    bu.ClearWorkingData();
+                    //Remove it from the store pool
+                    if (bu.Source == BlastUnitSource.STORE)
+                    {
+                        StoreDataPool.Remove(bu);
+                    }
+                }
+
+                //If there's a loop, re-apply all the units
+                if (buList[0].Loop)
+                {
+                    needsRefilter = true;
+                    foreach (BlastUnit bu in buList)
+                    {
+                        var applyLoopTiming = (bu.LoopTiming != null && bu.LoopTiming != -1);
+                        bu.Apply(true, applyLoopTiming);
+                    }
+                }
+            }
+
+            return needsRefilter;
+        }
+
         public static void Execute()
         {
             lock (executeLock)
@@ -370,7 +435,6 @@ namespace RTCV.CorruptCore
                 StepStart?.Invoke(null, new EventArgs());
                 if (isRunning)
                 {
-                    bool needsRefilter = false;
                     //Queue everything up
                     CheckApply();
 
@@ -378,63 +442,18 @@ namespace RTCV.CorruptCore
                     GetStoreBackups();
                     StepPreCorrupt?.Invoke(null, new EventArgs());
 
-                    //Execute all temp units
-                    List<List<BlastUnit>> itemsToRemove = new List<List<BlastUnit>>();
-                    foreach (List<BlastUnit> buList in appliedLifetime)
+                    var itemsToRemove = new List<List<BlastUnit>>();
+                    try
                     {
-                        foreach (BlastUnit bu in buList)
-                        {
-                            var result = bu.Execute();
-                            if (result == ExecuteState.ERROR)
-                            {
-                                var dr = MessageBox.Show(
-                                    "Something went horribly wrong during BlastUnit execute. Aborting. Would you like to send this to the devs?",
-                                    "A fatal error occurred", MessageBoxButtons.YesNo);
-                                isRunning = false;
-                                if (dr == DialogResult.Yes)
-                                {
-                                    throw new Exception("BlastUnit appliedLifetime Execute threw up. Check the log for more info.");
-                                }
+                        //Execute all temp units and store the expired ones for removal
+                        itemsToRemove.AddRange(ExecuteUnits(appliedLifetime, nameof(appliedLifetime), true));
 
-                                return;
-                            }
-                            if (result == ExecuteState.HANDLEDERROR)
-                            {
-                                isRunning = false;
-                                return;
-                            }
-                        }
-                        if (buList[0].Working.LastFrame == currentFrame)
-                        {
-                            itemsToRemove.Add(buList);
-                        }
+                        //Execute all infinite units. These are never removed
+                        ExecuteUnits(appliedInfinite, nameof(appliedInfinite), false);
                     }
-
-                    //Execute all infinite lifetime units
-                    foreach (List<BlastUnit> buList in appliedInfinite)
+                    catch (UnitExecutionException)
                     {
-                        foreach (BlastUnit bu in buList)
-                        {
-                            var result = bu.Execute();
-                            if (result == ExecuteState.ERROR)
-                            {
-                                var dr = MessageBox.Show(
-                                    "Something went horribly wrong during BlastUnit execute. Aborting. Would you like to send this to the devs?",
-                                    "A fatal error occurred", MessageBoxButtons.YesNo);
-                                isRunning = false;
-                                if (dr == DialogResult.Yes)
-                                {
-                                    throw new Exception("BlastUnit appliedInfinite Execute threw up. Check the log for more info.");
-                                }
-
-                                return;
-                            }
-                            if (result == ExecuteState.HANDLEDERROR)
-                            {
-                                isRunning = false;
-                                return;
-                            }
-                        }
+                        return;
                     }
 
                     StepPostCorrupt?.Invoke(null, new EventArgs());
@@ -442,32 +461,8 @@ namespace RTCV.CorruptCore
                     currentFrame++;
 
                     //Remove any temp units that have expired
-                    foreach (List<BlastUnit> buList in itemsToRemove)
-                    {
-                        //Remove it
-                        appliedLifetime.Remove(buList);
+                    var needsRefilter = RemoveAppliedLifetimeUnits(itemsToRemove);
 
-                        foreach (BlastUnit bu in buList)
-                        {
-                            bu.Working = null;
-                            //Remove it from the store pool
-                            if (bu.Source == BlastUnitSource.STORE)
-                            {
-                                StoreDataPool.Remove(bu);
-                            }
-                        }
-
-                        //If there's a loop, re-apply all the units
-                        if (buList[0].Loop)
-                        {
-                            needsRefilter = true;
-                            foreach (BlastUnit bu in buList)
-                            {
-                                bool applyLoopTiming = (bu.LoopTiming != null && bu.LoopTiming != -1);
-                                bu.Apply(true, applyLoopTiming);
-                            }
-                        }
-                    }
                     //We only call this if there's a loop
                     if (needsRefilter)
                     {

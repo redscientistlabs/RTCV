@@ -25,7 +25,7 @@ namespace RTCV.UI.Input
                 _dinput = new DirectInput();
 
                 _keyboard = new Keyboard(_dinput);
-                _keyboard.SetCooperativeLevel(S.GET<UI_CoreForm>().Handle, CooperativeLevel.Background | CooperativeLevel.Nonexclusive);
+                _keyboard.SetCooperativeLevel(S.GET<CoreForm>().Handle, CooperativeLevel.Background | CooperativeLevel.Nonexclusive);
                 _keyboard.Properties.BufferSize = 8;
             }
         }
@@ -74,12 +74,12 @@ namespace RTCV.UI.Input
                 return _eventList;
             }
         }
+    }
 
-        #pragma warning disable CA1815 //KeyEvent won't be used in comparison
-        public struct KeyEvent
-        {
-            public Key Key;
-            public bool Pressed;
-        }
+    #pragma warning disable CA1815 //KeyEvent won't be used in comparison
+    public struct KeyEvent
+    {
+        public Key Key { get; set; }
+        public bool Pressed { get; set; }
     }
 }

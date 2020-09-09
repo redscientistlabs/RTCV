@@ -69,7 +69,7 @@ namespace RTCV.UI
             btnGenerateVMD.Enabled = true;
         }
 
-        public long SafeStringToLong(string input)
+        public static long SafeStringToLong(string input)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace RTCV.UI
             }
         }
 
-        public void ProfileDomain()
+        public static void ProfileDomain()
         {
         }
 
@@ -126,7 +126,7 @@ namespace RTCV.UI
 
             if (string.IsNullOrWhiteSpace(tbVmdName.Text))
             {
-                proto.VmdName = CorruptCore.RtcCore.GetRandomKey();
+                proto.VmdName = RtcCore.GetRandomKey();
             }
             else
             {
@@ -137,7 +137,7 @@ namespace RTCV.UI
             proto.WordSize = mi.WordSize;
             proto.Padding = 0;
 
-            var sk = S.GET<RTC_SavestateManager_Form>().CurrentSaveStateStashKey;
+            var sk = S.GET<SavestateManagerForm>().CurrentSaveStateStashKey;
             if (sk == null && cbLoadBeforeGenerate.Checked && (AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] as bool? ?? false))
             {
                 MessageBox.Show("Load before generate is checked but no Savestate is selected in the Glitch Harvester!");
@@ -243,7 +243,7 @@ namespace RTCV.UI
         {
             btnLoadDomains_Click(null, null);
 
-            var ceForm = S.GET<RTC_CorruptionEngine_Form>();
+            var ceForm = S.GET<CorruptionEngineForm>();
 
             foreach (var item in cbSelectedMemoryDomain.Items)
                 if (item.ToString() == mi.ToString())
@@ -277,9 +277,9 @@ namespace RTCV.UI
             cbVectorLimiterList.ValueMember = "Value";
 
             //Do this here as if it's stuck into the designer, it keeps defaulting out
-            cbVectorLimiterList.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
+            cbVectorLimiterList.DataSource = RtcCore.LimiterListBindingSource;
 
-            if (CorruptCore.RtcCore.LimiterListBindingSource.Count > 0)
+            if (RtcCore.LimiterListBindingSource.Count > 0)
             {
                 CbVectorLimiterList_SelectedIndexChanged(cbVectorLimiterList, null);
             }

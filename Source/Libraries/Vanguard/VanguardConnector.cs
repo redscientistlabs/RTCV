@@ -4,16 +4,16 @@ namespace RTCV.Vanguard
     using System.Linq;
     using RTCV.CorruptCore;
     using RTCV.NetCore;
-    using NetworkSide = RTCV.NetCore.NetworkSide;
+    using RTCV.NetCore.Enums;
 
     public class VanguardConnector : IRoutable, IDisposable
     {
-        public NetCoreReceiver receiver;
+        private NetCoreReceiver receiver;
 
-        public NetCoreConnector netConn;
-        public CorruptCoreConnector corruptConn;
+        public NetCoreConnector netConn { get; private set; }
+        private CorruptCoreConnector corruptConn;
 
-        public NetworkStatus netcoreStatus => netConn.status;
+        public NetworkStatus netcoreStatus { get => netConn.status; }
 
         public VanguardConnector(NetCoreReceiver _receiver)
         {
@@ -25,8 +25,8 @@ namespace RTCV.Vanguard
 
             if (receiver.Attached)//attached mode
             {
-                CorruptCore.RtcCore.Attached = true;
-                RTCV.UI.UICore.Start(null);
+                RtcCore.Attached = true;
+                UI.UICore.Start(null);
                 return;
             }
 
@@ -46,7 +46,7 @@ namespace RTCV.Vanguard
 
         private static void NetCoreSpec_ClientConnected(object sender, EventArgs e)
         {
-            LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_PUSHVANGUARDSPEC, RTCV.NetCore.AllSpec.VanguardSpec.GetPartialSpec(), true);
+            LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_PUSHVANGUARDSPEC, AllSpec.VanguardSpec.GetPartialSpec(), true);
             LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_ALLSPECSSENT, true);
         }
 
@@ -61,7 +61,7 @@ namespace RTCV.Vanguard
                 string endpoint = msgParts[0];
                 e.message.Type = msgParts[1]; //remove endpoint from type
 
-                return NetCore.LocalNetCoreRouter.Route(endpoint, e);
+                return LocalNetCoreRouter.Route(endpoint, e);
             }
             else
             {   //This is for the Vanguard Implementation
@@ -78,6 +78,7 @@ namespace RTCV.Vanguard
 
         public void Kill()
         {
+            netConn?.Kill();
         }
 
         public void Dispose()
@@ -85,9 +86,9 @@ namespace RTCV.Vanguard
             netConn?.Dispose();
         }
 
-        public static void PushVanguardSpecRef(FullSpec spec) => RTCV.NetCore.AllSpec.VanguardSpec = spec;
+        public static void PushVanguardSpecRef(FullSpec spec) => AllSpec.VanguardSpec = spec;
 
-        public static bool IsUIForm() => (bool?)RTCV.NetCore.AllSpec.UISpec?[NetcoreCommands.RTC_INFOCUS] ?? false;
+        public static bool IsUIForm() => (bool?)AllSpec.UISpec?[NetcoreCommands.RTC_INFOCUS] ?? false;
 
         public void KillNetcore() => netConn.Kill();
     }

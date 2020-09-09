@@ -13,9 +13,9 @@ namespace RTCV.UI.Modular
 
         public Panel blockPanel { get; set; } = null;
 
-        public bool undockedSizable = true;
-        public bool popoutAllowed = true;
-        public UI_ComponentFormTile ParentComponentFormTitle = null;
+        public bool undockedSizable { get; set; } = true;
+        public bool popoutAllowed { get; set; } = true;
+        public ComponentFormTile ParentComponentFormTitle { get; set; } = null;
 
         protected ComponentForm() : base()
         {

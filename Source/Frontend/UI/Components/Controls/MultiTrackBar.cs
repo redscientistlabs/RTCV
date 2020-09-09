@@ -5,6 +5,16 @@
     using System.ComponentModel;
     using System.Windows.Forms;
 
+    public class ValueUpdateEventArgs : EventArgs
+    {
+        private long value;
+
+        public ValueUpdateEventArgs(long _value)
+        {
+            value = _value;
+        }
+    }
+
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class MultiTrackBar : UserControl
     {
@@ -360,22 +370,12 @@
             PropagateValue(nmValue, tbValue, nmControlValue);
         }
 
-        public class ValueUpdateEventArgs : EventArgs
-        {
-            public long value;
-
-            public ValueUpdateEventArgs(long _value)
-            {
-                value = _value;
-            }
-        }
-
         private void tbControlValue_Scroll(object sender, EventArgs e)
         {
         }
     }
 
-    internal class NoFocusTrackBar : System.Windows.Forms.TrackBar
+    internal class NoFocusTrackBar : TrackBar
     {
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, uint msg, int wParam, int lParam);

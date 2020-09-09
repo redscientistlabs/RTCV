@@ -4,6 +4,7 @@ namespace RTCV.CorruptCore
     using System.Collections.Generic;
     using System.Data;
     using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.IO.Compression;
     using System.Linq;
@@ -16,20 +17,31 @@ namespace RTCV.CorruptCore
     using Exception = System.Exception;
 
     [Serializable]
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     public class Stockpile
     {
-        [NonSerialized]
-        [Ceras.Exclude]
+        [Exclude]
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
+        [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
         public List<StashKey> StashKeys = new List<StashKey>();
 
-        public string Name;
+        [JsonProperty]
+        private string Name;
+
+        [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
         public string Filename;
-        public string ShortFilename;
-        public string RtcVersion;
-        public string VanguardImplementation;
+
+        [JsonProperty]
+        private string ShortFilename;
+
+        [JsonProperty]
+        private string RtcVersion;
+
+        [JsonProperty]
+        private string VanguardImplementation;
+
+        [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
         public bool MissingLimiter;
 
         public Stockpile(DataGridView dgvStockpile)
@@ -134,7 +146,7 @@ namespace RTCV.CorruptCore
         private static void CopyReferencedFiles(Stockpile sks, bool includeReferencedFiles, ref decimal saveProgress)
         {
             List<string> allRoms = new List<string>();
-            if (includeReferencedFiles && ((bool?)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.SUPPORTS_REFERENCES] ?? false))
+            if (includeReferencedFiles && ((bool?)AllSpec.VanguardSpec?[VSPEC.SUPPORTS_REFERENCES] ?? false))
             {
                 RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs("Prepping referenced files", saveProgress += 2));
                 //populating Allroms array
@@ -590,7 +602,7 @@ namespace RTCV.CorruptCore
         {
             var results = new OperationResults();
 
-            var s = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "ERROR";
+            var s = (string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "ERROR";
             if (!string.IsNullOrEmpty(sks.VanguardImplementation) && !sks.VanguardImplementation.Equals(s, StringComparison.OrdinalIgnoreCase) && sks.VanguardImplementation != "ERROR")
             {
                 results.AddError($"The stockpile you loaded is for a different Vanguard implementation.\nThe Stockpile reported {sks.VanguardImplementation} but you're connected to {s}.\nThis is a fatal error. Aborting load.");

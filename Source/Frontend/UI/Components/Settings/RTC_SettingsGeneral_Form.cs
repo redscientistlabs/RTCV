@@ -24,7 +24,7 @@
         private void btnImportKeyBindings_Click(object sender, EventArgs e)
         {
 
-            if (UI_VanguardImplementation.connector.netConn.status != NetworkStatus.CONNECTED)
+            if (VanguardImplementation.connector.netConn.status != NetworkStatus.CONNECTED)
             {
                 MessageBox.Show("Can't import keybindings when not connected to Bizhawk!");
                 return;
@@ -66,64 +66,64 @@
 
         private void btnChangeRTCColor_Click(object sender, EventArgs e)
         {
-            UICore.SelectRTCColor();
+            Colors.SelectRTCColor();
         }
 
         private void cbDisableBizhawkOSD_CheckedChanged(object sender, EventArgs e)
         {
             if (cbDisableEmulatorOSD.Checked)
             {
-                RTCV.NetCore.Params.SetParam(RTCSPEC.CORE_EMULATOROSDDISABLED);
+                NetCore.Params.SetParam(RTCSPEC.CORE_EMULATOROSDDISABLED);
             }
             else
             {
-                RTCV.NetCore.Params.RemoveParam(RTCSPEC.CORE_EMULATOROSDDISABLED);
+                NetCore.Params.RemoveParam(RTCSPEC.CORE_EMULATOROSDDISABLED);
             }
 
-            CorruptCore.RtcCore.EmulatorOsdDisabled = cbDisableEmulatorOSD.Checked;
+            RtcCore.EmulatorOsdDisabled = cbDisableEmulatorOSD.Checked;
         }
 
         private void cbAllowCrossCoreCorruption_CheckedChanged(object sender, EventArgs e)
         {
             if (cbAllowCrossCoreCorruption.Checked)
             {
-                RTCV.NetCore.Params.SetParam("ALLOW_CROSS_CORE_CORRUPTION");
+                NetCore.Params.SetParam("ALLOW_CROSS_CORE_CORRUPTION");
             }
             else
             {
-                RTCV.NetCore.Params.RemoveParam("ALLOW_CROSS_CORE_CORRUPTION");
+                NetCore.Params.RemoveParam("ALLOW_CROSS_CORE_CORRUPTION");
             }
 
-            CorruptCore.RtcCore.AllowCrossCoreCorruption = cbAllowCrossCoreCorruption.Checked;
+            RtcCore.AllowCrossCoreCorruption = cbAllowCrossCoreCorruption.Checked;
         }
 
         private void cbDontCleanAtQuit_CheckedChanged(object sender, EventArgs e)
         {
             if (cbDontCleanAtQuit.Checked)
             {
-                RTCV.NetCore.Params.SetParam("DONT_CLEAN_SAVESTATES_AT_QUIT");
+                NetCore.Params.SetParam("DONT_CLEAN_SAVESTATES_AT_QUIT");
             }
             else
             {
-                RTCV.NetCore.Params.RemoveParam("DONT_CLEAN_SAVESTATES_AT_QUIT");
+                NetCore.Params.RemoveParam("DONT_CLEAN_SAVESTATES_AT_QUIT");
             }
 
-            CorruptCore.RtcCore.DontCleanSavestatesOnQuit = cbDontCleanAtQuit.Checked;
+            RtcCore.DontCleanSavestatesOnQuit = cbDontCleanAtQuit.Checked;
         }
 
         private void CbUncapIntensity_CheckedChanged(object sender, EventArgs e)
         {
             if (cbUncapIntensity.Checked)
             {
-                RTCV.NetCore.Params.SetParam("UNCAP_INTENSITY");
+                NetCore.Params.SetParam("UNCAP_INTENSITY");
             }
             else
             {
-                RTCV.NetCore.Params.RemoveParam("UNCAP_INTENSITY");
+                NetCore.Params.RemoveParam("UNCAP_INTENSITY");
             }
 
-            S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.UncapNumericBox = cbUncapIntensity.Checked;
-            S.GET<RTC_GlitchHarvesterIntensity_Form>().multiTB_Intensity.UncapNumericBox = cbUncapIntensity.Checked;
+            S.GET<GeneralParametersForm>().multiTB_Intensity.UncapNumericBox = cbUncapIntensity.Checked;
+            S.GET<GlitchHarvesterIntensityForm>().multiTB_Intensity.UncapNumericBox = cbUncapIntensity.Checked;
         }
 
         private void btnRefreshInputDevices_Click(object sender, EventArgs e)

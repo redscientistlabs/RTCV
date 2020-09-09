@@ -8,6 +8,12 @@ namespace RTCV.UI.Components.Controls
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
 
+    public class SpecialBindingInfo
+    {
+        public string BindingName { get; set; }
+        public string TooltipText { get; set; }
+    }
+
     public sealed class InputWidget : TextBox
     {
         // TODO: when binding, make sure that the new key combo is not in one of the other bindings
@@ -17,12 +23,6 @@ namespace RTCV.UI.Components.Controls
         private string _wasPressed = "";
 
         public InputCompositeWidget CompositeWidget { get; set; }
-
-        public class SpecialBindingInfo
-        {
-            public string BindingName { get; set; }
-            public string TooltipText { get; set; }
-        }
 
         /// <summary>
         /// These bindings get ignored by the widget and can only be entered by SetBinding() via the context menu from the InputCompositeWidget
@@ -129,7 +129,7 @@ namespace RTCV.UI.Components.Controls
         /// </summary>
         private void ReadKeys()
         {
-            Input.Input.Instance.Update();
+            Input.Input.Update();
             var bindingStr = Input.Input.Instance.GetNextBindEvent();
             if (!string.IsNullOrEmpty(_wasPressed) && bindingStr == _wasPressed)
             {

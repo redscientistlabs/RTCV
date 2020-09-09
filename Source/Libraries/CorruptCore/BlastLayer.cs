@@ -3,6 +3,7 @@ namespace RTCV.CorruptCore
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Xml.Serialization;
     using Ceras;
@@ -10,11 +11,12 @@ namespace RTCV.CorruptCore
     using RTCV.NetCore;
     using Exception = System.Exception;
 
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     [Serializable]
     [XmlInclude(typeof(BlastUnit))]
     public class BlastLayer : ICloneable, INote
     {
+        [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
         public List<BlastUnit> Layer;
 
         public BlastLayer()

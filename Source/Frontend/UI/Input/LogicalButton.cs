@@ -10,8 +10,8 @@ namespace RTCV.UI.Input
             Modifiers = modifiers;
         }
 
-        public readonly string Button;
-        public readonly ModifierKeys Modifiers;
+        public readonly string Button { get; }
+        private readonly ModifierKeys Modifiers;
 
         public bool Alt { get { return ((Modifiers & ModifierKeys.Alt) != 0); } }
         public bool Control { get { return ((Modifiers & ModifierKeys.Control) != 0); } }

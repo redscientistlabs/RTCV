@@ -10,6 +10,7 @@ namespace RTCV.NetCore
     using System.Threading;
     using Ceras;
     using RTCV.NetCore.NetCore_Extensions;
+    using RTCV.NetCore.Enums;
 
     public class TCPLink : IDisposable
     {
@@ -61,14 +62,8 @@ namespace RTCV.NetCore
             DefaultBoopMonitoringCounter = spec.DefaultBoopMonitoringCounter;
             BoopMonitoringCounter = spec.DefaultBoopMonitoringCounter;
 
-            if (spec.AutoReconnect)
-            {
-                linkWatch = new TCPLinkWatch(this, spec);
-            }
-            else
-            {
-                StartNetworking();
-            }
+            // Remove an explicit StartNetworking() call with https://github.com/ircluzar/RTCV/pull/133
+            linkWatch = new TCPLinkWatch(this, spec);
         }
 
         private Socket KillableAcceptSocket(TcpListener listener)
@@ -235,20 +230,21 @@ namespace RTCV.NetCore
             }
         }
 
-        private CerasSerializer CreateSerializer()
+        private static CerasSerializer CreateSerializer()
         {
             var config = new SerializerConfig();
             config.Advanced.PersistTypeCache = true;
-            config.Advanced.UseReinterpretFormatter = false;
+            config.Advanced.UseReinterpretFormatter = false; //While faster, leads to some weird bugs due to threading abuse
+            config.Advanced.RespectNonSerializedAttribute = false;
             config.OnResolveFormatter.Add((c, t) =>
             {
                 if (t == typeof(HashSet<byte[]>))
                 {
-                    return new NetCore.NetCore_Extensions.HashSetFormatterThatKeepsItsComparer();
+                    return new HashSetFormatterThatKeepsItsComparer();
                 }
                 else if (t == typeof(HashSet<byte?[]>))
                 {
-                    return new NetCore.NetCore_Extensions.NullableByteHashSetFormatterThatKeepsItsComparer();
+                    return new NullableByteHashSetFormatterThatKeepsItsComparer();
                 }
 
                 return null; // continue searching
@@ -406,7 +402,7 @@ namespace RTCV.NetCore
 
             try
             {
-                if (object.ReferenceEquals(clientRef, client))
+                if (ReferenceEquals(clientRef, client))
                 {
                     client?.Close();
                     client = null;
@@ -547,7 +543,7 @@ namespace RTCV.NetCore
 
                 try
                 {
-                    if (object.ReferenceEquals(clientRef, client))
+                    if (ReferenceEquals(clientRef, client))
                     {
                         client?.Close();
                         client = null;

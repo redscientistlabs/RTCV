@@ -18,14 +18,14 @@ namespace RTCV.CorruptCore
             {
                 lock (miLock)
                 {
-                    return RTCV.NetCore.AllSpec.CorruptCoreSpec?["MEMORYINTERFACES"] as Dictionary<string, MemoryDomainProxy>;
+                    return AllSpec.CorruptCoreSpec?["MEMORYINTERFACES"] as Dictionary<string, MemoryDomainProxy>;
                 }
             }
             set
             {
                 lock (miLock)
                 {
-                    RTCV.NetCore.AllSpec.CorruptCoreSpec.Update("MEMORYINTERFACES", value);
+                    AllSpec.CorruptCoreSpec.Update("MEMORYINTERFACES", value);
                 }
             }
         }
@@ -89,7 +89,7 @@ namespace RTCV.CorruptCore
 
         public static void RefreshDomains(bool domainsChanged = false)
         {
-            var mdps = RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.MEMORYDOMAINS_INTERFACES] as MemoryDomainProxy[];
+            var mdps = AllSpec.VanguardSpec?[VSPEC.MEMORYDOMAINS_INTERFACES] as MemoryDomainProxy[];
             if (mdps == null)
             {
                 return;
@@ -196,7 +196,7 @@ namespace RTCV.CorruptCore
         public static VmdPrototype GetVmdPrototypeFromBlastlayer(BlastLayer bl)
         {
             //If the BL references a VMD that doesn't exist, return null
-            if (bl.Layer.Any(x => MemoryDomains.GetInterface(x.Domain) == null))
+            if (bl.Layer.Any(x => GetInterface(x.Domain) == null))
             {
                 return null;
             }
@@ -208,7 +208,7 @@ namespace RTCV.CorruptCore
             };
 
             BlastUnit bu = bl.Layer[0];
-            MemoryInterface mi = MemoryDomains.GetInterface(bu.Domain);
+            MemoryInterface mi = GetInterface(bu.Domain);
             proto.BigEndian = mi.BigEndian;
             proto.WordSize = mi.WordSize;
             proto.SuppliedBlastLayer = bl;
@@ -243,7 +243,7 @@ namespace RTCV.CorruptCore
         /// <param name="VMD"></param>
         public static void AddVMD(VirtualMemoryDomain VMD)
         {
-            MemoryDomains.VmdPool[VMD.ToString()] = VMD;
+            VmdPool[VMD.ToString()] = VMD;
 
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_DOMAIN_VMD_ADD, VMD.Proto, true);
             LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_EVENT_DOMAINSUPDATED);
@@ -256,7 +256,7 @@ namespace RTCV.CorruptCore
 
         public static void AddVMD_NET(VirtualMemoryDomain VMD)
         {
-            MemoryDomains.VmdPool[VMD.ToString()] = VMD;
+            VmdPool[VMD.ToString()] = VMD;
         }
 
         /// <summary>
@@ -276,9 +276,9 @@ namespace RTCV.CorruptCore
         /// <param name="vmdName"></param>
         public static void RemoveVMD(string vmdName)
         {
-            if (MemoryDomains.VmdPool.ContainsKey(vmdName))
+            if (VmdPool.ContainsKey(vmdName))
             {
-                MemoryDomains.VmdPool.Remove(vmdName);
+                VmdPool.Remove(vmdName);
             }
 
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_DOMAIN_VMD_REMOVE, vmdName, true);
@@ -292,9 +292,9 @@ namespace RTCV.CorruptCore
 
         public static void RemoveVMD_NET(string vmdName)
         {
-            if (MemoryDomains.VmdPool.ContainsKey(vmdName))
+            if (VmdPool.ContainsKey(vmdName))
             {
-                MemoryDomains.VmdPool.Remove(vmdName);
+                VmdPool.Remove(vmdName);
             }
         }
 
@@ -342,7 +342,7 @@ namespace RTCV.CorruptCore
                 case "NES":     //Nintendo Entertainment System
 
                     //There's no easy way to discern NES from FDS so just check for the domain name
-                    if (MemoryDomains.MemoryInterfaces.ContainsKey("PRG ROM"))
+                    if (MemoryInterfaces.ContainsKey("PRG ROM"))
                     {
                         rp.PrimaryDomain = "PRG ROM";
                     }
@@ -352,7 +352,7 @@ namespace RTCV.CorruptCore
                         break;
                     }
 
-                    if (MemoryDomains.MemoryInterfaces.ContainsKey("CHR VROM"))
+                    if (MemoryInterfaces.ContainsKey("CHR VROM"))
                     {
                         rp.SecondDomain = "CHR VROM";
                     }
@@ -365,7 +365,7 @@ namespace RTCV.CorruptCore
                     break;
 
                 case "SNES":    //Super Nintendo
-                    if (MemoryDomains.MemoryInterfaces.ContainsKey("SGB CARTROM")) //BSNES SGB Mode
+                    if (MemoryInterfaces.ContainsKey("SGB CARTROM")) //BSNES SGB Mode
                     {
                         rp.PrimaryDomain = "SGB CARTROM";
                     }
@@ -404,7 +404,7 @@ namespace RTCV.CorruptCore
                     break;
 
                 case "GEN":     // Sega Genesis
-                    if (MemoryDomains.MemoryInterfaces.ContainsKey("MD CART"))  //If it's regular Genesis or 32X
+                    if (MemoryInterfaces.ContainsKey("MD CART"))  //If it's regular Genesis or 32X
                     {
                         rp.PrimaryDomain = "MD CART";
 

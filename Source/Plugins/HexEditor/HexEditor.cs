@@ -14,6 +14,7 @@ namespace RTCV.Plugins.HexEditor
     using RTCV.NetCore;
     using RTCV.Common.CustomExtensions;
     using RTCV.CorruptCore;
+    using RTCV.CorruptCore.Extensions;
     using NLog;
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
@@ -52,10 +53,14 @@ namespace RTCV.Plugins.HexEditor
 
         private int DataSize { get; set; }
 
-        private Dictionary<string, MemoryInterface> AllDomains => MemoryDomains.AllMemoryInterfaces;
-        public volatile bool _hideOnClose = true;
+        private static Dictionary<string, MemoryInterface> AllDomains => MemoryDomains.AllMemoryInterfaces;
+        private volatile bool _hideOnClose = true;
+        public bool HideOnClose {
+            get { return _hideOnClose; }
+            set { _hideOnClose = value; }
+        }
 
-        readonly Logger _logger = NLog.LogManager.GetCurrentClassLogger();
+        readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         public HexEditor()
         {
@@ -85,22 +90,22 @@ namespace RTCV.Plugins.HexEditor
 
             Restart();
 
-            CorruptCore.StepActions.StepEnd += (o, e) =>
+            StepActions.StepEnd += (o, e) =>
             {
                 if (this.Visible)
                     UpdateValues();
             };
-            CorruptCore.RtcCore.GameClosed += (o, e) =>
+            RtcCore.GameClosed += (o, e) =>
             {
                 if (e.FullyClosed)
                 {
-                    _hideOnClose = false;
+                    HideOnClose = false;
                     this.Close();
                 }
                 else if (this.Visible)
                     Restart();
             };
-            CorruptCore.RtcCore.LoadGameDone += (o, e) =>
+            RtcCore.LoadGameDone += (o, e) =>
             {
                 if (this.Visible)
                     Restart();
@@ -132,7 +137,7 @@ namespace RTCV.Plugins.HexEditor
 
         private void HexEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (_hideOnClose)
+            if (HideOnClose)
             {
                 this.Hide();
                 _domain = new NullMemoryInterface();
@@ -155,9 +160,9 @@ namespace RTCV.Plugins.HexEditor
 
         #region API
 
-        public bool UpdateBefore => false;
+        public static bool UpdateBefore => false;
 
-        public bool AskSaveChanges()
+        public static bool AskSaveChanges()
         {
             return true;
         }
@@ -239,7 +244,7 @@ namespace RTCV.Plugins.HexEditor
             return str.Select(Convert.ToByte).ToArray();
         }
 
-        public byte[] ConvertHexStringToByteArray(string str)
+        public static byte[] ConvertHexStringToByteArray(string str)
         {
             if (string.IsNullOrWhiteSpace(str))
             {
@@ -941,14 +946,14 @@ namespace RTCV.Plugins.HexEditor
         private void IncrementAddress(long address)
         {
             var bytes = _domain.PeekBytes(address, address + DataSize, false);
-            CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref bytes, 1, _domain.BigEndian);
+            bytes.AddValueToByteArrayUnchecked(1, _domain.BigEndian);
             _domain.PokeBytes(address, bytes, _domain.BigEndian);
         }
 
         private void DecrementAddress(long address)
         {
             var bytes = _domain.PeekBytes(address, address + DataSize, false);
-            CorruptCore_Extensions.AddValueToByteArrayUnchecked(ref bytes, -1, _domain.BigEndian);
+            bytes.AddValueToByteArrayUnchecked(-1, _domain.BigEndian);
             _domain.PokeBytes(address, bytes, _domain.BigEndian);
         }
 
@@ -957,7 +962,7 @@ namespace RTCV.Plugins.HexEditor
             if (address != -1)
             {
                 var bytes = _domain.PeekBytes(address, address + DataSize, _domain.BigEndian);
-                return CorruptCore_Extensions.BytesToHexString(bytes);
+                return ByteArrayExtensions.BytesToHexString(bytes);
             }
 
             return "";
@@ -1182,7 +1187,7 @@ namespace RTCV.Plugins.HexEditor
             DataSizeDWordMenuItem.Checked = DataSize == 4;
         }
 
-        private ToolStripItem GetMenuItem(MemoryInterface domain, Action<string> setCallback, string selected = "", int? maxSize = null)
+        private static ToolStripItem GetMenuItem(MemoryInterface domain, Action<string> setCallback, string selected = "", int? maxSize = null)
         {
             var name = domain.Name;
             var item = new ToolStripMenuItem
@@ -1757,7 +1762,7 @@ namespace RTCV.Plugins.HexEditor
 
                 var textrect = new Rectangle(textpoint, new Size(_fontWidth * DataSize, _fontHeight));
 
-                if (CorruptCore.StepActions.InfiniteUnitExists(_domain.Name, _addressHighlighted))
+                if (StepActions.InfiniteUnitExists(_domain.Name, _addressHighlighted))
                 {
                     e.Graphics.FillRectangle(new SolidBrush(Color.Cyan), rect);
                     e.Graphics.FillRectangle(new SolidBrush(Color.Cyan), textrect);

@@ -9,7 +9,7 @@ namespace RTCV.CorruptCore
     [XmlInclude(typeof(BlastLayer))]
     [XmlInclude(typeof(BlastUnit))]
     [Serializable]
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     public class VmdPrototype
     {
         public string VmdName { get; set; }
@@ -26,7 +26,7 @@ namespace RTCV.CorruptCore
         public List<long[]> AddRanges { get; set; } = new List<long[]>();
         public List<long[]> RemoveRanges { get; set; } = new List<long[]>();
 
-        public BlastLayer SuppliedBlastLayer = null;
+        public BlastLayer SuppliedBlastLayer { get; set; } = null;
 
         public VmdPrototype()
         {
@@ -95,7 +95,7 @@ namespace RTCV.CorruptCore
             return VMD;
         }
 
-        public bool IsAddressInRanges(long address, List<long> singles, List<long[]> ranges)
+        public static bool IsAddressInRanges(long address, List<long> singles, List<long[]> ranges)
         {
             if (singles.Contains(address))
             {

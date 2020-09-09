@@ -4,10 +4,10 @@ namespace RTCV.CorruptCore
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using System.Numerics;
     using System.Security.Cryptography;
     using System.Windows.Forms;
     using Ceras;
+    using RTCV.CorruptCore.Extensions;
 
     [Serializable]
     [Ceras.MemberConfig(TargetMember.All)]
@@ -158,7 +158,7 @@ namespace RTCV.CorruptCore
             return res;
         }
 
-        private ulong BytesToUlong(byte[] byteRef)
+        private static ulong BytesToUlong(byte[] byteRef)
         {
             var bytes = (byte[])byteRef.Clone();
             //Fun switch of fun, but is faster for most paths than resizing to 8 bytes
@@ -194,7 +194,7 @@ namespace RTCV.CorruptCore
         private static char[] validCharListHex = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', CHAR_WILD, CHAR_PASS };
         private static char[] validCharListBinary = new char[] { '0', '1', CHAR_WILD, CHAR_PASS };
 
-        private BitlogicFilterEntry ParseLine(int lineNum, string filePath, string line, bool doFlipBytes)
+        private static BitlogicFilterEntry ParseLine(int lineNum, string filePath, string line, bool doFlipBytes)
         {
             bool flipBytes = !doFlipBytes; //to maintain sanity
 
@@ -298,7 +298,7 @@ namespace RTCV.CorruptCore
         }
 
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] //Inline hint (does it do anything here? idk)
-        private ulong CharToUlongHex(char c)
+        private static ulong CharToUlongHex(char c)
         {
             //Ascii format
             int i = (int)c;
@@ -320,12 +320,12 @@ namespace RTCV.CorruptCore
         //    }
         //}
 
-        private int GetPrecision(string s, int incr = 1)
+        private static int GetPrecision(string s, int incr = 1)
         {
             return (s.Length * incr) / 8;
         }
 
-        private BitlogicFilterEntry ParseHex(string line)
+        private static BitlogicFilterEntry ParseHex(string line)
         {
             //Could be refactored and merged with ParseBin probably
 
@@ -355,7 +355,7 @@ namespace RTCV.CorruptCore
             return new BitlogicFilterEntry(template, wildcard, passthrough, reserved, GetPrecision(line, 4));
         }
 
-        private BitlogicFilterEntry ParseBin(string line)
+        private static BitlogicFilterEntry ParseBin(string line)
         {
             ulong template = 0UL;
             ulong wildcard = 0UL;
@@ -387,7 +387,7 @@ namespace RTCV.CorruptCore
     /// Represents an entry for bit filter list.
     /// </summary>
     [Serializable]
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     public class BitlogicFilterEntry
     {
         ulong template;

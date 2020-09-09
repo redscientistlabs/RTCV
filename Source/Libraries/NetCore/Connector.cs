@@ -3,12 +3,12 @@ namespace RTCV.NetCore
     using System;
     using System.Linq;
     using System.Threading;
+    using RTCV.NetCore.Enums;
 
     public class NetCoreConnector : IRoutable, IDisposable
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-        public NetCoreSpec spec = null;
-        public Guid guid = Guid.NewGuid();
+        public NetCoreSpec spec { get; private set; } = null;
         internal UDPLink udp = null;
         internal volatile TCPLink tcp = null;
         internal MessageHub hub = null;

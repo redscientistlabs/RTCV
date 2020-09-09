@@ -13,7 +13,7 @@
         {
             try
             {
-                long fileLength = new System.IO.FileInfo(path).Length;
+                long fileLength = new FileInfo(path).Length;
                 totalFileSize = fileLength;
                 int tailBankSize = Convert.ToInt32(fileLength % maxBankSize);
                 bool multipleBanks = fileLength > maxBankSize;

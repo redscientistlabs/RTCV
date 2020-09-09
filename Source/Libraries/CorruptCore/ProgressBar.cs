@@ -4,15 +4,15 @@ namespace RTCV.CorruptCore
 
     public class ProgressBarEventArgs : EventArgs
     {
-        public string CurrentTask;
-        public decimal Progress;
+        public string CurrentTask { get; private set; }
+        public decimal Progress { get; set; }
 
         public ProgressBarEventArgs(string text, decimal progress)
         {
             CurrentTask = text;
             Progress = progress;
 
-            RTCV.Common.Logging.GlobalLogger.Log(NLog.LogLevel.Info, $"ProgressBarEventArgs: {text}");
+            Common.Logging.GlobalLogger.Log(NLog.LogLevel.Info, $"ProgressBarEventArgs: {text}");
         }
     }
 }

@@ -106,7 +106,7 @@ namespace RTCV.UI
         {
             LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_DOMAIN_REFRESHDOMAINS, true);
             RefreshDomains();
-            SetMemoryDomainsAllButSelectedDomains((string[])RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] ?? new string[] { });
+            SetMemoryDomainsAllButSelectedDomains((string[])AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] ?? new string[] { });
         }
 
         public void RefreshDomains()
@@ -128,7 +128,7 @@ namespace RTCV.UI
 
         public void RefreshDomainsAndKeepSelected(string[] overrideDomains = null)
         {
-            var temp = (string[])RTCV.NetCore.AllSpec.UISpec["SELECTEDDOMAINS"];
+            var temp = (string[])AllSpec.UISpec["SELECTEDDOMAINS"];
             var oldDomain = lbMemoryDomains.Items;
 
             RefreshDomains(); //refresh and reload domains
@@ -142,7 +142,7 @@ namespace RTCV.UI
                 }
 
                 logger.Trace("RefreshDomainsAndKeepSelected override SELECTEDDOMAINS domains to {domains}", sb);
-                RTCV.NetCore.AllSpec.UISpec.Update("SELECTEDDOMAINS", overrideDomains);
+                AllSpec.UISpec.Update("SELECTEDDOMAINS", overrideDomains);
                 SetMemoryDomainsSelectedDomains(overrideDomains);
             }
             //If we had old domains selected don't do anything
@@ -156,12 +156,12 @@ namespace RTCV.UI
 
                 logger.Trace("RefreshDomainsAndKeepSelected temp Setting SELECTEDDOMAINS domains to {domains}", sb);
 
-                RTCV.NetCore.AllSpec.UISpec.Update("SELECTEDDOMAINS", temp);
+                AllSpec.UISpec.Update("SELECTEDDOMAINS", temp);
                 SetMemoryDomainsSelectedDomains(temp);
             }
             else
             {
-                SetMemoryDomainsAllButSelectedDomains((string[])RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] ?? new string[0]);
+                SetMemoryDomainsAllButSelectedDomains((string[])AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] ?? new string[0]);
             }
         }
 
@@ -176,7 +176,7 @@ namespace RTCV.UI
         private void btnRefreshDomains_Click(object sender, EventArgs e)
         {
             RefreshDomains();
-            RTCV.NetCore.AllSpec.UISpec.Update("SELECTEDDOMAINS", lbMemoryDomains.SelectedItems.Cast<string>().ToArray());
+            AllSpec.UISpec.Update("SELECTEDDOMAINS", lbMemoryDomains.SelectedItems.Cast<string>().ToArray());
         }
 
         private void lbMemoryDomains_MouseDown(object sender, MouseEventArgs e)
@@ -186,7 +186,7 @@ namespace RTCV.UI
 
             if (e.Button == MouseButtons.Right)
             {
-                string vectorLimiter = S.GET<RTC_CorruptionEngine_Form>().CurrentVectorLimiterListName;
+                string vectorLimiter = S.GET<CorruptionEngineForm>().CurrentVectorLimiterListName;
                 var AutoLimitedDomains = MemoryDomains.AllMemoryInterfaces.Where(it => it.Value is VirtualMemoryDomain vmd && vmd.Name.Contains("->")).ToList();
 
                 if (vectorLimiter != null)
@@ -268,7 +268,7 @@ namespace RTCV.UI
                         currentListMenuItem.DropDownItems.Add(vectorMenuItem);
                         currentListMenuItem.DropDownItems.Add(new ToolStripSeparator());
 
-                        foreach (ComboBoxItem<string> listItem in S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.Items)
+                        foreach (ComboBoxItem<string> listItem in S.GET<CorruptionEngineForm>().cbVectorLimiterList.Items)
                         {
                             var listName = listItem.Name;
                             var subMenuItem = new ToolStripMenuItem();

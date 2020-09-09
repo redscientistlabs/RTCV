@@ -9,7 +9,6 @@ namespace RTCV.UI
     using RTCV.NetCore;
     using RTCV.Common;
     using RTCV.UI.Modular;
-    using static RTCV.UI.UI_Extensions;
 
     public partial class RTC_VmdPool_Form : ComponentForm, IAutoColorize, IBlockable
     {
@@ -93,7 +92,7 @@ namespace RTCV.UI
 
             string name = "";
             string value = vmdName.Trim().Replace("[V]", "");
-            if (UI_Extensions.GetInputBox("BlastLayer to VMD", "Enter the new VMD name:", ref value) == DialogResult.OK)
+            if (RTCV.UI.Forms.InputBox.ShowDialog("BlastLayer to VMD", "Enter the new VMD name:", ref value) == DialogResult.OK)
             {
                 name = value.Trim();
             }
@@ -104,7 +103,7 @@ namespace RTCV.UI
 
             if (string.IsNullOrWhiteSpace(name))
             {
-                name = CorruptCore.RtcCore.GetRandomKey();
+                name = RtcCore.GetRandomKey();
             }
 
             if (MemoryDomains.VmdPool.ContainsKey(name))
@@ -219,7 +218,7 @@ namespace RTCV.UI
             tbVmdPrototype.Text = DisplayVMD(vmd);
         }
 
-        private string DisplayVMD(VirtualMemoryDomain vmd)
+        private static string DisplayVMD(VirtualMemoryDomain vmd)
         {
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
@@ -352,7 +351,7 @@ namespace RTCV.UI
                 VirtualMemoryDomain vmd = MemoryDomains.VmdPool[vmdName];
 
                 string value = lbLoadedVmdList.SelectedItem.ToString().Trim().Replace("[V]", "");
-                if (GetInputBox("Add to My VMDs", "Confirm VMD name:", ref value) == DialogResult.OK)
+                if (Forms.InputBox.ShowDialog("Add to My VMDs", "Confirm VMD name:", ref value) == DialogResult.OK)
                 {
                     if (string.IsNullOrWhiteSpace(value.Trim()))
                     {

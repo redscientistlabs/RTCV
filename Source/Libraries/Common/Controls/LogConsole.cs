@@ -81,8 +81,8 @@ namespace RTCV.Common.Forms
 
         public void InitializeFromGlobalLogger()
         {
-            var config = NLog.LogManager.Configuration;
-            var t = GetRichTextBoxTarget(1000, RTCV.Common.Logging.CurrentLayout);
+            var config = LogManager.Configuration;
+            var t = GetRichTextBoxTarget(1000, Logging.CurrentLayout);
             config.AddRule(LogLevel.Trace, LogLevel.Fatal, t);
             _logger = new LogFactory(config).GetCurrentClassLogger();
         }

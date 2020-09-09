@@ -4,13 +4,14 @@ namespace RTCV.UI
     using System.Linq;
     using RTCV.CorruptCore;
     using RTCV.NetCore;
+    using RTCV.NetCore.Enums;
     using RTCV.Common;
     using RTCV.UI.Modular;
 
     public class UIConnector : IRoutable, IDisposable
     {
         private NetCoreReceiver receiver;
-        public NetCoreConnector netConn;
+        public NetCoreConnector netConn { get; private set; }
 
         public UIConnector(NetCoreReceiver _receiver)
         {
@@ -23,9 +24,9 @@ namespace RTCV.UI
                 return;
             }
 
-            var netCoreSpec = new NetCore.NetCoreSpec
+            var netCoreSpec = new NetCoreSpec
             {
-                Side = NetCore.NetworkSide.SERVER,
+                Side = NetworkSide.SERVER,
                 Attached = receiver.Attached,
                 Loopback = true
             };
@@ -48,25 +49,25 @@ namespace RTCV.UI
 
             SyncObjectSingleton.FormExecute(() =>
             {
-                if (S.GET<RTC_ConnectionStatus_Form>() != null && !S.GET<RTC_ConnectionStatus_Form>()
+                if (S.GET<ConnectionStatusForm>() != null && !S.GET<ConnectionStatusForm>()
                         .IsDisposed)
                 {
-                    S.GET<RTC_ConnectionStatus_Form>()
+                    S.GET<ConnectionStatusForm>()
                             .lbConnectionStatus.Text =
                         $"{(string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard"} connection timed out";
 
                     UICore.LockInterface();
-                    UI_DefaultGrids.connectionStatus.LoadToMain();
+                    DefaultGrids.connectionStatus.LoadToMain();
                 }
 
                 S.GET<RTC_VmdAct_Form>()
                     .cbAutoAddDump.Checked = false;
-                GameProtection.WasAutoCorruptRunning = CorruptCore.RtcCore.AutoCorrupt;
-                S.GET<UI_CoreForm>().AutoCorrupt = false;
+                GameProtection.WasAutoCorruptRunning = RtcCore.AutoCorrupt;
+                S.GET<CoreForm>().AutoCorrupt = false;
             });
             GameProtection.Stop(false);
 
-            if (S.GET<UI_CoreForm>()
+            if (S.GET<CoreForm>()
                     .cbUseAutoKillSwitch.Checked && AllSpec.VanguardSpec != null)
             {
                 AutoKillSwitch.KillEmulator();
@@ -77,7 +78,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                S.GET<RTC_ConnectionStatus_Form>().lbConnectionStatus.Text =
+                S.GET<ConnectionStatusForm>().lbConnectionStatus.Text =
                     $"Connected to {(string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard"}";
             });
         }
@@ -97,7 +98,7 @@ namespace RTCV.UI
                 string endpoint = msgParts[0];
                 e.message.Type = msgParts[1]; //remove endpoint from type
 
-                return NetCore.LocalNetCoreRouter.Route(endpoint, e);
+                return LocalNetCoreRouter.Route(endpoint, e);
             }
             else
             {   //This is for the Vanguard Implementation

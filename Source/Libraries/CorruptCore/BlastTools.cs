@@ -5,6 +5,7 @@
     using System.IO;
     using System.Windows.Forms;
     using Newtonsoft.Json;
+    using RTCV.CorruptCore.Extensions;
 
     public static class BlastTools
     {
@@ -98,21 +99,21 @@
             switch (input.Length)
             {
                 case 1:
-                    if (CorruptCore_Extensions.GetDecimalValue(input, false) > byte.MaxValue)
+                    if (ByteArrayExtensions.GetDecimalValue(input, false) > byte.MaxValue)
                     {
                         return getByteArray(1, 0xFF);
                     }
 
                     break;
                 case 2:
-                    if (CorruptCore_Extensions.GetDecimalValue(input, false) > ushort.MaxValue)
+                    if (ByteArrayExtensions.GetDecimalValue(input, false) > ushort.MaxValue)
                     {
                         return getByteArray(2, 0xFF);
                     }
 
                     break;
                 case 4:
-                    if (CorruptCore_Extensions.GetDecimalValue(input, false) > uint.MaxValue)
+                    if (ByteArrayExtensions.GetDecimalValue(input, false) > uint.MaxValue)
                     {
                         return getByteArray(2, 0xFF);
                     }
@@ -152,8 +153,8 @@
         {
             BlastLayer bl = new BlastLayer();
 
-            string thisSystem = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.SYSTEM];
-            string romFilename = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME];
+            string thisSystem = (string)NetCore.AllSpec.VanguardSpec[VSPEC.SYSTEM];
+            string romFilename = (string)NetCore.AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME];
 
             var rp = MemoryDomains.GetRomParts(thisSystem, romFilename);
 

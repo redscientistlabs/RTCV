@@ -40,7 +40,7 @@
                     break;
             }
 
-            RTCV.NetCore.Params.SetParam("CRASHSOUND", cbCrashSoundEffect.SelectedIndex.ToString());
+            NetCore.Params.SetParam("CRASHSOUND", cbCrashSoundEffect.SelectedIndex.ToString());
         }
 
         private void nmGameProtectionDelay_ValueChanged(object sender, KeyPressEventArgs e)
@@ -58,7 +58,7 @@
             UpdateGameProtectionDelay();
         }
 
-        public void UpdateGameProtectionDelay()
+        public static void UpdateGameProtectionDelay()
         {
             GameProtection.BackupInterval = Convert.ToInt32(S.GET<RTC_SettingsNetCore_Form>().nmGameProtectionDelay.Value);
             if (GameProtection.isRunning)

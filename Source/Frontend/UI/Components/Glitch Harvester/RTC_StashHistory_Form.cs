@@ -8,14 +8,13 @@ namespace RTCV.UI
     using RTCV.NetCore;
     using RTCV.Common;
     using RTCV.UI.Modular;
-    using static RTCV.UI.UI_Extensions;
 
     public partial class RTC_StashHistory_Form : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        public bool DontLoadSelectedStash = false;
+        public bool DontLoadSelectedStash { get; set; } = false;
 
         public RTC_StashHistory_Form()
         {
@@ -98,7 +97,7 @@ namespace RTCV.UI
 
             if (askForName)
             {
-                if (GetInputBox("Glitch Harvester", "Enter the new Stash name:", ref value) == DialogResult.OK)
+                if (RTCV.UI.Forms.InputBox.ShowDialog("Glitch Harvester", "Enter the new Stash name:", ref value) == DialogResult.OK)
                 {
                     Name = value.Trim();
                 }
@@ -219,7 +218,7 @@ namespace RTCV.UI
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Rename selected item", null, new EventHandler((ob, ev) =>
                 {
                     StashKey sk = StockpileManager_UISide.StashHistory[lbStashHistory.SelectedIndex];
-                    S.GET<RTC_StockpileManager_Form>().RenameStashKey(sk);
+                    RTC_StockpileManager_Form.RenameStashKey(sk);
                     RefreshStashHistory();
                 }))).Enabled = lbStashHistory.SelectedIndex != -1;
 
@@ -291,11 +290,11 @@ namespace RTCV.UI
                 }
 
                 S.GET<RTC_StockpileManager_Form>().dgvStockpile.ClearSelection();
-                S.GET<RTC_StockpilePlayer_Form>().dgvStockpile.ClearSelection();
+                S.GET<StockpilePlayerForm>().dgvStockpile.ClearSelection();
 
-                var blastForm = S.GET<RTC_GlitchHarvesterBlast_Form>();
+                var blastForm = S.GET<GlitchHarvesterBlastForm>();
 
-                if (S.GET<RTC_GlitchHarvesterBlast_Form>().MergeMode)
+                if (S.GET<GlitchHarvesterBlastForm>().MergeMode)
                 {
                     blastForm.ghMode = GlitchHarvesterMode.CORRUPT;
                     S.GET<RTC_StockpileManager_Form>().btnRenameSelected.Visible = true;
@@ -331,7 +330,7 @@ namespace RTCV.UI
                 btnStashDOWN.Enabled = true;
                 btnAddStashToStockpile.Enabled = true;
                 //((Control)sender).Focus();
-                S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
+                S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
             }
         }
 
@@ -341,7 +340,7 @@ namespace RTCV.UI
             lbStashHistory.ClearSelected();
             DontLoadSelectedStash = true;
             S.GET<RTC_StockpileManager_Form>().dgvStockpile.ClearSelection();
-            S.GET<RTC_GlitchHarvesterBlast_Form>().RedrawActionUI();
+            S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
         }
 
         private void btnClearStashHistory_Click(object sender, EventArgs e)

@@ -151,8 +151,8 @@ namespace RTCV.CorruptCore
                 return false;
             }
 
-            string currentGame = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.GAMENAME];
-            string currentCore = (string)RTCV.NetCore.AllSpec.VanguardSpec[VSPEC.SYSTEMCORE];
+            string currentGame = (string)AllSpec.VanguardSpec[VSPEC.GAMENAME];
+            string currentCore = (string)AllSpec.VanguardSpec[VSPEC.SYSTEMCORE];
             if (UseSavestates && (currentGame == null || psk.GameName != currentGame || psk.SystemCore != currentCore))
             {
                 LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_LOADROM, psk.RomFilename, true);

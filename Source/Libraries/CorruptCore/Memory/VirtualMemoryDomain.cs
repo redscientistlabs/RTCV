@@ -7,9 +7,10 @@ namespace RTCV.CorruptCore
     using System.Linq;
     using System.Runtime.Serialization.Formatters.Binary;
     using Ceras;
+    using RTCV.CorruptCore.Extensions;
 
     [Serializable]
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     public class VirtualMemoryDomain : MemoryInterface
     {
         public List<string> PointerDomains { get; set; } = new List<string>();
@@ -21,7 +22,7 @@ namespace RTCV.CorruptCore
 
         public VmdPrototype Proto { get; set; }
 
-        public bool Compacted = false;
+        public bool Compacted { get; private set; } = false;
 
         public VirtualMemoryDomain()
         {

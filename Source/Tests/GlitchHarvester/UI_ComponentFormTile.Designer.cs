@@ -1,6 +1,6 @@
 ﻿namespace RTCV.UI
 {
-    partial class UI_ComponentFormTile
+    partial class ComponentFormTile
     {
         /// <summary>
         /// Required designer variable.
@@ -33,9 +33,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.pnComponentFormHost.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // lbComponentFormName
-            // 
+            //
             this.lbComponentFormName.AutoSize = true;
             this.lbComponentFormName.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
             this.lbComponentFormName.ForeColor = System.Drawing.Color.White;
@@ -44,11 +44,11 @@
             this.lbComponentFormName.Size = new System.Drawing.Size(133, 15);
             this.lbComponentFormName.TabIndex = 121;
             this.lbComponentFormName.Text = "ComponentForm Name";
-            // 
+            //
             // pnComponentFormHost
-            // 
-            this.pnComponentFormHost.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.pnComponentFormHost.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnComponentFormHost.BackColor = System.Drawing.Color.Gray;
             this.pnComponentFormHost.Controls.Add(this.label4);
@@ -58,11 +58,11 @@
             this.pnComponentFormHost.Size = new System.Drawing.Size(280, 256);
             this.pnComponentFormHost.TabIndex = 122;
             this.pnComponentFormHost.Tag = "color:normal";
-            // 
+            //
             // label4
-            // 
-            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -72,9 +72,9 @@
             this.label4.TabIndex = 121;
             this.label4.Tag = "color:dark";
             this.label4.Text = "Component is detached to window";
-            // 
-            // UI_ComponentFormTile
-            // 
+            //
+            // ComponentFormTile
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -82,7 +82,7 @@
             this.Controls.Add(this.pnComponentFormHost);
             this.Controls.Add(this.lbComponentFormName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "UI_ComponentFormTile";
+            this.Name = "ComponentFormTile";
             this.Tag = "color:dark";
             this.Text = "ComponentForm Tile";
             this.pnComponentFormHost.ResumeLayout(false);

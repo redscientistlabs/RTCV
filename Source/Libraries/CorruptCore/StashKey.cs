@@ -12,11 +12,10 @@ namespace RTCV.CorruptCore
     using RTCV.NetCore;
 
     [Serializable]
-    [Ceras.MemberConfig(TargetMember.AllPublic)]
+    [MemberConfig(TargetMember.AllPublic)]
     public class StashKey : ICloneable, INote
     {
-        [NonSerialized]
-        [Ceras.Exclude]
+        [Exclude]
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public string RomFilename { get; set; }
@@ -44,16 +43,16 @@ namespace RTCV.CorruptCore
         public string ParentKey { get; set; }
         public BlastLayer BlastLayer { get; set; }
 
-        private string alias;
+        private string _alias;
         public string Alias
         {
-            get => alias ?? Key;
-            set => alias = value;
+            get => _alias ?? Key;
+            set => _alias = value;
         }
 
         public StashKey()
         {
-            string key = RtcCore.GetRandomKey();
+            var key = RtcCore.GetRandomKey();
             string parentkey = null;
             BlastLayer blastlayer = new BlastLayer();
             StashKeyConstructor(key, parentkey, blastlayer);
@@ -70,13 +69,13 @@ namespace RTCV.CorruptCore
             ParentKey = parentkey;
             BlastLayer = blastlayer;
 
-            RomFilename = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.OPENROMFILENAME] ?? "ERROR";
-            SystemName = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.SYSTEM] ?? "ERROR";
-            SystemCore = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.SYSTEMCORE] ?? "ERROR";
-            GameName = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.GAMENAME] ?? "ERROR";
-            SyncSettings = (string)RTCV.NetCore.AllSpec.VanguardSpec?[VSPEC.SYNCSETTINGS] ?? "";
+            RomFilename = (string)AllSpec.VanguardSpec?[VSPEC.OPENROMFILENAME] ?? "ERROR";
+            SystemName = (string)AllSpec.VanguardSpec?[VSPEC.SYSTEM] ?? "ERROR";
+            SystemCore = (string)AllSpec.VanguardSpec?[VSPEC.SYSTEMCORE] ?? "ERROR";
+            GameName = (string)AllSpec.VanguardSpec?[VSPEC.GAMENAME] ?? "ERROR";
+            SyncSettings = (string)AllSpec.VanguardSpec?[VSPEC.SYNCSETTINGS] ?? "";
 
-            this.SelectedDomains = ((string[])RTCV.NetCore.AllSpec.UISpec["SELECTEDDOMAINS"]).ToList();
+            this.SelectedDomains = ((string[])AllSpec.UISpec["SELECTEDDOMAINS"]).ToList();
         }
 
         public object Clone()
@@ -145,7 +144,7 @@ namespace RTCV.CorruptCore
                 return false;
             }
 
-            string deployedStatePath = GetSavestateFullPath();
+            var deployedStatePath = GetSavestateFullPath();
 
             if (File.Exists(deployedStatePath))
             {

@@ -28,9 +28,9 @@
             this.undockedSizable = false;
         }
 
-        public bool ActLoadedFromFile = false;
-        public bool FirstInit = false;
-        public bool _activeTableReady = false;
+        private bool ActLoadedFromFile = false;
+        private bool FirstInit = false;
+        private bool _activeTableReady = false;
 
         public bool ActiveTableReady
         {
@@ -66,14 +66,14 @@
             }
         }
 
-        public bool UseActiveTable = false;
-        public bool UseCorePrecision = false;
-        public List<string> ActiveTableDumps = null;
-        public long[] ActiveTableActivity = null;
-        public long[] ActiveTableGenerated = null;
-        public double ActivityThreshold = 0;
-        public Timer ActiveTableAutodump = null;
+        private bool UseCorePrecision = false;
+        private List<string> ActiveTableDumps = null;
+        private long[] ActiveTableActivity = null;
+        private long[] ActiveTableGenerated = null;
+        private double ActivityThreshold = 0;
+        private Timer ActiveTableAutodump = null;
 
+        private string _currentFilename = null;
         public string currentFilename
         {
             get => _currentFilename;
@@ -90,8 +90,6 @@
                 _currentFilename = value;
             }
         }
-
-        public string _currentFilename = null;
 
         public void SaveActiveTable(bool IsQuickSave)
         {
@@ -134,9 +132,9 @@
             lbActiveTableSize.Text = "Active table size (0x" + ActiveTableGenerated.Length.ToString("X") + ")";
         }
 
-        public byte[] GetDumpFromFile(string key)
+        public static byte[] GetDumpFromFile(string key)
         {
-            return File.ReadAllBytes(Path.Combine(CorruptCore.RtcCore.workingDir, "MEMORYDUMPS", key + ".dmp"));
+            return File.ReadAllBytes(Path.Combine(RtcCore.workingDir, "MEMORYDUMPS", key + ".dmp"));
         }
 
         public long[] CapActiveTable(long[] tempActiveTable)
@@ -155,7 +153,7 @@
 
                     while (DuplicateFound)
                     {
-                        long queryAdress = tempActiveTable[CorruptCore.RtcCore.RND.NextLong(0, tempActiveTable.Length - 1)];
+                        long queryAdress = tempActiveTable[RtcCore.RND.NextLong(0, tempActiveTable.Length - 1)];
 
                         if (!cappedActiveTable.Contains(queryAdress))
                         {
@@ -240,7 +238,7 @@
         {
             if (_activeTableReady)
             {
-                return ActiveTableGenerated[CorruptCore.RtcCore.RND.Next(ActiveTableGenerated.Length - 1)];
+                return ActiveTableGenerated[RtcCore.RND.Next(ActiveTableGenerated.Length - 1)];
             }
             else
             {
@@ -260,7 +258,7 @@
                 return;
             }
 
-            string key = CorruptCore.RtcCore.GetRandomKey();
+            string key = RtcCore.GetRandomKey();
 
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_DOMAIN_ACTIVETABLE_MAKEDUMP, new object[] { cbSelectedMemoryDomain.SelectedItem.ToString(), key }, true);
 
@@ -312,7 +310,7 @@
 
             ActiveTableDumps = new List<string>();
 
-            foreach (string file in Directory.GetFiles(Path.Combine(CorruptCore.RtcCore.workingDir, "MEMORYDUMPS")))
+            foreach (string file in Directory.GetFiles(Path.Combine(RtcCore.workingDir, "MEMORYDUMPS")))
             {
                 File.Delete(file);
             }
@@ -503,7 +501,7 @@
             {
                 if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
-                    throw new RTCV.NetCore.AbortEverythingException();
+                    throw new AbortEverythingException();
                 }
 
                 return false;
@@ -529,7 +527,7 @@
                 int lastaddress = -1;
 
                 proto.GenDomain = cbSelectedMemoryDomain.SelectedItem.ToString();
-                proto.VmdName = mi.Name + " " + CorruptCore.RtcCore.GetRandomKey();
+                proto.VmdName = mi.Name + " " + RtcCore.GetRandomKey();
                 proto.BigEndian = mi.BigEndian;
                 proto.WordSize = mi.WordSize;
                 proto.PointerSpacer = 1;
@@ -576,7 +574,7 @@
             {
                 if (CloudDebug.ShowErrorDialog(ex, true) == DialogResult.Abort)
                 {
-                    throw new RTCV.NetCore.AbortEverythingException();
+                    throw new AbortEverythingException();
                 }
 
                 return;

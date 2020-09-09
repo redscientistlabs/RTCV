@@ -27,7 +27,7 @@
             hubTimer.Start();
         }
 
-        private void CheckMessages(object sender, System.Timers.ElapsedEventArgs e)
+        private void CheckMessages(object sender, ElapsedEventArgs e)
         {
             while (true) //checks all messages
             {
@@ -79,7 +79,6 @@
                     //send command back or return value if from bizhawk to bizhawk
                     if (args._returnMessage != null)
                     {
-                        (args._returnMessage as NetCoreAdvancedMessage).ReturnedFrom = message.Type;
                         (args._returnMessage as NetCoreAdvancedMessage).requestGuid = (message as NetCoreAdvancedMessage).requestGuid;
                         SendMessage(args._returnMessage);
                     }
@@ -172,7 +171,7 @@
 
             if (returnMessage != null)
             {
-                RTCV.Common.Logging.GlobalLogger.Warn($"NetCoreEventArgs: ReturnValue was already set but was overriden with another value");
+                Common.Logging.GlobalLogger.Warn($"NetCoreEventArgs: ReturnValue was already set but was overriden with another value");
             }
 
             _returnMessage = message;

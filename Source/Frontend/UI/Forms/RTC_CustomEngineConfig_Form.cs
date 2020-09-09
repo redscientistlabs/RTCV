@@ -11,16 +11,16 @@
     public partial class RTC_CustomEngineConfig_Form : Form, IAutoColorize
     {
         private bool updatingMinMax = false;
-        public bool DontUpdateSpec = false;
+        private bool DontUpdateSpec = false;
 
         public RTC_CustomEngineConfig_Form()
         {
             InitializeComponent();
-            CorruptCore.RTC_CustomEngine.InitTemplates();
+            RTC_CustomEngine.InitTemplates();
 
             this.GotFocus += (o, e) => this.Refresh();
 
-            foreach (var k in CorruptCore.RTC_CustomEngine.Name2TemplateDico.Keys)
+            foreach (var k in RTC_CustomEngine.Name2TemplateDico.Keys)
             {
                 cbSelectedTemplate.Items.Add(k);
             }
@@ -33,14 +33,14 @@
 
         private void NmAlignment_ValueChanged(object sender, Components.Controls.ValueUpdateEventArgs<decimal> e)
         {
-            CorruptCore.RtcCore.Alignment = Convert.ToInt32(nmAlignment.Value);
-            S.GET<RTC_CorruptionEngine_Form>().nmAlignment.Value = nmAlignment.Value;
+            RtcCore.Alignment = Convert.ToInt32(nmAlignment.Value);
+            S.GET<CorruptionEngineForm>().nmAlignment.Value = nmAlignment.Value;
         }
 
         private void CbCustomPrecision_SelectedIndexChanged(object sender, EventArgs e)
         {
             cbCustomPrecision.Enabled = false;
-            S.GET<RTC_CorruptionEngine_Form>().cbCustomPrecision.Enabled = false;
+            S.GET<CorruptionEngineForm>().cbCustomPrecision.Enabled = false;
             try
             {
                 if (cbCustomPrecision.SelectedIndex != -1)
@@ -63,18 +63,18 @@
                     }
                     if (!DontUpdateSpec)
                     {
-                        CorruptCore.RtcCore.CurrentPrecision = precision;
+                        RtcCore.CurrentPrecision = precision;
                     }
 
                     UpdateMinMaxBoxes(precision);
                     nmAlignment.Maximum = precision - 1;
-                    S.GET<RTC_CorruptionEngine_Form>().cbCustomPrecision.SelectedIndex = cbCustomPrecision.SelectedIndex;
+                    S.GET<CorruptionEngineForm>().cbCustomPrecision.SelectedIndex = cbCustomPrecision.SelectedIndex;
                 }
             }
             finally
             {
                 cbCustomPrecision.Enabled = true;
-                S.GET<RTC_CorruptionEngine_Form>().cbCustomPrecision.Enabled = true;
+                S.GET<CorruptionEngineForm>().cbCustomPrecision.Enabled = true;
             }
         }
 
@@ -87,14 +87,14 @@
             cbLimiterList.ValueMember = "Value";
 
             //Do this here as if it's stuck into the designer, it keeps defaulting out
-            cbValueList.DataSource = CorruptCore.RtcCore.ValueListBindingSource;
-            cbLimiterList.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
+            cbValueList.DataSource = RtcCore.ValueListBindingSource;
+            cbLimiterList.DataSource = RtcCore.LimiterListBindingSource;
 
-            if (CorruptCore.RtcCore.ValueListBindingSource.Count > 0)
+            if (RtcCore.ValueListBindingSource.Count > 0)
             {
                 cbValueList_SelectedIndexChanged(cbValueList, null);
             }
-            if (CorruptCore.RtcCore.LimiterListBindingSource.Count > 0)
+            if (RtcCore.LimiterListBindingSource.Count > 0)
             {
                 cbLimiterList_SelectedIndexChanged(cbLimiterList, null);
             }
@@ -247,7 +247,7 @@
 
             ulong value = Convert.ToUInt64(nmMinValue.Value);
 
-            switch (CorruptCore.RtcCore.CurrentPrecision)
+            switch (RtcCore.CurrentPrecision)
             {
                 case 1:
                     RTC_CustomEngine.MinValue8Bit = value;
@@ -279,7 +279,7 @@
 
             ulong value = Convert.ToUInt64(nmMaxValue.Value);
 
-            switch (CorruptCore.RtcCore.CurrentPrecision)
+            switch (RtcCore.CurrentPrecision)
             {
                 case 1:
                     RTC_CustomEngine.MaxValue8Bit = value;
@@ -310,8 +310,8 @@
                 return;
             }
 
-            S.GET<RTC_CorruptionEngine_Form>().SetRewindBoxes(cbClearRewind.Checked);
-            S.GET<RTC_SimpleMode_Form>().SetRewindBoxes(cbClearRewind.Checked);
+            S.GET<CorruptionEngineForm>().SetRewindBoxes(cbClearRewind.Checked);
+            S.GET<SimpleModeForm>().SetRewindBoxes(cbClearRewind.Checked);
 
             StepActions.ClearStepActionsOnRewind = cbClearRewind.Checked;
         }
@@ -503,7 +503,7 @@
 
             if (RTC_CustomEngine.LoadTemplate(cbSelectedTemplate.SelectedItem.ToString()))
             {
-                RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(spec);
+                AllSpec.CorruptCoreSpec.Update(spec);
                 RestoreUIStateFromSpec();
                 updateUILock();
                 Refresh();
@@ -520,7 +520,7 @@
             }
 
             RTC_CustomEngine.Name2TemplateDico[spec[RTCSPEC.CUSTOM_NAME].ToString()] = spec;
-            RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(spec);
+            AllSpec.CorruptCoreSpec.Update(spec);
             RestoreUIStateFromSpec();
             Refresh();
             if (!cbSelectedTemplate.Items.Contains(spec[RTCSPEC.CUSTOM_NAME].ToString()))
@@ -668,23 +668,23 @@
                 nmAlignment.Value = RtcCore.Alignment;
 
                 //Todo - replace this and data-bind it
-                switch (CorruptCore.RtcCore.CurrentPrecision)
+                switch (RtcCore.CurrentPrecision)
                 {
                     case 1:
-                        S.GET<RTC_CorruptionEngine_Form>().cbCustomPrecision.SelectedIndex = 0;
+                        S.GET<CorruptionEngineForm>().cbCustomPrecision.SelectedIndex = 0;
                         break;
                     case 2:
-                        S.GET<RTC_CorruptionEngine_Form>().cbCustomPrecision.SelectedIndex = 1;
+                        S.GET<CorruptionEngineForm>().cbCustomPrecision.SelectedIndex = 1;
                         break;
                     case 4:
-                        S.GET<RTC_CorruptionEngine_Form>().cbCustomPrecision.SelectedIndex = 2;
+                        S.GET<CorruptionEngineForm>().cbCustomPrecision.SelectedIndex = 2;
                         break;
                     case 8:
-                        S.GET<RTC_CorruptionEngine_Form>().cbCustomPrecision.SelectedIndex = 3;
+                        S.GET<CorruptionEngineForm>().cbCustomPrecision.SelectedIndex = 3;
                         break;
                 }
 
-                switch (CorruptCore.RtcCore.CurrentPrecision)
+                switch (RtcCore.CurrentPrecision)
                 {
                     case 1:
                         nmMinValue.Value = RTC_CustomEngine.MinValue8Bit;
@@ -700,7 +700,7 @@
                         break;
                 }
 
-                switch (CorruptCore.RtcCore.CurrentPrecision)
+                switch (RtcCore.CurrentPrecision)
                 {
                     case 1:
                         nmMaxValue.Value = RTC_CustomEngine.MaxValue8Bit;

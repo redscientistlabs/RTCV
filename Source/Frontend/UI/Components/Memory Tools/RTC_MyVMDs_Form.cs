@@ -81,7 +81,7 @@ namespace RTCV.UI
             string name = "";
             string value = vmdName.Trim().Replace("[V]", "");
             string path = "";
-            if (UI_Extensions.GetInputBox("Renaming VMD", "Enter the new VMD name:", ref value) == DialogResult.OK)
+            if (RTCV.UI.Forms.InputBox.ShowDialog("Renaming VMD", "Enter the new VMD name:", ref value) == DialogResult.OK)
             {
                 name = value.Trim();
 
@@ -94,7 +94,7 @@ namespace RTCV.UI
 
             if (string.IsNullOrWhiteSpace(name))
             {
-                name = CorruptCore.RtcCore.GetRandomKey();
+                name = RtcCore.GetRandomKey();
             }
 
             if (File.Exists(path))

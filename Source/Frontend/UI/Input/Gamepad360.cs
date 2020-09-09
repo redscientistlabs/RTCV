@@ -9,6 +9,7 @@ namespace RTCV.UI.Input
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Runtime.InteropServices;
     using RTCV.CorruptCore;
     using SlimDX.XInput;
@@ -47,6 +48,7 @@ namespace RTCV.UI.Input
             public XINPUT_GAMEPAD Gamepad;
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1810", Justification = "Static constructor used to catch Exceptions")]
         static GamePad360()
         {
             try
@@ -72,7 +74,7 @@ namespace RTCV.UI.Input
 
                     //don't remove this code. it's important to catch errors on systems with broken xinput installs.
                     //(probably, checking for the library was adequate, but lets not get rid of this anyway)
-                    var test = new SlimDX.XInput.Controller(UserIndex.One).IsConnected;
+                    var test = new Controller(UserIndex.One).IsConnected;
                     _isAvailable = true;
                 }
             }
