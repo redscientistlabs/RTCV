@@ -321,11 +321,11 @@
     <Compile Include="Forms\BlastGeneratorForm.Designer.cs">
       <DependentUpon>BlastGeneratorForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\RTC_ConnectionStatus_Form.cs">
+    <Compile Include="Forms\ConnectionStatusForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\RTC_ConnectionStatus_Form.designer.cs">
-      <DependentUpon>RTC_ConnectionStatus_Form.cs</DependentUpon>
+    <Compile Include="Forms\ConnectionStatusForm.designer.cs">
+      <DependentUpon>ConnectionStatusForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\RTC_CustomEngineConfig_Form.cs">
       <SubType>Form</SubType>
@@ -572,8 +572,8 @@
     <EmbeddedResource Include="Forms\BlastGeneratorForm.resx">
       <DependentUpon>BlastGeneratorForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RTC_ConnectionStatus_Form.resx">
-      <DependentUpon>RTC_ConnectionStatus_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ConnectionStatusForm.resx">
+      <DependentUpon>ConnectionStatusForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RTC_CustomEngineConfig_Form.resx">
       <DependentUpon>RTC_CustomEngineConfig_Form.cs</DependentUpon>

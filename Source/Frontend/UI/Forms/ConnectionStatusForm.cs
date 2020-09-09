@@ -6,23 +6,23 @@
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class RTC_ConnectionStatus_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class ConnectionStatusForm : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        public RTC_ConnectionStatus_Form()
+        public ConnectionStatusForm()
         {
             InitializeComponent();
-            this.Shown += RTC_ConnectionStatus_Form_Shown;
-            this.btnTriggerKillswitch.MouseClick += BtnTriggerKillswitch_MouseClick;
+            this.Shown += OnFormShown;
+            this.btnTriggerKillswitch.MouseClick += OnTriggerKillswitchMouseClick;
         }
 
         private readonly string[] _flavorText = {
             "Imagine if we had actual flavor text",
             "Fun flavor text goes here",
             "The V probably stands for Vanguard",
-            "What are naming conventions",
+            "Now with naming conventions!",
             "Over 45,000 lines of code to make Mario do the funny",
             "We love circular references",
             "Don't show this to your epileptic friends",
@@ -35,7 +35,7 @@
             "Violates every design paradigm in the book",
         };
 
-        private void RTC_ConnectionStatus_Form_Load(object sender, EventArgs e)
+        private void OnFormLoad(object sender, EventArgs e)
         {
             int crashSound = 0;
 
@@ -47,17 +47,17 @@
             S.GET<RTC_SettingsNetCore_Form>().cbCrashSoundEffect.SelectedIndex = crashSound;
         }
 
-        private void RTC_ConnectionStatus_Form_Shown(object sender, EventArgs e)
+        private void OnFormShown(object sender, EventArgs e)
         {
             lbFlavorText.Text = _flavorText[CorruptCore.RtcCore.RND.Next(0, _flavorText.Length)];
         }
 
-        private void BtnEmergencySaveAs_Click(object sender, EventArgs e)
+        private void EmergencySaveAsStockpile(object sender, EventArgs e)
         {
             S.GET<RTC_StockpileManager_Form>().btnSaveStockpileAs_Click(null, null);
         }
 
-        private void BtnTriggerKillswitch_MouseClick(object sender, MouseEventArgs e)
+        private void OnTriggerKillswitchMouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -72,7 +72,7 @@
             AutoKillSwitch.KillEmulator(true);
         }
 
-        private void btnBreakCrashLoop_Click(object sender, EventArgs e)
+        private void BreakCrashLoop(object sender, EventArgs e)
         {
             S.GET<CoreForm>().cbUseAutoKillSwitch.Checked = false;
             AutoKillSwitch.KillEmulator(true);
