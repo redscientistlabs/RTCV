@@ -19,7 +19,7 @@
 
         public static int spacerSize;
         public static int tileSize;
-        private static Dictionary<Form, UI_ComponentFormTile> loadedTileForms = new Dictionary<Form, UI_ComponentFormTile>();
+        private static Dictionary<Form, ComponentFormTile> loadedTileForms = new Dictionary<Form, ComponentFormTile>();
 
         public CanvasForm(bool extraForm = false)
         {
@@ -36,22 +36,22 @@
             }
         }
 
-        public static UI_ComponentFormTile getTileForm(Form componentForm, int? newSizeX = null, int? newSizeY = null, bool DisplayHeader = true)
+        public static ComponentFormTile getTileForm(Form componentForm, int? newSizeX = null, int? newSizeY = null, bool DisplayHeader = true)
         {
             if (!loadedTileForms.ContainsKey(componentForm))
             {
-                var newForm = (UI_ComponentFormTile)Activator.CreateInstance(typeof(UI_ComponentFormTile));
+                var newForm = (ComponentFormTile)Activator.CreateInstance(typeof(ComponentFormTile));
                 loadedTileForms[componentForm] = newForm;
 
                 if (newSizeX != null && newSizeY != null)
                 {
-                    newForm.SetCompoentForm(componentForm, newSizeX.Value, newSizeY.Value, DisplayHeader);
+                    newForm.SetComponentForm(componentForm, newSizeX.Value, newSizeY.Value, DisplayHeader);
                 }
             }
             else
             {
                 var foundForm = loadedTileForms[componentForm];
-                foundForm.SetCompoentForm(componentForm, newSizeX.Value, newSizeY.Value, DisplayHeader);
+                foundForm.SetComponentForm(componentForm, newSizeX.Value, newSizeY.Value, DisplayHeader);
             }
             /*
             else
@@ -127,7 +127,7 @@
                         targetForm.Text = canvasGrid.GridName;
                         bool DisplayHeader = (canvasGrid.gridComponentDisplayHeader[x, y].HasValue ? canvasGrid.gridComponentDisplayHeader[x, y].Value : false);
                         var size = canvasGrid.gridComponentSize[x, y];
-                        UI_ComponentFormTile tileForm = getTileForm(canvasGrid.gridComponent[x, y], size?.Width, size?.Height, DisplayHeader);
+                        ComponentFormTile tileForm = getTileForm(canvasGrid.gridComponent[x, y], size?.Width, size?.Height, DisplayHeader);
                         tileForm.TopLevel = false;
                         targetForm.Controls.Add(tileForm);
                         tileForm.Location = getTileLocation(x, y);
@@ -155,7 +155,7 @@
 
                 foreach (Control ctr in extraForm?.Controls)
                 {
-                    if (ctr is UI_ComponentFormTile cft)
+                    if (ctr is ComponentFormTile cft)
                     {
                         cft.ReAnchorToPanel();
                     }

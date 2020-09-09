@@ -15,7 +15,7 @@ namespace RTCV.UI.Modular
 
         public bool undockedSizable { get; set; } = true;
         public bool popoutAllowed { get; set; } = true;
-        public UI_ComponentFormTile ParentComponentFormTitle { get; set; } = null;
+        public ComponentFormTile ParentComponentFormTitle { get; set; } = null;
 
         protected ComponentForm() : base()
         {
