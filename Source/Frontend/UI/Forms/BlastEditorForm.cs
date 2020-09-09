@@ -57,7 +57,7 @@ namespace RTCV.UI
     using RTCV.UI.Components;
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
-    public partial class RTC_NewBlastEditor_Form : Form, IAutoColorize
+    public partial class BlastEditorForm : Form, IAutoColorize
     {
         private static Dictionary<string, MemoryInterface> _domainToMiDico;
 
@@ -107,53 +107,13 @@ namespace RTCV.UI
         //We gotta cache this stuff outside of the scope of InitializeDGV
         //    private object actionTimeValues =
 
-        public RTC_NewBlastEditor_Form()
+        public BlastEditorForm()
         {
             try
             {
                 InitializeComponent();
 
-                dgvBlastEditor.DataError += dgvBlastLayer_DataError;
                 dgvBlastEditor.AutoGenerateColumns = false;
-                dgvBlastEditor.SelectionChanged += dgvBlastEditor_SelectionChanged;
-                dgvBlastEditor.ColumnHeaderMouseClick += dgvBlastEditor_ColumnHeaderMouseClick;
-                dgvBlastEditor.CellValueChanged += dgvBlastEditor_CellValueChanged;
-                dgvBlastEditor.CellMouseClick += dgvBlastEditor_CellMouseClick;
-                dgvBlastEditor.CellMouseDoubleClick += dgvBlastEditor_CellMouseDoubleClick;
-                dgvBlastEditor.RowsAdded += DgvBlastEditor_RowsAdded;
-                dgvBlastEditor.RowsRemoved += DgvBlastEditor_RowsRemoved;
-                dgvBlastEditor.CellFormatting += DgvBlastEditor_CellFormatting;
-                dgvBlastEditor.MouseClick += DgvBlastEditor_Click;
-
-                cbFilterColumn.SelectedValueChanged += (o, e) => { tbFilter_TextChanged(null, null); };
-                tbFilter.TextChanged += tbFilter_TextChanged;
-
-                cbEnabled.Validated += cbEnabled_Validated;
-                cbLocked.Validated += CbLocked_Validated;
-                cbBigEndian.Validated += CbBigEndian_Validated;
-                cbLoop.Validated += CbLoop_Validated;
-
-                cbDomain.Validated += cbDomain_Validated;
-                upDownAddress.Validated += UpDownAddress_Validated;
-                upDownPrecision.Validated += UpDownPrecision_Validated;
-                tbTiltValue.Validated += TbTiltValue_Validated;
-
-                upDownExecuteFrame.Validated += UpDownExecuteFrame_Validated;
-                upDownLoopTiming.Validated += UpDownLoopTiming_Validated;
-                upDownLifetime.Validated += UpDownLifetime_Validated;
-
-                cbSource.Validated += CbSource_Validated;
-                tbValue.Validated += TbValue_Validated;
-
-                cbInvertLimiter.Validated += CbInvertLimiter_Validated;
-                cbLimiterTime.Validated += CbLimiterTime_Validated;
-                cbStoreLimiterSource.Validated += cbStoreLimiterSource_Validated;
-                cbLimiterList.Validated += CbLimiterList_Validated;
-
-                upDownSourceAddress.Validated += UpDownSourceAddress_Validated;
-                cbStoreTime.Validated += CbStoreTime_Validated;
-                cbStoreType.Validated += CbStoreType_Validated;
-                cbSourceDomain.Validated += CbSourceDomain_Validated;
 
                 registerValueStringScrollEvents();
 
@@ -164,14 +124,6 @@ namespace RTCV.UI
                 upDownLifetime.Maximum = int.MaxValue;
                 upDownSourceAddress.Maximum = int.MaxValue;
                 upDownAddress.Maximum = int.MaxValue;
-
-                this.FormClosed += RTC_NewBlastEditorForm_Close;
-                this.FormClosing += RTC_NewBlastEditorForm_Closing;
-
-                //Registers the drag and drop with the blast editor form
-                AllowDrop = true;
-                this.DragEnter += RTC_NewBlastEditor_Form_DragEnter;
-                this.DragDrop += RTC_NewBlastEditor_Form_DragDrop;
             }
             catch (Exception ex)
             {
@@ -182,7 +134,7 @@ namespace RTCV.UI
             }
         }
 
-        private void RTC_NewBlastEditor_Form_DragDrop(object sender, DragEventArgs e)
+        private void OnFormDragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             foreach (var f in files)
@@ -195,18 +147,18 @@ namespace RTCV.UI
             }
         }
 
-        private void RTC_NewBlastEditor_Form_DragEnter(object sender, DragEventArgs e)
+        private void OnFormDragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Link;
         }
 
         public static void OpenBlastEditor(StashKey sk = null, bool silent = false)
         {
-            if (S.GET<RTC_NewBlastEditor_Form>().Visible)
+            if (S.GET<BlastEditorForm>().Visible)
                 silent = false;
 
-            S.GET<RTC_NewBlastEditor_Form>().Close();
-            S.SET(new RTC_NewBlastEditor_Form());
+            S.GET<BlastEditorForm>().Close();
+            S.SET(new BlastEditorForm());
 
             if (sk == null)
             {
@@ -218,15 +170,15 @@ namespace RTCV.UI
             //TODO
             if (sk.BlastLayer.Layer.Count > 5000 && (DialogResult.Yes == MessageBox.Show($"You're trying to open a blastlayer of size " + sk.BlastLayer.Layer.Count + ". This could take a while. Are you sure you want to continue?", "Opening a large BlastLayer", MessageBoxButtons.YesNo)))
             {
-                S.GET<RTC_NewBlastEditor_Form>().LoadStashkey(sk, silent);
+                S.GET<BlastEditorForm>().LoadStashkey(sk, silent);
             }
             else if (sk.BlastLayer.Layer.Count <= 5000)
             {
-                S.GET<RTC_NewBlastEditor_Form>().LoadStashkey(sk, silent);
+                S.GET<BlastEditorForm>().LoadStashkey(sk, silent);
             }
         }
 
-        private void RTC_NewBlastEditorForm_Load(object sender, EventArgs e)
+        private void OnFormLoad(object sender, EventArgs e)
         {
             Colors.SetRTCColor(Colors.GeneralColor, this);
             _domains = MemoryDomains.MemoryInterfaces?.Keys?.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
@@ -235,13 +187,9 @@ namespace RTCV.UI
             SetDisplayOrder();
         }
 
-        private void RTC_NewBlastEditorForm_Closing(object sender, FormClosingEventArgs e) => SaveDisplayOrder();
+        private void OnFormClosing(object sender, FormClosingEventArgs e) => SaveDisplayOrder();
 
-
-
-
-
-        private void RTC_NewBlastEditorForm_Close(object sender, FormClosedEventArgs e)
+        private void OnFormClosed(object sender, FormClosedEventArgs e)
         {
             //Clean up
             bs = null;
@@ -258,10 +206,10 @@ namespace RTCV.UI
         private void registerValueStringScrollEvents()
         {
             tbValue.MouseWheel += tbValueScroll;
-            dgvBlastEditor.MouseWheel += DgvBlastEditor_MouseWheel;
+            dgvBlastEditor.MouseWheel += OnBlastEditorMouseWheel;
         }
 
-        private void DgvBlastEditor_MouseWheel(object sender, MouseEventArgs e)
+        private void OnBlastEditorMouseWheel(object sender, MouseEventArgs e)
         {
             var owningRow = dgvBlastEditor.CurrentCell?.OwningRow;
 
@@ -330,7 +278,7 @@ namespace RTCV.UI
             Params.SetParam("BLASTEDITOR_COLUMN_ORDER", sb.ToString());
         }
 
-        private void DgvBlastEditor_Click(object sender, MouseEventArgs e)
+        private void OnBlastEditorMouseClick(object sender, MouseEventArgs e)
         {
             //Exit edit mode if you click away from a cell
             var ht = dgvBlastEditor.HitTest(e.X, e.Y);
@@ -341,7 +289,7 @@ namespace RTCV.UI
             }
         }
 
-        private void dgvBlastEditor_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void OnBlastEditorCellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             // Note handling
             if (e != null && e.RowIndex != -1 &&
@@ -385,7 +333,7 @@ namespace RTCV.UI
             }
         }
 
-        private void dgvBlastEditor_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void OnBlastEditorCellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -481,7 +429,7 @@ namespace RTCV.UI
             }))).Enabled = true;
         }
 
-        private void dgvBlastEditor_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void OnBlastEditorCellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             DataGridViewColumn changedColumn = dgvBlastEditor.Columns[e.ColumnIndex];
 
@@ -497,7 +445,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void CbSourceDomain_Validated(object sender, EventArgs e)
+        private void OnSourceDomainValidated(object sender, EventArgs e)
         {
             var value = cbSourceDomain.SelectedItem;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
@@ -509,7 +457,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void CbStoreType_Validated(object sender, EventArgs e)
+        private void OnStoreTypeValidated(object sender, EventArgs e)
         {
             var value = cbStoreType.SelectedItem;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
@@ -520,7 +468,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void CbStoreTime_Validated(object sender, EventArgs e)
+        private void OnStoreTimeValidated(object sender, EventArgs e)
         {
             var value = cbStoreTime.SelectedItem;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
@@ -531,7 +479,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void CbLimiterList_Validated(object sender, EventArgs e)
+        private void OnLimiterListValidated(object sender, EventArgs e)
         {
             var value = ((ComboBoxItem<string>)(cbLimiterList?.SelectedItem))?.Value ?? null;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
@@ -542,7 +490,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void CbBigEndian_Validated(object sender, EventArgs e)
+        private void OnBigEndianValidated(object sender, EventArgs e)
         {
             var value = cbBigEndian.Checked;
             //Big Endian isn't available in the DGV so we operate on the actual BU then refresh
@@ -555,7 +503,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void TbValue_Validated(object sender, EventArgs e)
+        private void OnValueValidated(object sender, EventArgs e)
         {
             var value = tbValue.Text;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
@@ -566,7 +514,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void CbSource_Validated(object sender, EventArgs e)
+        private void OnSourceValidated(object sender, EventArgs e)
         {
             var value = cbSource.SelectedItem;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
@@ -577,7 +525,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void TbTiltValue_Validated(object sender, EventArgs e)
+        private void OnTiltValueValidated(object sender, EventArgs e)
         {
             if (!BigInteger.TryParse(tbTiltValue.Text, out BigInteger value))
             {
@@ -592,7 +540,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void UpDownLifetime_Validated(object sender, EventArgs e)
+        private void OnLifetimeValidated(object sender, EventArgs e)
         {
             var value = upDownLifetime.Value;
             if (value > int.MaxValue)
@@ -609,7 +557,7 @@ namespace RTCV.UI
             dgvBlastEditor.Refresh();
         }
 
-        private void UpDownExecuteFrame_Validated(object sender, EventArgs e)
+        private void OnExecuteFrameValidated(object sender, EventArgs e)
         {
             var value = upDownExecuteFrame.Value;
             if (value > int.MaxValue)
@@ -626,7 +574,7 @@ namespace RTCV.UI
             dgvBlastEditor.Refresh();
         }
 
-        private void UpDownLoopTiming_Validated(object sender, EventArgs e)
+        private void OnLoopTimingValidated(object sender, EventArgs e)
         {
             var value = upDownLoopTiming.Value;
             if (value > int.MaxValue)
@@ -643,7 +591,7 @@ namespace RTCV.UI
             dgvBlastEditor.Refresh();
         }
 
-        private void UpDownPrecision_Validated(object sender, EventArgs e)
+        private void OnPrecisionValidated(object sender, EventArgs e)
         {
             var value = upDownPrecision.Value;
 
@@ -661,7 +609,7 @@ namespace RTCV.UI
             dgvBlastEditor.Refresh();
         }
 
-        private void UpDownAddress_Validated(object sender, EventArgs e)
+        private void OnAddressValidated(object sender, EventArgs e)
         {
             var value = upDownAddress.Value;
             if (value > int.MaxValue)
@@ -677,7 +625,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void UpDownSourceAddress_Validated(object sender, EventArgs e)
+        private void OnSourceAddressValidated(object sender, EventArgs e)
         {
             var value = upDownSourceAddress.Value;
             if (value > int.MaxValue)
@@ -693,7 +641,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void CbLocked_Validated(object sender, EventArgs e)
+        private void OnLockedValidated(object sender, EventArgs e)
         {
             var value = cbLocked.Checked;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
@@ -704,7 +652,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void CbLimiterTime_Validated(object sender, EventArgs e)
+        private void OnLimiterTimeValidated(object sender, EventArgs e)
         {
             var value = cbLimiterTime.SelectedItem;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
@@ -715,7 +663,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void cbStoreLimiterSource_Validated(object sender, EventArgs e)
+        private void OnStoreLimiterSourceValidated(object sender, EventArgs e)
         {
             var value = cbStoreLimiterSource.SelectedItem;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
@@ -726,7 +674,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void CbInvertLimiter_Validated(object sender, EventArgs e)
+        private void OnInvertLimiterValidated(object sender, EventArgs e)
         {
             var value = cbInvertLimiter.Checked;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
@@ -737,7 +685,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void cbEnabled_Validated(object sender, EventArgs e)
+        private void OnEnabledValidated(object sender, EventArgs e)
         {
             var value = cbEnabled.Checked;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
@@ -748,7 +696,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void cbDomain_Validated(object sender, EventArgs e)
+        private void OnDomainValidated(object sender, EventArgs e)
         {
             var value = cbDomain.SelectedItem;
 
@@ -765,7 +713,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void CbLoop_Validated(object sender, EventArgs e)
+        private void OnLoopValidated(object sender, EventArgs e)
         {
             var value = cbLoop.Checked;
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>().Where(x => (x.DataBoundItem as BlastUnit)?.IsLocked == false))
@@ -776,7 +724,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void dgvBlastEditor_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void OnBlastEditorColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -878,7 +826,7 @@ namespace RTCV.UI
             }
         }
 
-        private void dgvBlastEditor_SelectionChanged(object sender, EventArgs e)
+        private void OnBlastEditorSelectionChange(object sender, EventArgs e)
         {
             UpdateBottom();
 
@@ -893,13 +841,13 @@ namespace RTCV.UI
             updateMaximum(col);
         }
 
-        private void DgvBlastEditor_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        private void OnBlastEditorCellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             //Bug in DGV. If you don't read the value back, it goes into edit mode on first click if you read the selectedrow within SelectionChanged. Why? No idea.
             _ = dgvBlastEditor.Rows[e.RowIndex].Cells[0].Value;
         }
 
-        private void tbFilter_TextChanged(object sender, EventArgs e)
+        private void OnFilterTextChanged(object sender, EventArgs e)
         {
             if (tbFilter.Text.Length == 0)
             {
@@ -1345,12 +1293,12 @@ namespace RTCV.UI
             }
         }
 
-        public void dgvBlastLayer_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        private void OnBlastEditorDataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             MessageBox.Show(e.Exception.ToString() + "\nRow:" + e.RowIndex + "\nColumn" + e.ColumnIndex + "\n" + e.Context + "\n" + dgvBlastEditor[e.ColumnIndex, e.RowIndex].Value?.ToString());
         }
 
-        public void btnDisable50_Click(object sender, EventArgs e)
+        public void Disable50(object sender, EventArgs e)
         {
             foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
                 Where(x => x.IsLocked == false))
@@ -1368,7 +1316,7 @@ namespace RTCV.UI
             dgvBlastEditor.Refresh();
         }
 
-        public void btnInvertDisabled_Click(object sender, EventArgs e)
+        public void InvertDisabled(object sender, EventArgs e)
         {
             foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
                 Where(x => !x.IsLocked))
@@ -1378,7 +1326,7 @@ namespace RTCV.UI
             dgvBlastEditor.Refresh();
         }
 
-        public void btnRemoveDisabled_Click(object sender, EventArgs e)
+        public void RemoveDisabled(object sender, EventArgs e)
         {
             var buToRemove = new List<BlastUnit>();
 
@@ -1408,7 +1356,7 @@ namespace RTCV.UI
             dgvBlastEditor.ResumeLayout();
         }
 
-        public void btnDisableEverything_Click(object sender, EventArgs e)
+        public void DisableEverything(object sender, EventArgs e)
         {
             foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
                 Where(x =>
@@ -1419,7 +1367,7 @@ namespace RTCV.UI
             dgvBlastEditor.Refresh();
         }
 
-        public void btnEnableEverything_Click(object sender, EventArgs e)
+        public void EnableEverything(object sender, EventArgs e)
         {
             foreach (BlastUnit bu in currentSK.BlastLayer.Layer.
                 Where(x =>
@@ -1430,7 +1378,7 @@ namespace RTCV.UI
             dgvBlastEditor.Refresh();
         }
 
-        public void btnRemoveSelected_Click(object sender, EventArgs e)
+        public void RemoveSelected(object sender, EventArgs e)
         {
             foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
             {
@@ -1447,7 +1395,7 @@ namespace RTCV.UI
             }
         }
 
-        public void btnDuplicateSelected_Click(object sender, EventArgs e)
+        public void DuplicateSelected(object sender, EventArgs e)
         {
             if (dgvBlastEditor.SelectedRows.Count == 0)
             {
@@ -1466,7 +1414,7 @@ namespace RTCV.UI
             RefreshAllNoteIcons();
         }
 
-        public void btnSendToStash_Click(object sender, EventArgs e)
+        public void SendToStash(object sender, EventArgs e)
         {
             if (currentSK.ParentKey == null)
             {
@@ -1486,7 +1434,7 @@ namespace RTCV.UI
             StockpileManager_UISide.CurrentStashkey = StockpileManager_UISide.StashHistory[S.GET<RTC_StashHistory_Form>().lbStashHistory.SelectedIndex];
         }
 
-        public void btnNote_Click(object sender, EventArgs e)
+        public void OpenNoteEditor(object sender, EventArgs e)
         {
             if (dgvBlastEditor.SelectedRows.Count == 0)
             {
@@ -1508,7 +1456,7 @@ namespace RTCV.UI
             S.GET<NoteEditorForm>().Show();
         }
 
-        public void sanitizeDuplicatesToolStripMenuItem_Click(object sender, EventArgs e)
+        public void SanitizeDuplicates(object sender, EventArgs e)
         {
             dgvBlastEditor.ClearSelection();
 
@@ -1540,7 +1488,7 @@ namespace RTCV.UI
 
 
 
-        public void replaceRomFromGHToolStripMenuItem_Click(object sender, EventArgs e)
+        public void ReplaceRomFromGlitchHarvester(object sender, EventArgs e)
         {
             StashKey temp = StockpileManager_UISide.CurrentSavestateStashKey;
 
@@ -1559,7 +1507,7 @@ namespace RTCV.UI
             currentSK.SyncSettings = temp.SyncSettings;
         }
 
-        public void replaceRomFromFileToolStripMenuItem_Click(object sender, EventArgs e)
+        public void ReplaceRomFromFile(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("Loading this rom will invalidate the associated savestate. You'll need to set a new savestate for the Blastlayer. Continue?", "Invalidate State?", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
@@ -1649,17 +1597,17 @@ namespace RTCV.UI
             }
         }
 
-        private void bakeROMBlastunitsToFileToolStripMenuItem_Click(object sender, EventArgs e)
+        private void BakeROMBlastunitsToFile(object sender, EventArgs e)
         {
             BakeROMBlastunitsToFile(null);
         }
 
-        private void runOriginalSavestateToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RunOriginalSavestate(object sender, EventArgs e)
         {
             originalSK.RunOriginal();
         }
 
-        public void replaceSavestateFromGHToolStripMenuItem_Click(object sender, EventArgs e)
+        public void ReplaceSavestateFromGlitchHarvester(object sender, EventArgs e)
         {
             StashKey temp = StockpileManager_UISide.CurrentSavestateStashKey;
             if (temp == null)
@@ -1741,12 +1689,12 @@ namespace RTCV.UI
             var temp = new StashKey(RtcCore.GetRandomKey(), currentSK.ParentKey, currentSK.BlastLayer);
             currentSK.SyncSettings = temp.SyncSettings;
         }
-        private void replaceSavestateFromFileToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ReplaceSavestateFromFile(object sender, EventArgs e)
         {
             ReplaceSavestateFromFileToolStrip(null);
         }
 
-        public void SaveSavestateTo(string filename = null)
+        private void SaveSavestateTo(string filename = null)
         {
             if (filename == null)
             {
@@ -1768,12 +1716,12 @@ namespace RTCV.UI
             File.Copy(currentSK.GetSavestateFullPath(), filename, true);
         }
 
-        private void saveSavestateToToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveSavestateTo(object sender, EventArgs e)
         {
             SaveSavestateTo(null);
         }
 
-        public void saveToFileblToolStripMenuItem_Click(object sender, EventArgs e)
+        public void SaveBlastLayerToFile(object sender, EventArgs e)
         {
             //If there's no blastlayer file already set, don't quicksave
             if (CurrentBlastLayerFile.Length == 0)
@@ -1788,19 +1736,19 @@ namespace RTCV.UI
             CurrentBlastLayerFile = BlastTools.LastBlastLayerSavePath;
         }
 
-        public void saveAsToFileblToolStripMenuItem_Click(object sender, EventArgs e)
+        public void SaveAsBlastLayerToFile(object sender, EventArgs e)
         {
             BlastTools.SaveBlastLayerToFile(currentSK.BlastLayer);
             CurrentBlastLayerFile = BlastTools.LastBlastLayerSavePath;
         }
 
-        public void importBlastlayerblToolStripMenuItem_Click(object sender, EventArgs e)
+        public void ImportBlastLayer(object sender, EventArgs e)
         {
             BlastLayer temp = BlastTools.LoadBlastLayerFromFile();
             ImportBlastLayer(temp);
         }
 
-        public void loadFromFileblToolStripMenuItem_Click(object sender, EventArgs e)
+        public void LoadBlastLayerFromFile(object sender, EventArgs e)
         {
             BlastLayer temp = BlastTools.LoadBlastLayerFromFile();
             if (temp != null)
@@ -1978,7 +1926,7 @@ namespace RTCV.UI
             }
         }
 
-        public void btnLoadCorrupt_Click(object sender, EventArgs e)
+        public void LoadCorrupt(object sender, EventArgs e)
         {
             if (currentSK.ParentKey == null)
             {
@@ -2003,7 +1951,7 @@ namespace RTCV.UI
             newSk.Run();
         }
 
-        public void btnCorrupt_Click(object sender, EventArgs e)
+        public void Corrupt(object sender, EventArgs e)
         {
             var newSk = (StashKey)currentSK.Clone();
             S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newSk, false);
@@ -2025,7 +1973,7 @@ namespace RTCV.UI
 
 
 
-        public void btnShiftBlastLayerDown_Click(object sender, EventArgs e)
+        public void ShiftBlastLayerDown(object sender, EventArgs e)
         {
             var amount = updownShiftBlastLayerAmount.Value;
             var column = ((ComboBoxItem<string>)cbShiftBlastlayer?.SelectedItem)?.Value;
@@ -2041,7 +1989,7 @@ namespace RTCV.UI
             ShiftBlastLayer(amount, column, rows, true);
         }
 
-        public void btnShiftBlastLayerUp_Click(object sender, EventArgs e)
+        public void ShiftBlastLayerUp(object sender, EventArgs e)
         {
             var amount = updownShiftBlastLayerAmount.Value;
             var column = ((ComboBoxItem<string>)cbShiftBlastlayer?.SelectedItem)?.Value;
@@ -2117,13 +2065,13 @@ namespace RTCV.UI
             return BitConverter.ToString(valueBytes).Replace("-", string.Empty);
         }
 
-        private void btnHelp_Click(object sender, EventArgs e)
+        private void ShowHelp(object sender, EventArgs e)
         {
             var startInfo = new System.Diagnostics.ProcessStartInfo("https://corrupt.wiki/corruptors/rtc-real-time-corruptor/blast-editor.html");
             System.Diagnostics.Process.Start(startInfo);
         }
 
-        private void OpenBlastGeneratorToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OpenBlastGenerator(object sender, EventArgs e)
         {
             if (S.GET<BlastGeneratorForm>() != null)
             {
@@ -2136,7 +2084,7 @@ namespace RTCV.UI
             bgForm.LoadStashkey(currentSK);
         }
 
-        private void BtnAddRow_Click(object sender, EventArgs e)
+        private void AddRow(object sender, EventArgs e)
         {
             var bu = new BlastUnit(new byte[] { 0 }, _domains[0], 0, 1, MemoryDomains.GetInterface(_domains[0]).BigEndian);
             bs.Add(bu);
@@ -2147,7 +2095,7 @@ namespace RTCV.UI
             lbBlastLayerSize.Text = "Size: " + currentSK.BlastLayer.Layer.Count;
         }
 
-        public void btnSanitizeTool_Click(object sender, EventArgs e)
+        public void OpenSanitizeTool(object sender, EventArgs e)
         {
             OpenSanitizeTool();
         }
@@ -2196,7 +2144,7 @@ namespace RTCV.UI
             ImportBlastlayerFromCorruptedFile(null);
         }
 
-        private void NewToolStripMenuItem_Click(object sender, EventArgs e)
+        private void NewBlastLayer(object sender, EventArgs e)
         {
             bs.Clear();
             dgvBlastEditor.ResetBindings();
@@ -2206,19 +2154,18 @@ namespace RTCV.UI
 
         public bool AddStashToStockpile()
         {
-            btnSendToStash_Click(null, null);
+            SendToStash(null, null);
 
             return S.GET<RTC_StashHistory_Form>().btnAddStashToStockpile_Click();
         }
 
-
-        public void btnAddStashToStockpile_Click(object sender, EventArgs e) => AddStashToStockpile();
-        private void breakDownAllBlastunitsToolStripMenuItem_Click(object sender, EventArgs e) => BreakDownUnits();
-        private void DgvBlastEditor_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e) => UpdateLayerSize();
-        private void DgvBlastEditor_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e) => UpdateLayerSize();
-        private void exportToCSVToolStripMenuItem_Click(object sender, EventArgs e) => ExportToCSV(null);
-        private void bakeBlastunitsToVALUEToolStripMenuItem_Click(object sender, EventArgs e) => BakeBlastUnitsToValue();
-        private void runRomWithoutBlastlayerToolStripMenuItem_Click(object sender, EventArgs e) => currentSK.RunOriginal();
-        public void rasterizeVMDsToolStripMenuItem_Click(object sender, EventArgs e) => RasterizeVMDs();
+        private void AddStashToStockpile(object sender, EventArgs e) => AddStashToStockpile();
+        private void BreakDownAllBlastUnits(object sender, EventArgs e) => BreakDownUnits();
+        private void OnBlastEditorRowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e) => UpdateLayerSize();
+        private void OnBlastEditorRowsAdded(object sender, DataGridViewRowsAddedEventArgs e) => UpdateLayerSize();
+        private void ExportBlastLayerToCSV(object sender, EventArgs e) => ExportToCSV(null);
+        private void BakeBlastUnitsToValue(object sender, EventArgs e) => BakeBlastUnitsToValue();
+        private void RunRomWithoutBlastLayer(object sender, EventArgs e) => currentSK.RunOriginal();
+        private void RasterizeVMDs(object sender, EventArgs e) => RasterizeVMDs();
     }
 }

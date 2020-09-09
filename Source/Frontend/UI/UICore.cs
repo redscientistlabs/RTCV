@@ -591,10 +591,10 @@ namespace RTCV.UI
                 case "Disable 50":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<BlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
-                            bef.btnDisable50_Click(null, null);
+                            bef.Disable50(null, null);
                         }
                     });
                     break;
@@ -602,10 +602,10 @@ namespace RTCV.UI
                 case "Remove Disabled":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<BlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
-                            bef.btnRemoveDisabled_Click(null, null);
+                            bef.RemoveDisabled(null, null);
                         }
                     });
                     break;
@@ -613,60 +613,60 @@ namespace RTCV.UI
                 case "Invert Disabled":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<BlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
-                            bef.btnInvertDisabled_Click(null, null);
+                            bef.InvertDisabled(null, null);
                         }
                     });
                     break;
                 case "Shift Up":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<BlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
-                            bef.btnShiftBlastLayerUp_Click(null, null);
+                            bef.ShiftBlastLayerUp(null, null);
                         }
                     });
                     break;
                 case "Shift Down":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<BlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
-                            bef.btnShiftBlastLayerDown_Click(null, null);
+                            bef.ShiftBlastLayerDown(null, null);
                         }
                     });
                     break;
                 case "Load Corrupt":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<BlastEditorForm>();
                         if (bef != null && bef.Focused)
                         {
-                            bef.btnLoadCorrupt_Click(null, null);
+                            bef.LoadCorrupt(null, null);
                         }
                     });
                     break;
                 case "Apply":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<BlastEditorForm>();
                         if (bef != null && bef.Focused)
                         {
-                            bef.btnCorrupt_Click(null, null);
+                            bef.Corrupt(null, null);
                         }
                     });
                     break;
                 case "Send Stash":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<BlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
-                            bef.btnSendToStash_Click(null, null);
+                            bef.SendToStash(null, null);
                         }
                     });
                     break;
