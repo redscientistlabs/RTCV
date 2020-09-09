@@ -184,20 +184,20 @@ namespace RTCV.UI
                 columnsMenu.Items.Add(new ToolStripSeparator());
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Open Selected Item in Blast Editor", null, new EventHandler((ob, ev) =>
                 {
-                    if (S.GET<RTC_NewBlastEditor_Form>() != null)
+                    if (S.GET<NewBlastEditorForm>() != null)
                     {
                         var sk = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
-                        RTC_NewBlastEditor_Form.OpenBlastEditor(sk);
+                        NewBlastEditorForm.OpenBlastEditor(sk);
                     }
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Sanitize", null, new EventHandler((ob, ev) =>
                 {
-                    if (S.GET<RTC_NewBlastEditor_Form>() != null)
+                    if (S.GET<NewBlastEditorForm>() != null)
                     {
                         var sk = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
-                        RTC_NewBlastEditor_Form.OpenBlastEditor(sk);
-                        S.GET<RTC_NewBlastEditor_Form>().btnSanitizeTool_Click(null, null);
+                        NewBlastEditorForm.OpenBlastEditor(sk);
+                        S.GET<NewBlastEditorForm>().btnSanitizeTool_Click(null, null);
                     }
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 

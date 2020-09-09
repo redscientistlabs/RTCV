@@ -80,11 +80,11 @@ namespace RTCV.UI
             pnBlastLayerSanitization.Visible = false;
             this.Refresh();
 
-            S.GET<RTC_NewBlastEditor_Form>().dgvBlastEditor.ClearSelection();
-            S.GET<RTC_NewBlastEditor_Form>().btnDisable50_Click(null, null);
-            S.GET<RTC_NewBlastEditor_Form>().btnLoadCorrupt_Click(null, null);
+            S.GET<NewBlastEditorForm>().dgvBlastEditor.ClearSelection();
+            S.GET<NewBlastEditorForm>().btnDisable50_Click(null, null);
+            S.GET<NewBlastEditorForm>().btnLoadCorrupt_Click(null, null);
 
-            BlastLayer bl = (BlastLayer)S.GET<RTC_NewBlastEditor_Form>().currentSK.BlastLayer.Clone();
+            BlastLayer bl = (BlastLayer)S.GET<NewBlastEditorForm>().currentSK.BlastLayer.Clone();
 
             UpdateSanitizeProgress();
 
@@ -96,13 +96,13 @@ namespace RTCV.UI
             pnBlastLayerSanitization.Visible = false;
             this.Refresh();
 
-            S.GET<RTC_NewBlastEditor_Form>().btnRemoveDisabled_Click(null, null);
+            S.GET<NewBlastEditorForm>().btnRemoveDisabled_Click(null, null);
 
-            S.GET<RTC_NewBlastEditor_Form>().dgvBlastEditor.ClearSelection();
-            S.GET<RTC_NewBlastEditor_Form>().btnDisable50_Click(null, null);
-            S.GET<RTC_NewBlastEditor_Form>().btnLoadCorrupt_Click(null, null);
+            S.GET<NewBlastEditorForm>().dgvBlastEditor.ClearSelection();
+            S.GET<NewBlastEditorForm>().btnDisable50_Click(null, null);
+            S.GET<NewBlastEditorForm>().btnLoadCorrupt_Click(null, null);
 
-            BlastLayer bl = (BlastLayer)S.GET<RTC_NewBlastEditor_Form>().currentSK.BlastLayer.Clone();
+            BlastLayer bl = (BlastLayer)S.GET<NewBlastEditorForm>().currentSK.BlastLayer.Clone();
             lbSteps.Items.Add(new { Text = $"[{bl.Layer.Count(x => !x.IsLocked)} Units]", Value = bl });
 
             UpdateSanitizeProgress();
@@ -123,12 +123,12 @@ namespace RTCV.UI
             pnBlastLayerSanitization.Visible = false;
             this.Refresh();
 
-            S.GET<RTC_NewBlastEditor_Form>().btnInvertDisabled_Click(null, null);
-            S.GET<RTC_NewBlastEditor_Form>().btnRemoveDisabled_Click(null, null);
+            S.GET<NewBlastEditorForm>().btnInvertDisabled_Click(null, null);
+            S.GET<NewBlastEditorForm>().btnRemoveDisabled_Click(null, null);
 
             RunSanitizeAlgo();
 
-            BlastLayer bl = (BlastLayer)S.GET<RTC_NewBlastEditor_Form>().currentSK.BlastLayer.Clone();
+            BlastLayer bl = (BlastLayer)S.GET<NewBlastEditorForm>().currentSK.BlastLayer.Clone();
             lbSteps.Items.Add(new { Text = $"[{bl.Layer.Count(x => !x.IsLocked)} Units]", Value = bl });
 
             UpdateSanitizeProgress();
@@ -149,9 +149,9 @@ namespace RTCV.UI
             pnBlastLayerSanitization.Visible = false;
             this.Refresh();
 
-            S.GET<RTC_NewBlastEditor_Form>().btnLoadCorrupt_Click(null, null);
+            S.GET<NewBlastEditorForm>().btnLoadCorrupt_Click(null, null);
 
-            BlastLayer changes = (BlastLayer)S.GET<RTC_NewBlastEditor_Form>().currentSK.BlastLayer.Clone();
+            BlastLayer changes = (BlastLayer)S.GET<NewBlastEditorForm>().currentSK.BlastLayer.Clone();
 
             pnBlastLayerSanitization.Visible = true;
         }
@@ -164,7 +164,7 @@ namespace RTCV.UI
 
         private static void ReopenBlastEditor()
         {
-            var be = S.GET<RTC_NewBlastEditor_Form>();
+            var be = S.GET<NewBlastEditorForm>();
             be.RefreshAllNoteIcons();
             be.WindowState = FormWindowState.Minimized;
             be.Show();
@@ -174,7 +174,7 @@ namespace RTCV.UI
 
         public void LeaveAndSubtractChanges(object sender, EventArgs e)
         {
-            BlastLayer changes = (BlastLayer)S.GET<RTC_NewBlastEditor_Form>().currentSK.BlastLayer.Clone();
+            BlastLayer changes = (BlastLayer)S.GET<NewBlastEditorForm>().currentSK.BlastLayer.Clone();
             BlastLayer modified = (BlastLayer)originalBlastLayer.Clone();
 
             foreach (var unit in changes.Layer.Where(it => it.IsEnabled))
@@ -202,14 +202,14 @@ namespace RTCV.UI
                     bu.IsEnabled = true;
             }
 
-            S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(modified);
+            S.GET<NewBlastEditorForm>().LoadBlastlayer(modified);
             ReopenBlastEditor();
             this.Close();
         }
 
         private void LeaveWithoutChanges(object sender, EventArgs e)
         {
-            S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(originalBlastLayer);
+            S.GET<NewBlastEditorForm>().LoadBlastlayer(originalBlastLayer);
             ReopenBlastEditor();
 
             this.Close();
@@ -232,7 +232,7 @@ namespace RTCV.UI
             var modified = Cast(lastItem, new { Text = "", Value = new BlastLayer() });
 
             BlastLayer bl = (BlastLayer)modified.Value.Clone();
-            S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(bl);
+            S.GET<NewBlastEditorForm>().LoadBlastlayer(bl);
             workBlastLayer = bl;
 
             UpdateSanitizeProgress();
@@ -242,7 +242,7 @@ namespace RTCV.UI
                 lbSteps.Items.RemoveAt(lbSteps.Items.Count - 1);
             }
 
-            S.GET<RTC_NewBlastEditor_Form>().btnLoadCorrupt_Click(null, null);
+            S.GET<NewBlastEditorForm>().btnLoadCorrupt_Click(null, null);
 
             lbSanitizationText.Text = "Is the effect you are looking for still present?";
             btnYesEffect.Visible = true;
@@ -274,7 +274,7 @@ namespace RTCV.UI
             }
 
 
-            int currentSize = S.GET<RTC_NewBlastEditor_Form>().currentSK.BlastLayer.Layer.Count(x => !x.IsLocked);
+            int currentSize = S.GET<NewBlastEditorForm>().currentSK.BlastLayer.Layer.Count(x => !x.IsLocked);
             //int currentSize = workBlastLayer
 
             int currentRemainder = currentSize;
@@ -294,9 +294,9 @@ namespace RTCV.UI
         {
             btnStartSanitizing.Visible = false;
 
-            S.GET<RTC_NewBlastEditor_Form>().dgvBlastEditor.ClearSelection();
-            S.GET<RTC_NewBlastEditor_Form>().btnDisable50_Click(null, null);
-            S.GET<RTC_NewBlastEditor_Form>().btnLoadCorrupt_Click(null, null);
+            S.GET<NewBlastEditorForm>().dgvBlastEditor.ClearSelection();
+            S.GET<NewBlastEditorForm>().btnDisable50_Click(null, null);
+            S.GET<NewBlastEditorForm>().btnLoadCorrupt_Click(null, null);
 
             pnBlastLayerSanitization.Visible = true;
             lbWorkingPleaseWait.Visible = true;
@@ -304,9 +304,9 @@ namespace RTCV.UI
 
         public static void RunSanitizeAlgo()
         {
-            S.GET<RTC_NewBlastEditor_Form>().dgvBlastEditor.ClearSelection();
-            S.GET<RTC_NewBlastEditor_Form>().btnDisable50_Click(null, null);
-            S.GET<RTC_NewBlastEditor_Form>().btnLoadCorrupt_Click(null, null);
+            S.GET<NewBlastEditorForm>().dgvBlastEditor.ClearSelection();
+            S.GET<NewBlastEditorForm>().btnDisable50_Click(null, null);
+            S.GET<NewBlastEditorForm>().btnLoadCorrupt_Click(null, null);
         }
 
         private void OnFormClosing(object sender, FormClosingEventArgs e)
@@ -326,7 +326,7 @@ namespace RTCV.UI
                 switch (dr)
                 {
                     case DialogResult.Yes:
-                        S.GET<RTC_NewBlastEditor_Form>().LoadBlastlayer(originalBlastLayer);
+                        S.GET<NewBlastEditorForm>().LoadBlastlayer(originalBlastLayer);
                         break;
                     case DialogResult.No:
                         break;
@@ -340,12 +340,12 @@ namespace RTCV.UI
 
         private void AddToStockpile(object sender, EventArgs e)
         {
-            if (S.GET<RTC_NewBlastEditor_Form>().AddStashToStockpile())
+            if (S.GET<NewBlastEditorForm>().AddStashToStockpile())
                 this.Close();
         }
         private void AddToStash(object sender, EventArgs e)
         {
-            S.GET<RTC_NewBlastEditor_Form>().btnSendToStash_Click(null, null);
+            S.GET<NewBlastEditorForm>().btnSendToStash_Click(null, null);
             this.Close();
         }
         private void LeaveWithNoChanges(object sender, EventArgs e)

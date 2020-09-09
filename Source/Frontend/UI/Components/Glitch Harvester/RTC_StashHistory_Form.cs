@@ -196,20 +196,20 @@ namespace RTCV.UI
 
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Open Selected Item in Blast Editor", null, new EventHandler((ob, ev) =>
                 {
-                    if (S.GET<RTC_NewBlastEditor_Form>() != null)
+                    if (S.GET<NewBlastEditorForm>() != null)
                     {
                         StashKey sk = StockpileManager_UISide.StashHistory[lbStashHistory.SelectedIndex];
-                        RTC_NewBlastEditor_Form.OpenBlastEditor(sk);
+                        NewBlastEditorForm.OpenBlastEditor(sk);
                     }
                 }))).Enabled = lbStashHistory.SelectedIndex != -1;
 
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Sanitize", null, new EventHandler((ob, ev) =>
                 {
-                    if (S.GET<RTC_NewBlastEditor_Form>() != null)
+                    if (S.GET<NewBlastEditorForm>() != null)
                     {
                         StashKey sk = StockpileManager_UISide.StashHistory[lbStashHistory.SelectedIndex];
-                        RTC_NewBlastEditor_Form.OpenBlastEditor(sk, true);
-                        S.GET<RTC_NewBlastEditor_Form>().btnSanitizeTool_Click(null, null);
+                        NewBlastEditorForm.OpenBlastEditor(sk, true);
+                        S.GET<NewBlastEditorForm>().btnSanitizeTool_Click(null, null);
                     }
                 }))).Enabled = lbStashHistory.SelectedIndex != -1;
 

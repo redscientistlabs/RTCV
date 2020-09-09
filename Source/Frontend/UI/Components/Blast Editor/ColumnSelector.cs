@@ -50,10 +50,10 @@
                 sb.Append(cb.Name);
                 sb.Append(",");
             }
-            if (S.GET<RTC_NewBlastEditor_Form>() != null)
+            if (S.GET<NewBlastEditorForm>() != null)
             {
-                S.GET<RTC_NewBlastEditor_Form>().VisibleColumns = temp;
-                S.GET<RTC_NewBlastEditor_Form>().RefreshVisibleColumns();
+                S.GET<NewBlastEditorForm>().VisibleColumns = temp;
+                S.GET<NewBlastEditorForm>().RefreshVisibleColumns();
             }
             NetCore.Params.SetParam("BLASTEDITOR_VISIBLECOLUMNS", sb.ToString());
         }

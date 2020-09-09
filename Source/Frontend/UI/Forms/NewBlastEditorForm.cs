@@ -57,7 +57,7 @@ namespace RTCV.UI
     using RTCV.UI.Components;
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
-    public partial class RTC_NewBlastEditor_Form : Form, IAutoColorize
+    public partial class NewBlastEditorForm : Form, IAutoColorize
     {
         private static Dictionary<string, MemoryInterface> _domainToMiDico;
 
@@ -107,28 +107,27 @@ namespace RTCV.UI
         //We gotta cache this stuff outside of the scope of InitializeDGV
         //    private object actionTimeValues =
 
-        public RTC_NewBlastEditor_Form()
+        public NewBlastEditorForm()
         {
             try
             {
                 InitializeComponent();
 
-                dgvBlastEditor.DataError += dgvBlastLayer_DataError;
+                dgvBlastEditor.DataError += OnBlastEditorDataError;
                 dgvBlastEditor.AutoGenerateColumns = false;
-                dgvBlastEditor.SelectionChanged += dgvBlastEditor_SelectionChanged;
-                dgvBlastEditor.ColumnHeaderMouseClick += dgvBlastEditor_ColumnHeaderMouseClick;
-                dgvBlastEditor.CellValueChanged += dgvBlastEditor_CellValueChanged;
-                dgvBlastEditor.CellMouseClick += dgvBlastEditor_CellMouseClick;
-                dgvBlastEditor.CellMouseDoubleClick += dgvBlastEditor_CellMouseDoubleClick;
-                dgvBlastEditor.RowsAdded += DgvBlastEditor_RowsAdded;
-                dgvBlastEditor.RowsRemoved += DgvBlastEditor_RowsRemoved;
-                dgvBlastEditor.CellFormatting += DgvBlastEditor_CellFormatting;
-                dgvBlastEditor.MouseClick += DgvBlastEditor_Click;
+                dgvBlastEditor.SelectionChanged += OnBlastEditorSelectionChange;
+                dgvBlastEditor.ColumnHeaderMouseClick += OnBlastEditorColumnHeaderMouseClick;
+                dgvBlastEditor.CellValueChanged += OnBlastEditorCellValueChanged;
+                dgvBlastEditor.CellMouseClick += OnBlastEditorCellMouseClick;
+                dgvBlastEditor.CellMouseDoubleClick += OnBlastEditorCellMouseDoubleClick;
+                dgvBlastEditor.RowsAdded += OnBlastEditorRowsAdded;
+                dgvBlastEditor.RowsRemoved += OnBlastEditorRowsRemoved;
+                dgvBlastEditor.CellFormatting += OnBlastEditorCellFormatting;
+                dgvBlastEditor.MouseClick += OnBlastEditorMouseClick;
 
                 cbFilterColumn.SelectedValueChanged += (o, e) => { tbFilter_TextChanged(null, null); };
                 tbFilter.TextChanged += tbFilter_TextChanged;
 
-                cbEnabled.Validated += cbEnabled_Validated;
                 cbLocked.Validated += CbLocked_Validated;
                 cbBigEndian.Validated += CbBigEndian_Validated;
                 cbLoop.Validated += CbLoop_Validated;
@@ -170,8 +169,8 @@ namespace RTCV.UI
 
                 //Registers the drag and drop with the blast editor form
                 AllowDrop = true;
-                this.DragEnter += RTC_NewBlastEditor_Form_DragEnter;
-                this.DragDrop += RTC_NewBlastEditor_Form_DragDrop;
+                this.DragEnter += NewBlastEditorForm_DragEnter;
+                this.DragDrop += NewBlastEditorForm_DragDrop;
             }
             catch (Exception ex)
             {
@@ -182,7 +181,7 @@ namespace RTCV.UI
             }
         }
 
-        private void RTC_NewBlastEditor_Form_DragDrop(object sender, DragEventArgs e)
+        private void NewBlastEditorForm_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             foreach (var f in files)
@@ -195,18 +194,18 @@ namespace RTCV.UI
             }
         }
 
-        private void RTC_NewBlastEditor_Form_DragEnter(object sender, DragEventArgs e)
+        private void NewBlastEditorForm_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Link;
         }
 
         public static void OpenBlastEditor(StashKey sk = null, bool silent = false)
         {
-            if (S.GET<RTC_NewBlastEditor_Form>().Visible)
+            if (S.GET<NewBlastEditorForm>().Visible)
                 silent = false;
 
-            S.GET<RTC_NewBlastEditor_Form>().Close();
-            S.SET(new RTC_NewBlastEditor_Form());
+            S.GET<NewBlastEditorForm>().Close();
+            S.SET(new NewBlastEditorForm());
 
             if (sk == null)
             {
@@ -218,11 +217,11 @@ namespace RTCV.UI
             //TODO
             if (sk.BlastLayer.Layer.Count > 5000 && (DialogResult.Yes == MessageBox.Show($"You're trying to open a blastlayer of size " + sk.BlastLayer.Layer.Count + ". This could take a while. Are you sure you want to continue?", "Opening a large BlastLayer", MessageBoxButtons.YesNo)))
             {
-                S.GET<RTC_NewBlastEditor_Form>().LoadStashkey(sk, silent);
+                S.GET<NewBlastEditorForm>().LoadStashkey(sk, silent);
             }
             else if (sk.BlastLayer.Layer.Count <= 5000)
             {
-                S.GET<RTC_NewBlastEditor_Form>().LoadStashkey(sk, silent);
+                S.GET<NewBlastEditorForm>().LoadStashkey(sk, silent);
             }
         }
 
@@ -330,7 +329,7 @@ namespace RTCV.UI
             Params.SetParam("BLASTEDITOR_COLUMN_ORDER", sb.ToString());
         }
 
-        private void DgvBlastEditor_Click(object sender, MouseEventArgs e)
+        private void OnBlastEditorMouseClick(object sender, MouseEventArgs e)
         {
             //Exit edit mode if you click away from a cell
             var ht = dgvBlastEditor.HitTest(e.X, e.Y);
@@ -341,7 +340,7 @@ namespace RTCV.UI
             }
         }
 
-        private void dgvBlastEditor_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void OnBlastEditorCellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             // Note handling
             if (e != null && e.RowIndex != -1 &&
@@ -385,7 +384,7 @@ namespace RTCV.UI
             }
         }
 
-        private void dgvBlastEditor_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void OnBlastEditorCellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -481,7 +480,7 @@ namespace RTCV.UI
             }))).Enabled = true;
         }
 
-        private void dgvBlastEditor_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void OnBlastEditorCellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             DataGridViewColumn changedColumn = dgvBlastEditor.Columns[e.ColumnIndex];
 
@@ -776,7 +775,7 @@ namespace RTCV.UI
             UpdateBottom();
         }
 
-        private void dgvBlastEditor_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void OnBlastEditorColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -878,7 +877,7 @@ namespace RTCV.UI
             }
         }
 
-        private void dgvBlastEditor_SelectionChanged(object sender, EventArgs e)
+        private void OnBlastEditorSelectionChange(object sender, EventArgs e)
         {
             UpdateBottom();
 
@@ -893,7 +892,7 @@ namespace RTCV.UI
             updateMaximum(col);
         }
 
-        private void DgvBlastEditor_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        private void OnBlastEditorCellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             //Bug in DGV. If you don't read the value back, it goes into edit mode on first click if you read the selectedrow within SelectionChanged. Why? No idea.
             _ = dgvBlastEditor.Rows[e.RowIndex].Cells[0].Value;
@@ -1345,7 +1344,7 @@ namespace RTCV.UI
             }
         }
 
-        public void dgvBlastLayer_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        private void OnBlastEditorDataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             MessageBox.Show(e.Exception.ToString() + "\nRow:" + e.RowIndex + "\nColumn" + e.ColumnIndex + "\n" + e.Context + "\n" + dgvBlastEditor[e.ColumnIndex, e.RowIndex].Value?.ToString());
         }
@@ -2214,8 +2213,8 @@ namespace RTCV.UI
 
         public void btnAddStashToStockpile_Click(object sender, EventArgs e) => AddStashToStockpile();
         private void breakDownAllBlastunitsToolStripMenuItem_Click(object sender, EventArgs e) => BreakDownUnits();
-        private void DgvBlastEditor_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e) => UpdateLayerSize();
-        private void DgvBlastEditor_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e) => UpdateLayerSize();
+        private void OnBlastEditorRowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e) => UpdateLayerSize();
+        private void OnBlastEditorRowsAdded(object sender, DataGridViewRowsAddedEventArgs e) => UpdateLayerSize();
         private void exportToCSVToolStripMenuItem_Click(object sender, EventArgs e) => ExportToCSV(null);
         private void bakeBlastunitsToVALUEToolStripMenuItem_Click(object sender, EventArgs e) => BakeBlastUnitsToValue();
         private void runRomWithoutBlastlayerToolStripMenuItem_Click(object sender, EventArgs e) => currentSK.RunOriginal();

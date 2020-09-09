@@ -3,7 +3,7 @@ using RTCV.UI;
 
 namespace RTCV.UI
 {
-	partial class RTC_NewBlastEditor_Form
+	partial class NewBlastEditorForm
     {
 		/// <summary>
 		/// Required designer variable.
@@ -31,7 +31,7 @@ namespace RTCV.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_NewBlastEditor_Form));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewBlastEditorForm));
             this.dgvBlastEditor = new System.Windows.Forms.DataGridView();
             this.panelSidebar = new System.Windows.Forms.Panel();
             this.btnDisable50 = new System.Windows.Forms.Button();
@@ -62,11 +62,13 @@ namespace RTCV.UI
             this.tbFilter = new System.Windows.Forms.TextBox();
             this.panelBottom = new System.Windows.Forms.Panel();
             this.panel9 = new System.Windows.Forms.Panel();
+            this.label20 = new System.Windows.Forms.Label();
+            this.upDownLoopTiming = new RTCV.UI.Components.NumericUpDownHexFix();
             this.label16 = new System.Windows.Forms.Label();
             this.upDownLifetime = new RTCV.UI.Components.NumericUpDownHexFix();
             this.label1 = new System.Windows.Forms.Label();
-            this.upDownExecuteFrame = new RTCV.UI.Components.NumericUpDownHexFix();
             this.cbLoop = new System.Windows.Forms.CheckBox();
+            this.upDownExecuteFrame = new RTCV.UI.Components.NumericUpDownHexFix();
             this.label5 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.btnNote = new System.Windows.Forms.Button();
@@ -130,8 +132,6 @@ namespace RTCV.UI
             this.bakeBlastunitsToVALUEToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.breakDownAllBlastunitsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openBlastGeneratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.upDownLoopTiming = new RTCV.UI.Components.NumericUpDownHexFix();
-            this.label20 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBlastEditor)).BeginInit();
             this.panelSidebar.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -140,6 +140,7 @@ namespace RTCV.UI
             this.panel2.SuspendLayout();
             this.panelBottom.SuspendLayout();
             this.panel9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.upDownLoopTiming)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.upDownLifetime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.upDownExecuteFrame)).BeginInit();
             this.panel5.SuspendLayout();
@@ -151,11 +152,10 @@ namespace RTCV.UI
             ((System.ComponentModel.ISupportInitialize)(this.upDownAddress)).BeginInit();
             this.panel4.SuspendLayout();
             this.menuStripEx1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.upDownLoopTiming)).BeginInit();
             this.SuspendLayout();
-            //
+            // 
             // dgvBlastEditor
-            //
+            // 
             this.dgvBlastEditor.AllowUserToAddRows = false;
             this.dgvBlastEditor.AllowUserToResizeRows = false;
             this.dgvBlastEditor.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -173,9 +173,10 @@ namespace RTCV.UI
             this.dgvBlastEditor.Size = new System.Drawing.Size(662, 245);
             this.dgvBlastEditor.TabIndex = 0;
             this.dgvBlastEditor.Tag = "color:normal";
-            //
+            this.dgvBlastEditor.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.OnBlastEditorDataError);
+            // 
             // panelSidebar
-            //
+            // 
             this.panelSidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.panelSidebar.Controls.Add(this.btnDisable50);
             this.panelSidebar.Controls.Add(this.btnInvertDisabled);
@@ -201,9 +202,9 @@ namespace RTCV.UI
             this.panelSidebar.Size = new System.Drawing.Size(159, 517);
             this.panelSidebar.TabIndex = 146;
             this.panelSidebar.Tag = "color:dark1";
-            //
+            // 
             // btnDisable50
-            //
+            // 
             this.btnDisable50.BackColor = System.Drawing.Color.Gray;
             this.btnDisable50.FlatAppearance.BorderSize = 0;
             this.btnDisable50.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -218,9 +219,9 @@ namespace RTCV.UI
             this.btnDisable50.Text = "Disable 50%";
             this.btnDisable50.UseVisualStyleBackColor = false;
             this.btnDisable50.Click += new System.EventHandler(this.btnDisable50_Click);
-            //
+            // 
             // btnInvertDisabled
-            //
+            // 
             this.btnInvertDisabled.BackColor = System.Drawing.Color.Gray;
             this.btnInvertDisabled.FlatAppearance.BorderSize = 0;
             this.btnInvertDisabled.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -235,9 +236,9 @@ namespace RTCV.UI
             this.btnInvertDisabled.Text = "Invert Disabled";
             this.btnInvertDisabled.UseVisualStyleBackColor = false;
             this.btnInvertDisabled.Click += new System.EventHandler(this.btnInvertDisabled_Click);
-            //
+            // 
             // btnRemoveDisabled
-            //
+            // 
             this.btnRemoveDisabled.BackColor = System.Drawing.Color.Gray;
             this.btnRemoveDisabled.FlatAppearance.BorderSize = 0;
             this.btnRemoveDisabled.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -252,9 +253,9 @@ namespace RTCV.UI
             this.btnRemoveDisabled.Text = "Remove Disabled";
             this.btnRemoveDisabled.UseVisualStyleBackColor = false;
             this.btnRemoveDisabled.Click += new System.EventHandler(this.btnRemoveDisabled_Click);
-            //
+            // 
             // btnSanitizeTool
-            //
+            // 
             this.btnSanitizeTool.BackColor = System.Drawing.Color.Gray;
             this.btnSanitizeTool.FlatAppearance.BorderSize = 0;
             this.btnSanitizeTool.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -269,9 +270,9 @@ namespace RTCV.UI
             this.btnSanitizeTool.Text = "Sanitize Tool";
             this.btnSanitizeTool.UseVisualStyleBackColor = false;
             this.btnSanitizeTool.Click += new System.EventHandler(this.btnSanitizeTool_Click);
-            //
+            // 
             // btnDisableEverything
-            //
+            // 
             this.btnDisableEverything.BackColor = System.Drawing.Color.Gray;
             this.btnDisableEverything.FlatAppearance.BorderSize = 0;
             this.btnDisableEverything.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -286,9 +287,9 @@ namespace RTCV.UI
             this.btnDisableEverything.Text = "Disable Everything";
             this.btnDisableEverything.UseVisualStyleBackColor = false;
             this.btnDisableEverything.Click += new System.EventHandler(this.btnDisableEverything_Click);
-            //
+            // 
             // btnEnableEverything
-            //
+            // 
             this.btnEnableEverything.BackColor = System.Drawing.Color.Gray;
             this.btnEnableEverything.FlatAppearance.BorderSize = 0;
             this.btnEnableEverything.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -303,9 +304,9 @@ namespace RTCV.UI
             this.btnEnableEverything.Text = "Enable Everything";
             this.btnEnableEverything.UseVisualStyleBackColor = false;
             this.btnEnableEverything.Click += new System.EventHandler(this.btnEnableEverything_Click);
-            //
+            // 
             // btnRemoveSelected
-            //
+            // 
             this.btnRemoveSelected.BackColor = System.Drawing.Color.Gray;
             this.btnRemoveSelected.FlatAppearance.BorderSize = 0;
             this.btnRemoveSelected.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -320,9 +321,9 @@ namespace RTCV.UI
             this.btnRemoveSelected.Text = "Remove Selected";
             this.btnRemoveSelected.UseVisualStyleBackColor = false;
             this.btnRemoveSelected.Click += new System.EventHandler(this.btnRemoveSelected_Click);
-            //
+            // 
             // btnDuplicateSelected
-            //
+            // 
             this.btnDuplicateSelected.BackColor = System.Drawing.Color.Gray;
             this.btnDuplicateSelected.FlatAppearance.BorderSize = 0;
             this.btnDuplicateSelected.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -337,9 +338,9 @@ namespace RTCV.UI
             this.btnDuplicateSelected.Text = "Duplicate Selected";
             this.btnDuplicateSelected.UseVisualStyleBackColor = false;
             this.btnDuplicateSelected.Click += new System.EventHandler(this.btnDuplicateSelected_Click);
-            //
+            // 
             // btnAddRow
-            //
+            // 
             this.btnAddRow.BackColor = System.Drawing.Color.Gray;
             this.btnAddRow.FlatAppearance.BorderSize = 0;
             this.btnAddRow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -354,9 +355,9 @@ namespace RTCV.UI
             this.btnAddRow.Text = "Add New Row";
             this.btnAddRow.UseVisualStyleBackColor = false;
             this.btnAddRow.Click += new System.EventHandler(this.BtnAddRow_Click);
-            //
+            // 
             // btnAddStashToStockpile
-            //
+            // 
             this.btnAddStashToStockpile.BackColor = System.Drawing.Color.Gray;
             this.btnAddStashToStockpile.FlatAppearance.BorderSize = 0;
             this.btnAddStashToStockpile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -374,9 +375,9 @@ namespace RTCV.UI
             this.btnAddStashToStockpile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAddStashToStockpile.UseVisualStyleBackColor = false;
             this.btnAddStashToStockpile.Click += new System.EventHandler(this.btnAddStashToStockpile_Click);
-            //
+            // 
             // panel1
-            //
+            // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.Gray;
             this.panel1.Controls.Add(this.cbShiftBlastlayer);
@@ -388,9 +389,9 @@ namespace RTCV.UI
             this.panel1.Size = new System.Drawing.Size(136, 60);
             this.panel1.TabIndex = 137;
             this.panel1.Tag = "color:light2";
-            //
+            // 
             // cbShiftBlastlayer
-            //
+            // 
             this.cbShiftBlastlayer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.cbShiftBlastlayer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbShiftBlastlayer.ForeColor = System.Drawing.Color.White;
@@ -400,9 +401,9 @@ namespace RTCV.UI
             this.cbShiftBlastlayer.Size = new System.Drawing.Size(114, 21);
             this.cbShiftBlastlayer.TabIndex = 148;
             this.cbShiftBlastlayer.Tag = "color:dark1";
-            //
+            // 
             // btnShiftBlastLayerDown
-            //
+            // 
             this.btnShiftBlastLayerDown.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnShiftBlastLayerDown.FlatAppearance.BorderSize = 0;
             this.btnShiftBlastLayerDown.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -417,9 +418,9 @@ namespace RTCV.UI
             this.btnShiftBlastLayerDown.Text = "◀";
             this.btnShiftBlastLayerDown.UseVisualStyleBackColor = false;
             this.btnShiftBlastLayerDown.Click += new System.EventHandler(this.btnShiftBlastLayerDown_Click);
-            //
+            // 
             // btnShiftBlastLayerUp
-            //
+            // 
             this.btnShiftBlastLayerUp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnShiftBlastLayerUp.FlatAppearance.BorderSize = 0;
             this.btnShiftBlastLayerUp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -434,9 +435,9 @@ namespace RTCV.UI
             this.btnShiftBlastLayerUp.Text = "▶";
             this.btnShiftBlastLayerUp.UseVisualStyleBackColor = false;
             this.btnShiftBlastLayerUp.Click += new System.EventHandler(this.btnShiftBlastLayerUp_Click);
-            //
+            // 
             // updownShiftBlastLayerAmount
-            //
+            // 
             this.updownShiftBlastLayerAmount.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.updownShiftBlastLayerAmount.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.updownShiftBlastLayerAmount.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
@@ -447,9 +448,9 @@ namespace RTCV.UI
             this.updownShiftBlastLayerAmount.Size = new System.Drawing.Size(59, 22);
             this.updownShiftBlastLayerAmount.TabIndex = 145;
             this.updownShiftBlastLayerAmount.Tag = "color:dark1";
-            //
+            // 
             // pnMemoryTargetting
-            //
+            // 
             this.pnMemoryTargetting.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pnMemoryTargetting.BackColor = System.Drawing.Color.Gray;
             this.pnMemoryTargetting.Controls.Add(this.lbBlastLayerSize);
@@ -458,18 +459,18 @@ namespace RTCV.UI
             this.pnMemoryTargetting.Size = new System.Drawing.Size(135, 24);
             this.pnMemoryTargetting.TabIndex = 134;
             this.pnMemoryTargetting.Tag = "color:light2";
-            //
+            // 
             // lbBlastLayerSize
-            //
+            // 
             this.lbBlastLayerSize.ForeColor = System.Drawing.Color.White;
             this.lbBlastLayerSize.Location = new System.Drawing.Point(5, 5);
             this.lbBlastLayerSize.Name = "lbBlastLayerSize";
             this.lbBlastLayerSize.Size = new System.Drawing.Size(120, 19);
             this.lbBlastLayerSize.TabIndex = 132;
             this.lbBlastLayerSize.Text = "Layer size:";
-            //
+            // 
             // btnHelp
-            //
+            // 
             this.btnHelp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnHelp.FlatAppearance.BorderSize = 0;
             this.btnHelp.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -484,9 +485,9 @@ namespace RTCV.UI
             this.btnHelp.Tag = "color:dark1";
             this.btnHelp.UseVisualStyleBackColor = false;
             this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
-            //
+            // 
             // label3
-            //
+            // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
@@ -496,9 +497,9 @@ namespace RTCV.UI
             this.label3.Size = new System.Drawing.Size(82, 13);
             this.label3.TabIndex = 135;
             this.label3.Text = "BlastLayer Info";
-            //
+            // 
             // btnLoadCorrupt
-            //
+            // 
             this.btnLoadCorrupt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnLoadCorrupt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnLoadCorrupt.FlatAppearance.BorderSize = 0;
@@ -514,9 +515,9 @@ namespace RTCV.UI
             this.btnLoadCorrupt.Text = "Load + Corrupt";
             this.btnLoadCorrupt.UseVisualStyleBackColor = false;
             this.btnLoadCorrupt.Click += new System.EventHandler(this.btnLoadCorrupt_Click);
-            //
+            // 
             // btnCorrupt
-            //
+            // 
             this.btnCorrupt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnCorrupt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnCorrupt.FlatAppearance.BorderSize = 0;
@@ -532,9 +533,9 @@ namespace RTCV.UI
             this.btnCorrupt.Text = "Apply Corruption";
             this.btnCorrupt.UseVisualStyleBackColor = false;
             this.btnCorrupt.Click += new System.EventHandler(this.btnCorrupt_Click);
-            //
+            // 
             // btnSendToStash
-            //
+            // 
             this.btnSendToStash.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnSendToStash.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnSendToStash.FlatAppearance.BorderSize = 0;
@@ -550,9 +551,9 @@ namespace RTCV.UI
             this.btnSendToStash.Text = "Send To Stash";
             this.btnSendToStash.UseVisualStyleBackColor = false;
             this.btnSendToStash.Click += new System.EventHandler(this.btnSendToStash_Click);
-            //
+            // 
             // label4
-            //
+            // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
             this.label4.ForeColor = System.Drawing.Color.White;
@@ -561,9 +562,9 @@ namespace RTCV.UI
             this.label4.Size = new System.Drawing.Size(108, 13);
             this.label4.TabIndex = 136;
             this.label4.Text = "Shift Selected Rows";
-            //
+            // 
             // panel2
-            //
+            // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.cbFilterColumn);
             this.panel2.Controls.Add(this.tbFilter);
@@ -573,9 +574,9 @@ namespace RTCV.UI
             this.panel2.Size = new System.Drawing.Size(662, 21);
             this.panel2.TabIndex = 148;
             this.panel2.Tag = "color:light1";
-            //
+            // 
             // cbFilterColumn
-            //
+            // 
             this.cbFilterColumn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.cbFilterColumn.BackColor = System.Drawing.Color.White;
             this.cbFilterColumn.ForeColor = System.Drawing.Color.Black;
@@ -584,17 +585,17 @@ namespace RTCV.UI
             this.cbFilterColumn.Name = "cbFilterColumn";
             this.cbFilterColumn.Size = new System.Drawing.Size(100, 21);
             this.cbFilterColumn.TabIndex = 149;
-            //
+            // 
             // tbFilter
-            //
+            // 
             this.tbFilter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.tbFilter.Location = new System.Drawing.Point(562, -1);
             this.tbFilter.Name = "tbFilter";
             this.tbFilter.Size = new System.Drawing.Size(100, 22);
             this.tbFilter.TabIndex = 7;
-            //
+            // 
             // panelBottom
-            //
+            // 
             this.panelBottom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.panelBottom.Controls.Add(this.panel9);
             this.panelBottom.Controls.Add(this.label5);
@@ -608,9 +609,9 @@ namespace RTCV.UI
             this.panelBottom.Size = new System.Drawing.Size(662, 251);
             this.panelBottom.TabIndex = 149;
             this.panelBottom.Tag = "color:normal";
-            //
+            // 
             // panel9
-            //
+            // 
             this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel9.Controls.Add(this.label20);
             this.panel9.Controls.Add(this.upDownLoopTiming);
@@ -623,18 +624,48 @@ namespace RTCV.UI
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(118, 157);
             this.panel9.TabIndex = 4;
-            //
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(1, 110);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(70, 13);
+            this.label20.TabIndex = 28;
+            this.label20.Text = "Loop Timing";
+            // 
+            // upDownLoopTiming
+            // 
+            this.upDownLoopTiming.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.upDownLoopTiming.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.upDownLoopTiming.ForeColor = System.Drawing.Color.White;
+            this.upDownLoopTiming.Location = new System.Drawing.Point(4, 125);
+            this.upDownLoopTiming.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.upDownLoopTiming.Name = "upDownLoopTiming";
+            this.upDownLoopTiming.Size = new System.Drawing.Size(109, 22);
+            this.upDownLoopTiming.TabIndex = 27;
+            this.upDownLoopTiming.Tag = "color:dark1";
+            this.upDownLoopTiming.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            // 
             // label16
-            //
+            // 
             this.label16.AutoSize = true;
             this.label16.Location = new System.Drawing.Point(-1, 50);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(47, 13);
             this.label16.TabIndex = 26;
             this.label16.Text = "Lifetime";
-            //
+            // 
             // upDownLifetime
-            //
+            // 
             this.upDownLifetime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.upDownLifetime.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.upDownLifetime.ForeColor = System.Drawing.Color.White;
@@ -643,18 +674,28 @@ namespace RTCV.UI
             this.upDownLifetime.Size = new System.Drawing.Size(109, 22);
             this.upDownLifetime.TabIndex = 25;
             this.upDownLifetime.Tag = "color:dark1";
-            //
+            // 
             // label1
-            //
+            // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(1, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(80, 13);
             this.label1.TabIndex = 24;
             this.label1.Text = "Execute Frame";
-            //
+            // 
+            // cbLoop
+            // 
+            this.cbLoop.AutoSize = true;
+            this.cbLoop.Location = new System.Drawing.Point(2, 93);
+            this.cbLoop.Name = "cbLoop";
+            this.cbLoop.Size = new System.Drawing.Size(52, 17);
+            this.cbLoop.TabIndex = 0;
+            this.cbLoop.Text = "Loop";
+            this.cbLoop.UseVisualStyleBackColor = true;
+            // 
             // upDownExecuteFrame
-            //
+            // 
             this.upDownExecuteFrame.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.upDownExecuteFrame.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.upDownExecuteFrame.ForeColor = System.Drawing.Color.White;
@@ -663,28 +704,18 @@ namespace RTCV.UI
             this.upDownExecuteFrame.Size = new System.Drawing.Size(109, 22);
             this.upDownExecuteFrame.TabIndex = 12;
             this.upDownExecuteFrame.Tag = "color:dark1";
-            //
-            // cbLoop
-            //
-            this.cbLoop.AutoSize = true;
-            this.cbLoop.Location = new System.Drawing.Point(2, 93);
-            this.cbLoop.Name = "cbLoop";
-            this.cbLoop.Size = new System.Drawing.Size(52, 17);
-            this.cbLoop.TabIndex = 0;
-            this.cbLoop.Text = "Loop";
-            this.cbLoop.UseVisualStyleBackColor = true;
-            //
+            // 
             // label5
-            //
+            // 
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(145, 8);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(31, 13);
             this.label5.TabIndex = 3;
             this.label5.Text = "Data";
-            //
+            // 
             // panel5
-            //
+            // 
             this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel5.Controls.Add(this.btnNote);
             this.panel5.Controls.Add(this.panel8);
@@ -705,9 +736,9 @@ namespace RTCV.UI
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(484, 215);
             this.panel5.TabIndex = 2;
-            //
+            // 
             // btnNote
-            //
+            // 
             this.btnNote.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.btnNote.FlatAppearance.BorderSize = 0;
             this.btnNote.FlatStyle = System.Windows.Forms.FlatStyle.System;
@@ -722,9 +753,9 @@ namespace RTCV.UI
             this.btnNote.Text = "Open Note Editor";
             this.btnNote.UseVisualStyleBackColor = false;
             this.btnNote.Click += new System.EventHandler(this.btnNote_Click);
-            //
+            // 
             // panel8
-            //
+            // 
             this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel8.Controls.Add(this.cbStoreLimiterSource);
             this.panel8.Controls.Add(this.label17);
@@ -737,9 +768,9 @@ namespace RTCV.UI
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(210, 84);
             this.panel8.TabIndex = 25;
-            //
+            // 
             // cbStoreLimiterSource
-            //
+            // 
             this.cbStoreLimiterSource.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.cbStoreLimiterSource.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbStoreLimiterSource.ForeColor = System.Drawing.Color.White;
@@ -749,18 +780,18 @@ namespace RTCV.UI
             this.cbStoreLimiterSource.Size = new System.Drawing.Size(92, 21);
             this.cbStoreLimiterSource.TabIndex = 13;
             this.cbStoreLimiterSource.Tag = "color:dark1";
-            //
+            // 
             // label17
-            //
+            // 
             this.label17.AutoSize = true;
             this.label17.Location = new System.Drawing.Point(104, 43);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(99, 13);
             this.label17.TabIndex = 12;
             this.label17.Text = "Store Comparison";
-            //
+            // 
             // cbInvertLimiter
-            //
+            // 
             this.cbInvertLimiter.AutoSize = true;
             this.cbInvertLimiter.Location = new System.Drawing.Point(3, 47);
             this.cbInvertLimiter.Name = "cbInvertLimiter";
@@ -768,9 +799,9 @@ namespace RTCV.UI
             this.cbInvertLimiter.TabIndex = 11;
             this.cbInvertLimiter.Text = "Invert Limiter";
             this.cbInvertLimiter.UseVisualStyleBackColor = true;
-            //
+            // 
             // cbLimiterTime
-            //
+            // 
             this.cbLimiterTime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.cbLimiterTime.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbLimiterTime.ForeColor = System.Drawing.Color.White;
@@ -780,18 +811,18 @@ namespace RTCV.UI
             this.cbLimiterTime.Size = new System.Drawing.Size(92, 21);
             this.cbLimiterTime.TabIndex = 10;
             this.cbLimiterTime.Tag = "color:dark1";
-            //
+            // 
             // label18
-            //
+            // 
             this.label18.AutoSize = true;
             this.label18.Location = new System.Drawing.Point(104, 4);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(67, 13);
             this.label18.TabIndex = 9;
             this.label18.Text = "Limiter Time";
-            //
+            // 
             // cbLimiterList
-            //
+            // 
             this.cbLimiterList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.cbLimiterList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbLimiterList.ForeColor = System.Drawing.Color.White;
@@ -803,18 +834,18 @@ namespace RTCV.UI
             this.cbLimiterList.Size = new System.Drawing.Size(92, 21);
             this.cbLimiterList.TabIndex = 8;
             this.cbLimiterList.Tag = "color:dark1";
-            //
+            // 
             // label19
-            //
+            // 
             this.label19.AutoSize = true;
             this.label19.Location = new System.Drawing.Point(0, 4);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(61, 13);
             this.label19.TabIndex = 7;
             this.label19.Text = "Limiter List";
-            //
+            // 
             // tbTiltValue
-            //
+            // 
             this.tbTiltValue.AllowDecimal = false;
             this.tbTiltValue.AllowNegative = true;
             this.tbTiltValue.AllowSpace = false;
@@ -826,27 +857,27 @@ namespace RTCV.UI
             this.tbTiltValue.Size = new System.Drawing.Size(108, 22);
             this.tbTiltValue.TabIndex = 24;
             this.tbTiltValue.Tag = "color:dark1";
-            //
+            // 
             // label15
-            //
+            // 
             this.label15.AutoSize = true;
             this.label15.Location = new System.Drawing.Point(1, 125);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(54, 13);
             this.label15.TabIndex = 23;
             this.label15.Text = "Tilt Value";
-            //
+            // 
             // label11
-            //
+            // 
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(125, 4);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(42, 13);
             this.label11.TabIndex = 16;
             this.label11.Text = "Source";
-            //
+            // 
             // cbSource
-            //
+            // 
             this.cbSource.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.cbSource.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbSource.ForeColor = System.Drawing.Color.White;
@@ -856,9 +887,9 @@ namespace RTCV.UI
             this.cbSource.Size = new System.Drawing.Size(109, 21);
             this.cbSource.TabIndex = 15;
             this.cbSource.Tag = "color:dark1";
-            //
+            // 
             // panel6
-            //
+            // 
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel6.Controls.Add(this.label12);
             this.panel6.Controls.Add(this.tbValue);
@@ -866,18 +897,18 @@ namespace RTCV.UI
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(109, 49);
             this.panel6.TabIndex = 14;
-            //
+            // 
             // label12
-            //
+            // 
             this.label12.AutoSize = true;
             this.label12.Location = new System.Drawing.Point(3, 2);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(36, 13);
             this.label12.TabIndex = 13;
             this.label12.Text = "Value";
-            //
+            // 
             // tbValue
-            //
+            // 
             this.tbValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbValue.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbValue.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
@@ -891,9 +922,9 @@ namespace RTCV.UI
             this.tbValue.TabIndex = 0;
             this.tbValue.Tag = "color:dark1";
             this.tbValue.Text = "FFFFFFFF";
-            //
+            // 
             // panel7
-            //
+            // 
             this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel7.Controls.Add(this.cbSourceDomain);
             this.panel7.Controls.Add(this.upDownSourceAddress);
@@ -907,9 +938,9 @@ namespace RTCV.UI
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(216, 88);
             this.panel7.TabIndex = 13;
-            //
+            // 
             // cbSourceDomain
-            //
+            // 
             this.cbSourceDomain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.cbSourceDomain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbSourceDomain.ForeColor = System.Drawing.Color.White;
@@ -919,9 +950,9 @@ namespace RTCV.UI
             this.cbSourceDomain.Size = new System.Drawing.Size(109, 21);
             this.cbSourceDomain.TabIndex = 11;
             this.cbSourceDomain.Tag = "color:dark1";
-            //
+            // 
             // upDownSourceAddress
-            //
+            // 
             this.upDownSourceAddress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.upDownSourceAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.upDownSourceAddress.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
@@ -932,27 +963,27 @@ namespace RTCV.UI
             this.upDownSourceAddress.Size = new System.Drawing.Size(109, 22);
             this.upDownSourceAddress.TabIndex = 13;
             this.upDownSourceAddress.Tag = "color:dark1";
-            //
+            // 
             // label13
-            //
+            // 
             this.label13.AutoSize = true;
             this.label13.Location = new System.Drawing.Point(92, 44);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(86, 13);
             this.label13.TabIndex = 14;
             this.label13.Text = "Source Address";
-            //
+            // 
             // label14
-            //
+            // 
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(92, 3);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(85, 13);
             this.label14.TabIndex = 12;
             this.label14.Text = "Source Domain";
-            //
+            // 
             // cbStoreTime
-            //
+            // 
             this.cbStoreTime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.cbStoreTime.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbStoreTime.ForeColor = System.Drawing.Color.White;
@@ -962,18 +993,18 @@ namespace RTCV.UI
             this.cbStoreTime.Size = new System.Drawing.Size(83, 21);
             this.cbStoreTime.TabIndex = 10;
             this.cbStoreTime.Tag = "color:dark1";
-            //
+            // 
             // label6
-            //
+            // 
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(3, 44);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(60, 13);
             this.label6.TabIndex = 9;
             this.label6.Text = "Store Time";
-            //
+            // 
             // cbStoreType
-            //
+            // 
             this.cbStoreType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.cbStoreType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbStoreType.ForeColor = System.Drawing.Color.White;
@@ -983,27 +1014,27 @@ namespace RTCV.UI
             this.cbStoreType.Size = new System.Drawing.Size(83, 21);
             this.cbStoreType.TabIndex = 8;
             this.cbStoreType.Tag = "color:dark1";
-            //
+            // 
             // label7
-            //
+            // 
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(3, 3);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(60, 13);
             this.label7.TabIndex = 7;
             this.label7.Text = "Store Type";
-            //
+            // 
             // label10
-            //
+            // 
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(0, 87);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(53, 13);
             this.label10.TabIndex = 12;
             this.label10.Text = "Precision";
-            //
+            // 
             // upDownPrecision
-            //
+            // 
             this.upDownPrecision.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.upDownPrecision.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.upDownPrecision.ForeColor = System.Drawing.Color.White;
@@ -1022,18 +1053,18 @@ namespace RTCV.UI
             0,
             0,
             0});
-            //
+            // 
             // label9
-            //
+            // 
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(1, 45);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(48, 13);
             this.label9.TabIndex = 10;
             this.label9.Text = "Address";
-            //
+            // 
             // upDownAddress
-            //
+            // 
             this.upDownAddress.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.upDownAddress.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.upDownAddress.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
@@ -1044,18 +1075,18 @@ namespace RTCV.UI
             this.upDownAddress.Size = new System.Drawing.Size(109, 22);
             this.upDownAddress.TabIndex = 9;
             this.upDownAddress.Tag = "color:dark1";
-            //
+            // 
             // label8
-            //
+            // 
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(1, 3);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(47, 13);
             this.label8.TabIndex = 8;
             this.label8.Text = "Domain";
-            //
+            // 
             // cbDomain
-            //
+            // 
             this.cbDomain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.cbDomain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbDomain.ForeColor = System.Drawing.Color.White;
@@ -1065,18 +1096,18 @@ namespace RTCV.UI
             this.cbDomain.Size = new System.Drawing.Size(109, 21);
             this.cbDomain.TabIndex = 0;
             this.cbDomain.Tag = "color:dark1";
-            //
+            // 
             // label2
-            //
+            // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(17, 8);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(49, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "Settings";
-            //
+            // 
             // panel4
-            //
+            // 
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel4.Controls.Add(this.cbBigEndian);
             this.panel4.Controls.Add(this.cbLocked);
@@ -1085,9 +1116,9 @@ namespace RTCV.UI
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(118, 60);
             this.panel4.TabIndex = 0;
-            //
+            // 
             // cbBigEndian
-            //
+            // 
             this.cbBigEndian.AutoSize = true;
             this.cbBigEndian.Location = new System.Drawing.Point(3, 38);
             this.cbBigEndian.Name = "cbBigEndian";
@@ -1095,9 +1126,9 @@ namespace RTCV.UI
             this.cbBigEndian.TabIndex = 2;
             this.cbBigEndian.Text = "Big Endian";
             this.cbBigEndian.UseVisualStyleBackColor = true;
-            //
+            // 
             // cbLocked
-            //
+            // 
             this.cbLocked.AutoSize = true;
             this.cbLocked.Location = new System.Drawing.Point(3, 21);
             this.cbLocked.Name = "cbLocked";
@@ -1105,9 +1136,9 @@ namespace RTCV.UI
             this.cbLocked.TabIndex = 1;
             this.cbLocked.Text = "Locked";
             this.cbLocked.UseVisualStyleBackColor = true;
-            //
+            // 
             // cbEnabled
-            //
+            // 
             this.cbEnabled.AutoSize = true;
             this.cbEnabled.Location = new System.Drawing.Point(3, 4);
             this.cbEnabled.Name = "cbEnabled";
@@ -1115,9 +1146,10 @@ namespace RTCV.UI
             this.cbEnabled.TabIndex = 0;
             this.cbEnabled.Text = "Enabled";
             this.cbEnabled.UseVisualStyleBackColor = true;
-            //
+            this.cbEnabled.Validated += new System.EventHandler(this.cbEnabled_Validated);
+            // 
             // menuStripEx1
-            //
+            // 
             this.menuStripEx1.Font = new System.Drawing.Font("Segoe UI Symbol", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
             this.menuStripEx1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStripEx1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -1132,9 +1164,9 @@ namespace RTCV.UI
             this.menuStripEx1.TabIndex = 145;
             this.menuStripEx1.Tag = "";
             this.menuStripEx1.Text = "menuStripEx1";
-            //
+            // 
             // blastLayerToolStripMenuItem
-            //
+            // 
             this.blastLayerToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newToolStripMenuItem,
             this.loadFromFileblToolStripMenuItem,
@@ -1147,58 +1179,58 @@ namespace RTCV.UI
             this.blastLayerToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
             this.blastLayerToolStripMenuItem.Tag = "";
             this.blastLayerToolStripMenuItem.Text = "BlastLayer";
-            //
+            // 
             // newToolStripMenuItem
-            //
+            // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
             this.newToolStripMenuItem.Text = "&New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.NewToolStripMenuItem_Click);
-            //
+            // 
             // loadFromFileblToolStripMenuItem
-            //
+            // 
             this.loadFromFileblToolStripMenuItem.Name = "loadFromFileblToolStripMenuItem";
             this.loadFromFileblToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
             this.loadFromFileblToolStripMenuItem.Text = "&Load From File (.bl)";
             this.loadFromFileblToolStripMenuItem.Click += new System.EventHandler(this.loadFromFileblToolStripMenuItem_Click);
-            //
+            // 
             // saveToFileblToolStripMenuItem
-            //
+            // 
             this.saveToFileblToolStripMenuItem.Name = "saveToFileblToolStripMenuItem";
             this.saveToFileblToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
             this.saveToFileblToolStripMenuItem.Text = "&Save to File (.bl)";
             this.saveToFileblToolStripMenuItem.Click += new System.EventHandler(this.saveToFileblToolStripMenuItem_Click);
-            //
+            // 
             // saveAsToFileblToolStripMenuItem
-            //
+            // 
             this.saveAsToFileblToolStripMenuItem.Name = "saveAsToFileblToolStripMenuItem";
             this.saveAsToFileblToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
             this.saveAsToFileblToolStripMenuItem.Text = "&Save As to File (.bl)";
             this.saveAsToFileblToolStripMenuItem.Click += new System.EventHandler(this.saveAsToFileblToolStripMenuItem_Click);
-            //
+            // 
             // importBlastlayerblToolStripMenuItem
-            //
+            // 
             this.importBlastlayerblToolStripMenuItem.Name = "importBlastlayerblToolStripMenuItem";
             this.importBlastlayerblToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
             this.importBlastlayerblToolStripMenuItem.Text = "&Import Blastlayer (.bl)";
             this.importBlastlayerblToolStripMenuItem.Click += new System.EventHandler(this.importBlastlayerblToolStripMenuItem_Click);
-            //
+            // 
             // exportToCSVToolStripMenuItem
-            //
+            // 
             this.exportToCSVToolStripMenuItem.Name = "exportToCSVToolStripMenuItem";
             this.exportToCSVToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
             this.exportToCSVToolStripMenuItem.Text = "&Export to CSV";
             this.exportToCSVToolStripMenuItem.Click += new System.EventHandler(this.exportToCSVToolStripMenuItem_Click);
-            //
+            // 
             // importBlastlayerFromCorruptedFileToolStripMenuItem
-            //
+            // 
             this.importBlastlayerFromCorruptedFileToolStripMenuItem.Name = "importBlastlayerFromCorruptedFileToolStripMenuItem";
             this.importBlastlayerFromCorruptedFileToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
             this.importBlastlayerFromCorruptedFileToolStripMenuItem.Text = "Import Blastlayer From Corrupted &File";
             this.importBlastlayerFromCorruptedFileToolStripMenuItem.Click += new System.EventHandler(this.importBlastlayerFromCorruptedFileToolStripMenuItem_Click);
-            //
+            // 
             // saveStateToolStripMenuItem
-            //
+            // 
             this.saveStateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.runOriginalSavestateToolStripMenuItem,
             this.replaceSavestateFromGHToolStripMenuItem,
@@ -1208,37 +1240,37 @@ namespace RTCV.UI
             this.saveStateToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
             this.saveStateToolStripMenuItem.Tag = "";
             this.saveStateToolStripMenuItem.Text = "SaveState";
-            //
+            // 
             // runOriginalSavestateToolStripMenuItem
-            //
+            // 
             this.runOriginalSavestateToolStripMenuItem.Name = "runOriginalSavestateToolStripMenuItem";
             this.runOriginalSavestateToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.runOriginalSavestateToolStripMenuItem.Text = "Run Original Savestate";
             this.runOriginalSavestateToolStripMenuItem.Click += new System.EventHandler(this.runOriginalSavestateToolStripMenuItem_Click);
-            //
+            // 
             // replaceSavestateFromGHToolStripMenuItem
-            //
+            // 
             this.replaceSavestateFromGHToolStripMenuItem.Name = "replaceSavestateFromGHToolStripMenuItem";
             this.replaceSavestateFromGHToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.replaceSavestateFromGHToolStripMenuItem.Text = "Replace Savestate from GH";
             this.replaceSavestateFromGHToolStripMenuItem.Click += new System.EventHandler(this.replaceSavestateFromGHToolStripMenuItem_Click);
-            //
+            // 
             // replaceSavestateFromFileToolStripMenuItem
-            //
+            // 
             this.replaceSavestateFromFileToolStripMenuItem.Name = "replaceSavestateFromFileToolStripMenuItem";
             this.replaceSavestateFromFileToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.replaceSavestateFromFileToolStripMenuItem.Text = "Replace Savestate from File";
             this.replaceSavestateFromFileToolStripMenuItem.Click += new System.EventHandler(this.replaceSavestateFromFileToolStripMenuItem_Click);
-            //
+            // 
             // saveSavestateToToolStripMenuItem
-            //
+            // 
             this.saveSavestateToToolStripMenuItem.Name = "saveSavestateToToolStripMenuItem";
             this.saveSavestateToToolStripMenuItem.Size = new System.Drawing.Size(217, 22);
             this.saveSavestateToToolStripMenuItem.Text = "Save Savestate to";
             this.saveSavestateToToolStripMenuItem.Click += new System.EventHandler(this.saveSavestateToToolStripMenuItem_Click);
-            //
+            // 
             // rOMToolStripMenuItem
-            //
+            // 
             this.rOMToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.runRomWithoutBlastlayerToolStripMenuItem,
             this.replaceRomFromGHToolStripMenuItem,
@@ -1248,37 +1280,37 @@ namespace RTCV.UI
             this.rOMToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.rOMToolStripMenuItem.Tag = "";
             this.rOMToolStripMenuItem.Text = "ROM";
-            //
+            // 
             // runRomWithoutBlastlayerToolStripMenuItem
-            //
+            // 
             this.runRomWithoutBlastlayerToolStripMenuItem.Name = "runRomWithoutBlastlayerToolStripMenuItem";
             this.runRomWithoutBlastlayerToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
             this.runRomWithoutBlastlayerToolStripMenuItem.Text = "Run Rom Without Blastlayer";
             this.runRomWithoutBlastlayerToolStripMenuItem.Click += new System.EventHandler(this.runRomWithoutBlastlayerToolStripMenuItem_Click);
-            //
+            // 
             // replaceRomFromGHToolStripMenuItem
-            //
+            // 
             this.replaceRomFromGHToolStripMenuItem.Name = "replaceRomFromGHToolStripMenuItem";
             this.replaceRomFromGHToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
             this.replaceRomFromGHToolStripMenuItem.Text = "Replace Rom from GH";
             this.replaceRomFromGHToolStripMenuItem.Click += new System.EventHandler(this.replaceRomFromGHToolStripMenuItem_Click);
-            //
+            // 
             // replaceRomFromFileToolStripMenuItem
-            //
+            // 
             this.replaceRomFromFileToolStripMenuItem.Name = "replaceRomFromFileToolStripMenuItem";
             this.replaceRomFromFileToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
             this.replaceRomFromFileToolStripMenuItem.Text = "Replace Rom from File";
             this.replaceRomFromFileToolStripMenuItem.Click += new System.EventHandler(this.replaceRomFromFileToolStripMenuItem_Click);
-            //
+            // 
             // bakeROMBlastunitsToFileToolStripMenuItem
-            //
+            // 
             this.bakeROMBlastunitsToFileToolStripMenuItem.Name = "bakeROMBlastunitsToFileToolStripMenuItem";
             this.bakeROMBlastunitsToFileToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
             this.bakeROMBlastunitsToFileToolStripMenuItem.Text = "Bake ROM VALUE BlastUnits to File";
             this.bakeROMBlastunitsToFileToolStripMenuItem.Click += new System.EventHandler(this.bakeROMBlastunitsToFileToolStripMenuItem_Click);
-            //
+            // 
             // toolsToolStripMenuItem
-            //
+            // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sanitizeDuplicatesToolStripMenuItem,
             this.rasterizeVMDsToolStripMenuItem,
@@ -1289,74 +1321,44 @@ namespace RTCV.UI
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.toolsToolStripMenuItem.Tag = "";
             this.toolsToolStripMenuItem.Text = "Tools";
-            //
+            // 
             // sanitizeDuplicatesToolStripMenuItem
-            //
+            // 
             this.sanitizeDuplicatesToolStripMenuItem.Name = "sanitizeDuplicatesToolStripMenuItem";
             this.sanitizeDuplicatesToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.sanitizeDuplicatesToolStripMenuItem.Text = "Sanitize Duplicates";
             this.sanitizeDuplicatesToolStripMenuItem.Click += new System.EventHandler(this.sanitizeDuplicatesToolStripMenuItem_Click);
-            //
+            // 
             // rasterizeVMDsToolStripMenuItem
-            //
+            // 
             this.rasterizeVMDsToolStripMenuItem.Name = "rasterizeVMDsToolStripMenuItem";
             this.rasterizeVMDsToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.rasterizeVMDsToolStripMenuItem.Text = "Rasterize VMDs";
             this.rasterizeVMDsToolStripMenuItem.Click += new System.EventHandler(this.rasterizeVMDsToolStripMenuItem_Click);
-            //
+            // 
             // bakeBlastunitsToVALUEToolStripMenuItem
-            //
+            // 
             this.bakeBlastunitsToVALUEToolStripMenuItem.Name = "bakeBlastunitsToVALUEToolStripMenuItem";
             this.bakeBlastunitsToVALUEToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.bakeBlastunitsToVALUEToolStripMenuItem.Text = "Bake All Blastunits to VALUE";
             this.bakeBlastunitsToVALUEToolStripMenuItem.Click += new System.EventHandler(this.bakeBlastunitsToVALUEToolStripMenuItem_Click);
-            //
+            // 
             // breakDownAllBlastunitsToolStripMenuItem
-            //
+            // 
             this.breakDownAllBlastunitsToolStripMenuItem.Name = "breakDownAllBlastunitsToolStripMenuItem";
             this.breakDownAllBlastunitsToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.breakDownAllBlastunitsToolStripMenuItem.Text = "Break Down All Blastunits";
             this.breakDownAllBlastunitsToolStripMenuItem.Click += new System.EventHandler(this.breakDownAllBlastunitsToolStripMenuItem_Click);
-            //
+            // 
             // openBlastGeneratorToolStripMenuItem
-            //
+            // 
             this.openBlastGeneratorToolStripMenuItem.Name = "openBlastGeneratorToolStripMenuItem";
             this.openBlastGeneratorToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.openBlastGeneratorToolStripMenuItem.Text = "Open Blast Generator";
             this.openBlastGeneratorToolStripMenuItem.Click += new System.EventHandler(this.OpenBlastGeneratorToolStripMenuItem_Click);
-            //
-            // upDownLoopTiming
-            //
-            this.upDownLoopTiming.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.upDownLoopTiming.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.upDownLoopTiming.ForeColor = System.Drawing.Color.White;
-            this.upDownLoopTiming.Location = new System.Drawing.Point(4, 125);
-            this.upDownLoopTiming.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-            this.upDownLoopTiming.Name = "upDownLoopTiming";
-            this.upDownLoopTiming.Size = new System.Drawing.Size(109, 22);
-            this.upDownLoopTiming.TabIndex = 27;
-            this.upDownLoopTiming.Tag = "color:dark1";
-            this.upDownLoopTiming.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
-            //
-            // label20
-            //
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(1, 110);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(70, 13);
-            this.label20.TabIndex = 28;
-            this.label20.Text = "Loop Timing";
-            //
-            // RTC_NewBlastEditor_Form
-            //
+            // 
+            // NewBlastEditorForm
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(821, 541);
@@ -1369,7 +1371,7 @@ namespace RTCV.UI
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(837, 559);
-            this.Name = "RTC_NewBlastEditor_Form";
+            this.Name = "NewBlastEditorForm";
             this.Text = "Blast Editor";
             this.Load += new System.EventHandler(this.RTC_NewBlastEditorForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvBlastEditor)).EndInit();
@@ -1384,6 +1386,7 @@ namespace RTCV.UI
             this.panelBottom.PerformLayout();
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.upDownLoopTiming)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.upDownLifetime)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.upDownExecuteFrame)).EndInit();
             this.panel5.ResumeLayout(false);
@@ -1401,7 +1404,6 @@ namespace RTCV.UI
             this.panel4.PerformLayout();
             this.menuStripEx1.ResumeLayout(false);
             this.menuStripEx1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.upDownLoopTiming)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

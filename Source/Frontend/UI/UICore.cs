@@ -591,7 +591,7 @@ namespace RTCV.UI
                 case "Disable 50":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<NewBlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
                             bef.btnDisable50_Click(null, null);
@@ -602,7 +602,7 @@ namespace RTCV.UI
                 case "Remove Disabled":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<NewBlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
                             bef.btnRemoveDisabled_Click(null, null);
@@ -613,7 +613,7 @@ namespace RTCV.UI
                 case "Invert Disabled":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<NewBlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
                             bef.btnInvertDisabled_Click(null, null);
@@ -623,7 +623,7 @@ namespace RTCV.UI
                 case "Shift Up":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<NewBlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
                             bef.btnShiftBlastLayerUp_Click(null, null);
@@ -633,7 +633,7 @@ namespace RTCV.UI
                 case "Shift Down":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<NewBlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
                             bef.btnShiftBlastLayerDown_Click(null, null);
@@ -643,7 +643,7 @@ namespace RTCV.UI
                 case "Load Corrupt":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<NewBlastEditorForm>();
                         if (bef != null && bef.Focused)
                         {
                             bef.btnLoadCorrupt_Click(null, null);
@@ -653,7 +653,7 @@ namespace RTCV.UI
                 case "Apply":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<NewBlastEditorForm>();
                         if (bef != null && bef.Focused)
                         {
                             bef.btnCorrupt_Click(null, null);
@@ -663,7 +663,7 @@ namespace RTCV.UI
                 case "Send Stash":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<NewBlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
                             bef.btnSendToStash_Click(null, null);

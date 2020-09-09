@@ -238,7 +238,7 @@ namespace RTCV.UI
                 }
             }
             allStashKeys.AddRange(StockpileManager_UISide.StashHistory);
-            allStashKeys.AddRange(S.GET<RTC_NewBlastEditor_Form>().GetStashKeys());
+            allStashKeys.AddRange(S.GET<NewBlastEditorForm>().GetStashKeys());
             allStashKeys.AddRange(S.GET<RTC_BlastGenerator_Form>().GetStashKeys());
             bool notified = false;
             foreach (var sk in allStashKeys.Where(x => x?.StateLocation == StashKeySavestateLocation.SSK))

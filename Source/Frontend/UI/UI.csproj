@@ -345,11 +345,11 @@
     <Compile Include="Components\Blast Editor\SanitizeToolForm.Designer.cs">
       <DependentUpon>SanitizeToolForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\RTC_NewBlastEditor_Form.cs">
+    <Compile Include="Forms\NewBlastEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\RTC_NewBlastEditor_Form.Designer.cs">
-      <DependentUpon>RTC_NewBlastEditor_Form.cs</DependentUpon>
+    <Compile Include="Forms\NewBlastEditorForm.Designer.cs">
+      <DependentUpon>NewBlastEditorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\NoteEditorForm.cs">
       <SubType>Form</SubType>
@@ -584,8 +584,8 @@
     <EmbeddedResource Include="Components\Blast Editor\SanitizeToolForm.resx">
       <DependentUpon>SanitizeToolForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RTC_NewBlastEditor_Form.resx">
-      <DependentUpon>RTC_NewBlastEditor_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\NewBlastEditorForm.resx">
+      <DependentUpon>NewBlastEditorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\NoteEditorForm.resx">
       <DependentUpon>NoteEditorForm.cs</DependentUpon>

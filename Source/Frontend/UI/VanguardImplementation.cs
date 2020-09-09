@@ -492,7 +492,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
+                var blastEditor = S.GET<NewBlastEditorForm>();
                 blastEditor.OpenSanitizeTool(false);
             });
         }
@@ -501,7 +501,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
+                var blastEditor = S.GET<NewBlastEditorForm>();
                 blastEditor.btnLoadCorrupt_Click(null, null);
             });
         }
@@ -510,7 +510,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
+                var blastEditor = S.GET<NewBlastEditorForm>();
                 blastEditor.LoadOriginal();
             });
         }
@@ -520,7 +520,7 @@ namespace RTCV.UI
             var units = 0;
             SyncObjectSingleton.FormExecute(() =>
             {   // this is what the sanitize tool uses to judge how many units there are left to sanitize.
-                var blastEditor = S.GET<RTC_NewBlastEditor_Form>();
+                var blastEditor = S.GET<NewBlastEditorForm>();
                 units = blastEditor.currentSK?.BlastLayer?.Layer.Count(x => !x.IsLocked) ?? -1;
             });
 
@@ -532,7 +532,7 @@ namespace RTCV.UI
             var layerSize = 0;
             SyncObjectSingleton.FormExecute(() =>
             {
-                layerSize = S.GET<RTC_NewBlastEditor_Form>().currentSK?.BlastLayer?.Layer?.Count ?? -1;
+                layerSize = S.GET<NewBlastEditorForm>().currentSK?.BlastLayer?.Layer?.Count ?? -1;
             });
 
             e.setReturnValue(layerSize);
