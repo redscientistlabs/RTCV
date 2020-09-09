@@ -57,7 +57,7 @@ namespace RTCV.UI
     using RTCV.UI.Components;
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
-    public partial class NewBlastEditorForm : Form, IAutoColorize
+    public partial class BlastEditorForm : Form, IAutoColorize
     {
         private static Dictionary<string, MemoryInterface> _domainToMiDico;
 
@@ -107,7 +107,7 @@ namespace RTCV.UI
         //We gotta cache this stuff outside of the scope of InitializeDGV
         //    private object actionTimeValues =
 
-        public NewBlastEditorForm()
+        public BlastEditorForm()
         {
             try
             {
@@ -154,11 +154,11 @@ namespace RTCV.UI
 
         public static void OpenBlastEditor(StashKey sk = null, bool silent = false)
         {
-            if (S.GET<NewBlastEditorForm>().Visible)
+            if (S.GET<BlastEditorForm>().Visible)
                 silent = false;
 
-            S.GET<NewBlastEditorForm>().Close();
-            S.SET(new NewBlastEditorForm());
+            S.GET<BlastEditorForm>().Close();
+            S.SET(new BlastEditorForm());
 
             if (sk == null)
             {
@@ -170,11 +170,11 @@ namespace RTCV.UI
             //TODO
             if (sk.BlastLayer.Layer.Count > 5000 && (DialogResult.Yes == MessageBox.Show($"You're trying to open a blastlayer of size " + sk.BlastLayer.Layer.Count + ". This could take a while. Are you sure you want to continue?", "Opening a large BlastLayer", MessageBoxButtons.YesNo)))
             {
-                S.GET<NewBlastEditorForm>().LoadStashkey(sk, silent);
+                S.GET<BlastEditorForm>().LoadStashkey(sk, silent);
             }
             else if (sk.BlastLayer.Layer.Count <= 5000)
             {
-                S.GET<NewBlastEditorForm>().LoadStashkey(sk, silent);
+                S.GET<BlastEditorForm>().LoadStashkey(sk, silent);
             }
         }
 

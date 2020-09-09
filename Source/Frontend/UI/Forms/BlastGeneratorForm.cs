@@ -408,19 +408,19 @@ namespace RTCV.UI
                 newSk.BlastLayer = bl;
                 if (OpenedFromBlastEditor)
                 {
-                    if (S.GET<NewBlastEditorForm>() == null || S.GET<NewBlastEditorForm>().IsDisposed)
+                    if (S.GET<BlastEditorForm>() == null || S.GET<BlastEditorForm>().IsDisposed)
                     {
-                        S.SET(new NewBlastEditorForm());
-                        S.GET<NewBlastEditorForm>().LoadStashkey((StashKey)newSk.Clone());
+                        S.SET(new BlastEditorForm());
+                        S.GET<BlastEditorForm>().LoadStashkey((StashKey)newSk.Clone());
                     }
                     else
                     {
-                        S.GET<NewBlastEditorForm>().ImportBlastLayer(newSk.BlastLayer);
+                        S.GET<BlastEditorForm>().ImportBlastLayer(newSk.BlastLayer);
                     }
 
                     {
                     }
-                    S.GET<NewBlastEditorForm>().Show();
+                    S.GET<BlastEditorForm>().Show();
                 }
                 else
                 {

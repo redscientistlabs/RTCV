@@ -3,7 +3,7 @@ using RTCV.UI;
 
 namespace RTCV.UI
 {
-	partial class NewBlastEditorForm
+	partial class BlastEditorForm
     {
 		/// <summary>
 		/// Required designer variable.
@@ -31,7 +31,7 @@ namespace RTCV.UI
 		/// </summary>
 		private void InitializeComponent()
 		{
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewBlastEditorForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BlastEditorForm));
             this.dgvBlastEditor = new System.Windows.Forms.DataGridView();
             this.panelSidebar = new System.Windows.Forms.Panel();
             this.btnDisable50 = new System.Windows.Forms.Button();
@@ -1388,7 +1388,7 @@ namespace RTCV.UI
             this.openBlastGeneratorToolStripMenuItem.Text = "Open Blast Generator";
             this.openBlastGeneratorToolStripMenuItem.Click += new System.EventHandler(this.OpenBlastGenerator);
             //
-            // NewBlastEditorForm
+            // BlastEditorForm
             //
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1403,7 +1403,7 @@ namespace RTCV.UI
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(837, 559);
-            this.Name = "NewBlastEditorForm";
+            this.Name = "BlastEditorForm";
             this.Text = "Blast Editor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OnFormClosed);

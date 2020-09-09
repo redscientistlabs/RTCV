@@ -197,7 +197,7 @@ namespace RTCV.UI.Components.Controls
 
                     newStashkey.BlastLayer = new BlastLayer();
 
-                    NewBlastEditorForm.OpenBlastEditor(newStashkey);
+                    BlastEditorForm.OpenBlastEditor(newStashkey);
                 });
 
 

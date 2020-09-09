@@ -657,7 +657,7 @@ This message only appears once.";
                 Point locate = e.GetMouseLocation(sender);
                 columnsMenu.Items.Add("Open Blast Editor", null, new EventHandler((ob, ev) =>
                 {
-                    NewBlastEditorForm.OpenBlastEditor();
+                    BlastEditorForm.OpenBlastEditor();
                 }));
 
                 columnsMenu.Show(this, locate);

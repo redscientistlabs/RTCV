@@ -50,10 +50,10 @@
                 sb.Append(cb.Name);
                 sb.Append(",");
             }
-            if (S.GET<NewBlastEditorForm>() != null)
+            if (S.GET<BlastEditorForm>() != null)
             {
-                S.GET<NewBlastEditorForm>().VisibleColumns = temp;
-                S.GET<NewBlastEditorForm>().RefreshVisibleColumns();
+                S.GET<BlastEditorForm>().VisibleColumns = temp;
+                S.GET<BlastEditorForm>().RefreshVisibleColumns();
             }
             NetCore.Params.SetParam("BLASTEDITOR_VISIBLECOLUMNS", sb.ToString());
         }
