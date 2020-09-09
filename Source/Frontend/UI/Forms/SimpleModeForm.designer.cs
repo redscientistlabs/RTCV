@@ -84,7 +84,7 @@
             this.btnSwitchNormalMode.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSwitchNormalMode.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSwitchNormalMode.UseVisualStyleBackColor = false;
-            this.btnSwitchNormalMode.Click += new System.EventHandler(this.btnSwitchNormalMode_Click);
+            this.btnSwitchNormalMode.Click += new System.EventHandler(this.SwitchToNormalMode);
             //
             // gbSimpleGlitchHarvester
             //
@@ -123,7 +123,7 @@
             this.btnLoadGhSavestate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnLoadGhSavestate.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnLoadGhSavestate.UseVisualStyleBackColor = false;
-            this.btnLoadGhSavestate.Click += new System.EventHandler(this.btnLoadGhSavestate_Click);
+            this.btnLoadGhSavestate.Click += new System.EventHandler(this.LoadGlitchHarvesterSavestate);
             //
             // lbSimpleGlitchHarvesterHelp
             //
@@ -160,7 +160,7 @@
             this.btnCreateGhSavestate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnCreateGhSavestate.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCreateGhSavestate.UseVisualStyleBackColor = false;
-            this.btnCreateGhSavestate.Click += new System.EventHandler(this.btnCreateGhSavestate_Click);
+            this.btnCreateGhSavestate.Click += new System.EventHandler(this.CreateGlitchHarvesterSavestate);
             //
             // btnGlitchHarvesterCorrupt
             //
@@ -185,7 +185,7 @@
             this.btnGlitchHarvesterCorrupt.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnGlitchHarvesterCorrupt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnGlitchHarvesterCorrupt.UseVisualStyleBackColor = false;
-            this.btnGlitchHarvesterCorrupt.Click += new System.EventHandler(this.btnGlitchHarvesterCorrupt_Click);
+            this.btnGlitchHarvesterCorrupt.Click += new System.EventHandler(this.GlitchHarvesterLoadAndCorrupt);
             //
             // gbRealTimeCorruption
             //
@@ -249,7 +249,7 @@
             this.btnManualBlast.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnManualBlast.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnManualBlast.UseVisualStyleBackColor = false;
-            this.btnManualBlast.Click += new System.EventHandler(this.btnManualBlast_Click);
+            this.btnManualBlast.Click += new System.EventHandler(this.ManualBlast);
             //
             // btnAutoCorrupt
             //
@@ -273,7 +273,7 @@
             this.btnAutoCorrupt.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnAutoCorrupt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAutoCorrupt.UseVisualStyleBackColor = false;
-            this.btnAutoCorrupt.Click += new System.EventHandler(this.btnAutoCorrupt_Click);
+            this.btnAutoCorrupt.Click += new System.EventHandler(this.StartAutoCorrupt);
             //
             // gbEngineParameters
             //
@@ -345,7 +345,7 @@
             this.cbClearRewind.Text = "Clear Step Units on Rewind";
             this.cbClearRewind.UseVisualStyleBackColor = false;
             this.cbClearRewind.Visible = false;
-            this.cbClearRewind.CheckedChanged += new System.EventHandler(this.CbClearRewind_CheckedChanged);
+            this.cbClearRewind.CheckedChanged += new System.EventHandler(this.OnClearRewindChanged);
             //
             // btnClearInfiniteUnits
             //
@@ -364,7 +364,7 @@
             this.btnClearInfiniteUnits.Text = "Clear infinite units";
             this.btnClearInfiniteUnits.UseVisualStyleBackColor = false;
             this.btnClearInfiniteUnits.Visible = false;
-            this.btnClearInfiniteUnits.Click += new System.EventHandler(this.btnClearInfiniteUnits_Click);
+            this.btnClearInfiniteUnits.Click += new System.EventHandler(this.ClearInfiniteUnits);
             //
             // lbEngineDescription
             //
@@ -395,7 +395,7 @@
             this.btnShuffleAlgorithm.Tag = "color:light1";
             this.btnShuffleAlgorithm.Text = "Shuffle algorithm (Spice things up)";
             this.btnShuffleAlgorithm.UseVisualStyleBackColor = false;
-            this.btnShuffleAlgorithm.Click += new System.EventHandler(this.btnShuffleAlgorithm_Click);
+            this.btnShuffleAlgorithm.Click += new System.EventHandler(this.ShuffleAlgorithm);
             //
             // gbTargetType
             //
@@ -443,7 +443,7 @@
             this.rbModernPlatforms.TabStop = true;
             this.rbModernPlatforms.Text = "Modern Platforms (32bit/64bit, 3d games)";
             this.rbModernPlatforms.UseVisualStyleBackColor = true;
-            this.rbModernPlatforms.CheckedChanged += new System.EventHandler(this.rbModernPlatforms_CheckedChanged);
+            this.rbModernPlatforms.CheckedChanged += new System.EventHandler(this.SelectModernPlatforms);
             //
             // rbClassicPlatforms
             //
@@ -456,7 +456,7 @@
             this.rbClassicPlatforms.TabStop = true;
             this.rbClassicPlatforms.Text = "Classic Platforms (8bit/16bit, 2d games)";
             this.rbClassicPlatforms.UseVisualStyleBackColor = true;
-            this.rbClassicPlatforms.CheckedChanged += new System.EventHandler(this.rbClassicPlatforms_CheckedChanged);
+            this.rbClassicPlatforms.CheckedChanged += new System.EventHandler(this.SelectClassicPlatforms);
             //
             // lbConnectionStatus
             //
@@ -487,7 +487,7 @@
             this.btnBlastToggle.Text = "BlastLayer : OFF    (Attempts to uncorrupt/recorrupt in real-time)";
             this.btnBlastToggle.UseVisualStyleBackColor = false;
             this.btnBlastToggle.Visible = false;
-            this.btnBlastToggle.Click += new System.EventHandler(this.btnBlastToggle_Click);
+            this.btnBlastToggle.Click += new System.EventHandler(this.BlastLayerToggle);
             //
             // label2
             //
@@ -551,7 +551,7 @@
             this.Name = "SimpleModeForm";
             this.Tag = "color:dark1";
             this.Text = "Stockpile Player";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SimpleModeForm_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
             this.gbSimpleGlitchHarvester.ResumeLayout(false);
             this.gbRealTimeCorruption.ResumeLayout(false);
             this.gbEngineParameters.ResumeLayout(false);

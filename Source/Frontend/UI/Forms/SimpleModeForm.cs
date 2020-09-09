@@ -36,12 +36,12 @@
 
             if (rbClassicPlatforms.Checked)
             {
-                rbClassicPlatforms_CheckedChanged(null, null);
+                SelectClassicPlatforms(null, null);
             }
 
             if (rbModernPlatforms.Checked)
             {
-                rbModernPlatforms_CheckedChanged(null, null);
+                SelectModernPlatforms(null, null);
             }
 
             Params.SetParam("SIMPLE_MODE"); //Set RTC in Simple Mode
@@ -61,7 +61,7 @@
             S.GET<CoreForm>().OpenEngineConfig(null, null);
         }
 
-        private void SimpleModeForm_FormClosing(object sender, FormClosingEventArgs e)
+        private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason != CloseReason.FormOwnerClosing)
             {
@@ -70,23 +70,23 @@
             }
         }
 
-        private void btnBlastToggle_Click(object sender, EventArgs e)
+        private void BlastLayerToggle(object sender, EventArgs e)
         {
             S.GET<GlitchHarvesterBlastForm>().BlastLayerToggle(null, null);
         }
 
-        private void btnManualBlast_Click(object sender, EventArgs e)
+        private void ManualBlast(object sender, EventArgs e)
         {
             S.GET<CoreForm>().ManualBlast(sender, e);
         }
 
-        private void btnAutoCorrupt_Click(object sender, EventArgs e)
+        private void StartAutoCorrupt(object sender, EventArgs e)
         {
             S.GET<CoreForm>().StartAutoCorrupt(sender, e);
             //btnAutoCorrupt.Text = S.GET<CoreForm>().btnAutoCorrupt.Text;
         }
 
-        private void btnCreateGhSavestate_Click(object sender, EventArgs e)
+        private void CreateGlitchHarvesterSavestate(object sender, EventArgs e)
         {
             //Select first savestate slot if none is selected
             var selectedHolder = S.GET<SavestateManagerForm>().savestateList.SelectedHolder;
@@ -109,7 +109,7 @@
             S.GET<SavestateManagerForm>().savestateList.btnSaveLoad_Click(null, null);
         }
 
-        private void btnGlitchHarvesterCorrupt_Click(object sender, EventArgs e)
+        private void GlitchHarvesterLoadAndCorrupt(object sender, EventArgs e)
         {
             if (S.GET<RTC_StashHistory_Form>().lbStashHistory.Items.Count >= 20)
             {
@@ -119,12 +119,12 @@
             S.GET<GlitchHarvesterBlastForm>().Corrupt(null, null);
         }
 
-        private void rbClassicPlatforms_CheckedChanged(object sender, EventArgs e)
+        private void SelectClassicPlatforms(object sender, EventArgs e)
         {
             SwitchPlatformType(PlatformType.CLASSIC);
         }
 
-        private void rbModernPlatforms_CheckedChanged(object sender, EventArgs e)
+        private void SelectModernPlatforms(object sender, EventArgs e)
         {
             SwitchPlatformType(PlatformType.MODERN);
         }
@@ -154,7 +154,7 @@
             btnBlastToggle.Visible = true;
         }
 
-        public void Shuffle()
+        private void ShuffleAlgorithm(object sender, EventArgs e)
         {
             if (platform == PlatformType.CLASSIC)
             {
@@ -255,7 +255,7 @@
             var ui = S.GET<CoreForm>();
             if (ui.AutoCorrupt)
             {
-                btnAutoCorrupt_Click(null, null);
+                StartAutoCorrupt(null, null);
             }
 
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_CLEARSTEPBLASTUNITS, null, true);
@@ -357,23 +357,18 @@
             updownMaxInfiniteUnits.Visible = visible;
         }
 
-        private void btnShuffleAlgorithm_Click(object sender, EventArgs e)
-        {
-            Shuffle();
-        }
-
-        private void btnClearInfiniteUnits_Click(object sender, EventArgs e)
+        private void ClearInfiniteUnits(object sender, EventArgs e)
         {
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_CLEARSTEPBLASTUNITS, null, true);
         }
 
-        private void btnSwitchNormalMode_Click(object sender, EventArgs e)
+        private void SwitchToNormalMode(object sender, EventArgs e)
         {
             LeavingSimpleMode();
             this.Hide();
         }
 
-        private void btnLoadGhSavestate_Click(object sender, EventArgs e)
+        private void LoadGlitchHarvesterSavestate(object sender, EventArgs e)
         {
             //Select first savestate slot if none is selected
             var selectedHolder = S.GET<SavestateManagerForm>().savestateList.SelectedHolder;
@@ -403,7 +398,7 @@
             DontUpdateSpec = false;
         }
 
-        private void CbClearRewind_CheckedChanged(object sender, EventArgs e)
+        private void OnClearRewindChanged(object sender, EventArgs e)
         {
             if (DontUpdateSpec)
             {
