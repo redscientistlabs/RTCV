@@ -32,7 +32,7 @@ namespace RTCV.UI
     //MODE = GENERATIONMODE
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
-    public partial class RTC_BlastGenerator_Form : Form
+    public partial class BlastGeneratorForm : Form
     {
         private enum BlastGeneratorColumn
         {
@@ -58,7 +58,7 @@ namespace RTCV.UI
 
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private bool OpenedFromBlastEditor = false;
-        private StashKey sk = null;
+        private StashKey _sk = null;
         private ContextMenuStrip cms = new ContextMenuStrip();
         private bool initialized = false;
         private List<Control> allControls;
@@ -66,7 +66,7 @@ namespace RTCV.UI
         private static Dictionary<string, MemoryInterface> domainToMiDico = new Dictionary<string, MemoryInterface>();
         private string[] domains = MemoryDomains.MemoryInterfaces?.Keys?.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
 
-        public RTC_BlastGenerator_Form()
+        public BlastGeneratorForm()
         {
             InitializeComponent();
 
@@ -74,12 +74,12 @@ namespace RTCV.UI
             (dgvBlastGenerator.Columns["dgvEnabled"]).ValueType = typeof(string);
         }
 
-        private void RTC_BlastGeneratorForm_Load(object sender, EventArgs e)
+        private void OnFormLoad(object sender, EventArgs e)
         {
-            dgvBlastGenerator.MouseClick += dgvBlastGenerator_MouseClick;
-            dgvBlastGenerator.CellValueChanged += dgvBlastGenerator_CellValueChanged;
-            dgvBlastGenerator.CellMouseClick += dgvBlastGenerator_CellMouseClick;
-            dgvBlastGenerator.CellMouseDoubleClick += DgvBlastGenerator_CellMouseDoubleClick;
+            dgvBlastGenerator.MouseClick += OnBlastGeneratorDGVMouseClick;
+            dgvBlastGenerator.CellValueChanged += UpdateSelectedBlastGenerator;
+            dgvBlastGenerator.CellMouseClick += OnCellMouseClick;
+            dgvBlastGenerator.CellMouseDoubleClick += OnCellMouseDoubleClick;
 
             Colors.SetRTCColor(Colors.GeneralColor, this);
             getAllControls(this);
@@ -112,9 +112,9 @@ namespace RTCV.UI
             this.BringToFront();
         }
 
-        public void LoadStashkey(StashKey _sk)
+        public void LoadStashkey(StashKey sk)
         {
-            if (_sk == null)
+            if (sk == null)
             {
                 return;
             }
@@ -124,8 +124,8 @@ namespace RTCV.UI
                 return;
             }
 
-            sk = (StashKey)_sk.Clone();
-            sk.BlastLayer = new BlastLayer();
+            this._sk = (StashKey)sk.Clone();
+            this._sk.BlastLayer = new BlastLayer();
 
             AddDefaultRow();
             PopulateModeCombobox(dgvBlastGenerator.Rows[0]);
@@ -137,7 +137,7 @@ namespace RTCV.UI
             this.BringToFront();
         }
 
-        private void AddDefaultRow()
+        private void AddDefaultRow(object sender = null, EventArgs e = null)
         {
             try
             {
@@ -283,7 +283,7 @@ namespace RTCV.UI
             }
         }
 
-        private void btnJustCorrupt_Click(object sender, EventArgs e)
+        private void ApplyCorruption(object sender, EventArgs e)
         {
             try
             {
@@ -302,7 +302,7 @@ namespace RTCV.UI
             }
         }
 
-        private void btnLoadCorrupt_Click(object sender, EventArgs e)
+        private void LoadAndCorrupt(object sender, EventArgs e)
         {
             string saveStateWord = "Savestate";
 
@@ -319,7 +319,7 @@ namespace RTCV.UI
                 btnJustCorrupt.Enabled = false;
 
                 StashKey newSk = null;
-                if (sk == null)
+                if (_sk == null)
                 {
                     StashKey psk = StockpileManager_UISide.CurrentSavestateStashKey;
                     if (psk == null)
@@ -341,7 +341,7 @@ namespace RTCV.UI
                 }
                 else
                 {
-                    newSk = (StashKey)sk.Clone();
+                    newSk = (StashKey)_sk.Clone();
                 }
 
                 BlastLayer bl = GenerateBlastLayers(true, true);
@@ -360,7 +360,7 @@ namespace RTCV.UI
             }
         }
 
-        private void btnSendTo_Click(object sender, EventArgs e)
+        private void SendtoStash(object sender, EventArgs e)
         {
             string saveStateWord = "Savestate";
 
@@ -376,7 +376,7 @@ namespace RTCV.UI
             try
             {
                 StashKey newSk = null;
-                if (sk == null)
+                if (_sk == null)
                 {
                     StashKey psk = StockpileManager_UISide.CurrentSavestateStashKey;
                     if (psk == null)
@@ -396,7 +396,7 @@ namespace RTCV.UI
                 }
                 else
                 {
-                    newSk = (StashKey)sk.Clone();
+                    newSk = (StashKey)_sk.Clone();
                 }
 
                 BlastLayer bl = GenerateBlastLayers(true);
@@ -442,7 +442,7 @@ namespace RTCV.UI
             }
         }
 
-        private void dgvBlastGenerator_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void UpdateSelectedBlastGenerator(object sender, DataGridViewCellEventArgs e)
         {
             if (!initialized || dgvBlastGenerator == null)
             {
@@ -464,7 +464,7 @@ namespace RTCV.UI
             }
         }
 
-        private void dgvBlastGenerator_MouseClick(object sender, MouseEventArgs e)
+        private void OnBlastGeneratorDGVMouseClick(object sender, MouseEventArgs e)
         {
             int currentMouseOverColumn = dgvBlastGenerator.HitTest(e.X, e.Y).ColumnIndex;
             int currentMouseOverRow = dgvBlastGenerator.HitTest(e.X, e.Y).RowIndex;
@@ -520,7 +520,7 @@ namespace RTCV.UI
                     }
                     else
                     {
-                        newSk = (StashKey)sk.Clone();
+                        newSk = (StashKey)_sk.Clone();
                     }
                 }
 
@@ -684,47 +684,42 @@ namespace RTCV.UI
             }
         }
 
-        private void btnAddRow_Click(object sender, EventArgs e)
-        {
-            AddDefaultRow();
-        }
-
-        private void btnNudgeStartAddressUp_Click(object sender, EventArgs e)
+        private void NudgeStartAddressUp(object sender, EventArgs e)
         {
             NudgeParams("dgvStartAddress", updownNudgeStartAddress.Value);
         }
 
-        private void btnNudgeStartAddressDown_Click(object sender, EventArgs e)
+        private void NudgeStartAddressDown(object sender, EventArgs e)
         {
             NudgeParams("dgvStartAddress", updownNudgeStartAddress.Value, true);
         }
 
-        private void btnNudgeEndAddressUp_Click(object sender, EventArgs e)
+        private void NudgeEndAddressUp(object sender, EventArgs e)
         {
             NudgeParams("dgvEndAddress", updownNudgeEndAddress.Value);
         }
 
-        private void btnNudgeEndAddressDown_Click(object sender, EventArgs e)
+        private void NudgeEndAddressDown(object sender, EventArgs e)
         {
             NudgeParams("dgvEndAddress", updownNudgeEndAddress.Value, true);
         }
 
-        private void btnNudgeParam1Up_Click(object sender, EventArgs e)
+        private void NudgeParam1Up(object sender, EventArgs e)
         {
             NudgeParams("dgvParam1", updownNudgeParam1.Value);
         }
 
-        private void btnNudgeParam1Down_Click(object sender, EventArgs e)
+        private void NudgeParam1Down(object sender, EventArgs e)
         {
             NudgeParams("dgvParam1", updownNudgeParam1.Value, true);
         }
 
-        private void btnNudgeParam2Up_Click(object sender, EventArgs e)
+        private void NudgeParam2Up(object sender, EventArgs e)
         {
             NudgeParams("dgvParam2", updownNudgeParam2.Value);
         }
 
-        private void btnNudgeParam2Down_Click(object sender, EventArgs e)
+        private void NudgeParam2Down(object sender, EventArgs e)
         {
             NudgeParams("dgvParam2", updownNudgeParam2.Value, true);
         }
@@ -763,7 +758,7 @@ namespace RTCV.UI
             }
         }
 
-        private void btnHideSidebar_Click(object sender, EventArgs e)
+        private void HideSidebarToggle(object sender, EventArgs e)
         {
             if (btnHideSidebar.Text == "▶")
             {
@@ -806,7 +801,7 @@ namespace RTCV.UI
             }
         }
 
-        private void btnRefreshDomains_Click(object sender, EventArgs e)
+        private void RefreshDomains(object sender, EventArgs e)
         {
             RefreshDomains();
         }
@@ -936,28 +931,28 @@ namespace RTCV.UI
             return true;
         }
 
-        private void loadFromFileblToolStripMenuItem_Click(object sender, EventArgs e)
+        private void LoadBlastGenerator(object sender, EventArgs e)
         {
             loadDataGridView(dgvBlastGenerator);
         }
 
-        private void saveAsToFileblToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveBlastGenerator(object sender, EventArgs e)
         {
             SaveDataGridView(dgvBlastGenerator);
         }
 
-        private void importBlastlayerblToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ImportBlastGenerator(object sender, EventArgs e)
         {
             importDataGridView(dgvBlastGenerator);
         }
 
-        private void btnHelp_Click(object sender, EventArgs e)
+        private void ShowHelp(object sender, EventArgs e)
         {
             System.Diagnostics.ProcessStartInfo sInfo = new System.Diagnostics.ProcessStartInfo("https://corrupt.wiki/corruptors/rtc-real-time-corruptor/blast-generator.html");
             System.Diagnostics.Process.Start(sInfo);
         }
 
-        private void dgvBlastGenerator_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void OnCellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             // Note handling
             if (e != null)
@@ -1000,7 +995,7 @@ namespace RTCV.UI
             }
         }
 
-        private void DgvBlastGenerator_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void OnCellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -1023,7 +1018,7 @@ namespace RTCV.UI
             }
         }
 
-        private void CbUnitsShareNote_CheckedChanged(object sender, EventArgs e)
+        private void OnUnitsInheritNoteChanged(object sender, EventArgs e)
         {
             //mark the rows as dirty
             foreach (DataGridViewRow row in dgvBlastGenerator.Rows)
@@ -1055,7 +1050,7 @@ namespace RTCV.UI
 
         public StashKey[] GetStashKeys()
         {
-            return new[] { sk };
+            return new[] { _sk };
         }
     }
 

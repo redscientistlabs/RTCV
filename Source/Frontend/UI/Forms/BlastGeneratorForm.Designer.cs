@@ -1,6 +1,6 @@
 ﻿namespace RTCV.UI
 {
-	partial class RTC_BlastGenerator_Form
+	partial class BlastGeneratorForm
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -34,7 +34,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_BlastGenerator_Form));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BlastGeneratorForm));
             this.panelSidebar = new System.Windows.Forms.Panel();
             this.cbUnitsShareNote = new System.Windows.Forms.CheckBox();
             this.btnHelp = new System.Windows.Forms.Button();
@@ -132,7 +132,7 @@
             this.cbUnitsShareNote.Tag = "";
             this.cbUnitsShareNote.Text = "Units inheret note";
             this.cbUnitsShareNote.UseVisualStyleBackColor = true;
-            this.cbUnitsShareNote.CheckedChanged += new System.EventHandler(this.CbUnitsShareNote_CheckedChanged);
+            this.cbUnitsShareNote.CheckedChanged += new System.EventHandler(this.OnUnitsInheritNoteChanged);
             //
             // btnHelp
             //
@@ -149,7 +149,7 @@
             this.btnHelp.TabStop = false;
             this.btnHelp.Tag = "color:dark1";
             this.btnHelp.UseVisualStyleBackColor = false;
-            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
+            this.btnHelp.Click += new System.EventHandler(this.ShowHelp);
             //
             // btnLoadCorrupt
             //
@@ -167,7 +167,7 @@
             this.btnLoadCorrupt.Tag = "color:dark2";
             this.btnLoadCorrupt.Text = "Load + Corrupt";
             this.btnLoadCorrupt.UseVisualStyleBackColor = false;
-            this.btnLoadCorrupt.Click += new System.EventHandler(this.btnLoadCorrupt_Click);
+            this.btnLoadCorrupt.Click += new System.EventHandler(this.LoadAndCorrupt);
             //
             // btnJustCorrupt
             //
@@ -185,7 +185,7 @@
             this.btnJustCorrupt.Tag = "color:dark2";
             this.btnJustCorrupt.Text = "Apply Corruption";
             this.btnJustCorrupt.UseVisualStyleBackColor = false;
-            this.btnJustCorrupt.Click += new System.EventHandler(this.btnJustCorrupt_Click);
+            this.btnJustCorrupt.Click += new System.EventHandler(this.ApplyCorruption);
             //
             // btnRefreshDomains
             //
@@ -202,7 +202,7 @@
             this.btnRefreshDomains.Tag = "color:light1";
             this.btnRefreshDomains.Text = "Refresh Domains";
             this.btnRefreshDomains.UseVisualStyleBackColor = false;
-            this.btnRefreshDomains.Click += new System.EventHandler(this.btnRefreshDomains_Click);
+            this.btnRefreshDomains.Click += new System.EventHandler(this.RefreshDomains);
             //
             // btnSendTo
             //
@@ -220,7 +220,7 @@
             this.btnSendTo.Tag = "color:dark2";
             this.btnSendTo.Text = "Send To Stash";
             this.btnSendTo.UseVisualStyleBackColor = false;
-            this.btnSendTo.Click += new System.EventHandler(this.btnSendTo_Click);
+            this.btnSendTo.Click += new System.EventHandler(this.SendtoStash);
             //
             // btnAddRow
             //
@@ -237,7 +237,7 @@
             this.btnAddRow.Tag = "color:light1";
             this.btnAddRow.Text = "Add Row";
             this.btnAddRow.UseVisualStyleBackColor = false;
-            this.btnAddRow.Click += new System.EventHandler(this.btnAddRow_Click);
+            this.btnAddRow.Click += new System.EventHandler(this.AddDefaultRow);
             //
             // panel2
             //
@@ -281,7 +281,7 @@
             this.btnNudgeParam2Up.Tag = "color:light1";
             this.btnNudgeParam2Up.Text = "▶";
             this.btnNudgeParam2Up.UseVisualStyleBackColor = false;
-            this.btnNudgeParam2Up.Click += new System.EventHandler(this.btnNudgeParam2Up_Click);
+            this.btnNudgeParam2Up.Click += new System.EventHandler(this.NudgeParam2Up);
             //
             // btnNudgeParam2Down
             //
@@ -299,7 +299,7 @@
             this.btnNudgeParam2Down.Tag = "color:light1";
             this.btnNudgeParam2Down.Text = "◀";
             this.btnNudgeParam2Down.UseVisualStyleBackColor = false;
-            this.btnNudgeParam2Down.Click += new System.EventHandler(this.btnNudgeParam2Down_Click);
+            this.btnNudgeParam2Down.Click += new System.EventHandler(this.NudgeParam2Down);
             //
             // updownNudgeParam2
             //
@@ -339,7 +339,7 @@
             this.btnNudgeParam1Up.Tag = "color:light1";
             this.btnNudgeParam1Up.Text = "▶";
             this.btnNudgeParam1Up.UseVisualStyleBackColor = false;
-            this.btnNudgeParam1Up.Click += new System.EventHandler(this.btnNudgeParam1Up_Click);
+            this.btnNudgeParam1Up.Click += new System.EventHandler(this.NudgeParam1Up);
             //
             // btnNudgeParam1Down
             //
@@ -357,7 +357,7 @@
             this.btnNudgeParam1Down.Tag = "color:light1";
             this.btnNudgeParam1Down.Text = "◀";
             this.btnNudgeParam1Down.UseVisualStyleBackColor = false;
-            this.btnNudgeParam1Down.Click += new System.EventHandler(this.btnNudgeParam1Down_Click);
+            this.btnNudgeParam1Down.Click += new System.EventHandler(this.NudgeParam1Down);
             //
             // updownNudgeParam1
             //
@@ -397,7 +397,7 @@
             this.btnNudgeEndAddressUp.Tag = "color:light1";
             this.btnNudgeEndAddressUp.Text = "▶";
             this.btnNudgeEndAddressUp.UseVisualStyleBackColor = false;
-            this.btnNudgeEndAddressUp.Click += new System.EventHandler(this.btnNudgeEndAddressUp_Click);
+            this.btnNudgeEndAddressUp.Click += new System.EventHandler(this.NudgeEndAddressUp);
             //
             // btnNudgeEndAddressDown
             //
@@ -415,7 +415,7 @@
             this.btnNudgeEndAddressDown.Tag = "color:light1";
             this.btnNudgeEndAddressDown.Text = "◀";
             this.btnNudgeEndAddressDown.UseVisualStyleBackColor = false;
-            this.btnNudgeEndAddressDown.Click += new System.EventHandler(this.btnNudgeEndAddressDown_Click);
+            this.btnNudgeEndAddressDown.Click += new System.EventHandler(this.NudgeEndAddressDown);
             //
             // updownNudgeEndAddress
             //
@@ -455,7 +455,7 @@
             this.btnNudgeStartAddressUp.Tag = "color:light1";
             this.btnNudgeStartAddressUp.Text = "▶";
             this.btnNudgeStartAddressUp.UseVisualStyleBackColor = false;
-            this.btnNudgeStartAddressUp.Click += new System.EventHandler(this.btnNudgeStartAddressUp_Click);
+            this.btnNudgeStartAddressUp.Click += new System.EventHandler(this.NudgeStartAddressUp);
             //
             // btnNudgeStartAddressDown
             //
@@ -473,7 +473,7 @@
             this.btnNudgeStartAddressDown.Tag = "color:light1";
             this.btnNudgeStartAddressDown.Text = "◀";
             this.btnNudgeStartAddressDown.UseVisualStyleBackColor = false;
-            this.btnNudgeStartAddressDown.Click += new System.EventHandler(this.btnNudgeStartAddressDown_Click);
+            this.btnNudgeStartAddressDown.Click += new System.EventHandler(this.NudgeStartAddressDown);
             //
             // updownNudgeStartAddress
             //
@@ -706,21 +706,21 @@
             this.saveAsToFileblToolStripMenuItem.Name = "saveAsToFileblToolStripMenuItem";
             this.saveAsToFileblToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
             this.saveAsToFileblToolStripMenuItem.Text = "&Save As to File (.bg)";
-            this.saveAsToFileblToolStripMenuItem.Click += new System.EventHandler(this.saveAsToFileblToolStripMenuItem_Click);
+            this.saveAsToFileblToolStripMenuItem.Click += new System.EventHandler(this.SaveBlastGenerator);
             //
             // loadFromFileblToolStripMenuItem
             //
             this.loadFromFileblToolStripMenuItem.Name = "loadFromFileblToolStripMenuItem";
             this.loadFromFileblToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
             this.loadFromFileblToolStripMenuItem.Text = "&Load From File (.bg)";
-            this.loadFromFileblToolStripMenuItem.Click += new System.EventHandler(this.loadFromFileblToolStripMenuItem_Click);
+            this.loadFromFileblToolStripMenuItem.Click += new System.EventHandler(this.LoadBlastGenerator);
             //
             // importBlastlayerblToolStripMenuItem
             //
             this.importBlastlayerblToolStripMenuItem.Name = "importBlastlayerblToolStripMenuItem";
             this.importBlastlayerblToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
             this.importBlastlayerblToolStripMenuItem.Text = "&Import Generation Params (.bg)";
-            this.importBlastlayerblToolStripMenuItem.Click += new System.EventHandler(this.importBlastlayerblToolStripMenuItem_Click);
+            this.importBlastlayerblToolStripMenuItem.Click += new System.EventHandler(this.ImportBlastGenerator);
             //
             // btnHideSidebar
             //
@@ -732,7 +732,7 @@
             this.btnHideSidebar.TabIndex = 170;
             this.btnHideSidebar.Text = "▶";
             this.btnHideSidebar.UseVisualStyleBackColor = true;
-            this.btnHideSidebar.Click += new System.EventHandler(this.btnHideSidebar_Click);
+            this.btnHideSidebar.Click += new System.EventHandler(this.HideSidebarToggle);
             //
             // dgvBlastProtoReference
             //
@@ -938,7 +938,7 @@
             this.dgvNoteButton.Name = "dgvNoteButton";
             this.dgvNoteButton.ToolTipText = "Tells you if the row has a note.";
             //
-            // RTC_BlastGenerator_Form
+            // BlastGeneratorForm
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -952,10 +952,10 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStripEx1;
             this.MinimumSize = new System.Drawing.Size(18, 428);
-            this.Name = "RTC_BlastGenerator_Form";
+            this.Name = "BlastGeneratorForm";
             this.Tag = "color:dark1";
             this.Text = "Blast Generator";
-            this.Load += new System.EventHandler(this.RTC_BlastGeneratorForm_Load);
+            this.Load += new System.EventHandler(this.OnFormLoad);
             this.panelSidebar.ResumeLayout(false);
             this.panelSidebar.PerformLayout();
             this.panel2.ResumeLayout(false);
