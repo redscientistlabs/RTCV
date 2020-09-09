@@ -1,6 +1,6 @@
 ﻿namespace RTCV.UI
 {
-    partial class RTC_SimpleMode_Form
+    partial class SimpleModeForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_SimpleMode_Form));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SimpleModeForm));
             this.btnSwitchNormalMode = new System.Windows.Forms.Button();
             this.gbSimpleGlitchHarvester = new System.Windows.Forms.GroupBox();
             this.btnLoadGhSavestate = new System.Windows.Forms.Button();
@@ -63,9 +63,9 @@
             this.gbEngineParameters.SuspendLayout();
             this.gbTargetType.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // btnSwitchNormalMode
-            // 
+            //
             this.btnSwitchNormalMode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnSwitchNormalMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnSwitchNormalMode.FlatAppearance.BorderSize = 0;
@@ -85,10 +85,10 @@
             this.btnSwitchNormalMode.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSwitchNormalMode.UseVisualStyleBackColor = false;
             this.btnSwitchNormalMode.Click += new System.EventHandler(this.btnSwitchNormalMode_Click);
-            // 
+            //
             // gbSimpleGlitchHarvester
-            // 
-            this.gbSimpleGlitchHarvester.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.gbSimpleGlitchHarvester.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gbSimpleGlitchHarvester.Controls.Add(this.btnLoadGhSavestate);
             this.gbSimpleGlitchHarvester.Controls.Add(this.lbSimpleGlitchHarvesterHelp);
@@ -102,9 +102,9 @@
             this.gbSimpleGlitchHarvester.TabStop = false;
             this.gbSimpleGlitchHarvester.Text = "Simple Glitch Harvester";
             this.gbSimpleGlitchHarvester.Visible = false;
-            // 
+            //
             // btnLoadGhSavestate
-            // 
+            //
             this.btnLoadGhSavestate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnLoadGhSavestate.FlatAppearance.BorderSize = 0;
             this.btnLoadGhSavestate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -124,9 +124,9 @@
             this.btnLoadGhSavestate.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnLoadGhSavestate.UseVisualStyleBackColor = false;
             this.btnLoadGhSavestate.Click += new System.EventHandler(this.btnLoadGhSavestate_Click);
-            // 
+            //
             // lbSimpleGlitchHarvesterHelp
-            // 
+            //
             this.lbSimpleGlitchHarvesterHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lbSimpleGlitchHarvesterHelp.BackColor = System.Drawing.Color.Transparent;
             this.lbSimpleGlitchHarvesterHelp.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -137,10 +137,10 @@
             this.lbSimpleGlitchHarvesterHelp.TabIndex = 135;
             this.lbSimpleGlitchHarvesterHelp.Text = "This is a very simplified version of RTC\'s Glitch Harvester. It allows you to cre" +
     "ate a savestate and then corrupt it as many times you want.";
-            // 
+            //
             // btnCreateGhSavestate
-            // 
-            this.btnCreateGhSavestate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.btnCreateGhSavestate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCreateGhSavestate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnCreateGhSavestate.FlatAppearance.BorderSize = 0;
@@ -161,10 +161,10 @@
             this.btnCreateGhSavestate.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCreateGhSavestate.UseVisualStyleBackColor = false;
             this.btnCreateGhSavestate.Click += new System.EventHandler(this.btnCreateGhSavestate_Click);
-            // 
+            //
             // btnGlitchHarvesterCorrupt
-            // 
-            this.btnGlitchHarvesterCorrupt.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.btnGlitchHarvesterCorrupt.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnGlitchHarvesterCorrupt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnGlitchHarvesterCorrupt.FlatAppearance.BorderColor = System.Drawing.Color.Black;
@@ -186,10 +186,10 @@
             this.btnGlitchHarvesterCorrupt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnGlitchHarvesterCorrupt.UseVisualStyleBackColor = false;
             this.btnGlitchHarvesterCorrupt.Click += new System.EventHandler(this.btnGlitchHarvesterCorrupt_Click);
-            // 
+            //
             // gbRealTimeCorruption
-            // 
-            this.gbRealTimeCorruption.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.gbRealTimeCorruption.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gbRealTimeCorruption.Controls.Add(this.lbIntensityHelp);
             this.gbRealTimeCorruption.Controls.Add(this.pnIntensity);
@@ -203,9 +203,9 @@
             this.gbRealTimeCorruption.TabStop = false;
             this.gbRealTimeCorruption.Text = "Real-Time Corruption";
             this.gbRealTimeCorruption.Visible = false;
-            // 
+            //
             // lbIntensityHelp
-            // 
+            //
             this.lbIntensityHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lbIntensityHelp.BackColor = System.Drawing.Color.Transparent;
             this.lbIntensityHelp.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -216,19 +216,19 @@
             this.lbIntensityHelp.TabIndex = 5;
             this.lbIntensityHelp.Text = "The intensity controls the power of a Manual Blast. Auto-Corrupt fires a Blast ev" +
     "ery frame.";
-            // 
+            //
             // pnIntensity
-            // 
-            this.pnIntensity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.pnIntensity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnIntensity.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.pnIntensity.Location = new System.Drawing.Point(3, 14);
             this.pnIntensity.Name = "pnIntensity";
             this.pnIntensity.Size = new System.Drawing.Size(377, 97);
             this.pnIntensity.TabIndex = 134;
-            // 
+            //
             // btnManualBlast
-            // 
+            //
             this.btnManualBlast.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnManualBlast.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.btnManualBlast.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
@@ -250,9 +250,9 @@
             this.btnManualBlast.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnManualBlast.UseVisualStyleBackColor = false;
             this.btnManualBlast.Click += new System.EventHandler(this.btnManualBlast_Click);
-            // 
+            //
             // btnAutoCorrupt
-            // 
+            //
             this.btnAutoCorrupt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAutoCorrupt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.btnAutoCorrupt.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
@@ -274,10 +274,10 @@
             this.btnAutoCorrupt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAutoCorrupt.UseVisualStyleBackColor = false;
             this.btnAutoCorrupt.Click += new System.EventHandler(this.btnAutoCorrupt_Click);
-            // 
+            //
             // gbEngineParameters
-            // 
-            this.gbEngineParameters.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.gbEngineParameters.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gbEngineParameters.Controls.Add(this.updownMaxInfiniteUnits);
             this.gbEngineParameters.Controls.Add(this.lbMaxUnits);
@@ -293,9 +293,9 @@
             this.gbEngineParameters.TabStop = false;
             this.gbEngineParameters.Text = "Engine Parameters";
             this.gbEngineParameters.Visible = false;
-            // 
+            //
             // updownMaxInfiniteUnits
-            // 
+            //
             this.updownMaxInfiniteUnits.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.updownMaxInfiniteUnits.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.updownMaxInfiniteUnits.ForeColor = System.Drawing.Color.White;
@@ -321,9 +321,9 @@
             0,
             0});
             this.updownMaxInfiniteUnits.Visible = false;
-            // 
+            //
             // lbMaxUnits
-            // 
+            //
             this.lbMaxUnits.AutoSize = true;
             this.lbMaxUnits.Location = new System.Drawing.Point(378, 82);
             this.lbMaxUnits.Name = "lbMaxUnits";
@@ -331,9 +331,9 @@
             this.lbMaxUnits.TabIndex = 197;
             this.lbMaxUnits.Text = "Max ∞ Units";
             this.lbMaxUnits.Visible = false;
-            // 
+            //
             // cbClearRewind
-            // 
+            //
             this.cbClearRewind.AutoSize = true;
             this.cbClearRewind.BackColor = System.Drawing.Color.Transparent;
             this.cbClearRewind.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -346,9 +346,9 @@
             this.cbClearRewind.UseVisualStyleBackColor = false;
             this.cbClearRewind.Visible = false;
             this.cbClearRewind.CheckedChanged += new System.EventHandler(this.CbClearRewind_CheckedChanged);
-            // 
+            //
             // btnClearInfiniteUnits
-            // 
+            //
             this.btnClearInfiniteUnits.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClearInfiniteUnits.BackColor = System.Drawing.Color.Gray;
             this.btnClearInfiniteUnits.FlatAppearance.BorderSize = 0;
@@ -365,9 +365,9 @@
             this.btnClearInfiniteUnits.UseVisualStyleBackColor = false;
             this.btnClearInfiniteUnits.Visible = false;
             this.btnClearInfiniteUnits.Click += new System.EventHandler(this.btnClearInfiniteUnits_Click);
-            // 
+            //
             // lbEngineDescription
-            // 
+            //
             this.lbEngineDescription.AutoSize = true;
             this.lbEngineDescription.BackColor = System.Drawing.Color.Transparent;
             this.lbEngineDescription.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -378,9 +378,9 @@
             this.lbEngineDescription.TabIndex = 5;
             this.lbEngineDescription.Text = "Auto-Selected Engine: Vector Engine \nParameters: Limiter:One , Value:Two\n\nThis en" +
     "gine is made for corrupting 3d games \nand 2d games made for 3d-era consoles.";
-            // 
+            //
             // btnShuffleAlgorithm
-            // 
+            //
             this.btnShuffleAlgorithm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnShuffleAlgorithm.BackColor = System.Drawing.Color.Gray;
             this.btnShuffleAlgorithm.FlatAppearance.BorderSize = 0;
@@ -396,10 +396,10 @@
             this.btnShuffleAlgorithm.Text = "Shuffle algorithm (Spice things up)";
             this.btnShuffleAlgorithm.UseVisualStyleBackColor = false;
             this.btnShuffleAlgorithm.Click += new System.EventHandler(this.btnShuffleAlgorithm_Click);
-            // 
+            //
             // gbTargetType
-            // 
-            this.gbTargetType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.gbTargetType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gbTargetType.Controls.Add(this.btnHelp);
             this.gbTargetType.Controls.Add(this.rbModernPlatforms);
@@ -412,9 +412,9 @@
             this.gbTargetType.TabIndex = 132;
             this.gbTargetType.TabStop = false;
             this.gbTargetType.Text = "Target Type";
-            // 
+            //
             // btnHelp
-            // 
+            //
             this.btnHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnHelp.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnHelp.FlatAppearance.BorderSize = 0;
@@ -431,9 +431,9 @@
             this.btnHelp.Text = "?";
             this.btnHelp.UseVisualStyleBackColor = false;
             this.btnHelp.Visible = false;
-            // 
+            //
             // rbModernPlatforms
-            // 
+            //
             this.rbModernPlatforms.AutoSize = true;
             this.rbModernPlatforms.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.rbModernPlatforms.Location = new System.Drawing.Point(357, 43);
@@ -444,9 +444,9 @@
             this.rbModernPlatforms.Text = "Modern Platforms (32bit/64bit, 3d games)";
             this.rbModernPlatforms.UseVisualStyleBackColor = true;
             this.rbModernPlatforms.CheckedChanged += new System.EventHandler(this.rbModernPlatforms_CheckedChanged);
-            // 
+            //
             // rbClassicPlatforms
-            // 
+            //
             this.rbClassicPlatforms.AutoSize = true;
             this.rbClassicPlatforms.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.rbClassicPlatforms.Location = new System.Drawing.Point(47, 42);
@@ -457,9 +457,9 @@
             this.rbClassicPlatforms.Text = "Classic Platforms (8bit/16bit, 2d games)";
             this.rbClassicPlatforms.UseVisualStyleBackColor = true;
             this.rbClassicPlatforms.CheckedChanged += new System.EventHandler(this.rbClassicPlatforms_CheckedChanged);
-            // 
+            //
             // lbConnectionStatus
-            // 
+            //
             this.lbConnectionStatus.AutoSize = true;
             this.lbConnectionStatus.BackColor = System.Drawing.Color.Transparent;
             this.lbConnectionStatus.Font = new System.Drawing.Font("Segoe UI", 10F);
@@ -469,9 +469,9 @@
             this.lbConnectionStatus.Size = new System.Drawing.Size(391, 19);
             this.lbConnectionStatus.TabIndex = 2;
             this.lbConnectionStatus.Text = "What would best describe the game you are trying to corrupt?";
-            // 
+            //
             // btnBlastToggle
-            // 
+            //
             this.btnBlastToggle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnBlastToggle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnBlastToggle.FlatAppearance.BorderSize = 0;
@@ -488,9 +488,9 @@
             this.btnBlastToggle.UseVisualStyleBackColor = false;
             this.btnBlastToggle.Visible = false;
             this.btnBlastToggle.Click += new System.EventHandler(this.btnBlastToggle_Click);
-            // 
+            //
             // label2
-            // 
+            //
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 22F, System.Drawing.FontStyle.Bold);
             this.label2.ForeColor = System.Drawing.Color.White;
@@ -499,39 +499,39 @@
             this.label2.Size = new System.Drawing.Size(199, 41);
             this.label2.TabIndex = 83;
             this.label2.Text = "Simple Mode";
-            // 
+            //
             // dataGridViewTextBoxColumn1
-            // 
+            //
             this.dataGridViewTextBoxColumn1.HeaderText = "Item Name";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
             this.dataGridViewTextBoxColumn1.Width = 238;
-            // 
+            //
             // dataGridViewTextBoxColumn2
-            // 
+            //
             this.dataGridViewTextBoxColumn2.FillWeight = 45F;
             this.dataGridViewTextBoxColumn2.HeaderText = "Game";
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.ReadOnly = true;
             this.dataGridViewTextBoxColumn2.Width = 113;
-            // 
+            //
             // dataGridViewTextBoxColumn3
-            // 
+            //
             this.dataGridViewTextBoxColumn3.FillWeight = 45F;
             this.dataGridViewTextBoxColumn3.HeaderText = "System";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.ReadOnly = true;
             this.dataGridViewTextBoxColumn3.Width = 112;
-            // 
+            //
             // dataGridViewTextBoxColumn4
-            // 
+            //
             this.dataGridViewTextBoxColumn4.FillWeight = 40F;
             this.dataGridViewTextBoxColumn4.HeaderText = "Core";
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             this.dataGridViewTextBoxColumn4.Width = 101;
-            // 
-            // RTC_SimpleMode_Form
-            // 
+            //
+            // SimpleModeForm
+            //
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -548,10 +548,10 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(655, 515);
-            this.Name = "RTC_SimpleMode_Form";
+            this.Name = "SimpleModeForm";
             this.Tag = "color:dark1";
             this.Text = "Stockpile Player";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RTC_SimpleMode_Form_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SimpleModeForm_FormClosing);
             this.gbSimpleGlitchHarvester.ResumeLayout(false);
             this.gbRealTimeCorruption.ResumeLayout(false);
             this.gbEngineParameters.ResumeLayout(false);

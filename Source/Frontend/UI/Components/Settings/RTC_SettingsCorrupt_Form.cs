@@ -25,7 +25,7 @@ namespace RTCV.UI
             nmMaxInfiniteStepUnits.registerSlave(S.GET<CorruptionEngineForm>().updownMaxFreeze, handler);
             nmMaxInfiniteStepUnits.registerSlave(S.GET<CorruptionEngineForm>().updownMaxPipes, handler);
             nmMaxInfiniteStepUnits.registerSlave(S.GET<RTC_CustomEngineConfig_Form>().updownMaxInfiniteUnits, handler);
-            nmMaxInfiniteStepUnits.registerSlave(S.GET<RTC_SimpleMode_Form>().updownMaxInfiniteUnits, handler);
+            nmMaxInfiniteStepUnits.registerSlave(S.GET<SimpleModeForm>().updownMaxInfiniteUnits, handler);
 
             cbRerollAddress.Checked = RtcCore.RerollAddress;
             cbRerollSourceAddress.Checked = RtcCore.RerollSourceAddress;
@@ -119,7 +119,7 @@ namespace RTCV.UI
 
             S.GET<CorruptionEngineForm>().SetRewindBoxes(cbClearStepUnitsOnRewind.Checked);
             S.GET<RTC_CustomEngineConfig_Form>().SetRewindBoxes(cbClearStepUnitsOnRewind.Checked);
-            S.GET<RTC_SimpleMode_Form>().SetRewindBoxes(cbClearStepUnitsOnRewind.Checked);
+            S.GET<SimpleModeForm>().SetRewindBoxes(cbClearStepUnitsOnRewind.Checked);
 
             StepActions.ClearStepActionsOnRewind = cbClearStepUnitsOnRewind.Checked;
         }

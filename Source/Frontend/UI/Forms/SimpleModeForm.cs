@@ -9,7 +9,7 @@
     using RTCV.UI.Components.Controls;
     using RTCV.UI.Modular;
 
-    public partial class RTC_SimpleMode_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class SimpleModeForm : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
@@ -18,7 +18,7 @@
 
         private bool DontUpdateSpec = false;
 
-        public RTC_SimpleMode_Form()
+        public SimpleModeForm()
         {
             InitializeComponent();
         }
@@ -61,7 +61,7 @@
             S.GET<CoreForm>().OpenEngineConfig(null, null);
         }
 
-        private void RTC_SimpleMode_Form_FormClosing(object sender, FormClosingEventArgs e)
+        private void SimpleModeForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason != CloseReason.FormOwnerClosing)
             {
