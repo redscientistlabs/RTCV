@@ -21,7 +21,7 @@
 
             lbForm = new ListBoxForm(new ComponentForm[] {
                 S.GET<RTC_SettingsGeneral_Form>(),
-                S.GET<RTC_SettingsCorrupt_Form>(),
+                S.GET<SettingsCorruptForm>(),
                 S.GET<RTC_SettingsHotkeyConfig_Form>(),
                 S.GET<RTC_SettingsNetCore_Form>(),
                 S.GET<RTC_SettingsAbout_Form>(),
