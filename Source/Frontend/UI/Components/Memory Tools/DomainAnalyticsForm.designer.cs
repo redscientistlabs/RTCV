@@ -1,6 +1,6 @@
 ﻿namespace RTCV.UI
 {
-    partial class RTC_DomainAnalytics_Form
+    partial class DomainAnalyticsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_DomainAnalytics_Form));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DomainAnalyticsForm));
             this.btnSendToAnalytics = new System.Windows.Forms.Button();
             this.btnLoadDomains = new System.Windows.Forms.Button();
             this.cbSelectedMemoryDomain = new System.Windows.Forms.ComboBox();
@@ -57,7 +57,7 @@
             this.btnSendToAnalytics.Tag = "color:light1";
             this.btnSendToAnalytics.Text = "Send dumps to analytics";
             this.btnSendToAnalytics.UseVisualStyleBackColor = false;
-            this.btnSendToAnalytics.Click += new System.EventHandler(this.btnSendToAnalytics_Click);
+            this.btnSendToAnalytics.Click += new System.EventHandler(this.SendToAnalytics);
             //
             // btnLoadDomains
             //
@@ -74,7 +74,7 @@
             this.btnLoadDomains.Tag = "color:light1";
             this.btnLoadDomains.Text = "Load Domains";
             this.btnLoadDomains.UseVisualStyleBackColor = false;
-            this.btnLoadDomains.Click += new System.EventHandler(this.btnLoadDomains_Click);
+            this.btnLoadDomains.Click += new System.EventHandler(this.LoadDomains);
             this.btnLoadDomains.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             //
             // cbSelectedMemoryDomain
@@ -90,7 +90,7 @@
             this.cbSelectedMemoryDomain.Size = new System.Drawing.Size(182, 25);
             this.cbSelectedMemoryDomain.TabIndex = 125;
             this.cbSelectedMemoryDomain.Tag = "color:dark1";
-            this.cbSelectedMemoryDomain.SelectedIndexChanged += new System.EventHandler(this.cbSelectedMemoryDomain_SelectedIndexChanged);
+            this.cbSelectedMemoryDomain.SelectedIndexChanged += new System.EventHandler(this.UpdateSelectedMemoryDomain);
             this.cbSelectedMemoryDomain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             //
             // btnActiveTableDumpsReset
@@ -108,7 +108,7 @@
             this.btnActiveTableDumpsReset.Tag = "color:light1";
             this.btnActiveTableDumpsReset.Text = "Initialize Dump Collection";
             this.btnActiveTableDumpsReset.UseVisualStyleBackColor = false;
-            this.btnActiveTableDumpsReset.Click += new System.EventHandler(this.btnActiveTableDumpsReset_Click);
+            this.btnActiveTableDumpsReset.Click += new System.EventHandler(this.InitializeDumpCollection);
             this.btnActiveTableDumpsReset.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             //
             // lbNbMemoryDumps
@@ -143,7 +143,7 @@
             0,
             0,
             0});
-            this.nmAutoAddSec.ValueChanged += new System.EventHandler(this.nmAutoAddSec_ValueChanged);
+            this.nmAutoAddSec.ValueChanged += new System.EventHandler(this.UpdateAutoAddInterval);
             this.nmAutoAddSec.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             //
             // cbAutoAddDump
@@ -158,7 +158,7 @@
             this.cbAutoAddDump.TabIndex = 122;
             this.cbAutoAddDump.Text = "Auto-dump every";
             this.cbAutoAddDump.UseVisualStyleBackColor = true;
-            this.cbAutoAddDump.CheckedChanged += new System.EventHandler(this.cbAutoAddDump_CheckedChanged);
+            this.cbAutoAddDump.CheckedChanged += new System.EventHandler(this.UpdateAutoAddDump);
             this.cbAutoAddDump.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             //
             // lbDomainAddressSize
@@ -188,7 +188,7 @@
             this.btnActiveTableAddDump.Tag = "color:light1";
             this.btnActiveTableAddDump.Text = "Add domain dump";
             this.btnActiveTableAddDump.UseVisualStyleBackColor = false;
-            this.btnActiveTableAddDump.Click += new System.EventHandler(this.btnActiveTableAddDump_Click);
+            this.btnActiveTableAddDump.Click += new System.EventHandler(this.AddDomainDump);
             this.btnActiveTableAddDump.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             //
             // label16
@@ -203,7 +203,7 @@
             this.label16.Text = "sec";
             this.label16.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             //
-            // RTC_DomainAnalytics_Form
+            // DomainAnalyticsForm
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -222,11 +222,10 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "RTC_DomainAnalytics_Form";
+            this.Name = "DomainAnalyticsForm";
             this.Tag = "color:dark2";
             this.Text = "Domain Analytics";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
-            this.Load += new System.EventHandler(this.VmdActForm_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             ((System.ComponentModel.ISupportInitialize)(this.nmAutoAddSec)).EndInit();
             this.ResumeLayout(false);

@@ -201,11 +201,11 @@
       <DependentUpon>RTC_StockpileManager_Form.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Memory Tools\Common.cs" />
-    <Compile Include="Components\Memory Tools\RTC_DomainAnalytics_Form.cs">
+    <Compile Include="Components\Memory Tools\DomainAnalyticsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_DomainAnalytics_Form.designer.cs">
-      <DependentUpon>RTC_DomainAnalytics_Form.cs</DependentUpon>
+    <Compile Include="Components\Memory Tools\DomainAnalyticsForm.designer.cs">
+      <DependentUpon>DomainAnalyticsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Memory Tools\MyListsForm.cs">
       <SubType>Form</SubType>
@@ -237,11 +237,11 @@
     <Compile Include="Components\Memory Tools\RTC_VmdSimpleGen_Form.designer.cs">
       <DependentUpon>RTC_VmdSimpleGen_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Settings\RTC_SettingsCorrupt_Form.cs">
+    <Compile Include="Components\Settings\SettingsCorruptForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Settings\RTC_SettingsCorrupt_Form.designer.cs">
-      <DependentUpon>RTC_SettingsCorrupt_Form.cs</DependentUpon>
+    <Compile Include="Components\Settings\SettingsCorruptForm.designer.cs">
+      <DependentUpon>SettingsCorruptForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Memory Tools\ListGenForm.cs">
       <SubType>Form</SubType>
@@ -515,8 +515,8 @@
     <EmbeddedResource Include="Components\Glitch Harvester\RTC_StockpileManager_Form.resx">
       <DependentUpon>RTC_StockpileManager_Form.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\RTC_DomainAnalytics_Form.resx">
-      <DependentUpon>RTC_DomainAnalytics_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Memory Tools\DomainAnalyticsForm.resx">
+      <DependentUpon>DomainAnalyticsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Memory Tools\MyListsForm.resx">
       <DependentUpon>MyListsForm.cs</DependentUpon>
@@ -533,8 +533,8 @@
     <EmbeddedResource Include="Components\Memory Tools\RTC_VmdSimpleGen_Form.resx">
       <DependentUpon>RTC_VmdSimpleGen_Form.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Settings\RTC_SettingsCorrupt_Form.resx">
-      <DependentUpon>RTC_SettingsCorrupt_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Settings\SettingsCorruptForm.resx">
+      <DependentUpon>SettingsCorruptForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Memory Tools\ListGenForm.resx">
       <DependentUpon>ListGenForm.cs</DependentUpon>

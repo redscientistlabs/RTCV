@@ -254,7 +254,7 @@ namespace RTCV.UI
         public void SetRewindBoxes(bool enabled)
         {
             dontUpdate = true;
-            S.GET<RTC_SettingsCorrupt_Form>().SetRewindBoxes(enabled);
+            S.GET<SettingsCorruptForm>().SetRewindBoxes(enabled);
             cbClearFreezesOnRewind.Checked = enabled;
             cbClearCheatsOnRewind.Checked = enabled;
             cbClearPipesOnRewind.Checked = enabled;
@@ -285,7 +285,7 @@ namespace RTCV.UI
 
         private void OnLockPipesToggle(object sender, EventArgs e)
         {
-            S.GET<RTC_SettingsCorrupt_Form>().SetLockBoxes(cbLockPipes.Checked);
+            S.GET<SettingsCorruptForm>().SetLockBoxes(cbLockPipes.Checked);
             StepActions.LockExecution = cbLockPipes.Checked;
         }
 
