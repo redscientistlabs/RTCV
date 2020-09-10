@@ -1,6 +1,6 @@
 namespace RTCV.UI
 {
-    partial class RTC_OpenTools_Form
+    partial class OpenToolsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,9 +30,9 @@ namespace RTCV.UI
         {
             this.flpTools = new System.Windows.Forms.FlowLayoutPanel();
             this.SuspendLayout();
-            // 
+            //
             // flpTools
-            // 
+            //
             this.flpTools.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flpTools.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flpTools.Location = new System.Drawing.Point(0, 0);
@@ -40,9 +40,9 @@ namespace RTCV.UI
             this.flpTools.Padding = new System.Windows.Forms.Padding(8, 0, 0, 0);
             this.flpTools.Size = new System.Drawing.Size(390, 250);
             this.flpTools.TabIndex = 138;
-            // 
-            // RTC_OpenTools_Form
-            // 
+            //
+            // OpenToolsForm
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -52,7 +52,7 @@ namespace RTCV.UI
             this.Font = new System.Drawing.Font("Segoe UI Symbol", 8F);
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "RTC_OpenTools_Form";
+            this.Name = "OpenToolsForm";
             this.Tag = "color:dark3";
             this.Text = "Extra Tools Form";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);

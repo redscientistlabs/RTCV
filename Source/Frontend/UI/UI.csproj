@@ -213,11 +213,11 @@
     <Compile Include="Components\Memory Tools\MyListsForm.designer.cs">
       <DependentUpon>MyListsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_OpenTools_Form.cs">
+    <Compile Include="Components\Memory Tools\OpenToolsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_OpenTools_Form.designer.cs">
-      <DependentUpon>RTC_OpenTools_Form.cs</DependentUpon>
+    <Compile Include="Components\Memory Tools\OpenToolsForm.designer.cs">
+      <DependentUpon>OpenToolsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Memory Tools\RTC_VmdLimiterProfiler_Form.cs">
       <SubType>Form</SubType>
@@ -521,8 +521,8 @@
     <EmbeddedResource Include="Components\Memory Tools\MyListsForm.resx">
       <DependentUpon>MyListsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\RTC_OpenTools_Form.resx">
-      <DependentUpon>RTC_OpenTools_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Memory Tools\OpenToolsForm.resx">
+      <DependentUpon>OpenToolsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Memory Tools\RTC_VmdLimiterProfiler_Form.resx">
       <DependentUpon>RTC_VmdLimiterProfiler_Form.cs</DependentUpon>
