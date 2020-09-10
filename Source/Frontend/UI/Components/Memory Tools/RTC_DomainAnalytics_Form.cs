@@ -139,7 +139,7 @@
                 ActiveTableAutodump.Interval = Convert.ToInt32(nmAutoAddSec.Value) * 1000;
         }
 
-        private void RTC_VmdAct_Form_Load(object sender, EventArgs e)
+        private void VmdActForm_Load(object sender, EventArgs e)
         {
         }
 
@@ -147,7 +147,7 @@
         {
             cbAutoAddDump.Checked = false;
             var mi = MemoryDomains.GetInterface(cbSelectedMemoryDomain.SelectedItem.ToString());
-            RTC_AnalyticsTool_Form.OpenAnalyticsTool(mi, MemoryDumps);
+            AnalyticsToolForm.OpenAnalyticsTool(mi, MemoryDumps);
         }
 
         private void cbSelectedMemoryDomain_SelectedIndexChanged(object sender, EventArgs e)

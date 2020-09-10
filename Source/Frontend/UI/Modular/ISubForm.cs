@@ -4,12 +4,12 @@ namespace RTCV.UI.Modular
     {
         //Interface used for added contrals in SubForms
 
-        bool SubForm_HasLeftButton { get; }
-        bool SubForm_HasRightButton { get; }
-        string SubForm_LeftButtonText { get; }
-        string SubForm_RightButtonText { get; }
-        void SubForm_LeftButton_Click();
-        void SubForm_RightButton_Click();
+        bool HasLeftButton { get; }
+        bool HasRightButton { get; }
+        string LeftButtonText { get; }
+        string RightButtonText { get; }
+        void LeftButtonClick();
+        void RightButtonClick();
         void OnShown(); //The included OnShown sucks
         void OnHidden(); //There's no OnHidden and VisibleChanged sucks
     }

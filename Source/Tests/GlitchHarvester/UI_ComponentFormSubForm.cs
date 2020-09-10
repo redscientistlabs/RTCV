@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace RTCV.UI
 {
-    public partial class UI_ComponentFormSubForm : Form, ISubForm
+    public partial class ComponentFormSubForm : Form, ISubForm
     {
-        public UI_ComponentFormSubForm()
+        public ComponentFormSubForm()
         {
             InitializeComponent();
         }

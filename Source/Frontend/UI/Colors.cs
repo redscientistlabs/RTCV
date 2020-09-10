@@ -38,7 +38,7 @@ namespace RTCV.UI
                 }
 
                 //Get the extraforms
-                foreach (UI_CanvasForm targetForm in UI_CanvasForm.extraForms)
+                foreach (CanvasForm targetForm in CanvasForm.extraForms)
                 {
                     foreach (var c in targetForm.Controls.getControlsWithTag())
                         allControls.Add(c);

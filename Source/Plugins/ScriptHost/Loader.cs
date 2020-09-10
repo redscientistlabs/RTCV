@@ -21,7 +21,7 @@ namespace RTCV.Plugins.ScriptHost
         {
             Logging.GlobalLogger.Info($"ScriptHost v{Version} initializing.");
 
-            S.GET<RTC_OpenTools_Form>().RegisterTool("ScriptHost", "Open Script Host", () =>
+            S.GET<OpenToolsForm>().RegisterTool("ScriptHost", "Open Script Host", () =>
             {
                 S.SET(new ScriptHost());
                 S.GET<ScriptHost>().Show();

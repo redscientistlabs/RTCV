@@ -1,6 +1,6 @@
 ﻿namespace RTCV.UI
 {
-    partial class UI_CanvasForm
+    partial class CanvasForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,28 +30,28 @@
         {
             this.pnScale = new System.Windows.Forms.Panel();
             this.SuspendLayout();
-            // 
+            //
             // pnScale
-            // 
+            //
             this.pnScale.BackColor = System.Drawing.Color.Gray;
             this.pnScale.Location = new System.Drawing.Point(15, 15);
             this.pnScale.Name = "pnScale";
             this.pnScale.Size = new System.Drawing.Size(50, 50);
             this.pnScale.TabIndex = 5;
             this.pnScale.Tag = "color:normal";
-            // 
-            // UI_CanvasForm
-            // 
+            //
+            // CanvasForm
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(591, 425);
             this.Controls.Add(this.pnScale);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "UI_CanvasForm";
+            this.Name = "CanvasForm";
             this.Tag = "color:dark";
-            this.Text = "UI_CanvasForm";
-            this.Load += new System.EventHandler(this.UI_CanvasForm_Load);
+            this.Text = "CanvasForm";
+            this.Load += new System.EventHandler(this.CanvasForm_Load);
             this.ResumeLayout(false);
 
         }

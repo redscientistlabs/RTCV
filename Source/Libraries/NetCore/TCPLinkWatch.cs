@@ -2,6 +2,7 @@
 {
     using System;
     using System.Threading;
+    using RTCV.NetCore.Enums;
 
     public class TCPLinkWatch : IDisposable
     {

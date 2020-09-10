@@ -47,48 +47,48 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UI_CanvasForm.cs">
+    <Compile Include="CanvasForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI_CanvasForm.Designer.cs">
-      <DependentUpon>UI_CanvasForm.cs</DependentUpon>
+    <Compile Include="CanvasForm.Designer.cs">
+      <DependentUpon>CanvasForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI_Objects.cs" />
-    <Compile Include="UI_ShadowPanel.cs">
+    <Compile Include="ShadowPanel.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI_ShadowPanel.Designer.cs">
-      <DependentUpon>UI_ShadowPanel.cs</DependentUpon>
+    <Compile Include="ShadowPanel.Designer.cs">
+      <DependentUpon>ShadowPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI_CoreForm.cs">
+    <Compile Include="CoreForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI_CoreForm.Designer.cs">
-      <DependentUpon>UI_CoreForm.cs</DependentUpon>
+    <Compile Include="CoreForm.Designer.cs">
+      <DependentUpon>CoreForm.cs</DependentUpon>
     </Compile>
     <Compile Include="NetCoreServer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI_ComponentFormSubForm.cs">
+    <Compile Include="ComponentFormSubForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI_ComponentFormSubForm.Designer.cs">
-      <DependentUpon>UI_ComponentFormSubForm.cs</DependentUpon>
+    <Compile Include="ComponentFormSubForm.Designer.cs">
+      <DependentUpon>ComponentFormSubForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI_ComponentFormTile.cs">
+    <Compile Include="ComponentFormTile.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI_ComponentFormTile.Designer.cs">
-      <DependentUpon>UI_ComponentFormTile.cs</DependentUpon>
+    <Compile Include="ComponentFormTile.Designer.cs">
+      <DependentUpon>ComponentFormTile.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="UI_CanvasForm.resx">
-      <DependentUpon>UI_CanvasForm.cs</DependentUpon>
+    <EmbeddedResource Include="CanvasForm.resx">
+      <DependentUpon>CanvasForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI_CoreForm.resx">
-      <DependentUpon>UI_CoreForm.cs</DependentUpon>
+    <EmbeddedResource Include="CoreForm.resx">
+      <DependentUpon>CoreForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI_ShadowPanel.resx">
-      <DependentUpon>UI_ShadowPanel.cs</DependentUpon>
+    <EmbeddedResource Include="ShadowPanel.resx">
+      <DependentUpon>ShadowPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -100,11 +100,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="UI_ComponentFormSubForm.resx">
-      <DependentUpon>UI_ComponentFormSubForm.cs</DependentUpon>
+    <EmbeddedResource Include="ComponentFormSubForm.resx">
+      <DependentUpon>ComponentFormSubForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI_ComponentFormTile.resx">
-      <DependentUpon>UI_ComponentFormTile.cs</DependentUpon>
+    <EmbeddedResource Include="ComponentFormTile.resx">
+      <DependentUpon>ComponentFormTile.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
@@ -127,7 +127,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

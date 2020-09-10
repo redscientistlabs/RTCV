@@ -9,14 +9,14 @@ using System.Windows.Forms;
 
 namespace RTCV.UI
 {
-    public partial class UI_ComponentFormTile : Form, ITileForm
+    public partial class ComponentFormTile : Form, ITileForm
     {
 
         string childForm = null; //change to ComponentForm
         public int SizeX = 2;
         public int SizeY = 2;
 
-        public UI_ComponentFormTile()
+        public ComponentFormTile()
         {
             InitializeComponent();
 
@@ -29,12 +29,12 @@ namespace RTCV.UI
             SizeY = _sizeY;
 
 
-            
+
 
 
             this.Size = new Size(
-                (SizeX * UI_CanvasForm.tileSize) + ((SizeX - 1) * UI_CanvasForm.spacerSize),
-                (SizeY * UI_CanvasForm.tileSize) + ((SizeY - 1) * UI_CanvasForm.spacerSize)
+                (SizeX * CanvasForm.tileSize) + ((SizeX - 1) * CanvasForm.spacerSize),
+                (SizeY * CanvasForm.tileSize) + ((SizeY - 1) * CanvasForm.spacerSize)
                 );
 
 

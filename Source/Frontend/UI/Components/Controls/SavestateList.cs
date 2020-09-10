@@ -154,7 +154,7 @@ namespace RTCV.UI.Components.Controls
                     }
                 }
 
-                var smForm = (Parent as RTC_SavestateManager_Form);
+                var smForm = (Parent as SavestateManagerForm);
                 if (smForm != null && smForm.cbSavestateLoadOnClick.Checked)
                 {
                     btnSaveLoad.Text = "LOAD";
@@ -197,7 +197,7 @@ namespace RTCV.UI.Components.Controls
 
                     newStashkey.BlastLayer = new BlastLayer();
 
-                    RTC_NewBlastEditor_Form.OpenBlastEditor(newStashkey);
+                    BlastEditorForm.OpenBlastEditor(newStashkey);
                 });
 
 
@@ -314,7 +314,7 @@ namespace RTCV.UI.Components.Controls
             {
                 LoadCurrentState();
                 StockpileManager_UISide.CurrentStashkey = null;
-                S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = false;
+                S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = false;
             }
             else
             {

@@ -10,16 +10,16 @@ using RTCV.UI;
 
 namespace RTCV.UI
 {
-    public partial class UI_CanvasForm : Form
+    public partial class CanvasForm : Form
     {
-        public static UI_CanvasForm thisForm;
-        public static List<UI_CanvasForm> extraForms = new List<UI_CanvasForm>();
-        public UI_ShadowPanel spForm;
+        public static CanvasForm thisForm;
+        public static List<CanvasForm> extraForms = new List<CanvasForm>();
+        public ShadowPanel spForm;
 
         public static int spacerSize;
         public static int tileSize;
 
-        static Dictionary<string, UI_ComponentFormTile> loadedTileForms = new Dictionary<string, UI_ComponentFormTile>();
+        static Dictionary<string, ComponentFormTile> loadedTileForms = new Dictionary<string, ComponentFormTile>();
 
         public bool SubFormMode
         {
@@ -32,7 +32,7 @@ namespace RTCV.UI
                 }
         }
 
-        public UI_CanvasForm(bool extraForm = false)
+        public CanvasForm(bool extraForm = false)
         {
             InitializeComponent();
 
@@ -47,12 +47,12 @@ namespace RTCV.UI
 
         }
 
-        public static UI_ComponentFormTile getTileForm(string componentFormName, int? newSizeX = null, int? newSizeY = null, bool DisplayHeader = true)
+        public static ComponentFormTile getTileForm(string componentFormName, int? newSizeX = null, int? newSizeY = null, bool DisplayHeader = true)
         {
 
             if (!loadedTileForms.ContainsKey(componentFormName))
             {
-                var newForm = (UI_ComponentFormTile)Activator.CreateInstance(typeof(UI_ComponentFormTile));
+                var newForm = (ComponentFormTile)Activator.CreateInstance(typeof(ComponentFormTile));
                 loadedTileForms[componentFormName] = newForm;
 
                 if (newSizeX != null && newSizeY != null)
@@ -90,7 +90,7 @@ namespace RTCV.UI
 
         }
 
-        public void ResizeCanvas(UI_CanvasForm targetForm, CanvasGrid canvasGrid)
+        public void ResizeCanvas(CanvasForm targetForm, CanvasGrid canvasGrid)
         {
             this.SetSize(getTilePos(canvasGrid.x), getTilePos(canvasGrid.y));
         }
@@ -98,9 +98,9 @@ namespace RTCV.UI
         public void SetSize(int x, int y)
         {
             if (this.TopLevel)
-                this.Size = new Size(x + UI_CoreForm.xPadding, y + UI_CoreForm.yPadding);
+                this.Size = new Size(x + CoreForm.xPadding, y + CoreForm.yPadding);
             else
-                UI_CoreForm.thisForm.SetSize(x, y);
+                CoreForm.thisForm.SetSize(x, y);
         }
 
         public static void loadMultiGrid(MultiGrid mg)
@@ -109,7 +109,7 @@ namespace RTCV.UI
         }
 
 
-        public static void loadTileForm(UI_CanvasForm targetForm, CanvasGrid canvasGrid)
+        public static void loadTileForm(CanvasForm targetForm, CanvasGrid canvasGrid)
         {
 
             targetForm.ResizeCanvas(targetForm, canvasGrid);
@@ -121,7 +121,7 @@ namespace RTCV.UI
                         targetForm.Text = canvasGrid.GridName;
                         bool DisplayHeader = (canvasGrid.gridComponentDisplayHeader[x, y].HasValue ? canvasGrid.gridComponentDisplayHeader[x, y].Value : false);
                         var size = canvasGrid.gridComponentSize[x, y];
-                        UI_ComponentFormTile tileForm = getTileForm(canvasGrid.gridComponent[x, y], size?.Width, size?.Height, DisplayHeader);
+                        ComponentFormTile tileForm = getTileForm(canvasGrid.gridComponent[x, y], size?.Width, size?.Height, DisplayHeader);
                         tileForm.TopLevel = false;
                         targetForm.Controls.Add(tileForm);
                         tileForm.Location = getTileLocation(x, y);
@@ -136,7 +136,7 @@ namespace RTCV.UI
 
         public static void loadTileFormExtraWindow(CanvasGrid canvasGrid, string WindowHeader = "RTC Extra Form")
         {
-            UI_CanvasForm extraForm = new UI_CanvasForm(true);
+            CanvasForm extraForm = new CanvasForm(true);
 
             extraForm.Controls.Clear();
             extraForms.Add(extraForm);
@@ -162,7 +162,7 @@ namespace RTCV.UI
 
             if (spForm == null)
             {
-                ShowSubForm("UI_ComponentFormSubForm");
+                ShowSubForm("ComponentFormSubForm");
             }
             else
                 CloseSubForm();
@@ -198,7 +198,7 @@ namespace RTCV.UI
             if (spForm != null)
                 CloseSubForm();
 
-            spForm = new UI_ShadowPanel(thisForm, _type);
+            spForm = new ShadowPanel(thisForm, _type);
             spForm.TopLevel = false;
             thisForm.Controls.Add(spForm);
             spForm.Show();
@@ -210,9 +210,9 @@ namespace RTCV.UI
             //Closes subform and exists SubForm mode.
             //is automatically called when Cancel/Ok is pressed in SubForm.
 
-            if (UI_ShadowPanel.subForm != null) {
-                UI_ShadowPanel.subForm.Close();
-                UI_ShadowPanel.subForm = null;
+            if (ShadowPanel.subForm != null) {
+                ShadowPanel.subForm.Close();
+                ShadowPanel.subForm = null;
             }
 
             if (spForm != null)
@@ -222,10 +222,10 @@ namespace RTCV.UI
             }
         }
 
-        private void UI_CanvasForm_Load(object sender, EventArgs e)
+        private void CanvasForm_Load(object sender, EventArgs e)
         {
-            
+
         }
-        
+
     }
 }

@@ -4,7 +4,7 @@ namespace RTCV.Vanguard
     using System.Linq;
     using RTCV.CorruptCore;
     using RTCV.NetCore;
-    using NetworkSide = RTCV.NetCore.NetworkSide;
+    using RTCV.NetCore.Enums;
 
     public class VanguardConnector : IRoutable, IDisposable
     {

@@ -3,6 +3,7 @@ namespace RTCV.NetCore
     using System;
     using System.ComponentModel;
     using System.Threading;
+    using RTCV.NetCore.Enums;
 
     public class NetCoreSpec : IDisposable
     {

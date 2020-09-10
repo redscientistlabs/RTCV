@@ -30,7 +30,7 @@ namespace RTCV.UI
         private static System.Timers.Timer inputCheckTimer;
 
         //RTC Main Forms
-        public static RTC_SelectBox_Form mtForm = null;
+        public static SelectBoxForm mtForm = null;
 
         public static BindingCollection HotkeyBindings = new BindingCollection();
 
@@ -38,8 +38,8 @@ namespace RTCV.UI
         {
             S.formRegister.FormRegistered += FormRegister_FormRegistered;
             //registerFormEvents(S.GET<RTC_Core_Form>());
-            registerFormEvents(S.GET<UI_CoreForm>());
-            registerHotkeyBlacklistControls(S.GET<UI_CoreForm>());
+            registerFormEvents(S.GET<CoreForm>());
+            registerHotkeyBlacklistControls(S.GET<CoreForm>());
 
             if (!RtcCore.Attached)
             {
@@ -51,7 +51,7 @@ namespace RTCV.UI
 
             SyncObjectSingleton.SyncObject = dummy;
 
-            UI_VanguardImplementation.StartServer();
+            VanguardImplementation.StartServer();
 
             PartialSpec p = new PartialSpec("UISpec");
 
@@ -84,11 +84,11 @@ namespace RTCV.UI
 
             if (FirstConnect)
             {
-                UI_DefaultGrids.connectionStatus.LoadToMain();
+                DefaultGrids.connectionStatus.LoadToMain();
             }
 
             Colors.LoadRTCColor();
-            S.GET<UI_CoreForm>().Show();
+            S.GET<CoreForm>().Show();
             Initialized.Set();
             Colors.LoadRTCColor();
         }
@@ -191,17 +191,17 @@ namespace RTCV.UI
                 SetHotkeyTimer(false);
 
                 interfaceLocked = true;
-                var cf = S.GET<UI_CoreForm>();
+                var cf = S.GET<CoreForm>();
                 cf.LockSideBar();
 
-                S.GET<RTC_ConnectionStatus_Form>().pnBlockedButtons.Show();
+                S.GET<ConnectionStatusForm>().pnBlockedButtons.Show();
 
                 if (blockMainForm)
                 {
-                    UI_CanvasForm.mainForm.BlockView();
+                    CanvasForm.mainForm.BlockView();
                 }
 
-                UI_CanvasForm.extraForms.ForEach(it => it.BlockView());
+                CanvasForm.extraForms.ForEach(it => it.BlockView());
 
                 var ifs = S.GETINTERFACES<IBlockable>();
 
@@ -228,12 +228,12 @@ namespace RTCV.UI
             lock (lockObject)
             {
                 interfaceLocked = false;
-                S.GET<UI_CoreForm>().UnlockSideBar();
+                S.GET<CoreForm>().UnlockSideBar();
 
-                S.GET<RTC_ConnectionStatus_Form>().pnBlockedButtons.Hide();
+                S.GET<ConnectionStatusForm>().pnBlockedButtons.Hide();
 
-                UI_CanvasForm.mainForm.UnblockView();
-                UI_CanvasForm.extraForms.ForEach(it => it.UnblockView());
+                CanvasForm.mainForm.UnblockView();
+                CanvasForm.extraForms.ForEach(it => it.UnblockView());
                 var ifs = S.GETINTERFACES<IBlockable>();
                 foreach (var i in ifs)
                 {
@@ -253,7 +253,7 @@ namespace RTCV.UI
 
         public static void BlockView(this IBlockable ib)
         {
-            if (ib is RTC_ConnectionStatus_Form)
+            if (ib is ConnectionStatusForm)
             {
                 return;
             }
@@ -281,7 +281,7 @@ namespace RTCV.UI
 
         public static void UnblockView(this IBlockable ib)
         {
-            if (ib is RTC_ConnectionStatus_Form)
+            if (ib is ConnectionStatusForm)
             {
                 return;
             }
@@ -297,7 +297,7 @@ namespace RTCV.UI
         {
             if (baseType == null)
             {
-                baseType = typeof(UI_CoreForm);
+                baseType = typeof(CoreForm);
             }
             //This fetches all singletons interface IAutoColorized
 
@@ -396,23 +396,23 @@ namespace RTCV.UI
                 case "Manual Blast":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        S.GET<UI_CoreForm>().btnManualBlast_Click(null, null);
+                        S.GET<CoreForm>().ManualBlast(null, null);
                     });
                     break;
 
                 case "Auto-Corrupt":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        S.GET<UI_CoreForm>().btnAutoCorrupt_Click(null, null);
+                        S.GET<CoreForm>().StartAutoCorrupt(null, null);
                     });
                     break;
 
                 case "Error Delay--":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        if (S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value > 1)
+                        if (S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Value > 1)
                         {
-                            S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value--;
+                            S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Value--;
                         }
                     });
                     break;
@@ -420,9 +420,9 @@ namespace RTCV.UI
                 case "Error Delay++":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        if (S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value < S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Maximum)
+                        if (S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Value < S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Maximum)
                         {
-                            S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value++;
+                            S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Value++;
                         }
                     });
                     break;
@@ -430,9 +430,9 @@ namespace RTCV.UI
                 case "Intensity--":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        if (S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value > 1)
+                        if (S.GET<GeneralParametersForm>().multiTB_Intensity.Value > 1)
                         {
-                            S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value--;
+                            S.GET<GeneralParametersForm>().multiTB_Intensity.Value--;
                         }
                     });
                     break;
@@ -440,9 +440,9 @@ namespace RTCV.UI
                 case "Intensity++":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        if (S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value < S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Maximum)
+                        if (S.GET<GeneralParametersForm>().multiTB_Intensity.Value < S.GET<GeneralParametersForm>().multiTB_Intensity.Maximum)
                         {
-                            S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value++;
+                            S.GET<GeneralParametersForm>().multiTB_Intensity.Value++;
                         }
                     });
                     break;
@@ -450,8 +450,8 @@ namespace RTCV.UI
                 case "Load and Corrupt":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation = true;
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().btnCorrupt_Click(null, null);
+                        S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation = true;
+                        S.GET<GlitchHarvesterBlastForm>().Corrupt(null, null);
                     });
                     break;
 
@@ -460,10 +460,10 @@ namespace RTCV.UI
 
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        bool isload = S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation;
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation = false;
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().btnCorrupt_Click(null, null);
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation = isload;
+                        bool isload = S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation;
+                        S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation = false;
+                        S.GET<GlitchHarvesterBlastForm>().Corrupt(null, null);
+                        S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation = isload;
                     });
                     break;
 
@@ -471,12 +471,12 @@ namespace RTCV.UI
 
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var sh = S.GET<RTC_StashHistory_Form>();
+                        var sh = S.GET<StashHistoryForm>();
                         var sm = S.GET<RTC_StockpileManager_Form>();
-                        var ghb = S.GET<RTC_GlitchHarvesterBlast_Form>();
+                        var ghb = S.GET<GlitchHarvesterBlastForm>();
 
                         if (sh.lbStashHistory.SelectedIndex != -1)
-                            sh.lbStashHistory_SelectedIndexChanged(null, null);
+                            sh.HandleStashHistorySelectionChange(null, null);
                         else
                         {
                             var rows = sm.dgvStockpile.SelectedRows;
@@ -484,7 +484,7 @@ namespace RTCV.UI
 
                             if (rows.Count > 1)
                             {
-                                ghb.btnCorrupt_Click(null, null);
+                                ghb.Corrupt(null, null);
                             }
                             else
                             {
@@ -498,30 +498,30 @@ namespace RTCV.UI
                 case "Reroll":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().btnRerollSelected_Click(null, null);
+                        S.GET<GlitchHarvesterBlastForm>().RerollSelected(null, null);
                     });
                     break;
 
                 case "Load":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad.Text = "LOAD";
-                        S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad_Click(null, null);
+                        S.GET<SavestateManagerForm>().savestateList.btnSaveLoad.Text = "LOAD";
+                        S.GET<SavestateManagerForm>().savestateList.btnSaveLoad_Click(null, null);
                     });
                     break;
 
                 case "Save":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad.Text = "SAVE";
-                        S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad_Click(null, null);
+                        S.GET<SavestateManagerForm>().savestateList.btnSaveLoad.Text = "SAVE";
+                        S.GET<SavestateManagerForm>().savestateList.btnSaveLoad_Click(null, null);
                     });
                     break;
 
                 case "Stash->Stockpile":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        S.GET<RTC_StashHistory_Form>().AddStashToStockpile(false);
+                        S.GET<StashHistoryForm>().AddStashToStockpile(false);
                     });
                     break;
 
@@ -533,22 +533,22 @@ namespace RTCV.UI
                     SyncObjectSingleton.FormExecute(() =>
                     {
                         AllSpec.CorruptCoreSpec.Update(VSPEC.STEP_RUNBEFORE, true);
-                        S.GET<UI_CoreForm>().btnManualBlast_Click(null, null);
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw_Click(null, null);
+                        S.GET<CoreForm>().ManualBlast(null, null);
+                        S.GET<GlitchHarvesterBlastForm>().SendRawToStash(null, null);
                     });
                     break;
 
                 case "Send Raw to Stash":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw_Click(null, null);
+                        S.GET<GlitchHarvesterBlastForm>().SendRawToStash(null, null);
                     });
                     break;
 
                 case "BlastLayer Toggle":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().btnBlastToggle_Click(null, null);
+                        S.GET<GlitchHarvesterBlastForm>().BlastLayerToggle(null, null);
                     });
                     break;
 
@@ -557,10 +557,10 @@ namespace RTCV.UI
                     {
                         if (StockpileManager_UISide.CurrentStashkey == null || StockpileManager_UISide.CurrentStashkey.BlastLayer.Layer.Count == 0)
                         {
-                            S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = false;
+                            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = false;
                             return;
                         }
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = true;
+                        S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = true;
                         StockpileManager_UISide.ApplyStashkey(StockpileManager_UISide.CurrentStashkey, false);
                     });
                     break;
@@ -568,11 +568,11 @@ namespace RTCV.UI
                 case "Game Protect Back":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var f = S.GET<UI_CoreForm>();
+                        var f = S.GET<CoreForm>();
                         var b = f.btnGpJumpBack;
                         if (b.Visible && b.Enabled)
                         {
-                            f.btnGpJumpBack_Click(null, null);
+                            f.OnGameProtectionBack(null, null);
                         }
                     });
                     break;
@@ -580,21 +580,21 @@ namespace RTCV.UI
                 case "Game Protect Now":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var f = S.GET<UI_CoreForm>();
+                        var f = S.GET<CoreForm>();
                         var b = f.btnGpJumpNow;
                         if (b.Visible && b.Enabled)
                         {
-                            f.btnGpJumpNow_Click(null, null);
+                            f.OnGameProtectionNow(null, null);
                         }
                     });
                     break;
                 case "Disable 50":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<BlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
-                            bef.btnDisable50_Click(null, null);
+                            bef.Disable50(null, null);
                         }
                     });
                     break;
@@ -602,10 +602,10 @@ namespace RTCV.UI
                 case "Remove Disabled":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<BlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
-                            bef.btnRemoveDisabled_Click(null, null);
+                            bef.RemoveDisabled(null, null);
                         }
                     });
                     break;
@@ -613,60 +613,60 @@ namespace RTCV.UI
                 case "Invert Disabled":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<BlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
-                            bef.btnInvertDisabled_Click(null, null);
+                            bef.InvertDisabled(null, null);
                         }
                     });
                     break;
                 case "Shift Up":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<BlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
-                            bef.btnShiftBlastLayerUp_Click(null, null);
+                            bef.ShiftBlastLayerUp(null, null);
                         }
                     });
                     break;
                 case "Shift Down":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<BlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
-                            bef.btnShiftBlastLayerDown_Click(null, null);
+                            bef.ShiftBlastLayerDown(null, null);
                         }
                     });
                     break;
                 case "Load Corrupt":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<BlastEditorForm>();
                         if (bef != null && bef.Focused)
                         {
-                            bef.btnLoadCorrupt_Click(null, null);
+                            bef.LoadCorrupt(null, null);
                         }
                     });
                     break;
                 case "Apply":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<BlastEditorForm>();
                         if (bef != null && bef.Focused)
                         {
-                            bef.btnCorrupt_Click(null, null);
+                            bef.Corrupt(null, null);
                         }
                     });
                     break;
                 case "Send Stash":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<BlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
-                            bef.btnSendToStash_Click(null, null);
+                            bef.SendToStash(null, null);
                         }
                     });
                     break;
@@ -682,21 +682,21 @@ namespace RTCV.UI
         {
             if ((AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME] as bool?) ?? false)
             {
-                S.GET<UI_CoreForm>().btnManualBlast.Visible = true;
-                S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = true;
+                S.GET<CoreForm>().btnManualBlast.Visible = true;
+                S.GET<CoreForm>().btnAutoCorrupt.Visible = true;
             }
             else
             {
                 if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] == null)
                 {
-                    S.GET<UI_CoreForm>().btnManualBlast.Visible = false;
+                    S.GET<CoreForm>().btnManualBlast.Visible = false;
                 }
                 else
                 {
-                    S.GET<UI_CoreForm>().btnManualBlast.Visible = true;
+                    S.GET<CoreForm>().btnManualBlast.Visible = true;
                 }
 
-                S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
+                S.GET<CoreForm>().btnAutoCorrupt.Visible = false;
             }
         }
 
@@ -712,21 +712,21 @@ namespace RTCV.UI
                 S.GET<RTC_CustomEngineConfig_Form>().cbValueList.ValueMember = "Value";
                 S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DataSource = RtcCore.ValueListBindingSource;
 
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.DisplayMember = "Name";
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.ValueMember = "Value";
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.DataSource = RtcCore.LimiterListBindingSource;
+                S.GET<CorruptionEngineForm>().cbVectorLimiterList.DisplayMember = "Name";
+                S.GET<CorruptionEngineForm>().cbVectorLimiterList.ValueMember = "Value";
+                S.GET<CorruptionEngineForm>().cbVectorLimiterList.DataSource = RtcCore.LimiterListBindingSource;
 
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.DisplayMember = "Name";
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.ValueMember = "Value";
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.DataSource = RtcCore.ValueListBindingSource;
+                S.GET<CorruptionEngineForm>().cbVectorValueList.DisplayMember = "Name";
+                S.GET<CorruptionEngineForm>().cbVectorValueList.ValueMember = "Value";
+                S.GET<CorruptionEngineForm>().cbVectorValueList.DataSource = RtcCore.ValueListBindingSource;
             }
             else
             {
                 S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.DataSource = null;
                 S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DataSource = null;
 
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.DataSource = null;
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.DataSource = null;
+                S.GET<CorruptionEngineForm>().cbVectorLimiterList.DataSource = null;
+                S.GET<CorruptionEngineForm>().cbVectorValueList.DataSource = null;
             }
         }
 

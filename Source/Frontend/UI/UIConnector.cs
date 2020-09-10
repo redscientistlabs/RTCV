@@ -4,6 +4,7 @@ namespace RTCV.UI
     using System.Linq;
     using RTCV.CorruptCore;
     using RTCV.NetCore;
+    using RTCV.NetCore.Enums;
     using RTCV.Common;
     using RTCV.UI.Modular;
 
@@ -48,25 +49,25 @@ namespace RTCV.UI
 
             SyncObjectSingleton.FormExecute(() =>
             {
-                if (S.GET<RTC_ConnectionStatus_Form>() != null && !S.GET<RTC_ConnectionStatus_Form>()
+                if (S.GET<ConnectionStatusForm>() != null && !S.GET<ConnectionStatusForm>()
                         .IsDisposed)
                 {
-                    S.GET<RTC_ConnectionStatus_Form>()
+                    S.GET<ConnectionStatusForm>()
                             .lbConnectionStatus.Text =
                         $"{(string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard"} connection timed out";
 
                     UICore.LockInterface();
-                    UI_DefaultGrids.connectionStatus.LoadToMain();
+                    DefaultGrids.connectionStatus.LoadToMain();
                 }
 
-                S.GET<RTC_VmdAct_Form>()
+                S.GET<VmdActForm>()
                     .cbAutoAddDump.Checked = false;
                 GameProtection.WasAutoCorruptRunning = RtcCore.AutoCorrupt;
-                S.GET<UI_CoreForm>().AutoCorrupt = false;
+                S.GET<CoreForm>().AutoCorrupt = false;
             });
             GameProtection.Stop(false);
 
-            if (S.GET<UI_CoreForm>()
+            if (S.GET<CoreForm>()
                     .cbUseAutoKillSwitch.Checked && AllSpec.VanguardSpec != null)
             {
                 AutoKillSwitch.KillEmulator();
@@ -77,7 +78,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                S.GET<RTC_ConnectionStatus_Form>().lbConnectionStatus.Text =
+                S.GET<ConnectionStatusForm>().lbConnectionStatus.Text =
                     $"Connected to {(string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard"}";
             });
         }

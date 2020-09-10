@@ -75,6 +75,8 @@
     <Compile Include="DebugInfo\CloudDebug_Form.Designer.cs">
       <DependentUpon>CloudDebug_Form.cs</DependentUpon>
     </Compile>
+    <Compile Include="Enums\NetworkSide.cs" />
+    <Compile Include="Enums\NetworkStatus.cs" />
     <Compile Include="LocalRouter.cs" />
     <Compile Include="MessageHub.cs" />
     <Compile Include="NetcoreCommands.cs" />

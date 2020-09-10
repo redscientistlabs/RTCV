@@ -52,7 +52,7 @@ namespace RTCV.UI
             {
                 string VmdName = item.ToString();
                 //Go through the stash history and rasterize
-                foreach (StashKey sk in S.GET<RTC_StashHistory_Form>().lbStashHistory.Items)
+                foreach (StashKey sk in S.GET<StashHistoryForm>().lbStashHistory.Items)
                 {
                     sk.BlastLayer?.RasterizeVMDs(VmdName);
                 }
@@ -132,7 +132,7 @@ namespace RTCV.UI
                 }
             }
             //Go through the stash history and update any references
-            foreach (StashKey sk in S.GET<RTC_StashHistory_Form>().lbStashHistory.Items)
+            foreach (StashKey sk in S.GET<StashHistoryForm>().lbStashHistory.Items)
             {
                 foreach (var bu in sk.BlastLayer.Layer)
                 {
