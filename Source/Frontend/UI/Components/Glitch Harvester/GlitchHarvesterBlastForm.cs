@@ -112,7 +112,7 @@ namespace RTCV.UI
             else if (ghMode == GlitchHarvesterMode.INJECT)
             {
                 IsCorruptionApplied = StockpileManager_UISide.InjectFromStashkey(StockpileManager_UISide.CurrentStashkey, loadBeforeOperation);
-                S.GET<RTC_StashHistory_Form>().RefreshStashHistory();
+                S.GET<StashHistoryForm>().RefreshStashHistory();
             }
             else if (ghMode == GlitchHarvesterMode.ORIGINAL)
             {
@@ -226,7 +226,7 @@ namespace RTCV.UI
 
                     IsCorruptionApplied = StockpileManager_UISide.MergeStashkeys(sks);
 
-                    S.GET<RTC_StashHistory_Form>().RefreshStashHistorySelectLast();
+                    S.GET<StashHistoryForm>().RefreshStashHistorySelectLast();
                     //lbStashHistory.TopIndex = lbStashHistory.Items.Count - 1;
 
                     return;
@@ -242,9 +242,9 @@ namespace RTCV.UI
                         return;
                     }
 
-                    S.GET<RTC_StashHistory_Form>().DontLoadSelectedStash = true;
+                    S.GET<StashHistoryForm>().DontLoadSelectedStash = true;
                     IsCorruptionApplied = StockpileManager_UISide.Corrupt(loadBeforeOperation);
-                    S.GET<RTC_StashHistory_Form>().RefreshStashHistorySelectLast();
+                    S.GET<StashHistoryForm>().RefreshStashHistorySelectLast();
                 }
                 else if (ghMode == GlitchHarvesterMode.INJECT)
                 {
@@ -256,10 +256,10 @@ namespace RTCV.UI
                             throw new Exception("Inject tried to fetch the LastStashkey backup but this one was also null! Try to re-load your savestate and then re-select your corruption in the stash history or stockpile. That might fix it. If it still doesn't work after that, report to the devs pls");
                     }
 
-                    S.GET<RTC_StashHistory_Form>().DontLoadSelectedStash = true;
+                    S.GET<StashHistoryForm>().DontLoadSelectedStash = true;
 
                     IsCorruptionApplied = StockpileManager_UISide.InjectFromStashkey(StockpileManager_UISide.CurrentStashkey, loadBeforeOperation);
-                    S.GET<RTC_StashHistory_Form>().RefreshStashHistorySelectLast();
+                    S.GET<StashHistoryForm>().RefreshStashHistorySelectLast();
                 }
                 else if (ghMode == GlitchHarvesterMode.ORIGINAL)
                 {
@@ -271,7 +271,7 @@ namespace RTCV.UI
                             throw new Exception("CurrentStashkey in original was somehow null! Report this to the devs and tell them how you caused this.");
                     }
 
-                    S.GET<RTC_StashHistory_Form>().DontLoadSelectedStash = true;
+                    S.GET<StashHistoryForm>().DontLoadSelectedStash = true;
                     IsCorruptionApplied = StockpileManager_UISide.OriginalFromStashkey(StockpileManager_UISide.CurrentStashkey);
                 }
 
@@ -341,11 +341,11 @@ namespace RTCV.UI
                 StockpileManager_UISide.CurrentStashkey = sk;
                 StockpileManager_UISide.StashHistory.Add(StockpileManager_UISide.CurrentStashkey);
 
-                S.GET<RTC_StashHistory_Form>().DontLoadSelectedStash = true;
-                S.GET<RTC_StashHistory_Form>().RefreshStashHistorySelectLast();
-                S.GET<RTC_StashHistory_Form>().DontLoadSelectedStash = true;
+                S.GET<StashHistoryForm>().DontLoadSelectedStash = true;
+                S.GET<StashHistoryForm>().RefreshStashHistorySelectLast();
+                S.GET<StashHistoryForm>().DontLoadSelectedStash = true;
                 S.GET<RTC_StockpileManager_Form>().dgvStockpile.ClearSelection();
-                S.GET<RTC_StashHistory_Form>().DontLoadSelectedStash = false;
+                S.GET<StashHistoryForm>().DontLoadSelectedStash = false;
             }
             finally
             {
@@ -404,9 +404,9 @@ namespace RTCV.UI
             {
                 SetBlastButtonVisibility(false);
 
-                if (S.GET<RTC_StashHistory_Form>().lbStashHistory.SelectedIndex != -1)
+                if (S.GET<StashHistoryForm>().lbStashHistory.SelectedIndex != -1)
                 {
-                    StockpileManager_UISide.CurrentStashkey = (StashKey)StockpileManager_UISide.StashHistory[S.GET<RTC_StashHistory_Form>().lbStashHistory.SelectedIndex].Clone();
+                    StockpileManager_UISide.CurrentStashkey = (StashKey)StockpileManager_UISide.StashHistory[S.GET<StashHistoryForm>().lbStashHistory.SelectedIndex].Clone();
                 }
                 else if (S.GET<RTC_StockpileManager_Form>().dgvStockpile.SelectedRows.Count != 0 && S.GET<RTC_StockpileManager_Form>().dgvStockpile.SelectedRows[0].Cells[0].Value != null)
                 {
@@ -425,14 +425,14 @@ namespace RTCV.UI
                     if (StockpileManager_UISide.AddCurrentStashkeyToStash())
                     {
                         S.GET<RTC_StockpileManager_Form>().dgvStockpile.ClearSelection();
-                        S.GET<RTC_StashHistory_Form>()
+                        S.GET<StashHistoryForm>()
                             .RefreshStashHistory();
-                        S.GET<RTC_StashHistory_Form>()
+                        S.GET<StashHistoryForm>()
                             .lbStashHistory.ClearSelected();
-                        S.GET<RTC_StashHistory_Form>()
+                        S.GET<StashHistoryForm>()
                             .DontLoadSelectedStash = true;
-                        S.GET<RTC_StashHistory_Form>()
-                            .lbStashHistory.SelectedIndex = S.GET<RTC_StashHistory_Form>()
+                        S.GET<StashHistoryForm>()
+                            .lbStashHistory.SelectedIndex = S.GET<StashHistoryForm>()
                             .lbStashHistory.Items.Count - 1;
                     }
 

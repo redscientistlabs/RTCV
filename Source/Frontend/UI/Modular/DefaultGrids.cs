@@ -128,7 +128,7 @@ namespace RTCV.UI.Modular
                     Form ghbForm = S.GET<GlitchHarvesterBlastForm>();
                     Form ghiForm = S.GET<GlitchHarvesterIntensityForm>();
                     Form ssmForm = S.GET<SavestateManagerForm>();
-                    Form shForm = S.GET<RTC_StashHistory_Form>();
+                    Form shForm = S.GET<StashHistoryForm>();
                     Form spmForm = S.GET<RTC_StockpileManager_Form>();
 
                     ghGrid.SetTileForm(ghbForm, 0, 0, 4, 4, true);

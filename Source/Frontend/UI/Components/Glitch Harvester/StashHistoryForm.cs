@@ -9,32 +9,21 @@ namespace RTCV.UI
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class RTC_StashHistory_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class StashHistoryForm : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         public bool DontLoadSelectedStash { get; set; } = false;
 
-        public RTC_StashHistory_Form()
+        public StashHistoryForm()
         {
             InitializeComponent();
 
-            popoutAllowed = true;
-            this.undockedSizable = true;
-
-            this.MouseDoubleClick += ClearSelectedSKs;
-
             lbStashHistory.DataSource = StockpileManager_UISide.StashHistory;
-
-
-            //Registers the drag and drop with the blast edirot form
-            AllowDrop = true;
-            this.DragEnter += RTC_StashHistory_Form_DragEnter;
-            this.DragDrop += RTC_StashHistory_Form_DragDrop;
         }
 
-        private void RTC_StashHistory_Form_DragDrop(object sender, DragEventArgs e)
+        private void OnDragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             foreach (var f in files)
@@ -43,18 +32,18 @@ namespace RTCV.UI
                 {
                     BlastLayer temp = BlastTools.LoadBlastLayerFromFile(f);
                     StockpileManager_UISide.Import(temp);
-                    S.GET<RTC_StashHistory_Form>().RefreshStashHistory();
+                    S.GET<StashHistoryForm>().RefreshStashHistory();
                 }
             }
         }
 
-        private void RTC_StashHistory_Form_DragEnter(object sender, DragEventArgs e)
+        private void OnDragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Link;
         }
 
-        public void btnAddStashToStockpile_Click(object sender, EventArgs e) => btnAddStashToStockpile_Click();
-        public bool btnAddStashToStockpile_Click()
+        public void AddStashToStockpileButtonClick(object sender, EventArgs e) => AddStashToStockpileFromUI();
+        public bool AddStashToStockpileFromUI()
         {
             if (StockpileManager_UISide.CurrentStashkey != null && StockpileManager_UISide.CurrentStashkey.Alias != StockpileManager_UISide.CurrentStashkey.Key)
             {
@@ -150,7 +139,7 @@ namespace RTCV.UI
             return true;
         }
 
-        public void RefreshStashHistory()
+        public void RefreshStashHistory(object sender = null, EventArgs e = null)
         {
             DontLoadSelectedStash = true;
             var lastSelect = lbStashHistory.SelectedIndex;
@@ -186,7 +175,7 @@ namespace RTCV.UI
             DontLoadSelectedStash = false;
         }
 
-        private void lbStashHistory_MouseDown(object sender, MouseEventArgs e)
+        private void HandleStashHistoryMouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -260,11 +249,6 @@ namespace RTCV.UI
             }
         }
 
-        private void RTC_StashHistory_Form_Load(object sender, EventArgs e)
-        {
-            RefreshStashHistory();
-        }
-
         public void RefreshStashHistorySelectLast()
         {
             RefreshStashHistory();
@@ -274,7 +258,7 @@ namespace RTCV.UI
             lbStashHistory.SelectedIndex = lbStashHistory.Items.Count - 1;
         }
 
-        public void lbStashHistory_SelectedIndexChanged(object sender, EventArgs e)
+        public void HandleStashHistorySelectionChange(object sender, EventArgs e)
         {
             try
             {
@@ -343,7 +327,7 @@ namespace RTCV.UI
             S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
         }
 
-        private void btnClearStashHistory_Click(object sender, EventArgs e)
+        private void ClearStashHistory(object sender, EventArgs e)
         {
             StockpileManager_UISide.StashHistory.Clear();
             RefreshStashHistory();
@@ -353,7 +337,7 @@ namespace RTCV.UI
             GC.WaitForPendingFinalizers();
         }
 
-        private void btnStashUP_Click(object sender, EventArgs e)
+        private void MoveSelectedStashUp(object sender, EventArgs e)
         {
             if (lbStashHistory.SelectedIndex == -1)
             {
@@ -373,7 +357,7 @@ namespace RTCV.UI
             }
         }
 
-        private void btnStashDOWN_Click(object sender, EventArgs e)
+        private void MoveSelectedStashDown(object sender, EventArgs e)
         {
             if (lbStashHistory.SelectedIndex == -1)
             {

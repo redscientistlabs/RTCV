@@ -111,9 +111,9 @@
 
         private void GlitchHarvesterLoadAndCorrupt(object sender, EventArgs e)
         {
-            if (S.GET<RTC_StashHistory_Form>().lbStashHistory.Items.Count >= 20)
+            if (S.GET<StashHistoryForm>().lbStashHistory.Items.Count >= 20)
             {
-                S.GET<RTC_StashHistory_Form>().RemoveFirstStashHistoryItem();
+                S.GET<StashHistoryForm>().RemoveFirstStashHistoryItem();
             }
 
             S.GET<GlitchHarvesterBlastForm>().Corrupt(null, null);
