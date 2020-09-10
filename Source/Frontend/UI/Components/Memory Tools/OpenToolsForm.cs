@@ -8,19 +8,19 @@ namespace RTCV.UI
     using RTCV.UI.Components.Controls;
     using RTCV.UI.Modular;
 
-    public partial class RTC_OpenTools_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class OpenToolsForm : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        public RTC_OpenTools_Form()
+        public OpenToolsForm()
         {
             InitializeComponent();
 
-            RegisterTool("Hex Editor", "Open Hex Editor", () => btnOpenHexEditor_Click(this, EventArgs.Empty));
+            RegisterTool("Hex Editor", "Open Hex Editor", () => TryOpenHexEditor(this, EventArgs.Empty));
         }
 
-        private void btnOpenHexEditor_Click(object sender, EventArgs e)
+        private void TryOpenHexEditor(object sender, EventArgs e)
         {
             bool UseRealtime = (bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME] ?? false;
             if (UseRealtime)
