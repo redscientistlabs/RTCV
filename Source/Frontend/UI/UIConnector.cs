@@ -60,7 +60,7 @@ namespace RTCV.UI
                     DefaultGrids.connectionStatus.LoadToMain();
                 }
 
-                S.GET<RTC_VmdAct_Form>()
+                S.GET<VmdActForm>()
                     .cbAutoAddDump.Checked = false;
                 GameProtection.WasAutoCorruptRunning = RtcCore.AutoCorrupt;
                 S.GET<CoreForm>().AutoCorrupt = false;

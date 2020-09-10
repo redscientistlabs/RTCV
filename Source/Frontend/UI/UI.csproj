@@ -249,11 +249,11 @@
     <Compile Include="Components\Memory Tools\ListGenForm.designer.cs">
       <DependentUpon>ListGenForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdAct_Form.cs">
+    <Compile Include="Components\Memory Tools\VmdActForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdAct_Form.designer.cs">
-      <DependentUpon>RTC_VmdAct_Form.cs</DependentUpon>
+    <Compile Include="Components\Memory Tools\VmdActForm.designer.cs">
+      <DependentUpon>VmdActForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Memory Tools\RTC_VmdGen_Form.cs">
       <SubType>Form</SubType>
@@ -539,8 +539,8 @@
     <EmbeddedResource Include="Components\Memory Tools\ListGenForm.resx">
       <DependentUpon>ListGenForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\RTC_VmdAct_Form.resx">
-      <DependentUpon>RTC_VmdAct_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Memory Tools\VmdActForm.resx">
+      <DependentUpon>VmdActForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Memory Tools\RTC_VmdGen_Form.resx">
       <DependentUpon>RTC_VmdGen_Form.cs</DependentUpon>

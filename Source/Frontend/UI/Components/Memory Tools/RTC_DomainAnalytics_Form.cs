@@ -139,7 +139,7 @@
                 ActiveTableAutodump.Interval = Convert.ToInt32(nmAutoAddSec.Value) * 1000;
         }
 
-        private void RTC_VmdAct_Form_Load(object sender, EventArgs e)
+        private void VmdActForm_Load(object sender, EventArgs e)
         {
         }
 
