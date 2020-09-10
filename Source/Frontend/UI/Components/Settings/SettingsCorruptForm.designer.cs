@@ -1,6 +1,6 @@
 ﻿namespace RTCV.UI
 {
-    partial class RTC_SettingsCorrupt_Form
+    partial class SettingsCorruptForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_SettingsCorrupt_Form));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsCorruptForm));
             this.panel1 = new System.Windows.Forms.GroupBox();
             this.cbRerollDomain = new System.Windows.Forms.CheckBox();
             this.cbRerollAddress = new System.Windows.Forms.CheckBox();
@@ -52,12 +52,11 @@
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
-			this.nmMaxInfiniteStepUnits.SuspendLayout();
             this.panel6.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // panel1
-            // 
+            //
             this.panel1.BackColor = System.Drawing.Color.Transparent;
             this.panel1.Controls.Add(this.cbRerollDomain);
             this.panel1.Controls.Add(this.cbRerollAddress);
@@ -71,9 +70,9 @@
             this.panel1.TabStop = false;
             this.panel1.Tag = "";
             this.panel1.Text = "Store Settings";
-            // 
+            //
             // cbRerollDomain
-            // 
+            //
             this.cbRerollDomain.AutoSize = true;
             this.cbRerollDomain.Enabled = false;
             this.cbRerollDomain.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -84,10 +83,10 @@
             this.cbRerollDomain.TabIndex = 3;
             this.cbRerollDomain.Text = "Reroll Domain";
             this.cbRerollDomain.UseVisualStyleBackColor = true;
-            this.cbRerollDomain.CheckedChanged += new System.EventHandler(this.cbRerollDomain_CheckedChanged);
-            // 
+            this.cbRerollDomain.CheckedChanged += new System.EventHandler(this.UpdateRerollDomain);
+            //
             // cbRerollAddress
-            // 
+            //
             this.cbRerollAddress.AutoSize = true;
             this.cbRerollAddress.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbRerollAddress.ForeColor = System.Drawing.Color.White;
@@ -97,10 +96,10 @@
             this.cbRerollAddress.TabIndex = 1;
             this.cbRerollAddress.Text = "Reroll Address";
             this.cbRerollAddress.UseVisualStyleBackColor = true;
-            this.cbRerollAddress.CheckedChanged += new System.EventHandler(this.cbRerollAddress_CheckedChanged);
-            // 
+            this.cbRerollAddress.CheckedChanged += new System.EventHandler(this.UpdateRerollAddress);
+            //
             // cbRerollSourceAddress
-            // 
+            //
             this.cbRerollSourceAddress.AutoSize = true;
             this.cbRerollSourceAddress.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbRerollSourceAddress.ForeColor = System.Drawing.Color.White;
@@ -110,10 +109,10 @@
             this.cbRerollSourceAddress.TabIndex = 0;
             this.cbRerollSourceAddress.Text = "Reroll Source Address";
             this.cbRerollSourceAddress.UseVisualStyleBackColor = true;
-            this.cbRerollSourceAddress.CheckedChanged += new System.EventHandler(this.cbRerollSourceAddress_CheckedChanged);
-            // 
+            this.cbRerollSourceAddress.CheckedChanged += new System.EventHandler(this.UpdateRerollSourceAddress);
+            //
             // cbRerollSourceDomain
-            // 
+            //
             this.cbRerollSourceDomain.AutoSize = true;
             this.cbRerollSourceDomain.Enabled = false;
             this.cbRerollSourceDomain.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -124,10 +123,10 @@
             this.cbRerollSourceDomain.TabIndex = 2;
             this.cbRerollSourceDomain.Text = "Reroll Source Domain";
             this.cbRerollSourceDomain.UseVisualStyleBackColor = true;
-            this.cbRerollSourceDomain.CheckedChanged += new System.EventHandler(this.cbRerollSourceDomain_CheckedChanged);
-            // 
+            this.cbRerollSourceDomain.CheckedChanged += new System.EventHandler(this.UpdateRerollSourceDomain);
+            //
             // panel2
-            // 
+            //
             this.panel2.BackColor = System.Drawing.Color.Transparent;
             this.panel2.Controls.Add(this.cbIgnoreUnitOrigin);
             this.panel2.Controls.Add(this.cbRerollFollowsCustom);
@@ -139,9 +138,9 @@
             this.panel2.TabStop = false;
             this.panel2.Tag = "";
             this.panel2.Text = "Value Settings";
-            // 
+            //
             // cbIgnoreUnitOrigin
-            // 
+            //
             this.cbIgnoreUnitOrigin.AutoSize = true;
             this.cbIgnoreUnitOrigin.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbIgnoreUnitOrigin.ForeColor = System.Drawing.Color.White;
@@ -152,9 +151,9 @@
             this.cbIgnoreUnitOrigin.Text = "Ignore Unit Origin Mode";
             this.cbIgnoreUnitOrigin.UseVisualStyleBackColor = true;
             this.cbIgnoreUnitOrigin.CheckedChanged += new System.EventHandler(this.CBRerollIgnoresOriginalSource);
-            // 
+            //
             // cbRerollFollowsCustom
-            // 
+            //
             this.cbRerollFollowsCustom.AutoSize = true;
             this.cbRerollFollowsCustom.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbRerollFollowsCustom.ForeColor = System.Drawing.Color.White;
@@ -164,10 +163,10 @@
             this.cbRerollFollowsCustom.TabIndex = 0;
             this.cbRerollFollowsCustom.Text = "Reroll Follows Custom Engine";
             this.cbRerollFollowsCustom.UseVisualStyleBackColor = true;
-            this.cbRerollFollowsCustom.CheckedChanged += new System.EventHandler(this.CbRerollFollowsCustom_CheckedChanged);
-            // 
+            this.cbRerollFollowsCustom.CheckedChanged += new System.EventHandler(this.UpdateRerollFollowsCustom);
+            //
             // panel3
-            // 
+            //
             this.panel3.BackColor = System.Drawing.Color.Gray;
             this.panel3.Controls.Add(this.panel2);
             this.panel3.Controls.Add(this.panel1);
@@ -176,9 +175,9 @@
             this.panel3.Size = new System.Drawing.Size(250, 163);
             this.panel3.TabIndex = 141;
             this.panel3.Tag = "color:normal";
-            // 
+            //
             // label2
-            // 
+            //
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
             this.label2.ForeColor = System.Drawing.Color.White;
@@ -187,9 +186,9 @@
             this.label2.Size = new System.Drawing.Size(83, 15);
             this.label2.TabIndex = 144;
             this.label2.Text = "Reroll Settings";
-            // 
+            //
             // label3
-            // 
+            //
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
             this.label3.ForeColor = System.Drawing.Color.White;
@@ -198,9 +197,9 @@
             this.label3.Size = new System.Drawing.Size(110, 15);
             this.label3.TabIndex = 146;
             this.label3.Text = "Corruption Settings";
-            // 
+            //
             // panel4
-            // 
+            //
             this.panel4.BackColor = System.Drawing.Color.Gray;
             this.panel4.Controls.Add(this.panel5);
             this.panel4.Controls.Add(this.panel6);
@@ -209,9 +208,9 @@
             this.panel4.Size = new System.Drawing.Size(250, 130);
             this.panel4.TabIndex = 145;
             this.panel4.Tag = "color:normal";
-            // 
+            //
             // panel5
-            // 
+            //
             this.panel5.BackColor = System.Drawing.Color.Transparent;
             this.panel5.Controls.Add(this.nmMaxInfiniteStepUnits);
             this.panel5.Controls.Add(this.label5);
@@ -223,13 +222,14 @@
             this.panel5.TabStop = false;
             this.panel5.Tag = "";
             this.panel5.Text = "AutoCorrupt Settings";
-            // 
+            //
             // nmMaxInfiniteStepUnits
-            // 
+            //
             this.nmMaxInfiniteStepUnits.AutoSize = true;
             this.nmMaxInfiniteStepUnits.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.nmMaxInfiniteStepUnits.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.nmMaxInfiniteStepUnits.ForeColor = System.Drawing.Color.White;
+            this.nmMaxInfiniteStepUnits.Hexadecimal = false;
             this.nmMaxInfiniteStepUnits.Location = new System.Drawing.Point(111, 17);
             this.nmMaxInfiniteStepUnits.Maximum = new decimal(new int[] {
             65536,
@@ -250,9 +250,9 @@
             0,
             0,
             0});
-            // 
+            //
             // label5
-            // 
+            //
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label5.ForeColor = System.Drawing.Color.White;
@@ -262,9 +262,9 @@
             this.label5.TabIndex = 150;
             this.label5.Text = "Max Infinite Units:";
             this.label5.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
+            //
             // panel6
-            // 
+            //
             this.panel6.BackColor = System.Drawing.Color.Transparent;
             this.panel6.Controls.Add(this.cbClearStepUnitsOnRewind);
             this.panel6.Controls.Add(this.cbLockUnits);
@@ -276,9 +276,9 @@
             this.panel6.TabStop = false;
             this.panel6.Tag = "";
             this.panel6.Text = "StepActions Settings";
-            // 
+            //
             // cbClearStepUnitsOnRewind
-            // 
+            //
             this.cbClearStepUnitsOnRewind.AutoSize = true;
             this.cbClearStepUnitsOnRewind.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbClearStepUnitsOnRewind.ForeColor = System.Drawing.Color.White;
@@ -288,10 +288,10 @@
             this.cbClearStepUnitsOnRewind.TabIndex = 1;
             this.cbClearStepUnitsOnRewind.Text = "Clear Step Units on Rewind";
             this.cbClearStepUnitsOnRewind.UseVisualStyleBackColor = true;
-            this.cbClearStepUnitsOnRewind.CheckedChanged += new System.EventHandler(this.CbClearStepUnitsOnRewind_CheckedChanged);
-            // 
+            this.cbClearStepUnitsOnRewind.CheckedChanged += new System.EventHandler(this.UpdateClearStepUnitsOnRewind);
+            //
             // cbLockUnits
-            // 
+            //
             this.cbLockUnits.AutoSize = true;
             this.cbLockUnits.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbLockUnits.ForeColor = System.Drawing.Color.White;
@@ -301,10 +301,10 @@
             this.cbLockUnits.TabIndex = 0;
             this.cbLockUnits.Text = "Lock Units";
             this.cbLockUnits.UseVisualStyleBackColor = true;
-            this.cbLockUnits.CheckedChanged += new System.EventHandler(this.CbLockUnits_CheckedChanged);
-            // 
-            // RTC_SettingsCorrupt_Form
-            // 
+            this.cbLockUnits.CheckedChanged += new System.EventHandler(this.UpdateLockUnits);
+            //
+            // SettingsCorruptForm
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
@@ -319,7 +319,7 @@
             this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "RTC_SettingsCorrupt_Form";
+            this.Name = "SettingsCorruptForm";
             this.ShowInTaskbar = false;
             this.Tag = "color:dark1";
             this.Text = "Corruption Settings";
@@ -331,8 +331,6 @@
             this.panel4.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
-			this.nmMaxInfiniteStepUnits.PerformLayout();
-			this.nmMaxInfiniteStepUnits.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.ResumeLayout(false);

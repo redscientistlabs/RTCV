@@ -385,7 +385,7 @@ namespace RTCV.UI
                 rerollMenu.Items.Add("Configure Reroll", null, new EventHandler((ob, ev) =>
                 {
                     S.GET<CoreForm>().OpenSettings(null, new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0));
-                    S.GET<SettingsForm>().lbForm.SetFocusedForm(S.GET<RTC_SettingsCorrupt_Form>());
+                    S.GET<SettingsForm>().lbForm.SetFocusedForm(S.GET<SettingsCorruptForm>());
                     S.GET<CoreForm>().BringToFront();
                 }));
 
