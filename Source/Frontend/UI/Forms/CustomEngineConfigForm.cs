@@ -8,12 +8,12 @@
     using RTCV.NetCore;
     using RTCV.Common;
 
-    public partial class RTC_CustomEngineConfig_Form : Form, IAutoColorize
+    public partial class CustomEngineConfigForm : Form, IAutoColorize
     {
         private bool updatingMinMax = false;
         private bool DontUpdateSpec = false;
 
-        public RTC_CustomEngineConfig_Form()
+        public CustomEngineConfigForm()
         {
             InitializeComponent();
             RTC_CustomEngine.InitTemplates();
@@ -27,17 +27,17 @@
 
             cbSelectedTemplate.SelectedIndex = 0;
 
-            cbCustomPrecision.SelectedIndexChanged += CbCustomPrecision_SelectedIndexChanged;
-            nmAlignment.ValueChanged += NmAlignment_ValueChanged;
+            cbCustomPrecision.SelectedIndexChanged += HandleCustomPrecisionSelectionChange;
+            nmAlignment.ValueChanged += HandleAlignmentChange;
         }
 
-        private void NmAlignment_ValueChanged(object sender, Components.Controls.ValueUpdateEventArgs<decimal> e)
+        private void HandleAlignmentChange(object sender, Components.Controls.ValueUpdateEventArgs<decimal> e)
         {
             RtcCore.Alignment = Convert.ToInt32(nmAlignment.Value);
             S.GET<CorruptionEngineForm>().nmAlignment.Value = nmAlignment.Value;
         }
 
-        private void CbCustomPrecision_SelectedIndexChanged(object sender, EventArgs e)
+        private void HandleCustomPrecisionSelectionChange(object sender, EventArgs e)
         {
             cbCustomPrecision.Enabled = false;
             S.GET<CorruptionEngineForm>().cbCustomPrecision.Enabled = false;
@@ -78,7 +78,7 @@
             }
         }
 
-        private void RTC_CustomEngineConfig_Form_Load(object sender, EventArgs e)
+        private void OnLoad(object sender, EventArgs e)
         {
             cbValueList.DisplayMember = "Name";
             cbLimiterList.DisplayMember = "Name";
@@ -92,11 +92,11 @@
 
             if (RtcCore.ValueListBindingSource.Count > 0)
             {
-                cbValueList_SelectedIndexChanged(cbValueList, null);
+                HandleValueListSelectionChange(cbValueList, null);
             }
             if (RtcCore.LimiterListBindingSource.Count > 0)
             {
-                cbLimiterList_SelectedIndexChanged(cbLimiterList, null);
+                HandleLimiterListSelectionChange(cbLimiterList, null);
             }
 
             cbCustomPrecision.SelectedIndex = 0;
@@ -119,7 +119,7 @@
             lbFlavorText.Text = text[rnd.Next(0, text.Length)];
         }
 
-        private void RTC_CustomEngineConfig_Form_FormClosing(object sender, FormClosingEventArgs e)
+        private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason != CloseReason.FormOwnerClosing)
             {
@@ -131,7 +131,7 @@
 
         //I'm using if-else's rather than switch statements on purpose.
         //The switch statements required more lines and were harder to read.
-        private void unitSource_CheckedChanged(object sender, EventArgs e)
+        private void HandleUnitSourceChange(object sender, EventArgs e)
         {
             if (DontUpdateSpec)
             {
@@ -159,7 +159,7 @@
             }
         }
 
-        private void valueSource_CheckedChanged(object sender, EventArgs e)
+        private void HandleValueSourceChange(object sender, EventArgs e)
         {
             if (DontUpdateSpec)
             {
@@ -180,7 +180,7 @@
             }
         }
 
-        private void storeTime_CheckedChanged(object sender, EventArgs e)
+        private void HandleStoreTimeChange(object sender, EventArgs e)
         {
             if (DontUpdateSpec)
             {
@@ -197,7 +197,7 @@
             }
         }
 
-        private void storeAddress_CheckedChanged(object sender, EventArgs e)
+        private void HandleStoreAddressChange(object sender, EventArgs e)
         {
             if (DontUpdateSpec)
             {
@@ -214,7 +214,7 @@
             }
         }
 
-        private void storeType_CheckedChanged(object sender, EventArgs e)
+        private void HandleStoreTypeChange(object sender, EventArgs e)
         {
             if (DontUpdateSpec)
             {
@@ -232,7 +232,7 @@
             }
         }
 
-        private void nmMinValue_ValueChanged(object sender, EventArgs e)
+        private void HandleMinValueChange(object sender, EventArgs e)
         {
             if (DontUpdateSpec)
             {
@@ -264,7 +264,7 @@
             }
         }
 
-        private void nmMaxValue_ValueChanged(object sender, EventArgs e)
+        private void HandleMaxValueChange(object sender, EventArgs e)
         {
             if (DontUpdateSpec)
             {
@@ -303,7 +303,7 @@
             DontUpdateSpec = false;
         }
 
-        private void CbClearRewind_CheckedChanged(object sender, EventArgs e)
+        private void HandleClearRewindChange(object sender, EventArgs e)
         {
             if (DontUpdateSpec)
             {
@@ -316,7 +316,7 @@
             StepActions.ClearStepActionsOnRewind = cbClearRewind.Checked;
         }
 
-        private void cbLoopUnit_CheckedChanged(object sender, EventArgs e)
+        private void HandleLoopUnitChange(object sender, EventArgs e)
         {
             if (DontUpdateSpec)
             {
@@ -326,7 +326,7 @@
             RTC_CustomEngine.Loop = cbLoopUnit.Checked;
         }
 
-        private void cbValueList_SelectedIndexChanged(object sender, EventArgs e)
+        private void HandleValueListSelectionChange(object sender, EventArgs e)
         {
             if (DontUpdateSpec)
             {
@@ -336,7 +336,7 @@
             RTC_CustomEngine.ValueListHash = (string)cbValueList.SelectedValue;
         }
 
-        private void cbLimiterList_SelectedIndexChanged(object sender, EventArgs e)
+        private void HandleLimiterListSelectionChange(object sender, EventArgs e)
         {
             if (DontUpdateSpec)
             {
@@ -346,7 +346,7 @@
             RTC_CustomEngine.LimiterListHash = (string)cbLimiterList.SelectedValue;
         }
 
-        private void limiterTime_CheckedChanged(object sender, EventArgs e)
+        private void HandleLimiterTimeSelectionChange(object sender, EventArgs e)
         {
             if (DontUpdateSpec)
             {
@@ -371,7 +371,7 @@
             }
         }
 
-        private void rbStoreLimiterMode_CheckChanged(object sender, EventArgs e)
+        private void HandleStoreLimiterModeChange(object sender, EventArgs e)
         {
             if (rbStoreModeAddress.Checked)
             {
@@ -387,12 +387,12 @@
             }
         }
 
-        private void btnClearActive_Click(object sender, EventArgs e)
+        private void ClearActive(object sender, EventArgs e)
         {
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_CLEARSTEPBLASTUNITS, null, true);
         }
 
-        private void nmLifetime_ValueChanged(object sender, EventArgs e)
+        private void HandleLifetimeChange(object sender, EventArgs e)
         {
             if (DontUpdateSpec)
             {
@@ -402,7 +402,7 @@
             RTC_CustomEngine.Lifetime = Convert.ToInt32(nmLifetime.Value);
         }
 
-        private void nmDelay_ValueChanged(object sender, EventArgs e)
+        private void HandleDelayChange(object sender, EventArgs e)
         {
             if (DontUpdateSpec)
             {
@@ -412,7 +412,7 @@
             RTC_CustomEngine.Delay = Convert.ToInt32(nmDelay.Value);
         }
 
-        private void nmTilt_ValueChanged(object sender, EventArgs e)
+        private void HandleTiltChange(object sender, EventArgs e)
         {
             if (DontUpdateSpec)
             {
@@ -460,7 +460,7 @@
             updatingMinMax = false;
         }
 
-        private void cbLimiterInverted_CheckedChanged(object sender, EventArgs e)
+        private void HandleLimiterInvertedChange(object sender, EventArgs e)
         {
             if (DontUpdateSpec)
             {
@@ -470,7 +470,7 @@
             RTC_CustomEngine.LimiterInverted = cbLimiterInverted.Checked;
         }
 
-        private void cbSelectedTemplate_SelectedIndexChanged(object sender, EventArgs e)
+        private void HandleSelectedTemplateChange(object sender, EventArgs e)
         {
             PartialSpec spec = new PartialSpec("RTCSpec");
 
@@ -510,7 +510,7 @@
             }
         }
 
-        private void btnCustomTemplateLoad_Click(object sender, EventArgs e)
+        private void LoadCustomTemplate(object sender, EventArgs e)
         {
             PartialSpec spec = RTC_CustomEngine.LoadTemplateFile();
 
@@ -531,7 +531,7 @@
             cbSelectedTemplate.SelectedItem = spec[RTCSPEC.CUSTOM_NAME].ToString();
         }
 
-        private void btnCustomTemplateSaveAs_Click(object sender, EventArgs e)
+        private void SaveAsCustomTemplate(object sender, EventArgs e)
         {
             string TemplateName = RTC_CustomEngine.SaveTemplateFile(true);
 
@@ -552,7 +552,7 @@
             btnCustomTemplateSave.ForeColor = Color.Black;
         }
 
-        private void btnCustomTemplateSave_Click(object sender, EventArgs e)
+        private void SaveCustomTemplate(object sender, EventArgs e)
         {
             RTC_CustomEngine.SaveTemplateFile(false);
         }

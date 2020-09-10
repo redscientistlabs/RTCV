@@ -704,13 +704,13 @@ namespace RTCV.UI
         {
             if (setToBindingSource)
             {
-                S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.DisplayMember = "Name";
-                S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.ValueMember = "Value";
-                S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.DataSource = RtcCore.LimiterListBindingSource;
+                S.GET<CustomEngineConfigForm>().cbLimiterList.DisplayMember = "Name";
+                S.GET<CustomEngineConfigForm>().cbLimiterList.ValueMember = "Value";
+                S.GET<CustomEngineConfigForm>().cbLimiterList.DataSource = RtcCore.LimiterListBindingSource;
 
-                S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DisplayMember = "Name";
-                S.GET<RTC_CustomEngineConfig_Form>().cbValueList.ValueMember = "Value";
-                S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DataSource = RtcCore.ValueListBindingSource;
+                S.GET<CustomEngineConfigForm>().cbValueList.DisplayMember = "Name";
+                S.GET<CustomEngineConfigForm>().cbValueList.ValueMember = "Value";
+                S.GET<CustomEngineConfigForm>().cbValueList.DataSource = RtcCore.ValueListBindingSource;
 
                 S.GET<CorruptionEngineForm>().cbVectorLimiterList.DisplayMember = "Name";
                 S.GET<CorruptionEngineForm>().cbVectorLimiterList.ValueMember = "Value";
@@ -722,8 +722,8 @@ namespace RTCV.UI
             }
             else
             {
-                S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.DataSource = null;
-                S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DataSource = null;
+                S.GET<CustomEngineConfigForm>().cbLimiterList.DataSource = null;
+                S.GET<CustomEngineConfigForm>().cbValueList.DataSource = null;
 
                 S.GET<CorruptionEngineForm>().cbVectorLimiterList.DataSource = null;
                 S.GET<CorruptionEngineForm>().cbVectorValueList.DataSource = null;
