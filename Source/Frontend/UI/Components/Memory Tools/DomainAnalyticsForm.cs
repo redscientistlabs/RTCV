@@ -13,12 +13,12 @@
     using RTCV.UI.Modular;
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
-    public partial class RTC_DomainAnalytics_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class DomainAnalyticsForm : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        public RTC_DomainAnalytics_Form()
+        public DomainAnalyticsForm()
         {
             InitializeComponent();
 
@@ -30,7 +30,7 @@
         private List<string> MemoryDumps = null;
         private Timer ActiveTableAutodump = null;
 
-        private void btnActiveTableAddDump_Click(object sender, EventArgs e)
+        private void AddDomainDump(object sender, EventArgs e)
         {
             if (cbSelectedMemoryDomain == null || MemoryDomains.GetInterface(cbSelectedMemoryDomain.SelectedItem.ToString()).Size.ToString() == null)
             {
@@ -52,7 +52,7 @@
                 btnSendToAnalytics.Enabled = true;
         }
 
-        private void btnActiveTableDumpsReset_Click(object sender, EventArgs e)
+        private void InitializeDumpCollection(object sender, EventArgs e)
         {
             if (!FirstInit)
             {
@@ -106,7 +106,7 @@
                 cbSelectedMemoryDomain.SelectedIndex = 0;
         }
 
-        private void btnLoadDomains_Click(object sender, EventArgs e)
+        private void LoadDomains(object sender, EventArgs e)
         {
             cbAutoAddDump.Checked = false;
 
@@ -116,7 +116,7 @@
             btnLoadDomains.Text = "Refresh Domains";
         }
 
-        private void cbAutoAddDump_CheckedChanged(object sender, EventArgs e)
+        private void UpdateAutoAddDump(object sender, EventArgs e)
         {
             if (ActiveTableAutodump != null)
             {
@@ -128,34 +128,30 @@
             {
                 ActiveTableAutodump = new Timer();
                 ActiveTableAutodump.Interval = Convert.ToInt32(nmAutoAddSec.Value) * 1000;
-                ActiveTableAutodump.Tick += new EventHandler(btnActiveTableAddDump_Click);
+                ActiveTableAutodump.Tick += new EventHandler(AddDomainDump);
                 ActiveTableAutodump.Start();
             }
         }
 
-        private void nmAutoAddSec_ValueChanged(object sender, EventArgs e)
+        private void UpdateAutoAddInterval(object sender, EventArgs e)
         {
             if (ActiveTableAutodump != null)
                 ActiveTableAutodump.Interval = Convert.ToInt32(nmAutoAddSec.Value) * 1000;
         }
 
-        private void VmdActForm_Load(object sender, EventArgs e)
-        {
-        }
-
-        private void btnSendToAnalytics_Click(object sender, EventArgs e)
+        private void SendToAnalytics(object sender, EventArgs e)
         {
             cbAutoAddDump.Checked = false;
             var mi = MemoryDomains.GetInterface(cbSelectedMemoryDomain.SelectedItem.ToString());
             AnalyticsToolForm.OpenAnalyticsTool(mi, MemoryDumps);
         }
 
-        private void cbSelectedMemoryDomain_SelectedIndexChanged(object sender, EventArgs e)
+        private void UpdateSelectedMemoryDomain(object sender, EventArgs e)
         {
             cbAutoAddDump.Checked = false;
 
             if (btnActiveTableDumpsReset.Text == "Reset")
-                btnActiveTableDumpsReset_Click(sender, e);
+                InitializeDumpCollection(sender, e);
         }
     }
 }

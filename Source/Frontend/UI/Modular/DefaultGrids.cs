@@ -44,7 +44,7 @@ namespace RTCV.UI.Modular
                         S.GET<MyListsForm>(),
                         S.GET<ListGenForm>(),
                         S.GET<RTC_VmdLimiterProfiler_Form>(),
-                        //S.GET<RTC_DomainAnalytics_Form>(),
+                        //S.GET<DomainAnalyticsForm>(),
                         S.GET<OpenToolsForm>(),
                         })
                     {
