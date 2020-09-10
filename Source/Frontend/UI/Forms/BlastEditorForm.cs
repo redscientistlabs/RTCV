@@ -1425,13 +1425,13 @@ namespace RTCV.UI
 
             StockpileManager_UISide.StashHistory.Add(newSk);
 
-            S.GET<RTC_StashHistory_Form>().RefreshStashHistory();
+            S.GET<StashHistoryForm>().RefreshStashHistory();
             S.GET<RTC_StockpileManager_Form>().dgvStockpile.ClearSelection();
-            S.GET<RTC_StashHistory_Form>().lbStashHistory.ClearSelected();
+            S.GET<StashHistoryForm>().lbStashHistory.ClearSelected();
 
-            S.GET<RTC_StashHistory_Form>().DontLoadSelectedStash = true;
-            S.GET<RTC_StashHistory_Form>().lbStashHistory.SelectedIndex = S.GET<RTC_StashHistory_Form>().lbStashHistory.Items.Count - 1;
-            StockpileManager_UISide.CurrentStashkey = StockpileManager_UISide.StashHistory[S.GET<RTC_StashHistory_Form>().lbStashHistory.SelectedIndex];
+            S.GET<StashHistoryForm>().DontLoadSelectedStash = true;
+            S.GET<StashHistoryForm>().lbStashHistory.SelectedIndex = S.GET<StashHistoryForm>().lbStashHistory.Items.Count - 1;
+            StockpileManager_UISide.CurrentStashkey = StockpileManager_UISide.StashHistory[S.GET<StashHistoryForm>().lbStashHistory.SelectedIndex];
         }
 
         public void OpenNoteEditor(object sender, EventArgs e)
@@ -2156,7 +2156,7 @@ namespace RTCV.UI
         {
             SendToStash(null, null);
 
-            return S.GET<RTC_StashHistory_Form>().btnAddStashToStockpile_Click();
+            return S.GET<StashHistoryForm>().AddStashToStockpileFromUI();
         }
 
         private void AddStashToStockpile(object sender, EventArgs e) => AddStashToStockpile();

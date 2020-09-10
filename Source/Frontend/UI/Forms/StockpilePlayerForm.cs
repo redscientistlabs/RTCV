@@ -359,7 +359,7 @@
                     StockpileManager_UISide.CurrentStashkey = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
                     StockpileManager_UISide.ApplyStashkey(StockpileManager_UISide.CurrentStashkey);
 
-                    S.GET<RTC_StashHistory_Form>().lbStashHistory.ClearSelected();
+                    S.GET<StashHistoryForm>().lbStashHistory.ClearSelected();
                     S.GET<RTC_StockpileManager_Form>().dgvStockpile.ClearSelection();
 
                     S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = !(StockpileManager_UISide.CurrentStashkey.BlastLayer == null || StockpileManager_UISide.CurrentStashkey.BlastLayer.Layer.Count == 0);

@@ -68,7 +68,7 @@ namespace RTCV.UI
 
             try
             {
-                S.GET<RTC_StashHistory_Form>().btnAddStashToStockpile.Enabled = false;
+                S.GET<StashHistoryForm>().btnAddStashToStockpile.Enabled = false;
                 dgvStockpile.Enabled = false;
                 btnStockpileUP.Enabled = false;
                 btnStockpileDOWN.Enabled = false;
@@ -89,7 +89,7 @@ namespace RTCV.UI
                     }
                 }
 
-                S.GET<RTC_StashHistory_Form>().lbStashHistory.ClearSelected();
+                S.GET<StashHistoryForm>().lbStashHistory.ClearSelected();
                 S.GET<StockpilePlayerForm>().dgvStockpile.ClearSelection();
 
                 S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
@@ -134,7 +134,7 @@ namespace RTCV.UI
                         Render.StartRender();
                     }
 
-                    S.GET<RTC_StashHistory_Form>().RefreshStashHistory();
+                    S.GET<StashHistoryForm>().RefreshStashHistory();
                     return;
                 }
 
@@ -146,7 +146,7 @@ namespace RTCV.UI
                 dgvStockpile.Enabled = true;
                 btnStockpileUP.Enabled = true;
                 btnStockpileDOWN.Enabled = true;
-                S.GET<RTC_StashHistory_Form>().btnAddStashToStockpile.Enabled = true;
+                S.GET<StashHistoryForm>().btnAddStashToStockpile.Enabled = true;
             }
 
             S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
@@ -227,7 +227,7 @@ namespace RTCV.UI
                     }
 
                     StockpileManager_UISide.MergeStashkeys(sks);
-                    S.GET<RTC_StashHistory_Form>().RefreshStashHistory();
+                    S.GET<StashHistoryForm>().RefreshStashHistory();
                 }))).Enabled = (dgvStockpile.SelectedRows.Count > 1);
 
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Replace associated ROM", null, new EventHandler((ob, ev) =>
@@ -696,8 +696,8 @@ namespace RTCV.UI
                 {
                     BlastLayer temp = BlastTools.LoadBlastLayerFromFile(f);
                     StockpileManager_UISide.Import(temp);
-                    S.GET<RTC_StashHistory_Form>().RefreshStashHistorySelectLast();
-                    S.GET<RTC_StashHistory_Form>().AddStashToStockpile(true);
+                    S.GET<StashHistoryForm>().RefreshStashHistorySelectLast();
+                    S.GET<StashHistoryForm>().AddStashToStockpile(true);
                 }
                 else if (f.Contains(".sks"))
                 {

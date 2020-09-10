@@ -471,12 +471,12 @@ namespace RTCV.UI
 
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var sh = S.GET<RTC_StashHistory_Form>();
+                        var sh = S.GET<StashHistoryForm>();
                         var sm = S.GET<RTC_StockpileManager_Form>();
                         var ghb = S.GET<GlitchHarvesterBlastForm>();
 
                         if (sh.lbStashHistory.SelectedIndex != -1)
-                            sh.lbStashHistory_SelectedIndexChanged(null, null);
+                            sh.HandleStashHistorySelectionChange(null, null);
                         else
                         {
                             var rows = sm.dgvStockpile.SelectedRows;
@@ -521,7 +521,7 @@ namespace RTCV.UI
                 case "Stash->Stockpile":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        S.GET<RTC_StashHistory_Form>().AddStashToStockpile(false);
+                        S.GET<StashHistoryForm>().AddStashToStockpile(false);
                     });
                     break;
 
