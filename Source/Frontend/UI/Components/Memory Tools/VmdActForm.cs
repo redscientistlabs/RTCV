@@ -16,12 +16,12 @@
     using RTCV.UI.Modular;
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
-    public partial class RTC_VmdAct_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class VmdActForm : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        public RTC_VmdAct_Form()
+        public VmdActForm()
         {
             InitializeComponent();
 
@@ -246,7 +246,7 @@
             }
         }
 
-        private void btnActiveTableAddDump_Click(object sender, EventArgs e)
+        private void AddState(object sender, EventArgs e)
         {
             if (cbSelectedMemoryDomain == null || MemoryDomains.GetInterface(cbSelectedMemoryDomain.SelectedItem.ToString()).Size.ToString() == null)
             {
@@ -266,7 +266,7 @@
             lbFreezeEngineNbDumps.Text = "Memory dumps collected: " + ActiveTableDumps.Count.ToString();
         }
 
-        private void btnActiveTableDumpsReset_Click(object sender, EventArgs e)
+        private void Initialize(object sender, EventArgs e)
         {
             ActLoadedFromFile = false;
 
@@ -318,7 +318,7 @@
             currentFilename = null;
         }
 
-        private void btnActiveTableLoad_Click(object sender, EventArgs e)
+        private void LoadActiveTable(object sender, EventArgs e)
         {
             try
             {
@@ -353,7 +353,7 @@
             }
         }
 
-        private void btnActiveTableQuickSave_Click(object sender, EventArgs e)
+        private void SaveActiveTable(object sender, EventArgs e)
         {
             if (currentFilename == null)
             {
@@ -365,7 +365,7 @@
             }
         }
 
-        private void btnActiveTableSubtractFile_Click(object sender, EventArgs e)
+        private void SubtractActiveTable(object sender, EventArgs e)
         {
             string tempFilename;
 
@@ -408,7 +408,7 @@
             lbActiveTableSize.Text = "Active table size (0x" + ActiveTableGenerated.Length.ToString("X") + ")";
         }
 
-        private void btnActiveTableAddFile_Click(object sender, EventArgs e)
+        private void AddActiveTable(object sender, EventArgs e)
         {
             try
             {
@@ -584,7 +584,7 @@
             }
         }
 
-        private void btnActiveTableGenerate_Click(object sender, EventArgs e)
+        private void GenerateVMDFromActiveTable(object sender, EventArgs e)
         {
             if (cbSelectedMemoryDomain == null || MemoryDomains.GetInterface(cbSelectedMemoryDomain.SelectedItem.ToString())?.Size.ToString() == null)
             {
@@ -632,7 +632,7 @@
             }
         }
 
-        private void btnLoadDomains_Click(object sender, EventArgs e)
+        private void LoadDomains(object sender, EventArgs e)
         {
             RefreshDomains();
             btnActiveTableDumpsReset.Enabled = true;
@@ -640,7 +640,7 @@
             btnLoadDomains.Text = "Refresh Domains";
         }
 
-        private void nmActiveTableActivityThreshold_ValueChanged(object sender, EventArgs e)
+        private void HandleActivityThresholdValueChange(object sender, EventArgs e)
         {
             if (Convert.ToInt32(track_ActiveTableActivityThreshold.Value) == Convert.ToInt32(nmActiveTableActivityThreshold.Value * 100))
             {
@@ -651,7 +651,7 @@
             ActivityThreshold = Convert.ToDouble(nmActiveTableActivityThreshold.Value);
         }
 
-        private void track_ActiveTableActivityThreshold_Scroll(object sender, EventArgs e)
+        private void HandleActivityThresholdScroll(object sender, EventArgs e)
         {
             if (Convert.ToInt32(track_ActiveTableActivityThreshold.Value) == Convert.ToInt32(nmActiveTableActivityThreshold.Value * 100))
             {
@@ -662,7 +662,7 @@
             ActivityThreshold = Convert.ToDouble(nmActiveTableActivityThreshold.Value);
         }
 
-        private void cbAutoAddDump_CheckedChanged(object sender, EventArgs e)
+        private void HandleAutoAddDumpChange(object sender, EventArgs e)
         {
             if (ActiveTableAutodump != null)
             {
@@ -676,12 +676,12 @@
                 {
                     Interval = Convert.ToInt32(nmAutoAddSec.Value) * 1000
                 };
-                ActiveTableAutodump.Tick += new EventHandler(btnActiveTableAddDump_Click);
+                ActiveTableAutodump.Tick += new EventHandler(AddState);
                 ActiveTableAutodump.Start();
             }
         }
 
-        private void nmAutoAddSec_ValueChanged(object sender, EventArgs e)
+        private void HandleAutoAddIntervalChange(object sender, EventArgs e)
         {
             if (ActiveTableAutodump != null)
             {
@@ -689,13 +689,9 @@
             }
         }
 
-        private void cbUseCorePrecision_CheckedChanged(object sender, EventArgs e)
+        private void HandleUseCorePrecisionChange(object sender, EventArgs e)
         {
             UseCorePrecision = cbUseCorePrecision.Checked;
-        }
-
-        private void RTC_VmdAct_Form_Load(object sender, EventArgs e)
-        {
         }
     }
 }
