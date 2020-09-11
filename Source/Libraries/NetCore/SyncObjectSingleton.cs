@@ -1,8 +1,9 @@
-﻿namespace RTCV.NetCore
+namespace RTCV.NetCore
 {
     using System;
     using System.Collections.Generic;
     using System.Threading;
+    using System.Threading.Tasks;
     using System.Runtime.ExceptionServices;
     using System.Windows.Forms;
 
@@ -17,6 +18,7 @@
         public static ActionDelegate EmuInvokeDelegate;
         public static bool UseQueue = false;
         public static bool EmuThreadIsMainThread = false;
+        private static readonly WindowsFormsSynchronizationContext SynchronizationContext = new WindowsFormsSynchronizationContext();
 
         public static void FormExecute(Action a)
         {
@@ -28,6 +30,30 @@
             {
                 a.Invoke();
             }
+        }
+
+        public static void PostToUI(SendOrPostCallback callback, object state)
+        {
+            SynchronizationContext.Post(callback, state);
+        }
+
+        public static async Task FormExecuteAsync(Action a)
+        {
+            if (SyncObject.InvokeRequired)
+            {
+                var t = SyncObject.BeginInvoke(new MethodInvoker(a.Invoke));
+                await Task.Factory.FromAsync(t, Callback).ConfigureAwait(true);
+            }
+            else
+            {
+                var t = a.BeginInvoke(ar => { }, null);
+                await Task.Factory.FromAsync(t, Callback).ConfigureAwait(true);
+            }
+        }
+
+        private static void Callback(IAsyncResult ar)
+        {
+            //This is an intentionally empty method
         }
 
         public static void FormExecute<T>(Action<T> a, T b)

@@ -370,10 +370,7 @@ namespace RTCV.UI
 
         private static void DomainsUpdated()
         {
-            SyncObjectSingleton.FormExecute(() =>
-            {
-                S.GET<RTC_MemoryDomains_Form>().RefreshDomains();
-            });
+            S.GET<RTC_MemoryDomains_Form>().RefreshDomains();
             //We explicitly don't invoke this on the main thread to avoid deadlock.
             //The main thread invoke for the form will happen further down the chain
             S.GET<RTC_MemoryDomains_Form>().SetMemoryDomainsAllButSelectedDomains(AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] as string[] ?? new string[] { });
