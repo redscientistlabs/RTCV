@@ -194,11 +194,11 @@
     <Compile Include="Components\Glitch Harvester\StashHistoryForm.designer.cs">
       <DependentUpon>StashHistoryForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Glitch Harvester\RTC_StockpileManager_Form.cs">
+    <Compile Include="Components\Glitch Harvester\StockpileManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Glitch Harvester\RTC_StockpileManager_Form.designer.cs">
-      <DependentUpon>RTC_StockpileManager_Form.cs</DependentUpon>
+    <Compile Include="Components\Glitch Harvester\StockpileManagerForm.designer.cs">
+      <DependentUpon>StockpileManagerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Memory Tools\Common.cs" />
     <Compile Include="Components\Memory Tools\DomainAnalyticsForm.cs">
@@ -512,8 +512,8 @@
     <EmbeddedResource Include="Components\Glitch Harvester\StashHistoryForm.resx">
       <DependentUpon>StashHistoryForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Glitch Harvester\RTC_StockpileManager_Form.resx">
-      <DependentUpon>RTC_StockpileManager_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Glitch Harvester\StockpileManagerForm.resx">
+      <DependentUpon>StockpileManagerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Memory Tools\DomainAnalyticsForm.resx">
       <DependentUpon>DomainAnalyticsForm.cs</DependentUpon>

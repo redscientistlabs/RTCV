@@ -13,7 +13,7 @@ namespace RTCV.UI
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class RTC_StockpileManager_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class StockpileManagerForm : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
@@ -46,7 +46,7 @@ namespace RTCV.UI
             }
         }
 
-        public RTC_StockpileManager_Form()
+        public StockpileManagerForm()
         {
             InitializeComponent();
 
@@ -784,7 +784,7 @@ namespace RTCV.UI
             dgvStockpile_CellClick(dgvStockpile, null);
         }
 
-        private void RTC_StockpileManager_Form_Load(object sender, EventArgs e)
+        private void StockpileManagerForm_Load(object sender, EventArgs e)
         {
             dgvStockpile.AllowDrop = true;
             dgvStockpile.DragDrop += dgvStockpile_DragDrop;

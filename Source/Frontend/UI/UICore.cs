@@ -472,7 +472,7 @@ namespace RTCV.UI
                     SyncObjectSingleton.FormExecute(() =>
                     {
                         var sh = S.GET<StashHistoryForm>();
-                        var sm = S.GET<RTC_StockpileManager_Form>();
+                        var sm = S.GET<StockpileManagerForm>();
                         var ghb = S.GET<GlitchHarvesterBlastForm>();
 
                         if (sh.lbStashHistory.SelectedIndex != -1)
