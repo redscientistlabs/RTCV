@@ -488,7 +488,7 @@ namespace RTCV.UI
                             }
                             else
                             {
-                                sm.dgvStockpile_CellClick(sm.dgvStockpile, new DataGridViewCellEventArgs(0, mainRow.Index));
+                                sm.HandleCellClick(sm.dgvStockpile, new DataGridViewCellEventArgs(0, mainRow.Index));
                             }
                         }
                     });

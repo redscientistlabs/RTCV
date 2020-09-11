@@ -108,8 +108,8 @@
             this.dgvStockpile.Size = new System.Drawing.Size(490, 403);
             this.dgvStockpile.TabIndex = 169;
             this.dgvStockpile.Tag = "color:dark1";
-            this.dgvStockpile.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvStockpile_CellClick);
-            this.dgvStockpile.MouseDown += new System.Windows.Forms.MouseEventHandler(this.dgvStockpile_MouseDown);
+            this.dgvStockpile.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.HandleCellClick);
+            this.dgvStockpile.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleStockpileMouseDown);
             //
             // Item
             //
@@ -174,7 +174,7 @@
             this.btnRenameSelected.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnRenameSelected.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnRenameSelected.UseVisualStyleBackColor = false;
-            this.btnRenameSelected.Click += new System.EventHandler(this.btnRenameSelected_Click);
+            this.btnRenameSelected.Click += new System.EventHandler(this.RenamedSelected);
             //
             // btnImportStockpile
             //
@@ -197,7 +197,7 @@
             this.btnImportStockpile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnImportStockpile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnImportStockpile.UseVisualStyleBackColor = false;
-            this.btnImportStockpile.Click += new System.EventHandler(this.btnImportStockpile_Click);
+            this.btnImportStockpile.Click += new System.EventHandler(this.ImportStockpile);
             //
             // btnStockpileMoveSelectedDown
             //
@@ -215,7 +215,7 @@
             this.btnStockpileMoveSelectedDown.Tag = "color:light1";
             this.btnStockpileMoveSelectedDown.Text = "▼▼";
             this.btnStockpileMoveSelectedDown.UseVisualStyleBackColor = false;
-            this.btnStockpileMoveSelectedDown.Click += new System.EventHandler(this.btnStockpileMoveSelectedDown_Click);
+            this.btnStockpileMoveSelectedDown.Click += new System.EventHandler(this.MoveSelectedStockpileDown);
             //
             // btnStockpileMoveSelectedUp
             //
@@ -234,7 +234,7 @@
             this.btnStockpileMoveSelectedUp.Tag = "color:light1";
             this.btnStockpileMoveSelectedUp.Text = "▲▲";
             this.btnStockpileMoveSelectedUp.UseVisualStyleBackColor = false;
-            this.btnStockpileMoveSelectedUp.Click += new System.EventHandler(this.btnStockpileMoveSelectedUp_Click);
+            this.btnStockpileMoveSelectedUp.Click += new System.EventHandler(this.MoveSelectedStockpileUp);
             //
             // btnLoadStockpile
             //
@@ -256,7 +256,7 @@
             this.btnLoadStockpile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnLoadStockpile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnLoadStockpile.UseVisualStyleBackColor = false;
-            this.btnLoadStockpile.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnLoadStockpile_Click);
+            this.btnLoadStockpile.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LoadStockpile);
             //
             // btnSaveStockpile
             //
@@ -279,7 +279,7 @@
             this.btnSaveStockpile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSaveStockpile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSaveStockpile.UseVisualStyleBackColor = false;
-            this.btnSaveStockpile.Click += new System.EventHandler(this.btnSaveStockpile_Click);
+            this.btnSaveStockpile.Click += new System.EventHandler(this.SaveStockpile);
             //
             // btnSaveStockpileAs
             //
@@ -301,7 +301,7 @@
             this.btnSaveStockpileAs.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnSaveStockpileAs.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSaveStockpileAs.UseVisualStyleBackColor = false;
-            this.btnSaveStockpileAs.Click += new System.EventHandler(this.btnSaveStockpileAs_Click);
+            this.btnSaveStockpileAs.Click += new System.EventHandler(this.SaveStockpileAs);
             //
             // btnClearStockpile
             //
@@ -323,7 +323,7 @@
             this.btnClearStockpile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnClearStockpile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnClearStockpile.UseVisualStyleBackColor = false;
-            this.btnClearStockpile.Click += new System.EventHandler(this.btnClearStockpile_Click);
+            this.btnClearStockpile.Click += new System.EventHandler(this.ClearStockpile);
             //
             // btnStockpileDOWN
             //
@@ -341,7 +341,7 @@
             this.btnStockpileDOWN.Tag = "color:light1";
             this.btnStockpileDOWN.Text = "▼";
             this.btnStockpileDOWN.UseVisualStyleBackColor = false;
-            this.btnStockpileDOWN.Click += new System.EventHandler(this.btnStockpileDOWN_Click);
+            this.btnStockpileDOWN.Click += new System.EventHandler(this.StockpileDown);
             //
             // btnStockpileUP
             //
@@ -359,7 +359,7 @@
             this.btnStockpileUP.Tag = "color:light1";
             this.btnStockpileUP.Text = "▲";
             this.btnStockpileUP.UseVisualStyleBackColor = false;
-            this.btnStockpileUP.Click += new System.EventHandler(this.btnStockpileUP_Click);
+            this.btnStockpileUP.Click += new System.EventHandler(this.StockpileUp);
             //
             // btnRemoveSelectedStockpile
             //
@@ -382,7 +382,7 @@
             this.btnRemoveSelectedStockpile.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnRemoveSelectedStockpile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnRemoveSelectedStockpile.UseVisualStyleBackColor = false;
-            this.btnRemoveSelectedStockpile.Click += new System.EventHandler(this.btnRemoveSelectedStockpile_Click);
+            this.btnRemoveSelectedStockpile.Click += new System.EventHandler(this.RemoveSelectedStockpile);
             //
             // btnGlitchHarvesterSettings
             //
@@ -400,7 +400,7 @@
             this.btnGlitchHarvesterSettings.TabStop = false;
             this.btnGlitchHarvesterSettings.Tag = "color:light1";
             this.btnGlitchHarvesterSettings.UseVisualStyleBackColor = false;
-            this.btnGlitchHarvesterSettings.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnGlitchHarvesterSettings_MouseDown);
+            this.btnGlitchHarvesterSettings.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleGlitchHarvesterSettingsMouseDown);
             //
             // StockpileManagerForm
             //
@@ -429,7 +429,7 @@
             this.Tag = "color:dark1";
             this.Text = "Stockpile Manager";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
-            this.Load += new System.EventHandler(this.StockpileManagerForm_Load);
+            this.Load += new System.EventHandler(this.OnFormLoad);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             ((System.ComponentModel.ISupportInitialize)(this.dgvStockpile)).EndInit();
             this.ResumeLayout(false);
