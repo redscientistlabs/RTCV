@@ -167,6 +167,11 @@ namespace RTCV.CorruptCore
 
         public static long GetRealAddress(string domain, long address)
         {
+            if (domain == null)
+            {
+                throw new ArgumentNullException(nameof(domain));
+            }
+
             if (domain.Contains("[V]"))
             {
                 MemoryInterface mi = VmdPool[domain];
@@ -181,6 +186,11 @@ namespace RTCV.CorruptCore
 
         public static string GetRealDomain(string domain, long address)
         {
+            if (domain == null)
+            {
+                throw new ArgumentNullException(nameof(domain));
+            }
+
             if (domain.Contains("[V]"))
             {
                 MemoryInterface mi = VmdPool[domain];
@@ -195,6 +205,11 @@ namespace RTCV.CorruptCore
 
         public static VmdPrototype GetVmdPrototypeFromBlastlayer(BlastLayer bl)
         {
+            if (bl == null)
+            {
+                throw new ArgumentNullException(nameof(bl));
+            }
+
             //If the BL references a VMD that doesn't exist, return null
             if (bl.Layer.Any(x => GetInterface(x.Domain) == null))
             {
@@ -217,6 +232,11 @@ namespace RTCV.CorruptCore
 
         public static void GenerateVmdFromStashkey(StashKey sk)
         {
+            if (sk == null)
+            {
+                throw new ArgumentNullException(nameof(sk));
+            }
+
             VmdPrototype proto = GetVmdPrototypeFromBlastlayer(sk.BlastLayer);
             if (proto == null)
             {
@@ -233,6 +253,11 @@ namespace RTCV.CorruptCore
         /// <param name="proto"></param>
         public static void AddVMD(VmdPrototype proto)
         {
+            if (proto == null)
+            {
+                throw new ArgumentNullException(nameof(proto));
+            }
+
             AddVMD(proto.Generate());
         }
 
@@ -243,6 +268,11 @@ namespace RTCV.CorruptCore
         /// <param name="VMD"></param>
         public static void AddVMD(VirtualMemoryDomain VMD)
         {
+            if (VMD == null)
+            {
+                throw new ArgumentNullException(nameof(VMD));
+            }
+
             VmdPool[VMD.ToString()] = VMD;
 
             LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_DOMAIN_VMD_ADD, VMD.Proto, true);
@@ -251,11 +281,21 @@ namespace RTCV.CorruptCore
 
         public static void AddVMD_NET(VmdPrototype proto)
         {
+            if (proto == null)
+            {
+                throw new ArgumentNullException(nameof(proto));
+            }
+
             AddVMD_NET(proto.Generate());
         }
 
         public static void AddVMD_NET(VirtualMemoryDomain VMD)
         {
+            if (VMD == null)
+            {
+                throw new ArgumentNullException(nameof(VMD));
+            }
+
             VmdPool[VMD.ToString()] = VMD;
         }
 
@@ -266,6 +306,11 @@ namespace RTCV.CorruptCore
         /// <param name="VMD"></param>
         public static void RemoveVMD(VirtualMemoryDomain VMD)
         {
+            if (VMD == null)
+            {
+                throw new ArgumentNullException(nameof(VMD));
+            }
+
             RemoveVMD(VMD.ToString());
         }
 
@@ -287,6 +332,11 @@ namespace RTCV.CorruptCore
 
         public static void RemoveVMD_NET(VirtualMemoryDomain VMD)
         {
+            if (VMD == null)
+            {
+                throw new ArgumentNullException(nameof(VMD));
+            }
+
             RemoveVMD_NET(VMD.ToString());
         }
 
@@ -314,6 +364,11 @@ namespace RTCV.CorruptCore
 
         public static byte[] GetDomainData(string domain)
         {
+            if (domain == null)
+            {
+                throw new ArgumentNullException(nameof(domain));
+            }
+
             MemoryInterface mi = domain.Contains("[V]") ? (MemoryInterface)VmdPool[domain] : MemoryInterfaces[domain];
             return mi.GetDump();
         }
@@ -335,6 +390,16 @@ namespace RTCV.CorruptCore
 
         public static RomParts GetRomParts(string thisSystem, string romFilename)
         {
+            if (thisSystem == null)
+            {
+                throw new ArgumentNullException(nameof(thisSystem));
+            }
+
+            if (romFilename == null)
+            {
+                throw new ArgumentNullException(nameof(romFilename));
+            }
+
             RomParts rp = new RomParts();
 
             switch (thisSystem.ToUpper())

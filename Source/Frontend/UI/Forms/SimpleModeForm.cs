@@ -11,9 +11,6 @@
 
     public partial class SimpleModeForm : ComponentForm, IAutoColorize, IBlockable
     {
-        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
-
         private PlatformType platform = PlatformType.CLASSIC;
 
         private bool DontUpdateSpec = false;
@@ -219,7 +216,7 @@
                                        $"and 2d games made for 3d-era consoles.";
         }
 
-        public static void SelectComboBoxRandomItem(ComboBox cb)
+        private static void SelectComboBoxRandomItem(ComboBox cb)
         {
             Random RND = new Random((int)DateTime.Now.Ticks);
             int nbItems = cb.Items.Count;

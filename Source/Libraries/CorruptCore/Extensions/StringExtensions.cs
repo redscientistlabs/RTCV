@@ -1,6 +1,7 @@
 namespace RTCV.CorruptCore.Extensions
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.IO;
     using System.Text;
@@ -31,6 +32,7 @@ namespace RTCV.CorruptCore.Extensions
         /// </summary>
         /// <param name="hex"></param>
         /// <returns></returns>
+        [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/dotnet/roslyn-analyzers/issues/3451")]
         public static byte[] ToByteArray(this string hex)
         {
             var lengthPadded = (hex.Length / 2) + (hex.Length % 2);
@@ -67,6 +69,7 @@ namespace RTCV.CorruptCore.Extensions
         /// </summary>
         /// <param name="hex"></param>
         /// <returns></returns>
+        [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/dotnet/roslyn-analyzers/issues/3451")]
         public static byte?[] ToNullableByteArray(this string hex)
         {
             var lengthPadded = (hex.Length / 2) + (hex.Length % 2);
@@ -143,6 +146,11 @@ namespace RTCV.CorruptCore.Extensions
 
         public static string MakeSafeFilename(string filename, char replaceChar)
         {
+            if (filename == null)
+            {
+                throw new ArgumentNullException(nameof(filename));
+            }
+
             foreach (var c in Path.GetInvalidFileNameChars())
             {
                 filename = filename.Replace(c, replaceChar);

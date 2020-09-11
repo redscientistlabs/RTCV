@@ -365,7 +365,7 @@ This message only appears once.";
         private int settingsRightClickTimer = 0;
         private Timer testErrorTimer = null;
 
-        public void OpenSettings(object sender, MouseEventArgs e)
+        internal void OpenSettings(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {

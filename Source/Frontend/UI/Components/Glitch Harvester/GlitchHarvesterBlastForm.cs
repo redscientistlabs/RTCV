@@ -15,8 +15,8 @@ namespace RTCV.UI
 
     public partial class GlitchHarvesterBlastForm : ComponentForm, IAutoColorize, IBlockable
     {
-        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+        private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         public bool MergeMode { get; private set; } = false;
         public GlitchHarvesterMode ghMode { get; set; } = GlitchHarvesterMode.CORRUPT;

@@ -104,7 +104,7 @@ namespace RTCV.UI
             }
         }
 
-        public static void registerHotkeyBlacklistControls(Control container)
+        internal static void registerHotkeyBlacklistControls(Control container)
         {
             foreach (Control c in container.Controls)
             {
@@ -128,7 +128,7 @@ namespace RTCV.UI
             }
         }
 
-        public static void registerFormEvents(Form f)
+        internal static void registerFormEvents(Form f)
         {
             f.Deactivate -= NewForm_FocusChanged;
             f.Deactivate += NewForm_FocusChanged;
@@ -251,7 +251,7 @@ namespace RTCV.UI
             Input.Input.Instance.ClearEvents();
         }
 
-        public static void BlockView(this IBlockable ib)
+        internal static void BlockView(this IBlockable ib)
         {
             if (ib is ConnectionStatusForm)
             {
@@ -279,7 +279,7 @@ namespace RTCV.UI
             ib.blockPanel.Visible = true;
         }
 
-        public static void UnblockView(this IBlockable ib)
+        internal static void UnblockView(this IBlockable ib)
         {
             if (ib is ConnectionStatusForm)
             {

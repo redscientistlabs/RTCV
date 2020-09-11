@@ -15,8 +15,8 @@ namespace RTCV.UI
 
     public partial class RTC_StockpileManager_Form : ComponentForm, IAutoColorize, IBlockable
     {
-        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+        private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         private Color? originalSaveButtonColor = null;
         private bool _UnsavedEdits = false;
@@ -59,7 +59,7 @@ namespace RTCV.UI
             };
         }
 
-        public void dgvStockpile_CellClick(object sender, DataGridViewCellEventArgs e)
+        internal void dgvStockpile_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e == null || e.RowIndex == -1)
             {
@@ -289,7 +289,7 @@ namespace RTCV.UI
             }
         }
 
-        public static bool RenameStashKey(StashKey sk)
+        internal static bool RenameStashKey(StashKey sk)
         {
             string value = sk.Alias;
 

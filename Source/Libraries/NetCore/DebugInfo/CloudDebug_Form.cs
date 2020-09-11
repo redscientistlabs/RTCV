@@ -20,7 +20,7 @@ namespace RTCV.NetCore
         public CloudDebug(Exception _ex, bool canContinue = false)
         {
             InitializeComponent();
-            ex = _ex;
+            ex = _ex ?? throw new ArgumentNullException(nameof(_ex));
             if (ex is AbortEverythingException)
             {
                 return;

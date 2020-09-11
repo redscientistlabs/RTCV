@@ -223,7 +223,7 @@
             OnValueChanged(new ValueUpdateEventArgs(Value));
         }
 
-        public void registerSlave(MultiTrackBar comp)
+        internal void registerSlave(MultiTrackBar comp)
         {
             slaveComps.Add(comp);
             comp._parent = this;

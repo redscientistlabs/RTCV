@@ -13,6 +13,11 @@
 
         public static bool SaveBlastLayerToFile(BlastLayer bl, string path = null)
         {
+            if (bl == null)
+            {
+                throw new ArgumentNullException(nameof(bl));
+            }
+
             string filename = path;
 
             if (bl.Layer.Count == 0)
@@ -133,7 +138,7 @@
             return temp;
         }
 
-        public static BlastLayer GetAppliedBackupLayer(BlastLayer bl, StashKey sk)
+        internal static BlastLayer GetAppliedBackupLayer(BlastLayer bl, StashKey sk)
         {
             //So basically due to how netcore handles synced commands, we can't actually call sk.Run()
             //from within emuhawk or else it'll apply the blastlayer AFTER this code completes
@@ -149,7 +154,7 @@
             return newBlastLayer;
         }
 
-        public static BlastLayer GetBlastLayerFromDiff(byte[] Original, byte[] Corrupt)
+        internal static BlastLayer GetBlastLayerFromDiff(byte[] Original, byte[] Corrupt)
         {
             BlastLayer bl = new BlastLayer();
 
@@ -201,7 +206,7 @@
         /// </summary>
         /// <param name="blastLayers"></param>
         /// <returns></returns>
-        public static List<BlastGeneratorProto> GenerateBlastLayersFromBlastGeneratorProtos(List<BlastGeneratorProto> blastLayers)
+        internal static List<BlastGeneratorProto> GenerateBlastLayersFromBlastGeneratorProtos(List<BlastGeneratorProto> blastLayers)
         {
             foreach (BlastGeneratorProto bgp in blastLayers)
             {

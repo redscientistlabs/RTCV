@@ -55,6 +55,11 @@ namespace RTCV.UI.Components.Controls
 
             set
             {
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
                 ClearBindings();
                 var newBindings = value.Trim().Split(',');
                 _bindings.AddRange(newBindings);
@@ -185,6 +190,11 @@ namespace RTCV.UI.Components.Controls
 
         protected override void OnKeyUp(KeyEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             if (e.KeyCode == Keys.F4 && e.Modifiers == Keys.Alt)
             {
                 base.OnKeyUp(e);
@@ -195,6 +205,11 @@ namespace RTCV.UI.Components.Controls
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             if (e.KeyCode == Keys.F4 && e.Modifiers == Keys.Alt)
             {
                 base.OnKeyDown(e);
@@ -229,6 +244,11 @@ namespace RTCV.UI.Components.Controls
 
         protected override void OnKeyPress(KeyPressEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             e.Handled = true;
         }
 
@@ -251,6 +271,11 @@ namespace RTCV.UI.Components.Controls
 
         protected override void OnMouseWheel(MouseEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             if (e.Delta > 0)
             {
                 Decrement();

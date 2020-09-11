@@ -109,7 +109,7 @@ namespace RTCV.CorruptCore
             return new byte[precision];
         }
 
-        public static BlastLayer GetBlastLayer(IMemoryDomain[] Original, IMemoryDomain Corrupt, long skipBytes, bool useCustomPrecision)
+        private static BlastLayer GetBlastLayer(IMemoryDomain[] Original, IMemoryDomain Corrupt, long skipBytes, bool useCustomPrecision)
         {
             BlastLayer bl = new BlastLayer();
 
