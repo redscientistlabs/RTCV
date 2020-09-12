@@ -10,16 +10,16 @@ namespace RTCV.UI
 
     public class UIConnector : IRoutable, IDisposable
     {
-        private NetCoreReceiver receiver;
+        private NetCoreReceiver _receiver;
         public NetCoreConnector netConn { get; private set; }
 
-        public UIConnector(NetCoreReceiver _receiver)
+        public UIConnector(NetCoreReceiver receiver)
         {
-            receiver = _receiver;
+            _receiver = receiver;
 
             LocalNetCoreRouter.registerEndpoint(this, NetcoreCommands.UI);
 
-            if (receiver.Attached)
+            if (_receiver.Attached)
             {
                 return;
             }
@@ -27,7 +27,7 @@ namespace RTCV.UI
             var netCoreSpec = new NetCoreSpec
             {
                 Side = NetworkSide.SERVER,
-                Attached = receiver.Attached,
+                Attached = _receiver.Attached,
                 Loopback = true
             };
             netCoreSpec.MessageReceived += OnMessageReceivedProxy;
@@ -107,7 +107,7 @@ namespace RTCV.UI
             }
             else
             {   //This is for the Vanguard Implementation
-                receiver.OnMessageReceived(e);
+                _receiver.OnMessageReceived(e);
                 return e.returnMessage;
             }
         }

@@ -14,10 +14,10 @@ namespace RTCV.CorruptCore
         [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
         public long Address = 0;
 
-        public BlastTarget(string _domain, long _address)
+        public BlastTarget(string domain, long address)
         {
-            Domain = _domain;
-            Address = _address;
+            Domain = domain;
+            Address = address;
         }
     }
 }

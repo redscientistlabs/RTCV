@@ -24,9 +24,9 @@ namespace RTCV.CorruptCore
             Layer = new List<BlastUnit>();
         }
 
-        public BlastLayer(List<BlastUnit> _layer)
+        public BlastLayer(List<BlastUnit> layer)
         {
-            Layer = _layer;
+            Layer = layer;
         }
 
         public object Clone()
