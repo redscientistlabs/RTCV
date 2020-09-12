@@ -46,6 +46,11 @@ namespace RTCV.CorruptCore
 
         public Stockpile(DataGridView dgvStockpile)
         {
+            if (dgvStockpile == null)
+            {
+                throw new ArgumentNullException(nameof(dgvStockpile));
+            }
+
             foreach (DataGridViewRow row in dgvStockpile.Rows)
             {
                 StashKeys.Add((StashKey)row.Cells[0].Value);
@@ -63,6 +68,11 @@ namespace RTCV.CorruptCore
 
         public static bool Save(Stockpile sks, string filename, bool includeReferencedFiles = false, bool compress = true)
         {
+            if (sks == null)
+            {
+                throw new ArgumentNullException(nameof(sks));
+            }
+
             try
             {
                 if (sks.StashKeys.Count == 0)
@@ -598,7 +608,7 @@ namespace RTCV.CorruptCore
         /// Checks a stockpile for compatibility with the current version of the RTC
         /// </summary>
         /// <param name="sks"></param>
-        public static OperationResults CheckCompatibility(Stockpile sks)
+        internal static OperationResults CheckCompatibility(Stockpile sks)
         {
             var results = new OperationResults();
 
@@ -625,7 +635,7 @@ namespace RTCV.CorruptCore
         /// Recursively deletes all files and folders within a directory
         /// </summary>
         /// <param name="baseDir"></param>
-        public static void RecursiveDelete(DirectoryInfo baseDir)
+        private static void RecursiveDelete(DirectoryInfo baseDir)
         {
             if (!baseDir.Exists)
             {

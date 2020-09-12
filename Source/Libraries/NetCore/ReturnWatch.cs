@@ -44,7 +44,7 @@ namespace RTCV.NetCore
             cts.Dispose();
         }
 
-        public void AddReturn(NetCoreAdvancedMessage message)
+        internal void AddReturn(NetCoreAdvancedMessage message)
         {
             if (!message.requestGuid.HasValue)
             {

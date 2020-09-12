@@ -847,6 +847,16 @@ namespace RTCV.NetCore
         //Thanks! https://stackoverflow.com/a/13021983
         public static long CopyBytes(long bytesRequired, Stream inStream, Stream outStream)
         {
+            if (inStream == null)
+            {
+                throw new ArgumentNullException(nameof(inStream));
+            }
+
+            if (outStream == null)
+            {
+                throw new ArgumentNullException(nameof(outStream));
+            }
+
             var readSoFar = 0L;
             var buffer = new byte[64 * 1024];
             do

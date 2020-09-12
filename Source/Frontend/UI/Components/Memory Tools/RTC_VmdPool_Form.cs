@@ -12,8 +12,8 @@ namespace RTCV.UI
 
     public partial class RTC_VmdPool_Form : ComponentForm, IAutoColorize, IBlockable
     {
-        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+        private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         public RTC_VmdPool_Form()
         {
@@ -23,12 +23,12 @@ namespace RTCV.UI
             this.DragDrop += RTC_VmdPool_Form_DragDrop;
         }
 
-        public void RTC_VmdPool_Form_DragEnter(object sender, DragEventArgs e)
+        internal void RTC_VmdPool_Form_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Link;
         }
 
-        public void RTC_VmdPool_Form_DragDrop(object sender, DragEventArgs e)
+        internal void RTC_VmdPool_Form_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             foreach (var f in files)

@@ -16,7 +16,7 @@ namespace RTCV.CorruptCore
 
         public MemoryDomainProxy(IMemoryDomain _md)
         {
-            MD = _md;
+            MD = _md ?? throw new ArgumentNullException(nameof(_md));
             Size = MD.Size;
 
             Name = MD.ToString();

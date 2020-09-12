@@ -19,6 +19,11 @@
 
         public void LoadColumnSelector(DataGridViewColumnCollection columns)
         {
+            if (columns == null)
+            {
+                throw new ArgumentNullException(nameof(columns));
+            }
+
             foreach (DataGridViewColumn column in columns)
             {
                 CheckBox cb = new CheckBox

@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Data;
@@ -11,8 +11,8 @@
     {
         private ComponentForm[] childForms;
 
-        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+        private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         public ListBoxForm(ComponentForm[] _childForms)
         {
@@ -20,7 +20,7 @@
 
             this.undockedSizable = false;
 
-            childForms = _childForms;
+            childForms = _childForms ?? throw new ArgumentNullException(nameof(_childForms));
 
             //Populate the filter ComboBox
             lbComponentForms.DisplayMember = "Name";

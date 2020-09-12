@@ -1,5 +1,6 @@
 namespace RTCV.Plugins.HexEditor
 {
+    using System;
     using RTCV.Common;
     using RTCV.CorruptCore;
     using RTCV.NetCore;
@@ -12,6 +13,11 @@ namespace RTCV.Plugins.HexEditor
         }
         public object OnMessageReceived(object sender, NetCoreEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             //Use setReturnValue to handle returns
             var message = e.message;
             var advancedMessage = message as NetCoreAdvancedMessage;

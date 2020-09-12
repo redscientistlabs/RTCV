@@ -1,6 +1,7 @@
 namespace RTCV.CorruptCore.Extensions
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Numerics;
     using System.Text;
 
@@ -11,7 +12,7 @@ namespace RTCV.CorruptCore.Extensions
         /// Rotates the bits in an array of bytes to the left.
         /// </summary>
         /// <param name="bytes">The byte array to rotate.</param>
-        public static void RotateLeft(byte[] bytes)
+        internal static void RotateLeft(byte[] bytes)
         {
             var carryFlag = ShiftLeft(bytes);
 
@@ -25,7 +26,7 @@ namespace RTCV.CorruptCore.Extensions
         /// Rotates the bits in an array of bytes to the right.
         /// </summary>
         /// <param name="bytes">The byte array to rotate.</param>
-        public static void RotateRight(byte[] bytes)
+        internal static void RotateRight(byte[] bytes)
         {
             var carryFlag = ShiftRight(bytes);
 
@@ -39,7 +40,7 @@ namespace RTCV.CorruptCore.Extensions
         /// Shifts the bits in an array of bytes to the left.
         /// </summary>
         /// <param name="bytes">The byte array to shift.</param>
-        public static bool ShiftLeft(byte[] bytes)
+        internal static bool ShiftLeft(byte[] bytes)
         {
             var leftMostCarryFlag = false;
 
@@ -72,7 +73,7 @@ namespace RTCV.CorruptCore.Extensions
         /// Shifts the bits in an array of bytes to the right.
         /// </summary>
         /// <param name="bytes">The byte array to shift.</param>
-        public static bool ShiftRight(byte[] bytes)
+        internal static bool ShiftRight(byte[] bytes)
         {
             var rightMostCarryFlag = false;
             var rightEnd = bytes.Length - 1;
@@ -102,7 +103,7 @@ namespace RTCV.CorruptCore.Extensions
             return rightMostCarryFlag;
         }
 
-        public static decimal GetDecimalValue(byte[] value, bool needsBytesFlipped)
+        internal static decimal GetDecimalValue(byte[] value, bool needsBytesFlipped)
         {
             var valueClone = (byte[])value.Clone();
 
@@ -126,6 +127,7 @@ namespace RTCV.CorruptCore.Extensions
             return (x % m + m) % m;
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/redscientistlabs/RTCV/issues/187")]
         public static byte[] AddValueToByteArrayUnchecked(this byte[] input, BigInteger addValue, bool isInputBigEndian)
         {
             if (isInputBigEndian)
@@ -323,6 +325,7 @@ namespace RTCV.CorruptCore.Extensions
             return null;
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/redscientistlabs/RTCV/issues/187")]
         public static byte[] FlipBytes(this byte[] array)
         {
             var arrayClone = (byte[])array.Clone();
@@ -335,6 +338,7 @@ namespace RTCV.CorruptCore.Extensions
             return array;
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/redscientistlabs/RTCV/issues/187")]
         public static byte?[] FlipBytes(this byte?[] array)
         {
             var arrayClone = (byte?[])array.Clone();
@@ -347,6 +351,7 @@ namespace RTCV.CorruptCore.Extensions
             return array;
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/redscientistlabs/RTCV/issues/187")]
         public static byte[] PadLeft(this byte[] input, int length)
         {
             var newArray = new byte[length];
@@ -359,6 +364,7 @@ namespace RTCV.CorruptCore.Extensions
         /// <summary>
         /// Converts bytes to an uppercase string of hex numbers in upper case without any spacing or anything
         /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/redscientistlabs/RTCV/issues/187")]
         public static string BytesToHexString(this byte[] bytes)
         {
             var sb = new StringBuilder();

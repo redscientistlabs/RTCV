@@ -31,6 +31,11 @@ namespace RTCV.CorruptCore
 
         public string Initialize(string filePath, string[] dataLines, bool flipBytes, bool syncListViaNetcore)
         {
+            if (dataLines == null)
+            {
+                throw new ArgumentNullException(nameof(dataLines));
+            }
+
             byteList = new List<byte[]>();
 
             //For every line in the list, build up our list of bytes
@@ -164,6 +169,11 @@ namespace RTCV.CorruptCore
 
         public string Initialize(string filePath, string[] dataLines, bool flipBytes, bool syncListViaNetcore)
         {
+            if (dataLines == null)
+            {
+                throw new ArgumentNullException(nameof(dataLines));
+            }
+
             byteList = new List<byte?[]>();
 
             //For every line in the list, build up our list of bytes
@@ -221,6 +231,11 @@ namespace RTCV.CorruptCore
         }
         public bool ContainsValue(byte[] bytes)
         {
+            if (bytes == null)
+            {
+                throw new ArgumentNullException(nameof(bytes));
+            }
+
             return Filtering.NullableByteArrayContains(hashSet, bytes);
         }
         public byte[] GetRandomValue(string hash, int precision, byte[] passthrough)

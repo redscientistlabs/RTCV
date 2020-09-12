@@ -53,6 +53,11 @@ namespace RTCV.Vanguard
         public void OnMessageReceivedProxy(object sender, NetCoreEventArgs e) => OnMessageReceived(sender, e);
         public object OnMessageReceived(object sender, NetCoreEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             //No implementation here, we simply route and return
 
             if (e.message.Type.Contains('|'))

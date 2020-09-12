@@ -18,8 +18,8 @@
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class VmdActForm : ComponentForm, IAutoColorize, IBlockable
     {
-        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+        private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         public VmdActForm()
         {
@@ -124,7 +124,7 @@
             }
         }
 
-        public void SetActiveTable(ActiveTableObject act)
+        private void SetActiveTable(ActiveTableObject act)
         {
             FirstInit = true;
             ActiveTableGenerated = act.Data;
@@ -137,7 +137,7 @@
             return File.ReadAllBytes(Path.Combine(RtcCore.workingDir, "MEMORYDUMPS", key + ".dmp"));
         }
 
-        public long[] CapActiveTable(long[] tempActiveTable)
+        private long[] CapActiveTable(long[] tempActiveTable)
         {
             List<long> cappedActiveTable = new List<long>();
 

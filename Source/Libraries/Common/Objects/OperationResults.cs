@@ -21,6 +21,11 @@
 
         public OperationResult(string message, NLog.LogLevel severity, NLog.Logger logger, Exception e = null)
         {
+            if (logger == null)
+            {
+                throw new ArgumentNullException(nameof(logger));
+            }
+
             this.Message = message;
             this.Severity = severity;
             this.Exception = e;
@@ -44,7 +49,14 @@
 
         public void AddResult(OperationResult result) => messages.Add(result);
 
-        public void AddResults(OperationResults results) => messages.AddRange(results.Messages);
+        public void AddResults(OperationResults results) {
+            if (results == null)
+            {
+                throw new ArgumentNullException(nameof(results));
+            }
+
+            messages.AddRange(results.Messages);
+        }
 
         public void AddWarning(string warning) => messages.Add(new OperationResult(warning, NLog.LogLevel.Warn));
 
