@@ -2,7 +2,7 @@ namespace RTCV.NetCore
 {
     using System.Diagnostics.CodeAnalysis;
 
-    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "NetCore command names are allowed to have underscores for clarity and compatiblity with existing implementations.")]
+    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "NetCore command names may have underscores for clarity and compatiblity with existing implementations.")]
     public static class NetcoreCommands
     {
         public const string CORRUPTCORE = nameof(CORRUPTCORE);

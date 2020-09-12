@@ -87,6 +87,7 @@ namespace RTCV.CorruptCore
         NONE
     }
 
+    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "BGValueMode enum names may have underscores for compatiblity with existing implementations.")]
     public enum BGValueMode
     {
         SET,
@@ -107,6 +108,7 @@ namespace RTCV.CorruptCore
         BITWISE_ROTATE_RIGHT
     }
 
+    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "BGStoreMode enum names may have underscores for compatiblity with existing implementations.")]
     public enum BGStoreMode
     {
         CHAINED,
@@ -140,7 +142,7 @@ namespace RTCV.CorruptCore
         SILENTERROR,
     }
 
-    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "RTCSPEC members keep their underscores for compability and readability")]
+    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "RTCSPEC members may keep their underscores for compability and readability.")]
     public static class RTCSPEC
     {
         public static readonly string RTCDIR = nameof(RTCDIR);
@@ -226,6 +228,7 @@ namespace RTCV.CorruptCore
         public static readonly string STOCKPILE_RenderAtLoad = nameof(STOCKPILE_RenderAtLoad);
     }
 
+    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "VSPEC names may have underscores for clarity and compatiblity with existing implementations.")]
     public static class VSPEC
     {
         public static readonly string NAME = nameof(NAME);

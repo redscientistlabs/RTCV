@@ -34,7 +34,7 @@ namespace RTCV.CorruptCore
         }
     }
 
-    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "RtcCore members may keep their underscores for compability and readability")]
+    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "RtcCore members may keep their underscores for compability with existing implementations")]
     public static class RtcCore
     {
         //General RTC Values
@@ -1050,6 +1050,7 @@ namespace RTCV.CorruptCore
         }
     }
 
+    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "RtcClock members may keep their underscores for compability with existing implementations")]
     public static class RtcClock
     {
         static int CPU_STEP_Count = 0;
