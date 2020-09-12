@@ -8,12 +8,12 @@ namespace RTCV.CorruptCore.Extensions
     {
         public bool Equals(byte?[] a, byte?[] b)
         {
-            if (a == null || b == null)
+            if (a == null && b == null)
             {
-                return false;
+                return true;
             }
 
-            if (a.Length != b.Length)
+            if (a == null || b == null || a.Length != b.Length)
             {
                 return false;
             }
