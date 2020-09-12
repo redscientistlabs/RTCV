@@ -22,7 +22,7 @@
 
         public void SelectAll(object sender, EventArgs e)
         {
-            S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected();
+            S.GET<MemoryDomainsForm>().RefreshDomainsAndKeepSelected();
 
             cbSelectedMemoryDomain.Items.Clear();
             var domains = MemoryDomains.MemoryInterfaces?.Keys.Where(it => !it.Contains("[V]")).ToArray();

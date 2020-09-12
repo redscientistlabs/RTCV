@@ -1,6 +1,6 @@
 ﻿namespace RTCV.UI
 {
-	partial class RTC_MemoryDomains_Form
+	partial class MemoryDomainsForm
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -28,16 +28,16 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_MemoryDomains_Form));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MemoryDomainsForm));
             this.btnAutoSelectDomains = new System.Windows.Forms.Button();
             this.btnRefreshDomains = new System.Windows.Forms.Button();
             this.btnSelectAll = new System.Windows.Forms.Button();
             this.lbMemoryDomains = new RTCV.UI.Components.Controls.ListBoxExtended();
             this.SuspendLayout();
-            // 
+            //
             // btnAutoSelectDomains
-            // 
-            this.btnAutoSelectDomains.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.btnAutoSelectDomains.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAutoSelectDomains.BackColor = System.Drawing.Color.Gray;
             this.btnAutoSelectDomains.FlatAppearance.BorderSize = 0;
@@ -52,11 +52,11 @@
             this.btnAutoSelectDomains.Tag = "color:light1";
             this.btnAutoSelectDomains.Text = "Auto-select domains";
             this.btnAutoSelectDomains.UseVisualStyleBackColor = false;
-            this.btnAutoSelectDomains.Click += new System.EventHandler(this.btnAutoSelectDomains_Click);
+            this.btnAutoSelectDomains.Click += new System.EventHandler(this.AutoSelectDomains);
             this.btnAutoSelectDomains.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // btnRefreshDomains
-            // 
+            //
             this.btnRefreshDomains.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRefreshDomains.BackColor = System.Drawing.Color.Gray;
             this.btnRefreshDomains.FlatAppearance.BorderSize = 0;
@@ -71,11 +71,11 @@
             this.btnRefreshDomains.Tag = "color:light1";
             this.btnRefreshDomains.Text = "Unselect all";
             this.btnRefreshDomains.UseVisualStyleBackColor = false;
-            this.btnRefreshDomains.Click += new System.EventHandler(this.btnRefreshDomains_Click);
+            this.btnRefreshDomains.Click += new System.EventHandler(this.HandleRefreshDomainsClick);
             this.btnRefreshDomains.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // btnSelectAll
-            // 
+            //
             this.btnSelectAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnSelectAll.BackColor = System.Drawing.Color.Gray;
             this.btnSelectAll.FlatAppearance.BorderSize = 0;
@@ -90,13 +90,13 @@
             this.btnSelectAll.Tag = "color:light1";
             this.btnSelectAll.Text = "Select all";
             this.btnSelectAll.UseVisualStyleBackColor = false;
-            this.btnSelectAll.Click += new System.EventHandler(this.btnSelectAll_Click);
+            this.btnSelectAll.Click += new System.EventHandler(this.SelectAllDomains);
             this.btnSelectAll.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // lbMemoryDomains
-            // 
-            this.lbMemoryDomains.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.lbMemoryDomains.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbMemoryDomains.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.lbMemoryDomains.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -112,11 +112,11 @@
             this.lbMemoryDomains.Size = new System.Drawing.Size(181, 208);
             this.lbMemoryDomains.TabIndex = 15;
             this.lbMemoryDomains.Tag = "color:dark2";
-            this.lbMemoryDomains.SelectedIndexChanged += new System.EventHandler(this.lbMemoryDomains_SelectedIndexChanged);
-            this.lbMemoryDomains.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lbMemoryDomains_MouseDown);
-            // 
-            // RTC_MemoryDomains_Form
-            // 
+            this.lbMemoryDomains.SelectedIndexChanged += new System.EventHandler(this.HandleMemoryDomainSelectionChange);
+            this.lbMemoryDomains.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMemoryDomainsMouseDown);
+            //
+            // MemoryDomainsForm
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -127,7 +127,7 @@
             this.Controls.Add(this.btnSelectAll);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "RTC_MemoryDomains_Form";
+            this.Name = "MemoryDomainsForm";
             this.Tag = "color:dark1";
             this.Text = "Memory Domains";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);

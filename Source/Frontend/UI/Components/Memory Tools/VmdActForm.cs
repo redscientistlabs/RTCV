@@ -612,7 +612,7 @@
 
         private void RefreshDomains()
         {
-            S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected();
+            S.GET<MemoryDomainsForm>().RefreshDomainsAndKeepSelected();
             var temp = cbSelectedMemoryDomain.SelectedItem;
 
             cbSelectedMemoryDomain.Items.Clear();
