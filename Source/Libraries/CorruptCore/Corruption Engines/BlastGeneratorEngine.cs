@@ -1,6 +1,6 @@
 ﻿namespace RTCV.CorruptCore
 {
-    public static class RTC_BlastGeneratorEngine
+    public static class BlastGeneratorEngine
     {
         public static BlastUnit GetUnit()
         {
