@@ -7,12 +7,12 @@
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class RTC_SettingsGeneral_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class SettingsGeneralForm : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        public RTC_SettingsGeneral_Form()
+        public SettingsGeneralForm()
         {
             InitializeComponent();
 
@@ -59,17 +59,17 @@
             }
         }*/
 
-        private void btnOpenOnlineWiki_Click(object sender, EventArgs e)
+        private void OpenOnlineWiki(object sender, EventArgs e)
         {
             Process.Start("https://corrupt.wiki/");
         }
 
-        private void btnChangeRTCColor_Click(object sender, EventArgs e)
+        private void ChangeRTCColor(object sender, EventArgs e)
         {
             Colors.SelectRTCColor();
         }
 
-        private void cbDisableBizhawkOSD_CheckedChanged(object sender, EventArgs e)
+        private void HandleDisableBizhawkOSDChange(object sender, EventArgs e)
         {
             if (cbDisableEmulatorOSD.Checked)
             {
@@ -83,7 +83,7 @@
             RtcCore.EmulatorOsdDisabled = cbDisableEmulatorOSD.Checked;
         }
 
-        private void cbAllowCrossCoreCorruption_CheckedChanged(object sender, EventArgs e)
+        private void HandleAllowCrossCoreCorruptionChange(object sender, EventArgs e)
         {
             if (cbAllowCrossCoreCorruption.Checked)
             {
@@ -97,7 +97,7 @@
             RtcCore.AllowCrossCoreCorruption = cbAllowCrossCoreCorruption.Checked;
         }
 
-        private void cbDontCleanAtQuit_CheckedChanged(object sender, EventArgs e)
+        private void HandleDontCleanAtQuitChange(object sender, EventArgs e)
         {
             if (cbDontCleanAtQuit.Checked)
             {
@@ -111,7 +111,7 @@
             RtcCore.DontCleanSavestatesOnQuit = cbDontCleanAtQuit.Checked;
         }
 
-        private void CbUncapIntensity_CheckedChanged(object sender, EventArgs e)
+        private void HandleUncapIntensityChange(object sender, EventArgs e)
         {
             if (cbUncapIntensity.Checked)
             {
@@ -126,7 +126,7 @@
             S.GET<GlitchHarvesterIntensityForm>().multiTB_Intensity.UncapNumericBox = cbUncapIntensity.Checked;
         }
 
-        private void btnRefreshInputDevices_Click(object sender, EventArgs e)
+        private void RefreshInputDevices(object sender, EventArgs e)
         {
             Input.Input.Initialize();
         }
