@@ -85,7 +85,7 @@
     <Compile Include="Corruption Engines\RTC_DistortionEngine.cs" />
     <Compile Include="Corruption Engines\RTC_ClusterEngine.cs" />
     <Compile Include="Corruption Engines\RTC_FreezeEngine.cs" />
-    <Compile Include="Corruption Engines\RTC_HellgenieEngine.cs" />
+    <Compile Include="Corruption Engines\HellgenieEngine.cs" />
     <Compile Include="Corruption Engines\RTC_NightmareEngine.cs" />
     <Compile Include="Corruption Engines\RTC_PipeEngine.cs" />
     <Compile Include="Corruption Engines\RTC_VectorEngine.cs" />

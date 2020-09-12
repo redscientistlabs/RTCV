@@ -4,7 +4,7 @@
     using RTCV.NetCore;
     using RTCV.CorruptCore.Extensions;
 
-    public static class RTC_HellgenieEngine
+    public static class HellgenieEngine
     {
         public static ulong MinValue8Bit
         {
