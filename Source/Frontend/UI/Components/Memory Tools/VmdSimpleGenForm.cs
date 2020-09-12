@@ -9,19 +9,19 @@
     using RTCV.UI.Components.Controls;
     using RTCV.UI.Modular;
 
-    public partial class RTC_VmdSimpleGen_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class VmdSimpleGenForm : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         private long currentDomainSize = 0;
 
-        public RTC_VmdSimpleGen_Form()
+        public VmdSimpleGenForm()
         {
             InitializeComponent();
         }
 
-        private void btnSelectAll_Click(object sender, EventArgs e)
+        private void SelectAll(object sender, EventArgs e)
         {
             S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected();
 
@@ -38,7 +38,7 @@
             }
         }
 
-        private void cbSelectedMemoryDomain_SelectedIndexChanged(object sender, EventArgs e)
+        private void HandleSelectedMemoryDomainChange(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(cbSelectedMemoryDomain.SelectedItem?.ToString()) || !MemoryDomains.MemoryInterfaces.ContainsKey(cbSelectedMemoryDomain.SelectedItem.ToString()))
             {
@@ -83,7 +83,7 @@
             btnGenerateVMD.Enabled = true;
         }
 
-        private void btnGenerateVMD_Click(object sender, EventArgs e)
+        private void HandleGenerateVMDClick(object sender, EventArgs e)
         {
             GenerateVMD();
         }
@@ -240,49 +240,7 @@
             return true;
         }
 
-        private void btnHelp_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show(
-@"VMD Generator instructions help and examples
------------------------------------------------
-Adding an address range:
-5F-FF
-Adding a single address:
-5F
-
-Removing an address range:
--6D-110
-Removing a single address:
--6D
-
-> If no initial range is specified,
-the removals will be done on the entire range.
-
-> Ranges are exclusive, meaning that the last
-address is excluded from the range.
-
-> Single added addresses will bypass removal ranges
-
-> Single addresses aren't affected by the
-pointer spacer parameter");
-        }
-
-        private void MtbStartAddress_ValueChanged(object sender, ValueUpdateEventArgs e)
-        {
-            ComputeRangeExpression();
-        }
-
-        private void MtbRange_CheckChanged(object sender, EventArgs e)
-        {
-            ComputeRangeExpression();
-        }
-
-        private void MtbRange_ValueChanged(object sender, ValueUpdateEventArgs e)
-        {
-            ComputeRangeExpression();
-        }
-
-        private void ComputeRangeExpression()
+        private void ComputeRangeExpression(object sender, EventArgs e)
         {
             long maxAddress = mtbStartAddress.Maximum;
             long startAddress = mtbStartAddress.Value;
