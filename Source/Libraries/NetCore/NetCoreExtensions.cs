@@ -39,8 +39,8 @@ namespace RTCV.NetCore.NetCoreExtensions
     public class HashSetFormatterThatKeepsItsComparer : Ceras.Formatters.IFormatter<HashSet<byte[]>>
     {
         // Sub-formatters are automatically set by Ceras' dependency injection
-        public Ceras.Formatters.IFormatter<byte[]> _byteArrayFormatter { get; private set; }
-        public Ceras.Formatters.IFormatter<IEqualityComparer<byte[]>> _comparerFormatter { get; private set; } // auto-implemented by Ceras using DynamicObjectFormatter
+        public Ceras.Formatters.IFormatter<byte[]> ByteArrayFormatter { get; private set; }
+        public Ceras.Formatters.IFormatter<IEqualityComparer<byte[]>> ComparerFormatter { get; private set; } // auto-implemented by Ceras using DynamicObjectFormatter
 
         public void Serialize(ref byte[] buffer, ref int offset, HashSet<byte[]> set)
         {
@@ -55,7 +55,7 @@ namespace RTCV.NetCore.NetCoreExtensions
             // - Actual content
 
             // Comparer
-            _comparerFormatter.Serialize(ref buffer, ref offset, set.Comparer);
+            ComparerFormatter.Serialize(ref buffer, ref offset, set.Comparer);
 
             // Count
             // We could use a 'IFormatter<int>' field, but Ceras will resolve it to this method anyway...
@@ -64,14 +64,14 @@ namespace RTCV.NetCore.NetCoreExtensions
             // Actual content
             foreach (var array in set)
             {
-                _byteArrayFormatter.Serialize(ref buffer, ref offset, array);
+                ByteArrayFormatter.Serialize(ref buffer, ref offset, array);
             }
         }
 
         public void Deserialize(byte[] buffer, ref int offset, ref HashSet<byte[]> set)
         {
             IEqualityComparer<byte[]> equalityComparer = null;
-            _comparerFormatter.Deserialize(buffer, ref offset, ref equalityComparer);
+            ComparerFormatter.Deserialize(buffer, ref offset, ref equalityComparer);
 
             // We can already create the hashset
             set = new HashSet<byte[]>(equalityComparer);
@@ -81,7 +81,7 @@ namespace RTCV.NetCore.NetCoreExtensions
             for (var i = 0; i < count; i++)
             {
                 byte[] ar = null;
-                _byteArrayFormatter.Deserialize(buffer, ref offset, ref ar);
+                ByteArrayFormatter.Deserialize(buffer, ref offset, ref ar);
 
                 set.Add(ar);
             }
