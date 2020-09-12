@@ -12,20 +12,20 @@ namespace RTCV.UI
 
     public partial class VmdPoolForm : ComponentForm, IAutoColorize, IBlockable
     {
-        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+        private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         public VmdPoolForm()
         {
             InitializeComponent();
         }
 
-        public void HandleDragEnter(object sender, DragEventArgs e)
+        internal void HandleDragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Link;
         }
 
-        public void HandleDragDrop(object sender, DragEventArgs e)
+        internal void HandleDragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             foreach (var f in files)
@@ -402,12 +402,12 @@ namespace RTCV.UI
                 }
             }
 
-            S.GET<RTC_MyVMDs_Form>().RefreshVMDs();
+            S.GET<MyVMDsForm>().RefreshVMDs();
 
             //switch to My VMDs
             foreach (var item in UICore.mtForm.cbSelectBox.Items)
             {
-                if (((dynamic)item).value is RTC_MyVMDs_Form)
+                if (((dynamic)item).value is MyVMDsForm)
                 {
                     UICore.mtForm.cbSelectBox.SelectedItem = item;
                     break;

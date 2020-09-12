@@ -22,6 +22,11 @@ namespace RTCV.UI.Components
 
         protected override void OnCellMouseDown(DataGridViewCellMouseEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             base.OnCellMouseDown(e);
 
             if (e.RowIndex >= 0 && e.Button == MouseButtons.Right && this.CurrentRow != null)
@@ -51,6 +56,11 @@ namespace RTCV.UI.Components
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             var rowIndex = base.HitTest(e.X, e.Y).RowIndex;
             _delayedMouseDown = (rowIndex >= 0 &&
                 (ModifierKeys & Keys.Alt) > 0);
@@ -93,6 +103,11 @@ namespace RTCV.UI.Components
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             base.OnMouseMove(e);
 
             // If the mouse moves outside the rectangle, start the drag.

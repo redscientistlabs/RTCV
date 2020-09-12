@@ -183,6 +183,11 @@ namespace RTCV.CorruptCore
             }
             set
             {
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
                 //If there's no precision, use the length of the string rounded up
                 int p = this.Precision;
                 if (p == 0 && value.Length != 0)

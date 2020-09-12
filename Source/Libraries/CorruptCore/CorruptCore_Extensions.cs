@@ -17,7 +17,7 @@ namespace RTCV.CorruptCore
             }
         }
 
-        public static void DirectoryRequired(string[] paths)
+        internal static void DirectoryRequired(string[] paths)
         {
             foreach (var path in paths)
             {

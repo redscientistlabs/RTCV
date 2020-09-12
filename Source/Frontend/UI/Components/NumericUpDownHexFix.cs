@@ -35,6 +35,11 @@ namespace RTCV.UI.Components
 
         protected override void OnMouseWheel(MouseEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             var hme = e as HandledMouseEventArgs;
             if (hme != null)
             {

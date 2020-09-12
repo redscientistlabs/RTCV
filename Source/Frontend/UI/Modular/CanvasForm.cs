@@ -36,7 +36,7 @@
             }
         }
 
-        public static ComponentFormTile getTileForm(Form componentForm, int? newSizeX = null, int? newSizeY = null, bool DisplayHeader = true)
+        private static ComponentFormTile getTileForm(Form componentForm, int? newSizeX = null, int? newSizeY = null, bool DisplayHeader = true)
         {
             if (!loadedTileForms.ContainsKey(componentForm))
             {
@@ -97,7 +97,7 @@
             return outForm;
         }
 
-        public void ResizeCanvas(CanvasGrid canvasGrid)
+        private void ResizeCanvas(CanvasGrid canvasGrid)
         {
             this.SetSize(getTilePos(canvasGrid.x), getTilePos(canvasGrid.y));
         }
@@ -114,7 +114,7 @@
             }
         }
 
-        public static void loadTileForm(CanvasForm targetForm, CanvasGrid canvasGrid)
+        private static void loadTileForm(CanvasForm targetForm, CanvasGrid canvasGrid)
         {
             targetForm.ResizeCanvas(canvasGrid);
 
@@ -145,7 +145,7 @@
         //public void BlockView() => (this as IBlockable)?.BlockView();
         //public void UnblockView() => (this as IBlockable)?.UnblockView();
 
-        public static void loadTileFormExtraWindow(CanvasGrid canvasGrid, string WindowHeader, bool silent = false)
+        internal static void loadTileFormExtraWindow(CanvasGrid canvasGrid, string WindowHeader, bool silent = false)
         {
             CanvasForm extraForm;
 
@@ -193,7 +193,7 @@
             }
         }
 
-        public static void loadTileFormMain(CanvasGrid canvasGrid)
+        internal static void loadTileFormMain(CanvasGrid canvasGrid)
         {
             clearMainTileForm();
             loadTileForm(mainForm, canvasGrid);
