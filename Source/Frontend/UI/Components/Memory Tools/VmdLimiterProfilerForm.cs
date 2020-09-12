@@ -10,7 +10,7 @@ namespace RTCV.UI
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class RTC_VmdLimiterProfiler_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class VmdLimiterProfilerForm : ComponentForm, IAutoColorize, IBlockable
     {
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
@@ -19,12 +19,12 @@ namespace RTCV.UI
 
         private string LimiterListHash;
 
-        public RTC_VmdLimiterProfiler_Form()
+        public VmdLimiterProfilerForm()
         {
             InitializeComponent();
         }
 
-        private void btnLoadDomains_Click(object sender, EventArgs e)
+        private void LoadDomains(object sender, EventArgs e)
         {
             S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected();
 
@@ -41,7 +41,7 @@ namespace RTCV.UI
             }
         }
 
-        private void cbSelectedMemoryDomain_SelectedIndexChanged(object sender, EventArgs e)
+        private void HandleSelectedMemoryDomainChange(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(cbSelectedMemoryDomain.SelectedItem?.ToString()) || !MemoryDomains.MemoryInterfaces.ContainsKey(cbSelectedMemoryDomain.SelectedItem.ToString()))
             {
@@ -73,10 +73,7 @@ namespace RTCV.UI
         {
         }
 
-        private void btnGenerateVMD_Click(object sender, EventArgs e)
-        {
-            GenerateVMD();
-        }
+        private void HandleGenerateVMDClick(object sender, EventArgs e) => GenerateVMD();
 
         private bool GenerateVMD(bool AutoGenerate = false)
         {
@@ -221,7 +218,7 @@ namespace RTCV.UI
 
         internal void AutoProfile(MemoryInterface mi, string limiter)
         {
-            btnLoadDomains_Click(null, null);
+            LoadDomains(null, null);
 
             var ceForm = S.GET<CorruptionEngineForm>();
 
@@ -250,7 +247,7 @@ namespace RTCV.UI
             GenerateVMD(true);
         }
 
-        private void RTC_VmdLimiterProfiler_Form_Load(object sender, EventArgs e)
+        private void OnFormLoad(object sender, EventArgs e)
         {
             cbVectorLimiterList.DataSource = null;
             cbVectorLimiterList.DisplayMember = "Name";
@@ -261,11 +258,11 @@ namespace RTCV.UI
 
             if (RtcCore.LimiterListBindingSource.Count > 0)
             {
-                CbVectorLimiterList_SelectedIndexChanged(cbVectorLimiterList, null);
+                HandleVectorLimiterListSelectionChange(cbVectorLimiterList, null);
             }
         }
 
-        private void CbVectorLimiterList_SelectedIndexChanged(object sender, EventArgs e)
+        private void HandleVectorLimiterListSelectionChange(object sender, EventArgs e)
         {
             ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
             if (item != null)
