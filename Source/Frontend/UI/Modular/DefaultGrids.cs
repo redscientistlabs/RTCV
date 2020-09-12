@@ -44,7 +44,7 @@ namespace RTCV.UI.Modular
                         S.GET<MyListsForm>(),
                         S.GET<ListGenForm>(),
                         S.GET<RTC_VmdLimiterProfiler_Form>(),
-                        //S.GET<RTC_DomainAnalytics_Form>(),
+                        //S.GET<DomainAnalyticsForm>(),
                         S.GET<OpenToolsForm>(),
                         })
                     {
@@ -129,7 +129,7 @@ namespace RTCV.UI.Modular
                     Form ghiForm = S.GET<GlitchHarvesterIntensityForm>();
                     Form ssmForm = S.GET<SavestateManagerForm>();
                     Form shForm = S.GET<StashHistoryForm>();
-                    Form spmForm = S.GET<RTC_StockpileManager_Form>();
+                    Form spmForm = S.GET<StockpileManagerForm>();
 
                     ghGrid.SetTileForm(ghbForm, 0, 0, 4, 4, true);
                     ghGrid.SetTileForm(ssmForm, 0, 4, 4, 8, true);

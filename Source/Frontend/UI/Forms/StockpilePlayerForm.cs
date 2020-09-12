@@ -205,7 +205,7 @@
                 StockpileManager_UISide.ClearCurrentStockpile();
 
                 //Clear out the DGVs
-                S.GET<RTC_StockpileManager_Form>().dgvStockpile.Rows.Clear(); // Clear the stockpile manager
+                S.GET<StockpileManagerForm>().dgvStockpile.Rows.Clear(); // Clear the stockpile manager
                 dgvStockpile.Rows.Clear(); // Clear the stockpile player
 
                 var r = await Task.Run(() => Stockpile.Load(fileName));
@@ -360,7 +360,7 @@
                     StockpileManager_UISide.ApplyStashkey(StockpileManager_UISide.CurrentStashkey);
 
                     S.GET<StashHistoryForm>().lbStashHistory.ClearSelected();
-                    S.GET<RTC_StockpileManager_Form>().dgvStockpile.ClearSelection();
+                    S.GET<StockpileManagerForm>().dgvStockpile.ClearSelection();
 
                     S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = !(StockpileManager_UISide.CurrentStashkey.BlastLayer == null || StockpileManager_UISide.CurrentStashkey.BlastLayer.Layer.Count == 0);
                 }

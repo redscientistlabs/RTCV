@@ -48,7 +48,7 @@ namespace RTCV.UI
 
         private void OnFormLoad(object sender, EventArgs e)
         {
-            nmAlignment.registerSlave(S.GET<RTC_CustomEngineConfig_Form>().nmAlignment);
+            nmAlignment.registerSlave(S.GET<CustomEngineConfigForm>().nmAlignment);
             gbNightmareEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
             gbHellgenieEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
             gbDistortionEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
@@ -254,7 +254,7 @@ namespace RTCV.UI
         public void SetRewindBoxes(bool enabled)
         {
             dontUpdate = true;
-            S.GET<RTC_SettingsCorrupt_Form>().SetRewindBoxes(enabled);
+            S.GET<SettingsCorruptForm>().SetRewindBoxes(enabled);
             cbClearFreezesOnRewind.Checked = enabled;
             cbClearCheatsOnRewind.Checked = enabled;
             cbClearPipesOnRewind.Checked = enabled;
@@ -272,7 +272,7 @@ namespace RTCV.UI
 
             SetRewindBoxes(((CheckBox)sender).Checked);
 
-            S.GET<RTC_CustomEngineConfig_Form>().SetRewindBoxes(((CheckBox)sender).Checked);
+            S.GET<CustomEngineConfigForm>().SetRewindBoxes(((CheckBox)sender).Checked);
             S.GET<SimpleModeForm>().SetRewindBoxes(((CheckBox)sender).Checked);
 
             StepActions.ClearStepActionsOnRewind = cbClearFreezesOnRewind.Checked;
@@ -285,7 +285,7 @@ namespace RTCV.UI
 
         private void OnLockPipesToggle(object sender, EventArgs e)
         {
-            S.GET<RTC_SettingsCorrupt_Form>().SetLockBoxes(cbLockPipes.Checked);
+            S.GET<SettingsCorruptForm>().SetLockBoxes(cbLockPipes.Checked);
             StepActions.LockExecution = cbLockPipes.Checked;
         }
 
@@ -379,7 +379,7 @@ namespace RTCV.UI
         private void UpdateCustomPrecision(object sender, EventArgs e)
         {
             cbCustomPrecision.Enabled = false;
-            S.GET<RTC_CustomEngineConfig_Form>().cbCustomPrecision.Enabled = false;
+            S.GET<CustomEngineConfigForm>().cbCustomPrecision.Enabled = false;
             try
             {
                 if (cbCustomPrecision.SelectedIndex != -1)
@@ -404,14 +404,14 @@ namespace RTCV.UI
 
                     UpdateMinMaxBoxes(precision);
                     nmAlignment.Maximum = precision - 1;
-                    S.GET<RTC_CustomEngineConfig_Form>().cbCustomPrecision.SelectedIndex = cbCustomPrecision.SelectedIndex;
-                    S.GET<RTC_CustomEngineConfig_Form>().UpdateMinMaxBoxes(precision);
+                    S.GET<CustomEngineConfigForm>().cbCustomPrecision.SelectedIndex = cbCustomPrecision.SelectedIndex;
+                    S.GET<CustomEngineConfigForm>().UpdateMinMaxBoxes(precision);
                 }
             }
             finally
             {
                 cbCustomPrecision.Enabled = true;
-                S.GET<RTC_CustomEngineConfig_Form>().cbCustomPrecision.Enabled = true;
+                S.GET<CustomEngineConfigForm>().cbCustomPrecision.Enabled = true;
             }
         }
 
@@ -452,8 +452,8 @@ namespace RTCV.UI
 
         private void OpenCustomEngine(object sender, EventArgs e)
         {
-            S.GET<RTC_CustomEngineConfig_Form>().Show();
-            S.GET<RTC_CustomEngineConfig_Form>().Focus();
+            S.GET<CustomEngineConfigForm>().Show();
+            S.GET<CustomEngineConfigForm>().Focus();
         }
 
         private void UpdateClusterLimiterList(object sender, EventArgs e)

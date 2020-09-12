@@ -101,10 +101,10 @@
 
             //If our cell comes from the GH's dgv and the text changed, prompt unsavededits
             if (oldText != cleanText && _cells?.First()
-                ?.DataGridView == S.GET<RTC_StockpileManager_Form>()
+                ?.DataGridView == S.GET<StockpileManagerForm>()
                 .dgvStockpile)
             {
-                S.GET<RTC_StockpileManager_Form>().UnsavedEdits = true;
+                S.GET<StockpileManagerForm>().UnsavedEdits = true;
             }
         }
 

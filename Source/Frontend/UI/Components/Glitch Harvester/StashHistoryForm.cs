@@ -72,9 +72,9 @@ namespace RTCV.UI
             //If we don't support mixed stockpiles
             if (!((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_MIXED_STOCKPILE] ?? false))
             {
-                if (S.GET<RTC_StockpileManager_Form>().dgvStockpile.Rows.Count > 0)
+                if (S.GET<StockpileManagerForm>().dgvStockpile.Rows.Count > 0)
                 {
-                    string firstGameName = ((StashKey)S.GET<RTC_StockpileManager_Form>().dgvStockpile[0, 0].Value).GameName;
+                    string firstGameName = ((StashKey)S.GET<StockpileManagerForm>().dgvStockpile[0, 0].Value).GameName;
                     if (sk.GameName != firstGameName)
                     {
                         string name = (AllSpec.VanguardSpec[VSPEC.NAME] as string) ?? "Vanguard implementation";
@@ -111,13 +111,13 @@ namespace RTCV.UI
 
             sk.BlastLayer.RasterizeVMDs();
 
-            DataGridViewRow dataRow = S.GET<RTC_StockpileManager_Form>().dgvStockpile.Rows[S.GET<RTC_StockpileManager_Form>().dgvStockpile.Rows.Add()];
+            DataGridViewRow dataRow = S.GET<StockpileManagerForm>().dgvStockpile.Rows[S.GET<StockpileManagerForm>().dgvStockpile.Rows.Add()];
             dataRow.Cells["Item"].Value = sk;
             dataRow.Cells["GameName"].Value = sk.GameName;
             dataRow.Cells["SystemName"].Value = sk.SystemName;
             dataRow.Cells["SystemCore"].Value = sk.SystemCore;
 
-            S.GET<RTC_StockpileManager_Form>().RefreshNoteIcons();
+            S.GET<StockpileManagerForm>().RefreshNoteIcons();
 
             StockpileManager_UISide.StashHistory.Remove(sk);
 
@@ -127,14 +127,14 @@ namespace RTCV.UI
             lbStashHistory.ClearSelected();
             DontLoadSelectedStash = false;
 
-            int nRowIndex = S.GET<RTC_StockpileManager_Form>().dgvStockpile.Rows.Count - 1;
+            int nRowIndex = S.GET<StockpileManagerForm>().dgvStockpile.Rows.Count - 1;
 
-            S.GET<RTC_StockpileManager_Form>().dgvStockpile.ClearSelection();
-            S.GET<RTC_StockpileManager_Form>().dgvStockpile.Rows[nRowIndex].Selected = true;
+            S.GET<StockpileManagerForm>().dgvStockpile.ClearSelection();
+            S.GET<StockpileManagerForm>().dgvStockpile.Rows[nRowIndex].Selected = true;
 
             StockpileManager_UISide.StockpileChanged();
 
-            S.GET<RTC_StockpileManager_Form>().UnsavedEdits = true;
+            S.GET<StockpileManagerForm>().UnsavedEdits = true;
 
             return true;
         }
@@ -207,7 +207,7 @@ namespace RTCV.UI
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Rename selected item", null, new EventHandler((ob, ev) =>
                 {
                     StashKey sk = StockpileManager_UISide.StashHistory[lbStashHistory.SelectedIndex];
-                    RTC_StockpileManager_Form.RenameStashKey(sk);
+                    StockpileManagerForm.RenameStashKey(sk);
                     RefreshStashHistory();
                 }))).Enabled = lbStashHistory.SelectedIndex != -1;
 
@@ -273,7 +273,7 @@ namespace RTCV.UI
                     return;
                 }
 
-                S.GET<RTC_StockpileManager_Form>().dgvStockpile.ClearSelection();
+                S.GET<StockpileManagerForm>().dgvStockpile.ClearSelection();
                 S.GET<StockpilePlayerForm>().dgvStockpile.ClearSelection();
 
                 var blastForm = S.GET<GlitchHarvesterBlastForm>();
@@ -281,8 +281,8 @@ namespace RTCV.UI
                 if (S.GET<GlitchHarvesterBlastForm>().MergeMode)
                 {
                     blastForm.ghMode = GlitchHarvesterMode.CORRUPT;
-                    S.GET<RTC_StockpileManager_Form>().btnRenameSelected.Visible = true;
-                    S.GET<RTC_StockpileManager_Form>().btnRemoveSelectedStockpile.Text = "  Remove Item";
+                    S.GET<StockpileManagerForm>().btnRenameSelected.Visible = true;
+                    S.GET<StockpileManagerForm>().btnRemoveSelectedStockpile.Text = "  Remove Item";
 
                     if (blastForm.ghMode == GlitchHarvesterMode.CORRUPT)
                     {
@@ -323,7 +323,7 @@ namespace RTCV.UI
             DontLoadSelectedStash = true;
             lbStashHistory.ClearSelected();
             DontLoadSelectedStash = true;
-            S.GET<RTC_StockpileManager_Form>().dgvStockpile.ClearSelection();
+            S.GET<StockpileManagerForm>().dgvStockpile.ClearSelection();
             S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
         }
 
