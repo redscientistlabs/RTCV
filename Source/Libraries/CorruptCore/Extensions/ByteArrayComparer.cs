@@ -1,12 +1,18 @@
 namespace RTCV.CorruptCore.Extensions
 {
+    using System;
     using System.Collections.Generic;
 
     public class ByteArrayComparer : IEqualityComparer<byte[]>
     {
         public bool Equals(byte[] a, byte[] b)
         {
-            if (a.Length != b.Length)
+            if (a == null && b == null)
+            {
+                return true;
+            }
+
+            if (a == null || b == null || a.Length != b.Length)
             {
                 return false;
             }
@@ -24,6 +30,11 @@ namespace RTCV.CorruptCore.Extensions
 
         public int GetHashCode(byte[] a)
         {
+            if (a == null)
+            {
+                throw new ArgumentNullException(nameof(a));
+            }
+
             uint b = 0;
             for (int i = 0; i < a.Length; i++)
             {

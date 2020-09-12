@@ -216,6 +216,11 @@ namespace RTCV.CorruptCore
                 return false;
             }
 
+            if (sk == null)
+            {
+                throw new ArgumentNullException(nameof(sk));
+            }
+
             if (psk.SystemCore != sk.SystemCore && !RtcCore.AllowCrossCoreCorruption)
             {
                 MessageBox.Show("Merge attempt failed: Core mismatch\n\n" + $"{psk.GameName} -> {psk.SystemName} -> {psk.SystemCore}\n{sk.GameName} -> {sk.SystemName} -> {sk.SystemCore}");
@@ -411,6 +416,11 @@ namespace RTCV.CorruptCore
         /// <returns></returns>
         public static bool CheckAndFixMissingReference(StashKey psk, bool force = false, List<StashKey> keys = null, string customTitle = null, string customMessage = null)
         {
+            if (psk == null)
+            {
+                throw new ArgumentNullException(nameof(psk));
+            }
+
             if (!(bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_REFERENCES] ?? false)
             {
                 //Hack hack hack

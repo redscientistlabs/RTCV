@@ -22,6 +22,11 @@ namespace RTCV.CorruptCore
 
         public MultipleFileInterface(string _targetId, bool _bigEndian, bool _useAutomaticFileBackups = false)
         {
+            if (_targetId == null)
+            {
+                throw new ArgumentNullException(nameof(_targetId));
+            }
+
             try
             {
                 BigEndian = _bigEndian;

@@ -1,5 +1,6 @@
 namespace RTCV.UI.Components
 {
+    using System;
     using System.Globalization;
     using System.Windows.Forms;
 
@@ -10,6 +11,11 @@ namespace RTCV.UI.Components
         // the decimal point, and editing keystrokes (backspace).
         protected override void OnKeyPress(KeyPressEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             base.OnKeyPress(e);
 
             var numberFormatInfo = CultureInfo.CurrentCulture.NumberFormat;

@@ -95,7 +95,7 @@ namespace RTCV.CorruptCore
             return VMD;
         }
 
-        public static bool IsAddressInRanges(long address, List<long> singles, List<long[]> ranges)
+        private static bool IsAddressInRanges(long address, List<long> singles, List<long[]> ranges)
         {
             if (singles.Contains(address))
             {
@@ -118,6 +118,11 @@ namespace RTCV.CorruptCore
 
         public void AddFromTrimmedLine(string trimmedLine, long currentDomainSize, bool remove)
         {
+            if (trimmedLine == null)
+            {
+                throw new ArgumentNullException(nameof(trimmedLine));
+            }
+
             var lineParts = trimmedLine.Split('-');
 
             if (lineParts.Length > 1)

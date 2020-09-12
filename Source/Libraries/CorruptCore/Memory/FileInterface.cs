@@ -66,6 +66,11 @@ namespace RTCV.CorruptCore
         [SuppressMessage("Microsoft.Design", "CA1801", Justification = "_startPadding and _endPadding will be used eventually")]
         public FileInterface(string _targetId, bool _bigEndian, bool _useAutomaticFileBackups = false, long _startPadding = 0, long _endPadding = 0)
         {
+            if (_targetId == null)
+            {
+                throw new ArgumentNullException(nameof(_targetId));
+            }
+
             try
             {
                 string[] targetId = _targetId.Split('|');
@@ -374,8 +379,12 @@ namespace RTCV.CorruptCore
 
         public override void PokeBytes(long address, byte[] data)
         {
-            long offsetAddress = address + StartPadding;
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
+            long offsetAddress = address + StartPadding;
             if (offsetAddress + data.Length >= lastRealMemorySize)
             {
                 return;

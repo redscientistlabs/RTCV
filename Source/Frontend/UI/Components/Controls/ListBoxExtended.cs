@@ -1,5 +1,6 @@
 ﻿namespace RTCV.UI.Components.Controls
 {
+    using System;
     using System.Drawing;
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
@@ -55,6 +56,11 @@
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             if ((e.Button & MouseButtons.Left) != 0) //Attempt to prevent being triggered from slight accidental mouse movement when deselecting by having a buffer
             {
                 if (SelectionMode == SelectionMode.None)

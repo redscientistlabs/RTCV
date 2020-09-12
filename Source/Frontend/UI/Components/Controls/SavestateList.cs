@@ -128,7 +128,7 @@ namespace RTCV.UI.Components.Controls
             }
         }
 
-        public void BtnSavestate_MouseDown(object sender, MouseEventArgs e)
+        internal void BtnSavestate_MouseDown(object sender, MouseEventArgs e)
         {
             var locate = new Point(((Control)sender).Location.X + e.Location.X, ((Control)sender).Location.Y + e.Location.Y);
 

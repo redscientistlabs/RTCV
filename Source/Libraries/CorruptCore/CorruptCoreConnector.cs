@@ -15,6 +15,11 @@ namespace RTCV.CorruptCore
 
         public object OnMessageReceived(object sender, NetCoreEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             try
             { //Use setReturnValue to handle returns
                 var message = e.message;

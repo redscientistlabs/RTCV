@@ -17,7 +17,7 @@
             Colors.SetRTCColor(Colors.GeneralColor, this);
         }
 
-        public void SetComponentForm(Form _childForm, int _sizeX, int _sizeY, bool DisplayHeader)
+        internal void SetComponentForm(Form _childForm, int _sizeX, int _sizeY, bool DisplayHeader)
         {
             childForm = _childForm;
             SizeX = _sizeX;

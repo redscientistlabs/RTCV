@@ -28,6 +28,11 @@ namespace RTCV.NetCore
 
         public void Register(Action<object, NetCoreEventArgs> registrant, ISynchronizeInvoke _syncObject = null)
         {
+            if (registrant == null)
+            {
+                throw new ArgumentNullException(nameof(registrant));
+            }
+
             syncObject = _syncObject;
 
             Unregister();
@@ -67,6 +72,11 @@ namespace RTCV.NetCore
 
         public static void WriteLine(string message)
         {
+            if (message == null)
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
+
             if (!ShowDebug && (message.Contains("{BOOP}") || message.StartsWith("{EVENT_")))
             {
                 return;
