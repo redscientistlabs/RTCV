@@ -7,7 +7,7 @@
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
     using RTCV.UI;
-    using RTCV.NetCore.NetCore_Extensions;
+    using RTCV.NetCore.NetCoreExtensions;
 
     public partial class Loader : RTCV.UI.Forms.StandaloneForm
     {

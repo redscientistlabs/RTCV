@@ -4,7 +4,7 @@ namespace RTCV.NetCore
     using System.Collections.Concurrent;
     using System.Threading;
     using System.Threading.Tasks;
-    using RTCV.NetCore.NetCore_Extensions;
+    using RTCV.NetCore.NetCoreExtensions;
 
     public class ReturnWatch : IDisposable
     {

@@ -1,4 +1,4 @@
-namespace RTCV.NetCore.NetCore_Extensions
+namespace RTCV.NetCore.NetCoreExtensions
 {
     using System;
     using System.Collections.Generic;
@@ -6,7 +6,6 @@ namespace RTCV.NetCore.NetCore_Extensions
     using System.IO;
     using System.Reflection;
     using System.Reflection.Emit;
-    using System.Runtime.InteropServices;
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Threading;
     using Ceras;
