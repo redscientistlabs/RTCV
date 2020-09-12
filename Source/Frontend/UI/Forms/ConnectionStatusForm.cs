@@ -41,7 +41,7 @@
                 crashSound = Convert.ToInt32(NetCore.Params.ReadParam("CRASHSOUND"));
             }
 
-            S.GET<RTC_SettingsNetCore_Form>().cbCrashSoundEffect.SelectedIndex = crashSound;
+            S.GET<SettingsNetCoreForm>().cbCrashSoundEffect.SelectedIndex = crashSound;
         }
 
         private void OnFormShown(object sender, EventArgs e)
