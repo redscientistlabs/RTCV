@@ -338,7 +338,7 @@ namespace RTCV.CorruptCore
                 rtcSpecTemplate.Insert(StepActions.getDefaultPartial());
                 rtcSpecTemplate.Insert(Filtering.getDefaultPartial());
                 rtcSpecTemplate.Insert(VectorEngine.getDefaultPartial());
-                rtcSpecTemplate.Insert(RTC_ClusterEngine.getDefaultPartial());
+                rtcSpecTemplate.Insert(ClusterEngine.getDefaultPartial());
                 rtcSpecTemplate.Insert(MemoryDomains.getDefaultPartial());
                 rtcSpecTemplate.Insert(StockpileManager_EmuSide.getDefaultPartial());
                 rtcSpecTemplate.Insert(Render.getDefaultPartial());
@@ -632,13 +632,13 @@ namespace RTCV.CorruptCore
                         bu = FreezeEngine.GenerateUnit(domain, address, precision, alignment);
                         break;
                     case CorruptionEngine.PIPE:
-                        bu = RTC_PipeEngine.GenerateUnit(domain, address, precision, alignment);
+                        bu = PipeEngine.GenerateUnit(domain, address, precision, alignment);
                         break;
                     case CorruptionEngine.VECTOR:
                         bu = VectorEngine.GenerateUnit(domain, address, alignment);
                         break;
                     case CorruptionEngine.CLUSTER:
-                        bus = RTC_ClusterEngine.GenerateUnit(domain, address, alignment);
+                        bus = ClusterEngine.GenerateUnit(domain, address, alignment);
                         break;
                     case CorruptionEngine.CUSTOM:
                         bu = CustomEngine.GenerateUnit(domain, address, precision, alignment);

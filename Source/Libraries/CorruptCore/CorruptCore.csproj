@@ -82,12 +82,12 @@
     <Compile Include="CorruptCoreConnector.cs" />
     <Compile Include="Corruption Engines\RTC_BlastGeneratorEngine.cs" />
     <Compile Include="Corruption Engines\DistortionEngine.cs" />
+    <Compile Include="Corruption Engines\ClusterEngine.cs" />
     <Compile Include="Corruption Engines\CustomEngine.cs" />
-    <Compile Include="Corruption Engines\RTC_ClusterEngine.cs" />
     <Compile Include="Corruption Engines\FreezeEngine.cs" />
     <Compile Include="Corruption Engines\RTC_HellgenieEngine.cs" />
     <Compile Include="Corruption Engines\NightmareEngine.cs" />
-    <Compile Include="Corruption Engines\RTC_PipeEngine.cs" />
+    <Compile Include="Corruption Engines\PipeEngine.cs" />
     <Compile Include="Corruption Engines\VectorEngine.cs" />
     <Compile Include="EventWarlock\Editor\WarlockEditorFieldAttribute.cs" />
     <Compile Include="EventWarlock\Editor\WarlockEditableAttribute.cs" />
