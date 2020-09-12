@@ -328,16 +328,16 @@ namespace RTCV.CorruptCore
 
                 //Engine Settings
                 rtcSpecTemplate.Insert(getDefaultPartial());
-                rtcSpecTemplate.Insert(RTC_NightmareEngine.getDefaultPartial());
+                rtcSpecTemplate.Insert(NightmareEngine.getDefaultPartial());
                 rtcSpecTemplate.Insert(RTC_HellgenieEngine.getDefaultPartial());
                 rtcSpecTemplate.Insert(RTC_DistortionEngine.getDefaultPartial());
 
                 //Custom Engine Config with Nightmare Engine
-                RTC_CustomEngine.getDefaultPartial(rtcSpecTemplate);
+                CustomEngine.getDefaultPartial(rtcSpecTemplate);
 
                 rtcSpecTemplate.Insert(StepActions.getDefaultPartial());
                 rtcSpecTemplate.Insert(Filtering.getDefaultPartial());
-                rtcSpecTemplate.Insert(RTC_VectorEngine.getDefaultPartial());
+                rtcSpecTemplate.Insert(VectorEngine.getDefaultPartial());
                 rtcSpecTemplate.Insert(RTC_ClusterEngine.getDefaultPartial());
                 rtcSpecTemplate.Insert(MemoryDomains.getDefaultPartial());
                 rtcSpecTemplate.Insert(StockpileManager_EmuSide.getDefaultPartial());
@@ -620,7 +620,7 @@ namespace RTCV.CorruptCore
                 switch (engine)
                 {
                     case CorruptionEngine.NIGHTMARE:
-                        bu = RTC_NightmareEngine.GenerateUnit(domain, address, precision, alignment);
+                        bu = NightmareEngine.GenerateUnit(domain, address, precision, alignment);
                         break;
                     case CorruptionEngine.HELLGENIE:
                         bu = RTC_HellgenieEngine.GenerateUnit(domain, address, precision, alignment);
@@ -629,19 +629,19 @@ namespace RTCV.CorruptCore
                         bu = RTC_DistortionEngine.GenerateUnit(domain, address, precision, alignment);
                         break;
                     case CorruptionEngine.FREEZE:
-                        bu = RTC_FreezeEngine.GenerateUnit(domain, address, precision, alignment);
+                        bu = FreezeEngine.GenerateUnit(domain, address, precision, alignment);
                         break;
                     case CorruptionEngine.PIPE:
                         bu = PipeEngine.GenerateUnit(domain, address, precision, alignment);
                         break;
                     case CorruptionEngine.VECTOR:
-                        bu = RTC_VectorEngine.GenerateUnit(domain, address, alignment);
+                        bu = VectorEngine.GenerateUnit(domain, address, alignment);
                         break;
                     case CorruptionEngine.CLUSTER:
                         bus = RTC_ClusterEngine.GenerateUnit(domain, address, alignment);
                         break;
                     case CorruptionEngine.CUSTOM:
-                        bu = RTC_CustomEngine.GenerateUnit(domain, address, precision, alignment);
+                        bu = CustomEngine.GenerateUnit(domain, address, precision, alignment);
                         break;
                     case CorruptionEngine.NONE:
                         return null;
@@ -723,7 +723,7 @@ namespace RTCV.CorruptCore
             if ((SelectedEngine == CorruptionEngine.HELLGENIE ||
                 SelectedEngine == CorruptionEngine.FREEZE ||
                 SelectedEngine == CorruptionEngine.PIPE ||
-                (SelectedEngine == CorruptionEngine.CUSTOM && RTC_CustomEngine.Lifetime == 0)) &&
+                (SelectedEngine == CorruptionEngine.CUSTOM && CustomEngine.Lifetime == 0)) &&
                 intensity > StepActions.MaxInfiniteBlastUnits)
             {
                 intensity = StepActions.MaxInfiniteBlastUnits; //Capping for cheat max
