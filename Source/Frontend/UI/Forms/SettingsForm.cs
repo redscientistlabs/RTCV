@@ -53,7 +53,7 @@
 
         private void ShowDebugInfo(object sender, EventArgs e)
         {
-            S.GET<NetCore.DebugInfo_Form>().ShowDialog();
+            S.GET<NetCore.DebugInfoForm>().ShowDialog();
         }
 
         private void ShowTestForm(object sender, EventArgs e)
