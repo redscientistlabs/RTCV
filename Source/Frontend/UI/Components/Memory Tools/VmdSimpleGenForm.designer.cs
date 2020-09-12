@@ -1,6 +1,6 @@
 ﻿namespace RTCV.UI
 {
-    partial class RTC_VmdSimpleGen_Form
+    partial class VmdSimpleGenForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_VmdSimpleGen_Form));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VmdSimpleGenForm));
             this.mtbRange = new RTCV.UI.Components.Controls.MultiTrackBar();
             this.mtbStartAddress = new RTCV.UI.Components.Controls.MultiTrackBar();
             this.tbVmdName = new System.Windows.Forms.TextBox();
@@ -67,8 +67,8 @@
             this.mtbRange.Tag = "color:dark3";
             this.mtbRange.UncapNumericBox = false;
             this.mtbRange.Value = ((long)(0));
-            this.mtbRange.ValueChanged += new System.EventHandler<RTCV.UI.Components.Controls.ValueUpdateEventArgs>(this.MtbRange_ValueChanged);
-            this.mtbRange.CheckChanged += new System.EventHandler<System.EventArgs>(this.MtbRange_CheckChanged);
+            this.mtbRange.ValueChanged += new System.EventHandler<RTCV.UI.Components.Controls.ValueUpdateEventArgs>(this.ComputeRangeExpression);
+            this.mtbRange.CheckChanged += new System.EventHandler<System.EventArgs>(this.ComputeRangeExpression);
             //
             // mtbStartAddress
             //
@@ -88,7 +88,7 @@
             this.mtbStartAddress.Tag = "color:dark3";
             this.mtbStartAddress.UncapNumericBox = false;
             this.mtbStartAddress.Value = ((long)(0));
-            this.mtbStartAddress.ValueChanged += new System.EventHandler<RTCV.UI.Components.Controls.ValueUpdateEventArgs>(this.MtbStartAddress_ValueChanged);
+            this.mtbStartAddress.ValueChanged += new System.EventHandler<RTCV.UI.Components.Controls.ValueUpdateEventArgs>(this.ComputeRangeExpression);
             //
             // tbVmdName
             //
@@ -162,7 +162,7 @@
             this.btnGenerateVMD.Tag = "color:light1";
             this.btnGenerateVMD.Text = "Generate VMD";
             this.btnGenerateVMD.UseVisualStyleBackColor = false;
-            this.btnGenerateVMD.Click += new System.EventHandler(this.btnGenerateVMD_Click);
+            this.btnGenerateVMD.Click += new System.EventHandler(this.HandleGenerateVMDClick);
             this.btnGenerateVMD.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             //
             // groupBox1
@@ -284,7 +284,7 @@
             this.btnLoadDomains.Tag = "color:light1";
             this.btnLoadDomains.Text = "Load Domains";
             this.btnLoadDomains.UseVisualStyleBackColor = false;
-            this.btnLoadDomains.Click += new System.EventHandler(this.btnSelectAll_Click);
+            this.btnLoadDomains.Click += new System.EventHandler(this.SelectAll);
             this.btnLoadDomains.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             //
             // cbSelectedMemoryDomain
@@ -300,10 +300,10 @@
             this.cbSelectedMemoryDomain.Size = new System.Drawing.Size(130, 25);
             this.cbSelectedMemoryDomain.TabIndex = 16;
             this.cbSelectedMemoryDomain.Tag = "color:dark1";
-            this.cbSelectedMemoryDomain.SelectedIndexChanged += new System.EventHandler(this.cbSelectedMemoryDomain_SelectedIndexChanged);
+            this.cbSelectedMemoryDomain.SelectedIndexChanged += new System.EventHandler(this.HandleSelectedMemoryDomainChange);
             this.cbSelectedMemoryDomain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             //
-            // RTC_VmdSimpleGen_Form
+            // VmdSimpleGenForm
             //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -323,7 +323,7 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "RTC_VmdSimpleGen_Form";
+            this.Name = "VmdSimpleGenForm";
             this.Tag = "color:dark3";
             this.Text = "Simple VMD Generator";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
