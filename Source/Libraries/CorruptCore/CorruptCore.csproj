@@ -71,7 +71,7 @@
   <ItemGroup>
     <Compile Include="ActivationTableObject.cs" />
     <Compile Include="BitlogicListFilter.cs" />
-    <Compile Include="Blast Generator Engines\RTC_ValueGenerator.cs" />
+    <Compile Include="Blast Generator Engines\ValueGenerator.cs" />
     <Compile Include="Blast Generator Engines\StoreGenerator.cs" />
     <Compile Include="Coroutines\Conditionals\WaitFrames.cs" />
     <Compile Include="Coroutines\Conditionals\WaitUntil.cs" />
