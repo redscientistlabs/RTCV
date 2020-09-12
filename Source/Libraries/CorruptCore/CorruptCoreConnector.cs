@@ -177,13 +177,13 @@ namespace RTCV.CorruptCore
                         break;
 
                     case REMOTE_DOMAIN_VMD_ADD:
-                        MemoryDomains.AddVMD_NET((advancedMessage.objectValue as VmdPrototype));
+                        MemoryDomains.AddVMDFromRemote((advancedMessage.objectValue as VmdPrototype));
                         break;
 
                     case REMOTE_DOMAIN_VMD_REMOVE:
                         {
                             StepActions.ClearStepBlastUnits();
-                            MemoryDomains.RemoveVMD_NET((advancedMessage.objectValue as string));
+                            MemoryDomains.RemoveVMDFromRemote((advancedMessage.objectValue as string));
                         }
                         break;
 

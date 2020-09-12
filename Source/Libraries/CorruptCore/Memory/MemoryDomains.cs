@@ -140,9 +140,9 @@ namespace RTCV.CorruptCore
             return null;
         }
 
-        public static MemoryInterface GetInterface(string _domain)
+        public static MemoryInterface GetInterface(string domain)
         {
-            if (_domain == null)
+            if (domain == null)
             {
                 return null;
             }
@@ -152,12 +152,12 @@ namespace RTCV.CorruptCore
                 RefreshDomains();
             }
 
-            if (MemoryInterfaces.TryGetValue(_domain, out MemoryDomainProxy mi))
+            if (MemoryInterfaces.TryGetValue(domain, out MemoryDomainProxy mi))
             {
                 return mi;
             }
 
-            if (VmdPool.TryGetValue(_domain, out VirtualMemoryDomain vmd))
+            if (VmdPool.TryGetValue(domain, out VirtualMemoryDomain vmd))
             {
                 return vmd;
             }
@@ -279,17 +279,17 @@ namespace RTCV.CorruptCore
             LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_EVENT_DOMAINSUPDATED);
         }
 
-        public static void AddVMD_NET(VmdPrototype proto)
+        public static void AddVMDFromRemote(VmdPrototype proto)
         {
             if (proto == null)
             {
                 throw new ArgumentNullException(nameof(proto));
             }
 
-            AddVMD_NET(proto.Generate());
+            AddVMDFromRemote(proto.Generate());
         }
 
-        public static void AddVMD_NET(VirtualMemoryDomain VMD)
+        private static void AddVMDFromRemote(VirtualMemoryDomain VMD)
         {
             if (VMD == null)
             {
@@ -330,17 +330,7 @@ namespace RTCV.CorruptCore
             LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_EVENT_DOMAINSUPDATED);
         }
 
-        public static void RemoveVMD_NET(VirtualMemoryDomain VMD)
-        {
-            if (VMD == null)
-            {
-                throw new ArgumentNullException(nameof(VMD));
-            }
-
-            RemoveVMD_NET(VMD.ToString());
-        }
-
-        public static void RemoveVMD_NET(string vmdName)
+        public static void RemoveVMDFromRemote(string vmdName)
         {
             if (VmdPool.ContainsKey(vmdName))
             {
