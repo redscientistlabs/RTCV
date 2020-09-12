@@ -277,7 +277,7 @@ namespace RTCV.CorruptCore
                     {
                         string title = "Reference found in RTC dir";
                         string message = $"Can't save with file {key.RomFilename}\nGame name: {key.GameName}\n\nThis file appears to be in temporary storage (e.g. loaded from a stockpile).\nTo save without references, you will need to provide a replacement from outside the RTC's working directory.\n\nPlease provide a new path to the file in question.";
-                        while ((!string.IsNullOrEmpty(key.RomFilename)) && (CorruptCore_Extensions.IsOrIsSubDirectoryOf(Path.GetDirectoryName(key.RomFilename), RtcCore.workingDir))) // Make sure they don't give a new file within working
+                        while ((!string.IsNullOrEmpty(key.RomFilename)) && (CorruptCoreExtensions.IsOrIsSubDirectoryOf(Path.GetDirectoryName(key.RomFilename), RtcCore.workingDir))) // Make sure they don't give a new file within working
                         {
                             if (!StockpileManager_UISide.CheckAndFixMissingReference(key, true, sks.StashKeys, title, message))
                             {
@@ -770,7 +770,7 @@ namespace RTCV.CorruptCore
             Dictionary<string, string> name2filedico = new Dictionary<string, string>();
             foreach (var str in configPaths)
             {
-                var relPath = CorruptCore_Extensions.GetRelativePath(RtcCore.EmuDir, str);
+                var relPath = CorruptCoreExtensions.GetRelativePath(RtcCore.EmuDir, str);
 
                 name2filedico.Add(Path.GetFileName(str), relPath);
             }

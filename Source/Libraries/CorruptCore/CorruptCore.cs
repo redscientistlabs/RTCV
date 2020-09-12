@@ -260,7 +260,7 @@ namespace RTCV.CorruptCore
                 Start();
                 RegisterCorruptcoreSpec();
 
-                CorruptCore_Extensions.DirectoryRequired(paths: new string[] {
+                CorruptCoreExtensions.DirectoryRequired(paths: new string[] {
                     workingDir,
                     Path.Combine(workingDir, "TEMP"),
                     Path.Combine(workingDir, "SKS"),

@@ -132,7 +132,7 @@
     <Compile Include="ComboBoxItem.cs" />
     <Compile Include="CorruptCore.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="CorruptCore_Extensions.cs" />
+    <Compile Include="CorruptCoreExtensions.cs" />
     <Compile Include="Filtering.cs" />
     <Compile Include="INote.cs" />
     <Compile Include="ProgressBar.cs" />

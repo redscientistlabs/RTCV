@@ -7,7 +7,7 @@ namespace RTCV.CorruptCore
     using System.Runtime.InteropServices;
     using Ceras;
 
-    public static class CorruptCore_Extensions
+    public static class CorruptCoreExtensions
     {
         public static void DirectoryRequired(string path)
         {
