@@ -81,6 +81,11 @@
 
         public static object Route(string endpointName, NetCoreEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             try
             {
                 var endpoint = getEndpoint(endpointName);

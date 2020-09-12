@@ -21,6 +21,11 @@ namespace RTCV.NetCore
         }
         public NetCoreSimpleMessage(string _Type)
         {
+            if (_Type == null)
+            {
+                throw new ArgumentNullException(nameof(_Type));
+            }
+
             Type = _Type.Trim().ToUpper();
         }
     }
@@ -40,11 +45,21 @@ namespace RTCV.NetCore
         }
         public NetCoreAdvancedMessage(string _Type)
         {
+            if (_Type == null)
+            {
+                throw new ArgumentNullException(nameof(_Type));
+            }
+
             Type = _Type.Trim().ToUpper();
         }
 
         public NetCoreAdvancedMessage(string _Type, object _Obj)
         {
+            if (_Type == null)
+            {
+                throw new ArgumentNullException(nameof(_Type));
+            }
+
             Type = _Type.Trim().ToUpper();
             objectValue = _Obj;
         }

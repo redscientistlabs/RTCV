@@ -50,6 +50,11 @@ namespace RTCV.PluginHost
 
         public void Start(string[] pluginDirs, RTCSide side)
         {
+            if (pluginDirs == null)
+            {
+                throw new ArgumentNullException(nameof(pluginDirs));
+            }
+
             if (initialized)
             {
                 logger.Error(new InvalidOperationException("Host has already been started."));
