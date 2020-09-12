@@ -3,6 +3,7 @@ namespace RTCV.NetCore.NetCoreExtensions
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Reflection;
     using System.Reflection.Emit;
@@ -140,6 +141,7 @@ namespace RTCV.NetCore.NetCoreExtensions
         }
     }
 
+    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "DPI_AWARENESS_CONTEXT enum names may have underscores for clarity and compatiblity with existing implementations.")]
     public enum DPI_AWARENESS_CONTEXT
     {
         DPI_AWARENESS_CONTEXT_DEFAULT = 0,
