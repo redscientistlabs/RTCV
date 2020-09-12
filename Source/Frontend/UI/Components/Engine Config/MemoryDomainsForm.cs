@@ -230,7 +230,7 @@ namespace RTCV.UI
                             if (domain != null)
                             {
                                 string limiter = vmd.Name.Substring(vmd.Name.LastIndexOf('>') + 2);
-                                S.GET<RTC_VmdLimiterProfiler_Form>().AutoProfile(MemoryDomains.AllMemoryInterfaces[domain], limiter);
+                                S.GET<VmdLimiterProfilerForm>().AutoProfile(MemoryDomains.AllMemoryInterfaces[domain], limiter);
                             }
                         }
                     }).Enabled = (AutoLimitedDomains.Count > 0);
@@ -238,7 +238,7 @@ namespace RTCV.UI
 
                     var cbLoadState = new ToolStripMenuItem();
                     cbLoadState.Text = "Load GH State on Generate";
-                    var vlpForm = S.GET<RTC_VmdLimiterProfiler_Form>();
+                    var vlpForm = S.GET<VmdLimiterProfilerForm>();
                     cbLoadState.Checked = vlpForm.cbLoadBeforeGenerate.Checked;
                     cbLoadState.Click += (ob, ev) => {
                         vlpForm.cbLoadBeforeGenerate.Checked = !vlpForm.cbLoadBeforeGenerate.Checked;
@@ -262,7 +262,7 @@ namespace RTCV.UI
                         vectorMenuItem.Text = $"Use Vector Engine Limiter: -> {vectorLimiter}" + extraVector;
 
                         vectorMenuItem.Click += (ob, ev) => {
-                            S.GET<RTC_VmdLimiterProfiler_Form>().AutoProfile(mi.Value, vectorLimiter);
+                            S.GET<VmdLimiterProfilerForm>().AutoProfile(mi.Value, vectorLimiter);
                         };
 
                         currentListMenuItem.DropDownItems.Add(vectorMenuItem);
@@ -280,7 +280,7 @@ namespace RTCV.UI
                             subMenuItem.Text = "-> " + listName + extra;
 
                             subMenuItem.Click += (ob, ev) => {
-                                S.GET<RTC_VmdLimiterProfiler_Form>().AutoProfile(mi.Value, listName);
+                                S.GET<VmdLimiterProfilerForm>().AutoProfile(mi.Value, listName);
                             };
 
                             currentListMenuItem.DropDownItems.Add(subMenuItem);

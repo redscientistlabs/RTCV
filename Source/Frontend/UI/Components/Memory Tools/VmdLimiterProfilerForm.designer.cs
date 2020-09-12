@@ -1,6 +1,6 @@
 ﻿namespace RTCV.UI
 {
-    partial class RTC_VmdLimiterProfiler_Form
+    partial class VmdLimiterProfilerForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_VmdLimiterProfiler_Form));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VmdLimiterProfilerForm));
             this.pnLimiterList = new System.Windows.Forms.Panel();
             this.cbVectorLimiterList = new System.Windows.Forms.ComboBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -49,9 +49,9 @@
             this.pnLimiterList.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // pnLimiterList
-            // 
+            //
             this.pnLimiterList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.pnLimiterList.Controls.Add(this.cbVectorLimiterList);
             this.pnLimiterList.Controls.Add(this.label13);
@@ -61,9 +61,9 @@
             this.pnLimiterList.Size = new System.Drawing.Size(216, 51);
             this.pnLimiterList.TabIndex = 135;
             this.pnLimiterList.Tag = "color:dark2";
-            // 
+            //
             // cbVectorLimiterList
-            // 
+            //
             this.cbVectorLimiterList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.cbVectorLimiterList.DataSource = ((object)(resources.GetObject("cbVectorLimiterList.DataSource")));
             this.cbVectorLimiterList.DisplayMember = "Name";
@@ -80,10 +80,10 @@
             this.cbVectorLimiterList.TabIndex = 78;
             this.cbVectorLimiterList.Tag = "color:normal";
             this.cbVectorLimiterList.ValueMember = "Value";
-            this.cbVectorLimiterList.SelectedIndexChanged += new System.EventHandler(this.CbVectorLimiterList_SelectedIndexChanged);
-            // 
+            this.cbVectorLimiterList.SelectedIndexChanged += new System.EventHandler(this.HandleVectorLimiterListSelectionChange);
+            //
             // label13
-            // 
+            //
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label13.Location = new System.Drawing.Point(6, 6);
@@ -91,10 +91,10 @@
             this.label13.Size = new System.Drawing.Size(62, 13);
             this.label13.TabIndex = 79;
             this.label13.Text = "Limiter list:";
-            // 
+            //
             // tbVmdName
-            // 
-            this.tbVmdName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.tbVmdName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbVmdName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.tbVmdName.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -105,9 +105,9 @@
             this.tbVmdName.TabIndex = 132;
             this.tbVmdName.Tag = "color:dark1";
             this.tbVmdName.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // label2
-            // 
+            //
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label2.ForeColor = System.Drawing.Color.White;
@@ -117,10 +117,10 @@
             this.label2.TabIndex = 131;
             this.label2.Text = "VMD Name:";
             this.label2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // btnGenerateVMD
-            // 
-            this.btnGenerateVMD.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.btnGenerateVMD.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnGenerateVMD.BackColor = System.Drawing.Color.Gray;
             this.btnGenerateVMD.Enabled = false;
@@ -136,12 +136,12 @@
             this.btnGenerateVMD.Tag = "color:light1";
             this.btnGenerateVMD.Text = "Generate VMD";
             this.btnGenerateVMD.UseVisualStyleBackColor = false;
-            this.btnGenerateVMD.Click += new System.EventHandler(this.btnGenerateVMD_Click);
+            this.btnGenerateVMD.Click += new System.EventHandler(this.HandleGenerateVMDClick);
             this.btnGenerateVMD.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // groupBox1
-            // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            //
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.lbEndianTypeValue);
             this.groupBox1.Controls.Add(this.lbWordSizeValue);
@@ -158,9 +158,9 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Domain summary";
             this.groupBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // lbEndianTypeValue
-            // 
+            //
             this.lbEndianTypeValue.AutoSize = true;
             this.lbEndianTypeValue.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lbEndianTypeValue.ForeColor = System.Drawing.Color.White;
@@ -170,9 +170,9 @@
             this.lbEndianTypeValue.TabIndex = 92;
             this.lbEndianTypeValue.Text = "#####";
             this.lbEndianTypeValue.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // lbWordSizeValue
-            // 
+            //
             this.lbWordSizeValue.AutoSize = true;
             this.lbWordSizeValue.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lbWordSizeValue.ForeColor = System.Drawing.Color.White;
@@ -182,9 +182,9 @@
             this.lbWordSizeValue.TabIndex = 91;
             this.lbWordSizeValue.Text = "#####";
             this.lbWordSizeValue.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // lbDomainSizeValue
-            // 
+            //
             this.lbDomainSizeValue.AutoSize = true;
             this.lbDomainSizeValue.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lbDomainSizeValue.ForeColor = System.Drawing.Color.White;
@@ -194,9 +194,9 @@
             this.lbDomainSizeValue.TabIndex = 90;
             this.lbDomainSizeValue.Text = "#####";
             this.lbDomainSizeValue.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // lbEndianTypeLabel
-            // 
+            //
             this.lbEndianTypeLabel.AutoSize = true;
             this.lbEndianTypeLabel.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lbEndianTypeLabel.ForeColor = System.Drawing.Color.White;
@@ -206,9 +206,9 @@
             this.lbEndianTypeLabel.TabIndex = 88;
             this.lbEndianTypeLabel.Text = "Endian Type:";
             this.lbEndianTypeLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // lbWordSizeLabel
-            // 
+            //
             this.lbWordSizeLabel.AutoSize = true;
             this.lbWordSizeLabel.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lbWordSizeLabel.ForeColor = System.Drawing.Color.White;
@@ -218,9 +218,9 @@
             this.lbWordSizeLabel.TabIndex = 87;
             this.lbWordSizeLabel.Text = "Word Size:";
             this.lbWordSizeLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // lbDomainSizeLabel
-            // 
+            //
             this.lbDomainSizeLabel.AutoSize = true;
             this.lbDomainSizeLabel.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lbDomainSizeLabel.ForeColor = System.Drawing.Color.White;
@@ -230,9 +230,9 @@
             this.lbDomainSizeLabel.TabIndex = 86;
             this.lbDomainSizeLabel.Text = "Domain Size:";
             this.lbDomainSizeLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // label17
-            // 
+            //
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label17.ForeColor = System.Drawing.Color.White;
@@ -242,9 +242,9 @@
             this.label17.TabIndex = 117;
             this.label17.Text = "Memory Domain";
             this.label17.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // btnLoadDomains
-            // 
+            //
             this.btnLoadDomains.BackColor = System.Drawing.Color.Gray;
             this.btnLoadDomains.FlatAppearance.BorderSize = 0;
             this.btnLoadDomains.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -258,11 +258,11 @@
             this.btnLoadDomains.Tag = "color:light1";
             this.btnLoadDomains.Text = "Load Domains";
             this.btnLoadDomains.UseVisualStyleBackColor = false;
-            this.btnLoadDomains.Click += new System.EventHandler(this.btnLoadDomains_Click);
+            this.btnLoadDomains.Click += new System.EventHandler(this.LoadDomains);
             this.btnLoadDomains.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // cbSelectedMemoryDomain
-            // 
+            //
             this.cbSelectedMemoryDomain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.cbSelectedMemoryDomain.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSelectedMemoryDomain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -274,11 +274,11 @@
             this.cbSelectedMemoryDomain.Size = new System.Drawing.Size(130, 25);
             this.cbSelectedMemoryDomain.TabIndex = 16;
             this.cbSelectedMemoryDomain.Tag = "color:dark1";
-            this.cbSelectedMemoryDomain.SelectedIndexChanged += new System.EventHandler(this.cbSelectedMemoryDomain_SelectedIndexChanged);
+            this.cbSelectedMemoryDomain.SelectedIndexChanged += new System.EventHandler(this.HandleSelectedMemoryDomainChange);
             this.cbSelectedMemoryDomain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // cbLoadBeforeGenerate
-            // 
+            //
             this.cbLoadBeforeGenerate.AutoSize = true;
             this.cbLoadBeforeGenerate.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbLoadBeforeGenerate.ForeColor = System.Drawing.Color.White;
@@ -288,9 +288,9 @@
             this.cbLoadBeforeGenerate.TabIndex = 136;
             this.cbLoadBeforeGenerate.Text = "Load Glitch Harvester Savestate Before Generate";
             this.cbLoadBeforeGenerate.UseVisualStyleBackColor = true;
-            // 
-            // RTC_VmdLimiterProfiler_Form
-            // 
+            //
+            // VmdLimiterProfilerForm
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -307,11 +307,11 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "RTC_VmdLimiterProfiler_Form";
+            this.Name = "VmdLimiterProfilerForm";
             this.Tag = "color:dark3";
             this.Text = "Limiter Profiler";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
-            this.Load += new System.EventHandler(this.RTC_VmdLimiterProfiler_Form_Load);
+            this.Load += new System.EventHandler(this.OnFormLoad);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             this.pnLimiterList.ResumeLayout(false);
             this.pnLimiterList.PerformLayout();
