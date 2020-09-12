@@ -23,26 +23,21 @@ namespace RTCV.UI
 
             LoadHotkeys();
 
-            this.undockedSizable = false;
-            this.Load += SettingsHotkeyConfigForm_Load;
             this.HotkeyTabControl.SelectedIndexChanged += HotkeyHotkeyTabControlSelectedIndexChanged;
 
-            this.Activated += SettingsHotkeyConfigForm_GotFocus;
-            this.Deactivate += SettingsHotkeyConfigForm_LostFocus;
-            this.Leave += SettingsHotkeyConfigForm_LostFocus;
-            this.LostFocus += SettingsHotkeyConfigForm_LostFocus;
+            this.LostFocus += OnFormLostFocus;
 
             DoTabs();
             DoFocus();
         }
 
-        private void SettingsHotkeyConfigForm_GotFocus(object sender, EventArgs e)
+        private void OnFormGotFocus(object sender, EventArgs e)
         {
             UICore.SetHotkeyTimer(false);
             DoFocus();
         }
 
-        private void SettingsHotkeyConfigForm_LostFocus(object sender, EventArgs e)
+        private void OnFormLostFocus(object sender, EventArgs e)
         {
             Save();
         }
@@ -99,7 +94,7 @@ namespace RTCV.UI
             }
         }
 
-        private void SettingsHotkeyConfigForm_Load(object sender, EventArgs e)
+        private void OnFormLoad(object sender, EventArgs e)
         {
             Colors.SetRTCColor(Colors.GeneralColor, this.Parent);
         }

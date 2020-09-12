@@ -69,7 +69,12 @@
             this.Name = "SettingsHotkeyConfigForm";
             this.Tag = "color:dark2";
             this.Text = "Hotkey Config";
+            this.undockedSizable = false;
+            this.Activated += new System.EventHandler(this.OnFormGotFocus);
+            this.Deactivate += new System.EventHandler(this.OnFormLostFocus);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
+            this.Load += new System.EventHandler(this.OnFormLoad);
+            this.Leave += new System.EventHandler(this.OnFormLostFocus);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             this.HotkeyTabControl.ResumeLayout(false);
             this.ResumeLayout(false);
