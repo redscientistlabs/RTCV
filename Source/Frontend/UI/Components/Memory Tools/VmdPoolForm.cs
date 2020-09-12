@@ -18,17 +18,14 @@ namespace RTCV.UI
         public VmdPoolForm()
         {
             InitializeComponent();
-            AllowDrop = true;
-            this.DragEnter += VmdPoolForm_DragEnter;
-            this.DragDrop += VmdPoolForm_DragDrop;
         }
 
-        public void VmdPoolForm_DragEnter(object sender, DragEventArgs e)
+        public void HandleDragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Link;
         }
 
-        public void VmdPoolForm_DragDrop(object sender, DragEventArgs e)
+        public void HandleDragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             foreach (var f in files)

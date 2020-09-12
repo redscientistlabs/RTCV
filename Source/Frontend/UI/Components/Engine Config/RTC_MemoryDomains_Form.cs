@@ -31,8 +31,8 @@ namespace RTCV.UI
 
             //Registers the drag and drop with RTC_MyVMDs_Form
             AllowDrop = true;
-            this.DragEnter += S.GET<VmdPoolForm>().VmdPoolForm_DragEnter;
-            this.DragDrop += S.GET<VmdPoolForm>().VmdPoolForm_DragDrop;
+            this.DragEnter += S.GET<VmdPoolForm>().HandleDragEnter;
+            this.DragDrop += S.GET<VmdPoolForm>().HandleDragDrop;
         }
 
         private void UpdateSelectedMemoryDomains(object sender, EventArgs args)
