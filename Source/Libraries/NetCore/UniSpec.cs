@@ -304,7 +304,7 @@
         public SpecUpdateEventArgs(PartialSpec partialSpec, bool syncedUpdate)
         {
             PartialSpec = partialSpec;
-            this.SyncedUpdate = syncedUpdate;
+            SyncedUpdate = syncedUpdate;
         }
     }
 }
