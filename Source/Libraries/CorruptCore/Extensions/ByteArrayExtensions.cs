@@ -127,7 +127,7 @@ namespace RTCV.CorruptCore.Extensions
             return (x % m + m) % m;
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/dotnet/roslyn-analyzers/issues/3451")]
+        [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/redscientistlabs/RTCV/issues/187")]
         public static byte[] AddValueToByteArrayUnchecked(this byte[] input, BigInteger addValue, bool isInputBigEndian)
         {
             if (isInputBigEndian)
@@ -325,7 +325,7 @@ namespace RTCV.CorruptCore.Extensions
             return null;
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/dotnet/roslyn-analyzers/issues/3451")]
+        [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/redscientistlabs/RTCV/issues/187")]
         public static byte[] FlipBytes(this byte[] array)
         {
             var arrayClone = (byte[])array.Clone();
@@ -338,7 +338,7 @@ namespace RTCV.CorruptCore.Extensions
             return array;
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/dotnet/roslyn-analyzers/issues/3451")]
+        [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/redscientistlabs/RTCV/issues/187")]
         public static byte?[] FlipBytes(this byte?[] array)
         {
             var arrayClone = (byte?[])array.Clone();
@@ -351,7 +351,7 @@ namespace RTCV.CorruptCore.Extensions
             return array;
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/dotnet/roslyn-analyzers/issues/3451")]
+        [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/redscientistlabs/RTCV/issues/187")]
         public static byte[] PadLeft(this byte[] input, int length)
         {
             var newArray = new byte[length];
@@ -364,7 +364,7 @@ namespace RTCV.CorruptCore.Extensions
         /// <summary>
         /// Converts bytes to an uppercase string of hex numbers in upper case without any spacing or anything
         /// </summary>
-        [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/dotnet/roslyn-analyzers/issues/3451")]
+        [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/redscientistlabs/RTCV/issues/187")]
         public static string BytesToHexString(this byte[] bytes)
         {
             var sb = new StringBuilder();

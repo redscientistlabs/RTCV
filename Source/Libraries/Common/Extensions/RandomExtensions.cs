@@ -7,7 +7,7 @@ namespace RTCV.Common.CustomExtensions
     public static class RandomExtensions
     {
         //returns a uniformly random ulong between ulong.Min inclusive and ulong.Max inclusive
-        [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/dotnet/roslyn-analyzers/issues/3451")]
+        [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/redscientistlabs/RTCV/issues/187")]
         public static ulong NextULong(this Random rng)
         {
             var buf = new byte[8];
@@ -16,7 +16,7 @@ namespace RTCV.Common.CustomExtensions
         }
 
         //returns a uniformly random long between long.Min inclusive and long.Max inclusive
-        [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/dotnet/roslyn-analyzers/issues/3451")]
+        [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/redscientistlabs/RTCV/issues/187")]
         public static long NextLong(this Random rng)
         {
             var buf = new byte[8];

@@ -32,7 +32,7 @@ namespace RTCV.CorruptCore.Extensions
         /// </summary>
         /// <param name="hex"></param>
         /// <returns></returns>
-        [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/dotnet/roslyn-analyzers/issues/3451")]
+        [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/redscientistlabs/RTCV/issues/187")]
         public static byte[] ToByteArray(this string hex)
         {
             var lengthPadded = (hex.Length / 2) + (hex.Length % 2);
@@ -69,7 +69,7 @@ namespace RTCV.CorruptCore.Extensions
         /// </summary>
         /// <param name="hex"></param>
         /// <returns></returns>
-        [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/dotnet/roslyn-analyzers/issues/3451")]
+        [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/redscientistlabs/RTCV/issues/187")]
         public static byte?[] ToNullableByteArray(this string hex)
         {
             var lengthPadded = (hex.Length / 2) + (hex.Length % 2);
