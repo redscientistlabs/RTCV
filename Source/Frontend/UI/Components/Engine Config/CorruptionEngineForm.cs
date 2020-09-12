@@ -92,15 +92,15 @@ namespace RTCV.UI
             clusterChunkSize.ValueChanged += UpdateClusterChunkSize;
             clusterChunkModifier.ValueChanged += UpdateClusterModifier;
 
-            for (int j = 0; j < RTC_ClusterEngine.ShuffleTypes.Length; j++)
+            for (int j = 0; j < ClusterEngine.ShuffleTypes.Length; j++)
             {
-                cbClusterMethod.Items.Add(RTC_ClusterEngine.ShuffleTypes[j]);
+                cbClusterMethod.Items.Add(ClusterEngine.ShuffleTypes[j]);
             }
             cbClusterMethod.SelectedIndex = 0;
 
-            for (int j = 0; j < RTC_ClusterEngine.Directions.Length; j++)
+            for (int j = 0; j < ClusterEngine.Directions.Length; j++)
             {
-                clusterDirection.Items.Add(RTC_ClusterEngine.Directions[j]);
+                clusterDirection.Items.Add(ClusterEngine.Directions[j]);
             }
             clusterDirection.SelectedIndex = 0;
         }
@@ -461,23 +461,23 @@ namespace RTCV.UI
             ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
             if (item != null)
             {
-                RTC_ClusterEngine.LimiterListHash = item.Value;
+                ClusterEngine.LimiterListHash = item.Value;
             }
         }
 
         private void UpdateClusterChunkSize(object sender, EventArgs e)
         {
-            RTC_ClusterEngine.ChunkSize = (int)clusterChunkSize.Value;
+            ClusterEngine.ChunkSize = (int)clusterChunkSize.Value;
         }
 
         private void UpdateClusterModifier(object sender, EventArgs e)
         {
-            RTC_ClusterEngine.Modifier = (int)clusterChunkModifier.Value;
+            ClusterEngine.Modifier = (int)clusterChunkModifier.Value;
         }
 
         private void UpdateClusterMethod(object sender, EventArgs e)
         {
-            RTC_ClusterEngine.ShuffleType = cbClusterMethod.SelectedItem.ToString();
+            ClusterEngine.ShuffleType = cbClusterMethod.SelectedItem.ToString();
 
             if (cbClusterMethod.SelectedItem.ToString().ToLower().Contains("rotate"))
             {
@@ -491,17 +491,17 @@ namespace RTCV.UI
 
         private void UpdateClusterSplitUnits(object sender, EventArgs e)
         {
-            RTC_ClusterEngine.OutputMultipleUnits = clusterSplitUnits.Checked;
+            ClusterEngine.OutputMultipleUnits = clusterSplitUnits.Checked;
         }
 
         private void UpdateClusterDirection(object sender, EventArgs e)
         {
-            RTC_ClusterEngine.Direction = clusterDirection.SelectedItem.ToString();
+            ClusterEngine.Direction = clusterDirection.SelectedItem.ToString();
         }
 
         private void UpdateClusterFilterAll(object sender, EventArgs e)
         {
-            RTC_ClusterEngine.FilterAll = clusterFilterAll.Checked;
+            ClusterEngine.FilterAll = clusterFilterAll.Checked;
         }
 
         private void UpdateVectorUnlockPrecision(object sender, EventArgs e)
