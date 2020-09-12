@@ -338,7 +338,7 @@
             return StringToByteArray(list[RtcCore.RND.Next(list.Length)]);
         }
 
-        public static byte[] StringToByteArray(string hex)
+        internal static byte[] StringToByteArray(string hex)
         {
             return Enumerable.Range(0, hex.Length)
                 .Where(x => x % 2 == 0)
@@ -346,7 +346,7 @@
                 .ToArray();
         }
 
-        public static void getDefaultPartial(PartialSpec pSpec)
+        internal static void getDefaultPartial(PartialSpec pSpec)
         {
             pSpec = InitTemplate_NightmareEngine(pSpec.Name);
             pSpec[RTCSPEC.CUSTOM_PATH] = "";

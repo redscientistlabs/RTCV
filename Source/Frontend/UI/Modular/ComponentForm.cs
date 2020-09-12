@@ -135,7 +135,7 @@ namespace RTCV.UI.Modular
         us bind something to it in the properties panel. Gotta add it manually in the designer.cs ffs.
         */
 
-        public void HandleMouseDown(object sender, MouseEventArgs e)
+        internal void HandleMouseDown(object sender, MouseEventArgs e)
         {
             if (sender is NumericUpDown || sender is TextBox)
             {
@@ -161,7 +161,7 @@ namespace RTCV.UI.Modular
             }
         }
 
-        public void HandleFormClosing(object sender, FormClosingEventArgs e)
+        internal void HandleFormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason != CloseReason.FormOwnerClosing)
             {

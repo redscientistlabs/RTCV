@@ -69,7 +69,7 @@ namespace RTCV.Common
             }
 
             // var logfile = new NLog.Targets.FileTarget("logfile") { FileName = filename, Layout = layout };
-            var logconsole = new NLog.Targets.ColoredConsoleTarget("logconsole") {Layout = CurrentLayout};
+            var logconsole = new NLog.Targets.ColoredConsoleTarget("logconsole") { Layout = CurrentLayout };
 
             var isDebug = false;
             Debug.Assert(isDebug = true);

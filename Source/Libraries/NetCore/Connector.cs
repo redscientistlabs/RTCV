@@ -22,7 +22,7 @@ namespace RTCV.NetCore
         {
             logger.Debug($"NetCore Initialization");
 
-            spec = _spec;
+            spec = _spec ?? throw new ArgumentNullException(nameof(_spec));
             spec.Connector = this;
             Initialize();
 
@@ -53,6 +53,11 @@ namespace RTCV.NetCore
 
         public object OnMessageReceived(object sender, NetCoreEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             if ((e.message as NetCoreAdvancedMessage)?.requestGuid != null)
             {
                 return SendMessage(e.message, true, true);
