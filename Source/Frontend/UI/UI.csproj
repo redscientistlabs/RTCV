@@ -297,11 +297,11 @@
     <Compile Include="Components\Settings\SettingsNetCoreForm.designer.cs">
       <DependentUpon>SettingsNetCoreForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Settings\RTC_SettingsHotkeyConfig_Form.cs">
+    <Compile Include="Components\Settings\SettingsHotkeyConfigForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Settings\RTC_SettingsHotkeyConfig_Form.designer.cs">
-      <DependentUpon>RTC_SettingsHotkeyConfig_Form.cs</DependentUpon>
+    <Compile Include="Components\Settings\SettingsHotkeyConfigForm.designer.cs">
+      <DependentUpon>SettingsHotkeyConfigForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\InputBox.cs">
       <SubType>Form</SubType>
@@ -560,8 +560,8 @@
     <EmbeddedResource Include="Components\Settings\SettingsGeneralForm.resx">
       <DependentUpon>SettingsGeneralForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Settings\RTC_SettingsHotkeyConfig_Form.resx">
-      <DependentUpon>RTC_SettingsHotkeyConfig_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Settings\SettingsHotkeyConfigForm.resx">
+      <DependentUpon>SettingsHotkeyConfigForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Settings\SettingsNetCoreForm.resx">
       <DependentUpon>SettingsNetCoreForm.cs</DependentUpon>
