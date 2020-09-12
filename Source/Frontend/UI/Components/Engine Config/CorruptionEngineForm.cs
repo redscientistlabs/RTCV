@@ -326,8 +326,8 @@ namespace RTCV.UI
                     nmMinValueNightmare.Value = NightmareEngine.MinValue8Bit;
                     nmMaxValueNightmare.Value = NightmareEngine.MaxValue8Bit;
 
-                    nmMinValueHellgenie.Value = RTC_HellgenieEngine.MinValue8Bit;
-                    nmMaxValueHellgenie.Value = RTC_HellgenieEngine.MaxValue8Bit;
+                    nmMinValueHellgenie.Value = HellgenieEngine.MinValue8Bit;
+                    nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue8Bit;
 
                     break;
 
@@ -341,8 +341,8 @@ namespace RTCV.UI
                     nmMinValueNightmare.Value = NightmareEngine.MinValue16Bit;
                     nmMaxValueNightmare.Value = NightmareEngine.MaxValue16Bit;
 
-                    nmMinValueHellgenie.Value = RTC_HellgenieEngine.MinValue16Bit;
-                    nmMaxValueHellgenie.Value = RTC_HellgenieEngine.MaxValue16Bit;
+                    nmMinValueHellgenie.Value = HellgenieEngine.MinValue16Bit;
+                    nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue16Bit;
 
                     break;
                 case 4:
@@ -355,8 +355,8 @@ namespace RTCV.UI
                     nmMinValueNightmare.Value = NightmareEngine.MinValue32Bit;
                     nmMaxValueNightmare.Value = NightmareEngine.MaxValue32Bit;
 
-                    nmMinValueHellgenie.Value = RTC_HellgenieEngine.MinValue32Bit;
-                    nmMaxValueHellgenie.Value = RTC_HellgenieEngine.MaxValue32Bit;
+                    nmMinValueHellgenie.Value = HellgenieEngine.MinValue32Bit;
+                    nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue32Bit;
 
                     break;
                 case 8:
@@ -369,8 +369,8 @@ namespace RTCV.UI
                     nmMinValueNightmare.Value = NightmareEngine.MinValue64Bit;
                     nmMaxValueNightmare.Value = NightmareEngine.MaxValue64Bit;
 
-                    nmMinValueHellgenie.Value = RTC_HellgenieEngine.MinValue64Bit;
-                    nmMaxValueHellgenie.Value = RTC_HellgenieEngine.MaxValue64Bit;
+                    nmMinValueHellgenie.Value = HellgenieEngine.MinValue64Bit;
+                    nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue64Bit;
 
                     break;
             }
