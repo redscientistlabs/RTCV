@@ -207,7 +207,6 @@
             0,
             0,
             0});
-            this.nmPointerSpacer.ValueChanged += new System.EventHandler(this.numericUpDown2_ValueChanged);
             this.nmPointerSpacer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             //
             // cbUsePointerSpacer
