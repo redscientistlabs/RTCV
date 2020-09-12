@@ -294,7 +294,7 @@ namespace RTCV.UI
             ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
             if (item != null)
             {
-                RTC_VectorEngine.LimiterListHash = item.Value;
+                VectorEngine.LimiterListHash = item.Value;
             }
         }
 
@@ -303,7 +303,7 @@ namespace RTCV.UI
             ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
             if (item != null)
             {
-                RTC_VectorEngine.ValueListHash = item.Value;
+                VectorEngine.ValueListHash = item.Value;
             }
         }
 
@@ -323,8 +323,8 @@ namespace RTCV.UI
                     nmMinValueHellgenie.Maximum = byte.MaxValue;
                     nmMaxValueHellgenie.Maximum = byte.MaxValue;
 
-                    nmMinValueNightmare.Value = RTC_NightmareEngine.MinValue8Bit;
-                    nmMaxValueNightmare.Value = RTC_NightmareEngine.MaxValue8Bit;
+                    nmMinValueNightmare.Value = NightmareEngine.MinValue8Bit;
+                    nmMaxValueNightmare.Value = NightmareEngine.MaxValue8Bit;
 
                     nmMinValueHellgenie.Value = RTC_HellgenieEngine.MinValue8Bit;
                     nmMaxValueHellgenie.Value = RTC_HellgenieEngine.MaxValue8Bit;
@@ -338,8 +338,8 @@ namespace RTCV.UI
                     nmMinValueHellgenie.Maximum = ushort.MaxValue;
                     nmMaxValueHellgenie.Maximum = ushort.MaxValue;
 
-                    nmMinValueNightmare.Value = RTC_NightmareEngine.MinValue16Bit;
-                    nmMaxValueNightmare.Value = RTC_NightmareEngine.MaxValue16Bit;
+                    nmMinValueNightmare.Value = NightmareEngine.MinValue16Bit;
+                    nmMaxValueNightmare.Value = NightmareEngine.MaxValue16Bit;
 
                     nmMinValueHellgenie.Value = RTC_HellgenieEngine.MinValue16Bit;
                     nmMaxValueHellgenie.Value = RTC_HellgenieEngine.MaxValue16Bit;
@@ -352,8 +352,8 @@ namespace RTCV.UI
                     nmMinValueHellgenie.Maximum = uint.MaxValue;
                     nmMaxValueHellgenie.Maximum = uint.MaxValue;
 
-                    nmMinValueNightmare.Value = RTC_NightmareEngine.MinValue32Bit;
-                    nmMaxValueNightmare.Value = RTC_NightmareEngine.MaxValue32Bit;
+                    nmMinValueNightmare.Value = NightmareEngine.MinValue32Bit;
+                    nmMaxValueNightmare.Value = NightmareEngine.MaxValue32Bit;
 
                     nmMinValueHellgenie.Value = RTC_HellgenieEngine.MinValue32Bit;
                     nmMaxValueHellgenie.Value = RTC_HellgenieEngine.MaxValue32Bit;
@@ -366,8 +366,8 @@ namespace RTCV.UI
                     nmMinValueHellgenie.Maximum = ulong.MaxValue;
                     nmMaxValueHellgenie.Maximum = ulong.MaxValue;
 
-                    nmMinValueNightmare.Value = RTC_NightmareEngine.MinValue64Bit;
-                    nmMaxValueNightmare.Value = RTC_NightmareEngine.MaxValue64Bit;
+                    nmMinValueNightmare.Value = NightmareEngine.MinValue64Bit;
+                    nmMaxValueNightmare.Value = NightmareEngine.MaxValue64Bit;
 
                     nmMinValueHellgenie.Value = RTC_HellgenieEngine.MinValue64Bit;
                     nmMaxValueHellgenie.Value = RTC_HellgenieEngine.MaxValue64Bit;
@@ -431,19 +431,19 @@ namespace RTCV.UI
             switch (cbBlastType.SelectedItem.ToString())
             {
                 case "RANDOM":
-                    RTC_NightmareEngine.Algo = NightmareAlgo.RANDOM;
+                    NightmareEngine.Algo = NightmareAlgo.RANDOM;
                     nmMinValueNightmare.Enabled = true;
                     nmMaxValueNightmare.Enabled = true;
                     break;
 
                 case "RANDOMTILT":
-                    RTC_NightmareEngine.Algo = NightmareAlgo.RANDOMTILT;
+                    NightmareEngine.Algo = NightmareAlgo.RANDOMTILT;
                     nmMinValueNightmare.Enabled = true;
                     nmMaxValueNightmare.Enabled = true;
                     break;
 
                 case "TILT":
-                    RTC_NightmareEngine.Algo = NightmareAlgo.TILT;
+                    NightmareEngine.Algo = NightmareAlgo.TILT;
                     nmMinValueNightmare.Enabled = false;
                     nmMaxValueNightmare.Enabled = false;
                     break;
@@ -510,13 +510,13 @@ namespace RTCV.UI
             {
                 nmAlignment.Maximum = new decimal(new int[] { 0, 0, 0, 0 });
                 cbCustomPrecision.Enabled = true;
-                RTC_VectorEngine.UnlockPrecision = true;
+                VectorEngine.UnlockPrecision = true;
             }
             else
             {
                 nmAlignment.Maximum = 3;
                 cbCustomPrecision.Enabled = false;
-                RTC_VectorEngine.UnlockPrecision = true;
+                VectorEngine.UnlockPrecision = true;
             }
         }
     }

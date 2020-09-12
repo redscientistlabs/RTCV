@@ -820,34 +820,34 @@ namespace RTCV.CorruptCore
                 {
                     if (this.GeneratedUsingValueList && !RtcCore.RerollIgnoresOriginalSource)
                     {
-                        Value = Filtering.GetRandomConstant(RTC_CustomEngine.ValueListHash, Precision);
+                        Value = Filtering.GetRandomConstant(CustomEngine.ValueListHash, Precision);
                     }
                     else
                     {
-                        if (RTC_CustomEngine.ValueSource == CustomValueSource.VALUELIST)
+                        if (CustomEngine.ValueSource == CustomValueSource.VALUELIST)
                         {
-                            Value = Filtering.GetRandomConstant(RTC_CustomEngine.ValueListHash, Precision);
+                            Value = Filtering.GetRandomConstant(CustomEngine.ValueListHash, Precision);
                             return;
                         }
 
                         //Generate a random value based on our precision.
                         //We use a BigInteger as we support arbitrary length, but we do use built in methods for 8,16,32 bit for performance reasons
                         BigInteger randomValue = 0;
-                        if (RTC_CustomEngine.ValueSource == CustomValueSource.RANGE)
+                        if (CustomEngine.ValueSource == CustomValueSource.RANGE)
                         {
                             switch (Precision)
                             {
                                 case (1):
-                                    randomValue = RtcCore.RND.NextULong(RTC_CustomEngine.MinValue8Bit, RTC_CustomEngine.MaxValue8Bit, true);
+                                    randomValue = RtcCore.RND.NextULong(CustomEngine.MinValue8Bit, CustomEngine.MaxValue8Bit, true);
                                     break;
                                 case (2):
-                                    randomValue = RtcCore.RND.NextULong(RTC_CustomEngine.MinValue16Bit, RTC_CustomEngine.MaxValue16Bit, true);
+                                    randomValue = RtcCore.RND.NextULong(CustomEngine.MinValue16Bit, CustomEngine.MaxValue16Bit, true);
                                     break;
                                 case (4):
-                                    randomValue = RtcCore.RND.NextULong(RTC_CustomEngine.MinValue32Bit, RTC_CustomEngine.MaxValue32Bit, true);
+                                    randomValue = RtcCore.RND.NextULong(CustomEngine.MinValue32Bit, CustomEngine.MaxValue32Bit, true);
                                     break;
                                 case (8):
-                                    randomValue = RtcCore.RND.NextULong(RTC_CustomEngine.MinValue64Bit, RTC_CustomEngine.MaxValue64Bit, true);
+                                    randomValue = RtcCore.RND.NextULong(CustomEngine.MinValue64Bit, CustomEngine.MaxValue64Bit, true);
                                     break;
                                 //No limits if out of normal range
                                 default:
@@ -857,7 +857,7 @@ namespace RTCV.CorruptCore
                                     break;
                             }
                         }
-                        else if (RTC_CustomEngine.ValueSource == CustomValueSource.RANDOM)
+                        else if (CustomEngine.ValueSource == CustomValueSource.RANDOM)
                         {
                             switch (this.Precision)
                             {
@@ -891,7 +891,7 @@ namespace RTCV.CorruptCore
                 {
                     if (this.GeneratedUsingValueList && !RtcCore.RerollIgnoresOriginalSource)
                     {
-                        Value = Filtering.GetRandomConstant(RTC_VectorEngine.ValueListHash, Precision);
+                        Value = Filtering.GetRandomConstant(VectorEngine.ValueListHash, Precision);
                     }
                     else
                     {

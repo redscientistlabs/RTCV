@@ -11,7 +11,7 @@
     using RTCV.NetCore;
     using RTCV.CorruptCore.Extensions;
 
-    public static class RTC_CustomEngine
+    public static class CustomEngine
     {
         private static Dictionary<string, Type> name2TypeDico = new Dictionary<string, Type>();
         public static Dictionary<string, PartialSpec> Name2TemplateDico = new Dictionary<string, PartialSpec>();
