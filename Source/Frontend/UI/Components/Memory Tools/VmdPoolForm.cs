@@ -38,7 +38,7 @@ namespace RTCV.UI
             RefreshVMDs();
         }
 
-        private void btnUnloadVMD_Click(object sender, EventArgs e)
+        private void UnloadVMD(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
                 return;
@@ -162,11 +162,7 @@ namespace RTCV.UI
             }
         }
 
-        private void VmdPoolForm_Load(object sender, EventArgs e)
-        {
-        }
-
-        private void lbLoadedVmdList_SelectedIndexChanged(object sender, EventArgs e)
+        private void HandleLoadedVmdListSelectionChange(object sender, EventArgs e)
         {
             btnSendToMyVMDs.Enabled = false;
             btnSaveVmd.Enabled = false;
@@ -243,7 +239,7 @@ namespace RTCV.UI
             return sb.ToString();
         }
 
-        private void btnSaveVmd_Click(object sender, EventArgs e)
+        private void SaveVMD(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
                 return;
@@ -292,7 +288,7 @@ namespace RTCV.UI
         }
 
 
-        private void btnLoadVmd_Click(object sender, EventArgs e)
+        private void HandleLoadVMDClick(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog
             {
@@ -325,7 +321,7 @@ namespace RTCV.UI
             }
         }
 
-        private void btnRenameVMD_Click(object sender, EventArgs e)
+        private void HandleRenameVMDClick(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
                 return;
@@ -337,7 +333,7 @@ namespace RTCV.UI
             RefreshVMDs();
         }
 
-        private void btnSendToMyVMDs_Click(object sender, EventArgs e)
+        private void SendToMyVMDs(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
                 return;
