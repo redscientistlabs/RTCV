@@ -333,7 +333,7 @@ namespace RTCV.CorruptCore
                 rtcSpecTemplate.Insert(RTC_DistortionEngine.getDefaultPartial());
 
                 //Custom Engine Config with Nightmare Engine
-                RTC_CustomEngine.getDefaultPartial(rtcSpecTemplate);
+                CustomEngine.getDefaultPartial(rtcSpecTemplate);
 
                 rtcSpecTemplate.Insert(StepActions.getDefaultPartial());
                 rtcSpecTemplate.Insert(Filtering.getDefaultPartial());
@@ -641,7 +641,7 @@ namespace RTCV.CorruptCore
                         bus = RTC_ClusterEngine.GenerateUnit(domain, address, alignment);
                         break;
                     case CorruptionEngine.CUSTOM:
-                        bu = RTC_CustomEngine.GenerateUnit(domain, address, precision, alignment);
+                        bu = CustomEngine.GenerateUnit(domain, address, precision, alignment);
                         break;
                     case CorruptionEngine.NONE:
                         return null;
@@ -723,7 +723,7 @@ namespace RTCV.CorruptCore
             if ((SelectedEngine == CorruptionEngine.HELLGENIE ||
                 SelectedEngine == CorruptionEngine.FREEZE ||
                 SelectedEngine == CorruptionEngine.PIPE ||
-                (SelectedEngine == CorruptionEngine.CUSTOM && RTC_CustomEngine.Lifetime == 0)) &&
+                (SelectedEngine == CorruptionEngine.CUSTOM && CustomEngine.Lifetime == 0)) &&
                 intensity > StepActions.MaxInfiniteBlastUnits)
             {
                 intensity = StepActions.MaxInfiniteBlastUnits; //Capping for cheat max
