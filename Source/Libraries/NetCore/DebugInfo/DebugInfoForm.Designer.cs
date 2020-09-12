@@ -1,6 +1,6 @@
 ﻿namespace RTCV.NetCore
 {
-	partial class DebugInfo_Form
+	partial class DebugInfoForm
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -28,15 +28,15 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DebugInfo_Form));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DebugInfoForm));
             this.btnGetDebugRTC = new System.Windows.Forms.Button();
             this.tbRTC = new System.Windows.Forms.RichTextBox();
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.btnGetDebugEmu = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
+            //
             // btnGetDebugRTC
-            // 
+            //
             this.btnGetDebugRTC.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.btnGetDebugRTC.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGetDebugRTC.Location = new System.Drawing.Point(12, 12);
@@ -47,9 +47,9 @@
             this.btnGetDebugRTC.Text = "Get Debug Info (RTC)";
             this.btnGetDebugRTC.UseVisualStyleBackColor = false;
             this.btnGetDebugRTC.Click += new System.EventHandler(this.btnGetDebugRTC_Click);
-            // 
+            //
             // tbRTC
-            // 
+            //
             this.tbRTC.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.tbRTC.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbRTC.ForeColor = System.Drawing.Color.White;
@@ -59,9 +59,9 @@
             this.tbRTC.TabIndex = 1;
             this.tbRTC.Tag = "color:dark1";
             this.tbRTC.Text = "";
-            // 
+            //
             // richTextBox2
-            // 
+            //
             this.richTextBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.richTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -72,9 +72,9 @@
             this.richTextBox2.TabIndex = 3;
             this.richTextBox2.Tag = "color:dark1";
             this.richTextBox2.Text = "";
-            // 
+            //
             // btnGetDebugEmu
-            // 
+            //
             this.btnGetDebugEmu.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnGetDebugEmu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.btnGetDebugEmu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -86,9 +86,9 @@
             this.btnGetDebugEmu.Text = "Get Debug Info (Emu)";
             this.btnGetDebugEmu.UseVisualStyleBackColor = false;
             this.btnGetDebugEmu.Click += new System.EventHandler(this.btnGetDebugEmu_Click);
-            // 
-            // DebugInfo_Form
-            // 
+            //
+            // DebugInfoForm
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -100,7 +100,7 @@
             this.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F);
             this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "DebugInfo_Form";
+            this.Name = "DebugInfoForm";
             this.Tag = "color:normal";
             this.Text = "Debug Info";
             this.ResumeLayout(false);
