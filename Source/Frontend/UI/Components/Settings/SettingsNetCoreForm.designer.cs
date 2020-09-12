@@ -86,7 +86,7 @@
             this.cbCrashSoundEffect.Size = new System.Drawing.Size(163, 21);
             this.cbCrashSoundEffect.TabIndex = 127;
             this.cbCrashSoundEffect.Tag = "color:dark1";
-            this.cbCrashSoundEffect.SelectedIndexChanged += new System.EventHandler(this.cbCrashSoundEffect_SelectedIndexChanged);
+            this.cbCrashSoundEffect.SelectedIndexChanged += new System.EventHandler(this.OnCrashSoundeffectChange);
             //
             // label1
             //
@@ -171,9 +171,9 @@
             0,
             0,
             0});
-            this.nmGameProtectionDelay.ValueChanged += new System.EventHandler(this.nmGameProtectionDelay_ValueChanged);
-            this.nmGameProtectionDelay.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nmGameProtectionDelay_ValueChanged);
-            this.nmGameProtectionDelay.KeyUp += new System.Windows.Forms.KeyEventHandler(this.nmGameProtectionDelay_ValueChanged);
+            this.nmGameProtectionDelay.ValueChanged += new System.EventHandler(this.OnGameProtectionDelayChange);
+            this.nmGameProtectionDelay.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnGameProtectionDelayChange);
+            this.nmGameProtectionDelay.KeyUp += new System.Windows.Forms.KeyEventHandler(this.OnGameProtectionDelayChange);
             //
             // lbDetachedModeSettings
             //
@@ -200,7 +200,6 @@
             this.Tag = "color:dark1";
             this.Text = "NetCore";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
-            this.Load += new System.EventHandler(this.SettingsNetCoreForm_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             this.pnDetachedModeSettings.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);

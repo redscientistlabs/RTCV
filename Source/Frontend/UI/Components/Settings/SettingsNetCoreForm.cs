@@ -19,7 +19,7 @@
             InitializeComponent();
         }
 
-        private void cbCrashSoundEffect_SelectedIndexChanged(object sender, EventArgs e)
+        private void OnCrashSoundeffectChange(object sender, EventArgs e)
         {
             switch (cbCrashSoundEffect.SelectedIndex)
             {
@@ -43,20 +43,7 @@
             NetCore.Params.SetParam("CRASHSOUND", cbCrashSoundEffect.SelectedIndex.ToString());
         }
 
-        private void nmGameProtectionDelay_ValueChanged(object sender, KeyPressEventArgs e)
-        {
-            UpdateGameProtectionDelay();
-        }
-
-        private void nmGameProtectionDelay_ValueChanged(object sender, KeyEventArgs e)
-        {
-            UpdateGameProtectionDelay();
-        }
-
-        private void nmGameProtectionDelay_ValueChanged(object sender, EventArgs e)
-        {
-            UpdateGameProtectionDelay();
-        }
+        private void OnGameProtectionDelayChange(object sender, EventArgs e) => UpdateGameProtectionDelay();
 
         public static void UpdateGameProtectionDelay()
         {
@@ -65,10 +52,6 @@
             {
                 GameProtection.Reset(false);
             }
-        }
-
-        private void SettingsNetCoreForm_Load(object sender, EventArgs e)
-        {
         }
     }
 }
