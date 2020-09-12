@@ -294,7 +294,7 @@ namespace RTCV.UI
             ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
             if (item != null)
             {
-                RTC_VectorEngine.LimiterListHash = item.Value;
+                VectorEngine.LimiterListHash = item.Value;
             }
         }
 
@@ -303,7 +303,7 @@ namespace RTCV.UI
             ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
             if (item != null)
             {
-                RTC_VectorEngine.ValueListHash = item.Value;
+                VectorEngine.ValueListHash = item.Value;
             }
         }
 
@@ -510,13 +510,13 @@ namespace RTCV.UI
             {
                 nmAlignment.Maximum = new decimal(new int[] { 0, 0, 0, 0 });
                 cbCustomPrecision.Enabled = true;
-                RTC_VectorEngine.UnlockPrecision = true;
+                VectorEngine.UnlockPrecision = true;
             }
             else
             {
                 nmAlignment.Maximum = 3;
                 cbCustomPrecision.Enabled = false;
-                RTC_VectorEngine.UnlockPrecision = true;
+                VectorEngine.UnlockPrecision = true;
             }
         }
     }

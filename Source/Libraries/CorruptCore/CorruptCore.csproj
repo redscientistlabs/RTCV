@@ -88,7 +88,7 @@
     <Compile Include="Corruption Engines\RTC_HellgenieEngine.cs" />
     <Compile Include="Corruption Engines\RTC_NightmareEngine.cs" />
     <Compile Include="Corruption Engines\RTC_PipeEngine.cs" />
-    <Compile Include="Corruption Engines\RTC_VectorEngine.cs" />
+    <Compile Include="Corruption Engines\VectorEngine.cs" />
     <Compile Include="EventWarlock\Editor\WarlockEditorFieldAttribute.cs" />
     <Compile Include="EventWarlock\Editor\WarlockEditableAttribute.cs" />
     <Compile Include="EventWarlock\EWConditional.cs" />
