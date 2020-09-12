@@ -2,11 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Windows.Forms;
     using RTCV.NetCore;
     using RTCV.CorruptCore.Extensions;
 
+    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "StockpileManager_EmuSide members may keep their underscores for compatibility with existing implementations")]
     public static class StockpileManager_EmuSide
     {
         public static BlastLayer CorruptBL = null;
