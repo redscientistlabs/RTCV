@@ -37,7 +37,7 @@ namespace RTCV.UI.Modular
                     UICore.mtForm = new SelectBoxForm(new ComponentForm[] {
                         S.GET<VmdNoToolForm>(),
                         S.GET<MyVMDsForm>(),
-                        S.GET<RTC_VmdPool_Form>(),
+                        S.GET<VmdPoolForm>(),
                         S.GET<VmdGenForm>(),
                         S.GET<RTC_VmdSimpleGen_Form>(),
                         S.GET<VmdActForm>(),
