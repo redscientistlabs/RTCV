@@ -50,13 +50,13 @@ namespace RTCV.UI
             });
         }
 
-        public void SetMemoryDomainsSelectedDomains(string[] _domains)
+        public void SetMemoryDomainsSelectedDomains(string[] domains)
         {
             var oldState = this.Visible;
 
             for (int i = 0; i < lbMemoryDomains.Items.Count; i++)
             {
-                if (_domains.Contains(lbMemoryDomains.Items[i].ToString()))
+                if (domains.Contains(lbMemoryDomains.Items[i].ToString()))
                 {
                     lbMemoryDomains.SetSelected(i, true);
                 }
@@ -70,13 +70,13 @@ namespace RTCV.UI
             this.Visible = oldState;
         }
 
-        public void SetMemoryDomainsAllButSelectedDomains(string[] _blacklistedDomains)
+        public void SetMemoryDomainsAllButSelectedDomains(string[] blacklistedDomains)
         {
             var oldState = this.Visible;
 
             for (int i = 0; i < lbMemoryDomains.Items.Count; i++)
             {
-                if (_blacklistedDomains?.Contains(lbMemoryDomains.Items[i].ToString()) ?? false)
+                if (blacklistedDomains?.Contains(lbMemoryDomains.Items[i].ToString()) ?? false)
                 {
                     lbMemoryDomains.SetSelected(i, false);
                 }
