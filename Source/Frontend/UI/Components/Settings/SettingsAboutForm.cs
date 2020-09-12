@@ -6,31 +6,29 @@
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class RTC_SettingsAbout_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class SettingsAboutForm : ComponentForm, IAutoColorize, IBlockable
     {
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        public RTC_SettingsAbout_Form()
+        public SettingsAboutForm()
         {
             InitializeComponent();
-
-            this.undockedSizable = false;
         }
 
-        private void RTC_SettingsAbout_Form_Load(object sender, EventArgs e)
+        private void OnFormLoad(object sender, EventArgs e)
         {
             lbVersion.Text += RtcCore.RtcVersion;
             lbProcess.Text += (RtcCore.Attached ? "Attached mode" : "Detached mode");
             lbConnectedTo.Text += (string)NetCore.AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Not Connected";
         }
 
-        private void LbSourceCode_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void OpenRTCVRepo(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/ircluzar/RTCV");
+            System.Diagnostics.Process.Start("https://github.com/redscientistlabs/RTCV");
         }
 
-        private void LbRTCHome_Clicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void OpenRTCHome(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://redscientist.com/rtc");
         }

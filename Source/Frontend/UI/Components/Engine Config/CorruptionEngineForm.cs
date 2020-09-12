@@ -92,15 +92,15 @@ namespace RTCV.UI
             clusterChunkSize.ValueChanged += UpdateClusterChunkSize;
             clusterChunkModifier.ValueChanged += UpdateClusterModifier;
 
-            for (int j = 0; j < RTC_ClusterEngine.ShuffleTypes.Length; j++)
+            for (int j = 0; j < ClusterEngine.ShuffleTypes.Length; j++)
             {
-                cbClusterMethod.Items.Add(RTC_ClusterEngine.ShuffleTypes[j]);
+                cbClusterMethod.Items.Add(ClusterEngine.ShuffleTypes[j]);
             }
             cbClusterMethod.SelectedIndex = 0;
 
-            for (int j = 0; j < RTC_ClusterEngine.Directions.Length; j++)
+            for (int j = 0; j < ClusterEngine.Directions.Length; j++)
             {
-                clusterDirection.Items.Add(RTC_ClusterEngine.Directions[j]);
+                clusterDirection.Items.Add(ClusterEngine.Directions[j]);
             }
             clusterDirection.SelectedIndex = 0;
         }
@@ -294,7 +294,7 @@ namespace RTCV.UI
             ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
             if (item != null)
             {
-                RTC_VectorEngine.LimiterListHash = item.Value;
+                VectorEngine.LimiterListHash = item.Value;
             }
         }
 
@@ -303,7 +303,7 @@ namespace RTCV.UI
             ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
             if (item != null)
             {
-                RTC_VectorEngine.ValueListHash = item.Value;
+                VectorEngine.ValueListHash = item.Value;
             }
         }
 
@@ -323,11 +323,11 @@ namespace RTCV.UI
                     nmMinValueHellgenie.Maximum = byte.MaxValue;
                     nmMaxValueHellgenie.Maximum = byte.MaxValue;
 
-                    nmMinValueNightmare.Value = RTC_NightmareEngine.MinValue8Bit;
-                    nmMaxValueNightmare.Value = RTC_NightmareEngine.MaxValue8Bit;
+                    nmMinValueNightmare.Value = NightmareEngine.MinValue8Bit;
+                    nmMaxValueNightmare.Value = NightmareEngine.MaxValue8Bit;
 
-                    nmMinValueHellgenie.Value = RTC_HellgenieEngine.MinValue8Bit;
-                    nmMaxValueHellgenie.Value = RTC_HellgenieEngine.MaxValue8Bit;
+                    nmMinValueHellgenie.Value = HellgenieEngine.MinValue8Bit;
+                    nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue8Bit;
 
                     break;
 
@@ -338,11 +338,11 @@ namespace RTCV.UI
                     nmMinValueHellgenie.Maximum = ushort.MaxValue;
                     nmMaxValueHellgenie.Maximum = ushort.MaxValue;
 
-                    nmMinValueNightmare.Value = RTC_NightmareEngine.MinValue16Bit;
-                    nmMaxValueNightmare.Value = RTC_NightmareEngine.MaxValue16Bit;
+                    nmMinValueNightmare.Value = NightmareEngine.MinValue16Bit;
+                    nmMaxValueNightmare.Value = NightmareEngine.MaxValue16Bit;
 
-                    nmMinValueHellgenie.Value = RTC_HellgenieEngine.MinValue16Bit;
-                    nmMaxValueHellgenie.Value = RTC_HellgenieEngine.MaxValue16Bit;
+                    nmMinValueHellgenie.Value = HellgenieEngine.MinValue16Bit;
+                    nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue16Bit;
 
                     break;
                 case 4:
@@ -352,11 +352,11 @@ namespace RTCV.UI
                     nmMinValueHellgenie.Maximum = uint.MaxValue;
                     nmMaxValueHellgenie.Maximum = uint.MaxValue;
 
-                    nmMinValueNightmare.Value = RTC_NightmareEngine.MinValue32Bit;
-                    nmMaxValueNightmare.Value = RTC_NightmareEngine.MaxValue32Bit;
+                    nmMinValueNightmare.Value = NightmareEngine.MinValue32Bit;
+                    nmMaxValueNightmare.Value = NightmareEngine.MaxValue32Bit;
 
-                    nmMinValueHellgenie.Value = RTC_HellgenieEngine.MinValue32Bit;
-                    nmMaxValueHellgenie.Value = RTC_HellgenieEngine.MaxValue32Bit;
+                    nmMinValueHellgenie.Value = HellgenieEngine.MinValue32Bit;
+                    nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue32Bit;
 
                     break;
                 case 8:
@@ -366,11 +366,11 @@ namespace RTCV.UI
                     nmMinValueHellgenie.Maximum = ulong.MaxValue;
                     nmMaxValueHellgenie.Maximum = ulong.MaxValue;
 
-                    nmMinValueNightmare.Value = RTC_NightmareEngine.MinValue64Bit;
-                    nmMaxValueNightmare.Value = RTC_NightmareEngine.MaxValue64Bit;
+                    nmMinValueNightmare.Value = NightmareEngine.MinValue64Bit;
+                    nmMaxValueNightmare.Value = NightmareEngine.MaxValue64Bit;
 
-                    nmMinValueHellgenie.Value = RTC_HellgenieEngine.MinValue64Bit;
-                    nmMaxValueHellgenie.Value = RTC_HellgenieEngine.MaxValue64Bit;
+                    nmMinValueHellgenie.Value = HellgenieEngine.MinValue64Bit;
+                    nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue64Bit;
 
                     break;
             }
@@ -431,19 +431,19 @@ namespace RTCV.UI
             switch (cbBlastType.SelectedItem.ToString())
             {
                 case "RANDOM":
-                    RTC_NightmareEngine.Algo = NightmareAlgo.RANDOM;
+                    NightmareEngine.Algo = NightmareAlgo.RANDOM;
                     nmMinValueNightmare.Enabled = true;
                     nmMaxValueNightmare.Enabled = true;
                     break;
 
                 case "RANDOMTILT":
-                    RTC_NightmareEngine.Algo = NightmareAlgo.RANDOMTILT;
+                    NightmareEngine.Algo = NightmareAlgo.RANDOMTILT;
                     nmMinValueNightmare.Enabled = true;
                     nmMaxValueNightmare.Enabled = true;
                     break;
 
                 case "TILT":
-                    RTC_NightmareEngine.Algo = NightmareAlgo.TILT;
+                    NightmareEngine.Algo = NightmareAlgo.TILT;
                     nmMinValueNightmare.Enabled = false;
                     nmMaxValueNightmare.Enabled = false;
                     break;
@@ -461,23 +461,23 @@ namespace RTCV.UI
             ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
             if (item != null)
             {
-                RTC_ClusterEngine.LimiterListHash = item.Value;
+                ClusterEngine.LimiterListHash = item.Value;
             }
         }
 
         private void UpdateClusterChunkSize(object sender, EventArgs e)
         {
-            RTC_ClusterEngine.ChunkSize = (int)clusterChunkSize.Value;
+            ClusterEngine.ChunkSize = (int)clusterChunkSize.Value;
         }
 
         private void UpdateClusterModifier(object sender, EventArgs e)
         {
-            RTC_ClusterEngine.Modifier = (int)clusterChunkModifier.Value;
+            ClusterEngine.Modifier = (int)clusterChunkModifier.Value;
         }
 
         private void UpdateClusterMethod(object sender, EventArgs e)
         {
-            RTC_ClusterEngine.ShuffleType = cbClusterMethod.SelectedItem.ToString();
+            ClusterEngine.ShuffleType = cbClusterMethod.SelectedItem.ToString();
 
             if (cbClusterMethod.SelectedItem.ToString().ToLower().Contains("rotate"))
             {
@@ -491,17 +491,17 @@ namespace RTCV.UI
 
         private void UpdateClusterSplitUnits(object sender, EventArgs e)
         {
-            RTC_ClusterEngine.OutputMultipleUnits = clusterSplitUnits.Checked;
+            ClusterEngine.OutputMultipleUnits = clusterSplitUnits.Checked;
         }
 
         private void UpdateClusterDirection(object sender, EventArgs e)
         {
-            RTC_ClusterEngine.Direction = clusterDirection.SelectedItem.ToString();
+            ClusterEngine.Direction = clusterDirection.SelectedItem.ToString();
         }
 
         private void UpdateClusterFilterAll(object sender, EventArgs e)
         {
-            RTC_ClusterEngine.FilterAll = clusterFilterAll.Checked;
+            ClusterEngine.FilterAll = clusterFilterAll.Checked;
         }
 
         private void UpdateVectorUnlockPrecision(object sender, EventArgs e)
@@ -510,13 +510,13 @@ namespace RTCV.UI
             {
                 nmAlignment.Maximum = new decimal(new int[] { 0, 0, 0, 0 });
                 cbCustomPrecision.Enabled = true;
-                RTC_VectorEngine.UnlockPrecision = true;
+                VectorEngine.UnlockPrecision = true;
             }
             else
             {
                 nmAlignment.Maximum = 3;
                 cbCustomPrecision.Enabled = false;
-                RTC_VectorEngine.UnlockPrecision = true;
+                VectorEngine.UnlockPrecision = true;
             }
         }
     }

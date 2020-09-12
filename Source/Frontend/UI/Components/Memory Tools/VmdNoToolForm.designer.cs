@@ -1,6 +1,6 @@
 ﻿namespace RTCV.UI
 {
-    partial class RTC_VmdNoTool_Form
+    partial class VmdNoToolForm
 	{
         /// <summary>
         /// Required designer variable.
@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_VmdNoTool_Form));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VmdNoToolForm));
             this.SuspendLayout();
-            // 
-            // RTC_VmdNoTool_Form
-            // 
+            //
+            // VmdNoToolForm
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -40,7 +40,7 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "RTC_VmdNoTool_Form";
+            this.Name = "VmdNoToolForm";
             this.Tag = "color:dark1";
             this.Text = "No Tool Selected";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);

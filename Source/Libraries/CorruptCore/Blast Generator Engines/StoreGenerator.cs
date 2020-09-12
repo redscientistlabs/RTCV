@@ -2,7 +2,7 @@ namespace RTCV.CorruptCore
 {
     using System;
 
-    public static class RTC_StoreGenerator
+    public static class StoreGenerator
     {
         internal static BlastLayer GenerateLayer(string note, string domain, long stepSize, long startAddress, long endAddress,
             ulong param1, int precision, int lifetime, int executeFrame, bool loop, int seed, BGStoreMode mode)

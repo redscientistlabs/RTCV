@@ -3,7 +3,7 @@ namespace RTCV.CorruptCore
     using System.Collections.Generic;
     using RTCV.NetCore;
 
-    public static class RTC_ClusterEngine
+    public static class ClusterEngine
     {
         const string rand = "Random";
         const string reverse = "Reverse";

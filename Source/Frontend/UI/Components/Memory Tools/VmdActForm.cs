@@ -566,7 +566,7 @@
 
                 MemoryDomains.AddVMD(VMD);
 
-                S.GET<RTC_VmdPool_Form>().RefreshVMDs();
+                S.GET<VmdPoolForm>().RefreshVMDs();
 
                 return;
             }

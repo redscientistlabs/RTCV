@@ -6,7 +6,7 @@ namespace RTCV.CorruptCore
     using RTCV.Common.CustomExtensions;
     using RTCV.CorruptCore.Extensions;
 
-    public static class RTC_ValueGenerator
+    public static class ValueGenerator
     {
         private static byte[] param1Bytes;
         private static byte[] param2Bytes;

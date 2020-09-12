@@ -201,14 +201,14 @@ namespace RTCV.UI
             lbWordSizeValue.Text = "######";
 
             //refresh to vmd pool menu
-            S.GET<RTC_VmdPool_Form>().RefreshVMDs();
+            S.GET<VmdPoolForm>().RefreshVMDs();
 
             if (!AutoGenerate)
             {
                 //Selects back the VMD Pool menu
                 foreach (var item in UICore.mtForm.cbSelectBox.Items)
                 {
-                    if (((dynamic)item).value is RTC_VmdPool_Form)
+                    if (((dynamic)item).value is VmdPoolForm)
                     {
                         UICore.mtForm.cbSelectBox.SelectedItem = item;
                         break;
