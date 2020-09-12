@@ -278,7 +278,7 @@ namespace RTCV.UI
 
                     if (StockpileManager_UISide.BackupedState != null)
                     {
-                        S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected(StockpileManager_UISide.BackupedState.SelectedDomains.ToArray());
+                        S.GET<MemoryDomainsForm>().RefreshDomainsAndKeepSelected(StockpileManager_UISide.BackupedState.SelectedDomains.ToArray());
                     }
 
                     GameProtection.Start();
@@ -378,8 +378,8 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                S.GET<RTC_MemoryDomains_Form>().RefreshDomains();
-                S.GET<RTC_MemoryDomains_Form>().SetMemoryDomainsAllButSelectedDomains(AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] as string[] ?? new string[] { });
+                S.GET<MemoryDomainsForm>().RefreshDomains();
+                S.GET<MemoryDomainsForm>().SetMemoryDomainsAllButSelectedDomains(AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] as string[] ?? new string[] { });
             });
         }
 

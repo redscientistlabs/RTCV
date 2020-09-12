@@ -126,7 +126,7 @@ namespace RTCV.UI
 
             //S.GET<GlitchHarvesterIntensityForm>().Visible = true;
             S.GET<GeneralParametersForm>().Show();
-            S.GET<RTC_MemoryDomains_Form>().Show();
+            S.GET<MemoryDomainsForm>().Show();
             S.GET<GlitchHarvesterIntensityForm>().Show();
 
             switch (cbSelectedEngine.SelectedItem.ToString())
@@ -213,7 +213,7 @@ namespace RTCV.UI
                     S.GET<CoreForm>().AutoCorrupt = false;
                     S.GET<CoreForm>().btnAutoCorrupt.Visible = false;
                     S.GET<GeneralParametersForm>().Hide();
-                    S.GET<RTC_MemoryDomains_Form>().Hide();
+                    S.GET<MemoryDomainsForm>().Hide();
                     S.GET<GlitchHarvesterIntensityForm>().Hide();
                     break;
 
@@ -227,7 +227,7 @@ namespace RTCV.UI
                 S.GET<GeneralParametersForm>().multiTB_Intensity.Visible = false;
                 S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Visible = false;
                 S.GET<GeneralParametersForm>().cbBlastRadius.Visible = false;
-                S.GET<RTC_MemoryDomains_Form>().lbMemoryDomains.Visible = false;
+                S.GET<MemoryDomainsForm>().lbMemoryDomains.Visible = false;
             }
             else
             {
@@ -235,7 +235,7 @@ namespace RTCV.UI
                 S.GET<GeneralParametersForm>().multiTB_Intensity.Visible = true;
                 S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Visible = true;
                 S.GET<GeneralParametersForm>().cbBlastRadius.Visible = true;
-                S.GET<RTC_MemoryDomains_Form>().lbMemoryDomains.Visible = true;
+                S.GET<MemoryDomainsForm>().lbMemoryDomains.Visible = true;
             }
 
             cbSelectedEngine.BringToFront();
