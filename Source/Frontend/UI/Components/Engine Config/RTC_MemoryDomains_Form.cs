@@ -29,7 +29,7 @@ namespace RTCV.UI
             updateTimer.Elapsed += UpdateSelectedMemoryDomains;
 
 
-            //Registers the drag and drop with RTC_MyVMDs_Form
+            //Registers the drag and drop with MyVMDsForm
             AllowDrop = true;
             this.DragEnter += S.GET<RTC_VmdPool_Form>().RTC_VmdPool_Form_DragEnter;
             this.DragDrop += S.GET<RTC_VmdPool_Form>().RTC_VmdPool_Form_DragDrop;
