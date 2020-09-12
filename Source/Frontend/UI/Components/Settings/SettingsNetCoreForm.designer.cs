@@ -1,6 +1,6 @@
 ﻿namespace RTCV.UI
 {
-    partial class RTC_SettingsNetCore_Form
+    partial class SettingsNetCoreForm
     {
         /// <summary>
         /// Required designer variable.
@@ -43,9 +43,9 @@
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmGameProtectionDelay)).BeginInit();
             this.SuspendLayout();
-            // 
+            //
             // pnDetachedModeSettings
-            // 
+            //
             this.pnDetachedModeSettings.BackColor = System.Drawing.Color.Gray;
             this.pnDetachedModeSettings.Controls.Add(this.groupBox2);
             this.pnDetachedModeSettings.Controls.Add(this.groupBox1);
@@ -54,9 +54,9 @@
             this.pnDetachedModeSettings.Size = new System.Drawing.Size(250, 190);
             this.pnDetachedModeSettings.TabIndex = 132;
             this.pnDetachedModeSettings.Tag = "color:normal";
-            // 
+            //
             // groupBox2
-            // 
+            //
             this.groupBox2.Controls.Add(this.cbCrashSoundEffect);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
@@ -67,9 +67,9 @@
             this.groupBox2.TabIndex = 125;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "NetCore";
-            // 
+            //
             // cbCrashSoundEffect
-            // 
+            //
             this.cbCrashSoundEffect.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.cbCrashSoundEffect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCrashSoundEffect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -87,9 +87,9 @@
             this.cbCrashSoundEffect.TabIndex = 127;
             this.cbCrashSoundEffect.Tag = "color:dark1";
             this.cbCrashSoundEffect.SelectedIndexChanged += new System.EventHandler(this.cbCrashSoundEffect_SelectedIndexChanged);
-            // 
+            //
             // label1
-            // 
+            //
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.label1.Location = new System.Drawing.Point(15, 17);
@@ -97,9 +97,9 @@
             this.label1.Size = new System.Drawing.Size(99, 13);
             this.label1.TabIndex = 126;
             this.label1.Text = "Crash sound effect:";
-            // 
+            //
             // groupBox1
-            // 
+            //
             this.groupBox1.Controls.Add(this.label20);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label21);
@@ -112,9 +112,9 @@
             this.groupBox1.TabIndex = 124;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Game Protection";
-            // 
+            //
             // label20
-            // 
+            //
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label20.ForeColor = System.Drawing.Color.White;
@@ -123,9 +123,9 @@
             this.label20.Size = new System.Drawing.Size(129, 13);
             this.label20.TabIndex = 116;
             this.label20.Text = "Backups the game state";
-            // 
+            //
             // label3
-            // 
+            //
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label3.ForeColor = System.Drawing.Color.White;
@@ -134,9 +134,9 @@
             this.label3.Size = new System.Drawing.Size(49, 13);
             this.label3.TabIndex = 115;
             this.label3.Text = "seconds";
-            // 
+            //
             // label21
-            // 
+            //
             this.label21.AutoSize = true;
             this.label21.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label21.ForeColor = System.Drawing.Color.White;
@@ -145,9 +145,9 @@
             this.label21.Size = new System.Drawing.Size(33, 13);
             this.label21.TabIndex = 117;
             this.label21.Text = "every";
-            // 
+            //
             // nmGameProtectionDelay
-            // 
+            //
             this.nmGameProtectionDelay.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.nmGameProtectionDelay.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.nmGameProtectionDelay.ForeColor = System.Drawing.Color.White;
@@ -174,9 +174,9 @@
             this.nmGameProtectionDelay.ValueChanged += new System.EventHandler(this.nmGameProtectionDelay_ValueChanged);
             this.nmGameProtectionDelay.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.nmGameProtectionDelay_ValueChanged);
             this.nmGameProtectionDelay.KeyUp += new System.Windows.Forms.KeyEventHandler(this.nmGameProtectionDelay_ValueChanged);
-            // 
+            //
             // lbDetachedModeSettings
-            // 
+            //
             this.lbDetachedModeSettings.AutoSize = true;
             this.lbDetachedModeSettings.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
             this.lbDetachedModeSettings.ForeColor = System.Drawing.Color.White;
@@ -185,9 +185,9 @@
             this.lbDetachedModeSettings.Size = new System.Drawing.Size(138, 15);
             this.lbDetachedModeSettings.TabIndex = 133;
             this.lbDetachedModeSettings.Text = "Detached Mode Settings";
-            // 
-            // RTC_SettingsNetCore_Form
-            // 
+            //
+            // SettingsNetCoreForm
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -196,11 +196,11 @@
             this.Controls.Add(this.lbDetachedModeSettings);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "RTC_SettingsNetCore_Form";
+            this.Name = "SettingsNetCoreForm";
             this.Tag = "color:dark1";
             this.Text = "NetCore";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
-            this.Load += new System.EventHandler(this.RTC_SettingsNetCore_Form_Load);
+            this.Load += new System.EventHandler(this.SettingsNetCoreForm_Load);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             this.pnDetachedModeSettings.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);

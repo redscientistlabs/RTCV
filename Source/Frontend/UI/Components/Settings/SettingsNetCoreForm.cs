@@ -9,12 +9,12 @@
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class RTC_SettingsNetCore_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class SettingsNetCoreForm : ComponentForm, IAutoColorize, IBlockable
     {
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        public RTC_SettingsNetCore_Form()
+        public SettingsNetCoreForm()
         {
             InitializeComponent();
         }
@@ -60,14 +60,14 @@
 
         public static void UpdateGameProtectionDelay()
         {
-            GameProtection.BackupInterval = Convert.ToInt32(S.GET<RTC_SettingsNetCore_Form>().nmGameProtectionDelay.Value);
+            GameProtection.BackupInterval = Convert.ToInt32(S.GET<SettingsNetCoreForm>().nmGameProtectionDelay.Value);
             if (GameProtection.isRunning)
             {
                 GameProtection.Reset(false);
             }
         }
 
-        private void RTC_SettingsNetCore_Form_Load(object sender, EventArgs e)
+        private void SettingsNetCoreForm_Load(object sender, EventArgs e)
         {
         }
     }
