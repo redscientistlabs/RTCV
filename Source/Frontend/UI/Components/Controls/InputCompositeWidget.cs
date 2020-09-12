@@ -29,7 +29,7 @@ namespace RTCV.UI.Components.Controls
         private ToolTip _tooltip;
         private string _bindingTooltipText;
 
-        public void SetupTooltip(ToolTip tip, string bindingText)
+        internal void SetupTooltip(ToolTip tip, string bindingText)
         {
             _tooltip = tip;
             _tooltip.SetToolTip(btnSpecial, "Click here for special tricky bindings");

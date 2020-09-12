@@ -86,7 +86,7 @@ namespace RTCV.CorruptCore
             return sk;
         }
 
-        public static void SetCore(StashKey sk)
+        internal static void SetCore(StashKey sk)
         {
             SetCore(sk.SystemName, sk.SystemCore);
         }

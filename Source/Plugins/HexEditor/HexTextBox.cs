@@ -35,6 +35,11 @@ namespace RTCV.Plugins.HexEditor
 
         protected override void OnKeyPress(KeyPressEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             if (e.KeyChar == '\b' || e.KeyChar == 22 || e.KeyChar == 1 || e.KeyChar == 3)
             {
                 return;
@@ -48,6 +53,11 @@ namespace RTCV.Plugins.HexEditor
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             if (e.KeyCode == Keys.Up)
             {
                 if (Text.IsHex() && !string.IsNullOrEmpty(_addressFormatStr))

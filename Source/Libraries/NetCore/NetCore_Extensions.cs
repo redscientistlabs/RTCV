@@ -45,6 +45,11 @@ namespace RTCV.NetCore.NetCore_Extensions
 
         public void Serialize(ref byte[] buffer, ref int offset, HashSet<byte[]> set)
         {
+            if (set == null)
+            {
+                throw new ArgumentNullException(nameof(set));
+            }
+
             // What do we need?
             // - The comparer
             // - Number of entries
@@ -92,6 +97,11 @@ namespace RTCV.NetCore.NetCore_Extensions
 
         public void Serialize(ref byte[] buffer, ref int offset, HashSet<byte?[]> set)
         {
+            if (set == null)
+            {
+                throw new ArgumentNullException(nameof(set));
+            }
+
             // What do we need?
             // - The comparer
             // - Number of entries
