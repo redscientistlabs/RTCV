@@ -8,22 +8,22 @@ namespace RTCV.Vanguard
 
     public class VanguardConnector : IRoutable, IDisposable
     {
-        private NetCoreReceiver receiver;
+        private NetCoreReceiver _receiver;
 
         public NetCoreConnector netConn { get; private set; }
         private CorruptCoreConnector corruptConn;
 
         public NetworkStatus netcoreStatus { get => netConn.status; }
 
-        public VanguardConnector(NetCoreReceiver _receiver)
+        public VanguardConnector(NetCoreReceiver receiver)
         {
-            receiver = _receiver;
+            _receiver = receiver;
 
             LocalNetCoreRouter.registerEndpoint(this, NetcoreCommands.VANGUARD);
             corruptConn = new CorruptCoreConnector();
             LocalNetCoreRouter.registerEndpoint(corruptConn, NetcoreCommands.CORRUPTCORE);
 
-            if (receiver.Attached)//attached mode
+            if (_receiver.Attached)//attached mode
             {
                 RtcCore.Attached = true;
                 UI.UICore.Start(null);
@@ -70,7 +70,7 @@ namespace RTCV.Vanguard
             }
             else
             {   //This is for the Vanguard Implementation
-                receiver.OnMessageReceived(e);
+                _receiver.OnMessageReceived(e);
                 return e.returnMessage;
             }
         }
