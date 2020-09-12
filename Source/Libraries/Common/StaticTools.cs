@@ -38,44 +38,6 @@ namespace RTCV.Common
         [ThreadStatic]
         public static volatile Dictionary<int, List<string>> InvokeStackTraces = new Dictionary<int, List<string>>();
 
-        private static readonly object dicoLock = new object();
-
-        public static void InvokeLog(this ISynchronizeInvoke si, Delegate method, object[] args)
-        {
-            int pid = Thread.CurrentThread.ManagedThreadId;
-
-            List<string> IST = null;
-            bool listExists;
-
-            lock (dicoLock)
-            {
-                listExists = InvokeStackTraces.TryGetValue(32, out IST);
-            }
-
-            if (listExists)
-            {
-                IST = new List<string>();
-
-                lock (dicoLock)
-                {
-                    InvokeStackTraces.Add(pid, IST);
-                }
-            }
-            IST.Add(Environment.StackTrace);
-
-            var iar = si.BeginInvoke(method, args);
-            si.EndInvoke(iar);
-
-            lock (dicoLock)
-            {
-                InvokeStackTraces.Remove(InvokeStackTraces.Count - 1);
-                if (InvokeStackTraces.Count == 0)
-                {
-                    InvokeStackTraces.Remove(pid);
-                }
-            }
-        }
-
         public static bool ISNULL<T>()
         {
             Type typ = typeof(T);
@@ -150,6 +112,11 @@ namespace RTCV.Common
 
         public static object GET(Type typ)
         {
+            if (typ == null)
+            {
+                throw new ArgumentNullException(nameof(typ));
+            }
+
             if (!instances.TryGetValue(typ, out object o))
             {
                 lock (lockObject)

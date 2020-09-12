@@ -14,8 +14,8 @@ namespace RTCV.UI
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class MemoryDomainsForm : ComponentForm, IAutoColorize, IBlockable
     {
-        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+        private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
         private System.Timers.Timer updateTimer;
 
         public MemoryDomainsForm()
@@ -29,7 +29,7 @@ namespace RTCV.UI
             updateTimer.Elapsed += UpdateSelectedMemoryDomains;
 
 
-            //Registers the drag and drop with RTC_MyVMDs_Form
+            //Registers the drag and drop with MyVMDsForm
             AllowDrop = true;
             this.DragEnter += S.GET<RTC_VmdPool_Form>().RTC_VmdPool_Form_DragEnter;
             this.DragDrop += S.GET<RTC_VmdPool_Form>().RTC_VmdPool_Form_DragDrop;

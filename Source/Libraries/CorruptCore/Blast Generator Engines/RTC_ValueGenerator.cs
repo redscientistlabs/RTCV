@@ -11,7 +11,7 @@ namespace RTCV.CorruptCore
         private static byte[] param1Bytes;
         private static byte[] param2Bytes;
 
-        public static BlastLayer GenerateLayer(string note, string domain, long stepSize, long startAddress, long endAddress,
+        internal static BlastLayer GenerateLayer(string note, string domain, long stepSize, long startAddress, long endAddress,
             ulong param1, ulong param2, int precision, int lifetime, int executeFrame, bool loop, int seed, BGValueMode mode)
         {
             BlastLayer bl = new BlastLayer();

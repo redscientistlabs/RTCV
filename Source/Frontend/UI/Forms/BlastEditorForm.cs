@@ -1198,7 +1198,7 @@ namespace RTCV.UI
         private BindingSource bs = null;
         private BindingSource _bs = null;
 
-        public void LoadStashkey(StashKey sk, bool silent = false)
+        internal void LoadStashkey(StashKey sk, bool silent = false)
         {
             if (!RefreshDomains())
             {
@@ -1957,7 +1957,7 @@ namespace RTCV.UI
             S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newSk, false);
         }
 
-        public static void RefreshNoteIcons(DataGridViewRowCollection rows)
+        private static void RefreshNoteIcons(DataGridViewRowCollection rows)
         {
             foreach (DataGridViewRow row in rows)
             {
