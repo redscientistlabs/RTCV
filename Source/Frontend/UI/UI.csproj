@@ -279,11 +279,11 @@
     <Compile Include="Components\TemplateForm.designer.cs">
       <DependentUpon>TemplateForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Settings\RTC_SettingsAbout_Form.cs">
+    <Compile Include="Components\Settings\SettingsAboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Settings\RTC_SettingsAbout_Form.designer.cs">
-      <DependentUpon>RTC_SettingsAbout_Form.cs</DependentUpon>
+    <Compile Include="Components\Settings\SettingsAboutForm.designer.cs">
+      <DependentUpon>SettingsAboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Settings\RTC_SettingsGeneral_Form.cs">
       <SubType>Form</SubType>
@@ -554,8 +554,8 @@
     <EmbeddedResource Include="Components\TemplateForm.resx">
       <DependentUpon>TemplateForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Settings\RTC_SettingsAbout_Form.resx">
-      <DependentUpon>RTC_SettingsAbout_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Settings\SettingsAboutForm.resx">
+      <DependentUpon>SettingsAboutForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Settings\RTC_SettingsGeneral_Form.resx">
       <DependentUpon>RTC_SettingsGeneral_Form.cs</DependentUpon>
