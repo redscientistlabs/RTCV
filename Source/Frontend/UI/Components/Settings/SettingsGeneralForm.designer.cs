@@ -1,6 +1,6 @@
 namespace RTCV.UI
 {
-    partial class RTC_SettingsGeneral_Form
+    partial class SettingsGeneralForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@ namespace RTCV.UI
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RTC_SettingsGeneral_Form));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsGeneralForm));
             this.panel1 = new System.Windows.Forms.Panel();
             this.cbUncapIntensity = new System.Windows.Forms.CheckBox();
             this.cbDontCleanAtQuit = new System.Windows.Forms.CheckBox();
@@ -40,9 +40,9 @@ namespace RTCV.UI
             this.btnRefreshInputDevices = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // panel1
-            // 
+            //
             this.panel1.BackColor = System.Drawing.Color.Gray;
             this.panel1.Controls.Add(this.cbUncapIntensity);
             this.panel1.Controls.Add(this.cbDontCleanAtQuit);
@@ -53,9 +53,9 @@ namespace RTCV.UI
             this.panel1.Size = new System.Drawing.Size(250, 96);
             this.panel1.TabIndex = 138;
             this.panel1.Tag = "color:normal";
-            // 
+            //
             // cbUncapIntensity
-            // 
+            //
             this.cbUncapIntensity.AutoSize = true;
             this.cbUncapIntensity.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbUncapIntensity.ForeColor = System.Drawing.Color.White;
@@ -65,10 +65,10 @@ namespace RTCV.UI
             this.cbUncapIntensity.TabIndex = 3;
             this.cbUncapIntensity.Text = "Uncap intensity box value";
             this.cbUncapIntensity.UseVisualStyleBackColor = true;
-            this.cbUncapIntensity.CheckedChanged += new System.EventHandler(this.CbUncapIntensity_CheckedChanged);
-            // 
+            this.cbUncapIntensity.CheckedChanged += new System.EventHandler(this.HandleUncapIntensityChange);
+            //
             // cbDontCleanAtQuit
-            // 
+            //
             this.cbDontCleanAtQuit.AutoSize = true;
             this.cbDontCleanAtQuit.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbDontCleanAtQuit.ForeColor = System.Drawing.Color.White;
@@ -78,10 +78,10 @@ namespace RTCV.UI
             this.cbDontCleanAtQuit.TabIndex = 2;
             this.cbDontCleanAtQuit.Text = "Don\'t clean savestates at quit";
             this.cbDontCleanAtQuit.UseVisualStyleBackColor = true;
-            this.cbDontCleanAtQuit.CheckedChanged += new System.EventHandler(this.cbDontCleanAtQuit_CheckedChanged);
-            // 
+            this.cbDontCleanAtQuit.CheckedChanged += new System.EventHandler(this.HandleDontCleanAtQuitChange);
+            //
             // cbAllowCrossCoreCorruption
-            // 
+            //
             this.cbAllowCrossCoreCorruption.AutoSize = true;
             this.cbAllowCrossCoreCorruption.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbAllowCrossCoreCorruption.ForeColor = System.Drawing.Color.White;
@@ -91,10 +91,10 @@ namespace RTCV.UI
             this.cbAllowCrossCoreCorruption.TabIndex = 1;
             this.cbAllowCrossCoreCorruption.Text = "Allow Cross-Core / Cross-Game corruption";
             this.cbAllowCrossCoreCorruption.UseVisualStyleBackColor = true;
-            this.cbAllowCrossCoreCorruption.CheckedChanged += new System.EventHandler(this.cbAllowCrossCoreCorruption_CheckedChanged);
-            // 
+            this.cbAllowCrossCoreCorruption.CheckedChanged += new System.EventHandler(this.HandleAllowCrossCoreCorruptionChange);
+            //
             // cbDisableEmulatorOSD
-            // 
+            //
             this.cbDisableEmulatorOSD.AutoSize = true;
             this.cbDisableEmulatorOSD.Checked = true;
             this.cbDisableEmulatorOSD.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -106,10 +106,10 @@ namespace RTCV.UI
             this.cbDisableEmulatorOSD.TabIndex = 0;
             this.cbDisableEmulatorOSD.Text = "Disable the emulator OSD system";
             this.cbDisableEmulatorOSD.UseVisualStyleBackColor = true;
-            this.cbDisableEmulatorOSD.CheckedChanged += new System.EventHandler(this.cbDisableBizhawkOSD_CheckedChanged);
-            // 
+            this.cbDisableEmulatorOSD.CheckedChanged += new System.EventHandler(this.HandleDisableBizhawkOSDChange);
+            //
             // label4
-            // 
+            //
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
             this.label4.ForeColor = System.Drawing.Color.White;
@@ -118,9 +118,9 @@ namespace RTCV.UI
             this.label4.Size = new System.Drawing.Size(117, 15);
             this.label4.TabIndex = 139;
             this.label4.Text = "General RTC Settings";
-            // 
+            //
             // btnChangeRTCColor
-            // 
+            //
             this.btnChangeRTCColor.BackColor = System.Drawing.Color.Gray;
             this.btnChangeRTCColor.FlatAppearance.BorderSize = 0;
             this.btnChangeRTCColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -136,10 +136,10 @@ namespace RTCV.UI
             this.btnChangeRTCColor.Text = "   Change color theme";
             this.btnChangeRTCColor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnChangeRTCColor.UseVisualStyleBackColor = false;
-            this.btnChangeRTCColor.Click += new System.EventHandler(this.btnChangeRTCColor_Click);
-            // 
+            this.btnChangeRTCColor.Click += new System.EventHandler(this.ChangeRTCColor);
+            //
             // btnOpenOnlineWiki
-            // 
+            //
             this.btnOpenOnlineWiki.BackColor = System.Drawing.Color.Gray;
             this.btnOpenOnlineWiki.FlatAppearance.BorderSize = 0;
             this.btnOpenOnlineWiki.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -155,10 +155,10 @@ namespace RTCV.UI
             this.btnOpenOnlineWiki.Text = "    Open the online wiki";
             this.btnOpenOnlineWiki.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnOpenOnlineWiki.UseVisualStyleBackColor = false;
-            this.btnOpenOnlineWiki.Click += new System.EventHandler(this.btnOpenOnlineWiki_Click);
-            // 
+            this.btnOpenOnlineWiki.Click += new System.EventHandler(this.OpenOnlineWiki);
+            //
             // btnRefreshInputDevices
-            // 
+            //
             this.btnRefreshInputDevices.BackColor = System.Drawing.Color.Gray;
             this.btnRefreshInputDevices.FlatAppearance.BorderSize = 0;
             this.btnRefreshInputDevices.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -174,10 +174,10 @@ namespace RTCV.UI
             this.btnRefreshInputDevices.Text = "   Refresh Input Devices";
             this.btnRefreshInputDevices.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnRefreshInputDevices.UseVisualStyleBackColor = false;
-            this.btnRefreshInputDevices.Click += new System.EventHandler(this.btnRefreshInputDevices_Click);
-            // 
-            // RTC_SettingsGeneral_Form
-            // 
+            this.btnRefreshInputDevices.Click += new System.EventHandler(this.RefreshInputDevices);
+            //
+            // SettingsGeneralForm
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -189,7 +189,7 @@ namespace RTCV.UI
             this.Controls.Add(this.btnOpenOnlineWiki);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "RTC_SettingsGeneral_Form";
+            this.Name = "SettingsGeneralForm";
             this.Tag = "color:dark1";
             this.Text = "General";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
