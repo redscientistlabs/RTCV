@@ -3,9 +3,9 @@
     using System;
     using System.Windows.Forms;
 
-    public partial class DebugInfo_Form : Form
+    public partial class DebugInfoForm : Form
     {
-        public DebugInfo_Form()
+        public DebugInfoForm()
         {
             InitializeComponent();
             this.FormClosing += RTC_Debug_Form_FormClosing;

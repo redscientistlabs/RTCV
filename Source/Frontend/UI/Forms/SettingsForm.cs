@@ -19,7 +19,7 @@
             lbForm = new ListBoxForm(new ComponentForm[] {
                 S.GET<SettingsGeneralForm>(),
                 S.GET<SettingsCorruptForm>(),
-                S.GET<RTC_SettingsHotkeyConfig_Form>(),
+                S.GET<SettingsHotkeyConfigForm>(),
                 S.GET<RTC_SettingsNetCore_Form>(),
                 S.GET<SettingsAboutForm>(),
             })
@@ -53,7 +53,7 @@
 
         private void ShowDebugInfo(object sender, EventArgs e)
         {
-            S.GET<NetCore.DebugInfo_Form>().ShowDialog();
+            S.GET<NetCore.DebugInfoForm>().ShowDialog();
         }
 
         private void ShowTestForm(object sender, EventArgs e)
