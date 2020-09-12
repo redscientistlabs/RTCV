@@ -9,24 +9,24 @@ namespace RTCV.UI
 
     public partial class ListBoxForm : ComponentForm, IBlockable
     {
-        private ComponentForm[] childForms;
+        private ComponentForm[] _childForms;
 
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        public ListBoxForm(ComponentForm[] _childForms)
+        public ListBoxForm(ComponentForm[] childForms)
         {
             InitializeComponent();
 
             this.undockedSizable = false;
 
-            childForms = _childForms ?? throw new ArgumentNullException(nameof(_childForms));
+            _childForms = childForms ?? throw new ArgumentNullException(nameof(childForms));
 
             //Populate the filter ComboBox
             lbComponentForms.DisplayMember = "Name";
             lbComponentForms.ValueMember = "Value";
 
-            foreach (var item in childForms)
+            foreach (var item in _childForms)
             {
                 lbComponentForms.Items.Add(new ComboBoxItem<Form>(item.Text, item));
             }
