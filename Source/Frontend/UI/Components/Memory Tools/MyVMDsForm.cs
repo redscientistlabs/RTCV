@@ -7,25 +7,25 @@ namespace RTCV.UI
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class RTC_MyVMDs_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class MyVMDsForm : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        public RTC_MyVMDs_Form()
+        public MyVMDsForm()
         {
             InitializeComponent();
             AllowDrop = true;
-            this.DragEnter += RTC_MyVMDs_Form_DragEnter;
-            this.DragDrop += RTC_MyVMDs_Form_DragDrop;
+            this.DragEnter += MyVMDsForm_DragEnter;
+            this.DragDrop += MyVMDsForm_DragDrop;
         }
 
-        public void RTC_MyVMDs_Form_DragEnter(object sender, DragEventArgs e)
+        public void MyVMDsForm_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Link;
         }
 
-        public void RTC_MyVMDs_Form_DragDrop(object sender, DragEventArgs e)
+        public void MyVMDsForm_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             foreach (var f in files)
@@ -106,7 +106,7 @@ namespace RTCV.UI
             File.Move(vmdPath, path);
         }
 
-        private void RTC_MyVMDs_Form_Load(object sender, EventArgs e)
+        private void MyVMDsForm_Load(object sender, EventArgs e)
         {
             RefreshVMDs();
         }

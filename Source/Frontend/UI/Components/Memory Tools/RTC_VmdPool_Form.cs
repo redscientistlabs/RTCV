@@ -409,12 +409,12 @@ namespace RTCV.UI
                 }
             }
 
-            S.GET<RTC_MyVMDs_Form>().RefreshVMDs();
+            S.GET<MyVMDsForm>().RefreshVMDs();
 
             //switch to My VMDs
             foreach (var item in UICore.mtForm.cbSelectBox.Items)
             {
-                if (((dynamic)item).value is RTC_MyVMDs_Form)
+                if (((dynamic)item).value is MyVMDsForm)
                 {
                     UICore.mtForm.cbSelectBox.SelectedItem = item;
                     break;
