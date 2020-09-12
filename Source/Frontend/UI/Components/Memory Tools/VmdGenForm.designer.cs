@@ -119,7 +119,7 @@
             this.btnHelp.TabStop = false;
             this.btnHelp.Tag = "color:light1";
             this.btnHelp.UseVisualStyleBackColor = false;
-            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
+            this.btnHelp.Click += new System.EventHandler(this.ShowHelp);
             this.btnHelp.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             //
             // tbVmdName
@@ -238,7 +238,7 @@
             this.btnGenerateVMD.Tag = "color:light1";
             this.btnGenerateVMD.Text = "Generate VMD";
             this.btnGenerateVMD.UseVisualStyleBackColor = false;
-            this.btnGenerateVMD.Click += new System.EventHandler(this.btnGenerateVMD_Click);
+            this.btnGenerateVMD.Click += new System.EventHandler(this.GenerateVMD);
             this.btnGenerateVMD.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             //
             // groupBox1
@@ -358,7 +358,7 @@
             this.btnLoadDomains.Tag = "color:light1";
             this.btnLoadDomains.Text = "Load Domains";
             this.btnLoadDomains.UseVisualStyleBackColor = false;
-            this.btnLoadDomains.Click += new System.EventHandler(this.btnSelectAll_Click);
+            this.btnLoadDomains.Click += new System.EventHandler(this.SelectAll);
             this.btnLoadDomains.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             //
             // cbSelectedMemoryDomain
@@ -374,7 +374,7 @@
             this.cbSelectedMemoryDomain.Size = new System.Drawing.Size(130, 25);
             this.cbSelectedMemoryDomain.TabIndex = 16;
             this.cbSelectedMemoryDomain.Tag = "color:dark1";
-            this.cbSelectedMemoryDomain.SelectedIndexChanged += new System.EventHandler(this.cbSelectedMemoryDomain_SelectedIndexChanged);
+            this.cbSelectedMemoryDomain.SelectedIndexChanged += new System.EventHandler(this.HandleSelectedMemoryDomainChange);
             this.cbSelectedMemoryDomain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             //
             // VmdGenForm

@@ -338,7 +338,7 @@ namespace RTCV.UI
 
                 var vmdgenerator = S.GET<VmdGenForm>();
 
-                vmdgenerator.btnSelectAll_Click(null, null);
+                vmdgenerator.SelectAll(null, null);
 
                 var cbitems = vmdgenerator.cbSelectedMemoryDomain.Items;
                 object domainFound = null;
@@ -368,7 +368,7 @@ namespace RTCV.UI
                 {
                     if (!string.IsNullOrWhiteSpace(value))
                         vmdgenerator.tbVmdName.Text = value.Trim();
-                    vmdgenerator.btnGenerateVMD_Click(null, null);
+                    vmdgenerator.GenerateVMD(null, null);
                 }
             });
             e.setReturnValue(true);
