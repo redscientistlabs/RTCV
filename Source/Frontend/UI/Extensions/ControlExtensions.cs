@@ -15,7 +15,7 @@ namespace RTCV.UI.Extensions
         [DllImport("gdi32.dll")]
         private static extern int BitBlt(IntPtr hdc, int x, int y, int cx, int cy, IntPtr hdcSrc, int x1, int y1, int rop);
 
-        public static Bitmap getFormScreenShot(this Control con)
+        internal static Bitmap getFormScreenShot(this Control con)
         {
             logger.Trace($"getFormScreenShot ClientRectangle | Width: {con.ClientRectangle.Width} | Height: {con.ClientRectangle.Height} | X: {con.ClientRectangle.X} | Y: {con.ClientRectangle.Y}");
             try
@@ -42,7 +42,7 @@ namespace RTCV.UI.Extensions
             }
         }
 
-        public static List<Control> getControlsWithTag(this Control.ControlCollection controls)
+        internal static List<Control> getControlsWithTag(this Control.ControlCollection controls)
         {
             var allControls = new List<Control>();
 

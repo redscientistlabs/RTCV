@@ -4,7 +4,7 @@ namespace RTCV.UI.Extensions
 
     public static class BitmapExtensions
     {
-        public static void Tint(this Bitmap bmp, Color col)
+        internal static void Tint(this Bitmap bmp, Color col)
         {
             var rectSize = new Rectangle(0, 0, bmp.Width, bmp.Height);
 

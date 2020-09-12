@@ -252,6 +252,11 @@ namespace RTCV.CorruptCore
 
         public override void PokeBytes(long startAddress, byte[] value, bool raw = true)
         {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
             if (!raw || !BigEndian)
             {
                 value.FlipBytes();

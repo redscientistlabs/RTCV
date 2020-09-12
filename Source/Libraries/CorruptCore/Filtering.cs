@@ -45,7 +45,7 @@ namespace RTCV.CorruptCore
             return partial;
         }
 
-        public static void LoadStockpileLists(Stockpile sks)
+        internal static void LoadStockpileLists(Stockpile sks)
         {
             var lists = LoadListsFromPaths(Directory.GetFiles(Path.Combine(RtcCore.workingDir, "SKS"), "*.limiter"));
 
@@ -173,6 +173,11 @@ namespace RTCV.CorruptCore
         /// <returns>The hash of the list being registereds</returns>
         public static string RegisterList(IListFilter list, string name, bool syncListsViaNetcore)
         {
+            if (list == null)
+            {
+                throw new ArgumentNullException(nameof(list));
+            }
+
             string hashStr = list.GetHash(); //get it from object
 
             //Assuming the key doesn't already exist (we assume collions won't happen), add it.
@@ -206,6 +211,11 @@ namespace RTCV.CorruptCore
 
         public static bool LimiterPeekBytes(long startAddress, long endAddress, string hash, MemoryInterface mi)
         {
+            if (mi == null)
+            {
+                throw new ArgumentNullException(nameof(mi));
+            }
+
             //If we go outside of the domain, just return false
             if (endAddress > mi.Size)
             {
@@ -239,6 +249,11 @@ namespace RTCV.CorruptCore
 
         public static byte[] LimiterPeekAndGetBytes(long startAddress, long endAddress, string hash, MemoryInterface mi)
         {
+            if (mi == null)
+            {
+                throw new ArgumentNullException(nameof(mi));
+            }
+
             //If we go outside of the domain, just return false
             if (endAddress > mi.Size)
             {
@@ -304,7 +319,7 @@ namespace RTCV.CorruptCore
             return false;
         }
 
-        public static bool NullableByteArrayContains(HashSet<byte?[]> hs, byte[] bytes)
+        internal static bool NullableByteArrayContains(HashSet<byte?[]> hs, byte[] bytes)
         {
             //checks nullable bytes lists against other byte lists, ignoring null collisions from both sides.
 
@@ -384,7 +399,7 @@ namespace RTCV.CorruptCore
         /// </summary>
         /// <param name="sks"></param>
         /// <returns></returns>
-        public static Dictionary<string, List<string>> GetAllLimiterListsFromStockpile(Stockpile sks)
+        internal static Dictionary<string, List<string>> GetAllLimiterListsFromStockpile(Stockpile sks)
         {
             sks.MissingLimiter = false;
 

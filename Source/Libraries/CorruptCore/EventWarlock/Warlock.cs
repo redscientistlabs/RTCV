@@ -29,7 +29,7 @@ namespace RTCV.CorruptCore.EventWarlock
         /// </summary>
         /// <param name="grimoire"></param>
         /// <returns></returns>
-        public static bool AddGrimoire(Grimoire grimoire)
+        internal static bool AddGrimoire(Grimoire grimoire)
         {
             if (grimoire.Name.Length != 0 && Grimoires.Any(x => x.Name == grimoire.Name))
             {

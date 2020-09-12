@@ -12,8 +12,8 @@ namespace RTCV.UI
 
     public partial class RTC_VmdLimiterProfiler_Form : ComponentForm, IAutoColorize, IBlockable
     {
-        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+        private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         private long currentDomainSize = 0;
 
@@ -67,26 +67,6 @@ namespace RTCV.UI
             long fullRange = mi.Size;
 
             btnGenerateVMD.Enabled = true;
-        }
-
-        public static long SafeStringToLong(string input)
-        {
-            try
-            {
-                if (input.IndexOf("0X", StringComparison.OrdinalIgnoreCase) >= 0)
-                {
-                    return long.Parse(input.Substring(2), NumberStyles.HexNumber);
-                }
-                else
-                {
-                    return long.Parse(input, NumberStyles.HexNumber);
-                }
-            }
-            catch (FormatException e)
-            {
-                Console.Write(e);
-                return -1;
-            }
         }
 
         public static void ProfileDomain()

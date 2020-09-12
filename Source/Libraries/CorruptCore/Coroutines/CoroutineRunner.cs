@@ -26,18 +26,6 @@ namespace RTCV.CorruptCore.Coroutines
             coroutines.AddLast(coroutine);
         }
 
-        /// <summary>
-        /// Starts a coroutine.
-        /// </summary>
-        /// <param name="enumerator"></param>
-        /// <returns></returns>
-        public Coroutine StartCoroutine(IEnumerator<Yielder> enumerator)
-        {
-            Coroutine res = new Coroutine(enumerator);
-            coroutines.AddLast(res);
-            return res;
-        }
-
         public void Update()
         {
             var curCoroutineNode = coroutines.First;

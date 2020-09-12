@@ -28,6 +28,11 @@ namespace RTCV.CorruptCore
             bool inHeader = true;
             bool doFlipBytes = flipBytes;
 
+            if (dataLines == null)
+            {
+                throw new ArgumentNullException(nameof(dataLines));
+            }
+
             try
             {
                 for (int j = 0; j < dataLines.Length; j++)
@@ -91,6 +96,11 @@ namespace RTCV.CorruptCore
 
         public bool ContainsValue(byte[] bytes)
         {
+            if (bytes == null)
+            {
+                throw new ArgumentNullException(nameof(bytes));
+            }
+
             try
             {
                 ulong data = BytesToUlong(bytes); //Convert bytes to ulong
