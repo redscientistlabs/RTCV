@@ -81,9 +81,9 @@
     <Compile Include="Coroutines\Yielder.cs" />
     <Compile Include="CorruptCoreConnector.cs" />
     <Compile Include="Corruption Engines\BlastGeneratorEngine.cs" />
-    <Compile Include="Corruption Engines\CustomEngine.cs" />
-    <Compile Include="Corruption Engines\RTC_DistortionEngine.cs" />
     <Compile Include="Corruption Engines\ClusterEngine.cs" />
+    <Compile Include="Corruption Engines\CustomEngine.cs" />
+    <Compile Include="Corruption Engines\DistortionEngine.cs" />
     <Compile Include="Corruption Engines\FreezeEngine.cs" />
     <Compile Include="Corruption Engines\RTC_HellgenieEngine.cs" />
     <Compile Include="Corruption Engines\NightmareEngine.cs" />
