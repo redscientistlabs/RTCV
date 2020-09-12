@@ -20,7 +20,7 @@
                 S.GET<SettingsGeneralForm>(),
                 S.GET<SettingsCorruptForm>(),
                 S.GET<SettingsHotkeyConfigForm>(),
-                S.GET<RTC_SettingsNetCore_Form>(),
+                S.GET<SettingsNetCoreForm>(),
                 S.GET<SettingsAboutForm>(),
             })
             {

@@ -9,17 +9,17 @@
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class RTC_SettingsNetCore_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class SettingsNetCoreForm : ComponentForm, IAutoColorize, IBlockable
     {
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        public RTC_SettingsNetCore_Form()
+        public SettingsNetCoreForm()
         {
             InitializeComponent();
         }
 
-        private void cbCrashSoundEffect_SelectedIndexChanged(object sender, EventArgs e)
+        private void OnCrashSoundeffectChange(object sender, EventArgs e)
         {
             switch (cbCrashSoundEffect.SelectedIndex)
             {
@@ -43,32 +43,15 @@
             NetCore.Params.SetParam("CRASHSOUND", cbCrashSoundEffect.SelectedIndex.ToString());
         }
 
-        private void nmGameProtectionDelay_ValueChanged(object sender, KeyPressEventArgs e)
-        {
-            UpdateGameProtectionDelay();
-        }
-
-        private void nmGameProtectionDelay_ValueChanged(object sender, KeyEventArgs e)
-        {
-            UpdateGameProtectionDelay();
-        }
-
-        private void nmGameProtectionDelay_ValueChanged(object sender, EventArgs e)
-        {
-            UpdateGameProtectionDelay();
-        }
+        private void OnGameProtectionDelayChange(object sender, EventArgs e) => UpdateGameProtectionDelay();
 
         public static void UpdateGameProtectionDelay()
         {
-            GameProtection.BackupInterval = Convert.ToInt32(S.GET<RTC_SettingsNetCore_Form>().nmGameProtectionDelay.Value);
+            GameProtection.BackupInterval = Convert.ToInt32(S.GET<SettingsNetCoreForm>().nmGameProtectionDelay.Value);
             if (GameProtection.isRunning)
             {
                 GameProtection.Reset(false);
             }
-        }
-
-        private void RTC_SettingsNetCore_Form_Load(object sender, EventArgs e)
-        {
         }
     }
 }
