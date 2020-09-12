@@ -38,7 +38,7 @@ namespace RTCV.UI.Modular
                         S.GET<RTC_VmdNoTool_Form>(),
                         S.GET<RTC_MyVMDs_Form>(),
                         S.GET<RTC_VmdPool_Form>(),
-                        S.GET<RTC_VmdGen_Form>(),
+                        S.GET<VmdGenForm>(),
                         S.GET<RTC_VmdSimpleGen_Form>(),
                         S.GET<VmdActForm>(),
                         S.GET<MyListsForm>(),

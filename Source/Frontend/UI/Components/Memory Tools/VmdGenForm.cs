@@ -8,14 +8,14 @@
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class RTC_VmdGen_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class VmdGenForm : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         private long currentDomainSize = 0;
 
-        public RTC_VmdGen_Form()
+        public VmdGenForm()
         {
             InitializeComponent();
         }

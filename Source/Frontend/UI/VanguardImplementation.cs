@@ -336,7 +336,7 @@ namespace RTCV.UI
                 string domain = (string)objs[0];
                 string text = (string)objs[1];
 
-                var vmdgenerator = S.GET<RTC_VmdGen_Form>();
+                var vmdgenerator = S.GET<VmdGenForm>();
 
                 vmdgenerator.btnSelectAll_Click(null, null);
 
