@@ -39,11 +39,11 @@ namespace RTCV.UI.Modular
                         S.GET<MyVMDsForm>(),
                         S.GET<VmdPoolForm>(),
                         S.GET<VmdGenForm>(),
-                        S.GET<RTC_VmdSimpleGen_Form>(),
+                        S.GET<VmdSimpleGenForm>(),
                         S.GET<VmdActForm>(),
                         S.GET<MyListsForm>(),
                         S.GET<ListGenForm>(),
-                        S.GET<RTC_VmdLimiterProfiler_Form>(),
+                        S.GET<VmdLimiterProfilerForm>(),
                         //S.GET<DomainAnalyticsForm>(),
                         S.GET<OpenToolsForm>(),
                         })

@@ -1,27 +1,30 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Data;
+    using System.Globalization;
     using System.Linq;
     using System.Windows.Forms;
     using RTCV.CorruptCore;
+    using RTCV.NetCore;
     using RTCV.Common;
-    using RTCV.UI.Components.Controls;
     using RTCV.UI.Modular;
 
-    public partial class RTC_VmdSimpleGen_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class VmdLimiterProfilerForm : ComponentForm, IAutoColorize, IBlockable
     {
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         private long currentDomainSize = 0;
 
-        public RTC_VmdSimpleGen_Form()
+        private string LimiterListHash;
+
+        public VmdLimiterProfilerForm()
         {
             InitializeComponent();
         }
 
-        private void btnSelectAll_Click(object sender, EventArgs e)
+        private void LoadDomains(object sender, EventArgs e)
         {
             S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected();
 
@@ -38,7 +41,7 @@
             }
         }
 
-        private void cbSelectedMemoryDomain_SelectedIndexChanged(object sender, EventArgs e)
+        private void HandleSelectedMemoryDomainChange(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(cbSelectedMemoryDomain.SelectedItem?.ToString()) || !MemoryDomains.MemoryInterfaces.ContainsKey(cbSelectedMemoryDomain.SelectedItem.ToString()))
             {
@@ -63,44 +66,16 @@
 
             long fullRange = mi.Size;
 
-            if (mtbStartAddress.Value > fullRange)
-            {
-                mtbStartAddress.Value = fullRange;
-            }
-
-            if (mtbStartAddress.Maximum != fullRange)
-            {
-                mtbStartAddress.Maximum = fullRange;
-            }
-
-            if (mtbRange.Maximum != fullRange)
-            {
-                mtbRange.Maximum = fullRange;
-            }
-
-            mtbStartAddress.Enabled = true;
-            mtbRange.Enabled = true;
             btnGenerateVMD.Enabled = true;
         }
 
-        private void btnGenerateVMD_Click(object sender, EventArgs e)
+        public static void ProfileDomain()
         {
-            GenerateVMD();
         }
 
-        public bool GenerateVMD(string textBoxContent)
-        {
-            if (textBoxContent == null)
-            {
-                throw new Exception("Can't generate a vmd without text");
-            }
+        private void HandleGenerateVMDClick(object sender, EventArgs e) => GenerateVMD();
 
-            tbRangeExpression.Text = textBoxContent;
-
-            return GenerateVMD();
-        }
-
-        private bool GenerateVMD()
+        private bool GenerateVMD(bool AutoGenerate = false)
         {
             if (string.IsNullOrWhiteSpace(cbSelectedMemoryDomain.SelectedItem?.ToString()) || !MemoryDomains.MemoryInterfaces.ContainsKey(cbSelectedMemoryDomain.SelectedItem.ToString()))
             {
@@ -108,10 +83,15 @@
                 return false;
             }
 
-            if (!string.IsNullOrWhiteSpace(tbVmdName.Text) && MemoryDomains.VmdPool.ContainsKey($"[V]{tbVmdName.Text}"))
+            if (!AutoGenerate && !string.IsNullOrWhiteSpace(tbVmdName.Text) && MemoryDomains.VmdPool.ContainsKey($"[V]{tbVmdName.Text}"))
             {
                 MessageBox.Show("There is already a VMD with this name in the VMD Pool");
                 return false;
+            }
+
+            if (AutoGenerate && MemoryDomains.VmdPool.ContainsKey($"[V]{tbVmdName.Text}"))
+            {
+                MemoryDomains.RemoveVMD($"[V]{tbVmdName.Text}");
             }
 
             MemoryInterface mi = MemoryDomains.MemoryInterfaces[cbSelectedMemoryDomain.SelectedItem.ToString()];
@@ -134,25 +114,20 @@
             proto.WordSize = mi.WordSize;
             proto.Padding = 0;
 
-            foreach (string line in tbRangeExpression.Lines)
+            var sk = S.GET<SavestateManagerForm>().CurrentSaveStateStashKey;
+            if (sk == null && cbLoadBeforeGenerate.Checked && (AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES] as bool? ?? false))
             {
-                if (string.IsNullOrWhiteSpace(line))
-                {
-                    continue;
-                }
-
-                string trimmedLine = line.Trim();
-
-                bool remove = false;
-
-                if (trimmedLine[0] == '-')
-                {
-                    remove = true;
-                    trimmedLine = trimmedLine.Substring(1);
-                }
-
-                proto.AddFromTrimmedLine(trimmedLine, currentDomainSize, remove);
+                MessageBox.Show("Load before generate is checked but no Savestate is selected in the Glitch Harvester!");
+                return false;
             }
+            var legalAdresses = LocalNetCoreRouter.QueryRoute<long[]>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_LONGARRAY_FILTERDOMAIN, new object[] { mi.Name, LimiterListHash, cbLoadBeforeGenerate.Checked ? sk : null });
+            if (legalAdresses == null || legalAdresses.Length == 0)
+            {
+                tbVmdName.Text = "";
+                return false;
+            }
+
+            proto.AddSingles.AddRange(legalAdresses);
 
             if (proto.AddRanges.Count == 0 && proto.AddSingles.Count == 0)
             {
@@ -218,80 +193,82 @@
 
             currentDomainSize = 0;
 
-            tbRangeExpression.Text = "";
-
             lbDomainSizeValue.Text = "######";
             lbEndianTypeValue.Text = "######";
             lbWordSizeValue.Text = "######";
 
-            //send to vmd pool menu
+            //refresh to vmd pool menu
             S.GET<VmdPoolForm>().RefreshVMDs();
 
-            //Selects back the VMD Pool menu
-            foreach (var item in UICore.mtForm.cbSelectBox.Items)
+            if (!AutoGenerate)
             {
-                if (((dynamic)item).value is VmdPoolForm)
+                //Selects back the VMD Pool menu
+                foreach (var item in UICore.mtForm.cbSelectBox.Items)
                 {
-                    UICore.mtForm.cbSelectBox.SelectedItem = item;
-                    break;
+                    if (((dynamic)item).value is VmdPoolForm)
+                    {
+                        UICore.mtForm.cbSelectBox.SelectedItem = item;
+                        break;
+                    }
                 }
             }
 
             return true;
         }
 
-        private void btnHelp_Click(object sender, EventArgs e)
+        internal void AutoProfile(MemoryInterface mi, string limiter)
         {
-            MessageBox.Show(
-@"VMD Generator instructions help and examples
------------------------------------------------
-Adding an address range:
-5F-FF
-Adding a single address:
-5F
+            LoadDomains(null, null);
 
-Removing an address range:
--6D-110
-Removing a single address:
--6D
+            var ceForm = S.GET<CorruptionEngineForm>();
 
-> If no initial range is specified,
-the removals will be done on the entire range.
+            foreach (var item in cbSelectedMemoryDomain.Items)
+                if (item.ToString() == mi.ToString())
+                {
+                    cbSelectedMemoryDomain.SelectedItem = item;
+                    break;
+                }
 
-> Ranges are exclusive, meaning that the last
-address is excluded from the range.
+            foreach (ComboBoxItem<string> item in ceForm.cbVectorLimiterList.Items)
+                if (item.Name == limiter)
+                {
+                    ceForm.cbVectorLimiterList.SelectedItem = item;
+                    break;
+                }
 
-> Single added addresses will bypass removal ranges
+            ComboBoxItem<string> cbItem = (ComboBoxItem<string>)((ComboBox)ceForm.cbVectorLimiterList).SelectedItem;
+            if (cbItem != null)
+            {
+                LimiterListHash = cbItem.Value;
+            }
 
-> Single addresses aren't affected by the
-pointer spacer parameter");
+            tbVmdName.Text = $"{mi} -- {limiter}";
+
+            GenerateVMD(true);
         }
 
-        private void MtbStartAddress_ValueChanged(object sender, ValueUpdateEventArgs e)
+        private void OnFormLoad(object sender, EventArgs e)
         {
-            ComputeRangeExpression();
+            cbVectorLimiterList.DataSource = null;
+            cbVectorLimiterList.DisplayMember = "Name";
+            cbVectorLimiterList.ValueMember = "Value";
+
+            //Do this here as if it's stuck into the designer, it keeps defaulting out
+            cbVectorLimiterList.DataSource = RtcCore.LimiterListBindingSource;
+
+            if (RtcCore.LimiterListBindingSource.Count > 0)
+            {
+                HandleVectorLimiterListSelectionChange(cbVectorLimiterList, null);
+            }
         }
 
-        private void MtbRange_CheckChanged(object sender, EventArgs e)
+        private void HandleVectorLimiterListSelectionChange(object sender, EventArgs e)
         {
-            ComputeRangeExpression();
-        }
-
-        private void MtbRange_ValueChanged(object sender, ValueUpdateEventArgs e)
-        {
-            ComputeRangeExpression();
-        }
-
-        private void ComputeRangeExpression()
-        {
-            long maxAddress = mtbStartAddress.Maximum;
-            long startAddress = mtbStartAddress.Value;
-            long range = mtbRange.Value;
-            long addressPlusRange = (startAddress + range > mtbStartAddress.Maximum) ? mtbStartAddress.Maximum : startAddress + range;
-            bool rangeUsed = mtbRange.Checked;
-
-            string generatedExpression = $"{startAddress.ToHexString()}-{(rangeUsed ? addressPlusRange.ToHexString() : maxAddress.ToHexString())}";
-            tbRangeExpression.Text = generatedExpression;
+            ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
+            if (item != null)
+            {
+                LimiterListHash = item.Value;
+            }
         }
     }
 }

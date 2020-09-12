@@ -219,11 +219,11 @@
     <Compile Include="Components\Memory Tools\OpenToolsForm.designer.cs">
       <DependentUpon>OpenToolsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdLimiterProfiler_Form.cs">
+    <Compile Include="Components\Memory Tools\VmdLimiterProfilerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdLimiterProfiler_Form.designer.cs">
-      <DependentUpon>RTC_VmdLimiterProfiler_Form.cs</DependentUpon>
+    <Compile Include="Components\Memory Tools\VmdLimiterProfilerForm.designer.cs">
+      <DependentUpon>VmdLimiterProfilerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Memory Tools\MyVMDsForm.cs">
       <SubType>Form</SubType>
@@ -231,11 +231,11 @@
     <Compile Include="Components\Memory Tools\MyVMDsForm.designer.cs">
       <DependentUpon>MyVMDsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdSimpleGen_Form.cs">
+    <Compile Include="Components\Memory Tools\VmdSimpleGenForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdSimpleGen_Form.designer.cs">
-      <DependentUpon>RTC_VmdSimpleGen_Form.cs</DependentUpon>
+    <Compile Include="Components\Memory Tools\VmdSimpleGenForm.designer.cs">
+      <DependentUpon>VmdSimpleGenForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Settings\SettingsCorruptForm.cs">
       <SubType>Form</SubType>
@@ -375,7 +375,7 @@
     <Compile Include="Forms\StockpilePlayerForm.designer.cs">
       <DependentUpon>StockpilePlayerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\RTC_Standalone_Form.cs">
+    <Compile Include="Forms\StandaloneForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="AutoKillSwitch.cs" />
@@ -524,14 +524,14 @@
     <EmbeddedResource Include="Components\Memory Tools\OpenToolsForm.resx">
       <DependentUpon>OpenToolsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\RTC_VmdLimiterProfiler_Form.resx">
-      <DependentUpon>RTC_VmdLimiterProfiler_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Memory Tools\VmdLimiterProfilerForm.resx">
+      <DependentUpon>VmdLimiterProfilerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Memory Tools\MyVMDsForm.resx">
       <DependentUpon>MyVMDsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\RTC_VmdSimpleGen_Form.resx">
-      <DependentUpon>RTC_VmdSimpleGen_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Memory Tools\VmdSimpleGenForm.resx">
+      <DependentUpon>VmdSimpleGenForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Settings\SettingsCorruptForm.resx">
       <DependentUpon>SettingsCorruptForm.cs</DependentUpon>

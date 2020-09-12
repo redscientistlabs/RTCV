@@ -159,7 +159,7 @@ namespace TestVanguardImplemented
 		}
 
 		//This is the entry point of RTC. Without this method, nothing will load.
-		public static void Start(RTC_Standalone_Form _standaloneForm = null)
+		public static void Start(StandaloneForm _standaloneForm = null)
 		{
 			//Grab an object on the main thread to use for netcore invokes
 			SyncObjectSingleton.SyncObject = Program.SyncForm;
