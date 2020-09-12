@@ -4,6 +4,7 @@ namespace RTCV.CorruptCore
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
     using System.Net;
@@ -33,6 +34,7 @@ namespace RTCV.CorruptCore
         }
     }
 
+    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "RtcCore members may keep their underscores for compability and readability")]
     public static class RtcCore
     {
         //General RTC Values

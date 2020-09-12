@@ -1,5 +1,7 @@
 namespace RTCV.CorruptCore
 {
+    using System.Diagnostics.CodeAnalysis;
+
     public enum BlastRadius
     {
         SPREAD,
@@ -138,6 +140,7 @@ namespace RTCV.CorruptCore
         SILENTERROR,
     }
 
+    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "RTCSPEC members keep their underscores for compability and readability")]
     public static class RTCSPEC
     {
         public static readonly string RTCDIR = nameof(RTCDIR);
