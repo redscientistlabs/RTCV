@@ -8,23 +8,19 @@
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class RTC_VmdGen_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class VmdGenForm : ComponentForm, IAutoColorize, IBlockable
     {
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         private long currentDomainSize = 0;
 
-        public RTC_VmdGen_Form()
+        public VmdGenForm()
         {
             InitializeComponent();
         }
 
-        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
-        {
-        }
-
-        public void btnSelectAll_Click(object sender, EventArgs e)
+        public void SelectAll(object sender, EventArgs e)
         {
             S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected();
 
@@ -41,7 +37,7 @@
             }
         }
 
-        private void cbSelectedMemoryDomain_SelectedIndexChanged(object sender, EventArgs e)
+        private void HandleSelectedMemoryDomainChange(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(cbSelectedMemoryDomain.SelectedItem?.ToString()) || !MemoryDomains.MemoryInterfaces.ContainsKey(cbSelectedMemoryDomain.SelectedItem.ToString()))
             {
@@ -58,7 +54,7 @@
             currentDomainSize = Convert.ToInt64(mi.Size);
         }
 
-        public void btnGenerateVMD_Click(object sender, EventArgs e)
+        public void GenerateVMD(object sender, EventArgs e)
         {
             GenerateVMD();
         }
@@ -216,7 +212,7 @@
             return true;
         }
 
-        private void btnHelp_Click(object sender, EventArgs e)
+        private void ShowHelp(object sender, EventArgs e)
         {
             MessageBox.Show(
 @"VMD Generator instructions help and examples
