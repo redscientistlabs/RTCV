@@ -632,7 +632,7 @@ namespace RTCV.CorruptCore
                         bu = RTC_FreezeEngine.GenerateUnit(domain, address, precision, alignment);
                         break;
                     case CorruptionEngine.PIPE:
-                        bu = RTC_PipeEngine.GenerateUnit(domain, address, precision, alignment);
+                        bu = PipeEngine.GenerateUnit(domain, address, precision, alignment);
                         break;
                     case CorruptionEngine.VECTOR:
                         bu = RTC_VectorEngine.GenerateUnit(domain, address, alignment);

@@ -1,6 +1,6 @@
 ﻿namespace RTCV.CorruptCore
 {
-    public static class RTC_PipeEngine
+    public static class PipeEngine
     {
         public static BlastUnit GenerateUnit(string domain, long address, int precision, int alignment)
         {
