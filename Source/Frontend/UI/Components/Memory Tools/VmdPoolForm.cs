@@ -10,25 +10,25 @@ namespace RTCV.UI
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class RTC_VmdPool_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class VmdPoolForm : ComponentForm, IAutoColorize, IBlockable
     {
         public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        public RTC_VmdPool_Form()
+        public VmdPoolForm()
         {
             InitializeComponent();
             AllowDrop = true;
-            this.DragEnter += RTC_VmdPool_Form_DragEnter;
-            this.DragDrop += RTC_VmdPool_Form_DragDrop;
+            this.DragEnter += VmdPoolForm_DragEnter;
+            this.DragDrop += VmdPoolForm_DragDrop;
         }
 
-        public void RTC_VmdPool_Form_DragEnter(object sender, DragEventArgs e)
+        public void VmdPoolForm_DragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Link;
         }
 
-        public void RTC_VmdPool_Form_DragDrop(object sender, DragEventArgs e)
+        public void VmdPoolForm_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             foreach (var f in files)
@@ -165,7 +165,7 @@ namespace RTCV.UI
             }
         }
 
-        private void RTC_VmdPool_Form_Load(object sender, EventArgs e)
+        private void VmdPoolForm_Load(object sender, EventArgs e)
         {
         }
 

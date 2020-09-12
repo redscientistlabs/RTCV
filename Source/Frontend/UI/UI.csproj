@@ -267,11 +267,11 @@
     <Compile Include="Components\Memory Tools\RTC_VmdNoTool_Form.designer.cs">
       <DependentUpon>RTC_VmdNoTool_Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdPool_Form.cs">
+    <Compile Include="Components\Memory Tools\VmdPoolForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdPool_Form.designer.cs">
-      <DependentUpon>RTC_VmdPool_Form.cs</DependentUpon>
+    <Compile Include="Components\Memory Tools\VmdPoolForm.designer.cs">
+      <DependentUpon>VmdPoolForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\TemplateForm.cs">
       <SubType>Form</SubType>
@@ -548,8 +548,8 @@
     <EmbeddedResource Include="Components\Memory Tools\RTC_VmdNoTool_Form.resx">
       <DependentUpon>RTC_VmdNoTool_Form.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\RTC_VmdPool_Form.resx">
-      <DependentUpon>RTC_VmdPool_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Memory Tools\VmdPoolForm.resx">
+      <DependentUpon>VmdPoolForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\TemplateForm.resx">
       <DependentUpon>TemplateForm.cs</DependentUpon>

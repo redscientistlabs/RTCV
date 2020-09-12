@@ -178,13 +178,13 @@ namespace RTCV.UI
                 string vmdName = item.ToString();
                 string path = Path.Combine(RtcCore.VmdsDir, vmdName);
 
-                S.GET<RTC_VmdPool_Form>().loadVmd(path, true);
+                S.GET<VmdPoolForm>().loadVmd(path, true);
             }
 
             //switch to VMD Pool
             foreach (var item in UICore.mtForm.cbSelectBox.Items)
             {
-                if (((dynamic)item).value is RTC_VmdPool_Form)
+                if (((dynamic)item).value is VmdPoolForm)
                 {
                     UICore.mtForm.cbSelectBox.SelectedItem = item;
                     break;

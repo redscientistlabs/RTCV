@@ -215,7 +215,7 @@ namespace RTCV.UI
                 {
                     var sk = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
                     MemoryDomains.GenerateVmdFromStashkey(sk);
-                    S.GET<RTC_VmdPool_Form>().RefreshVMDs();
+                    S.GET<VmdPoolForm>().RefreshVMDs();
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Merge Selected Stashkeys", null, new EventHandler((ob, ev) =>
