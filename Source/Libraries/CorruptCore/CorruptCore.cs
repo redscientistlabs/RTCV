@@ -629,7 +629,7 @@ namespace RTCV.CorruptCore
                         bu = RTC_DistortionEngine.GenerateUnit(domain, address, precision, alignment);
                         break;
                     case CorruptionEngine.FREEZE:
-                        bu = RTC_FreezeEngine.GenerateUnit(domain, address, precision, alignment);
+                        bu = FreezeEngine.GenerateUnit(domain, address, precision, alignment);
                         break;
                     case CorruptionEngine.PIPE:
                         bu = RTC_PipeEngine.GenerateUnit(domain, address, precision, alignment);
