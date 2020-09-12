@@ -1,6 +1,6 @@
 ﻿namespace RTCV.UI
 {
-    partial class RTC_SettingsHotkeyConfig_Form
+    partial class SettingsHotkeyConfigForm
     {
         /// <summary>
         /// Required designer variable.
@@ -34,9 +34,9 @@
             this.HotkeyTabControl = new System.Windows.Forms.TabControl();
             this.HotkeyTabControl.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // tabPage1
-            // 
+            //
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -45,9 +45,9 @@
             this.tabPage1.Tag = "color:normal";
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
+            //
             // HotkeyTabControl
-            // 
+            //
             this.HotkeyTabControl.Controls.Add(this.tabPage1);
             this.HotkeyTabControl.Location = new System.Drawing.Point(12, 12);
             this.HotkeyTabControl.Name = "HotkeyTabControl";
@@ -55,9 +55,9 @@
             this.HotkeyTabControl.Size = new System.Drawing.Size(388, 328);
             this.HotkeyTabControl.TabIndex = 0;
             this.HotkeyTabControl.Tag = "color:normal";
-            // 
-            // RTC_SettingsHotkeyConfig_Form
-            // 
+            //
+            // SettingsHotkeyConfigForm
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -66,7 +66,7 @@
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "RTC_SettingsHotkeyConfig_Form";
+            this.Name = "SettingsHotkeyConfigForm";
             this.Tag = "color:dark2";
             this.Text = "Hotkey Config";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);

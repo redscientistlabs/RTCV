@@ -12,37 +12,37 @@ namespace RTCV.UI
     using RTCV.UI.Input;
     using RTCV.UI.Modular;
 
-    public partial class RTC_SettingsHotkeyConfig_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class SettingsHotkeyConfigForm : ComponentForm, IAutoColorize, IBlockable
     {
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        public RTC_SettingsHotkeyConfig_Form()
+        public SettingsHotkeyConfigForm()
         {
             InitializeComponent();
 
             LoadHotkeys();
 
             this.undockedSizable = false;
-            this.Load += RTC_SettingsHotkeyConfig_Form_Load;
+            this.Load += SettingsHotkeyConfigForm_Load;
             this.HotkeyTabControl.SelectedIndexChanged += HotkeyHotkeyTabControlSelectedIndexChanged;
 
-            this.Activated += RTC_SettingsHotkeyConfig_Form_GotFocus;
-            this.Deactivate += RTC_SettingsHotkeyConfig_Form_LostFocus;
-            this.Leave += RTC_SettingsHotkeyConfig_Form_LostFocus;
-            this.LostFocus += RTC_SettingsHotkeyConfig_Form_LostFocus;
+            this.Activated += SettingsHotkeyConfigForm_GotFocus;
+            this.Deactivate += SettingsHotkeyConfigForm_LostFocus;
+            this.Leave += SettingsHotkeyConfigForm_LostFocus;
+            this.LostFocus += SettingsHotkeyConfigForm_LostFocus;
 
             DoTabs();
             DoFocus();
         }
 
-        private void RTC_SettingsHotkeyConfig_Form_GotFocus(object sender, EventArgs e)
+        private void SettingsHotkeyConfigForm_GotFocus(object sender, EventArgs e)
         {
             UICore.SetHotkeyTimer(false);
             DoFocus();
         }
 
-        private void RTC_SettingsHotkeyConfig_Form_LostFocus(object sender, EventArgs e)
+        private void SettingsHotkeyConfigForm_LostFocus(object sender, EventArgs e)
         {
             Save();
         }
@@ -99,7 +99,7 @@ namespace RTCV.UI
             }
         }
 
-        private void RTC_SettingsHotkeyConfig_Form_Load(object sender, EventArgs e)
+        private void SettingsHotkeyConfigForm_Load(object sender, EventArgs e)
         {
             Colors.SetRTCColor(Colors.GeneralColor, this.Parent);
         }
