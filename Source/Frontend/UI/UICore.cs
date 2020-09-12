@@ -472,7 +472,7 @@ namespace RTCV.UI
                     SyncObjectSingleton.FormExecute(() =>
                     {
                         var sh = S.GET<StashHistoryForm>();
-                        var sm = S.GET<RTC_StockpileManager_Form>();
+                        var sm = S.GET<StockpileManagerForm>();
                         var ghb = S.GET<GlitchHarvesterBlastForm>();
 
                         if (sh.lbStashHistory.SelectedIndex != -1)
@@ -488,7 +488,7 @@ namespace RTCV.UI
                             }
                             else
                             {
-                                sm.dgvStockpile_CellClick(sm.dgvStockpile, new DataGridViewCellEventArgs(0, mainRow.Index));
+                                sm.HandleCellClick(sm.dgvStockpile, new DataGridViewCellEventArgs(0, mainRow.Index));
                             }
                         }
                     });
