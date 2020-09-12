@@ -298,12 +298,12 @@
 
     public class SpecUpdateEventArgs : EventArgs
     {
-        public PartialSpec PartialSpec { get; private set; } = null;
+        public PartialSpec partialSpec { get; private set; } = null;
         public bool SyncedUpdate { get; private set; } = true;
 
         public SpecUpdateEventArgs(PartialSpec partialSpec, bool syncedUpdate)
         {
-            PartialSpec = partialSpec;
+            this.partialSpec = partialSpec;
             SyncedUpdate = syncedUpdate;
         }
     }

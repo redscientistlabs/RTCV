@@ -347,7 +347,7 @@ namespace RTCV.CorruptCore
 
                 AllSpec.CorruptCoreSpec.SpecUpdated += (o, e) =>
                 {
-                    PartialSpec partial = e.PartialSpec;
+                    PartialSpec partial = e.partialSpec;
                     if (IsStandaloneUI)
                     {
                         LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHCORRUPTCORESPECUPDATE, partial, true);

@@ -316,7 +316,7 @@ namespace RTCV.CorruptCore
                 AllSpec.CorruptCoreSpec = new FullSpec(temp.GetPartialSpec(), !RtcCore.Attached);
                 AllSpec.CorruptCoreSpec.SpecUpdated += (ob, eas) =>
                 {
-                    PartialSpec partial = eas.PartialSpec;
+                    PartialSpec partial = eas.partialSpec;
                     LocalNetCoreRouter.Route(UI, REMOTE_PUSHCORRUPTCORESPECUPDATE, partial, true);
                 };
                 MemoryDomains.RefreshDomains();

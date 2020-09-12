@@ -60,7 +60,7 @@ namespace RTCV.UI
             AllSpec.UISpec = new FullSpec(p, !RtcCore.Attached);
             AllSpec.UISpec.SpecUpdated += (o, e) =>
             {
-                PartialSpec partial = e.PartialSpec;
+                PartialSpec partial = e.partialSpec;
 
                 LocalNetCoreRouter.Route(CORRUPTCORE, REMOTE_PUSHUISPECUPDATE, partial, e.SyncedUpdate);
             };
