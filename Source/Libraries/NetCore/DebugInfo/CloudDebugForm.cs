@@ -307,7 +307,7 @@ namespace RTCV.NetCore
             }
         }
 
-        private void btnDebugInfo_Click(object sender, EventArgs e) => S.GET<DebugInfo_Form>().ShowDialog();
+        private void btnDebugInfo_Click(object sender, EventArgs e) => S.GET<DebugInfoForm>().ShowDialog();
     }
 
     [Serializable]
