@@ -12,13 +12,13 @@ namespace RTCV.UI
     using RTCV.UI.Modular;
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
-    public partial class RTC_MemoryDomains_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class MemoryDomainsForm : ComponentForm, IAutoColorize, IBlockable
     {
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
         private System.Timers.Timer updateTimer;
 
-        public RTC_MemoryDomains_Form()
+        public MemoryDomainsForm()
         {
             InitializeComponent();
             updateTimer = new System.Timers.Timer
@@ -90,7 +90,7 @@ namespace RTCV.UI
             this.Visible = oldState;
         }
 
-        private void btnSelectAll_Click(object sender, EventArgs e)
+        private void SelectAllDomains(object sender, EventArgs e)
         {
             RefreshDomains();
 
@@ -102,7 +102,7 @@ namespace RTCV.UI
             UpdateSelectedMemoryDomains(null, null);
         }
 
-        private void btnAutoSelectDomains_Click(object sender, EventArgs e)
+        private void AutoSelectDomains(object sender, EventArgs e)
         {
             LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_DOMAIN_REFRESHDOMAINS, true);
             RefreshDomains();
@@ -165,7 +165,7 @@ namespace RTCV.UI
             }
         }
 
-        private void lbMemoryDomains_SelectedIndexChanged(object sender, EventArgs e)
+        private void HandleMemoryDomainSelectionChange(object sender, EventArgs e)
         {
             updateTimer.Stop();
             updateTimer.Start();
@@ -173,13 +173,13 @@ namespace RTCV.UI
             //RTC_Restore.SaveRestore();
         }
 
-        private void btnRefreshDomains_Click(object sender, EventArgs e)
+        private void HandleRefreshDomainsClick(object sender, EventArgs e)
         {
             RefreshDomains();
             AllSpec.UISpec.Update("SELECTEDDOMAINS", lbMemoryDomains.SelectedItems.Cast<string>().ToArray());
         }
 
-        private void lbMemoryDomains_MouseDown(object sender, MouseEventArgs e)
+        private void HandleMemoryDomainsMouseDown(object sender, MouseEventArgs e)
         {
             //Point locate = new Point(((Control)sender).Location.X + e.Location.X, ((Control)sender).Location.Y + e.Location.Y);
             Point locate = new Point(e.Location.X, e.Location.Y);

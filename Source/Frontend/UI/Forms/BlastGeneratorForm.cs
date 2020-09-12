@@ -776,7 +776,7 @@ namespace RTCV.UI
         {
             try
             {
-                S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected();
+                S.GET<MemoryDomainsForm>().RefreshDomainsAndKeepSelected();
                 domainToMiDico.Clear();
                 domains = MemoryDomains.MemoryInterfaces.Keys.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
                 foreach (string domain in domains)

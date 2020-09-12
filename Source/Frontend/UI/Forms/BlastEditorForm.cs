@@ -1266,7 +1266,7 @@ namespace RTCV.UI
         {
             try
             {
-                S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected();
+                S.GET<MemoryDomainsForm>().RefreshDomainsAndKeepSelected();
                 DomainToMiDico?.Clear();
                 if (MemoryDomains.MemoryInterfaces == null)
                 {
