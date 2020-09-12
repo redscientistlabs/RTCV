@@ -21,7 +21,7 @@
                 S.GET<SettingsCorruptForm>(),
                 S.GET<RTC_SettingsHotkeyConfig_Form>(),
                 S.GET<RTC_SettingsNetCore_Form>(),
-                S.GET<RTC_SettingsAbout_Form>(),
+                S.GET<SettingsAboutForm>(),
             })
             {
                 popoutAllowed = false
