@@ -891,7 +891,7 @@ namespace RTCV.CorruptCore
                 {
                     if (this.GeneratedUsingValueList && !RtcCore.RerollIgnoresOriginalSource)
                     {
-                        Value = Filtering.GetRandomConstant(RTC_VectorEngine.ValueListHash, Precision);
+                        Value = Filtering.GetRandomConstant(VectorEngine.ValueListHash, Precision);
                     }
                     else
                     {
