@@ -2,7 +2,7 @@
 {
     using RTCV.NetCore;
 
-    public static class RTC_DistortionEngine
+    public static class DistortionEngine
     {
         public static int Delay
         {

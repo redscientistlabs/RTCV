@@ -330,7 +330,7 @@ namespace RTCV.CorruptCore
                 rtcSpecTemplate.Insert(getDefaultPartial());
                 rtcSpecTemplate.Insert(RTC_NightmareEngine.getDefaultPartial());
                 rtcSpecTemplate.Insert(RTC_HellgenieEngine.getDefaultPartial());
-                rtcSpecTemplate.Insert(RTC_DistortionEngine.getDefaultPartial());
+                rtcSpecTemplate.Insert(DistortionEngine.getDefaultPartial());
 
                 //Custom Engine Config with Nightmare Engine
                 RTC_CustomEngine.getDefaultPartial(rtcSpecTemplate);
@@ -626,7 +626,7 @@ namespace RTCV.CorruptCore
                         bu = RTC_HellgenieEngine.GenerateUnit(domain, address, precision, alignment);
                         break;
                     case CorruptionEngine.DISTORTION:
-                        bu = RTC_DistortionEngine.GenerateUnit(domain, address, precision, alignment);
+                        bu = DistortionEngine.GenerateUnit(domain, address, precision, alignment);
                         break;
                     case CorruptionEngine.FREEZE:
                         bu = RTC_FreezeEngine.GenerateUnit(domain, address, precision, alignment);
