@@ -55,7 +55,7 @@ namespace RTCV.UI
             this.lbLoadedVmdList.Size = new System.Drawing.Size(173, 223);
             this.lbLoadedVmdList.TabIndex = 12;
             this.lbLoadedVmdList.Tag = "color:dark1";
-            this.lbLoadedVmdList.SelectedIndexChanged += new System.EventHandler(this.lbLoadedVmdList_SelectedIndexChanged);
+            this.lbLoadedVmdList.SelectedIndexChanged += new System.EventHandler(this.HandleLoadedVmdListSelectionChange);
             this.lbLoadedVmdList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             //
             // btnRefreshVmdFiles
@@ -74,7 +74,7 @@ namespace RTCV.UI
             this.btnRefreshVmdFiles.Tag = "color:light1";
             this.btnRefreshVmdFiles.Text = "Refresh VMD Files";
             this.btnRefreshVmdFiles.UseVisualStyleBackColor = false;
-            this.btnRefreshVmdFiles.Click += new System.EventHandler(this.btnRefreshVmdFiles_Click);
+            this.btnRefreshVmdFiles.Click += new System.EventHandler(this.RefreshVMDFiles);
             //
             // btnLoadVmd
             //
@@ -98,7 +98,7 @@ namespace RTCV.UI
             this.btnLoadVmd.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnLoadVmd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnLoadVmd.UseVisualStyleBackColor = false;
-            this.btnLoadVmd.Click += new System.EventHandler(this.btnLoadVmd_Click);
+            this.btnLoadVmd.Click += new System.EventHandler(this.LoadVMD);
             this.btnLoadVmd.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             //
             // btnImportVmd
@@ -122,7 +122,7 @@ namespace RTCV.UI
             this.btnImportVmd.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnImportVmd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnImportVmd.UseVisualStyleBackColor = false;
-            this.btnImportVmd.Click += new System.EventHandler(this.btnImportVmd_Click_1);
+            this.btnImportVmd.Click += new System.EventHandler(this.ImportVMD);
             this.btnImportVmd.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             //
             // btnSaveVmd
@@ -146,7 +146,7 @@ namespace RTCV.UI
             this.btnSaveVmd.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnSaveVmd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSaveVmd.UseVisualStyleBackColor = false;
-            this.btnSaveVmd.Click += new System.EventHandler(this.btnSaveVmd_Click);
+            this.btnSaveVmd.Click += new System.EventHandler(this.SaveVMD);
             this.btnSaveVmd.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             //
             // btnRenameVMD
@@ -170,7 +170,7 @@ namespace RTCV.UI
             this.btnRenameVMD.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnRenameVMD.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnRenameVMD.UseVisualStyleBackColor = false;
-            this.btnRenameVMD.Click += new System.EventHandler(this.btnRenameVMD_Click);
+            this.btnRenameVMD.Click += new System.EventHandler(this.RenameVMD);
             this.btnRenameVMD.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             //
             // btnUnloadVmd
@@ -195,11 +195,12 @@ namespace RTCV.UI
             this.btnUnloadVmd.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnUnloadVmd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnUnloadVmd.UseVisualStyleBackColor = false;
-            this.btnUnloadVmd.Click += new System.EventHandler(this.btnUnloadVMD_Click);
+            this.btnUnloadVmd.Click += new System.EventHandler(this.UnloadVMD);
             this.btnUnloadVmd.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             //
             // MyVMDsForm
             //
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -219,7 +220,9 @@ namespace RTCV.UI
             this.Tag = "color:dark3";
             this.Text = "My VMDs";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
-            this.Load += new System.EventHandler(this.MyVMDsForm_Load);
+            this.Load += new System.EventHandler(this.OnLoad);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.HandleDragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.HandleDragEnter);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             this.ResumeLayout(false);
 
