@@ -219,11 +219,11 @@
     <Compile Include="Components\Memory Tools\OpenToolsForm.designer.cs">
       <DependentUpon>OpenToolsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdLimiterProfiler_Form.cs">
+    <Compile Include="Components\Memory Tools\VmdLimiterProfilerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdLimiterProfiler_Form.designer.cs">
-      <DependentUpon>RTC_VmdLimiterProfiler_Form.cs</DependentUpon>
+    <Compile Include="Components\Memory Tools\VmdLimiterProfilerForm.designer.cs">
+      <DependentUpon>VmdLimiterProfilerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Memory Tools\MyVMDsForm.cs">
       <SubType>Form</SubType>
@@ -524,8 +524,8 @@
     <EmbeddedResource Include="Components\Memory Tools\OpenToolsForm.resx">
       <DependentUpon>OpenToolsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\RTC_VmdLimiterProfiler_Form.resx">
-      <DependentUpon>RTC_VmdLimiterProfiler_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Memory Tools\VmdLimiterProfilerForm.resx">
+      <DependentUpon>VmdLimiterProfilerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Memory Tools\MyVMDsForm.resx">
       <DependentUpon>MyVMDsForm.cs</DependentUpon>
