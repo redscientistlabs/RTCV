@@ -103,7 +103,7 @@
             S.GET<SavestateManagerForm>().savestateList.btnSaveLoad.ForeColor = Color.OrangeRed;
 
             //Trigger Save button
-            S.GET<SavestateManagerForm>().savestateList.btnSaveLoad_Click(null, null);
+            S.GET<SavestateManagerForm>().savestateList.HandleSaveLoadClick(null, null);
         }
 
         private void GlitchHarvesterLoadAndCorrupt(object sender, EventArgs e)
@@ -385,7 +385,7 @@
             S.GET<SavestateManagerForm>().savestateList.btnSaveLoad.ForeColor = Color.FromArgb(192, 255, 192);
 
             //Trigger Save button
-            S.GET<SavestateManagerForm>().savestateList.btnSaveLoad_Click(null, null);
+            S.GET<SavestateManagerForm>().savestateList.HandleSaveLoadClick(null, null);
         }
 
         public void SetRewindBoxes(bool enabled)

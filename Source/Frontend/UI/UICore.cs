@@ -506,7 +506,7 @@ namespace RTCV.UI
                     SyncObjectSingleton.FormExecute(() =>
                     {
                         S.GET<SavestateManagerForm>().savestateList.btnSaveLoad.Text = "LOAD";
-                        S.GET<SavestateManagerForm>().savestateList.btnSaveLoad_Click(null, null);
+                        S.GET<SavestateManagerForm>().savestateList.HandleSaveLoadClick(null, null);
                     });
                     break;
 
@@ -514,7 +514,7 @@ namespace RTCV.UI
                     SyncObjectSingleton.FormExecute(() =>
                     {
                         S.GET<SavestateManagerForm>().savestateList.btnSaveLoad.Text = "SAVE";
-                        S.GET<SavestateManagerForm>().savestateList.btnSaveLoad_Click(null, null);
+                        S.GET<SavestateManagerForm>().savestateList.HandleSaveLoadClick(null, null);
                     });
                     break;
 

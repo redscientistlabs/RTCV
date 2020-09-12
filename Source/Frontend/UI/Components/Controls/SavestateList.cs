@@ -158,7 +158,7 @@ namespace RTCV.UI.Components.Controls
                 if (smForm != null && smForm.cbSavestateLoadOnClick.Checked)
                 {
                     btnSaveLoad.Text = "LOAD";
-                    btnSaveLoad_Click(null, null);
+                    HandleSaveLoadClick(null, null);
                 }
             }
             else if (e.Button == MouseButtons.Right)
@@ -302,7 +302,7 @@ namespace RTCV.UI.Components.Controls
         }
 
         [SuppressMessage("Microsoft.Design", "IDE1006", Justification = "Designer-originated method")]
-        public void btnSaveLoad_Click(object sender, EventArgs e)
+        public void HandleSaveLoadClick(object sender, EventArgs e)
         {
             var renameSaveStateWord = AllSpec.VanguardSpec[VSPEC.RENAME_SAVESTATE];
             if (renameSaveStateWord != null && renameSaveStateWord is string s)
