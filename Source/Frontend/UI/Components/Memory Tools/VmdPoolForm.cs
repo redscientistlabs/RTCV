@@ -10,25 +10,22 @@ namespace RTCV.UI
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class RTC_VmdPool_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class VmdPoolForm : ComponentForm, IAutoColorize, IBlockable
     {
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        public RTC_VmdPool_Form()
+        public VmdPoolForm()
         {
             InitializeComponent();
-            AllowDrop = true;
-            this.DragEnter += RTC_VmdPool_Form_DragEnter;
-            this.DragDrop += RTC_VmdPool_Form_DragDrop;
         }
 
-        internal void RTC_VmdPool_Form_DragEnter(object sender, DragEventArgs e)
+        internal void HandleDragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Link;
         }
 
-        internal void RTC_VmdPool_Form_DragDrop(object sender, DragEventArgs e)
+        internal void HandleDragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             foreach (var f in files)
@@ -41,7 +38,7 @@ namespace RTCV.UI
             RefreshVMDs();
         }
 
-        private void btnUnloadVMD_Click(object sender, EventArgs e)
+        private void UnloadVMD(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
                 return;
@@ -165,11 +162,7 @@ namespace RTCV.UI
             }
         }
 
-        private void RTC_VmdPool_Form_Load(object sender, EventArgs e)
-        {
-        }
-
-        private void lbLoadedVmdList_SelectedIndexChanged(object sender, EventArgs e)
+        private void HandleLoadedVmdListSelectionChange(object sender, EventArgs e)
         {
             btnSendToMyVMDs.Enabled = false;
             btnSaveVmd.Enabled = false;
@@ -246,7 +239,7 @@ namespace RTCV.UI
             return sb.ToString();
         }
 
-        private void btnSaveVmd_Click(object sender, EventArgs e)
+        private void SaveVMD(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
                 return;
@@ -295,7 +288,7 @@ namespace RTCV.UI
         }
 
 
-        private void btnLoadVmd_Click(object sender, EventArgs e)
+        private void HandleLoadVMDClick(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog
             {
@@ -328,7 +321,7 @@ namespace RTCV.UI
             }
         }
 
-        private void btnRenameVMD_Click(object sender, EventArgs e)
+        private void HandleRenameVMDClick(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
                 return;
@@ -340,7 +333,7 @@ namespace RTCV.UI
             RefreshVMDs();
         }
 
-        private void btnSendToMyVMDs_Click(object sender, EventArgs e)
+        private void SendToMyVMDs(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
                 return;

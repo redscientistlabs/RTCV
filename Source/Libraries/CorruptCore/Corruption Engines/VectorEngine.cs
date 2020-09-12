@@ -2,7 +2,7 @@ namespace RTCV.CorruptCore
 {
     using RTCV.NetCore;
 
-    public static class RTC_VectorEngine
+    public static class VectorEngine
     {
         public static string LimiterListHash
         {

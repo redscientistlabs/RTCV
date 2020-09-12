@@ -1,6 +1,6 @@
 ﻿namespace RTCV.CorruptCore
 {
-    public static class RTC_FreezeEngine
+    public static class FreezeEngine
     {
         public static BlastUnit GenerateUnit(string domain, long address, int precision, int alignment)
         {
