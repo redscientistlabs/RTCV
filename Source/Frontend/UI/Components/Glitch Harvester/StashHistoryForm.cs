@@ -216,7 +216,7 @@ namespace RTCV.UI
                     StashKey sk = StockpileManager_UISide.StashHistory[lbStashHistory.SelectedIndex];
                     sk.BlastLayer.RasterizeVMDs();
                     MemoryDomains.GenerateVmdFromStashkey(sk);
-                    S.GET<RTC_VmdPool_Form>().RefreshVMDs();
+                    S.GET<VmdPoolForm>().RefreshVMDs();
                 }))).Enabled = lbStashHistory.SelectedIndex != -1;
 
                 columnsMenu.Items.Add(new ToolStripSeparator());

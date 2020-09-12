@@ -16,11 +16,11 @@
         public CustomEngineConfigForm()
         {
             InitializeComponent();
-            RTC_CustomEngine.InitTemplates();
+            CustomEngine.InitTemplates();
 
             this.GotFocus += (o, e) => this.Refresh();
 
-            foreach (var k in RTC_CustomEngine.Name2TemplateDico.Keys)
+            foreach (var k in CustomEngine.Name2TemplateDico.Keys)
             {
                 cbSelectedTemplate.Items.Add(k);
             }
@@ -145,14 +145,14 @@
         {
             if (rbUnitSourceStore.Checked)
             {
-                RTC_CustomEngine.Source = BlastUnitSource.STORE;
+                CustomEngine.Source = BlastUnitSource.STORE;
                 gbValueSettings.Enabled = false;
                 gbStoreSettings.Enabled = true;
                 gbStoreCompare.Enabled = true;
             }
             else if (rbUnitSourceValue.Checked)
             {
-                RTC_CustomEngine.Source = BlastUnitSource.VALUE;
+                CustomEngine.Source = BlastUnitSource.VALUE;
                 gbValueSettings.Enabled = true;
                 gbStoreSettings.Enabled = false;
                 gbStoreCompare.Enabled = false;
@@ -168,15 +168,15 @@
 
             if (rbRandom.Checked)
             {
-                RTC_CustomEngine.ValueSource = CustomValueSource.RANDOM;
+                CustomEngine.ValueSource = CustomValueSource.RANDOM;
             }
             else if (rbValueList.Checked)
             {
-                RTC_CustomEngine.ValueSource = CustomValueSource.VALUELIST;
+                CustomEngine.ValueSource = CustomValueSource.VALUELIST;
             }
             else if (rbRange.Checked)
             {
-                RTC_CustomEngine.ValueSource = CustomValueSource.RANGE;
+                CustomEngine.ValueSource = CustomValueSource.RANGE;
             }
         }
 
@@ -189,11 +189,11 @@
 
             if (rbStoreImmediate.Checked)
             {
-                RTC_CustomEngine.StoreTime = StoreTime.IMMEDIATE;
+                CustomEngine.StoreTime = StoreTime.IMMEDIATE;
             }
             else if (rbStoreFirstExecute.Checked)
             {
-                RTC_CustomEngine.StoreTime = StoreTime.PREEXECUTE;
+                CustomEngine.StoreTime = StoreTime.PREEXECUTE;
             }
         }
 
@@ -206,11 +206,11 @@
 
             if (rbStoreRandom.Checked)
             {
-                RTC_CustomEngine.StoreAddress = CustomStoreAddress.RANDOM;
+                CustomEngine.StoreAddress = CustomStoreAddress.RANDOM;
             }
             else if (rbStoreSame.Checked)
             {
-                RTC_CustomEngine.StoreAddress = CustomStoreAddress.SAME;
+                CustomEngine.StoreAddress = CustomStoreAddress.SAME;
             }
         }
 
@@ -223,12 +223,12 @@
 
             if (rbStoreOnce.Checked)
             {
-                RTC_CustomEngine.StoreType = StoreType.ONCE;
+                CustomEngine.StoreType = StoreType.ONCE;
             }
 
             if (rbStoreStep.Checked)
             {
-                RTC_CustomEngine.StoreType = StoreType.CONTINUOUS;
+                CustomEngine.StoreType = StoreType.CONTINUOUS;
             }
         }
 
@@ -250,16 +250,16 @@
             switch (RtcCore.CurrentPrecision)
             {
                 case 1:
-                    RTC_CustomEngine.MinValue8Bit = value;
+                    CustomEngine.MinValue8Bit = value;
                     break;
                 case 2:
-                    RTC_CustomEngine.MinValue16Bit = value;
+                    CustomEngine.MinValue16Bit = value;
                     break;
                 case 4:
-                    RTC_CustomEngine.MinValue32Bit = value;
+                    CustomEngine.MinValue32Bit = value;
                     break;
                 case 8:
-                    RTC_CustomEngine.MinValue64Bit = value;
+                    CustomEngine.MinValue64Bit = value;
                     break;
             }
         }
@@ -282,16 +282,16 @@
             switch (RtcCore.CurrentPrecision)
             {
                 case 1:
-                    RTC_CustomEngine.MaxValue8Bit = value;
+                    CustomEngine.MaxValue8Bit = value;
                     break;
                 case 2:
-                    RTC_CustomEngine.MaxValue16Bit = value;
+                    CustomEngine.MaxValue16Bit = value;
                     break;
                 case 4:
-                    RTC_CustomEngine.MaxValue32Bit = value;
+                    CustomEngine.MaxValue32Bit = value;
                     break;
                 case 8:
-                    RTC_CustomEngine.MaxValue64Bit = value;
+                    CustomEngine.MaxValue64Bit = value;
                     break;
             }
         }
@@ -323,7 +323,7 @@
                 return;
             }
 
-            RTC_CustomEngine.Loop = cbLoopUnit.Checked;
+            CustomEngine.Loop = cbLoopUnit.Checked;
         }
 
         private void HandleValueListSelectionChange(object sender, EventArgs e)
@@ -333,7 +333,7 @@
                 return;
             }
 
-            RTC_CustomEngine.ValueListHash = (string)cbValueList.SelectedValue;
+            CustomEngine.ValueListHash = (string)cbValueList.SelectedValue;
         }
 
         private void HandleLimiterListSelectionChange(object sender, EventArgs e)
@@ -343,7 +343,7 @@
                 return;
             }
 
-            RTC_CustomEngine.LimiterListHash = (string)cbLimiterList.SelectedValue;
+            CustomEngine.LimiterListHash = (string)cbLimiterList.SelectedValue;
         }
 
         private void HandleLimiterTimeSelectionChange(object sender, EventArgs e)
@@ -355,19 +355,19 @@
 
             if (rbLimiterNone.Checked)
             {
-                RTC_CustomEngine.LimiterTime = LimiterTime.NONE;
+                CustomEngine.LimiterTime = LimiterTime.NONE;
             }
             else if (rbLimiterGenerate.Checked)
             {
-                RTC_CustomEngine.LimiterTime = LimiterTime.GENERATE;
+                CustomEngine.LimiterTime = LimiterTime.GENERATE;
             }
             else if (rbLimiterFirstExecute.Checked)
             {
-                RTC_CustomEngine.LimiterTime = LimiterTime.PREEXECUTE;
+                CustomEngine.LimiterTime = LimiterTime.PREEXECUTE;
             }
             else if (rbLimiterExecute.Checked)
             {
-                RTC_CustomEngine.LimiterTime = LimiterTime.EXECUTE;
+                CustomEngine.LimiterTime = LimiterTime.EXECUTE;
             }
         }
 
@@ -375,15 +375,15 @@
         {
             if (rbStoreModeAddress.Checked)
             {
-                RTC_CustomEngine.StoreLimiterSource = StoreLimiterSource.ADDRESS;
+                CustomEngine.StoreLimiterSource = StoreLimiterSource.ADDRESS;
             }
             else if (rbStoreModeSource.Checked)
             {
-                RTC_CustomEngine.StoreLimiterSource = StoreLimiterSource.SOURCEADDRESS;
+                CustomEngine.StoreLimiterSource = StoreLimiterSource.SOURCEADDRESS;
             }
             else if (rbStoreModeBoth.Checked)
             {
-                RTC_CustomEngine.StoreLimiterSource = StoreLimiterSource.BOTH;
+                CustomEngine.StoreLimiterSource = StoreLimiterSource.BOTH;
             }
         }
 
@@ -399,7 +399,7 @@
                 return;
             }
 
-            RTC_CustomEngine.Lifetime = Convert.ToInt32(nmLifetime.Value);
+            CustomEngine.Lifetime = Convert.ToInt32(nmLifetime.Value);
         }
 
         private void HandleDelayChange(object sender, EventArgs e)
@@ -409,7 +409,7 @@
                 return;
             }
 
-            RTC_CustomEngine.Delay = Convert.ToInt32(nmDelay.Value);
+            CustomEngine.Delay = Convert.ToInt32(nmDelay.Value);
         }
 
         private void HandleTiltChange(object sender, EventArgs e)
@@ -419,7 +419,7 @@
                 return;
             }
 
-            RTC_CustomEngine.TiltValue = (BigInteger)nmTilt.Value;
+            CustomEngine.TiltValue = (BigInteger)nmTilt.Value;
         }
 
         public void UpdateMinMaxBoxes(int precision)
@@ -431,30 +431,30 @@
                     nmMinValue.Maximum = byte.MaxValue;
                     nmMaxValue.Maximum = byte.MaxValue;
 
-                    nmMinValue.Value = RTC_CustomEngine.MinValue8Bit;
-                    nmMaxValue.Value = RTC_CustomEngine.MaxValue8Bit;
+                    nmMinValue.Value = CustomEngine.MinValue8Bit;
+                    nmMaxValue.Value = CustomEngine.MaxValue8Bit;
                     break;
 
                 case 2:
                     nmMinValue.Maximum = ushort.MaxValue;
                     nmMaxValue.Maximum = ushort.MaxValue;
 
-                    nmMinValue.Value = RTC_CustomEngine.MinValue16Bit;
-                    nmMaxValue.Value = RTC_CustomEngine.MaxValue16Bit;
+                    nmMinValue.Value = CustomEngine.MinValue16Bit;
+                    nmMaxValue.Value = CustomEngine.MaxValue16Bit;
                     break;
                 case 4:
                     nmMinValue.Maximum = uint.MaxValue;
                     nmMaxValue.Maximum = uint.MaxValue;
 
-                    nmMinValue.Value = RTC_CustomEngine.MinValue32Bit;
-                    nmMaxValue.Value = RTC_CustomEngine.MaxValue32Bit;
+                    nmMinValue.Value = CustomEngine.MinValue32Bit;
+                    nmMaxValue.Value = CustomEngine.MaxValue32Bit;
                     break;
                 case 8:
                     nmMinValue.Maximum = ulong.MaxValue;
                     nmMaxValue.Maximum = ulong.MaxValue;
 
-                    nmMinValue.Value = RTC_CustomEngine.MinValue64Bit;
-                    nmMaxValue.Value = RTC_CustomEngine.MaxValue64Bit;
+                    nmMinValue.Value = CustomEngine.MinValue64Bit;
+                    nmMaxValue.Value = CustomEngine.MaxValue64Bit;
                     break;
             }
             updatingMinMax = false;
@@ -467,7 +467,7 @@
                 return;
             }
 
-            RTC_CustomEngine.LimiterInverted = cbLimiterInverted.Checked;
+            CustomEngine.LimiterInverted = cbLimiterInverted.Checked;
         }
 
         private void HandleSelectedTemplateChange(object sender, EventArgs e)
@@ -501,7 +501,7 @@
                 btnCustomTemplateSave.ForeColor = Color.Black;
             }
 
-            if (RTC_CustomEngine.LoadTemplate(cbSelectedTemplate.SelectedItem.ToString()))
+            if (CustomEngine.LoadTemplate(cbSelectedTemplate.SelectedItem.ToString()))
             {
                 AllSpec.CorruptCoreSpec.Update(spec);
                 RestoreUIStateFromSpec();
@@ -512,14 +512,14 @@
 
         private void LoadCustomTemplate(object sender, EventArgs e)
         {
-            PartialSpec spec = RTC_CustomEngine.LoadTemplateFile();
+            PartialSpec spec = CustomEngine.LoadTemplateFile();
 
             if (spec == null)
             {
                 return;
             }
 
-            RTC_CustomEngine.Name2TemplateDico[spec[RTCSPEC.CUSTOM_NAME].ToString()] = spec;
+            CustomEngine.Name2TemplateDico[spec[RTCSPEC.CUSTOM_NAME].ToString()] = spec;
             AllSpec.CorruptCoreSpec.Update(spec);
             RestoreUIStateFromSpec();
             Refresh();
@@ -533,7 +533,7 @@
 
         private void SaveAsCustomTemplate(object sender, EventArgs e)
         {
-            string TemplateName = RTC_CustomEngine.SaveTemplateFile(true);
+            string TemplateName = CustomEngine.SaveTemplateFile(true);
 
             if (string.IsNullOrWhiteSpace(TemplateName))
             {
@@ -554,7 +554,7 @@
 
         private void SaveCustomTemplate(object sender, EventArgs e)
         {
-            RTC_CustomEngine.SaveTemplateFile(false);
+            CustomEngine.SaveTemplateFile(false);
         }
 
         private void RestoreUIStateFromSpec()
@@ -563,7 +563,7 @@
             {
                 DontUpdateSpec = true;
 
-                switch (RTC_CustomEngine.Source)
+                switch (CustomEngine.Source)
                 {
                     case (BlastUnitSource.STORE):
                         rbUnitSourceStore.Checked = true;
@@ -573,7 +573,7 @@
                         break;
                 }
 
-                switch (RTC_CustomEngine.ValueSource)
+                switch (CustomEngine.ValueSource)
                 {
                     case (CustomValueSource.RANDOM):
                         rbRandom.Checked = true;
@@ -586,7 +586,7 @@
                         break;
                 }
 
-                switch (RTC_CustomEngine.StoreTime)
+                switch (CustomEngine.StoreTime)
                 {
                     case (StoreTime.IMMEDIATE):
                         rbStoreImmediate.Checked = true;
@@ -596,7 +596,7 @@
                         break;
                 }
 
-                switch (RTC_CustomEngine.StoreAddress)
+                switch (CustomEngine.StoreAddress)
                 {
                     case (CustomStoreAddress.RANDOM):
                         rbStoreRandom.Checked = true;
@@ -606,7 +606,7 @@
                         break;
                 }
 
-                switch (RTC_CustomEngine.StoreType)
+                switch (CustomEngine.StoreType)
                 {
                     case (StoreType.ONCE):
                         rbStoreOnce.Checked = true;
@@ -616,7 +616,7 @@
                         break;
                 }
 
-                switch (RTC_CustomEngine.LimiterTime)
+                switch (CustomEngine.LimiterTime)
                 {
                     case (LimiterTime.NONE):
                         rbLimiterNone.Checked = true;
@@ -632,7 +632,7 @@
                         break;
                 }
 
-                switch (RTC_CustomEngine.StoreLimiterSource)
+                switch (CustomEngine.StoreLimiterSource)
                 {
                     case (StoreLimiterSource.ADDRESS):
                         rbStoreModeAddress.Checked = true;
@@ -647,20 +647,20 @@
 
                 cbClearRewind.Checked = StepActions.ClearStepActionsOnRewind;
 
-                cbLoopUnit.Checked = RTC_CustomEngine.Loop;
-                cbLimiterInverted.Checked = RTC_CustomEngine.LimiterInverted;
+                cbLoopUnit.Checked = CustomEngine.Loop;
+                cbLimiterInverted.Checked = CustomEngine.LimiterInverted;
 
-                cbValueList.SelectedValue = RTC_CustomEngine.ValueListHash;
-                cbLimiterList.SelectedValue = RTC_CustomEngine.LimiterListHash;
+                cbValueList.SelectedValue = CustomEngine.ValueListHash;
+                cbLimiterList.SelectedValue = CustomEngine.LimiterListHash;
 
-                if (RTC_CustomEngine.TiltValue > (BigInteger)decimal.MaxValue)
+                if (CustomEngine.TiltValue > (BigInteger)decimal.MaxValue)
                 {
-                    RTC_CustomEngine.TiltValue = (BigInteger)decimal.MaxValue;
+                    CustomEngine.TiltValue = (BigInteger)decimal.MaxValue;
                 }
 
-                nmTilt.Value = (decimal)RTC_CustomEngine.TiltValue;
-                nmDelay.Value = RTC_CustomEngine.Delay;
-                nmLifetime.Value = RTC_CustomEngine.Lifetime;
+                nmTilt.Value = (decimal)CustomEngine.TiltValue;
+                nmDelay.Value = CustomEngine.Delay;
+                nmLifetime.Value = CustomEngine.Lifetime;
 
                 UpdateMinMaxBoxes(RtcCore.CurrentPrecision);
 
@@ -687,32 +687,32 @@
                 switch (RtcCore.CurrentPrecision)
                 {
                     case 1:
-                        nmMinValue.Value = RTC_CustomEngine.MinValue8Bit;
+                        nmMinValue.Value = CustomEngine.MinValue8Bit;
                         break;
                     case 2:
-                        nmMinValue.Value = RTC_CustomEngine.MinValue16Bit;
+                        nmMinValue.Value = CustomEngine.MinValue16Bit;
                         break;
                     case 4:
-                        nmMinValue.Value = RTC_CustomEngine.MinValue32Bit;
+                        nmMinValue.Value = CustomEngine.MinValue32Bit;
                         break;
                     case 8:
-                        nmMinValue.Value = RTC_CustomEngine.MinValue64Bit;
+                        nmMinValue.Value = CustomEngine.MinValue64Bit;
                         break;
                 }
 
                 switch (RtcCore.CurrentPrecision)
                 {
                     case 1:
-                        nmMaxValue.Value = RTC_CustomEngine.MaxValue8Bit;
+                        nmMaxValue.Value = CustomEngine.MaxValue8Bit;
                         break;
                     case 2:
-                        nmMaxValue.Value = RTC_CustomEngine.MaxValue16Bit;
+                        nmMaxValue.Value = CustomEngine.MaxValue16Bit;
                         break;
                     case 4:
-                        nmMaxValue.Value = RTC_CustomEngine.MaxValue32Bit;
+                        nmMaxValue.Value = CustomEngine.MaxValue32Bit;
                         break;
                     case 8:
-                        nmMaxValue.Value = RTC_CustomEngine.MaxValue64Bit;
+                        nmMaxValue.Value = CustomEngine.MaxValue64Bit;
                         break;
                 }
             }
