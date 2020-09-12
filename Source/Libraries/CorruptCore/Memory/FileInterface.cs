@@ -63,8 +63,9 @@ namespace RTCV.CorruptCore
             }
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1801", Justification = "startPadding and endPadding will be used eventually")]
-        public FileInterface(string targetId, bool bigEndian, bool useAutomaticFileBackups = false, long startPadding = 0, long endPadding = 0)
+        [SuppressMessage("Microsoft.Design", "CA1707", Justification = "_startPadding will keep its underscore for compability with existing DosboxStub implementation")]
+        [SuppressMessage("Microsoft.Design", "CA1801", Justification = "_startPadding and endPadding will be used eventually")]
+        public FileInterface(string targetId, bool bigEndian, bool useAutomaticFileBackups = false, long _startPadding = 0, long endPadding = 0)
         {
             if (targetId == null)
             {
