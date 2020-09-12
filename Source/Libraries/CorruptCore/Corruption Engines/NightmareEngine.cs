@@ -5,7 +5,7 @@
     using RTCV.NetCore;
     using RTCV.CorruptCore.Extensions;
 
-    public static class RTC_NightmareEngine
+    public static class NightmareEngine
     {
         public static NightmareAlgo Algo
         {
@@ -110,7 +110,7 @@
                             type = NightmareType.SET;
                             break;
                         default:
-                            MessageBox.Show("Random returned an unexpected value (RTC_NightmareEngine switch(Algo) RANDOMTILT)");
+                            MessageBox.Show("Random returned an unexpected value (NightmareEngine switch(Algo) RANDOMTILT)");
                             return null;
                     }
 
@@ -129,7 +129,7 @@
                             break;
 
                         default:
-                            MessageBox.Show("Random returned an unexpected value (RTC_NightmareEngine switch(Algo) TILT)");
+                            MessageBox.Show("Random returned an unexpected value (NightmareEngine switch(Algo) TILT)");
                             return null;
                     }
                     break;
