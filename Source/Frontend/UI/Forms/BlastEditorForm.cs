@@ -1426,7 +1426,7 @@ namespace RTCV.UI
             StockpileManager_UISide.StashHistory.Add(newSk);
 
             S.GET<StashHistoryForm>().RefreshStashHistory();
-            S.GET<RTC_StockpileManager_Form>().dgvStockpile.ClearSelection();
+            S.GET<StockpileManagerForm>().dgvStockpile.ClearSelection();
             S.GET<StashHistoryForm>().lbStashHistory.ClearSelected();
 
             S.GET<StashHistoryForm>().DontLoadSelectedStash = true;

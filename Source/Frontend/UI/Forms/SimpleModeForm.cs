@@ -403,7 +403,7 @@
             }
 
             S.GET<CorruptionEngineForm>().SetRewindBoxes(cbClearRewind.Checked);
-            S.GET<RTC_CustomEngineConfig_Form>().SetRewindBoxes(cbClearRewind.Checked);
+            S.GET<CustomEngineConfigForm>().SetRewindBoxes(cbClearRewind.Checked);
 
             StepActions.ClearStepActionsOnRewind = cbClearRewind.Checked;
         }

@@ -13,7 +13,7 @@ namespace RTCV.UI
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class RTC_StockpileManager_Form : ComponentForm, IAutoColorize, IBlockable
+    public partial class StockpileManagerForm : ComponentForm, IAutoColorize, IBlockable
     {
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
@@ -46,7 +46,7 @@ namespace RTCV.UI
             }
         }
 
-        public RTC_StockpileManager_Form()
+        public StockpileManagerForm()
         {
             InitializeComponent();
 
@@ -59,7 +59,7 @@ namespace RTCV.UI
             };
         }
 
-        internal void dgvStockpile_CellClick(object sender, DataGridViewCellEventArgs e)
+        internal void HandleCellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e == null || e.RowIndex == -1)
             {
@@ -156,7 +156,7 @@ namespace RTCV.UI
             return (ModifierKeys & Keys.Control) != 0;
         }
 
-        private void dgvStockpile_MouseDown(object sender, MouseEventArgs e)
+        private void HandleStockpileMouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -302,7 +302,7 @@ namespace RTCV.UI
             return false;
         }
 
-        private void btnRenameSelected_Click(object sender, EventArgs e)
+        private void RenamedSelected(object sender, EventArgs e)
         {
             if (!btnRenameSelected.Visible)
             {
@@ -322,11 +322,7 @@ namespace RTCV.UI
             }
         }
 
-        private void btnRemoveSelectedStockpile_Click(object sender, EventArgs e)
-        {
-            RemoveSelected();
-        }
-
+        private void RemoveSelectedStockpile(object sender, EventArgs e) => RemoveSelected();
         public void RemoveSelected()
         {
             if (ModifierKeys == Keys.Control || (dgvStockpile.SelectedRows.Count != 0 && (MessageBox.Show("Are you sure you want to remove the selected stockpile entries?", "Delete Stockpile Entry?", MessageBoxButtons.YesNo) == DialogResult.Yes)))
@@ -341,11 +337,7 @@ namespace RTCV.UI
             }
         }
 
-        private void btnClearStockpile_Click(object sender, EventArgs e)
-        {
-            ClearStockpile();
-        }
-
+        private void ClearStockpile(object sender, EventArgs e) => ClearStockpile();
         public void ClearStockpile(bool force = false)
         {
             if (force || MessageBox.Show("Are you sure you want to clear the stockpile?", "Clearing stockpile", MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -507,7 +499,7 @@ namespace RTCV.UI
             }
         }
 
-        private void btnLoadStockpile_Click(object sender, MouseEventArgs e)
+        private void LoadStockpile(object sender, MouseEventArgs e)
         {
             logger.Trace("Entering LoadStockpile {0}", Thread.CurrentThread.ManagedThreadId);
             RtcCore.CheckForProblematicProcesses();
@@ -578,7 +570,7 @@ namespace RTCV.UI
             loadMenuItems.Show(this, locate);
         }
 
-        public void btnSaveStockpileAs_Click(object sender, EventArgs e)
+        public void SaveStockpileAs(object sender, EventArgs e)
         {
             if (dgvStockpile.Rows.Count == 0)
             {
@@ -609,7 +601,7 @@ namespace RTCV.UI
             SaveStockpile(sks, path);
         }
 
-        private void btnSaveStockpile_Click(object sender, EventArgs e)
+        private void SaveStockpile(object sender, EventArgs e)
         {
             Stockpile sks = new Stockpile(dgvStockpile);
             SaveStockpile(sks, StockpileManager_UISide.GetCurrentStockpilePath());
@@ -623,7 +615,7 @@ namespace RTCV.UI
             }
         }
 
-        private void btnStockpileMoveSelectedUp_Click(object sender, EventArgs e)
+        private void MoveSelectedStockpileUp(object sender, EventArgs e)
         {
             var selectedRows = dgvStockpile.SelectedRows.Cast<DataGridViewRow>().ToArray();
             foreach (DataGridViewRow row in selectedRows)
@@ -653,7 +645,7 @@ namespace RTCV.UI
             S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
         }
 
-        private void btnStockpileMoveSelectedDown_Click(object sender, EventArgs e)
+        private void MoveSelectedStockpileDown(object sender, EventArgs e)
         {
             var selectedRows = dgvStockpile.SelectedRows.Cast<DataGridViewRow>().ToArray();
             foreach (DataGridViewRow row in selectedRows)
@@ -685,7 +677,7 @@ namespace RTCV.UI
             S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
         }
 
-        private void dgvStockpile_DragDrop(object sender, DragEventArgs e)
+        private void HandleDragDrop(object sender, DragEventArgs e)
         {
             bool alreadyLoadedAStockpile = false;
 
@@ -718,12 +710,12 @@ namespace RTCV.UI
             S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
         }
 
-        private void dgvStockpile_DragEnter(object sender, DragEventArgs e)
+        private void HandleDragEnter(object sender, DragEventArgs e)
         {
             e.Effect = DragDropEffects.Link;
         }
 
-        private void btnImportStockpile_Click(object sender, EventArgs e)
+        private void ImportStockpile(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog
             {
@@ -738,7 +730,7 @@ namespace RTCV.UI
             }
         }
 
-        private void btnStockpileUP_Click(object sender, EventArgs e)
+        private void StockpileUp(object sender, EventArgs e)
         {
             if (dgvStockpile.SelectedRows.Count == 0)
             {
@@ -758,10 +750,10 @@ namespace RTCV.UI
                 dgvStockpile.Rows[currentSelectedIndex - 1].Selected = true;
             }
 
-            dgvStockpile_CellClick(dgvStockpile, null);
+            HandleCellClick(dgvStockpile, null);
         }
 
-        private void btnStockpileDOWN_Click(object sender, EventArgs e)
+        private void StockpileDown(object sender, EventArgs e)
         {
             if (dgvStockpile.SelectedRows.Count == 0)
             {
@@ -781,17 +773,17 @@ namespace RTCV.UI
                 dgvStockpile.Rows[currentSelectedIndex + 1].Selected = true;
             }
 
-            dgvStockpile_CellClick(dgvStockpile, null);
+            HandleCellClick(dgvStockpile, null);
         }
 
-        private void RTC_StockpileManager_Form_Load(object sender, EventArgs e)
+        private void OnFormLoad(object sender, EventArgs e)
         {
             dgvStockpile.AllowDrop = true;
-            dgvStockpile.DragDrop += dgvStockpile_DragDrop;
-            dgvStockpile.DragEnter += dgvStockpile_DragEnter;
+            dgvStockpile.DragDrop += HandleDragDrop;
+            dgvStockpile.DragEnter += HandleDragEnter;
         }
 
-        private void btnGlitchHarvesterSettings_MouseDown(object sender, MouseEventArgs e)
+        private void HandleGlitchHarvesterSettingsMouseDown(object sender, MouseEventArgs e)
         {
             Point locate = e.GetMouseLocation(sender);
             ContextMenuStrip ghSettingsMenu = new ContextMenuStrip();

@@ -133,18 +133,18 @@ namespace RTCV.UI
         public void RedrawActionUI()
         {
             // Merge tool and ui change
-            if (S.GET<RTC_StockpileManager_Form>().dgvStockpile.SelectedRows.Count > 1)
+            if (S.GET<StockpileManagerForm>().dgvStockpile.SelectedRows.Count > 1)
             {
                 MergeMode = true;
                 btnCorrupt.Text = "  Merge";
-                S.GET<RTC_StockpileManager_Form>().btnRenameSelected.Visible = false;
-                S.GET<RTC_StockpileManager_Form>().btnRemoveSelectedStockpile.Text = "  Remove Items";
+                S.GET<StockpileManagerForm>().btnRenameSelected.Visible = false;
+                S.GET<StockpileManagerForm>().btnRemoveSelectedStockpile.Text = "  Remove Items";
             }
             else
             {
                 MergeMode = false;
-                S.GET<RTC_StockpileManager_Form>().btnRenameSelected.Visible = true;
-                S.GET<RTC_StockpileManager_Form>().btnRemoveSelectedStockpile.Text = "  Remove Item";
+                S.GET<StockpileManagerForm>().btnRenameSelected.Visible = true;
+                S.GET<StockpileManagerForm>().btnRemoveSelectedStockpile.Text = "  Remove Item";
 
                 if (ghMode == GlitchHarvesterMode.CORRUPT)
                 {
@@ -218,7 +218,7 @@ namespace RTCV.UI
                     List<StashKey> sks = new List<StashKey>();
 
                     //Reverse before merging because DataGridView selectedrows is backwards for some odd reason
-                    var reversed = S.GET<RTC_StockpileManager_Form>().dgvStockpile.SelectedRows.Cast<DataGridViewRow>().Reverse();
+                    var reversed = S.GET<StockpileManagerForm>().dgvStockpile.SelectedRows.Cast<DataGridViewRow>().Reverse();
                     foreach (DataGridViewRow row in reversed)
                     {
                         sks.Add((StashKey)row.Cells[0].Value);
@@ -344,7 +344,7 @@ namespace RTCV.UI
                 S.GET<StashHistoryForm>().DontLoadSelectedStash = true;
                 S.GET<StashHistoryForm>().RefreshStashHistorySelectLast();
                 S.GET<StashHistoryForm>().DontLoadSelectedStash = true;
-                S.GET<RTC_StockpileManager_Form>().dgvStockpile.ClearSelection();
+                S.GET<StockpileManagerForm>().dgvStockpile.ClearSelection();
                 S.GET<StashHistoryForm>().DontLoadSelectedStash = false;
             }
             finally
@@ -408,9 +408,9 @@ namespace RTCV.UI
                 {
                     StockpileManager_UISide.CurrentStashkey = (StashKey)StockpileManager_UISide.StashHistory[S.GET<StashHistoryForm>().lbStashHistory.SelectedIndex].Clone();
                 }
-                else if (S.GET<RTC_StockpileManager_Form>().dgvStockpile.SelectedRows.Count != 0 && S.GET<RTC_StockpileManager_Form>().dgvStockpile.SelectedRows[0].Cells[0].Value != null)
+                else if (S.GET<StockpileManagerForm>().dgvStockpile.SelectedRows.Count != 0 && S.GET<StockpileManagerForm>().dgvStockpile.SelectedRows[0].Cells[0].Value != null)
                 {
-                    StockpileManager_UISide.CurrentStashkey = (StashKey)(S.GET<RTC_StockpileManager_Form>().dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey)?.Clone();
+                    StockpileManager_UISide.CurrentStashkey = (StashKey)(S.GET<StockpileManagerForm>().dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey)?.Clone();
                     //StockpileManager_UISide.unsavedEdits = true;
                 }
                 else
@@ -424,7 +424,7 @@ namespace RTCV.UI
 
                     if (StockpileManager_UISide.AddCurrentStashkeyToStash())
                     {
-                        S.GET<RTC_StockpileManager_Form>().dgvStockpile.ClearSelection();
+                        S.GET<StockpileManagerForm>().dgvStockpile.ClearSelection();
                         S.GET<StashHistoryForm>()
                             .RefreshStashHistory();
                         S.GET<StashHistoryForm>()

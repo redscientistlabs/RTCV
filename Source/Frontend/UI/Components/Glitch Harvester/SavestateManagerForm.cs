@@ -230,7 +230,7 @@ namespace RTCV.UI
         {
             var allStashKeys = new List<StashKey>();
             //Commit any used states to SESSION so we can safely unload the sk
-            foreach (var row in S.GET<RTC_StockpileManager_Form>().dgvStockpile.Rows.Cast<DataGridViewRow>().ToList())
+            foreach (var row in S.GET<StockpileManagerForm>().dgvStockpile.Rows.Cast<DataGridViewRow>().ToList())
             {
                 if (row.Cells[0].Value is StashKey sk)
                 {

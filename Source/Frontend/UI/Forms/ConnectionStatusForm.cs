@@ -51,7 +51,7 @@
 
         private void EmergencySaveAsStockpile(object sender, EventArgs e)
         {
-            S.GET<RTC_StockpileManager_Form>().btnSaveStockpileAs_Click(null, null);
+            S.GET<StockpileManagerForm>().SaveStockpileAs(null, null);
         }
 
         private void OnTriggerKillswitchMouseClick(object sender, MouseEventArgs e)
