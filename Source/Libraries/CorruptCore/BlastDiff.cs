@@ -139,11 +139,11 @@ namespace RTCV.CorruptCore
                     BlastUnit bu;
                     if (i > OriginalFirstDomainMaxAddress)
                     {
-                        bu = RTC_NightmareEngine.GenerateUnit(getNamefromIMemoryDomainArray(Original, i), i - OriginalFirstDomainMaxAddress - 1, precision, 0, corruptBytes);
+                        bu = NightmareEngine.GenerateUnit(getNamefromIMemoryDomainArray(Original, i), i - OriginalFirstDomainMaxAddress - 1, precision, 0, corruptBytes);
                     }
                     else
                     {
-                        bu = RTC_NightmareEngine.GenerateUnit(getNamefromIMemoryDomainArray(Original, i), i, precision, 0, corruptBytes);
+                        bu = NightmareEngine.GenerateUnit(getNamefromIMemoryDomainArray(Original, i), i, precision, 0, corruptBytes);
                     }
 
                     bu.BigEndian = Original[0].BigEndian;
