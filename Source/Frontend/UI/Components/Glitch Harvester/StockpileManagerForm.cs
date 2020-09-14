@@ -293,7 +293,7 @@ namespace RTCV.UI
         {
             string value = sk.Alias;
 
-            if (RTCV.UI.Forms.InputBox.ShowDialog("Glitch Harvester", "Enter the new Stash name:", ref value) == DialogResult.OK && !string.IsNullOrWhiteSpace(value))
+            if (RTCV.UI.Forms.InputBox.ShowDialog("Renaming Stashkey", "Enter the new Stash name:", ref value) == DialogResult.OK && !string.IsNullOrWhiteSpace(value))
             {
                 sk.Alias = value.Trim();
                 return true;
