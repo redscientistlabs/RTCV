@@ -124,6 +124,7 @@ namespace RTCV.UI
                 upDownLifetime.Maximum = int.MaxValue;
                 upDownSourceAddress.Maximum = int.MaxValue;
                 upDownAddress.Maximum = int.MaxValue;
+                dontShowBlastlayerNameInTitleToolStripMenuItem.Checked = Params.IsParamSet("DONT_SHOW_BLASTLAYER_NAME_IN_EDITOR");
             }
             catch (Exception ex)
             {
@@ -185,7 +186,6 @@ namespace RTCV.UI
 
             dgvBlastEditor.AllowUserToOrderColumns = true;
             SetDisplayOrder();
-            dontShowBlastlayerNameInTitleToolStripMenuItem.Checked = Params.IsParamSet("DONT_SHOW_BLASTLAYER_NAME_IN_EDITOR");
         }
 
         private void OnFormClosing(object sender, FormClosingEventArgs e) => SaveDisplayOrder();
