@@ -38,6 +38,9 @@ foreach ($project in $PROJECTS)
         continue
     }
 
+    Write-Progress -id 0 -activity "$($project.PrintFriendlyName)" -Status "Restoring"
+    msbuild $SolutionPath /t:restore /consoleloggerparameters:ErrorsOnly /nologo -m
+
     Write-Progress -id 0 -activity "$($project.PrintFriendlyName)" -Status "Building"
     msbuild $SolutionPath $($project.MSBuildArgs -Split " ") /consoleloggerparameters:ErrorsOnly /nologo -m
     if (-not ($LastExitCode -eq 0))
