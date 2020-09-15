@@ -1049,12 +1049,11 @@ namespace RTCV.CorruptCore
         }
     }
 
-    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "RtcClock members may keep their underscores for compability with existing implementations")]
     public static class RtcClock
     {
-        static int CPU_STEP_Count = 0;
+        private static int cpuStepCount = 0;
 
-        public static void STEP_CORRUPT(bool executeActions, bool performStep)
+        public static void StepCorrupt(bool executeActions, bool performStep)
         {
             if (executeActions)
             {
@@ -1063,22 +1062,22 @@ namespace RTCV.CorruptCore
 
             if (performStep)
             {
-                CPU_STEP_Count++;
+                cpuStepCount++;
 
                 var autoCorrupt = RtcCore.AutoCorrupt;
                 var errorDelay = RtcCore.ErrorDelay;
-                if (autoCorrupt && CPU_STEP_Count >= errorDelay)
+                if (autoCorrupt && cpuStepCount >= errorDelay)
                 {
-                    CPU_STEP_Count = 0;
+                    cpuStepCount = 0;
                     BlastLayer bl = RtcCore.GenerateBlastLayer((string[])AllSpec.UISpec["SELECTEDDOMAINS"]);
                     bl?.Apply(false, false);
                 }
             }
         }
 
-        public static void RESET_COUNT()
+        public static void ResetCount()
         {
-            CPU_STEP_Count = 0;
+            cpuStepCount = 0;
         }
     }
 }

@@ -87,25 +87,24 @@ namespace RTCV.CorruptCore
         NONE
     }
 
-    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "BGValueMode enum names may have underscores for compatiblity with existing implementations.")]
     public enum BGValueMode
     {
-        SET,
-        ADD,
-        SUBTRACT,
-        RANDOM,
-        RANDOM_RANGE,
-        SHIFT_LEFT,
-        SHIFT_RIGHT,
-        REPLACE_X_WITH_Y,
-        BITWISE_AND,
-        BITWISE_OR,
-        BITWISE_XOR,
-        BITWISE_COMPLEMENT,
-        BITWISE_SHIFT_LEFT,
-        BITWISE_SHIFT_RIGHT,
-        BITWISE_ROTATE_LEFT,
-        BITWISE_ROTATE_RIGHT
+        Set,
+        Add,
+        Subtract,
+        Random,
+        RandomRange,
+        ShiftLeft,
+        ShiftRight,
+        ReplaceXWithY,
+        BitwiseAnd,
+        BitwiseOr,
+        BitwiseXOr,
+        BitwiseComplement,
+        BitwiseShiftLeft,
+        BitwiseShiftRight,
+        BitwiseRotateLeft,
+        BitwiseRotateRight
     }
 
     [SuppressMessage("Microsoft.Design", "CA1707", Justification = "BGStoreMode enum names may have underscores for compatiblity with existing implementations.")]
