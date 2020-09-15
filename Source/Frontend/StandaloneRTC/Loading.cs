@@ -15,14 +15,14 @@
                     Environment.OSVersion.Version.Build >= 17763);
 
         [DllImport("User32.dll")]
-        public static extern DPI_AWARENESS_CONTEXT SetThreadDpiAwarenessContext(
-            DPI_AWARENESS_CONTEXT dpiContext);
+        public static extern DPIAwarenessContext SetThreadDpiAwarenessContext(
+            DPIAwarenessContext dpiContext);
 
         public Loader(string[] args)
         {
             if (IsGDIEnhancedScalingAvailable())
             {
-                SetThreadDpiAwarenessContext(DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED);
+                SetThreadDpiAwarenessContext(DPIAwarenessContext.UnawareGDIScaled);
                 Application.EnableVisualStyles();
             }
 

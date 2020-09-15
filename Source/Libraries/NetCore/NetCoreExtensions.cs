@@ -141,15 +141,14 @@ namespace RTCV.NetCore.NetCoreExtensions
         }
     }
 
-    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "DPI_AWARENESS_CONTEXT enum names may have underscores for clarity and compatiblity with existing implementations.")]
-    public enum DPI_AWARENESS_CONTEXT
+    public enum DPIAwarenessContext
     {
-        DPI_AWARENESS_CONTEXT_DEFAULT = 0,
-        DPI_AWARENESS_CONTEXT_UNAWARE = -1,
-        DPI_AWARENESS_CONTEXT_SYSTEM_AWARE = -2,
-        DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE = -3,
-        DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2 = -4,
-        DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED = -5
+        Default = 0,
+        Unaware = -1,
+        SystemAware = -2,
+        PerMonitorAware = -3,
+        PerMonitorAwareV2 = -4,
+        UnawareGDIScaled = -5
     }
 
     //https://stackoverflow.com/a/47744757/10923568

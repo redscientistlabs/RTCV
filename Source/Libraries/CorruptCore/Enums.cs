@@ -140,7 +140,7 @@ namespace RTCV.CorruptCore
         SILENTERROR,
     }
 
-    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "RTCSPEC members may keep their underscores for compability and readability.")]
+    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "RTCSPEC members may keep their underscores since changing this would break serialization.")]
     public static class RTCSPEC
     {
         public static readonly string RTCDIR = nameof(RTCDIR);
@@ -226,7 +226,7 @@ namespace RTCV.CorruptCore
         public static readonly string STOCKPILE_RenderAtLoad = nameof(STOCKPILE_RenderAtLoad);
     }
 
-    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "VSPEC names may have underscores for clarity and compatiblity with existing implementations.")]
+    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "VSPEC names may have underscores since changing this would break serialization.")]
     public static class VSPEC
     {
         public static readonly string NAME = nameof(NAME);
