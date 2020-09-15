@@ -23,7 +23,7 @@ Set-Variable -Name PROJECTS -Option ReadOnly -Value @(`
     ,[Project]::new("ProcessStub", "ProcessStub-Vanguard\ProcessStub-Vanguard.sln"               , "")`
     ,[Project]::new("melonDS"    , "melonDS-Vanguard\out\build\x64-Debug\melonDS.sln"            , "")`
     ,[Project]::new("dolphin"    , "dolphin-vanguard\Source\dolphin-emu.sln"                     , "/property:Configuration=Release /property:Platform=x64 /p:TreatWarningAsError=false")`
-    ,[Project]::new("pcsx2"      , "pcsx2-Vanguard\PCSX2_suite.sln"                              , "/property:Configuration=Debug /property:Platform=Win32")`
+    ,[Project]::new("pcsx2"      , "pcsx2-Vanguard\PCSX2_suite.sln"                              , "/property:Configuration=Release /property:Platform=Win32")`
     ,[Project]::new("citra"      , "citra-vanguard\build\citra.sln"                              , "")`
     ,[Project]::new("Dosbox"     , "DosboxStub-Vanguard\DosboxStub-Vanguard.sln"                 , "")`
     )
