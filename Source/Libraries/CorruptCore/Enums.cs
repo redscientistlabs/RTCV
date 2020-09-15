@@ -107,13 +107,12 @@ namespace RTCV.CorruptCore
         BitwiseRotateRight
     }
 
-    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "BGStoreMode enum names may have underscores for compatiblity with existing implementations.")]
     public enum BGStoreMode
     {
-        CHAINED,
-        SOURCE_SET,
-        SOURCE_RANDOM,
-        DEST_RANDOM,
+        Chained,
+        SourceSet,
+        SourceRandom,
+        DestRandom,
         SELF,
     }
 

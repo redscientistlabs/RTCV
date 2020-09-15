@@ -61,7 +61,7 @@ namespace RTCV.CorruptCore
 
                 switch (mode)
                 {
-                    case BGStoreMode.CHAINED:
+                    case BGStoreMode.Chained:
                         long temp = address + stepSize;
                         if (temp <= mi.Size)
                         {
@@ -73,15 +73,15 @@ namespace RTCV.CorruptCore
                         }
 
                         break;
-                    case BGStoreMode.SOURCE_RANDOM:
+                    case BGStoreMode.SourceRandom:
                         destAddress = address;
                         address = rand.Next(0, Convert.ToInt32(mi.Size - 1));
                         break;
-                    case BGStoreMode.SOURCE_SET:
+                    case BGStoreMode.SourceSet:
                         destAddress = address;
                         address = (long)param1;
                         break;
-                    case BGStoreMode.DEST_RANDOM:
+                    case BGStoreMode.DestRandom:
                         destAddress = rand.Next(0, Convert.ToInt32(mi.Size - 1));
                         break;
                     case BGStoreMode.SELF:
