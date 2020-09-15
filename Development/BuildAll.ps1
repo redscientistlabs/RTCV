@@ -18,11 +18,11 @@ class Project {
         $this.RelativePathToSln = $p
         if ($release)
         {
-            $this.MSBuildArgs = "/property:Configuration=Release $b"
+            $this.MSBuildArgs = "$b /property:Configuration=Release"
         }
         else
         {
-            $this.MSBuildArgs = "/property:Configuration=Debug $b"
+            $this.MSBuildArgs = "$b /property:Configuration=Debug"
         }
     }
 }
@@ -35,7 +35,7 @@ Set-Variable -Name PROJECTS -Option ReadOnly -Value @(`
     ,[Project]::new("UnityStub"  , "UnityStub-Vanguard\UnityStub-Vanguard.sln"                   , "", $Release)`
     ,[Project]::new("ProcessStub", "ProcessStub-Vanguard\ProcessStub-Vanguard.sln"               , "", $Release)`
     ,[Project]::new("melonDS"    , "melonDS-Vanguard\out\build\x64-Debug\melonDS.sln"            , "", $Release)`
-    ,[Project]::new("dolphin"    , "dolphin-vanguard\Source\dolphin-emu.sln"                     , "/property:Platform=x64 /p:TreatWarningAsError=false", $Release)`
+    ,[Project]::new("dolphin"    , "dolphin-vanguard\Source\dolphin-emu.sln"                     , "/property:Platform=x64 /p:TreatWarningAsError=false", $true)` # Debug flavor of dolphin doesn't build correctly
     ,[Project]::new("pcsx2"      , "pcsx2-Vanguard\PCSX2_suite.sln"                              , "/property:Platform=Win32", $Release)`
     ,[Project]::new("citra"      , "citra-vanguard\build\citra.sln"                              , "", $Release)`
     ,[Project]::new("Dosbox"     , "DosboxStub-Vanguard\DosboxStub-Vanguard.sln"                 , "", $Release)`
