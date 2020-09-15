@@ -40,7 +40,7 @@
             {
                 if (VanguardImplementation.connector.netConn.status == NetCore.Enums.NetworkStatus.CONNECTED)
                 {
-                    LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_EVENT_CLOSEEMULATOR);
+                    LocalNetCoreRouter.Route(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Remote.REMOTE_EVENT_CLOSEEMULATOR);
                 }
 
                 Environment.Exit(0);

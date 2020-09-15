@@ -940,7 +940,7 @@ namespace RTCV.Plugins.HexEditor
 
         internal static void CreateVmdText(string domain, string text)
         {   //Sends text to the VMD Generator and trigger generation
-            LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_GENERATEVMDTEXT, new object[] { domain, text }, false);
+            LocalNetCoreRouter.Route(NetCore.Commands.Basic.UI, NetCore.Commands.Remote.REMOTE_GENERATEVMDTEXT, new object[] { domain, text }, false);
         }
 
         private void IncrementAddress(long address)

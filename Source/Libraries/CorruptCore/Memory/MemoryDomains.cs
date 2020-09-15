@@ -106,7 +106,7 @@ namespace RTCV.CorruptCore
 
             if (domainsChanged)
             {
-                LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_EVENT_DOMAINSUPDATED, true);
+                LocalNetCoreRouter.Route(NetCore.Commands.Basic.UI, NetCore.Commands.Remote.REMOTE_EVENT_DOMAINSUPDATED, true);
             }
         }
 
@@ -275,8 +275,8 @@ namespace RTCV.CorruptCore
 
             VmdPool[VMD.ToString()] = VMD;
 
-            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_DOMAIN_VMD_ADD, VMD.Proto, true);
-            LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_EVENT_DOMAINSUPDATED);
+            LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.REMOTE_DOMAIN_VMD_ADD, VMD.Proto, true);
+            LocalNetCoreRouter.Route(NetCore.Commands.Basic.UI, NetCore.Commands.Remote.REMOTE_EVENT_DOMAINSUPDATED);
         }
 
         public static void AddVMDFromRemote(VmdPrototype proto)
@@ -326,8 +326,8 @@ namespace RTCV.CorruptCore
                 VmdPool.Remove(vmdName);
             }
 
-            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_DOMAIN_VMD_REMOVE, vmdName, true);
-            LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_EVENT_DOMAINSUPDATED);
+            LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.REMOTE_DOMAIN_VMD_REMOVE, vmdName, true);
+            LocalNetCoreRouter.Route(NetCore.Commands.Basic.UI, NetCore.Commands.Remote.REMOTE_EVENT_DOMAINSUPDATED);
         }
 
         public static void RemoveVMDFromRemote(string vmdName)

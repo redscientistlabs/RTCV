@@ -42,7 +42,7 @@
 
             string key = RtcCore.GetRandomKey();
 
-            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_DOMAIN_ACTIVETABLE_MAKEDUMP, new object[] { cbSelectedMemoryDomain.SelectedItem.ToString(), key }, true);
+            LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.REMOTE_DOMAIN_ACTIVETABLE_MAKEDUMP, new object[] { cbSelectedMemoryDomain.SelectedItem.ToString(), key }, true);
 
             var keyPath = Path.Combine(RtcCore.workingDir, "MEMORYDUMPS", key + ".dmp");
             MemoryDumps.Add(keyPath);

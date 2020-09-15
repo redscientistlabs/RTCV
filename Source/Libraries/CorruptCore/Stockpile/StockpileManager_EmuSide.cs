@@ -30,14 +30,14 @@
             }
 
             StashKey.SetCore(sk);
-            LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_LOADROM, sk.RomFilename, true);
+            LocalNetCoreRouter.Route(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Remote.REMOTE_LOADROM, sk.RomFilename, true);
 
             string ss = (string)AllSpec.VanguardSpec[VSPEC.SYNCSETTINGS];
             //If the syncsettings are different, update them and load it again. Otheriwse, leave as is
             if (sk.SyncSettings != ss && sk.SyncSettings != null)
             {
-                LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_KEY_SETSYNCSETTINGS, sk.SyncSettings, true);
-                LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_LOADROM, sk.RomFilename, true);
+                LocalNetCoreRouter.Route(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Remote.REMOTE_KEY_SETSYNCSETTINGS, sk.SyncSettings, true);
+                LocalNetCoreRouter.Route(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Remote.REMOTE_LOADROM, sk.RomFilename, true);
             }
             return true;
         }
@@ -63,7 +63,7 @@
 
                 if (File.Exists(theoreticalSaveStateFilename))
                 {
-                    if (!LocalNetCoreRouter.QueryRoute<bool>(NetcoreCommands.VANGUARD, NetcoreCommands.LOADSAVESTATE, new object[] { theoreticalSaveStateFilename, stateLocation }, true))
+                    if (!LocalNetCoreRouter.QueryRoute<bool>(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Basic.LOADSAVESTATE, new object[] { theoreticalSaveStateFilename, stateLocation }, true))
                     {
                         MessageBox.Show($"Error loading savestate : An internal error has occurred.\n Are you sure your savestate matches the game, your syncsettings match, and the savestate is supported by this version of {RtcCore.VanguardImplementationName}?");
                         return false;
@@ -94,7 +94,7 @@
             if (_sk == null)
             {
                 Key = RtcCore.GetRandomKey();
-                //statePath = LocalNetCoreRouter.QueryRoute<String>(NetcoreCommands.VANGUARD, NetcoreCommands.SAVESAVESTATE, Key, true);
+                //statePath = LocalNetCoreRouter.QueryRoute<String>(NetCore.Commands.Basic.Vanguard, NetcoreCommands.SAVESAVESTATE, Key, true);
                 sk = new StashKey(Key, Key, null);
             }
             else
@@ -124,7 +124,7 @@
             if (_sk == null)
             {
                 Key = RtcCore.GetRandomKey();
-                statePath = LocalNetCoreRouter.QueryRoute<string>(NetcoreCommands.VANGUARD, NetcoreCommands.SAVESAVESTATE, Key, true);
+                statePath = LocalNetCoreRouter.QueryRoute<string>(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Basic.SAVESAVESTATE, Key, true);
 
                 if (statePath == null)
                 {

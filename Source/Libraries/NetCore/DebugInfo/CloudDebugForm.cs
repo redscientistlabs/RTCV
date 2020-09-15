@@ -83,7 +83,7 @@ namespace RTCV.NetCore
 
         public static string getEmuInfo()
         {
-            string str = LocalNetCoreRouter.QueryRoute<string>(NetcoreCommands.CORRUPTCORE, "GETSPECDUMPS");
+            string str = LocalNetCoreRouter.QueryRoute<string>(NetCore.Commands.Basic.CorruptCore, "GETSPECDUMPS");
             if (str != null)
             {
                 return str;

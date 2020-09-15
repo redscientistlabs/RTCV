@@ -104,7 +104,7 @@ namespace RTCV.UI
 
         private void AutoSelectDomains(object sender, EventArgs e)
         {
-            LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_DOMAIN_REFRESHDOMAINS, true);
+            LocalNetCoreRouter.Route(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Remote.REMOTE_DOMAIN_REFRESHDOMAINS, true);
             RefreshDomains();
             SetMemoryDomainsAllButSelectedDomains((string[])AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] ?? new string[] { });
         }

@@ -19,9 +19,9 @@ namespace RTCV.Vanguard
         {
             _receiver = receiver;
 
-            LocalNetCoreRouter.registerEndpoint(this, NetcoreCommands.VANGUARD);
+            LocalNetCoreRouter.registerEndpoint(this, NetCore.Commands.Basic.Vanguard);
             corruptConn = new CorruptCoreConnector();
-            LocalNetCoreRouter.registerEndpoint(corruptConn, NetcoreCommands.CORRUPTCORE);
+            LocalNetCoreRouter.registerEndpoint(corruptConn, NetCore.Commands.Basic.CorruptCore);
 
             if (_receiver.Attached)//attached mode
             {
@@ -39,15 +39,15 @@ namespace RTCV.Vanguard
             netConn = new NetCoreConnector(netCoreSpec);
 
             //netConn = LocalNetCoreRouter.registerEndpoint(new NetCoreConnector(netCoreSpec), "WGH");
-            LocalNetCoreRouter.registerEndpoint(netConn, NetcoreCommands.DEFAULT); //Will send mesages to netcore if can't find the destination
+            LocalNetCoreRouter.registerEndpoint(netConn, NetCore.Commands.Basic.Default); //Will send mesages to netcore if can't find the destination
         }
 
         public static void ImplyClientConnected() => NetCoreSpec_ClientConnected(null, null);
 
         private static void NetCoreSpec_ClientConnected(object sender, EventArgs e)
         {
-            LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_PUSHVANGUARDSPEC, AllSpec.VanguardSpec.GetPartialSpec(), true);
-            LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_ALLSPECSSENT, true);
+            LocalNetCoreRouter.Route(NetCore.Commands.Basic.UI, NetCore.Commands.Remote.PushVanguardSpec, AllSpec.VanguardSpec.GetPartialSpec(), true);
+            LocalNetCoreRouter.Route(NetCore.Commands.Basic.UI, NetCore.Commands.Remote.REMOTE_ALLSPECSSENT, true);
         }
 
         public void OnMessageReceivedProxy(object sender, NetCoreEventArgs e) => OnMessageReceived(sender, e);
@@ -93,7 +93,7 @@ namespace RTCV.Vanguard
 
         public static void PushVanguardSpecRef(FullSpec spec) => AllSpec.VanguardSpec = spec;
 
-        public static bool IsUIForm() => (bool?)AllSpec.UISpec?[NetcoreCommands.RTC_INFOCUS] ?? false;
+        public static bool IsUIForm() => (bool?)AllSpec.UISpec?[NetCore.Commands.Basic.RTC_INFOCUS] ?? false;
 
         public void KillNetcore() => netConn.Kill();
     }

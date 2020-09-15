@@ -9,7 +9,7 @@
 
         public static BlastLayer GetBlastLayer()
         {
-            return NetCore.LocalNetCoreRouter.QueryRoute<BlastLayer>(NetCore.NetcoreCommands.UI, NetCore.NetcoreCommands.REMOTE_GETBLASTGENERATOR_LAYER, true);
+            return NetCore.LocalNetCoreRouter.QueryRoute<BlastLayer>(NetCore.Commands.Basic.UI, NetCore.Commands.Remote.REMOTE_GETBLASTGENERATOR_LAYER, true);
         }
     }
 }
