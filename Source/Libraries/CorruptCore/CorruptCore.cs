@@ -34,7 +34,6 @@ namespace RTCV.CorruptCore
         }
     }
 
-    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "RtcCore members may keep their underscores for compability with existing implementations")]
     public static class RtcCore
     {
         //General RTC Values
@@ -1035,17 +1034,17 @@ namespace RTCV.CorruptCore
             ProgressBarHandler?.Invoke(sender, e);
         }
 
-        public static void LOAD_GAME_DONE()
+        public static void InvokeLoadGameDone()
         {
             LoadGameDone?.Invoke(null, null);
         }
 
-        public static void GAME_CLOSED(bool fullyClosed = false)
+        public static void InvokeGameClosed(bool fullyClosed = false)
         {
             GameClosed?.Invoke(null, new GameClosedEventArgs(fullyClosed));
         }
 
-        public static void KILL_HEX_EDITOR()
+        public static void InvokeKillHexEditor()
         {
         }
     }
