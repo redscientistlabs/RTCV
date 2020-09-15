@@ -1,3 +1,8 @@
+param (
+    [switch]$Release = $false, # Run with the Release build configurations
+    [switch]$WhatIf = $false # Just print the commands that would be run
+)
+
 class Project {
     [string]$PrintFriendlyName
     [string]$RelativePathToSln
@@ -6,26 +11,34 @@ class Project {
     Project(
         [string]$n,
         [string]$p,
-        [string]$b
+        [string]$b,
+        [boolean]$release
     ){
         $this.PrintFriendlyName = $n
         $this.RelativePathToSln = $p
-        $this.MSBuildArgs = $b
+        if ($release)
+        {
+            $this.MSBuildArgs = "/property:Configuration=Release $b"
+        }
+        else
+        {
+            $this.MSBuildArgs = "/property:Configuration=Debug $b"
+        }
     }
 }
 
 Set-Variable -Name PROJECTS -Option ReadOnly -Value @(`
-     [Project]::new("RTCV"       , "RTCV/RTCV.sln"                                               , "")`
-    ,[Project]::new("Bizhawk"    , "Bizhawk-Vanguard\Real-Time Corruptor\BizHawk_RTC\BizHawk.sln", "")`
-    ,[Project]::new("CemuStub"   , "CemuStub-Vanguard"                                           , "")`
-    ,[Project]::new("FileStub"   , "FileStub-Vanguard\FileStub-Vanguard.sln"                     , "")`
-    ,[Project]::new("UnityStub"  , "UnityStub-Vanguard\UnityStub-Vanguard.sln"                   , "")`
-    ,[Project]::new("ProcessStub", "ProcessStub-Vanguard\ProcessStub-Vanguard.sln"               , "")`
-    ,[Project]::new("melonDS"    , "melonDS-Vanguard\out\build\x64-Debug\melonDS.sln"            , "")`
-    ,[Project]::new("dolphin"    , "dolphin-vanguard\Source\dolphin-emu.sln"                     , "/property:Configuration=Release /property:Platform=x64 /p:TreatWarningAsError=false")`
-    ,[Project]::new("pcsx2"      , "pcsx2-Vanguard\PCSX2_suite.sln"                              , "/property:Configuration=Debug /property:Platform=Win32")`
-    ,[Project]::new("citra"      , "citra-vanguard\build\citra.sln"                              , "")`
-    ,[Project]::new("Dosbox"     , "DosboxStub-Vanguard\DosboxStub-Vanguard.sln"                 , "")`
+     [Project]::new("RTCV"       , "RTCV/RTCV.sln"                                               , "", $Release)`
+    ,[Project]::new("Bizhawk"    , "Bizhawk-Vanguard\Real-Time Corruptor\BizHawk_RTC\BizHawk.sln", "", $Release)`
+    ,[Project]::new("CemuStub"   , "CemuStub-Vanguard"                                           , "", $Release)`
+    ,[Project]::new("FileStub"   , "FileStub-Vanguard\FileStub-Vanguard.sln"                     , "", $Release)`
+    ,[Project]::new("UnityStub"  , "UnityStub-Vanguard\UnityStub-Vanguard.sln"                   , "", $Release)`
+    ,[Project]::new("ProcessStub", "ProcessStub-Vanguard\ProcessStub-Vanguard.sln"               , "", $Release)`
+    ,[Project]::new("melonDS"    , "melonDS-Vanguard\out\build\x64-Debug\melonDS.sln"            , "", $Release)`
+    ,[Project]::new("dolphin"    , "dolphin-vanguard\Source\dolphin-emu.sln"                     , "/property:Platform=x64 /p:TreatWarningAsError=false", $Release)`
+    ,[Project]::new("pcsx2"      , "pcsx2-Vanguard\PCSX2_suite.sln"                              , "/property:Platform=Win32", $Release)`
+    ,[Project]::new("citra"      , "citra-vanguard\build\citra.sln"                              , "", $Release)`
+    ,[Project]::new("Dosbox"     , "DosboxStub-Vanguard\DosboxStub-Vanguard.sln"                 , "", $Release)`
     )
 
 $ScriptDirectory = Split-Path -parent $PSCommandPath
@@ -38,11 +51,20 @@ foreach ($project in $PROJECTS)
         continue
     }
 
+    $restoreCommand = "msbuild '$SolutionPath' /t:restore /consoleloggerparameters:ErrorsOnly /nologo -m"
+    $compilationCommand = "msbuild '$SolutionPath' $($project.MSBuildArgs -Split " ") /consoleloggerparameters:ErrorsOnly /nologo -m"
+    if ($WhatIf)
+    {
+        Write-Host $restoreCommand
+        Write-Host $compilationCommand
+        continue
+    }
+
     Write-Progress -id 0 -activity "$($project.PrintFriendlyName)" -Status "Restoring"
-    msbuild $SolutionPath /t:restore /consoleloggerparameters:ErrorsOnly /nologo -m
+    Invoke-Expression $restoreCommand
 
     Write-Progress -id 0 -activity "$($project.PrintFriendlyName)" -Status "Building"
-    msbuild $SolutionPath $($project.MSBuildArgs -Split " ") /consoleloggerparameters:ErrorsOnly /nologo -m
+    Invoke-Expression $compilationCommand
     if (-not ($LastExitCode -eq 0))
     {
         Write-Host "$($project.PrintFriendlyName) BUILD FAILED" -ForegroundColor Red
