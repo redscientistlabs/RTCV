@@ -8,7 +8,7 @@ namespace RTCV.CorruptCore
     using Newtonsoft.Json;
     using RTCV.CorruptCore.Extensions;
 
-    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "FileInterfaceIdentity enum values may have underscores for compatiblity with existing implementations.")]
+    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "FileInterfaceIdentity enum values may have underscores since changing this may break serialization.")]
     public enum FileInterfaceIdentity
     {
         SELF_DESCRIBE,
@@ -64,9 +64,8 @@ namespace RTCV.CorruptCore
             }
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1707", Justification = "_startPadding may keep its underscore for compability with the existing DosboxStub implementation.")]
         [SuppressMessage("Microsoft.Design", "CA1801", Justification = "_startPadding and endPadding will be used eventually")]
-        public FileInterface(string targetId, bool bigEndian, bool useAutomaticFileBackups = false, long _startPadding = 0, long endPadding = 0)
+        public FileInterface(string targetId, bool bigEndian, bool useAutomaticFileBackups = false, long startPadding = 0, long endPadding = 0)
         {
             if (targetId == null)
             {
