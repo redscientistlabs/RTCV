@@ -1,7 +1,22 @@
 param (
     [switch]$Release = $false, # Run with the Release build configurations
+    [switch]$Clean = $false, # Clean each project before building it
+    [switch]$NoRestore = $false, # Don't restore each project before building it (without this flag, default behavior is to restore each project)
     [switch]$WhatIf = $false # Just print the commands that would be run
 )
+
+class RTCVCommand {
+    [string]$PrintFriendlyName
+    [string]$Command
+
+    RTCVCommand(
+        [string]$n,
+        [string]$c
+    ){
+        $this.PrintFriendlyName = $n
+        $this.Command = $c
+    }
+}
 
 class Project {
     [string]$PrintFriendlyName
@@ -25,6 +40,24 @@ class Project {
             $this.MSBuildArgs = "$b /property:Configuration=Debug"
         }
     }
+
+    [RTCVCommand] GetCleanCommand([string]$fullPath)
+    {
+        return [RTCVCommand]::new("Cleaning",`
+                                  "msbuild '$($fullPath)' /t:clean /consoleloggerparameters:ErrorsOnly /nologo -m")
+    }
+
+    [RTCVCommand] GetRestoreCommand([string]$fullPath)
+    {
+        return [RTCVCommand]::new("Restoring",`
+                                  "msbuild '$($fullPath)' /t:restore /consoleloggerparameters:ErrorsOnly /nologo -m")
+    }
+
+    [RTCVCommand] GetBuildCommand([string]$fullPath)
+    {
+        return [RTCVCommand]::new("Building",`
+                                  "msbuild '$fullPath' $($this.MSBuildArgs -Split " ") /consoleloggerparameters:ErrorsOnly /nologo -m")
+    }
 }
 
 Set-Variable -Name PROJECTS -Option ReadOnly -Value @(`
@@ -44,6 +77,7 @@ Set-Variable -Name PROJECTS -Option ReadOnly -Value @(`
 $ScriptDirectory = Split-Path -parent $PSCommandPath
 foreach ($project in $PROJECTS)
 {
+    # A developer may not have all of the projects locally, or they may not be set up properly, so skip anything that's not found
     $SolutionPath = (Join-Path $ScriptDirectory -ChildPath (Join-Path "../.." $project.RelativePathToSln))
     if (-not (Test-Path $SolutionPath))
     {
@@ -51,27 +85,43 @@ foreach ($project in $PROJECTS)
         continue
     }
 
-    $restoreCommand = "msbuild '$SolutionPath' /t:restore /consoleloggerparameters:ErrorsOnly /nologo -m"
-    $compilationCommand = "msbuild '$SolutionPath' $($project.MSBuildArgs -Split " ") /consoleloggerparameters:ErrorsOnly /nologo -m"
+    # Get all of the commands that should be run
+    $commandsToRun = @()
+    if ($Clean)
+    {
+        $commandsToRun = $commandsToRun + @($project.GetCleanCommand($SolutionPath))
+    }
+
+    if (-not $NoRestore)
+    {
+        $commandsToRun = $commandsToRun + @($project.GetRestoreCommand($SolutionPath))
+    }
+
+    $commandsToRun = $commandsToRun + @($project.GetBuildCommand($SolutionPath))
+
     if ($WhatIf)
     {
-        Write-Host $restoreCommand
-        Write-Host $compilationCommand
+        foreach($cmd in $commandsToRun)
+        {
+            Write-Host $cmd.Command
+        }
         continue
     }
 
-    Write-Progress -id 0 -activity "$($project.PrintFriendlyName)" -Status "Restoring"
-    Invoke-Expression $restoreCommand
-
-    Write-Progress -id 0 -activity "$($project.PrintFriendlyName)" -Status "Building"
-    Invoke-Expression $compilationCommand
-    if (-not ($LastExitCode -eq 0))
+    foreach($cmd in $commandsToRun)
     {
-        Write-Host "$($project.PrintFriendlyName) BUILD FAILED" -ForegroundColor Red
+        Write-Progress -id 0 -activity "$($project.PrintFriendlyName)" -Status $cmd.PrintFriendlyName
+        Invoke-Expression $cmd.Command
+        if (-not ($LastExitCode -eq 0))
+        {
+            Write-Host "$($project.PrintFriendlyName) FAILED" -ForegroundColor Red
+            continue;
+        }
     }
-    else
+
+    if ($LastExitCode -eq 0)
     {
-        Write-Host "$($project.PrintFriendlyName) BUILD PASSED" -ForegroundColor Green
+        Write-Host "$($project.PrintFriendlyName) PASSED" -ForegroundColor Green
     }
 
     Write-Progress -id 0 -activity "$($project.PrintFriendlyName)" -Completed
