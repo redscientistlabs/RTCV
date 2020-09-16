@@ -86,7 +86,7 @@ namespace RTCV.UI
 
             if (askForName)
             {
-                if (RTCV.UI.Forms.InputBox.ShowDialog("Glitch Harvester", "Enter the new Stash name:", ref value) == DialogResult.OK)
+                if (RTCV.UI.Forms.InputBox.ShowDialog("Renaming Stashkey", "Enter the new Stash name:", ref value) == DialogResult.OK)
                 {
                     Name = value.Trim();
                 }

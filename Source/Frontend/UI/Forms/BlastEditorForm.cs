@@ -124,6 +124,7 @@ namespace RTCV.UI
                 upDownLifetime.Maximum = int.MaxValue;
                 upDownSourceAddress.Maximum = int.MaxValue;
                 upDownAddress.Maximum = int.MaxValue;
+                dontShowBlastlayerNameInTitleToolStripMenuItem.Checked = Params.IsParamSet("DONT_SHOW_BLASTLAYER_NAME_IN_EDITOR");
             }
             catch (Exception ex)
             {
@@ -1191,7 +1192,7 @@ namespace RTCV.UI
             set
             {
                 _currentSK = value;
-                this.Name = "Blast Editor - " + value?.Alias ?? "Unnamed";
+                SetTitle(value?.Alias ?? "Unnamed");
             }
         }
 
@@ -1248,7 +1249,6 @@ namespace RTCV.UI
                 }
             };
 
-            this.Text = $"Blast Editor - {sk.Alias}";
 
             dgvBlastEditor.DataSource = bs;
             InitializeDGV();
@@ -2144,6 +2144,32 @@ namespace RTCV.UI
             ImportBlastlayerFromCorruptedFile(null);
         }
 
+        private void showBlastlayerNameInTitleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dontShowBlastlayerNameInTitleToolStripMenuItem.Checked)
+            {
+                Params.SetParam("DONT_SHOW_BLASTLAYER_NAME_IN_EDITOR");
+            }
+            else
+            {
+                Params.RemoveParam("DONT_SHOW_BLASTLAYER_NAME_IN_EDITOR");
+            }
+
+            SetTitle(currentSK?.Alias ?? "Unsaved");
+        }
+
+        private void SetTitle(string name)
+        {
+            if (dontShowBlastlayerNameInTitleToolStripMenuItem.Checked)
+            {
+                this.Text = "Blast Editor";
+            }
+            else
+            {
+                this.Text = "Blast Editor - " + name;
+            }
+        }
+
         private void NewBlastLayer(object sender, EventArgs e)
         {
             bs.Clear();
@@ -2155,7 +2181,6 @@ namespace RTCV.UI
         public bool AddStashToStockpile()
         {
             SendToStash(null, null);
-
             return S.GET<StashHistoryForm>().AddStashToStockpileFromUI();
         }
 
@@ -2167,5 +2192,6 @@ namespace RTCV.UI
         private void BakeBlastUnitsToValue(object sender, EventArgs e) => BakeBlastUnitsToValue();
         private void RunRomWithoutBlastLayer(object sender, EventArgs e) => currentSK.RunOriginal();
         private void RasterizeVMDs(object sender, EventArgs e) => RasterizeVMDs();
+
     }
 }
