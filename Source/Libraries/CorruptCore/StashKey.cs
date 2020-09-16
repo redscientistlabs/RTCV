@@ -106,8 +106,8 @@ namespace RTCV.CorruptCore
         /// </summary>
         public bool Run()
         {
-            StockpileManager_UISide.CurrentStashkey = this;
-            return StockpileManager_UISide.ApplyStashkey(this);
+            StockpileManagerUISide.CurrentStashkey = this;
+            return StockpileManagerUISide.ApplyStashkey(this);
         }
 
         /// <summary>
@@ -115,8 +115,8 @@ namespace RTCV.CorruptCore
         /// </summary>
         public void RunOriginal()
         {
-            StockpileManager_UISide.CurrentStashkey = this;
-            StockpileManager_UISide.OriginalFromStashkey(this);
+            StockpileManagerUISide.CurrentStashkey = this;
+            StockpileManagerUISide.OriginalFromStashkey(this);
         }
 
         public byte[] EmbedState()

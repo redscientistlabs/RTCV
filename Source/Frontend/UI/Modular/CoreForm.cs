@@ -467,7 +467,7 @@ This message only appears once.";
                 btnGpJumpNow.Visible = false;
 
                 //Do this to prevent any potential race
-                var sk = StockpileManager_UISide.BackupedState;
+                var sk = StockpileManagerUISide.BackupedState;
 
                 if (sk != null)
                 {

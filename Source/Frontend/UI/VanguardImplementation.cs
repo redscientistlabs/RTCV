@@ -271,14 +271,14 @@ namespace RTCV.UI
                 //Restart game protection
                 if (S.GET<CoreForm>().cbUseGameProtection.Checked)
                 {
-                    if (StockpileManager_UISide.BackupedState != null)
+                    if (StockpileManagerUISide.BackupedState != null)
                     {
-                        StockpileManager_UISide.BackupedState.Run();
+                        StockpileManagerUISide.BackupedState.Run();
                     }
 
-                    if (StockpileManager_UISide.BackupedState != null)
+                    if (StockpileManagerUISide.BackupedState != null)
                     {
-                        S.GET<MemoryDomainsForm>().RefreshDomainsAndKeepSelected(StockpileManager_UISide.BackupedState.SelectedDomains.ToArray());
+                        S.GET<MemoryDomainsForm>().RefreshDomainsAndKeepSelected(StockpileManagerUISide.BackupedState.SelectedDomains.ToArray());
                     }
 
                     GameProtection.Start();
@@ -413,7 +413,7 @@ namespace RTCV.UI
         {
             if (advancedMessage?.objectValue is StashKey sk)
             {
-                StockpileManager_UISide.BackupedState = sk;
+                StockpileManagerUISide.BackupedState = sk;
                 GameProtection.AddBackupState(sk);
                 SyncObjectSingleton.FormExecute(() =>
                 {

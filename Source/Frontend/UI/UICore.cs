@@ -555,13 +555,13 @@ namespace RTCV.UI
                 case "BlastLayer Re-Blast":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        if (StockpileManager_UISide.CurrentStashkey == null || StockpileManager_UISide.CurrentStashkey.BlastLayer.Layer.Count == 0)
+                        if (StockpileManagerUISide.CurrentStashkey == null || StockpileManagerUISide.CurrentStashkey.BlastLayer.Layer.Count == 0)
                         {
                             S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = false;
                             return;
                         }
                         S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = true;
-                        StockpileManager_UISide.ApplyStashkey(StockpileManager_UISide.CurrentStashkey, false);
+                        StockpileManagerUISide.ApplyStashkey(StockpileManagerUISide.CurrentStashkey, false);
                     });
                     break;
 

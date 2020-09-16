@@ -26,7 +26,7 @@ namespace RTCV.UI.Components.Controls
             set
             {
                 _selectedHolder = value;
-                StockpileManager_UISide.CurrentSavestateStashKey = value?.sk;
+                StockpileManagerUISide.CurrentSavestateStashKey = value?.sk;
             }
         }
 
@@ -293,7 +293,7 @@ namespace RTCV.UI.Components.Controls
                     return;
                 }
 
-                StockpileManager_UISide.LoadState(psk);
+                StockpileManagerUISide.LoadState(psk);
             }
             else
             {
@@ -313,7 +313,7 @@ namespace RTCV.UI.Components.Controls
             if (btnSaveLoad.Text == "LOAD")
             {
                 LoadCurrentState();
-                StockpileManager_UISide.CurrentStashkey = null;
+                StockpileManagerUISide.CurrentStashkey = null;
                 S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = false;
             }
             else
@@ -324,7 +324,7 @@ namespace RTCV.UI.Components.Controls
                     return;
                 }
 
-                StashKey sk = StockpileManager_UISide.SaveState();
+                StashKey sk = StockpileManagerUISide.SaveState();
 
                 if (sk == null)
                 {
@@ -333,7 +333,7 @@ namespace RTCV.UI.Components.Controls
                     return;
                 }
 
-                StockpileManager_UISide.CurrentSavestateStashKey = sk;
+                StockpileManagerUISide.CurrentSavestateStashKey = sk;
 
                 //Replace if there'a already a sk
                 if (SelectedHolder?.sk != null)

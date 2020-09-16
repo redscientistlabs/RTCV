@@ -237,7 +237,7 @@ namespace RTCV.UI
                     allStashKeys.Add(sk);
                 }
             }
-            allStashKeys.AddRange(StockpileManager_UISide.StashHistory);
+            allStashKeys.AddRange(StockpileManagerUISide.StashHistory);
             allStashKeys.AddRange(S.GET<BlastEditorForm>().GetStashKeys());
             allStashKeys.AddRange(S.GET<BlastGeneratorForm>().GetStashKeys());
             bool notified = false;

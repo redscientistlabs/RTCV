@@ -1423,7 +1423,7 @@ namespace RTCV.UI
             }
             var newSk = (StashKey)currentSK.Clone();
 
-            StockpileManager_UISide.StashHistory.Add(newSk);
+            StockpileManagerUISide.StashHistory.Add(newSk);
 
             S.GET<StashHistoryForm>().RefreshStashHistory();
             S.GET<StockpileManagerForm>().dgvStockpile.ClearSelection();
@@ -1431,7 +1431,7 @@ namespace RTCV.UI
 
             S.GET<StashHistoryForm>().DontLoadSelectedStash = true;
             S.GET<StashHistoryForm>().lbStashHistory.SelectedIndex = S.GET<StashHistoryForm>().lbStashHistory.Items.Count - 1;
-            StockpileManager_UISide.CurrentStashkey = StockpileManager_UISide.StashHistory[S.GET<StashHistoryForm>().lbStashHistory.SelectedIndex];
+            StockpileManagerUISide.CurrentStashkey = StockpileManagerUISide.StashHistory[S.GET<StashHistoryForm>().lbStashHistory.SelectedIndex];
         }
 
         public void OpenNoteEditor(object sender, EventArgs e)
@@ -1490,7 +1490,7 @@ namespace RTCV.UI
 
         public void ReplaceRomFromGlitchHarvester(object sender, EventArgs e)
         {
-            StashKey temp = StockpileManager_UISide.CurrentSavestateStashKey;
+            StashKey temp = StockpileManagerUISide.CurrentSavestateStashKey;
 
             if (temp == null)
             {
@@ -1609,7 +1609,7 @@ namespace RTCV.UI
 
         public void ReplaceSavestateFromGlitchHarvester(object sender, EventArgs e)
         {
-            StashKey temp = StockpileManager_UISide.CurrentSavestateStashKey;
+            StashKey temp = StockpileManagerUISide.CurrentSavestateStashKey;
             if (temp == null)
             {
                 MessageBox.Show("There is no savestate selected in the glitch harvester, or the current selected box is empty");
@@ -1678,7 +1678,7 @@ namespace RTCV.UI
             File.Copy(filename, currentSK.GetSavestateFullPath(), true);
 
             //Attempt to load and if it fails, don't let them update it.
-            if (!StockpileManager_UISide.LoadState(currentSK))
+            if (!StockpileManagerUISide.LoadState(currentSK))
             {
                 currentSK.ParentKey = oldKey;
                 currentSK.SyncSettings = oldSS;
@@ -1954,7 +1954,7 @@ namespace RTCV.UI
         public void Corrupt(object sender, EventArgs e)
         {
             var newSk = (StashKey)currentSK.Clone();
-            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newSk, false);
+            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = StockpileManagerUISide.ApplyStashkey(newSk, false);
         }
 
         private static void RefreshNoteIcons(DataGridViewRowCollection rows)
