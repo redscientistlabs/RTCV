@@ -77,7 +77,7 @@ namespace RTCV.UI
                     case Basic.KillswitchPulse:
                         KillSwitchPulse();
                         break;
-                    case Basic.ResetgameProtectionIfRunning:
+                    case Basic.ResetGameProtectionIfRunning:
                         ResetGameProtectionIfRunning();
                         break;
                     case Remote.DisableSavestateSupport:

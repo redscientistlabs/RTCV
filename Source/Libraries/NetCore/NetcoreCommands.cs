@@ -7,7 +7,7 @@ namespace RTCV.NetCore.Commands
         public const string Default = nameof(Basic) + "_" + nameof(Default);
         public const string UI = nameof(Basic) + "_" + nameof(UI);
         public const string KillswitchPulse = nameof(Basic) + "_" + nameof(KillswitchPulse);
-        public const string ResetgameProtectionIfRunning = nameof(Basic) + "_" + nameof(ResetgameProtectionIfRunning);
+        public const string ResetGameProtectionIfRunning = nameof(Basic) + "_" + nameof(ResetGameProtectionIfRunning);
         public const string MANUALBLAST = nameof(Basic) + "_" + nameof(MANUALBLAST);
         public const string APPLYBLASTLAYER = nameof(Basic) + "_" + nameof(APPLYBLASTLAYER);
         public const string APPLYCACHEDBLASTLAYER = nameof(Basic) + "_" + nameof(APPLYCACHEDBLASTLAYER);
