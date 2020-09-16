@@ -62,7 +62,7 @@ namespace RTCV.UI
             {
                 PartialSpec partial = e.partialSpec;
 
-                LocalNetCoreRouter.Route(Basic.CorruptCore, Remote.REMOTE_PUSHUISPECUPDATE, partial, e.SyncedUpdate);
+                LocalNetCoreRouter.Route(Basic.CorruptCore, Remote.PushUISpecUpdate, partial, e.SyncedUpdate);
             };
 
             RtcCore.StartUISide();
@@ -165,7 +165,7 @@ namespace RTCV.UI
                 return;
             }
 
-            bool previousState = (bool?)AllSpec.UISpec[Basic.RTC_INFOCUS] ?? false;
+            bool previousState = (bool?)AllSpec.UISpec[Basic.RTCInFocus] ?? false;
             //bool currentState = forceSet ?? isAnyRTCFormFocused();
             bool currentState = (Form.ActiveForm != null && forceSet == null) || (forceSet ?? false);
 
@@ -173,7 +173,7 @@ namespace RTCV.UI
             {
                 logger.Trace($"Swapping focus state {previousState} => {currentState}");
                 //This is a non-synced spec update to prevent jittering. Shouldn't have any other noticeable impact
-                AllSpec.UISpec.Update(Basic.RTC_INFOCUS, currentState, true, false);
+                AllSpec.UISpec.Update(Basic.RTCInFocus, currentState, true, false);
             }
         }
 

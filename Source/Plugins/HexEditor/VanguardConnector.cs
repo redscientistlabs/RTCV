@@ -24,7 +24,7 @@ namespace RTCV.Plugins.HexEditor
 
             switch (e.message.Type)
             {
-                case NetCore.Commands.Remote.REMOTE_OPENHEXEDITOR:
+                case NetCore.Commands.Remote.OpenHexEditor:
                     {
                         SyncObjectSingleton.FormExecute(() =>
                         {
@@ -38,7 +38,7 @@ namespace RTCV.Plugins.HexEditor
                     }
                     break;
 
-                case NetCore.Commands.Emulator.EMU_OPEN_HEXEDITOR_ADDRESS:
+                case NetCore.Commands.Emulator.OpenHexEditorAddress:
                     {
                         var temp = advancedMessage.objectValue as object[];
                         var domain = (string)temp[0];

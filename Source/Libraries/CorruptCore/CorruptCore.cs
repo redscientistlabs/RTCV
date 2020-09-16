@@ -351,11 +351,11 @@ namespace RTCV.CorruptCore
                     PartialSpec partial = e.partialSpec;
                     if (IsStandaloneUI)
                     {
-                        LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.RemotePushCorruptCoreSpecUpdate, partial, true);
+                        LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.PushCorruptCoreSpecUpdate, partial, true);
                     }
                     else
                     {
-                        LocalNetCoreRouter.Route(NetCore.Commands.Basic.UI, NetCore.Commands.Remote.RemotePushCorruptCoreSpecUpdate, partial, true);
+                        LocalNetCoreRouter.Route(NetCore.Commands.Basic.UI, NetCore.Commands.Remote.PushCorruptCoreSpecUpdate, partial, true);
                     }
                 };
 

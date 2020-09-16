@@ -37,11 +37,11 @@ namespace RTCV.CorruptCore
         private static void PreApplyStashkey(bool _clearUnitsBeforeApply = true)
         {
             if (_clearUnitsBeforeApply)
-                LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.REMOTE_CLEARSTEPBLASTUNITS, null, true);
+                LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
 
 
             bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
-            LocalNetCoreRouter.Route(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Remote.REMOTE_PRECORRUPTACTION, null, true);
+            LocalNetCoreRouter.Route(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Remote.PreCorruptAction, null, true);
         }
 
         private static void PostApplyStashkey()
@@ -54,7 +54,7 @@ namespace RTCV.CorruptCore
                 Render.StartRender();
             }
 
-            LocalNetCoreRouter.Route(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Remote.REMOTE_POSTCORRUPTACTION);
+            LocalNetCoreRouter.Route(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Remote.PostCorruptAction);
         }
 
         public static bool ApplyStashkey(StashKey sk, bool _loadBeforeOperation = true, bool _clearUnitsBeforeApply = true)
@@ -157,7 +157,7 @@ namespace RTCV.CorruptCore
             string currentCore = (string)AllSpec.VanguardSpec[VSPEC.SYSTEMCORE];
             if (UseSavestates && (currentGame == null || psk.GameName != currentGame || psk.SystemCore != currentCore))
             {
-                LocalNetCoreRouter.Route(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Remote.REMOTE_LOADROM, psk.RomFilename, true);
+                LocalNetCoreRouter.Route(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Remote.LoadROM, psk.RomFilename, true);
             }
 
             //We make it without the blastlayer so we can send it across and use the cached version without needing a prototype
@@ -372,7 +372,7 @@ namespace RTCV.CorruptCore
 
         public static bool LoadState(StashKey sk, bool reloadRom = true, bool applyBlastLayer = true)
         {
-            bool success = LocalNetCoreRouter.QueryRoute<bool>(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.REMOTE_LOADSTATE, new object[] { sk, reloadRom, applyBlastLayer }, true);
+            bool success = LocalNetCoreRouter.QueryRoute<bool>(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.LoadState, new object[] { sk, reloadRom, applyBlastLayer }, true);
             return success;
         }
 
@@ -382,11 +382,11 @@ namespace RTCV.CorruptCore
 
             if (UseSavestates)
             {
-                return LocalNetCoreRouter.QueryRoute<StashKey>(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.REMOTE_SAVESTATE, sk, true);
+                return LocalNetCoreRouter.QueryRoute<StashKey>(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.SaveState, sk, true);
             }
             else
             {
-                return LocalNetCoreRouter.QueryRoute<StashKey>(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.REMOTE_SAVESTATELESS, sk, true);
+                return LocalNetCoreRouter.QueryRoute<StashKey>(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.SaveStateless, sk, true);
             }
         }
 

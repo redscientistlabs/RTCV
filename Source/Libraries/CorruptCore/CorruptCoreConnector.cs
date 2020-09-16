@@ -31,14 +31,14 @@ namespace RTCV.CorruptCore
                         GetSpecDumps(ref e);
                         break;
                     //UI sent its spec
-                    case Remote.RemotePushUISpec:
+                    case Remote.PushUISpec:
                         {
                             SyncObjectSingleton.FormExecute(() => AllSpec.UISpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached));
                             break;
                         }
 
                     //UI sent a spec update
-                    case Remote.REMOTE_PUSHUISPECUPDATE:
+                    case Remote.PushUISpecUpdate:
                         SyncObjectSingleton.FormExecute(() => AllSpec.UISpec?.Update((PartialSpec)advancedMessage.objectValue));
                         break;
 
@@ -65,28 +65,28 @@ namespace RTCV.CorruptCore
                         break;
 
                     //UI sent an update of the CorruptCore spec
-                    case Remote.RemotePushCorruptCoreSpecUpdate:
+                    case Remote.PushCorruptCoreSpecUpdate:
                         SyncObjectSingleton.FormExecute(() => AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false));
                         break;
 
-                    case Remote.REMOTE_EVENT_DOMAINSUPDATED:
+                    case Remote.EventDomainsUpdated:
                         var domainsChanged = (bool)advancedMessage.objectValue;
                         MemoryDomains.RefreshDomains(domainsChanged);
                         break;
 
-                    case Remote.REMOTE_EVENT_RESTRICTFEATURES:
+                    case Remote.EventRestrictFeatures:
                         RestrictFeatures();
                         break;
 
-                    case Remote.REMOTE_EVENT_SHUTDOWN:
+                    case Remote.EventShutdown:
                         RtcCore.Shutdown();
                         break;
 
-                    case Remote.REMOTE_OPENHEXEDITOR:
+                    case Remote.OpenHexEditor:
                         OpenHexEditor();
                         break;
 
-                    case Emulator.EMU_OPEN_HEXEDITOR_ADDRESS:
+                    case Emulator.OpenHexEditorAddress:
                         OpenHexEditorAddress(advancedMessage.objectValue);
                         break;
 
@@ -102,29 +102,29 @@ namespace RTCV.CorruptCore
                         ApplyBlastLayer(advancedMessage);
                         break;
 
-                    case Remote.REMOTE_PUSHRTCSPEC:
+                    case Remote.PushRTCSpec:
                         AllSpec.CorruptCoreSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
                         e.setReturnValue(true);
                         break;
 
-                    case Remote.REMOTE_PUSHRTCSPECUPDATE:
+                    case Remote.PushRTCSpecUpdate:
                         AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
                         break;
 
-                    case Basic.BLASTGENERATOR_BLAST:
+                    case Basic.BlastGeneratorBlast:
                         {
                             var valueAsObjectArr = advancedMessage.objectValue as object[];
                             BlastGeneratorBlast(valueAsObjectArr, ref e);
                         }
                         break;
 
-                    case Remote.REMOTE_LOADSTATE:
+                    case Remote.LoadState:
                         {
                             var valueAsObjectArr = advancedMessage.objectValue as object[];
                             LoadState(valueAsObjectArr, ref e);
                         }
                         break;
-                    case Remote.REMOTE_SAVESTATE:
+                    case Remote.SaveState:
                         {
                             StashKey sk = null;
                             void a()
@@ -135,7 +135,7 @@ namespace RTCV.CorruptCore
                             e.setReturnValue(sk);
                         }
                         break;
-                    case Remote.REMOTE_SAVESTATELESS:
+                    case Remote.SaveStateless:
                         {
                             StashKey sk = null;
                             void a()
@@ -147,7 +147,7 @@ namespace RTCV.CorruptCore
                         }
                         break;
 
-                    case Remote.REMOTE_BACKUPKEY_REQUEST:
+                    case Remote.BackupKeyRequest:
                         {
                             //We don't store this in the spec as it'd be horrible to push it to the UI and it doesn't care
                             //if (!LocalNetCoreRouter.QueryRoute<bool>(NetCore.Commands.Basic.Vanguard, NetcoreCommands.REMOTE_ISNORMALADVANCE))
@@ -159,15 +159,15 @@ namespace RTCV.CorruptCore
 
                             if (sk != null)
                             {
-                                LocalNetCoreRouter.Route(Basic.UI, Remote.REMOTE_BACKUPKEY_STASH, sk, false);
+                                LocalNetCoreRouter.Route(Basic.UI, Remote.BackupKeyStash, sk, false);
                             }
 
                             break;
                         }
-                    case Remote.REMOTE_DOMAIN_GETDOMAINS:
-                        e.setReturnValue(LocalNetCoreRouter.Route(Basic.Vanguard, Remote.REMOTE_DOMAIN_GETDOMAINS, true));
+                    case Remote.DomainGetDomains:
+                        e.setReturnValue(LocalNetCoreRouter.Route(Basic.Vanguard, Remote.DomainGetDomains, true));
                         break;
-                    case Remote.REMOTE_PUSHVMDPROTOS:
+                    case Remote.PushVMDProtos:
                         MemoryDomains.VmdPool.Clear();
                         foreach (var proto in (advancedMessage.objectValue as VmdPrototype[]))
                         {
@@ -176,18 +176,18 @@ namespace RTCV.CorruptCore
 
                         break;
 
-                    case Remote.REMOTE_DOMAIN_VMD_ADD:
+                    case Remote.DomainVMDAdd:
                         MemoryDomains.AddVMDFromRemote((advancedMessage.objectValue as VmdPrototype));
                         break;
 
-                    case Remote.REMOTE_DOMAIN_VMD_REMOVE:
+                    case Remote.DomainVMDRemove:
                         {
                             StepActions.ClearStepBlastUnits();
                             MemoryDomains.RemoveVMDFromRemote((advancedMessage.objectValue as string));
                         }
                         break;
 
-                    case Remote.REMOTE_DOMAIN_ACTIVETABLE_MAKEDUMP:
+                    case Remote.DomainActiveTableMakeDump:
                         {
                             void a()
                             {
@@ -200,7 +200,7 @@ namespace RTCV.CorruptCore
                         }
                         break;
 
-                    case Remote.REMOTE_BLASTTOOLS_GETAPPLIEDBACKUPLAYER:
+                    case Remote.BlastToolsGetAppliedBackupLayer:
                         {
                             var bl = (BlastLayer)(advancedMessage.objectValue as object[])[0];
                             var sk = (StashKey)(advancedMessage.objectValue as object[])[1];
@@ -214,14 +214,14 @@ namespace RTCV.CorruptCore
                             break;
                         }
 
-                    case Remote.REMOTE_LONGARRAY_FILTERDOMAIN:
+                    case Remote.LongArrayFilterDomain:
                         {
                             var objValues = (advancedMessage.objectValue as object[]);
                             FilterDomain(objValues, ref e);
                         }
                         break;
 
-                    case Remote.REMOTE_KEY_GETRAWBLASTLAYER:
+                    case Remote.KeyGetRawBlastLayer:
                         {
                             void a()
                             { e.setReturnValue(StockpileManager_EmuSide.GetRawBlastlayer()); }
@@ -229,7 +229,7 @@ namespace RTCV.CorruptCore
                         }
                         break;
 
-                    case Remote.REMOTE_BL_GETDIFFBLASTLAYER:
+                    case Remote.BLGetDiffBlastLayer:
                         {
                             var filename = advancedMessage.objectValue as string;
                             void a()
@@ -238,7 +238,7 @@ namespace RTCV.CorruptCore
                         }
                         break;
 
-                    case Remote.REMOTE_SET_APPLYUNCORRUPTBL:
+                    case Remote.SetApplyUncorruptBL:
                         {
                             void a()
                             {
@@ -248,7 +248,7 @@ namespace RTCV.CorruptCore
                         }
                         break;
 
-                    case Remote.REMOTE_SET_APPLYCORRUPTBL:
+                    case Remote.SetApplyCorruptBL:
                         {
                             void a()
                             {
@@ -258,14 +258,14 @@ namespace RTCV.CorruptCore
                         }
                         break;
 
-                    case Remote.REMOTE_CLEARSTEPBLASTUNITS:
+                    case Remote.ClearStepBlastUnits:
                         SyncObjectSingleton.FormExecute(() => StepActions.ClearStepBlastUnits());
                         break;
 
-                    case Remote.REMOTE_LOADPLUGINS:
+                    case Remote.LoadPlugins:
                         LoadPlugins();
                         break;
-                    case Remote.REMOTE_REMOVEEXCESSINFINITESTEPUNITS:
+                    case Remote.RemoveExcessInfiniteStepUnits:
                         SyncObjectSingleton.FormExecute(() => StepActions.RemoveExcessInfiniteStepUnits());
                         break;
 
@@ -317,7 +317,7 @@ namespace RTCV.CorruptCore
                 AllSpec.CorruptCoreSpec.SpecUpdated += (ob, eas) =>
                 {
                     PartialSpec partial = eas.partialSpec;
-                    LocalNetCoreRouter.Route(Basic.UI, Remote.RemotePushCorruptCoreSpecUpdate, partial, true);
+                    LocalNetCoreRouter.Route(Basic.UI, Remote.PushCorruptCoreSpecUpdate, partial, true);
                 };
                 MemoryDomains.RefreshDomains();
             });
@@ -328,22 +328,22 @@ namespace RTCV.CorruptCore
         {
             if (!AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_SAVESTATES) ?? true)
             {
-                LocalNetCoreRouter.Route(Basic.UI, Remote.REMOTE_DISABLESAVESTATESUPPORT);
+                LocalNetCoreRouter.Route(Basic.UI, Remote.DisableSavestateSupport);
             }
 
             if (!AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true)
             {
-                LocalNetCoreRouter.Route(Basic.UI, Remote.REMOTE_DISABLEREALTIMESUPPORT);
+                LocalNetCoreRouter.Route(Basic.UI, Remote.DisableRealtimeSupport);
             }
 
             if (!AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_KILLSWITCH) ?? true)
             {
-                LocalNetCoreRouter.Route(Basic.UI, Remote.REMOTE_DISABLEKILLSWITCHSUPPORT);
+                LocalNetCoreRouter.Route(Basic.UI, Remote.DisableKillSwitchSupport);
             }
 
             if (!AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_GAMEPROTECTION) ?? true)
             {
-                LocalNetCoreRouter.Route(Basic.UI, Remote.REMOTE_DISABLEGAMEPROTECTIONSUPPORT);
+                LocalNetCoreRouter.Route(Basic.UI, Remote.DisableGameProtectionSupport);
             }
         }
 
@@ -370,7 +370,7 @@ namespace RTCV.CorruptCore
                 if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
                 {
                     SyncObjectSingleton.FormExecute(a);
-                    e.setReturnValue(LocalNetCoreRouter.Route(Basic.Vanguard, Remote.REMOTE_RESUMEEMULATION, true));
+                    e.setReturnValue(LocalNetCoreRouter.Route(Basic.Vanguard, Remote.ResumeEmulation, true));
                 }
                 else //We're loading on the emulator thread which'll block
                 {
@@ -384,14 +384,14 @@ namespace RTCV.CorruptCore
         {
             if ((bool?)AllSpec.VanguardSpec[VSPEC.USE_INTEGRATED_HEXEDITOR] ?? false)
             {
-                LocalNetCoreRouter.Route(Basic.Vanguard, Remote.REMOTE_OPENHEXEDITOR, true);
+                LocalNetCoreRouter.Route(Basic.Vanguard, Remote.OpenHexEditor, true);
             }
             else
             {
                 //Route it to the plugin if loaded
                 if (RtcCore.PluginHost.LoadedPlugins.Any(x => x.Name == "Hex Editor"))
                 {
-                    LocalNetCoreRouter.Route("HEXEDITOR", Remote.REMOTE_OPENHEXEDITOR, true);
+                    LocalNetCoreRouter.Route("HEXEDITOR", Remote.OpenHexEditor, true);
                 }
                 else
                 {
@@ -404,14 +404,14 @@ namespace RTCV.CorruptCore
         {
             if ((bool?)AllSpec.VanguardSpec[VSPEC.USE_INTEGRATED_HEXEDITOR] ?? false)
             {
-                LocalNetCoreRouter.Route(Basic.Vanguard, Emulator.EMU_OPEN_HEXEDITOR_ADDRESS, objectValue, true);
+                LocalNetCoreRouter.Route(Basic.Vanguard, Emulator.OpenHexEditorAddress, objectValue, true);
             }
             else
             {
                 //Route it to the plugin if loaded
                 if (RtcCore.PluginHost.LoadedPlugins.Any(x => x.Name == "Hex Editor"))
                 {
-                    LocalNetCoreRouter.Route("HEXEDITOR", Emulator.EMU_OPEN_HEXEDITOR_ADDRESS, objectValue, true);
+                    LocalNetCoreRouter.Route("HEXEDITOR", Emulator.OpenHexEditorAddress, objectValue, true);
                 }
                 else
                 {
@@ -458,7 +458,7 @@ namespace RTCV.CorruptCore
                 SyncObjectSingleton.FormExecute(a);
                 if (resumeAfter)
                 {
-                    e.setReturnValue(LocalNetCoreRouter.Route(Basic.Vanguard, Remote.REMOTE_RESUMEEMULATION, true));
+                    e.setReturnValue(LocalNetCoreRouter.Route(Basic.Vanguard, Remote.ResumeEmulation, true));
                 }
             }
             else
@@ -509,7 +509,7 @@ namespace RTCV.CorruptCore
             if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
             {
                 SyncObjectSingleton.FormExecute(a);
-                e.setReturnValue(LocalNetCoreRouter.Route(Basic.Vanguard, Remote.REMOTE_RESUMEEMULATION, true));
+                e.setReturnValue(LocalNetCoreRouter.Route(Basic.Vanguard, Remote.ResumeEmulation, true));
             }
             else //We can just do everything on the emulation thread as it'll block
             {
@@ -572,7 +572,7 @@ namespace RTCV.CorruptCore
                 if (sk != null && ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false))
                 {
                     SyncObjectSingleton.FormExecute(a);
-                    LocalNetCoreRouter.Route(Basic.Vanguard, Remote.REMOTE_RESUMEEMULATION, true);
+                    LocalNetCoreRouter.Route(Basic.Vanguard, Remote.ResumeEmulation, true);
                 }
                 else //We can just do everything on the emulation thread as it'll block
                 {
