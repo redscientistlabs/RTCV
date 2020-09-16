@@ -973,7 +973,7 @@ namespace RTCV.CorruptCore
                 if (AutoCorrupt)
                 {
                     AutoCorrupt = false;
-                    LocalNetCoreRouter.Route(NetCore.Commands.Basic.UI, NetCore.Commands.Basic.ErrorDiableAutoCorrupt);
+                    LocalNetCoreRouter.Route(NetCore.Commands.Basic.UI, NetCore.Commands.Basic.ErrorDisableAutoCorrupt);
                 }
 
                 if (dr == DialogResult.Abort)

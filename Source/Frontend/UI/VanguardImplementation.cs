@@ -65,7 +65,7 @@ namespace RTCV.UI
                     case Remote.GetBlastGeneratorLayer:
                         GetBlastGeneratorLayer(ref e);
                         break;
-                    case Basic.ErrorDiableAutoCorrupt:
+                    case Basic.ErrorDisableAutoCorrupt:
                         DisableAutoCorrupt();
                         break;
                     case Remote.RenderDisplay:

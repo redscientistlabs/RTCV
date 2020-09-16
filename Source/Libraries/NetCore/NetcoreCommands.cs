@@ -13,7 +13,7 @@ namespace RTCV.NetCore.Commands
         public const string ApplyCachedBlastLayer = nameof(Basic) + "_" + nameof(ApplyCachedBlastLayer);
         public const string Blast = nameof(Basic) + "_" + nameof(Blast);
         public const string StashKey = nameof(Basic) + "_" + nameof(StashKey);
-        public const string ErrorDiableAutoCorrupt = nameof(Basic) + "_" + nameof(ErrorDiableAutoCorrupt);
+        public const string ErrorDisableAutoCorrupt = nameof(Basic) + "_" + nameof(ErrorDisableAutoCorrupt);
         public const string GenerateBlastLayer = nameof(Basic) + "_" + nameof(GenerateBlastLayer);
         public const string SaveSavestate = nameof(Basic) + "_" + nameof(SaveSavestate);
         public const string LoadSavestate = nameof(Basic) + "_" + nameof(LoadSavestate);
