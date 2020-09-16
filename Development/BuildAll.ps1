@@ -67,7 +67,7 @@ Set-Variable -Name PROJECTS -Option ReadOnly -Value @(`
     ,[Project]::new("FileStub"   , "FileStub-Vanguard\FileStub-Vanguard.sln"                     , "", $Release)`
     ,[Project]::new("UnityStub"  , "UnityStub-Vanguard\UnityStub-Vanguard.sln"                   , "", $Release)`
     ,[Project]::new("ProcessStub", "ProcessStub-Vanguard\ProcessStub-Vanguard.sln"               , "", $Release)`
-    ,[Project]::new("melonDS"    , "melonDS-Vanguard\out\build\x64-Debug\melonDS.sln"            , "", $Release)`
+    ,[Project]::new("melonDS"    , "melonDS-Vanguard\build\melonDS.sln"                          , "", $Release)`
     ,[Project]::new("dolphin"    , "dolphin-vanguard\Source\dolphin-emu.sln"                     , "/property:Platform=x64 /p:TreatWarningAsError=false", $true)` # Debug flavor of dolphin doesn't build correctly
     ,[Project]::new("pcsx2"      , "pcsx2-Vanguard\PCSX2_suite.sln"                              , "/property:Platform=Win32", $Release)`
     ,[Project]::new("citra"      , "citra-vanguard\build\citra.sln"                              , "", $Release)`
