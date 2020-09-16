@@ -341,7 +341,7 @@ namespace RTCV.CorruptCore
                 rtcSpecTemplate.Insert(VectorEngine.getDefaultPartial());
                 rtcSpecTemplate.Insert(ClusterEngine.getDefaultPartial());
                 rtcSpecTemplate.Insert(MemoryDomains.getDefaultPartial());
-                rtcSpecTemplate.Insert(StockpileManager_EmuSide.getDefaultPartial());
+                rtcSpecTemplate.Insert(StockpileManagerEmuSide.getDefaultPartial());
                 rtcSpecTemplate.Insert(Render.getDefaultPartial());
 
                 AllSpec.CorruptCoreSpec = new FullSpec(rtcSpecTemplate, !Attached); //You have to feed a partial spec as a template

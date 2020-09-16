@@ -129,7 +129,7 @@ namespace RTCV.CorruptCore
                             StashKey sk = null;
                             void a()
                             {
-                                sk = StockpileManager_EmuSide.SaveState_NET(advancedMessage.objectValue as StashKey); //Has to be nullable cast
+                                sk = StockpileManagerEmuSide.SaveState_NET(advancedMessage.objectValue as StashKey); //Has to be nullable cast
                             }
                             SyncObjectSingleton.EmuThreadExecute(a, false);
                             e.setReturnValue(sk);
@@ -140,7 +140,7 @@ namespace RTCV.CorruptCore
                             StashKey sk = null;
                             void a()
                             {
-                                sk = StockpileManager_EmuSide.SaveStateLess_NET(advancedMessage.objectValue as StashKey); //Has to be nullable cast
+                                sk = StockpileManagerEmuSide.SaveStateLess_NET(advancedMessage.objectValue as StashKey); //Has to be nullable cast
                             }
                             SyncObjectSingleton.EmuThreadExecute(a, false);
                             e.setReturnValue(sk);
@@ -155,7 +155,7 @@ namespace RTCV.CorruptCore
 
                             StashKey sk = null;
                             //We send an unsynced command back
-                            SyncObjectSingleton.FormExecute(() => sk = StockpileManager_EmuSide.SaveState_NET());
+                            SyncObjectSingleton.FormExecute(() => sk = StockpileManagerEmuSide.SaveState_NET());
 
                             if (sk != null)
                             {
@@ -224,7 +224,7 @@ namespace RTCV.CorruptCore
                     case Remote.KeyGetRawBlastLayer:
                         {
                             void a()
-                            { e.setReturnValue(StockpileManager_EmuSide.GetRawBlastlayer()); }
+                            { e.setReturnValue(StockpileManagerEmuSide.GetRawBlastlayer()); }
                             SyncObjectSingleton.EmuThreadExecute(a, false);
                         }
                         break;
@@ -242,7 +242,7 @@ namespace RTCV.CorruptCore
                         {
                             void a()
                             {
-                                StockpileManager_EmuSide.UnCorruptBL?.Apply(true);
+                                StockpileManagerEmuSide.UnCorruptBL?.Apply(true);
                             }
                             SyncObjectSingleton.EmuThreadExecute(a, false);
                         }
@@ -252,7 +252,7 @@ namespace RTCV.CorruptCore
                         {
                             void a()
                             {
-                                StockpileManager_EmuSide.CorruptBL?.Apply(false);
+                                StockpileManagerEmuSide.CorruptBL?.Apply(false);
                             }
                             SyncObjectSingleton.EmuThreadExecute(a, false);
                         }
@@ -360,11 +360,11 @@ namespace RTCV.CorruptCore
                 //Load the game from the main thread
                 if (reloadRom)
                 {
-                    SyncObjectSingleton.FormExecute(() => StockpileManager_EmuSide.LoadRom_NET(sk));
+                    SyncObjectSingleton.FormExecute(() => StockpileManagerEmuSide.LoadRom_NET(sk));
                 }
                 void a()
                 {
-                    returnValue = StockpileManager_EmuSide.LoadState_NET(sk, runBlastLayer);
+                    returnValue = StockpileManagerEmuSide.LoadState_NET(sk, runBlastLayer);
                 }
                 //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
                 if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
@@ -433,12 +433,12 @@ namespace RTCV.CorruptCore
                 //Load the game from the main thread
                 if (loadBeforeCorrupt)
                 {
-                    SyncObjectSingleton.FormExecute(() => StockpileManager_EmuSide.LoadRom_NET(sk));
+                    SyncObjectSingleton.FormExecute(() => StockpileManagerEmuSide.LoadRom_NET(sk));
                 }
 
                 if (loadBeforeCorrupt)
                 {
-                    StockpileManager_EmuSide.LoadState_NET(sk, false);
+                    StockpileManagerEmuSide.LoadState_NET(sk, false);
                 }
 
                 returnList = BlastTools.GenerateBlastLayersFromBlastGeneratorProtos(blastGeneratorProtos);
@@ -488,12 +488,12 @@ namespace RTCV.CorruptCore
                     //Load the game from the main thread
                     if (useSavestates && loadBeforeCorrupt)
                     {
-                        SyncObjectSingleton.FormExecute(() => StockpileManager_EmuSide.LoadRom_NET(sk));
+                        SyncObjectSingleton.FormExecute(() => StockpileManagerEmuSide.LoadRom_NET(sk));
                     }
 
                     if (useSavestates && loadBeforeCorrupt)
                     {
-                        StockpileManager_EmuSide.LoadState_NET(sk, false);
+                        StockpileManagerEmuSide.LoadState_NET(sk, false);
                     }
 
                     bl = RtcCore.GenerateBlastLayerOnAllThreads();
@@ -549,7 +549,7 @@ namespace RTCV.CorruptCore
                 {
                     if (sk != null) //If a stashkey was passed in, we want to load then profile
                     {
-                        StockpileManager_EmuSide.LoadState_NET(sk, false);
+                        StockpileManagerEmuSide.LoadState_NET(sk, false);
                     }
 
                     MemoryInterface mi = MemoryDomains.MemoryInterfaces[domain];

@@ -8,8 +8,7 @@
     using RTCV.NetCore;
     using RTCV.CorruptCore.Extensions;
 
-    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "StockpileManager_EmuSide members may keep their underscores for compatibility with existing implementations")]
-    public static class StockpileManager_EmuSide
+    public static class StockpileManagerEmuSide
     {
         public static BlastLayer CorruptBL = null;
         public static BlastLayer UnCorruptBL = null;
