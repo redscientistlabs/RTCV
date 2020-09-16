@@ -115,7 +115,7 @@ namespace RTCV.NetCore.Commands
         public const string HotkeyBeLoadCorrupt = nameof(Remote) + "_" + nameof(HotkeyBeLoadCorrupt);
         public const string HotkeyBeApply = nameof(Remote) + "_" + nameof(HotkeyBeApply);
         public const string HotkeyBeSendStash = nameof(Remote) + "_" + nameof(HotkeyBeSendStash);
-        public const string EventEmuManiformClose = nameof(Remote) + "_" + nameof(EventEmuManiformClose);
+        public const string EventEmuMainFormClose = nameof(Remote) + "_" + nameof(EventEmuMainFormClose);
         public const string EventEmuStarted = nameof(Remote) + "_" + nameof(EventEmuStarted);
     }
 
