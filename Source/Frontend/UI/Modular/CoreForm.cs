@@ -326,7 +326,7 @@ This message only appears once.";
             }
             else
             {
-                LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Basic.MANUALBLAST, true);
+                LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Basic.ManualBlast, true);
             }
         }
 
@@ -582,7 +582,7 @@ This message only appears once.";
 
         private static void BlastRawStash()
         {
-            LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Basic.MANUALBLAST, true);
+            LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Basic.ManualBlast, true);
             S.GET<GlitchHarvesterBlastForm>().SendRawToStash(null, null);
         }
 

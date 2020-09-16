@@ -78,7 +78,7 @@ namespace RTCV.CorruptCore
                 //Param 0 is BlastLayer
                 //Param 1 is storeUncorruptBackup
                 //Param 2 is MergeWithCurrent (for fixing blast toggle with inject)
-                LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Basic.APPLYBLASTLAYER, new object[] { sk?.BlastLayer, true, mergeWithCurrent }, true);
+                LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Basic.ApplyBlastLayer, new object[] { sk?.BlastLayer, true, mergeWithCurrent }, true);
             }
 
             PostApplyStashkey();
@@ -172,7 +172,7 @@ namespace RTCV.CorruptCore
             };
 
 
-            BlastLayer bl = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Basic.GENERATEBLASTLAYER,
+            BlastLayer bl = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Basic.GenerateBlastLayer,
                     new object[]
                     {
                     CurrentStashkey,
@@ -248,7 +248,7 @@ namespace RTCV.CorruptCore
             }
             else
             {
-                LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Basic.APPLYBLASTLAYER, new object[] { CurrentStashkey.BlastLayer, true }, true);
+                LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Basic.ApplyBlastLayer, new object[] { CurrentStashkey.BlastLayer, true }, true);
             }
 
             bool isCorruptionApplied = CurrentStashkey?.BlastLayer?.Layer?.Count > 0;
@@ -353,7 +353,7 @@ namespace RTCV.CorruptCore
                 }
                 else
                 {
-                    LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Basic.APPLYBLASTLAYER, new object[] { CurrentStashkey.BlastLayer, true }, true);
+                    LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Basic.ApplyBlastLayer, new object[] { CurrentStashkey.BlastLayer, true }, true);
                 }
 
 

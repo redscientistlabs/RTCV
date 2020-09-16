@@ -294,7 +294,7 @@ namespace RTCV.UI
 
         private void BlastRawStash()
         {
-            LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Basic.MANUALBLAST, true);
+            LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Basic.ManualBlast, true);
             SendRawToStash(null, null);
         }
 

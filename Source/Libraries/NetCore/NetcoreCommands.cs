@@ -8,15 +8,15 @@ namespace RTCV.NetCore.Commands
         public const string UI = nameof(Basic) + "_" + nameof(UI);
         public const string KillswitchPulse = nameof(Basic) + "_" + nameof(KillswitchPulse);
         public const string ResetGameProtectionIfRunning = nameof(Basic) + "_" + nameof(ResetGameProtectionIfRunning);
-        public const string MANUALBLAST = nameof(Basic) + "_" + nameof(MANUALBLAST);
-        public const string APPLYBLASTLAYER = nameof(Basic) + "_" + nameof(APPLYBLASTLAYER);
-        public const string APPLYCACHEDBLASTLAYER = nameof(Basic) + "_" + nameof(APPLYCACHEDBLASTLAYER);
-        public const string BLAST = nameof(Basic) + "_" + nameof(BLAST);
-        public const string STASHKEY = nameof(Basic) + "_" + nameof(STASHKEY);
+        public const string ManualBlast = nameof(Basic) + "_" + nameof(ManualBlast);
+        public const string ApplyBlastLayer = nameof(Basic) + "_" + nameof(ApplyBlastLayer);
+        public const string ApplyCachedBlastLayer = nameof(Basic) + "_" + nameof(ApplyCachedBlastLayer);
+        public const string Blast = nameof(Basic) + "_" + nameof(Blast);
+        public const string StashKey = nameof(Basic) + "_" + nameof(StashKey);
         public const string ErrorDiableAutoCorrupt = nameof(Basic) + "_" + nameof(ErrorDiableAutoCorrupt);
-        public const string GENERATEBLASTLAYER = nameof(Basic) + "_" + nameof(GENERATEBLASTLAYER);
-        public const string SAVESAVESTATE = nameof(Basic) + "_" + nameof(SAVESAVESTATE);
-        public const string LOADSAVESTATE = nameof(Basic) + "_" + nameof(LOADSAVESTATE);
+        public const string GenerateBlastLayer = nameof(Basic) + "_" + nameof(GenerateBlastLayer);
+        public const string SaveSavestate = nameof(Basic) + "_" + nameof(SaveSavestate);
+        public const string LoadSavestate = nameof(Basic) + "_" + nameof(LoadSavestate);
         public const string RTCInFocus = nameof(Basic) + "_" + nameof(RTCInFocus);
         public const string BlastGeneratorBlast = nameof(Basic) + "_" + nameof(BlastGeneratorBlast);
     }

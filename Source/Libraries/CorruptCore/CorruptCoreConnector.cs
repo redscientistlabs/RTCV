@@ -90,15 +90,15 @@ namespace RTCV.CorruptCore
                         OpenHexEditorAddress(advancedMessage.objectValue);
                         break;
 
-                    case Basic.MANUALBLAST:
+                    case Basic.ManualBlast:
                         RtcCore.GenerateAndBlast();
                         break;
 
-                    case Basic.GENERATEBLASTLAYER:
+                    case Basic.GenerateBlastLayer:
                         GenerateBlastLayer(advancedMessage, ref e);
                         break;
 
-                    case Basic.APPLYBLASTLAYER:
+                    case Basic.ApplyBlastLayer:
                         ApplyBlastLayer(advancedMessage);
                         break;
 

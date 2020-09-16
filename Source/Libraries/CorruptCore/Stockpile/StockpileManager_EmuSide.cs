@@ -63,7 +63,7 @@
 
                 if (File.Exists(theoreticalSaveStateFilename))
                 {
-                    if (!LocalNetCoreRouter.QueryRoute<bool>(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Basic.LOADSAVESTATE, new object[] { theoreticalSaveStateFilename, stateLocation }, true))
+                    if (!LocalNetCoreRouter.QueryRoute<bool>(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Basic.LoadSavestate, new object[] { theoreticalSaveStateFilename, stateLocation }, true))
                     {
                         MessageBox.Show($"Error loading savestate : An internal error has occurred.\n Are you sure your savestate matches the game, your syncsettings match, and the savestate is supported by this version of {RtcCore.VanguardImplementationName}?");
                         return false;
@@ -124,7 +124,7 @@
             if (_sk == null)
             {
                 Key = RtcCore.GetRandomKey();
-                statePath = LocalNetCoreRouter.QueryRoute<string>(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Basic.SAVESAVESTATE, Key, true);
+                statePath = LocalNetCoreRouter.QueryRoute<string>(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Basic.SaveSavestate, Key, true);
 
                 if (statePath == null)
                 {
