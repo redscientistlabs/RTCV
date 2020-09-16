@@ -21,7 +21,7 @@
             return partial;
         }
 
-        public static bool LoadRom_NET(StashKey sk)
+        public static bool LoadRomNet(StashKey sk)
         {
             if (sk == null)
             {
@@ -41,7 +41,7 @@
             return true;
         }
 
-        public static bool LoadState_NET(StashKey sk, bool applyBlastLayer = true)
+        public static bool LoadStateNet(StashKey sk, bool applyBlastLayer = true)
         {
             if (sk == null)
             {
@@ -83,14 +83,14 @@
             return true;
         }
 
-        public static StashKey SaveStateLess_NET(StashKey _sk = null)
+        public static StashKey SaveStateLessNet(StashKey skParam = null)
         {
             string Key;
             //string statePath = "";
 
             StashKey sk;
 
-            if (_sk == null)
+            if (skParam == null)
             {
                 Key = RtcCore.GetRandomKey();
                 //statePath = LocalNetCoreRouter.QueryRoute<String>(NetCore.Commands.Basic.Vanguard, NetcoreCommands.SAVESAVESTATE, Key, true);
@@ -98,9 +98,9 @@
             }
             else
             {
-                Key = _sk.Key;
+                Key = skParam.Key;
                 //statePath = _sk.StateFilename;
-                sk = _sk;
+                sk = skParam;
             }
 
             //if (string.IsNullOrEmpty(statePath))
@@ -113,14 +113,14 @@
             return sk;
         }
 
-        public static StashKey SaveState_NET(StashKey _sk = null)
+        public static StashKey SaveStateNET(StashKey skParam = null)
         {
             string Key;
             string statePath;
 
             StashKey sk;
 
-            if (_sk == null)
+            if (skParam == null)
             {
                 Key = RtcCore.GetRandomKey();
                 statePath = LocalNetCoreRouter.QueryRoute<string>(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Basic.SaveSavestate, Key, true);
@@ -134,9 +134,9 @@
             }
             else
             {
-                Key = _sk.Key;
-                statePath = _sk.StateFilename;
-                sk = _sk;
+                Key = skParam.Key;
+                statePath = skParam.StateFilename;
+                sk = skParam;
             }
 
             if (string.IsNullOrEmpty(statePath))
@@ -154,7 +154,7 @@
 
         public static StashKey GetRawBlastlayer()
         {
-            StashKey sk = SaveState_NET();
+            StashKey sk = SaveStateNET();
             if (sk == null)
             {
                 return null;

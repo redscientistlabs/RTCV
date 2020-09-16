@@ -56,13 +56,13 @@ namespace RTCV.CorruptCore
             LocalNetCoreRouter.Route(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Remote.PostCorruptAction);
         }
 
-        public static bool ApplyStashkey(StashKey sk, bool _loadBeforeOperation = true, bool _clearUnitsBeforeApply = true)
+        public static bool ApplyStashkey(StashKey sk, bool loadBeforeOperation = true, bool clearUnitsBeforeApply = true)
         {
-            PreApplyStashkey(_clearUnitsBeforeApply);
+            PreApplyStashkey(clearUnitsBeforeApply);
 
             bool isCorruptionApplied = sk?.BlastLayer?.Layer?.Count > 0;
 
-            if (_loadBeforeOperation)
+            if (loadBeforeOperation)
             {
                 if (!LoadState(sk))
                 {
@@ -71,7 +71,7 @@ namespace RTCV.CorruptCore
             }
             else
             {
-                bool mergeWithCurrent = !_clearUnitsBeforeApply;
+                bool mergeWithCurrent = !clearUnitsBeforeApply;
 
                 //APPLYBLASTLAYER
                 //Param 0 is BlastLayer
@@ -84,7 +84,7 @@ namespace RTCV.CorruptCore
             return isCorruptionApplied;
         }
 
-        public static void Import(BlastLayer _importedBlastLayer)
+        public static void Import(BlastLayer importedBlastLayer)
         {
             string saveStateWord = "Savestate";
 
@@ -121,13 +121,13 @@ namespace RTCV.CorruptCore
             };
 
 
-            BlastLayer bl = _importedBlastLayer;
+            BlastLayer bl = importedBlastLayer;
 
             CurrentStashkey.BlastLayer = bl;
             StashHistory.Add(CurrentStashkey);
         }
 
-        public static bool Corrupt(bool _loadBeforeOperation = true)
+        public static bool Corrupt(bool loadBeforeOperation = true)
         {
             string saveStateWord = "Savestate";
 
@@ -175,7 +175,7 @@ namespace RTCV.CorruptCore
                     new object[]
                     {
                     CurrentStashkey,
-                    _loadBeforeOperation,
+                    loadBeforeOperation,
                     true,
                     true
                     }, true);
@@ -197,7 +197,7 @@ namespace RTCV.CorruptCore
             StashHistory.RemoveAt(0);
         }
 
-        public static bool InjectFromStashkey(StashKey sk, bool _loadBeforeOperation = true)
+        public static bool InjectFromStashkey(StashKey sk, bool loadBeforeOperation = true)
         {
             string saveStateWord = "Savestate";
 
@@ -238,7 +238,7 @@ namespace RTCV.CorruptCore
                 StateLocation = psk.StateLocation
             };
 
-            if (_loadBeforeOperation)
+            if (loadBeforeOperation)
             {
                 if (!LoadState(CurrentStashkey))
                 {
@@ -282,7 +282,7 @@ namespace RTCV.CorruptCore
             return isCorruptionApplied;
         }
 
-        public static bool MergeStashkeys(List<StashKey> sks, bool _loadBeforeOperation = true)
+        public static bool MergeStashkeys(List<StashKey> sks, bool loadBeforeOperation = true)
         {
             PreApplyStashkey();
 
@@ -343,7 +343,7 @@ namespace RTCV.CorruptCore
 
                 bool isCorruptionApplied = CurrentStashkey?.BlastLayer?.Layer?.Count > 0;
 
-                if (_loadBeforeOperation)
+                if (loadBeforeOperation)
                 {
                     if (!LoadState(CurrentStashkey))
                     {
@@ -396,11 +396,11 @@ namespace RTCV.CorruptCore
         }
 
 
-        public static bool AddCurrentStashkeyToStash(bool _stashAfterOperation = true)
+        public static bool AddCurrentStashkeyToStash(bool stashAfterOperation = true)
         {
             bool isCorruptionApplied = CurrentStashkey?.BlastLayer?.Layer?.Count > 0;
 
-            if (isCorruptionApplied && StashAfterOperation && _stashAfterOperation)
+            if (isCorruptionApplied && StashAfterOperation && stashAfterOperation)
             {
                 StashHistory.Add(CurrentStashkey);
             }

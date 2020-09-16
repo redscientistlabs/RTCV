@@ -129,7 +129,7 @@ namespace RTCV.CorruptCore
                             StashKey sk = null;
                             void a()
                             {
-                                sk = StockpileManagerEmuSide.SaveState_NET(advancedMessage.objectValue as StashKey); //Has to be nullable cast
+                                sk = StockpileManagerEmuSide.SaveStateNET(advancedMessage.objectValue as StashKey); //Has to be nullable cast
                             }
                             SyncObjectSingleton.EmuThreadExecute(a, false);
                             e.setReturnValue(sk);
@@ -140,7 +140,7 @@ namespace RTCV.CorruptCore
                             StashKey sk = null;
                             void a()
                             {
-                                sk = StockpileManagerEmuSide.SaveStateLess_NET(advancedMessage.objectValue as StashKey); //Has to be nullable cast
+                                sk = StockpileManagerEmuSide.SaveStateLessNet(advancedMessage.objectValue as StashKey); //Has to be nullable cast
                             }
                             SyncObjectSingleton.EmuThreadExecute(a, false);
                             e.setReturnValue(sk);
@@ -155,7 +155,7 @@ namespace RTCV.CorruptCore
 
                             StashKey sk = null;
                             //We send an unsynced command back
-                            SyncObjectSingleton.FormExecute(() => sk = StockpileManagerEmuSide.SaveState_NET());
+                            SyncObjectSingleton.FormExecute(() => sk = StockpileManagerEmuSide.SaveStateNET());
 
                             if (sk != null)
                             {
@@ -360,11 +360,11 @@ namespace RTCV.CorruptCore
                 //Load the game from the main thread
                 if (reloadRom)
                 {
-                    SyncObjectSingleton.FormExecute(() => StockpileManagerEmuSide.LoadRom_NET(sk));
+                    SyncObjectSingleton.FormExecute(() => StockpileManagerEmuSide.LoadRomNet(sk));
                 }
                 void a()
                 {
-                    returnValue = StockpileManagerEmuSide.LoadState_NET(sk, runBlastLayer);
+                    returnValue = StockpileManagerEmuSide.LoadStateNet(sk, runBlastLayer);
                 }
                 //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
                 if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
@@ -433,12 +433,12 @@ namespace RTCV.CorruptCore
                 //Load the game from the main thread
                 if (loadBeforeCorrupt)
                 {
-                    SyncObjectSingleton.FormExecute(() => StockpileManagerEmuSide.LoadRom_NET(sk));
+                    SyncObjectSingleton.FormExecute(() => StockpileManagerEmuSide.LoadRomNet(sk));
                 }
 
                 if (loadBeforeCorrupt)
                 {
-                    StockpileManagerEmuSide.LoadState_NET(sk, false);
+                    StockpileManagerEmuSide.LoadStateNet(sk, false);
                 }
 
                 returnList = BlastTools.GenerateBlastLayersFromBlastGeneratorProtos(blastGeneratorProtos);
@@ -488,12 +488,12 @@ namespace RTCV.CorruptCore
                     //Load the game from the main thread
                     if (useSavestates && loadBeforeCorrupt)
                     {
-                        SyncObjectSingleton.FormExecute(() => StockpileManagerEmuSide.LoadRom_NET(sk));
+                        SyncObjectSingleton.FormExecute(() => StockpileManagerEmuSide.LoadRomNet(sk));
                     }
 
                     if (useSavestates && loadBeforeCorrupt)
                     {
-                        StockpileManagerEmuSide.LoadState_NET(sk, false);
+                        StockpileManagerEmuSide.LoadStateNet(sk, false);
                     }
 
                     bl = RtcCore.GenerateBlastLayerOnAllThreads();
@@ -549,7 +549,7 @@ namespace RTCV.CorruptCore
                 {
                     if (sk != null) //If a stashkey was passed in, we want to load then profile
                     {
-                        StockpileManagerEmuSide.LoadState_NET(sk, false);
+                        StockpileManagerEmuSide.LoadStateNet(sk, false);
                     }
 
                     MemoryInterface mi = MemoryDomains.MemoryInterfaces[domain];
