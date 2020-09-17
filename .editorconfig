@@ -311,9 +311,6 @@ dotnet_diagnostic.CA2008.severity = none
 # Specify marshaling for P/Invoke string arguments
 dotnet_diagnostic.CA2101.severity = none
 
-# Non-constant fields should not be visible
-dotnet_diagnostic.CA2211.severity = none
-
 # Change to be read-only by removing the property setter
 dotnet_diagnostic.CA2227.severity = none
 
