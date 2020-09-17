@@ -843,7 +843,6 @@ namespace RTCV.NetCore
             return spec.Connector.watch.GetValue((Guid)message.requestGuid, message.Type); //This will lock here until value is returned from peer
         }
 
-        #region STREAM EXTENSIONS
         //Thanks! https://stackoverflow.com/a/13021983
         public static long CopyBytes(long bytesRequired, Stream inStream, Stream outStream)
         {
@@ -873,7 +872,5 @@ namespace RTCV.NetCore
             } while (readSoFar < bytesRequired);
             return readSoFar;
         }
-        #endregion
-
     }
 }

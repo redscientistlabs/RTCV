@@ -32,8 +32,6 @@ namespace RTCV.NetCore
 
         private ISynchronizeInvoke _syncObject = null;
 
-        #region Events
-
         public event EventHandler<NetCoreEventArgs> MessageReceived;
         public virtual void OnMessageReceived(NetCoreEventArgs e) => MessageReceived?.Invoke(this, e);
 
@@ -130,8 +128,6 @@ namespace RTCV.NetCore
 
         public event EventHandler SyncedMessageEnd;
         internal virtual void OnSyncedMessageEnd(EventArgs e) => SyncedMessageEnd?.Invoke(this, e);
-
-        #endregion
 
         public bool LockStatusEventLockout(int timeout = int.MaxValue)
         {

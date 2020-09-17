@@ -25,7 +25,6 @@ namespace RTCV.CorruptCore
             }
         }
 
-        #region COLOR EXTENSIONS
 
         /// <summary>
         /// Creates color with corrected brightness.
@@ -58,10 +57,6 @@ namespace RTCV.CorruptCore
 
             return Color.FromArgb(color.A, (int)red, (int)green, (int)blue);
         }
-
-        #endregion COLOR EXTENSIONS
-
-        #region PATH EXTENSIONS
 
         public static string GetRelativePath(string rootPath, string fullPath)
         {
@@ -102,7 +97,6 @@ namespace RTCV.CorruptCore
 
             return isChild;
         }
-        #endregion PATH EXTENSIONS
     }
 
     public static class ObjectCopierCeras
