@@ -269,9 +269,6 @@ dotnet_diagnostic.CA1712.severity = none
 # Rename virtual/interface member so it no longer conflicts with reserved language
 dotnet_diagnostic.CA1716.severity = none
 
-# Identifier contains type name
-dotnet_diagnostic.CA1720.severity = none
-
 # Naming conflict
 dotnet_diagnostic.CA1724.severity = none
 
