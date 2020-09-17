@@ -21,7 +21,7 @@ namespace RTCV.Plugins
             return true;
         }
 
-        public bool Stop()
+        public bool StopPlugin()
         {
             return true;
         }

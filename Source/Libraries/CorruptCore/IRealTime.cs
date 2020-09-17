@@ -8,7 +8,6 @@ namespace RTCV.CorruptCore
 
     public interface IRealTime
     {
-        event EventHandler<RealTimeEventArgs> Step;
         event EventHandler GameLoaded;
         event EventHandler GameClosed;
 

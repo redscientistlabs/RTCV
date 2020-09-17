@@ -32,7 +32,7 @@ namespace RTCV.Plugins.ScriptHost
             return true;
         }
 
-        public bool Stop()
+        public bool StopPlugin()
         {
             return true;
         }
