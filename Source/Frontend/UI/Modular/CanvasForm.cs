@@ -99,7 +99,7 @@
 
         private void ResizeCanvas(CanvasGrid canvasGrid)
         {
-            this.SetSize(getTilePos(canvasGrid.x), getTilePos(canvasGrid.y));
+            this.SetSize(getTilePos(canvasGrid.X), getTilePos(canvasGrid.Y));
         }
 
         public void SetSize(int x, int y)
@@ -118,9 +118,9 @@
         {
             targetForm.ResizeCanvas(canvasGrid);
 
-            for (int x = 0; x < canvasGrid.x; x++)
+            for (int x = 0; x < canvasGrid.X; x++)
             {
-                for (int y = 0; y < canvasGrid.y; y++)
+                for (int y = 0; y < canvasGrid.Y; y++)
                 {
                     if (canvasGrid.gridComponent[x, y] != null)
                     {

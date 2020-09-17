@@ -50,13 +50,13 @@ namespace RTCV.UI
             });
         }
 
-        public void SetMemoryDomainsSelectedDomains(string[] _domains)
+        public void SetMemoryDomainsSelectedDomains(string[] domains)
         {
             var oldState = this.Visible;
 
             for (int i = 0; i < lbMemoryDomains.Items.Count; i++)
             {
-                if (_domains.Contains(lbMemoryDomains.Items[i].ToString()))
+                if (domains.Contains(lbMemoryDomains.Items[i].ToString()))
                 {
                     lbMemoryDomains.SetSelected(i, true);
                 }
@@ -70,13 +70,13 @@ namespace RTCV.UI
             this.Visible = oldState;
         }
 
-        public void SetMemoryDomainsAllButSelectedDomains(string[] _blacklistedDomains)
+        public void SetMemoryDomainsAllButSelectedDomains(string[] blacklistedDomains)
         {
             var oldState = this.Visible;
 
             for (int i = 0; i < lbMemoryDomains.Items.Count; i++)
             {
-                if (_blacklistedDomains?.Contains(lbMemoryDomains.Items[i].ToString()) ?? false)
+                if (blacklistedDomains?.Contains(lbMemoryDomains.Items[i].ToString()) ?? false)
                 {
                     lbMemoryDomains.SetSelected(i, false);
                 }
@@ -104,7 +104,7 @@ namespace RTCV.UI
 
         private void AutoSelectDomains(object sender, EventArgs e)
         {
-            LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_DOMAIN_REFRESHDOMAINS, true);
+            LocalNetCoreRouter.Route(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Remote.DomainRefreshDomains, true);
             RefreshDomains();
             SetMemoryDomainsAllButSelectedDomains((string[])AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] ?? new string[] { });
         }

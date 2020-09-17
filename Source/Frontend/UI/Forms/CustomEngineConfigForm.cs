@@ -389,7 +389,7 @@
 
         private void ClearActive(object sender, EventArgs e)
         {
-            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_CLEARSTEPBLASTUNITS, null, true);
+            LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
         }
 
         private void HandleLifetimeChange(object sender, EventArgs e)

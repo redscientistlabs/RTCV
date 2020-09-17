@@ -292,7 +292,7 @@ namespace RTCV.UI
                 btnJustCorrupt.Enabled = false;
 
                 GenerateBlastLayers(false, true);
-                //LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.APPLYBLASTLAYER, new object[] { bl?.Clone() as BlastLayer, true }, true);
+                //LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Basic.APPLYBLASTLAYER, new object[] { bl?.Clone() as BlastLayer, true }, true);
             }
             finally
             {
@@ -321,7 +321,7 @@ namespace RTCV.UI
                 StashKey newSk = null;
                 if (_sk == null)
                 {
-                    StashKey psk = StockpileManager_UISide.CurrentSavestateStashKey;
+                    StashKey psk = StockpileManagerUISide.CurrentSavestateStashKey;
                     if (psk == null)
                     {
                         MessageBox.Show(
@@ -378,7 +378,7 @@ namespace RTCV.UI
                 StashKey newSk = null;
                 if (_sk == null)
                 {
-                    StashKey psk = StockpileManager_UISide.CurrentSavestateStashKey;
+                    StashKey psk = StockpileManagerUISide.CurrentSavestateStashKey;
                     if (psk == null)
                     {
                         MessageBox.Show($"Could not perform the CORRUPT action\n\nEither no {saveStateWord} Box was selected in the {saveStateWord} Manager\nor the {saveStateWord} Box itself is empty.");
@@ -424,14 +424,14 @@ namespace RTCV.UI
                 }
                 else
                 {
-                    StockpileManager_UISide.StashHistory.Add(newSk);
+                    StockpileManagerUISide.StashHistory.Add(newSk);
                     S.GET<StashHistoryForm>().RefreshStashHistory();
                     S.GET<StockpileManagerForm>().dgvStockpile.ClearSelection();
                     S.GET<StashHistoryForm>().lbStashHistory.ClearSelected();
 
                     S.GET<StashHistoryForm>().DontLoadSelectedStash = true;
                     S.GET<StashHistoryForm>().lbStashHistory.SelectedIndex = S.GET<StashHistoryForm>().lbStashHistory.Items.Count - 1;
-                    StockpileManager_UISide.CurrentStashkey = StockpileManager_UISide.StashHistory[S.GET<StashHistoryForm>().lbStashHistory.SelectedIndex];
+                    StockpileManagerUISide.CurrentStashkey = StockpileManagerUISide.StashHistory[S.GET<StashHistoryForm>().lbStashHistory.SelectedIndex];
                 }
             }
             finally
@@ -501,7 +501,7 @@ namespace RTCV.UI
                     //If opened from engine config, use the GH state
                     if (!OpenedFromBlastEditor)
                     {
-                        StashKey psk = StockpileManager_UISide.CurrentSavestateStashKey;
+                        StashKey psk = StockpileManagerUISide.CurrentSavestateStashKey;
                         if (psk == null)
                         {
                             MessageBox.Show(
@@ -551,7 +551,7 @@ namespace RTCV.UI
 
                 List<BlastGeneratorProto> returnList = new List<BlastGeneratorProto>();
 
-                returnList = LocalNetCoreRouter.QueryRoute<List<BlastGeneratorProto>>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.BLASTGENERATOR_BLAST, new object[] { newSk, protoList, loadBeforeCorrupt, applyAfterCorrupt, resumeAfter }, true);
+                returnList = LocalNetCoreRouter.QueryRoute<List<BlastGeneratorProto>>(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Basic.BlastGeneratorBlast, new object[] { newSk, protoList, loadBeforeCorrupt, applyAfterCorrupt, resumeAfter }, true);
 
                 if (returnList == null)
                 {

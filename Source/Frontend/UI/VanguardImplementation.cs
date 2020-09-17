@@ -9,7 +9,7 @@ namespace RTCV.UI
     using RTCV.NetCore;
     using RTCV.Common;
     using RTCV.UI.Modular;
-    using static RTCV.NetCore.NetcoreCommands;
+    using RTCV.NetCore.Commands;
 
     public static class VanguardImplementation
     {
@@ -44,98 +44,98 @@ namespace RTCV.UI
 
                 switch (message.Type) //Handle received messages here
                 {
-                    case REMOTE_PUSHVANGUARDSPEC:
+                    case Remote.PushVanguardSpec:
                         PushVanguardSpec(advancedMessage, ref e);
                         break;
-                    case REMOTE_ALLSPECSSENT:
+                    case Remote.AllSpecSent:
                         AllSpecSent();
                         break;
-                    case REMOTE_PUSHVANGUARDSPECUPDATE:
+                    case Remote.PushVanguardSpecUpdate:
                         PushVanguardSpecUpdate(advancedMessage, ref e);
                         break;
-                    case REMOTE_PUSHCORRUPTCORESPECUPDATE:
+                    case Remote.PushCorruptCoreSpecUpdate:
                         PushCorruptCoreSpecUpdate(advancedMessage, ref e);
                         break;
-                    case REMOTE_GENERATEVMDTEXT:
+                    case Remote.GenerateVMDText:
                         GenerateVmdText(advancedMessage, ref e);
                         break;
-                    case REMOTE_EVENT_DOMAINSUPDATED:
+                    case Remote.EventDomainsUpdated:
                         DomainsUpdated();
                         break;
-                    case REMOTE_GETBLASTGENERATOR_LAYER:
+                    case Remote.GetBlastGeneratorLayer:
                         GetBlastGeneratorLayer(ref e);
                         break;
-                    case ERROR_DISABLE_AUTOCORRUPT:
+                    case Basic.ErrorDisableAutoCorrupt:
                         DisableAutoCorrupt();
                         break;
-                    case REMOTE_RENDER_DISPLAY:
+                    case Remote.RenderDisplay:
                         RenderDisplay();
                         break;
-                    case REMOTE_BACKUPKEY_STASH:
+                    case Remote.BackupKeyStash:
                         BackupKeyStash(advancedMessage);
                         break;
-                    case KILLSWITCH_PULSE:
+                    case Basic.KillswitchPulse:
                         KillSwitchPulse();
                         break;
-                    case RESET_GAME_PROTECTION_IF_RUNNING:
+                    case Basic.ResetGameProtectionIfRunning:
                         ResetGameProtectionIfRunning();
                         break;
-                    case REMOTE_DISABLESAVESTATESUPPORT:
+                    case Remote.DisableSavestateSupport:
                         DisableSavestateSupport();
                         break;
 
-                    case REMOTE_DISABLEGAMEPROTECTIONSUPPORT:
+                    case Remote.DisableGameProtectionSupport:
                         DisableGameProtectionSupport();
                         break;
 
-                    case REMOTE_DISABLEREALTIMESUPPORT:
+                    case Remote.DisableRealtimeSupport:
                         DisableRealTimeSupport();
                         break;
-                    case REMOTE_DISABLEKILLSWITCHSUPPORT:
+                    case Remote.DisableKillSwitchSupport:
                         DisableKillSwitchSupport();
                         break;
 
-                    case REMOTE_BLASTEDITOR_STARTSANITIZETOOL:
+                    case Remote.BlastEditorStartSanitizeTool:
                         StartSanitizeTool();
                         break;
 
-                    case REMOTE_BLASTEDITOR_LOADCORRUPT:
+                    case Remote.BlastEditorLoadCorrupt:
                         LoadCorrupt();
                         break;
 
-                    case REMOTE_BLASTEDITOR_LOADORIGINAL:
+                    case Remote.BlastEditorLoadOriginal:
                         LoadOriginal();
                         break;
 
-                    case REMOTE_BLASTEDITOR_GETLAYERSIZE_UNLOCKEDUNITS:
+                    case Remote.BlastEditorGetLayerSizeUnlockedUnits:
                         GetLayerSizeUnlockedUnits(ref e);
                         break;
 
-                    case REMOTE_BLASTEDITOR_GETLAYERSIZE:
+                    case Remote.BlastEditorGetLayerSize:
                         GetLayerSize(ref e);
                         break;
 
-                    case REMOTE_SANITIZETOOL_STARTSANITIZING:
+                    case Remote.SanitizeToolStartSanitizing:
                         StartSanitizing();
                         break;
 
-                    case REMOTE_SANITIZETOOL_LEAVEWITHCHANGES:
+                    case Remote.SanitizeToolLeaveWithChanges:
                         LeaveWithChanges();
                         break;
 
-                    case REMOTE_SANITIZETOOL_LEAVESUBTRACTCHANGES:
+                    case Remote.SanitizeToolLeaveSubtractChanges:
                         LeaveSubtractChanges();
                         break;
 
-                    case REMOTE_SANITIZETOOL_YESEFFECT:
+                    case Remote.SanitizeToolYesEffect:
                         YesEffect();
                         break;
 
-                    case REMOTE_SANITIZETOOL_NOEFFECT:
+                    case Remote.SanitizeToolNoEffect:
                         NoEffect();
                         break;
 
-                    case REMOTE_SANITIZETOOL_REROLL:
+                    case Remote.SanitizeToolReroll:
                         Reroll();
                         break;
                 }
@@ -161,8 +161,8 @@ namespace RTCV.UI
             e.setReturnValue(true);
 
             //Push the UI and CorruptCore spec (since we're master)
-            LocalNetCoreRouter.Route(CORRUPTCORE, REMOTE_PUSHUISPEC, AllSpec.UISpec.GetPartialSpec(), true);
-            LocalNetCoreRouter.Route(CORRUPTCORE, REMOTE_PUSHCORRUPTCORESPEC, AllSpec.CorruptCoreSpec.GetPartialSpec(), true);
+            LocalNetCoreRouter.Route(Basic.CorruptCore, Remote.PushUISpec, AllSpec.UISpec.GetPartialSpec(), true);
+            LocalNetCoreRouter.Route(Basic.CorruptCore, Remote.PushCorruptCoreSpec, AllSpec.CorruptCoreSpec.GetPartialSpec(), true);
 
             SyncObjectSingleton.FormExecute(() =>
             {
@@ -170,7 +170,7 @@ namespace RTCV.UI
                 S.GET<CoreForm>().pnCrashProtection.Visible = true;
             });
             //Specs are all set up so UI is clear.
-            LocalNetCoreRouter.Route(VANGUARD, REMOTE_ALLSPECSSENT, true);
+            LocalNetCoreRouter.Route(Basic.Vanguard, Remote.AllSpecSent, true);
         }
 
         private static void AllSpecSent()
@@ -189,7 +189,7 @@ namespace RTCV.UI
 
                     //Load plugins on both sides
                     RtcCore.LoadPlugins();
-                    LocalNetCoreRouter.Route(CORRUPTCORE, REMOTE_LOADPLUGINS, true);
+                    LocalNetCoreRouter.Route(Basic.CorruptCore, Remote.LoadPlugins, true);
 
                     //Configure the UI based on the vanguard spec
                     UICore.ConfigureUIFromVanguardSpec();
@@ -229,7 +229,7 @@ namespace RTCV.UI
                 }
                 else
                 {
-                    LocalNetCoreRouter.Route(CORRUPTCORE, REMOTE_LOADPLUGINS, true);
+                    LocalNetCoreRouter.Route(Basic.CorruptCore, Remote.LoadPlugins, true);
                     //make sure the other side reloads the plugins
 
                     var clientName = (string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
@@ -241,7 +241,7 @@ namespace RTCV.UI
 
                     //Push the VMDs since we store them out of spec
                     var vmdProtos = MemoryDomains.VmdPool.Values.Cast<VirtualMemoryDomain>().Select(x => x.Proto).ToArray();
-                    LocalNetCoreRouter.Route(CORRUPTCORE, REMOTE_PUSHVMDPROTOS, vmdProtos, true);
+                    LocalNetCoreRouter.Route(Basic.CorruptCore, Remote.PushVMDProtos, vmdProtos, true);
 
                     S.GET<CoreForm>().Show();
 
@@ -271,14 +271,14 @@ namespace RTCV.UI
                 //Restart game protection
                 if (S.GET<CoreForm>().cbUseGameProtection.Checked)
                 {
-                    if (StockpileManager_UISide.BackupedState != null)
+                    if (StockpileManagerUISide.BackupedState != null)
                     {
-                        StockpileManager_UISide.BackupedState.Run();
+                        StockpileManagerUISide.BackupedState.Run();
                     }
 
-                    if (StockpileManager_UISide.BackupedState != null)
+                    if (StockpileManagerUISide.BackupedState != null)
                     {
-                        S.GET<MemoryDomainsForm>().RefreshDomainsAndKeepSelected(StockpileManager_UISide.BackupedState.SelectedDomains.ToArray());
+                        S.GET<MemoryDomainsForm>().RefreshDomainsAndKeepSelected(StockpileManagerUISide.BackupedState.SelectedDomains.ToArray());
                     }
 
                     GameProtection.Start();
@@ -413,7 +413,7 @@ namespace RTCV.UI
         {
             if (advancedMessage?.objectValue is StashKey sk)
             {
-                StockpileManager_UISide.BackupedState = sk;
+                StockpileManagerUISide.BackupedState = sk;
                 GameProtection.AddBackupState(sk);
                 SyncObjectSingleton.FormExecute(() =>
                 {

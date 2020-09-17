@@ -348,7 +348,7 @@
 
         internal static void getDefaultPartial(PartialSpec pSpec)
         {
-            pSpec = InitTemplate_NightmareEngine(pSpec.Name);
+            pSpec = InitializeNightmareEngineTemplate(pSpec.Name);
             pSpec[RTCSPEC.CUSTOM_PATH] = "";
             foreach (var k in pSpec.GetKeys())
             {
@@ -358,12 +358,12 @@
 
         public static void InitTemplates()
         {
-            var nightmare = InitTemplate_NightmareEngine();
-            var hellgenie = InitTemplate_HellgenieEngine();
-            var freeze = InitTemplate_FreezeEngine();
-            var distortion = InitTemplate_DistortionEngine();
-            var pipe = InitTemplate_PipeEngine();
-            var vector = InitTemplate_VectorEngine();
+            var nightmare = InitializeNightmareEngineTemplate();
+            var hellgenie = InitializeHellgenieEngineTemplate();
+            var freeze = InitializeFreezeEngineTemplate();
+            var distortion = InitializeDistortionEngineTemplate();
+            var pipe = InitializePipeEngineTemplate();
+            var vector = InitializeVectorEngineTemplate();
 
             Name2TemplateDico[nightmare[RTCSPEC.CUSTOM_NAME].ToString()] = nightmare;
             Name2TemplateDico[hellgenie[RTCSPEC.CUSTOM_NAME].ToString()] = hellgenie;
@@ -394,7 +394,7 @@
         //Don't set a Limiter or Value list hash in any of these. We just leave it on whatever is currently set and set that it shouldn't be used.
 
         //This is because we need to be able to have the UI select some item (the comboboxes don't have an "empty" state)
-        public static PartialSpec InitTemplate_NightmareEngine(string name = null)
+        public static PartialSpec InitializeNightmareEngineTemplate(string name = null)
         {
             PartialSpec pSpec;
             if (name == null)
@@ -440,7 +440,7 @@
             return pSpec;
         }
 
-        public static PartialSpec InitTemplate_HellgenieEngine()
+        public static PartialSpec InitializeHellgenieEngineTemplate()
         {
             PartialSpec pSpec = new PartialSpec(AllSpec.CorruptCoreSpec.name);
             pSpec[RTCSPEC.CUSTOM_NAME] = "Hellgenie Engine";
@@ -477,7 +477,7 @@
             return pSpec;
         }
 
-        public static PartialSpec InitTemplate_DistortionEngine()
+        public static PartialSpec InitializeDistortionEngineTemplate()
         {
             PartialSpec pSpec = new PartialSpec(AllSpec.CorruptCoreSpec.name);
 
@@ -515,7 +515,7 @@
             return pSpec;
         }
 
-        public static PartialSpec InitTemplate_FreezeEngine()
+        public static PartialSpec InitializeFreezeEngineTemplate()
         {
             PartialSpec pSpec = new PartialSpec(AllSpec.CorruptCoreSpec.name);
 
@@ -552,7 +552,7 @@
             return pSpec;
         }
 
-        public static PartialSpec InitTemplate_PipeEngine()
+        public static PartialSpec InitializePipeEngineTemplate()
         {
             PartialSpec pSpec = new PartialSpec(AllSpec.CorruptCoreSpec.name);
             pSpec[RTCSPEC.CUSTOM_NAME] = "Pipe Engine";
@@ -589,7 +589,7 @@
             return pSpec;
         }
 
-        public static PartialSpec InitTemplate_VectorEngine()
+        public static PartialSpec InitializeVectorEngineTemplate()
         {
             PartialSpec pSpec = new PartialSpec(AllSpec.CorruptCoreSpec.name);
 

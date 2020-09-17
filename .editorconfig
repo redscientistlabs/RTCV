@@ -263,9 +263,6 @@ dotnet_diagnostic.CA1307.severity = none
 # P/Invoke method should not be visible
 dotnet_diagnostic.CA1401.severity = none
 
-# Remove underscore for member name
-dotnet_diagnostic.CA1707.severity = none
-
 # Do not prefix enum values with the name of the enum type 'FileType'
 dotnet_diagnostic.CA1712.severity = none
 

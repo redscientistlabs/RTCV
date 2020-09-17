@@ -170,7 +170,7 @@
                 {
                     var sk = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
                     StashKey newSk = (StashKey)sk.Clone();
-                    S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newSk, false);
+                    S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = StockpileManagerUISide.ApplyStashkey(newSk, false);
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
                 columnsMenu.Show(this, locate);
@@ -199,7 +199,7 @@
                 S.GET<SaveProgressForm>().Dock = DockStyle.Fill;
                 CoreForm.cfForm?.OpenSubForm(S.GET<SaveProgressForm>());
 
-                StockpileManager_UISide.ClearCurrentStockpile();
+                StockpileManagerUISide.ClearCurrentStockpile();
 
                 //Clear out the DGVs
                 S.GET<StockpileManagerForm>().dgvStockpile.Rows.Clear(); // Clear the stockpile manager
@@ -227,7 +227,7 @@
                 List<StashKey> keys = dgvStockpile.Rows.Cast<DataGridViewRow>().Select(x => (StashKey)x.Cells["Item"].Value).ToList();
                 foreach (var sk in keys)
                 {
-                    StockpileManager_UISide.CheckAndFixMissingReference(sk, false, keys);
+                    StockpileManagerUISide.CheckAndFixMissingReference(sk, false, keys);
                 }
 
                 dgvStockpile.ClearSelection();
@@ -353,13 +353,13 @@
                     S.GET<CoreForm>().AutoCorrupt = false;
 
                     S.GET<GlitchHarvesterBlastForm>().ghMode = GlitchHarvesterMode.CORRUPT;
-                    StockpileManager_UISide.CurrentStashkey = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
-                    StockpileManager_UISide.ApplyStashkey(StockpileManager_UISide.CurrentStashkey);
+                    StockpileManagerUISide.CurrentStashkey = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
+                    StockpileManagerUISide.ApplyStashkey(StockpileManagerUISide.CurrentStashkey);
 
                     S.GET<StashHistoryForm>().lbStashHistory.ClearSelected();
                     S.GET<StockpileManagerForm>().dgvStockpile.ClearSelection();
 
-                    S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = !(StockpileManager_UISide.CurrentStashkey.BlastLayer == null || StockpileManager_UISide.CurrentStashkey.BlastLayer.Layer.Count == 0);
+                    S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = !(StockpileManagerUISide.CurrentStashkey.BlastLayer == null || StockpileManagerUISide.CurrentStashkey.BlastLayer.Layer.Count == 0);
                 }
             }
             finally

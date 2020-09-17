@@ -12,7 +12,7 @@
     using Ceras;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
-    using RTCV.NetCore.NetCore_Extensions;
+    using RTCV.NetCore.NetCoreExtensions;
 
     public class FullSpec : BaseSpec
     {
@@ -21,7 +21,7 @@
 
         private PartialSpec template = null;
         public string name { get; private set; } = "UnnamedSpec";
-        private bool propagationIsEnabled;
+        private bool _propagationIsEnabled;
 
         public new object this[string key]  //FullSpec is readonly, must update with partials
         {
@@ -32,9 +32,9 @@
             }
         }
 
-        public FullSpec(PartialSpec partialSpec, bool _propagationEnabled)
+        public FullSpec(PartialSpec partialSpec, bool propagationEnabled)
         {
-            propagationIsEnabled = _propagationEnabled;
+            _propagationIsEnabled = propagationEnabled;
 
             //Creating a FullSpec requires a template
             template = partialSpec ?? throw new ArgumentNullException(nameof(partialSpec));
@@ -84,30 +84,30 @@
             }
         }
 
-        public void Update(PartialSpec _partialSpec, bool propagate = true, bool synced = true)
+        public void Update(PartialSpec partialSpec, bool propagate = true, bool synced = true)
         {
-            if (_partialSpec == null)
+            if (partialSpec == null)
             {
-                throw new ArgumentNullException(nameof(_partialSpec));
+                throw new ArgumentNullException(nameof(partialSpec));
             }
 
-            if (name != _partialSpec.Name)
+            if (name != partialSpec.Name)
             {
                 throw new Exception("Name mismatch between PartialSpec and FullSpec");
             }
 
             //For initial
-            foreach (var key in _partialSpec.specDico.Keys)
+            foreach (var key in partialSpec.specDico.Keys)
             {
-                base[key] = _partialSpec.specDico[key];
+                base[key] = partialSpec.specDico[key];
             }
 
             //Increment the version
             base.version++;
 
-            if (propagationIsEnabled && propagate)
+            if (_propagationIsEnabled && propagate)
             {
-                OnSpecUpdated(new SpecUpdateEventArgs(_partialSpec, synced));
+                OnSpecUpdated(new SpecUpdateEventArgs(partialSpec, synced));
             }
         }
 
@@ -218,9 +218,9 @@
         [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
         public string Name;
 
-        public PartialSpec(string _name)
+        public PartialSpec(string name)
         {
-            Name = _name;
+            Name = name;
         }
 
         public PartialSpec()
@@ -299,12 +299,12 @@
     public class SpecUpdateEventArgs : EventArgs
     {
         public PartialSpec partialSpec { get; private set; } = null;
-        public bool syncedUpdate { get; private set; } = true;
+        public bool SyncedUpdate { get; private set; } = true;
 
-        public SpecUpdateEventArgs(PartialSpec _partialSpec, bool _syncedUpdate)
+        public SpecUpdateEventArgs(PartialSpec partialSpec, bool syncedUpdate)
         {
-            partialSpec = _partialSpec;
-            syncedUpdate = _syncedUpdate;
+            this.partialSpec = partialSpec;
+            SyncedUpdate = syncedUpdate;
         }
     }
 }

@@ -132,7 +132,7 @@
     <Compile Include="ComboBoxItem.cs" />
     <Compile Include="CorruptCore.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="CorruptCore_Extensions.cs" />
+    <Compile Include="CorruptCoreExtensions.cs" />
     <Compile Include="Filtering.cs" />
     <Compile Include="INote.cs" />
     <Compile Include="ProgressBar.cs" />
@@ -143,8 +143,8 @@
     <Compile Include="StashKey.cs" />
     <Compile Include="StepActions.cs" />
     <Compile Include="Stockpile\Stockpile.cs" />
-    <Compile Include="Stockpile\StockpileManager_UISide.cs" />
-    <Compile Include="Stockpile\StockpileManager_EmuSide.cs" />
+    <Compile Include="Stockpile\StockpileManagerUISide.cs" />
+    <Compile Include="Stockpile\StockpileManagerEmuSide.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

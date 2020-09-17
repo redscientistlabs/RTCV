@@ -22,17 +22,17 @@
             InitializeComponent();
         }
 
-        public NoteEditorForm(INote note, DataGridViewCell _cell) : this(note)
+        public NoteEditorForm(INote note, DataGridViewCell cell) : this(note)
         {
             _cells = new List<DataGridViewCell>
             {
-                _cell
+                cell
             };
         }
 
-        public NoteEditorForm(INote note, List<DataGridViewCell> _cells) : this(note)
+        public NoteEditorForm(INote note, List<DataGridViewCell> cells) : this(note)
         {
-            this._cells = _cells;
+            _cells = cells;
         }
 
         private void OnFormLoad(object sender, EventArgs e)

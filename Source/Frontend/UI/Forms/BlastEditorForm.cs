@@ -420,12 +420,12 @@ namespace RTCV.UI
 
                 if (cell.OwningColumn == dgvBlastEditor.Columns[BuProperty.Address.ToString()])
                 {
-                    LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.EMU_OPEN_HEXEDITOR_ADDRESS, new object[] { bu.Domain, bu.Address });
+                    LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Emulator.OpenHexEditorAddress, new object[] { bu.Domain, bu.Address });
                 }
 
                 if (cell.OwningColumn == dgvBlastEditor.Columns[BuProperty.SourceAddress.ToString()])
                 {
-                    LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.EMU_OPEN_HEXEDITOR_ADDRESS, new object[] { bu.SourceDomain, bu.SourceAddress });
+                    LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Emulator.OpenHexEditorAddress, new object[] { bu.SourceDomain, bu.SourceAddress });
                 }
             }))).Enabled = true;
         }
@@ -1423,7 +1423,7 @@ namespace RTCV.UI
             }
             var newSk = (StashKey)currentSK.Clone();
 
-            StockpileManager_UISide.StashHistory.Add(newSk);
+            StockpileManagerUISide.StashHistory.Add(newSk);
 
             S.GET<StashHistoryForm>().RefreshStashHistory();
             S.GET<StockpileManagerForm>().dgvStockpile.ClearSelection();
@@ -1431,7 +1431,7 @@ namespace RTCV.UI
 
             S.GET<StashHistoryForm>().DontLoadSelectedStash = true;
             S.GET<StashHistoryForm>().lbStashHistory.SelectedIndex = S.GET<StashHistoryForm>().lbStashHistory.Items.Count - 1;
-            StockpileManager_UISide.CurrentStashkey = StockpileManager_UISide.StashHistory[S.GET<StashHistoryForm>().lbStashHistory.SelectedIndex];
+            StockpileManagerUISide.CurrentStashkey = StockpileManagerUISide.StashHistory[S.GET<StashHistoryForm>().lbStashHistory.SelectedIndex];
         }
 
         public void OpenNoteEditor(object sender, EventArgs e)
@@ -1490,7 +1490,7 @@ namespace RTCV.UI
 
         public void ReplaceRomFromGlitchHarvester(object sender, EventArgs e)
         {
-            StashKey temp = StockpileManager_UISide.CurrentSavestateStashKey;
+            StashKey temp = StockpileManagerUISide.CurrentSavestateStashKey;
 
             if (temp == null)
             {
@@ -1526,7 +1526,7 @@ namespace RTCV.UI
 
                 var filename = openRomDialog.FileName;
 
-                LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_LOADROM, filename, true);
+                LocalNetCoreRouter.Route(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Remote.LoadROM, filename, true);
 
                 var temp = new StashKey(RtcCore.GetRandomKey(), currentSK.ParentKey, currentSK.BlastLayer);
 
@@ -1609,7 +1609,7 @@ namespace RTCV.UI
 
         public void ReplaceSavestateFromGlitchHarvester(object sender, EventArgs e)
         {
-            StashKey temp = StockpileManager_UISide.CurrentSavestateStashKey;
+            StashKey temp = StockpileManagerUISide.CurrentSavestateStashKey;
             if (temp == null)
             {
                 MessageBox.Show("There is no savestate selected in the glitch harvester, or the current selected box is empty");
@@ -1678,7 +1678,7 @@ namespace RTCV.UI
             File.Copy(filename, currentSK.GetSavestateFullPath(), true);
 
             //Attempt to load and if it fails, don't let them update it.
-            if (!StockpileManager_UISide.LoadState(currentSK))
+            if (!StockpileManagerUISide.LoadState(currentSK))
             {
                 currentSK.ParentKey = oldKey;
                 currentSK.SyncSettings = oldSS;
@@ -1902,7 +1902,7 @@ namespace RTCV.UI
                 }
 
                 //Bake them
-                BlastLayer newBlastLayer = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_BLASTTOOLS_GETAPPLIEDBACKUPLAYER, new object[] { bl, currentSK }, true);
+                BlastLayer newBlastLayer = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.BlastToolsGetAppliedBackupLayer, new object[] { bl, currentSK }, true);
 
                 var i = 0;
                 //Insert the new one where the old row was, then remove the old row.
@@ -1954,7 +1954,7 @@ namespace RTCV.UI
         public void Corrupt(object sender, EventArgs e)
         {
             var newSk = (StashKey)currentSK.Clone();
-            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newSk, false);
+            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = StockpileManagerUISide.ApplyStashkey(newSk, false);
         }
 
         private static void RefreshNoteIcons(DataGridViewRowCollection rows)
@@ -2134,7 +2134,7 @@ namespace RTCV.UI
                 filename = openFileDialog.FileName;
             }
 
-            var bl = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_BL_GETDIFFBLASTLAYER, filename);
+            var bl = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.BLGetDiffBlastLayer, filename);
 
             ImportBlastLayer(bl);
         }

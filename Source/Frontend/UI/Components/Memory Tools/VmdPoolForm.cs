@@ -44,7 +44,7 @@ namespace RTCV.UI
                 return;
 
             //Clear any active units to prevent bad things due to soon unloaded vmds
-            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_CLEARSTEPBLASTUNITS, null, true);
+            LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
             foreach (var item in lbLoadedVmdList.SelectedItems)
             {
                 string VmdName = item.ToString();
@@ -54,7 +54,7 @@ namespace RTCV.UI
                     sk.BlastLayer?.RasterizeVMDs(VmdName);
                 }
                 //CurrentStashKey can be separate
-                StockpileManager_UISide.CurrentStashkey?.BlastLayer?.RasterizeVMDs(VmdName);
+                StockpileManagerUISide.CurrentStashkey?.BlastLayer?.RasterizeVMDs(VmdName);
 
                 MemoryDomains.RemoveVMD(VmdName);
             }
@@ -145,9 +145,9 @@ namespace RTCV.UI
                 }
             }
             //CurrentStashKey can be separate
-            if (StockpileManager_UISide.CurrentStashkey != null)
+            if (StockpileManagerUISide.CurrentStashkey != null)
             {
-                foreach (var bu in StockpileManager_UISide.CurrentStashkey.BlastLayer.Layer.Where(x => x.Domain == vmdName || x.SourceDomain == vmdName))
+                foreach (var bu in StockpileManagerUISide.CurrentStashkey.BlastLayer.Layer.Where(x => x.Domain == vmdName || x.SourceDomain == vmdName))
                 {
                     if (bu.Domain == vmdName)
                     {

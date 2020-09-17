@@ -7,7 +7,7 @@ namespace RTCV.CorruptCore
     using System.Runtime.InteropServices;
     using Ceras;
 
-    public static class CorruptCore_Extensions
+    public static class CorruptCoreExtensions
     {
         public static void DirectoryRequired(string path)
         {
@@ -149,8 +149,8 @@ namespace RTCV.CorruptCore
             FileTypeUnknown = 0x0000,
         }
 
-        public const int SW_HIDE = 0;
-        public const int SW_SHOW = 5;
+        internal const int SW_HIDE = 0;
+        internal const int SW_SHOW = 5;
 
         internal const int SC_CLOSE = 0xF060;           //close button's code in Windows API
         internal const int MF_ENABLED = 0x00000000;     //enabled button status

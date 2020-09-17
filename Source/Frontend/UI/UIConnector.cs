@@ -10,16 +10,16 @@ namespace RTCV.UI
 
     public class UIConnector : IRoutable, IDisposable
     {
-        private NetCoreReceiver receiver;
+        private NetCoreReceiver _receiver;
         public NetCoreConnector netConn { get; private set; }
 
-        public UIConnector(NetCoreReceiver _receiver)
+        public UIConnector(NetCoreReceiver receiver)
         {
-            receiver = _receiver;
+            _receiver = receiver;
 
-            LocalNetCoreRouter.registerEndpoint(this, NetcoreCommands.UI);
+            LocalNetCoreRouter.registerEndpoint(this, NetCore.Commands.Basic.UI);
 
-            if (receiver.Attached)
+            if (_receiver.Attached)
             {
                 return;
             }
@@ -27,7 +27,7 @@ namespace RTCV.UI
             var netCoreSpec = new NetCoreSpec
             {
                 Side = NetworkSide.SERVER,
-                Attached = receiver.Attached,
+                Attached = _receiver.Attached,
                 Loopback = true
             };
             netCoreSpec.MessageReceived += OnMessageReceivedProxy;
@@ -36,8 +36,8 @@ namespace RTCV.UI
             netCoreSpec.ServerDisconnected += NetCoreSpec_ServerConnectionLost;
 
             netConn = new NetCoreConnector(netCoreSpec);
-            LocalNetCoreRouter.registerEndpoint(netConn, NetcoreCommands.VANGUARD);
-            LocalNetCoreRouter.registerEndpoint(netConn, NetcoreCommands.DEFAULT); //Will send mesages to netcore if can't find the destination
+            LocalNetCoreRouter.registerEndpoint(netConn, NetCore.Commands.Basic.Vanguard);
+            LocalNetCoreRouter.registerEndpoint(netConn, NetCore.Commands.Basic.Default); //Will send mesages to netcore if can't find the destination
         }
 
         private void NetCoreSpec_ServerConnectionLost(object sender, EventArgs e)
@@ -107,7 +107,7 @@ namespace RTCV.UI
             }
             else
             {   //This is for the Vanguard Implementation
-                receiver.OnMessageReceived(e);
+                _receiver.OnMessageReceived(e);
                 return e.returnMessage;
             }
         }

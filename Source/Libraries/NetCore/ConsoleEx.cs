@@ -24,16 +24,16 @@ namespace RTCV.NetCore
         }
 
         private static ConsoleEx _singularity = null;
-        private ISynchronizeInvoke syncObject = null; //This can contain the form or anything that implements it.
+        private ISynchronizeInvoke _syncObject = null; //This can contain the form or anything that implements it.
 
-        public void Register(Action<object, NetCoreEventArgs> registrant, ISynchronizeInvoke _syncObject = null)
+        public void Register(Action<object, NetCoreEventArgs> registrant, ISynchronizeInvoke syncObject = null)
         {
             if (registrant == null)
             {
                 throw new ArgumentNullException(nameof(registrant));
             }
 
-            syncObject = _syncObject;
+            _syncObject = syncObject;
 
             Unregister();
             ConsoleWritten += registrant.Invoke; //We trick the eventhandler in executing the registrant instead
@@ -56,11 +56,11 @@ namespace RTCV.NetCore
         public event EventHandler<NetCoreEventArgs> ConsoleWritten;
         public virtual void OnConsoleWritten(NetCoreEventArgs e)
         {
-            if (syncObject != null)
+            if (_syncObject != null)
             {
-                if (syncObject.InvokeRequired)
+                if (_syncObject.InvokeRequired)
                 {
-                    syncObject.Invoke(new MethodInvoker(() => { OnConsoleWritten(e); }), null);
+                    _syncObject.Invoke(new MethodInvoker(() => { OnConsoleWritten(e); }), null);
                     return;
                 }
             }

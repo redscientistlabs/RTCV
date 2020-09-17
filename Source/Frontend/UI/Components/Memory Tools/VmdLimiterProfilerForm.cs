@@ -120,7 +120,7 @@ namespace RTCV.UI
                 MessageBox.Show("Load before generate is checked but no Savestate is selected in the Glitch Harvester!");
                 return false;
             }
-            var legalAdresses = LocalNetCoreRouter.QueryRoute<long[]>(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_LONGARRAY_FILTERDOMAIN, new object[] { mi.Name, LimiterListHash, cbLoadBeforeGenerate.Checked ? sk : null });
+            var legalAdresses = LocalNetCoreRouter.QueryRoute<long[]>(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.LongArrayFilterDomain, new object[] { mi.Name, LimiterListHash, cbLoadBeforeGenerate.Checked ? sk : null });
             if (legalAdresses == null || legalAdresses.Length == 0)
             {
                 tbVmdName.Text = "";

@@ -68,7 +68,7 @@
     <Compile Include="AllSpec.cs" />
     <Compile Include="Connector.cs" />
     <Compile Include="ConsoleEx.cs" />
-    <Compile Include="NetCore_Extensions.cs" />
+    <Compile Include="NetCoreExtensions.cs" />
     <Compile Include="DebugInfo\CloudDebugForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -85,24 +85,24 @@ namespace RTCV.CorruptCore
 
                 switch (mode)
                 {
-                    case BGValueMode.ADD:
+                    case BGValueMode.Add:
                         tiltValue = new BigInteger(param1Bytes);
                         break;
-                    case BGValueMode.SUBTRACT:
+                    case BGValueMode.Subtract:
                         tiltValue = new BigInteger(param1Bytes) * -1;
                         break;
-                    case BGValueMode.RANDOM:
+                    case BGValueMode.Random:
                         for (int i = 0; i < value.Length; i++)
                         {
                             value[i] = (byte)rand.Next(0, 255);
                         }
 
                         break;
-                    case BGValueMode.RANDOM_RANGE:
+                    case BGValueMode.RandomRange:
                         ulong temp = rand.NextULong(param1, param2);
                         value = ByteArrayExtensions.GetByteArrayValue(precision, temp, true);
                         break;
-                    case BGValueMode.REPLACE_X_WITH_Y:
+                    case BGValueMode.ReplaceXWithY:
                         if (mi.PeekBytes(address, address + precision, mi.BigEndian)
                             .SequenceEqual(param1Bytes))
                         {
@@ -114,10 +114,10 @@ namespace RTCV.CorruptCore
                         }
 
                         break;
-                    case BGValueMode.SET:
+                    case BGValueMode.Set:
                         value = ByteArrayExtensions.GetByteArrayValue(precision, param1, true);
                         break;
-                    case BGValueMode.SHIFT_RIGHT:
+                    case BGValueMode.ShiftRight:
                         value = mi.PeekBytes(address, address + precision, mi.BigEndian);
                         address += (long)param1;
                         if (address >= mi.Size)
@@ -126,7 +126,7 @@ namespace RTCV.CorruptCore
                         }
 
                         break;
-                    case BGValueMode.SHIFT_LEFT:
+                    case BGValueMode.ShiftLeft:
                         value = mi.PeekBytes(address, address + precision, mi.BigEndian);
                         address -= (long)param1;
                         if (address < 0)
@@ -137,7 +137,7 @@ namespace RTCV.CorruptCore
 
 
                     //Bitwise operations
-                    case BGValueMode.BITWISE_AND:
+                    case BGValueMode.BitwiseAnd:
                         _temp = param1Bytes;
                         value = mi.PeekBytes(address, address + precision, mi.BigEndian);
                         for (int i = 0; i < value.Length; i++)
@@ -146,7 +146,7 @@ namespace RTCV.CorruptCore
                         }
 
                         break;
-                    case BGValueMode.BITWISE_COMPLEMENT:
+                    case BGValueMode.BitwiseComplement:
                         _temp = param1Bytes;
                         value = mi.PeekBytes(address, address + precision, mi.BigEndian);
                         for (int i = 0; i < value.Length; i++)
@@ -155,7 +155,7 @@ namespace RTCV.CorruptCore
                         }
 
                         break;
-                    case BGValueMode.BITWISE_OR:
+                    case BGValueMode.BitwiseOr:
                         _temp = param1Bytes;
                         value = mi.PeekBytes(address, address + precision, mi.BigEndian);
                         for (int i = 0; i < value.Length; i++)
@@ -164,7 +164,7 @@ namespace RTCV.CorruptCore
                         }
 
                         break;
-                    case BGValueMode.BITWISE_XOR:
+                    case BGValueMode.BitwiseXOr:
                         _temp = param1Bytes;
                         value = mi.PeekBytes(address, address + precision, mi.BigEndian);
                         for (int i = 0; i < value.Length; i++)
@@ -173,7 +173,7 @@ namespace RTCV.CorruptCore
                         }
 
                         break;
-                    case BGValueMode.BITWISE_SHIFT_LEFT:
+                    case BGValueMode.BitwiseShiftLeft:
                         value = mi.PeekBytes(address, address + precision, mi.BigEndian);
                         for (int i = 0; i < (long)param1; i++)
                         {
@@ -181,7 +181,7 @@ namespace RTCV.CorruptCore
                         }
 
                         break;
-                    case BGValueMode.BITWISE_SHIFT_RIGHT:
+                    case BGValueMode.BitwiseShiftRight:
                         value = mi.PeekBytes(address, address + precision, mi.BigEndian);
                         for (int i = 0; i < (long)param1; i++)
                         {
@@ -189,7 +189,7 @@ namespace RTCV.CorruptCore
                         }
 
                         break;
-                    case BGValueMode.BITWISE_ROTATE_LEFT:
+                    case BGValueMode.BitwiseRotateLeft:
                         value = mi.PeekBytes(address, address + precision, mi.BigEndian);
                         for (int i = 0; i < (long)param1; i++)
                         {
@@ -197,7 +197,7 @@ namespace RTCV.CorruptCore
                         }
 
                         break;
-                    case BGValueMode.BITWISE_ROTATE_RIGHT:
+                    case BGValueMode.BitwiseRotateRight:
                         value = mi.PeekBytes(address, address + precision, mi.BigEndian);
                         for (int i = 0; i < (long)param1; i++)
                         {

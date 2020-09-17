@@ -91,7 +91,7 @@
             }
             sk?.Run();
             //Don't delete it if it's also our "current" state
-            if (sk != StockpileManager_UISide.BackupedState)
+            if (sk != StockpileManagerUISide.BackupedState)
             {
                 Task.Run(() => RemoveBackup(sk)); //Don't wait on the hdd operations
             }
@@ -114,7 +114,7 @@
 
         public static void ClearAllBackups()
         {
-            StockpileManager_UISide.BackupedState = null;
+            StockpileManagerUISide.BackupedState = null;
             StashKey[] states = new StashKey[0];
 
             //Grab a copy then clear it out
@@ -136,7 +136,7 @@
 
         private static void Tick(object sender, EventArgs e)
         {
-            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_BACKUPKEY_REQUEST);
+            LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.BackupKeyRequest);
         }
     }
 }

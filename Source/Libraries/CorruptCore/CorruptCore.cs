@@ -4,6 +4,7 @@ namespace RTCV.CorruptCore
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
     using System.Net;
@@ -260,7 +261,7 @@ namespace RTCV.CorruptCore
                 Start();
                 RegisterCorruptcoreSpec();
 
-                CorruptCore_Extensions.DirectoryRequired(paths: new string[] {
+                CorruptCoreExtensions.DirectoryRequired(paths: new string[] {
                     workingDir,
                     Path.Combine(workingDir, "TEMP"),
                     Path.Combine(workingDir, "SKS"),
@@ -311,7 +312,7 @@ namespace RTCV.CorruptCore
 
         private static void KillswitchTimer_Tick(object sender, EventArgs e)
         {
-            LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.KILLSWITCH_PULSE);
+            LocalNetCoreRouter.Route(NetCore.Commands.Basic.UI, NetCore.Commands.Basic.KillswitchPulse);
         }
 
         /**
@@ -340,7 +341,7 @@ namespace RTCV.CorruptCore
                 rtcSpecTemplate.Insert(VectorEngine.getDefaultPartial());
                 rtcSpecTemplate.Insert(ClusterEngine.getDefaultPartial());
                 rtcSpecTemplate.Insert(MemoryDomains.getDefaultPartial());
-                rtcSpecTemplate.Insert(StockpileManager_EmuSide.getDefaultPartial());
+                rtcSpecTemplate.Insert(StockpileManagerEmuSide.getDefaultPartial());
                 rtcSpecTemplate.Insert(Render.getDefaultPartial());
 
                 AllSpec.CorruptCoreSpec = new FullSpec(rtcSpecTemplate, !Attached); //You have to feed a partial spec as a template
@@ -350,11 +351,11 @@ namespace RTCV.CorruptCore
                     PartialSpec partial = e.partialSpec;
                     if (IsStandaloneUI)
                     {
-                        LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHCORRUPTCORESPECUPDATE, partial, true);
+                        LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.PushCorruptCoreSpecUpdate, partial, true);
                     }
                     else
                     {
-                        LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_PUSHCORRUPTCORESPECUPDATE, partial, true);
+                        LocalNetCoreRouter.Route(NetCore.Commands.Basic.UI, NetCore.Commands.Remote.PushCorruptCoreSpecUpdate, partial, true);
                     }
                 };
 
@@ -972,7 +973,7 @@ namespace RTCV.CorruptCore
                 if (AutoCorrupt)
                 {
                     AutoCorrupt = false;
-                    LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.ERROR_DISABLE_AUTOCORRUPT);
+                    LocalNetCoreRouter.Route(NetCore.Commands.Basic.UI, NetCore.Commands.Basic.ErrorDisableAutoCorrupt);
                 }
 
                 if (dr == DialogResult.Abort)
@@ -1033,26 +1034,26 @@ namespace RTCV.CorruptCore
             ProgressBarHandler?.Invoke(sender, e);
         }
 
-        public static void LOAD_GAME_DONE()
+        public static void InvokeLoadGameDone()
         {
             LoadGameDone?.Invoke(null, null);
         }
 
-        public static void GAME_CLOSED(bool fullyClosed = false)
+        public static void InvokeGameClosed(bool fullyClosed = false)
         {
             GameClosed?.Invoke(null, new GameClosedEventArgs(fullyClosed));
         }
 
-        public static void KILL_HEX_EDITOR()
+        public static void InvokeKillHexEditor()
         {
         }
     }
 
     public static class RtcClock
     {
-        static int CPU_STEP_Count = 0;
+        private static int cpuStepCount = 0;
 
-        public static void STEP_CORRUPT(bool executeActions, bool performStep)
+        public static void StepCorrupt(bool executeActions, bool performStep)
         {
             if (executeActions)
             {
@@ -1061,22 +1062,22 @@ namespace RTCV.CorruptCore
 
             if (performStep)
             {
-                CPU_STEP_Count++;
+                cpuStepCount++;
 
                 var autoCorrupt = RtcCore.AutoCorrupt;
                 var errorDelay = RtcCore.ErrorDelay;
-                if (autoCorrupt && CPU_STEP_Count >= errorDelay)
+                if (autoCorrupt && cpuStepCount >= errorDelay)
                 {
-                    CPU_STEP_Count = 0;
+                    cpuStepCount = 0;
                     BlastLayer bl = RtcCore.GenerateBlastLayer((string[])AllSpec.UISpec["SELECTEDDOMAINS"]);
                     bl?.Apply(false, false);
                 }
             }
         }
 
-        public static void RESET_COUNT()
+        public static void ResetCount()
         {
-            CPU_STEP_Count = 0;
+            cpuStepCount = 0;
         }
     }
 }

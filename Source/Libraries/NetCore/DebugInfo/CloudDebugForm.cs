@@ -15,27 +15,27 @@ namespace RTCV.NetCore
 
     public partial class CloudDebug : Form
     {
-        private Exception ex;
+        private readonly Exception _ex;
 
-        public CloudDebug(Exception _ex, bool canContinue = false)
+        public CloudDebug(Exception ex, bool canContinue = false)
         {
             InitializeComponent();
-            ex = _ex ?? throw new ArgumentNullException(nameof(_ex));
-            if (ex is AbortEverythingException)
+            _ex = ex ?? throw new ArgumentNullException(nameof(ex));
+            if (_ex is AbortEverythingException)
             {
                 return;
             }
 
-            if (!(ex is OperationAbortedException))
+            if (!(_ex is OperationAbortedException))
             {
-                lbException.Text = ex.Message;
-                StringBuilder sb = new StringBuilder();
-                sb.AppendLine($"{ex.Message}\n{ex.StackTrace}");
-                var e = _ex;
+                lbException.Text = _ex.Message;
+                var sb = new StringBuilder();
+                sb.AppendLine($"{_ex.Message}\n{_ex.StackTrace}");
+                var e = ex;
                 while (e.InnerException != null)
                 {
                     sb.AppendLine();
-                    sb.AppendLine($"Inner Exception: {ex.Message}\n{ex.StackTrace}");
+                    sb.AppendLine($"Inner Exception: {_ex.Message}\n{_ex.StackTrace}");
                     e = e.InnerException;
                 }
                 tbStackTrace.Text = sb.ToString();
@@ -56,7 +56,7 @@ namespace RTCV.NetCore
 
         public DialogResult Start()
         {
-            if (ex is OperationAbortedException)
+            if (_ex is OperationAbortedException)
             {
                 return DialogResult.Abort;
             }
@@ -83,7 +83,7 @@ namespace RTCV.NetCore
 
         public static string getEmuInfo()
         {
-            string str = LocalNetCoreRouter.QueryRoute<string>(NetcoreCommands.CORRUPTCORE, "GETSPECDUMPS");
+            string str = LocalNetCoreRouter.QueryRoute<string>(NetCore.Commands.Basic.CorruptCore, "GETSPECDUMPS");
             if (str != null)
             {
                 return str;
@@ -132,13 +132,13 @@ namespace RTCV.NetCore
                 File.WriteAllText(sideFile, Process.GetCurrentProcess().ProcessName);
 
                 //Exporting Stacktrace
-                var _ex = ex;
+                var _ex = this._ex;
                 StringBuilder sb = new StringBuilder();
-                sb.AppendLine($"Exception: {ex.Message}\n{ex.StackTrace}");
+                sb.AppendLine($"Exception: {this._ex.Message}\n{this._ex.StackTrace}");
                 while (_ex.InnerException != null)
                 {
                     sb.AppendLine();
-                    sb.AppendLine($"Inner Exception: {ex.Message}\n{ex.StackTrace}");
+                    sb.AppendLine($"Inner Exception: {this._ex.Message}\n{this._ex.StackTrace}");
                     _ex = _ex.InnerException;
                 }
                 tbStackTrace.Text = sb.ToString();
@@ -148,9 +148,9 @@ namespace RTCV.NetCore
                 //Exporting data
                 string data = Path.Combine(tempdebugdir, "DATA.TXT");
                 sb = new StringBuilder();
-                foreach (var key in ex.Data.Keys)
+                foreach (var key in this._ex.Data.Keys)
                 {
-                    sb.AppendLine(key + " : " + ex.Data[key]);
+                    sb.AppendLine(key + " : " + this._ex.Data[key]);
                 }
                 File.WriteAllText(data, sb.ToString());
 

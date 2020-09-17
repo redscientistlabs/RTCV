@@ -1,12 +1,12 @@
-namespace RTCV.NetCore.NetCore_Extensions
+namespace RTCV.NetCore.NetCoreExtensions
 {
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Reflection;
     using System.Reflection.Emit;
-    using System.Runtime.InteropServices;
     using System.Runtime.Serialization.Formatters.Binary;
     using System.Threading;
     using Ceras;
@@ -40,8 +40,8 @@ namespace RTCV.NetCore.NetCore_Extensions
     public class HashSetFormatterThatKeepsItsComparer : Ceras.Formatters.IFormatter<HashSet<byte[]>>
     {
         // Sub-formatters are automatically set by Ceras' dependency injection
-        public Ceras.Formatters.IFormatter<byte[]> _byteArrayFormatter { get; private set; }
-        public Ceras.Formatters.IFormatter<IEqualityComparer<byte[]>> _comparerFormatter { get; private set; } // auto-implemented by Ceras using DynamicObjectFormatter
+        public Ceras.Formatters.IFormatter<byte[]> ByteArrayFormatter { get; private set; }
+        public Ceras.Formatters.IFormatter<IEqualityComparer<byte[]>> ComparerFormatter { get; private set; } // auto-implemented by Ceras using DynamicObjectFormatter
 
         public void Serialize(ref byte[] buffer, ref int offset, HashSet<byte[]> set)
         {
@@ -56,7 +56,7 @@ namespace RTCV.NetCore.NetCore_Extensions
             // - Actual content
 
             // Comparer
-            _comparerFormatter.Serialize(ref buffer, ref offset, set.Comparer);
+            ComparerFormatter.Serialize(ref buffer, ref offset, set.Comparer);
 
             // Count
             // We could use a 'IFormatter<int>' field, but Ceras will resolve it to this method anyway...
@@ -65,14 +65,14 @@ namespace RTCV.NetCore.NetCore_Extensions
             // Actual content
             foreach (var array in set)
             {
-                _byteArrayFormatter.Serialize(ref buffer, ref offset, array);
+                ByteArrayFormatter.Serialize(ref buffer, ref offset, array);
             }
         }
 
         public void Deserialize(byte[] buffer, ref int offset, ref HashSet<byte[]> set)
         {
             IEqualityComparer<byte[]> equalityComparer = null;
-            _comparerFormatter.Deserialize(buffer, ref offset, ref equalityComparer);
+            ComparerFormatter.Deserialize(buffer, ref offset, ref equalityComparer);
 
             // We can already create the hashset
             set = new HashSet<byte[]>(equalityComparer);
@@ -82,7 +82,7 @@ namespace RTCV.NetCore.NetCore_Extensions
             for (var i = 0; i < count; i++)
             {
                 byte[] ar = null;
-                _byteArrayFormatter.Deserialize(buffer, ref offset, ref ar);
+                ByteArrayFormatter.Deserialize(buffer, ref offset, ref ar);
 
                 set.Add(ar);
             }
@@ -92,8 +92,8 @@ namespace RTCV.NetCore.NetCore_Extensions
     public class NullableByteHashSetFormatterThatKeepsItsComparer : Ceras.Formatters.IFormatter<HashSet<byte?[]>>
     {
         // Sub-formatters are automatically set by Ceras' dependency injection
-        public Ceras.Formatters.IFormatter<byte?[]> _byteArrayFormatter { get; }
-        public Ceras.Formatters.IFormatter<IEqualityComparer<byte?[]>> _comparerFormatter { get; } // auto-implemented by Ceras using DynamicObjectFormatter
+        public Ceras.Formatters.IFormatter<byte?[]> ByteArrayFormatter { get; }
+        public Ceras.Formatters.IFormatter<IEqualityComparer<byte?[]>> ComparerFormatter { get; } // auto-implemented by Ceras using DynamicObjectFormatter
 
         public void Serialize(ref byte[] buffer, ref int offset, HashSet<byte?[]> set)
         {
@@ -108,7 +108,7 @@ namespace RTCV.NetCore.NetCore_Extensions
             // - Actual content
 
             // Comparer
-            _comparerFormatter.Serialize(ref buffer, ref offset, set.Comparer);
+            ComparerFormatter.Serialize(ref buffer, ref offset, set.Comparer);
 
             // Count
             // We could use a 'IFormatter<int>' field, but Ceras will resolve it to this method anyway...
@@ -117,14 +117,14 @@ namespace RTCV.NetCore.NetCore_Extensions
             // Actual content
             foreach (var array in set)
             {
-                _byteArrayFormatter.Serialize(ref buffer, ref offset, array);
+                ByteArrayFormatter.Serialize(ref buffer, ref offset, array);
             }
         }
 
         public void Deserialize(byte[] buffer, ref int offset, ref HashSet<byte?[]> set)
         {
             IEqualityComparer<byte?[]> equalityComparer = null;
-            _comparerFormatter.Deserialize(buffer, ref offset, ref equalityComparer);
+            ComparerFormatter.Deserialize(buffer, ref offset, ref equalityComparer);
 
             // We can already create the hashset
             set = new HashSet<byte?[]>(equalityComparer);
@@ -134,21 +134,21 @@ namespace RTCV.NetCore.NetCore_Extensions
             for (var i = 0; i < count; i++)
             {
                 byte?[] ar = null;
-                _byteArrayFormatter.Deserialize(buffer, ref offset, ref ar);
+                ByteArrayFormatter.Deserialize(buffer, ref offset, ref ar);
 
                 set.Add(ar);
             }
         }
     }
 
-    public enum DPI_AWARENESS_CONTEXT
+    public enum DPIAwarenessContext
     {
-        DPI_AWARENESS_CONTEXT_DEFAULT = 0,
-        DPI_AWARENESS_CONTEXT_UNAWARE = -1,
-        DPI_AWARENESS_CONTEXT_SYSTEM_AWARE = -2,
-        DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE = -3,
-        DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2 = -4,
-        DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED = -5
+        Default = 0,
+        Unaware = -1,
+        SystemAware = -2,
+        PerMonitorAware = -3,
+        PerMonitorAwareV2 = -4,
+        UnawareGDIScaled = -5
     }
 
     //https://stackoverflow.com/a/47744757/10923568

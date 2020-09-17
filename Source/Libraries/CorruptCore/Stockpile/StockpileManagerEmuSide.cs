@@ -2,12 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Windows.Forms;
     using RTCV.NetCore;
     using RTCV.CorruptCore.Extensions;
 
-    public static class StockpileManager_EmuSide
+    public static class StockpileManagerEmuSide
     {
         public static BlastLayer CorruptBL = null;
         public static BlastLayer UnCorruptBL = null;
@@ -20,7 +21,7 @@
             return partial;
         }
 
-        public static bool LoadRom_NET(StashKey sk)
+        public static bool LoadRomNet(StashKey sk)
         {
             if (sk == null)
             {
@@ -28,19 +29,19 @@
             }
 
             StashKey.SetCore(sk);
-            LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_LOADROM, sk.RomFilename, true);
+            LocalNetCoreRouter.Route(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Remote.LoadROM, sk.RomFilename, true);
 
             string ss = (string)AllSpec.VanguardSpec[VSPEC.SYNCSETTINGS];
             //If the syncsettings are different, update them and load it again. Otheriwse, leave as is
             if (sk.SyncSettings != ss && sk.SyncSettings != null)
             {
-                LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_KEY_SETSYNCSETTINGS, sk.SyncSettings, true);
-                LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_LOADROM, sk.RomFilename, true);
+                LocalNetCoreRouter.Route(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Remote.KeySetSyncSettings, sk.SyncSettings, true);
+                LocalNetCoreRouter.Route(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Remote.LoadROM, sk.RomFilename, true);
             }
             return true;
         }
 
-        public static bool LoadState_NET(StashKey sk, bool applyBlastLayer = true)
+        public static bool LoadStateNet(StashKey sk, bool applyBlastLayer = true)
         {
             if (sk == null)
             {
@@ -61,7 +62,7 @@
 
                 if (File.Exists(theoreticalSaveStateFilename))
                 {
-                    if (!LocalNetCoreRouter.QueryRoute<bool>(NetcoreCommands.VANGUARD, NetcoreCommands.LOADSAVESTATE, new object[] { theoreticalSaveStateFilename, stateLocation }, true))
+                    if (!LocalNetCoreRouter.QueryRoute<bool>(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Basic.LoadSavestate, new object[] { theoreticalSaveStateFilename, stateLocation }, true))
                     {
                         MessageBox.Show($"Error loading savestate : An internal error has occurred.\n Are you sure your savestate matches the game, your syncsettings match, and the savestate is supported by this version of {RtcCore.VanguardImplementationName}?");
                         return false;
@@ -82,24 +83,24 @@
             return true;
         }
 
-        public static StashKey SaveStateLess_NET(StashKey _sk = null)
+        public static StashKey SaveStateLessNet(StashKey skParam = null)
         {
             string Key;
             //string statePath = "";
 
             StashKey sk;
 
-            if (_sk == null)
+            if (skParam == null)
             {
                 Key = RtcCore.GetRandomKey();
-                //statePath = LocalNetCoreRouter.QueryRoute<String>(NetcoreCommands.VANGUARD, NetcoreCommands.SAVESAVESTATE, Key, true);
+                //statePath = LocalNetCoreRouter.QueryRoute<String>(NetCore.Commands.Basic.Vanguard, NetcoreCommands.SAVESAVESTATE, Key, true);
                 sk = new StashKey(Key, Key, null);
             }
             else
             {
-                Key = _sk.Key;
+                Key = skParam.Key;
                 //statePath = _sk.StateFilename;
-                sk = _sk;
+                sk = skParam;
             }
 
             //if (string.IsNullOrEmpty(statePath))
@@ -112,17 +113,17 @@
             return sk;
         }
 
-        public static StashKey SaveState_NET(StashKey _sk = null)
+        public static StashKey SaveStateNET(StashKey skParam = null)
         {
             string Key;
             string statePath;
 
             StashKey sk;
 
-            if (_sk == null)
+            if (skParam == null)
             {
                 Key = RtcCore.GetRandomKey();
-                statePath = LocalNetCoreRouter.QueryRoute<string>(NetcoreCommands.VANGUARD, NetcoreCommands.SAVESAVESTATE, Key, true);
+                statePath = LocalNetCoreRouter.QueryRoute<string>(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Basic.SaveSavestate, Key, true);
 
                 if (statePath == null)
                 {
@@ -133,9 +134,9 @@
             }
             else
             {
-                Key = _sk.Key;
-                statePath = _sk.StateFilename;
-                sk = _sk;
+                Key = skParam.Key;
+                statePath = skParam.StateFilename;
+                sk = skParam;
             }
 
             if (string.IsNullOrEmpty(statePath))
@@ -153,7 +154,7 @@
 
         public static StashKey GetRawBlastlayer()
         {
-            StashKey sk = SaveState_NET();
+            StashKey sk = SaveStateNET();
             if (sk == null)
             {
                 return null;
