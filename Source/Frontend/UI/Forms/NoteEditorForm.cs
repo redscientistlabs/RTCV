@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Collections.Generic;
@@ -14,6 +14,9 @@
         private readonly INote _note;
 
         private readonly List<DataGridViewCell> _cells;
+
+        private static Point NoteBoxPosition;
+        private static Size NoteBoxSize;
 
         private NoteEditorForm(INote note)
         {
@@ -43,13 +46,13 @@
             }
 
             // Set window location
-            if (UICore.NoteBoxPosition != new Point(0, 0))
+            if (NoteBoxPosition != new Point(0, 0))
             {
-                this.Location = UICore.NoteBoxPosition;
+                this.Location = NoteBoxPosition;
             }
-            if (UICore.NoteBoxSize != new Size(0, 0))
+            if (NoteBoxSize != new Size(0, 0))
             {
-                this.Size = UICore.NoteBoxSize;
+                this.Size = NoteBoxSize;
             }
         }
 
@@ -64,8 +67,8 @@
 
         private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
-            UICore.NoteBoxSize = this.Size;
-            UICore.NoteBoxPosition = this.Location;
+            NoteBoxSize = this.Size;
+            NoteBoxPosition = this.Location;
 
             var cleanText = string.Join("\n", tbNote.Lines.Select(it => it.Trim()));
 

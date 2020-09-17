@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Collections.Generic;
@@ -13,9 +13,9 @@
     public static class GameProtection
     {
         private static Timer t;
-        public static int BackupInterval = 5;
-        public static bool isRunning = false;
-        public static bool WasAutoCorruptRunning = false;
+        internal static int BackupInterval = 5;
+        internal static bool isRunning = false;
+        internal static bool WasAutoCorruptRunning = false;
         private const int maxStates = 20;
 
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();

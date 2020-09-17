@@ -10,9 +10,9 @@ namespace RTCV.UI
 
     public static class AutoKillSwitch
     {
-        public static int MaxMissedPulses = 25;
+        private const int MaxMissedPulses = 25;
         private static Timer killswitchSpamPreventTimer;
-        public static bool ShouldKillswitchFire = true;
+        internal static bool ShouldKillswitchFire = true;
         private static volatile object lockObject = new object();
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
@@ -43,7 +43,7 @@ namespace RTCV.UI
         private static volatile int pulseCount = MaxMissedPulses;
         private static Timer BoopMonitoringTimer = null;
 
-        public static SoundPlayer[] LoadedSounds = null;
+        internal static SoundPlayer[] LoadedSounds = null;
 
         public static void PlayCrashSound()
         {

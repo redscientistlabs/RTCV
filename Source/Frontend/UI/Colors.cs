@@ -10,16 +10,15 @@ namespace RTCV.UI
 
     public static class Colors
     {
-        //public static Color generalColor = Color.FromArgb(60, 45, 70);
-        public static Color GeneralColor = Color.LightSteelBlue;
+        internal static Color GeneralColor = Color.LightSteelBlue;
 
-        public static Color Light1Color;
-        public static Color Light2Color;
-        public static Color NormalColor;
-        public static Color Dark1Color;
-        public static Color Dark2Color;
-        public static Color Dark3Color;
-        public static Color Dark4Color;
+        public static Color Light1Color { get; private set; }
+        public static Color Light2Color { get; private set; }
+        public static Color NormalColor { get; private set; }
+        public static Color Dark1Color { get; private set; }
+        public static Color Dark2Color { get; private set; }
+        public static Color Dark3Color { get; private set; }
+        public static Color Dark4Color { get; private set; }
 
         public static void SetRTCColor(Color color, Control ctr = null)
         {
