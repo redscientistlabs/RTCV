@@ -2192,6 +2192,5 @@ namespace RTCV.UI
         private void BakeBlastUnitsToValue(object sender, EventArgs e) => BakeBlastUnitsToValue();
         private void RunRomWithoutBlastLayer(object sender, EventArgs e) => currentSK.RunOriginal();
         private void RasterizeVMDs(object sender, EventArgs e) => RasterizeVMDs();
-
     }
 }
