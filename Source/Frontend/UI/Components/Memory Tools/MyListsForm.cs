@@ -147,7 +147,9 @@ namespace RTCV.UI
             }
 
             if (allDisabled)
+            {
                 btnEnableDisableList.Text = "  Enable List";
+            }
             else
             {
                 btnEnableDisableList.Text = "  Disable List";

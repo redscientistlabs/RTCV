@@ -503,9 +503,6 @@ dotnet_diagnostic.SA1516.severity = none
 # Braces should not be omitted from multi-line child statement
 dotnet_diagnostic.SA1519.severity = none
 
-# Use braces consistently
-dotnet_diagnostic.SA1520.severity = none
-
 # Elements should be documented
 dotnet_diagnostic.SA1600.severity = none
 
