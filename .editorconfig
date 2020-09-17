@@ -362,9 +362,6 @@ dotnet_diagnostic.SA1119.severity = none
 # Use string.Empty for empty strings
 dotnet_diagnostic.SA1122.severity = none
 
-# Do not use regions
-dotnet_diagnostic.SA1124.severity = none
-
 # Put constructor initializers on their own line
 dotnet_diagnostic.SA1128.severity = none
 

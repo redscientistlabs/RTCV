@@ -158,8 +158,6 @@ namespace RTCV.Plugins.HexEditor
             }
         }
 
-        #region API
-
         public static bool UpdateBefore => false;
 
         public static bool AskSaveChanges()
@@ -375,8 +373,6 @@ namespace RTCV.Plugins.HexEditor
 
             _hexFind.Close();
         }
-
-        #endregion
 
         private char Remap(byte val)
         {
@@ -998,10 +994,6 @@ namespace RTCV.Plugins.HexEditor
             }
         }
 
-        #region Events
-
-        #region File Menu
-
         private void CloseTableFileMenuItem_Click(object sender, EventArgs e)
         {
             _textTable.Clear();
@@ -1011,10 +1003,6 @@ namespace RTCV.Plugins.HexEditor
         {
             Close();
         }
-
-        #endregion
-
-        #region Edit
 
         private void EditMenuItem_DropDownOpened(object sender, EventArgs e)
         {
@@ -1169,10 +1157,6 @@ namespace RTCV.Plugins.HexEditor
             FindPrev(_findStr, false);
         }
 
-        #endregion
-
-        #region Options
-
         private void OptionsSubMenu_DropDownOpened(object sender, EventArgs e)
         {
             BigEndianMenuItem.Checked = BigEndian;
@@ -1291,10 +1275,6 @@ namespace RTCV.Plugins.HexEditor
         {
         }
 
-        #endregion
-
-        #region Settings Menu
-
         private void ResetColorsToDefaultMenuItem_Click(object sender, EventArgs e)
         {
             MemoryViewerBox.BackColor = Color.FromName("Control");
@@ -1303,10 +1283,6 @@ namespace RTCV.Plugins.HexEditor
             Header.BackColor = Color.FromName("Control");
             Header.ForeColor = Color.FromName("ControlText");
         }
-
-        #endregion
-
-        #region Context Menu and Dialog Events
 
         private void HexEditor_Resize(object sender, EventArgs e)
         {
@@ -1691,10 +1667,6 @@ namespace RTCV.Plugins.HexEditor
             UpdateValues();
         }
 
-        #endregion
-
-        #region MemoryViewer Events
-
         private void HexEditor_MouseWheel(object sender, MouseEventArgs e)
         {
             var delta = 0;
@@ -1873,13 +1845,9 @@ namespace RTCV.Plugins.HexEditor
             }
         }
 
-        #endregion
-
         private void HexMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
         }
-
-        #endregion
 
         private void UnFreezeAddress(long address)
         {
