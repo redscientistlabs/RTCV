@@ -485,6 +485,7 @@ namespace RTCV.UI
             {
                 S.GET<CoreForm>().pnAutoKillSwitch.Visible = false;
                 S.GET<CoreForm>().cbUseAutoKillSwitch.Checked = false;
+                AutoKillSwitch.Enabled = false;
             });
         }
 

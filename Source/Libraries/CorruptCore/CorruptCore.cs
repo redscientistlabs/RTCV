@@ -302,14 +302,14 @@ namespace RTCV.CorruptCore
             if (!Attached)
             {
                 Start();
-                if (KillswitchTimer == null)
+                if (AllSpec.VanguardSpec[VSPEC.SUPPORTS_KILLSWITCH] as bool? == true)
                 {
-                    KillswitchTimer = new Timer();
-                }
+                    KillswitchTimer ??= new Timer();
 
-                KillswitchTimer.Interval = 250;
-                KillswitchTimer.Tick += KillswitchTimer_Tick;
-                KillswitchTimer.Start();
+                    KillswitchTimer.Interval = 250;
+                    KillswitchTimer.Tick += KillswitchTimer_Tick;
+                    KillswitchTimer.Start();
+                }
             }
             IsEmulatorSide = true;
         }
