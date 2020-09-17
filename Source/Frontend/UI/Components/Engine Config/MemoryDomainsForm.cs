@@ -51,9 +51,9 @@ namespace RTCV.UI
 
         public void SetMemoryDomainsSelectedDomains(string[] domains)
         {
-            foreach (var domain in _domains)
+            foreach (var domain in domains)
             {
-                if (_domains.Contains(domain))
+                if (domains.Contains(domain))
                 {
                     this.domains[domain] = true;
                 }
