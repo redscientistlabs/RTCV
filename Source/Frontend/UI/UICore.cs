@@ -476,7 +476,9 @@ namespace RTCV.UI
                         var ghb = S.GET<GlitchHarvesterBlastForm>();
 
                         if (sh.lbStashHistory.SelectedIndex != -1)
+                        {
                             sh.HandleStashHistorySelectionChange(null, null);
+                        }
                         else
                         {
                             var rows = sm.dgvStockpile.SelectedRows;

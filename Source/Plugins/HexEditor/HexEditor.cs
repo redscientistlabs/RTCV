@@ -103,7 +103,9 @@ namespace RTCV.Plugins.HexEditor
                     this.Close();
                 }
                 else if (this.Visible)
+                {
                     Restart();
+                }
             };
             RtcCore.LoadGameDone += (o, e) =>
             {
