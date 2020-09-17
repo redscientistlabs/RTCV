@@ -139,7 +139,6 @@ namespace RTCV.UI.Input
         }
 
         public string Name { get { return name; } }
-        // public Guid Guid { get { return guid; } }
         public int PlayerNumber { get; private set; }
 
         public string ButtonName(int index)
