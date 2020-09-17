@@ -24,7 +24,7 @@ namespace RTCV.CorruptCore
         private static List<List<BlastUnit>> appliedInfinite = new List<List<BlastUnit>>();
 
 
-        public static List<BlastUnit> StoreDataPool = new List<BlastUnit>();
+        internal static List<BlastUnit> StoreDataPool = new List<BlastUnit>();
 
         private static int currentFrame = 0;
         private static int nextFrame = -1;

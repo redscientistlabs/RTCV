@@ -19,9 +19,9 @@ namespace RTCV.CorruptCore.EventWarlock
 
         //Static variables
         [Ceras.Exclude]
-        public static HashSet<string> StaticFlags = new HashSet<string>();
+        public static readonly HashSet<string> StaticFlags = new HashSet<string>();
         [Ceras.Exclude]
-        public static Dictionary<string, object> StaticVariables = new Dictionary<string, object>();
+        public static readonly Dictionary<string, object> StaticVariables = new Dictionary<string, object>();
 
         //Non static variables
         // [NonSerialized]

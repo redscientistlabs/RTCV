@@ -33,7 +33,7 @@ namespace RTCV.CorruptCore
             set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.FILTERING_HASH2NAMEDICO, value);
         }
 
-        public static int StockpileListCount = 0;
+        internal static int StockpileListCount = 0;
 
         public static PartialSpec getDefaultPartial()
         {

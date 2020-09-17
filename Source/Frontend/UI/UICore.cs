@@ -350,7 +350,7 @@ namespace RTCV.UI
         private static bool lockPending;
         private static object lockObject = new object();
 
-        public static object InputLock = new object();
+        internal static object InputLock = new object();
         //Borrowed from Bizhawk. Thanks guys
         private static void ProcessInputCheck(object o, ElapsedEventArgs e)
         {

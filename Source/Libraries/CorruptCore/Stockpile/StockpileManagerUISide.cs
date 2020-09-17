@@ -30,7 +30,7 @@ namespace RTCV.CorruptCore
         }
         public static StashKey CurrentSavestateStashKey { get; set; }
         public static volatile StashKey BackupedState;
-        public static bool StashAfterOperation = true;
+        public static bool StashAfterOperation { get; set; } = true;
         public static volatile List<StashKey> StashHistory = new List<StashKey>();
 
         private static void PreApplyStashkey(bool _clearUnitsBeforeApply = true)
