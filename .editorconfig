@@ -278,9 +278,6 @@ dotnet_diagnostic.CA1805.severity = none
 # Using method without reference to error
 dotnet_diagnostic.CA1806.severity = none
 
-# internal class never instatiated
-dotnet_diagnostic.CA1812.severity = none
-
 # .ctor uses a multidimensional array. Replace it with a jagged array if possible.
 dotnet_diagnostic.CA1814.severity = none
 
