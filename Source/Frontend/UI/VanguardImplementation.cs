@@ -292,7 +292,7 @@ namespace RTCV.UI
 
                 if (Params.IsParamSet("SIMPLE_MODE"))
                 {
-                    bool isSpec = (AllSpec.VanguardSpec[VSPEC.NAME] as string)?.ToUpper().Contains("SPEC") ?? false;
+                    bool isSpec = (AllSpec.VanguardSpec[VSPEC.NAME] as string)?.ToUpper().Contains("STUB") ?? false;
 
                     if (isSpec) //Simple Mode cannot run on Stubs
                     {
