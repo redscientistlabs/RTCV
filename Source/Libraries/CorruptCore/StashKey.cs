@@ -93,7 +93,7 @@ namespace RTCV.CorruptCore
 
         public static void SetCore(string systemName, string systemCore)
         {
-            LocalNetCoreRouter.Route(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Remote.KeySetSystemCore, new object[] { systemName, systemCore }, true);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.KeySetSystemCore, new object[] { systemName, systemCore }, true);
         }
 
         public override string ToString()

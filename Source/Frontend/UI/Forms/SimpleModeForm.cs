@@ -255,7 +255,7 @@
                 StartAutoCorrupt(null, null);
             }
 
-            LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
         }
 
         public void SelectNightmareEngine()
@@ -356,7 +356,7 @@
 
         private void ClearInfiniteUnits(object sender, EventArgs e)
         {
-            LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
         }
 
         private void SwitchToNormalMode(object sender, EventArgs e)

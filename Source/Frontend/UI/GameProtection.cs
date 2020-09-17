@@ -136,7 +136,7 @@
 
         private static void Tick(object sender, EventArgs e)
         {
-            LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.BackupKeyRequest);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.BackupKeyRequest);
         }
     }
 }

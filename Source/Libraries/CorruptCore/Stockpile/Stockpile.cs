@@ -130,7 +130,7 @@ namespace RTCV.CorruptCore
                     MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
                 if (dr == DialogResult.OK)
                 {
-                    LocalNetCoreRouter.Route(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Remote.CloseGame, true);
+                    LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.CloseGame, true);
                 }
                 else
                 {
@@ -465,7 +465,7 @@ namespace RTCV.CorruptCore
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
                 if (dr == DialogResult.OK)
                 {
-                    LocalNetCoreRouter.Route(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Remote.CloseGame, true);
+                    LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.CloseGame, true);
                 }
                 else
                 {

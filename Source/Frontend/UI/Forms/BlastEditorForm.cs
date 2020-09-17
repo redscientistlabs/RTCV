@@ -420,12 +420,12 @@ namespace RTCV.UI
 
                 if (cell.OwningColumn == dgvBlastEditor.Columns[BuProperty.Address.ToString()])
                 {
-                    LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Emulator.OpenHexEditorAddress, new object[] { bu.Domain, bu.Address });
+                    LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Emulator.OpenHexEditorAddress, new object[] { bu.Domain, bu.Address });
                 }
 
                 if (cell.OwningColumn == dgvBlastEditor.Columns[BuProperty.SourceAddress.ToString()])
                 {
-                    LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Emulator.OpenHexEditorAddress, new object[] { bu.SourceDomain, bu.SourceAddress });
+                    LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Emulator.OpenHexEditorAddress, new object[] { bu.SourceDomain, bu.SourceAddress });
                 }
             }))).Enabled = true;
         }
@@ -1526,7 +1526,7 @@ namespace RTCV.UI
 
                 var filename = openRomDialog.FileName;
 
-                LocalNetCoreRouter.Route(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Remote.LoadROM, filename, true);
+                LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.LoadROM, filename, true);
 
                 var temp = new StashKey(RtcCore.GetRandomKey(), currentSK.ParentKey, currentSK.BlastLayer);
 
@@ -1902,7 +1902,7 @@ namespace RTCV.UI
                 }
 
                 //Bake them
-                BlastLayer newBlastLayer = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.BlastToolsGetAppliedBackupLayer, new object[] { bl, currentSK }, true);
+                BlastLayer newBlastLayer = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.BlastToolsGetAppliedBackupLayer, new object[] { bl, currentSK }, true);
 
                 var i = 0;
                 //Insert the new one where the old row was, then remove the old row.
@@ -2134,7 +2134,7 @@ namespace RTCV.UI
                 filename = openFileDialog.FileName;
             }
 
-            var bl = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.BLGetDiffBlastLayer, filename);
+            var bl = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.BLGetDiffBlastLayer, filename);
 
             ImportBlastLayer(bl);
         }

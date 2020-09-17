@@ -142,8 +142,8 @@ namespace TestVanguardImplemented
 			if (VanguardCore.attached)
 				RTCV.Vanguard.VanguardConnector.PushVanguardSpecRef(VanguardCore.VanguardSpec);
 
-			LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetcoreCommands.REMOTE_PUSHVANGUARDSPEC, emuSpecTemplate, true);
-			LocalNetCoreRouter.Route(NetCore.Commands.Basic.UI, NetcoreCommands.REMOTE_PUSHVANGUARDSPEC, emuSpecTemplate, true);
+			LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetcoreCommands.REMOTE_PUSHVANGUARDSPEC, emuSpecTemplate, true);
+			LocalNetCoreRouter.Route(NetCore.Endpoints.UI, NetcoreCommands.REMOTE_PUSHVANGUARDSPEC, emuSpecTemplate, true);
 
 
 			VanguardSpec.SpecUpdated += (o, e) =>
@@ -153,8 +153,8 @@ namespace TestVanguardImplemented
 				if(!VanguardCore.attached)
 					RTCV.NetCore.AllSpec.VanguardSpec = VanguardSpec;
 
-				LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetcoreCommands.REMOTE_PUSHVANGUARDSPECUPDATE, partial, true);
-				LocalNetCoreRouter.Route(NetCore.Commands.Basic.UI, NetcoreCommands.REMOTE_PUSHVANGUARDSPECUPDATE, partial, true);
+				LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetcoreCommands.REMOTE_PUSHVANGUARDSPECUPDATE, partial, true);
+				LocalNetCoreRouter.Route(NetCore.Endpoints.UI, NetcoreCommands.REMOTE_PUSHVANGUARDSPECUPDATE, partial, true);
 			};
 		}
 

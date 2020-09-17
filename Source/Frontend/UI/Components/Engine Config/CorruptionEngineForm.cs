@@ -107,7 +107,7 @@ namespace RTCV.UI
 
         private void ResyncDistortionEngine(object sender, EventArgs e)
         {
-            LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
         }
 
         private void UpdateEngine(object sender, EventArgs e)
@@ -241,7 +241,7 @@ namespace RTCV.UI
             cbSelectedEngine.BringToFront();
             pnCustomPrecision.BringToFront();
 
-            LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
         }
 
         public void SetLockBoxes(bool enabled)
@@ -280,7 +280,7 @@ namespace RTCV.UI
 
         private void ClearPipes(object sender, EventArgs e)
         {
-            LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
         }
 
         private void OnLockPipesToggle(object sender, EventArgs e)
@@ -309,7 +309,7 @@ namespace RTCV.UI
 
         private void ClearCheats(object sender, EventArgs e)
         {
-            LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
         }
 
         private void UpdateMinMaxBoxes(int precision)

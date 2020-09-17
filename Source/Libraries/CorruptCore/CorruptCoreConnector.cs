@@ -1,3 +1,5 @@
+using System.Net;
+
 namespace RTCV.CorruptCore
 {
     using System;
@@ -150,7 +152,7 @@ namespace RTCV.CorruptCore
                     case Remote.BackupKeyRequest:
                         {
                             //We don't store this in the spec as it'd be horrible to push it to the UI and it doesn't care
-                            //if (!LocalNetCoreRouter.QueryRoute<bool>(NetCore.Commands.Basic.Vanguard, NetcoreCommands.REMOTE_ISNORMALADVANCE))
+                            //if (!LocalNetCoreRouter.QueryRoute<bool>(NetCore.Endpoints.Vanguard, NetcoreCommands.REMOTE_ISNORMALADVANCE))
                             //break;
 
                             StashKey sk = null;
@@ -159,13 +161,13 @@ namespace RTCV.CorruptCore
 
                             if (sk != null)
                             {
-                                LocalNetCoreRouter.Route(Basic.UI, Remote.BackupKeyStash, sk, false);
+                                LocalNetCoreRouter.Route(Endpoints.UI, Remote.BackupKeyStash, sk, false);
                             }
 
                             break;
                         }
                     case Remote.DomainGetDomains:
-                        e.setReturnValue(LocalNetCoreRouter.Route(Basic.Vanguard, Remote.DomainGetDomains, true));
+                        e.setReturnValue(LocalNetCoreRouter.Route(Endpoints.Vanguard, Remote.DomainGetDomains, true));
                         break;
                     case Remote.PushVMDProtos:
                         MemoryDomains.VmdPool.Clear();
@@ -317,7 +319,7 @@ namespace RTCV.CorruptCore
                 AllSpec.CorruptCoreSpec.SpecUpdated += (ob, eas) =>
                 {
                     PartialSpec partial = eas.partialSpec;
-                    LocalNetCoreRouter.Route(Basic.UI, Remote.PushCorruptCoreSpecUpdate, partial, true);
+                    LocalNetCoreRouter.Route(Endpoints.Default, Remote.PushCorruptCoreSpecUpdate, partial, true);
                 };
                 MemoryDomains.RefreshDomains();
             });
@@ -328,22 +330,22 @@ namespace RTCV.CorruptCore
         {
             if (!AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_SAVESTATES) ?? true)
             {
-                LocalNetCoreRouter.Route(Basic.UI, Remote.DisableSavestateSupport);
+                LocalNetCoreRouter.Route(Endpoints.UI, Remote.DisableSavestateSupport);
             }
 
             if (!AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true)
             {
-                LocalNetCoreRouter.Route(Basic.UI, Remote.DisableRealtimeSupport);
+                LocalNetCoreRouter.Route(Endpoints.UI, Remote.DisableRealtimeSupport);
             }
 
             if (!AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_KILLSWITCH) ?? true)
             {
-                LocalNetCoreRouter.Route(Basic.UI, Remote.DisableKillSwitchSupport);
+                LocalNetCoreRouter.Route(Endpoints.UI, Remote.DisableKillSwitchSupport);
             }
 
             if (!AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_GAMEPROTECTION) ?? true)
             {
-                LocalNetCoreRouter.Route(Basic.UI, Remote.DisableGameProtectionSupport);
+                LocalNetCoreRouter.Route(Endpoints.UI, Remote.DisableGameProtectionSupport);
             }
         }
 
@@ -370,7 +372,7 @@ namespace RTCV.CorruptCore
                 if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
                 {
                     SyncObjectSingleton.FormExecute(a);
-                    e.setReturnValue(LocalNetCoreRouter.Route(Basic.Vanguard, Remote.ResumeEmulation, true));
+                    e.setReturnValue(LocalNetCoreRouter.Route(Endpoints.Vanguard, Remote.ResumeEmulation, true));
                 }
                 else //We're loading on the emulator thread which'll block
                 {
@@ -384,7 +386,7 @@ namespace RTCV.CorruptCore
         {
             if ((bool?)AllSpec.VanguardSpec[VSPEC.USE_INTEGRATED_HEXEDITOR] ?? false)
             {
-                LocalNetCoreRouter.Route(Basic.Vanguard, Remote.OpenHexEditor, true);
+                LocalNetCoreRouter.Route(Endpoints.Vanguard, Remote.OpenHexEditor, true);
             }
             else
             {
@@ -404,7 +406,7 @@ namespace RTCV.CorruptCore
         {
             if ((bool?)AllSpec.VanguardSpec[VSPEC.USE_INTEGRATED_HEXEDITOR] ?? false)
             {
-                LocalNetCoreRouter.Route(Basic.Vanguard, Emulator.OpenHexEditorAddress, objectValue, true);
+                LocalNetCoreRouter.Route(Endpoints.Vanguard, Emulator.OpenHexEditorAddress, objectValue, true);
             }
             else
             {
@@ -458,7 +460,7 @@ namespace RTCV.CorruptCore
                 SyncObjectSingleton.FormExecute(a);
                 if (resumeAfter)
                 {
-                    e.setReturnValue(LocalNetCoreRouter.Route(Basic.Vanguard, Remote.ResumeEmulation, true));
+                    e.setReturnValue(LocalNetCoreRouter.Route(Endpoints.Vanguard, Remote.ResumeEmulation, true));
                 }
             }
             else
@@ -509,7 +511,7 @@ namespace RTCV.CorruptCore
             if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
             {
                 SyncObjectSingleton.FormExecute(a);
-                e.setReturnValue(LocalNetCoreRouter.Route(Basic.Vanguard, Remote.ResumeEmulation, true));
+                e.setReturnValue(LocalNetCoreRouter.Route(Endpoints.Vanguard, Remote.ResumeEmulation, true));
             }
             else //We can just do everything on the emulation thread as it'll block
             {
@@ -572,7 +574,7 @@ namespace RTCV.CorruptCore
                 if (sk != null && ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false))
                 {
                     SyncObjectSingleton.FormExecute(a);
-                    LocalNetCoreRouter.Route(Basic.Vanguard, Remote.ResumeEmulation, true);
+                    LocalNetCoreRouter.Route(Endpoints.Vanguard, Remote.ResumeEmulation, true);
                 }
                 else //We can just do everything on the emulation thread as it'll block
                 {

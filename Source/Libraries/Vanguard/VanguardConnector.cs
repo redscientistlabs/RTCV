@@ -19,9 +19,9 @@ namespace RTCV.Vanguard
         {
             _receiver = receiver;
 
-            LocalNetCoreRouter.registerEndpoint(this, NetCore.Commands.Basic.Vanguard);
+            LocalNetCoreRouter.registerEndpoint(this, NetCore.Endpoints.Vanguard);
             corruptConn = new CorruptCoreConnector();
-            LocalNetCoreRouter.registerEndpoint(corruptConn, NetCore.Commands.Basic.CorruptCore);
+            LocalNetCoreRouter.registerEndpoint(corruptConn, NetCore.Endpoints.CorruptCore);
 
             if (_receiver.Attached)//attached mode
             {
@@ -39,15 +39,15 @@ namespace RTCV.Vanguard
             netConn = new NetCoreConnector(netCoreSpec);
 
             //netConn = LocalNetCoreRouter.registerEndpoint(new NetCoreConnector(netCoreSpec), "WGH");
-            LocalNetCoreRouter.registerEndpoint(netConn, NetCore.Commands.Basic.Default); //Will send mesages to netcore if can't find the destination
+            LocalNetCoreRouter.registerEndpoint(netConn, NetCore.Endpoints.Default); //Will send mesages to netcore if can't find the destination
         }
 
         public static void ImplyClientConnected() => NetCoreSpec_ClientConnected(null, null);
 
         private static void NetCoreSpec_ClientConnected(object sender, EventArgs e)
         {
-            LocalNetCoreRouter.Route(NetCore.Commands.Basic.UI, NetCore.Commands.Remote.PushVanguardSpec, AllSpec.VanguardSpec.GetPartialSpec(), true);
-            LocalNetCoreRouter.Route(NetCore.Commands.Basic.UI, NetCore.Commands.Remote.AllSpecSent, true);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.UI, NetCore.Commands.Remote.PushVanguardSpec, AllSpec.VanguardSpec.GetPartialSpec(), true);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.UI, NetCore.Commands.Remote.AllSpecSent, true);
         }
 
         public void OnMessageReceivedProxy(object sender, NetCoreEventArgs e) => OnMessageReceived(sender, e);

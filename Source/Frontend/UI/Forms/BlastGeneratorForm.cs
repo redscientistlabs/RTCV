@@ -292,7 +292,7 @@ namespace RTCV.UI
                 btnJustCorrupt.Enabled = false;
 
                 GenerateBlastLayers(false, true);
-                //LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Basic.APPLYBLASTLAYER, new object[] { bl?.Clone() as BlastLayer, true }, true);
+                //LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Basic.APPLYBLASTLAYER, new object[] { bl?.Clone() as BlastLayer, true }, true);
             }
             finally
             {
@@ -551,7 +551,7 @@ namespace RTCV.UI
 
                 List<BlastGeneratorProto> returnList = new List<BlastGeneratorProto>();
 
-                returnList = LocalNetCoreRouter.QueryRoute<List<BlastGeneratorProto>>(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Basic.BlastGeneratorBlast, new object[] { newSk, protoList, loadBeforeCorrupt, applyAfterCorrupt, resumeAfter }, true);
+                returnList = LocalNetCoreRouter.QueryRoute<List<BlastGeneratorProto>>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Basic.BlastGeneratorBlast, new object[] { newSk, protoList, loadBeforeCorrupt, applyAfterCorrupt, resumeAfter }, true);
 
                 if (returnList == null)
                 {

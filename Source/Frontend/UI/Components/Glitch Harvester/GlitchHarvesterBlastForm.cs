@@ -294,7 +294,7 @@ namespace RTCV.UI
 
         private void BlastRawStash()
         {
-            LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Basic.ManualBlast, true);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Basic.ManualBlast, true);
             SendRawToStash(null, null);
         }
 
@@ -336,7 +336,7 @@ namespace RTCV.UI
                     return;
                 }
 
-                StashKey sk = LocalNetCoreRouter.QueryRoute<StashKey>(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.KeyGetRawBlastLayer, true);
+                StashKey sk = LocalNetCoreRouter.QueryRoute<StashKey>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.KeyGetRawBlastLayer, true);
 
                 StockpileManagerUISide.CurrentStashkey = sk;
                 StockpileManagerUISide.StashHistory.Add(StockpileManagerUISide.CurrentStashkey);
@@ -365,14 +365,14 @@ namespace RTCV.UI
             {
                 IsCorruptionApplied = true;
 
-                LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.SetApplyCorruptBL, true);
+                LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.SetApplyCorruptBL, true);
             }
             else
             {
                 IsCorruptionApplied = false;
 
-                LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.SetApplyUncorruptBL, true);
-                LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
+                LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.SetApplyUncorruptBL, true);
+                LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
             }
         }
 

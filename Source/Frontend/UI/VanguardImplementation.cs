@@ -161,8 +161,8 @@ namespace RTCV.UI
             e.setReturnValue(true);
 
             //Push the UI and CorruptCore spec (since we're master)
-            LocalNetCoreRouter.Route(Basic.CorruptCore, Remote.PushUISpec, AllSpec.UISpec.GetPartialSpec(), true);
-            LocalNetCoreRouter.Route(Basic.CorruptCore, Remote.PushCorruptCoreSpec, AllSpec.CorruptCoreSpec.GetPartialSpec(), true);
+            LocalNetCoreRouter.Route(Endpoints.CorruptCore, Remote.PushUISpec, AllSpec.UISpec.GetPartialSpec(), true);
+            LocalNetCoreRouter.Route(Endpoints.CorruptCore, Remote.PushCorruptCoreSpec, AllSpec.CorruptCoreSpec.GetPartialSpec(), true);
 
             SyncObjectSingleton.FormExecute(() =>
             {
@@ -170,7 +170,7 @@ namespace RTCV.UI
                 S.GET<CoreForm>().pnCrashProtection.Visible = true;
             });
             //Specs are all set up so UI is clear.
-            LocalNetCoreRouter.Route(Basic.Vanguard, Remote.AllSpecSent, true);
+            LocalNetCoreRouter.Route(Endpoints.Vanguard, Remote.AllSpecSent, true);
         }
 
         private static void AllSpecSent()
@@ -189,7 +189,7 @@ namespace RTCV.UI
 
                     //Load plugins on both sides
                     RtcCore.LoadPlugins();
-                    LocalNetCoreRouter.Route(Basic.CorruptCore, Remote.LoadPlugins, true);
+                    LocalNetCoreRouter.Route(Endpoints.CorruptCore, Remote.LoadPlugins, true);
 
                     //Configure the UI based on the vanguard spec
                     UICore.ConfigureUIFromVanguardSpec();
@@ -229,7 +229,7 @@ namespace RTCV.UI
                 }
                 else
                 {
-                    LocalNetCoreRouter.Route(Basic.CorruptCore, Remote.LoadPlugins, true);
+                    LocalNetCoreRouter.Route(Endpoints.CorruptCore, Remote.LoadPlugins, true);
                     //make sure the other side reloads the plugins
 
                     var clientName = (string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
@@ -241,7 +241,7 @@ namespace RTCV.UI
 
                     //Push the VMDs since we store them out of spec
                     var vmdProtos = MemoryDomains.VmdPool.Values.Cast<VirtualMemoryDomain>().Select(x => x.Proto).ToArray();
-                    LocalNetCoreRouter.Route(Basic.CorruptCore, Remote.PushVMDProtos, vmdProtos, true);
+                    LocalNetCoreRouter.Route(Endpoints.CorruptCore, Remote.PushVMDProtos, vmdProtos, true);
 
                     S.GET<CoreForm>().Show();
 

@@ -17,7 +17,7 @@ namespace RTCV.UI
         {
             _receiver = receiver;
 
-            LocalNetCoreRouter.registerEndpoint(this, NetCore.Commands.Basic.UI);
+            LocalNetCoreRouter.registerEndpoint(this, NetCore.Endpoints.UI);
 
             if (_receiver.Attached)
             {
@@ -36,8 +36,8 @@ namespace RTCV.UI
             netCoreSpec.ServerDisconnected += NetCoreSpec_ServerConnectionLost;
 
             netConn = new NetCoreConnector(netCoreSpec);
-            LocalNetCoreRouter.registerEndpoint(netConn, NetCore.Commands.Basic.Vanguard);
-            LocalNetCoreRouter.registerEndpoint(netConn, NetCore.Commands.Basic.Default); //Will send mesages to netcore if can't find the destination
+            LocalNetCoreRouter.registerEndpoint(netConn, NetCore.Endpoints.Vanguard);
+            LocalNetCoreRouter.registerEndpoint(netConn, NetCore.Endpoints.Default); //Will send mesages to netcore if can't find the destination
         }
 
         private void NetCoreSpec_ServerConnectionLost(object sender, EventArgs e)

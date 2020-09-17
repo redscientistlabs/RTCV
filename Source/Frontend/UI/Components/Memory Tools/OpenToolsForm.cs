@@ -25,7 +25,7 @@ namespace RTCV.UI
             bool UseRealtime = (bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME] ?? false;
             if (UseRealtime)
             {
-                LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.OpenHexEditor);
+                LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.OpenHexEditor);
             }
             else
             {

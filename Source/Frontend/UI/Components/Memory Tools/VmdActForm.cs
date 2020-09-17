@@ -260,7 +260,7 @@
 
             string key = RtcCore.GetRandomKey();
 
-            LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.DomainActiveTableMakeDump, new object[] { cbSelectedMemoryDomain.SelectedItem.ToString(), key }, true);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.DomainActiveTableMakeDump, new object[] { cbSelectedMemoryDomain.SelectedItem.ToString(), key }, true);
 
             ActiveTableDumps.Add(key);
             lbFreezeEngineNbDumps.Text = "Memory dumps collected: " + ActiveTableDumps.Count.ToString();

@@ -44,7 +44,7 @@ namespace RTCV.UI
                 return;
 
             //Clear any active units to prevent bad things due to soon unloaded vmds
-            LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
             foreach (var item in lbLoadedVmdList.SelectedItems)
             {
                 string VmdName = item.ToString();

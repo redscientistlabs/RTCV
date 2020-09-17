@@ -312,7 +312,7 @@ namespace RTCV.CorruptCore
 
         private static void KillswitchTimer_Tick(object sender, EventArgs e)
         {
-            LocalNetCoreRouter.Route(NetCore.Commands.Basic.UI, NetCore.Commands.Basic.KillswitchPulse);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.UI, NetCore.Commands.Basic.KillswitchPulse);
         }
 
         /**
@@ -351,11 +351,11 @@ namespace RTCV.CorruptCore
                     PartialSpec partial = e.partialSpec;
                     if (IsStandaloneUI)
                     {
-                        LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.PushCorruptCoreSpecUpdate, partial, true);
+                        LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.PushCorruptCoreSpecUpdate, partial, true);
                     }
                     else
                     {
-                        LocalNetCoreRouter.Route(NetCore.Commands.Basic.UI, NetCore.Commands.Remote.PushCorruptCoreSpecUpdate, partial, true);
+                        LocalNetCoreRouter.Route(NetCore.Endpoints.UI, NetCore.Commands.Remote.PushCorruptCoreSpecUpdate, partial, true);
                     }
                 };
 
@@ -973,7 +973,7 @@ namespace RTCV.CorruptCore
                 if (AutoCorrupt)
                 {
                     AutoCorrupt = false;
-                    LocalNetCoreRouter.Route(NetCore.Commands.Basic.UI, NetCore.Commands.Basic.ErrorDisableAutoCorrupt);
+                    LocalNetCoreRouter.Route(NetCore.Endpoints.UI, NetCore.Commands.Basic.ErrorDisableAutoCorrupt);
                 }
 
                 if (dr == DialogResult.Abort)

@@ -2,10 +2,6 @@ namespace RTCV.NetCore.Commands
 {
     public static class Basic
     {
-        public const string CorruptCore = nameof(Basic) + "_" + nameof(CorruptCore);
-        public const string Vanguard = nameof(Basic) + "_" + nameof(Vanguard);
-        public const string Default = nameof(Basic) + "_" + nameof(Default);
-        public const string UI = nameof(Basic) + "_" + nameof(UI);
         public const string KillswitchPulse = nameof(Basic) + "_" + nameof(KillswitchPulse);
         public const string ResetGameProtectionIfRunning = nameof(Basic) + "_" + nameof(ResetGameProtectionIfRunning);
         public const string ManualBlast = nameof(Basic) + "_" + nameof(ManualBlast);

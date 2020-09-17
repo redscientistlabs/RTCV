@@ -62,7 +62,7 @@ namespace RTCV.UI
             {
                 PartialSpec partial = e.partialSpec;
 
-                LocalNetCoreRouter.Route(Basic.CorruptCore, Remote.PushUISpecUpdate, partial, e.SyncedUpdate);
+                LocalNetCoreRouter.Route(Endpoints.CorruptCore, Remote.PushUISpecUpdate, partial, e.SyncedUpdate);
             };
 
             RtcCore.StartUISide();

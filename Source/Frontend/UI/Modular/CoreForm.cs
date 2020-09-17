@@ -89,8 +89,8 @@ namespace RTCV.UI
                 return;
             }
 
-            LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Remote.EventShutdown, true);
-            LocalNetCoreRouter.Route(NetCore.Commands.Basic.Vanguard, NetCore.Commands.Remote.EventCloseEmulator);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.EventShutdown, true);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.EventCloseEmulator);
 
             //Sleep to make sure the message is sent
             System.Threading.Thread.Sleep(500);
@@ -326,7 +326,7 @@ This message only appears once.";
             }
             else
             {
-                LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Basic.ManualBlast, true);
+                LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Basic.ManualBlast, true);
             }
         }
 
@@ -582,7 +582,7 @@ This message only appears once.";
 
         private static void BlastRawStash()
         {
-            LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, NetCore.Commands.Basic.ManualBlast, true);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Basic.ManualBlast, true);
             S.GET<GlitchHarvesterBlastForm>().SendRawToStash(null, null);
         }
 
@@ -666,7 +666,7 @@ This message only appears once.";
 
         private void TestCommand(object sender, EventArgs e)
         {
-            LocalNetCoreRouter.Route(NetCore.Commands.Basic.CorruptCore, "TEST");
+            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, "TEST");
         }
     }
 }
