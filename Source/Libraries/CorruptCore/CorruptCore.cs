@@ -295,6 +295,10 @@ namespace RTCV.CorruptCore
 
         public static void StartEmuSide()
         {
+            if (AllSpec.VanguardSpec == null)
+            {
+                throw new AbortEverythingException("Fatal Error: VanguardSpec hasn't been initialized. You must start Vanguard before calling StartEmuSide()");
+            }
             if (!Attached)
             {
                 Start();
