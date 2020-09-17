@@ -320,9 +320,6 @@ dotnet_diagnostic.CA2211.severity = none
 # Change to be read-only by removing the property setter
 dotnet_diagnostic.CA2227.severity = none
 
-# Call a different method
-dotnet_diagnostic.CA2234.severity = none
-
 # Don't use MD5
 dotnet_diagnostic.CA5351.severity = none
 

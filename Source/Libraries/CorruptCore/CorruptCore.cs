@@ -513,8 +513,9 @@ namespace RTCV.CorruptCore
                     using (var client = new HttpClient())
                     {
                         client.Timeout = TimeSpan.FromMilliseconds(5000);
+                        var problematicProcessesUri = new Uri("http://redscientist.com/software/rtc/ProblematicProcesses.json");
                         //Using .Result makes it synchronous
-                        json = client.GetStringAsync("http://redscientist.com/software/rtc/ProblematicProcesses.json")
+                        json = client.GetStringAsync(problematicProcessesUri)
                             .Result;
                     }
 
