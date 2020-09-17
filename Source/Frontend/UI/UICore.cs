@@ -19,20 +19,16 @@ namespace RTCV.UI
 
     public static class UICore
     {
-        //Note Box Settings
-        public static Point NoteBoxPosition;
-        public static Size NoteBoxSize;
-
-        public static bool FirstConnect = true;
-        public static ManualResetEvent Initialized = new ManualResetEvent(false);
+        internal static bool FirstConnect = true;
+        internal static ManualResetEvent Initialized = new ManualResetEvent(false);
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private static System.Timers.Timer inputCheckTimer;
 
         //RTC Main Forms
-        public static SelectBoxForm mtForm = null;
+        internal static SelectBoxForm mtForm = null;
 
-        public static BindingCollection HotkeyBindings = new BindingCollection();
+        internal static BindingCollection HotkeyBindings = new BindingCollection();
 
         public static void Start(Form standaloneForm = null)
         {
@@ -313,7 +309,7 @@ namespace RTCV.UI
             return all.ToArray();
         }
 
-        public static volatile bool isClosing = false;
+        internal static volatile bool isClosing = false;
 
         public static void CloseAllRtcForms() //This allows every form to get closed to prevent RTC from hanging
         {
@@ -350,7 +346,7 @@ namespace RTCV.UI
         private static bool lockPending;
         private static object lockObject = new object();
 
-        public static object InputLock = new object();
+        internal static object InputLock = new object();
         //Borrowed from Bizhawk. Thanks guys
         private static void ProcessInputCheck(object o, ElapsedEventArgs e)
         {

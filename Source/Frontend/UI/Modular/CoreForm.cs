@@ -19,15 +19,15 @@ namespace RTCV.UI
         //This form traps events and forwards them.
         //It contains the single CanvasForm instance.
 
-        public static CoreForm thisForm;
-        public static CanvasForm cfForm;
+        internal static CoreForm thisForm;
+        internal static CanvasForm cfForm;
 
         public CanvasGrid previousGrid { get; set; } = null;
 
-        //Vallues used for padding and scaling properly in high dpi
-        public static int xPadding;
-        public static int corePadding; // height of the top bar
-        public static int yPadding;
+        //Values used for padding and scaling properly in high dpi
+        internal static int xPadding { get; private set; }
+        private static int corePadding; // height of the top bar
+        internal static int yPadding { get; private set; }
 
         private Panel pnLockSidebar = null;
 

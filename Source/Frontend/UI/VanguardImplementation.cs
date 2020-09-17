@@ -13,7 +13,7 @@ namespace RTCV.UI
 
     public static class VanguardImplementation
     {
-        public static UIConnector connector = null;
+        internal static UIConnector connector = null;
         private static string lastVanguardClient = "";
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 

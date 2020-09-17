@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Windows.Forms;
@@ -224,7 +224,7 @@
 
     public static class AnalyticsCube
     {
-        public static List<List<byte[]>> Cube;
+        public static List<List<byte[]>> Cube { get; private set; }
 
         internal static List<double> CrunchFloatActivity(List<int> fullActivity, int maxActivity)
         {

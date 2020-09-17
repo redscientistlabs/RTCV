@@ -44,18 +44,18 @@ namespace RTCV.CorruptCore
         private static readonly ThreadLocal<Random> rnd = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref seed)));
         public static Random RND => rnd.Value;
 
-        public static bool Attached = false;
+        public static bool Attached { get; set; }  = false;
 
-        public static int CachedPrecision;
+        internal static int CachedPrecision;
 
-        public static List<ProblematicProcess> ProblematicProcesses;
+        private static List<ProblematicProcess> ProblematicProcesses;
 
-        public static Timer KillswitchTimer = new Timer();
+        private static Timer KillswitchTimer = new Timer();
 
         private static readonly Host pluginHost = new Host();
         public static Host PluginHost => pluginHost;
 
-        public static bool EmuDirOverride = false;
+        public static bool EmuDirOverride { get; set; } = false;
 
         public static string EmuDir
         {
@@ -92,8 +92,8 @@ namespace RTCV.CorruptCore
         public static event EventHandler<ProgressBarEventArgs> ProgressBarHandler;
 
         //This is for the UI only but needs to be in here as well
-        public static BindingList<ComboBoxItem<string>> LimiterListBindingSource = new BindingList<ComboBoxItem<string>>();
-        public static BindingList<ComboBoxItem<string>> ValueListBindingSource = new BindingList<ComboBoxItem<string>>();
+        public static readonly BindingList<ComboBoxItem<string>> LimiterListBindingSource = new BindingList<ComboBoxItem<string>>();
+        public static readonly BindingList<ComboBoxItem<string>> ValueListBindingSource = new BindingList<ComboBoxItem<string>>();
 
         public static bool AllowCrossCoreCorruption
         {
@@ -229,12 +229,12 @@ namespace RTCV.CorruptCore
 
         public static string VanguardImplementationName => (string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard Implementation";
 
-        public static bool IsStandaloneUI;
-        public static bool IsEmulatorSide;
+        private static bool IsStandaloneUI;
+        private static bool IsEmulatorSide;
 
-        public static EventHandler CorruptCoreExiting;
-        public static EventHandler<GameClosedEventArgs> GameClosed;
-        public static EventHandler LoadGameDone;
+        private static EventHandler CorruptCoreExiting;
+        public static EventHandler<GameClosedEventArgs> GameClosed { get; set; }
+        public static EventHandler LoadGameDone { get; set; }
 
         public static void Start()
         {
@@ -573,7 +573,7 @@ namespace RTCV.CorruptCore
         }
 
         //Checks if any problematic processes are found
-        public static bool Warned = false;
+        private static bool Warned = false;
         public static void CheckForProblematicProcesses()
         {
             logger.Info("Entering CheckForProblematicProcesses");

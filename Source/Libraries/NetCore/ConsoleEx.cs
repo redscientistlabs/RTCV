@@ -8,7 +8,7 @@ namespace RTCV.NetCore
     public class ConsoleEx
     {
         private protected static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-        public static volatile bool ShowDebug = false; // for debugging purposes, put this to true in order to see BOOP and EVENT commands in the console
+        internal static volatile bool ShowDebug = false; // for debugging purposes, put this to true in order to see BOOP and EVENT commands in the console
 
         public static ConsoleEx singularity
         {

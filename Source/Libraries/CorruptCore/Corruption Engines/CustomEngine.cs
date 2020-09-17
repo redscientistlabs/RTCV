@@ -1,4 +1,4 @@
-﻿namespace RTCV.CorruptCore
+namespace RTCV.CorruptCore
 {
     using System;
     using System.Collections.Generic;
@@ -14,7 +14,7 @@
     public static class CustomEngine
     {
         private static Dictionary<string, Type> name2TypeDico = new Dictionary<string, Type>();
-        public static Dictionary<string, PartialSpec> Name2TemplateDico = new Dictionary<string, PartialSpec>();
+        public static readonly Dictionary<string, PartialSpec> Name2TemplateDico = new Dictionary<string, PartialSpec>();
 
         public static ulong MinValue8Bit
         {
