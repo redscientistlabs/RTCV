@@ -11,9 +11,6 @@
 
     public partial class SimpleModeForm : ComponentForm, IAutoColorize, IBlockable
     {
-        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
-
         private PlatformType platform = PlatformType.CLASSIC;
 
         private bool DontUpdateSpec = false;
@@ -106,7 +103,7 @@
             S.GET<SavestateManagerForm>().savestateList.btnSaveLoad.ForeColor = Color.OrangeRed;
 
             //Trigger Save button
-            S.GET<SavestateManagerForm>().savestateList.btnSaveLoad_Click(null, null);
+            S.GET<SavestateManagerForm>().savestateList.HandleSaveLoadClick(null, null);
         }
 
         private void GlitchHarvesterLoadAndCorrupt(object sender, EventArgs e)
@@ -219,7 +216,7 @@
                                        $"and 2d games made for 3d-era consoles.";
         }
 
-        public static void SelectComboBoxRandomItem(ComboBox cb)
+        private static void SelectComboBoxRandomItem(ComboBox cb)
         {
             Random RND = new Random((int)DateTime.Now.Ticks);
             int nbItems = cb.Items.Count;
@@ -258,7 +255,7 @@
                 StartAutoCorrupt(null, null);
             }
 
-            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_CLEARSTEPBLASTUNITS, null, true);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
         }
 
         public void SelectNightmareEngine()
@@ -359,7 +356,7 @@
 
         private void ClearInfiniteUnits(object sender, EventArgs e)
         {
-            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_CLEARSTEPBLASTUNITS, null, true);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
         }
 
         private void SwitchToNormalMode(object sender, EventArgs e)
@@ -388,7 +385,7 @@
             S.GET<SavestateManagerForm>().savestateList.btnSaveLoad.ForeColor = Color.FromArgb(192, 255, 192);
 
             //Trigger Save button
-            S.GET<SavestateManagerForm>().savestateList.btnSaveLoad_Click(null, null);
+            S.GET<SavestateManagerForm>().savestateList.HandleSaveLoadClick(null, null);
         }
 
         public void SetRewindBoxes(bool enabled)

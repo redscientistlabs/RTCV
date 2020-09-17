@@ -9,10 +9,10 @@
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class ShadowPanel : Form
     {
-        private CanvasForm parentForm;
+        private CanvasForm _parentForm;
         public Form subForm { get; set; } = null;
 
-        public ShadowPanel(CanvasForm _parentForm, ISubForm reqForm)
+        public ShadowPanel(CanvasForm parentForm, ISubForm reqForm)
         {
             InitializeComponent();
             var blockerForm = new Form
@@ -28,7 +28,7 @@
 
             Colors.SetRTCColor(Colors.GeneralColor, this);
 
-            parentForm = _parentForm;
+            _parentForm = parentForm;
             UpdateBackground();
 
             subForm = (Form)reqForm;
@@ -96,18 +96,18 @@
 
             //Then, repositions flating box in the center of the window.
 
-            if (parentForm.Width == 0 || parentForm.Height == 0)
+            if (_parentForm.Width == 0 || _parentForm.Height == 0)
             {
                 return;
             }
 
-            Bitmap bmp = parentForm.getFormScreenShot();
+            Bitmap bmp = _parentForm.getFormScreenShot();
             bmp.Tint(Color.FromArgb(0x7F, Colors.Dark4Color));
 
-            this.Size = parentForm.Size;
+            this.Size = _parentForm.Size;
             this.BackgroundImage = bmp;
 
-            pnFloater.Location = new Point((parentForm.Width - pnFloater.Width) / 2, (parentForm.Height - pnFloater.Height) / 2);
+            pnFloater.Location = new Point((_parentForm.Width - pnFloater.Width) / 2, (_parentForm.Height - pnFloater.Height) / 2);
         }
 
         private void OnRightButtonClick(object sender, EventArgs e)
@@ -119,7 +119,7 @@
                 (subForm as ISubForm).RightButtonClick();
             }
 
-            parentForm.CloseSubForm();
+            _parentForm.CloseSubForm();
         }
 
         private void OnLeftButtonClick(object sender, EventArgs e)
@@ -131,7 +131,7 @@
                 (subForm as ISubForm).LeftButtonClick();
             }
 
-            parentForm.CloseSubForm();
+            _parentForm.CloseSubForm();
         }
     }
 }

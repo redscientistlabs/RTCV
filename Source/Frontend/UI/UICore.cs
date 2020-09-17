@@ -15,7 +15,7 @@ namespace RTCV.UI
     using RTCV.UI.Extensions;
     using RTCV.UI.Input;
     using RTCV.UI.Modular;
-    using static RTCV.NetCore.NetcoreCommands;
+    using RTCV.NetCore.Commands;
 
     public static class UICore
     {
@@ -43,7 +43,7 @@ namespace RTCV.UI
 
             if (!RtcCore.Attached)
             {
-                S.SET((Forms.RTC_Standalone_Form)standaloneForm);
+                S.SET((Forms.StandaloneForm)standaloneForm);
             }
 
             Form dummy = new Form();
@@ -62,17 +62,17 @@ namespace RTCV.UI
             {
                 PartialSpec partial = e.partialSpec;
 
-                LocalNetCoreRouter.Route(CORRUPTCORE, REMOTE_PUSHUISPECUPDATE, partial, e.syncedUpdate);
+                LocalNetCoreRouter.Route(Endpoints.CorruptCore, Remote.PushUISpecUpdate, partial, e.SyncedUpdate);
             };
 
             RtcCore.StartUISide();
 
             //Loading RTC Params
 
-            S.GET<RTC_SettingsGeneral_Form>().cbDisableEmulatorOSD.Checked = Params.IsParamSet(RTCSPEC.CORE_EMULATOROSDDISABLED);
-            S.GET<RTC_SettingsGeneral_Form>().cbAllowCrossCoreCorruption.Checked = Params.IsParamSet("ALLOW_CROSS_CORE_CORRUPTION");
-            S.GET<RTC_SettingsGeneral_Form>().cbDontCleanAtQuit.Checked = Params.IsParamSet("DONT_CLEAN_SAVESTATES_AT_QUIT");
-            S.GET<RTC_SettingsGeneral_Form>().cbUncapIntensity.Checked = Params.IsParamSet("UNCAP_INTENSITY");
+            S.GET<SettingsGeneralForm>().cbDisableEmulatorOSD.Checked = Params.IsParamSet(RTCSPEC.CORE_EMULATOROSDDISABLED);
+            S.GET<SettingsGeneralForm>().cbAllowCrossCoreCorruption.Checked = Params.IsParamSet("ALLOW_CROSS_CORE_CORRUPTION");
+            S.GET<SettingsGeneralForm>().cbDontCleanAtQuit.Checked = Params.IsParamSet("DONT_CLEAN_SAVESTATES_AT_QUIT");
+            S.GET<SettingsGeneralForm>().cbUncapIntensity.Checked = Params.IsParamSet("UNCAP_INTENSITY");
 
             //Initialize input code. Poll every 16ms
             Input.Input.Initialize();
@@ -104,7 +104,7 @@ namespace RTCV.UI
             }
         }
 
-        public static void registerHotkeyBlacklistControls(Control container)
+        internal static void registerHotkeyBlacklistControls(Control container)
         {
             foreach (Control c in container.Controls)
             {
@@ -128,7 +128,7 @@ namespace RTCV.UI
             }
         }
 
-        public static void registerFormEvents(Form f)
+        internal static void registerFormEvents(Form f)
         {
             f.Deactivate -= NewForm_FocusChanged;
             f.Deactivate += NewForm_FocusChanged;
@@ -165,7 +165,7 @@ namespace RTCV.UI
                 return;
             }
 
-            bool previousState = (bool?)AllSpec.UISpec[RTC_INFOCUS] ?? false;
+            bool previousState = (bool?)AllSpec.UISpec[Basic.RTCInFocus] ?? false;
             //bool currentState = forceSet ?? isAnyRTCFormFocused();
             bool currentState = (Form.ActiveForm != null && forceSet == null) || (forceSet ?? false);
 
@@ -173,7 +173,7 @@ namespace RTCV.UI
             {
                 logger.Trace($"Swapping focus state {previousState} => {currentState}");
                 //This is a non-synced spec update to prevent jittering. Shouldn't have any other noticeable impact
-                AllSpec.UISpec.Update(RTC_INFOCUS, currentState, true, false);
+                AllSpec.UISpec.Update(Basic.RTCInFocus, currentState, true, false);
             }
         }
 
@@ -251,7 +251,7 @@ namespace RTCV.UI
             Input.Input.Instance.ClearEvents();
         }
 
-        public static void BlockView(this IBlockable ib)
+        internal static void BlockView(this IBlockable ib)
         {
             if (ib is ConnectionStatusForm)
             {
@@ -279,7 +279,7 @@ namespace RTCV.UI
             ib.blockPanel.Visible = true;
         }
 
-        public static void UnblockView(this IBlockable ib)
+        internal static void UnblockView(this IBlockable ib)
         {
             if (ib is ConnectionStatusForm)
             {
@@ -332,9 +332,9 @@ namespace RTCV.UI
                 }
             }
 
-            if (S.GET<Forms.RTC_Standalone_Form>() != null)
+            if (S.GET<Forms.StandaloneForm>() != null)
             {
-                S.GET<Forms.RTC_Standalone_Form>().Close();
+                S.GET<Forms.StandaloneForm>().Close();
             }
 
             //Clean out the working folders
@@ -506,7 +506,7 @@ namespace RTCV.UI
                     SyncObjectSingleton.FormExecute(() =>
                     {
                         S.GET<SavestateManagerForm>().savestateList.btnSaveLoad.Text = "LOAD";
-                        S.GET<SavestateManagerForm>().savestateList.btnSaveLoad_Click(null, null);
+                        S.GET<SavestateManagerForm>().savestateList.HandleSaveLoadClick(null, null);
                     });
                     break;
 
@@ -514,7 +514,7 @@ namespace RTCV.UI
                     SyncObjectSingleton.FormExecute(() =>
                     {
                         S.GET<SavestateManagerForm>().savestateList.btnSaveLoad.Text = "SAVE";
-                        S.GET<SavestateManagerForm>().savestateList.btnSaveLoad_Click(null, null);
+                        S.GET<SavestateManagerForm>().savestateList.HandleSaveLoadClick(null, null);
                     });
                     break;
 
@@ -555,13 +555,13 @@ namespace RTCV.UI
                 case "BlastLayer Re-Blast":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        if (StockpileManager_UISide.CurrentStashkey == null || StockpileManager_UISide.CurrentStashkey.BlastLayer.Layer.Count == 0)
+                        if (StockpileManagerUISide.CurrentStashkey == null || StockpileManagerUISide.CurrentStashkey.BlastLayer.Layer.Count == 0)
                         {
                             S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = false;
                             return;
                         }
                         S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = true;
-                        StockpileManager_UISide.ApplyStashkey(StockpileManager_UISide.CurrentStashkey, false);
+                        StockpileManagerUISide.ApplyStashkey(StockpileManagerUISide.CurrentStashkey, false);
                     });
                     break;
 

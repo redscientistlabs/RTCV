@@ -15,8 +15,8 @@
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class DomainAnalyticsForm : ComponentForm, IAutoColorize, IBlockable
     {
-        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+        private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         public DomainAnalyticsForm()
         {
@@ -42,7 +42,7 @@
 
             string key = RtcCore.GetRandomKey();
 
-            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_DOMAIN_ACTIVETABLE_MAKEDUMP, new object[] { cbSelectedMemoryDomain.SelectedItem.ToString(), key }, true);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.DomainActiveTableMakeDump, new object[] { cbSelectedMemoryDomain.SelectedItem.ToString(), key }, true);
 
             var keyPath = Path.Combine(RtcCore.workingDir, "MEMORYDUMPS", key + ".dmp");
             MemoryDumps.Add(keyPath);
@@ -92,7 +92,7 @@
 
         private void RefreshDomains()
         {
-            S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected();
+            S.GET<MemoryDomainsForm>().RefreshDomainsAndKeepSelected();
             var temp = cbSelectedMemoryDomain.SelectedItem;
 
             cbSelectedMemoryDomain.Items.Clear();

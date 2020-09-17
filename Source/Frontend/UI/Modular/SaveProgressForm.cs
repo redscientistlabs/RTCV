@@ -51,7 +51,7 @@ namespace RTCV.UI
             pbSave.Value = 0;
             try
             {
-                VanguardImplementation.connector?.netConn?.spec?.LockStatusEventLockout();
+                VanguardImplementation.connector?.netConn?.Spec?.LockStatusEventLockout();
                 logger.Trace("Thread id {0} got Mutex... (save)", System.Threading.Thread.CurrentThread.ManagedThreadId);
             }
             catch (System.Threading.AbandonedMutexException)
@@ -63,7 +63,7 @@ namespace RTCV.UI
         public void OnHidden()
         {
             logger.Trace("Entering OnHidden() {0}\n{1}", System.Threading.Thread.CurrentThread.ManagedThreadId, Environment.StackTrace);
-            VanguardImplementation.connector?.netConn?.spec?.UnlockLockStatusEventLockout();
+            VanguardImplementation.connector?.netConn?.Spec?.UnlockLockStatusEventLockout();
             logger.Trace("Thread id {0} released Mutex... (save)", System.Threading.Thread.CurrentThread.ManagedThreadId);
         }
     }

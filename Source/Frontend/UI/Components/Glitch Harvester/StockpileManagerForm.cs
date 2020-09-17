@@ -15,8 +15,8 @@ namespace RTCV.UI
 
     public partial class StockpileManagerForm : ComponentForm, IAutoColorize, IBlockable
     {
-        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+        private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         private Color? originalSaveButtonColor = null;
         private bool _UnsavedEdits = false;
@@ -59,7 +59,7 @@ namespace RTCV.UI
             };
         }
 
-        public void HandleCellClick(object sender, DataGridViewCellEventArgs e)
+        internal void HandleCellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e == null || e.RowIndex == -1)
             {
@@ -99,10 +99,10 @@ namespace RTCV.UI
                     return;
                 }
 
-                StockpileManager_UISide.CurrentStashkey = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
+                StockpileManagerUISide.CurrentStashkey = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
 
                 List<StashKey> keys = dgvStockpile.Rows.Cast<DataGridViewRow>().Select(x => (StashKey)x.Cells[0].Value).ToList();
-                if (!StockpileManager_UISide.CheckAndFixMissingReference(StockpileManager_UISide.CurrentStashkey, false, keys))
+                if (!StockpileManagerUISide.CheckAndFixMissingReference(StockpileManagerUISide.CurrentStashkey, false, keys))
                 {
                     return;
                 }
@@ -127,7 +127,7 @@ namespace RTCV.UI
                     //If you ctrl+select, you get things in the reverse order (the most recent selected gets inserted at the start of the list)
                     if (IsControlDown())
                         sks.Reverse();
-                    StockpileManager_UISide.MergeStashkeys(sks);
+                    StockpileManagerUISide.MergeStashkeys(sks);
 
                     if (Render.RenderAtLoad && S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation)
                     {
@@ -207,7 +207,7 @@ namespace RTCV.UI
                 {
                     var sk = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
                     StashKey newSk = (StashKey)sk.Clone();
-                    S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = StockpileManager_UISide.ApplyStashkey(newSk, false, false);
+                    S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = StockpileManagerUISide.ApplyStashkey(newSk, false, false);
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
                 columnsMenu.Items.Add(new ToolStripSeparator());
@@ -215,7 +215,7 @@ namespace RTCV.UI
                 {
                     var sk = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
                     MemoryDomains.GenerateVmdFromStashkey(sk);
-                    S.GET<RTC_VmdPool_Form>().RefreshVMDs();
+                    S.GET<VmdPoolForm>().RefreshVMDs();
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Merge Selected Stashkeys", null, new EventHandler((ob, ev) =>
@@ -226,7 +226,7 @@ namespace RTCV.UI
                         sks.Add((StashKey)row.Cells[0].Value);
                     }
 
-                    StockpileManager_UISide.MergeStashkeys(sks);
+                    StockpileManagerUISide.MergeStashkeys(sks);
                     S.GET<StashHistoryForm>().RefreshStashHistory();
                 }))).Enabled = (dgvStockpile.SelectedRows.Count > 1);
 
@@ -289,11 +289,11 @@ namespace RTCV.UI
             }
         }
 
-        public static bool RenameStashKey(StashKey sk)
+        internal static bool RenameStashKey(StashKey sk)
         {
             string value = sk.Alias;
 
-            if (RTCV.UI.Forms.InputBox.ShowDialog("Glitch Harvester", "Enter the new Stash name:", ref value) == DialogResult.OK && !string.IsNullOrWhiteSpace(value))
+            if (RTCV.UI.Forms.InputBox.ShowDialog("Renaming Stashkey", "Enter the new Stash name:", ref value) == DialogResult.OK && !string.IsNullOrWhiteSpace(value))
             {
                 sk.Alias = value.Trim();
                 return true;
@@ -313,7 +313,7 @@ namespace RTCV.UI
             {
                 if (RenameStashKey(dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey))
                 {
-                    StockpileManager_UISide.StockpileChanged();
+                    StockpileManagerUISide.StockpileChanged();
                     dgvStockpile.Refresh();
                     UnsavedEdits = true;
                 }
@@ -331,7 +331,7 @@ namespace RTCV.UI
                 {
                     dgvStockpile.Rows.Remove(row);
                 }
-                StockpileManager_UISide.StockpileChanged();
+                StockpileManagerUISide.StockpileChanged();
                 UnsavedEdits = true;
                 S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
             }
@@ -344,7 +344,7 @@ namespace RTCV.UI
             {
                 dgvStockpile.Rows.Clear();
 
-                StockpileManager_UISide.ClearCurrentStockpile();
+                StockpileManagerUISide.ClearCurrentStockpile();
 
                 btnSaveStockpile.Enabled = false;
                 UnsavedEdits = false;
@@ -378,7 +378,7 @@ namespace RTCV.UI
                 ghForm?.OpenSubForm(S.GET<SaveProgressForm>());
 
                 logger.Trace("Clearing Current Stockpile");
-                StockpileManager_UISide.ClearCurrentStockpile();
+                StockpileManagerUISide.ClearCurrentStockpile();
                 dgvStockpile.Rows.Clear();
 
                 S.GET<StockpilePlayerForm>().dgvStockpile.Rows.Clear();
@@ -396,7 +396,7 @@ namespace RTCV.UI
                     logger.Trace("Load Task Success");
                     var sks = r.Result;
                     //Update the current stockpile to this one
-                    StockpileManager_UISide.SetCurrentStockpile(sks);
+                    StockpileManagerUISide.SetCurrentStockpile(sks);
 
                     logger.Trace("Populating DGV");
                     foreach (StashKey key in sks.StashKeys)
@@ -415,7 +415,7 @@ namespace RTCV.UI
                 }
 
                 dgvStockpile.ClearSelection();
-                StockpileManager_UISide.StockpileChanged();
+                StockpileManagerUISide.StockpileChanged();
 
                 UnsavedEdits = false;
             }
@@ -485,7 +485,7 @@ namespace RTCV.UI
 
                 if (r)
                 {
-                    StockpileManager_UISide.SetCurrentStockpile(sks);
+                    StockpileManagerUISide.SetCurrentStockpile(sks);
                     sendCurrentStockpileToSKS();
                     UnsavedEdits = false;
                     btnSaveStockpile.Enabled = true;
@@ -604,7 +604,7 @@ namespace RTCV.UI
         private void SaveStockpile(object sender, EventArgs e)
         {
             Stockpile sks = new Stockpile(dgvStockpile);
-            SaveStockpile(sks, StockpileManager_UISide.GetCurrentStockpilePath());
+            SaveStockpile(sks, StockpileManagerUISide.GetCurrentStockpilePath());
         }
 
         private void sendCurrentStockpileToSKS()
@@ -641,7 +641,7 @@ namespace RTCV.UI
 
             UnsavedEdits = true;
 
-            StockpileManager_UISide.StockpileChanged();
+            StockpileManagerUISide.StockpileChanged();
             S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
         }
 
@@ -673,7 +673,7 @@ namespace RTCV.UI
 
             UnsavedEdits = true;
 
-            StockpileManager_UISide.StockpileChanged();
+            StockpileManagerUISide.StockpileChanged();
             S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
         }
 
@@ -687,7 +687,7 @@ namespace RTCV.UI
                 if (f.Contains(".bl"))
                 {
                     BlastLayer temp = BlastTools.LoadBlastLayerFromFile(f);
-                    StockpileManager_UISide.Import(temp);
+                    StockpileManagerUISide.Import(temp);
                     S.GET<StashHistoryForm>().RefreshStashHistorySelectLast();
                     S.GET<StashHistoryForm>().AddStashToStockpile(true);
                 }

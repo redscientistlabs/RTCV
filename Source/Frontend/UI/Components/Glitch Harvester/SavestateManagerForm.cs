@@ -18,8 +18,8 @@ namespace RTCV.UI
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class SavestateManagerForm : ComponentForm, IAutoColorize, IBlockable
     {
-        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+        private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         private BindingSource savestateBindingSource = new BindingSource(new BindingList<SaveStateKey>(), null);
 
@@ -237,7 +237,7 @@ namespace RTCV.UI
                     allStashKeys.Add(sk);
                 }
             }
-            allStashKeys.AddRange(StockpileManager_UISide.StashHistory);
+            allStashKeys.AddRange(StockpileManagerUISide.StashHistory);
             allStashKeys.AddRange(S.GET<BlastEditorForm>().GetStashKeys());
             allStashKeys.AddRange(S.GET<BlastGeneratorForm>().GetStashKeys());
             bool notified = false;

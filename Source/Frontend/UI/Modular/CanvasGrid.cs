@@ -10,8 +10,8 @@ namespace RTCV.UI
     {
         //grid that represents the layout of a single form
 
-        public int x { get; private set; } = 0;
-        public int y { get; private set; } = 0;
+        public int X { get; private set; } = 0;
+        public int Y { get; private set; } = 0;
         public Form[,] gridComponent { get; private set; }
         public Size?[,] gridComponentSize { get; private set; }
         public bool?[,] gridComponentDisplayHeader { get; private set; }
@@ -19,22 +19,22 @@ namespace RTCV.UI
         public string GridName { get; private set; } = "";
         internal bool isResizable = false;
 
-        public CanvasGrid(int _x, int _y, string _GridName)
+        public CanvasGrid(int x, int y, string gridName)
         {
-            x = _x;
-            y = _y;
-            gridComponent = new Form[x, y];
-            gridComponentSize = new Size?[x, y];
-            gridComponentDisplayHeader = new bool?[x, y];
-            GridName = _GridName;
+            X = x;
+            Y = y;
+            gridComponent = new Form[X, Y];
+            gridComponentSize = new Size?[X, Y];
+            gridComponentDisplayHeader = new bool?[X, Y];
+            GridName = gridName;
         }
 
-        public void SetTileForm(Form componentForm, int tilePosX, int tilePosY, int tileSizeX, int tileSizeY, bool displayHeader, AnchorStyles anchor = (AnchorStyles.Top | AnchorStyles.Left))
+        internal void SetTileForm(Form componentForm, int tilePosX, int tilePosY, int tileSizeX, int tileSizeY, bool displayHeader, AnchorStyles anchor = (AnchorStyles.Top | AnchorStyles.Left))
         {
             //removes tileForm position if already exists
-            for (int _x = 0; _x < x; _x++)
+            for (int _x = 0; _x < X; _x++)
             {
-                for (int _y = 0; _y < y; _y++)
+                for (int _y = 0; _y < Y; _y++)
                 {
                     if (gridComponent[_x, _y] == componentForm)
                     {
@@ -46,7 +46,7 @@ namespace RTCV.UI
             }
 
             //place tileForm if within grid space
-            if (tilePosX < x && tilePosY < y)
+            if (tilePosX < X && tilePosY < Y)
             {
                 gridComponent[tilePosX, tilePosY] = componentForm;
                 gridComponentSize[tilePosX, tilePosY] = new Size(tileSizeX, tileSizeY);

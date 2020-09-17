@@ -33,7 +33,7 @@
         List<dynamic> DumpSource = new List<dynamic>();
         private int WordSize;
 
-        public static void OpenAnalyticsTool(MemoryInterface mi, List<string> memoryDumpPaths)
+        internal static void OpenAnalyticsTool(MemoryInterface mi, List<string> memoryDumpPaths)
         {
             S.GET<AnalyticsToolForm>().Close();
             var stf = new AnalyticsToolForm();

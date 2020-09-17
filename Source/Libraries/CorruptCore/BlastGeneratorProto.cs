@@ -27,22 +27,22 @@ namespace RTCV.CorruptCore
         {
         }
 
-        public BlastGeneratorProto(string _note, string _blastType, string _domain, string _mode, int _precision, long _stepSize, long _startAddress, long _endAddress, ulong _param1, ulong _param2, int lifetime, int executeframe, bool loop, int _seed)
+        public BlastGeneratorProto(string note, string blastType, string domain, string mode, int precision, long stepSize, long startAddress, long endAddress, ulong param1, ulong param2, int lifetime, int executeframe, bool loop, int seed)
         {
-            Note = _note;
-            BlastType = _blastType;
-            Domain = _domain;
-            Precision = _precision;
-            StartAddress = _startAddress;
-            EndAddress = _endAddress;
-            Param1 = _param1;
-            Param2 = _param2;
-            Mode = _mode;
-            StepSize = _stepSize;
+            Note = note;
+            BlastType = blastType;
+            Domain = domain;
+            Precision = precision;
+            StartAddress = startAddress;
+            EndAddress = endAddress;
+            Param1 = param1;
+            Param2 = param2;
+            Mode = mode;
+            StepSize = stepSize;
             Lifetime = lifetime;
             ExecuteFrame = executeframe;
             Loop = loop;
-            Seed = _seed;
+            Seed = seed;
         }
 
         public BlastLayer GenerateBlastLayer()
@@ -50,10 +50,10 @@ namespace RTCV.CorruptCore
             switch (BlastType)
             {
                 case "Value":
-                    bl = RTC_ValueGenerator.GenerateLayer(Note, Domain, StepSize, StartAddress, EndAddress, Param1, Param2, Precision, Lifetime, ExecuteFrame, Loop, Seed, (BGValueMode)Enum.Parse(typeof(BGValueMode), Mode, true));
+                    bl = ValueGenerator.GenerateLayer(Note, Domain, StepSize, StartAddress, EndAddress, Param1, Param2, Precision, Lifetime, ExecuteFrame, Loop, Seed, (BGValueMode)Enum.Parse(typeof(BGValueMode), Mode, true));
                     break;
                 case "Store":
-                    bl = RTC_StoreGenerator.GenerateLayer(Note, Domain, StepSize, StartAddress, EndAddress, Param1, Precision, Lifetime, ExecuteFrame, Loop, Seed, (BGStoreMode)Enum.Parse(typeof(BGStoreMode), Mode, true));
+                    bl = StoreGenerator.GenerateLayer(Note, Domain, StepSize, StartAddress, EndAddress, Param1, Precision, Lifetime, ExecuteFrame, Loop, Seed, (BGStoreMode)Enum.Parse(typeof(BGStoreMode), Mode, true));
                     break;
                 default:
                     return null;

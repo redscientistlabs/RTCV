@@ -11,6 +11,16 @@ namespace RTCV.NetCore.SafeJsonTypeSerialization
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
+            if (reader == null)
+            {
+                throw new ArgumentNullException(nameof(reader));
+            }
+
+            if (serializer == null)
+            {
+                throw new ArgumentNullException(nameof(serializer));
+            }
+
             if (reader.TokenType == JsonToken.Null)
             {
                 return null;
@@ -26,6 +36,21 @@ namespace RTCV.NetCore.SafeJsonTypeSerialization
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
+            if (serializer == null)
+            {
+                throw new ArgumentNullException(nameof(serializer));
+            }
+
+            if (writer == null)
+            {
+                throw new ArgumentNullException(nameof(writer));
+            }
+
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+
             if (serializer.TypeNameHandling == TypeNameHandling.None)
             {
                 Debug.WriteLine("ObjectItemConverter used when serializer.TypeNameHandling == TypeNameHandling.None");

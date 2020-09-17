@@ -17,7 +17,7 @@ namespace RTCV.CorruptCore
             set
             {
                 AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_ISRENDERING, value);
-                LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_RENDER_DISPLAY);
+                LocalNetCoreRouter.Route(NetCore.Endpoints.UI, NetCore.Commands.Remote.RenderDisplay);
             }
         }
 
@@ -60,7 +60,7 @@ namespace RTCV.CorruptCore
             IsRendering = true;
 
             if (vanguardSupportsRendering)
-                LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RENDER_START, true);
+                LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.RenderStart, true);
             else
                 Renderer.StopRender();
 
@@ -75,7 +75,7 @@ namespace RTCV.CorruptCore
             IsRendering = false;
 
             if (vanguardSupportsRendering)
-                LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RENDER_STOP, true);
+                LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.RenderStop, true);
         }
 
         public enum RENDERTYPE

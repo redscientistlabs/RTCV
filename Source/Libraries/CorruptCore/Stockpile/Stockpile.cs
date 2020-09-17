@@ -46,6 +46,11 @@ namespace RTCV.CorruptCore
 
         public Stockpile(DataGridView dgvStockpile)
         {
+            if (dgvStockpile == null)
+            {
+                throw new ArgumentNullException(nameof(dgvStockpile));
+            }
+
             foreach (DataGridViewRow row in dgvStockpile.Rows)
             {
                 StashKeys.Add((StashKey)row.Cells[0].Value);
@@ -63,6 +68,11 @@ namespace RTCV.CorruptCore
 
         public static bool Save(Stockpile sks, string filename, bool includeReferencedFiles = false, bool compress = true)
         {
+            if (sks == null)
+            {
+                throw new ArgumentNullException(nameof(sks));
+            }
+
             try
             {
                 if (sks.StashKeys.Count == 0)
@@ -120,7 +130,7 @@ namespace RTCV.CorruptCore
                     MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
                 if (dr == DialogResult.OK)
                 {
-                    LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_CLOSEGAME, true);
+                    LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.CloseGame, true);
                 }
                 else
                 {
@@ -267,9 +277,9 @@ namespace RTCV.CorruptCore
                     {
                         string title = "Reference found in RTC dir";
                         string message = $"Can't save with file {key.RomFilename}\nGame name: {key.GameName}\n\nThis file appears to be in temporary storage (e.g. loaded from a stockpile).\nTo save without references, you will need to provide a replacement from outside the RTC's working directory.\n\nPlease provide a new path to the file in question.";
-                        while ((!string.IsNullOrEmpty(key.RomFilename)) && (CorruptCore_Extensions.IsOrIsSubDirectoryOf(Path.GetDirectoryName(key.RomFilename), RtcCore.workingDir))) // Make sure they don't give a new file within working
+                        while ((!string.IsNullOrEmpty(key.RomFilename)) && (CorruptCoreExtensions.IsOrIsSubDirectoryOf(Path.GetDirectoryName(key.RomFilename), RtcCore.workingDir))) // Make sure they don't give a new file within working
                         {
-                            if (!StockpileManager_UISide.CheckAndFixMissingReference(key, true, sks.StashKeys, title, message))
+                            if (!StockpileManagerUISide.CheckAndFixMissingReference(key, true, sks.StashKeys, title, message))
                             {
                                 failure = true;
                                 return;
@@ -455,7 +465,7 @@ namespace RTCV.CorruptCore
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
                 if (dr == DialogResult.OK)
                 {
-                    LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_CLOSEGAME, true);
+                    LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.CloseGame, true);
                 }
                 else
                 {
@@ -598,7 +608,7 @@ namespace RTCV.CorruptCore
         /// Checks a stockpile for compatibility with the current version of the RTC
         /// </summary>
         /// <param name="sks"></param>
-        public static OperationResults CheckCompatibility(Stockpile sks)
+        internal static OperationResults CheckCompatibility(Stockpile sks)
         {
             var results = new OperationResults();
 
@@ -625,7 +635,7 @@ namespace RTCV.CorruptCore
         /// Recursively deletes all files and folders within a directory
         /// </summary>
         /// <param name="baseDir"></param>
-        public static void RecursiveDelete(DirectoryInfo baseDir)
+        private static void RecursiveDelete(DirectoryInfo baseDir)
         {
             if (!baseDir.Exists)
             {
@@ -760,7 +770,7 @@ namespace RTCV.CorruptCore
             Dictionary<string, string> name2filedico = new Dictionary<string, string>();
             foreach (var str in configPaths)
             {
-                var relPath = CorruptCore_Extensions.GetRelativePath(RtcCore.EmuDir, str);
+                var relPath = CorruptCoreExtensions.GetRelativePath(RtcCore.EmuDir, str);
 
                 name2filedico.Add(Path.GetFileName(str), relPath);
             }

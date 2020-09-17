@@ -6,23 +6,23 @@
 
     public partial class SelectBoxForm : ComponentForm, IBlockable
     {
-        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+        private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        private ComponentForm[] childForms;
+        private ComponentForm[] _childForms;
 
-        public SelectBoxForm(ComponentForm[] _childForms)
+        public SelectBoxForm(ComponentForm[] childForms)
         {
             InitializeComponent();
 
             Colors.SetRTCColor(Colors.GeneralColor, this);
 
-            childForms = _childForms;
+            _childForms = childForms ?? throw new ArgumentNullException(nameof(childForms));
 
             cbSelectBox.DisplayMember = "text";
             cbSelectBox.ValueMember = "value";
 
-            foreach (var item in childForms)
+            foreach (var item in _childForms)
             {
                 cbSelectBox.Items.Add(new { text = item.Text, value = item });
             }

@@ -10,8 +10,8 @@ namespace RTCV.UI
 
     public partial class OpenToolsForm : ComponentForm, IAutoColorize, IBlockable
     {
-        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+        private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         public OpenToolsForm()
         {
@@ -25,7 +25,7 @@ namespace RTCV.UI
             bool UseRealtime = (bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME] ?? false;
             if (UseRealtime)
             {
-                LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_OPENHEXEDITOR);
+                LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.OpenHexEditor);
             }
             else
             {

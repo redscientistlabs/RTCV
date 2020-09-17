@@ -77,7 +77,9 @@
     <Compile Include="HexFind.Designer.cs">
       <DependentUpon>HexFind.cs</DependentUpon>
     </Compile>
-    <Compile Include="HexTextBox.cs" />
+    <Compile Include="HexTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="InputPrompt.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -61,6 +61,7 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Endpoints.cs" />
     <Compile Include="SafeJsonTypeSerialization\JsonKnownTypesBinder.cs" />
     <Compile Include="SafeJsonTypeSerialization\TypeWrapper.cs" />
     <Compile Include="SafeJsonTypeSerialization\UntypedToTypedValueContractResolver.cs" />
@@ -68,12 +69,12 @@
     <Compile Include="AllSpec.cs" />
     <Compile Include="Connector.cs" />
     <Compile Include="ConsoleEx.cs" />
-    <Compile Include="NetCore_Extensions.cs" />
-    <Compile Include="DebugInfo\CloudDebug_Form.cs">
+    <Compile Include="NetCoreExtensions.cs" />
+    <Compile Include="DebugInfo\CloudDebugForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DebugInfo\CloudDebug_Form.Designer.cs">
-      <DependentUpon>CloudDebug_Form.cs</DependentUpon>
+    <Compile Include="DebugInfo\CloudDebugForm.Designer.cs">
+      <DependentUpon>CloudDebugForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Enums\NetworkSide.cs" />
     <Compile Include="Enums\NetworkStatus.cs" />
@@ -85,11 +86,11 @@
     <Compile Include="NetCoreSpec.cs" />
     <Compile Include="Params.cs" />
     <Compile Include="ReturnWatch.cs" />
-    <Compile Include="DebugInfo\DebugInfo_Form.cs">
+    <Compile Include="DebugInfo\DebugInfoForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DebugInfo\DebugInfo_Form.Designer.cs">
-      <DependentUpon>DebugInfo_Form.cs</DependentUpon>
+    <Compile Include="DebugInfo\DebugInfoForm.Designer.cs">
+      <DependentUpon>DebugInfoForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SyncObjectSingleton.cs" />
     <Compile Include="TCPLinkWatch.cs" />
@@ -99,11 +100,11 @@
     <Compile Include="UniSpec.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="DebugInfo\CloudDebug_Form.resx">
-      <DependentUpon>CloudDebug_Form.cs</DependentUpon>
+    <EmbeddedResource Include="DebugInfo\CloudDebugForm.resx">
+      <DependentUpon>CloudDebugForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DebugInfo\DebugInfo_Form.resx">
-      <DependentUpon>DebugInfo_Form.cs</DependentUpon>
+    <EmbeddedResource Include="DebugInfo\DebugInfoForm.resx">
+      <DependentUpon>DebugInfoForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

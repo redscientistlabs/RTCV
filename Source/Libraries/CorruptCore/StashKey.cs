@@ -86,14 +86,14 @@ namespace RTCV.CorruptCore
             return sk;
         }
 
-        public static void SetCore(StashKey sk)
+        internal static void SetCore(StashKey sk)
         {
             SetCore(sk.SystemName, sk.SystemCore);
         }
 
         public static void SetCore(string systemName, string systemCore)
         {
-            LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_KEY_SETSYSTEMCORE, new object[] { systemName, systemCore }, true);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.KeySetSystemCore, new object[] { systemName, systemCore }, true);
         }
 
         public override string ToString()
@@ -106,8 +106,8 @@ namespace RTCV.CorruptCore
         /// </summary>
         public bool Run()
         {
-            StockpileManager_UISide.CurrentStashkey = this;
-            return StockpileManager_UISide.ApplyStashkey(this);
+            StockpileManagerUISide.CurrentStashkey = this;
+            return StockpileManagerUISide.ApplyStashkey(this);
         }
 
         /// <summary>
@@ -115,8 +115,8 @@ namespace RTCV.CorruptCore
         /// </summary>
         public void RunOriginal()
         {
-            StockpileManager_UISide.CurrentStashkey = this;
-            StockpileManager_UISide.OriginalFromStashkey(this);
+            StockpileManagerUISide.CurrentStashkey = this;
+            StockpileManagerUISide.OriginalFromStashkey(this);
         }
 
         public byte[] EmbedState()

@@ -14,9 +14,9 @@ namespace RTCV.CorruptCore
 
         public override long Size { get; set; }
 
-        public MemoryDomainProxy(IMemoryDomain _md)
+        public MemoryDomainProxy(IMemoryDomain md)
         {
-            MD = _md;
+            MD = md ?? throw new ArgumentNullException(nameof(md));
             Size = MD.Size;
 
             Name = MD.ToString();

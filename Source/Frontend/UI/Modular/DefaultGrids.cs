@@ -31,19 +31,19 @@ namespace RTCV.UI.Modular
                     var ecGrid = new CanvasGrid(15, 12, "Engine Config");
 
                     Form gpForm = S.GET<GeneralParametersForm>();
-                    Form mdForm = S.GET<RTC_MemoryDomains_Form>();
+                    Form mdForm = S.GET<MemoryDomainsForm>();
                     Form ceForm = S.GET<CorruptionEngineForm>();
 
                     UICore.mtForm = new SelectBoxForm(new ComponentForm[] {
-                        S.GET<RTC_VmdNoTool_Form>(),
-                        S.GET<RTC_MyVMDs_Form>(),
-                        S.GET<RTC_VmdPool_Form>(),
-                        S.GET<RTC_VmdGen_Form>(),
-                        S.GET<RTC_VmdSimpleGen_Form>(),
+                        S.GET<VmdNoToolForm>(),
+                        S.GET<MyVMDsForm>(),
+                        S.GET<VmdPoolForm>(),
+                        S.GET<VmdGenForm>(),
+                        S.GET<VmdSimpleGenForm>(),
                         S.GET<VmdActForm>(),
                         S.GET<MyListsForm>(),
                         S.GET<ListGenForm>(),
-                        S.GET<RTC_VmdLimiterProfiler_Form>(),
+                        S.GET<VmdLimiterProfilerForm>(),
                         //S.GET<DomainAnalyticsForm>(),
                         S.GET<OpenToolsForm>(),
                         })

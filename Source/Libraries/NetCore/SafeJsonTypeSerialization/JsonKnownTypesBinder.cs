@@ -18,6 +18,11 @@ namespace RTCV.NetCore.SafeJsonTypeSerialization
 
         public void BindToName(Type serializedType, out string assemblyName, out string typeName)
         {
+            if (serializedType == null)
+            {
+                throw new ArgumentNullException(nameof(serializedType));
+            }
+
             assemblyName = null;
             typeName = serializedType.Name;
         }

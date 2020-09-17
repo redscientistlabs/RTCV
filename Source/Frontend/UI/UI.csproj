@@ -164,11 +164,11 @@
     <Compile Include="Components\Engine Config\GeneralParametersForm.Designer.cs">
       <DependentUpon>GeneralParametersForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Engine Config\RTC_MemoryDomains_Form.cs">
+    <Compile Include="Components\Engine Config\MemoryDomainsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Engine Config\RTC_MemoryDomains_Form.Designer.cs">
-      <DependentUpon>RTC_MemoryDomains_Form.cs</DependentUpon>
+    <Compile Include="Components\Engine Config\MemoryDomainsForm.Designer.cs">
+      <DependentUpon>MemoryDomainsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Glitch Harvester\GlitchHarvesterBlastForm.cs">
       <SubType>Form</SubType>
@@ -219,23 +219,23 @@
     <Compile Include="Components\Memory Tools\OpenToolsForm.designer.cs">
       <DependentUpon>OpenToolsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdLimiterProfiler_Form.cs">
+    <Compile Include="Components\Memory Tools\VmdLimiterProfilerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdLimiterProfiler_Form.designer.cs">
-      <DependentUpon>RTC_VmdLimiterProfiler_Form.cs</DependentUpon>
+    <Compile Include="Components\Memory Tools\VmdLimiterProfilerForm.designer.cs">
+      <DependentUpon>VmdLimiterProfilerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_MyVMDs_Form.cs">
+    <Compile Include="Components\Memory Tools\MyVMDsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_MyVMDs_Form.designer.cs">
-      <DependentUpon>RTC_MyVMDs_Form.cs</DependentUpon>
+    <Compile Include="Components\Memory Tools\MyVMDsForm.designer.cs">
+      <DependentUpon>MyVMDsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdSimpleGen_Form.cs">
+    <Compile Include="Components\Memory Tools\VmdSimpleGenForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdSimpleGen_Form.designer.cs">
-      <DependentUpon>RTC_VmdSimpleGen_Form.cs</DependentUpon>
+    <Compile Include="Components\Memory Tools\VmdSimpleGenForm.designer.cs">
+      <DependentUpon>VmdSimpleGenForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\Settings\SettingsCorruptForm.cs">
       <SubType>Form</SubType>
@@ -255,23 +255,23 @@
     <Compile Include="Components\Memory Tools\VmdActForm.designer.cs">
       <DependentUpon>VmdActForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdGen_Form.cs">
+    <Compile Include="Components\Memory Tools\VmdGenForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdGen_Form.designer.cs">
-      <DependentUpon>RTC_VmdGen_Form.cs</DependentUpon>
+    <Compile Include="Components\Memory Tools\VmdGenForm.designer.cs">
+      <DependentUpon>VmdGenForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdNoTool_Form.cs">
+    <Compile Include="Components\Memory Tools\VmdNoToolForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdNoTool_Form.designer.cs">
-      <DependentUpon>RTC_VmdNoTool_Form.cs</DependentUpon>
+    <Compile Include="Components\Memory Tools\VmdNoToolForm.designer.cs">
+      <DependentUpon>VmdNoToolForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdPool_Form.cs">
+    <Compile Include="Components\Memory Tools\VmdPoolForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdPool_Form.designer.cs">
-      <DependentUpon>RTC_VmdPool_Form.cs</DependentUpon>
+    <Compile Include="Components\Memory Tools\VmdPoolForm.designer.cs">
+      <DependentUpon>VmdPoolForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\TemplateForm.cs">
       <SubType>Form</SubType>
@@ -279,29 +279,29 @@
     <Compile Include="Components\TemplateForm.designer.cs">
       <DependentUpon>TemplateForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Settings\RTC_SettingsAbout_Form.cs">
+    <Compile Include="Components\Settings\SettingsAboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Settings\RTC_SettingsAbout_Form.designer.cs">
-      <DependentUpon>RTC_SettingsAbout_Form.cs</DependentUpon>
+    <Compile Include="Components\Settings\SettingsAboutForm.designer.cs">
+      <DependentUpon>SettingsAboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Settings\RTC_SettingsGeneral_Form.cs">
+    <Compile Include="Components\Settings\SettingsGeneralForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Settings\RTC_SettingsGeneral_Form.designer.cs">
-      <DependentUpon>RTC_SettingsGeneral_Form.cs</DependentUpon>
+    <Compile Include="Components\Settings\SettingsGeneralForm.designer.cs">
+      <DependentUpon>SettingsGeneralForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Settings\RTC_SettingsNetCore_Form.cs">
+    <Compile Include="Components\Settings\SettingsNetCoreForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Settings\RTC_SettingsNetCore_Form.designer.cs">
-      <DependentUpon>RTC_SettingsNetCore_Form.cs</DependentUpon>
+    <Compile Include="Components\Settings\SettingsNetCoreForm.designer.cs">
+      <DependentUpon>SettingsNetCoreForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Settings\RTC_SettingsHotkeyConfig_Form.cs">
+    <Compile Include="Components\Settings\SettingsHotkeyConfigForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Settings\RTC_SettingsHotkeyConfig_Form.designer.cs">
-      <DependentUpon>RTC_SettingsHotkeyConfig_Form.cs</DependentUpon>
+    <Compile Include="Components\Settings\SettingsHotkeyConfigForm.designer.cs">
+      <DependentUpon>SettingsHotkeyConfigForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\InputBox.cs">
       <SubType>Form</SubType>
@@ -375,7 +375,7 @@
     <Compile Include="Forms\StockpilePlayerForm.designer.cs">
       <DependentUpon>StockpilePlayerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\RTC_Standalone_Form.cs">
+    <Compile Include="Forms\StandaloneForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="AutoKillSwitch.cs" />
@@ -497,8 +497,8 @@
     <EmbeddedResource Include="Components\Engine Config\GeneralParametersForm.resx">
       <DependentUpon>GeneralParametersForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Engine Config\RTC_MemoryDomains_Form.resx">
-      <DependentUpon>RTC_MemoryDomains_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Engine Config\MemoryDomainsForm.resx">
+      <DependentUpon>MemoryDomainsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Glitch Harvester\GlitchHarvesterBlastForm.resx">
       <DependentUpon>GlitchHarvesterBlastForm.cs</DependentUpon>
@@ -524,14 +524,14 @@
     <EmbeddedResource Include="Components\Memory Tools\OpenToolsForm.resx">
       <DependentUpon>OpenToolsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\RTC_VmdLimiterProfiler_Form.resx">
-      <DependentUpon>RTC_VmdLimiterProfiler_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Memory Tools\VmdLimiterProfilerForm.resx">
+      <DependentUpon>VmdLimiterProfilerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\RTC_MyVMDs_Form.resx">
-      <DependentUpon>RTC_MyVMDs_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Memory Tools\MyVMDsForm.resx">
+      <DependentUpon>MyVMDsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\RTC_VmdSimpleGen_Form.resx">
-      <DependentUpon>RTC_VmdSimpleGen_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Memory Tools\VmdSimpleGenForm.resx">
+      <DependentUpon>VmdSimpleGenForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Settings\SettingsCorruptForm.resx">
       <DependentUpon>SettingsCorruptForm.cs</DependentUpon>
@@ -542,29 +542,29 @@
     <EmbeddedResource Include="Components\Memory Tools\VmdActForm.resx">
       <DependentUpon>VmdActForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\RTC_VmdGen_Form.resx">
-      <DependentUpon>RTC_VmdGen_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Memory Tools\VmdGenForm.resx">
+      <DependentUpon>VmdGenForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\RTC_VmdNoTool_Form.resx">
-      <DependentUpon>RTC_VmdNoTool_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Memory Tools\VmdNoToolForm.resx">
+      <DependentUpon>VmdNoToolForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\RTC_VmdPool_Form.resx">
-      <DependentUpon>RTC_VmdPool_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Memory Tools\VmdPoolForm.resx">
+      <DependentUpon>VmdPoolForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\TemplateForm.resx">
       <DependentUpon>TemplateForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Settings\RTC_SettingsAbout_Form.resx">
-      <DependentUpon>RTC_SettingsAbout_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Settings\SettingsAboutForm.resx">
+      <DependentUpon>SettingsAboutForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Settings\RTC_SettingsGeneral_Form.resx">
-      <DependentUpon>RTC_SettingsGeneral_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Settings\SettingsGeneralForm.resx">
+      <DependentUpon>SettingsGeneralForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Settings\RTC_SettingsHotkeyConfig_Form.resx">
-      <DependentUpon>RTC_SettingsHotkeyConfig_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Settings\SettingsHotkeyConfigForm.resx">
+      <DependentUpon>SettingsHotkeyConfigForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\Settings\RTC_SettingsNetCore_Form.resx">
-      <DependentUpon>RTC_SettingsNetCore_Form.cs</DependentUpon>
+    <EmbeddedResource Include="Components\Settings\SettingsNetCoreForm.resx">
+      <DependentUpon>SettingsNetCoreForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AnalyticsToolForm.resx">
       <DependentUpon>AnalyticsToolForm.cs</DependentUpon>

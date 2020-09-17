@@ -22,6 +22,11 @@ namespace RTCV.NetCore
 
         public static void FormExecute(Action a)
         {
+            if (a == null)
+            {
+                throw new ArgumentNullException(nameof(a));
+            }
+
             if (SyncObject.InvokeRequired)
             {
                 SyncObject.InvokeCorrectly(new MethodInvoker(a.Invoke));
@@ -58,6 +63,11 @@ namespace RTCV.NetCore
 
         public static void FormExecute<T>(Action<T> a, T b)
         {
+            if (a == null)
+            {
+                throw new ArgumentNullException(nameof(a));
+            }
+
             if (SyncObject.InvokeRequired)
             {
                 SyncObject.InvokeCorrectly(new MethodInvoker(() => { a.Invoke(b); }));
@@ -70,6 +80,11 @@ namespace RTCV.NetCore
 
         public static void FormExecute(Delegate a)
         {
+            if (a == null)
+            {
+                throw new ArgumentNullException(nameof(a));
+            }
+
             if (SyncObject.InvokeRequired)
             {
                 SyncObject.InvokeCorrectly(a);
@@ -104,6 +119,16 @@ namespace RTCV.NetCore
 
         public static void SyncObjectExecute(Form sync, Action<object, EventArgs> a)
         {
+            if (a == null)
+            {
+                throw new ArgumentNullException(nameof(a));
+            }
+
+            if (sync == null)
+            {
+                throw new ArgumentNullException(nameof(sync));
+            }
+
             if (sync.InvokeRequired)
             {
                 sync.InvokeCorrectly(new MethodInvoker(() => { a.Invoke(null, null); }));

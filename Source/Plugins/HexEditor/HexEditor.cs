@@ -228,7 +228,7 @@ namespace RTCV.Plugins.HexEditor
             });
         }
 
-        public byte[] ConvertTextToBytes(string str)
+        internal byte[] ConvertTextToBytes(string str)
         {
             if (_textTable.Any())
             {
@@ -267,7 +267,7 @@ namespace RTCV.Plugins.HexEditor
             return bytes;
         }
 
-        public void FindNext(string value, bool wrap)
+        internal void FindNext(string value, bool wrap)
         {
             long found = -1;
 
@@ -320,7 +320,7 @@ namespace RTCV.Plugins.HexEditor
             _hexFind.Close();
         }
 
-        public void FindPrev(string value, bool wrap)
+        internal void FindPrev(string value, bool wrap)
         {
             long found = -1;
 
@@ -575,7 +575,7 @@ namespace RTCV.Plugins.HexEditor
             return _domain.PeekByte(address);
         }
 
-        public void SetDomain(MemoryInterface mi)
+        internal void SetDomain(MemoryInterface mi)
         {
             SetMemoryDomain(mi.Name);
         }
@@ -887,7 +887,7 @@ namespace RTCV.Plugins.HexEditor
             MemoryViewerBox.Refresh();
         }
 
-        public static void CreateVmdFromSelected(string domain, List<long> allAddresses, int wordSize)
+        internal static void CreateVmdFromSelected(string domain, List<long> allAddresses, int wordSize)
         {
             var allAddrCount = allAddresses.Count;
             if (wordSize > 1) //fills the gap caused by address spacing
@@ -940,7 +940,7 @@ namespace RTCV.Plugins.HexEditor
 
         internal static void CreateVmdText(string domain, string text)
         {   //Sends text to the VMD Generator and trigger generation
-            LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_GENERATEVMDTEXT, new object[] { domain, text }, false);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.UI, NetCore.Commands.Remote.GenerateVMDText, new object[] { domain, text }, false);
         }
 
         private void IncrementAddress(long address)

@@ -8,9 +8,6 @@
 
     public partial class ConnectionStatusForm : ComponentForm, IAutoColorize, IBlockable
     {
-        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
-
         public ConnectionStatusForm()
         {
             InitializeComponent();
@@ -44,7 +41,7 @@
                 crashSound = Convert.ToInt32(NetCore.Params.ReadParam("CRASHSOUND"));
             }
 
-            S.GET<RTC_SettingsNetCore_Form>().cbCrashSoundEffect.SelectedIndex = crashSound;
+            S.GET<SettingsNetCoreForm>().cbCrashSoundEffect.SelectedIndex = crashSound;
         }
 
         private void OnFormShown(object sender, EventArgs e)

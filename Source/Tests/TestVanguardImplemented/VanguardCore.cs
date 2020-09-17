@@ -142,8 +142,8 @@ namespace TestVanguardImplemented
 			if (VanguardCore.attached)
 				RTCV.Vanguard.VanguardConnector.PushVanguardSpecRef(VanguardCore.VanguardSpec);
 
-			LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHVANGUARDSPEC, emuSpecTemplate, true);
-			LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_PUSHVANGUARDSPEC, emuSpecTemplate, true);
+			LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetcoreCommands.REMOTE_PUSHVANGUARDSPEC, emuSpecTemplate, true);
+			LocalNetCoreRouter.Route(NetCore.Endpoints.UI, NetcoreCommands.REMOTE_PUSHVANGUARDSPEC, emuSpecTemplate, true);
 
 
 			VanguardSpec.SpecUpdated += (o, e) =>
@@ -153,13 +153,13 @@ namespace TestVanguardImplemented
 				if(!VanguardCore.attached)
 					RTCV.NetCore.AllSpec.VanguardSpec = VanguardSpec;
 
-				LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHVANGUARDSPECUPDATE, partial, true);
-				LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_PUSHVANGUARDSPECUPDATE, partial, true);
+				LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetcoreCommands.REMOTE_PUSHVANGUARDSPECUPDATE, partial, true);
+				LocalNetCoreRouter.Route(NetCore.Endpoints.UI, NetcoreCommands.REMOTE_PUSHVANGUARDSPECUPDATE, partial, true);
 			};
 		}
 
 		//This is the entry point of RTC. Without this method, nothing will load.
-		public static void Start(RTC_Standalone_Form _standaloneForm = null)
+		public static void Start(StandaloneForm _standaloneForm = null)
 		{
 			//Grab an object on the main thread to use for netcore invokes
 			SyncObjectSingleton.SyncObject = Program.SyncForm;

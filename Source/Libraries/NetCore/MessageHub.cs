@@ -165,9 +165,9 @@
         public NetCoreMessage returnMessage => _returnMessage;
         internal NetCoreMessage _returnMessage = null;
 
-        public void setReturnValue(object _objectValue)
+        public void setReturnValue(object obj)
         {
-            var message = new NetCoreAdvancedMessage("{RETURNVALUE}") { objectValue = _objectValue };
+            var message = new NetCoreAdvancedMessage("{RETURNVALUE}") { objectValue = obj };
 
             if (returnMessage != null)
             {

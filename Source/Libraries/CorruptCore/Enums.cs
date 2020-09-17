@@ -1,5 +1,7 @@
 namespace RTCV.CorruptCore
 {
+    using System.Diagnostics.CodeAnalysis;
+
     public enum BlastRadius
     {
         SPREAD,
@@ -87,30 +89,30 @@ namespace RTCV.CorruptCore
 
     public enum BGValueMode
     {
-        SET,
-        ADD,
-        SUBTRACT,
-        RANDOM,
-        RANDOM_RANGE,
-        SHIFT_LEFT,
-        SHIFT_RIGHT,
-        REPLACE_X_WITH_Y,
-        BITWISE_AND,
-        BITWISE_OR,
-        BITWISE_XOR,
-        BITWISE_COMPLEMENT,
-        BITWISE_SHIFT_LEFT,
-        BITWISE_SHIFT_RIGHT,
-        BITWISE_ROTATE_LEFT,
-        BITWISE_ROTATE_RIGHT
+        Set,
+        Add,
+        Subtract,
+        Random,
+        RandomRange,
+        ShiftLeft,
+        ShiftRight,
+        ReplaceXWithY,
+        BitwiseAnd,
+        BitwiseOr,
+        BitwiseXOr,
+        BitwiseComplement,
+        BitwiseShiftLeft,
+        BitwiseShiftRight,
+        BitwiseRotateLeft,
+        BitwiseRotateRight
     }
 
     public enum BGStoreMode
     {
-        CHAINED,
-        SOURCE_SET,
-        SOURCE_RANDOM,
-        DEST_RANDOM,
+        Chained,
+        SourceSet,
+        SourceRandom,
+        DestRandom,
         SELF,
     }
 
@@ -138,6 +140,7 @@ namespace RTCV.CorruptCore
         SILENTERROR,
     }
 
+    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "RTCSPEC members may keep their underscores since changing this would break serialization.")]
     public static class RTCSPEC
     {
         public static readonly string RTCDIR = nameof(RTCDIR);
@@ -223,6 +226,7 @@ namespace RTCV.CorruptCore
         public static readonly string STOCKPILE_RenderAtLoad = nameof(STOCKPILE_RenderAtLoad);
     }
 
+    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "VSPEC names may have underscores since changing this would break serialization.")]
     public static class VSPEC
     {
         public static readonly string NAME = nameof(NAME);

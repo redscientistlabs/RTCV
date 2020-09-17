@@ -71,8 +71,8 @@
   <ItemGroup>
     <Compile Include="ActivationTableObject.cs" />
     <Compile Include="BitlogicListFilter.cs" />
-    <Compile Include="Blast Generator Engines\RTC_ValueGenerator.cs" />
-    <Compile Include="Blast Generator Engines\RTC_StoreGenerator.cs" />
+    <Compile Include="Blast Generator Engines\ValueGenerator.cs" />
+    <Compile Include="Blast Generator Engines\StoreGenerator.cs" />
     <Compile Include="Coroutines\Conditionals\WaitFrames.cs" />
     <Compile Include="Coroutines\Conditionals\WaitUntil.cs" />
     <Compile Include="Coroutines\Coroutine.cs" />
@@ -80,15 +80,15 @@
     <Compile Include="Coroutines\CoroutineRunner.cs" />
     <Compile Include="Coroutines\Yielder.cs" />
     <Compile Include="CorruptCoreConnector.cs" />
-    <Compile Include="Corruption Engines\RTC_BlastGeneratorEngine.cs" />
-    <Compile Include="Corruption Engines\RTC_CustomEngine.cs" />
-    <Compile Include="Corruption Engines\RTC_DistortionEngine.cs" />
-    <Compile Include="Corruption Engines\RTC_ClusterEngine.cs" />
-    <Compile Include="Corruption Engines\RTC_FreezeEngine.cs" />
-    <Compile Include="Corruption Engines\RTC_HellgenieEngine.cs" />
-    <Compile Include="Corruption Engines\RTC_NightmareEngine.cs" />
-    <Compile Include="Corruption Engines\RTC_PipeEngine.cs" />
-    <Compile Include="Corruption Engines\RTC_VectorEngine.cs" />
+    <Compile Include="Corruption Engines\BlastGeneratorEngine.cs" />
+    <Compile Include="Corruption Engines\ClusterEngine.cs" />
+    <Compile Include="Corruption Engines\CustomEngine.cs" />
+    <Compile Include="Corruption Engines\DistortionEngine.cs" />
+    <Compile Include="Corruption Engines\FreezeEngine.cs" />
+    <Compile Include="Corruption Engines\HellgenieEngine.cs" />
+    <Compile Include="Corruption Engines\NightmareEngine.cs" />
+    <Compile Include="Corruption Engines\PipeEngine.cs" />
+    <Compile Include="Corruption Engines\VectorEngine.cs" />
     <Compile Include="EventWarlock\Editor\WarlockEditorFieldAttribute.cs" />
     <Compile Include="EventWarlock\Editor\WarlockEditableAttribute.cs" />
     <Compile Include="EventWarlock\EWConditional.cs" />
@@ -132,7 +132,7 @@
     <Compile Include="ComboBoxItem.cs" />
     <Compile Include="CorruptCore.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="CorruptCore_Extensions.cs" />
+    <Compile Include="CorruptCoreExtensions.cs" />
     <Compile Include="Filtering.cs" />
     <Compile Include="INote.cs" />
     <Compile Include="ProgressBar.cs" />
@@ -143,8 +143,8 @@
     <Compile Include="StashKey.cs" />
     <Compile Include="StepActions.cs" />
     <Compile Include="Stockpile\Stockpile.cs" />
-    <Compile Include="Stockpile\StockpileManager_UISide.cs" />
-    <Compile Include="Stockpile\StockpileManager_EmuSide.cs" />
+    <Compile Include="Stockpile\StockpileManagerUISide.cs" />
+    <Compile Include="Stockpile\StockpileManagerEmuSide.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

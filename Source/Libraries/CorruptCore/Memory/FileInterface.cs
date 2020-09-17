@@ -8,6 +8,7 @@ namespace RTCV.CorruptCore
     using Newtonsoft.Json;
     using RTCV.CorruptCore.Extensions;
 
+    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "FileInterfaceIdentity enum values may have underscores since changing this may break serialization.")]
     public enum FileInterfaceIdentity
     {
         SELF_DESCRIBE,
@@ -42,7 +43,7 @@ namespace RTCV.CorruptCore
         //lastRealMemorySize is used in peek/poke to cancel out non-existing adresses
         public override long? lastMemorySize { get; set; }
         public long? lastRealMemorySize { get; set; }
-        public bool useAutomaticFileBackups { get; set; } = false;
+        public bool UseAutomaticFileBackups { get; set; } = false;
 
         public long MultiFilePosition { get; set; } = 0;
         public long MultiFilePositionCeiling { get; set; } = 0;
@@ -63,21 +64,26 @@ namespace RTCV.CorruptCore
             }
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1801", Justification = "_startPadding and _endPadding will be used eventually")]
-        public FileInterface(string _targetId, bool _bigEndian, bool _useAutomaticFileBackups = false, long _startPadding = 0, long _endPadding = 0)
+        [SuppressMessage("Microsoft.Design", "CA1801", Justification = "_startPadding and endPadding will be used eventually")]
+        public FileInterface(string targetId, bool bigEndian, bool useAutomaticFileBackups = false, long startPadding = 0, long endPadding = 0)
         {
+            if (targetId == null)
+            {
+                throw new ArgumentNullException(nameof(targetId));
+            }
+
             try
             {
-                string[] targetId = _targetId.Split('|');
-                Filename = targetId[1];
+                string[] targetIdParts = targetId.Split('|');
+                Filename = targetIdParts[1];
                 var fi = new FileInfo(Filename);
                 ShortFilename = fi.Name;
-                BigEndian = _bigEndian;
+                BigEndian = bigEndian;
                 StartPadding = 0;
                 EndPadding = 0;
 
                 InterfaceUniquePrefix = Filename.CreateMD5().Substring(0, 4).ToUpper();
-                useAutomaticFileBackups = _useAutomaticFileBackups;
+                this.UseAutomaticFileBackups = useAutomaticFileBackups;
 
                 if (!File.Exists(Filename))
                 {
@@ -106,7 +112,7 @@ namespace RTCV.CorruptCore
                     throw new Exception($"FileInterface failed to load something because the file is (probably) in use \n" + "Culprit file: " + Filename + "\n", ex);
                 }
 
-                if (useAutomaticFileBackups)
+                if (this.UseAutomaticFileBackups)
                 {
                     SetBackup();
                 }
@@ -339,7 +345,7 @@ namespace RTCV.CorruptCore
 
         public override void getMemoryDump()
         {
-            if (useAutomaticFileBackups)
+            if (UseAutomaticFileBackups)
             {
                 lastMemoryDump = MemoryBanks.ReadFile(getBackupFilename());
             }
@@ -374,8 +380,12 @@ namespace RTCV.CorruptCore
 
         public override void PokeBytes(long address, byte[] data)
         {
-            long offsetAddress = address + StartPadding;
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
 
+            long offsetAddress = address + StartPadding;
             if (offsetAddress + data.Length >= lastRealMemorySize)
             {
                 return;

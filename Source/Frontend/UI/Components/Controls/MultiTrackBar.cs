@@ -7,11 +7,11 @@
 
     public class ValueUpdateEventArgs : EventArgs
     {
-        private long value;
+        private long _value;
 
-        public ValueUpdateEventArgs(long _value)
+        public ValueUpdateEventArgs(long value)
         {
-            value = _value;
+            _value = value;
         }
     }
 
@@ -223,7 +223,7 @@
             OnValueChanged(new ValueUpdateEventArgs(Value));
         }
 
-        public void registerSlave(MultiTrackBar comp)
+        internal void registerSlave(MultiTrackBar comp)
         {
             slaveComps.Add(comp);
             comp._parent = this;

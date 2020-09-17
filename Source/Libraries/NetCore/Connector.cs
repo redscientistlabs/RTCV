@@ -8,7 +8,7 @@ namespace RTCV.NetCore
     public class NetCoreConnector : IRoutable, IDisposable
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-        public NetCoreSpec spec { get; private set; } = null;
+        public NetCoreSpec Spec { get; private set; } = null;
         internal UDPLink udp = null;
         internal volatile TCPLink tcp = null;
         internal MessageHub hub = null;
@@ -18,12 +18,12 @@ namespace RTCV.NetCore
 
         public bool Disposed { get; set; } = false;
 
-        public NetCoreConnector(NetCoreSpec _spec)
+        public NetCoreConnector(NetCoreSpec spec)
         {
             logger.Debug($"NetCore Initialization");
 
-            spec = _spec;
-            spec.Connector = this;
+            Spec = spec ?? throw new ArgumentNullException(nameof(spec));
+            Spec.Connector = this;
             Initialize();
 
             logger.Debug($"NetCore Started");
@@ -31,7 +31,7 @@ namespace RTCV.NetCore
 
         private void Initialize()
         {
-            if (spec.Side == NetworkSide.NONE)
+            if (Spec.Side == NetworkSide.NONE)
             {
                 logger.Debug("Could not initialize connector : Side was not set");
                 return;
@@ -39,10 +39,10 @@ namespace RTCV.NetCore
 
             try
             {
-                hub = new MessageHub(spec);
-                udp = new UDPLink(spec);
-                tcp = new TCPLink(spec);
-                watch = new ReturnWatch(spec);
+                hub = new MessageHub(Spec);
+                udp = new UDPLink(Spec);
+                tcp = new TCPLink(Spec);
+                watch = new ReturnWatch(Spec);
             }
             catch (Exception)
             {
@@ -53,6 +53,11 @@ namespace RTCV.NetCore
 
         public object OnMessageReceived(object sender, NetCoreEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             if ((e.message as NetCoreAdvancedMessage)?.requestGuid != null)
             {
                 return SendMessage(e.message, true, true);
@@ -162,7 +167,7 @@ namespace RTCV.NetCore
         public void Dispose()
         {
             Stop(true);
-            spec?.Dispose();
+            Spec?.Dispose();
             udp?.Dispose();
             tcp?.Dispose();
             hub?.Dispose();

@@ -109,7 +109,7 @@ namespace RTCV.CorruptCore
             return new byte[precision];
         }
 
-        public static BlastLayer GetBlastLayer(IMemoryDomain[] Original, IMemoryDomain Corrupt, long skipBytes, bool useCustomPrecision)
+        private static BlastLayer GetBlastLayer(IMemoryDomain[] Original, IMemoryDomain Corrupt, long skipBytes, bool useCustomPrecision)
         {
             BlastLayer bl = new BlastLayer();
 
@@ -139,11 +139,11 @@ namespace RTCV.CorruptCore
                     BlastUnit bu;
                     if (i > OriginalFirstDomainMaxAddress)
                     {
-                        bu = RTC_NightmareEngine.GenerateUnit(getNamefromIMemoryDomainArray(Original, i), i - OriginalFirstDomainMaxAddress - 1, precision, 0, corruptBytes);
+                        bu = NightmareEngine.GenerateUnit(getNamefromIMemoryDomainArray(Original, i), i - OriginalFirstDomainMaxAddress - 1, precision, 0, corruptBytes);
                     }
                     else
                     {
-                        bu = RTC_NightmareEngine.GenerateUnit(getNamefromIMemoryDomainArray(Original, i), i, precision, 0, corruptBytes);
+                        bu = NightmareEngine.GenerateUnit(getNamefromIMemoryDomainArray(Original, i), i, precision, 0, corruptBytes);
                     }
 
                     bu.BigEndian = Original[0].BigEndian;

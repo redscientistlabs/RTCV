@@ -89,8 +89,8 @@ namespace RTCV.UI
                 return;
             }
 
-            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_EVENT_SHUTDOWN, true);
-            LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_EVENT_CLOSEEMULATOR);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.EventShutdown, true);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.EventCloseEmulator);
 
             //Sleep to make sure the message is sent
             System.Threading.Thread.Sleep(500);
@@ -326,7 +326,7 @@ This message only appears once.";
             }
             else
             {
-                LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.MANUALBLAST, true);
+                LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Basic.ManualBlast, true);
             }
         }
 
@@ -365,7 +365,7 @@ This message only appears once.";
         private int settingsRightClickTimer = 0;
         private Timer testErrorTimer = null;
 
-        public void OpenSettings(object sender, MouseEventArgs e)
+        internal void OpenSettings(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -467,7 +467,7 @@ This message only appears once.";
                 btnGpJumpNow.Visible = false;
 
                 //Do this to prevent any potential race
-                var sk = StockpileManager_UISide.BackupedState;
+                var sk = StockpileManagerUISide.BackupedState;
 
                 if (sk != null)
                 {
@@ -582,7 +582,7 @@ This message only appears once.";
 
         private static void BlastRawStash()
         {
-            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.MANUALBLAST, true);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Basic.ManualBlast, true);
             S.GET<GlitchHarvesterBlastForm>().SendRawToStash(null, null);
         }
 
@@ -666,7 +666,7 @@ This message only appears once.";
 
         private void TestCommand(object sender, EventArgs e)
         {
-            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, "TEST");
+            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, "TEST");
         }
     }
 }

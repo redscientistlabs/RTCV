@@ -26,7 +26,7 @@ namespace RTCV.UI.Components.Controls
             set
             {
                 _selectedHolder = value;
-                StockpileManager_UISide.CurrentSavestateStashKey = value?.sk;
+                StockpileManagerUISide.CurrentSavestateStashKey = value?.sk;
             }
         }
 
@@ -128,7 +128,7 @@ namespace RTCV.UI.Components.Controls
             }
         }
 
-        public void BtnSavestate_MouseDown(object sender, MouseEventArgs e)
+        internal void BtnSavestate_MouseDown(object sender, MouseEventArgs e)
         {
             var locate = new Point(((Control)sender).Location.X + e.Location.X, ((Control)sender).Location.Y + e.Location.Y);
 
@@ -158,7 +158,7 @@ namespace RTCV.UI.Components.Controls
                 if (smForm != null && smForm.cbSavestateLoadOnClick.Checked)
                 {
                     btnSaveLoad.Text = "LOAD";
-                    btnSaveLoad_Click(null, null);
+                    HandleSaveLoadClick(null, null);
                 }
             }
             else if (e.Button == MouseButtons.Right)
@@ -293,7 +293,7 @@ namespace RTCV.UI.Components.Controls
                     return;
                 }
 
-                StockpileManager_UISide.LoadState(psk);
+                StockpileManagerUISide.LoadState(psk);
             }
             else
             {
@@ -302,7 +302,7 @@ namespace RTCV.UI.Components.Controls
         }
 
         [SuppressMessage("Microsoft.Design", "IDE1006", Justification = "Designer-originated method")]
-        public void btnSaveLoad_Click(object sender, EventArgs e)
+        public void HandleSaveLoadClick(object sender, EventArgs e)
         {
             var renameSaveStateWord = AllSpec.VanguardSpec[VSPEC.RENAME_SAVESTATE];
             if (renameSaveStateWord != null && renameSaveStateWord is string s)
@@ -313,7 +313,7 @@ namespace RTCV.UI.Components.Controls
             if (btnSaveLoad.Text == "LOAD")
             {
                 LoadCurrentState();
-                StockpileManager_UISide.CurrentStashkey = null;
+                StockpileManagerUISide.CurrentStashkey = null;
                 S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = false;
             }
             else
@@ -324,7 +324,7 @@ namespace RTCV.UI.Components.Controls
                     return;
                 }
 
-                StashKey sk = StockpileManager_UISide.SaveState();
+                StashKey sk = StockpileManagerUISide.SaveState();
 
                 if (sk == null)
                 {
@@ -333,7 +333,7 @@ namespace RTCV.UI.Components.Controls
                     return;
                 }
 
-                StockpileManager_UISide.CurrentSavestateStashKey = sk;
+                StockpileManagerUISide.CurrentSavestateStashKey = sk;
 
                 //Replace if there'a already a sk
                 if (SelectedHolder?.sk != null)

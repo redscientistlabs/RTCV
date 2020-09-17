@@ -4,7 +4,7 @@ namespace RTCV.NetCore
     using System.Collections.Concurrent;
     using System.Threading;
     using System.Threading.Tasks;
-    using RTCV.NetCore.NetCore_Extensions;
+    using RTCV.NetCore.NetCoreExtensions;
 
     public class ReturnWatch : IDisposable
     {
@@ -16,7 +16,7 @@ namespace RTCV.NetCore
         private volatile ConcurrentDictionary<Guid, object> SyncReturns = new ConcurrentDictionary<Guid, object>();
         private volatile int activeWatches = 0;
         private CancellationTokenSource cts = new CancellationTokenSource();
-        public Guid guid { get; private set; } = Guid.NewGuid();
+        private Guid _guid = Guid.NewGuid();
 
         public bool IsWaitingForReturn
         {
@@ -33,7 +33,7 @@ namespace RTCV.NetCore
 
         public void Kill()
         {
-            logger.Info("KillReturnWatch called on {guid}", guid);
+            logger.Info("KillReturnWatch called on {guid}", _guid);
             SyncReturns.Clear();
             cts.Cancel();
             cts = new CancellationTokenSource();
@@ -44,7 +44,7 @@ namespace RTCV.NetCore
             cts.Dispose();
         }
 
-        public void AddReturn(NetCoreAdvancedMessage message)
+        internal void AddReturn(NetCoreAdvancedMessage message)
         {
             if (!message.requestGuid.HasValue)
             {
@@ -82,7 +82,7 @@ namespace RTCV.NetCore
         internal async Task<object> GetValueTask(Guid WatchedGuid, string type, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            logger.Trace("GetValue called on {guid}", guid);
+            logger.Trace("GetValue called on {guid}", _guid);
             //Jams the current thread until the value is returned or the KillReturnWatch flag is set to true
 
             logger.Trace("GetValue:Awaiting -> " + type);

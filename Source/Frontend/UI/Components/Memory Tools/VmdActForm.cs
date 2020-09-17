@@ -18,8 +18,8 @@
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class VmdActForm : ComponentForm, IAutoColorize, IBlockable
     {
-        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+        private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         public VmdActForm()
         {
@@ -124,7 +124,7 @@
             }
         }
 
-        public void SetActiveTable(ActiveTableObject act)
+        private void SetActiveTable(ActiveTableObject act)
         {
             FirstInit = true;
             ActiveTableGenerated = act.Data;
@@ -137,7 +137,7 @@
             return File.ReadAllBytes(Path.Combine(RtcCore.workingDir, "MEMORYDUMPS", key + ".dmp"));
         }
 
-        public long[] CapActiveTable(long[] tempActiveTable)
+        private long[] CapActiveTable(long[] tempActiveTable)
         {
             List<long> cappedActiveTable = new List<long>();
 
@@ -260,7 +260,7 @@
 
             string key = RtcCore.GetRandomKey();
 
-            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_DOMAIN_ACTIVETABLE_MAKEDUMP, new object[] { cbSelectedMemoryDomain.SelectedItem.ToString(), key }, true);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.DomainActiveTableMakeDump, new object[] { cbSelectedMemoryDomain.SelectedItem.ToString(), key }, true);
 
             ActiveTableDumps.Add(key);
             lbFreezeEngineNbDumps.Text = "Memory dumps collected: " + ActiveTableDumps.Count.ToString();
@@ -566,7 +566,7 @@
 
                 MemoryDomains.AddVMD(VMD);
 
-                S.GET<RTC_VmdPool_Form>().RefreshVMDs();
+                S.GET<VmdPoolForm>().RefreshVMDs();
 
                 return;
             }
@@ -612,7 +612,7 @@
 
         private void RefreshDomains()
         {
-            S.GET<RTC_MemoryDomains_Form>().RefreshDomainsAndKeepSelected();
+            S.GET<MemoryDomainsForm>().RefreshDomainsAndKeepSelected();
             var temp = cbSelectedMemoryDomain.SelectedItem;
 
             cbSelectedMemoryDomain.Items.Clear();
