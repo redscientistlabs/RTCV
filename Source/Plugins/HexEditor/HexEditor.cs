@@ -756,7 +756,7 @@ namespace RTCV.Plugins.HexEditor
             long i = HexScrollBar.Value;
             var rowoffset = y / _fontHeight;
             i += rowoffset;
-            var colWidth = DataSize * 2 + 1;
+            var colWidth = (DataSize * 2) + 1;
 
             var column = x / (_fontWidth * colWidth);
 
@@ -822,11 +822,11 @@ namespace RTCV.Plugins.HexEditor
         private Point GetAddressCoordinates(long address)
         {
             var extra = (address % DataSize) * _fontWidth * 2;
-            var xOffset = AddressesLabel.Location.X + _fontWidth / 2 - 2;
+            var xOffset = AddressesLabel.Location.X + (_fontWidth / 2) - 2;
             var yOffset = AddressesLabel.Location.Y;
 
             return new Point(
-                (int)((((address % 16) / DataSize) * (_fontWidth * (DataSize * 2 + 1))) + xOffset + extra),
+                (int)((((address % 16) / DataSize) * (_fontWidth * ((DataSize * 2) + 1))) + xOffset + extra),
                 (int)((((address / 16) - HexScrollBar.Value) * _fontHeight) + yOffset)
                 );
         }
@@ -839,8 +839,8 @@ namespace RTCV.Plugins.HexEditor
 
         private int GetTextOffset()
         {
-            var start = (16 / DataSize) * _fontWidth * (DataSize * 2 + 1);
-            start += AddressesLabel.Location.X + _fontWidth / 2;
+            var start = (16 / DataSize) * _fontWidth * ((DataSize * 2) + 1);
+            start += AddressesLabel.Location.X + (_fontWidth / 2);
             start += _fontWidth * 2;
             return start;
         }
@@ -1053,7 +1053,7 @@ namespace RTCV.Plugins.HexEditor
             Array.Sort(addresses);
 
             //find the maximum length of the exported string
-            var maximumLength = addresses.Length * (export ? 3 : 2) + 8;
+            var maximumLength = (addresses.Length * (export ? 3 : 2)) + 8;
             var sb = new StringBuilder(maximumLength);
 
             //generate it differently for export (as you see it) or copy (raw bytes)
@@ -1757,7 +1757,7 @@ namespace RTCV.Plugins.HexEditor
                 var textX = (int)GetTextX(_addressHighlighted);
                 var textpoint = new Point(textX, point.Y);
 
-                var rect = new Rectangle(point, new Size(_fontWidth * 2 * DataSize + (NeedsExtra(_addressHighlighted) ? _fontWidth : 0) + 3, _fontHeight));
+                var rect = new Rectangle(point, new Size((_fontWidth * 2 * DataSize) + (NeedsExtra(_addressHighlighted) ? _fontWidth : 0) + 3, _fontHeight));
                 e.Graphics.DrawRectangle(new Pen(Brushes.Black), rect);
 
                 var textrect = new Rectangle(textpoint, new Size(_fontWidth * DataSize, _fontHeight));
@@ -1782,7 +1782,7 @@ namespace RTCV.Plugins.HexEditor
                     var textX = (int)GetTextX(address);
                     var textpoint = new Point(textX, point.Y);
 
-                    var rect = new Rectangle(point, new Size(_fontWidth * 2 * DataSize + 3, _fontHeight));
+                    var rect = new Rectangle(point, new Size((_fontWidth * 2 * DataSize) + 3, _fontHeight));
                     e.Graphics.DrawRectangle(new Pen(Brushes.Black), rect);
 
                     var textrect = new Rectangle(textpoint, new Size(_fontWidth * DataSize, _fontHeight));

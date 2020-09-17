@@ -458,9 +458,6 @@ dotnet_diagnostic.SA1404.severity = none
 # Debug.Assert should provide message text
 dotnet_diagnostic.SA1405.severity = none
 
-# Arithmetic expressions should declare precedence
-dotnet_diagnostic.SA1407.severity = none
-
 # Conditional expressions should declare precedence
 dotnet_diagnostic.SA1408.severity = none
 

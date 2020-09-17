@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Collections.Generic;
@@ -469,7 +469,7 @@
                 }
 
                 List<long> newActiveTable = new List<long>();
-                double computedThreshold = ActiveTableDumps.Count * (ActivityThreshold / 100d) + 1d;
+                double computedThreshold = (ActiveTableDumps.Count * (ActivityThreshold / 100d)) + 1d;
                 bool ExcludeEverchanging = cbActiveTableExclude100percent.Checked;
 
                 for (int i = 0; i < ActiveTableActivity.Length; i++)
