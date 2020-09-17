@@ -293,9 +293,6 @@ dotnet_diagnostic.CA1819.severity = none
 # Avoid unnecessary zero-length array allocations
 dotnet_diagnostic.CA1825.severity = none
 
-# Using `StringBuilder.Append(char)` instead of `StringBuilder.Append(string)`
-dotnet_diagnostic.CA1834.severity = none
-
 # Call on object before all references to it are out of scope
 dotnet_diagnostic.CA2000.severity = none
 
