@@ -1,4 +1,4 @@
-﻿namespace RTCV.NetCore
+namespace RTCV.NetCore
 {
     using System;
     using System.Collections.Generic;
@@ -8,15 +8,13 @@
 
     public static class SyncObjectSingleton
     {
-        public static Form SyncObject;
-        public static volatile bool executing;
-        public static volatile Queue<Action> ActionQueue = new Queue<Action>();
+        public static Form SyncObject { get; set; }
         public delegate void ActionDelegate(Action a);
         public delegate void ActionDelegateT<T>(Action<T> a, T b);
         public delegate void GenericDelegate();
-        public static ActionDelegate EmuInvokeDelegate;
-        public static bool UseQueue = false;
-        public static bool EmuThreadIsMainThread = false;
+        public static ActionDelegate EmuInvokeDelegate { get; set; }
+        public static bool UseQueue { get; set; } = false;
+        public static bool EmuThreadIsMainThread { get; set; } = false;
 
         public static void FormExecute(Action a)
         {

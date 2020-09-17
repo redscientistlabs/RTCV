@@ -32,11 +32,8 @@ namespace RTCV.Common
     public static class S
     {
         private static readonly ConcurrentDictionary<Type, object> instances = new ConcurrentDictionary<Type, object>();
-        public static FormRegister formRegister = new FormRegister();
+        public static readonly FormRegister formRegister = new FormRegister();
         private static object lockObject = new object();
-
-        [ThreadStatic]
-        public static volatile Dictionary<int, List<string>> InvokeStackTraces = new Dictionary<int, List<string>>();
 
         public static bool ISNULL<T>()
         {

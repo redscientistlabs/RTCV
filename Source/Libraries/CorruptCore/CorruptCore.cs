@@ -44,9 +44,9 @@ namespace RTCV.CorruptCore
         private static readonly ThreadLocal<Random> rnd = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref seed)));
         public static Random RND => rnd.Value;
 
-        public static bool Attached = false;
+        public static bool Attached { get; set; }  = false;
 
-        public static int CachedPrecision;
+        internal static int CachedPrecision;
 
         public static List<ProblematicProcess> ProblematicProcesses;
 
