@@ -1,4 +1,4 @@
-﻿//Most of this code is lifted from Bizhawk
+//Most of this code is lifted from Bizhawk
 //https://github.com/tasvideos/bizhawk
 //Thanks guys
 
@@ -177,8 +177,8 @@ namespace RTCV.UI.Input
             const float f = 32768 / 10000.0f;
 
             //since our whole input framework really only understands whole axes, let's make the triggers look like an axis
-            float ltrig = g.bLeftTrigger / 255.0f * 2 - 1;
-            float rtrig = g.bRightTrigger / 255.0f * 2 - 1;
+            float ltrig = (g.bLeftTrigger / 255.0f * 2) - 1;
+            float rtrig = (g.bRightTrigger / 255.0f * 2) - 1;
             ltrig *= 10000;
             rtrig *= 10000;
 

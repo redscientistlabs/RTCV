@@ -124,7 +124,7 @@ namespace RTCV.CorruptCore.Extensions
 
         private static BigInteger Mod(BigInteger x, BigInteger m)
         {
-            return (x % m + m) % m;
+            return ((x % m) + m) % m;
         }
 
         [SuppressMessage("Microsoft.Design", "CA1062", Justification = "https://github.com/redscientistlabs/RTCV/issues/187")]
@@ -244,7 +244,7 @@ namespace RTCV.CorruptCore.Extensions
 
                         if (bigIntValue > maxValue)
                         {
-                            bigIntValue = bigIntValue % maxValue - 1; //Works fine for positive
+                            bigIntValue = (bigIntValue % maxValue) - 1; //Works fine for positive
                         }
                         else if (bigIntValue < 0)
                         {
