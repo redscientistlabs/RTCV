@@ -7,6 +7,8 @@
     <OutputPath>..\..\..\Build\</OutputPath>
     <!-- Use Build\ instead of Build\net471\ for output -->
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <!-- System.Reflection.Metadata and System.Runtime.CompilerServices.Unsafe are conflicting dependencies https://docs.microsoft.com/en-us/nuget/reference/errors-and-warnings/nu1605 -->
+    <NoWarn>NU1605</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.ServiceModel" />
