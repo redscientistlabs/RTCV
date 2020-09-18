@@ -5,7 +5,8 @@
     <RootNamespace>ExtensionHost</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <OutputPath>..\..\..\Build\</OutputPath>
-    <MSBuildWarningsAsMessages>NU1702</MSBuildWarningsAsMessages>
+    <!-- Use Build\ instead of Build\net471\ for output -->
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System.ServiceModel" />

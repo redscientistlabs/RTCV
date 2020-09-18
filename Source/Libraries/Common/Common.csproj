@@ -1,12 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net471</TargetFramework>
     <OutputType>Library</OutputType>
     <RootNamespace>RTCV.Common</RootNamespace>
     <AssemblyName>RTCV.Common</AssemblyName>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
     <OutputPath>..\..\..\Build\</OutputPath>
+    <!-- Use Build\ instead of Build\net471\ for output -->
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Compile Update="Controls\LogConsole.cs">
@@ -22,7 +24,6 @@
     </PackageReference>
     <PackageReference Include="NLog.Windows.Forms">
       <Version>4.3.0</Version>
-      <NoWarn>NU1701</NoWarn>
     </PackageReference>
   </ItemGroup>
 </Project>

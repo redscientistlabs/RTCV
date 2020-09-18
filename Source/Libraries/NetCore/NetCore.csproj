@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net471</TargetFramework>
     <OutputType>Library</OutputType>
     <RootNamespace>RTCV.NetCore</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
-    <MSBuildWarningsAsMessages>NU1702</MSBuildWarningsAsMessages>
+    <!-- Use Build\ instead of Build\net471\ for output -->
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>..\..\..\Build\</OutputPath>
@@ -36,7 +37,6 @@
     </PackageReference>
     <PackageReference Include="SevenZipSharp.Net45">
       <Version>1.0.19</Version>
-      <NoWarn>NU1701</NoWarn>
     </PackageReference>
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
       <Version>4.5.2</Version>

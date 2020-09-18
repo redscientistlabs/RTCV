@@ -1,13 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net471</TargetFramework>
     <OutputType>Library</OutputType>
     <RootNamespace>RTCV.CorruptCore</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
     <OutputPath>..\..\..\Build\</OutputPath>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <MSBuildWarningsAsMessages>NU1702</MSBuildWarningsAsMessages>
+    <LangVersion>8.0</LangVersion>
+    <!-- Use Build\ instead of Build\net471\ for output -->
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />

@@ -1,10 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net471</TargetFramework>
     <OutputType>Library</OutputType>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
-    <MSBuildWarningsAsMessages>NU1702</MSBuildWarningsAsMessages>
+    <!-- Use Build\ instead of Build\net471\ for output -->
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>..\..\..\Build\RTC\PLUGINS\</OutputPath>
@@ -35,7 +36,6 @@
     </PackageReference>
     <PackageReference Include="CS-Script.lib">
       <Version>3.30.0</Version>
-      <NoWarn>NU1701</NoWarn>
     </PackageReference>
     <PackageReference Include="Fody">
       <Version>6.1.0</Version>
@@ -44,7 +44,6 @@
     </PackageReference>
     <PackageReference Include="jacobslusser.ScintillaNET">
       <Version>3.6.3</Version>
-      <NoWarn>NU1701</NoWarn>
     </PackageReference>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="NLog">
@@ -52,19 +51,14 @@
     </PackageReference>
     <PackageReference Include="NLog.Windows.Forms">
       <Version>4.3.0</Version>
-      <NoWarn>NU1701</NoWarn>
     </PackageReference>
     <PackageReference Include="System.ComponentModel.Composition" Version="4.7.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
       <Version>4.5.2</Version>
     </PackageReference>
-    <PackageReference Include="PagedControl" Version="2.2.0">
-      <NoWarn>NU1701</NoWarn>
-    </PackageReference>
     <PackageReference Include="TabControl">
       <Version>2.1.2</Version>
-      <NoWarn>NU1701</NoWarn>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

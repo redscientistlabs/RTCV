@@ -1,4 +1,4 @@
-//Based on https://github.com/TASVideos/BizHawk/blob/master/BizHawk.Client.EmuHawk/config/InputWidget.cs
+﻿//Based on https://github.com/TASVideos/BizHawk/blob/master/BizHawk.Client.EmuHawk/config/InputWidget.cs
 namespace RTCV.UI.Components.Controls
 {
     using System;
@@ -39,7 +39,7 @@ namespace RTCV.UI.Components.Controls
 
         public InputWidget()
         {
-            ContextMenuStrip = new ContextMenuStrip();
+            ContextMenu = new ContextMenu();
             _timer.Tick += Timer_Tick;
             ClearBindings();
             AutoTab = true;
