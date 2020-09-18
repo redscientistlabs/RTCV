@@ -103,7 +103,7 @@
       <Version>4.1.0</Version>
     </PackageReference>
     <PackageReference Include="NLog">
-      <Version>4.6.8</Version>
+      <Version>4.7.4</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
