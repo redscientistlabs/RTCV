@@ -29,7 +29,7 @@ jobs:
 
     # Restore nuget packages for all targets
     - name: Restore Nuget packages in current build target
-      run: msbuild /t:restore '.\RTCV\'
+      run: msbuild /t:restore '.\RTCV\RTCV.sln'
     - name: Restore Nuget packages in Bizhawk
       run: msbuild /t:restore '.\Bizhawk-Vanguard\Real-Time Corruptor\BizHawk_RTC\BizHawk.sln'
 
@@ -58,7 +58,7 @@ jobs:
 
     # Restore nuget packages for all targets
     - name: Restore Nuget packages in current build target
-      run: msbuild /t:restore '.\RTCV\'
+      run: msbuild /t:restore '.\RTCV\RTCV.sln'
     - name: Restore Nuget packages in CemuStub
       run: msbuild /t:restore '.\CemuStub-Vanguard\'
 
@@ -87,7 +87,7 @@ jobs:
 
     # Restore nuget packages for all targets
     - name: Restore Nuget packages in current build target
-      run: msbuild /t:restore '.\RTCV\'
+      run: msbuild /t:restore '.\RTCV\RTCV.sln'
     - name: Restore Nuget packages in FileStub
       run: msbuild /t:restore '.\FileStub-Vanguard\FileStub-Vanguard.sln'
 
@@ -116,7 +116,7 @@ jobs:
 
     # Restore nuget packages for all targets
     - name: Restore Nuget packages in current build target
-      run: msbuild /t:restore '.\RTCV\'
+      run: msbuild /t:restore '.\RTCV\RTCV.sln'
     - name: Restore Nuget packages in UnityStub
       run: msbuild /t:restore '.\UnityStub-Vanguard\UnityStub-Vanguard.sln'
 
@@ -145,7 +145,7 @@ jobs:
 
     # Restore nuget packages for all targets
     - name: Restore Nuget packages in current build target
-      run: msbuild /t:restore '.\RTCV\'
+      run: msbuild /t:restore '.\RTCV\RTCV.sln'
     - name: Restore Nuget packages in ProcessStub
       run: msbuild /t:restore '.\ProcessStub-Vanguard\ProcessStub-Vanguard.sln'
 
@@ -166,9 +166,9 @@ jobs:
       with:
         path: 'RTCV'
     - name: Restore Nuget packages in RTCV
-      run: msbuild /t:restore '.\RTCV\'
+      run: msbuild /t:restore '.\RTCV\RTCV.sln'
     - name: Build RTCV
-      run: msbuild '.\RTCV\'
+      run: msbuild '.\RTCV\RTCV.sln'
 
     # Build melonDS
     - name: Checkout melonDS-Vanguard
@@ -203,12 +203,12 @@ jobs:
       uses: actions/checkout@v2
       with:
         path: 'RTCV'
-    - name: Restore Nuget packages in RTCV
-      run: msbuild /t:restore '.\RTCV\'
-    - name: Restore Nuget packages in dolphin-vanguard
-      run: msbuild /t:restore '.\dolphin-vanguard\Source\dolphin-emu.sln'
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.0
+    - name: Restore Nuget packages in RTCV
+      run: msbuild /t:restore '.\RTCV\RTCV.sln'
+    - name: Restore Nuget packages in dolphin-vanguard
+      run: msbuild /t:restore '.\dolphin-vanguard\Source\dolphin-emu.sln'
     - name: Build with MSBuild
       run: msbuild '.\dolphin-vanguard\Source\dolphin-emu.sln' /property:Configuration=Release /property:Platform=x64 /p:TreatWarningAsError=false
 
@@ -226,12 +226,12 @@ jobs:
       uses: actions/checkout@v2
       with:
         path: 'RTCV'
-    - name: Restore Nuget packages in RTCV
-      run: msbuild /t:restore '.\RTCV\'
-    - name: Restore Nuget packages in pcsx2-Vanguard
-      run: msbuild /t:restore '.\pcsx2-Vanguard\PCSX2_suite.sln'
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.0
+    - name: Restore Nuget packages in RTCV
+      run: msbuild /t:restore '.\RTCV\RTCV.sln'
+    - name: Restore Nuget packages in pcsx2-Vanguard
+      run: msbuild /t:restore '.\pcsx2-Vanguard\PCSX2_suite.sln'
     - name: Build with MSBuild
       run: msbuild '.\pcsx2-Vanguard\PCSX2_suite.sln' /property:Configuration=Debug /property:Platform=Win32
 
@@ -246,7 +246,7 @@ jobs:
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1.0.0
     - name: Restore Nuget packages in RTCV
-      run: msbuild /t:restore '.\RTCV\'
+      run: msbuild /t:restore '.\RTCV\RTCV.sln'
     - name: Build RTCV
       run: msbuild '.\RTCV\RTCV.sln'
 
@@ -291,7 +291,7 @@ jobs:
 
     # Restore nuget packages for all targets
     - name: Restore Nuget packages in current build target
-      run: msbuild /t:restore '.\RTCV\'
+      run: msbuild /t:restore '.\RTCV\RTCV.sln'
     - name: Restore Nuget packages in DosboxStub
       run: msbuild /t:restore '.\DosboxStub-Vanguard\DosboxStub-Vanguard.sln'
 
