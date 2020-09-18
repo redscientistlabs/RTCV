@@ -25,7 +25,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="NLog">
-      <Version>4.6.8</Version>
+      <Version>4.7.4</Version>
     </PackageReference>
     <PackageReference Include="System.ComponentModel.Composition" Version="4.7.0" />
   </ItemGroup>

@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NLog">
-      <Version>4.6.8</Version>
+      <Version>4.7.4</Version>
     </PackageReference>
     <PackageReference Include="NLog.Windows.Forms">
       <Version>4.3.0</Version>
