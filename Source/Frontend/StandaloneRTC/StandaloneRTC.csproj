@@ -23,6 +23,8 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <!-- RuntimeIdentifier needed for dolphin -->
     <RuntimeIdentifiers>win7-x64</RuntimeIdentifiers>
+    <!-- Avoid MissingManifestResourceException  errors, see https://github.com/dotnet/ef6/issues/1258#issuecomment-531355034 -->
+    <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>..\..\..\Build\</OutputPath>
