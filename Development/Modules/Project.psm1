@@ -4,6 +4,7 @@ class Project {
     [string]$PrintFriendlyName
     [string]$SolutionPath
     [string]$MSBuildArgs
+    [string]$ExecutablePath
 
     static [Project[]] LoadFromJson([string]$ScriptDirectory)
     {
@@ -21,6 +22,7 @@ class Project {
     {
         $this.PrintFriendlyName = $jsonInput.name
         $this.SolutionPath = (Join-Path $ScriptDirectory -ChildPath (Join-Path "../.." $jsonInput.solutionPath))
+        $this.ExecutablePath = (Join-Path $ScriptDirectory -ChildPath (Join-Path "../.." $jsonInput.exe))
         $this.MSBuildArgs = $($jsonInput.additionalBuildArguments)
         if ($jsonInput.forceReleaseFlavor)
         {
@@ -53,5 +55,10 @@ class Project {
     {
         return [RTCVCommand]::new("Building",`
                                   "msbuild '$($this.SolutionPath)' $($this.MSBuildArgs -Split " ") /consoleloggerparameters:ErrorsOnly /nologo -m")
+    }
+
+    [void] Run()
+    {
+        Start-Process $this.ExecutablePath
     }
 }
