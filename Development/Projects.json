@@ -1,0 +1,49 @@
+[
+    {
+        "name": "RTCV",
+        "solutionPath": "RTCV/RTCV.sln"
+    },
+    {
+        "name": "Bizhawk"    ,
+        "solutionPath": "Bizhawk-Vanguard/Real-Time Corruptor/BizHawk_RTC/BizHawk.sln"
+    },
+    {
+        "name": "CemuStub",
+        "solutionPath": "CemuStub-Vanguard/CemuStub-Vanguard.sln"
+    },
+    {
+        "name": "FileStub",
+        "solutionPath": "FileStub-Vanguard/FileStub-Vanguard.sln"
+    },
+    {
+        "name": "UnityStub",
+        "solutionPath": "UnityStub-Vanguard/UnityStub-Vanguard.sln"
+    },
+    {
+        "name": "ProcessStub",
+        "solutionPath": "ProcessStub-Vanguard/ProcessStub-Vanguard.sln"
+    },
+    {
+        "name": "melonDS",
+        "solutionPath": "melonDS-Vanguard/build/melonDS.sln"
+    },
+    {
+        "name": "dolphin",
+        "solutionPath": "dolphin-vanguard/Source/dolphin-emu.sln",
+        "additionalBuildArguments": "/property:Platform=x64 /p:TreatWarningAsError=false",
+        "forceReleaseFlavor": true
+    },
+    {
+        "name": "pcsx2",
+        "solutionPath": "pcsx2-Vanguard/PCSX2_suite.sln",
+        "additionalBuildArguments": "/property:Platform=Win32"
+    },
+    {
+        "name": "citra",
+        "solutionPath": "citra-vanguard/build/citra.sln"
+    },
+    {
+        "name": "Dosbox",
+        "solutionPath": "DosboxStub-Vanguard/DosboxStub-Vanguard.sln"
+    }
+]
