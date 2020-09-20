@@ -26,8 +26,11 @@ namespace RTCV.CorruptCore
         [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
         public List<StashKey> StashKeys = new List<StashKey>();
 
+        // https://github.com/redscientistlabs/RTCV/issues/241
+        #pragma warning disable 649 // Field is unused, but removing it would change how this object serializes, which could break other components
         [JsonProperty]
         private string Name;
+        #pragma warning restore 649
 
         [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
         public string Filename;

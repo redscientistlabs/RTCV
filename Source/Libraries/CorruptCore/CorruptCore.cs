@@ -232,7 +232,10 @@ namespace RTCV.CorruptCore
         private static bool IsStandaloneUI;
         private static bool IsEmulatorSide;
 
+        #pragma warning disable 649 // CorruptCoreExiting is never assigned to locally, but it is an API that is used by other plugins/emulators
         private static EventHandler CorruptCoreExiting;
+        #pragma warning restore 649
+
         public static EventHandler<GameClosedEventArgs> GameClosed { get; set; }
         public static EventHandler LoadGameDone { get; set; }
 
