@@ -1,4 +1,4 @@
-﻿namespace RTCV.NetCore
+namespace RTCV.NetCore
 {
     using System;
     using System.Collections;
@@ -182,7 +182,7 @@
             StringBuilder tabBuilder = new StringBuilder();
             for (int i = 0; i < tab; i++)
             {
-                tabBuilder.Append("\t");
+                tabBuilder.Append('\t');
             }
 
             string t = tabBuilder.ToString();

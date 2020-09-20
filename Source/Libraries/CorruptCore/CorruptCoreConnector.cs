@@ -1,5 +1,3 @@
-using System.Net;
-
 namespace RTCV.CorruptCore
 {
     using System;

@@ -232,7 +232,7 @@ namespace RTCV.CorruptCore
         private static bool IsStandaloneUI;
         private static bool IsEmulatorSide;
 
-        private static EventHandler CorruptCoreExiting;
+        //private static EventHandler CorruptCoreExiting;
         public static EventHandler<GameClosedEventArgs> GameClosed { get; set; }
         public static EventHandler LoadGameDone { get; set; }
 
@@ -242,7 +242,7 @@ namespace RTCV.CorruptCore
 
         public static void Shutdown()
         {
-            CorruptCoreExiting?.Invoke(null, null);
+            //CorruptCoreExiting?.Invoke(null, null);
             PluginHost.Shutdown();
         }
 
