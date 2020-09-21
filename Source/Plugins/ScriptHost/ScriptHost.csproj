@@ -33,9 +33,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Frontend\UI\UI.csproj" />
-    <ProjectReference Include="..\..\Libraries\Common\Common.csproj" />
-    <ProjectReference Include="..\..\Libraries\PluginHost\PluginHost.csproj" />
+    <ProjectReference Include="..\..\Frontend\UI\UI.csproj">
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Common\Common.csproj">
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\PluginHost\PluginHost.csproj">
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Costura.Fody">

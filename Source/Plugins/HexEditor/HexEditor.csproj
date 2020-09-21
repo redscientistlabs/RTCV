@@ -9,10 +9,18 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Common\Common.csproj" />
-    <ProjectReference Include="..\..\Libraries\CorruptCore\CorruptCore.csproj" />
-    <ProjectReference Include="..\..\Libraries\NetCore\NetCore.csproj" />
-    <ProjectReference Include="..\..\Libraries\PluginHost\PluginHost.csproj" />
+    <ProjectReference Include="..\..\Libraries\Common\Common.csproj">
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\CorruptCore\CorruptCore.csproj">
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\NetCore\NetCore.csproj">
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\PluginHost\PluginHost.csproj">
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Update="HexTextBox.cs">
