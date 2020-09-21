@@ -80,8 +80,8 @@ namespace RTCV.CorruptCore
                 var fi = new FileInfo(Filename);
                 ShortFilename = fi.Name;
                 BigEndian = bigEndian;
-                StartPadding = 0;
-                EndPadding = 0;
+                StartPadding = startPadding;
+                EndPadding = endPadding;
 
                 InterfaceUniquePrefix = Filename.CreateMD5().Substring(0, 4).ToUpper();
                 this.UseAutomaticFileBackups = useAutomaticFileBackups;
