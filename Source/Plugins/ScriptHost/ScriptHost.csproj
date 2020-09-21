@@ -6,6 +6,13 @@
     <UseWindowsForms>true</UseWindowsForms>
     <!-- Use Build\ instead of Build\net471\ for output -->
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <!--
+      Avoid MissingManifestResourceException errors. For more context, see:
+        https://github.com/dotnet/ef6/issues/1258#issuecomment-531355034
+        https://docs.microsoft.com/en-us/dotnet/core/compatibility/msbuild#resource-manifest-file-name-change
+        https://github.com/redscientistlabs/RTCV/pull/239#discussion_r491094052
+    -->
+    <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>..\..\..\Build\RTC\PLUGINS\</OutputPath>
