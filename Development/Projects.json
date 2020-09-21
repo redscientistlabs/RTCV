@@ -1,0 +1,60 @@
+[
+    {
+        "name": "RTCV",
+        "solutionPath": "RTCV/RTCV.sln",
+        "exe": "RTCV/Build/StandaloneRTC.exe"
+    },
+    {
+        "name": "Bizhawk",
+        "solutionPath": "Bizhawk-Vanguard/Real-Time Corruptor/BizHawk_RTC/BizHawk.sln",
+        "exe": "Bizhawk-Vanguard/Real-Time Corruptor/BizHawk_RTC/output/EmuHawk.exe"
+    },
+    {
+        "name": "CemuStub",
+        "solutionPath": "CemuStub-Vanguard/CemuStub-Vanguard.sln",
+        "exe": "CemuStub-Vanguard/CemuStub/bin/Debug/CemuStub.exe"
+    },
+    {
+        "name": "FileStub",
+        "solutionPath": "FileStub-Vanguard/FileStub-Vanguard.sln",
+        "exe": "FileStub-Vanguard/FileStub/bin/x64/Debug/FileStub.exe"
+    },
+    {
+        "name": "UnityStub",
+        "solutionPath": "UnityStub-Vanguard/UnityStub-Vanguard.sln",
+        "exe": "UnityStub-Vanguard/UnityStub/bin/x64/Debug/UnityStub.exe"
+    },
+    {
+        "name": "ProcessStub",
+        "solutionPath": "ProcessStub-Vanguard/ProcessStub-Vanguard.sln",
+        "exe": "ProcessStub-Vanguard/ProcessStub/bin/x64/Debug/ProcessStub.exe"
+    },
+    {
+        "name": "melonDS",
+        "solutionPath": "melonDS-Vanguard/build/melonDS.sln",
+        "exe": "melonDS-Vanguard/build/Debug/melonDS.exe"
+    },
+    {
+        "name": "dolphin",
+        "solutionPath": "dolphin-vanguard/Source/dolphin-emu.sln",
+        "additionalBuildArguments": "/property:Platform=x64 /p:TreatWarningAsError=false",
+        "forceReleaseFlavor": true,
+        "exe": "dolphin-vanguard/Build/x64/Release/Dolphin/bin"
+    },
+    {
+        "name": "pcsx2",
+        "solutionPath": "pcsx2-Vanguard/PCSX2_suite.sln",
+        "additionalBuildArguments": "/property:Platform=Win32",
+        "exe": "pcsx2-Vanguard/bin/pcsx2.exe"
+    },
+    {
+        "name": "citra",
+        "solutionPath": "citra-vanguard/build/citra.sln",
+        "exe": "citra-vanguard/build/bin/Debug/citra-qt.exe"
+    },
+    {
+        "name": "Dosbox",
+        "solutionPath": "DosboxStub-Vanguard/DosboxStub-Vanguard.sln",
+        "exe": "DosboxStub-Vanguard/DosboxStub/bin/x64/Debug/DosboxStub.exe"
+    }
+]

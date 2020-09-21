@@ -53,7 +53,7 @@
                 temp.Add(cb.Name);
 
                 sb.Append(cb.Name);
-                sb.Append(",");
+                sb.Append(',');
             }
             if (S.GET<BlastEditorForm>() != null)
             {
