@@ -5,6 +5,7 @@
     <RootNamespace>RTCV.Plugins</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <OutputPath>..\..\..\Build\RTC\PLUGINS\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\PluginHost\PluginHost.csproj" />
