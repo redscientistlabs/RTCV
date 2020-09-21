@@ -532,4 +532,25 @@ namespace RTCV.CorruptCore
             }
         }
     }
+
+    [Serializable()]
+    public class TargetLoader
+    {
+
+        public string Path { get; set; } = null;
+        public long PaddingHeader { get; set; } = 0;
+        public long PaddingFooter { get; set; } = 0;
+        public bool IsMain { get; set; } = false;
+
+        public TargetLoader(string path, bool isMain)
+        {
+            Path = path;
+            IsMain = isMain;
+        }
+
+        public override string ToString()
+        {
+            return Path;
+        }
+    }
 }

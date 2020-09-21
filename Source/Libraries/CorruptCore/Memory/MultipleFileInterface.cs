@@ -20,25 +20,27 @@ namespace RTCV.CorruptCore
 
         public List<FileInterface> FileInterfaces { get; private set; } = new List<FileInterface>();
 
-        public MultipleFileInterface(string targetId, bool bigEndian, bool useAutomaticFileBackups = false)
+        public MultipleFileInterface(TargetLoader[] targets, bool bigEndian, bool useAutomaticFileBackups = false)
         {
-            if (targetId == null)
+            if (targets == null)
             {
-                throw new ArgumentNullException(nameof(targetId));
+                throw new ArgumentNullException(nameof(targets));
             }
 
             try
             {
                 BigEndian = bigEndian;
-                var targetIdParts = targetId.Split('|');
-                foreach (var t in targetIdParts)
+                foreach (var target in targets)
                 {
                     try
                     {
-                        var fi = new FileInterface("File|" + t, bigEndian, useAutomaticFileBackups)
-                        {
-                            parent = this
-                        };
+                        var fi = new FileInterface(
+                        targetId: "File|" + target.Path,
+                        bigEndian: BigEndian,
+                        useAutomaticFileBackups: true,
+                        startPadding: target.PaddingHeader,
+                        endPadding: target.PaddingFooter);
+
                         FileInterfaces.Add(fi);
                     }
                     catch
