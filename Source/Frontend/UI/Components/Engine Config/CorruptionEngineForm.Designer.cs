@@ -42,7 +42,6 @@ namespace RTCV.UI
             this.label21 = new System.Windows.Forms.Label();
             this.btnOpenBlastGenerator = new System.Windows.Forms.Button();
             this.gbVectorEngine = new System.Windows.Forms.GroupBox();
-            this.cbVectorUnlockPrecision = new System.Windows.Forms.CheckBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lbVectorEngineValueText1 = new System.Windows.Forms.Label();
             this.cbVectorValueList = new System.Windows.Forms.ComboBox();
@@ -115,6 +114,7 @@ namespace RTCV.UI
             this.label12 = new System.Windows.Forms.Label();
             this.comboBox9 = new System.Windows.Forms.ComboBox();
             this.label22 = new System.Windows.Forms.Label();
+            this.cbVectorUnlockPrecision = new System.Windows.Forms.CheckBox();
             this.pnCustomPrecision.SuspendLayout();
             this.gbBlastGeneratorEngine.SuspendLayout();
             this.gbVectorEngine.SuspendLayout();
@@ -131,9 +131,9 @@ namespace RTCV.UI
             ((System.ComponentModel.ISupportInitialize)(this.clusterChunkModifier)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.clusterChunkSize)).BeginInit();
             this.SuspendLayout();
-            // 
+            //
             // pnCustomPrecision
-            // 
+            //
             this.pnCustomPrecision.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.pnCustomPrecision.Controls.Add(this.cbCustomPrecision);
             this.pnCustomPrecision.Controls.Add(this.label5);
@@ -145,9 +145,9 @@ namespace RTCV.UI
             this.pnCustomPrecision.TabIndex = 139;
             this.pnCustomPrecision.Tag = "color:dark2";
             this.pnCustomPrecision.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // cbCustomPrecision
-            // 
+            //
             this.cbCustomPrecision.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.cbCustomPrecision.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCustomPrecision.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -166,9 +166,9 @@ namespace RTCV.UI
             this.cbCustomPrecision.Tag = "color:normal";
             this.cbCustomPrecision.SelectedIndexChanged += new System.EventHandler(this.UpdateCustomPrecision);
             this.cbCustomPrecision.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // label5
-            // 
+            //
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F);
             this.label5.ForeColor = System.Drawing.Color.White;
@@ -177,9 +177,9 @@ namespace RTCV.UI
             this.label5.Size = new System.Drawing.Size(95, 13);
             this.label5.TabIndex = 82;
             this.label5.Text = "Engine Precision:";
-            // 
+            //
             // label8
-            // 
+            //
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F);
             this.label8.ForeColor = System.Drawing.Color.White;
@@ -188,9 +188,9 @@ namespace RTCV.UI
             this.label8.Size = new System.Drawing.Size(63, 13);
             this.label8.TabIndex = 149;
             this.label8.Text = "Alignment:";
-            // 
+            //
             // nmAlignment
-            // 
+            //
             this.nmAlignment.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.nmAlignment.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.nmAlignment.ForeColor = System.Drawing.Color.White;
@@ -217,9 +217,9 @@ namespace RTCV.UI
             0,
             0});
             this.nmAlignment.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // cbSelectedEngine
-            // 
+            //
             this.cbSelectedEngine.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.cbSelectedEngine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSelectedEngine.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -243,9 +243,9 @@ namespace RTCV.UI
             this.cbSelectedEngine.Tag = "color:normal";
             this.cbSelectedEngine.SelectedIndexChanged += new System.EventHandler(this.UpdateEngine);
             this.cbSelectedEngine.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // gbSelectedEngine
-            // 
+            //
             this.gbSelectedEngine.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.gbSelectedEngine.ForeColor = System.Drawing.Color.White;
             this.gbSelectedEngine.Location = new System.Drawing.Point(19, 7);
@@ -255,9 +255,9 @@ namespace RTCV.UI
             this.gbSelectedEngine.TabStop = false;
             this.gbSelectedEngine.Visible = false;
             this.gbSelectedEngine.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // gbBlastGeneratorEngine
-            // 
+            //
             this.gbBlastGeneratorEngine.Controls.Add(this.label10);
             this.gbBlastGeneratorEngine.Controls.Add(this.comboBox8);
             this.gbBlastGeneratorEngine.Controls.Add(this.label21);
@@ -271,9 +271,9 @@ namespace RTCV.UI
             this.gbBlastGeneratorEngine.TabStop = false;
             this.gbBlastGeneratorEngine.Visible = false;
             this.gbBlastGeneratorEngine.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // label10
-            // 
+            //
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Italic);
             this.label10.Location = new System.Drawing.Point(174, 36);
@@ -283,9 +283,9 @@ namespace RTCV.UI
             this.label10.TabIndex = 80;
             this.label10.Text = resources.GetString("label10.Text");
             this.label10.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // comboBox8
-            // 
+            //
             this.comboBox8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.comboBox8.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -299,9 +299,9 @@ namespace RTCV.UI
             this.comboBox8.Tag = "color:normal";
             this.comboBox8.Visible = false;
             this.comboBox8.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // label21
-            // 
+            //
             this.label21.AutoSize = true;
             this.label21.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
             this.label21.Location = new System.Drawing.Point(170, 16);
@@ -310,9 +310,9 @@ namespace RTCV.UI
             this.label21.TabIndex = 78;
             this.label21.Text = "Imports corruption from the Blast Generator";
             this.label21.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // btnOpenBlastGenerator
-            // 
+            //
             this.btnOpenBlastGenerator.BackColor = System.Drawing.Color.Gray;
             this.btnOpenBlastGenerator.FlatAppearance.BorderSize = 0;
             this.btnOpenBlastGenerator.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -328,9 +328,9 @@ namespace RTCV.UI
             this.btnOpenBlastGenerator.UseVisualStyleBackColor = false;
             this.btnOpenBlastGenerator.Click += new System.EventHandler(this.OpenBlastGenerator);
             this.btnOpenBlastGenerator.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // gbVectorEngine
-            // 
+            //
             this.gbVectorEngine.Controls.Add(this.cbVectorUnlockPrecision);
             this.gbVectorEngine.Controls.Add(this.panel2);
             this.gbVectorEngine.Controls.Add(this.pnLimiterList);
@@ -345,22 +345,9 @@ namespace RTCV.UI
             this.gbVectorEngine.TabStop = false;
             this.gbVectorEngine.Visible = false;
             this.gbVectorEngine.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // cbVectorUnlockPrecision
-            // 
-            this.cbVectorUnlockPrecision.AutoSize = true;
-            this.cbVectorUnlockPrecision.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
-            this.cbVectorUnlockPrecision.ForeColor = System.Drawing.Color.White;
-            this.cbVectorUnlockPrecision.Location = new System.Drawing.Point(357, 15);
-            this.cbVectorUnlockPrecision.Name = "cbVectorUnlockPrecision";
-            this.cbVectorUnlockPrecision.Size = new System.Drawing.Size(59, 17);
-            this.cbVectorUnlockPrecision.TabIndex = 144;
-            this.cbVectorUnlockPrecision.Text = "Unlock";
-            this.cbVectorUnlockPrecision.UseVisualStyleBackColor = true;
-            this.cbVectorUnlockPrecision.CheckedChanged += new System.EventHandler(this.UpdateVectorUnlockPrecision);
-            // 
+            //
             // panel2
-            // 
+            //
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.panel2.Controls.Add(this.lbVectorEngineValueText1);
             this.panel2.Controls.Add(this.cbVectorValueList);
@@ -371,9 +358,9 @@ namespace RTCV.UI
             this.panel2.TabIndex = 135;
             this.panel2.Tag = "color:dark2";
             this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // lbVectorEngineValueText1
-            // 
+            //
             this.lbVectorEngineValueText1.AutoSize = true;
             this.lbVectorEngineValueText1.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lbVectorEngineValueText1.Location = new System.Drawing.Point(165, 25);
@@ -382,9 +369,9 @@ namespace RTCV.UI
             this.lbVectorEngineValueText1.TabIndex = 138;
             this.lbVectorEngineValueText1.Text = "Replacement values";
             this.lbVectorEngineValueText1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // cbVectorValueList
-            // 
+            //
             this.cbVectorValueList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.cbVectorValueList.DataSource = ((object)(resources.GetObject("cbVectorValueList.DataSource")));
             this.cbVectorValueList.DisplayMember = "Name";
@@ -403,9 +390,9 @@ namespace RTCV.UI
             this.cbVectorValueList.ValueMember = "Value";
             this.cbVectorValueList.SelectedIndexChanged += new System.EventHandler(this.UpdateVectorValueList);
             this.cbVectorValueList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // label18
-            // 
+            //
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label18.Location = new System.Drawing.Point(5, 4);
@@ -414,9 +401,9 @@ namespace RTCV.UI
             this.label18.TabIndex = 80;
             this.label18.Text = "Value list:";
             this.label18.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // pnLimiterList
-            // 
+            //
             this.pnLimiterList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.pnLimiterList.Controls.Add(this.lbVectorEngineLimiterText1);
             this.pnLimiterList.Controls.Add(this.cbVectorLimiterList);
@@ -427,9 +414,9 @@ namespace RTCV.UI
             this.pnLimiterList.TabIndex = 134;
             this.pnLimiterList.Tag = "color:dark2";
             this.pnLimiterList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // lbVectorEngineLimiterText1
-            // 
+            //
             this.lbVectorEngineLimiterText1.AutoSize = true;
             this.lbVectorEngineLimiterText1.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lbVectorEngineLimiterText1.Location = new System.Drawing.Point(165, 24);
@@ -438,9 +425,9 @@ namespace RTCV.UI
             this.lbVectorEngineLimiterText1.TabIndex = 141;
             this.lbVectorEngineLimiterText1.Text = "Comparison values";
             this.lbVectorEngineLimiterText1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // cbVectorLimiterList
-            // 
+            //
             this.cbVectorLimiterList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.cbVectorLimiterList.DataSource = ((object)(resources.GetObject("cbVectorLimiterList.DataSource")));
             this.cbVectorLimiterList.DisplayMember = "Name";
@@ -459,9 +446,9 @@ namespace RTCV.UI
             this.cbVectorLimiterList.ValueMember = "Value";
             this.cbVectorLimiterList.SelectedIndexChanged += new System.EventHandler(this.UpdateVectorLimiterList);
             this.cbVectorLimiterList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // label13
-            // 
+            //
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label13.Location = new System.Drawing.Point(6, 4);
@@ -470,9 +457,9 @@ namespace RTCV.UI
             this.label13.TabIndex = 79;
             this.label13.Text = "Limiter list:";
             this.label13.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // comboBox6
-            // 
+            //
             this.comboBox6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.comboBox6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -486,9 +473,9 @@ namespace RTCV.UI
             this.comboBox6.Tag = "color:dark1";
             this.comboBox6.Visible = false;
             this.comboBox6.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // label19
-            // 
+            //
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
             this.label19.Location = new System.Drawing.Point(170, 16);
@@ -497,9 +484,9 @@ namespace RTCV.UI
             this.label19.TabIndex = 77;
             this.label19.Text = "Corrupts 32-bit values using lists";
             this.label19.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // gbPipeEngine
-            // 
+            //
             this.gbPipeEngine.Controls.Add(this.label4);
             this.gbPipeEngine.Controls.Add(this.updownMaxPipes);
             this.gbPipeEngine.Controls.Add(this.label14);
@@ -516,9 +503,9 @@ namespace RTCV.UI
             this.gbPipeEngine.TabStop = false;
             this.gbPipeEngine.Visible = false;
             this.gbPipeEngine.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // label4
-            // 
+            //
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Segoe UI Symbol", 8F);
             this.label4.Location = new System.Drawing.Point(5, 42);
@@ -526,9 +513,9 @@ namespace RTCV.UI
             this.label4.Size = new System.Drawing.Size(72, 13);
             this.label4.TabIndex = 143;
             this.label4.Text = "Max ∞ Units";
-            // 
+            //
             // updownMaxPipes
-            // 
+            //
             this.updownMaxPipes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.updownMaxPipes.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.updownMaxPipes.ForeColor = System.Drawing.Color.White;
@@ -553,9 +540,9 @@ namespace RTCV.UI
             0,
             0,
             0});
-            // 
+            //
             // label14
-            // 
+            //
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
             this.label14.Location = new System.Drawing.Point(170, 16);
@@ -564,9 +551,9 @@ namespace RTCV.UI
             this.label14.TabIndex = 84;
             this.label14.Text = "Copies values from an address to another";
             this.label14.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // comboBox5
-            // 
+            //
             this.comboBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.comboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -580,9 +567,9 @@ namespace RTCV.UI
             this.comboBox5.Tag = "color:normal";
             this.comboBox5.Visible = false;
             this.comboBox5.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // cbClearPipesOnRewind
-            // 
+            //
             this.cbClearPipesOnRewind.AutoSize = true;
             this.cbClearPipesOnRewind.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbClearPipesOnRewind.ForeColor = System.Drawing.Color.White;
@@ -594,9 +581,9 @@ namespace RTCV.UI
             this.cbClearPipesOnRewind.UseVisualStyleBackColor = true;
             this.cbClearPipesOnRewind.CheckedChanged += new System.EventHandler(this.OnClearRewindToggle);
             this.cbClearPipesOnRewind.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // cbLockPipes
-            // 
+            //
             this.cbLockPipes.AutoSize = true;
             this.cbLockPipes.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbLockPipes.ForeColor = System.Drawing.Color.White;
@@ -608,9 +595,9 @@ namespace RTCV.UI
             this.cbLockPipes.UseVisualStyleBackColor = true;
             this.cbLockPipes.CheckedChanged += new System.EventHandler(this.OnLockPipesToggle);
             this.cbLockPipes.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // btnClearPipes
-            // 
+            //
             this.btnClearPipes.BackColor = System.Drawing.Color.Gray;
             this.btnClearPipes.FlatAppearance.BorderSize = 0;
             this.btnClearPipes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -626,9 +613,9 @@ namespace RTCV.UI
             this.btnClearPipes.UseVisualStyleBackColor = false;
             this.btnClearPipes.Click += new System.EventHandler(this.ClearPipes);
             this.btnClearPipes.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // gbDistortionEngine
-            // 
+            //
             this.gbDistortionEngine.Controls.Add(this.label17);
             this.gbDistortionEngine.Controls.Add(this.comboBox3);
             this.gbDistortionEngine.Controls.Add(this.btnResyncDistortionEngine);
@@ -643,9 +630,9 @@ namespace RTCV.UI
             this.gbDistortionEngine.TabStop = false;
             this.gbDistortionEngine.Visible = false;
             this.gbDistortionEngine.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // label17
-            // 
+            //
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
             this.label17.Location = new System.Drawing.Point(170, 16);
@@ -654,9 +641,9 @@ namespace RTCV.UI
             this.label17.TabIndex = 87;
             this.label17.Text = "Backups values and restores them later";
             this.label17.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // comboBox3
-            // 
+            //
             this.comboBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -670,9 +657,9 @@ namespace RTCV.UI
             this.comboBox3.Tag = "color:normal";
             this.comboBox3.Visible = false;
             this.comboBox3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // btnResyncDistortionEngine
-            // 
+            //
             this.btnResyncDistortionEngine.BackColor = System.Drawing.Color.Gray;
             this.btnResyncDistortionEngine.FlatAppearance.BorderSize = 0;
             this.btnResyncDistortionEngine.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -688,9 +675,9 @@ namespace RTCV.UI
             this.btnResyncDistortionEngine.UseVisualStyleBackColor = false;
             this.btnResyncDistortionEngine.Click += new System.EventHandler(this.ResyncDistortionEngine);
             this.btnResyncDistortionEngine.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // nmDistortionDelay
-            // 
+            //
             this.nmDistortionDelay.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.nmDistortionDelay.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.nmDistortionDelay.ForeColor = System.Drawing.Color.White;
@@ -716,9 +703,9 @@ namespace RTCV.UI
             0,
             0});
             this.nmDistortionDelay.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // label7
-            // 
+            //
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label7.Location = new System.Drawing.Point(5, 42);
@@ -727,9 +714,9 @@ namespace RTCV.UI
             this.label7.TabIndex = 0;
             this.label7.Text = "Distortion delay:";
             this.label7.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // gbFreezeEngine
-            // 
+            //
             this.gbFreezeEngine.Controls.Add(this.label6);
             this.gbFreezeEngine.Controls.Add(this.updownMaxFreeze);
             this.gbFreezeEngine.Controls.Add(this.label20);
@@ -745,9 +732,9 @@ namespace RTCV.UI
             this.gbFreezeEngine.TabStop = false;
             this.gbFreezeEngine.Visible = false;
             this.gbFreezeEngine.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // label6
-            // 
+            //
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Segoe UI Symbol", 8F);
             this.label6.Location = new System.Drawing.Point(5, 42);
@@ -755,9 +742,9 @@ namespace RTCV.UI
             this.label6.Size = new System.Drawing.Size(72, 13);
             this.label6.TabIndex = 143;
             this.label6.Text = "Max ∞ Units";
-            // 
+            //
             // updownMaxFreeze
-            // 
+            //
             this.updownMaxFreeze.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.updownMaxFreeze.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.updownMaxFreeze.ForeColor = System.Drawing.Color.White;
@@ -782,9 +769,9 @@ namespace RTCV.UI
             0,
             0,
             0});
-            // 
+            //
             // label20
-            // 
+            //
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
             this.label20.Location = new System.Drawing.Point(170, 16);
@@ -793,9 +780,9 @@ namespace RTCV.UI
             this.label20.TabIndex = 88;
             this.label20.Text = "Freezes values in place";
             this.label20.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // comboBox4
-            // 
+            //
             this.comboBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.comboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -809,9 +796,9 @@ namespace RTCV.UI
             this.comboBox4.Tag = "color:normal";
             this.comboBox4.Visible = false;
             this.comboBox4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // cbClearFreezesOnRewind
-            // 
+            //
             this.cbClearFreezesOnRewind.AutoSize = true;
             this.cbClearFreezesOnRewind.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbClearFreezesOnRewind.ForeColor = System.Drawing.Color.White;
@@ -823,9 +810,9 @@ namespace RTCV.UI
             this.cbClearFreezesOnRewind.UseVisualStyleBackColor = true;
             this.cbClearFreezesOnRewind.CheckedChanged += new System.EventHandler(this.OnClearRewindToggle);
             this.cbClearFreezesOnRewind.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // btnClearAllFreezes
-            // 
+            //
             this.btnClearAllFreezes.BackColor = System.Drawing.Color.Gray;
             this.btnClearAllFreezes.FlatAppearance.BorderSize = 0;
             this.btnClearAllFreezes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -841,9 +828,9 @@ namespace RTCV.UI
             this.btnClearAllFreezes.UseVisualStyleBackColor = false;
             this.btnClearAllFreezes.Click += new System.EventHandler(this.ClearCheats);
             this.btnClearAllFreezes.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // gbHellgenieEngine
-            // 
+            //
             this.gbHellgenieEngine.Controls.Add(this.label1);
             this.gbHellgenieEngine.Controls.Add(this.label26);
             this.gbHellgenieEngine.Controls.Add(this.updownMaxCheats);
@@ -863,9 +850,9 @@ namespace RTCV.UI
             this.gbHellgenieEngine.TabStop = false;
             this.gbHellgenieEngine.Visible = false;
             this.gbHellgenieEngine.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // label1
-            // 
+            //
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI Symbol", 8F);
             this.label1.Location = new System.Drawing.Point(5, 92);
@@ -873,9 +860,9 @@ namespace RTCV.UI
             this.label1.Size = new System.Drawing.Size(72, 13);
             this.label1.TabIndex = 141;
             this.label1.Text = "Max ∞ Units";
-            // 
+            //
             // label26
-            // 
+            //
             this.label26.AutoSize = true;
             this.label26.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label26.Location = new System.Drawing.Point(5, 67);
@@ -884,9 +871,9 @@ namespace RTCV.UI
             this.label26.TabIndex = 147;
             this.label26.Text = "Maximum Value";
             this.label26.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // updownMaxCheats
-            // 
+            //
             this.updownMaxCheats.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.updownMaxCheats.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.updownMaxCheats.ForeColor = System.Drawing.Color.White;
@@ -911,9 +898,9 @@ namespace RTCV.UI
             0,
             0,
             0});
-            // 
+            //
             // label27
-            // 
+            //
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label27.Location = new System.Drawing.Point(5, 42);
@@ -922,9 +909,9 @@ namespace RTCV.UI
             this.label27.TabIndex = 144;
             this.label27.Text = "Minimum Value";
             this.label27.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // nmMaxValueHellgenie
-            // 
+            //
             this.nmMaxValueHellgenie.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.nmMaxValueHellgenie.Font = new System.Drawing.Font("Consolas", 8.25F);
             this.nmMaxValueHellgenie.ForeColor = System.Drawing.Color.White;
@@ -950,9 +937,9 @@ namespace RTCV.UI
             0,
             0});
             this.nmMaxValueHellgenie.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // label16
-            // 
+            //
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
             this.label16.Location = new System.Drawing.Point(170, 16);
@@ -961,9 +948,9 @@ namespace RTCV.UI
             this.label16.TabIndex = 86;
             this.label16.Text = "Edits values and makes them keep their value";
             this.label16.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // nmMinValueHellgenie
-            // 
+            //
             this.nmMinValueHellgenie.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.nmMinValueHellgenie.Font = new System.Drawing.Font("Consolas", 8.25F);
             this.nmMinValueHellgenie.ForeColor = System.Drawing.Color.White;
@@ -989,9 +976,9 @@ namespace RTCV.UI
             0,
             0});
             this.nmMinValueHellgenie.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // comboBox2
-            // 
+            //
             this.comboBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -1005,9 +992,9 @@ namespace RTCV.UI
             this.comboBox2.Tag = "color:normal";
             this.comboBox2.Visible = false;
             this.comboBox2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // cbClearCheatsOnRewind
-            // 
+            //
             this.cbClearCheatsOnRewind.AutoSize = true;
             this.cbClearCheatsOnRewind.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbClearCheatsOnRewind.ForeColor = System.Drawing.Color.White;
@@ -1019,9 +1006,9 @@ namespace RTCV.UI
             this.cbClearCheatsOnRewind.UseVisualStyleBackColor = true;
             this.cbClearCheatsOnRewind.CheckedChanged += new System.EventHandler(this.OnClearRewindToggle);
             this.cbClearCheatsOnRewind.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // btnClearCheats
-            // 
+            //
             this.btnClearCheats.BackColor = System.Drawing.Color.Gray;
             this.btnClearCheats.FlatAppearance.BorderSize = 0;
             this.btnClearCheats.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -1037,9 +1024,9 @@ namespace RTCV.UI
             this.btnClearCheats.UseVisualStyleBackColor = false;
             this.btnClearCheats.Click += new System.EventHandler(this.ClearCheats);
             this.btnClearCheats.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // gbNightmareEngine
-            // 
+            //
             this.gbNightmareEngine.Controls.Add(this.label24);
             this.gbNightmareEngine.Controls.Add(this.label23);
             this.gbNightmareEngine.Controls.Add(this.nmMaxValueNightmare);
@@ -1057,9 +1044,9 @@ namespace RTCV.UI
             this.gbNightmareEngine.TabStop = false;
             this.gbNightmareEngine.Visible = false;
             this.gbNightmareEngine.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // label24
-            // 
+            //
             this.label24.AutoSize = true;
             this.label24.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label24.Location = new System.Drawing.Point(5, 91);
@@ -1068,9 +1055,9 @@ namespace RTCV.UI
             this.label24.TabIndex = 143;
             this.label24.Text = "Maximum Value";
             this.label24.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // label23
-            // 
+            //
             this.label23.AutoSize = true;
             this.label23.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label23.Location = new System.Drawing.Point(5, 66);
@@ -1079,9 +1066,9 @@ namespace RTCV.UI
             this.label23.TabIndex = 140;
             this.label23.Text = "Minimum Value";
             this.label23.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // nmMaxValueNightmare
-            // 
+            //
             this.nmMaxValueNightmare.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.nmMaxValueNightmare.Font = new System.Drawing.Font("Consolas", 8.25F);
             this.nmMaxValueNightmare.ForeColor = System.Drawing.Color.White;
@@ -1107,9 +1094,9 @@ namespace RTCV.UI
             0,
             0});
             this.nmMaxValueNightmare.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // nmMinValueNightmare
-            // 
+            //
             this.nmMinValueNightmare.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.nmMinValueNightmare.Font = new System.Drawing.Font("Consolas", 8.25F);
             this.nmMinValueNightmare.ForeColor = System.Drawing.Color.White;
@@ -1135,9 +1122,9 @@ namespace RTCV.UI
             0,
             0});
             this.nmMinValueNightmare.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // label15
-            // 
+            //
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
             this.label15.Location = new System.Drawing.Point(170, 16);
@@ -1146,9 +1133,9 @@ namespace RTCV.UI
             this.label15.TabIndex = 85;
             this.label15.Text = "Replaces or edits values";
             this.label15.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // comboBox1
-            // 
+            //
             this.comboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -1162,9 +1149,9 @@ namespace RTCV.UI
             this.comboBox1.Tag = "color:normal";
             this.comboBox1.Visible = false;
             this.comboBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // cbBlastType
-            // 
+            //
             this.cbBlastType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.cbBlastType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbBlastType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -1182,9 +1169,9 @@ namespace RTCV.UI
             this.cbBlastType.Tag = "color:normal";
             this.cbBlastType.SelectedIndexChanged += new System.EventHandler(this.UpdateBlastType);
             this.cbBlastType.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // label9
-            // 
+            //
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label9.Location = new System.Drawing.Point(5, 41);
@@ -1193,9 +1180,9 @@ namespace RTCV.UI
             this.label9.TabIndex = 12;
             this.label9.Text = "Blast type:";
             this.label9.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // gbCustomEngine
-            // 
+            //
             this.gbCustomEngine.Controls.Add(this.label2);
             this.gbCustomEngine.Controls.Add(this.comboBox7);
             this.gbCustomEngine.Controls.Add(this.label3);
@@ -1208,9 +1195,9 @@ namespace RTCV.UI
             this.gbCustomEngine.TabIndex = 147;
             this.gbCustomEngine.TabStop = false;
             this.gbCustomEngine.Visible = false;
-            // 
+            //
             // label2
-            // 
+            //
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Italic);
             this.label2.Location = new System.Drawing.Point(182, 33);
@@ -1219,9 +1206,9 @@ namespace RTCV.UI
             this.label2.Size = new System.Drawing.Size(204, 26);
             this.label2.TabIndex = 81;
             this.label2.Text = "It has so many options, there\'s no way we could fit them all here!";
-            // 
+            //
             // comboBox7
-            // 
+            //
             this.comboBox7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.comboBox7.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -1234,9 +1221,9 @@ namespace RTCV.UI
             this.comboBox7.TabIndex = 79;
             this.comboBox7.Tag = "color:normal";
             this.comboBox7.Visible = false;
-            // 
+            //
             // label3
-            // 
+            //
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
             this.label3.Location = new System.Drawing.Point(170, 16);
@@ -1244,9 +1231,9 @@ namespace RTCV.UI
             this.label3.Size = new System.Drawing.Size(123, 13);
             this.label3.TabIndex = 78;
             this.label3.Text = "Create your own engine!";
-            // 
+            //
             // btnOpenCustomEngine
-            // 
+            //
             this.btnOpenCustomEngine.BackColor = System.Drawing.Color.Gray;
             this.btnOpenCustomEngine.FlatAppearance.BorderSize = 0;
             this.btnOpenCustomEngine.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -1261,9 +1248,9 @@ namespace RTCV.UI
             this.btnOpenCustomEngine.Text = "Open Custom Engine";
             this.btnOpenCustomEngine.UseVisualStyleBackColor = false;
             this.btnOpenCustomEngine.Click += new System.EventHandler(this.OpenCustomEngine);
-            // 
+            //
             // gbClusterEngine
-            // 
+            //
             this.gbClusterEngine.Controls.Add(this.pnClusterLimiterList);
             this.gbClusterEngine.Controls.Add(this.comboBox9);
             this.gbClusterEngine.Controls.Add(this.label22);
@@ -1275,9 +1262,9 @@ namespace RTCV.UI
             this.gbClusterEngine.TabIndex = 148;
             this.gbClusterEngine.TabStop = false;
             this.gbClusterEngine.Visible = false;
-            // 
+            //
             // pnClusterLimiterList
-            // 
+            //
             this.pnClusterLimiterList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.pnClusterLimiterList.Controls.Add(this.clusterFilterAll);
             this.pnClusterLimiterList.Controls.Add(this.label29);
@@ -1297,9 +1284,9 @@ namespace RTCV.UI
             this.pnClusterLimiterList.TabIndex = 134;
             this.pnClusterLimiterList.Tag = "color:dark2";
             this.pnClusterLimiterList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // clusterFilterAll
-            // 
+            //
             this.clusterFilterAll.AutoSize = true;
             this.clusterFilterAll.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.clusterFilterAll.ForeColor = System.Drawing.Color.White;
@@ -1310,9 +1297,9 @@ namespace RTCV.UI
             this.clusterFilterAll.Text = "Filter All";
             this.clusterFilterAll.UseVisualStyleBackColor = true;
             this.clusterFilterAll.CheckedChanged += new System.EventHandler(this.UpdateClusterFilterAll);
-            // 
+            //
             // label29
-            // 
+            //
             this.label29.AutoSize = true;
             this.label29.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label29.Location = new System.Drawing.Point(293, 52);
@@ -1320,9 +1307,9 @@ namespace RTCV.UI
             this.label29.Size = new System.Drawing.Size(96, 13);
             this.label29.TabIndex = 150;
             this.label29.Text = "Cluster Direction:";
-            // 
+            //
             // clusterDirection
-            // 
+            //
             this.clusterDirection.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.clusterDirection.DisplayMember = "Name";
             this.clusterDirection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -1339,9 +1326,9 @@ namespace RTCV.UI
             this.clusterDirection.Tag = "color:normal";
             this.clusterDirection.ValueMember = "Value";
             this.clusterDirection.SelectedIndexChanged += new System.EventHandler(this.UpdateClusterDirection);
-            // 
+            //
             // clusterSplitUnits
-            // 
+            //
             this.clusterSplitUnits.AutoSize = true;
             this.clusterSplitUnits.Checked = true;
             this.clusterSplitUnits.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -1354,9 +1341,9 @@ namespace RTCV.UI
             this.clusterSplitUnits.Text = "Split Blast Units";
             this.clusterSplitUnits.UseVisualStyleBackColor = true;
             this.clusterSplitUnits.CheckedChanged += new System.EventHandler(this.UpdateClusterSplitUnits);
-            // 
+            //
             // label28
-            // 
+            //
             this.label28.AutoSize = true;
             this.label28.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label28.Location = new System.Drawing.Point(175, 52);
@@ -1364,9 +1351,9 @@ namespace RTCV.UI
             this.label28.Size = new System.Drawing.Size(88, 13);
             this.label28.TabIndex = 148;
             this.label28.Text = "Rotate Amount:";
-            // 
+            //
             // clusterChunkModifier
-            // 
+            //
             this.clusterChunkModifier.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.clusterChunkModifier.Enabled = false;
             this.clusterChunkModifier.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -1391,9 +1378,9 @@ namespace RTCV.UI
             0,
             0,
             0});
-            // 
+            //
             // label25
-            // 
+            //
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label25.Location = new System.Drawing.Point(6, 52);
@@ -1401,9 +1388,9 @@ namespace RTCV.UI
             this.label25.Size = new System.Drawing.Size(51, 13);
             this.label25.TabIndex = 146;
             this.label25.Text = "Method:";
-            // 
+            //
             // cbClusterMethod
-            // 
+            //
             this.cbClusterMethod.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.cbClusterMethod.DisplayMember = "Name";
             this.cbClusterMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -1420,9 +1407,9 @@ namespace RTCV.UI
             this.cbClusterMethod.Tag = "color:normal";
             this.cbClusterMethod.ValueMember = "Value";
             this.cbClusterMethod.SelectedIndexChanged += new System.EventHandler(this.UpdateClusterMethod);
-            // 
+            //
             // label11
-            // 
+            //
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label11.Location = new System.Drawing.Point(176, 3);
@@ -1431,9 +1418,9 @@ namespace RTCV.UI
             this.label11.TabIndex = 142;
             this.label11.Text = "Cluster Chunk Size:";
             this.label11.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // clusterChunkSize
-            // 
+            //
             this.clusterChunkSize.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.clusterChunkSize.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.clusterChunkSize.ForeColor = System.Drawing.Color.White;
@@ -1458,9 +1445,9 @@ namespace RTCV.UI
             0,
             0});
             this.clusterChunkSize.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // cbClusterLimiterList
-            // 
+            //
             this.cbClusterLimiterList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.cbClusterLimiterList.DisplayMember = "Name";
             this.cbClusterLimiterList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -1478,9 +1465,9 @@ namespace RTCV.UI
             this.cbClusterLimiterList.ValueMember = "Value";
             this.cbClusterLimiterList.SelectedIndexChanged += new System.EventHandler(this.UpdateClusterLimiterList);
             this.cbClusterLimiterList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // label12
-            // 
+            //
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label12.Location = new System.Drawing.Point(6, 4);
@@ -1489,9 +1476,9 @@ namespace RTCV.UI
             this.label12.TabIndex = 79;
             this.label12.Text = "Limiter list:";
             this.label12.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
             // comboBox9
-            // 
+            //
             this.comboBox9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.comboBox9.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -1504,9 +1491,9 @@ namespace RTCV.UI
             this.comboBox9.TabIndex = 82;
             this.comboBox9.Tag = "color:dark1";
             this.comboBox9.Visible = false;
-            // 
+            //
             // label22
-            // 
+            //
             this.label22.AutoSize = true;
             this.label22.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
             this.label22.Location = new System.Drawing.Point(170, 16);
@@ -1515,12 +1502,25 @@ namespace RTCV.UI
             this.label22.TabIndex = 77;
             this.label22.Text = "Swaps Values with neighbor Values";
             this.label22.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
+            //
+            // cbVectorUnlockPrecision
+            //
+            this.cbVectorUnlockPrecision.AutoSize = true;
+            this.cbVectorUnlockPrecision.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
+            this.cbVectorUnlockPrecision.ForeColor = System.Drawing.Color.White;
+            this.cbVectorUnlockPrecision.Location = new System.Drawing.Point(357, 15);
+            this.cbVectorUnlockPrecision.Name = "cbVectorUnlockPrecision";
+            this.cbVectorUnlockPrecision.Size = new System.Drawing.Size(59, 17);
+            this.cbVectorUnlockPrecision.TabIndex = 144;
+            this.cbVectorUnlockPrecision.Text = "Unlock";
+            this.cbVectorUnlockPrecision.UseVisualStyleBackColor = true;
+            this.cbVectorUnlockPrecision.CheckedChanged += new System.EventHandler(this.UpdateVectorUnlockPrecision);
+            //
             // CorruptionEngineForm
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Red;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1448, 1097);
             this.Controls.Add(this.gbClusterEngine);
             this.Controls.Add(this.gbCustomEngine);
