@@ -261,7 +261,7 @@ namespace RTCV.UI
 
         private void OnClosing(object sender, FormClosingEventArgs e)
         {
-            if (e.CloseReason != CloseReason.FormOwnerClosing)
+            if (e.CloseReason == CloseReason.UserClosing)
             {
                 //S.GET<RTC_Core_Form>().btnGlitchHarvester.Text = S.GET<RTC_Core_Form>().btnGlitchHarvester.Text.Replace("○ ", "");
 

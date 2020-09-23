@@ -1,6 +1,7 @@
 namespace RTCV.UI
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics;
     using System.Drawing;
     using System.IO;
@@ -89,13 +90,25 @@ namespace RTCV.UI
                 return;
             }
 
+            UICore.isClosing = true;
+
             LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.EventShutdown, true);
             LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.EventCloseEmulator);
 
-            //Sleep to make sure the message is sent
+            //Sleep to make sure the message was sent since we don't handshake it
             System.Threading.Thread.Sleep(500);
 
-            UICore.CloseAllRtcForms();
+            //Clean out the working folders
+            if (!RtcCore.DontCleanSavestatesOnQuit)
+            {
+                Stockpile.EmptyFolder("WORKING");
+            }
+
+            //Shut down vanguard
+            VanguardImplementation.Shutdown();
+
+            //Signal the quit
+            Application.Exit();
         }
 
         private void OnFormLoad(object sender, EventArgs e)
