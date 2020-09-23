@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Collections.Generic;
@@ -12,7 +12,7 @@
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class StockpilePlayerForm : ComponentForm, IAutoColorize, IBlockable
+    public partial class StockpilePlayerForm : ComponentForm, IBlockable
     {
         private bool currentlyLoading = false;
 

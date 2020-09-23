@@ -288,27 +288,6 @@ namespace RTCV.UI
             }
         }
 
-        //All RTC forms
-        public static Form[] AllColorizedSingletons(Type baseType = null)
-        {
-            if (baseType == null)
-            {
-                baseType = typeof(CoreForm);
-            }
-            //This fetches all singletons interface IAutoColorized
-
-            List<Form> all = new List<Form>();
-            foreach (Type t in Assembly.GetAssembly(baseType).GetTypes())
-            {
-                if (typeof(IAutoColorize).IsAssignableFrom(t) && t != typeof(IAutoColorize))
-                {
-                    all.Add((Form)S.GET(Type.GetType(t.ToString())));
-                }
-            }
-
-            return all.ToArray();
-        }
-
         internal static volatile bool isClosing = false;
         private static bool interfaceLocked;
         private static bool lockPending;

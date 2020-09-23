@@ -10,7 +10,7 @@ namespace RTCV.UI
     using RTCV.NetCore;
     using RTCV.Common;
 
-    public partial class AnalyticsToolForm : Form, IAutoColorize
+    public partial class AnalyticsToolForm : Modular.ColorizedForm
     {
         private MemoryInterface MemoryInterface;
         private List<string> ActiveTableDumps;
@@ -79,11 +79,6 @@ namespace RTCV.UI
             }
 
             stf.Show();
-        }
-
-        private void OnFormLoad(object sender, EventArgs e)
-        {
-            Colors.SetRTCColor(Colors.GeneralColor, this);
         }
 
         private void OnFormClosing(object sender, FormClosingEventArgs e)

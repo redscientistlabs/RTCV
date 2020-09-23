@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Drawing;
@@ -9,7 +9,7 @@
     using RTCV.UI.Components.Controls;
     using RTCV.UI.Modular;
 
-    public partial class SimpleModeForm : ComponentForm, IAutoColorize, IBlockable
+    public partial class SimpleModeForm : ComponentForm, IBlockable
     {
         private PlatformType platform = PlatformType.CLASSIC;
 

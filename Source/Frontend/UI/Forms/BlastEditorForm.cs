@@ -57,7 +57,7 @@ namespace RTCV.UI
     using RTCV.UI.Components;
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
-    public partial class BlastEditorForm : Form, IAutoColorize
+    public partial class BlastEditorForm : Modular.ColorizedForm
     {
         private static Dictionary<string, MemoryInterface> _domainToMiDico;
 
@@ -181,7 +181,6 @@ namespace RTCV.UI
 
         private void OnFormLoad(object sender, EventArgs e)
         {
-            Colors.SetRTCColor(Colors.GeneralColor, this);
             _domains = MemoryDomains.MemoryInterfaces?.Keys?.Concat(MemoryDomains.VmdPool.Values.Select(it => it.ToString())).ToArray();
 
             dgvBlastEditor.AllowUserToOrderColumns = true;

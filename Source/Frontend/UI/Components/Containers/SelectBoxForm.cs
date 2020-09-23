@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Windows.Forms;
@@ -14,8 +14,6 @@
         public SelectBoxForm(ComponentForm[] childForms)
         {
             InitializeComponent();
-
-            Colors.SetRTCColor(Colors.GeneralColor, this);
 
             _childForms = childForms ?? throw new ArgumentNullException(nameof(childForms));
 

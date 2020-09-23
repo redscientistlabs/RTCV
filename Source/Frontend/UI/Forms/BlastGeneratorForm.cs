@@ -81,7 +81,6 @@ namespace RTCV.UI
             dgvBlastGenerator.CellMouseClick += OnCellMouseClick;
             dgvBlastGenerator.CellMouseDoubleClick += OnCellMouseDoubleClick;
 
-            Colors.SetRTCColor(Colors.GeneralColor, this);
             getAllControls(this);
         }
 

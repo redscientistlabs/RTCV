@@ -6,13 +6,11 @@ namespace RTCV.UI
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class SettingsCorruptForm : ComponentForm, IAutoColorize, IBlockable
+    public partial class SettingsCorruptForm : ComponentForm, IBlockable
     {
         public SettingsCorruptForm()
         {
             InitializeComponent();
-
-            Colors.SetRTCColor(Colors.GeneralColor, this);
 
             var handler = new EventHandler<Components.Controls.ValueUpdateEventArgs<decimal>>(UpdateMaxInfiniteStepUnits);
             nmMaxInfiniteStepUnits.ValueChanged += handler;

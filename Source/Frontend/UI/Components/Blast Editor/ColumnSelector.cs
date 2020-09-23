@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Collections.Generic;
@@ -7,13 +7,13 @@
     using System.Text;
     using System.Windows.Forms;
     using RTCV.Common;
+    using RTCV.UI.Modular;
 
-    public partial class ColumnSelector : Form, IAutoColorize
+    public partial class ColumnSelector : ColorizedForm
     {
         public ColumnSelector()
         {
             InitializeComponent();
-            Colors.SetRTCColor(Colors.GeneralColor, this);
             this.FormClosing += this.OnFormClosing;
         }
 
