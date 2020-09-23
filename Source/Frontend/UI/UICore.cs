@@ -289,30 +289,6 @@ namespace RTCV.UI
         }
 
         internal static volatile bool isClosing = false;
-
-        public static void CloseAllRtcForms() //This allows every form to get closed to prevent RTC from hanging
-        {
-            if (isClosing)
-            {
-                return;
-            }
-
-            isClosing = true;
-
-            if (S.GET<Forms.StandaloneForm>() != null)
-            {
-                S.GET<Forms.StandaloneForm>().Close();
-            }
-
-            //Clean out the working folders
-            if (!RtcCore.DontCleanSavestatesOnQuit)
-            {
-                Stockpile.EmptyFolder("WORKING");
-            }
-
-            Environment.Exit(0);
-        }
-
         private static bool interfaceLocked;
         private static bool lockPending;
         private static object lockObject = new object();
