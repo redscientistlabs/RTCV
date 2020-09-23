@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Diagnostics;
@@ -8,7 +8,7 @@
     using RTCV.UI.Modular;
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
-    public partial class SettingsForm : ComponentForm, IAutoColorize, IBlockable
+    public partial class SettingsForm : ComponentForm, IBlockable
     {
         public ListBoxForm lbForm { get; private set; }
 

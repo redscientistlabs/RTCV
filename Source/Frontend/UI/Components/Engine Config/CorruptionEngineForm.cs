@@ -9,7 +9,7 @@ namespace RTCV.UI
     using RTCV.NetCore;
     using RTCV.UI.Modular;
 
-    public partial class CorruptionEngineForm : ComponentForm, IAutoColorize, IBlockable
+    public partial class CorruptionEngineForm : ComponentForm, IBlockable
     {
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);

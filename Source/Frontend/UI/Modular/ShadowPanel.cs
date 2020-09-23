@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Drawing;
@@ -7,7 +7,7 @@
     using RTCV.UI.Modular;
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
-    public partial class ShadowPanel : Form
+    public partial class ShadowPanel : ColorizedForm
     {
         private CanvasForm _parentForm;
         public Form subForm { get; set; } = null;
@@ -25,8 +25,6 @@
                 BackColor = Color.DarkSlateBlue,
                 Opacity = 0.2f
             };
-
-            Colors.SetRTCColor(Colors.GeneralColor, this);
 
             _parentForm = parentForm;
             UpdateBackground();

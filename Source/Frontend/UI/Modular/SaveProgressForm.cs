@@ -6,7 +6,7 @@ namespace RTCV.UI
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class SaveProgressForm : ComponentForm, IAutoColorize, ISubForm
+    public partial class SaveProgressForm : ComponentForm, ISubForm
     {
         public SaveProgressForm()
         {

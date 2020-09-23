@@ -15,7 +15,7 @@ namespace RTCV.UI
     using RTCV.UI.Modular;
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
-    public partial class CoreForm : Form, IAutoColorize
+    public partial class CoreForm : Modular.ColorizedForm
     {
         //This form traps events and forwards them.
         //It contains the single CanvasForm instance.
@@ -78,8 +78,6 @@ namespace RTCV.UI
             yPadding = (Height - cfForm.Height);
             corePadding = pnSideBar.Width;
             xPadding = (Width - cfForm.Width) - corePadding;
-
-            //Colors.SetRTCColor(Colors.GeneralColor);
         }
 
         private void OnFormClosing(object sender, FormClosingEventArgs e)

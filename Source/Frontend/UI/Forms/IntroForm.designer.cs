@@ -1,4 +1,4 @@
-﻿using System.Windows.Forms;
+using System.Windows.Forms;
 using RTCV.UI;
 
 namespace RTCV.UI
@@ -174,7 +174,6 @@ namespace RTCV.UI
             this.Tag = "color:dark1";
             this.Text = "Welcome to RTCV";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
-            this.Load += new System.EventHandler(this.OnLoad);
             this.ResumeLayout(false);
             this.PerformLayout();
 

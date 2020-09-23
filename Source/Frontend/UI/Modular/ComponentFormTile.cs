@@ -1,11 +1,11 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System.Drawing;
     using System.Windows.Forms;
     using RTCV.UI.Modular;
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
-    public partial class ComponentFormTile : Form, ITileForm
+    public partial class ComponentFormTile : ColorizedForm, ITileForm
     {
         public Form childForm { get; private set; } = null;
         private int SizeX = 2;
@@ -14,7 +14,6 @@
         public ComponentFormTile()
         {
             InitializeComponent();
-            Colors.SetRTCColor(Colors.GeneralColor, this);
         }
 
         internal void SetComponentForm(Form _childForm, int _sizeX, int _sizeY, bool DisplayHeader)

@@ -8,7 +8,7 @@ namespace RTCV.UI
     using RTCV.UI.Modular;
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
-    public partial class CanvasForm : Form, IBlockable
+    public partial class CanvasForm : ColorizedForm, IBlockable
     {
         internal static CanvasForm mainForm { get; private set; }
         internal static List<CanvasForm> extraForms { get; private set; } = new List<CanvasForm>();
@@ -24,8 +24,6 @@ namespace RTCV.UI
         public CanvasForm(bool extraForm = false)
         {
             InitializeComponent();
-
-            Colors.SetRTCColor(Colors.GeneralColor, this);
 
             if (!extraForm)
             {

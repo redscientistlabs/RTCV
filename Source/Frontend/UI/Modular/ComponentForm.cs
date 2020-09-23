@@ -5,7 +5,7 @@ namespace RTCV.UI.Modular
     using System.Linq;
     using System.Windows.Forms;
 
-    public class ComponentForm : Form
+    public class ComponentForm : ColorizedForm
     {
         private protected static NLog.Logger logger;
         private Panel defaultPanel = null;
