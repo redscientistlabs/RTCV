@@ -3,6 +3,7 @@
     <ExcludeAssemblies>
       Common
       PluginHost
+      UI
     </ExcludeAssemblies>
   </Costura>
 </Weavers>
