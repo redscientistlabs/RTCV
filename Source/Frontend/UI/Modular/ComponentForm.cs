@@ -163,7 +163,7 @@ namespace RTCV.UI.Modular
 
         internal void HandleFormClosing(object sender, FormClosingEventArgs e)
         {
-            if (e.CloseReason != CloseReason.FormOwnerClosing)
+            if (e.CloseReason == CloseReason.UserClosing)
             {
                 e.Cancel = true;
                 this.RestoreToPreviousPanel();

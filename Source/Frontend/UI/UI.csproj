@@ -1,67 +1,33 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BD376BB2-17EC-4FB0-A9FE-6B1BBF4AF3E3}</ProjectGuid>
+    <TargetFramework>net471</TargetFramework>
     <OutputType>Library</OutputType>
     <RootNamespace>RTCV.UI</RootNamespace>
-    <AssemblyName>UI</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
-    <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
     <OutputPath>..\..\..\Build\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\..\..\Build\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <LangVersion>latest</LangVersion>
+    <MSBuildWarningsAsMessages>NU1702</MSBuildWarningsAsMessages>
+    <LangVersion>8.0</LangVersion>
+    <!-- Use Build\ instead of Build\net471\ for output -->
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <!-- Avoid MissingManifestResourceException  errors, see https://github.com/dotnet/ef6/issues/1258#issuecomment-531355034 -->
+    <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <!-- https://stackoverflow.com/a/12672514 -->
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
   <ItemGroup>
@@ -69,601 +35,58 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Deps\SlimDX.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Transactions" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\Blast Editor\ColumnSelector.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Blast Editor\ColumnSelector.Designer.cs">
-      <DependentUpon>ColumnSelector.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Containers\ListBoxForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Containers\ListBoxForm.designer.cs">
-      <DependentUpon>ListBoxForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Containers\SelectBoxForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Containers\SelectBoxForm.designer.cs">
-      <DependentUpon>SelectBoxForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Controls\HexTextBox.cs">
+    <Compile Update="Components\Controls\HexTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Components\Controls\InputCompositeWidget.cs">
+    <Compile Update="Components\Controls\InputCompositeWidget.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Components\Controls\InputCompositeWidget.Designer.cs">
-      <DependentUpon>InputCompositeWidget.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Controls\InputWidget.cs">
+    <Compile Update="Components\Controls\InputWidget.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Components\Controls\ListBoxExtended.cs">
+    <Compile Update="Components\Controls\ListBoxExtended.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Components\Controls\MultiTrackBar.cs">
+    <Compile Update="Components\Controls\MultiTrackBar.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Components\Controls\MultiTrackBar.designer.cs">
-      <DependentUpon>MultiTrackBar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Controls\MultiUpDown.cs">
+    <Compile Update="Components\Controls\MultiUpDown.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Components\Controls\MultiUpDown.Designer.cs">
-      <DependentUpon>MultiUpDown.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Controls\OpenToolButton.cs">
+    <Compile Update="Components\Controls\OpenToolButton.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Components\Controls\OpenToolButton.Designer.cs">
-      <DependentUpon>OpenToolButton.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Controls\SavestateHolder.cs">
+    <Compile Update="Components\Controls\SavestateHolder.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Components\Controls\SavestateHolder.Designer.cs">
-      <DependentUpon>SavestateHolder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Controls\SavestateList.cs">
+    <Compile Update="Components\Controls\SavestateList.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Components\Controls\SavestateList.Designer.cs">
-      <DependentUpon>SavestateList.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Controls\SpecControl.cs">
+    <Compile Update="Components\Controls\SpecControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Components\Engine Config\CorruptionEngineForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Engine Config\CorruptionEngineForm.Designer.cs">
-      <DependentUpon>CorruptionEngineForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Engine Config\GeneralParametersForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Engine Config\GeneralParametersForm.Designer.cs">
-      <DependentUpon>GeneralParametersForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Engine Config\MemoryDomainsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Engine Config\MemoryDomainsForm.Designer.cs">
-      <DependentUpon>MemoryDomainsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Glitch Harvester\GlitchHarvesterBlastForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Glitch Harvester\GlitchHarvesterBlastForm.designer.cs">
-      <DependentUpon>GlitchHarvesterBlastForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Glitch Harvester\SavestateManagerForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Glitch Harvester\SavestateManagerForm.designer.cs">
-      <DependentUpon>SavestateManagerForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Glitch Harvester\GlitchHarvesterIntensityForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Glitch Harvester\GlitchHarvesterIntensityForm.designer.cs">
-      <DependentUpon>GlitchHarvesterIntensityForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Glitch Harvester\StashHistoryForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Glitch Harvester\StashHistoryForm.designer.cs">
-      <DependentUpon>StashHistoryForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Glitch Harvester\StockpileManagerForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Glitch Harvester\StockpileManagerForm.designer.cs">
-      <DependentUpon>StockpileManagerForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Memory Tools\Common.cs" />
-    <Compile Include="Components\Memory Tools\DomainAnalyticsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Memory Tools\DomainAnalyticsForm.designer.cs">
-      <DependentUpon>DomainAnalyticsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Memory Tools\MyListsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Memory Tools\MyListsForm.designer.cs">
-      <DependentUpon>MyListsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Memory Tools\OpenToolsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Memory Tools\OpenToolsForm.designer.cs">
-      <DependentUpon>OpenToolsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Memory Tools\VmdLimiterProfilerForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Memory Tools\VmdLimiterProfilerForm.designer.cs">
-      <DependentUpon>VmdLimiterProfilerForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Memory Tools\MyVMDsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Memory Tools\MyVMDsForm.designer.cs">
-      <DependentUpon>MyVMDsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Memory Tools\VmdSimpleGenForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Memory Tools\VmdSimpleGenForm.designer.cs">
-      <DependentUpon>VmdSimpleGenForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Settings\SettingsCorruptForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Settings\SettingsCorruptForm.designer.cs">
-      <DependentUpon>SettingsCorruptForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Memory Tools\ListGenForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Memory Tools\ListGenForm.designer.cs">
-      <DependentUpon>ListGenForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Memory Tools\VmdActForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Memory Tools\VmdActForm.designer.cs">
-      <DependentUpon>VmdActForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Memory Tools\VmdGenForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Memory Tools\VmdGenForm.designer.cs">
-      <DependentUpon>VmdGenForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Memory Tools\VmdNoToolForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Memory Tools\VmdNoToolForm.designer.cs">
-      <DependentUpon>VmdNoToolForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Memory Tools\VmdPoolForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Memory Tools\VmdPoolForm.designer.cs">
-      <DependentUpon>VmdPoolForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\TemplateForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\TemplateForm.designer.cs">
-      <DependentUpon>TemplateForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Settings\SettingsAboutForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Settings\SettingsAboutForm.designer.cs">
-      <DependentUpon>SettingsAboutForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Settings\SettingsGeneralForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Settings\SettingsGeneralForm.designer.cs">
-      <DependentUpon>SettingsGeneralForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Settings\SettingsNetCoreForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Settings\SettingsNetCoreForm.designer.cs">
-      <DependentUpon>SettingsNetCoreForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Settings\SettingsHotkeyConfigForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Settings\SettingsHotkeyConfigForm.designer.cs">
-      <DependentUpon>SettingsHotkeyConfigForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\InputBox.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\InputBox.designer.cs">
-      <DependentUpon>InputBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\AnalyticsToolForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\AnalyticsToolForm.Designer.cs">
-      <DependentUpon>AnalyticsToolForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\BlastGeneratorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\BlastGeneratorForm.Designer.cs">
-      <DependentUpon>BlastGeneratorForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\ConnectionStatusForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\ConnectionStatusForm.designer.cs">
-      <DependentUpon>ConnectionStatusForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\CustomEngineConfigForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\CustomEngineConfigForm.Designer.cs">
-      <DependentUpon>CustomEngineConfigForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\IntroForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\IntroForm.Designer.cs">
-      <DependentUpon>IntroForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Blast Editor\SanitizeToolForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Blast Editor\SanitizeToolForm.Designer.cs">
-      <DependentUpon>SanitizeToolForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\BlastEditorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\BlastEditorForm.Designer.cs">
-      <DependentUpon>BlastEditorForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\NoteEditorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\NoteEditorForm.designer.cs">
-      <DependentUpon>NoteEditorForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\SettingsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\SettingsForm.Designer.cs">
-      <DependentUpon>SettingsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\SimpleModeForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\SimpleModeForm.designer.cs">
-      <DependentUpon>SimpleModeForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\StockpilePlayerForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\StockpilePlayerForm.designer.cs">
-      <DependentUpon>StockpilePlayerForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\StandaloneForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AutoKillSwitch.cs" />
-    <Compile Include="Forms\TestForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\TestForm.Designer.cs">
-      <DependentUpon>TestForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GameProtection.cs" />
-    <Compile Include="IBlockable.cs" />
-    <Compile Include="ITileForm.cs" />
-    <Compile Include="SortableBindingList.cs" />
-    <Compile Include="Extensions\BitmapExtensions.cs" />
-    <Compile Include="Extensions\ControlExtensions.cs" />
-    <Compile Include="Extensions\NumberExtensions.cs" />
-    <Compile Include="Input\Bindings.cs" />
-    <Compile Include="Input\FocusTypes.cs" />
-    <Compile Include="Input\Gamepad.cs" />
-    <Compile Include="Input\Gamepad360.cs" />
-    <Compile Include="Input\Input.cs" />
-    <Compile Include="Input\InputEvent.cs" />
-    <Compile Include="Input\IPCKeyInput.cs" />
-    <Compile Include="Input\Keyboard.cs" />
-    <Compile Include="Input\LogicalButton.cs" />
-    <Compile Include="Input\ModifierKeys.cs" />
-    <Compile Include="Input\WorkingDictionary.cs" />
-    <Compile Include="Modular\CanvasForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Modular\CanvasForm.Designer.cs">
-      <DependentUpon>CanvasForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Modular\ComponentFormSubForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Modular\ComponentFormSubForm.Designer.cs">
-      <DependentUpon>ComponentFormSubForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Modular\ComponentFormTile.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Modular\ComponentFormTile.Designer.cs">
-      <DependentUpon>ComponentFormTile.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Modular\CoreForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Modular\CoreForm.Designer.cs">
-      <DependentUpon>CoreForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Modular\DefaultGrids.cs" />
-    <Compile Include="Modular\CanvasGrid.cs" />
-    <Compile Include="Modular\ISubForm.cs" />
-    <Compile Include="Modular\SaveProgressForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Modular\SaveProgressForm.designer.cs">
-      <DependentUpon>SaveProgressForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Modular\ShadowPanel.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Modular\ShadowPanel.Designer.cs">
-      <DependentUpon>ShadowPanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Colors.cs" />
-    <Compile Include="UICore.cs" />
-    <Compile Include="UIConnector.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Components\DataGridViewDraggable.cs">
+    <Compile Update="Components\DataGridViewDraggable.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Components\DataGridViewNumericUpDownCell.cs" />
-    <Compile Include="Components\DataGridViewNumericUpDownColumn.cs" />
-    <Compile Include="Components\DataGridViewNumericUpDownEditingControl.cs">
+    <Compile Update="Components\DataGridViewNumericUpDownEditingControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Components\NumericTextBox.cs">
+    <Compile Update="Components\NumericTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Components\NumericUpDownHexFix.cs">
+    <Compile Update="Components\NumericUpDownHexFix.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="VanguardImplementation.cs" />
-    <EmbeddedResource Include="Components\Blast Editor\ColumnSelector.resx">
-      <DependentUpon>ColumnSelector.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Containers\ListBoxForm.resx">
-      <DependentUpon>ListBoxForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Containers\SelectBoxForm.resx">
-      <DependentUpon>SelectBoxForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Controls\InputCompositeWidget.resx">
-      <DependentUpon>InputCompositeWidget.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Controls\MultiTrackBar.resx">
-      <DependentUpon>MultiTrackBar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Controls\MultiUpDown.resx">
-      <DependentUpon>MultiUpDown.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Controls\OpenToolButton.resx">
-      <DependentUpon>OpenToolButton.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Controls\SavestateHolder.resx">
-      <DependentUpon>SavestateHolder.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Controls\SavestateList.resx">
-      <DependentUpon>SavestateList.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Controls\SpecControl.resx">
-      <DependentUpon>SpecControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Engine Config\CorruptionEngineForm.resx">
-      <DependentUpon>CorruptionEngineForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Engine Config\GeneralParametersForm.resx">
-      <DependentUpon>GeneralParametersForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Engine Config\MemoryDomainsForm.resx">
-      <DependentUpon>MemoryDomainsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Glitch Harvester\GlitchHarvesterBlastForm.resx">
-      <DependentUpon>GlitchHarvesterBlastForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Glitch Harvester\SavestateManagerForm.resx">
-      <DependentUpon>SavestateManagerForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Glitch Harvester\GlitchHarvesterIntensityForm.resx">
-      <DependentUpon>GlitchHarvesterIntensityForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Glitch Harvester\StashHistoryForm.resx">
-      <DependentUpon>StashHistoryForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Glitch Harvester\StockpileManagerForm.resx">
-      <DependentUpon>StockpileManagerForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\DomainAnalyticsForm.resx">
-      <DependentUpon>DomainAnalyticsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\MyListsForm.resx">
-      <DependentUpon>MyListsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\OpenToolsForm.resx">
-      <DependentUpon>OpenToolsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\VmdLimiterProfilerForm.resx">
-      <DependentUpon>VmdLimiterProfilerForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\MyVMDsForm.resx">
-      <DependentUpon>MyVMDsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\VmdSimpleGenForm.resx">
-      <DependentUpon>VmdSimpleGenForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Settings\SettingsCorruptForm.resx">
-      <DependentUpon>SettingsCorruptForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\ListGenForm.resx">
-      <DependentUpon>ListGenForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\VmdActForm.resx">
-      <DependentUpon>VmdActForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\VmdGenForm.resx">
-      <DependentUpon>VmdGenForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\VmdNoToolForm.resx">
-      <DependentUpon>VmdNoToolForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\VmdPoolForm.resx">
-      <DependentUpon>VmdPoolForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\TemplateForm.resx">
-      <DependentUpon>TemplateForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Settings\SettingsAboutForm.resx">
-      <DependentUpon>SettingsAboutForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Settings\SettingsGeneralForm.resx">
-      <DependentUpon>SettingsGeneralForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Settings\SettingsHotkeyConfigForm.resx">
-      <DependentUpon>SettingsHotkeyConfigForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Settings\SettingsNetCoreForm.resx">
-      <DependentUpon>SettingsNetCoreForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\AnalyticsToolForm.resx">
-      <DependentUpon>AnalyticsToolForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\BlastGeneratorForm.resx">
-      <DependentUpon>BlastGeneratorForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ConnectionStatusForm.resx">
-      <DependentUpon>ConnectionStatusForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\CustomEngineConfigForm.resx">
-      <DependentUpon>CustomEngineConfigForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\IntroForm.resx">
-      <DependentUpon>IntroForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Blast Editor\SanitizeToolForm.resx">
-      <DependentUpon>SanitizeToolForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\BlastEditorForm.resx">
-      <DependentUpon>BlastEditorForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\NoteEditorForm.resx">
-      <DependentUpon>NoteEditorForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SettingsForm.resx">
-      <DependentUpon>SettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SimpleModeForm.resx">
-      <DependentUpon>SimpleModeForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\StockpilePlayerForm.resx">
-      <DependentUpon>StockpilePlayerForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\TestForm.resx">
-      <DependentUpon>TestForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Modular\CanvasForm.resx">
-      <DependentUpon>CanvasForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <Compile Include="Modular\ComponentForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <EmbeddedResource Include="Modular\ComponentFormSubForm.resx">
-      <DependentUpon>ComponentFormSubForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Modular\ComponentFormTile.resx">
-      <DependentUpon>ComponentFormTile.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Modular\CoreForm.resx">
-      <DependentUpon>CoreForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Modular\SaveProgressForm.resx">
-      <DependentUpon>SaveProgressForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Modular\ShadowPanel.resx">
-      <DependentUpon>ShadowPanel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Question Mark.png" />
+    <ProjectReference Include="..\..\Libraries\Common\Common.csproj" />
+    <ProjectReference Include="..\..\Libraries\CorruptCore\CorruptCore.csproj" />
+    <ProjectReference Include="..\..\Libraries\NetCore\NetCore.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\refresh new.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Common\Common.csproj">
-      <Project>{A31C17E1-2EAB-434F-A022-20193F2CEAB7}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\CorruptCore\CorruptCore.csproj">
-      <Project>{b5633a86-dc66-4723-88eb-7dfc95458072}</Project>
-      <Name>CorruptCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\NetCore\NetCore.csproj">
-      <Project>{7e106aec-5614-4206-9e4d-25759c90e8ae}</Project>
-      <Name>NetCore</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
     </PackageReference>
@@ -673,6 +96,9 @@
     <PackageReference Include="NLog.Windows.Forms">
       <Version>4.3.0</Version>
     </PackageReference>
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <EmbeddedResource Remove="Forms\InputBox.resx" />
+  </ItemGroup>
 </Project>

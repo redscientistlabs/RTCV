@@ -35,6 +35,12 @@ namespace RTCV.UI
             connector?.Restart();
         }
 
+        public static void Shutdown()
+        {
+            logger.Info("Shutting down Netcore");
+            connector?.Kill();
+        }
+
         private static void OnMessageReceived(object sender, NetCoreEventArgs e)
         {
             try
