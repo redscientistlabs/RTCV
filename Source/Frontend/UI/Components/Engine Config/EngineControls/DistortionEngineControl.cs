@@ -1,4 +1,4 @@
-namespace RTCV.UI.Components.EngineConfig.Engines
+namespace RTCV.UI.Components.EngineConfig.EngineControls
 {
     using RTCV.NetCore;
 

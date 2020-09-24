@@ -1,12 +1,12 @@
-namespace RTCV.UI.Components.EngineConfig.Engines
+namespace RTCV.UI.Components.EngineConfig.EngineControls
 {
     using System;
     using System.Windows.Forms;
     using RTCV.CorruptCore;
 
-    internal partial class ClusterEngine : EngineConfigControl
+    internal partial class ClusterEngineControl : EngineConfigControl
     {
-        internal ClusterEngine()
+        internal ClusterEngineControl()
         {
             InitializeComponent();
         }

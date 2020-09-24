@@ -1,6 +1,6 @@
-namespace RTCV.UI.Components.EngineConfig.Engines
+namespace RTCV.UI.Components.EngineConfig.EngineControls
 {
-    partial class ClusterEngine
+    partial class ClusterEngineControl
     {
         /// <summary> 
         /// Required designer variable.

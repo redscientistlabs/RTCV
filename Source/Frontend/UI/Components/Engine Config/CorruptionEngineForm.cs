@@ -16,15 +16,15 @@ namespace RTCV.UI
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        internal readonly Components.EngineConfig.Engines.FreezeEngine gbFreezeEngine;
-        internal Components.EngineConfig.Engines.NightmareEngine gbNightmareEngine = new Components.EngineConfig.Engines.NightmareEngine();
-        internal readonly Components.EngineConfig.Engines.HellgenieEngine gbHellgenieEngine;
-        private Components.EngineConfig.Engines.DistortionEngine gbDistortionEngine = new Components.EngineConfig.Engines.DistortionEngine();
-        private Components.EngineConfig.Engines.CustomEngine gbCustomEngine = new Components.EngineConfig.Engines.CustomEngine();
-        internal Components.EngineConfig.Engines.PipeEngine gbPipeEngine = new Components.EngineConfig.Engines.PipeEngine();
-        internal Components.EngineConfig.Engines.BlastGeneratorEngine gbBlastGeneratorEngine = new Components.EngineConfig.Engines.BlastGeneratorEngine();
-        internal readonly Components.EngineConfig.Engines.VectorEngine gbVectorEngine;
-        internal Components.EngineConfig.Engines.ClusterEngine gbClusterEngine = new Components.EngineConfig.Engines.ClusterEngine();
+        internal readonly Components.EngineConfig.EngineControls.FreezeEngineControl gbFreezeEngine;
+        internal Components.EngineConfig.EngineControls.NightmareEngineControl gbNightmareEngine = new Components.EngineConfig.EngineControls.NightmareEngineControl();
+        internal readonly Components.EngineConfig.EngineControls.HellgenieEngineControl gbHellgenieEngine;
+        private Components.EngineConfig.EngineControls.DistortionEngineControl gbDistortionEngine = new Components.EngineConfig.EngineControls.DistortionEngineControl();
+        private Components.EngineConfig.EngineControls.CustomEngineControl gbCustomEngine = new Components.EngineConfig.EngineControls.CustomEngineControl();
+        internal Components.EngineConfig.EngineControls.PipeEngineControl gbPipeEngine = new Components.EngineConfig.EngineControls.PipeEngineControl();
+        internal Components.EngineConfig.EngineControls.BlastGeneratorEngineControl gbBlastGeneratorEngine = new Components.EngineConfig.EngineControls.BlastGeneratorEngineControl();
+        internal readonly Components.EngineConfig.EngineControls.VectorEngineControl gbVectorEngine;
+        internal Components.EngineConfig.EngineControls.ClusterEngineControl gbClusterEngine = new Components.EngineConfig.EngineControls.ClusterEngineControl();
 
         public string CurrentVectorLimiterListName
         {
@@ -44,12 +44,12 @@ namespace RTCV.UI
 
             this.undockedSizable = false;
 
-            gbFreezeEngine = new Components.EngineConfig.Engines.FreezeEngine(this);
+            gbFreezeEngine = new Components.EngineConfig.EngineControls.FreezeEngineControl(this);
             this.Controls.Add(gbFreezeEngine);
 
             this.Controls.Add(gbNightmareEngine);
 
-            gbHellgenieEngine = new Components.EngineConfig.Engines.HellgenieEngine(this);
+            gbHellgenieEngine = new Components.EngineConfig.EngineControls.HellgenieEngineControl(this);
             this.Controls.Add(gbHellgenieEngine);
 
             this.Controls.Add(gbDistortionEngine);
@@ -60,7 +60,7 @@ namespace RTCV.UI
 
             this.Controls.Add(gbBlastGeneratorEngine);
 
-            gbVectorEngine = new Components.EngineConfig.Engines.VectorEngine(this);
+            gbVectorEngine = new Components.EngineConfig.EngineControls.VectorEngineControl(this);
             this.Controls.Add(gbVectorEngine);
 
             this.Controls.Add(gbClusterEngine);
