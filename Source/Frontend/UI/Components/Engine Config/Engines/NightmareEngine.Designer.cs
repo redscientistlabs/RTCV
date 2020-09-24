@@ -160,6 +160,7 @@ namespace RTCV.UI.Components.EngineConfig.Engines
             this.cbBlastType.Size = new System.Drawing.Size(92, 21);
             this.cbBlastType.TabIndex = 145;
             this.cbBlastType.Tag = "color:normal";
+            this.cbBlastType.SelectedIndexChanged += new System.EventHandler(this.UpdateBlastType);
             // 
             // label9
             // 

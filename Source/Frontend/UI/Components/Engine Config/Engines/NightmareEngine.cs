@@ -9,6 +9,7 @@ namespace RTCV.UI.Components.EngineConfig.Engines
     using System.Text;
     using System.Threading.Tasks;
     using System.Windows.Forms;
+    using RTCV.CorruptCore;
     using RTCV.UI.Components.EngineConfig;
 
     internal partial class NightmareEngine : EngineConfigControl
@@ -16,6 +17,30 @@ namespace RTCV.UI.Components.EngineConfig.Engines
         internal NightmareEngine()
         {
             InitializeComponent();
+        }
+
+        private void UpdateBlastType(object sender, EventArgs e)
+        {
+            switch (cbBlastType.SelectedItem.ToString())
+            {
+                case "RANDOM":
+                    CorruptCore.NightmareEngine.Algo = NightmareAlgo.RANDOM;
+                    nmMinValueNightmare.Enabled = true;
+                    nmMaxValueNightmare.Enabled = true;
+                    break;
+
+                case "RANDOMTILT":
+                    CorruptCore.NightmareEngine.Algo = NightmareAlgo.RANDOMTILT;
+                    nmMinValueNightmare.Enabled = true;
+                    nmMaxValueNightmare.Enabled = true;
+                    break;
+
+                case "TILT":
+                    CorruptCore.NightmareEngine.Algo = NightmareAlgo.TILT;
+                    nmMinValueNightmare.Enabled = false;
+                    nmMaxValueNightmare.Enabled = false;
+                    break;
+            }
         }
 
         internal void UpdateMinMaxBoxes(int precision)

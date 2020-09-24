@@ -361,30 +361,6 @@ namespace RTCV.UI
             }
         }
 
-        private void UpdateBlastType(object sender, EventArgs e)
-        {
-            switch (gbNightmareEngine.cbBlastType.SelectedItem.ToString())
-            {
-                case "RANDOM":
-                    NightmareEngine.Algo = NightmareAlgo.RANDOM;
-                    gbNightmareEngine.nmMinValueNightmare.Enabled = true;
-                    gbNightmareEngine.nmMaxValueNightmare.Enabled = true;
-                    break;
-
-                case "RANDOMTILT":
-                    NightmareEngine.Algo = NightmareAlgo.RANDOMTILT;
-                    gbNightmareEngine.nmMinValueNightmare.Enabled = true;
-                    gbNightmareEngine.nmMaxValueNightmare.Enabled = true;
-                    break;
-
-                case "TILT":
-                    NightmareEngine.Algo = NightmareAlgo.TILT;
-                    gbNightmareEngine.nmMinValueNightmare.Enabled = false;
-                    gbNightmareEngine.nmMaxValueNightmare.Enabled = false;
-                    break;
-            }
-        }
-
         private void OpenCustomEngine(object sender, EventArgs e)
         {
             S.GET<CustomEngineConfigForm>().Show();
