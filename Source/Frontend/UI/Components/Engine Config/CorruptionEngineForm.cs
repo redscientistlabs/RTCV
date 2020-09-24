@@ -358,24 +358,7 @@ namespace RTCV.UI
             }
         }
 
-
-
-
-
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        private void UpdateVectorUnlockPrecision(object sender, EventArgs e)
+        internal void UpdateVectorUnlockPrecision(object sender, EventArgs e)
         {
             if (gbVectorEngine.cbVectorUnlockPrecision.Checked)
             {

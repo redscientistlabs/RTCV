@@ -8,6 +8,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
 
             cbVectorLimiterList.SelectedIndexChanged += parent.UpdateVectorLimiterList;
             cbVectorValueList.SelectedIndexChanged += parent.UpdateVectorValueList;
+            cbVectorUnlockPrecision.CheckedChanged += parent.UpdateVectorUnlockPrecision;
         }
     }
 }
