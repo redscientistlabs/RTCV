@@ -67,17 +67,6 @@ namespace RTCV.UI
             this.btnResyncDistortionEngine = new System.Windows.Forms.Button();
             this.nmDistortionDelay = new RTCV.UI.Components.Controls.MultiUpDown();
             this.label7 = new System.Windows.Forms.Label();
-            this.gbHellgenieEngine = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.updownMaxCheats = new RTCV.UI.Components.Controls.MultiUpDown();
-            this.label27 = new System.Windows.Forms.Label();
-            this.nmMaxValueHellgenie = new RTCV.UI.Components.Controls.MultiUpDown();
-            this.label16 = new System.Windows.Forms.Label();
-            this.nmMinValueHellgenie = new RTCV.UI.Components.Controls.MultiUpDown();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.cbClearCheatsOnRewind = new System.Windows.Forms.CheckBox();
-            this.btnClearCheats = new System.Windows.Forms.Button();
             this.gbCustomEngine = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox7 = new System.Windows.Forms.ComboBox();
@@ -106,7 +95,6 @@ namespace RTCV.UI
             this.pnLimiterList.SuspendLayout();
             this.gbPipeEngine.SuspendLayout();
             this.gbDistortionEngine.SuspendLayout();
-            this.gbHellgenieEngine.SuspendLayout();
             this.gbCustomEngine.SuspendLayout();
             this.gbClusterEngine.SuspendLayout();
             this.pnClusterLimiterList.SuspendLayout();
@@ -710,202 +698,6 @@ namespace RTCV.UI
             this.label7.Text = "Distortion delay:";
             this.label7.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
-            // gbHellgenieEngine
-            // 
-            this.gbHellgenieEngine.Controls.Add(this.label1);
-            this.gbHellgenieEngine.Controls.Add(this.label26);
-            this.gbHellgenieEngine.Controls.Add(this.updownMaxCheats);
-            this.gbHellgenieEngine.Controls.Add(this.label27);
-            this.gbHellgenieEngine.Controls.Add(this.nmMaxValueHellgenie);
-            this.gbHellgenieEngine.Controls.Add(this.label16);
-            this.gbHellgenieEngine.Controls.Add(this.nmMinValueHellgenie);
-            this.gbHellgenieEngine.Controls.Add(this.comboBox2);
-            this.gbHellgenieEngine.Controls.Add(this.cbClearCheatsOnRewind);
-            this.gbHellgenieEngine.Controls.Add(this.btnClearCheats);
-            this.gbHellgenieEngine.Font = new System.Drawing.Font("Segoe UI", 9.75F);
-            this.gbHellgenieEngine.ForeColor = System.Drawing.Color.White;
-            this.gbHellgenieEngine.Location = new System.Drawing.Point(454, 156);
-            this.gbHellgenieEngine.Name = "gbHellgenieEngine";
-            this.gbHellgenieEngine.Size = new System.Drawing.Size(420, 151);
-            this.gbHellgenieEngine.TabIndex = 141;
-            this.gbHellgenieEngine.TabStop = false;
-            this.gbHellgenieEngine.Visible = false;
-            this.gbHellgenieEngine.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Segoe UI Symbol", 8F);
-            this.label1.Location = new System.Drawing.Point(5, 92);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 13);
-            this.label1.TabIndex = 141;
-            this.label1.Text = "Max ∞ Units";
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label26.Location = new System.Drawing.Point(5, 67);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(87, 13);
-            this.label26.TabIndex = 147;
-            this.label26.Text = "Maximum Value";
-            this.label26.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // updownMaxCheats
-            // 
-            this.updownMaxCheats.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.updownMaxCheats.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.updownMaxCheats.ForeColor = System.Drawing.Color.White;
-            this.updownMaxCheats.Hexadecimal = false;
-            this.updownMaxCheats.Location = new System.Drawing.Point(96, 90);
-            this.updownMaxCheats.Maximum = new decimal(new int[] {
-            65536,
-            0,
-            0,
-            0});
-            this.updownMaxCheats.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.updownMaxCheats.Name = "updownMaxCheats";
-            this.updownMaxCheats.Size = new System.Drawing.Size(70, 22);
-            this.updownMaxCheats.TabIndex = 140;
-            this.updownMaxCheats.Tag = "color:normal";
-            this.updownMaxCheats.Value = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label27.Location = new System.Drawing.Point(5, 42);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(86, 13);
-            this.label27.TabIndex = 144;
-            this.label27.Text = "Minimum Value";
-            this.label27.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // nmMaxValueHellgenie
-            // 
-            this.nmMaxValueHellgenie.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.nmMaxValueHellgenie.Font = new System.Drawing.Font("Consolas", 8.25F);
-            this.nmMaxValueHellgenie.ForeColor = System.Drawing.Color.White;
-            this.nmMaxValueHellgenie.Hexadecimal = true;
-            this.nmMaxValueHellgenie.Location = new System.Drawing.Point(96, 65);
-            this.nmMaxValueHellgenie.Maximum = new decimal(new int[] {
-            -1,
-            -1,
-            0,
-            0});
-            this.nmMaxValueHellgenie.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.nmMaxValueHellgenie.Name = "nmMaxValueHellgenie";
-            this.nmMaxValueHellgenie.Size = new System.Drawing.Size(70, 20);
-            this.nmMaxValueHellgenie.TabIndex = 146;
-            this.nmMaxValueHellgenie.Tag = "color:normal";
-            this.nmMaxValueHellgenie.Value = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.nmMaxValueHellgenie.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
-            this.label16.Location = new System.Drawing.Point(170, 16);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(218, 13);
-            this.label16.TabIndex = 86;
-            this.label16.Text = "Edits values and makes them keep their value";
-            this.label16.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // nmMinValueHellgenie
-            // 
-            this.nmMinValueHellgenie.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.nmMinValueHellgenie.Font = new System.Drawing.Font("Consolas", 8.25F);
-            this.nmMinValueHellgenie.ForeColor = System.Drawing.Color.White;
-            this.nmMinValueHellgenie.Hexadecimal = true;
-            this.nmMinValueHellgenie.Location = new System.Drawing.Point(96, 40);
-            this.nmMinValueHellgenie.Maximum = new decimal(new int[] {
-            -1,
-            -1,
-            0,
-            0});
-            this.nmMinValueHellgenie.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.nmMinValueHellgenie.Name = "nmMinValueHellgenie";
-            this.nmMinValueHellgenie.Size = new System.Drawing.Size(70, 20);
-            this.nmMinValueHellgenie.TabIndex = 145;
-            this.nmMinValueHellgenie.Tag = "color:normal";
-            this.nmMinValueHellgenie.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.nmMinValueHellgenie.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBox2.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.comboBox2.ForeColor = System.Drawing.Color.White;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(0, 9);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(165, 21);
-            this.comboBox2.TabIndex = 76;
-            this.comboBox2.Tag = "color:normal";
-            this.comboBox2.Visible = false;
-            this.comboBox2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // cbClearCheatsOnRewind
-            // 
-            this.cbClearCheatsOnRewind.AutoSize = true;
-            this.cbClearCheatsOnRewind.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.cbClearCheatsOnRewind.ForeColor = System.Drawing.Color.White;
-            this.cbClearCheatsOnRewind.Location = new System.Drawing.Point(184, 41);
-            this.cbClearCheatsOnRewind.Name = "cbClearCheatsOnRewind";
-            this.cbClearCheatsOnRewind.Size = new System.Drawing.Size(165, 17);
-            this.cbClearCheatsOnRewind.TabIndex = 75;
-            this.cbClearCheatsOnRewind.Text = "Clear step units on Rewind";
-            this.cbClearCheatsOnRewind.UseVisualStyleBackColor = true;
-            this.cbClearCheatsOnRewind.CheckedChanged += new System.EventHandler(this.OnClearRewindToggle);
-            this.cbClearCheatsOnRewind.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // btnClearCheats
-            // 
-            this.btnClearCheats.BackColor = System.Drawing.Color.Gray;
-            this.btnClearCheats.FlatAppearance.BorderSize = 0;
-            this.btnClearCheats.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClearCheats.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnClearCheats.ForeColor = System.Drawing.Color.White;
-            this.btnClearCheats.Location = new System.Drawing.Point(7, 120);
-            this.btnClearCheats.Name = "btnClearCheats";
-            this.btnClearCheats.Size = new System.Drawing.Size(159, 24);
-            this.btnClearCheats.TabIndex = 10;
-            this.btnClearCheats.TabStop = false;
-            this.btnClearCheats.Tag = "color:light1";
-            this.btnClearCheats.Text = "Clear all cheats";
-            this.btnClearCheats.UseVisualStyleBackColor = false;
-            this.btnClearCheats.Click += new System.EventHandler(this.ClearCheats);
-            this.btnClearCheats.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
             // gbCustomEngine
             // 
             this.gbCustomEngine.Controls.Add(this.label2);
@@ -1240,7 +1032,6 @@ namespace RTCV.UI
             this.Controls.Add(this.gbVectorEngine);
             this.Controls.Add(this.gbPipeEngine);
             this.Controls.Add(this.gbDistortionEngine);
-            this.Controls.Add(this.gbHellgenieEngine);
             this.Controls.Add(this.pnCustomPrecision);
             this.Controls.Add(this.cbSelectedEngine);
             this.Controls.Add(this.gbSelectedEngine);
@@ -1266,8 +1057,6 @@ namespace RTCV.UI
             this.gbPipeEngine.PerformLayout();
             this.gbDistortionEngine.ResumeLayout(false);
             this.gbDistortionEngine.PerformLayout();
-            this.gbHellgenieEngine.ResumeLayout(false);
-            this.gbHellgenieEngine.PerformLayout();
             this.gbCustomEngine.ResumeLayout(false);
             this.gbCustomEngine.PerformLayout();
             this.gbClusterEngine.ResumeLayout(false);
@@ -1314,25 +1103,14 @@ namespace RTCV.UI
 		private System.Windows.Forms.Button btnResyncDistortionEngine;
         public RTCV.UI.Components.Controls.MultiUpDown nmDistortionDelay;
 		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.GroupBox gbHellgenieEngine;
-		private System.Windows.Forms.Label label26;
-		private System.Windows.Forms.Label label27;
-		public RTCV.UI.Components.Controls.MultiUpDown nmMaxValueHellgenie;
-		private System.Windows.Forms.Label label16;
-		public RTCV.UI.Components.Controls.MultiUpDown nmMinValueHellgenie;
-		public System.Windows.Forms.ComboBox comboBox2;
-		public System.Windows.Forms.CheckBox cbClearCheatsOnRewind;
-		private System.Windows.Forms.Button btnClearCheats;
 		private System.Windows.Forms.GroupBox gbCustomEngine;
 		private System.Windows.Forms.Label label2;
 		public System.Windows.Forms.ComboBox comboBox7;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Button btnOpenCustomEngine;
 		private System.Windows.Forms.Label label5;
-		public Components.Controls.MultiUpDown updownMaxCheats;
 		private System.Windows.Forms.Label label4;
 		public Components.Controls.MultiUpDown updownMaxPipes;
-		private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label8;
         public Components.Controls.MultiUpDown nmAlignment;
         private System.Windows.Forms.GroupBox gbClusterEngine;

@@ -18,6 +18,7 @@ namespace RTCV.UI
 
         internal Components.EngineConfig.Engines.FreezeEngine gbFreezeEngine = new Components.EngineConfig.Engines.FreezeEngine();
         internal Components.EngineConfig.Engines.NightmareEngine gbNightmareEngine = new Components.EngineConfig.Engines.NightmareEngine();
+        internal Components.EngineConfig.Engines.HellgenieEngine gbHellgenieEngine = new Components.EngineConfig.Engines.HellgenieEngine();
 
         public string CurrentVectorLimiterListName
         {
@@ -52,6 +53,7 @@ namespace RTCV.UI
 
             this.Controls.Add(gbFreezeEngine);
             this.Controls.Add(gbNightmareEngine);
+            this.Controls.Add(gbHellgenieEngine);
         }
 
         private void OnFormLoad(object sender, EventArgs e)
@@ -264,7 +266,7 @@ namespace RTCV.UI
             dontUpdate = true;
             S.GET<SettingsCorruptForm>().SetRewindBoxes(enabled);
             gbFreezeEngine.cbClearFreezesOnRewind.Checked = enabled;
-            cbClearCheatsOnRewind.Checked = enabled;
+            gbHellgenieEngine.cbClearCheatsOnRewind.Checked = enabled;
             cbClearPipesOnRewind.Checked = enabled;
             dontUpdate = false;
         }
@@ -328,14 +330,14 @@ namespace RTCV.UI
                     gbNightmareEngine.nmMinValueNightmare.Maximum = byte.MaxValue;
                     gbNightmareEngine.nmMaxValueNightmare.Maximum = byte.MaxValue;
 
-                    nmMinValueHellgenie.Maximum = byte.MaxValue;
-                    nmMaxValueHellgenie.Maximum = byte.MaxValue;
+                    gbHellgenieEngine.nmMinValueHellgenie.Maximum = byte.MaxValue;
+                    gbHellgenieEngine.nmMaxValueHellgenie.Maximum = byte.MaxValue;
 
                     gbNightmareEngine.nmMinValueNightmare.Value = NightmareEngine.MinValue8Bit;
                     gbNightmareEngine.nmMaxValueNightmare.Value = NightmareEngine.MaxValue8Bit;
 
-                    nmMinValueHellgenie.Value = HellgenieEngine.MinValue8Bit;
-                    nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue8Bit;
+                    gbHellgenieEngine.nmMinValueHellgenie.Value = HellgenieEngine.MinValue8Bit;
+                    gbHellgenieEngine.nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue8Bit;
 
                     break;
 
@@ -343,42 +345,42 @@ namespace RTCV.UI
                     gbNightmareEngine.nmMinValueNightmare.Maximum = ushort.MaxValue;
                     gbNightmareEngine.nmMaxValueNightmare.Maximum = ushort.MaxValue;
 
-                    nmMinValueHellgenie.Maximum = ushort.MaxValue;
-                    nmMaxValueHellgenie.Maximum = ushort.MaxValue;
+                    gbHellgenieEngine.nmMinValueHellgenie.Maximum = ushort.MaxValue;
+                    gbHellgenieEngine.nmMaxValueHellgenie.Maximum = ushort.MaxValue;
 
                     gbNightmareEngine.nmMinValueNightmare.Value = NightmareEngine.MinValue16Bit;
                     gbNightmareEngine.nmMaxValueNightmare.Value = NightmareEngine.MaxValue16Bit;
 
-                    nmMinValueHellgenie.Value = HellgenieEngine.MinValue16Bit;
-                    nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue16Bit;
+                    gbHellgenieEngine.nmMinValueHellgenie.Value = HellgenieEngine.MinValue16Bit;
+                    gbHellgenieEngine.nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue16Bit;
 
                     break;
                 case 4:
                     gbNightmareEngine.nmMinValueNightmare.Maximum = uint.MaxValue;
                     gbNightmareEngine.nmMaxValueNightmare.Maximum = uint.MaxValue;
 
-                    nmMinValueHellgenie.Maximum = uint.MaxValue;
-                    nmMaxValueHellgenie.Maximum = uint.MaxValue;
+                    gbHellgenieEngine.nmMinValueHellgenie.Maximum = uint.MaxValue;
+                    gbHellgenieEngine.nmMaxValueHellgenie.Maximum = uint.MaxValue;
 
                     gbNightmareEngine.nmMinValueNightmare.Value = NightmareEngine.MinValue32Bit;
                     gbNightmareEngine.nmMaxValueNightmare.Value = NightmareEngine.MaxValue32Bit;
 
-                    nmMinValueHellgenie.Value = HellgenieEngine.MinValue32Bit;
-                    nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue32Bit;
+                    gbHellgenieEngine.nmMinValueHellgenie.Value = HellgenieEngine.MinValue32Bit;
+                    gbHellgenieEngine.nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue32Bit;
 
                     break;
                 case 8:
                     gbNightmareEngine.nmMinValueNightmare.Maximum = ulong.MaxValue;
                     gbNightmareEngine.nmMaxValueNightmare.Maximum = ulong.MaxValue;
 
-                    nmMinValueHellgenie.Maximum = ulong.MaxValue;
-                    nmMaxValueHellgenie.Maximum = ulong.MaxValue;
+                    gbHellgenieEngine.nmMinValueHellgenie.Maximum = ulong.MaxValue;
+                    gbHellgenieEngine.nmMaxValueHellgenie.Maximum = ulong.MaxValue;
 
                     gbNightmareEngine.nmMinValueNightmare.Value = NightmareEngine.MinValue64Bit;
                     gbNightmareEngine.nmMaxValueNightmare.Value = NightmareEngine.MaxValue64Bit;
 
-                    nmMinValueHellgenie.Value = HellgenieEngine.MinValue64Bit;
-                    nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue64Bit;
+                    gbHellgenieEngine.nmMinValueHellgenie.Value = HellgenieEngine.MinValue64Bit;
+                    gbHellgenieEngine.nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue64Bit;
 
                     break;
             }
