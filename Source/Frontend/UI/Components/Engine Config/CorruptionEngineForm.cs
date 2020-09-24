@@ -3,7 +3,6 @@ namespace RTCV.UI
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
-    using System.Linq;
     using System.Windows.Forms;
     using RTCV.Common;
     using RTCV.CorruptCore;
@@ -16,20 +15,20 @@ namespace RTCV.UI
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        internal readonly Components.EngineConfig.EngineControls.FreezeEngineControl freezeEngineControl;
-        internal readonly Components.EngineConfig.EngineControls.NightmareEngineControl nightmareEngineControl;
-        internal readonly Components.EngineConfig.EngineControls.HellgenieEngineControl hellgenieEngineControl;
+        internal readonly Components.EngineConfig.EngineControls.FreezeEngineControl FreezeEngineControl;
+        internal readonly Components.EngineConfig.EngineControls.NightmareEngineControl NightmareEngineControl;
+        internal readonly Components.EngineConfig.EngineControls.HellgenieEngineControl HellgenieEngineControl;
         private readonly Components.EngineConfig.EngineControls.DistortionEngineControl distortionEngineControl;
         private readonly Components.EngineConfig.EngineControls.CustomEngineControl customEngineControl;
-        internal readonly Components.EngineConfig.EngineControls.PipeEngineControl pipeEngineControl;
-        internal readonly Components.EngineConfig.EngineControls.BlastGeneratorEngineControl blastGeneratorEngineControl;
-        internal readonly Components.EngineConfig.EngineControls.VectorEngineControl vectorEngineControl;
-        internal readonly Components.EngineConfig.EngineControls.ClusterEngineControl clusterEngineControl;
+        internal readonly Components.EngineConfig.EngineControls.PipeEngineControl PipeEngineControl;
+        internal readonly Components.EngineConfig.EngineControls.BlastGeneratorEngineControl BlastGeneratorEngineControl;
+        internal readonly Components.EngineConfig.EngineControls.VectorEngineControl VectorEngineControl;
+        internal readonly Components.EngineConfig.EngineControls.ClusterEngineControl ClusterEngineControl;
 
         public string CurrentVectorLimiterListName
         {
             get {
-                ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)vectorEngineControl.cbVectorLimiterList).SelectedItem;
+                ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)VectorEngineControl.cbVectorLimiterList).SelectedItem;
 
                 if (item == null) //this shouldn't ever happen unless the list files are missing
                     MessageBox.Show("Error: No vector engine limiter list selected. Bad install?");
@@ -46,14 +45,14 @@ namespace RTCV.UI
 
             var engineControlLocation = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
 
-            freezeEngineControl = new Components.EngineConfig.EngineControls.FreezeEngineControl(this);
-            this.Controls.Add(freezeEngineControl);
+            FreezeEngineControl = new Components.EngineConfig.EngineControls.FreezeEngineControl(this);
+            this.Controls.Add(FreezeEngineControl);
 
-            nightmareEngineControl = new Components.EngineConfig.EngineControls.NightmareEngineControl(engineControlLocation);
-            this.Controls.Add(nightmareEngineControl);
+            NightmareEngineControl = new Components.EngineConfig.EngineControls.NightmareEngineControl(engineControlLocation);
+            this.Controls.Add(NightmareEngineControl);
 
-            hellgenieEngineControl = new Components.EngineConfig.EngineControls.HellgenieEngineControl(this);
-            this.Controls.Add(hellgenieEngineControl);
+            HellgenieEngineControl = new Components.EngineConfig.EngineControls.HellgenieEngineControl(this);
+            this.Controls.Add(HellgenieEngineControl);
 
             distortionEngineControl = new Components.EngineConfig.EngineControls.DistortionEngineControl(engineControlLocation);
             this.Controls.Add(distortionEngineControl);
@@ -61,17 +60,17 @@ namespace RTCV.UI
             customEngineControl = new Components.EngineConfig.EngineControls.CustomEngineControl(engineControlLocation);
             this.Controls.Add(customEngineControl);
 
-            pipeEngineControl = new Components.EngineConfig.EngineControls.PipeEngineControl(this);
-            this.Controls.Add(pipeEngineControl);
+            PipeEngineControl = new Components.EngineConfig.EngineControls.PipeEngineControl(this);
+            this.Controls.Add(PipeEngineControl);
 
-            blastGeneratorEngineControl = new Components.EngineConfig.EngineControls.BlastGeneratorEngineControl(engineControlLocation);
-            this.Controls.Add(blastGeneratorEngineControl);
+            BlastGeneratorEngineControl = new Components.EngineConfig.EngineControls.BlastGeneratorEngineControl(engineControlLocation);
+            this.Controls.Add(BlastGeneratorEngineControl);
 
-            vectorEngineControl = new Components.EngineConfig.EngineControls.VectorEngineControl(this);
-            this.Controls.Add(vectorEngineControl);
+            VectorEngineControl = new Components.EngineConfig.EngineControls.VectorEngineControl(this);
+            this.Controls.Add(VectorEngineControl);
 
-            clusterEngineControl = new Components.EngineConfig.EngineControls.ClusterEngineControl(engineControlLocation);
-            this.Controls.Add(clusterEngineControl);
+            ClusterEngineControl = new Components.EngineConfig.EngineControls.ClusterEngineControl(engineControlLocation);
+            this.Controls.Add(ClusterEngineControl);
         }
 
         private void OnFormLoad(object sender, EventArgs e)
@@ -83,25 +82,25 @@ namespace RTCV.UI
 
             if (RtcCore.LimiterListBindingSource.Count > 0)
             {
-                UpdateVectorLimiterList(vectorEngineControl.cbVectorLimiterList, null);
-                UpdateVectorLimiterList(clusterEngineControl.cbClusterLimiterList, null);
+                UpdateVectorLimiterList(VectorEngineControl.cbVectorLimiterList, null);
+                UpdateVectorLimiterList(ClusterEngineControl.cbClusterLimiterList, null);
             }
             if (RtcCore.ValueListBindingSource.Count > 0)
             {
-                UpdateVectorValueList(vectorEngineControl.cbVectorValueList, null);
+                UpdateVectorValueList(VectorEngineControl.cbVectorValueList, null);
             }
         }
 
         private void UpdateEngine(object sender, EventArgs e)
         {
-            nightmareEngineControl.Visible = false;
-            hellgenieEngineControl.Visible = false;
+            NightmareEngineControl.Visible = false;
+            HellgenieEngineControl.Visible = false;
             distortionEngineControl.Visible = false;
-            freezeEngineControl.Visible = false;
-            pipeEngineControl.Visible = false;
-            vectorEngineControl.Visible = false;
-            clusterEngineControl.Visible = false;
-            blastGeneratorEngineControl.Visible = false;
+            FreezeEngineControl.Visible = false;
+            PipeEngineControl.Visible = false;
+            VectorEngineControl.Visible = false;
+            ClusterEngineControl.Visible = false;
+            BlastGeneratorEngineControl.Visible = false;
             customEngineControl.Visible = false;
             cbCustomPrecision.Enabled = false;
             nmAlignment.Maximum = RtcCore.CurrentPrecision - 1;
@@ -115,7 +114,7 @@ namespace RTCV.UI
             {
                 case "Nightmare Engine":
                     RtcCore.SelectedEngine = CorruptionEngine.NIGHTMARE;
-                    nightmareEngineControl.Visible = true;
+                    NightmareEngineControl.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
                     S.GET<CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
@@ -123,7 +122,7 @@ namespace RTCV.UI
 
                 case "Hellgenie Engine":
                     RtcCore.SelectedEngine = CorruptionEngine.HELLGENIE;
-                    hellgenieEngineControl.Visible = true;
+                    HellgenieEngineControl.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
                     S.GET<CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
@@ -139,7 +138,7 @@ namespace RTCV.UI
 
                 case "Freeze Engine":
                     RtcCore.SelectedEngine = CorruptionEngine.FREEZE;
-                    freezeEngineControl.Visible = true;
+                    FreezeEngineControl.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
                     S.GET<CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
@@ -147,7 +146,7 @@ namespace RTCV.UI
 
                 case "Pipe Engine":
                     RtcCore.SelectedEngine = CorruptionEngine.PIPE;
-                    pipeEngineControl.Visible = true;
+                    PipeEngineControl.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
                     S.GET<CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
@@ -156,9 +155,9 @@ namespace RTCV.UI
                 case "Vector Engine":
                     RtcCore.SelectedEngine = CorruptionEngine.VECTOR;
                     nmAlignment.Maximum = 3;
-                    vectorEngineControl.Visible = true;
+                    VectorEngineControl.Visible = true;
 
-                    if (vectorEngineControl.cbVectorUnlockPrecision.Checked)
+                    if (VectorEngineControl.cbVectorUnlockPrecision.Checked)
                     {
                         nmAlignment.Maximum = new decimal(new int[] { 0, 0, 0, 0 });
                         cbCustomPrecision.Enabled = true;
@@ -175,7 +174,7 @@ namespace RTCV.UI
                 case "Cluster Engine":
                     RtcCore.SelectedEngine = CorruptionEngine.CLUSTER;
                     nmAlignment.Maximum = 3;
-                    clusterEngineControl.Visible = true;
+                    ClusterEngineControl.Visible = true;
 
                     S.GET<CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
@@ -190,7 +189,7 @@ namespace RTCV.UI
 
                 case "Blast Generator":
                     RtcCore.SelectedEngine = CorruptionEngine.BLASTGENERATORENGINE;
-                    blastGeneratorEngineControl.Visible = true;
+                    BlastGeneratorEngineControl.Visible = true;
 
                     S.GET<CoreForm>().AutoCorrupt = false;
                     S.GET<CoreForm>().btnAutoCorrupt.Visible = false;
@@ -229,7 +228,7 @@ namespace RTCV.UI
         public void SetLockBoxes(bool enabled)
         {
             dontUpdate = true;
-            pipeEngineControl.cbLockPipes.Checked = enabled;
+            PipeEngineControl.cbLockPipes.Checked = enabled;
             dontUpdate = false;
         }
 
@@ -237,9 +236,9 @@ namespace RTCV.UI
         {
             dontUpdate = true;
             S.GET<SettingsCorruptForm>().SetRewindBoxes(enabled);
-            freezeEngineControl.cbClearFreezesOnRewind.Checked = enabled;
-            hellgenieEngineControl.cbClearCheatsOnRewind.Checked = enabled;
-            pipeEngineControl.cbClearPipesOnRewind.Checked = enabled;
+            FreezeEngineControl.cbClearFreezesOnRewind.Checked = enabled;
+            HellgenieEngineControl.cbClearCheatsOnRewind.Checked = enabled;
+            PipeEngineControl.cbClearPipesOnRewind.Checked = enabled;
             dontUpdate = false;
         }
 
@@ -257,7 +256,7 @@ namespace RTCV.UI
             S.GET<CustomEngineConfigForm>().SetRewindBoxes(((CheckBox)sender).Checked);
             S.GET<SimpleModeForm>().SetRewindBoxes(((CheckBox)sender).Checked);
 
-            StepActions.ClearStepActionsOnRewind = freezeEngineControl.cbClearFreezesOnRewind.Checked;
+            StepActions.ClearStepActionsOnRewind = FreezeEngineControl.cbClearFreezesOnRewind.Checked;
         }
 
         internal void UpdateVectorLimiterList(object sender, EventArgs e)
@@ -285,8 +284,8 @@ namespace RTCV.UI
 
         private void UpdateMinMaxBoxes(int precision)
         {
-            nightmareEngineControl.UpdateMinMaxBoxes(precision);
-            hellgenieEngineControl.UpdateMinMaxBoxes(precision);
+            NightmareEngineControl.UpdateMinMaxBoxes(precision);
+            HellgenieEngineControl.UpdateMinMaxBoxes(precision);
         }
 
         private void UpdateCustomPrecision(object sender, EventArgs e)
@@ -330,7 +329,7 @@ namespace RTCV.UI
 
         internal void UpdateVectorUnlockPrecision(object sender, EventArgs e)
         {
-            if (vectorEngineControl.cbVectorUnlockPrecision.Checked)
+            if (VectorEngineControl.cbVectorUnlockPrecision.Checked)
             {
                 nmAlignment.Maximum = new decimal(new int[] { 0, 0, 0, 0 });
                 cbCustomPrecision.Enabled = true;

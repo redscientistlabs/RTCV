@@ -229,14 +229,14 @@ namespace RTCV.UI
                     break;
                 }
 
-            foreach (ComboBoxItem<string> item in ceForm.vectorEngineControl.cbVectorLimiterList.Items)
+            foreach (ComboBoxItem<string> item in ceForm.VectorEngineControl.cbVectorLimiterList.Items)
                 if (item.Name == limiter)
                 {
-                    ceForm.vectorEngineControl.cbVectorLimiterList.SelectedItem = item;
+                    ceForm.VectorEngineControl.cbVectorLimiterList.SelectedItem = item;
                     break;
                 }
 
-            ComboBoxItem<string> cbItem = (ComboBoxItem<string>)((ComboBox)ceForm.vectorEngineControl.cbVectorLimiterList).SelectedItem;
+            ComboBoxItem<string> cbItem = (ComboBoxItem<string>)((ComboBox)ceForm.VectorEngineControl.cbVectorLimiterList).SelectedItem;
             if (cbItem != null)
             {
                 LimiterListHash = cbItem.Value;
