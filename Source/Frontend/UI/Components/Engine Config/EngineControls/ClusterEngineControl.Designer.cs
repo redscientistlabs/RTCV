@@ -117,6 +117,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             this.clusterDirection.TabIndex = 149;
             this.clusterDirection.Tag = "color:normal";
             this.clusterDirection.ValueMember = "Value";
+            this.clusterDirection.SelectedIndexChanged += new System.EventHandler(this.UpdateClusterDirection);
             // 
             // clusterSplitUnits
             // 

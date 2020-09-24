@@ -371,10 +371,7 @@ namespace RTCV.UI
 
         
 
-        private void UpdateClusterDirection(object sender, EventArgs e)
-        {
-            ClusterEngine.Direction = gbClusterEngine.clusterDirection.SelectedItem.ToString();
-        }
+        
 
         private void UpdateClusterFilterAll(object sender, EventArgs e)
         {
