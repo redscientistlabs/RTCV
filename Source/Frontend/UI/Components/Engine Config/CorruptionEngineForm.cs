@@ -24,6 +24,7 @@ namespace RTCV.UI
         internal Components.EngineConfig.Engines.PipeEngine gbPipeEngine = new Components.EngineConfig.Engines.PipeEngine();
         internal Components.EngineConfig.Engines.BlastGeneratorEngine gbBlastGeneratorEngine = new Components.EngineConfig.Engines.BlastGeneratorEngine();
         internal Components.EngineConfig.Engines.VectorEngine gbVectorEngine = new Components.EngineConfig.Engines.VectorEngine();
+        internal Components.EngineConfig.Engines.ClusterEngine gbClusterEngine = new Components.EngineConfig.Engines.ClusterEngine();
 
         public string CurrentVectorLimiterListName
         {
@@ -51,6 +52,7 @@ namespace RTCV.UI
             this.Controls.Add(gbPipeEngine);
             this.Controls.Add(gbBlastGeneratorEngine);
             this.Controls.Add(gbVectorEngine);
+            this.Controls.Add(gbClusterEngine);
         }
 
         private void OnFormLoad(object sender, EventArgs e)
@@ -72,44 +74,44 @@ namespace RTCV.UI
 
             gbVectorEngine.cbVectorValueList.DataSource = null;
             gbVectorEngine.cbVectorLimiterList.DataSource = null;
-            cbClusterLimiterList.DataSource = null;
+            gbClusterEngine.cbClusterLimiterList.DataSource = null;
             gbVectorEngine.cbVectorValueList.DisplayMember = "Name";
             gbVectorEngine.cbVectorLimiterList.DisplayMember = "Name";
-            cbClusterLimiterList.DisplayMember = "Name";
+            gbClusterEngine.cbClusterLimiterList.DisplayMember = "Name";
 
             gbVectorEngine.cbVectorValueList.ValueMember = "Value";
             gbVectorEngine.cbVectorLimiterList.ValueMember = "Value";
-            cbClusterLimiterList.ValueMember = "Value";
+            gbClusterEngine.cbClusterLimiterList.ValueMember = "Value";
 
             //Do this here as if it's stuck into the designer, it keeps defaulting out
             gbVectorEngine.cbVectorValueList.DataSource = RtcCore.ValueListBindingSource;
             gbVectorEngine.cbVectorLimiterList.DataSource = RtcCore.LimiterListBindingSource;
-            cbClusterLimiterList.DataSource = RtcCore.LimiterListBindingSource;
+            gbClusterEngine.cbClusterLimiterList.DataSource = RtcCore.LimiterListBindingSource;
 
             if (RtcCore.LimiterListBindingSource.Count > 0)
             {
                 UpdateVectorLimiterList(gbVectorEngine.cbVectorLimiterList, null);
-                UpdateVectorLimiterList(cbClusterLimiterList, null);
+                UpdateVectorLimiterList(gbClusterEngine.cbClusterLimiterList, null);
             }
             if (RtcCore.ValueListBindingSource.Count > 0)
             {
                 UpdateVectorValueList(gbVectorEngine.cbVectorValueList, null);
             }
 
-            clusterChunkSize.ValueChanged += UpdateClusterChunkSize;
-            clusterChunkModifier.ValueChanged += UpdateClusterModifier;
+            gbClusterEngine.clusterChunkSize.ValueChanged += UpdateClusterChunkSize;
+            gbClusterEngine.clusterChunkModifier.ValueChanged += UpdateClusterModifier;
 
             for (int j = 0; j < ClusterEngine.ShuffleTypes.Length; j++)
             {
-                cbClusterMethod.Items.Add(ClusterEngine.ShuffleTypes[j]);
+                gbClusterEngine.cbClusterMethod.Items.Add(ClusterEngine.ShuffleTypes[j]);
             }
-            cbClusterMethod.SelectedIndex = 0;
+            gbClusterEngine.cbClusterMethod.SelectedIndex = 0;
 
             for (int j = 0; j < ClusterEngine.Directions.Length; j++)
             {
-                clusterDirection.Items.Add(ClusterEngine.Directions[j]);
+                gbClusterEngine.clusterDirection.Items.Add(ClusterEngine.Directions[j]);
             }
-            clusterDirection.SelectedIndex = 0;
+            gbClusterEngine.clusterDirection.SelectedIndex = 0;
         }
 
         private void ResyncDistortionEngine(object sender, EventArgs e)
@@ -474,41 +476,41 @@ namespace RTCV.UI
 
         private void UpdateClusterChunkSize(object sender, EventArgs e)
         {
-            ClusterEngine.ChunkSize = (int)clusterChunkSize.Value;
+            ClusterEngine.ChunkSize = (int)gbClusterEngine.clusterChunkSize.Value;
         }
 
         private void UpdateClusterModifier(object sender, EventArgs e)
         {
-            ClusterEngine.Modifier = (int)clusterChunkModifier.Value;
+            ClusterEngine.Modifier = (int)gbClusterEngine.clusterChunkModifier.Value;
         }
 
         private void UpdateClusterMethod(object sender, EventArgs e)
         {
-            ClusterEngine.ShuffleType = cbClusterMethod.SelectedItem.ToString();
+            ClusterEngine.ShuffleType = gbClusterEngine.cbClusterMethod.SelectedItem.ToString();
 
-            if (cbClusterMethod.SelectedItem.ToString().ToLower().Contains("rotate"))
+            if (gbClusterEngine.cbClusterMethod.SelectedItem.ToString().ToLower().Contains("rotate"))
             {
-                clusterChunkModifier.Enabled = true;
+                gbClusterEngine.clusterChunkModifier.Enabled = true;
             }
             else
             {
-                clusterChunkModifier.Enabled = false;
+                gbClusterEngine.clusterChunkModifier.Enabled = false;
             }
         }
 
         private void UpdateClusterSplitUnits(object sender, EventArgs e)
         {
-            ClusterEngine.OutputMultipleUnits = clusterSplitUnits.Checked;
+            ClusterEngine.OutputMultipleUnits = gbClusterEngine.clusterSplitUnits.Checked;
         }
 
         private void UpdateClusterDirection(object sender, EventArgs e)
         {
-            ClusterEngine.Direction = clusterDirection.SelectedItem.ToString();
+            ClusterEngine.Direction = gbClusterEngine.clusterDirection.SelectedItem.ToString();
         }
 
         private void UpdateClusterFilterAll(object sender, EventArgs e)
         {
-            ClusterEngine.FilterAll = clusterFilterAll.Checked;
+            ClusterEngine.FilterAll = gbClusterEngine.clusterFilterAll.Checked;
         }
 
         private void UpdateVectorUnlockPrecision(object sender, EventArgs e)

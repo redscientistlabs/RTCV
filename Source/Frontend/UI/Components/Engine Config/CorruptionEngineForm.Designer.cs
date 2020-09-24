@@ -36,27 +36,7 @@ namespace RTCV.UI
             this.nmAlignment = new RTCV.UI.Components.Controls.MultiUpDown();
             this.cbSelectedEngine = new System.Windows.Forms.ComboBox();
             this.gbSelectedEngine = new System.Windows.Forms.GroupBox();
-            this.gbClusterEngine = new System.Windows.Forms.GroupBox();
-            this.pnClusterLimiterList = new System.Windows.Forms.Panel();
-            this.clusterFilterAll = new System.Windows.Forms.CheckBox();
-            this.label29 = new System.Windows.Forms.Label();
-            this.clusterDirection = new System.Windows.Forms.ComboBox();
-            this.clusterSplitUnits = new System.Windows.Forms.CheckBox();
-            this.label28 = new System.Windows.Forms.Label();
-            this.clusterChunkModifier = new System.Windows.Forms.NumericUpDown();
-            this.label25 = new System.Windows.Forms.Label();
-            this.cbClusterMethod = new System.Windows.Forms.ComboBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.clusterChunkSize = new System.Windows.Forms.NumericUpDown();
-            this.cbClusterLimiterList = new System.Windows.Forms.ComboBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.comboBox9 = new System.Windows.Forms.ComboBox();
-            this.label22 = new System.Windows.Forms.Label();
             this.pnCustomPrecision.SuspendLayout();
-            this.gbClusterEngine.SuspendLayout();
-            this.pnClusterLimiterList.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.clusterChunkModifier)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.clusterChunkSize)).BeginInit();
             this.SuspendLayout();
             // 
             // pnCustomPrecision
@@ -183,267 +163,12 @@ namespace RTCV.UI
             this.gbSelectedEngine.Visible = false;
             this.gbSelectedEngine.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
-            // gbClusterEngine
-            // 
-            this.gbClusterEngine.Controls.Add(this.pnClusterLimiterList);
-            this.gbClusterEngine.Controls.Add(this.comboBox9);
-            this.gbClusterEngine.Controls.Add(this.label22);
-            this.gbClusterEngine.Font = new System.Drawing.Font("Segoe UI", 9.75F);
-            this.gbClusterEngine.ForeColor = System.Drawing.Color.White;
-            this.gbClusterEngine.Location = new System.Drawing.Point(880, 308);
-            this.gbClusterEngine.Name = "gbClusterEngine";
-            this.gbClusterEngine.Size = new System.Drawing.Size(420, 151);
-            this.gbClusterEngine.TabIndex = 148;
-            this.gbClusterEngine.TabStop = false;
-            this.gbClusterEngine.Visible = false;
-            // 
-            // pnClusterLimiterList
-            // 
-            this.pnClusterLimiterList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.pnClusterLimiterList.Controls.Add(this.clusterFilterAll);
-            this.pnClusterLimiterList.Controls.Add(this.label29);
-            this.pnClusterLimiterList.Controls.Add(this.clusterDirection);
-            this.pnClusterLimiterList.Controls.Add(this.clusterSplitUnits);
-            this.pnClusterLimiterList.Controls.Add(this.label28);
-            this.pnClusterLimiterList.Controls.Add(this.clusterChunkModifier);
-            this.pnClusterLimiterList.Controls.Add(this.label25);
-            this.pnClusterLimiterList.Controls.Add(this.cbClusterMethod);
-            this.pnClusterLimiterList.Controls.Add(this.label11);
-            this.pnClusterLimiterList.Controls.Add(this.clusterChunkSize);
-            this.pnClusterLimiterList.Controls.Add(this.cbClusterLimiterList);
-            this.pnClusterLimiterList.Controls.Add(this.label12);
-            this.pnClusterLimiterList.Location = new System.Drawing.Point(6, 40);
-            this.pnClusterLimiterList.Name = "pnClusterLimiterList";
-            this.pnClusterLimiterList.Size = new System.Drawing.Size(408, 104);
-            this.pnClusterLimiterList.TabIndex = 134;
-            this.pnClusterLimiterList.Tag = "color:dark2";
-            this.pnClusterLimiterList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // clusterFilterAll
-            // 
-            this.clusterFilterAll.AutoSize = true;
-            this.clusterFilterAll.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.clusterFilterAll.ForeColor = System.Drawing.Color.White;
-            this.clusterFilterAll.Location = new System.Drawing.Point(296, 27);
-            this.clusterFilterAll.Name = "clusterFilterAll";
-            this.clusterFilterAll.Size = new System.Drawing.Size(68, 17);
-            this.clusterFilterAll.TabIndex = 151;
-            this.clusterFilterAll.Text = "Filter All";
-            this.clusterFilterAll.UseVisualStyleBackColor = true;
-            this.clusterFilterAll.CheckedChanged += new System.EventHandler(this.UpdateClusterFilterAll);
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label29.Location = new System.Drawing.Point(293, 52);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(96, 13);
-            this.label29.TabIndex = 150;
-            this.label29.Text = "Cluster Direction:";
-            // 
-            // clusterDirection
-            // 
-            this.clusterDirection.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.clusterDirection.DisplayMember = "Name";
-            this.clusterDirection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.clusterDirection.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.clusterDirection.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.clusterDirection.ForeColor = System.Drawing.Color.White;
-            this.clusterDirection.FormattingEnabled = true;
-            this.clusterDirection.IntegralHeight = false;
-            this.clusterDirection.Location = new System.Drawing.Point(296, 68);
-            this.clusterDirection.MaxDropDownItems = 15;
-            this.clusterDirection.Name = "clusterDirection";
-            this.clusterDirection.Size = new System.Drawing.Size(106, 21);
-            this.clusterDirection.TabIndex = 149;
-            this.clusterDirection.Tag = "color:normal";
-            this.clusterDirection.ValueMember = "Value";
-            this.clusterDirection.SelectedIndexChanged += new System.EventHandler(this.UpdateClusterDirection);
-            // 
-            // clusterSplitUnits
-            // 
-            this.clusterSplitUnits.AutoSize = true;
-            this.clusterSplitUnits.Checked = true;
-            this.clusterSplitUnits.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.clusterSplitUnits.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.clusterSplitUnits.ForeColor = System.Drawing.Color.White;
-            this.clusterSplitUnits.Location = new System.Drawing.Point(296, 4);
-            this.clusterSplitUnits.Name = "clusterSplitUnits";
-            this.clusterSplitUnits.Size = new System.Drawing.Size(106, 17);
-            this.clusterSplitUnits.TabIndex = 144;
-            this.clusterSplitUnits.Text = "Split Blast Units";
-            this.clusterSplitUnits.UseVisualStyleBackColor = true;
-            this.clusterSplitUnits.CheckedChanged += new System.EventHandler(this.UpdateClusterSplitUnits);
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label28.Location = new System.Drawing.Point(175, 52);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(88, 13);
-            this.label28.TabIndex = 148;
-            this.label28.Text = "Rotate Amount:";
-            // 
-            // clusterChunkModifier
-            // 
-            this.clusterChunkModifier.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.clusterChunkModifier.Enabled = false;
-            this.clusterChunkModifier.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.clusterChunkModifier.ForeColor = System.Drawing.Color.White;
-            this.clusterChunkModifier.Location = new System.Drawing.Point(178, 67);
-            this.clusterChunkModifier.Maximum = new decimal(new int[] {
-            65536,
-            0,
-            0,
-            0});
-            this.clusterChunkModifier.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.clusterChunkModifier.Name = "clusterChunkModifier";
-            this.clusterChunkModifier.Size = new System.Drawing.Size(100, 22);
-            this.clusterChunkModifier.TabIndex = 147;
-            this.clusterChunkModifier.Tag = "color:normal";
-            this.clusterChunkModifier.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label25.Location = new System.Drawing.Point(6, 52);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(51, 13);
-            this.label25.TabIndex = 146;
-            this.label25.Text = "Method:";
-            // 
-            // cbClusterMethod
-            // 
-            this.cbClusterMethod.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.cbClusterMethod.DisplayMember = "Name";
-            this.cbClusterMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbClusterMethod.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbClusterMethod.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.cbClusterMethod.ForeColor = System.Drawing.Color.White;
-            this.cbClusterMethod.FormattingEnabled = true;
-            this.cbClusterMethod.IntegralHeight = false;
-            this.cbClusterMethod.Location = new System.Drawing.Point(9, 68);
-            this.cbClusterMethod.MaxDropDownItems = 15;
-            this.cbClusterMethod.Name = "cbClusterMethod";
-            this.cbClusterMethod.Size = new System.Drawing.Size(152, 21);
-            this.cbClusterMethod.TabIndex = 145;
-            this.cbClusterMethod.Tag = "color:normal";
-            this.cbClusterMethod.ValueMember = "Value";
-            this.cbClusterMethod.SelectedIndexChanged += new System.EventHandler(this.UpdateClusterMethod);
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label11.Location = new System.Drawing.Point(176, 3);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(106, 13);
-            this.label11.TabIndex = 142;
-            this.label11.Text = "Cluster Chunk Size:";
-            this.label11.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // clusterChunkSize
-            // 
-            this.clusterChunkSize.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.clusterChunkSize.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.clusterChunkSize.ForeColor = System.Drawing.Color.White;
-            this.clusterChunkSize.Location = new System.Drawing.Point(178, 19);
-            this.clusterChunkSize.Maximum = new decimal(new int[] {
-            65536,
-            0,
-            0,
-            0});
-            this.clusterChunkSize.Minimum = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.clusterChunkSize.Name = "clusterChunkSize";
-            this.clusterChunkSize.Size = new System.Drawing.Size(100, 22);
-            this.clusterChunkSize.TabIndex = 144;
-            this.clusterChunkSize.Tag = "color:normal";
-            this.clusterChunkSize.Value = new decimal(new int[] {
-            3,
-            0,
-            0,
-            0});
-            this.clusterChunkSize.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // cbClusterLimiterList
-            // 
-            this.cbClusterLimiterList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.cbClusterLimiterList.DisplayMember = "Name";
-            this.cbClusterLimiterList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbClusterLimiterList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbClusterLimiterList.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.cbClusterLimiterList.ForeColor = System.Drawing.Color.White;
-            this.cbClusterLimiterList.FormattingEnabled = true;
-            this.cbClusterLimiterList.IntegralHeight = false;
-            this.cbClusterLimiterList.Location = new System.Drawing.Point(8, 19);
-            this.cbClusterLimiterList.MaxDropDownItems = 15;
-            this.cbClusterLimiterList.Name = "cbClusterLimiterList";
-            this.cbClusterLimiterList.Size = new System.Drawing.Size(152, 21);
-            this.cbClusterLimiterList.TabIndex = 78;
-            this.cbClusterLimiterList.Tag = "color:normal";
-            this.cbClusterLimiterList.ValueMember = "Value";
-            this.cbClusterLimiterList.SelectedIndexChanged += new System.EventHandler(this.UpdateClusterLimiterList);
-            this.cbClusterLimiterList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label12.Location = new System.Drawing.Point(6, 4);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(62, 13);
-            this.label12.TabIndex = 79;
-            this.label12.Text = "Limiter list:";
-            this.label12.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // comboBox9
-            // 
-            this.comboBox9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.comboBox9.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox9.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBox9.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.comboBox9.ForeColor = System.Drawing.Color.White;
-            this.comboBox9.FormattingEnabled = true;
-            this.comboBox9.Location = new System.Drawing.Point(0, 9);
-            this.comboBox9.Name = "comboBox9";
-            this.comboBox9.Size = new System.Drawing.Size(165, 21);
-            this.comboBox9.TabIndex = 82;
-            this.comboBox9.Tag = "color:dark1";
-            this.comboBox9.Visible = false;
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
-            this.label22.Location = new System.Drawing.Point(170, 16);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(173, 13);
-            this.label22.TabIndex = 77;
-            this.label22.Text = "Swaps Values with neighbor Values";
-            this.label22.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
             // CorruptionEngineForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1448, 1097);
-            this.Controls.Add(this.gbClusterEngine);
             this.Controls.Add(this.pnCustomPrecision);
             this.Controls.Add(this.cbSelectedEngine);
             this.Controls.Add(this.gbSelectedEngine);
@@ -457,12 +182,6 @@ namespace RTCV.UI
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             this.pnCustomPrecision.ResumeLayout(false);
             this.pnCustomPrecision.PerformLayout();
-            this.gbClusterEngine.ResumeLayout(false);
-            this.gbClusterEngine.PerformLayout();
-            this.pnClusterLimiterList.ResumeLayout(false);
-            this.pnClusterLimiterList.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.clusterChunkModifier)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.clusterChunkSize)).EndInit();
             this.ResumeLayout(false);
 
 		}
@@ -476,21 +195,5 @@ namespace RTCV.UI
 		private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label8;
         public Components.Controls.MultiUpDown nmAlignment;
-        private System.Windows.Forms.GroupBox gbClusterEngine;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.NumericUpDown clusterChunkSize;
-        private System.Windows.Forms.Panel pnClusterLimiterList;
-        public System.Windows.Forms.ComboBox cbClusterLimiterList;
-        private System.Windows.Forms.Label label12;
-        public System.Windows.Forms.ComboBox comboBox9;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Label label25;
-        public System.Windows.Forms.ComboBox cbClusterMethod;
-        private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.NumericUpDown clusterChunkModifier;
-        public System.Windows.Forms.CheckBox clusterSplitUnits;
-        private System.Windows.Forms.Label label29;
-        public System.Windows.Forms.ComboBox clusterDirection;
-        public System.Windows.Forms.CheckBox clusterFilterAll;
     }
 }
