@@ -1,15 +1,18 @@
 namespace RTCV.UI.Components.EngineConfig.EngineControls
 {
     using System;
+    using System.Drawing;
     using RTCV.Common;
     using RTCV.CorruptCore;
     using RTCV.NetCore;
 
-    public partial class PipeEngineControl : EngineConfigControl
+    internal partial class PipeEngineControl : EngineConfigControl
     {
-        public PipeEngineControl()
+        internal PipeEngineControl(CorruptionEngineForm parent) : base(new Point(parent.gbSelectedEngine.Location.X, parent.gbSelectedEngine.Location.Y))
         {
             InitializeComponent();
+
+            cbClearPipesOnRewind.CheckedChanged += parent.OnClearRewindToggle;
         }
 
         private void ClearPipes(object sender, EventArgs e)

@@ -12,7 +12,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
 
     internal partial class FreezeEngineControl : EngineConfigControl
     {
-        internal FreezeEngineControl(CorruptionEngineForm parent)
+        internal FreezeEngineControl(CorruptionEngineForm parent) : base(new Point(parent.gbSelectedEngine.Location.X, parent.gbSelectedEngine.Location.Y))
         {
             InitializeComponent();
 

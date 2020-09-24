@@ -1,10 +1,11 @@
 namespace RTCV.UI.Components.EngineConfig.EngineControls
 {
+    using System.Drawing;
     using RTCV.CorruptCore;
 
     internal partial class VectorEngineControl : EngineConfigControl
     {
-        internal VectorEngineControl(CorruptionEngineForm parent)
+        internal VectorEngineControl(CorruptionEngineForm parent) : base(new Point(parent.gbSelectedEngine.Location.X, parent.gbSelectedEngine.Location.Y))
         {
             InitializeComponent();
 

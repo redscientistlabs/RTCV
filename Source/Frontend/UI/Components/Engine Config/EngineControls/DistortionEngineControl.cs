@@ -1,10 +1,11 @@
 namespace RTCV.UI.Components.EngineConfig.EngineControls
 {
+    using System.Drawing;
     using RTCV.NetCore;
 
     public partial class DistortionEngineControl : EngineConfigControl
     {
-        public DistortionEngineControl()
+        public DistortionEngineControl(Point location) : base(location)
         {
             InitializeComponent();
         }

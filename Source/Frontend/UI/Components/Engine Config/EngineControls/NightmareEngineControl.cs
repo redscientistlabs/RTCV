@@ -14,7 +14,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
 
     internal partial class NightmareEngineControl : EngineConfigControl
     {
-        internal NightmareEngineControl()
+        internal NightmareEngineControl(Point location) : base(location)
         {
             InitializeComponent();
 

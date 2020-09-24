@@ -17,14 +17,14 @@ namespace RTCV.UI
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         internal readonly Components.EngineConfig.EngineControls.FreezeEngineControl freezeEngineControl;
-        internal Components.EngineConfig.EngineControls.NightmareEngineControl nightmareEngineControl = new Components.EngineConfig.EngineControls.NightmareEngineControl();
+        internal readonly Components.EngineConfig.EngineControls.NightmareEngineControl nightmareEngineControl;
         internal readonly Components.EngineConfig.EngineControls.HellgenieEngineControl hellgenieEngineControl;
-        private Components.EngineConfig.EngineControls.DistortionEngineControl distortionEngineControl = new Components.EngineConfig.EngineControls.DistortionEngineControl();
-        private Components.EngineConfig.EngineControls.CustomEngineControl customEngineControl = new Components.EngineConfig.EngineControls.CustomEngineControl();
-        internal Components.EngineConfig.EngineControls.PipeEngineControl pipeEngineControl = new Components.EngineConfig.EngineControls.PipeEngineControl();
-        internal Components.EngineConfig.EngineControls.BlastGeneratorEngineControl blastGeneratorEngineControl = new Components.EngineConfig.EngineControls.BlastGeneratorEngineControl();
+        private readonly Components.EngineConfig.EngineControls.DistortionEngineControl distortionEngineControl;
+        private readonly Components.EngineConfig.EngineControls.CustomEngineControl customEngineControl;
+        internal readonly Components.EngineConfig.EngineControls.PipeEngineControl pipeEngineControl;
+        internal readonly Components.EngineConfig.EngineControls.BlastGeneratorEngineControl blastGeneratorEngineControl;
         internal readonly Components.EngineConfig.EngineControls.VectorEngineControl vectorEngineControl;
-        internal Components.EngineConfig.EngineControls.ClusterEngineControl clusterEngineControl = new Components.EngineConfig.EngineControls.ClusterEngineControl();
+        internal readonly Components.EngineConfig.EngineControls.ClusterEngineControl clusterEngineControl;
 
         public string CurrentVectorLimiterListName
         {
@@ -44,40 +44,39 @@ namespace RTCV.UI
 
             this.undockedSizable = false;
 
+            var engineControlLocation = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
+
             freezeEngineControl = new Components.EngineConfig.EngineControls.FreezeEngineControl(this);
             this.Controls.Add(freezeEngineControl);
 
+            nightmareEngineControl = new Components.EngineConfig.EngineControls.NightmareEngineControl(engineControlLocation);
             this.Controls.Add(nightmareEngineControl);
 
             hellgenieEngineControl = new Components.EngineConfig.EngineControls.HellgenieEngineControl(this);
             this.Controls.Add(hellgenieEngineControl);
 
+            distortionEngineControl = new Components.EngineConfig.EngineControls.DistortionEngineControl(engineControlLocation);
             this.Controls.Add(distortionEngineControl);
+
+            customEngineControl = new Components.EngineConfig.EngineControls.CustomEngineControl(engineControlLocation);
             this.Controls.Add(customEngineControl);
 
+            pipeEngineControl = new Components.EngineConfig.EngineControls.PipeEngineControl(this);
             this.Controls.Add(pipeEngineControl);
-            pipeEngineControl.cbClearPipesOnRewind.CheckedChanged += OnClearRewindToggle;
 
+            blastGeneratorEngineControl = new Components.EngineConfig.EngineControls.BlastGeneratorEngineControl(engineControlLocation);
             this.Controls.Add(blastGeneratorEngineControl);
 
             vectorEngineControl = new Components.EngineConfig.EngineControls.VectorEngineControl(this);
             this.Controls.Add(vectorEngineControl);
 
+            clusterEngineControl = new Components.EngineConfig.EngineControls.ClusterEngineControl(engineControlLocation);
             this.Controls.Add(clusterEngineControl);
         }
 
         private void OnFormLoad(object sender, EventArgs e)
         {
             nmAlignment.registerSlave(S.GET<CustomEngineConfigForm>().nmAlignment);
-            nightmareEngineControl.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
-            hellgenieEngineControl.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
-            distortionEngineControl.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
-            freezeEngineControl.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
-            pipeEngineControl.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
-            vectorEngineControl.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
-            clusterEngineControl.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
-            blastGeneratorEngineControl.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
-            customEngineControl.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
 
             cbSelectedEngine.SelectedIndex = 0;
             cbCustomPrecision.SelectedIndex = 0;

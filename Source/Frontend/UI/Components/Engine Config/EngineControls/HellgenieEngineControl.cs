@@ -1,8 +1,10 @@
 namespace RTCV.UI.Components.EngineConfig.EngineControls
 {
+    using System.Drawing;
+
     internal partial class HellgenieEngineControl : EngineConfigControl
     {
-        internal HellgenieEngineControl(CorruptionEngineForm parent)
+        internal HellgenieEngineControl(CorruptionEngineForm parent) : base(new Point(parent.gbSelectedEngine.Location.X, parent.gbSelectedEngine.Location.Y))
         {
             InitializeComponent();
 

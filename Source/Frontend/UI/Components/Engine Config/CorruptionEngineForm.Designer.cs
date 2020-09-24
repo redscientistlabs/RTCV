@@ -191,7 +191,7 @@ namespace RTCV.UI
 		private System.Windows.Forms.Panel pnCustomPrecision;
 		public System.Windows.Forms.ComboBox cbCustomPrecision;
 		public System.Windows.Forms.ComboBox cbSelectedEngine;
-		private System.Windows.Forms.GroupBox gbSelectedEngine;
+		internal System.Windows.Forms.GroupBox gbSelectedEngine;
 		private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label8;
         public Components.Controls.MultiUpDown nmAlignment;
