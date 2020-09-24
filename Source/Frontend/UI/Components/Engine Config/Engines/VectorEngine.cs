@@ -1,10 +1,12 @@
 namespace RTCV.UI.Components.EngineConfig.Engines
 {
-    public partial class VectorEngine : EngineConfigControl
+    internal partial class VectorEngine : EngineConfigControl
     {
-        public VectorEngine()
+        internal VectorEngine(CorruptionEngineForm parent)
         {
             InitializeComponent();
+
+            cbVectorLimiterList.SelectedIndexChanged += parent.UpdateVectorLimiterList;
         }
     }
 }

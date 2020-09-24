@@ -290,7 +290,7 @@ namespace RTCV.UI
             StepActions.ClearStepActionsOnRewind = gbFreezeEngine.cbClearFreezesOnRewind.Checked;
         }
 
-        private void UpdateVectorLimiterList(object sender, EventArgs e)
+        internal void UpdateVectorLimiterList(object sender, EventArgs e)
         {
             ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
             if (item != null)
