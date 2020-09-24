@@ -61,12 +61,6 @@ namespace RTCV.UI
             this.cbClearPipesOnRewind = new System.Windows.Forms.CheckBox();
             this.cbLockPipes = new System.Windows.Forms.CheckBox();
             this.btnClearPipes = new System.Windows.Forms.Button();
-            this.gbDistortionEngine = new System.Windows.Forms.GroupBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.btnResyncDistortionEngine = new System.Windows.Forms.Button();
-            this.nmDistortionDelay = new RTCV.UI.Components.Controls.MultiUpDown();
-            this.label7 = new System.Windows.Forms.Label();
             this.gbCustomEngine = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox7 = new System.Windows.Forms.ComboBox();
@@ -94,7 +88,6 @@ namespace RTCV.UI
             this.panel2.SuspendLayout();
             this.pnLimiterList.SuspendLayout();
             this.gbPipeEngine.SuspendLayout();
-            this.gbDistortionEngine.SuspendLayout();
             this.gbCustomEngine.SuspendLayout();
             this.gbClusterEngine.SuspendLayout();
             this.pnClusterLimiterList.SuspendLayout();
@@ -597,107 +590,6 @@ namespace RTCV.UI
             this.btnClearPipes.Click += new System.EventHandler(this.ClearPipes);
             this.btnClearPipes.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
-            // gbDistortionEngine
-            // 
-            this.gbDistortionEngine.Controls.Add(this.label17);
-            this.gbDistortionEngine.Controls.Add(this.comboBox3);
-            this.gbDistortionEngine.Controls.Add(this.btnResyncDistortionEngine);
-            this.gbDistortionEngine.Controls.Add(this.nmDistortionDelay);
-            this.gbDistortionEngine.Controls.Add(this.label7);
-            this.gbDistortionEngine.Font = new System.Drawing.Font("Segoe UI", 9.75F);
-            this.gbDistortionEngine.ForeColor = System.Drawing.Color.White;
-            this.gbDistortionEngine.Location = new System.Drawing.Point(454, 308);
-            this.gbDistortionEngine.Name = "gbDistortionEngine";
-            this.gbDistortionEngine.Size = new System.Drawing.Size(420, 151);
-            this.gbDistortionEngine.TabIndex = 142;
-            this.gbDistortionEngine.TabStop = false;
-            this.gbDistortionEngine.Visible = false;
-            this.gbDistortionEngine.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
-            this.label17.Location = new System.Drawing.Point(170, 16);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(189, 13);
-            this.label17.TabIndex = 87;
-            this.label17.Text = "Backups values and restores them later";
-            this.label17.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // comboBox3
-            // 
-            this.comboBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBox3.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.comboBox3.ForeColor = System.Drawing.Color.White;
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(0, 9);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(165, 21);
-            this.comboBox3.TabIndex = 77;
-            this.comboBox3.Tag = "color:normal";
-            this.comboBox3.Visible = false;
-            this.comboBox3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // btnResyncDistortionEngine
-            // 
-            this.btnResyncDistortionEngine.BackColor = System.Drawing.Color.Gray;
-            this.btnResyncDistortionEngine.FlatAppearance.BorderSize = 0;
-            this.btnResyncDistortionEngine.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnResyncDistortionEngine.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnResyncDistortionEngine.ForeColor = System.Drawing.Color.White;
-            this.btnResyncDistortionEngine.Location = new System.Drawing.Point(7, 120);
-            this.btnResyncDistortionEngine.Name = "btnResyncDistortionEngine";
-            this.btnResyncDistortionEngine.Size = new System.Drawing.Size(159, 24);
-            this.btnResyncDistortionEngine.TabIndex = 76;
-            this.btnResyncDistortionEngine.TabStop = false;
-            this.btnResyncDistortionEngine.Tag = "color:light1";
-            this.btnResyncDistortionEngine.Text = "Resync Distortion Engine";
-            this.btnResyncDistortionEngine.UseVisualStyleBackColor = false;
-            this.btnResyncDistortionEngine.Click += new System.EventHandler(this.ResyncDistortionEngine);
-            this.btnResyncDistortionEngine.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // nmDistortionDelay
-            // 
-            this.nmDistortionDelay.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.nmDistortionDelay.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.nmDistortionDelay.ForeColor = System.Drawing.Color.White;
-            this.nmDistortionDelay.Hexadecimal = false;
-            this.nmDistortionDelay.Location = new System.Drawing.Point(96, 39);
-            this.nmDistortionDelay.Maximum = new decimal(new int[] {
-            65536,
-            0,
-            0,
-            0});
-            this.nmDistortionDelay.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nmDistortionDelay.Name = "nmDistortionDelay";
-            this.nmDistortionDelay.Size = new System.Drawing.Size(70, 22);
-            this.nmDistortionDelay.TabIndex = 9;
-            this.nmDistortionDelay.Tag = "color:normal";
-            this.nmDistortionDelay.Value = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.nmDistortionDelay.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label7.Location = new System.Drawing.Point(5, 42);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(92, 13);
-            this.label7.TabIndex = 0;
-            this.label7.Text = "Distortion delay:";
-            this.label7.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
             // gbCustomEngine
             // 
             this.gbCustomEngine.Controls.Add(this.label2);
@@ -1031,7 +923,6 @@ namespace RTCV.UI
             this.Controls.Add(this.gbBlastGeneratorEngine);
             this.Controls.Add(this.gbVectorEngine);
             this.Controls.Add(this.gbPipeEngine);
-            this.Controls.Add(this.gbDistortionEngine);
             this.Controls.Add(this.pnCustomPrecision);
             this.Controls.Add(this.cbSelectedEngine);
             this.Controls.Add(this.gbSelectedEngine);
@@ -1055,8 +946,6 @@ namespace RTCV.UI
             this.pnLimiterList.PerformLayout();
             this.gbPipeEngine.ResumeLayout(false);
             this.gbPipeEngine.PerformLayout();
-            this.gbDistortionEngine.ResumeLayout(false);
-            this.gbDistortionEngine.PerformLayout();
             this.gbCustomEngine.ResumeLayout(false);
             this.gbCustomEngine.PerformLayout();
             this.gbClusterEngine.ResumeLayout(false);
@@ -1097,12 +986,6 @@ namespace RTCV.UI
 		public System.Windows.Forms.CheckBox cbClearPipesOnRewind;
 		public System.Windows.Forms.CheckBox cbLockPipes;
 		private System.Windows.Forms.Button btnClearPipes;
-		private System.Windows.Forms.GroupBox gbDistortionEngine;
-		private System.Windows.Forms.Label label17;
-		public System.Windows.Forms.ComboBox comboBox3;
-		private System.Windows.Forms.Button btnResyncDistortionEngine;
-        public RTCV.UI.Components.Controls.MultiUpDown nmDistortionDelay;
-		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.GroupBox gbCustomEngine;
 		private System.Windows.Forms.Label label2;
 		public System.Windows.Forms.ComboBox comboBox7;
