@@ -253,6 +253,7 @@ namespace RTCV.UI.Components.EngineConfig.Engines
             this.cbClusterLimiterList.TabIndex = 78;
             this.cbClusterLimiterList.Tag = "color:normal";
             this.cbClusterLimiterList.ValueMember = "Value";
+            this.cbClusterLimiterList.SelectedIndexChanged += new System.EventHandler(this.UpdateClusterLimiterList);
             // 
             // label12
             // 

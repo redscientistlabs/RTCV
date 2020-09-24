@@ -361,14 +361,10 @@ namespace RTCV.UI
             }
         }
 
-        private void UpdateClusterLimiterList(object sender, EventArgs e)
-        {
-            ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
-            if (item != null)
-            {
-                ClusterEngine.LimiterListHash = item.Value;
-            }
-        }
+
+
+
+
 
         private void UpdateClusterChunkSize(object sender, EventArgs e)
         {
