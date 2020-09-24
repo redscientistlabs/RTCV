@@ -299,7 +299,7 @@ namespace RTCV.UI
             }
         }
 
-        private void UpdateVectorValueList(object sender, EventArgs e)
+        internal void UpdateVectorValueList(object sender, EventArgs e)
         {
             ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
             if (item != null)

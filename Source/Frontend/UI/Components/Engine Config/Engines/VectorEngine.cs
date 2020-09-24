@@ -7,6 +7,7 @@ namespace RTCV.UI.Components.EngineConfig.Engines
             InitializeComponent();
 
             cbVectorLimiterList.SelectedIndexChanged += parent.UpdateVectorLimiterList;
+            cbVectorValueList.SelectedIndexChanged += parent.UpdateVectorValueList;
         }
     }
 }
