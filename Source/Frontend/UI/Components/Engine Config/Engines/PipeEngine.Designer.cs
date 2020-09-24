@@ -125,6 +125,7 @@ namespace RTCV.UI.Components.EngineConfig.Engines
             this.cbLockPipes.TabIndex = 149;
             this.cbLockPipes.Text = "Lock step units";
             this.cbLockPipes.UseVisualStyleBackColor = true;
+            this.cbLockPipes.CheckedChanged += new System.EventHandler(this.OnLockPipesToggle);
             // 
             // btnClearPipes
             // 
@@ -141,6 +142,7 @@ namespace RTCV.UI.Components.EngineConfig.Engines
             this.btnClearPipes.Tag = "color:light1";
             this.btnClearPipes.Text = "Clear Pipes";
             this.btnClearPipes.UseVisualStyleBackColor = false;
+            this.btnClearPipes.Click += new System.EventHandler(this.ClearPipes);
             // 
             // PipeEngine
             // 

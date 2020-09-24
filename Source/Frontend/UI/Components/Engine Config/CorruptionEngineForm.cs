@@ -45,11 +45,19 @@ namespace RTCV.UI
             this.undockedSizable = false;
 
             this.Controls.Add(gbFreezeEngine);
+            gbFreezeEngine.cbClearFreezesOnRewind.CheckedChanged += OnClearRewindToggle;
+
             this.Controls.Add(gbNightmareEngine);
+
             this.Controls.Add(gbHellgenieEngine);
+            gbHellgenieEngine.cbClearCheatsOnRewind.CheckedChanged += OnClearRewindToggle;
+
             this.Controls.Add(gbDistortionEngine);
             this.Controls.Add(gbCustomEngine);
+
             this.Controls.Add(gbPipeEngine);
+            gbPipeEngine.cbClearPipesOnRewind.CheckedChanged += OnClearRewindToggle;
+
             this.Controls.Add(gbBlastGeneratorEngine);
             this.Controls.Add(gbVectorEngine);
             this.Controls.Add(gbClusterEngine);
@@ -280,17 +288,6 @@ namespace RTCV.UI
             S.GET<SimpleModeForm>().SetRewindBoxes(((CheckBox)sender).Checked);
 
             StepActions.ClearStepActionsOnRewind = gbFreezeEngine.cbClearFreezesOnRewind.Checked;
-        }
-
-        private void ClearPipes(object sender, EventArgs e)
-        {
-            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
-        }
-
-        private void OnLockPipesToggle(object sender, EventArgs e)
-        {
-            S.GET<SettingsCorruptForm>().SetLockBoxes(gbPipeEngine.cbLockPipes.Checked);
-            StepActions.LockExecution = gbPipeEngine.cbLockPipes.Checked;
         }
 
         private void UpdateVectorLimiterList(object sender, EventArgs e)
