@@ -361,12 +361,6 @@ namespace RTCV.UI
             }
         }
 
-        private void OpenCustomEngine(object sender, EventArgs e)
-        {
-            S.GET<CustomEngineConfigForm>().Show();
-            S.GET<CustomEngineConfigForm>().Focus();
-        }
-
         private void UpdateClusterLimiterList(object sender, EventArgs e)
         {
             ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;

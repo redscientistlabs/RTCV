@@ -82,6 +82,7 @@ namespace RTCV.UI.Components.EngineConfig.Engines
             this.btnOpenCustomEngine.Tag = "color:light1";
             this.btnOpenCustomEngine.Text = "Open Custom Engine";
             this.btnOpenCustomEngine.UseVisualStyleBackColor = false;
+            this.btnOpenCustomEngine.Click += new System.EventHandler(this.OpenCustomEngine);
             // 
             // CustomEngine
             // 
