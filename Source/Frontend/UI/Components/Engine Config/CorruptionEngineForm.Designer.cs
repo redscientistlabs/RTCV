@@ -36,11 +36,6 @@ namespace RTCV.UI
             this.nmAlignment = new RTCV.UI.Components.Controls.MultiUpDown();
             this.cbSelectedEngine = new System.Windows.Forms.ComboBox();
             this.gbSelectedEngine = new System.Windows.Forms.GroupBox();
-            this.gbBlastGeneratorEngine = new System.Windows.Forms.GroupBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.comboBox8 = new System.Windows.Forms.ComboBox();
-            this.label21 = new System.Windows.Forms.Label();
-            this.btnOpenBlastGenerator = new System.Windows.Forms.Button();
             this.gbVectorEngine = new System.Windows.Forms.GroupBox();
             this.cbVectorUnlockPrecision = new System.Windows.Forms.CheckBox();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -70,7 +65,6 @@ namespace RTCV.UI
             this.comboBox9 = new System.Windows.Forms.ComboBox();
             this.label22 = new System.Windows.Forms.Label();
             this.pnCustomPrecision.SuspendLayout();
-            this.gbBlastGeneratorEngine.SuspendLayout();
             this.gbVectorEngine.SuspendLayout();
             this.panel2.SuspendLayout();
             this.pnLimiterList.SuspendLayout();
@@ -203,79 +197,6 @@ namespace RTCV.UI
             this.gbSelectedEngine.TabStop = false;
             this.gbSelectedEngine.Visible = false;
             this.gbSelectedEngine.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // gbBlastGeneratorEngine
-            // 
-            this.gbBlastGeneratorEngine.Controls.Add(this.label10);
-            this.gbBlastGeneratorEngine.Controls.Add(this.comboBox8);
-            this.gbBlastGeneratorEngine.Controls.Add(this.label21);
-            this.gbBlastGeneratorEngine.Controls.Add(this.btnOpenBlastGenerator);
-            this.gbBlastGeneratorEngine.Font = new System.Drawing.Font("Segoe UI", 9.75F);
-            this.gbBlastGeneratorEngine.ForeColor = System.Drawing.Color.White;
-            this.gbBlastGeneratorEngine.Location = new System.Drawing.Point(880, 460);
-            this.gbBlastGeneratorEngine.Name = "gbBlastGeneratorEngine";
-            this.gbBlastGeneratorEngine.Size = new System.Drawing.Size(420, 151);
-            this.gbBlastGeneratorEngine.TabIndex = 146;
-            this.gbBlastGeneratorEngine.TabStop = false;
-            this.gbBlastGeneratorEngine.Visible = false;
-            this.gbBlastGeneratorEngine.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Italic);
-            this.label10.Location = new System.Drawing.Point(174, 36);
-            this.label10.MaximumSize = new System.Drawing.Size(205, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(197, 104);
-            this.label10.TabIndex = 80;
-            this.label10.Text = resources.GetString("label10.Text");
-            this.label10.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // comboBox8
-            // 
-            this.comboBox8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.comboBox8.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBox8.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.comboBox8.ForeColor = System.Drawing.Color.White;
-            this.comboBox8.FormattingEnabled = true;
-            this.comboBox8.Location = new System.Drawing.Point(0, 9);
-            this.comboBox8.Name = "comboBox8";
-            this.comboBox8.Size = new System.Drawing.Size(165, 21);
-            this.comboBox8.TabIndex = 79;
-            this.comboBox8.Tag = "color:normal";
-            this.comboBox8.Visible = false;
-            this.comboBox8.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
-            this.label21.Location = new System.Drawing.Point(170, 16);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(216, 13);
-            this.label21.TabIndex = 78;
-            this.label21.Text = "Imports corruption from the Blast Generator";
-            this.label21.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // btnOpenBlastGenerator
-            // 
-            this.btnOpenBlastGenerator.BackColor = System.Drawing.Color.Gray;
-            this.btnOpenBlastGenerator.FlatAppearance.BorderSize = 0;
-            this.btnOpenBlastGenerator.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOpenBlastGenerator.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnOpenBlastGenerator.ForeColor = System.Drawing.Color.White;
-            this.btnOpenBlastGenerator.Location = new System.Drawing.Point(7, 120);
-            this.btnOpenBlastGenerator.Name = "btnOpenBlastGenerator";
-            this.btnOpenBlastGenerator.Size = new System.Drawing.Size(159, 24);
-            this.btnOpenBlastGenerator.TabIndex = 77;
-            this.btnOpenBlastGenerator.TabStop = false;
-            this.btnOpenBlastGenerator.Tag = "color:light1";
-            this.btnOpenBlastGenerator.Text = "Open Blast Generator";
-            this.btnOpenBlastGenerator.UseVisualStyleBackColor = false;
-            this.btnOpenBlastGenerator.Click += new System.EventHandler(this.OpenBlastGenerator);
-            this.btnOpenBlastGenerator.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // gbVectorEngine
             // 
@@ -707,7 +628,6 @@ namespace RTCV.UI
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1448, 1097);
             this.Controls.Add(this.gbClusterEngine);
-            this.Controls.Add(this.gbBlastGeneratorEngine);
             this.Controls.Add(this.gbVectorEngine);
             this.Controls.Add(this.pnCustomPrecision);
             this.Controls.Add(this.cbSelectedEngine);
@@ -722,8 +642,6 @@ namespace RTCV.UI
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             this.pnCustomPrecision.ResumeLayout(false);
             this.pnCustomPrecision.PerformLayout();
-            this.gbBlastGeneratorEngine.ResumeLayout(false);
-            this.gbBlastGeneratorEngine.PerformLayout();
             this.gbVectorEngine.ResumeLayout(false);
             this.gbVectorEngine.PerformLayout();
             this.panel2.ResumeLayout(false);
@@ -746,11 +664,6 @@ namespace RTCV.UI
 		public System.Windows.Forms.ComboBox cbCustomPrecision;
 		public System.Windows.Forms.ComboBox cbSelectedEngine;
 		private System.Windows.Forms.GroupBox gbSelectedEngine;
-		private System.Windows.Forms.GroupBox gbBlastGeneratorEngine;
-		private System.Windows.Forms.Label label10;
-		public System.Windows.Forms.ComboBox comboBox8;
-		private System.Windows.Forms.Label label21;
-		private System.Windows.Forms.Button btnOpenBlastGenerator;
 		private System.Windows.Forms.GroupBox gbVectorEngine;
 		private System.Windows.Forms.Panel panel2;
 		private System.Windows.Forms.Label lbVectorEngineValueText1;

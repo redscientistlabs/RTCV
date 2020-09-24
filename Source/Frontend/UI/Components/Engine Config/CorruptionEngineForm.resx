@@ -117,12 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="label10.Text" xml:space="preserve">
-    <value>The Blast Generator is a tool that provides an experience similar to classic rom corruptors.
-
-You input a start address, end address, and step size. It then goes through that range and generates corruption based upon the user provided parameters.
-</value>
-  </data>
   <data name="cbVectorValueList.DataSource" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAJgBbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1u
