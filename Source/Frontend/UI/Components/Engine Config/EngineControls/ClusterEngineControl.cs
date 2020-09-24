@@ -43,5 +43,10 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
                 clusterChunkModifier.Enabled = false;
             }
         }
+
+        private void UpdateClusterSplitUnits(object sender, EventArgs e)
+        {
+            ClusterEngine.OutputMultipleUnits = clusterSplitUnits.Checked;
+        }
     }
 }

@@ -131,6 +131,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             this.clusterSplitUnits.TabIndex = 144;
             this.clusterSplitUnits.Text = "Split Blast Units";
             this.clusterSplitUnits.UseVisualStyleBackColor = true;
+            this.clusterSplitUnits.CheckedChanged += new System.EventHandler(this.UpdateClusterSplitUnits);
             // 
             // label28
             // 

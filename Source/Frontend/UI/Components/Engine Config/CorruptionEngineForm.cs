@@ -369,10 +369,7 @@ namespace RTCV.UI
 
         
 
-        private void UpdateClusterSplitUnits(object sender, EventArgs e)
-        {
-            ClusterEngine.OutputMultipleUnits = gbClusterEngine.clusterSplitUnits.Checked;
-        }
+        
 
         private void UpdateClusterDirection(object sender, EventArgs e)
         {
