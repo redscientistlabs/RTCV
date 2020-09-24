@@ -83,6 +83,7 @@ namespace RTCV.UI.Components.EngineConfig.Engines
             this.btnOpenBlastGenerator.Tag = "color:light1";
             this.btnOpenBlastGenerator.Text = "Open Blast Generator";
             this.btnOpenBlastGenerator.UseVisualStyleBackColor = false;
+            this.btnOpenBlastGenerator.Click += new System.EventHandler(this.OpenBlastGenerator);
             // 
             // BlastGeneratorEngine
             // 
