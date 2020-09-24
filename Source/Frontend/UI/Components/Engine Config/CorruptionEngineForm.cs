@@ -373,10 +373,7 @@ namespace RTCV.UI
 
         
 
-        private void UpdateClusterFilterAll(object sender, EventArgs e)
-        {
-            ClusterEngine.FilterAll = gbClusterEngine.clusterFilterAll.Checked;
-        }
+        
 
         private void UpdateVectorUnlockPrecision(object sender, EventArgs e)
         {

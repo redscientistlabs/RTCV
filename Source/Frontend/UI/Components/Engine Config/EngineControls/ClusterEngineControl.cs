@@ -48,10 +48,15 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
         {
             ClusterEngine.OutputMultipleUnits = clusterSplitUnits.Checked;
         }
-        
+
         private void UpdateClusterDirection(object sender, EventArgs e)
         {
             ClusterEngine.Direction = clusterDirection.SelectedItem.ToString();
+        }
+
+        private void UpdateClusterFilterAll(object sender, EventArgs e)
+        {
+            ClusterEngine.FilterAll = clusterFilterAll.Checked;
         }
     }
 }

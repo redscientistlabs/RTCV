@@ -88,6 +88,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             this.clusterFilterAll.TabIndex = 151;
             this.clusterFilterAll.Text = "Filter All";
             this.clusterFilterAll.UseVisualStyleBackColor = true;
+            this.clusterFilterAll.CheckedChanged += new System.EventHandler(this.UpdateClusterFilterAll);
             // 
             // label29
             // 
