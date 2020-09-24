@@ -203,11 +203,11 @@ namespace RTCV.UI
 
         public void ShuffleModern()
         {
-            SelectComboBoxRandomItem(S.GET<CorruptionEngineForm>().gbVectorEngine.cbVectorLimiterList);
-            SelectComboBoxRandomItem(S.GET<CorruptionEngineForm>().gbVectorEngine.cbVectorValueList);
+            SelectComboBoxRandomItem(S.GET<CorruptionEngineForm>().vectorEngineControl.cbVectorLimiterList);
+            SelectComboBoxRandomItem(S.GET<CorruptionEngineForm>().vectorEngineControl.cbVectorValueList);
 
-            string limiter = S.GET<CorruptionEngineForm>().gbVectorEngine.cbVectorLimiterList.Text;
-            string value = S.GET<CorruptionEngineForm>().gbVectorEngine.cbVectorValueList.Text;
+            string limiter = S.GET<CorruptionEngineForm>().vectorEngineControl.cbVectorLimiterList.Text;
+            string value = S.GET<CorruptionEngineForm>().vectorEngineControl.cbVectorValueList.Text;
 
             lbEngineDescription.Text = $"Auto-Selected Engine: Vector Engine\n" +
                                        $"Parameters: Limiter:{limiter} , Value:{value}\n" +
@@ -326,18 +326,18 @@ namespace RTCV.UI
             SelectEngineByName("Vector Engine");
             SetInfiniteUnitVisibility(false);
 
-            if (S.GET<CorruptionEngineForm>().gbVectorEngine.cbVectorLimiterList.Items.Count > 0)
+            if (S.GET<CorruptionEngineForm>().vectorEngineControl.cbVectorLimiterList.Items.Count > 0)
             {
-                S.GET<CorruptionEngineForm>().gbVectorEngine.cbVectorLimiterList.SelectedIndex = 0;
-                S.GET<CorruptionEngineForm>().gbVectorEngine.cbVectorValueList.SelectedIndex = 0;
+                S.GET<CorruptionEngineForm>().vectorEngineControl.cbVectorLimiterList.SelectedIndex = 0;
+                S.GET<CorruptionEngineForm>().vectorEngineControl.cbVectorValueList.SelectedIndex = 0;
             }
             else
             {
                 throw new Exception("No vector lists could be found. Your RTCV installation might be broken.");
             }
 
-            string limiter = S.GET<CorruptionEngineForm>().gbVectorEngine.cbVectorLimiterList.Text;
-            string value = S.GET<CorruptionEngineForm>().gbVectorEngine.cbVectorValueList.Text;
+            string limiter = S.GET<CorruptionEngineForm>().vectorEngineControl.cbVectorLimiterList.Text;
+            string value = S.GET<CorruptionEngineForm>().vectorEngineControl.cbVectorValueList.Text;
 
             lbEngineDescription.Text = $"Auto-Selected Engine: Vector Engine\n" +
                                        $"Parameters: Limiter:{limiter} , Value:{value}\n" +

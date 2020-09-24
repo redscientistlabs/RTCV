@@ -18,7 +18,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
         {
             InitializeComponent();
 
-            gbNightmareEngine.cbBlastType.SelectedIndex = 0;
+            cbBlastType.SelectedIndex = 0;
         }
 
         private void UpdateBlastType(object sender, EventArgs e)
