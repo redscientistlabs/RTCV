@@ -78,15 +78,6 @@ namespace RTCV.UI
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.cbClearCheatsOnRewind = new System.Windows.Forms.CheckBox();
             this.btnClearCheats = new System.Windows.Forms.Button();
-            this.gbNightmareEngine = new System.Windows.Forms.GroupBox();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.nmMaxValueNightmare = new RTCV.UI.Components.Controls.MultiUpDown();
-            this.nmMinValueNightmare = new RTCV.UI.Components.Controls.MultiUpDown();
-            this.label15 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.cbBlastType = new System.Windows.Forms.ComboBox();
-            this.label9 = new System.Windows.Forms.Label();
             this.gbCustomEngine = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox7 = new System.Windows.Forms.ComboBox();
@@ -116,7 +107,6 @@ namespace RTCV.UI
             this.gbPipeEngine.SuspendLayout();
             this.gbDistortionEngine.SuspendLayout();
             this.gbHellgenieEngine.SuspendLayout();
-            this.gbNightmareEngine.SuspendLayout();
             this.gbCustomEngine.SuspendLayout();
             this.gbClusterEngine.SuspendLayout();
             this.pnClusterLimiterList.SuspendLayout();
@@ -916,162 +906,6 @@ namespace RTCV.UI
             this.btnClearCheats.Click += new System.EventHandler(this.ClearCheats);
             this.btnClearCheats.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
-            // gbNightmareEngine
-            // 
-            this.gbNightmareEngine.Controls.Add(this.label24);
-            this.gbNightmareEngine.Controls.Add(this.label23);
-            this.gbNightmareEngine.Controls.Add(this.nmMaxValueNightmare);
-            this.gbNightmareEngine.Controls.Add(this.nmMinValueNightmare);
-            this.gbNightmareEngine.Controls.Add(this.label15);
-            this.gbNightmareEngine.Controls.Add(this.comboBox1);
-            this.gbNightmareEngine.Controls.Add(this.cbBlastType);
-            this.gbNightmareEngine.Controls.Add(this.label9);
-            this.gbNightmareEngine.Font = new System.Drawing.Font("Segoe UI", 9.75F);
-            this.gbNightmareEngine.ForeColor = System.Drawing.Color.White;
-            this.gbNightmareEngine.Location = new System.Drawing.Point(454, 5);
-            this.gbNightmareEngine.Name = "gbNightmareEngine";
-            this.gbNightmareEngine.Size = new System.Drawing.Size(420, 151);
-            this.gbNightmareEngine.TabIndex = 140;
-            this.gbNightmareEngine.TabStop = false;
-            this.gbNightmareEngine.Visible = false;
-            this.gbNightmareEngine.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label24.Location = new System.Drawing.Point(5, 91);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(87, 13);
-            this.label24.TabIndex = 143;
-            this.label24.Text = "Maximum Value";
-            this.label24.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label23.Location = new System.Drawing.Point(5, 66);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(86, 13);
-            this.label23.TabIndex = 140;
-            this.label23.Text = "Minimum Value";
-            this.label23.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // nmMaxValueNightmare
-            // 
-            this.nmMaxValueNightmare.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.nmMaxValueNightmare.Font = new System.Drawing.Font("Consolas", 8.25F);
-            this.nmMaxValueNightmare.ForeColor = System.Drawing.Color.White;
-            this.nmMaxValueNightmare.Hexadecimal = true;
-            this.nmMaxValueNightmare.Location = new System.Drawing.Point(96, 89);
-            this.nmMaxValueNightmare.Maximum = new decimal(new int[] {
-            -1,
-            -1,
-            0,
-            0});
-            this.nmMaxValueNightmare.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.nmMaxValueNightmare.Name = "nmMaxValueNightmare";
-            this.nmMaxValueNightmare.Size = new System.Drawing.Size(70, 20);
-            this.nmMaxValueNightmare.TabIndex = 142;
-            this.nmMaxValueNightmare.Tag = "color:normal";
-            this.nmMaxValueNightmare.Value = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.nmMaxValueNightmare.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // nmMinValueNightmare
-            // 
-            this.nmMinValueNightmare.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.nmMinValueNightmare.Font = new System.Drawing.Font("Consolas", 8.25F);
-            this.nmMinValueNightmare.ForeColor = System.Drawing.Color.White;
-            this.nmMinValueNightmare.Hexadecimal = true;
-            this.nmMinValueNightmare.Location = new System.Drawing.Point(96, 64);
-            this.nmMinValueNightmare.Maximum = new decimal(new int[] {
-            -1,
-            -1,
-            0,
-            0});
-            this.nmMinValueNightmare.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.nmMinValueNightmare.Name = "nmMinValueNightmare";
-            this.nmMinValueNightmare.Size = new System.Drawing.Size(70, 20);
-            this.nmMinValueNightmare.TabIndex = 141;
-            this.nmMinValueNightmare.Tag = "color:normal";
-            this.nmMinValueNightmare.Value = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.nmMinValueNightmare.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
-            this.label15.Location = new System.Drawing.Point(170, 16);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(117, 13);
-            this.label15.TabIndex = 85;
-            this.label15.Text = "Replaces or edits values";
-            this.label15.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBox1.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.comboBox1.ForeColor = System.Drawing.Color.White;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(0, 9);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(165, 21);
-            this.comboBox1.TabIndex = 16;
-            this.comboBox1.Tag = "color:normal";
-            this.comboBox1.Visible = false;
-            this.comboBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // cbBlastType
-            // 
-            this.cbBlastType.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.cbBlastType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbBlastType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbBlastType.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.cbBlastType.ForeColor = System.Drawing.Color.White;
-            this.cbBlastType.FormattingEnabled = true;
-            this.cbBlastType.Items.AddRange(new object[] {
-            "RANDOM",
-            "RANDOMTILT",
-            "TILT"});
-            this.cbBlastType.Location = new System.Drawing.Point(74, 37);
-            this.cbBlastType.Name = "cbBlastType";
-            this.cbBlastType.Size = new System.Drawing.Size(92, 21);
-            this.cbBlastType.TabIndex = 13;
-            this.cbBlastType.Tag = "color:normal";
-            this.cbBlastType.SelectedIndexChanged += new System.EventHandler(this.UpdateBlastType);
-            this.cbBlastType.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label9.Location = new System.Drawing.Point(5, 41);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(59, 13);
-            this.label9.TabIndex = 12;
-            this.label9.Text = "Blast type:";
-            this.label9.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
             // gbCustomEngine
             // 
             this.gbCustomEngine.Controls.Add(this.label2);
@@ -1407,7 +1241,6 @@ namespace RTCV.UI
             this.Controls.Add(this.gbPipeEngine);
             this.Controls.Add(this.gbDistortionEngine);
             this.Controls.Add(this.gbHellgenieEngine);
-            this.Controls.Add(this.gbNightmareEngine);
             this.Controls.Add(this.pnCustomPrecision);
             this.Controls.Add(this.cbSelectedEngine);
             this.Controls.Add(this.gbSelectedEngine);
@@ -1435,8 +1268,6 @@ namespace RTCV.UI
             this.gbDistortionEngine.PerformLayout();
             this.gbHellgenieEngine.ResumeLayout(false);
             this.gbHellgenieEngine.PerformLayout();
-            this.gbNightmareEngine.ResumeLayout(false);
-            this.gbNightmareEngine.PerformLayout();
             this.gbCustomEngine.ResumeLayout(false);
             this.gbCustomEngine.PerformLayout();
             this.gbClusterEngine.ResumeLayout(false);
@@ -1492,15 +1323,6 @@ namespace RTCV.UI
 		public System.Windows.Forms.ComboBox comboBox2;
 		public System.Windows.Forms.CheckBox cbClearCheatsOnRewind;
 		private System.Windows.Forms.Button btnClearCheats;
-		private System.Windows.Forms.GroupBox gbNightmareEngine;
-		private System.Windows.Forms.Label label24;
-		private System.Windows.Forms.Label label23;
-		public RTCV.UI.Components.Controls.MultiUpDown nmMaxValueNightmare;
-		public RTCV.UI.Components.Controls.MultiUpDown nmMinValueNightmare;
-		private System.Windows.Forms.Label label15;
-		public System.Windows.Forms.ComboBox comboBox1;
-		public System.Windows.Forms.ComboBox cbBlastType;
-		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.GroupBox gbCustomEngine;
 		private System.Windows.Forms.Label label2;
 		public System.Windows.Forms.ComboBox comboBox7;

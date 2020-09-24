@@ -1,4 +1,4 @@
-namespace RTCV.UI.Components.Engine_Config.Engines
+namespace RTCV.UI.Components.EngineConfig.Engines
 {
     partial class FreezeEngine
     {
@@ -31,7 +31,6 @@ namespace RTCV.UI.Components.Engine_Config.Engines
             this.label6 = new System.Windows.Forms.Label();
             this.updownMaxFreeze = new RTCV.UI.Components.Controls.MultiUpDown();
             this.label20 = new System.Windows.Forms.Label();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
             this.cbClearFreezesOnRewind = new System.Windows.Forms.CheckBox();
             this.btnClearAllFreezes = new System.Windows.Forms.Button();
             this.engineGroupBox.SuspendLayout();
@@ -42,9 +41,14 @@ namespace RTCV.UI.Components.Engine_Config.Engines
             this.engineGroupBox.Controls.Add(this.label6);
             this.engineGroupBox.Controls.Add(this.updownMaxFreeze);
             this.engineGroupBox.Controls.Add(this.label20);
-            this.engineGroupBox.Controls.Add(this.comboBox4);
             this.engineGroupBox.Controls.Add(this.cbClearFreezesOnRewind);
             this.engineGroupBox.Controls.Add(this.btnClearAllFreezes);
+            this.engineGroupBox.Controls.SetChildIndex(this.btnClearAllFreezes, 0);
+            this.engineGroupBox.Controls.SetChildIndex(this.cbClearFreezesOnRewind, 0);
+            this.engineGroupBox.Controls.SetChildIndex(this.label20, 0);
+            this.engineGroupBox.Controls.SetChildIndex(this.updownMaxFreeze, 0);
+            this.engineGroupBox.Controls.SetChildIndex(this.label6, 0);
+            this.engineGroupBox.Controls.SetChildIndex(this.placeholderComboBox, 0);
             // 
             // label6
             // 
@@ -95,21 +99,6 @@ namespace RTCV.UI.Components.Engine_Config.Engines
             this.label20.TabIndex = 147;
             this.label20.Text = "Freezes values in place";
             // 
-            // comboBox4
-            // 
-            this.comboBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.comboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBox4.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.comboBox4.ForeColor = System.Drawing.Color.White;
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(0, 6);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(165, 21);
-            this.comboBox4.TabIndex = 146;
-            this.comboBox4.Tag = "color:normal";
-            this.comboBox4.Visible = false;
-            // 
             // cbClearFreezesOnRewind
             // 
             this.cbClearFreezesOnRewind.AutoSize = true;
@@ -153,7 +142,6 @@ namespace RTCV.UI.Components.Engine_Config.Engines
         private System.Windows.Forms.Label label6;
         public Controls.MultiUpDown updownMaxFreeze;
         private System.Windows.Forms.Label label20;
-        public System.Windows.Forms.ComboBox comboBox4;
         public System.Windows.Forms.CheckBox cbClearFreezesOnRewind;
         private System.Windows.Forms.Button btnClearAllFreezes;
     }

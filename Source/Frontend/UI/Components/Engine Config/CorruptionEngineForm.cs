@@ -1,6 +1,7 @@
 namespace RTCV.UI
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
     using System.Linq;
     using System.Windows.Forms;
@@ -9,12 +10,14 @@ namespace RTCV.UI
     using RTCV.NetCore;
     using RTCV.UI.Modular;
 
+    [SuppressMessage("Microsoft.Designer", "CA2213:Disposable types are not disposed", Justification = "Designer classes have their own Dispose method")]
     public partial class CorruptionEngineForm : ComponentForm, IBlockable
     {
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        internal Components.Engine_Config.Engines.FreezeEngine gbFreezeEngine = new Components.Engine_Config.Engines.FreezeEngine();
+        internal Components.EngineConfig.Engines.FreezeEngine gbFreezeEngine = new Components.EngineConfig.Engines.FreezeEngine();
+        internal Components.EngineConfig.Engines.NightmareEngine gbNightmareEngine = new Components.EngineConfig.Engines.NightmareEngine();
 
         public string CurrentVectorLimiterListName
         {
@@ -48,6 +51,7 @@ namespace RTCV.UI
             this.undockedSizable = false;
 
             this.Controls.Add(gbFreezeEngine);
+            this.Controls.Add(gbNightmareEngine);
         }
 
         private void OnFormLoad(object sender, EventArgs e)
@@ -64,7 +68,7 @@ namespace RTCV.UI
             gbCustomEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
 
             cbSelectedEngine.SelectedIndex = 0;
-            cbBlastType.SelectedIndex = 0;
+            gbNightmareEngine.cbBlastType.SelectedIndex = 0;
             cbCustomPrecision.SelectedIndex = 0;
 
             cbVectorValueList.DataSource = null;
@@ -321,14 +325,14 @@ namespace RTCV.UI
             switch (precision)
             {
                 case 1:
-                    nmMinValueNightmare.Maximum = byte.MaxValue;
-                    nmMaxValueNightmare.Maximum = byte.MaxValue;
+                    gbNightmareEngine.nmMinValueNightmare.Maximum = byte.MaxValue;
+                    gbNightmareEngine.nmMaxValueNightmare.Maximum = byte.MaxValue;
 
                     nmMinValueHellgenie.Maximum = byte.MaxValue;
                     nmMaxValueHellgenie.Maximum = byte.MaxValue;
 
-                    nmMinValueNightmare.Value = NightmareEngine.MinValue8Bit;
-                    nmMaxValueNightmare.Value = NightmareEngine.MaxValue8Bit;
+                    gbNightmareEngine.nmMinValueNightmare.Value = NightmareEngine.MinValue8Bit;
+                    gbNightmareEngine.nmMaxValueNightmare.Value = NightmareEngine.MaxValue8Bit;
 
                     nmMinValueHellgenie.Value = HellgenieEngine.MinValue8Bit;
                     nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue8Bit;
@@ -336,42 +340,42 @@ namespace RTCV.UI
                     break;
 
                 case 2:
-                    nmMinValueNightmare.Maximum = ushort.MaxValue;
-                    nmMaxValueNightmare.Maximum = ushort.MaxValue;
+                    gbNightmareEngine.nmMinValueNightmare.Maximum = ushort.MaxValue;
+                    gbNightmareEngine.nmMaxValueNightmare.Maximum = ushort.MaxValue;
 
                     nmMinValueHellgenie.Maximum = ushort.MaxValue;
                     nmMaxValueHellgenie.Maximum = ushort.MaxValue;
 
-                    nmMinValueNightmare.Value = NightmareEngine.MinValue16Bit;
-                    nmMaxValueNightmare.Value = NightmareEngine.MaxValue16Bit;
+                    gbNightmareEngine.nmMinValueNightmare.Value = NightmareEngine.MinValue16Bit;
+                    gbNightmareEngine.nmMaxValueNightmare.Value = NightmareEngine.MaxValue16Bit;
 
                     nmMinValueHellgenie.Value = HellgenieEngine.MinValue16Bit;
                     nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue16Bit;
 
                     break;
                 case 4:
-                    nmMinValueNightmare.Maximum = uint.MaxValue;
-                    nmMaxValueNightmare.Maximum = uint.MaxValue;
+                    gbNightmareEngine.nmMinValueNightmare.Maximum = uint.MaxValue;
+                    gbNightmareEngine.nmMaxValueNightmare.Maximum = uint.MaxValue;
 
                     nmMinValueHellgenie.Maximum = uint.MaxValue;
                     nmMaxValueHellgenie.Maximum = uint.MaxValue;
 
-                    nmMinValueNightmare.Value = NightmareEngine.MinValue32Bit;
-                    nmMaxValueNightmare.Value = NightmareEngine.MaxValue32Bit;
+                    gbNightmareEngine.nmMinValueNightmare.Value = NightmareEngine.MinValue32Bit;
+                    gbNightmareEngine.nmMaxValueNightmare.Value = NightmareEngine.MaxValue32Bit;
 
                     nmMinValueHellgenie.Value = HellgenieEngine.MinValue32Bit;
                     nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue32Bit;
 
                     break;
                 case 8:
-                    nmMinValueNightmare.Maximum = ulong.MaxValue;
-                    nmMaxValueNightmare.Maximum = ulong.MaxValue;
+                    gbNightmareEngine.nmMinValueNightmare.Maximum = ulong.MaxValue;
+                    gbNightmareEngine.nmMaxValueNightmare.Maximum = ulong.MaxValue;
 
                     nmMinValueHellgenie.Maximum = ulong.MaxValue;
                     nmMaxValueHellgenie.Maximum = ulong.MaxValue;
 
-                    nmMinValueNightmare.Value = NightmareEngine.MinValue64Bit;
-                    nmMaxValueNightmare.Value = NightmareEngine.MaxValue64Bit;
+                    gbNightmareEngine.nmMinValueNightmare.Value = NightmareEngine.MinValue64Bit;
+                    gbNightmareEngine.nmMaxValueNightmare.Value = NightmareEngine.MaxValue64Bit;
 
                     nmMinValueHellgenie.Value = HellgenieEngine.MinValue64Bit;
                     nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue64Bit;
@@ -432,24 +436,24 @@ namespace RTCV.UI
 
         private void UpdateBlastType(object sender, EventArgs e)
         {
-            switch (cbBlastType.SelectedItem.ToString())
+            switch (gbNightmareEngine.cbBlastType.SelectedItem.ToString())
             {
                 case "RANDOM":
                     NightmareEngine.Algo = NightmareAlgo.RANDOM;
-                    nmMinValueNightmare.Enabled = true;
-                    nmMaxValueNightmare.Enabled = true;
+                    gbNightmareEngine.nmMinValueNightmare.Enabled = true;
+                    gbNightmareEngine.nmMaxValueNightmare.Enabled = true;
                     break;
 
                 case "RANDOMTILT":
                     NightmareEngine.Algo = NightmareAlgo.RANDOMTILT;
-                    nmMinValueNightmare.Enabled = true;
-                    nmMaxValueNightmare.Enabled = true;
+                    gbNightmareEngine.nmMinValueNightmare.Enabled = true;
+                    gbNightmareEngine.nmMaxValueNightmare.Enabled = true;
                     break;
 
                 case "TILT":
                     NightmareEngine.Algo = NightmareAlgo.TILT;
-                    nmMinValueNightmare.Enabled = false;
-                    nmMaxValueNightmare.Enabled = false;
+                    gbNightmareEngine.nmMinValueNightmare.Enabled = false;
+                    gbNightmareEngine.nmMaxValueNightmare.Enabled = false;
                     break;
             }
         }

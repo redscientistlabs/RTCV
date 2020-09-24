@@ -1,4 +1,4 @@
-namespace RTCV.UI.Components.Engine_Config
+namespace RTCV.UI.Components.EngineConfig
 {
     partial class EngineConfigControl
     {
@@ -29,17 +29,35 @@ namespace RTCV.UI.Components.Engine_Config
         private void InitializeComponent()
         {
             this.engineGroupBox = new System.Windows.Forms.GroupBox();
+            this.placeholderComboBox = new System.Windows.Forms.ComboBox();
+            this.engineGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // engineGroupBox
             // 
             this.engineGroupBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.engineGroupBox.Controls.Add(this.placeholderComboBox);
             this.engineGroupBox.Location = new System.Drawing.Point(0, 3);
             this.engineGroupBox.Name = "engineGroupBox";
             this.engineGroupBox.Size = new System.Drawing.Size(420, 148);
             this.engineGroupBox.TabIndex = 0;
             this.engineGroupBox.TabStop = false;
             this.engineGroupBox.Tag = "color:dark1";
+            // 
+            // placeholderComboBox
+            // 
+            this.placeholderComboBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
+            this.placeholderComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.placeholderComboBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.placeholderComboBox.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.placeholderComboBox.ForeColor = System.Drawing.Color.White;
+            this.placeholderComboBox.FormattingEnabled = true;
+            this.placeholderComboBox.Location = new System.Drawing.Point(0, 6);
+            this.placeholderComboBox.Name = "placeholderComboBox";
+            this.placeholderComboBox.Size = new System.Drawing.Size(165, 21);
+            this.placeholderComboBox.TabIndex = 147;
+            this.placeholderComboBox.Tag = "color:normal";
+            this.placeholderComboBox.Visible = false;
             // 
             // EngineConfigControl
             // 
@@ -50,6 +68,7 @@ namespace RTCV.UI.Components.Engine_Config
             this.Name = "EngineConfigControl";
             this.Size = new System.Drawing.Size(420, 151);
             this.Tag = "color:dark1";
+            this.engineGroupBox.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -57,5 +76,6 @@ namespace RTCV.UI.Components.Engine_Config
         #endregion
 
         protected System.Windows.Forms.GroupBox engineGroupBox;
+        public System.Windows.Forms.ComboBox placeholderComboBox;
     }
 }
