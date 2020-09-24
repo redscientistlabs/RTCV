@@ -169,6 +169,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             0,
             0,
             0});
+            this.clusterChunkModifier.ValueChanged += new System.EventHandler(this.UpdateClusterModifier);
             // 
             // label25
             // 
@@ -278,11 +279,11 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             this.label22.TabIndex = 148;
             this.label22.Text = "Swaps Values with neighbor Values";
             // 
-            // ClusterEngine
+            // ClusterEngineControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "ClusterEngine";
+            this.Name = "ClusterEngineControl";
             this.engineGroupBox.ResumeLayout(false);
             this.engineGroupBox.PerformLayout();
             this.pnClusterLimiterList.ResumeLayout(false);

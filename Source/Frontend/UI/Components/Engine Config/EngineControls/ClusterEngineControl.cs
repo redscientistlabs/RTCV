@@ -24,5 +24,10 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
         {
             CorruptCore.ClusterEngine.ChunkSize = (int)clusterChunkSize.Value;
         }
+
+        private void UpdateClusterModifier(object sender, EventArgs e)
+        {
+            ClusterEngine.Modifier = (int)clusterChunkModifier.Value;
+        }
     }
 }
