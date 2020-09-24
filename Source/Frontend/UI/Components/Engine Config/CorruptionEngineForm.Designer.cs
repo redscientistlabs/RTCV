@@ -61,11 +61,6 @@ namespace RTCV.UI
             this.cbClearPipesOnRewind = new System.Windows.Forms.CheckBox();
             this.cbLockPipes = new System.Windows.Forms.CheckBox();
             this.btnClearPipes = new System.Windows.Forms.Button();
-            this.gbCustomEngine = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.comboBox7 = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.btnOpenCustomEngine = new System.Windows.Forms.Button();
             this.gbClusterEngine = new System.Windows.Forms.GroupBox();
             this.pnClusterLimiterList = new System.Windows.Forms.Panel();
             this.clusterFilterAll = new System.Windows.Forms.CheckBox();
@@ -88,7 +83,6 @@ namespace RTCV.UI
             this.panel2.SuspendLayout();
             this.pnLimiterList.SuspendLayout();
             this.gbPipeEngine.SuspendLayout();
-            this.gbCustomEngine.SuspendLayout();
             this.gbClusterEngine.SuspendLayout();
             this.pnClusterLimiterList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clusterChunkModifier)).BeginInit();
@@ -590,74 +584,6 @@ namespace RTCV.UI
             this.btnClearPipes.Click += new System.EventHandler(this.ClearPipes);
             this.btnClearPipes.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
-            // gbCustomEngine
-            // 
-            this.gbCustomEngine.Controls.Add(this.label2);
-            this.gbCustomEngine.Controls.Add(this.comboBox7);
-            this.gbCustomEngine.Controls.Add(this.label3);
-            this.gbCustomEngine.Controls.Add(this.btnOpenCustomEngine);
-            this.gbCustomEngine.Font = new System.Drawing.Font("Segoe UI", 9.75F);
-            this.gbCustomEngine.ForeColor = System.Drawing.Color.White;
-            this.gbCustomEngine.Location = new System.Drawing.Point(880, 611);
-            this.gbCustomEngine.Name = "gbCustomEngine";
-            this.gbCustomEngine.Size = new System.Drawing.Size(420, 151);
-            this.gbCustomEngine.TabIndex = 147;
-            this.gbCustomEngine.TabStop = false;
-            this.gbCustomEngine.Visible = false;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Italic);
-            this.label2.Location = new System.Drawing.Point(182, 33);
-            this.label2.MaximumSize = new System.Drawing.Size(205, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(204, 26);
-            this.label2.TabIndex = 81;
-            this.label2.Text = "It has so many options, there\'s no way we could fit them all here!";
-            // 
-            // comboBox7
-            // 
-            this.comboBox7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.comboBox7.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBox7.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.comboBox7.ForeColor = System.Drawing.Color.White;
-            this.comboBox7.FormattingEnabled = true;
-            this.comboBox7.Location = new System.Drawing.Point(0, 9);
-            this.comboBox7.Name = "comboBox7";
-            this.comboBox7.Size = new System.Drawing.Size(165, 21);
-            this.comboBox7.TabIndex = 79;
-            this.comboBox7.Tag = "color:normal";
-            this.comboBox7.Visible = false;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
-            this.label3.Location = new System.Drawing.Point(170, 16);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(123, 13);
-            this.label3.TabIndex = 78;
-            this.label3.Text = "Create your own engine!";
-            // 
-            // btnOpenCustomEngine
-            // 
-            this.btnOpenCustomEngine.BackColor = System.Drawing.Color.Gray;
-            this.btnOpenCustomEngine.FlatAppearance.BorderSize = 0;
-            this.btnOpenCustomEngine.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOpenCustomEngine.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnOpenCustomEngine.ForeColor = System.Drawing.Color.White;
-            this.btnOpenCustomEngine.Location = new System.Drawing.Point(7, 120);
-            this.btnOpenCustomEngine.Name = "btnOpenCustomEngine";
-            this.btnOpenCustomEngine.Size = new System.Drawing.Size(159, 24);
-            this.btnOpenCustomEngine.TabIndex = 77;
-            this.btnOpenCustomEngine.TabStop = false;
-            this.btnOpenCustomEngine.Tag = "color:light1";
-            this.btnOpenCustomEngine.Text = "Open Custom Engine";
-            this.btnOpenCustomEngine.UseVisualStyleBackColor = false;
-            this.btnOpenCustomEngine.Click += new System.EventHandler(this.OpenCustomEngine);
-            // 
             // gbClusterEngine
             // 
             this.gbClusterEngine.Controls.Add(this.pnClusterLimiterList);
@@ -919,7 +845,6 @@ namespace RTCV.UI
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1448, 1097);
             this.Controls.Add(this.gbClusterEngine);
-            this.Controls.Add(this.gbCustomEngine);
             this.Controls.Add(this.gbBlastGeneratorEngine);
             this.Controls.Add(this.gbVectorEngine);
             this.Controls.Add(this.gbPipeEngine);
@@ -946,8 +871,6 @@ namespace RTCV.UI
             this.pnLimiterList.PerformLayout();
             this.gbPipeEngine.ResumeLayout(false);
             this.gbPipeEngine.PerformLayout();
-            this.gbCustomEngine.ResumeLayout(false);
-            this.gbCustomEngine.PerformLayout();
             this.gbClusterEngine.ResumeLayout(false);
             this.gbClusterEngine.PerformLayout();
             this.pnClusterLimiterList.ResumeLayout(false);
@@ -986,11 +909,6 @@ namespace RTCV.UI
 		public System.Windows.Forms.CheckBox cbClearPipesOnRewind;
 		public System.Windows.Forms.CheckBox cbLockPipes;
 		private System.Windows.Forms.Button btnClearPipes;
-		private System.Windows.Forms.GroupBox gbCustomEngine;
-		private System.Windows.Forms.Label label2;
-		public System.Windows.Forms.ComboBox comboBox7;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.Button btnOpenCustomEngine;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.Label label4;
 		public Components.Controls.MultiUpDown updownMaxPipes;

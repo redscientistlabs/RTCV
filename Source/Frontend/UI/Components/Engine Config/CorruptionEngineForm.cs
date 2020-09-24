@@ -20,6 +20,7 @@ namespace RTCV.UI
         internal Components.EngineConfig.Engines.NightmareEngine gbNightmareEngine = new Components.EngineConfig.Engines.NightmareEngine();
         internal Components.EngineConfig.Engines.HellgenieEngine gbHellgenieEngine = new Components.EngineConfig.Engines.HellgenieEngine();
         private Components.EngineConfig.Engines.DistortionEngine gbDistortionEngine = new Components.EngineConfig.Engines.DistortionEngine();
+        private Components.EngineConfig.Engines.CustomEngine gbCustomEngine = new Components.EngineConfig.Engines.CustomEngine();
 
         public string CurrentVectorLimiterListName
         {
@@ -56,6 +57,7 @@ namespace RTCV.UI
             this.Controls.Add(gbNightmareEngine);
             this.Controls.Add(gbHellgenieEngine);
             this.Controls.Add(gbDistortionEngine);
+            this.Controls.Add(gbCustomEngine);
         }
 
         private void OnFormLoad(object sender, EventArgs e)
