@@ -82,11 +82,6 @@ namespace RTCV.UI
             cbSelectedEngine.SelectedIndex = 0;
             cbCustomPrecision.SelectedIndex = 0;
 
-            //Do this here as if it's stuck into the designer, it keeps defaulting out
-            vectorEngineControl.cbVectorValueList.DataSource = RtcCore.ValueListBindingSource;
-            vectorEngineControl.cbVectorLimiterList.DataSource = RtcCore.LimiterListBindingSource;
-            clusterEngineControl.cbClusterLimiterList.DataSource = RtcCore.LimiterListBindingSource;
-
             if (RtcCore.LimiterListBindingSource.Count > 0)
             {
                 UpdateVectorLimiterList(vectorEngineControl.cbVectorLimiterList, null);

@@ -13,6 +13,8 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             cbClusterLimiterList.DataSource = null;
             cbClusterLimiterList.DisplayMember = "Name";
             cbClusterLimiterList.ValueMember = "Value";
+
+            cbClusterLimiterList.DataSource = RtcCore.LimiterListBindingSource;
         }
 
         private void UpdateClusterLimiterList(object sender, EventArgs e)

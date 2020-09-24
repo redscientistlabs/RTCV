@@ -1,5 +1,7 @@
 namespace RTCV.UI.Components.EngineConfig.EngineControls
 {
+    using RTCV.CorruptCore;
+
     internal partial class VectorEngineControl : EngineConfigControl
     {
         internal VectorEngineControl(CorruptionEngineForm parent)
@@ -17,6 +19,10 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             cbVectorLimiterList.SelectedIndexChanged += parent.UpdateVectorLimiterList;
             cbVectorValueList.SelectedIndexChanged += parent.UpdateVectorValueList;
             cbVectorUnlockPrecision.CheckedChanged += parent.UpdateVectorUnlockPrecision;
+
+            //Do this here as if it's stuck into the designer, it keeps defaulting out
+            cbVectorValueList.DataSource = RtcCore.ValueListBindingSource;
+            cbVectorLimiterList.DataSource = RtcCore.LimiterListBindingSource;
         }
     }
 }
