@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace RTCV.UI.Components.Engine_Config.Engines
 {
-    public partial class FreezeEngine : UserControl
+    public partial class FreezeEngine : EngineConfigControl
     {
         public FreezeEngine()
         {

@@ -28,31 +28,23 @@ namespace RTCV.UI.Components.Engine_Config.Engines
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.updownMaxFreeze = new RTCV.UI.Components.Controls.MultiUpDown();
             this.label20 = new System.Windows.Forms.Label();
             this.comboBox4 = new System.Windows.Forms.ComboBox();
             this.cbClearFreezesOnRewind = new System.Windows.Forms.CheckBox();
             this.btnClearAllFreezes = new System.Windows.Forms.Button();
-            this.updownMaxFreeze = new RTCV.UI.Components.Controls.MultiUpDown();
-            this.groupBox1.SuspendLayout();
+            this.engineGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
-            // groupBox1
+            // engineGroupBox
             // 
-            this.groupBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.groupBox1.Controls.Add(this.label6);
-            this.groupBox1.Controls.Add(this.updownMaxFreeze);
-            this.groupBox1.Controls.Add(this.label20);
-            this.groupBox1.Controls.Add(this.comboBox4);
-            this.groupBox1.Controls.Add(this.cbClearFreezesOnRewind);
-            this.groupBox1.Controls.Add(this.btnClearAllFreezes);
-            this.groupBox1.Location = new System.Drawing.Point(0, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(420, 148);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Tag = "color:dark1";
+            this.engineGroupBox.Controls.Add(this.label6);
+            this.engineGroupBox.Controls.Add(this.updownMaxFreeze);
+            this.engineGroupBox.Controls.Add(this.label20);
+            this.engineGroupBox.Controls.Add(this.comboBox4);
+            this.engineGroupBox.Controls.Add(this.cbClearFreezesOnRewind);
+            this.engineGroupBox.Controls.Add(this.btnClearAllFreezes);
             // 
             // label6
             // 
@@ -64,6 +56,33 @@ namespace RTCV.UI.Components.Engine_Config.Engines
             this.label6.Size = new System.Drawing.Size(72, 13);
             this.label6.TabIndex = 149;
             this.label6.Text = "Max ∞ Units";
+            // 
+            // updownMaxFreeze
+            // 
+            this.updownMaxFreeze.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
+            this.updownMaxFreeze.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.updownMaxFreeze.ForeColor = System.Drawing.Color.White;
+            this.updownMaxFreeze.Hexadecimal = false;
+            this.updownMaxFreeze.Location = new System.Drawing.Point(96, 36);
+            this.updownMaxFreeze.Maximum = new decimal(new int[] {
+            65536,
+            0,
+            0,
+            0});
+            this.updownMaxFreeze.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.updownMaxFreeze.Name = "updownMaxFreeze";
+            this.updownMaxFreeze.Size = new System.Drawing.Size(70, 22);
+            this.updownMaxFreeze.TabIndex = 148;
+            this.updownMaxFreeze.Tag = "color:normal";
+            this.updownMaxFreeze.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
             // 
             // label20
             // 
@@ -119,50 +138,18 @@ namespace RTCV.UI.Components.Engine_Config.Engines
             this.btnClearAllFreezes.Text = "Clear all freezes";
             this.btnClearAllFreezes.UseVisualStyleBackColor = false;
             // 
-            // updownMaxFreeze
-            // 
-            this.updownMaxFreeze.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.updownMaxFreeze.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.updownMaxFreeze.ForeColor = System.Drawing.Color.White;
-            this.updownMaxFreeze.Hexadecimal = false;
-            this.updownMaxFreeze.Location = new System.Drawing.Point(96, 36);
-            this.updownMaxFreeze.Maximum = new decimal(new int[] {
-            65536,
-            0,
-            0,
-            0});
-            this.updownMaxFreeze.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.updownMaxFreeze.Name = "updownMaxFreeze";
-            this.updownMaxFreeze.Size = new System.Drawing.Size(70, 22);
-            this.updownMaxFreeze.TabIndex = 148;
-            this.updownMaxFreeze.Tag = "color:normal";
-            this.updownMaxFreeze.Value = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            // 
             // FreezeEngine
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.groupBox1);
             this.Name = "FreezeEngine";
-            this.Size = new System.Drawing.Size(420, 151);
-            this.Tag = "color:dark1";
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.engineGroupBox.ResumeLayout(false);
+            this.engineGroupBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label6;
         public Controls.MultiUpDown updownMaxFreeze;
         private System.Windows.Forms.Label label20;
