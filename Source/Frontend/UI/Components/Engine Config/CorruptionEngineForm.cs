@@ -14,6 +14,8 @@ namespace RTCV.UI
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
+        internal Components.Engine_Config.Engines.FreezeEngine gbFreezeEngine = new Components.Engine_Config.Engines.FreezeEngine();
+
         public string CurrentVectorLimiterListName
         {
             get {
@@ -44,6 +46,8 @@ namespace RTCV.UI
             InitializeComponent();
 
             this.undockedSizable = false;
+
+            this.Controls.Add(gbFreezeEngine);
         }
 
         private void OnFormLoad(object sender, EventArgs e)
@@ -255,7 +259,7 @@ namespace RTCV.UI
         {
             dontUpdate = true;
             S.GET<SettingsCorruptForm>().SetRewindBoxes(enabled);
-            cbClearFreezesOnRewind.Checked = enabled;
+            gbFreezeEngine.cbClearFreezesOnRewind.Checked = enabled;
             cbClearCheatsOnRewind.Checked = enabled;
             cbClearPipesOnRewind.Checked = enabled;
             dontUpdate = false;
@@ -275,7 +279,7 @@ namespace RTCV.UI
             S.GET<CustomEngineConfigForm>().SetRewindBoxes(((CheckBox)sender).Checked);
             S.GET<SimpleModeForm>().SetRewindBoxes(((CheckBox)sender).Checked);
 
-            StepActions.ClearStepActionsOnRewind = cbClearFreezesOnRewind.Checked;
+            StepActions.ClearStepActionsOnRewind = gbFreezeEngine.cbClearFreezesOnRewind.Checked;
         }
 
         private void ClearPipes(object sender, EventArgs e)
