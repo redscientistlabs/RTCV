@@ -16,14 +16,14 @@ namespace RTCV.UI
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        internal Components.EngineConfig.Engines.FreezeEngine gbFreezeEngine = new Components.EngineConfig.Engines.FreezeEngine();
+        internal readonly Components.EngineConfig.Engines.FreezeEngine gbFreezeEngine;
         internal Components.EngineConfig.Engines.NightmareEngine gbNightmareEngine = new Components.EngineConfig.Engines.NightmareEngine();
-        internal Components.EngineConfig.Engines.HellgenieEngine gbHellgenieEngine = new Components.EngineConfig.Engines.HellgenieEngine();
+        internal readonly Components.EngineConfig.Engines.HellgenieEngine gbHellgenieEngine;
         private Components.EngineConfig.Engines.DistortionEngine gbDistortionEngine = new Components.EngineConfig.Engines.DistortionEngine();
         private Components.EngineConfig.Engines.CustomEngine gbCustomEngine = new Components.EngineConfig.Engines.CustomEngine();
         internal Components.EngineConfig.Engines.PipeEngine gbPipeEngine = new Components.EngineConfig.Engines.PipeEngine();
         internal Components.EngineConfig.Engines.BlastGeneratorEngine gbBlastGeneratorEngine = new Components.EngineConfig.Engines.BlastGeneratorEngine();
-        internal Components.EngineConfig.Engines.VectorEngine gbVectorEngine = new Components.EngineConfig.Engines.VectorEngine();
+        internal readonly Components.EngineConfig.Engines.VectorEngine gbVectorEngine;
         internal Components.EngineConfig.Engines.ClusterEngine gbClusterEngine = new Components.EngineConfig.Engines.ClusterEngine();
 
         public string CurrentVectorLimiterListName
@@ -44,13 +44,13 @@ namespace RTCV.UI
 
             this.undockedSizable = false;
 
+            gbFreezeEngine = new Components.EngineConfig.Engines.FreezeEngine(this);
             this.Controls.Add(gbFreezeEngine);
-            gbFreezeEngine.cbClearFreezesOnRewind.CheckedChanged += OnClearRewindToggle;
 
             this.Controls.Add(gbNightmareEngine);
 
+            gbHellgenieEngine = new Components.EngineConfig.Engines.HellgenieEngine(this);
             this.Controls.Add(gbHellgenieEngine);
-            gbHellgenieEngine.cbClearCheatsOnRewind.CheckedChanged += OnClearRewindToggle;
 
             this.Controls.Add(gbDistortionEngine);
             this.Controls.Add(gbCustomEngine);
@@ -59,7 +59,10 @@ namespace RTCV.UI
             gbPipeEngine.cbClearPipesOnRewind.CheckedChanged += OnClearRewindToggle;
 
             this.Controls.Add(gbBlastGeneratorEngine);
+
+            gbVectorEngine = new Components.EngineConfig.Engines.VectorEngine(this);
             this.Controls.Add(gbVectorEngine);
+
             this.Controls.Add(gbClusterEngine);
         }
 
@@ -275,7 +278,7 @@ namespace RTCV.UI
 
         private bool dontUpdate = false;
 
-        private void OnClearRewindToggle(object sender, EventArgs e)
+        internal void OnClearRewindToggle(object sender, EventArgs e)
         {
             if (dontUpdate)
             {
@@ -308,7 +311,7 @@ namespace RTCV.UI
             }
         }
 
-        private void ClearCheats(object sender, EventArgs e)
+        internal void ClearCheats(object sender, EventArgs e)
         {
             LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
         }

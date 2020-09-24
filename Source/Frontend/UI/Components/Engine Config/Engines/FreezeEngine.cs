@@ -10,11 +10,14 @@ namespace RTCV.UI.Components.EngineConfig.Engines
     using System.Threading.Tasks;
     using System.Windows.Forms;
 
-    public partial class FreezeEngine : EngineConfigControl
+    internal partial class FreezeEngine : EngineConfigControl
     {
-        public FreezeEngine()
+        internal FreezeEngine(CorruptionEngineForm parent)
         {
             InitializeComponent();
+
+            btnClearAllFreezes.Click += parent.ClearCheats;
+            cbClearFreezesOnRewind.CheckedChanged += parent.OnClearRewindToggle;
         }
     }
 }
