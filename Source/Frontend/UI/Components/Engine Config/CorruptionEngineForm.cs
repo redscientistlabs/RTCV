@@ -80,19 +80,7 @@ namespace RTCV.UI
             gbCustomEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
 
             cbSelectedEngine.SelectedIndex = 0;
-            gbNightmareEngine.cbBlastType.SelectedIndex = 0;
             cbCustomPrecision.SelectedIndex = 0;
-
-            gbVectorEngine.cbVectorValueList.DataSource = null;
-            gbVectorEngine.cbVectorLimiterList.DataSource = null;
-            gbClusterEngine.cbClusterLimiterList.DataSource = null;
-            gbVectorEngine.cbVectorValueList.DisplayMember = "Name";
-            gbVectorEngine.cbVectorLimiterList.DisplayMember = "Name";
-            gbClusterEngine.cbClusterLimiterList.DisplayMember = "Name";
-
-            gbVectorEngine.cbVectorValueList.ValueMember = "Value";
-            gbVectorEngine.cbVectorLimiterList.ValueMember = "Value";
-            gbClusterEngine.cbClusterLimiterList.ValueMember = "Value";
 
             //Do this here as if it's stuck into the designer, it keeps defaulting out
             gbVectorEngine.cbVectorValueList.DataSource = RtcCore.ValueListBindingSource;

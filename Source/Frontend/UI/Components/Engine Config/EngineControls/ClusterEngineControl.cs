@@ -9,6 +9,10 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
         internal ClusterEngineControl()
         {
             InitializeComponent();
+
+            cbClusterLimiterList.DataSource = null;
+            cbClusterLimiterList.DisplayMember = "Name";
+            cbClusterLimiterList.ValueMember = "Value";
         }
 
         private void UpdateClusterLimiterList(object sender, EventArgs e)
