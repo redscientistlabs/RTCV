@@ -91,18 +91,6 @@ namespace RTCV.UI
             {
                 UpdateVectorValueList(vectorEngineControl.cbVectorValueList, null);
             }
-
-            for (int j = 0; j < ClusterEngine.ShuffleTypes.Length; j++)
-            {
-                clusterEngineControl.cbClusterMethod.Items.Add(ClusterEngine.ShuffleTypes[j]);
-            }
-            clusterEngineControl.cbClusterMethod.SelectedIndex = 0;
-
-            for (int j = 0; j < ClusterEngine.Directions.Length; j++)
-            {
-                clusterEngineControl.clusterDirection.Items.Add(ClusterEngine.Directions[j]);
-            }
-            clusterEngineControl.clusterDirection.SelectedIndex = 0;
         }
 
         private void UpdateEngine(object sender, EventArgs e)

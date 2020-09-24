@@ -15,6 +15,18 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             cbClusterLimiterList.ValueMember = "Value";
 
             cbClusterLimiterList.DataSource = RtcCore.LimiterListBindingSource;
+
+            for (int j = 0; j < ClusterEngine.ShuffleTypes.Length; j++)
+            {
+                cbClusterMethod.Items.Add(ClusterEngine.ShuffleTypes[j]);
+            }
+            cbClusterMethod.SelectedIndex = 0;
+
+            for (int j = 0; j < ClusterEngine.Directions.Length; j++)
+            {
+                clusterDirection.Items.Add(ClusterEngine.Directions[j]);
+            }
+            clusterDirection.SelectedIndex = 0;
         }
 
         private void UpdateClusterLimiterList(object sender, EventArgs e)
