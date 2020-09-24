@@ -21,6 +21,7 @@ namespace RTCV.UI
         internal Components.EngineConfig.Engines.HellgenieEngine gbHellgenieEngine = new Components.EngineConfig.Engines.HellgenieEngine();
         private Components.EngineConfig.Engines.DistortionEngine gbDistortionEngine = new Components.EngineConfig.Engines.DistortionEngine();
         private Components.EngineConfig.Engines.CustomEngine gbCustomEngine = new Components.EngineConfig.Engines.CustomEngine();
+        internal Components.EngineConfig.Engines.PipeEngine gbPipeEngine = new Components.EngineConfig.Engines.PipeEngine();
 
         public string CurrentVectorLimiterListName
         {
@@ -58,6 +59,7 @@ namespace RTCV.UI
             this.Controls.Add(gbHellgenieEngine);
             this.Controls.Add(gbDistortionEngine);
             this.Controls.Add(gbCustomEngine);
+            this.Controls.Add(gbPipeEngine);
         }
 
         private void OnFormLoad(object sender, EventArgs e)
@@ -261,7 +263,7 @@ namespace RTCV.UI
         public void SetLockBoxes(bool enabled)
         {
             dontUpdate = true;
-            cbLockPipes.Checked = enabled;
+            gbPipeEngine.cbLockPipes.Checked = enabled;
             dontUpdate = false;
         }
 
@@ -271,7 +273,7 @@ namespace RTCV.UI
             S.GET<SettingsCorruptForm>().SetRewindBoxes(enabled);
             gbFreezeEngine.cbClearFreezesOnRewind.Checked = enabled;
             gbHellgenieEngine.cbClearCheatsOnRewind.Checked = enabled;
-            cbClearPipesOnRewind.Checked = enabled;
+            gbPipeEngine.cbClearPipesOnRewind.Checked = enabled;
             dontUpdate = false;
         }
 
@@ -299,8 +301,8 @@ namespace RTCV.UI
 
         private void OnLockPipesToggle(object sender, EventArgs e)
         {
-            S.GET<SettingsCorruptForm>().SetLockBoxes(cbLockPipes.Checked);
-            StepActions.LockExecution = cbLockPipes.Checked;
+            S.GET<SettingsCorruptForm>().SetLockBoxes(gbPipeEngine.cbLockPipes.Checked);
+            StepActions.LockExecution = gbPipeEngine.cbLockPipes.Checked;
         }
 
         private void UpdateVectorLimiterList(object sender, EventArgs e)

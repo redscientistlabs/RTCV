@@ -53,14 +53,6 @@ namespace RTCV.UI
             this.label13 = new System.Windows.Forms.Label();
             this.comboBox6 = new System.Windows.Forms.ComboBox();
             this.label19 = new System.Windows.Forms.Label();
-            this.gbPipeEngine = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.updownMaxPipes = new RTCV.UI.Components.Controls.MultiUpDown();
-            this.label14 = new System.Windows.Forms.Label();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
-            this.cbClearPipesOnRewind = new System.Windows.Forms.CheckBox();
-            this.cbLockPipes = new System.Windows.Forms.CheckBox();
-            this.btnClearPipes = new System.Windows.Forms.Button();
             this.gbClusterEngine = new System.Windows.Forms.GroupBox();
             this.pnClusterLimiterList = new System.Windows.Forms.Panel();
             this.clusterFilterAll = new System.Windows.Forms.CheckBox();
@@ -82,7 +74,6 @@ namespace RTCV.UI
             this.gbVectorEngine.SuspendLayout();
             this.panel2.SuspendLayout();
             this.pnLimiterList.SuspendLayout();
-            this.gbPipeEngine.SuspendLayout();
             this.gbClusterEngine.SuspendLayout();
             this.pnClusterLimiterList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clusterChunkModifier)).BeginInit();
@@ -455,135 +446,6 @@ namespace RTCV.UI
             this.label19.Text = "Corrupts 32-bit values using lists";
             this.label19.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
-            // gbPipeEngine
-            // 
-            this.gbPipeEngine.Controls.Add(this.label4);
-            this.gbPipeEngine.Controls.Add(this.updownMaxPipes);
-            this.gbPipeEngine.Controls.Add(this.label14);
-            this.gbPipeEngine.Controls.Add(this.comboBox5);
-            this.gbPipeEngine.Controls.Add(this.cbClearPipesOnRewind);
-            this.gbPipeEngine.Controls.Add(this.cbLockPipes);
-            this.gbPipeEngine.Controls.Add(this.btnClearPipes);
-            this.gbPipeEngine.Font = new System.Drawing.Font("Segoe UI", 9.75F);
-            this.gbPipeEngine.ForeColor = System.Drawing.Color.White;
-            this.gbPipeEngine.Location = new System.Drawing.Point(880, 5);
-            this.gbPipeEngine.Name = "gbPipeEngine";
-            this.gbPipeEngine.Size = new System.Drawing.Size(420, 151);
-            this.gbPipeEngine.TabIndex = 143;
-            this.gbPipeEngine.TabStop = false;
-            this.gbPipeEngine.Visible = false;
-            this.gbPipeEngine.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Segoe UI Symbol", 8F);
-            this.label4.Location = new System.Drawing.Point(5, 42);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(72, 13);
-            this.label4.TabIndex = 143;
-            this.label4.Text = "Max ∞ Units";
-            // 
-            // updownMaxPipes
-            // 
-            this.updownMaxPipes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.updownMaxPipes.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.updownMaxPipes.ForeColor = System.Drawing.Color.White;
-            this.updownMaxPipes.Hexadecimal = false;
-            this.updownMaxPipes.Location = new System.Drawing.Point(96, 39);
-            this.updownMaxPipes.Maximum = new decimal(new int[] {
-            65536,
-            0,
-            0,
-            0});
-            this.updownMaxPipes.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.updownMaxPipes.Name = "updownMaxPipes";
-            this.updownMaxPipes.Size = new System.Drawing.Size(70, 22);
-            this.updownMaxPipes.TabIndex = 142;
-            this.updownMaxPipes.Tag = "color:normal";
-            this.updownMaxPipes.Value = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
-            this.label14.Location = new System.Drawing.Point(170, 16);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(201, 13);
-            this.label14.TabIndex = 84;
-            this.label14.Text = "Copies values from an address to another";
-            this.label14.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // comboBox5
-            // 
-            this.comboBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.comboBox5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBox5.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.comboBox5.ForeColor = System.Drawing.Color.White;
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Location = new System.Drawing.Point(0, 9);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(165, 21);
-            this.comboBox5.TabIndex = 83;
-            this.comboBox5.Tag = "color:normal";
-            this.comboBox5.Visible = false;
-            this.comboBox5.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // cbClearPipesOnRewind
-            // 
-            this.cbClearPipesOnRewind.AutoSize = true;
-            this.cbClearPipesOnRewind.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.cbClearPipesOnRewind.ForeColor = System.Drawing.Color.White;
-            this.cbClearPipesOnRewind.Location = new System.Drawing.Point(184, 56);
-            this.cbClearPipesOnRewind.Name = "cbClearPipesOnRewind";
-            this.cbClearPipesOnRewind.Size = new System.Drawing.Size(165, 17);
-            this.cbClearPipesOnRewind.TabIndex = 79;
-            this.cbClearPipesOnRewind.Text = "Clear step units on Rewind";
-            this.cbClearPipesOnRewind.UseVisualStyleBackColor = true;
-            this.cbClearPipesOnRewind.CheckedChanged += new System.EventHandler(this.OnClearRewindToggle);
-            this.cbClearPipesOnRewind.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // cbLockPipes
-            // 
-            this.cbLockPipes.AutoSize = true;
-            this.cbLockPipes.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.cbLockPipes.ForeColor = System.Drawing.Color.White;
-            this.cbLockPipes.Location = new System.Drawing.Point(184, 36);
-            this.cbLockPipes.Name = "cbLockPipes";
-            this.cbLockPipes.Size = new System.Drawing.Size(103, 17);
-            this.cbLockPipes.TabIndex = 77;
-            this.cbLockPipes.Text = "Lock step units";
-            this.cbLockPipes.UseVisualStyleBackColor = true;
-            this.cbLockPipes.CheckedChanged += new System.EventHandler(this.OnLockPipesToggle);
-            this.cbLockPipes.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // btnClearPipes
-            // 
-            this.btnClearPipes.BackColor = System.Drawing.Color.Gray;
-            this.btnClearPipes.FlatAppearance.BorderSize = 0;
-            this.btnClearPipes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClearPipes.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnClearPipes.ForeColor = System.Drawing.Color.White;
-            this.btnClearPipes.Location = new System.Drawing.Point(7, 120);
-            this.btnClearPipes.Name = "btnClearPipes";
-            this.btnClearPipes.Size = new System.Drawing.Size(159, 24);
-            this.btnClearPipes.TabIndex = 76;
-            this.btnClearPipes.TabStop = false;
-            this.btnClearPipes.Tag = "color:light1";
-            this.btnClearPipes.Text = "Clear Pipes";
-            this.btnClearPipes.UseVisualStyleBackColor = false;
-            this.btnClearPipes.Click += new System.EventHandler(this.ClearPipes);
-            this.btnClearPipes.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
             // gbClusterEngine
             // 
             this.gbClusterEngine.Controls.Add(this.pnClusterLimiterList);
@@ -847,7 +709,6 @@ namespace RTCV.UI
             this.Controls.Add(this.gbClusterEngine);
             this.Controls.Add(this.gbBlastGeneratorEngine);
             this.Controls.Add(this.gbVectorEngine);
-            this.Controls.Add(this.gbPipeEngine);
             this.Controls.Add(this.pnCustomPrecision);
             this.Controls.Add(this.cbSelectedEngine);
             this.Controls.Add(this.gbSelectedEngine);
@@ -869,8 +730,6 @@ namespace RTCV.UI
             this.panel2.PerformLayout();
             this.pnLimiterList.ResumeLayout(false);
             this.pnLimiterList.PerformLayout();
-            this.gbPipeEngine.ResumeLayout(false);
-            this.gbPipeEngine.PerformLayout();
             this.gbClusterEngine.ResumeLayout(false);
             this.gbClusterEngine.PerformLayout();
             this.pnClusterLimiterList.ResumeLayout(false);
@@ -903,15 +762,7 @@ namespace RTCV.UI
 		private System.Windows.Forms.Label label13;
 		public System.Windows.Forms.ComboBox comboBox6;
 		private System.Windows.Forms.Label label19;
-		private System.Windows.Forms.GroupBox gbPipeEngine;
-		private System.Windows.Forms.Label label14;
-		public System.Windows.Forms.ComboBox comboBox5;
-		public System.Windows.Forms.CheckBox cbClearPipesOnRewind;
-		public System.Windows.Forms.CheckBox cbLockPipes;
-		private System.Windows.Forms.Button btnClearPipes;
 		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.Label label4;
-		public Components.Controls.MultiUpDown updownMaxPipes;
         private System.Windows.Forms.Label label8;
         public Components.Controls.MultiUpDown nmAlignment;
         private System.Windows.Forms.GroupBox gbClusterEngine;

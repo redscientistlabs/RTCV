@@ -16,7 +16,7 @@ namespace RTCV.UI
             nmMaxInfiniteStepUnits.ValueChanged += handler;
             nmMaxInfiniteStepUnits.registerSlave(S.GET<CorruptionEngineForm>().gbHellgenieEngine.updownMaxCheats, handler);
             nmMaxInfiniteStepUnits.registerSlave(S.GET<CorruptionEngineForm>().gbFreezeEngine.updownMaxFreeze, handler);
-            nmMaxInfiniteStepUnits.registerSlave(S.GET<CorruptionEngineForm>().updownMaxPipes, handler);
+            nmMaxInfiniteStepUnits.registerSlave(S.GET<CorruptionEngineForm>().gbPipeEngine.updownMaxPipes, handler);
             nmMaxInfiniteStepUnits.registerSlave(S.GET<CustomEngineConfigForm>().updownMaxInfiniteUnits, handler);
             nmMaxInfiniteStepUnits.registerSlave(S.GET<SimpleModeForm>().updownMaxInfiniteUnits, handler);
 
