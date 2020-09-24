@@ -23,27 +23,15 @@ namespace RTCV.UI
         private Components.EngineConfig.Engines.CustomEngine gbCustomEngine = new Components.EngineConfig.Engines.CustomEngine();
         internal Components.EngineConfig.Engines.PipeEngine gbPipeEngine = new Components.EngineConfig.Engines.PipeEngine();
         internal Components.EngineConfig.Engines.BlastGeneratorEngine gbBlastGeneratorEngine = new Components.EngineConfig.Engines.BlastGeneratorEngine();
+        internal Components.EngineConfig.Engines.VectorEngine gbVectorEngine = new Components.EngineConfig.Engines.VectorEngine();
 
         public string CurrentVectorLimiterListName
         {
             get {
-                ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)cbVectorLimiterList).SelectedItem;
+                ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)gbVectorEngine.cbVectorLimiterList).SelectedItem;
 
                 if (item == null) //this shouldn't ever happen unless the list files are missing
                     MessageBox.Show("Error: No vector engine limiter list selected. Bad install?");
-
-                return item?.Name;
-            }
-        }
-
-        public string CurrentVectorValueListName
-        {
-            get
-            {
-                ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)cbVectorValueList).SelectedItem;
-
-                if (item == null) //this shouldn't ever happen unless the list files are missing
-                    MessageBox.Show("Error: No vector engine value list selected. Bad install?");
 
                 return item?.Name;
             }
@@ -62,6 +50,7 @@ namespace RTCV.UI
             this.Controls.Add(gbCustomEngine);
             this.Controls.Add(gbPipeEngine);
             this.Controls.Add(gbBlastGeneratorEngine);
+            this.Controls.Add(gbVectorEngine);
         }
 
         private void OnFormLoad(object sender, EventArgs e)
@@ -81,30 +70,30 @@ namespace RTCV.UI
             gbNightmareEngine.cbBlastType.SelectedIndex = 0;
             cbCustomPrecision.SelectedIndex = 0;
 
-            cbVectorValueList.DataSource = null;
-            cbVectorLimiterList.DataSource = null;
+            gbVectorEngine.cbVectorValueList.DataSource = null;
+            gbVectorEngine.cbVectorLimiterList.DataSource = null;
             cbClusterLimiterList.DataSource = null;
-            cbVectorValueList.DisplayMember = "Name";
-            cbVectorLimiterList.DisplayMember = "Name";
+            gbVectorEngine.cbVectorValueList.DisplayMember = "Name";
+            gbVectorEngine.cbVectorLimiterList.DisplayMember = "Name";
             cbClusterLimiterList.DisplayMember = "Name";
 
-            cbVectorValueList.ValueMember = "Value";
-            cbVectorLimiterList.ValueMember = "Value";
+            gbVectorEngine.cbVectorValueList.ValueMember = "Value";
+            gbVectorEngine.cbVectorLimiterList.ValueMember = "Value";
             cbClusterLimiterList.ValueMember = "Value";
 
             //Do this here as if it's stuck into the designer, it keeps defaulting out
-            cbVectorValueList.DataSource = RtcCore.ValueListBindingSource;
-            cbVectorLimiterList.DataSource = RtcCore.LimiterListBindingSource;
+            gbVectorEngine.cbVectorValueList.DataSource = RtcCore.ValueListBindingSource;
+            gbVectorEngine.cbVectorLimiterList.DataSource = RtcCore.LimiterListBindingSource;
             cbClusterLimiterList.DataSource = RtcCore.LimiterListBindingSource;
 
             if (RtcCore.LimiterListBindingSource.Count > 0)
             {
-                UpdateVectorLimiterList(cbVectorLimiterList, null);
+                UpdateVectorLimiterList(gbVectorEngine.cbVectorLimiterList, null);
                 UpdateVectorLimiterList(cbClusterLimiterList, null);
             }
             if (RtcCore.ValueListBindingSource.Count > 0)
             {
-                UpdateVectorValueList(cbVectorValueList, null);
+                UpdateVectorValueList(gbVectorEngine.cbVectorValueList, null);
             }
 
             clusterChunkSize.ValueChanged += UpdateClusterChunkSize;
@@ -194,7 +183,7 @@ namespace RTCV.UI
                     nmAlignment.Maximum = 3;
                     gbVectorEngine.Visible = true;
 
-                    if (cbVectorUnlockPrecision.Checked)
+                    if (gbVectorEngine.cbVectorUnlockPrecision.Checked)
                     {
                         nmAlignment.Maximum = new decimal(new int[] { 0, 0, 0, 0 });
                         cbCustomPrecision.Enabled = true;
@@ -524,7 +513,7 @@ namespace RTCV.UI
 
         private void UpdateVectorUnlockPrecision(object sender, EventArgs e)
         {
-            if (cbVectorUnlockPrecision.Checked)
+            if (gbVectorEngine.cbVectorUnlockPrecision.Checked)
             {
                 nmAlignment.Maximum = new decimal(new int[] { 0, 0, 0, 0 });
                 cbCustomPrecision.Enabled = true;

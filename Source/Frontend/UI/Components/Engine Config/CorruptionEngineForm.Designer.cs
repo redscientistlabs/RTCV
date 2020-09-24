@@ -36,18 +36,6 @@ namespace RTCV.UI
             this.nmAlignment = new RTCV.UI.Components.Controls.MultiUpDown();
             this.cbSelectedEngine = new System.Windows.Forms.ComboBox();
             this.gbSelectedEngine = new System.Windows.Forms.GroupBox();
-            this.gbVectorEngine = new System.Windows.Forms.GroupBox();
-            this.cbVectorUnlockPrecision = new System.Windows.Forms.CheckBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.lbVectorEngineValueText1 = new System.Windows.Forms.Label();
-            this.cbVectorValueList = new System.Windows.Forms.ComboBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.pnLimiterList = new System.Windows.Forms.Panel();
-            this.lbVectorEngineLimiterText1 = new System.Windows.Forms.Label();
-            this.cbVectorLimiterList = new System.Windows.Forms.ComboBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.comboBox6 = new System.Windows.Forms.ComboBox();
-            this.label19 = new System.Windows.Forms.Label();
             this.gbClusterEngine = new System.Windows.Forms.GroupBox();
             this.pnClusterLimiterList = new System.Windows.Forms.Panel();
             this.clusterFilterAll = new System.Windows.Forms.CheckBox();
@@ -65,9 +53,6 @@ namespace RTCV.UI
             this.comboBox9 = new System.Windows.Forms.ComboBox();
             this.label22 = new System.Windows.Forms.Label();
             this.pnCustomPrecision.SuspendLayout();
-            this.gbVectorEngine.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.pnLimiterList.SuspendLayout();
             this.gbClusterEngine.SuspendLayout();
             this.pnClusterLimiterList.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.clusterChunkModifier)).BeginInit();
@@ -197,175 +182,6 @@ namespace RTCV.UI
             this.gbSelectedEngine.TabStop = false;
             this.gbSelectedEngine.Visible = false;
             this.gbSelectedEngine.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // gbVectorEngine
-            // 
-            this.gbVectorEngine.Controls.Add(this.cbVectorUnlockPrecision);
-            this.gbVectorEngine.Controls.Add(this.panel2);
-            this.gbVectorEngine.Controls.Add(this.pnLimiterList);
-            this.gbVectorEngine.Controls.Add(this.comboBox6);
-            this.gbVectorEngine.Controls.Add(this.label19);
-            this.gbVectorEngine.Font = new System.Drawing.Font("Segoe UI", 9.75F);
-            this.gbVectorEngine.ForeColor = System.Drawing.Color.White;
-            this.gbVectorEngine.Location = new System.Drawing.Point(880, 156);
-            this.gbVectorEngine.Name = "gbVectorEngine";
-            this.gbVectorEngine.Size = new System.Drawing.Size(420, 151);
-            this.gbVectorEngine.TabIndex = 144;
-            this.gbVectorEngine.TabStop = false;
-            this.gbVectorEngine.Visible = false;
-            this.gbVectorEngine.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // cbVectorUnlockPrecision
-            // 
-            this.cbVectorUnlockPrecision.AutoSize = true;
-            this.cbVectorUnlockPrecision.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
-            this.cbVectorUnlockPrecision.ForeColor = System.Drawing.Color.White;
-            this.cbVectorUnlockPrecision.Location = new System.Drawing.Point(357, 15);
-            this.cbVectorUnlockPrecision.Name = "cbVectorUnlockPrecision";
-            this.cbVectorUnlockPrecision.Size = new System.Drawing.Size(59, 17);
-            this.cbVectorUnlockPrecision.TabIndex = 144;
-            this.cbVectorUnlockPrecision.Text = "Unlock";
-            this.cbVectorUnlockPrecision.UseVisualStyleBackColor = true;
-            this.cbVectorUnlockPrecision.CheckedChanged += new System.EventHandler(this.UpdateVectorUnlockPrecision);
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.panel2.Controls.Add(this.lbVectorEngineValueText1);
-            this.panel2.Controls.Add(this.cbVectorValueList);
-            this.panel2.Controls.Add(this.label18);
-            this.panel2.Location = new System.Drawing.Point(6, 94);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(408, 47);
-            this.panel2.TabIndex = 135;
-            this.panel2.Tag = "color:dark2";
-            this.panel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // lbVectorEngineValueText1
-            // 
-            this.lbVectorEngineValueText1.AutoSize = true;
-            this.lbVectorEngineValueText1.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.lbVectorEngineValueText1.Location = new System.Drawing.Point(165, 25);
-            this.lbVectorEngineValueText1.Name = "lbVectorEngineValueText1";
-            this.lbVectorEngineValueText1.Size = new System.Drawing.Size(108, 13);
-            this.lbVectorEngineValueText1.TabIndex = 138;
-            this.lbVectorEngineValueText1.Text = "Replacement values";
-            this.lbVectorEngineValueText1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // cbVectorValueList
-            // 
-            this.cbVectorValueList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.cbVectorValueList.DataSource = ((object)(resources.GetObject("cbVectorValueList.DataSource")));
-            this.cbVectorValueList.DisplayMember = "Name";
-            this.cbVectorValueList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbVectorValueList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbVectorValueList.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.cbVectorValueList.ForeColor = System.Drawing.Color.White;
-            this.cbVectorValueList.FormattingEnabled = true;
-            this.cbVectorValueList.IntegralHeight = false;
-            this.cbVectorValueList.Location = new System.Drawing.Point(8, 19);
-            this.cbVectorValueList.MaxDropDownItems = 15;
-            this.cbVectorValueList.Name = "cbVectorValueList";
-            this.cbVectorValueList.Size = new System.Drawing.Size(152, 21);
-            this.cbVectorValueList.TabIndex = 81;
-            this.cbVectorValueList.Tag = "color:normal";
-            this.cbVectorValueList.ValueMember = "Value";
-            this.cbVectorValueList.SelectedIndexChanged += new System.EventHandler(this.UpdateVectorValueList);
-            this.cbVectorValueList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label18.Location = new System.Drawing.Point(5, 4);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(56, 13);
-            this.label18.TabIndex = 80;
-            this.label18.Text = "Value list:";
-            this.label18.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // pnLimiterList
-            // 
-            this.pnLimiterList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.pnLimiterList.Controls.Add(this.lbVectorEngineLimiterText1);
-            this.pnLimiterList.Controls.Add(this.cbVectorLimiterList);
-            this.pnLimiterList.Controls.Add(this.label13);
-            this.pnLimiterList.Location = new System.Drawing.Point(6, 40);
-            this.pnLimiterList.Name = "pnLimiterList";
-            this.pnLimiterList.Size = new System.Drawing.Size(408, 47);
-            this.pnLimiterList.TabIndex = 134;
-            this.pnLimiterList.Tag = "color:dark2";
-            this.pnLimiterList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // lbVectorEngineLimiterText1
-            // 
-            this.lbVectorEngineLimiterText1.AutoSize = true;
-            this.lbVectorEngineLimiterText1.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.lbVectorEngineLimiterText1.Location = new System.Drawing.Point(165, 24);
-            this.lbVectorEngineLimiterText1.Name = "lbVectorEngineLimiterText1";
-            this.lbVectorEngineLimiterText1.Size = new System.Drawing.Size(104, 13);
-            this.lbVectorEngineLimiterText1.TabIndex = 141;
-            this.lbVectorEngineLimiterText1.Text = "Comparison values";
-            this.lbVectorEngineLimiterText1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // cbVectorLimiterList
-            // 
-            this.cbVectorLimiterList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.cbVectorLimiterList.DataSource = ((object)(resources.GetObject("cbVectorLimiterList.DataSource")));
-            this.cbVectorLimiterList.DisplayMember = "Name";
-            this.cbVectorLimiterList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbVectorLimiterList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.cbVectorLimiterList.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.cbVectorLimiterList.ForeColor = System.Drawing.Color.White;
-            this.cbVectorLimiterList.FormattingEnabled = true;
-            this.cbVectorLimiterList.IntegralHeight = false;
-            this.cbVectorLimiterList.Location = new System.Drawing.Point(8, 19);
-            this.cbVectorLimiterList.MaxDropDownItems = 15;
-            this.cbVectorLimiterList.Name = "cbVectorLimiterList";
-            this.cbVectorLimiterList.Size = new System.Drawing.Size(152, 21);
-            this.cbVectorLimiterList.TabIndex = 78;
-            this.cbVectorLimiterList.Tag = "color:normal";
-            this.cbVectorLimiterList.ValueMember = "Value";
-            this.cbVectorLimiterList.SelectedIndexChanged += new System.EventHandler(this.UpdateVectorLimiterList);
-            this.cbVectorLimiterList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.label13.Location = new System.Drawing.Point(6, 4);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(62, 13);
-            this.label13.TabIndex = 79;
-            this.label13.Text = "Limiter list:";
-            this.label13.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // comboBox6
-            // 
-            this.comboBox6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.comboBox6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.comboBox6.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.comboBox6.ForeColor = System.Drawing.Color.White;
-            this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Location = new System.Drawing.Point(0, 9);
-            this.comboBox6.Name = "comboBox6";
-            this.comboBox6.Size = new System.Drawing.Size(165, 21);
-            this.comboBox6.TabIndex = 82;
-            this.comboBox6.Tag = "color:dark1";
-            this.comboBox6.Visible = false;
-            this.comboBox6.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
-            this.label19.Location = new System.Drawing.Point(170, 16);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(161, 13);
-            this.label19.TabIndex = 77;
-            this.label19.Text = "Corrupts 32-bit values using lists";
-            this.label19.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // gbClusterEngine
             // 
@@ -628,7 +444,6 @@ namespace RTCV.UI
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1448, 1097);
             this.Controls.Add(this.gbClusterEngine);
-            this.Controls.Add(this.gbVectorEngine);
             this.Controls.Add(this.pnCustomPrecision);
             this.Controls.Add(this.cbSelectedEngine);
             this.Controls.Add(this.gbSelectedEngine);
@@ -642,12 +457,6 @@ namespace RTCV.UI
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             this.pnCustomPrecision.ResumeLayout(false);
             this.pnCustomPrecision.PerformLayout();
-            this.gbVectorEngine.ResumeLayout(false);
-            this.gbVectorEngine.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            this.pnLimiterList.ResumeLayout(false);
-            this.pnLimiterList.PerformLayout();
             this.gbClusterEngine.ResumeLayout(false);
             this.gbClusterEngine.PerformLayout();
             this.pnClusterLimiterList.ResumeLayout(false);
@@ -664,17 +473,6 @@ namespace RTCV.UI
 		public System.Windows.Forms.ComboBox cbCustomPrecision;
 		public System.Windows.Forms.ComboBox cbSelectedEngine;
 		private System.Windows.Forms.GroupBox gbSelectedEngine;
-		private System.Windows.Forms.GroupBox gbVectorEngine;
-		private System.Windows.Forms.Panel panel2;
-		private System.Windows.Forms.Label lbVectorEngineValueText1;
-		public System.Windows.Forms.ComboBox cbVectorValueList;
-		private System.Windows.Forms.Label label18;
-		private System.Windows.Forms.Panel pnLimiterList;
-		private System.Windows.Forms.Label lbVectorEngineLimiterText1;
-		public System.Windows.Forms.ComboBox cbVectorLimiterList;
-		private System.Windows.Forms.Label label13;
-		public System.Windows.Forms.ComboBox comboBox6;
-		private System.Windows.Forms.Label label19;
 		private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label8;
         public Components.Controls.MultiUpDown nmAlignment;
@@ -694,6 +492,5 @@ namespace RTCV.UI
         private System.Windows.Forms.Label label29;
         public System.Windows.Forms.ComboBox clusterDirection;
         public System.Windows.Forms.CheckBox clusterFilterAll;
-        public System.Windows.Forms.CheckBox cbVectorUnlockPrecision;
     }
 }

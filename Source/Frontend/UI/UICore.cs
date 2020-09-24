@@ -657,21 +657,21 @@ namespace RTCV.UI
                 S.GET<CustomEngineConfigForm>().cbValueList.ValueMember = "Value";
                 S.GET<CustomEngineConfigForm>().cbValueList.DataSource = RtcCore.ValueListBindingSource;
 
-                S.GET<CorruptionEngineForm>().cbVectorLimiterList.DisplayMember = "Name";
-                S.GET<CorruptionEngineForm>().cbVectorLimiterList.ValueMember = "Value";
-                S.GET<CorruptionEngineForm>().cbVectorLimiterList.DataSource = RtcCore.LimiterListBindingSource;
+                S.GET<CorruptionEngineForm>().gbVectorEngine.cbVectorLimiterList.DisplayMember = "Name";
+                S.GET<CorruptionEngineForm>().gbVectorEngine.cbVectorLimiterList.ValueMember = "Value";
+                S.GET<CorruptionEngineForm>().gbVectorEngine.cbVectorLimiterList.DataSource = RtcCore.LimiterListBindingSource;
 
-                S.GET<CorruptionEngineForm>().cbVectorValueList.DisplayMember = "Name";
-                S.GET<CorruptionEngineForm>().cbVectorValueList.ValueMember = "Value";
-                S.GET<CorruptionEngineForm>().cbVectorValueList.DataSource = RtcCore.ValueListBindingSource;
+                S.GET<CorruptionEngineForm>().gbVectorEngine.cbVectorValueList.DisplayMember = "Name";
+                S.GET<CorruptionEngineForm>().gbVectorEngine.cbVectorValueList.ValueMember = "Value";
+                S.GET<CorruptionEngineForm>().gbVectorEngine.cbVectorValueList.DataSource = RtcCore.ValueListBindingSource;
             }
             else
             {
                 S.GET<CustomEngineConfigForm>().cbLimiterList.DataSource = null;
                 S.GET<CustomEngineConfigForm>().cbValueList.DataSource = null;
 
-                S.GET<CorruptionEngineForm>().cbVectorLimiterList.DataSource = null;
-                S.GET<CorruptionEngineForm>().cbVectorValueList.DataSource = null;
+                S.GET<CorruptionEngineForm>().gbVectorEngine.cbVectorLimiterList.DataSource = null;
+                S.GET<CorruptionEngineForm>().gbVectorEngine.cbVectorValueList.DataSource = null;
             }
         }
 
