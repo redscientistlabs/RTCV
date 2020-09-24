@@ -11,11 +11,51 @@ namespace RTCV.UI.Components.EngineConfig.Engines
     using System.Windows.Forms;
     using RTCV.UI.Components.EngineConfig;
 
-    public partial class NightmareEngine : EngineConfigControl
+    internal partial class NightmareEngine : EngineConfigControl
     {
-        public NightmareEngine()
+        internal NightmareEngine()
         {
             InitializeComponent();
+        }
+
+        internal void UpdateMinMaxBoxes(int precision)
+        {
+            switch (precision)
+            {
+                case 1:
+                    nmMinValueNightmare.Maximum = byte.MaxValue;
+                    nmMaxValueNightmare.Maximum = byte.MaxValue;
+
+                    nmMinValueNightmare.Value = CorruptCore.NightmareEngine.MinValue8Bit;
+                    nmMaxValueNightmare.Value = CorruptCore.NightmareEngine.MaxValue8Bit;
+
+                    break;
+
+                case 2:
+                    nmMinValueNightmare.Maximum = ushort.MaxValue;
+                    nmMaxValueNightmare.Maximum = ushort.MaxValue;
+
+                    nmMinValueNightmare.Value = CorruptCore.NightmareEngine.MinValue16Bit;
+                    nmMaxValueNightmare.Value = CorruptCore.NightmareEngine.MaxValue16Bit;
+
+                    break;
+                case 4:
+                    nmMinValueNightmare.Maximum = uint.MaxValue;
+                    nmMaxValueNightmare.Maximum = uint.MaxValue;
+
+                    nmMinValueNightmare.Value = CorruptCore.NightmareEngine.MinValue32Bit;
+                    nmMaxValueNightmare.Value = CorruptCore.NightmareEngine.MaxValue32Bit;
+
+                    break;
+                case 8:
+                    nmMinValueNightmare.Maximum = ulong.MaxValue;
+                    nmMaxValueNightmare.Maximum = ulong.MaxValue;
+
+                    nmMinValueNightmare.Value = CorruptCore.NightmareEngine.MinValue64Bit;
+                    nmMaxValueNightmare.Value = CorruptCore.NightmareEngine.MaxValue64Bit;
+
+                    break;
+            }
         }
     }
 }

@@ -318,66 +318,8 @@ namespace RTCV.UI
 
         private void UpdateMinMaxBoxes(int precision)
         {
-            switch (precision)
-            {
-                case 1:
-                    gbNightmareEngine.nmMinValueNightmare.Maximum = byte.MaxValue;
-                    gbNightmareEngine.nmMaxValueNightmare.Maximum = byte.MaxValue;
-
-                    gbHellgenieEngine.nmMinValueHellgenie.Maximum = byte.MaxValue;
-                    gbHellgenieEngine.nmMaxValueHellgenie.Maximum = byte.MaxValue;
-
-                    gbNightmareEngine.nmMinValueNightmare.Value = NightmareEngine.MinValue8Bit;
-                    gbNightmareEngine.nmMaxValueNightmare.Value = NightmareEngine.MaxValue8Bit;
-
-                    gbHellgenieEngine.nmMinValueHellgenie.Value = HellgenieEngine.MinValue8Bit;
-                    gbHellgenieEngine.nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue8Bit;
-
-                    break;
-
-                case 2:
-                    gbNightmareEngine.nmMinValueNightmare.Maximum = ushort.MaxValue;
-                    gbNightmareEngine.nmMaxValueNightmare.Maximum = ushort.MaxValue;
-
-                    gbHellgenieEngine.nmMinValueHellgenie.Maximum = ushort.MaxValue;
-                    gbHellgenieEngine.nmMaxValueHellgenie.Maximum = ushort.MaxValue;
-
-                    gbNightmareEngine.nmMinValueNightmare.Value = NightmareEngine.MinValue16Bit;
-                    gbNightmareEngine.nmMaxValueNightmare.Value = NightmareEngine.MaxValue16Bit;
-
-                    gbHellgenieEngine.nmMinValueHellgenie.Value = HellgenieEngine.MinValue16Bit;
-                    gbHellgenieEngine.nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue16Bit;
-
-                    break;
-                case 4:
-                    gbNightmareEngine.nmMinValueNightmare.Maximum = uint.MaxValue;
-                    gbNightmareEngine.nmMaxValueNightmare.Maximum = uint.MaxValue;
-
-                    gbHellgenieEngine.nmMinValueHellgenie.Maximum = uint.MaxValue;
-                    gbHellgenieEngine.nmMaxValueHellgenie.Maximum = uint.MaxValue;
-
-                    gbNightmareEngine.nmMinValueNightmare.Value = NightmareEngine.MinValue32Bit;
-                    gbNightmareEngine.nmMaxValueNightmare.Value = NightmareEngine.MaxValue32Bit;
-
-                    gbHellgenieEngine.nmMinValueHellgenie.Value = HellgenieEngine.MinValue32Bit;
-                    gbHellgenieEngine.nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue32Bit;
-
-                    break;
-                case 8:
-                    gbNightmareEngine.nmMinValueNightmare.Maximum = ulong.MaxValue;
-                    gbNightmareEngine.nmMaxValueNightmare.Maximum = ulong.MaxValue;
-
-                    gbHellgenieEngine.nmMinValueHellgenie.Maximum = ulong.MaxValue;
-                    gbHellgenieEngine.nmMaxValueHellgenie.Maximum = ulong.MaxValue;
-
-                    gbNightmareEngine.nmMinValueNightmare.Value = NightmareEngine.MinValue64Bit;
-                    gbNightmareEngine.nmMaxValueNightmare.Value = NightmareEngine.MaxValue64Bit;
-
-                    gbHellgenieEngine.nmMinValueHellgenie.Value = HellgenieEngine.MinValue64Bit;
-                    gbHellgenieEngine.nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue64Bit;
-
-                    break;
-            }
+            gbNightmareEngine.UpdateMinMaxBoxes(precision);
+            gbHellgenieEngine.UpdateMinMaxBoxes(precision);
         }
 
         private void UpdateCustomPrecision(object sender, EventArgs e)
