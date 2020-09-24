@@ -73,6 +73,7 @@ namespace RTCV.UI.Components.EngineConfig.Engines
             this.btnResyncDistortionEngine.Tag = "color:light1";
             this.btnResyncDistortionEngine.Text = "Resync Distortion Engine";
             this.btnResyncDistortionEngine.UseVisualStyleBackColor = false;
+            this.btnResyncDistortionEngine.Click += new System.EventHandler(this.ResyncDistortionEngine);
             // 
             // nmDistortionDelay
             // 

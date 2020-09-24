@@ -114,11 +114,6 @@ namespace RTCV.UI
             gbClusterEngine.clusterDirection.SelectedIndex = 0;
         }
 
-        private void ResyncDistortionEngine(object sender, EventArgs e)
-        {
-            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
-        }
-
         private void UpdateEngine(object sender, EventArgs e)
         {
             gbNightmareEngine.Visible = false;
