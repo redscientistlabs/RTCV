@@ -235,6 +235,7 @@ namespace RTCV.UI.Components.EngineConfig.Engines
             0,
             0,
             0});
+            this.clusterChunkSize.ValueChanged += new System.EventHandler(this.UpdateClusterChunkSize);
             // 
             // cbClusterLimiterList
             // 

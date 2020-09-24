@@ -19,5 +19,10 @@ namespace RTCV.UI.Components.EngineConfig.Engines
                 CorruptCore.ClusterEngine.LimiterListHash = item.Value;
             }
         }
+
+        private void UpdateClusterChunkSize(object sender, EventArgs e)
+        {
+            CorruptCore.ClusterEngine.ChunkSize = (int)clusterChunkSize.Value;
+        }
     }
 }

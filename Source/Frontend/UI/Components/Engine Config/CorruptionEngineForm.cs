@@ -109,7 +109,6 @@ namespace RTCV.UI
                 UpdateVectorValueList(gbVectorEngine.cbVectorValueList, null);
             }
 
-            gbClusterEngine.clusterChunkSize.ValueChanged += UpdateClusterChunkSize;
             gbClusterEngine.clusterChunkModifier.ValueChanged += UpdateClusterModifier;
 
             for (int j = 0; j < ClusterEngine.ShuffleTypes.Length; j++)
@@ -366,10 +365,7 @@ namespace RTCV.UI
 
 
 
-        private void UpdateClusterChunkSize(object sender, EventArgs e)
-        {
-            ClusterEngine.ChunkSize = (int)gbClusterEngine.clusterChunkSize.Value;
-        }
+        
 
         private void UpdateClusterModifier(object sender, EventArgs e)
         {
