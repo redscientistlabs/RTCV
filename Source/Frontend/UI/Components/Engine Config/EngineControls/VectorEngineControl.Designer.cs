@@ -1,6 +1,6 @@
 namespace RTCV.UI.Components.EngineConfig.EngineControls
 {
-    partial class VectorEngine
+    partial class VectorEngineControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,7 +28,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VectorEngine));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VectorEngineControl));
             this.cbVectorUnlockPrecision = new System.Windows.Forms.CheckBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lbVectorEngineValueText1 = new System.Windows.Forms.Label();

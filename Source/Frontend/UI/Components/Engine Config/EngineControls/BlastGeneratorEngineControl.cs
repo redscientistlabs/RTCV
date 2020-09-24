@@ -3,9 +3,9 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
     using System;
     using RTCV.Common;
 
-    internal partial class BlastGeneratorEngine : EngineConfigControl
+    internal partial class BlastGeneratorEngineControl : EngineConfigControl
     {
-        internal BlastGeneratorEngine()
+        internal BlastGeneratorEngineControl()
         {
             InitializeComponent();
         }

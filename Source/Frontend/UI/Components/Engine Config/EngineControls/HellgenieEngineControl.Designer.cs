@@ -1,6 +1,6 @@
 namespace RTCV.UI.Components.EngineConfig.EngineControls
 {
-    partial class HellgenieEngine
+    partial class HellgenieEngineControl
     {
         /// <summary> 
         /// Required designer variable.

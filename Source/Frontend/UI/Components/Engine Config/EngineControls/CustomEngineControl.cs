@@ -3,9 +3,9 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
     using System;
     using RTCV.Common;
 
-    internal partial class CustomEngine : EngineConfigControl
+    internal partial class CustomEngineControl : EngineConfigControl
     {
-        internal CustomEngine()
+        internal CustomEngineControl()
         {
             InitializeComponent();
         }

@@ -1,6 +1,6 @@
 namespace RTCV.UI.Components.EngineConfig.EngineControls
 {
-    partial class BlastGeneratorEngine
+    partial class BlastGeneratorEngineControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,7 +28,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BlastGeneratorEngine));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BlastGeneratorEngineControl));
             this.label10 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.btnOpenBlastGenerator = new System.Windows.Forms.Button();

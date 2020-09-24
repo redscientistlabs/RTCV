@@ -1,6 +1,6 @@
 namespace RTCV.UI.Components.EngineConfig.EngineControls
 {
-    partial class NightmareEngine
+    partial class NightmareEngineControl
     {
         /// <summary> 
         /// Required designer variable.

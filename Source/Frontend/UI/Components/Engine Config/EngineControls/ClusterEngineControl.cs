@@ -29,5 +29,19 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
         {
             ClusterEngine.Modifier = (int)clusterChunkModifier.Value;
         }
+
+        private void UpdateClusterMethod(object sender, EventArgs e)
+        {
+            ClusterEngine.ShuffleType = cbClusterMethod.SelectedItem.ToString();
+
+            if (cbClusterMethod.SelectedItem.ToString().ToLower().Contains("rotate"))
+            {
+                clusterChunkModifier.Enabled = true;
+            }
+            else
+            {
+                clusterChunkModifier.Enabled = false;
+            }
+        }
     }
 }

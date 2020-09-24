@@ -1,8 +1,8 @@
 namespace RTCV.UI.Components.EngineConfig.EngineControls
 {
-    internal partial class HellgenieEngine : EngineConfigControl
+    internal partial class HellgenieEngineControl : EngineConfigControl
     {
-        internal HellgenieEngine(CorruptionEngineForm parent)
+        internal HellgenieEngineControl(CorruptionEngineForm parent)
         {
             InitializeComponent();
 

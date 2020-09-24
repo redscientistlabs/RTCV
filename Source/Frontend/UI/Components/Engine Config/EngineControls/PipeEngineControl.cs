@@ -5,9 +5,9 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
     using RTCV.CorruptCore;
     using RTCV.NetCore;
 
-    public partial class PipeEngine : EngineConfigControl
+    public partial class PipeEngineControl : EngineConfigControl
     {
-        public PipeEngine()
+        public PipeEngineControl()
         {
             InitializeComponent();
         }

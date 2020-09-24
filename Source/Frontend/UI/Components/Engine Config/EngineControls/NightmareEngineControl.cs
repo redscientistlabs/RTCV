@@ -12,9 +12,9 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
     using RTCV.CorruptCore;
     using RTCV.UI.Components.EngineConfig;
 
-    internal partial class NightmareEngine : EngineConfigControl
+    internal partial class NightmareEngineControl : EngineConfigControl
     {
-        internal NightmareEngine()
+        internal NightmareEngineControl()
         {
             InitializeComponent();
         }

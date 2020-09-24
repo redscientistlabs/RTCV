@@ -1,6 +1,6 @@
 namespace RTCV.UI.Components.EngineConfig.EngineControls
 {
-    partial class FreezeEngine
+    partial class FreezeEngineControl
     {
         /// <summary> 
         /// Required designer variable.

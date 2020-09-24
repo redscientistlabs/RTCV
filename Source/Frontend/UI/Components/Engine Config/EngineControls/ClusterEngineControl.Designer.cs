@@ -199,6 +199,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             this.cbClusterMethod.TabIndex = 145;
             this.cbClusterMethod.Tag = "color:normal";
             this.cbClusterMethod.ValueMember = "Value";
+            this.cbClusterMethod.SelectedIndexChanged += new System.EventHandler(this.UpdateClusterMethod);
             // 
             // label11
             // 

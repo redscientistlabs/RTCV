@@ -1,6 +1,6 @@
 namespace RTCV.UI.Components.EngineConfig.EngineControls
 {
-    partial class CustomEngine
+    partial class CustomEngineControl
     {
         /// <summary> 
         /// Required designer variable.

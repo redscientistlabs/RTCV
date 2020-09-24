@@ -1,6 +1,6 @@
 namespace RTCV.UI.Components.EngineConfig.EngineControls
 {
-    partial class DistortionEngine
+    partial class DistortionEngineControl
     {
         /// <summary> 
         /// Required designer variable.

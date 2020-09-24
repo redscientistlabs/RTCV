@@ -367,19 +367,7 @@ namespace RTCV.UI
 
         
 
-        private void UpdateClusterMethod(object sender, EventArgs e)
-        {
-            ClusterEngine.ShuffleType = gbClusterEngine.cbClusterMethod.SelectedItem.ToString();
-
-            if (gbClusterEngine.cbClusterMethod.SelectedItem.ToString().ToLower().Contains("rotate"))
-            {
-                gbClusterEngine.clusterChunkModifier.Enabled = true;
-            }
-            else
-            {
-                gbClusterEngine.clusterChunkModifier.Enabled = false;
-            }
-        }
+        
 
         private void UpdateClusterSplitUnits(object sender, EventArgs e)
         {

@@ -2,9 +2,9 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
 {
     using RTCV.NetCore;
 
-    public partial class DistortionEngine : EngineConfigControl
+    public partial class DistortionEngineControl : EngineConfigControl
     {
-        public DistortionEngine()
+        public DistortionEngineControl()
         {
             InitializeComponent();
         }
