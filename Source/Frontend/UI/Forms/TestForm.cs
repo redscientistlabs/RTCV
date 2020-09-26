@@ -1,11 +1,11 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Collections.Generic;
     using System.Windows.Forms;
     using RTCV.Common;
 
-    public partial class TestForm : Form, IAutoColorize
+    public partial class TestForm : Modular.ColorizedForm
     {
         public TestForm()
         {

@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Drawing;
@@ -8,7 +8,7 @@
     using RTCV.NetCore;
     using RTCV.Common;
 
-    public partial class CustomEngineConfigForm : Form, IAutoColorize
+    public partial class CustomEngineConfigForm : Modular.ColorizedForm
     {
         private bool updatingMinMax = false;
         private bool DontUpdateSpec = false;

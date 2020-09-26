@@ -333,7 +333,6 @@ namespace RTCV.UI
             this.Tag = "color:dark1";
             this.Text = "Analytics Tool";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
-            this.Load += new System.EventHandler(this.OnFormLoad);
             ((System.ComponentModel.ISupportInitialize)(this.pbActivity)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();

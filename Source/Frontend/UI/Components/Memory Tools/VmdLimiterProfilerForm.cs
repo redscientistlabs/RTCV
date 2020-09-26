@@ -10,7 +10,7 @@ namespace RTCV.UI
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class VmdLimiterProfilerForm : ComponentForm, IAutoColorize, IBlockable
+    public partial class VmdLimiterProfilerForm : ComponentForm, IBlockable
     {
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
@@ -229,14 +229,14 @@ namespace RTCV.UI
                     break;
                 }
 
-            foreach (ComboBoxItem<string> item in ceForm.cbVectorLimiterList.Items)
+            foreach (ComboBoxItem<string> item in ceForm.VectorEngineControl.cbVectorLimiterList.Items)
                 if (item.Name == limiter)
                 {
-                    ceForm.cbVectorLimiterList.SelectedItem = item;
+                    ceForm.VectorEngineControl.cbVectorLimiterList.SelectedItem = item;
                     break;
                 }
 
-            ComboBoxItem<string> cbItem = (ComboBoxItem<string>)((ComboBox)ceForm.cbVectorLimiterList).SelectedItem;
+            ComboBoxItem<string> cbItem = (ComboBoxItem<string>)((ComboBox)ceForm.VectorEngineControl.cbVectorLimiterList).SelectedItem;
             if (cbItem != null)
             {
                 LimiterListHash = cbItem.Value;

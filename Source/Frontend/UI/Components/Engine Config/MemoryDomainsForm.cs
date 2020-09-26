@@ -12,7 +12,7 @@ namespace RTCV.UI
     using RTCV.UI.Modular;
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
-    public partial class MemoryDomainsForm : ComponentForm, IAutoColorize, IBlockable
+    public partial class MemoryDomainsForm : ComponentForm, IBlockable
     {
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
@@ -268,7 +268,7 @@ namespace RTCV.UI
                         currentListMenuItem.DropDownItems.Add(vectorMenuItem);
                         currentListMenuItem.DropDownItems.Add(new ToolStripSeparator());
 
-                        foreach (ComboBoxItem<string> listItem in S.GET<CorruptionEngineForm>().cbVectorLimiterList.Items)
+                        foreach (ComboBoxItem<string> listItem in S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorLimiterList.Items)
                         {
                             var listName = listItem.Name;
                             var subMenuItem = new ToolStripMenuItem();

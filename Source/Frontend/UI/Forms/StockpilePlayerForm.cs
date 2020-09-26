@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Collections.Generic;
@@ -12,7 +12,7 @@
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class StockpilePlayerForm : ComponentForm, IAutoColorize, IBlockable
+    public partial class StockpilePlayerForm : ComponentForm, IBlockable
     {
         private bool currentlyLoading = false;
 
@@ -162,7 +162,7 @@
                 (columnsMenu.Items.Add("Show Note", null, new EventHandler((ob, ev) => { dgvStockpile.Columns["Note"].Visible ^= true; })) as ToolStripMenuItem).Checked = dgvStockpile.Columns["Note"].Visible;
                 columnsMenu.Items.Add(stripSeparator);
                 (columnsMenu.Items.Add("Load on Select", null, new EventHandler((ob, ev) => { S.GET<GlitchHarvesterBlastForm>().LoadOnSelect ^= true; })) as ToolStripMenuItem).Checked = S.GET<GlitchHarvesterBlastForm>().LoadOnSelect;
-                (columnsMenu.Items.Add("Clear Infinite Units on Rewind", null, new EventHandler((ob, ev) => { S.GET<CorruptionEngineForm>().cbClearCheatsOnRewind.Checked ^= true; })) as ToolStripMenuItem).Checked = S.GET<CorruptionEngineForm>().cbClearCheatsOnRewind.Checked;
+                (columnsMenu.Items.Add("Clear Infinite Units on Rewind", null, new EventHandler((ob, ev) => { S.GET<CorruptionEngineForm>().HellgenieEngineControl.cbClearCheatsOnRewind.Checked ^= true; })) as ToolStripMenuItem).Checked = S.GET<CorruptionEngineForm>().HellgenieEngineControl.cbClearCheatsOnRewind.Checked;
 
                 columnsMenu.Items.Add(stripSeparator);
 

@@ -12,7 +12,7 @@ namespace RTCV.UI
     using RTCV.UI.Input;
     using RTCV.UI.Modular;
 
-    public partial class SettingsHotkeyConfigForm : ComponentForm, IAutoColorize, IBlockable
+    public partial class SettingsHotkeyConfigForm : ComponentForm, IBlockable
     {
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
@@ -92,11 +92,6 @@ namespace RTCV.UI
                     NetCore.Params.RemoveParam("HOTKEYS");
                 }
             }
-        }
-
-        private void OnFormLoad(object sender, EventArgs e)
-        {
-            Colors.SetRTCColor(Colors.GeneralColor, this.Parent);
         }
 
         private void HotkeyHotkeyTabControlSelectedIndexChanged(object sender, EventArgs e)

@@ -38,7 +38,7 @@ namespace RTCV.NetCore
         {
             Running = false;
 
-            try { ReaderThread.Abort(); } catch { }
+            try { ReaderThread?.Abort(); } catch { }
             while (ReaderThread != null && ReaderThread.IsAlive)
             {
                 System.Windows.Forms.Application.DoEvents();
@@ -46,7 +46,7 @@ namespace RTCV.NetCore
             } //Lets wait for the thread to die
             ReaderThread = null;
 
-            try { Sender.Close(); } catch { }
+            try { Sender?.Close(); } catch { }
         }
 
         public void Dispose()
