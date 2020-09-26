@@ -664,6 +664,10 @@ namespace RTCV.UI
                 S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorValueList.DisplayMember = "Name";
                 S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorValueList.ValueMember = "Value";
                 S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorValueList.DataSource = RtcCore.ValueListBindingSource;
+
+                S.GET<CorruptionEngineForm>().ClusterEngineControl.cbClusterLimiterList.DisplayMember = "Name";
+                S.GET<CorruptionEngineForm>().ClusterEngineControl.cbClusterLimiterList.ValueMember = "Value";
+                S.GET<CorruptionEngineForm>().ClusterEngineControl.cbClusterLimiterList.DataSource = RtcCore.LimiterListBindingSource;
             }
             else
             {
@@ -672,6 +676,8 @@ namespace RTCV.UI
 
                 S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorLimiterList.DataSource = null;
                 S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorValueList.DataSource = null;
+
+                S.GET<CorruptionEngineForm>().ClusterEngineControl.cbClusterLimiterList.DataSource = null;
             }
         }
 
