@@ -61,7 +61,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             this.label24.AutoSize = true;
             this.label24.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label24.ForeColor = System.Drawing.Color.White;
-            this.label24.Location = new System.Drawing.Point(5, 88);
+            this.label24.Location = new System.Drawing.Point(5, 89);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(87, 13);
             this.label24.TabIndex = 151;
@@ -72,7 +72,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             this.label23.AutoSize = true;
             this.label23.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label23.ForeColor = System.Drawing.Color.White;
-            this.label23.Location = new System.Drawing.Point(5, 63);
+            this.label23.Location = new System.Drawing.Point(5, 64);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(86, 13);
             this.label23.TabIndex = 148;
@@ -84,7 +84,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             this.nmMaxValueNightmare.Font = new System.Drawing.Font("Consolas", 8.25F);
             this.nmMaxValueNightmare.ForeColor = System.Drawing.Color.White;
             this.nmMaxValueNightmare.Hexadecimal = true;
-            this.nmMaxValueNightmare.Location = new System.Drawing.Point(96, 86);
+            this.nmMaxValueNightmare.Location = new System.Drawing.Point(96, 87);
             this.nmMaxValueNightmare.Maximum = new decimal(new int[] {
             -1,
             -1,
@@ -111,7 +111,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             this.nmMinValueNightmare.Font = new System.Drawing.Font("Consolas", 8.25F);
             this.nmMinValueNightmare.ForeColor = System.Drawing.Color.White;
             this.nmMinValueNightmare.Hexadecimal = true;
-            this.nmMinValueNightmare.Location = new System.Drawing.Point(96, 61);
+            this.nmMinValueNightmare.Location = new System.Drawing.Point(96, 62);
             this.nmMinValueNightmare.Maximum = new decimal(new int[] {
             -1,
             -1,
@@ -137,7 +137,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Italic);
             this.label15.ForeColor = System.Drawing.Color.White;
-            this.label15.Location = new System.Drawing.Point(170, 13);
+            this.label15.Location = new System.Drawing.Point(170, 14);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(117, 13);
             this.label15.TabIndex = 147;
@@ -155,7 +155,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             "RANDOM",
             "RANDOMTILT",
             "TILT"});
-            this.cbBlastType.Location = new System.Drawing.Point(74, 34);
+            this.cbBlastType.Location = new System.Drawing.Point(74, 35);
             this.cbBlastType.Name = "cbBlastType";
             this.cbBlastType.Size = new System.Drawing.Size(92, 21);
             this.cbBlastType.TabIndex = 145;
@@ -167,17 +167,17 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(5, 38);
+            this.label9.Location = new System.Drawing.Point(5, 39);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(59, 13);
             this.label9.TabIndex = 144;
             this.label9.Text = "Blast type:";
             // 
-            // NightmareEngine
+            // NightmareEngineControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "NightmareEngine";
+            this.Name = "NightmareEngineControl";
             this.engineGroupBox.ResumeLayout(false);
             this.engineGroupBox.PerformLayout();
             this.ResumeLayout(false);

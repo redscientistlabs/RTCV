@@ -14,11 +14,69 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
 
     internal partial class NightmareEngineControl : EngineConfigControl
     {
+        private bool updatingMinMax = false;
+
         internal NightmareEngineControl(Point location) : base(location)
         {
             InitializeComponent();
 
             cbBlastType.SelectedIndex = 0;
+            nmMinValueNightmare.ValueChanged += UpdateMinValue;
+            nmMaxValueNightmare.ValueChanged += UpdateMaxValue;
+        }
+
+        private void UpdateMinValue(object sender, EventArgs e)
+        {
+            //We don't want to trigger this if it caps when stepping downwards	
+            if (updatingMinMax)
+            {
+                return;
+            }
+
+            ulong value = Convert.ToUInt64(nmMinValueNightmare.Value);
+
+            switch (RtcCore.CurrentPrecision)
+            {
+                case 1:
+                    NightmareEngine.MinValue8Bit = value;
+                    break;
+                case 2:
+                    NightmareEngine.MinValue16Bit = value;
+                    break;
+                case 4:
+                    NightmareEngine.MinValue32Bit = value;
+                    break;
+                case 8:
+                    NightmareEngine.MinValue64Bit = value;
+                    break;
+            }
+        }
+
+        private void UpdateMaxValue(object sender, EventArgs e)
+        {
+            //We don't want to trigger this if it caps when stepping downwards	
+            if (updatingMinMax)
+            {
+                return;
+            }
+
+            ulong value = Convert.ToUInt64(nmMaxValueNightmare.Value);
+
+            switch (RtcCore.CurrentPrecision)
+            {
+                case 1:
+                    NightmareEngine.MaxValue8Bit = value;
+                    break;
+                case 2:
+                    NightmareEngine.MaxValue16Bit = value;
+                    break;
+                case 4:
+                    NightmareEngine.MaxValue32Bit = value;
+                    break;
+                case 8:
+                    NightmareEngine.MaxValue64Bit = value;
+                    break;
+            }
         }
 
         private void UpdateBlastType(object sender, EventArgs e)
@@ -47,6 +105,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
 
         internal void UpdateMinMaxBoxes(int precision)
         {
+            updatingMinMax = true;
             switch (precision)
             {
                 case 1:
@@ -83,6 +142,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
 
                     break;
             }
+            updatingMinMax = false;
         }
     }
 }
