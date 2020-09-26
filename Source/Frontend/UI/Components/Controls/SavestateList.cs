@@ -320,8 +320,20 @@ namespace RTCV.UI.Components.Controls
             {
                 if (SelectedHolder == null)
                 {
-                    MessageBox.Show($"No {_saveStateWord} Box is currently selected in the Glitch Harvester's {_saveStateWord} Manager");
-                    return;
+                    bool hasSavedItems = _controlList.FirstOrDefault(it => it.HasState()) != null;
+
+                    if (hasSavedItems)
+                    {
+                        MessageBox.Show($"No {_saveStateWord} Box is currently selected in the Glitch Harvester's {_saveStateWord} Manager");
+                        return;
+                    }
+                    else
+                    {
+                        //select first one
+                        var holder = _controlList.First();
+                        holder.SetSelected(true);
+                        SelectedHolder = holder;
+                    }
                 }
 
                 StashKey sk = StockpileManagerUISide.SaveState();

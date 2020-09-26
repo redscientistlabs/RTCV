@@ -538,7 +538,7 @@ This message only appears once.";
 
                     case "N64":     //Nintendo 64
                         SetEngineByName("Vector Engine");
-                        S.GET<GeneralParametersForm>().multiTB_Intensity.Value = 75;
+                        S.GET<GeneralParametersForm>().multiTB_Intensity.Value = 25;
                         S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Value = 1;
                         break;
 
@@ -572,6 +572,11 @@ This message only appears once.";
 
                         //TODO: Add more domains for systems like gamegear, atari, turbo graphx
                 }
+
+                //Force control to commit new values
+                S.GET<GeneralParametersForm>().multiTB_Intensity.OnValueChanged(null);
+                S.GET<GeneralParametersForm>().multiTB_ErrorDelay.OnValueChanged(null);
+
             }
 
             S.GET<CoreForm>().AutoCorrupt = true;

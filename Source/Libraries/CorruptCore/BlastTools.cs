@@ -1,4 +1,4 @@
-﻿namespace RTCV.CorruptCore
+namespace RTCV.CorruptCore
 {
     using System;
     using System.Collections.Generic;
@@ -213,7 +213,7 @@
                 //Only generate if there's no BlastLayer.
                 //A new proto is always generated if the cell is dirty which means no BlastLayer will exist
                 //Otherwise, we just return the existing BlastLayer
-                if (true || bgp != null && bgp.bl == null)
+                if (bgp != null && bgp.bl == null)
                 {
                     Console.Write("BGP was dirty. Generating BlastLayer\n");
                     bgp.bl = bgp.GenerateBlastLayer();
