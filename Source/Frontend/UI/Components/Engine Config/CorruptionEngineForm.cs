@@ -1,39 +1,37 @@
 namespace RTCV.UI
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
-    using System.Linq;
     using System.Windows.Forms;
     using RTCV.Common;
     using RTCV.CorruptCore;
     using RTCV.NetCore;
     using RTCV.UI.Modular;
 
+    [SuppressMessage("Microsoft.Designer", "CA2213:Disposable types are not disposed", Justification = "Designer classes have their own Dispose method")]
     public partial class CorruptionEngineForm : ComponentForm, IBlockable
     {
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
+        internal readonly Components.EngineConfig.EngineControls.FreezeEngineControl FreezeEngineControl;
+        internal readonly Components.EngineConfig.EngineControls.NightmareEngineControl NightmareEngineControl;
+        internal readonly Components.EngineConfig.EngineControls.HellgenieEngineControl HellgenieEngineControl;
+        private readonly Components.EngineConfig.EngineControls.DistortionEngineControl distortionEngineControl;
+        private readonly Components.EngineConfig.EngineControls.CustomEngineControl customEngineControl;
+        internal readonly Components.EngineConfig.EngineControls.PipeEngineControl PipeEngineControl;
+        internal readonly Components.EngineConfig.EngineControls.BlastGeneratorEngineControl BlastGeneratorEngineControl;
+        internal readonly Components.EngineConfig.EngineControls.VectorEngineControl VectorEngineControl;
+        internal readonly Components.EngineConfig.EngineControls.ClusterEngineControl ClusterEngineControl;
+
         public string CurrentVectorLimiterListName
         {
             get {
-                ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)cbVectorLimiterList).SelectedItem;
+                ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)VectorEngineControl.cbVectorLimiterList).SelectedItem;
 
                 if (item == null) //this shouldn't ever happen unless the list files are missing
                     MessageBox.Show("Error: No vector engine limiter list selected. Bad install?");
-
-                return item?.Name;
-            }
-        }
-
-        public string CurrentVectorValueListName
-        {
-            get
-            {
-                ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)cbVectorValueList).SelectedItem;
-
-                if (item == null) //this shouldn't ever happen unless the list files are missing
-                    MessageBox.Show("Error: No vector engine value list selected. Bad install?");
 
                 return item?.Name;
             }
@@ -44,83 +42,66 @@ namespace RTCV.UI
             InitializeComponent();
 
             this.undockedSizable = false;
+
+            var engineControlLocation = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
+
+            FreezeEngineControl = new Components.EngineConfig.EngineControls.FreezeEngineControl(this);
+            this.Controls.Add(FreezeEngineControl);
+
+            NightmareEngineControl = new Components.EngineConfig.EngineControls.NightmareEngineControl(engineControlLocation);
+            this.Controls.Add(NightmareEngineControl);
+
+            HellgenieEngineControl = new Components.EngineConfig.EngineControls.HellgenieEngineControl(this);
+            this.Controls.Add(HellgenieEngineControl);
+
+            distortionEngineControl = new Components.EngineConfig.EngineControls.DistortionEngineControl(engineControlLocation);
+            this.Controls.Add(distortionEngineControl);
+
+            customEngineControl = new Components.EngineConfig.EngineControls.CustomEngineControl(engineControlLocation);
+            this.Controls.Add(customEngineControl);
+
+            PipeEngineControl = new Components.EngineConfig.EngineControls.PipeEngineControl(this);
+            this.Controls.Add(PipeEngineControl);
+
+            BlastGeneratorEngineControl = new Components.EngineConfig.EngineControls.BlastGeneratorEngineControl(engineControlLocation);
+            this.Controls.Add(BlastGeneratorEngineControl);
+
+            VectorEngineControl = new Components.EngineConfig.EngineControls.VectorEngineControl(this);
+            this.Controls.Add(VectorEngineControl);
+
+            ClusterEngineControl = new Components.EngineConfig.EngineControls.ClusterEngineControl(engineControlLocation);
+            this.Controls.Add(ClusterEngineControl);
         }
 
         private void OnFormLoad(object sender, EventArgs e)
         {
             nmAlignment.registerSlave(S.GET<CustomEngineConfigForm>().nmAlignment);
-            gbNightmareEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
-            gbHellgenieEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
-            gbDistortionEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
-            gbFreezeEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
-            gbPipeEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
-            gbVectorEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
-            gbClusterEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
-            gbBlastGeneratorEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
-            gbCustomEngine.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
 
             cbSelectedEngine.SelectedIndex = 0;
-            cbBlastType.SelectedIndex = 0;
             cbCustomPrecision.SelectedIndex = 0;
-
-            cbVectorValueList.DataSource = null;
-            cbVectorLimiterList.DataSource = null;
-            cbClusterLimiterList.DataSource = null;
-            cbVectorValueList.DisplayMember = "Name";
-            cbVectorLimiterList.DisplayMember = "Name";
-            cbClusterLimiterList.DisplayMember = "Name";
-
-            cbVectorValueList.ValueMember = "Value";
-            cbVectorLimiterList.ValueMember = "Value";
-            cbClusterLimiterList.ValueMember = "Value";
-
-            //Do this here as if it's stuck into the designer, it keeps defaulting out
-            cbVectorValueList.DataSource = RtcCore.ValueListBindingSource;
-            cbVectorLimiterList.DataSource = RtcCore.LimiterListBindingSource;
-            cbClusterLimiterList.DataSource = RtcCore.LimiterListBindingSource;
 
             if (RtcCore.LimiterListBindingSource.Count > 0)
             {
-                UpdateVectorLimiterList(cbVectorLimiterList, null);
-                UpdateVectorLimiterList(cbClusterLimiterList, null);
+                UpdateVectorLimiterList(VectorEngineControl.cbVectorLimiterList, null);
+                UpdateVectorLimiterList(ClusterEngineControl.cbClusterLimiterList, null);
             }
             if (RtcCore.ValueListBindingSource.Count > 0)
             {
-                UpdateVectorValueList(cbVectorValueList, null);
+                UpdateVectorValueList(VectorEngineControl.cbVectorValueList, null);
             }
-
-            clusterChunkSize.ValueChanged += UpdateClusterChunkSize;
-            clusterChunkModifier.ValueChanged += UpdateClusterModifier;
-
-            for (int j = 0; j < ClusterEngine.ShuffleTypes.Length; j++)
-            {
-                cbClusterMethod.Items.Add(ClusterEngine.ShuffleTypes[j]);
-            }
-            cbClusterMethod.SelectedIndex = 0;
-
-            for (int j = 0; j < ClusterEngine.Directions.Length; j++)
-            {
-                clusterDirection.Items.Add(ClusterEngine.Directions[j]);
-            }
-            clusterDirection.SelectedIndex = 0;
-        }
-
-        private void ResyncDistortionEngine(object sender, EventArgs e)
-        {
-            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
         }
 
         private void UpdateEngine(object sender, EventArgs e)
         {
-            gbNightmareEngine.Visible = false;
-            gbHellgenieEngine.Visible = false;
-            gbDistortionEngine.Visible = false;
-            gbFreezeEngine.Visible = false;
-            gbPipeEngine.Visible = false;
-            gbVectorEngine.Visible = false;
-            gbClusterEngine.Visible = false;
-            gbBlastGeneratorEngine.Visible = false;
-            gbCustomEngine.Visible = false;
+            NightmareEngineControl.Visible = false;
+            HellgenieEngineControl.Visible = false;
+            distortionEngineControl.Visible = false;
+            FreezeEngineControl.Visible = false;
+            PipeEngineControl.Visible = false;
+            VectorEngineControl.Visible = false;
+            ClusterEngineControl.Visible = false;
+            BlastGeneratorEngineControl.Visible = false;
+            customEngineControl.Visible = false;
             cbCustomPrecision.Enabled = false;
             nmAlignment.Maximum = RtcCore.CurrentPrecision - 1;
 
@@ -133,7 +114,7 @@ namespace RTCV.UI
             {
                 case "Nightmare Engine":
                     RtcCore.SelectedEngine = CorruptionEngine.NIGHTMARE;
-                    gbNightmareEngine.Visible = true;
+                    NightmareEngineControl.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
                     S.GET<CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
@@ -141,7 +122,7 @@ namespace RTCV.UI
 
                 case "Hellgenie Engine":
                     RtcCore.SelectedEngine = CorruptionEngine.HELLGENIE;
-                    gbHellgenieEngine.Visible = true;
+                    HellgenieEngineControl.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
                     S.GET<CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
@@ -149,7 +130,7 @@ namespace RTCV.UI
 
                 case "Distortion Engine":
                     RtcCore.SelectedEngine = CorruptionEngine.DISTORTION;
-                    gbDistortionEngine.Visible = true;
+                    distortionEngineControl.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
                     S.GET<CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
@@ -157,7 +138,7 @@ namespace RTCV.UI
 
                 case "Freeze Engine":
                     RtcCore.SelectedEngine = CorruptionEngine.FREEZE;
-                    gbFreezeEngine.Visible = true;
+                    FreezeEngineControl.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
                     S.GET<CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
@@ -165,7 +146,7 @@ namespace RTCV.UI
 
                 case "Pipe Engine":
                     RtcCore.SelectedEngine = CorruptionEngine.PIPE;
-                    gbPipeEngine.Visible = true;
+                    PipeEngineControl.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
                     S.GET<CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
@@ -174,9 +155,9 @@ namespace RTCV.UI
                 case "Vector Engine":
                     RtcCore.SelectedEngine = CorruptionEngine.VECTOR;
                     nmAlignment.Maximum = 3;
-                    gbVectorEngine.Visible = true;
+                    VectorEngineControl.Visible = true;
 
-                    if (cbVectorUnlockPrecision.Checked)
+                    if (VectorEngineControl.cbVectorUnlockPrecision.Checked)
                     {
                         nmAlignment.Maximum = new decimal(new int[] { 0, 0, 0, 0 });
                         cbCustomPrecision.Enabled = true;
@@ -193,14 +174,14 @@ namespace RTCV.UI
                 case "Cluster Engine":
                     RtcCore.SelectedEngine = CorruptionEngine.CLUSTER;
                     nmAlignment.Maximum = 3;
-                    gbClusterEngine.Visible = true;
+                    ClusterEngineControl.Visible = true;
 
                     S.GET<CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
                     break;
 
                 case "Custom Engine":
                     RtcCore.SelectedEngine = CorruptionEngine.CUSTOM;
-                    gbCustomEngine.Visible = true;
+                    customEngineControl.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
                     S.GET<CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
@@ -208,7 +189,7 @@ namespace RTCV.UI
 
                 case "Blast Generator":
                     RtcCore.SelectedEngine = CorruptionEngine.BLASTGENERATORENGINE;
-                    gbBlastGeneratorEngine.Visible = true;
+                    BlastGeneratorEngineControl.Visible = true;
 
                     S.GET<CoreForm>().AutoCorrupt = false;
                     S.GET<CoreForm>().btnAutoCorrupt.Visible = false;
@@ -247,7 +228,7 @@ namespace RTCV.UI
         public void SetLockBoxes(bool enabled)
         {
             dontUpdate = true;
-            cbLockPipes.Checked = enabled;
+            PipeEngineControl.cbLockPipes.Checked = enabled;
             dontUpdate = false;
         }
 
@@ -255,15 +236,15 @@ namespace RTCV.UI
         {
             dontUpdate = true;
             S.GET<SettingsCorruptForm>().SetRewindBoxes(enabled);
-            cbClearFreezesOnRewind.Checked = enabled;
-            cbClearCheatsOnRewind.Checked = enabled;
-            cbClearPipesOnRewind.Checked = enabled;
+            FreezeEngineControl.cbClearFreezesOnRewind.Checked = enabled;
+            HellgenieEngineControl.cbClearCheatsOnRewind.Checked = enabled;
+            PipeEngineControl.cbClearPipesOnRewind.Checked = enabled;
             dontUpdate = false;
         }
 
         private bool dontUpdate = false;
 
-        private void OnClearRewindToggle(object sender, EventArgs e)
+        internal void OnClearRewindToggle(object sender, EventArgs e)
         {
             if (dontUpdate)
             {
@@ -275,21 +256,10 @@ namespace RTCV.UI
             S.GET<CustomEngineConfigForm>().SetRewindBoxes(((CheckBox)sender).Checked);
             S.GET<SimpleModeForm>().SetRewindBoxes(((CheckBox)sender).Checked);
 
-            StepActions.ClearStepActionsOnRewind = cbClearFreezesOnRewind.Checked;
+            StepActions.ClearStepActionsOnRewind = FreezeEngineControl.cbClearFreezesOnRewind.Checked;
         }
 
-        private void ClearPipes(object sender, EventArgs e)
-        {
-            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
-        }
-
-        private void OnLockPipesToggle(object sender, EventArgs e)
-        {
-            S.GET<SettingsCorruptForm>().SetLockBoxes(cbLockPipes.Checked);
-            StepActions.LockExecution = cbLockPipes.Checked;
-        }
-
-        private void UpdateVectorLimiterList(object sender, EventArgs e)
+        internal void UpdateVectorLimiterList(object sender, EventArgs e)
         {
             ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
             if (item != null)
@@ -298,7 +268,7 @@ namespace RTCV.UI
             }
         }
 
-        private void UpdateVectorValueList(object sender, EventArgs e)
+        internal void UpdateVectorValueList(object sender, EventArgs e)
         {
             ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
             if (item != null)
@@ -307,73 +277,15 @@ namespace RTCV.UI
             }
         }
 
-        private void ClearCheats(object sender, EventArgs e)
+        internal void ClearCheats(object sender, EventArgs e)
         {
             LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
         }
 
         private void UpdateMinMaxBoxes(int precision)
         {
-            switch (precision)
-            {
-                case 1:
-                    nmMinValueNightmare.Maximum = byte.MaxValue;
-                    nmMaxValueNightmare.Maximum = byte.MaxValue;
-
-                    nmMinValueHellgenie.Maximum = byte.MaxValue;
-                    nmMaxValueHellgenie.Maximum = byte.MaxValue;
-
-                    nmMinValueNightmare.Value = NightmareEngine.MinValue8Bit;
-                    nmMaxValueNightmare.Value = NightmareEngine.MaxValue8Bit;
-
-                    nmMinValueHellgenie.Value = HellgenieEngine.MinValue8Bit;
-                    nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue8Bit;
-
-                    break;
-
-                case 2:
-                    nmMinValueNightmare.Maximum = ushort.MaxValue;
-                    nmMaxValueNightmare.Maximum = ushort.MaxValue;
-
-                    nmMinValueHellgenie.Maximum = ushort.MaxValue;
-                    nmMaxValueHellgenie.Maximum = ushort.MaxValue;
-
-                    nmMinValueNightmare.Value = NightmareEngine.MinValue16Bit;
-                    nmMaxValueNightmare.Value = NightmareEngine.MaxValue16Bit;
-
-                    nmMinValueHellgenie.Value = HellgenieEngine.MinValue16Bit;
-                    nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue16Bit;
-
-                    break;
-                case 4:
-                    nmMinValueNightmare.Maximum = uint.MaxValue;
-                    nmMaxValueNightmare.Maximum = uint.MaxValue;
-
-                    nmMinValueHellgenie.Maximum = uint.MaxValue;
-                    nmMaxValueHellgenie.Maximum = uint.MaxValue;
-
-                    nmMinValueNightmare.Value = NightmareEngine.MinValue32Bit;
-                    nmMaxValueNightmare.Value = NightmareEngine.MaxValue32Bit;
-
-                    nmMinValueHellgenie.Value = HellgenieEngine.MinValue32Bit;
-                    nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue32Bit;
-
-                    break;
-                case 8:
-                    nmMinValueNightmare.Maximum = ulong.MaxValue;
-                    nmMaxValueNightmare.Maximum = ulong.MaxValue;
-
-                    nmMinValueHellgenie.Maximum = ulong.MaxValue;
-                    nmMaxValueHellgenie.Maximum = ulong.MaxValue;
-
-                    nmMinValueNightmare.Value = NightmareEngine.MinValue64Bit;
-                    nmMaxValueNightmare.Value = NightmareEngine.MaxValue64Bit;
-
-                    nmMinValueHellgenie.Value = HellgenieEngine.MinValue64Bit;
-                    nmMaxValueHellgenie.Value = HellgenieEngine.MaxValue64Bit;
-
-                    break;
-            }
+            NightmareEngineControl.UpdateMinMaxBoxes(precision);
+            HellgenieEngineControl.UpdateMinMaxBoxes(precision);
         }
 
         private void UpdateCustomPrecision(object sender, EventArgs e)
@@ -415,98 +327,9 @@ namespace RTCV.UI
             }
         }
 
-        private void OpenBlastGenerator(object sender, EventArgs e)
+        internal void UpdateVectorUnlockPrecision(object sender, EventArgs e)
         {
-            if (S.GET<BlastGeneratorForm>() != null)
-            {
-                S.GET<BlastGeneratorForm>().Close();
-            }
-
-            S.SET(new BlastGeneratorForm());
-            S.GET<BlastGeneratorForm>().LoadNoStashKey();
-        }
-
-        private void UpdateBlastType(object sender, EventArgs e)
-        {
-            switch (cbBlastType.SelectedItem.ToString())
-            {
-                case "RANDOM":
-                    NightmareEngine.Algo = NightmareAlgo.RANDOM;
-                    nmMinValueNightmare.Enabled = true;
-                    nmMaxValueNightmare.Enabled = true;
-                    break;
-
-                case "RANDOMTILT":
-                    NightmareEngine.Algo = NightmareAlgo.RANDOMTILT;
-                    nmMinValueNightmare.Enabled = true;
-                    nmMaxValueNightmare.Enabled = true;
-                    break;
-
-                case "TILT":
-                    NightmareEngine.Algo = NightmareAlgo.TILT;
-                    nmMinValueNightmare.Enabled = false;
-                    nmMaxValueNightmare.Enabled = false;
-                    break;
-            }
-        }
-
-        private void OpenCustomEngine(object sender, EventArgs e)
-        {
-            S.GET<CustomEngineConfigForm>().Show();
-            S.GET<CustomEngineConfigForm>().Focus();
-        }
-
-        private void UpdateClusterLimiterList(object sender, EventArgs e)
-        {
-            ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
-            if (item != null)
-            {
-                ClusterEngine.LimiterListHash = item.Value;
-            }
-        }
-
-        private void UpdateClusterChunkSize(object sender, EventArgs e)
-        {
-            ClusterEngine.ChunkSize = (int)clusterChunkSize.Value;
-        }
-
-        private void UpdateClusterModifier(object sender, EventArgs e)
-        {
-            ClusterEngine.Modifier = (int)clusterChunkModifier.Value;
-        }
-
-        private void UpdateClusterMethod(object sender, EventArgs e)
-        {
-            ClusterEngine.ShuffleType = cbClusterMethod.SelectedItem.ToString();
-
-            if (cbClusterMethod.SelectedItem.ToString().ToLower().Contains("rotate"))
-            {
-                clusterChunkModifier.Enabled = true;
-            }
-            else
-            {
-                clusterChunkModifier.Enabled = false;
-            }
-        }
-
-        private void UpdateClusterSplitUnits(object sender, EventArgs e)
-        {
-            ClusterEngine.OutputMultipleUnits = clusterSplitUnits.Checked;
-        }
-
-        private void UpdateClusterDirection(object sender, EventArgs e)
-        {
-            ClusterEngine.Direction = clusterDirection.SelectedItem.ToString();
-        }
-
-        private void UpdateClusterFilterAll(object sender, EventArgs e)
-        {
-            ClusterEngine.FilterAll = clusterFilterAll.Checked;
-        }
-
-        private void UpdateVectorUnlockPrecision(object sender, EventArgs e)
-        {
-            if (cbVectorUnlockPrecision.Checked)
+            if (VectorEngineControl.cbVectorUnlockPrecision.Checked)
             {
                 nmAlignment.Maximum = new decimal(new int[] { 0, 0, 0, 0 });
                 cbCustomPrecision.Enabled = true;

@@ -657,21 +657,27 @@ namespace RTCV.UI
                 S.GET<CustomEngineConfigForm>().cbValueList.ValueMember = "Value";
                 S.GET<CustomEngineConfigForm>().cbValueList.DataSource = RtcCore.ValueListBindingSource;
 
-                S.GET<CorruptionEngineForm>().cbVectorLimiterList.DisplayMember = "Name";
-                S.GET<CorruptionEngineForm>().cbVectorLimiterList.ValueMember = "Value";
-                S.GET<CorruptionEngineForm>().cbVectorLimiterList.DataSource = RtcCore.LimiterListBindingSource;
+                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorLimiterList.DisplayMember = "Name";
+                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorLimiterList.ValueMember = "Value";
+                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorLimiterList.DataSource = RtcCore.LimiterListBindingSource;
 
-                S.GET<CorruptionEngineForm>().cbVectorValueList.DisplayMember = "Name";
-                S.GET<CorruptionEngineForm>().cbVectorValueList.ValueMember = "Value";
-                S.GET<CorruptionEngineForm>().cbVectorValueList.DataSource = RtcCore.ValueListBindingSource;
+                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorValueList.DisplayMember = "Name";
+                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorValueList.ValueMember = "Value";
+                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorValueList.DataSource = RtcCore.ValueListBindingSource;
+
+                S.GET<CorruptionEngineForm>().ClusterEngineControl.cbClusterLimiterList.DisplayMember = "Name";
+                S.GET<CorruptionEngineForm>().ClusterEngineControl.cbClusterLimiterList.ValueMember = "Value";
+                S.GET<CorruptionEngineForm>().ClusterEngineControl.cbClusterLimiterList.DataSource = RtcCore.LimiterListBindingSource;
             }
             else
             {
                 S.GET<CustomEngineConfigForm>().cbLimiterList.DataSource = null;
                 S.GET<CustomEngineConfigForm>().cbValueList.DataSource = null;
 
-                S.GET<CorruptionEngineForm>().cbVectorLimiterList.DataSource = null;
-                S.GET<CorruptionEngineForm>().cbVectorValueList.DataSource = null;
+                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorLimiterList.DataSource = null;
+                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorValueList.DataSource = null;
+
+                S.GET<CorruptionEngineForm>().ClusterEngineControl.cbClusterLimiterList.DataSource = null;
             }
         }
 

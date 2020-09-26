@@ -268,7 +268,7 @@ namespace RTCV.UI
                         currentListMenuItem.DropDownItems.Add(vectorMenuItem);
                         currentListMenuItem.DropDownItems.Add(new ToolStripSeparator());
 
-                        foreach (ComboBoxItem<string> listItem in S.GET<CorruptionEngineForm>().cbVectorLimiterList.Items)
+                        foreach (ComboBoxItem<string> listItem in S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorLimiterList.Items)
                         {
                             var listName = listItem.Name;
                             var subMenuItem = new ToolStripMenuItem();
