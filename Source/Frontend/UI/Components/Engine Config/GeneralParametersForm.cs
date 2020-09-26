@@ -7,7 +7,7 @@ namespace RTCV.UI
     using RTCV.NetCore;
     using RTCV.UI.Modular;
 
-    public partial class GeneralParametersForm : ComponentForm, IAutoColorize, IBlockable
+    public partial class GeneralParametersForm : ComponentForm, IBlockable
     {
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);

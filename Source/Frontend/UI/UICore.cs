@@ -19,20 +19,16 @@ namespace RTCV.UI
 
     public static class UICore
     {
-        //Note Box Settings
-        public static Point NoteBoxPosition;
-        public static Size NoteBoxSize;
-
-        public static bool FirstConnect = true;
-        public static ManualResetEvent Initialized = new ManualResetEvent(false);
+        internal static bool FirstConnect = true;
+        internal static ManualResetEvent Initialized = new ManualResetEvent(false);
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private static System.Timers.Timer inputCheckTimer;
 
         //RTC Main Forms
-        public static SelectBoxForm mtForm = null;
+        internal static SelectBoxForm mtForm = null;
 
-        public static BindingCollection HotkeyBindings = new BindingCollection();
+        internal static BindingCollection HotkeyBindings = new BindingCollection();
 
         public static void Start(Form standaloneForm = null)
         {
@@ -292,65 +288,12 @@ namespace RTCV.UI
             }
         }
 
-        //All RTC forms
-        public static Form[] AllColorizedSingletons(Type baseType = null)
-        {
-            if (baseType == null)
-            {
-                baseType = typeof(CoreForm);
-            }
-            //This fetches all singletons interface IAutoColorized
-
-            List<Form> all = new List<Form>();
-            foreach (Type t in Assembly.GetAssembly(baseType).GetTypes())
-            {
-                if (typeof(IAutoColorize).IsAssignableFrom(t) && t != typeof(IAutoColorize))
-                {
-                    all.Add((Form)S.GET(Type.GetType(t.ToString())));
-                }
-            }
-
-            return all.ToArray();
-        }
-
-        public static volatile bool isClosing = false;
-
-        public static void CloseAllRtcForms() //This allows every form to get closed to prevent RTC from hanging
-        {
-            if (isClosing)
-            {
-                return;
-            }
-
-            isClosing = true;
-
-            foreach (Form frm in AllColorizedSingletons())
-            {
-                if (frm != null)
-                {
-                    frm.Close();
-                }
-            }
-
-            if (S.GET<Forms.StandaloneForm>() != null)
-            {
-                S.GET<Forms.StandaloneForm>().Close();
-            }
-
-            //Clean out the working folders
-            if (!RtcCore.DontCleanSavestatesOnQuit)
-            {
-                Stockpile.EmptyFolder("WORKING");
-            }
-
-            Environment.Exit(0);
-        }
-
+        internal static volatile bool isClosing = false;
         private static bool interfaceLocked;
         private static bool lockPending;
         private static object lockObject = new object();
 
-        public static object InputLock = new object();
+        internal static object InputLock = new object();
         //Borrowed from Bizhawk. Thanks guys
         private static void ProcessInputCheck(object o, ElapsedEventArgs e)
         {
@@ -476,7 +419,9 @@ namespace RTCV.UI
                         var ghb = S.GET<GlitchHarvesterBlastForm>();
 
                         if (sh.lbStashHistory.SelectedIndex != -1)
+                        {
                             sh.HandleStashHistorySelectionChange(null, null);
+                        }
                         else
                         {
                             var rows = sm.dgvStockpile.SelectedRows;
@@ -712,21 +657,27 @@ namespace RTCV.UI
                 S.GET<CustomEngineConfigForm>().cbValueList.ValueMember = "Value";
                 S.GET<CustomEngineConfigForm>().cbValueList.DataSource = RtcCore.ValueListBindingSource;
 
-                S.GET<CorruptionEngineForm>().cbVectorLimiterList.DisplayMember = "Name";
-                S.GET<CorruptionEngineForm>().cbVectorLimiterList.ValueMember = "Value";
-                S.GET<CorruptionEngineForm>().cbVectorLimiterList.DataSource = RtcCore.LimiterListBindingSource;
+                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorLimiterList.DisplayMember = "Name";
+                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorLimiterList.ValueMember = "Value";
+                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorLimiterList.DataSource = RtcCore.LimiterListBindingSource;
 
-                S.GET<CorruptionEngineForm>().cbVectorValueList.DisplayMember = "Name";
-                S.GET<CorruptionEngineForm>().cbVectorValueList.ValueMember = "Value";
-                S.GET<CorruptionEngineForm>().cbVectorValueList.DataSource = RtcCore.ValueListBindingSource;
+                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorValueList.DisplayMember = "Name";
+                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorValueList.ValueMember = "Value";
+                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorValueList.DataSource = RtcCore.ValueListBindingSource;
+
+                S.GET<CorruptionEngineForm>().ClusterEngineControl.cbClusterLimiterList.DisplayMember = "Name";
+                S.GET<CorruptionEngineForm>().ClusterEngineControl.cbClusterLimiterList.ValueMember = "Value";
+                S.GET<CorruptionEngineForm>().ClusterEngineControl.cbClusterLimiterList.DataSource = RtcCore.LimiterListBindingSource;
             }
             else
             {
                 S.GET<CustomEngineConfigForm>().cbLimiterList.DataSource = null;
                 S.GET<CustomEngineConfigForm>().cbValueList.DataSource = null;
 
-                S.GET<CorruptionEngineForm>().cbVectorLimiterList.DataSource = null;
-                S.GET<CorruptionEngineForm>().cbVectorValueList.DataSource = null;
+                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorLimiterList.DataSource = null;
+                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorValueList.DataSource = null;
+
+                S.GET<CorruptionEngineForm>().ClusterEngineControl.cbClusterLimiterList.DataSource = null;
             }
         }
 

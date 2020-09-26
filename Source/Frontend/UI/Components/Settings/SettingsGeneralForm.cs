@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Diagnostics;
@@ -7,7 +7,7 @@
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class SettingsGeneralForm : ComponentForm, IAutoColorize, IBlockable
+    public partial class SettingsGeneralForm : ComponentForm, IBlockable
     {
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);

@@ -1,11 +1,11 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Windows.Forms;
     using RTCV.NetCore;
     using RTCV.Common;
 
-    public partial class IntroForm : Form, IAutoColorize
+    public partial class IntroForm : Modular.ColorizedForm
     {
         public IntroAction selection { get; private set; } = IntroAction.EXIT;
 
@@ -22,11 +22,6 @@
                     throw new AbortEverythingException();
                 }
             }
-        }
-
-        private void OnLoad(object sender, EventArgs e)
-        {
-            Colors.SetRTCColor(Colors.GeneralColor, this);
         }
 
         private void OnFormClosing(object sender, FormClosingEventArgs e)

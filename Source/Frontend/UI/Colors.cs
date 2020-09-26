@@ -10,51 +10,21 @@ namespace RTCV.UI
 
     public static class Colors
     {
-        //public static Color generalColor = Color.FromArgb(60, 45, 70);
-        public static Color GeneralColor = Color.LightSteelBlue;
+        internal static Color GeneralColor = Color.LightSteelBlue;
 
-        public static Color Light1Color;
-        public static Color Light2Color;
-        public static Color NormalColor;
-        public static Color Dark1Color;
-        public static Color Dark2Color;
-        public static Color Dark3Color;
-        public static Color Dark4Color;
+        public static Color Light1Color { get; private set; }
+        public static Color Light2Color { get; private set; }
+        public static Color NormalColor { get; private set; }
+        public static Color Dark1Color { get; private set; }
+        public static Color Dark2Color { get; private set; }
+        public static Color Dark3Color { get; private set; }
+        public static Color Dark4Color { get; private set; }
 
-        public static void SetRTCColor(Color color, Control ctr = null)
+        public static void SetRTCColor(Color color, Control ctr)
         {
             HashSet<Control> allControls = new HashSet<Control>();
 
-            if (ctr == null)
-            {
-                foreach (Form targetForm in UICore.AllColorizedSingletons())
-                {
-                    if (targetForm != null)
-                    {
-                        foreach (var c in targetForm.Controls.getControlsWithTag())
-                            allControls.Add(c);
-                        allControls.Add(targetForm);
-                    }
-                }
-
-                //Get the extraforms
-                foreach (CanvasForm targetForm in CanvasForm.extraForms)
-                {
-                    foreach (var c in targetForm.Controls.getControlsWithTag())
-                        allControls.Add(c);
-                    allControls.Add(targetForm);
-                }
-
-                //We have to manually add the mtform because it's not singleton, not an extraForm, and not owned by any specific form
-                //Todo - Refactor this so we don't need to add it separately
-                if (UICore.mtForm != null)
-                {
-                    foreach (var c in UICore.mtForm.Controls.getControlsWithTag())
-                        allControls.Add(c);
-                    allControls.Add(UICore.mtForm);
-                }
-            }
-            else if (ctr is Form || ctr is UserControl)
+            if (ctr is Form || ctr is UserControl)
             {
                 foreach (var c in ctr.Controls.getControlsWithTag())
                     allControls.Add(c);
@@ -153,7 +123,7 @@ namespace RTCV.UI
             }
 
             GeneralColor = color;
-            SetRTCColor(color);
+            RTCV.Common.S.RecolorRegisteredColorizables();
 
             SaveRTCColor(color);
         }
@@ -170,7 +140,7 @@ namespace RTCV.UI
                 GeneralColor = Color.FromArgb(110, 150, 193);
             }
 
-            SetRTCColor(GeneralColor);
+            RTCV.Common.S.RecolorRegisteredColorizables();
         }
 
         public static void SaveRTCColor(Color color)

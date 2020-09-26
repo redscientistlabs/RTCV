@@ -5,8 +5,6 @@ namespace RTCV.Common.CustomExtensions
 
     public static class StringExtensions
     {
-        #region String and Char validation extensions
-
         /// <summary>
         /// Validates the char is 0-9
         /// </summary>
@@ -71,7 +69,5 @@ namespace RTCV.Common.CustomExtensions
 
             return output.ToString();
         }
-
-        #endregion
     }
 }

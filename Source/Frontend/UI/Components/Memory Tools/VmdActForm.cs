@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Collections.Generic;
@@ -16,7 +16,7 @@
     using RTCV.UI.Modular;
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
-    public partial class VmdActForm : ComponentForm, IAutoColorize, IBlockable
+    public partial class VmdActForm : ComponentForm, IBlockable
     {
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
@@ -469,7 +469,7 @@
                 }
 
                 List<long> newActiveTable = new List<long>();
-                double computedThreshold = ActiveTableDumps.Count * (ActivityThreshold / 100d) + 1d;
+                double computedThreshold = (ActiveTableDumps.Count * (ActivityThreshold / 100d)) + 1d;
                 bool ExcludeEverchanging = cbActiveTableExclude100percent.Checked;
 
                 for (int i = 0; i < ActiveTableActivity.Length; i++)

@@ -1,6 +1,7 @@
 namespace RTCV.UI
 {
     using System;
+    using System.ComponentModel;
     using System.Diagnostics;
     using System.Drawing;
     using System.IO;
@@ -14,20 +15,20 @@ namespace RTCV.UI
     using RTCV.UI.Modular;
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
-    public partial class CoreForm : Form, IAutoColorize
+    public partial class CoreForm : Modular.ColorizedForm
     {
         //This form traps events and forwards them.
         //It contains the single CanvasForm instance.
 
-        public static CoreForm thisForm;
-        public static CanvasForm cfForm;
+        internal static CoreForm thisForm;
+        internal static CanvasForm cfForm;
 
         public CanvasGrid previousGrid { get; set; } = null;
 
-        //Vallues used for padding and scaling properly in high dpi
-        public static int xPadding;
-        public static int corePadding; // height of the top bar
-        public static int yPadding;
+        //Values used for padding and scaling properly in high dpi
+        internal static int xPadding { get; private set; }
+        private static int corePadding; // height of the top bar
+        internal static int yPadding { get; private set; }
 
         private Panel pnLockSidebar = null;
 
@@ -77,8 +78,6 @@ namespace RTCV.UI
             yPadding = (Height - cfForm.Height);
             corePadding = pnSideBar.Width;
             xPadding = (Width - cfForm.Width) - corePadding;
-
-            //Colors.SetRTCColor(Colors.GeneralColor);
         }
 
         private void OnFormClosing(object sender, FormClosingEventArgs e)
@@ -89,13 +88,25 @@ namespace RTCV.UI
                 return;
             }
 
+            UICore.isClosing = true;
+
             LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.EventShutdown, true);
             LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.EventCloseEmulator);
 
-            //Sleep to make sure the message is sent
+            //Sleep to make sure the message was sent since we don't handshake it
             System.Threading.Thread.Sleep(500);
 
-            UICore.CloseAllRtcForms();
+            //Clean out the working folders
+            if (!RtcCore.DontCleanSavestatesOnQuit)
+            {
+                Stockpile.EmptyFolder("WORKING");
+            }
+
+            //Shut down vanguard
+            VanguardImplementation.Shutdown();
+
+            //Signal the quit
+            Application.Exit();
         }
 
         private void OnFormLoad(object sender, EventArgs e)

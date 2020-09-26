@@ -73,7 +73,9 @@ namespace RTCV.Plugins.ScriptHost.Controls
             InitializeComponent();
             //CSScript.EvaluatorConfig.Engine = EvaluatorEngine.Roslyn;
             if (darkTheme)
+            {
                 ConfigureScintillaDark();
+            }
             else
             {
                 ConfigureScintilla();

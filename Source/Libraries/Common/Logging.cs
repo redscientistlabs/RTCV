@@ -15,8 +15,8 @@ namespace RTCV.Common
 
     public static class Logging
     {
-        public static Logger GlobalLogger = LogManager.GetLogger("Global");
-        public static Layout CurrentLayout;
+        public static Logger GlobalLogger { get; private set; } = LogManager.GetLogger("Global");
+        public static Layout CurrentLayout { get; private set; }
 
         private static readonly LogLevel minLevel = LogLevel.Trace;
         private const int logsToKeep = 5;

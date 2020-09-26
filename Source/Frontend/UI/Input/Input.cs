@@ -291,7 +291,9 @@
                         {
                         }
                         else
+                        {
                             EnqueueEvent(ie);
+                        }
                     }
                 } //lock(this)
 

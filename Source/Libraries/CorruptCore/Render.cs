@@ -27,7 +27,7 @@ namespace RTCV.CorruptCore
             set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_RENDERTYPE, value);
         }
 
-        public static IRenderer Renderer = null;
+        private static IRenderer Renderer = null;
 
         public static PartialSpec getDefaultPartial()
         {

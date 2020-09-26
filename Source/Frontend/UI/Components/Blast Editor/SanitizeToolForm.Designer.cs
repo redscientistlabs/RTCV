@@ -443,7 +443,6 @@ namespace RTCV.UI
             this.Tag = "color:dark1";
             this.Text = "Sanitize Tool";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
-            this.Load += new System.EventHandler(this.OnFormLoad);
             this.pnBlastLayerSanitization.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.ResumeLayout(false);

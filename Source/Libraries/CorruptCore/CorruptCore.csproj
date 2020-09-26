@@ -1,165 +1,20 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B5633A86-DC66-4723-88EB-7DFC95458072}</ProjectGuid>
+    <TargetFramework>net471</TargetFramework>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RTCV.CorruptCore</RootNamespace>
-    <AssemblyName>CorruptCore</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
     <OutputPath>..\..\..\Build\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\..\..\Build\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\..\..\Build\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>latest</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>..\..\..\Build\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>latest</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
+    <LangVersion>8.0</LangVersion>
+    <!-- Use Build\ instead of Build\net471\ for output -->
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ActivationTableObject.cs" />
-    <Compile Include="BitlogicListFilter.cs" />
-    <Compile Include="Blast Generator Engines\ValueGenerator.cs" />
-    <Compile Include="Blast Generator Engines\StoreGenerator.cs" />
-    <Compile Include="Coroutines\Conditionals\WaitFrames.cs" />
-    <Compile Include="Coroutines\Conditionals\WaitUntil.cs" />
-    <Compile Include="Coroutines\Coroutine.cs" />
-    <Compile Include="Coroutines\CoroutineEngine.cs" />
-    <Compile Include="Coroutines\CoroutineRunner.cs" />
-    <Compile Include="Coroutines\Yielder.cs" />
-    <Compile Include="CorruptCoreConnector.cs" />
-    <Compile Include="Corruption Engines\BlastGeneratorEngine.cs" />
-    <Compile Include="Corruption Engines\ClusterEngine.cs" />
-    <Compile Include="Corruption Engines\CustomEngine.cs" />
-    <Compile Include="Corruption Engines\DistortionEngine.cs" />
-    <Compile Include="Corruption Engines\FreezeEngine.cs" />
-    <Compile Include="Corruption Engines\HellgenieEngine.cs" />
-    <Compile Include="Corruption Engines\NightmareEngine.cs" />
-    <Compile Include="Corruption Engines\PipeEngine.cs" />
-    <Compile Include="Corruption Engines\VectorEngine.cs" />
-    <Compile Include="EventWarlock\Editor\WarlockEditorFieldAttribute.cs" />
-    <Compile Include="EventWarlock\Editor\WarlockEditableAttribute.cs" />
-    <Compile Include="EventWarlock\EWConditional.cs" />
-    <Compile Include="EventWarlock\EWConditionGroup.cs" />
-    <Compile Include="EventWarlock\Grimoire.cs" />
-    <Compile Include="EventWarlock\QuestionOp.cs" />
-    <Compile Include="EventWarlock\Spell.cs" />
-    <Compile Include="EventWarlock\Warlock.cs" />
-    <Compile Include="EventWarlock\WarlockAction.cs" />
-    <Compile Include="EventWarlock\WarlockActions\WarlockActionEcho.cs" />
-    <Compile Include="EventWarlock\WarlockConditions\FirstEqualsSecond.cs" />
-    <Compile Include="IRenderer.cs" />
-    <Compile Include="JsonHelper.cs" />
-    <Compile Include="Exceptions\StockpileSaveException.cs" />
-    <Compile Include="Exceptions\UnitExecutionException.cs" />
-    <Compile Include="Extensions\ByteArrayComparer.cs" />
-    <Compile Include="Extensions\ByteArrayExtensions.cs" />
-    <Compile Include="Extensions\NullableByteArrayComparer.cs" />
-    <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="Memory\FileInterface.cs" />
-    <Compile Include="Memory\FileMemoryInterface.cs" />
-    <Compile Include="Memory\IMemoryDomain.cs" />
-    <Compile Include="Memory\MemoryDomainProxy.cs" />
-    <Compile Include="Memory\MemoryDomains.cs" />
-    <Compile Include="Memory\MemoryInterface.cs" />
-    <Compile Include="Memory\MultipleFileInterface.cs" />
-    <Compile Include="Memory\NullMemoryInterface.cs" />
-    <Compile Include="Memory\VirtualMemoryDomain.cs" />
-    <Compile Include="Memory\VmdPrototype.cs" />
-    <Compile Include="IRealTime.cs" />
-    <Compile Include="ListFilters.cs" />
-    <Compile Include="LogConsole.cs" />
-    <Compile Include="MemoryBanks.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BlastGeneratorProto.cs" />
-    <Compile Include="BlastLayer.cs" />
-    <Compile Include="BlastTarget.cs" />
-    <Compile Include="BlastTools.cs" />
-    <Compile Include="BlastUnit.cs" />
-    <Compile Include="BlastUnitWorkingData.cs" />
-    <Compile Include="ComboBoxItem.cs" />
-    <Compile Include="CorruptCore.cs" />
-    <Compile Include="Enums.cs" />
-    <Compile Include="CorruptCoreExtensions.cs" />
-    <Compile Include="Filtering.cs" />
-    <Compile Include="INote.cs" />
-    <Compile Include="ProgressBar.cs" />
-    <Compile Include="Render.cs" />
-    <Compile Include="RomParts.cs" />
-    <Compile Include="BlastDiff.cs" />
-    <Compile Include="SaveStateKey.cs" />
-    <Compile Include="StashKey.cs" />
-    <Compile Include="StepActions.cs" />
-    <Compile Include="Stockpile\Stockpile.cs" />
-    <Compile Include="Stockpile\StockpileManagerUISide.cs" />
-    <Compile Include="Stockpile\StockpileManagerEmuSide.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{A31C17E1-2EAB-434F-A022-20193F2CEAB7}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NetCore\NetCore.csproj">
-      <Project>{7e106aec-5614-4206-9e4d-25759c90e8ae}</Project>
-      <Name>NetCore</Name>
-      <Private>True</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\PluginHost\PluginHost.csproj">
-      <Project>{3f02eda3-6949-4b30-9cda-b56ffba0e976}</Project>
-      <Name>PluginHost</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\NetCore\NetCore.csproj" />
+    <ProjectReference Include="..\PluginHost\PluginHost.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Ceras">
@@ -169,20 +24,19 @@
       <Version>12.0.3</Version>
     </PackageReference>
     <PackageReference Include="NLog">
-      <Version>4.6.8</Version>
+      <Version>4.7.4</Version>
     </PackageReference>
     <PackageReference Include="System.Buffers">
-      <Version>4.5.0</Version>
+      <Version>4.5.1</Version>
     </PackageReference>
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
-      <Version>4.5.2</Version>
+      <Version>4.7.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tools\" />
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>rd /s /q "cs", "pl", "pt-BR", "tr", "de", "en", "es", "fr", "it", "ja", "ko", "ru", "zh-Hans", "zh-Hant"</PostBuildEvent>
   </PropertyGroup>

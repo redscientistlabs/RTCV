@@ -1,112 +1,34 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7E106AEC-5614-4206-9E4D-25759C90E8AE}</ProjectGuid>
+    <TargetFramework>net471</TargetFramework>
     <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RTCV.NetCore</RootNamespace>
-    <AssemblyName>NetCore</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+    <!-- Use Build\ instead of Build\net471\ for output -->
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <!--
+      Avoid MissingManifestResourceException errors. For more context, see:
+        https://github.com/dotnet/ef6/issues/1258#issuecomment-531355034
+        https://docs.microsoft.com/en-us/dotnet/core/compatibility/msbuild#resource-manifest-file-name-change
+        https://github.com/redscientistlabs/RTCV/pull/239#discussion_r491094052
+    -->
+    <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
     <OutputPath>..\..\..\Build\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
     <OutputPath>..\..\..\Build\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\..\..\Build\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
-    <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>..\..\..\Build\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Data" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Endpoints.cs" />
-    <Compile Include="SafeJsonTypeSerialization\JsonKnownTypesBinder.cs" />
-    <Compile Include="SafeJsonTypeSerialization\TypeWrapper.cs" />
-    <Compile Include="SafeJsonTypeSerialization\UntypedToTypedValueContractResolver.cs" />
-    <Compile Include="SafeJsonTypeSerialization\UntypedToTypedValueConverter.cs" />
-    <Compile Include="AllSpec.cs" />
-    <Compile Include="Connector.cs" />
-    <Compile Include="ConsoleEx.cs" />
-    <Compile Include="NetCoreExtensions.cs" />
-    <Compile Include="DebugInfo\CloudDebugForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DebugInfo\CloudDebugForm.Designer.cs">
-      <DependentUpon>CloudDebugForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Enums\NetworkSide.cs" />
-    <Compile Include="Enums\NetworkStatus.cs" />
-    <Compile Include="LocalRouter.cs" />
-    <Compile Include="MessageHub.cs" />
-    <Compile Include="NetcoreCommands.cs" />
-    <Compile Include="NetCoreMessages.cs" />
-    <Compile Include="NetCoreObjects.cs" />
-    <Compile Include="NetCoreSpec.cs" />
-    <Compile Include="Params.cs" />
-    <Compile Include="ReturnWatch.cs" />
-    <Compile Include="DebugInfo\DebugInfoForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DebugInfo\DebugInfoForm.Designer.cs">
-      <DependentUpon>DebugInfoForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SyncObjectSingleton.cs" />
-    <Compile Include="TCPLinkWatch.cs" />
-    <Compile Include="UDPLink.cs" />
-    <Compile Include="TCPLink.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UniSpec.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="DebugInfo\CloudDebugForm.resx">
-      <DependentUpon>CloudDebugForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DebugInfo\DebugInfoForm.resx">
-      <DependentUpon>DebugInfoForm.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
@@ -118,27 +40,16 @@
       <Version>12.0.3</Version>
     </PackageReference>
     <PackageReference Include="NLog">
-      <Version>4.6.8</Version>
+      <Version>4.7.4</Version>
     </PackageReference>
     <PackageReference Include="SevenZipSharp.Net45">
       <Version>1.0.19</Version>
     </PackageReference>
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
-      <Version>4.5.2</Version>
+      <Version>4.7.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{a31c17e1-2eab-434f-a022-20193f2ceab7}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

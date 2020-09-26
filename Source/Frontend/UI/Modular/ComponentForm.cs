@@ -5,7 +5,7 @@ namespace RTCV.UI.Modular
     using System.Linq;
     using System.Windows.Forms;
 
-    public class ComponentForm : Form
+    public class ComponentForm : ColorizedForm
     {
         private protected static NLog.Logger logger;
         private Panel defaultPanel = null;
@@ -163,7 +163,7 @@ namespace RTCV.UI.Modular
 
         internal void HandleFormClosing(object sender, FormClosingEventArgs e)
         {
-            if (e.CloseReason != CloseReason.FormOwnerClosing)
+            if (e.CloseReason == CloseReason.UserClosing)
             {
                 e.Cancel = true;
                 this.RestoreToPreviousPanel();

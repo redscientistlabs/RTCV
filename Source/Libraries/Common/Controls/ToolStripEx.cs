@@ -109,9 +109,8 @@ namespace RTCV.Common.Controls
         }
     }
 
-    internal sealed class NativeConstants
+    internal static class NativeConstants
     {
-        private NativeConstants() { }
         internal const uint WM_MOUSEACTIVATE = 0x21;
         internal const uint MA_ACTIVATE = 1;
         internal const uint MA_ACTIVATEANDEAT = 2;

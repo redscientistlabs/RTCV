@@ -26,23 +26,21 @@ namespace RTCV.NetCore
                 return;
             }
 
-            if (!(_ex is OperationAbortedException))
+            lbException.Text = _ex.Message;
+            var sb = new StringBuilder();
+            sb.AppendLine($"{_ex.Message}\n{_ex.StackTrace}");
+            var e = ex;
+            while (e.InnerException != null)
             {
-                lbException.Text = _ex.Message;
-                var sb = new StringBuilder();
-                sb.AppendLine($"{_ex.Message}\n{_ex.StackTrace}");
-                var e = ex;
-                while (e.InnerException != null)
-                {
-                    sb.AppendLine();
-                    sb.AppendLine($"Inner Exception: {_ex.Message}\n{_ex.StackTrace}");
-                    e = e.InnerException;
-                }
-                tbStackTrace.Text = sb.ToString();
-
-                btnContinue.Visible = canContinue;
-                btnContinue.Visible = true;
+                sb.AppendLine();
+                sb.AppendLine($"Inner Exception: {_ex.Message}\n{_ex.StackTrace}");
+                e = e.InnerException;
             }
+            tbStackTrace.Text = sb.ToString();
+
+            btnContinue.Visible = canContinue;
+            btnContinue.Visible = true;
+
             this.Shown += CloudDebug_Shown;
         }
 
@@ -56,14 +54,7 @@ namespace RTCV.NetCore
 
         public DialogResult Start()
         {
-            if (_ex is OperationAbortedException)
-            {
-                return DialogResult.Abort;
-            }
-            else
-            {
-                return this.ShowDialog();
-            }
+            return this.ShowDialog();
         }
 
         public static string getRTCInfo()

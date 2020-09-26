@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Collections.Generic;
@@ -8,24 +8,22 @@
     using RTCV.UI.Modular;
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
-    public partial class CanvasForm : Form, IBlockable
+    public partial class CanvasForm : ColorizedForm, IBlockable
     {
-        public static CanvasForm mainForm;
-        public static List<CanvasForm> extraForms = new List<CanvasForm>();
+        internal static CanvasForm mainForm { get; private set; }
+        internal static List<CanvasForm> extraForms { get; private set; } = new List<CanvasForm>();
         private static Dictionary<string, CanvasForm> allExtraForms = new Dictionary<string, CanvasForm>();
         public ShadowPanel spForm { get; private set; }
 
         public Panel blockPanel { get; set; } = null;
 
-        public static int spacerSize;
-        public static int tileSize;
+        internal static int spacerSize { get; private set; }
+        internal static int tileSize { get; private set; }
         private static Dictionary<Form, ComponentFormTile> loadedTileForms = new Dictionary<Form, ComponentFormTile>();
 
         public CanvasForm(bool extraForm = false)
         {
             InitializeComponent();
-
-            Colors.SetRTCColor(Colors.GeneralColor, this);
 
             if (!extraForm)
             {
@@ -261,7 +259,7 @@
 
         private void OnClosing(object sender, FormClosingEventArgs e)
         {
-            if (e.CloseReason != CloseReason.FormOwnerClosing)
+            if (e.CloseReason == CloseReason.UserClosing)
             {
                 //S.GET<RTC_Core_Form>().btnGlitchHarvester.Text = S.GET<RTC_Core_Form>().btnGlitchHarvester.Text.Replace("○ ", "");
 

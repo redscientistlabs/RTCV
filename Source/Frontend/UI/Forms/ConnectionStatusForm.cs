@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Drawing;
@@ -6,7 +6,7 @@
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class ConnectionStatusForm : ComponentForm, IAutoColorize, IBlockable
+    public partial class ConnectionStatusForm : ComponentForm, IBlockable
     {
         public ConnectionStatusForm()
         {

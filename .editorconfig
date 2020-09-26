@@ -218,6 +218,7 @@ csharp_preserve_single_line_blocks = true
 csharp_preserve_single_line_statements = true
 
 csharp_prefer_simple_using_statement = false # Prefer the old using statement format. See example: https://github.com/RehanSaeed/EditorConfig/pull/23
+csharp_using_directive_placement = inside_namespace:warning
 
 # The following rule won't be functional until this roslyn bug is fixed: https://github.com/dotnet/roslyn-analyzers/issues/3451
 dotnet_code_quality.CA1062.exclude_extension_method_this_parameter = true
@@ -266,9 +267,6 @@ dotnet_diagnostic.CA1401.severity = none
 # Do not prefix enum values with the name of the enum type 'FileType'
 dotnet_diagnostic.CA1712.severity = none
 
-# Rename virtual/interface member so it no longer conflicts with reserved language
-dotnet_diagnostic.CA1716.severity = none
-
 # Naming conflict
 dotnet_diagnostic.CA1724.severity = none
 
@@ -277,9 +275,6 @@ dotnet_diagnostic.CA1805.severity = none
 
 # Using method without reference to error
 dotnet_diagnostic.CA1806.severity = none
-
-# internal class never instatiated
-dotnet_diagnostic.CA1812.severity = none
 
 # .ctor uses a multidimensional array. Replace it with a jagged array if possible.
 dotnet_diagnostic.CA1814.severity = none
@@ -292,9 +287,6 @@ dotnet_diagnostic.CA1819.severity = none
 
 # Avoid unnecessary zero-length array allocations
 dotnet_diagnostic.CA1825.severity = none
-
-# Using `StringBuilder.Append(char)` instead of `StringBuilder.Append(string)`
-dotnet_diagnostic.CA1834.severity = none
 
 # Call on object before all references to it are out of scope
 dotnet_diagnostic.CA2000.severity = none
@@ -310,9 +302,6 @@ dotnet_diagnostic.CA2008.severity = none
 
 # Specify marshaling for P/Invoke string arguments
 dotnet_diagnostic.CA2101.severity = none
-
-# Non-constant fields should not be visible
-dotnet_diagnostic.CA2211.severity = none
 
 # Change to be read-only by removing the property setter
 dotnet_diagnostic.CA2227.severity = none
@@ -367,9 +356,6 @@ dotnet_diagnostic.SA1119.severity = none
 
 # Use string.Empty for empty strings
 dotnet_diagnostic.SA1122.severity = none
-
-# Do not use regions
-dotnet_diagnostic.SA1124.severity = none
 
 # Put constructor initializers on their own line
 dotnet_diagnostic.SA1128.severity = none
@@ -461,9 +447,6 @@ dotnet_diagnostic.SA1404.severity = none
 # Debug.Assert should provide message text
 dotnet_diagnostic.SA1405.severity = none
 
-# Arithmetic expressions should declare precedence
-dotnet_diagnostic.SA1407.severity = none
-
 # Conditional expressions should declare precedence
 dotnet_diagnostic.SA1408.severity = none
 
@@ -511,9 +494,6 @@ dotnet_diagnostic.SA1516.severity = none
 
 # Braces should not be omitted from multi-line child statement
 dotnet_diagnostic.SA1519.severity = none
-
-# Use braces consistently
-dotnet_diagnostic.SA1520.severity = none
 
 # Elements should be documented
 dotnet_diagnostic.SA1600.severity = none

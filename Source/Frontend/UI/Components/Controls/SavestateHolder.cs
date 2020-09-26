@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI.Components.Controls
+namespace RTCV.UI.Components.Controls
 {
     using System;
     using System.Drawing;
@@ -17,6 +17,11 @@
             InitializeComponent();
             btnSavestate.Text = num.ToString();
             tbSavestate.Visible = false;
+        }
+
+        public bool HasState()
+        {
+            return ssk != null;
         }
 
         public void SetStashKey(SaveStateKey key, int number)

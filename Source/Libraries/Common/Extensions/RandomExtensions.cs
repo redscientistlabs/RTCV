@@ -43,13 +43,13 @@ namespace RTCV.Common.CustomExtensions
                 throw new ArgumentOutOfRangeException(nameof(max), "Max must be greater than min when inclusiveUpperBound is false, and greater than or equal to when true");
             }
 
-            var limit = ulong.MaxValue - ulong.MaxValue % range;
+            var limit = ulong.MaxValue - (ulong.MaxValue % range);
             ulong r;
             do
             {
                 r = rng.NextULong();
             } while (r > limit);
-            return (long)(r % range + (ulong)min);
+            return (long)((r % range) + (ulong)min);
         }
 
         //returns a uniformly random ulong between Min and Max without modulo bias
@@ -72,14 +72,14 @@ namespace RTCV.Common.CustomExtensions
                 throw new ArgumentOutOfRangeException(nameof(max), "Max must be greater than min when inclusiveUpperBound is false, and greater than or equal to when true");
             }
 
-            var limit = ulong.MaxValue - ulong.MaxValue % range;
+            var limit = ulong.MaxValue - (ulong.MaxValue % range);
             ulong r;
             do
             {
                 r = rng.NextULong();
             } while (r > limit);
 
-            return r % range + min;
+            return (r % range) + min;
         }
     }
 }

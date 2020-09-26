@@ -33,7 +33,7 @@ namespace RTCV.Plugins.HexEditor
             return true;
         }
 
-        public bool Stop()
+        public bool StopPlugin()
         {
             if (!S.ISNULL<HexEditor>())
             {

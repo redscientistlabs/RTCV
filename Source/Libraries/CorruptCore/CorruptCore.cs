@@ -44,18 +44,18 @@ namespace RTCV.CorruptCore
         private static readonly ThreadLocal<Random> rnd = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref seed)));
         public static Random RND => rnd.Value;
 
-        public static bool Attached = false;
+        public static bool Attached { get; set; }  = false;
 
-        public static int CachedPrecision;
+        internal static int CachedPrecision;
 
-        public static List<ProblematicProcess> ProblematicProcesses;
+        private static List<ProblematicProcess> ProblematicProcesses;
 
-        public static Timer KillswitchTimer = new Timer();
+        private static Timer KillswitchTimer = new Timer();
 
         private static readonly Host pluginHost = new Host();
         public static Host PluginHost => pluginHost;
 
-        public static bool EmuDirOverride = false;
+        public static bool EmuDirOverride { get; set; } = false;
 
         public static string EmuDir
         {
@@ -92,8 +92,8 @@ namespace RTCV.CorruptCore
         public static event EventHandler<ProgressBarEventArgs> ProgressBarHandler;
 
         //This is for the UI only but needs to be in here as well
-        public static BindingList<ComboBoxItem<string>> LimiterListBindingSource = new BindingList<ComboBoxItem<string>>();
-        public static BindingList<ComboBoxItem<string>> ValueListBindingSource = new BindingList<ComboBoxItem<string>>();
+        public static readonly BindingList<ComboBoxItem<string>> LimiterListBindingSource = new BindingList<ComboBoxItem<string>>();
+        public static readonly BindingList<ComboBoxItem<string>> ValueListBindingSource = new BindingList<ComboBoxItem<string>>();
 
         public static bool AllowCrossCoreCorruption
         {
@@ -229,12 +229,15 @@ namespace RTCV.CorruptCore
 
         public static string VanguardImplementationName => (string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard Implementation";
 
-        public static bool IsStandaloneUI;
-        public static bool IsEmulatorSide;
+        private static bool IsStandaloneUI;
+        private static bool IsEmulatorSide;
 
-        public static EventHandler CorruptCoreExiting;
-        public static EventHandler<GameClosedEventArgs> GameClosed;
-        public static EventHandler LoadGameDone;
+        #pragma warning disable 649 // CorruptCoreExiting is never assigned to locally, but it is an API that is used by other plugins/emulators
+        private static EventHandler CorruptCoreExiting;
+        #pragma warning restore 649
+
+        public static EventHandler<GameClosedEventArgs> GameClosed { get; set; }
+        public static EventHandler LoadGameDone { get; set; }
 
         public static void Start()
         {
@@ -295,17 +298,21 @@ namespace RTCV.CorruptCore
 
         public static void StartEmuSide()
         {
+            if (AllSpec.VanguardSpec == null)
+            {
+                throw new AbortEverythingException("Fatal Error: VanguardSpec hasn't been initialized. You must start Vanguard before calling StartEmuSide()");
+            }
             if (!Attached)
             {
                 Start();
-                if (KillswitchTimer == null)
+                if (AllSpec.VanguardSpec[VSPEC.SUPPORTS_KILLSWITCH] as bool? == true)
                 {
-                    KillswitchTimer = new Timer();
-                }
+                    KillswitchTimer ??= new Timer();
 
-                KillswitchTimer.Interval = 250;
-                KillswitchTimer.Tick += KillswitchTimer_Tick;
-                KillswitchTimer.Start();
+                    KillswitchTimer.Interval = 250;
+                    KillswitchTimer.Tick += KillswitchTimer_Tick;
+                    KillswitchTimer.Start();
+                }
             }
             IsEmulatorSide = true;
         }
@@ -569,7 +576,7 @@ namespace RTCV.CorruptCore
         }
 
         //Checks if any problematic processes are found
-        public static bool Warned = false;
+        private static bool Warned = false;
         public static void CheckForProblematicProcesses()
         {
             logger.Info("Entering CheckForProblematicProcesses");

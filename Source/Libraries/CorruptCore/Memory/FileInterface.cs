@@ -22,6 +22,7 @@ namespace RTCV.CorruptCore
         //File management
         public static Dictionary<string, string> CompositeFilenameDico { get; set; }
 
+        [SuppressMessage("Microsoft.Design", "CA2211", Justification = "Unknown serialization impact of making this field a property")]
         public static FileInterfaceIdentity identity = FileInterfaceIdentity.SELF_DESCRIBE;
         public override string Name => ShortFilename;
         public override long Size => lastMemorySize.GetValueOrDefault(0);

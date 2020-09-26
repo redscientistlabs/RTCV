@@ -10,7 +10,7 @@ namespace RTCV.UI
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class VmdLimiterProfilerForm : ComponentForm, IAutoColorize, IBlockable
+    public partial class VmdLimiterProfilerForm : ComponentForm, IBlockable
     {
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
@@ -170,7 +170,7 @@ namespace RTCV.UI
             //Verify they want to continue if the domain is larger than 32MB and they didn't manually set ranges
             if (size > 0x2000000)
             {
-                DialogResult result = MessageBox.Show("The VMD you're trying to generate is larger than 32MB\n The VMD size is " + ((size / 1024 / 1024) + 1) + " MB (" + size / 1024f / 1024f / 1024f + " GB).\n Are you sure you want to continue?", "VMD Detected", MessageBoxButtons.YesNo);
+                DialogResult result = MessageBox.Show("The VMD you're trying to generate is larger than 32MB\n The VMD size is " + ((size / 1024 / 1024) + 1) + " MB (" + (size / 1024f / 1024f / 1024f) + " GB).\n Are you sure you want to continue?", "VMD Detected", MessageBoxButtons.YesNo);
                 if (result == DialogResult.No)
                 {
                     return false;
@@ -229,14 +229,14 @@ namespace RTCV.UI
                     break;
                 }
 
-            foreach (ComboBoxItem<string> item in ceForm.cbVectorLimiterList.Items)
+            foreach (ComboBoxItem<string> item in ceForm.VectorEngineControl.cbVectorLimiterList.Items)
                 if (item.Name == limiter)
                 {
-                    ceForm.cbVectorLimiterList.SelectedItem = item;
+                    ceForm.VectorEngineControl.cbVectorLimiterList.SelectedItem = item;
                     break;
                 }
 
-            ComboBoxItem<string> cbItem = (ComboBoxItem<string>)((ComboBox)ceForm.cbVectorLimiterList).SelectedItem;
+            ComboBoxItem<string> cbItem = (ComboBoxItem<string>)((ComboBox)ceForm.VectorEngineControl.cbVectorLimiterList).SelectedItem;
             if (cbItem != null)
             {
                 LimiterListHash = cbItem.Value;

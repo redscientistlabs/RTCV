@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Data;
@@ -9,7 +9,7 @@
     using RTCV.UI.Components.Controls;
     using RTCV.UI.Modular;
 
-    public partial class VmdSimpleGenForm : ComponentForm, IAutoColorize, IBlockable
+    public partial class VmdSimpleGenForm : ComponentForm, IBlockable
     {
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
@@ -195,7 +195,7 @@
             //Verify they want to continue if the domain is larger than 32MB and they didn't manually set ranges
             if (size > 0x2000000)
             {
-                DialogResult result = MessageBox.Show("The VMD you're trying to generate is larger than 32MB\n The VMD size is " + ((size / 1024 / 1024) + 1) + " MB (" + size / 1024f / 1024f / 1024f + " GB).\n Are you sure you want to continue?", "VMD Detected", MessageBoxButtons.YesNo);
+                DialogResult result = MessageBox.Show("The VMD you're trying to generate is larger than 32MB\n The VMD size is " + ((size / 1024 / 1024) + 1) + " MB (" + (size / 1024f / 1024f / 1024f) + " GB).\n Are you sure you want to continue?", "VMD Detected", MessageBoxButtons.YesNo);
                 if (result == DialogResult.No)
                 {
                     return false;

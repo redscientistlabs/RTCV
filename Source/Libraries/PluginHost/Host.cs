@@ -96,7 +96,7 @@ namespace RTCV.PluginHost
         {
             foreach (var p in _loadedPlugins)
             {
-                p.Stop();
+                p.StopPlugin();
             }
         }
 

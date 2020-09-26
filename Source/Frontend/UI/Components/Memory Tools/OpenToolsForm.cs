@@ -8,7 +8,7 @@ namespace RTCV.UI
     using RTCV.UI.Components.Controls;
     using RTCV.UI.Modular;
 
-    public partial class OpenToolsForm : ComponentForm, IAutoColorize, IBlockable
+    public partial class OpenToolsForm : ComponentForm, IBlockable
     {
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);

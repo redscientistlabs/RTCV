@@ -9,9 +9,10 @@ namespace RTCV.Common
     using System.Windows.Forms;
     using NLog;
 
-    #pragma warning disable CA1040 // Allow this interface to be empty, since it's used to signal auto-coloriation for a class
-    // Implementing this interface causes auto-coloration.
-    public interface IAutoColorize { }
+    public interface IColorize
+    {
+        void Recolor();
+    }
 
     public class FormRegisteredEventArgs : EventArgs
     {
@@ -32,11 +33,27 @@ namespace RTCV.Common
     public static class S
     {
         private static readonly ConcurrentDictionary<Type, object> instances = new ConcurrentDictionary<Type, object>();
-        public static FormRegister formRegister = new FormRegister();
+        public static readonly FormRegister formRegister = new FormRegister();
         private static object lockObject = new object();
+        private static List<IColorize> _colorizables = new List<IColorize>();
 
-        [ThreadStatic]
-        public static volatile Dictionary<int, List<string>> InvokeStackTraces = new Dictionary<int, List<string>>();
+        public static void RegisterColorizable(IColorize colorizable)
+        {
+            _colorizables.Add(colorizable);
+        }
+
+        public static void DeregisterColorizable(IColorize colorizable)
+        {
+            _colorizables.Remove(colorizable);
+        }
+
+        public static void RecolorRegisteredColorizables()
+        {
+            foreach (var c in _colorizables)
+            {
+                c.Recolor();
+            }
+        }
 
         public static bool ISNULL<T>()
         {

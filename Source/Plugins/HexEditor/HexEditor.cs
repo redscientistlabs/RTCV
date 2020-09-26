@@ -103,7 +103,9 @@ namespace RTCV.Plugins.HexEditor
                     this.Close();
                 }
                 else if (this.Visible)
+                {
                     Restart();
+                }
             };
             RtcCore.LoadGameDone += (o, e) =>
             {
@@ -157,8 +159,6 @@ namespace RTCV.Plugins.HexEditor
                 return null; // Negative = no address highlighted
             }
         }
-
-        #region API
 
         public static bool UpdateBefore => false;
 
@@ -375,8 +375,6 @@ namespace RTCV.Plugins.HexEditor
 
             _hexFind.Close();
         }
-
-        #endregion
 
         private char Remap(byte val)
         {
@@ -756,7 +754,7 @@ namespace RTCV.Plugins.HexEditor
             long i = HexScrollBar.Value;
             var rowoffset = y / _fontHeight;
             i += rowoffset;
-            var colWidth = DataSize * 2 + 1;
+            var colWidth = (DataSize * 2) + 1;
 
             var column = x / (_fontWidth * colWidth);
 
@@ -822,11 +820,11 @@ namespace RTCV.Plugins.HexEditor
         private Point GetAddressCoordinates(long address)
         {
             var extra = (address % DataSize) * _fontWidth * 2;
-            var xOffset = AddressesLabel.Location.X + _fontWidth / 2 - 2;
+            var xOffset = AddressesLabel.Location.X + (_fontWidth / 2) - 2;
             var yOffset = AddressesLabel.Location.Y;
 
             return new Point(
-                (int)((((address % 16) / DataSize) * (_fontWidth * (DataSize * 2 + 1))) + xOffset + extra),
+                (int)((((address % 16) / DataSize) * (_fontWidth * ((DataSize * 2) + 1))) + xOffset + extra),
                 (int)((((address / 16) - HexScrollBar.Value) * _fontHeight) + yOffset)
                 );
         }
@@ -839,8 +837,8 @@ namespace RTCV.Plugins.HexEditor
 
         private int GetTextOffset()
         {
-            var start = (16 / DataSize) * _fontWidth * (DataSize * 2 + 1);
-            start += AddressesLabel.Location.X + _fontWidth / 2;
+            var start = (16 / DataSize) * _fontWidth * ((DataSize * 2) + 1);
+            start += AddressesLabel.Location.X + (_fontWidth / 2);
             start += _fontWidth * 2;
             return start;
         }
@@ -998,10 +996,6 @@ namespace RTCV.Plugins.HexEditor
             }
         }
 
-        #region Events
-
-        #region File Menu
-
         private void CloseTableFileMenuItem_Click(object sender, EventArgs e)
         {
             _textTable.Clear();
@@ -1011,10 +1005,6 @@ namespace RTCV.Plugins.HexEditor
         {
             Close();
         }
-
-        #endregion
-
-        #region Edit
 
         private void EditMenuItem_DropDownOpened(object sender, EventArgs e)
         {
@@ -1053,7 +1043,7 @@ namespace RTCV.Plugins.HexEditor
             Array.Sort(addresses);
 
             //find the maximum length of the exported string
-            var maximumLength = addresses.Length * (export ? 3 : 2) + 8;
+            var maximumLength = (addresses.Length * (export ? 3 : 2)) + 8;
             var sb = new StringBuilder(maximumLength);
 
             //generate it differently for export (as you see it) or copy (raw bytes)
@@ -1168,10 +1158,6 @@ namespace RTCV.Plugins.HexEditor
         {
             FindPrev(_findStr, false);
         }
-
-        #endregion
-
-        #region Options
 
         private void OptionsSubMenu_DropDownOpened(object sender, EventArgs e)
         {
@@ -1291,10 +1277,6 @@ namespace RTCV.Plugins.HexEditor
         {
         }
 
-        #endregion
-
-        #region Settings Menu
-
         private void ResetColorsToDefaultMenuItem_Click(object sender, EventArgs e)
         {
             MemoryViewerBox.BackColor = Color.FromName("Control");
@@ -1303,10 +1285,6 @@ namespace RTCV.Plugins.HexEditor
             Header.BackColor = Color.FromName("Control");
             Header.ForeColor = Color.FromName("ControlText");
         }
-
-        #endregion
-
-        #region Context Menu and Dialog Events
 
         private void HexEditor_Resize(object sender, EventArgs e)
         {
@@ -1691,10 +1669,6 @@ namespace RTCV.Plugins.HexEditor
             UpdateValues();
         }
 
-        #endregion
-
-        #region MemoryViewer Events
-
         private void HexEditor_MouseWheel(object sender, MouseEventArgs e)
         {
             var delta = 0;
@@ -1757,7 +1731,7 @@ namespace RTCV.Plugins.HexEditor
                 var textX = (int)GetTextX(_addressHighlighted);
                 var textpoint = new Point(textX, point.Y);
 
-                var rect = new Rectangle(point, new Size(_fontWidth * 2 * DataSize + (NeedsExtra(_addressHighlighted) ? _fontWidth : 0) + 3, _fontHeight));
+                var rect = new Rectangle(point, new Size((_fontWidth * 2 * DataSize) + (NeedsExtra(_addressHighlighted) ? _fontWidth : 0) + 3, _fontHeight));
                 e.Graphics.DrawRectangle(new Pen(Brushes.Black), rect);
 
                 var textrect = new Rectangle(textpoint, new Size(_fontWidth * DataSize, _fontHeight));
@@ -1782,7 +1756,7 @@ namespace RTCV.Plugins.HexEditor
                     var textX = (int)GetTextX(address);
                     var textpoint = new Point(textX, point.Y);
 
-                    var rect = new Rectangle(point, new Size(_fontWidth * 2 * DataSize + 3, _fontHeight));
+                    var rect = new Rectangle(point, new Size((_fontWidth * 2 * DataSize) + 3, _fontHeight));
                     e.Graphics.DrawRectangle(new Pen(Brushes.Black), rect);
 
                     var textrect = new Rectangle(textpoint, new Size(_fontWidth * DataSize, _fontHeight));
@@ -1873,13 +1847,9 @@ namespace RTCV.Plugins.HexEditor
             }
         }
 
-        #endregion
-
         private void HexMenuStrip_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
         }
-
-        #endregion
 
         private void UnFreezeAddress(long address)
         {

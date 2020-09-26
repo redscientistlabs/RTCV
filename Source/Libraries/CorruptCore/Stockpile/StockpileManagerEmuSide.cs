@@ -1,4 +1,4 @@
-﻿namespace RTCV.CorruptCore
+namespace RTCV.CorruptCore
 {
     using System;
     using System.Collections.Generic;
@@ -10,8 +10,8 @@
 
     public static class StockpileManagerEmuSide
     {
-        public static BlastLayer CorruptBL = null;
-        public static BlastLayer UnCorruptBL = null;
+        internal static BlastLayer CorruptBL = null;
+        public static BlastLayer UnCorruptBL { get; set; } = null;
 
 
         public static PartialSpec getDefaultPartial()

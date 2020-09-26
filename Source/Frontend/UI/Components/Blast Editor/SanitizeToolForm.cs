@@ -7,7 +7,7 @@ namespace RTCV.UI
     using RTCV.NetCore;
     using RTCV.Common;
 
-    public partial class SanitizeToolForm : Form, IAutoColorize
+    public partial class SanitizeToolForm : Modular.ColorizedForm
     {
         private BlastLayer _originalBlastLayer = null;
 
@@ -66,11 +66,6 @@ namespace RTCV.UI
                 stf.ShowDialog();
             else
                 stf.Show();
-        }
-
-        private void OnFormLoad(object sender, EventArgs e)
-        {
-            Colors.SetRTCColor(Colors.GeneralColor, this);
         }
 
         public void Reroll(object sender, EventArgs e)

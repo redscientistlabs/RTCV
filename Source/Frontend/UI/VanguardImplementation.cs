@@ -13,7 +13,7 @@ namespace RTCV.UI
 
     public static class VanguardImplementation
     {
-        public static UIConnector connector = null;
+        internal static UIConnector connector = null;
         private static string lastVanguardClient = "";
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
@@ -33,6 +33,12 @@ namespace RTCV.UI
         {
             logger.Info("Restarting NetCore");
             connector?.Restart();
+        }
+
+        public static void Shutdown()
+        {
+            logger.Info("Shutting down Netcore");
+            connector?.Kill();
         }
 
         private static void OnMessageReceived(object sender, NetCoreEventArgs e)
@@ -292,7 +298,7 @@ namespace RTCV.UI
 
                 if (Params.IsParamSet("SIMPLE_MODE"))
                 {
-                    bool isSpec = (AllSpec.VanguardSpec[VSPEC.NAME] as string)?.ToUpper().Contains("SPEC") ?? false;
+                    bool isSpec = (AllSpec.VanguardSpec[VSPEC.NAME] as string)?.ToUpper().Contains("STUB") ?? false;
 
                     if (isSpec) //Simple Mode cannot run on Stubs
                     {
@@ -478,6 +484,7 @@ namespace RTCV.UI
             {
                 S.GET<CoreForm>().pnAutoKillSwitch.Visible = false;
                 S.GET<CoreForm>().cbUseAutoKillSwitch.Checked = false;
+                AutoKillSwitch.Enabled = false;
             });
         }
 

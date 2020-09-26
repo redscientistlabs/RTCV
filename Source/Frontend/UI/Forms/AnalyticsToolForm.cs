@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Windows.Forms;
@@ -10,7 +10,7 @@
     using RTCV.NetCore;
     using RTCV.Common;
 
-    public partial class AnalyticsToolForm : Form, IAutoColorize
+    public partial class AnalyticsToolForm : Modular.ColorizedForm
     {
         private MemoryInterface MemoryInterface;
         private List<string> ActiveTableDumps;
@@ -79,11 +79,6 @@
             }
 
             stf.Show();
-        }
-
-        private void OnFormLoad(object sender, EventArgs e)
-        {
-            Colors.SetRTCColor(Colors.GeneralColor, this);
         }
 
         private void OnFormClosing(object sender, FormClosingEventArgs e)
@@ -224,7 +219,7 @@
 
     public static class AnalyticsCube
     {
-        public static List<List<byte[]>> Cube;
+        public static List<List<byte[]>> Cube { get; private set; }
 
         internal static List<double> CrunchFloatActivity(List<int> fullActivity, int maxActivity)
         {

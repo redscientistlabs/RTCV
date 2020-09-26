@@ -6,19 +6,17 @@ namespace RTCV.UI
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public partial class SettingsCorruptForm : ComponentForm, IAutoColorize, IBlockable
+    public partial class SettingsCorruptForm : ComponentForm, IBlockable
     {
         public SettingsCorruptForm()
         {
             InitializeComponent();
 
-            Colors.SetRTCColor(Colors.GeneralColor, this);
-
             var handler = new EventHandler<Components.Controls.ValueUpdateEventArgs<decimal>>(UpdateMaxInfiniteStepUnits);
             nmMaxInfiniteStepUnits.ValueChanged += handler;
-            nmMaxInfiniteStepUnits.registerSlave(S.GET<CorruptionEngineForm>().updownMaxCheats, handler);
-            nmMaxInfiniteStepUnits.registerSlave(S.GET<CorruptionEngineForm>().updownMaxFreeze, handler);
-            nmMaxInfiniteStepUnits.registerSlave(S.GET<CorruptionEngineForm>().updownMaxPipes, handler);
+            nmMaxInfiniteStepUnits.registerSlave(S.GET<CorruptionEngineForm>().HellgenieEngineControl.updownMaxCheats, handler);
+            nmMaxInfiniteStepUnits.registerSlave(S.GET<CorruptionEngineForm>().FreezeEngineControl.updownMaxFreeze, handler);
+            nmMaxInfiniteStepUnits.registerSlave(S.GET<CorruptionEngineForm>().PipeEngineControl.updownMaxPipes, handler);
             nmMaxInfiniteStepUnits.registerSlave(S.GET<CustomEngineConfigForm>().updownMaxInfiniteUnits, handler);
             nmMaxInfiniteStepUnits.registerSlave(S.GET<SimpleModeForm>().updownMaxInfiniteUnits, handler);
 

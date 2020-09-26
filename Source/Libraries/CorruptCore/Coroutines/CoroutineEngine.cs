@@ -5,9 +5,9 @@ namespace RTCV.CorruptCore.Coroutines
     /// </summary>
     public static class CoroutineEngine
     {
-        public static CoroutineRunner PreExecute = new CoroutineRunner();
-        public static CoroutineRunner Execute = new CoroutineRunner();
-        public static CoroutineRunner PostExecute = new CoroutineRunner();
+        public static readonly CoroutineRunner PreExecute = new CoroutineRunner();
+        public static readonly CoroutineRunner Execute = new CoroutineRunner();
+        public static readonly CoroutineRunner PostExecute = new CoroutineRunner();
 
         public static void Reset()
         {
