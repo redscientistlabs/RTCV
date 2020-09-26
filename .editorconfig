@@ -218,6 +218,7 @@ csharp_preserve_single_line_blocks = true
 csharp_preserve_single_line_statements = true
 
 csharp_prefer_simple_using_statement = false # Prefer the old using statement format. See example: https://github.com/RehanSaeed/EditorConfig/pull/23
+csharp_using_directive_placement = inside_namespace:warning
 
 # The following rule won't be functional until this roslyn bug is fixed: https://github.com/dotnet/roslyn-analyzers/issues/3451
 dotnet_code_quality.CA1062.exclude_extension_method_this_parameter = true
