@@ -13,7 +13,11 @@ namespace RTCV.CorruptCore
             string thisSystem = (AllSpec.VanguardSpec[VSPEC.SYSTEM] as string);
             var rp = MemoryDomains.GetRomParts(thisSystem, filename);
 
-            IMemoryDomain Corrupt = new FileInterface("File|" + filename, false, false);
+            var target = new FileTarget(filename, null);
+            target.BigEndian = false;
+            target.IsVaulted = false;
+
+            IMemoryDomain Corrupt = new FileInterface(target);
 
             (Corrupt as FileInterface).getMemoryDump(); //gotta cache it otherwise it's going to be super slow
 

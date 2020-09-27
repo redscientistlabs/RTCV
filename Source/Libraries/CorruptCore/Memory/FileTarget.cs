@@ -38,7 +38,7 @@ namespace RTCV.CorruptCore
                 BaseDir = baseDir;
         }
 
-        public string getUniqueId()
+        public static string getTargetId(string filePart, string baseDir = null)
         {
             string CreateMd5HashString(byte[] input)
             {
@@ -47,17 +47,19 @@ namespace RTCV.CorruptCore
             }
 
             string basepart = "";
-            if (!string.IsNullOrWhiteSpace(BaseDir))
-                basepart = CreateMd5HashString(System.Text.Encoding.UTF8.GetBytes(BaseDir));
+            if (!string.IsNullOrWhiteSpace(baseDir))
+                basepart = CreateMd5HashString(System.Text.Encoding.UTF8.GetBytes(baseDir));
 
-            string filepart = CreateMd5HashString(System.Text.Encoding.UTF8.GetBytes(FilePath));
+            string filepart = CreateMd5HashString(System.Text.Encoding.UTF8.GetBytes(filePart));
 
             return $"{basepart}$${filepart}";
         }
 
+        public string getTargetId() => getTargetId(FilePath, BaseDir);
+
         public string RealFilePath => BaseDir + FilePath;
-        public string WorkingFilePath => Path.Combine(Vault.vaultWorkingPath, getUniqueId(), new FileInfo(RealFilePath).Name);
-        public string BackupFilePath => Path.Combine(Vault.vaultBackupsPath, getUniqueId(), new FileInfo(RealFilePath).Name);
+        public string WorkingFilePath => Path.Combine(Vault.vaultWorkingPath, getTargetId(), new FileInfo(RealFilePath).Name);
+        public string BackupFilePath => Path.Combine(Vault.vaultBackupsPath, getTargetId(), new FileInfo(RealFilePath).Name);
 
         public bool SetBaseDir(string baseDir)
         {

@@ -22,9 +22,11 @@ namespace RTCV.CorruptCore
         public static string vaultBackupsPath => Path.Combine(RtcCore.VaultDir, "BACKUPS");
         public static string vaultWorkingPath => Path.Combine(RtcCore.VaultDir, "WORKING");
 
+        public static event EventHandler VaultUpdated;
+
         static Dictionary<string, FileTarget> vaultDb = null;
 
-        private static void init()
+        public static void Init()
         {
             if (!initialized)
             {
@@ -49,13 +51,28 @@ namespace RTCV.CorruptCore
 
         public static FileTarget RequestFileTarget(string filePath, string baseDir = null)
         {
-            var target = new FileTarget(filePath, baseDir);
+            Init();
+
+            string targetId = FileTarget.getTargetId(filePath, baseDir);
+
+            if (vaultDb.TryGetValue(targetId, out FileTarget target))
+            {
+
+            }
+            else
+            {
+                target = new FileTarget(filePath, baseDir);
+                vaultDb[targetId] = target;
+                SaveVaultDb();
+            }
 
             if (!File.Exists(target.BackupFilePath))
                 CopyRealToBackup(target);
 
             return target;
         }
+
+        public static List<FileTarget> GetDirtyTargets() => vaultDb?.Values?.Where(it => it.isDirty).ToList();
 
         public static bool CopyRealToBackup(FileTarget target) => CopyTarget(target, FileTargetLocation.REAL, FileTargetLocation.BACKUP, false);
 
@@ -69,6 +86,8 @@ namespace RTCV.CorruptCore
 
         static bool CopyTarget(FileTarget target, FileTargetLocation input, FileTargetLocation output, bool? enforceDirty)
         {
+            Init();
+
             string inputFileLocation = target.GetPathFromLocation(input);
             string outputFileLocation = target.GetPathFromLocation(output);
 
@@ -88,6 +107,8 @@ namespace RTCV.CorruptCore
                     target.isDirty = enforceDirty.Value;
                 }
 
+                SaveVaultDb();
+
                 return true;
             }
             catch (Exception ex)
@@ -95,10 +116,11 @@ namespace RTCV.CorruptCore
                 logger.Trace($"Failed to copy file from {input} location '{inputFileLocation}' to {output} location '{outputFileLocation}'\n{ex}");
                 return false;
             }
+
         }
 
 
-        public static void LoadVaultDb()
+        public static bool LoadVaultDb()
         {
             JsonSerializer serializer = new JsonSerializer();
             if (!File.Exists(vaultDbPath))
@@ -116,9 +138,11 @@ namespace RTCV.CorruptCore
             }
             catch (IOException e)
             {
-                MessageBox.Show("Unable to read vault Database\n" + e.ToString());
-                vaultDb = null;
+                MessageBox.Show("Unable to read vault Database\nApplication will exit to prevent accidental damage\n" + e.ToString());
+                Application.Exit();
+                return false;
             }
+            return true;
         }
 
         public static bool SaveVaultDb()
@@ -136,9 +160,31 @@ namespace RTCV.CorruptCore
             catch (IOException e)
             {
                 MessageBox.Show("Unable to write to vault Database\n" + e.ToString());
+                VaultUpdated?.Invoke(null,null);
                 return false;
             }
+
+
+            VaultUpdated?.Invoke(null, null);
             return true;
+        }
+
+        public static void ResetVault()
+        {
+            initialized = false;
+
+            if (File.Exists(vaultDbPath))
+                File.Delete(vaultDbPath);
+
+            if (Directory.Exists(vaultWorkingPath))
+                Directory.Delete(vaultWorkingPath, true);
+
+            if (Directory.Exists(vaultBackupsPath))
+                Directory.Delete(vaultBackupsPath, true);
+
+            vaultDb = null;
+
+            Init();
         }
     }
 }
