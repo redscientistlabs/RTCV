@@ -20,7 +20,7 @@ namespace RTCV.CorruptCore
 
         public List<FileInterface> FileInterfaces { get; private set; } = new List<FileInterface>();
 
-        public MultipleFileInterface(TargetLoader[] targets, bool bigEndian, bool useAutomaticFileBackups = false)
+        public MultipleFileInterface(FileTarget[] targets, bool bigEndian, bool useAutomaticFileBackups = false)
         {
             if (targets == null)
             {
@@ -35,7 +35,7 @@ namespace RTCV.CorruptCore
                     try
                     {
                         var fi = new FileInterface(
-                        targetId: "File|" + target.Path,
+                        targetId: "File|" + target.FilePath,
                         bigEndian: BigEndian,
                         useAutomaticFileBackups: true,
                         startPadding: target.PaddingHeader,
