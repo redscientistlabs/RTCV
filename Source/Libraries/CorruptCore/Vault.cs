@@ -28,7 +28,6 @@ namespace RTCV.CorruptCore
         {
             if (!initialized)
             {
-
                 vaultDi = new DirectoryInfo(RtcCore.VaultDir);
                 var vaultBackupsDi = new DirectoryInfo(vaultBackupsPath);
                 var vaultWorkingDi = new DirectoryInfo(vaultWorkingPath);
@@ -101,7 +100,6 @@ namespace RTCV.CorruptCore
 
         public static void LoadVaultDb()
         {
-
             JsonSerializer serializer = new JsonSerializer();
             if (!File.Exists(vaultDbPath))
             {
@@ -125,7 +123,6 @@ namespace RTCV.CorruptCore
 
         public static bool SaveVaultDb()
         {
-
             JsonSerializer serializer = new JsonSerializer();
 
             try
@@ -143,6 +140,5 @@ namespace RTCV.CorruptCore
             }
             return true;
         }
-
     }
 }

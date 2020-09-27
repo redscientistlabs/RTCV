@@ -8,14 +8,6 @@ namespace RTCV.CorruptCore
     using System.Threading.Tasks;
 
 
-    public enum FileTargetStatus
-    {
-        UNBACKED = 0,
-        BACKED = 1,
-        DIRTY = 2,
-
-    }
-
     public enum FileTargetLocation
     {
         REAL,
@@ -28,13 +20,12 @@ namespace RTCV.CorruptCore
     [Serializable()]
     public class FileTarget
     {
-
         public string FilePath { get; set; } = "";
         public string BaseDir { get; set; } = "";
         public long PaddingHeader { get; set; } = 0;
         public long PaddingFooter { get; set; } = 0;
-        public bool IsMain { get; set; } = false;
-
+        public bool IsVaulted { get; set; } = true;
+        public bool BigEndian { get; set; } = true;
         public string OriginalChecksum { get; set; } = null;
         public long OriginalSize { get; set; } = -1;
         public bool isDirty { get; set; } = false;
@@ -62,7 +53,6 @@ namespace RTCV.CorruptCore
             string filepart = CreateMd5HashString(System.Text.Encoding.UTF8.GetBytes(FilePath));
 
             return $"{basepart}$${filepart}";
-
         }
 
         public string RealFilePath => BaseDir + FilePath;

@@ -54,6 +54,8 @@ namespace RTCV.CorruptCore
 
         private string InterfaceUniquePrefix = "";
 
+        private FileTarget target;
+
         public override string ToString()
         {
             switch (identity)
@@ -69,25 +71,27 @@ namespace RTCV.CorruptCore
         }
 
         [SuppressMessage("Microsoft.Design", "CA1801", Justification = "_startPadding and endPadding will be used eventually")]
-        public FileInterface(string targetId, bool bigEndian, bool useAutomaticFileBackups = false, long startPadding = 0, long endPadding = 0)
+        //public FileInterface(string targetId, bool bigEndian, bool useAutomaticFileBackups = false, long startPadding = 0, long endPadding = 0)
+        public FileInterface(FileTarget fileTarget)
         {
-            if (targetId == null)
+            if (fileTarget == null)
             {
-                throw new ArgumentNullException(nameof(targetId));
+                throw new ArgumentNullException(nameof(fileTarget));
             }
 
             try
             {
-                string[] targetIdParts = targetId.Split('|');
-                Filename = targetIdParts[1];
+                target = fileTarget;
+
+                Filename = target.RealFilePath;
                 var fi = new FileInfo(Filename);
                 ShortFilename = fi.Name;
-                BigEndian = bigEndian;
-                StartPadding = startPadding;
-                EndPadding = endPadding;
+                BigEndian = target.BigEndian;
+                StartPadding = target.PaddingHeader;
+                EndPadding = target.PaddingFooter;
 
                 InterfaceUniquePrefix = Filename.CreateMD5().Substring(0, 4).ToUpper();
-                this.UseAutomaticFileBackups = useAutomaticFileBackups;
+                this.UseAutomaticFileBackups = target.IsVaulted;
 
                 if (!File.Exists(Filename))
                 {
@@ -121,7 +125,6 @@ namespace RTCV.CorruptCore
                     SetBackup();
                 }
 
-                //getMemoryDump();
                 getMemorySize();
             }
             catch (Exception ex)
@@ -215,52 +218,34 @@ namespace RTCV.CorruptCore
             return true;
         }
 
-        public string getCorruptFilename(bool overrideWriteCopyMode = false)
-        {
-            if (overrideWriteCopyMode)
-            {
-                return Path.Combine(RtcCore.EmuDir, "FILEBACKUPS", getCompositeFilename());
-            }
-            else
-            {
-                return Filename;
-            }
-        }
+        //public string getCorruptFilename(bool overrideWriteCopyMode = false)
+        //{
+        //    if (overrideWriteCopyMode)
+        //    {
+        //        return Path.Combine(RtcCore.EmuDir, "FILEBACKUPS", getCompositeFilename());
+        //    }
+        //    else
+        //    {
+        //        return Filename;
+        //    }
+        //}
 
-        public string getBackupFilename()
-        {
-            return Path.Combine(RtcCore.EmuDir, "FILEBACKUPS", getCompositeFilename());
-        }
+        //public string getBackupFilename()
+        //{
+        //    return Path.Combine(RtcCore.EmuDir, "FILEBACKUPS", getCompositeFilename());
+        //}
 
         public override bool ResetWorkingFile()
         {
-            try
-            {
-                if (File.Exists(getCorruptFilename()))
-                {
-                    File.Delete(getCorruptFilename());
-                }
-            }
-            catch
-            {
-                MessageBox.Show($"Could not get access to {getCorruptFilename()}\n\nClose the file then try whatever you were doing again", "WARNING");
-                return false;
-            }
-
             SetWorkingFile();
             return true;
         }
 
         public string SetWorkingFile()
         {
-            string corruptFilename = getCorruptFilename();
+            Vault.CopyBackupToWorking(target);
 
-            if (!File.Exists(corruptFilename))
-            {
-                File.Copy(getBackupFilename(), corruptFilename, true);
-            }
-
-            return corruptFilename;
+            return target.WorkingFilePath;
         }
 
         public override bool ApplyWorkingFile()
@@ -273,14 +258,11 @@ namespace RTCV.CorruptCore
         {
             try
             {
-                if (!File.Exists(getBackupFilename()))
-                {
-                    File.Copy(Filename, getBackupFilename(), true);
-                }
+                Vault.CopyRealToBackup(target);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Couldn't set backup of {Filename}!");
+                MessageBox.Show($"Couldn't set backup of {target.RealFilePath}!");
                 logger.Debug(ex, "SetBackup failed");
                 return false;
             }
@@ -294,31 +276,18 @@ namespace RTCV.CorruptCore
                 return false;
             }
 
-            try
-            {
-                if (File.Exists(getBackupFilename()))
-                {
-                    File.Delete(getBackupFilename());
-                }
+            SetBackup();
 
-                SetBackup();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Couldn't reset backup of {Filename}!");
-                logger.Debug(ex, "ResetBackup failed");
-                return false;
-            }
             return true;
         }
 
         public override bool RestoreBackup(bool announce = true)
         {
-            if (File.Exists(getBackupFilename()))
+            if (File.Exists(target.BackupFilePath))
             {
                 try
                 {
-                    File.Copy(getBackupFilename(), Filename, true);
+                    Vault.CopyBackupToReal(target);
                 }
                 catch (Exception e)
                 {
@@ -351,11 +320,11 @@ namespace RTCV.CorruptCore
         {
             if (UseAutomaticFileBackups)
             {
-                lastMemoryDump = MemoryBanks.ReadFile(getBackupFilename());
+                lastMemoryDump = MemoryBanks.ReadFile(target.BackupFilePath);
             }
             else
             {
-                lastMemoryDump = MemoryBanks.ReadFile(Filename);
+                lastMemoryDump = MemoryBanks.ReadFile(target.RealFilePath);
             }
         }
 
@@ -535,5 +504,4 @@ namespace RTCV.CorruptCore
             }
         }
     }
-
 }

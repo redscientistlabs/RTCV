@@ -34,12 +34,13 @@ namespace RTCV.CorruptCore
                 {
                     try
                     {
-                        var fi = new FileInterface(
-                        targetId: "File|" + target.FilePath,
-                        bigEndian: BigEndian,
-                        useAutomaticFileBackups: true,
-                        startPadding: target.PaddingHeader,
-                        endPadding: target.PaddingFooter);
+                        var fi = new FileInterface(target);
+                        //var fi = new FileInterface(
+                        //targetId: "File|" + target.FilePath,
+                        //bigEndian: BigEndian,
+                        //useAutomaticFileBackups: true,
+                        //startPadding: target.PaddingHeader,
+                        //endPadding: target.PaddingFooter);
 
                         FileInterfaces.Add(fi);
                     }
@@ -95,21 +96,6 @@ namespace RTCV.CorruptCore
         public override string ToString()
         {
             return "Multiple Files";
-        }
-
-        public string getCompositeFilename()
-        {
-            return string.Join("|", FileInterfaces.Select(it => it.getCompositeFilename()));
-        }
-
-        public string getCorruptFilename(bool overrideWriteCopyMode = false)
-        {
-            return string.Join("|", FileInterfaces.Select(it => it.getCorruptFilename(overrideWriteCopyMode)));
-        }
-
-        public string getBackupFilename()
-        {
-            return string.Join("|", FileInterfaces.Select(it => it.getBackupFilename()));
         }
 
         public override bool ResetWorkingFile()
