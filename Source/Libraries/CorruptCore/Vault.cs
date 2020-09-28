@@ -4,6 +4,7 @@ namespace RTCV.CorruptCore
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Security.Cryptography.X509Certificates;
     using System.Text;
     using System.Threading.Tasks;
     using System.Windows.Forms;
@@ -55,11 +56,10 @@ namespace RTCV.CorruptCore
 
             string targetId = FileTarget.getTargetId(filePath, baseDir);
 
-            if (vaultDb.TryGetValue(targetId, out FileTarget target))
-            {
+            FileTarget target = null;
+            vaultDb.TryGetValue(targetId, out target);
 
-            }
-            else
+            if (target == null)
             {
                 target = new FileTarget(filePath, baseDir);
                 vaultDb[targetId] = target;
@@ -77,6 +77,39 @@ namespace RTCV.CorruptCore
         public static bool CopyRealToBackup(FileTarget target) => CopyTarget(target, FileTargetLocation.REAL, FileTargetLocation.BACKUP, false);
 
         public static bool CopyBackupToWorking(FileTarget target) => CopyTarget(target, FileTargetLocation.BACKUP, FileTargetLocation.WORKING, null);
+
+        internal static void Migrate(FileTarget target, string prevFilePath, string prevBaseDir, FileTargetLocation prevLocation, string newFilePath, string newFileDir, FileTargetLocation newLocation)
+        {
+            string prevKey = FileTarget.getTargetId(prevFilePath, prevBaseDir);
+            string newKey = FileTarget.getTargetId(newFilePath, newFileDir);
+
+            string getPath(string key, FileTargetLocation location)
+            {
+                switch (location)
+                {
+                    case FileTargetLocation.REAL:
+                        return target.RealFilePath;
+                    case FileTargetLocation.WORKING:
+                        return Path.Combine(Vault.vaultWorkingPath, key, new FileInfo(target.RealFilePath).Name);
+                    case FileTargetLocation.BACKUP:
+                        return Path.Combine(Vault.vaultBackupsPath, key, new FileInfo(target.RealFilePath).Name);
+                    default:
+                        throw null;
+                }
+            }
+
+            var prevFile = new FileInfo(getPath(prevKey, prevLocation));
+            var newFile = new FileInfo(getPath(newKey, newLocation));
+
+            if (!newFile.Directory.Exists)
+                newFile.Directory.Create();
+
+            if (newFile.Exists)
+                newFile.Delete();
+
+            File.Copy(prevFile.FullName, newFile.FullName);
+            Directory.Delete(prevFile.Directory.FullName, true);
+        }
 
         public static bool CopyBackupToReal(FileTarget target) => CopyTarget(target, FileTargetLocation.BACKUP, FileTargetLocation.REAL, false);
 

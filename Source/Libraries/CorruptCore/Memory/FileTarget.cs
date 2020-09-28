@@ -63,15 +63,30 @@ namespace RTCV.CorruptCore
 
         public bool SetBaseDir(string baseDir)
         {
-            if (baseDir == null)
-                return true;
-
-            if (!FilePath.Contains(baseDir))
+            if (string.IsNullOrWhiteSpace(baseDir))
+            {
                 return false;
+            }
 
-            BaseDir = baseDir;
-            FilePath = FilePath.Replace(baseDir, "");
-            return true;
+            if (string.IsNullOrWhiteSpace(BaseDir))
+            {
+
+                if (!FilePath.Contains(baseDir))
+                    return false;
+
+                string newFilePath = FilePath.Replace(baseDir, "");
+                Vault.Migrate(this, FilePath, BaseDir, FileTargetLocation.BACKUP, newFilePath, baseDir, FileTargetLocation.BACKUP);
+                BaseDir = baseDir;
+                FilePath = newFilePath;
+                return true;
+            }
+            else
+            {
+                Vault.Migrate(this, FilePath, BaseDir, FileTargetLocation.BACKUP, FilePath, baseDir, FileTargetLocation.BACKUP);
+                BaseDir = baseDir;
+                return true;
+            }
+
         }
 
         public string GetPathFromLocation(FileTargetLocation location)

@@ -90,7 +90,7 @@ namespace RTCV.CorruptCore
                 StartPadding = target.PaddingHeader;
                 EndPadding = target.PaddingFooter;
 
-                InterfaceUniquePrefix = Filename.CreateMD5().Substring(0, 4).ToUpper();
+                InterfaceUniquePrefix = target.FilePath.CreateMD5().Substring(0, 4).ToUpper();
                 this.UseAutomaticFileBackups = target.IsVaulted;
 
                 if (!File.Exists(Filename))
