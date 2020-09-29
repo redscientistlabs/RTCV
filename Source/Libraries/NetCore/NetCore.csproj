@@ -46,7 +46,7 @@
       <Version>1.0.19</Version>
     </PackageReference>
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
-      <Version>4.7.1</Version>
+      <Version>4.5.2</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
