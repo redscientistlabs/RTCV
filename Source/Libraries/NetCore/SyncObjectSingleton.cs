@@ -16,7 +16,7 @@ namespace RTCV.NetCore
         public static ActionDelegate EmuInvokeDelegate { get; set; }
         public static bool UseQueue { get; set; } = false;
         public static bool EmuThreadIsMainThread { get; set; } = false;
-        private static readonly WindowsFormsSynchronizationContext SynchronizationContext { get; set; } = new WindowsFormsSynchronizationContext();
+        private static WindowsFormsSynchronizationContext SynchronizationContext { get; } = new WindowsFormsSynchronizationContext();
 
         public static void FormExecute(Action a)
         {
