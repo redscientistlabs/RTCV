@@ -20,17 +20,25 @@ namespace RTCV.UI
         public static Color Dark3Color { get; private set; }
         public static Color Dark4Color { get; private set; }
 
-        public static void SetRTCColor(Color color, Control ctr)
+        public static void SetRTCColor(Color color, Control ctr, bool propagate = true)
         {
             HashSet<Control> allControls = new HashSet<Control>();
 
-            if (ctr is Form || ctr is UserControl)
+
+            if (propagate)
             {
-                foreach (var c in ctr.Controls.getControlsWithTag())
-                    allControls.Add(c);
-                allControls.Add(ctr);
+                if (ctr is Form || ctr is UserControl)
+                {
+                    foreach (var c in ctr.Controls.getControlsWithTag())
+                        allControls.Add(c);
+                    allControls.Add(ctr);
+                }
+                else if (ctr is Form)
+                {
+                    allControls.Add(ctr);
+                }
             }
-            else if (ctr is Form)
+            else
             {
                 allControls.Add(ctr);
             }

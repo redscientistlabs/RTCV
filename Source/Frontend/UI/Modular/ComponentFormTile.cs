@@ -14,6 +14,8 @@ namespace RTCV.UI
         public ComponentFormTile()
         {
             InitializeComponent();
+
+            Recolor(false);
         }
 
         internal void SetComponentForm(Form _childForm, int _sizeX, int _sizeY, bool DisplayHeader)

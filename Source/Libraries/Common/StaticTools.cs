@@ -11,7 +11,7 @@ namespace RTCV.Common
 
     public interface IColorize
     {
-        void Recolor();
+        void Recolor(bool propagate = true);
     }
 
     public class FormRegisteredEventArgs : EventArgs
