@@ -39,7 +39,7 @@
         "solutionPath": "dolphin-vanguard/Source/dolphin-emu.sln",
         "additionalBuildArguments": "/property:Platform=x64 /p:TreatWarningAsError=false",
         "forceReleaseFlavor": true,
-        "exe": "dolphin-vanguard/Build/x64/Release/Dolphin/bin"
+        "exe": "dolphin-vanguard/Build/x64/Release/Dolphin/bin/Dolphin.exe"
     },
     {
         "name": "pcsx2",
