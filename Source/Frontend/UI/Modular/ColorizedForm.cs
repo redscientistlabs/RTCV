@@ -18,9 +18,9 @@ namespace RTCV.UI.Modular
         }
 
         private void Colorize(object sender, EventArgs e) => Recolor();
-        public void Recolor(bool propagate = true)
+        public void Recolor()
         {
-            Colors.SetRTCColor(Colors.GeneralColor, this, propagate);
+            Colors.SetRTCColor(Colors.GeneralColor, this);
         }
     }
 }
