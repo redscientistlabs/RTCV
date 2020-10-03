@@ -4,7 +4,9 @@ class Project {
     [string]$PrintFriendlyName
     [string]$SolutionPath
     [string]$MSBuildArgs
-    [string]$ExecutablePath
+    [string]$DefaultExecutablePath
+    [string]$DebugExecutablePath
+    [string]$ReleaseExecutablePath
 
     static [Project[]] LoadFromJson([string]$ScriptDirectory)
     {
@@ -22,7 +24,22 @@ class Project {
     {
         $this.PrintFriendlyName = $jsonInput.name
         $this.SolutionPath = (Join-Path $ScriptDirectory -ChildPath (Join-Path "../.." $jsonInput.solutionPath))
-        $this.ExecutablePath = (Join-Path $ScriptDirectory -ChildPath (Join-Path "../.." $jsonInput.exe))
+
+        if ($jsonInput.exe)
+        {
+            $this.DefaultExecutablePath = (Join-Path $ScriptDirectory -ChildPath (Join-Path "../.." $jsonInput.exe))
+        }
+
+        if ($jsonInput.debugExe)
+        {
+            $this.DebugExecutablePath = (Join-Path $ScriptDirectory -ChildPath (Join-Path "../.." $jsonInput.debugExe))
+        }
+
+        if ($jsonInput.releaseExe)
+        {
+            $this.ReleaseExecutablePath = (Join-Path $ScriptDirectory -ChildPath (Join-Path "../.." $jsonInput.releaseExe))
+        }
+
         $this.MSBuildArgs = $($jsonInput.additionalBuildArguments)
         if ($jsonInput.forceReleaseFlavor)
         {
@@ -57,8 +74,23 @@ class Project {
                                   "msbuild '$($this.SolutionPath)' $($this.MSBuildArgs -Split " ") /consoleloggerparameters:ErrorsOnly /nologo -m")
     }
 
-    [void] Run()
+    [void] Run([bool]$Release)
     {
-        Start-Process $this.ExecutablePath
+        if ($Release -and $this.ReleaseExecutablePath)
+        {
+            Start-Process $this.ReleaseExecutablePath
+        }
+        elseif (!$Release -and $this.DebugExecutablePath)
+        {
+            Start-Process $this.DebugExecutablePath
+        }
+        elseif ($this.DefaultExecutablePath)
+        {
+            Start-Process $this.DefaultExecutablePath
+        }
+        else
+        {
+            Write-Host "$($this.PrintFriendlyName) FAILED. No executable available for configuration" -ForegroundColor Red
+        }
     }
 }

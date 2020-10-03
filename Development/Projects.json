@@ -45,7 +45,8 @@
         "name": "pcsx2",
         "solutionPath": "pcsx2-Vanguard/PCSX2_suite.sln",
         "additionalBuildArguments": "/property:Platform=Win32",
-        "exe": "pcsx2-Vanguard/bin/pcsx2.exe"
+        "releaseExe": "pcsx2-Vanguard/bin/pcsx2.exe",
+        "debugExe": "pcsx2-Vanguard/bin/pcsx2-dbg.exe"
     },
     {
         "name": "citra",
