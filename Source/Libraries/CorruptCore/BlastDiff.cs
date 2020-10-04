@@ -17,9 +17,7 @@ namespace RTCV.CorruptCore
 
             (Corrupt as FileInterface).getMemoryDump(); //gotta cache it otherwise it's going to be super slow
 
-            string[] selectedDomains = AllSpec.UISpec["SELECTEDDOMAINS"] as string[];
-
-            if (selectedDomains == null || selectedDomains.Length == 0)
+            if (!(AllSpec.UISpec["SELECTEDDOMAINS"] is string[] selectedDomains) || selectedDomains.Length == 0)
             {
                 MessageBox.Show("Error: No domain is selected");
                 return null;
