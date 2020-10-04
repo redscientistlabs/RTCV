@@ -1,4 +1,4 @@
-﻿namespace RTCV.NetCore
+namespace RTCV.NetCore
 {
     using System;
     using System.Collections.Generic;
@@ -12,9 +12,9 @@
 
         public static T registerEndpoint<T>(T endpoint, string name)
         {
-            if (endpoint is IRoutable)
+            if (endpoint is IRoutable routable)
             {
-                endpoints[name] = (IRoutable)endpoint;
+                endpoints[name] = routable;
             }
             else
             {

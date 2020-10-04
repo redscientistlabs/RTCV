@@ -111,9 +111,9 @@ namespace RTCV.UI
             {
                 return 1; //first has value, second doesn't
             }
-            if (lhsValue is IComparable)
+            if (lhsValue is IComparable lhsComparable)
             {
-                return ((IComparable)lhsValue).CompareTo(rhsValue);
+                return lhsComparable.CompareTo(rhsValue);
             }
             if (lhsValue.Equals(rhsValue))
             {

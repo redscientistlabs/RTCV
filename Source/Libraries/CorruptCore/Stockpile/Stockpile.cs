@@ -728,8 +728,7 @@ namespace RTCV.CorruptCore
                 return;
             }
 
-            string[] configPaths = AllSpec.VanguardSpec[VSPEC.CONFIG_PATHS] as string[];
-            if (configPaths == null)
+            if (!(AllSpec.VanguardSpec[VSPEC.CONFIG_PATHS] is string[] configPaths))
             {
                 throw new Exception("ConfigMode was set but ConfigPath was null!");
             }
