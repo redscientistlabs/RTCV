@@ -15,4 +15,4 @@ jobs:
     - name: MSTest help menu
       run: '& "$(vswhere -property installationPath)\Common7\IDE\MSTest.exe" /help'
     - name: Run tests with MSTest
-      run: '& "$(vswhere -property installationPath)\Common7\IDE\MSTest.exe" /testcontainer:\Build\SerializationTests.dll'
+      run: '& "$(vswhere -property installationPath)\Common7\IDE\MSTest.exe" /testcontainer:Build\SerializationTests.dll'
