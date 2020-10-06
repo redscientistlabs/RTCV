@@ -414,8 +414,7 @@ namespace RTCV.UI
         {
             ((ToolStripMenuItem)cms.Items.Add("Open Selected Address in Hex Editor", null, new EventHandler((ob, ev) =>
             {
-                var bu = dgvBlastEditor.Rows[cell.RowIndex]?.DataBoundItem as BlastUnit;
-                if (bu == null)
+                if (!(dgvBlastEditor.Rows[cell.RowIndex]?.DataBoundItem is BlastUnit bu))
                 {
                     return;
                 }

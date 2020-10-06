@@ -74,8 +74,7 @@ namespace RTCV.UI
             _sortProperty = prop;
             _sortDirection = direction;
 
-            List<T> list = Items as List<T>;
-            if (list == null)
+            if (!(Items is List<T> list))
             {
                 return;
             }
