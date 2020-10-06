@@ -21,7 +21,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
 
         private void UpdateMinValue(object sender, EventArgs e)
         {
-            //We don't want to trigger this if it caps when stepping downwards	
+            //We don't want to trigger this if it caps when stepping downwards
             if (updatingMinMax)
             {
                 return;
@@ -48,7 +48,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
 
         private void UpdateMaxValue(object sender, EventArgs e)
         {
-            //We don't want to trigger this if it caps when stepping downwards	
+            //We don't want to trigger this if it caps when stepping downwards
             if (updatingMinMax)
             {
                 return;

@@ -576,7 +576,6 @@ This message only appears once.";
                 //Force control to commit new values
                 S.GET<GeneralParametersForm>().multiTB_Intensity.OnValueChanged(null);
                 S.GET<GeneralParametersForm>().multiTB_ErrorDelay.OnValueChanged(null);
-
             }
 
             S.GET<CoreForm>().AutoCorrupt = true;

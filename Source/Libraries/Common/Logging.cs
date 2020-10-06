@@ -15,11 +15,12 @@ namespace RTCV.Common
 
     public static class Logging
     {
+        private const int logsToKeep = 5;
+
         public static Logger GlobalLogger { get; private set; } = LogManager.GetLogger("Global");
         public static Layout CurrentLayout { get; private set; }
 
         private static readonly LogLevel minLevel = LogLevel.Trace;
-        private const int logsToKeep = 5;
 
         public static void StartLogging(string filename)
         {

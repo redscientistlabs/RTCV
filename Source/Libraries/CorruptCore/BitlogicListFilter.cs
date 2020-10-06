@@ -13,15 +13,16 @@ namespace RTCV.CorruptCore
     [Ceras.MemberConfig(TargetMember.All)]
     public class BitlogicListFilter : IListFilter
     {
+        //Could be moved to a common location
+        const char CHAR_WILD = '?';
+        const char CHAR_PASS = '#';
+        const char CHAR_FLAG = '@';
+
         List<BitlogicFilterEntry> entries = new List<BitlogicFilterEntry>();
         private HashSet<string> options = new HashSet<string>();
 
         private int precision = 0;
 
-        //Could be moved to a common location
-        const char CHAR_WILD = '?';
-        const char CHAR_PASS = '#';
-        const char CHAR_FLAG = '@';
 
         public string Initialize(string filePath, string[] dataLines, bool flipBytes, bool syncListViaNetcore)
         {

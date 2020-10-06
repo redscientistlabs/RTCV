@@ -8,9 +8,9 @@ namespace RTCV.UI.Extensions
 
     public static class ControlExtensions
     {
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-
         private const int SRCCOPY = 0xCC0020;
+
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         [DllImport("gdi32.dll")]
         private static extern int BitBlt(IntPtr hdc, int x, int y, int cx, int cy, IntPtr hdcSrc, int x1, int y1, int rop);

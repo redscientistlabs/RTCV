@@ -59,6 +59,12 @@ namespace RTCV.UI
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class BlastEditorForm : Modular.ColorizedForm
     {
+        private const int buttonFillWeight = 20;
+        private const int checkBoxFillWeight = 25;
+        private const int comboBoxFillWeight = 40;
+        private const int textBoxFillWeight = 30;
+        private const int numericUpDownFillWeight = 35;
+
         private static Dictionary<string, MemoryInterface> _domainToMiDico;
 
         private static Dictionary<string, MemoryInterface> DomainToMiDico
@@ -74,11 +80,6 @@ namespace RTCV.UI
         private ContextMenuStrip headerStrip;
         private ContextMenuStrip cms;
         private Dictionary<string, Control> property2ControlDico;
-        private const int buttonFillWeight = 20;
-        private const int checkBoxFillWeight = 25;
-        private const int comboBoxFillWeight = 40;
-        private const int textBoxFillWeight = 30;
-        private const int numericUpDownFillWeight = 35;
         private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private enum BuProperty
