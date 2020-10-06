@@ -222,10 +222,13 @@ namespace RTCV.UI
 
                             string domain;
                             if (vmd.CompactPointerDomains.Length > 0)
+                            {
                                 domain = vmd.CompactPointerDomains.FirstOrDefault();
+                            }
                             else
+                            {
                                 domain = vmd.PointerDomains.FirstOrDefault();
-
+                            }
 
                             if (domain != null)
                             {
@@ -253,7 +256,9 @@ namespace RTCV.UI
 
                         string extraVector = "";
                         if (MemoryDomains.VmdPool.ContainsKey($"[V]{mi.Value} -- {vectorLimiter}"))
+                        {
                             extraVector = " (Regenerate)";
+                        }
 
                         var currentListMenuItem = new ToolStripMenuItem();
                         currentListMenuItem.Text = mi.Key.ToString();
@@ -275,7 +280,9 @@ namespace RTCV.UI
 
                             string extra = "";
                             if (MemoryDomains.VmdPool.ContainsKey($"[V]{mi.Value} -- {listName}"))
+                            {
                                 extra = " (Regenerate)";
+                            }
 
                             subMenuItem.Text = "-> " + listName + extra;
 

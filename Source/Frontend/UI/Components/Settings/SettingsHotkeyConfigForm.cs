@@ -65,7 +65,9 @@ namespace RTCV.UI
             var missing = def.Where(it => UICore.HotkeyBindings.FirstOrDefault(it2 => it2.DisplayName == it.DisplayName) == null);
 
             foreach (var bind in missing)
+            {
                 UICore.HotkeyBindings.Add(bind);
+            }
         }
 
         private static void LoadHotkeys()

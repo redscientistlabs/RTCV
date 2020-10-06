@@ -89,10 +89,13 @@ namespace RTCV.NetCore
         {
             string szdll = "";
             if (Environment.Is64BitProcess)
+            {
                 szdll = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "7z.dll");
+            }
             else
+            {
                 szdll = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "7z32.dll");
-
+            }
 
             if (btnSendDebug.Text != "Fetch data") //If not in receive mode
             {

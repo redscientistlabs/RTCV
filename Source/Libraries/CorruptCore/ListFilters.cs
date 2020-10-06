@@ -249,9 +249,13 @@ namespace RTCV.CorruptCore
             for (int i = 0; i < value.Length; i++)
             {
                 if (value[i] == null)
+                {
                     outValue[i] = (byte)RtcCore.RND.Next(255); //filling wildcards with random(255)
+                }
                 else
+                {
                     outValue[i] = value[i].Value;
+                }
             }
 
             //Copy the value to a working array

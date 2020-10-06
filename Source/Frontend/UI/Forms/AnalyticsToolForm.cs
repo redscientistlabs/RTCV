@@ -99,7 +99,9 @@ namespace RTCV.UI
         private void SelectAllDumps(object sender, EventArgs e)
         {
             for (int i = 0; i < lbDumps.Items.Count; i++)
+            {
                 lbDumps.SetSelected(i, true);
+            }
         }
 
         private void SelectNoDumps(object sender, EventArgs e)
@@ -179,12 +181,16 @@ namespace RTCV.UI
                         List<byte[]> stripe = new List<byte[]>();
 
                         for (int x = 0; x < AnalyticsCube.Cube.Count; x++)
+                        {
                             stripe.Add(AnalyticsCube.GetWord(x, y));
+                        }
 
                         int crunchedActivity = AnalyticsCube.CrunchAlgoChain(stripe);
 
                         if (maxActivity < crunchedActivity)
+                        {
                             maxActivity = crunchedActivity;
+                        }
 
                         activity.Add(crunchedActivity);
                     }
@@ -205,7 +211,9 @@ namespace RTCV.UI
             foreach (var ret in returns)
             {
                 if (maxActivity < ret.maxActivity)
+                {
                     maxActivity = ret.maxActivity;
+                }
 
                 fullActivity.AddRange(ret.activity);
             }
@@ -226,7 +234,9 @@ namespace RTCV.UI
             List<double> output = new List<double>();
 
             foreach (var activity in fullActivity)
+            {
                 output.Add(Convert.ToDouble(activity) / Convert.ToDouble(maxActivity));
+            }
 
             return output;
         }
@@ -242,7 +252,9 @@ namespace RTCV.UI
             for (int i = 0; i < stripe.Count; i++)
             {
                 if (i == 0)
+                {
                     continue;
+                }
 
                 bool hasActivity = false;
 
@@ -259,7 +271,9 @@ namespace RTCV.UI
                 }
 
                 if (hasActivity)
+                {
                     activity++;
+                }
             }
 
             return activity;
@@ -289,13 +303,17 @@ namespace RTCV.UI
         internal static void Push(byte[] dump, int wordSize)
         {
             if (Cube == null)
+            {
                 Init();
+            }
 
             int nbWords = (dump.Length / wordSize);
             var Square = new List<byte[]>();
 
             for (int i = 0; i < nbWords; i++)
+            {
                 Square.Add(getWord(dump, wordSize, i));
+            }
 
             Cube.Add(Square);
         }
@@ -305,7 +323,9 @@ namespace RTCV.UI
             byte[] output = new byte[wordSize];
 
             for (int i = 0; i < wordSize; i++)
+            {
                 output[i] = dump[index + i];
+            }
 
             return output;
         }

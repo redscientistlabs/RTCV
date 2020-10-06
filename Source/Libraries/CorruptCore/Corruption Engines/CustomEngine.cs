@@ -161,7 +161,9 @@ namespace RTCV.CorruptCore
 
                 MemoryInterface mi = MemoryDomains.GetInterface(domain);
                 if (mi == null)
+                {
                     return null;
+                }
 
                 byte[] value = new byte[precision];
                 long safeAddress = address - (address % precision) + alignment;

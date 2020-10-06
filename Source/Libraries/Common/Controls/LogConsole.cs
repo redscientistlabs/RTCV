@@ -33,7 +33,10 @@ namespace RTCV.Common.Forms
             get
             {
                 if (_logger != null)
+                {
                     return _logger;
+                }
+
                 InitializeFromGlobalLogger();
                 return _logger;
             }
@@ -91,7 +94,9 @@ namespace RTCV.Common.Forms
         public void InitializeCustomLogger(int maxLines, Layout layout, string fileName = null)
         {
             if (layout == null)
+            {
                 layout = "${level} ${logger} ${message} ${onexception:|${newline}EXCEPTION OCCURRED\\:${exception:format=type,message,method:maxInnerExceptionLevel=5:innerFormat=shortType,message,method}${newline}";
+            }
 
             var config = new NLog.Config.LoggingConfiguration();
 

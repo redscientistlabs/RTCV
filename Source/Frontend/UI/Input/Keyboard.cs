@@ -1,4 +1,4 @@
-﻿//Most of this code is lifted from Bizhawk
+//Most of this code is lifted from Bizhawk
 //https://github.com/tasvideos/bizhawk
 //Thanks guys
 
@@ -55,19 +55,29 @@ namespace RTCV.UI.Input
                 _eventList.Clear();
 
                 if (_keyboard == null || _keyboard.Acquire().IsFailure || _keyboard.Poll().IsFailure)
+                {
                     return _eventList;
+                }
 
                 for (; ; )
                 {
                     var events = _keyboard.GetBufferedData();
                     if (Result.Last.IsFailure || events.Count == 0)
+                    {
                         break;
+                    }
+
                     foreach (var e in events)
                     {
                         foreach (var k in e.PressedKeys)
+                        {
                             _eventList.Add(new KeyEvent { Key = k, Pressed = true });
+                        }
+
                         foreach (var k in e.ReleasedKeys)
+                        {
                             _eventList.Add(new KeyEvent { Key = k, Pressed = false });
+                        }
                     }
                 }
 

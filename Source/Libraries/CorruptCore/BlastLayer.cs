@@ -58,7 +58,9 @@ namespace RTCV.CorruptCore
                     if (UnCorruptBL_Backup.Layer != null)
                     {
                         if (StockpileManagerEmuSide.UnCorruptBL.Layer == null)
+                        {
                             StockpileManagerEmuSide.UnCorruptBL.Layer = new List<BlastUnit>();
+                        }
 
                         StockpileManagerEmuSide.UnCorruptBL.Layer.AddRange(UnCorruptBL_Backup.Layer);
                     }
@@ -66,7 +68,9 @@ namespace RTCV.CorruptCore
                     if (CorruptBL_Backup.Layer != null)
                     {
                         if (StockpileManagerEmuSide.CorruptBL.Layer == null)
+                        {
                             StockpileManagerEmuSide.CorruptBL.Layer = new List<BlastUnit>();
+                        }
 
                         StockpileManagerEmuSide.CorruptBL.Layer.AddRange(CorruptBL_Backup.Layer);
                     }

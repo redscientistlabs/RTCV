@@ -52,7 +52,9 @@ namespace RTCV.UI
                 string listPath = Path.Combine(RtcCore.ListsDir, item.ToString().Replace("[DISABLED] ", "$"));
 
                 if (File.Exists(listPath))
+                {
                     File.Delete(listPath);
+                }
             }
 
             RefreshLists();
@@ -63,7 +65,9 @@ namespace RTCV.UI
             lbKnownLists.Items.Clear();
 
             if (!Directory.Exists(RtcCore.ListsDir))
+            {
                 Directory.CreateDirectory(RtcCore.ListsDir);
+            }
 
             var files = Directory.GetFiles(RtcCore.ListsDir).OrderBy(it => it.Replace("$", ""));
             foreach (var file in files)
@@ -123,8 +127,9 @@ namespace RTCV.UI
             btnRemoveList.Enabled = false;
 
             if (lbKnownLists.SelectedItem == null)
+            {
                 return;
-
+            }
 
             if (lbKnownLists.SelectedItems.Count == 1)
             {
@@ -159,7 +164,9 @@ namespace RTCV.UI
         private void SaveSelectedList(object sender, EventArgs e)
         {
             if (lbKnownLists.SelectedIndex == -1)
+            {
                 return;
+            }
 
             string listName = lbKnownLists.SelectedItem.ToString().Replace("[DISABLED] ", "");
             string path = Path.Combine(RtcCore.ListsDir, listName);
@@ -195,7 +202,9 @@ namespace RTCV.UI
         private void LoadSelectedList(object sender, EventArgs e)
         {
             if (lbKnownLists.SelectedIndex == -1)
+            {
                 return;
+            }
 
             foreach (var item in lbKnownLists.SelectedItems)
             {
@@ -204,7 +213,9 @@ namespace RTCV.UI
 
                 string cleanListName = listName.Replace("[DISABLED] ", "$");
                 if (cleanListName[0] == '$')
+                {
                     cleanListName = cleanListName.Substring(1);
+                }
 
                 string pathDisabled = Path.Combine(RtcCore.ListsDir, "$" + cleanListName);
                 string pathEnabled = Path.Combine(RtcCore.ListsDir, cleanListName);
@@ -237,7 +248,9 @@ namespace RTCV.UI
         private void RenameSelectedList(object sender, EventArgs e)
         {
             if (lbKnownLists.SelectedIndex == -1)
+            {
                 return;
+            }
 
             string vmdName = lbKnownLists.SelectedItem.ToString().Replace("[DISABLED] ", "$");
 

@@ -46,7 +46,9 @@ namespace RTCV.Plugins.HexEditor
 
                         MemoryInterface mi = MemoryDomains.GetInterface(domain);
                         if (mi == null)
+                        {
                             break;
+                        }
 
                         SyncObjectSingleton.FormExecute(() =>
                         {

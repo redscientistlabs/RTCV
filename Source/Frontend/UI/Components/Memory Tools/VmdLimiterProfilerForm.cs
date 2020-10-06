@@ -223,18 +223,22 @@ namespace RTCV.UI
             var ceForm = S.GET<CorruptionEngineForm>();
 
             foreach (var item in cbSelectedMemoryDomain.Items)
+            {
                 if (item.ToString() == mi.ToString())
                 {
                     cbSelectedMemoryDomain.SelectedItem = item;
                     break;
                 }
+            }
 
             foreach (ComboBoxItem<string> item in ceForm.VectorEngineControl.cbVectorLimiterList.Items)
+            {
                 if (item.Name == limiter)
                 {
                     ceForm.VectorEngineControl.cbVectorLimiterList.SelectedItem = item;
                     break;
                 }
+            }
 
             ComboBoxItem<string> cbItem = (ComboBoxItem<string>)((ComboBox)ceForm.VectorEngineControl.cbVectorLimiterList).SelectedItem;
             if (cbItem != null)
