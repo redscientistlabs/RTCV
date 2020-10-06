@@ -1,8 +1,8 @@
-name: Build
+name: Build and test RTCV
 on: [push, pull_request]
 
 jobs:
-  RTCV:
+  buildAndTest:
     runs-on: windows-2019
     steps:
     - uses: actions/checkout@v1
@@ -12,3 +12,5 @@ jobs:
       run: msbuild RTCV.sln /t:restore
     - name: Build with MSBuild
       run: msbuild RTCV.sln
+    - name: Run tests with MSTest # Thanks to this post https://stackoverflow.com/a/62010912/1222411
+      run: '& "$(vswhere -property installationPath)\Common7\IDE\MSTest.exe" /testcontainer:Build\SerializationTests.dll'
