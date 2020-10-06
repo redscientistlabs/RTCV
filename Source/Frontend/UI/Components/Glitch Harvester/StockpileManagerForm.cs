@@ -126,7 +126,10 @@ namespace RTCV.UI
                     //If you shift-select you get things in the order you'd expect (start > end).
                     //If you ctrl+select, you get things in the reverse order (the most recent selected gets inserted at the start of the list)
                     if (IsControlDown())
+                    {
                         sks.Reverse();
+                    }
+
                     StockpileManagerUISide.MergeStashkeys(sks);
 
                     if (Render.RenderAtLoad && S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation)

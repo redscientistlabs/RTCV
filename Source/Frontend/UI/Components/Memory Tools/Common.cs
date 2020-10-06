@@ -22,7 +22,9 @@ namespace RTCV.UI
                 {
                     var result = MessageBox.Show("This file already exist in your VMDs folder, do you want to overwrite it?", "Overwrite file?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                     if (result == DialogResult.No)
+                    {
                         throw new OverwriteCancelledException();
+                    }
                 }
 
                 File.Delete(targetPath);

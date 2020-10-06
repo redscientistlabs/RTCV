@@ -75,9 +75,13 @@ namespace RTCV.Common
             var isDebug = false;
             Debug.Assert(isDebug = true);
             if (Environment.GetCommandLineArgs().Contains("-TRACE") || isDebug)
+            {
                 config.AddRule(LogLevel.Trace, LogLevel.Fatal, logconsole);
+            }
             else
+            {
                 config.AddRule(LogLevel.Debug, LogLevel.Fatal, logconsole);
+            }
             // Rules for mapping loggers to targets
             //config.AddRule(LogLevel.Trace, LogLevel.Fatal, logfile);
 

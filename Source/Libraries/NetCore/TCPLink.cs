@@ -158,7 +158,9 @@ namespace RTCV.NetCore
                     {
                         var stopThread = ProcessPeerMessage(ref serializer, ref networkStream);
                         if (stopThread)
+                        {
                             return;
+                        }
                     }
 
                     Thread.Sleep(spec.messageReadTimerDelay);

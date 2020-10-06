@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI.Input
+namespace RTCV.UI.Input
 {
     using System;
     using System.Collections.Generic;
@@ -15,8 +15,15 @@
         /// </summary>
         public void ControlInputFocus(System.Windows.Forms.Control c, FocusTypes types, bool wants)
         {
-            if (types.HasFlag(FocusTypes.Mouse) && wants) WantingMouseFocus.Add(c);
-            if (types.HasFlag(FocusTypes.Mouse) && !wants) WantingMouseFocus.Remove(c);
+            if (types.HasFlag(FocusTypes.Mouse) && wants)
+            {
+                WantingMouseFocus.Add(c);
+            }
+
+            if (types.HasFlag(FocusTypes.Mouse) && !wants)
+            {
+                WantingMouseFocus.Remove(c);
+            }
         }
 
         readonly HashSet<System.Windows.Forms.Control> WantingMouseFocus = new HashSet<System.Windows.Forms.Control>();
@@ -71,8 +78,15 @@
         void HandleButton(string button, bool newState)
         {
             bool isModifier = IgnoreKeys.Contains(button);
-            if (LastState[button] && newState) return;
-            if (!LastState[button] && !newState) return;
+            if (LastState[button] && newState)
+            {
+                return;
+            }
+
+            if (!LastState[button] && !newState)
+            {
+                return;
+            }
 
             //apply
             //NOTE: this is not quite right. if someone held leftshift+rightshift it would be broken. seems unlikely, though.
@@ -80,17 +94,43 @@
             {
                 _Modifiers &= ~ModifierKeys.Shift;
                 if (newState)
+                {
                     _Modifiers |= ModifierKeys.Shift;
+                }
             }
-            if (button == "RightShift") { _Modifiers &= ~ModifierKeys.Shift; if (newState) _Modifiers |= ModifierKeys.Shift; }
-            if (button == "LeftControl") { _Modifiers &= ~ModifierKeys.Control; if (newState) _Modifiers |= ModifierKeys.Control; }
-            if (button == "RightControl") { _Modifiers &= ~ModifierKeys.Control; if (newState) _Modifiers |= ModifierKeys.Control; }
-            if (button == "LeftAlt") { _Modifiers &= ~ModifierKeys.Alt; if (newState) _Modifiers |= ModifierKeys.Alt; }
-            if (button == "RightAlt") { _Modifiers &= ~ModifierKeys.Alt; if (newState) _Modifiers |= ModifierKeys.Alt; }
+            if (button == "RightShift") { _Modifiers &= ~ModifierKeys.Shift; if (newState)
+                {
+                    _Modifiers |= ModifierKeys.Shift;
+                }
+            }
+            if (button == "LeftControl") { _Modifiers &= ~ModifierKeys.Control; if (newState)
+                {
+                    _Modifiers |= ModifierKeys.Control;
+                }
+            }
+            if (button == "RightControl") { _Modifiers &= ~ModifierKeys.Control; if (newState)
+                {
+                    _Modifiers |= ModifierKeys.Control;
+                }
+            }
+            if (button == "LeftAlt") { _Modifiers &= ~ModifierKeys.Alt; if (newState)
+                {
+                    _Modifiers |= ModifierKeys.Alt;
+                }
+            }
+            if (button == "RightAlt") { _Modifiers &= ~ModifierKeys.Alt; if (newState)
+                {
+                    _Modifiers |= ModifierKeys.Alt;
+                }
+            }
 
             if (UnpressState.ContainsKey(button))
             {
-                if (newState) return;
+                if (newState)
+                {
+                    return;
+                }
+
                 Console.WriteLine("Removing Unpress {0} with newState {1}", button, newState);
                 UnpressState.Remove(button);
                 LastState[button] = false;
@@ -99,12 +139,35 @@
 
             //dont generate events for things like Ctrl+LeftControl
             ModifierKeys mods = _Modifiers;
-            if (button == "LeftShift") mods &= ~ModifierKeys.Shift;
-            if (button == "RightShift") mods &= ~ModifierKeys.Shift;
-            if (button == "LeftControl") mods &= ~ModifierKeys.Control;
-            if (button == "RightControl") mods &= ~ModifierKeys.Control;
-            if (button == "LeftAlt") mods &= ~ModifierKeys.Alt;
-            if (button == "RightAlt") mods &= ~ModifierKeys.Alt;
+            if (button == "LeftShift")
+            {
+                mods &= ~ModifierKeys.Shift;
+            }
+
+            if (button == "RightShift")
+            {
+                mods &= ~ModifierKeys.Shift;
+            }
+
+            if (button == "LeftControl")
+            {
+                mods &= ~ModifierKeys.Control;
+            }
+
+            if (button == "RightControl")
+            {
+                mods &= ~ModifierKeys.Control;
+            }
+
+            if (button == "LeftAlt")
+            {
+                mods &= ~ModifierKeys.Alt;
+            }
+
+            if (button == "RightAlt")
+            {
+                mods &= ~ModifierKeys.Alt;
+            }
 
             var ie = new InputEvent
             {
@@ -135,7 +198,9 @@
                         EventType = InputEventType.Release
                     };
                     if (ieModified.LogicalButton != alreadyReleased)
+                    {
                         _NewEvents.Add(ieModified);
+                    }
                 }
                 ModifierState[button] = null;
             }
@@ -161,8 +226,14 @@
         {
             lock (this)
             {
-                if (InputEvents.Count == 0) return null;
-                else return InputEvents.Dequeue();
+                if (InputEvents.Count == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return InputEvents.Dequeue();
+                }
             }
         }
 
@@ -180,7 +251,9 @@
             lock (FloatValues)
             {
                 foreach (var kvp in FloatValues)
+                {
                     FloatValuesCopy.Add(new Tuple<string, float>(kvp.Key, kvp.Value));
+                }
             }
             return FloatValuesCopy;
         }
@@ -190,7 +263,9 @@
             for (; ; )
             {
                 if (KillUpdateThread)
+                {
                     return;
+                }
 
                 var keyEvents = KeyInput.Update();
                 GamePad.UpdateAll();
@@ -203,7 +278,9 @@
 
                     //analyze keys
                     foreach (var ke in keyEvents)
+                    {
                         HandleButton(ke.Key.ToString(), ke.Pressed);
+                    }
 
                     lock (FloatValues)
                     {
@@ -214,13 +291,19 @@
                         {
                             string xname = "X" + pad.PlayerNumber + " ";
                             for (int b = 0; b < pad.NumButtons; b++)
+                            {
                                 HandleButton(xname + pad.ButtonName(b), pad.Pressed(b));
+                            }
+
                             foreach (var sv in pad.GetFloats())
                             {
                                 string n = xname + sv.Item1;
                                 float f = sv.Item2;
                                 if (trackdeltas)
+                                {
                                     FloatDeltas[n] += Math.Abs(f - FloatValues[n]);
+                                }
+
                                 FloatValues[n] = f;
                             }
                         }
@@ -230,7 +313,10 @@
                         {
                             string jname = "J" + pad.PlayerNumber + " ";
                             for (int b = 0; b < pad.NumButtons; b++)
+                            {
                                 HandleButton(jname + pad.ButtonName(b), pad.Pressed(b));
+                            }
+
                             foreach (var sv in pad.GetFloats())
                             {
                                 string n = jname + sv.Item1;
@@ -238,7 +324,10 @@
                                 //if (n == "J5 RotationZ")
                                 //    System.Diagnostics.Debugger.Break();
                                 if (trackdeltas)
+                                {
                                     FloatDeltas[n] += Math.Abs(f - FloatValues[n]);
+                                }
+
                                 FloatValues[n] = f;
                             }
                         }
@@ -319,7 +408,9 @@
                 {
                     // need to wiggle the stick a bit
                     if (kvp.Value >= 20000.0f)
+                    {
                         return kvp.Key;
+                    }
                 }
             }
             return null;
@@ -345,8 +436,15 @@
             //this whole process is intimately involved with the data structures, which can conflict with the input thread.
             lock (this)
             {
-                if (InputEvents.Count == 0) return null;
-                if (!(bool?)AllSpec.UISpec[NetCore.Commands.Basic.RTCInFocus] ?? true) return null;
+                if (InputEvents.Count == 0)
+                {
+                    return null;
+                }
+
+                if (!(bool?)AllSpec.UISpec[NetCore.Commands.Basic.RTCInFocus] ?? true)
+                {
+                    return null;
+                }
 
                 //we only listen to releases for input binding, because we need to distinguish releases of pure modifierkeys from modified keys
                 //if you just pressed ctrl, wanting to bind ctrl, we'd see: pressed:ctrl, unpressed:ctrl
@@ -359,19 +457,26 @@
 
                     //as a special perk, we'll accept escape immediately
                     if (ie.EventType == InputEventType.Press && ie.LogicalButton.Button == "Escape")
+                    {
                         goto ACCEPT;
+                    }
 
-                    if (ie.EventType == InputEventType.Press) continue;
+                    if (ie.EventType == InputEventType.Press)
+                    {
+                        continue;
+                    }
 
-                    ACCEPT:
+ACCEPT:
                     Console.WriteLine("Bind Event: {0} ", ie);
 
                     foreach (var kvp in LastState)
+                    {
                         if (kvp.Value)
                         {
                             Console.WriteLine("Unpressing " + kvp.Key);
                             UnpressState[kvp.Key] = true;
                         }
+                    }
 
                     InputEvents.Clear();
 

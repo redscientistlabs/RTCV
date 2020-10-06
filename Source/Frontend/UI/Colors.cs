@@ -27,7 +27,10 @@ namespace RTCV.UI
             if (ctr is Form || ctr is UserControl)
             {
                 foreach (var c in ctr.Controls.getControlsWithTag())
+                {
                     allControls.Add(c);
+                }
+
                 allControls.Add(ctr);
             }
             else if (ctr is Form)

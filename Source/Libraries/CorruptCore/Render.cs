@@ -52,18 +52,25 @@ namespace RTCV.CorruptCore
             if (IsRendering)
             {
                 if (vanguardSupportsRendering)
+                {
                     StopRender();
+                }
                 else if (Renderer != null)
+                {
                     Renderer.StopRender();
+                }
             }
 
             IsRendering = true;
 
             if (vanguardSupportsRendering)
+            {
                 LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.RenderStart, true);
+            }
             else
+            {
                 Renderer.StopRender();
-
+            }
 
             return true;
         }
@@ -75,7 +82,9 @@ namespace RTCV.CorruptCore
             IsRendering = false;
 
             if (vanguardSupportsRendering)
+            {
                 LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.RenderStop, true);
+            }
         }
 
         public enum RENDERTYPE

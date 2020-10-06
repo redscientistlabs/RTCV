@@ -20,9 +20,21 @@ namespace RTCV.UI.Input
         public override string ToString()
         {
             string ret = "";
-            if (Control) ret += "Ctrl+";
-            if (Alt) ret += "Alt+";
-            if (Shift) ret += "Shift+";
+            if (Control)
+            {
+                ret += "Ctrl+";
+            }
+
+            if (Alt)
+            {
+                ret += "Alt+";
+            }
+
+            if (Shift)
+            {
+                ret += "Shift+";
+            }
+
             ret += Button;
             return ret;
         }

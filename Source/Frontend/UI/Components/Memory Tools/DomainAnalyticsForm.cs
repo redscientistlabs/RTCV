@@ -38,7 +38,9 @@ namespace RTCV.UI
                 return;
             }
             if (MemoryDumps == null)
+            {
                 return;
+            }
 
             string key = RtcCore.GetRandomKey();
 
@@ -49,7 +51,9 @@ namespace RTCV.UI
             lbNbMemoryDumps.Text = "Memory dumps collected: " + MemoryDumps.Count.ToString();
 
             if (MemoryDumps.Count > 1)
+            {
                 btnSendToAnalytics.Enabled = true;
+            }
         }
 
         private void InitializeDumpCollection(object sender, EventArgs e)
@@ -76,7 +80,9 @@ namespace RTCV.UI
             {
                 DialogResult result = MessageBox.Show("The domain you have selected is larger than 32MB\n The domain size is " + (memoryDomainSize / (1024 * 1024)) + "MB.\n Are you sure you want to continue?", "Large Domain Detected", MessageBoxButtons.YesNo);
                 if (result == DialogResult.No)
+                {
                     return;
+                }
             }
 
             lbDomainAddressSize.Text = "Domain size: 0x" + mi.Size.ToString("X");
@@ -85,7 +91,9 @@ namespace RTCV.UI
             MemoryDumps = new List<string>();
 
             foreach (string file in Directory.GetFiles(Path.Combine(RtcCore.workingDir, "MEMORYDUMPS")))
+            {
                 File.Delete(file);
+            }
 
             btnSendToAnalytics.Enabled = false;
         }
@@ -98,12 +106,18 @@ namespace RTCV.UI
             cbSelectedMemoryDomain.Items.Clear();
             var domains = MemoryDomains.MemoryInterfaces?.Keys.Where(it => !it.Contains("[V]")).ToArray();
             if (domains?.Length > 0)
+            {
                 cbSelectedMemoryDomain.Items.AddRange(domains);
+            }
 
             if (temp != null && cbSelectedMemoryDomain.Items.Contains(temp))
+            {
                 cbSelectedMemoryDomain.SelectedItem = temp;
+            }
             else if (cbSelectedMemoryDomain.Items.Count > 0)
+            {
                 cbSelectedMemoryDomain.SelectedIndex = 0;
+            }
         }
 
         private void LoadDomains(object sender, EventArgs e)
@@ -136,7 +150,9 @@ namespace RTCV.UI
         private void UpdateAutoAddInterval(object sender, EventArgs e)
         {
             if (ActiveTableAutodump != null)
+            {
                 ActiveTableAutodump.Interval = Convert.ToInt32(nmAutoAddSec.Value) * 1000;
+            }
         }
 
         private void SendToAnalytics(object sender, EventArgs e)
@@ -151,7 +167,9 @@ namespace RTCV.UI
             cbAutoAddDump.Checked = false;
 
             if (btnActiveTableDumpsReset.Text == "Reset")
+            {
                 InitializeDumpCollection(sender, e);
+            }
         }
     }
 }

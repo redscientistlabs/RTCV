@@ -174,12 +174,16 @@ This message only appears once.";
             string gridNameLine = layoutFileData.FirstOrDefault(it => it.StartsWith("GridName:"));
 
             if (gridNameLine == null)
+            {
                 return;
+            }
 
             string[] parts = gridNameLine.Trim().Split(':');
 
             if (parts.Length == 1 || string.IsNullOrWhiteSpace(parts[1]))
+            {
                 return;
+            }
 
             btnOpenCustomLayout.Text = $"Load {parts[1]}";
         }

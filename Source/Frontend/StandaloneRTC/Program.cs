@@ -88,10 +88,12 @@
                 {
                     var asms = AppDomain.CurrentDomain.GetAssemblies();
                     foreach (var asm in asms)
+                    {
                         if (asm.FullName == requested)
                         {
                             return asm;
                         }
+                    }
 
                     //load missing assemblies by trying to find them in the dll directory
                     string dllname = new AssemblyName(requested).Name + ".dll";

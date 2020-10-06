@@ -63,9 +63,13 @@ namespace RTCV.UI
             stf.UpdateSanitizeProgress();
 
             if (lockUI)
+            {
                 stf.ShowDialog();
+            }
             else
+            {
                 stf.Show();
+            }
         }
 
         public void Reroll(object sender, EventArgs e)
@@ -189,10 +193,14 @@ namespace RTCV.UI
                 );
 
                 if (TargetUnit != null && !TargetUnit.IsLocked)
+                {
                     modified.Layer.Remove(TargetUnit);
+                }
 
                 foreach (var bu in modified.Layer)
+                {
                     bu.IsEnabled = true;
+                }
             }
 
             S.GET<BlastEditorForm>().LoadBlastlayer(modified);
@@ -333,7 +341,9 @@ namespace RTCV.UI
         private void AddToStockpile(object sender, EventArgs e)
         {
             if (S.GET<BlastEditorForm>().AddStashToStockpile())
+            {
                 this.Close();
+            }
         }
         private void AddToStash(object sender, EventArgs e)
         {

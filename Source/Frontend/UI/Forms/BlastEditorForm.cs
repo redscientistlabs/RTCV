@@ -157,7 +157,9 @@ namespace RTCV.UI
         public static void OpenBlastEditor(StashKey sk = null, bool silent = false)
         {
             if (S.GET<BlastEditorForm>().Visible)
+            {
                 silent = false;
+            }
 
             S.GET<BlastEditorForm>().Close();
             S.SET(new BlastEditorForm());
@@ -1752,7 +1754,9 @@ namespace RTCV.UI
         {
             BlastLayer temp = BlastTools.LoadBlastLayerFromFile();
             if (temp != null)
+            {
                 LoadBlastlayer(temp);
+            }
         }
 
         public void LoadBlastlayer(BlastLayer bl, bool import = false)
