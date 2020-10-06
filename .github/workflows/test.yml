@@ -1,0 +1,18 @@
+name: Test
+on: [push, pull_request]
+
+jobs:
+  RTCV:
+    runs-on: windows-2019
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.0
+    - name: Restore packages
+      run: msbuild RTCV.sln /t:restore
+    - name: Build with MSBuild
+      run: msbuild RTCV.sln
+    - name: MSTest help menu
+      run: '& "$(vswhere -property installationPath)\Common7\IDE\MSTest.exe" /help'
+    - name: Run tests with MSTest
+      run: '& "$(vswhere -property installationPath)\Common7\IDE\MSTest.exe" /testcontainer:\Build\SerializationTests.dll'
