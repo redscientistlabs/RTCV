@@ -1,8 +1,8 @@
-name: Build
+name: Build and test RTCV
 on: [push, pull_request]
 
 jobs:
-  RTCV:
+  buildAndTest:
     runs-on: windows-2019
     steps:
     - uses: actions/checkout@v1
@@ -12,3 +12,9 @@ jobs:
       run: msbuild RTCV.sln /t:restore
     - name: Build with MSBuild
       run: msbuild RTCV.sln
+    - name: Run tests
+      run: dotnet test
+    - name: Report coverage to codecov
+      uses: codecov/codecov-action@v1.0.13
+      with:
+        file: Tests/coverage.opencover.xml
