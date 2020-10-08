@@ -14,5 +14,7 @@ jobs:
       run: msbuild RTCV.sln
     - name: Run tests
       run: dotnet test
-    - name: Codecov
+    - name: Report coverage to codecov
       uses: codecov/codecov-action@v1.0.13
+      with:
+        file: Tests/coverage.opencover.xml
