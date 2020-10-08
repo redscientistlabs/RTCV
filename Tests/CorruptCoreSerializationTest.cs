@@ -1,4 +1,4 @@
-namespace SerializationTests
+namespace Tests
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Newtonsoft.Json;

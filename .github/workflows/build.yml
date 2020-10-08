@@ -12,5 +12,5 @@ jobs:
       run: msbuild RTCV.sln /t:restore
     - name: Build with MSBuild
       run: msbuild RTCV.sln
-    - name: Run tests with MSTest # Thanks to this post https://stackoverflow.com/a/62010912/1222411
-      run: '& "$(vswhere -property installationPath)\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" Build\SerializationTests.dll'
+    - name: Run tests
+      run: dotnet test
