@@ -1,4 +1,4 @@
-﻿//Most of this code is lifted from Bizhawk
+//Most of this code is lifted from Bizhawk
 //https://github.com/tasvideos/bizhawk
 //Thanks guys
 
@@ -253,29 +253,6 @@ namespace RTCV.UI.Input
                 AddItem(string.Format("POV{0}R", i + 1),
                     () => { int t = state.GetPointOfViewControllers()[j]; return t >= 4500 && t <= 13500; });
             }
-        }
-
-        // Note that this does not appear to work at this time. I probably need to have more infos.
-        public void SetVibration(/*int left, int right*/)
-        {
-            int[] temp1, temp2;
-            // my first clue that it doesnt work is that LEFT  and RIGHT _ARENT USED_
-            // I should just look for C++ examples instead of trying to look for SlimDX examples
-
-            var parameters = new EffectParameters
-            {
-                Duration = 0x2710,
-                Gain = 0x2710,
-                SamplePeriod = 0,
-                TriggerButton = 0,
-                TriggerRepeatInterval = 0x2710,
-                Flags = EffectFlags.None
-            };
-            parameters.GetAxes(out temp1, out temp2);
-            parameters.SetAxes(temp1, temp2);
-            var effect = new Effect(joystick, EffectGuid.ConstantForce);
-            effect.SetParameters(parameters);
-            effect.Start(1);
         }
     }
 }

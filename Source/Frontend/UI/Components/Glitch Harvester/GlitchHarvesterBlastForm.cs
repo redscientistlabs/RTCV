@@ -197,8 +197,7 @@ namespace RTCV.UI
             {
                 SetBlastButtonVisibility(false);
 
-                var domains = AllSpec.UISpec["SELECTEDDOMAINS"] as string[];
-                if (domains == null || domains.Length == 0)
+                if (!(AllSpec.UISpec["SELECTEDDOMAINS"] is string[] domains) || domains.Length == 0)
                 {
                     MessageBox.Show("Can't corrupt with no domains selected.");
                     return;

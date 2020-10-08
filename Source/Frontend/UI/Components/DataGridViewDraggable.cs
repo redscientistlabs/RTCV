@@ -140,9 +140,7 @@ namespace RTCV.UI.Components
             // If the drag operation was a move then remove and insert the row.
             if (e.Effect == DragDropEffects.Move)
             {
-                var rows = e.Data.GetData(typeof(DataGridViewSelectedRowCollection)) as DataGridViewSelectedRowCollection;
-
-                if (rows != null)
+                if (e.Data.GetData(typeof(DataGridViewSelectedRowCollection)) is DataGridViewSelectedRowCollection rows)
                 {
                     //We want to keep things in their original order rather than the order in which they were selected. Therefore sort by their rowindex as a key
                     DataGridViewRow[] _rows = rows.Cast<DataGridViewRow>().ToArray();

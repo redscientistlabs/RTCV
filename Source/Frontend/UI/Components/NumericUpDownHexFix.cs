@@ -40,8 +40,7 @@ namespace RTCV.UI.Components
                 throw new ArgumentNullException(nameof(e));
             }
 
-            var hme = e as HandledMouseEventArgs;
-            if (hme != null)
+            if (e is HandledMouseEventArgs hme)
             {
                 hme.Handled = true;
             }
