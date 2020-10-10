@@ -1,6 +1,5 @@
 namespace Tests.CorruptCore.Serialization
 {
-    using System.IO;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Newtonsoft.Json;
     using RTCV.CorruptCore;

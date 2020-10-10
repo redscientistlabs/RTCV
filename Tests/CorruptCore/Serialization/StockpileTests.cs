@@ -5,7 +5,6 @@ namespace Tests.CorruptCore.Serialization
     using Newtonsoft.Json;
     using RTCV.CorruptCore;
     using FluentAssertions;
-    using FluentAssertions.Common;
 
     [TestClass]
     public class StockpileTests
