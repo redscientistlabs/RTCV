@@ -1,12 +1,13 @@
-namespace Tests
+namespace Tests.CorruptCore
 {
+    using System.IO;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Newtonsoft.Json;
     using RTCV.CorruptCore;
     using FluentAssertions;
 
     [TestClass]
-    public class CorruptCoreSerializationTest
+    public class ActiveTableObjectTests
     {
         [TestMethod]
         public void TestActiveTableObjectSerialization()
