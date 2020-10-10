@@ -1,7 +1,6 @@
 namespace RTCV.NetCore
 {
     using System;
-    using System.Data;
     using System.Diagnostics;
     using System.Drawing;
     using System.IO;
@@ -190,7 +189,7 @@ namespace RTCV.NetCore
                     TempFolderPath = Path.GetTempPath(),
                     ArchiveFormat = SevenZip.OutArchiveFormat.SevenZip
                 };
-                comp.CompressDirectory(tempdebugdir, tempzipfile, false, password);
+                comp.CompressDirectory(tempdebugdir, tempzipfile, password);
 
                 string filename = CloudTransfer.CloudSave(tempzipfile);
                 tbKey.Text = filename + "-" + password;
