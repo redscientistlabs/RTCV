@@ -1,4 +1,4 @@
-namespace Tests.CorruptCore
+namespace Tests.CorruptCore.Serialization
 {
     using System.IO;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
