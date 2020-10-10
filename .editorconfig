@@ -267,9 +267,6 @@ dotnet_diagnostic.CA1401.severity = none
 # Do not prefix enum values with the name of the enum type 'FileType'
 dotnet_diagnostic.CA1712.severity = none
 
-# Naming conflict
-dotnet_diagnostic.CA1724.severity = none
-
 # Member is explicitly initialized to its default value
 dotnet_diagnostic.CA1805.severity = none
 

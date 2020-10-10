@@ -5,29 +5,8 @@ namespace RTCV.UI.Input
     using System.Threading;
     using RTCV.NetCore;
 
-    public class Input
+    internal class Input
     {
-        /// <summary>
-        /// If your form needs this kind of input focus, be sure to say so.
-        /// Really, this only makes sense for mouse, but I've started building it out for other things
-        /// Why is this receiving a control, but actually using it as a Form (where the WantingMouseFocus is checked?)
-        /// Because later we might change it to work off the control, specifically, if a control is supplied (normally actually a Form will be supplied)
-        /// </summary>
-        public void ControlInputFocus(System.Windows.Forms.Control c, FocusTypes types, bool wants)
-        {
-            if (types.HasFlag(FocusTypes.Mouse) && wants)
-            {
-                WantingMouseFocus.Add(c);
-            }
-
-            if (types.HasFlag(FocusTypes.Mouse) && !wants)
-            {
-                WantingMouseFocus.Remove(c);
-            }
-        }
-
-        readonly HashSet<System.Windows.Forms.Control> WantingMouseFocus = new HashSet<System.Windows.Forms.Control>();
-
         public static Input Instance { get; private set; }
         readonly Thread UpdateThread;
         private bool KillUpdateThread = false;
@@ -330,39 +309,6 @@ namespace RTCV.UI.Input
 
                                 FloatValues[n] = f;
                             }
-                        }
-
-                        // analyse moose
-                        // other sorts of mouse api (raw input) could easily be added as a separate listing under a different class
-                        if (WantingMouseFocus.Contains(System.Windows.Forms.Form.ActiveForm))
-                        {
-                            var P = System.Windows.Forms.Control.MousePosition;
-                            if (trackdeltas)
-                            {
-                                // these are relative to screen coordinates, but that's not terribly important
-                                FloatDeltas["WMouse X"] += Math.Abs(P.X - FloatValues["WMouse X"]) * 50;
-                                FloatDeltas["WMouse Y"] += Math.Abs(P.Y - FloatValues["WMouse Y"]) * 50;
-                            }
-                            // coordinate translation happens later
-                            FloatValues["WMouse X"] = P.X;
-                            FloatValues["WMouse Y"] = P.Y;
-
-                            var B = System.Windows.Forms.Control.MouseButtons;
-                            HandleButton("WMouse L", (B & System.Windows.Forms.MouseButtons.Left) != 0);
-                            HandleButton("WMouse C", (B & System.Windows.Forms.MouseButtons.Middle) != 0);
-                            HandleButton("WMouse R", (B & System.Windows.Forms.MouseButtons.Right) != 0);
-                            HandleButton("WMouse 1", (B & System.Windows.Forms.MouseButtons.XButton1) != 0);
-                            HandleButton("WMouse 2", (B & System.Windows.Forms.MouseButtons.XButton2) != 0);
-                        }
-                        else
-                        {
-                            //dont do this: for now, it will interfere with the virtualpad. dont do something similar for the mouse position either
-                            //unpress all buttons
-                            //HandleButton("WMouse L", false);
-                            //HandleButton("WMouse C", false);
-                            //HandleButton("WMouse R", false);
-                            //HandleButton("WMouse 1", false);
-                            //HandleButton("WMouse 2", false);
                         }
                     }
 
