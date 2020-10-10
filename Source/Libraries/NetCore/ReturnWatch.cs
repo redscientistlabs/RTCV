@@ -18,13 +18,7 @@ namespace RTCV.NetCore
         private CancellationTokenSource cts = new CancellationTokenSource();
         private Guid _guid = Guid.NewGuid();
 
-        public bool IsWaitingForReturn
-        {
-            get
-            {
-                return activeWatches > 0;
-            }
-        }
+        public bool IsWaitingForReturn => activeWatches > 0;
 
         internal ReturnWatch(NetCoreSpec _spec)
         {
