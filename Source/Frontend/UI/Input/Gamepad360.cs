@@ -155,7 +155,7 @@ namespace RTCV.UI.Input
         uint index0;
         XINPUT_STATE state;
 
-        public int PlayerNumber { get { return (int)index0 + 1; } }
+        public int PlayerNumber => (int)index0 + 1;
 
         GamePad360(uint index0, Controller c)
         {

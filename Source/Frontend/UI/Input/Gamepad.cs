@@ -150,7 +150,7 @@ namespace RTCV.UI.Input
             return state;
         }
 
-        public string Name { get { return name; } }
+        public string Name => name;
         public int PlayerNumber { get; private set; }
 
         public string ButtonName(int index)
