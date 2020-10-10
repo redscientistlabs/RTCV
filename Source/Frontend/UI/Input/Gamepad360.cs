@@ -55,15 +55,15 @@ namespace RTCV.UI.Input
             {
                 //some users wont even have xinput installed. in order to avoid spurious exceptions and possible instability, check for the library first
                 HasGetInputStateEx = true;
-                LibraryHandle = Win32.LoadLibrary("xinput1_3.dll");
+                LibraryHandle = NativeWin32APIs.LoadLibrary("xinput1_3.dll");
                 if (LibraryHandle == IntPtr.Zero)
                 {
-                    LibraryHandle = Win32.LoadLibrary("xinput1_4.dll");
+                    LibraryHandle = NativeWin32APIs.LoadLibrary("xinput1_4.dll");
                 }
 
                 if (LibraryHandle == IntPtr.Zero)
                 {
-                    LibraryHandle = Win32.LoadLibrary("xinput9_1_0.dll");
+                    LibraryHandle = NativeWin32APIs.LoadLibrary("xinput9_1_0.dll");
                     HasGetInputStateEx = false;
                 }
 

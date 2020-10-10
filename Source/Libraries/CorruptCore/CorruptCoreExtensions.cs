@@ -123,25 +123,10 @@ namespace RTCV.CorruptCore
     }
 
     //Lifted from Bizhawk https://github.com/TASVideos/BizHawk
-    public static class Win32
+    public static class NativeWin32APIs
     {
         [DllImport("kernel32.dll")]
         public static extern IntPtr LoadLibrary(string dllToLoad);
-
-        [DllImport("kernel32.dll")]
-        public static extern FileType GetFileType(IntPtr hFile);
-
-        [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
-        public static extern IntPtr GetCommandLine();
-
-        public enum FileType : int
-        {
-            FileTypeChar = 0x0002,
-            FileTypeDisk = 0x0001,
-            FileTypePipe = 0x0003,
-            FileTypeRemote = 0x8000,
-            FileTypeUnknown = 0x0000,
-        }
 
         internal const int SW_HIDE = 0;
         internal const int SW_SHOW = 5;
@@ -156,45 +141,5 @@ namespace RTCV.CorruptCore
 
         [DllImport("user32.dll")]
         public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-
-        [DllImport("user32.dll")]
-        public static extern IntPtr GetSystemMenu(IntPtr hWndValue, bool isRevert);
-
-        [DllImport("user32.dll")]
-        public static extern int EnableMenuItem(IntPtr tMenu, int targetItem, int targetStatus);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern bool SetForegroundWindow(IntPtr hWnd);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern IntPtr SetActiveWindow(IntPtr hWnd);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool AttachConsole(int dwProcessId);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool AllocConsole();
-
-        [DllImport("kernel32.dll", SetLastError = false)]
-        public static extern bool FreeConsole();
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern IntPtr GetStdHandle(int nStdHandle);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool SetStdHandle(int nStdHandle, IntPtr hConsoleOutput);
-
-        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern IntPtr CreateFile(
-            string fileName,
-            int desiredAccess,
-            int shareMode,
-            IntPtr securityAttributes,
-            int creationDisposition,
-            int flagsAndAttributes,
-            IntPtr templateFile);
-
-        [DllImport("kernel32.dll", ExactSpelling = true, SetLastError = true)]
-        public static extern bool CloseHandle(IntPtr handle);
     }
 }

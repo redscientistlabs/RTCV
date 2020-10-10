@@ -12,15 +12,15 @@ namespace RTCV.CorruptCore
 
         public static void ShowConsole()
         {
-            var handle = Win32.GetConsoleWindow();
-            Win32.ShowWindow(handle, Win32.SW_SHOW);
+            var handle = NativeWin32APIs.GetConsoleWindow();
+            NativeWin32APIs.ShowWindow(handle, NativeWin32APIs.SW_SHOW);
             ConsoleVisible = true;
         }
 
         public static void HideConsole()
         {
-            var handle = Win32.GetConsoleWindow();
-            Win32.ShowWindow(handle, Win32.SW_HIDE);
+            var handle = NativeWin32APIs.GetConsoleWindow();
+            NativeWin32APIs.ShowWindow(handle, NativeWin32APIs.SW_HIDE);
             ConsoleVisible = false;
         }
 
