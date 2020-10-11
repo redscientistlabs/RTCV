@@ -38,8 +38,8 @@ namespace RTCV.CorruptCore
         [JsonProperty]
         private string VanguardImplementation;
 
-        [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
-        public bool MissingLimiter;
+        [JsonProperty]
+        internal bool MissingLimiter;
 
         public Stockpile(DataGridView dgvStockpile)
         {
