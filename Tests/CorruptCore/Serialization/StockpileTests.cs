@@ -12,6 +12,7 @@ namespace Tests.CorruptCore.Serialization
         private const string TestResourceFolder = "../Tests/CorruptCore/Serialization/Resources";
         private static readonly string defaultStockpilePath = Path.Combine(TestResourceFolder, "DefaultStockpile.json");
         private static readonly string defaultStockpile505Path = Path.Combine(TestResourceFolder, "DefaultStockpile505.json");
+        private static readonly string simpleStockpile505Path = Path.Combine(TestResourceFolder, "SimpleStockpile505.json");
 
         /// <summary>
         /// Validate the output of serialization for a default Stockpile object.
@@ -64,6 +65,24 @@ namespace Tests.CorruptCore.Serialization
                 var actualStockpileSerialized = actualStreamReader.ReadToEnd();
                 var actualStockpile = JsonConvert.DeserializeObject<Stockpile>(actualStockpileSerialized);
                 actualStockpile.Should().BeEquivalentTo(expectedStockpile);
+            }
+        }
+
+        [TestMethod]
+        public void TestSimpleStockpile505Deserialization()
+        {
+            var expectedStockpile = new Stockpile();
+            expectedStockpile.Filename = "StockpileFilename";
+            expectedStockpile.StashKeys.Add(new StashKey());
+
+            using (var actualStreamReader = new StreamReader(simpleStockpile505Path))
+            {
+                var actualStockpileSerialized = actualStreamReader.ReadToEnd();
+                var actualStockpile = JsonConvert.DeserializeObject<Stockpile>(actualStockpileSerialized);
+                actualStockpile.Should().BeEquivalentTo(
+                    expectedStockpile,
+                    options => options.Excluding(o => o.StashKeys[0].Key).Excluding(o => o.StashKeys[0].Alias) // key and alias values are generated at runtime
+                );
             }
         }
     }

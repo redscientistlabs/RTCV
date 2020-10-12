@@ -1,0 +1,31 @@
+{
+  "StashKeys": [
+    {
+      "RomFilename": "ERROR",
+      "RomShortFilename": null,
+      "RomData": null,
+      "StateShortFilename": null,
+      "StateFilename": null,
+      "StateData": null,
+      "StateLocation": "SESSION",
+      "KnownLists": {},
+      "SystemName": "ERROR",
+      "SystemDeepName": null,
+      "SystemCore": "ERROR",
+      "SelectedDomains": null,
+      "GameName": "ERROR",
+      "SyncSettings": "",
+      "Note": null,
+      "Key": "1366281776271970",
+      "ParentKey": null,
+      "BlastLayer": { "Layer": [] },
+      "Alias": "1366281776271970"
+    }
+  ],
+  "Name": "StockpileName",
+  "Filename": "StockpileFilename",
+  "ShortFilename": "StockpileShortFilename",
+  "RtcVersion": null,
+  "VanguardImplementation": null,
+  "MissingLimiter": false
+}
