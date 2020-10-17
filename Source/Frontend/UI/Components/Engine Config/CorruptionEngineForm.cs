@@ -31,7 +31,11 @@ namespace RTCV.UI
                 ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)VectorEngineControl.cbVectorLimiterList).SelectedItem;
 
                 if (item == null) //this shouldn't ever happen unless the list files are missing
+                {
+                    {
                     MessageBox.Show("Error: No vector engine limiter list selected. Bad install?");
+                }
+                }
 
                 return item?.Name;
             }

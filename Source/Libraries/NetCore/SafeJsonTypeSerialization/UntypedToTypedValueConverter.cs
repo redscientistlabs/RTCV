@@ -27,9 +27,9 @@ namespace RTCV.NetCore.SafeJsonTypeSerialization
             }
 
             var value = serializer.Deserialize(reader, objectType);
-            if (value is TypeWrapper)
+            if (value is TypeWrapper wrapper)
             {
-                return ((TypeWrapper)value).ObjectValue;
+                return wrapper.ObjectValue;
             }
             return value;
         }
@@ -57,13 +57,13 @@ namespace RTCV.NetCore.SafeJsonTypeSerialization
                 serializer.Serialize(writer, value);
             }
             // Handle a couple of simple primitive cases where a type wrapper is not needed
-            else if (value is string)
+            else if (value is string str)
             {
-                writer.WriteValue((string)value);
+                writer.WriteValue(str);
             }
-            else if (value is bool)
+            else if (value is bool boolean)
             {
-                writer.WriteValue((bool)value);
+                writer.WriteValue(boolean);
             }
             else
             {

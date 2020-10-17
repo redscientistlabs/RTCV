@@ -1,6 +1,7 @@
 namespace RTCV.UI.Components
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
@@ -9,6 +10,7 @@ namespace RTCV.UI.Components
     /// Reference Article https://msdn.microsoft.com/en-us/library/aa730881(v=vs.80).aspx
     /// Defines the editing control for the DataGridViewNumericUpDownCell custom cell type.
     /// </summary>/// <summary>
+    [SuppressMessage("Microsoft.Design", "CA1812:Avoid uninstantiated internal classes", Justification = "DataGridViewNumericUpDownEditingControl is used to cast from Control, not directly instantiated by design.")]
     internal class DataGridViewNumericUpDownEditingControl : NumericUpDownHexFix, IDataGridViewEditingControl
     {
         // Needed to forward keyboard messages to the child TextBox control.

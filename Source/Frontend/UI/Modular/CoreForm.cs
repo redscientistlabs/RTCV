@@ -174,12 +174,16 @@ This message only appears once.";
             string gridNameLine = layoutFileData.FirstOrDefault(it => it.StartsWith("GridName:"));
 
             if (gridNameLine == null)
+            {
                 return;
+            }
 
             string[] parts = gridNameLine.Trim().Split(':');
 
             if (parts.Length == 1 || string.IsNullOrWhiteSpace(parts[1]))
+            {
                 return;
+            }
 
             btnOpenCustomLayout.Text = $"Load {parts[1]}";
         }
@@ -576,7 +580,6 @@ This message only appears once.";
                 //Force control to commit new values
                 S.GET<GeneralParametersForm>().multiTB_Intensity.OnValueChanged(null);
                 S.GET<GeneralParametersForm>().multiTB_ErrorDelay.OnValueChanged(null);
-
             }
 
             S.GET<CoreForm>().AutoCorrupt = true;

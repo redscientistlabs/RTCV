@@ -379,16 +379,22 @@ namespace RTCV.CorruptCore.Extensions
         public static byte[] Flatten69(this byte?[] bytes)
         {
             if (bytes == null)
+            {
                 return null;
+            }
 
             var newArray = new byte[bytes.Length];
 
             for (var i = 0; i < bytes.Length; i++)
             {
                 if (bytes[i] == null)
+                {
                     newArray[i] = 69;
+                }
                 else
+                {
                     newArray[i] = bytes[i].Value;
+                }
             }
 
             return newArray;

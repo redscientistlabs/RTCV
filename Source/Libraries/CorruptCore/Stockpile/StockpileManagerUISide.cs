@@ -38,8 +38,9 @@ namespace RTCV.CorruptCore
         private static void PreApplyStashkey(bool _clearUnitsBeforeApply = true)
         {
             if (_clearUnitsBeforeApply)
+            {
                 LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
-
+            }
 
             bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
             LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.PreCorruptAction, null, true);
@@ -313,6 +314,7 @@ namespace RTCV.CorruptCore
                 }
 
                 if (!RtcCore.AllowCrossCoreCorruption)
+                {
                     foreach (StashKey item in sks)
                     {
                         if (item.GameName != master.GameName)
@@ -322,6 +324,7 @@ namespace RTCV.CorruptCore
                             return false;
                         }
                     }
+                }
 
                 BlastLayer bl = new BlastLayer();
 

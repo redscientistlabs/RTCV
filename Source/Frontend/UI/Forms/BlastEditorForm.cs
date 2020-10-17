@@ -59,6 +59,12 @@ namespace RTCV.UI
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class BlastEditorForm : Modular.ColorizedForm
     {
+        private const int buttonFillWeight = 20;
+        private const int checkBoxFillWeight = 25;
+        private const int comboBoxFillWeight = 40;
+        private const int textBoxFillWeight = 30;
+        private const int numericUpDownFillWeight = 35;
+
         private static Dictionary<string, MemoryInterface> _domainToMiDico;
 
         private static Dictionary<string, MemoryInterface> DomainToMiDico
@@ -74,11 +80,6 @@ namespace RTCV.UI
         private ContextMenuStrip headerStrip;
         private ContextMenuStrip cms;
         private Dictionary<string, Control> property2ControlDico;
-        private const int buttonFillWeight = 20;
-        private const int checkBoxFillWeight = 25;
-        private const int comboBoxFillWeight = 40;
-        private const int textBoxFillWeight = 30;
-        private const int numericUpDownFillWeight = 35;
         private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private enum BuProperty
@@ -156,7 +157,9 @@ namespace RTCV.UI
         public static void OpenBlastEditor(StashKey sk = null, bool silent = false)
         {
             if (S.GET<BlastEditorForm>().Visible)
+            {
                 silent = false;
+            }
 
             S.GET<BlastEditorForm>().Close();
             S.SET(new BlastEditorForm());
@@ -411,8 +414,7 @@ namespace RTCV.UI
         {
             ((ToolStripMenuItem)cms.Items.Add("Open Selected Address in Hex Editor", null, new EventHandler((ob, ev) =>
             {
-                var bu = dgvBlastEditor.Rows[cell.RowIndex]?.DataBoundItem as BlastUnit;
-                if (bu == null)
+                if (!(dgvBlastEditor.Rows[cell.RowIndex]?.DataBoundItem is BlastUnit bu))
                 {
                     return;
                 }
@@ -1751,7 +1753,9 @@ namespace RTCV.UI
         {
             BlastLayer temp = BlastTools.LoadBlastLayerFromFile();
             if (temp != null)
+            {
                 LoadBlastlayer(temp);
+            }
         }
 
         public void LoadBlastlayer(BlastLayer bl, bool import = false)

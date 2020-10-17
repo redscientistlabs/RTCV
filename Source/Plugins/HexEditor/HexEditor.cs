@@ -93,7 +93,9 @@ namespace RTCV.Plugins.HexEditor
             StepActions.StepEnd += (o, e) =>
             {
                 if (this.Visible)
+                {
                     UpdateValues();
+                }
             };
             RtcCore.GameClosed += (o, e) =>
             {
@@ -110,7 +112,9 @@ namespace RTCV.Plugins.HexEditor
             RtcCore.LoadGameDone += (o, e) =>
             {
                 if (this.Visible)
+                {
                     Restart();
+                }
             };
 
 

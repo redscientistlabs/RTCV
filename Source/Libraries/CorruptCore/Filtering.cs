@@ -330,7 +330,9 @@ namespace RTCV.CorruptCore
                 for (int i = 0; i < item.Length; i++)
                 {
                     if (item[i] == null) //ignoring wildcards (null values)
+                    {
                         continue;
+                    }
 
                     if (item[i].Value != bytes[i])
                     {

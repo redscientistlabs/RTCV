@@ -55,12 +55,15 @@ namespace RTCV.UI.Input
             {
                 //some users wont even have xinput installed. in order to avoid spurious exceptions and possible instability, check for the library first
                 HasGetInputStateEx = true;
-                LibraryHandle = Win32.LoadLibrary("xinput1_3.dll");
-                if (LibraryHandle == IntPtr.Zero)
-                    LibraryHandle = Win32.LoadLibrary("xinput1_4.dll");
+                LibraryHandle = NativeWin32APIs.LoadLibrary("xinput1_3.dll");
                 if (LibraryHandle == IntPtr.Zero)
                 {
-                    LibraryHandle = Win32.LoadLibrary("xinput9_1_0.dll");
+                    LibraryHandle = NativeWin32APIs.LoadLibrary("xinput1_4.dll");
+                }
+
+                if (LibraryHandle == IntPtr.Zero)
+                {
+                    LibraryHandle = NativeWin32APIs.LoadLibrary("xinput9_1_0.dll");
                     HasGetInputStateEx = false;
                 }
 
@@ -88,7 +91,9 @@ namespace RTCV.UI.Input
                 _devices.Clear();
 
                 if (!_isAvailable)
+                {
                     return;
+                }
 
                 //now, at this point, slimdx may be using one xinput, and we may be using another
                 //i'm not sure how slimdx picks its dll to bind to.
@@ -100,10 +105,25 @@ namespace RTCV.UI.Input
                 var c3 = new Controller(UserIndex.Three);
                 var c4 = new Controller(UserIndex.Four);
 
-                if (c1.IsConnected) _devices.Add(new GamePad360(0, c1));
-                if (c2.IsConnected) _devices.Add(new GamePad360(1, c2));
-                if (c3.IsConnected) _devices.Add(new GamePad360(2, c3));
-                if (c4.IsConnected) _devices.Add(new GamePad360(3, c4));
+                if (c1.IsConnected)
+                {
+                    _devices.Add(new GamePad360(0, c1));
+                }
+
+                if (c2.IsConnected)
+                {
+                    _devices.Add(new GamePad360(1, c2));
+                }
+
+                if (c3.IsConnected)
+                {
+                    _devices.Add(new GamePad360(2, c3));
+                }
+
+                if (c4.IsConnected)
+                {
+                    _devices.Add(new GamePad360(3, c4));
+                }
             }
         }
 
@@ -135,7 +155,7 @@ namespace RTCV.UI.Input
         uint index0;
         XINPUT_STATE state;
 
-        public int PlayerNumber { get { return (int)index0 + 1; } }
+        public int PlayerNumber => (int)index0 + 1;
 
         GamePad360(uint index0, Controller c)
         {
@@ -148,7 +168,9 @@ namespace RTCV.UI.Input
         public void Update()
         {
             if (controller.IsConnected == false)
+            {
                 return;
+            }
 
             if (XInputGetStateExProc != null)
             {

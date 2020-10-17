@@ -89,9 +89,13 @@ namespace RTCV.CorruptCore.Extensions
                     var chars = temp.Substring(i, 2);
 
                     if (chars == "??")
+                    {
                         bytes[j] = null;
+                    }
                     else
+                    {
                         bytes[j] = (byte)Convert.ToUInt32(chars, 16);
+                    }
                 }
                 catch (FormatException e)
                 {

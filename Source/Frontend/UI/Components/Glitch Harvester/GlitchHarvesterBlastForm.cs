@@ -197,8 +197,7 @@ namespace RTCV.UI
             {
                 SetBlastButtonVisibility(false);
 
-                var domains = AllSpec.UISpec["SELECTEDDOMAINS"] as string[];
-                if (domains == null || domains.Length == 0)
+                if (!(AllSpec.UISpec["SELECTEDDOMAINS"] is string[] domains) || domains.Length == 0)
                 {
                     MessageBox.Show("Can't corrupt with no domains selected.");
                     return;
@@ -251,9 +250,13 @@ namespace RTCV.UI
                     if (StockpileManagerUISide.CurrentStashkey == null)
                     {
                         if (StockpileManagerUISide.LastStashkey != null)
+                        {
                             StockpileManagerUISide.CurrentStashkey = StockpileManagerUISide.LastStashkey;
+                        }
                         else
+                        {
                             throw new Exception("Inject tried to fetch the LastStashkey backup but this one was also null! Try to re-load your savestate and then re-select your corruption in the stash history or stockpile. That might fix it. If it still doesn't work after that, report to the devs pls");
+                        }
                     }
 
                     S.GET<StashHistoryForm>().DontLoadSelectedStash = true;
@@ -266,9 +269,13 @@ namespace RTCV.UI
                     if (StockpileManagerUISide.CurrentStashkey == null)
                     {
                         if (StockpileManagerUISide.LastStashkey != null)
+                        {
                             StockpileManagerUISide.CurrentStashkey = StockpileManagerUISide.LastStashkey;
+                        }
                         else
+                        {
                             throw new Exception("CurrentStashkey in original was somehow null! Report this to the devs and tell them how you caused this.");
+                        }
                     }
 
                     S.GET<StashHistoryForm>().DontLoadSelectedStash = true;

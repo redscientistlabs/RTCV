@@ -26,12 +26,6 @@ namespace RTCV.CorruptCore
         [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
         public List<StashKey> StashKeys = new List<StashKey>();
 
-        // https://github.com/redscientistlabs/RTCV/issues/241
-        #pragma warning disable 649 // Field is unused, but removing it would change how this object serializes, which could break other components
-        [JsonProperty]
-        private string Name;
-        #pragma warning restore 649
-
         [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
         public string Filename;
 
@@ -44,8 +38,8 @@ namespace RTCV.CorruptCore
         [JsonProperty]
         private string VanguardImplementation;
 
-        [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
-        public bool MissingLimiter;
+        [JsonProperty]
+        internal bool MissingLimiter;
 
         public Stockpile(DataGridView dgvStockpile)
         {
@@ -62,11 +56,6 @@ namespace RTCV.CorruptCore
 
         public Stockpile()
         {
-        }
-
-        public override string ToString()
-        {
-            return Name ?? string.Empty;
         }
 
         public static bool Save(Stockpile sks, string filename, bool includeReferencedFiles = false, bool compress = true)
@@ -728,8 +717,7 @@ namespace RTCV.CorruptCore
                 return;
             }
 
-            string[] configPaths = AllSpec.VanguardSpec[VSPEC.CONFIG_PATHS] as string[];
-            if (configPaths == null)
+            if (!(AllSpec.VanguardSpec[VSPEC.CONFIG_PATHS] is string[] configPaths))
             {
                 throw new Exception("ConfigMode was set but ConfigPath was null!");
             }
@@ -824,8 +812,7 @@ namespace RTCV.CorruptCore
                 return;
             }
 
-            string[] configPaths = AllSpec.VanguardSpec[VSPEC.CONFIG_PATHS] as string[];
-            if (configPaths == null)
+            if (!(AllSpec.VanguardSpec[VSPEC.CONFIG_PATHS] is string[] configPaths))
             {
                 throw new Exception("ConfigMode was set but ConfigPath was null!");
             }

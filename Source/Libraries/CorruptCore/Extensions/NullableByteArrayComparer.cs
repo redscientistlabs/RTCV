@@ -21,7 +21,9 @@ namespace RTCV.CorruptCore.Extensions
             for (int i = 0; i < a.Length; i++)
             {
                 if (a[i] == null || b[i] == null) //wildcards
+                {
                     return true;
+                }
 
                 if (a[i].Value != b[i].Value)
                 {

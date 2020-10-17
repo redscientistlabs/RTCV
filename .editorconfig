@@ -267,9 +267,6 @@ dotnet_diagnostic.CA1401.severity = none
 # Do not prefix enum values with the name of the enum type 'FileType'
 dotnet_diagnostic.CA1712.severity = none
 
-# Naming conflict
-dotnet_diagnostic.CA1724.severity = none
-
 # Member is explicitly initialized to its default value
 dotnet_diagnostic.CA1805.severity = none
 
@@ -386,9 +383,6 @@ dotnet_diagnostic.SA1201.severity = none
 
 # Elements should be ordered by access
 dotnet_diagnostic.SA1202.severity = none
-
-# Constants should appear before fields
-dotnet_diagnostic.SA1203.severity = none
 
 # Static elements should appear before instance elements
 dotnet_diagnostic.SA1204.severity = none

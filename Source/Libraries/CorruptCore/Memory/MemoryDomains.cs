@@ -89,8 +89,7 @@ namespace RTCV.CorruptCore
 
         public static void RefreshDomains(bool domainsChanged = false)
         {
-            var mdps = AllSpec.VanguardSpec?[VSPEC.MEMORYDOMAINS_INTERFACES] as MemoryDomainProxy[];
-            if (mdps == null)
+            if (!(AllSpec.VanguardSpec?[VSPEC.MEMORYDOMAINS_INTERFACES] is MemoryDomainProxy[] mdps))
             {
                 return;
             }

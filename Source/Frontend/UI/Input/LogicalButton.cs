@@ -13,16 +13,28 @@ namespace RTCV.UI.Input
         public readonly string Button { get; }
         private readonly ModifierKeys Modifiers;
 
-        public bool Alt { get { return ((Modifiers & ModifierKeys.Alt) != 0); } }
-        public bool Control { get { return ((Modifiers & ModifierKeys.Control) != 0); } }
-        public bool Shift { get { return ((Modifiers & ModifierKeys.Shift) != 0); } }
+        public bool Alt => ((Modifiers & ModifierKeys.Alt) != 0);
+        public bool Control => ((Modifiers & ModifierKeys.Control) != 0);
+        public bool Shift => ((Modifiers & ModifierKeys.Shift) != 0);
 
         public override string ToString()
         {
             string ret = "";
-            if (Control) ret += "Ctrl+";
-            if (Alt) ret += "Alt+";
-            if (Shift) ret += "Shift+";
+            if (Control)
+            {
+                ret += "Ctrl+";
+            }
+
+            if (Alt)
+            {
+                ret += "Alt+";
+            }
+
+            if (Shift)
+            {
+                ret += "Shift+";
+            }
+
             ret += Button;
             return ret;
         }

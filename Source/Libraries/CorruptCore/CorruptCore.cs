@@ -386,11 +386,16 @@ namespace RTCV.CorruptCore
         public static void LoadPlugins(string[] paths = null)
         {
             if (paths == null)
+            {
                 paths = new[] { PluginDir };
+            }
 
             RTCSide side = RTCSide.Server;
             if (IsEmulatorSide)
+            {
                 side = RTCSide.Client;
+            }
+
             if (Attached)
             {
                 side = RTCSide.Both;
@@ -659,7 +664,9 @@ namespace RTCV.CorruptCore
                 }
 
                 if (bu != null) //upgrade single blastunits to array
+                {
                     bus = new BlastUnit[] { bu };
+                }
 
                 return bus;
             }

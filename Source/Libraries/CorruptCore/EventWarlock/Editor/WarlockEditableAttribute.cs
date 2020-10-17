@@ -14,9 +14,6 @@ namespace RTCV.CorruptCore.EventWarlock.Editor
             this.customEditorID = customEditorName;
         }
 
-        public string CustomEditorID
-        {
-            get { return customEditorID; }
-        }
+        public string CustomEditorID => customEditorID;
     }
 }

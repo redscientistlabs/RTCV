@@ -17,7 +17,7 @@ namespace RTCV.CorruptCore.EventWarlock
         public bool Enabled { get; private set; } = true;
         // public string Name;
         private EWConditional conditional = null;
-        public EWConditional Conditional { get => conditional; }
+        public EWConditional Conditional => conditional;
         private List<WarlockAction> Actions = new List<WarlockAction>();
         private bool isElse = false;
 

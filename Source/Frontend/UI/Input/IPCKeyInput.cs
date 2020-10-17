@@ -1,4 +1,4 @@
-﻿//Most of this code is lifted from Bizhawk
+//Most of this code is lifted from Bizhawk
 //https://github.com/tasvideos/bizhawk
 //Thanks guys
 
@@ -41,7 +41,9 @@ namespace RTCV.UI.Input
                             int e = br.ReadInt32();
                             bool pressed = (e & 0x80000000) != 0;
                             lock (PendingEventList)
+                            {
                                 PendingEventList.Add(new KeyEvent { Key = (Key)(e & 0x7FFFFFFF), Pressed = pressed });
+                            }
                         }
                     }
                     catch { }
