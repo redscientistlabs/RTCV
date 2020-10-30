@@ -5,6 +5,7 @@ namespace Tests.CorruptCore.Serialization
     using Newtonsoft.Json;
     using RTCV.CorruptCore;
     using FluentAssertions;
+    using RTCV.NetCore;
 
     [TestClass]
     public class StockpileTests
@@ -71,6 +72,10 @@ namespace Tests.CorruptCore.Serialization
         [TestMethod]
         public void TestSimpleStockpile505Deserialization()
         {
+            var p = new PartialSpec("UISpec");
+            p["SELECTEDDOMAINS"] = new string[] { };
+            AllSpec.UISpec = new FullSpec(p, !RtcCore.Attached);
+
             var expectedStockpile = new Stockpile();
             expectedStockpile.Filename = "StockpileFilename";
             expectedStockpile.StashKeys.Add(new StashKey());
