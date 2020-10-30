@@ -52,7 +52,7 @@
       <Version>3.30.3</Version>
     </PackageReference>
     <PackageReference Include="Fody">
-      <Version>6.2.6</Version>
+      <Version>6.3.0</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
