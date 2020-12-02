@@ -25,7 +25,9 @@ jobs:
 
     # Setup Tooling
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.0
+      uses: microsoft/setup-msbuild@v1
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
     # Restore nuget packages for all targets
     - name: Restore Nuget packages in current build target
@@ -54,7 +56,9 @@ jobs:
 
     # Setup Tooling
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.0
+      uses: microsoft/setup-msbuild@v1
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
     # Restore nuget packages for all targets
     - name: Restore Nuget packages in current build target
@@ -83,7 +87,9 @@ jobs:
 
     # Setup Tooling
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.0
+      uses: microsoft/setup-msbuild@v1
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
     # Restore nuget packages for all targets
     - name: Restore Nuget packages in current build target
@@ -112,7 +118,9 @@ jobs:
 
     # Setup Tooling
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.0
+      uses: microsoft/setup-msbuild@v1
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
     # Restore nuget packages for all targets
     - name: Restore Nuget packages in current build target
@@ -141,7 +149,9 @@ jobs:
 
     # Setup Tooling
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.0
+      uses: microsoft/setup-msbuild@v1
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
     # Restore nuget packages for all targets
     - name: Restore Nuget packages in current build target
@@ -158,7 +168,9 @@ jobs:
     steps:
     # Setup tooling
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.0
+      uses: microsoft/setup-msbuild@v1
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
     # Setup RTCV
     - name: Checkout current build target
@@ -204,7 +216,9 @@ jobs:
       with:
         path: 'RTCV'
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.0
+      uses: microsoft/setup-msbuild@v1
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     - name: Restore Nuget packages in RTCV
       run: msbuild /t:restore '.\RTCV\RTCV.sln'
     - name: Restore Nuget packages in dolphin-vanguard
@@ -227,7 +241,9 @@ jobs:
       with:
         path: 'RTCV'
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.0
+      uses: microsoft/setup-msbuild@v1
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     - name: Restore Nuget packages in RTCV
       run: msbuild /t:restore '.\RTCV\RTCV.sln'
     - name: Restore Nuget packages in pcsx2-Vanguard
@@ -244,7 +260,9 @@ jobs:
       with:
         path: 'RTCV'
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.0
+      uses: microsoft/setup-msbuild@v1
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     - name: Restore Nuget packages in RTCV
       run: msbuild /t:restore '.\RTCV\RTCV.sln'
     - name: Build RTCV
@@ -287,7 +305,9 @@ jobs:
 
     # Setup Tooling
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.0
+      uses: microsoft/setup-msbuild@v1
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
     # Restore nuget packages for all targets
     - name: Restore Nuget packages in current build target
