@@ -55,7 +55,7 @@ namespace RTCV.CorruptCore
 
                 if (mergeWithPrevious)
                 {
-                    if (UnCorruptBL_Backup.Layer != null)
+                    if (UnCorruptBL_Backup?.Layer != null)
                     {
                         if (StockpileManagerEmuSide.UnCorruptBL.Layer == null)
                         {
@@ -65,7 +65,7 @@ namespace RTCV.CorruptCore
                         StockpileManagerEmuSide.UnCorruptBL.Layer.AddRange(UnCorruptBL_Backup.Layer);
                     }
 
-                    if (CorruptBL_Backup.Layer != null)
+                    if (CorruptBL_Backup?.Layer != null)
                     {
                         if (StockpileManagerEmuSide.CorruptBL.Layer == null)
                         {
