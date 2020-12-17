@@ -43,9 +43,6 @@ namespace RTCV.CorruptCore
 
                 if (mergeWithPrevious)
                 {
-                    //UnCorruptBL_Backup = (BlastLayer)StockpileManager_EmuSide.UnCorruptBL?.Clone();
-                    //CorruptBL_Backup = (BlastLayer)StockpileManager_EmuSide.CorruptBL?.Clone();
-
                     UnCorruptBL_Backup = StockpileManagerEmuSide.UnCorruptBL;
                     CorruptBL_Backup = StockpileManagerEmuSide.CorruptBL;
                 }
@@ -75,6 +72,10 @@ namespace RTCV.CorruptCore
                         StockpileManagerEmuSide.CorruptBL.Layer.AddRange(CorruptBL_Backup.Layer);
                     }
                 }
+            }
+            else
+            {
+                StockpileManagerEmuSide.UnCorruptBL = null;
             }
 
             bool success;

@@ -106,7 +106,8 @@ namespace RTCV.UI
             VanguardImplementation.Shutdown();
 
             //Signal the quit
-            Application.Exit();
+            //Application.Exit();
+            Environment.Exit(-1);
         }
 
         private void OnFormLoad(object sender, EventArgs e)

@@ -312,9 +312,12 @@ namespace RTCV.UI.Components.Controls
 
             if (btnSaveLoad.Text == "LOAD")
             {
+
                 LoadCurrentState();
                 StockpileManagerUISide.CurrentStashkey = null;
                 S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = false;
+                LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearBlastlayerCache, false);
+
             }
             else
             {
