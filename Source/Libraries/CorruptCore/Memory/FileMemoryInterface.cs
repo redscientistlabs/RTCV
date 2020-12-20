@@ -17,6 +17,7 @@ namespace RTCV.CorruptCore
 
         public abstract void CloseStream();
         public abstract void getMemoryDump();
+        public abstract FileTarget[] GetFileTargets();
         public abstract void wipeMemoryDump();
         public abstract byte[][] lastMemoryDump { get; set; }
         public abstract bool cacheEnabled { get; }
@@ -31,11 +32,9 @@ namespace RTCV.CorruptCore
         public abstract byte PeekByte(long address);
         public abstract byte[] PeekBytes(long address, int length);
 
-        public abstract bool SetBackup();
-        public abstract bool ResetBackup(bool askConfirmation = true);
-        public abstract bool RestoreBackup(bool announce = true);
-        public abstract bool ResetWorkingFile();
-        public abstract bool ApplyWorkingFile();
+        public abstract bool SendRealToBackup(bool askConfirmation = true);
+        public abstract bool SendBackupToReal(bool announce = true);
+        public abstract bool CommitChangesToReal();
 
         private volatile System.IO.Stream _stream = null;
         public System.IO.Stream stream

@@ -2,6 +2,7 @@ namespace RTCV.CorruptCore
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Windows.Forms;
 
@@ -20,26 +21,28 @@ namespace RTCV.CorruptCore
 
         public List<FileInterface> FileInterfaces { get; private set; } = new List<FileInterface>();
 
-        public MultipleFileInterface(string targetId, bool bigEndian, bool useAutomaticFileBackups = false)
+        public MultipleFileInterface(FileTarget[] targets, bool bigEndian, bool useAutomaticFileBackups = false)
         {
-            if (targetId == null)
+            if (targets == null)
             {
-                throw new ArgumentNullException(nameof(targetId));
+                throw new ArgumentNullException(nameof(targets));
             }
 
             try
             {
                 BigEndian = bigEndian;
-                var targetIdParts = targetId.Split('|');
-                foreach (var t in targetIdParts)
+                foreach (var target in targets)
                 {
                     try
                     {
-                        var fi = new FileInterface("File|" + t, bigEndian, useAutomaticFileBackups)
-                        {
-                            parent = this
-                        };
+                        var fi = new FileInterface(target);
                         FileInterfaces.Add(fi);
+
+                        if (useAutomaticFileBackups)
+                        {
+                            if (!File.Exists(target.BackupFilePath))
+                                fi.SendRealToBackup(false);
+                        }
                     }
                     catch
                     {
@@ -56,12 +59,6 @@ namespace RTCV.CorruptCore
 
                 ShortFilename = "MultipleFiles";
 
-                if (useAutomaticFileBackups)
-                {
-                    SetBackup();
-                }
-
-                //getMemoryDump();
                 getMemorySize();
 
                 setFilePositions();
@@ -95,116 +92,38 @@ namespace RTCV.CorruptCore
             return "Multiple Files";
         }
 
-        public string getCompositeFilename()
-        {
-            return string.Join("|", FileInterfaces.Select(it => it.getCompositeFilename()));
-        }
-
-        public string getCorruptFilename(bool overrideWriteCopyMode = false)
-        {
-            return string.Join("|", FileInterfaces.Select(it => it.getCorruptFilename(overrideWriteCopyMode)));
-        }
-
-        public string getBackupFilename()
-        {
-            return string.Join("|", FileInterfaces.Select(it => it.getBackupFilename()));
-        }
-
-        public override bool ResetWorkingFile()
+        public override bool CommitChangesToReal()
         {
             bool allSucceeded = true;
             foreach (var fi in FileInterfaces)
-            {
-                if (allSucceeded)
-                {
-                    allSucceeded = fi.ResetWorkingFile();
-                }
-                else
-                {
-                    fi.ResetWorkingFile();
-                }
-            }
+                if (!fi.CommitChangesToReal())
+                    allSucceeded = false;
 
             return allSucceeded;
         }
 
-        public string SetWorkingFile()
+        public override bool SendRealToBackup(bool askConfirmation = true)
         {
-            return string.Join("|", FileInterfaces.Select(it => it.SetWorkingFile()));
-        }
-
-        public override bool ApplyWorkingFile()
-        {
-            bool allSucceeded = true;
-            foreach (var fi in FileInterfaces)
-            {
-                if (allSucceeded)
-                {
-                    allSucceeded = fi.ApplyWorkingFile();
-                }
-                else
-                {
-                    fi.ApplyWorkingFile();
-                }
-            }
-
-            return allSucceeded;
-        }
-
-        public override bool SetBackup()
-        {
-            bool allSucceeded = true;
-            foreach (var fi in FileInterfaces)
-            {
-                if (allSucceeded)
-                {
-                    allSucceeded = fi.SetBackup();
-                }
-                else
-                {
-                    fi.SetBackup();
-                }
-            }
-
-            return allSucceeded;
-        }
-
-        public override bool ResetBackup(bool askConfirmation = true)
-        {
-            bool allSucceeded = true;
             if (askConfirmation && MessageBox.Show("Are you sure you want to reset the backup using the target files?", "WARNING", MessageBoxButtons.YesNo) == DialogResult.No)
             {
                 return false;
             }
 
+            bool allSucceeded = true;
             foreach (var fi in FileInterfaces)
-            {
-                if (allSucceeded)
-                {
-                    allSucceeded = fi.ResetBackup(false);
-                }
-                else
-                {
-                    fi.ResetBackup(false);
-                }
-            }
+                if (!fi.SendRealToBackup(false))
+                    allSucceeded = false;
+
             return allSucceeded;
         }
 
-        public override bool RestoreBackup(bool announce = true)
+        public override bool SendBackupToReal(bool announce = true)
         {
             bool allSucceeded = true;
             foreach (var fi in FileInterfaces)
-            {
-                if (allSucceeded)
-                {
-                    allSucceeded = fi.RestoreBackup(false);
-                }
-                else
-                {
-                    fi.RestoreBackup(false);
-                }
-            }
+                if (!fi.SendBackupToReal(false))
+                    allSucceeded = false;
+
             if (announce)
             {
                 MessageBox.Show("Backups of " + string.Join(",", FileInterfaces.Select(it => (it as FileInterface).ShortFilename)) + " were restored");
@@ -231,8 +150,6 @@ namespace RTCV.CorruptCore
             for (int i = 0; i < FileInterfaces.Count; i++)
             {
                 FileInterfaces[i].wipeMemoryDump();
-                //GC.Collect();
-                //GC.WaitForFullGCComplete();
             }
         }
 
@@ -245,38 +162,6 @@ namespace RTCV.CorruptCore
                 totalDumpSize += FileInterfaces[i].lastMemorySize.Value;
                 FileInterfaces[i].getMemoryDump();
             }
-
-            //lastMemoryDump = new byte[totalDumpSize];
-
-            //long targetAddress = 0;
-
-            //for (int i = 0; i < FileInterfaces.Count; i++)
-            //{
-
-            //Removed copying of the memory in a local big file because
-            //it's smarter to actually use the FileInterfaces themselves
-            /*
-            long targetLength = FileInterfaces[i].lastMemorySize.Value;
-            Array.Copy(FileInterfaces[i].lastMemoryDump, 0, lastMemoryDump, targetAddress, targetLength);
-            targetAddress += targetLength;
-            FileInterfaces[i].lastMemoryDump = null;
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            */
-            //}
-            /*
-            List<byte> allBytes = new List<byte>();
-
-            foreach (var fi in FileInterfaces)
-            {
-                allBytes.AddRange(fi.getMemoryDump());
-                fi.lastMemoryDump = null;
-            }
-
-        lastMemoryDump = allBytes.ToArray();
-        */
-
-            //return lastMemoryDump;
         }
 
         #pragma warning disable CA1065
@@ -314,7 +199,7 @@ namespace RTCV.CorruptCore
                 if (fi.MultiFilePositionCeiling > address)
                 {
                     fi.PokeBytes(address - fi.MultiFilePosition, data);
-                    return;
+                    break;
                 }
             }
         }
@@ -332,6 +217,11 @@ namespace RTCV.CorruptCore
                     return;
                 }
             }
+
+            var targets = GetFileTargets();
+            if (targets != null)
+                foreach (var target in targets)
+                    target.isDirty = true;
         }
 
         public override byte PeekByte(long address)
@@ -366,6 +256,23 @@ namespace RTCV.CorruptCore
 
             //if wasn't found
             return null;
+        }
+
+        public override FileTarget[] GetFileTargets()
+        {
+            List<FileTarget> fileTargets = new List<FileTarget>();
+
+            foreach (var fi in FileInterfaces)
+            {
+                var targets = fi.GetFileTargets();
+                if (targets != null)
+                    fileTargets.AddRange(targets);
+            }
+
+            if (fileTargets.Count == 0)
+                return null;
+
+            return fileTargets.ToArray();
         }
     }
 }
