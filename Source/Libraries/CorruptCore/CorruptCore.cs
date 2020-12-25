@@ -1079,15 +1079,22 @@ namespace RTCV.CorruptCore
 
             if (performStep)
             {
-                cpuStepCount++;
-
-                var autoCorrupt = RtcCore.AutoCorrupt;
-                var errorDelay = RtcCore.ErrorDelay;
-                if (autoCorrupt && cpuStepCount >= errorDelay)
+                try
                 {
-                    cpuStepCount = 0;
-                    BlastLayer bl = RtcCore.GenerateBlastLayer((string[])AllSpec.UISpec["SELECTEDDOMAINS"]);
-                    bl?.Apply(false, false);
+                    cpuStepCount++;
+
+                    var autoCorrupt = RtcCore.AutoCorrupt;
+                    var errorDelay = RtcCore.ErrorDelay;
+                    if (autoCorrupt && cpuStepCount >= errorDelay)
+                    {
+                        cpuStepCount = 0;
+                        BlastLayer bl = RtcCore.GenerateBlastLayer((string[])AllSpec.UISpec["SELECTEDDOMAINS"]);
+                        bl?.Apply(false, false);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Trace.WriteLine(ex.ToString());
                 }
             }
         }
