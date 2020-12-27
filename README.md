@@ -26,7 +26,7 @@ Icon graciously provided by [ShyGuyXXL](https://twitter.com/shyguyxxl)
 ## Features
 - Corrupts in real-time
 - Supports various emulators via a generic API. Currently comes with Bizhawk, Dolphin, PCSX2, melonDS, and Windows real-time implementations.
-- Supports corrupting files on-disk via the FileStub implementation, as well as including specialized support for certain kinds of files (WiiU games via CemuStub & Unity games via UnityStub).
+- Supports corrupting files on-disk via the FileStub implementation, as well as including specialized support for certain kinds of files.
 - Many corruption engines with customizable algorithms
 - Easy start option for autocorrupt
 - Glitch Harvester (Corruption Savestate Manager)

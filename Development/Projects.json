@@ -20,11 +20,6 @@
         "exe": "FileStub-Vanguard/FileStub/bin/x64/Debug/FileStub.exe"
     },
     {
-        "name": "UnityStub",
-        "solutionPath": "UnityStub-Vanguard/UnityStub-Vanguard.sln",
-        "exe": "UnityStub-Vanguard/UnityStub/bin/x64/Debug/UnityStub.exe"
-    },
-    {
         "name": "ProcessStub",
         "solutionPath": "ProcessStub-Vanguard/ProcessStub-Vanguard.sln",
         "exe": "ProcessStub-Vanguard/ProcessStub/bin/x64/Debug/ProcessStub.exe"
