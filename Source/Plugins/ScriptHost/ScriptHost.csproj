@@ -49,7 +49,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="CS-Script.lib">
-      <Version>3.30.3</Version>
+      <Version>3.30.5.1</Version>
     </PackageReference>
     <PackageReference Include="Fody">
       <Version>6.3.0</Version>
