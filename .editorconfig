@@ -303,6 +303,9 @@ dotnet_diagnostic.CA2008.severity = none
 # Specify marshaling for P/Invoke string arguments
 dotnet_diagnostic.CA2101.severity = none
 
+# Seal classes that satisfy private interfaces
+dotnet_diagnostic.CA2119.severity = none
+
 # Change to be read-only by removing the property setter
 dotnet_diagnostic.CA2227.severity = none
 
