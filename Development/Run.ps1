@@ -3,7 +3,7 @@ using module ".\Modules\Project.psm1"
 
 param(
     [Parameter(Mandatory=$true)]
-    [ValidateSet("RTCV","Bizhawk","CemuStub","FileStub","CemuStub","UnityStub","ProcessStub","melonDS","dolphin","pcsx2","citra","Dosbox")]
+    [ValidateSet("RTCV","Bizhawk","CemuStub","FileStub","CemuStub","ProcessStub","melonDS","dolphin","pcsx2","citra","Dosbox")]
     [String[]]$ProjectsToRun,
 
     [switch]$Release = $false # Run with the Release build configurations
