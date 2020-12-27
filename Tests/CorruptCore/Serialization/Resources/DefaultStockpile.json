@@ -1,8 +1,7 @@
 {
-  "StashKeys": [],
-  "Filename": null,
-  "ShortFilename": null,
   "RtcVersion": null,
   "VanguardImplementation": null,
-  "MissingLimiter": false
+  "MissingLimiter": false,
+  "StashKeys": [],
+  "Filename": null
 }
