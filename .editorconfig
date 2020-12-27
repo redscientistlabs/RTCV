@@ -261,6 +261,9 @@ dotnet_diagnostic.CA1305.severity = none
 # string.EndsWith behavior could vary based on the current user's locale settings
 dotnet_diagnostic.CA1307.severity = none
 
+# string function behavior could vary based on the current user's locale settings
+dotnet_diagnostic.CA1310.severity = none
+
 # P/Invoke method should not be visible
 dotnet_diagnostic.CA1401.severity = none
 
