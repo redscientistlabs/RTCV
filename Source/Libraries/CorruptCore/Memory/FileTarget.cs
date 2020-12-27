@@ -70,7 +70,6 @@ namespace RTCV.CorruptCore
 
             if (string.IsNullOrWhiteSpace(BaseDir))
             {
-
                 if (!FilePath.Contains(baseDir))
                     return false;
 
@@ -86,7 +85,6 @@ namespace RTCV.CorruptCore
                 BaseDir = baseDir;
                 return true;
             }
-
         }
 
         public string GetPathFromLocation(FileTargetLocation location)

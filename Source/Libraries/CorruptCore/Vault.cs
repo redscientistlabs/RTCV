@@ -116,9 +116,11 @@ namespace RTCV.CorruptCore
         //working to real is dirty even when uncorrupted
         public static bool CopyWorkingToReal(FileTarget target) => CopyTarget(target, FileTargetLocation.WORKING, FileTargetLocation.REAL, true);
 
-
-        static bool CopyTarget(FileTarget target, FileTargetLocation input, FileTargetLocation output, bool? enforceDirty)
+        private static bool CopyTarget(FileTarget target, FileTargetLocation input, FileTargetLocation output, bool? enforceDirty)
         {
+            if (target is null)
+                return false;
+
             Init();
 
             string inputFileLocation = target.GetPathFromLocation(input);
@@ -149,7 +151,6 @@ namespace RTCV.CorruptCore
                 logger.Trace($"Failed to copy file from {input} location '{inputFileLocation}' to {output} location '{outputFileLocation}'\n{ex}");
                 return false;
             }
-
         }
 
 
@@ -193,10 +194,9 @@ namespace RTCV.CorruptCore
             catch (IOException e)
             {
                 MessageBox.Show("Unable to write to vault Database\n" + e.ToString());
-                VaultUpdated?.Invoke(null,null);
+                VaultUpdated?.Invoke(null, null);
                 return false;
             }
-
 
             VaultUpdated?.Invoke(null, null);
             return true;
