@@ -171,7 +171,7 @@ namespace RTCV.CorruptCore
             List<BlastUnit> collection = null;
             foreach (List<BlastUnit> it in buListCollection)
             {
-                if (it[0].Working.ExecuteFrameQueued == bu.Working.ExecuteFrameQueued &&
+                if (it[0].GetWorkingData().ExecuteFrameQueued == bu.GetWorkingData().ExecuteFrameQueued &&
                     it[0].Lifetime == bu.Lifetime &&
                     it[0].Loop == bu.Loop &&
                     CheckLimitersMatch(it[0], bu))
@@ -243,22 +243,22 @@ namespace RTCV.CorruptCore
                 var useRealtime = (AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME] as bool? ?? true);
                 if (!useRealtime)
                 {
-                    bu.Working.ExecuteFrameQueued = 0;
-                    bu.Working.LastFrame = 1;
+                    bu.GetWorkingData().ExecuteFrameQueued = 0;
+                    bu.GetWorkingData().LastFrame = 1;
                 }
                 else
                 {
                     if (overrideExecuteFrame) //If a looping unit has a loop timing, use the loop timing instead of ExecuteFrame for subsequent loops
                     {
-                        bu.Working.ExecuteFrameQueued = bu.LoopTiming.Value + currentFrame;
+                        bu.GetWorkingData().ExecuteFrameQueued = bu.LoopTiming.Value + currentFrame;
                         //We subtract 1 here as we want lifetime to be exclusive. 1 means 1 apply, not applies 0 > applies 1 > done
-                        bu.Working.LastFrame = bu.Working.ExecuteFrameQueued + bu.Lifetime - 1;
+                        bu.GetWorkingData().LastFrame = bu.GetWorkingData().ExecuteFrameQueued + bu.Lifetime - 1;
                     }
                     else
                     {
-                        bu.Working.ExecuteFrameQueued = bu.ExecuteFrame + currentFrame;
+                        bu.GetWorkingData().ExecuteFrameQueued = bu.ExecuteFrame + currentFrame;
                         //We subtract 1 here as we want lifetime to be exclusive. 1 means 1 apply, not applies 0 > applies 1 > done
-                        bu.Working.LastFrame = bu.Working.ExecuteFrameQueued + bu.Lifetime - 1;
+                        bu.GetWorkingData().LastFrame = bu.GetWorkingData().ExecuteFrameQueued + bu.Lifetime - 1;
                     }
                 }
 
@@ -283,7 +283,7 @@ namespace RTCV.CorruptCore
 
                 //buListCollection = buListCollection.OrderBy(it => it[0].Working.ExecuteFrameQueued).ToList();
                 //this didnt need to be stored since it is only being used in this one loop
-                foreach (List<BlastUnit> buList in buListCollection.OrderBy(it => it[0].Working.ExecuteFrameQueued).ToList())
+                foreach (List<BlastUnit> buList in buListCollection.OrderBy(it => it[0].GetWorkingData().ExecuteFrameQueued).ToList())
                 {
                     queued.AddLast(buList);
                 }
@@ -292,7 +292,7 @@ namespace RTCV.CorruptCore
                 buListCollection = new List<List<BlastUnit>>();
 
                 //There's data so have the execute loop actually do something
-                nextFrame = (queued.First())[0].Working.ExecuteFrameQueued;
+                nextFrame = (queued.First())[0].GetWorkingData().ExecuteFrameQueued;
                 isRunning = true;
             }
         }
@@ -354,7 +354,7 @@ namespace RTCV.CorruptCore
                     return;
                 }
                 //It's not empty so set the next frame
-                nextFrame = (queued.First())[0].Working.ExecuteFrameQueued;
+                nextFrame = (queued.First())[0].GetWorkingData().ExecuteFrameQueued;
             }
         }
 
@@ -386,7 +386,7 @@ namespace RTCV.CorruptCore
                         throw new UnitExecutionException();
                     }
                 }
-                if (removeExpiredUnits && buList[0].Working.LastFrame == currentFrame)
+                if (removeExpiredUnits && buList[0].GetWorkingData().LastFrame == currentFrame)
                 {
                     itemsToRemove.Add(buList);
                 }

@@ -254,9 +254,20 @@ namespace RTCV.CorruptCore
         [Description("Note associated with this unit")]
         public string Note { get; set; }
 
+
         //Don't serialize this
-        [JsonIgnore, Exclude]
-        public BlastUnitWorkingData Working { get; private set; }
+        [NonSerialized, Exclude]
+        private BlastUnitWorkingData _workingData;
+
+        internal BlastUnitWorkingData GetWorkingData()
+        {
+            return _workingData;
+        }
+
+        private void SetWorkingData(BlastUnitWorkingData value)
+        {
+            _workingData = value;
+        }
 
         /// <summary>
         /// Creates a Blastunit that utilizes a backup.
@@ -516,7 +527,7 @@ namespace RTCV.CorruptCore
                 return true;
             }
             //Create our working data object
-            this.Working = new BlastUnitWorkingData();
+            this.SetWorkingData(new BlastUnitWorkingData());
 
             //We need to grab the value to freeze
             if (Source == BlastUnitSource.STORE && StoreTime == StoreTime.IMMEDIATE)
@@ -574,7 +585,7 @@ namespace RTCV.CorruptCore
                     }
                 }
 
-                if (Working == null)
+                if (GetWorkingData() == null)
                 {
                     if (Debugger.IsAttached)
                     {
@@ -588,31 +599,31 @@ namespace RTCV.CorruptCore
                 {
                     case (BlastUnitSource.STORE):
                         {
-                            if (Working.StoreData == null)
+                            if (GetWorkingData().StoreData == null)
                             {
                                 Common.Logging.GlobalLogger.Error("Blastunit: STOREDATA WAS NULL {this}", this);
                                 return ExecuteState.SILENTERROR;
                             }
 
                             //If there's no stored data, return out.
-                            if (Working.StoreData.Count == 0)
+                            if (GetWorkingData().StoreData.Count == 0)
                             {
                                 return ExecuteState.NOTEXECUTED;
                             }
 
                             //Apply the value we have stored
-                            Working.ApplyValue = Working.StoreData.Peek();
+                            GetWorkingData().ApplyValue = GetWorkingData().StoreData.Peek();
 
                             //Remove it from the store pool if it's a continuous backup
                             if (StoreType == StoreType.CONTINUOUS)
                             {
-                                Working.StoreData.Dequeue();
+                                GetWorkingData().StoreData.Dequeue();
                             }
 
                             //All the data is already handled by GetStoreBackup, so we can just poke
                             for (int i = 0; i < Precision; i++)
                             {
-                                mi.PokeByte(Address + i, Working.ApplyValue[i]);
+                                mi.PokeByte(Address + i, GetWorkingData().ApplyValue[i]);
                             }
                             break;
                         }
@@ -620,25 +631,25 @@ namespace RTCV.CorruptCore
                         {
                             //We only calculate it once for Value and then store it in ApplyValue.
                             //If the length has changed (blast editor) we gotta recalc it
-                            if (Working.ApplyValue == null)
+                            if (GetWorkingData().ApplyValue == null)
                             {
                                 //We don't want to modify the original array
-                                Working.ApplyValue = (byte[])Value.Clone();
+                                GetWorkingData().ApplyValue = (byte[])Value.Clone();
 
                                 //Calculate the actual value to apply
-                                Working.ApplyValue.AddValueToByteArrayUnchecked(TiltValue, false); //We don't use the endianess toggle here as we always store value units as little endian
+                                GetWorkingData().ApplyValue.AddValueToByteArrayUnchecked(TiltValue, false); //We don't use the endianess toggle here as we always store value units as little endian
 
                                 //Flip it if it's big endian
                                 if (this.BigEndian)
                                 {
-                                    Working.ApplyValue.FlipBytes();
+                                    GetWorkingData().ApplyValue.FlipBytes();
                                 }
                             }
 
                             //Poke the memory
                             for (int i = 0; i < Precision; i++)
                             {
-                                mi.PokeByte(Address + i, Working.ApplyValue[i]);
+                                mi.PokeByte(Address + i, GetWorkingData().ApplyValue[i]);
                             }
                             break;
                         }
@@ -691,7 +702,7 @@ namespace RTCV.CorruptCore
             }
 
             //Enqueue it
-            Working.StoreData.Enqueue(value);
+            GetWorkingData().StoreData.Enqueue(value);
         }
 
         /// <summary>
@@ -727,9 +738,9 @@ namespace RTCV.CorruptCore
         {
             if (this.Source == BlastUnitSource.STORE && this.StoreType == StoreType.CONTINUOUS && this.LimiterTime != LimiterTime.GENERATE)
             {
-                if (this.Working.StoreData.Count > 0)
+                if (this.GetWorkingData().StoreData.Count > 0)
                 {
-                    this.Working.StoreData.Dequeue();
+                    this.GetWorkingData().StoreData.Dequeue();
                 }
             }
 
@@ -956,7 +967,7 @@ namespace RTCV.CorruptCore
 
         public void ClearWorkingData()
         {
-            Working = null;
+            SetWorkingData(null);
         }
 
         public override string ToString()
