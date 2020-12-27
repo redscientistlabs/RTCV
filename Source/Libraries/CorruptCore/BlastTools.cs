@@ -55,6 +55,22 @@ namespace RTCV.CorruptCore
             return true;
         }
 
+        public static BlastLayer LoadBlastLayerFromStream(Stream s)
+        {
+            BlastLayer bl = null;
+
+            try
+            {
+                bl = JsonHelper.Deserialize<BlastLayer>(s);
+                return bl;
+            }
+            catch
+            {
+                MessageBox.Show("The BlastLayer file could not be loaded");
+                return null;
+            }
+        }
+
         public static BlastLayer LoadBlastLayerFromFile(string filename = null)
         {
             BlastLayer bl = null;

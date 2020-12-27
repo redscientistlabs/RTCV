@@ -4,6 +4,9 @@ namespace RTCV.CorruptCore
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
+    using System.Linq;
+    using System.Threading;
+    using System.Threading.Tasks;
     using System.Windows.Forms;
     using Newtonsoft.Json;
     using RTCV.CorruptCore.Extensions;
@@ -51,6 +54,8 @@ namespace RTCV.CorruptCore
 
         private string InterfaceUniquePrefix = "";
 
+        private FileTarget target;
+
         public override string ToString()
         {
             switch (identity)
@@ -66,25 +71,27 @@ namespace RTCV.CorruptCore
         }
 
         [SuppressMessage("Microsoft.Design", "CA1801", Justification = "_startPadding and endPadding will be used eventually")]
-        public FileInterface(string targetId, bool bigEndian, bool useAutomaticFileBackups = false, long startPadding = 0, long endPadding = 0)
+        //public FileInterface(string targetId, bool bigEndian, bool useAutomaticFileBackups = false, long startPadding = 0, long endPadding = 0)
+        public FileInterface(FileTarget fileTarget)
         {
-            if (targetId == null)
+            if (fileTarget == null)
             {
-                throw new ArgumentNullException(nameof(targetId));
+                throw new ArgumentNullException(nameof(fileTarget));
             }
 
             try
             {
-                string[] targetIdParts = targetId.Split('|');
-                Filename = targetIdParts[1];
+                target = fileTarget;
+
+                Filename = target.RealFilePath;
                 var fi = new FileInfo(Filename);
                 ShortFilename = fi.Name;
-                BigEndian = bigEndian;
-                StartPadding = 0;
-                EndPadding = 0;
+                BigEndian = target.BigEndian;
+                StartPadding = target.PaddingHeader;
+                EndPadding = target.PaddingFooter;
 
-                InterfaceUniquePrefix = Filename.CreateMD5().Substring(0, 4).ToUpper();
-                this.UseAutomaticFileBackups = useAutomaticFileBackups;
+                InterfaceUniquePrefix = target.FilePath.CreateMD5().Substring(0, 4).ToUpper();
+                this.UseAutomaticFileBackups = target.IsVaulted;
 
                 if (!File.Exists(Filename))
                 {
@@ -115,10 +122,10 @@ namespace RTCV.CorruptCore
 
                 if (this.UseAutomaticFileBackups)
                 {
-                    SetBackup();
+                    if (!File.Exists(target.BackupFilePath))
+                        SendRealToBackup(false);
                 }
 
-                //getMemoryDump();
                 getMemorySize();
             }
             catch (Exception ex)
@@ -136,155 +143,13 @@ namespace RTCV.CorruptCore
             }
         }
 
-        public string getCompositeFilename()
-        {
-            if (CompositeFilenameDico.ContainsKey(Filename))
-            {
-                return CompositeFilenameDico[Filename];
-            }
-            //Add it to the dico
-            string name = (CompositeFilenameDico.Keys.Count + 1).ToString();
-            CompositeFilenameDico[Filename] = name;
-            //Flush to disk
-            SaveCompositeFilenameDico();
-            return name;
-        }
-
-        public static bool LoadCompositeFilenameDico(string jsonBaseDir = null)
-        {
-            if (jsonBaseDir == null)
-            {
-                jsonBaseDir = RtcCore.EmuDir;
-            }
-
-            JsonSerializer serializer = new JsonSerializer();
-            var path = Path.Combine(jsonBaseDir, "FILEBACKUPS", "filemap.json");
-            if (!File.Exists(path))
-            {
-                CompositeFilenameDico = new Dictionary<string, string>();
-                return true;
-            }
-            try
-            {
-                using (StreamReader sw = new StreamReader(path))
-                using (JsonTextReader reader = new JsonTextReader(sw))
-                {
-                    CompositeFilenameDico = serializer.Deserialize<Dictionary<string, string>>(reader);
-                }
-            }
-            catch (IOException e)
-            {
-                MessageBox.Show("Unable to access the filemap! Figure out what's locking it and then restart the WGH.\n" + e.ToString());
-                return false;
-            }
-            return true;
-        }
-
-        public static bool SaveCompositeFilenameDico(string jsonFilePath = null)
-        {
-            if (jsonFilePath == null)
-            {
-                jsonFilePath = RtcCore.EmuDir;
-            }
-
-            JsonSerializer serializer = new JsonSerializer();
-            var folder = Path.Combine(jsonFilePath, "FILEBACKUPS");
-
-            if (!Directory.Exists(folder))
-            {
-                Directory.CreateDirectory(folder);
-            }
-
-            var path = Path.Combine(folder, "filemap.json");
-            try
-            {
-                using (StreamWriter sw = new StreamWriter(File.Create(path)))
-                using (JsonWriter writer = new JsonTextWriter(sw))
-                {
-                    serializer.Serialize(writer, CompositeFilenameDico);
-                }
-            }
-            catch (IOException e)
-            {
-                MessageBox.Show("Unable to access the filemap!\n" + e.ToString());
-                return false;
-            }
-            return true;
-        }
-
-        public string getCorruptFilename(bool overrideWriteCopyMode = false)
-        {
-            if (overrideWriteCopyMode)
-            {
-                return Path.Combine(RtcCore.EmuDir, "FILEBACKUPS", getCompositeFilename());
-            }
-            else
-            {
-                return Filename;
-            }
-        }
-
-        public string getBackupFilename()
-        {
-            return Path.Combine(RtcCore.EmuDir, "FILEBACKUPS", getCompositeFilename());
-        }
-
-        public override bool ResetWorkingFile()
-        {
-            try
-            {
-                if (File.Exists(getCorruptFilename()))
-                {
-                    File.Delete(getCorruptFilename());
-                }
-            }
-            catch
-            {
-                MessageBox.Show($"Could not get access to {getCorruptFilename()}\n\nClose the file then try whatever you were doing again", "WARNING");
-                return false;
-            }
-
-            SetWorkingFile();
-            return true;
-        }
-
-        public string SetWorkingFile()
-        {
-            string corruptFilename = getCorruptFilename();
-
-            if (!File.Exists(corruptFilename))
-            {
-                File.Copy(getBackupFilename(), corruptFilename, true);
-            }
-
-            return corruptFilename;
-        }
-
-        public override bool ApplyWorkingFile()
+        public override bool CommitChangesToReal()
         {
             CloseStream();
             return true;
         }
 
-        public override bool SetBackup()
-        {
-            try
-            {
-                if (!File.Exists(getBackupFilename()))
-                {
-                    File.Copy(Filename, getBackupFilename(), true);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Couldn't set backup of {Filename}!");
-                logger.Debug(ex, "SetBackup failed");
-                return false;
-            }
-            return true;
-        }
-
-        public override bool ResetBackup(bool askConfirmation = true)
+        public override bool SendRealToBackup(bool askConfirmation = true)
         {
             if (askConfirmation && MessageBox.Show("Are you sure you want to reset the backup using the target file?", "WARNING", MessageBoxButtons.YesNo) == DialogResult.No)
             {
@@ -293,29 +158,25 @@ namespace RTCV.CorruptCore
 
             try
             {
-                if (File.Exists(getBackupFilename()))
-                {
-                    File.Delete(getBackupFilename());
-                }
-
-                SetBackup();
+                Vault.CopyRealToBackup(target);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Couldn't reset backup of {Filename}!");
-                logger.Debug(ex, "ResetBackup failed");
+                MessageBox.Show($"Couldn't set backup of {target.RealFilePath}!");
+                logger.Debug(ex, "SetBackup failed");
                 return false;
             }
+
             return true;
         }
 
-        public override bool RestoreBackup(bool announce = true)
+        public override bool SendBackupToReal(bool announce = true)
         {
-            if (File.Exists(getBackupFilename()))
+            if (File.Exists(target.BackupFilePath))
             {
                 try
                 {
-                    File.Copy(getBackupFilename(), Filename, true);
+                    Vault.CopyBackupToReal(target);
                 }
                 catch (Exception e)
                 {
@@ -348,11 +209,11 @@ namespace RTCV.CorruptCore
         {
             if (UseAutomaticFileBackups)
             {
-                lastMemoryDump = MemoryBanks.ReadFile(getBackupFilename());
+                lastMemoryDump = MemoryBanks.ReadFile(target.BackupFilePath);
             }
             else
             {
-                lastMemoryDump = MemoryBanks.ReadFile(Filename);
+                lastMemoryDump = MemoryBanks.ReadFile(target.RealFilePath);
             }
         }
 
@@ -394,7 +255,7 @@ namespace RTCV.CorruptCore
 
             if (stream == null)
             {
-                stream = File.Open(SetWorkingFile(), FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
+                stream = File.Open(target.RealFilePath, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
             }
 
             stream.Position = offsetAddress;
@@ -405,11 +266,8 @@ namespace RTCV.CorruptCore
                 MemoryBanks.PokeBytes(lastMemoryDump, offsetAddress, data);
             }
 
-            /*
-            if (lastMemoryDump != null)
-                for (int i = 0; i < data.Length; i++)
-                    lastMemoryDump[address + i] = data[i];
-            */
+            if (target != null)
+                target.isDirty = true;
         }
 
         public override void PokeByte(long address, byte data)
@@ -421,11 +279,16 @@ namespace RTCV.CorruptCore
                 return;
             }
 
+            if (cacheEnabled)
+            {
+                MemoryBanks.PokeByte(lastMemoryDump, offsetAddress, data);
+            }
+
             try
             {
                 if (stream == null)
                 {
-                    stream = File.Open(SetWorkingFile(), FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
+                    stream = File.Open(target.RealFilePath, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
                 }
 
                 stream.Position = offsetAddress;
@@ -443,11 +306,8 @@ namespace RTCV.CorruptCore
                 throw;
             }
 
-            if (cacheEnabled)
-            {
-                MemoryBanks.PokeByte(lastMemoryDump, offsetAddress, data);
-            }
-            //lastMemoryDump[address] = data;
+            if (target != null)
+                target.isDirty = true;
         }
 
         public override byte PeekByte(long address)
@@ -463,20 +323,18 @@ namespace RTCV.CorruptCore
             {
                 return MemoryBanks.PeekByte(lastMemoryDump, offsetAddress);
             }
-            //return lastMemoryDump[address];
+
             try
             {
                 byte[] readBytes = new byte[1];
 
                 if (stream == null)
                 {
-                    stream = File.Open(SetWorkingFile(), FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
+                    stream = File.Open(target.RealFilePath, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
                 }
 
                 stream.Position = offsetAddress;
                 stream.Read(readBytes, 0, 1);
-
-                //fs.Close();
 
                 return readBytes[0];
             }
@@ -506,19 +364,16 @@ namespace RTCV.CorruptCore
             {
                 return MemoryBanks.PeekBytes(lastMemoryDump, offsetAddress, length);
             }
-            //return lastMemoryDump.SubArray(address, range);
 
             byte[] readBytes = new byte[length];
 
             if (stream == null)
             {
-                stream = File.Open(SetWorkingFile(), FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
+                stream = File.Open(target.RealFilePath, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
             }
 
             stream.Position = offsetAddress;
             stream.Read(readBytes, 0, length);
-
-            //fs.Close();
 
             return readBytes;
         }
@@ -530,6 +385,14 @@ namespace RTCV.CorruptCore
                 stream.Close();
                 stream = null;
             }
+        }
+
+        public override FileTarget[] GetFileTargets()
+        {
+            if (target == null)
+                return null;
+
+            return new FileTarget[] { target };
         }
     }
 }

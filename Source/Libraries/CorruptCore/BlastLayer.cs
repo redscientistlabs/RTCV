@@ -43,9 +43,6 @@ namespace RTCV.CorruptCore
 
                 if (mergeWithPrevious)
                 {
-                    //UnCorruptBL_Backup = (BlastLayer)StockpileManager_EmuSide.UnCorruptBL?.Clone();
-                    //CorruptBL_Backup = (BlastLayer)StockpileManager_EmuSide.CorruptBL?.Clone();
-
                     UnCorruptBL_Backup = StockpileManagerEmuSide.UnCorruptBL;
                     CorruptBL_Backup = StockpileManagerEmuSide.CorruptBL;
                 }
@@ -55,7 +52,7 @@ namespace RTCV.CorruptCore
 
                 if (mergeWithPrevious)
                 {
-                    if (UnCorruptBL_Backup.Layer != null)
+                    if (UnCorruptBL_Backup?.Layer != null)
                     {
                         if (StockpileManagerEmuSide.UnCorruptBL.Layer == null)
                         {
@@ -65,7 +62,7 @@ namespace RTCV.CorruptCore
                         StockpileManagerEmuSide.UnCorruptBL.Layer.AddRange(UnCorruptBL_Backup.Layer);
                     }
 
-                    if (CorruptBL_Backup.Layer != null)
+                    if (CorruptBL_Backup?.Layer != null)
                     {
                         if (StockpileManagerEmuSide.CorruptBL.Layer == null)
                         {
@@ -75,6 +72,10 @@ namespace RTCV.CorruptCore
                         StockpileManagerEmuSide.CorruptBL.Layer.AddRange(CorruptBL_Backup.Layer);
                     }
                 }
+            }
+            else
+            {
+                StockpileManagerEmuSide.UnCorruptBL = null;
             }
 
             bool success;

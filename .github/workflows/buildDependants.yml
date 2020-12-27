@@ -25,12 +25,12 @@ jobs:
 
     # Setup Tooling
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.0
+      uses: microsoft/setup-msbuild@v1.0.2
 
-    # Restore nuget packages for all targets
-    - name: Restore Nuget packages in current build target
+    # Restore packages for all targets
+    - name: Restore packages in current build target
       run: msbuild /t:restore '.\RTCV\RTCV.sln'
-    - name: Restore Nuget packages in Bizhawk
+    - name: Restore packages in Bizhawk
       run: msbuild /t:restore '.\Bizhawk-Vanguard\Real-Time Corruptor\BizHawk_RTC\BizHawk.sln'
 
     # Build Bizhawk
@@ -54,12 +54,12 @@ jobs:
 
     # Setup Tooling
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.0
+      uses: microsoft/setup-msbuild@v1.0.2
 
-    # Restore nuget packages for all targets
-    - name: Restore Nuget packages in current build target
+    # Restore packages for all targets
+    - name: Restore packages in current build target
       run: msbuild /t:restore '.\RTCV\RTCV.sln'
-    - name: Restore Nuget packages in CemuStub
+    - name: Restore packages in CemuStub
       run: msbuild /t:restore '.\CemuStub-Vanguard\'
 
     # Build CemuStub
@@ -83,46 +83,17 @@ jobs:
 
     # Setup Tooling
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.0
+      uses: microsoft/setup-msbuild@v1.0.2
 
-    # Restore nuget packages for all targets
-    - name: Restore Nuget packages in current build target
+    # Restore packages for all targets
+    - name: Restore packages in current build target
       run: msbuild /t:restore '.\RTCV\RTCV.sln'
-    - name: Restore Nuget packages in FileStub
+    - name: Restore packages in FileStub
       run: msbuild /t:restore '.\FileStub-Vanguard\FileStub-Vanguard.sln'
 
     # Build FileStub
     - name: Build FileStub-Vanguard
       run: msbuild '.\FileStub-Vanguard\FileStub-Vanguard.sln'
-
-  UnityStub:
-    runs-on: windows-2019
-    steps:
-    # Checkout relevant code
-    - name: Checkout current build target
-      uses: actions/checkout@v2
-      with:
-        path: 'RTCV'
-    - name: Checkout UnityStub
-      uses: actions/checkout@v2
-      with:
-        repository: 'redscientistlabs/UnityStub-Vanguard'
-        ref: 'master'
-        path: 'UnityStub-Vanguard'
-
-    # Setup Tooling
-    - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.0
-
-    # Restore nuget packages for all targets
-    - name: Restore Nuget packages in current build target
-      run: msbuild /t:restore '.\RTCV\RTCV.sln'
-    - name: Restore Nuget packages in UnityStub
-      run: msbuild /t:restore '.\UnityStub-Vanguard\UnityStub-Vanguard.sln'
-
-    # Build UnityStub
-    - name: Build UnityStub-Vanguard
-      run: msbuild '.\UnityStub-Vanguard\UnityStub-Vanguard.sln'
 
   ProcessStub:
     runs-on: windows-2019
@@ -141,12 +112,12 @@ jobs:
 
     # Setup Tooling
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.0
+      uses: microsoft/setup-msbuild@v1.0.2
 
-    # Restore nuget packages for all targets
-    - name: Restore Nuget packages in current build target
+    # Restore packages for all targets
+    - name: Restore packages in current build target
       run: msbuild /t:restore '.\RTCV\RTCV.sln'
-    - name: Restore Nuget packages in ProcessStub
+    - name: Restore packages in ProcessStub
       run: msbuild /t:restore '.\ProcessStub-Vanguard\ProcessStub-Vanguard.sln'
 
     # Build ProcessStub
@@ -158,14 +129,14 @@ jobs:
     steps:
     # Setup tooling
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.0
+      uses: microsoft/setup-msbuild@v1.0.2
 
     # Setup RTCV
     - name: Checkout current build target
       uses: actions/checkout@v2
       with:
         path: 'RTCV'
-    - name: Restore Nuget packages in RTCV
+    - name: Restore packages in RTCV
       run: msbuild /t:restore '.\RTCV\RTCV.sln'
     - name: Build RTCV
       run: msbuild '.\RTCV\RTCV.sln'
@@ -204,10 +175,10 @@ jobs:
       with:
         path: 'RTCV'
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.0
-    - name: Restore Nuget packages in RTCV
+      uses: microsoft/setup-msbuild@v1.0.2
+    - name: Restore packages in RTCV
       run: msbuild /t:restore '.\RTCV\RTCV.sln'
-    - name: Restore Nuget packages in dolphin-vanguard
+    - name: Restore packages in dolphin-vanguard
       run: msbuild /t:restore '.\dolphin-vanguard\Source\dolphin-emu.sln'
     - name: Build with MSBuild
       run: msbuild '.\dolphin-vanguard\Source\dolphin-emu.sln' /property:Configuration=Release /property:Platform=x64 /p:TreatWarningAsError=false
@@ -227,10 +198,10 @@ jobs:
       with:
         path: 'RTCV'
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.0
-    - name: Restore Nuget packages in RTCV
+      uses: microsoft/setup-msbuild@v1.0.2
+    - name: Restore packages in RTCV
       run: msbuild /t:restore '.\RTCV\RTCV.sln'
-    - name: Restore Nuget packages in pcsx2-Vanguard
+    - name: Restore packages in pcsx2-Vanguard
       run: msbuild /t:restore '.\pcsx2-Vanguard\PCSX2_suite.sln'
     - name: Build with MSBuild
       run: msbuild '.\pcsx2-Vanguard\PCSX2_suite.sln' /property:Configuration=Debug /property:Platform=Win32
@@ -244,8 +215,8 @@ jobs:
       with:
         path: 'RTCV'
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.0
-    - name: Restore Nuget packages in RTCV
+      uses: microsoft/setup-msbuild@v1.0.2
+    - name: Restore packages in RTCV
       run: msbuild /t:restore '.\RTCV\RTCV.sln'
     - name: Build RTCV
       run: msbuild '.\RTCV\RTCV.sln'
@@ -287,12 +258,12 @@ jobs:
 
     # Setup Tooling
     - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.0
+      uses: microsoft/setup-msbuild@v1.0.2
 
-    # Restore nuget packages for all targets
-    - name: Restore Nuget packages in current build target
+    # Restore packages for all targets
+    - name: Restore packages in current build target
       run: msbuild /t:restore '.\RTCV\RTCV.sln'
-    - name: Restore Nuget packages in DosboxStub
+    - name: Restore packages in DosboxStub
       run: msbuild /t:restore '.\DosboxStub-Vanguard\DosboxStub-Vanguard.sln'
 
     # Build DosboxStub
