@@ -256,7 +256,7 @@ namespace RTCV.CorruptCore
 
 
         //Don't serialize this
-        [NonSerialized]
+        [NonSerialized, Exclude]
         private BlastUnitWorkingData _workingData;
 
         internal BlastUnitWorkingData GetWorkingData()
