@@ -218,6 +218,9 @@ namespace RTCV.CorruptCore
                 //populating temp folder with roms
                 foreach (string str in allRoms)
                 {
+                    if (str.EndsWith("IGNORE"))
+                        continue;
+
                     RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Copying {Path.GetFileNameWithoutExtension(str)} to stockpile", saveProgress += percentPerFile));
                     string rom = str;
                     string romTempfilename = Path.Combine(RtcCore.workingDir, "TEMP", Path.GetFileName(rom));

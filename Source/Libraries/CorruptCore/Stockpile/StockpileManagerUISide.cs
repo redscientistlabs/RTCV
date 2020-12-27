@@ -383,7 +383,7 @@ namespace RTCV.CorruptCore
         public static StashKey SaveState(StashKey sk = null)
         {
             bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
-
+            
             if (UseSavestates)
             {
                 return LocalNetCoreRouter.QueryRoute<StashKey>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.SaveState, sk, true);
@@ -454,7 +454,7 @@ namespace RTCV.CorruptCore
             string message = customMessage ?? $"Can't find file {psk.RomFilename}\nGame name: {psk.GameName}\nSystem name: {psk.SystemName}\n\n To continue loading, provide a new file for replacement.";
             string title = customTitle ?? "Error: File not found";
 
-            if (force || !File.Exists(psk.RomFilename))
+            if ((force || !File.Exists(psk.RomFilename)) && !psk.RomFilename.EndsWith("IGNORE"))
             {
                 if (DialogResult.OK == MessageBox.Show(message, title, MessageBoxButtons.OKCancel))
                 {
