@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
 	partial class MemoryDomainsForm
 	{
@@ -30,7 +30,7 @@
 		{
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MemoryDomainsForm));
             this.btnAutoSelectDomains = new System.Windows.Forms.Button();
-            this.btnRefreshDomains = new System.Windows.Forms.Button();
+            this.btnUnselectAll = new System.Windows.Forms.Button();
             this.btnSelectAll = new System.Windows.Forms.Button();
             this.lbMemoryDomains = new RTCV.UI.Components.Controls.ListBoxExtended();
             this.SuspendLayout();
@@ -54,26 +54,26 @@
             this.btnAutoSelectDomains.UseVisualStyleBackColor = false;
             this.btnAutoSelectDomains.Click += new System.EventHandler(this.AutoSelectDomains);
             this.btnAutoSelectDomains.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            //
-            // btnRefreshDomains
-            //
-            this.btnRefreshDomains.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRefreshDomains.BackColor = System.Drawing.Color.Gray;
-            this.btnRefreshDomains.FlatAppearance.BorderSize = 0;
-            this.btnRefreshDomains.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRefreshDomains.Font = new System.Drawing.Font("Segoe UI", 8F);
-            this.btnRefreshDomains.ForeColor = System.Drawing.Color.White;
-            this.btnRefreshDomains.Location = new System.Drawing.Point(103, 255);
-            this.btnRefreshDomains.Name = "btnRefreshDomains";
-            this.btnRefreshDomains.Size = new System.Drawing.Size(88, 24);
-            this.btnRefreshDomains.TabIndex = 16;
-            this.btnRefreshDomains.TabStop = false;
-            this.btnRefreshDomains.Tag = "color:light1";
-            this.btnRefreshDomains.Text = "Unselect all";
-            this.btnRefreshDomains.UseVisualStyleBackColor = false;
-            this.btnRefreshDomains.Click += new System.EventHandler(this.HandleRefreshDomainsClick);
-            this.btnRefreshDomains.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            //
+            // 
+            // btnUnselectAll
+            // 
+            this.btnUnselectAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnUnselectAll.BackColor = System.Drawing.Color.Gray;
+            this.btnUnselectAll.FlatAppearance.BorderSize = 0;
+            this.btnUnselectAll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUnselectAll.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnUnselectAll.ForeColor = System.Drawing.Color.White;
+            this.btnUnselectAll.Location = new System.Drawing.Point(103, 255);
+            this.btnUnselectAll.Name = "btnUnselectAll";
+            this.btnUnselectAll.Size = new System.Drawing.Size(88, 24);
+            this.btnUnselectAll.TabIndex = 16;
+            this.btnUnselectAll.TabStop = false;
+            this.btnUnselectAll.Tag = "color:light1";
+            this.btnUnselectAll.Text = "Unselect all";
+            this.btnUnselectAll.UseVisualStyleBackColor = false;
+            this.btnUnselectAll.Click += new System.EventHandler(this.UnselectAllDomains);
+            this.btnUnselectAll.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
+            // 
             // btnSelectAll
             //
             this.btnSelectAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -123,7 +123,7 @@
             this.ClientSize = new System.Drawing.Size(200, 291);
             this.Controls.Add(this.lbMemoryDomains);
             this.Controls.Add(this.btnAutoSelectDomains);
-            this.Controls.Add(this.btnRefreshDomains);
+            this.Controls.Add(this.btnUnselectAll);
             this.Controls.Add(this.btnSelectAll);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -140,7 +140,7 @@
 
 		public RTCV.UI.Components.Controls.ListBoxExtended lbMemoryDomains;
 		private System.Windows.Forms.Button btnAutoSelectDomains;
-		private System.Windows.Forms.Button btnRefreshDomains;
+		private System.Windows.Forms.Button btnUnselectAll;
 		private System.Windows.Forms.Button btnSelectAll;
 	}
 }

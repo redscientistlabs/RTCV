@@ -32,26 +32,24 @@ namespace RTCV.CorruptCore
                         break;
                     //UI sent its spec
                     case Remote.PushUISpec:
-                        {
-                            SyncObjectSingleton.FormExecute(() => AllSpec.UISpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached));
-                            break;
-                        }
+                    {
+                        AllSpec.UISpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
+                            //SyncObjectSingleton.FormExecute();
+                        break;
+                    }
 
                     //UI sent a spec update
                     case Remote.PushUISpecUpdate:
-                        SyncObjectSingleton.FormExecute(() => AllSpec.UISpec?.Update((PartialSpec)advancedMessage.objectValue));
+                        //SyncObjectSingleton.FormExecute(() => AllSpec.UISpec?.Update((PartialSpec)advancedMessage.objectValue));
+                        AllSpec.UISpec?.Update((PartialSpec)advancedMessage.objectValue);
                         break;
 
                     //Vanguard sent a copy of its spec
                     case Remote.PushVanguardSpec:
-
-                        SyncObjectSingleton.FormExecute(() =>
+                        if (!RtcCore.Attached)
                         {
-                            if (!RtcCore.Attached)
-                            {
-                                AllSpec.VanguardSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
-                            }
-                        });
+                            AllSpec.VanguardSpec = new FullSpec((PartialSpec)advancedMessage.objectValue, !RtcCore.Attached);
+                        }
                         break;
 
                     //Vanguard sent a spec update
@@ -66,7 +64,7 @@ namespace RTCV.CorruptCore
 
                     //UI sent an update of the CorruptCore spec
                     case Remote.PushCorruptCoreSpecUpdate:
-                        SyncObjectSingleton.FormExecute(() => AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false));
+                        AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
                         break;
 
                     case Remote.EventDomainsUpdated:

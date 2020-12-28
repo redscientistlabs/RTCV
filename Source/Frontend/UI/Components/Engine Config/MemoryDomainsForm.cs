@@ -1,3 +1,7 @@
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Threading;
+
 namespace RTCV.UI
 {
     using System;
@@ -14,20 +18,16 @@ namespace RTCV.UI
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class MemoryDomainsForm : ComponentForm, IBlockable
     {
-        private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
-        private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
-        private System.Timers.Timer updateTimer;
+        public new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
+        public new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
+        private readonly Dictionary<string, bool> domains = new Dictionary<string, bool>();
+        private bool ignoreListboxChanged;
+
+        //private BindingSource _bs;
 
         public MemoryDomainsForm()
         {
             InitializeComponent();
-            updateTimer = new System.Timers.Timer
-            {
-                AutoReset = false,
-                Interval = 300,
-            };
-            updateTimer.Elapsed += UpdateSelectedMemoryDomains;
-
 
             //Registers the drag and drop with MyVMDsForm
             AllowDrop = true;
@@ -35,70 +35,96 @@ namespace RTCV.UI
             this.DragDrop += S.GET<VmdPoolForm>().HandleDragDrop;
         }
 
+
         private void UpdateSelectedMemoryDomains(object sender, EventArgs args)
         {
-            SyncObjectSingleton.FormExecute(() =>
+            StringBuilder sb = new StringBuilder();
+            foreach (var s in domains.Where(x => x.Value).ToList())
             {
-                StringBuilder sb = new StringBuilder();
-                foreach (var s in lbMemoryDomains.SelectedItems.Cast<string>().ToArray())
-                {
-                    sb.Append($"{s},");
-                }
+                sb.Append($"{s},");
+            }
 
-                logger.Trace("UpdateSelectedMemoryDomains Setting SELECTEDDOMAINS domains to {domains}", sb);
-                AllSpec.UISpec.Update("SELECTEDDOMAINS", lbMemoryDomains.SelectedItems.Cast<string>().Distinct().ToArray());
-            });
+            logger.Trace("UpdateSelectedMemoryDomains Setting SELECTEDDOMAINS domains to {domains}", sb);
+            AllSpec.UISpec.Update("SELECTEDDOMAINS", domains.Where(x => x.Value).Select(x => x.Key).ToArray());
+            PostDomainsToUI();
         }
 
         public void SetMemoryDomainsSelectedDomains(string[] domains)
         {
-            var oldState = this.Visible;
-
-            for (int i = 0; i < lbMemoryDomains.Items.Count; i++)
+            foreach (var domain in domains)
             {
-                if (domains.Contains(lbMemoryDomains.Items[i].ToString()))
+                if (domains.Contains(domain))
                 {
-                    lbMemoryDomains.SetSelected(i, true);
+                    this.domains[domain] = true;
                 }
                 else
                 {
-                    lbMemoryDomains.SetSelected(i, false);
+                    this.domains[domain] = false;
                 }
             }
-
             UpdateSelectedMemoryDomains(null, null);
-            this.Visible = oldState;
         }
 
-        public void SetMemoryDomainsAllButSelectedDomains(string[] blacklistedDomains)
+        private void SendDomainsToUI()
         {
-            var oldState = this.Visible;
+            ignoreListboxChanged = true;
+            lbMemoryDomains.Items.Clear();
+            lbMemoryDomains.Items.AddRange(domains.Keys.ToArray());
+            ignoreListboxChanged = false;
+        }
 
-            for (int i = 0; i < lbMemoryDomains.Items.Count; i++)
-            {
-                if (blacklistedDomains?.Contains(lbMemoryDomains.Items[i].ToString()) ?? false)
+        private void PostDomainsToUI()
+        {
+            SyncObjectSingleton.PostToUI(
+                _ =>
                 {
-                    lbMemoryDomains.SetSelected(i, false);
+                    SendDomainsToUI();
+                }, null);
+            PostSelectedDomainsToUI();
+        }
+
+        private void SendSelectedDomainsToUI()
+        {
+            ignoreListboxChanged = true;
+            foreach (var domain in domains.ToList())
+            {
+                lbMemoryDomains.SetSelected(lbMemoryDomains.FindStringExact(domain.Key), domain.Value);
+            }
+            ignoreListboxChanged = false;
+        }
+
+        private void PostSelectedDomainsToUI()
+        {
+            SyncObjectSingleton.PostToUI(
+                _ =>
+                {
+                    SendSelectedDomainsToUI();
+                }, null);
+        }
+
+        public void SetMemoryDomainsAllButSelectedDomains(string[] _blacklistedDomains)
+        {
+            foreach (var domain in domains.ToList())
+            {
+                if (_blacklistedDomains?.Contains(domain.Key) ?? false)
+                {
+                    domains[domain.Key] = false;
                 }
                 else
                 {
-                    lbMemoryDomains.SetSelected(i, true);
+                    domains[domain.Key] = true;
                 }
             }
-
             UpdateSelectedMemoryDomains(null, null);
-            this.Visible = oldState;
         }
 
         private void SelectAllDomains(object sender, EventArgs e)
         {
             RefreshDomains();
-
-            for (int i = 0; i < lbMemoryDomains.Items.Count; i++)
+            foreach (var domain in domains.ToList())
             {
-                lbMemoryDomains.SetSelected(i, true);
+                domains[domain.Key] = true;
             }
-
             UpdateSelectedMemoryDomains(null, null);
         }
 
@@ -111,25 +137,27 @@ namespace RTCV.UI
 
         public void RefreshDomains()
         {
-            var oldState = this.Visible;
-            lbMemoryDomains.Items.Clear();
+            domains.Clear();
             if (MemoryDomains.MemoryInterfaces != null)
             {
-                lbMemoryDomains.Items.AddRange(MemoryDomains.MemoryInterfaces?.Keys.ToArray());
+                foreach (var domain in MemoryDomains.MemoryInterfaces?.Keys.ToArray())
+                {
+                    domains[domain] = false;
+                }
             }
 
             if (MemoryDomains.VmdPool.Count > 0)
             {
-                lbMemoryDomains.Items.AddRange(MemoryDomains.VmdPool.Values.Select(it => it.ToString()).ToArray());
+                foreach (var domain in MemoryDomains.VmdPool.Values.Select(it => it.ToString()).ToArray())
+                {
+                    domains[domain] = false;
+                }
             }
-
-            this.Visible = oldState;
         }
 
         public void RefreshDomainsAndKeepSelected(string[] overrideDomains = null)
         {
             var temp = (string[])AllSpec.UISpec["SELECTEDDOMAINS"];
-            var oldDomain = lbMemoryDomains.Items;
 
             RefreshDomains(); //refresh and reload domains
 
@@ -163,20 +191,34 @@ namespace RTCV.UI
             {
                 SetMemoryDomainsAllButSelectedDomains((string[])AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] ?? new string[0]);
             }
+
+            PostDomainsToUI();
         }
 
         private void HandleMemoryDomainSelectionChange(object sender, EventArgs e)
         {
-            updateTimer.Stop();
-            updateTimer.Start();
+            if (ignoreListboxChanged)
+            {
+                return;
+            }
 
+            foreach (string item in lbMemoryDomains.SelectedItems)
+            {
+                domains[item] = true;
+            }
+
+            UpdateSelectedMemoryDomains(null, null);
             //RTC_Restore.SaveRestore();
         }
 
-        private void HandleRefreshDomainsClick(object sender, EventArgs e)
+        private void UnselectAllDomains(object sender, EventArgs e)
         {
-            RefreshDomains();
-            AllSpec.UISpec.Update("SELECTEDDOMAINS", lbMemoryDomains.SelectedItems.Cast<string>().ToArray());
+            foreach (var domain in domains.ToList())
+            {
+                domains[domain.Key] = false;
+            }
+            AllSpec.UISpec.Update("SELECTEDDOMAINS", domains.Where(x => x.Value).ToArray());
+            PostSelectedDomainsToUI();
         }
 
         private void HandleMemoryDomainsMouseDown(object sender, MouseEventArgs e)
