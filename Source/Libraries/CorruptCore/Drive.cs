@@ -19,7 +19,7 @@ namespace RTCV.CorruptCore
         public static string PackageDrive(string folderPath)
         {
 
-            string sessionpath = Path.Combine(RtcCore.workingDir, "SESSION", $"DATA_{RtcCore.GetRandomKey()}.drive");
+            string sessionpath = Path.Combine(RtcCore.workingDir, "SESSION", $"DATA_{RtcCore.GetRandomKey()}.drv");
 
             if (File.Exists(sessionpath))
                 File.Delete(sessionpath);
@@ -37,7 +37,7 @@ namespace RTCV.CorruptCore
         public static string PackageCurrentDrive()
         {
             string drivepath = Path.Combine(RtcCore.workingDir, "DRIVE");
-            string sessionpath = Path.Combine(RtcCore.workingDir, "SESSION", $"DATA_{RtcCore.GetRandomKey()}.drive");
+            string sessionpath = Path.Combine(RtcCore.workingDir, "SESSION", $"DATA_{RtcCore.GetRandomKey()}.drv");
 
             if (File.Exists(sessionpath))
                 File.Delete(sessionpath);
@@ -52,30 +52,46 @@ namespace RTCV.CorruptCore
 
         }
 
-        public static void SaveCurrentDriveAs()
+        public static void SaveCurrentDriveAs() => SaveCurrentDriveAs(null);
+        public static void SaveCurrentDriveAs(string savePath)
         {
             var drivefile = PackageCurrentDrive();
             var fi = new FileInfo(drivefile);
 
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog
+            if (savePath == null)
             {
-                DefaultExt = "drive",
-                Title = "Save Drive to File",
-                Filter = "RTC Drive file|*.drive",
-                FileName = fi.Name,
-                RestoreDirectory = true
-            };
 
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                SaveFileDialog saveFileDialog1 = new SaveFileDialog
+                {
+                    DefaultExt = "drv",
+                    Title = "Save Drive to File",
+                    Filter = "RTC Drive file|*.drv",
+                    FileName = fi.Name,
+                    RestoreDirectory = true
+                };
+
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    var filename = saveFileDialog1.FileName;
+
+                    if (File.Exists(filename))
+                        File.Delete(filename);
+
+                    File.Move(drivefile, filename);
+                }
+            }
+            else
             {
-                var filename = saveFileDialog1.FileName;
-                File.Move(drivefile, filename);
+                if (File.Exists(savePath))
+                    File.Delete(savePath);
+
+                File.Move(drivefile, savePath);
             }
         }
 
         public static string UnpackageDrive(string packagePath)
         {
-            string sessionpath = Path.Combine(RtcCore.workingDir, "SESSION", $"DATA_{RtcCore.GetRandomKey()}.drive");
+            string sessionpath = Path.Combine(RtcCore.workingDir, "SESSION", $"DATA_{RtcCore.GetRandomKey()}.drv");
             string drivepath = Path.Combine(RtcCore.workingDir, "DRIVE");
             string autoexecpath = Path.Combine(drivepath, "autoexec.rom");
 
@@ -88,9 +104,9 @@ namespace RTCV.CorruptCore
 
             ZipFile.ExtractToDirectory(packagePath, drivepath);
 
-            if(File.Exists(autoexecpath))
+            if (File.Exists(autoexecpath))
             {
-                return File.ReadAllText(autoexecpath);
+                return Path.Combine(drivepath, File.ReadAllText(autoexecpath));
             }
             else
             {
