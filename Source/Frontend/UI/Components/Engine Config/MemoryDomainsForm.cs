@@ -1,9 +1,8 @@
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Threading;
-
 namespace RTCV.UI
 {
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Threading;
     using System;
     using System.Data;
     using System.Drawing;
