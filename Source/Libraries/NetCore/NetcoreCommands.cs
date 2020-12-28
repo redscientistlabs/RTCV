@@ -69,6 +69,7 @@ namespace RTCV.NetCore.Commands
         public const string KeyGetRawBlastLayer = nameof(Remote) + "_" + nameof(KeyGetRawBlastLayer);
         public const string BLGetDiffBlastLayer = nameof(Remote) + "_" + nameof(BLGetDiffBlastLayer);
         public const string LongArrayFilterDomain = nameof(Remote) + "_" + nameof(LongArrayFilterDomain);
+        public const string ClearBlastlayerCache = nameof(Remote) + "_" + nameof(ClearBlastlayerCache);
         public const string SetApplyUncorruptBL = nameof(Remote) + "_" + nameof(SetApplyUncorruptBL);
         public const string SetApplyCorruptBL = nameof(Remote) + "_" + nameof(SetApplyCorruptBL);
         public const string ClearStepBlastUnits = nameof(Remote) + "_" + nameof(ClearStepBlastUnits);

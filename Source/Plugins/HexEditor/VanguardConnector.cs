@@ -28,7 +28,7 @@ namespace RTCV.Plugins.HexEditor
                     {
                         SyncObjectSingleton.FormExecute(() =>
                         {
-                            if (S.GET<HexEditor>().IsDisposed)
+                            if (S.ISNULL<HexEditor>())
                             {
                                 S.SET(new HexEditor());
                             }
@@ -46,7 +46,9 @@ namespace RTCV.Plugins.HexEditor
 
                         MemoryInterface mi = MemoryDomains.GetInterface(domain);
                         if (mi == null)
+                        {
                             break;
+                        }
 
                         SyncObjectSingleton.FormExecute(() =>
                         {

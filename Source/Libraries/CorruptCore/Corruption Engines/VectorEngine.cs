@@ -50,7 +50,9 @@ namespace RTCV.CorruptCore
                 {
                     int listPrecision = list.GetPrecision();
                     if (listPrecision > 8)
+                    {
                         precision = listPrecision;
+                    }
                 }
                 else
                 {

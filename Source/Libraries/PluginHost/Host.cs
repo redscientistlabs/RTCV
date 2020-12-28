@@ -34,7 +34,9 @@ namespace RTCV.PluginHost
             foreach (var dir in pluginDirs)
             {
                 if (Directory.Exists(dir))
+                {
                     catalog.Catalogs.Add(new DirectoryCatalog(dir));
+                }
             }
             _container = new CompositionContainer(catalog);
 
@@ -74,9 +76,15 @@ namespace RTCV.PluginHost
                     if (side == RTCSide.Both)
                     {
                         if (p.Start(RTCSide.Client))
+                        {
                             logger.Info("Loaded {pluginName} as client successfully", p.Name);
+                        }
+
                         if (p.Start(RTCSide.Server))
+                        {
                             logger.Info("Loaded {pluginName} as server successfully", p.Name);
+                        }
+
                         _loadedPlugins.Add(p);
                     }
                     else if (p.Start(side))
@@ -111,9 +119,14 @@ namespace RTCV.PluginHost
         {
             Assembly assembly = null;
             if (args.LoadedAssembly.IsDynamic)
+            {
                 assembly = args.LoadedAssembly;
+            }
             else
+            {
                 assembly = Assembly.LoadFile(args.LoadedAssembly.Location);
+            }
+
             var assemblyLoaderType = assembly.GetType("Costura.AssemblyLoader", false);
             var attachMethod = assemblyLoaderType?.GetMethod("Attach", BindingFlags.Static | BindingFlags.Public);
             attachMethod?.Invoke(null, new object[] { });

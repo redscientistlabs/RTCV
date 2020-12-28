@@ -74,8 +74,7 @@ namespace RTCV.UI
             _sortProperty = prop;
             _sortDirection = direction;
 
-            List<T> list = Items as List<T>;
-            if (list == null)
+            if (!(Items is List<T> list))
             {
                 return;
             }
@@ -111,9 +110,9 @@ namespace RTCV.UI
             {
                 return 1; //first has value, second doesn't
             }
-            if (lhsValue is IComparable)
+            if (lhsValue is IComparable lhsComparable)
             {
-                return ((IComparable)lhsValue).CompareTo(rhsValue);
+                return lhsComparable.CompareTo(rhsValue);
             }
             if (lhsValue.Equals(rhsValue))
             {

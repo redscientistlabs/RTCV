@@ -15,11 +15,12 @@ namespace RTCV.Common
 
     public static class Logging
     {
+        private const int logsToKeep = 5;
+
         public static Logger GlobalLogger { get; private set; } = LogManager.GetLogger("Global");
         public static Layout CurrentLayout { get; private set; }
 
         private static readonly LogLevel minLevel = LogLevel.Trace;
-        private const int logsToKeep = 5;
 
         public static void StartLogging(string filename)
         {
@@ -74,9 +75,13 @@ namespace RTCV.Common
             var isDebug = false;
             Debug.Assert(isDebug = true);
             if (Environment.GetCommandLineArgs().Contains("-TRACE") || isDebug)
+            {
                 config.AddRule(LogLevel.Trace, LogLevel.Fatal, logconsole);
+            }
             else
+            {
                 config.AddRule(LogLevel.Debug, LogLevel.Fatal, logconsole);
+            }
             // Rules for mapping loggers to targets
             //config.AddRule(LogLevel.Trace, LogLevel.Fatal, logfile);
 

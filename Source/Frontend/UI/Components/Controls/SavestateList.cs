@@ -253,6 +253,9 @@ namespace RTCV.UI.Components.Controls
 
         private bool CheckAndFixingMissingStates(StashKey psk)
         {
+            if (psk.RomFilename == "IGNORE")
+                return true;
+
             if (!File.Exists(psk.RomFilename))
             {
                 if (DialogResult.Yes == MessageBox.Show($"Can't find file {psk.RomFilename}\nGame name: {psk.GameName}\nSystem name: {psk.SystemName}\n\n Would you like to provide a new file for replacement?", "Error: File not found", MessageBoxButtons.YesNo))
@@ -315,6 +318,7 @@ namespace RTCV.UI.Components.Controls
                 LoadCurrentState();
                 StockpileManagerUISide.CurrentStashkey = null;
                 S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = false;
+                LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearBlastlayerCache, false);
             }
             else
             {

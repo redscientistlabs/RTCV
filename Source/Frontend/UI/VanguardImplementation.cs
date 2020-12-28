@@ -367,7 +367,10 @@ namespace RTCV.UI
                 if (Forms.InputBox.ShowDialog("VMD Generation", "Enter the new VMD name:", ref value) == DialogResult.OK)
                 {
                     if (!string.IsNullOrWhiteSpace(value))
+                    {
                         vmdgenerator.tbVmdName.Text = value.Trim();
+                    }
+
                     vmdgenerator.GenerateVMD(null, null);
                 }
             });

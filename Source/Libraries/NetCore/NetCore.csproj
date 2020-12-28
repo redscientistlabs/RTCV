@@ -40,13 +40,11 @@
       <Version>12.0.3</Version>
     </PackageReference>
     <PackageReference Include="NLog">
-      <Version>4.7.4</Version>
+      <Version>4.7.6</Version>
     </PackageReference>
-    <PackageReference Include="SevenZipSharp.Net45">
-      <Version>1.0.19</Version>
-    </PackageReference>
+    <PackageReference Include="Squid-Box.SevenZipSharp" Version="1.3.283" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
-      <Version>4.7.1</Version>
+      <Version>4.5.2</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

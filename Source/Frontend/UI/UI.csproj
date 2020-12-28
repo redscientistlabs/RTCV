@@ -37,6 +37,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Components\Engine Config\CorruptionEngineForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Components\Controls\HexTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -91,7 +94,7 @@
       <Version>12.0.3</Version>
     </PackageReference>
     <PackageReference Include="NLog">
-      <Version>4.7.4</Version>
+      <Version>4.7.6</Version>
     </PackageReference>
     <PackageReference Include="NLog.Windows.Forms">
       <Version>4.3.0</Version>

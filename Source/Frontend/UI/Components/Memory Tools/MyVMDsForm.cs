@@ -38,14 +38,18 @@ namespace RTCV.UI
         private void UnloadVMD(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
+            {
                 return;
+            }
 
             foreach (var item in lbLoadedVmdList.SelectedItems)
             {
                 string vmdPath = Path.Combine(RtcCore.VmdsDir, item.ToString());
 
                 if (File.Exists(vmdPath))
+                {
                     File.Delete(vmdPath);
+                }
             }
 
             RefreshVMDs();
@@ -56,7 +60,9 @@ namespace RTCV.UI
             lbLoadedVmdList.Items.Clear();
 
             if (!Directory.Exists(RtcCore.VmdsDir))
+            {
                 Directory.CreateDirectory(RtcCore.VmdsDir);
+            }
 
             var files = Directory.GetFiles(RtcCore.VmdsDir);
             foreach (var file in files)
@@ -116,8 +122,9 @@ namespace RTCV.UI
             btnUnloadVmd.Enabled = false;
 
             if (lbLoadedVmdList.SelectedItem == null)
+            {
                 return;
-
+            }
 
             if (lbLoadedVmdList.SelectedItems.Count == 1)
             {
@@ -132,7 +139,9 @@ namespace RTCV.UI
         private void SaveVMD(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
+            {
                 return;
+            }
 
             string vmdName = lbLoadedVmdList.SelectedItem.ToString();
             string path = Path.Combine(RtcCore.VmdsDir, vmdName);
@@ -168,7 +177,9 @@ namespace RTCV.UI
         private void LoadVMD(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
+            {
                 return;
+            }
 
             foreach (var item in lbLoadedVmdList.SelectedItems)
             {
@@ -192,7 +203,9 @@ namespace RTCV.UI
         private void RenameVMD(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
+            {
                 return;
+            }
 
             string vmdName = lbLoadedVmdList.SelectedItem.ToString();
 

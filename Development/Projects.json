@@ -20,11 +20,6 @@
         "exe": "FileStub-Vanguard/FileStub/bin/x64/Debug/FileStub.exe"
     },
     {
-        "name": "UnityStub",
-        "solutionPath": "UnityStub-Vanguard/UnityStub-Vanguard.sln",
-        "exe": "UnityStub-Vanguard/UnityStub/bin/x64/Debug/UnityStub.exe"
-    },
-    {
         "name": "ProcessStub",
         "solutionPath": "ProcessStub-Vanguard/ProcessStub-Vanguard.sln",
         "exe": "ProcessStub-Vanguard/ProcessStub/bin/x64/Debug/ProcessStub.exe"
@@ -39,13 +34,14 @@
         "solutionPath": "dolphin-vanguard/Source/dolphin-emu.sln",
         "additionalBuildArguments": "/property:Platform=x64 /p:TreatWarningAsError=false",
         "forceReleaseFlavor": true,
-        "exe": "dolphin-vanguard/Build/x64/Release/Dolphin/bin"
+        "exe": "dolphin-vanguard/Binary/x64/Dolphin.exe"
     },
     {
         "name": "pcsx2",
         "solutionPath": "pcsx2-Vanguard/PCSX2_suite.sln",
         "additionalBuildArguments": "/property:Platform=Win32",
-        "exe": "pcsx2-Vanguard/bin/pcsx2.exe"
+        "releaseExe": "pcsx2-Vanguard/bin/pcsx2.exe",
+        "debugExe": "pcsx2-Vanguard/bin/pcsx2-dbg.exe"
     },
     {
         "name": "citra",

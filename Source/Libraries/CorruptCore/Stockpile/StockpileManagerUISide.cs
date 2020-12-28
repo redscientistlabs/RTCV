@@ -38,8 +38,9 @@ namespace RTCV.CorruptCore
         private static void PreApplyStashkey(bool _clearUnitsBeforeApply = true)
         {
             if (_clearUnitsBeforeApply)
+            {
                 LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
-
+            }
 
             bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
             LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.PreCorruptAction, null, true);
@@ -313,6 +314,7 @@ namespace RTCV.CorruptCore
                 }
 
                 if (!RtcCore.AllowCrossCoreCorruption)
+                {
                     foreach (StashKey item in sks)
                     {
                         if (item.GameName != master.GameName)
@@ -322,6 +324,7 @@ namespace RTCV.CorruptCore
                             return false;
                         }
                     }
+                }
 
                 BlastLayer bl = new BlastLayer();
 
@@ -380,7 +383,7 @@ namespace RTCV.CorruptCore
         public static StashKey SaveState(StashKey sk = null)
         {
             bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
-
+            
             if (UseSavestates)
             {
                 return LocalNetCoreRouter.QueryRoute<StashKey>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.SaveState, sk, true);
@@ -451,7 +454,7 @@ namespace RTCV.CorruptCore
             string message = customMessage ?? $"Can't find file {psk.RomFilename}\nGame name: {psk.GameName}\nSystem name: {psk.SystemName}\n\n To continue loading, provide a new file for replacement.";
             string title = customTitle ?? "Error: File not found";
 
-            if (force || !File.Exists(psk.RomFilename))
+            if ((force || !File.Exists(psk.RomFilename)) && !psk.RomFilename.EndsWith("IGNORE"))
             {
                 if (DialogResult.OK == MessageBox.Show(message, title, MessageBoxButtons.OKCancel))
                 {

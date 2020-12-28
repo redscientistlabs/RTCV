@@ -1,4 +1,4 @@
-﻿//Most of this code is lifted from Bizhawk
+//Most of this code is lifted from Bizhawk
 //https://github.com/tasvideos/bizhawk
 //Thanks guys
 
@@ -31,14 +31,18 @@ namespace RTCV.UI.Input
                     Console.WriteLine("joydevice: {0} `{1}`", device.InstanceGuid, device.ProductName);
 
                     if (device.ProductName.Contains("XBOX 360"))
+                    {
                         continue; // Don't input XBOX 360 controllers into here; we'll process them via XInput (there are limitations in some trigger axes when xbox pads go over xinput)
+                    }
 
                     var joystick = new Joystick(_dinput, device.InstanceGuid);
                     joystick.SetCooperativeLevel(S.GET<CoreForm>().Handle, CooperativeLevel.Background | CooperativeLevel.Nonexclusive);
                     foreach (DeviceObjectInstance deviceObject in joystick.GetObjects())
                     {
                         if ((deviceObject.ObjectType & ObjectDeviceType.Axis) != 0)
+                        {
                             joystick.GetObjectPropertiesById((int)deviceObject.ObjectType).SetRange(-1000, 1000);
+                        }
                     }
                     joystick.Acquire();
 
@@ -110,26 +114,34 @@ namespace RTCV.UI.Input
             try
             {
                 if (joystick.Acquire().IsFailure)
+                {
                     return;
+                }
             }
             catch
             {
                 return;
             }
             if (joystick.Poll().IsFailure)
+            {
                 return;
+            }
 
             state = joystick.GetCurrentState();
             if (Result.Last.IsFailure)
+            {
                 // do something?
                 return;
+            }
         }
 
         public IEnumerable<Tuple<string, float>> GetFloats()
         {
             var pis = typeof(JoystickState).GetProperties();
             foreach (var pi in pis)
+            {
                 yield return new Tuple<string, float>(pi.Name, 10.0f * (float)(int)pi.GetValue(state, null));
+            }
         }
 
         /// <summary>FOR DEBUGGING ONLY</summary>
@@ -138,7 +150,7 @@ namespace RTCV.UI.Input
             return state;
         }
 
-        public string Name { get { return name; } }
+        public string Name => name;
         public int PlayerNumber { get; private set; }
 
         public string ButtonName(int index)
@@ -241,29 +253,6 @@ namespace RTCV.UI.Input
                 AddItem(string.Format("POV{0}R", i + 1),
                     () => { int t = state.GetPointOfViewControllers()[j]; return t >= 4500 && t <= 13500; });
             }
-        }
-
-        // Note that this does not appear to work at this time. I probably need to have more infos.
-        public void SetVibration(/*int left, int right*/)
-        {
-            int[] temp1, temp2;
-            // my first clue that it doesnt work is that LEFT  and RIGHT _ARENT USED_
-            // I should just look for C++ examples instead of trying to look for SlimDX examples
-
-            var parameters = new EffectParameters
-            {
-                Duration = 0x2710,
-                Gain = 0x2710,
-                SamplePeriod = 0,
-                TriggerButton = 0,
-                TriggerRepeatInterval = 0x2710,
-                Flags = EffectFlags.None
-            };
-            parameters.GetAxes(out temp1, out temp2);
-            parameters.SetAxes(temp1, temp2);
-            var effect = new Effect(joystick, EffectGuid.ConstantForce);
-            effect.SetParameters(parameters);
-            effect.Start(1);
         }
     }
 }

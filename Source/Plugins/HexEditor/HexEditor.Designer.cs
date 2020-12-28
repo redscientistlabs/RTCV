@@ -550,7 +550,6 @@ namespace RTCV.Plugins.HexEditor
             this.Controls.Add(this.Header);
             this.Controls.Add(this.MemoryViewerBox);
             this.Controls.Add(this.HexMenuStrip);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.HexMenuStrip;
             this.MinimumSize = new System.Drawing.Size(360, 180);
             this.Name = "HexEditor";

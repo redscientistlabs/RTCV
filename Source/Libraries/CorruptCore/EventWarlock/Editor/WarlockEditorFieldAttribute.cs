@@ -14,9 +14,6 @@ namespace RTCV.CorruptCore.EventWarlock.Editor
             this.fieldName = fieldName;
         }
 
-        public string FieldName
-        {
-            get { return fieldName; }
-        }
+        public string FieldName => fieldName;
     }
 }

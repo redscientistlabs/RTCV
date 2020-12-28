@@ -41,7 +41,9 @@ namespace RTCV.UI
         private void UnloadVMD(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
+            {
                 return;
+            }
 
             //Clear any active units to prevent bad things due to soon unloaded vmds
             LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
@@ -171,8 +173,9 @@ namespace RTCV.UI
 
 
             if (lbLoadedVmdList.SelectedItem == null)
+            {
                 return;
-
+            }
 
             if (lbLoadedVmdList.SelectedItems.Count == 1)
             {
@@ -218,11 +221,14 @@ namespace RTCV.UI
             sb.Append($"===Singles==={Environment.NewLine}");
 
             foreach (var i in vmd.Proto.AddSingles)
+            {
                 sb.Append($"{i.ToHexString()}{Environment.NewLine}");
+            }
 
             foreach (var i in vmd.Proto.RemoveSingles)
+            {
                 sb.Append($"-{i.ToHexString()}{Environment.NewLine}");
-
+            }
 
             sb.Append($"{Environment.NewLine}");
 
@@ -231,10 +237,14 @@ namespace RTCV.UI
             sb.Append($"===Ranges==={Environment.NewLine}");
 
             foreach (var i in vmd.Proto.AddRanges)
+            {
                 sb.Append($"{i[0].ToHexString()}-{i[1].ToHexString()}{Environment.NewLine}");
+            }
 
             foreach (var i in vmd.Proto.RemoveRanges)
+            {
                 sb.Append($"-{i[0].ToHexString()}-{i[1].ToHexString()}{Environment.NewLine}");
+            }
 
             return sb.ToString();
         }
@@ -242,7 +252,9 @@ namespace RTCV.UI
         private void SaveVMD(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
+            {
                 return;
+            }
 
             string vmdName = lbLoadedVmdList.SelectedItem.ToString();
             VirtualMemoryDomain vmd = MemoryDomains.VmdPool[vmdName];
@@ -324,7 +336,9 @@ namespace RTCV.UI
         private void HandleRenameVMDClick(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
+            {
                 return;
+            }
 
             string vmdName = lbLoadedVmdList.SelectedItem.ToString();
 
@@ -336,7 +350,9 @@ namespace RTCV.UI
         private void SendToMyVMDs(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
+            {
                 return;
+            }
 
             if (lbLoadedVmdList.SelectedItems.Count == 1)
             {
@@ -353,7 +369,9 @@ namespace RTCV.UI
                     }
 
                     if (!Directory.Exists(RtcCore.VmdsDir))
+                    {
                         Directory.CreateDirectory(RtcCore.VmdsDir);
+                    }
 
                     string targetPath = Path.Combine(RtcCore.VmdsDir, value.Trim() + ".vmd");
 
@@ -361,7 +379,9 @@ namespace RTCV.UI
                     {
                         var result = MessageBox.Show("This file already exists in your VMDs folder, do you want to overwrite it?", "Overwrite file?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                         if (result == DialogResult.No)
+                        {
                             return;
+                        }
 
                         File.Delete(targetPath);
                     }
@@ -390,7 +410,9 @@ namespace RTCV.UI
                     {
                         var result = MessageBox.Show("This file already exists in your VMDs folder, do you want to overwrite it?", "Overwrite file?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                         if (result == DialogResult.No)
+                        {
                             return;
+                        }
 
                         File.Delete(itemTargetPath);
                     }

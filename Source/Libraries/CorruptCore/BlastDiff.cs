@@ -13,13 +13,15 @@ namespace RTCV.CorruptCore
             string thisSystem = (AllSpec.VanguardSpec[VSPEC.SYSTEM] as string);
             var rp = MemoryDomains.GetRomParts(thisSystem, filename);
 
-            IMemoryDomain Corrupt = new FileInterface("File|" + filename, false, false);
+            var target = new FileTarget(filename, null);
+            target.BigEndian = false;
+            target.IsVaulted = false;
+
+            IMemoryDomain Corrupt = new FileInterface(target);
 
             (Corrupt as FileInterface).getMemoryDump(); //gotta cache it otherwise it's going to be super slow
 
-            string[] selectedDomains = AllSpec.UISpec["SELECTEDDOMAINS"] as string[];
-
-            if (selectedDomains == null || selectedDomains.Length == 0)
+            if (!(AllSpec.UISpec["SELECTEDDOMAINS"] is string[] selectedDomains) || selectedDomains.Length == 0)
             {
                 MessageBox.Show("Error: No domain is selected");
                 return null;

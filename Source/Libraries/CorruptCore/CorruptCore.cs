@@ -87,6 +87,8 @@ namespace RTCV.CorruptCore
         public static string ListsDir => Path.Combine(RtcDir, "LISTS");
 
         public static string VmdsDir => Path.Combine(RtcDir, "VMDS");
+
+        public static string VaultDir => Path.Combine(EmuDir, "VAULT");
         public static string EngineTemplateDir => Path.Combine(RtcDir, "ENGINETEMPLATES");
 
         public static event EventHandler<ProgressBarEventArgs> ProgressBarHandler;
@@ -384,11 +386,16 @@ namespace RTCV.CorruptCore
         public static void LoadPlugins(string[] paths = null)
         {
             if (paths == null)
+            {
                 paths = new[] { PluginDir };
+            }
 
             RTCSide side = RTCSide.Server;
             if (IsEmulatorSide)
+            {
                 side = RTCSide.Client;
+            }
+
             if (Attached)
             {
                 side = RTCSide.Both;
@@ -657,7 +664,9 @@ namespace RTCV.CorruptCore
                 }
 
                 if (bu != null) //upgrade single blastunits to array
+                {
                     bus = new BlastUnit[] { bu };
+                }
 
                 return bus;
             }
@@ -1070,15 +1079,22 @@ namespace RTCV.CorruptCore
 
             if (performStep)
             {
-                cpuStepCount++;
-
-                var autoCorrupt = RtcCore.AutoCorrupt;
-                var errorDelay = RtcCore.ErrorDelay;
-                if (autoCorrupt && cpuStepCount >= errorDelay)
+                try
                 {
-                    cpuStepCount = 0;
-                    BlastLayer bl = RtcCore.GenerateBlastLayer((string[])AllSpec.UISpec["SELECTEDDOMAINS"]);
-                    bl?.Apply(false, false);
+                    cpuStepCount++;
+
+                    var autoCorrupt = RtcCore.AutoCorrupt;
+                    var errorDelay = RtcCore.ErrorDelay;
+                    if (autoCorrupt && cpuStepCount >= errorDelay)
+                    {
+                        cpuStepCount = 0;
+                        BlastLayer bl = RtcCore.GenerateBlastLayer((string[])AllSpec.UISpec["SELECTEDDOMAINS"]);
+                        bl?.Apply(false, false);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Trace.WriteLine(ex.ToString());
                 }
             }
         }

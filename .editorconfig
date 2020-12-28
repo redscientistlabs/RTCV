@@ -261,14 +261,14 @@ dotnet_diagnostic.CA1305.severity = none
 # string.EndsWith behavior could vary based on the current user's locale settings
 dotnet_diagnostic.CA1307.severity = none
 
+# string function behavior could vary based on the current user's locale settings
+dotnet_diagnostic.CA1310.severity = none
+
 # P/Invoke method should not be visible
 dotnet_diagnostic.CA1401.severity = none
 
 # Do not prefix enum values with the name of the enum type 'FileType'
 dotnet_diagnostic.CA1712.severity = none
-
-# Naming conflict
-dotnet_diagnostic.CA1724.severity = none
 
 # Member is explicitly initialized to its default value
 dotnet_diagnostic.CA1805.severity = none
@@ -302,6 +302,9 @@ dotnet_diagnostic.CA2008.severity = none
 
 # Specify marshaling for P/Invoke string arguments
 dotnet_diagnostic.CA2101.severity = none
+
+# Seal classes that satisfy private interfaces
+dotnet_diagnostic.CA2119.severity = none
 
 # Change to be read-only by removing the property setter
 dotnet_diagnostic.CA2227.severity = none
@@ -386,9 +389,6 @@ dotnet_diagnostic.SA1201.severity = none
 
 # Elements should be ordered by access
 dotnet_diagnostic.SA1202.severity = none
-
-# Constants should appear before fields
-dotnet_diagnostic.SA1203.severity = none
 
 # Static elements should appear before instance elements
 dotnet_diagnostic.SA1204.severity = none

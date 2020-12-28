@@ -236,6 +236,17 @@ namespace RTCV.CorruptCore
                         }
                         break;
 
+                    case Remote.ClearBlastlayerCache:
+                        {
+                            void a()
+                            {
+                                StockpileManagerEmuSide.UnCorruptBL = null;
+                                StockpileManagerEmuSide.CorruptBL = null;
+                            }
+                            SyncObjectSingleton.EmuThreadExecute(a, false);
+                        }
+                        break;
+
                     case Remote.SetApplyUncorruptBL:
                         {
                             void a()

@@ -1,4 +1,4 @@
-﻿namespace RTCV.NetCore
+namespace RTCV.NetCore
 {
     using System;
     using System.Collections.Generic;
@@ -111,9 +111,9 @@
         internal object SendMessage(string message) => SendMessage(new NetCoreSimpleMessage(message));
         internal object SendMessage(NetCoreMessage message, bool synced = false)
         {
-            if (message is NetCoreSimpleMessage)
+            if (message is NetCoreSimpleMessage simpleMessage)
             {
-                spec.Connector.udp.SendMessage((NetCoreSimpleMessage)message);
+                spec.Connector.udp.SendMessage(simpleMessage);
             }
             else //message is NetCoreAdvancedMessage
             {

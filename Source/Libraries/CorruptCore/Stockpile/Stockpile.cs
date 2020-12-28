@@ -4,7 +4,6 @@ namespace RTCV.CorruptCore
     using System.Collections.Generic;
     using System.Data;
     using System.Diagnostics;
-    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.IO.Compression;
     using System.Linq;
@@ -18,25 +17,17 @@ namespace RTCV.CorruptCore
 
     [Serializable]
     [MemberConfig(TargetMember.All)]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Naming styles here a optimized for readable serialization and not for code clarity")]
     public class Stockpile
     {
         [Exclude]
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
-        public List<StashKey> StashKeys = new List<StashKey>();
+        private List<StashKey> _stashKeys = new List<StashKey>();
+        public List<StashKey> StashKeys { get => _stashKeys; set => _stashKeys = value; }
 
-        // https://github.com/redscientistlabs/RTCV/issues/241
-        #pragma warning disable 649 // Field is unused, but removing it would change how this object serializes, which could break other components
-        [JsonProperty]
-        private string Name;
-        #pragma warning restore 649
-
-        [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
-        public string Filename;
-
-        [JsonProperty]
-        private string ShortFilename;
+        private string _filename;
+        public string Filename { get => _filename; set => _filename = value; }
 
         [JsonProperty]
         private string RtcVersion;
@@ -44,8 +35,8 @@ namespace RTCV.CorruptCore
         [JsonProperty]
         private string VanguardImplementation;
 
-        [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
-        public bool MissingLimiter;
+        [JsonProperty]
+        internal bool MissingLimiter;
 
         public Stockpile(DataGridView dgvStockpile)
         {
@@ -62,11 +53,6 @@ namespace RTCV.CorruptCore
 
         public Stockpile()
         {
-        }
-
-        public override string ToString()
-        {
-            return Name ?? string.Empty;
         }
 
         public static bool Save(Stockpile sks, string filename, bool includeReferencedFiles = false, bool compress = true)
@@ -87,7 +73,6 @@ namespace RTCV.CorruptCore
                 CheckForDiskBasedGame();
 
                 sks.Filename = filename;
-                sks.ShortFilename = Path.GetFileName(sks.Filename);
 
                 decimal saveProgress = 0;
                 CleanTempFolder(ref sks, ref saveProgress);
@@ -233,6 +218,9 @@ namespace RTCV.CorruptCore
                 //populating temp folder with roms
                 foreach (string str in allRoms)
                 {
+                    if (str.EndsWith("IGNORE"))
+                        continue;
+
                     RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Copying {Path.GetFileNameWithoutExtension(str)} to stockpile", saveProgress += percentPerFile));
                     string rom = str;
                     string romTempfilename = Path.Combine(RtcCore.workingDir, "TEMP", Path.GetFileName(rom));
@@ -728,8 +716,7 @@ namespace RTCV.CorruptCore
                 return;
             }
 
-            string[] configPaths = AllSpec.VanguardSpec[VSPEC.CONFIG_PATHS] as string[];
-            if (configPaths == null)
+            if (!(AllSpec.VanguardSpec[VSPEC.CONFIG_PATHS] is string[] configPaths))
             {
                 throw new Exception("ConfigMode was set but ConfigPath was null!");
             }
@@ -824,8 +811,7 @@ namespace RTCV.CorruptCore
                 return;
             }
 
-            string[] configPaths = AllSpec.VanguardSpec[VSPEC.CONFIG_PATHS] as string[];
-            if (configPaths == null)
+            if (!(AllSpec.VanguardSpec[VSPEC.CONFIG_PATHS] is string[] configPaths))
             {
                 throw new Exception("ConfigMode was set but ConfigPath was null!");
             }
