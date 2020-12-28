@@ -19,7 +19,7 @@ namespace RTCV.CorruptCore
         public static string PackageDrive(string folderPath)
         {
 
-            string sessionpath = Path.Combine(RtcCore.workingDir, "SESSION", $"DRIVE_{RtcCore.GetRandomKey()}.State");
+            string sessionpath = Path.Combine(RtcCore.workingDir, "SESSION", $"DATA_{RtcCore.GetRandomKey()}.drive");
 
             if (File.Exists(sessionpath))
                 File.Delete(sessionpath);
@@ -37,7 +37,7 @@ namespace RTCV.CorruptCore
         public static string PackageCurrentDrive()
         {
             string drivepath = Path.Combine(RtcCore.workingDir, "DRIVE");
-            string sessionpath = Path.Combine(RtcCore.workingDir, "SESSION", $"DRIVE_{RtcCore.GetRandomKey()}.State");
+            string sessionpath = Path.Combine(RtcCore.workingDir, "SESSION", $"DATA_{RtcCore.GetRandomKey()}.drive");
 
             if (File.Exists(sessionpath))
                 File.Delete(sessionpath);
@@ -52,9 +52,30 @@ namespace RTCV.CorruptCore
 
         }
 
+        public static void SaveCurrentDriveAs()
+        {
+            var drivefile = PackageCurrentDrive();
+            var fi = new FileInfo(drivefile);
+
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog
+            {
+                DefaultExt = "drive",
+                Title = "Save Drive to File",
+                Filter = "RTC Drive file|*.drive",
+                FileName = fi.Name,
+                RestoreDirectory = true
+            };
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                var filename = saveFileDialog1.FileName;
+                File.Move(drivefile, filename);
+            }
+        }
+
         public static string UnpackageDrive(string packagePath)
         {
-            string sessionpath = Path.Combine(RtcCore.workingDir, "SESSION", $"DRIVE_{RtcCore.GetRandomKey()}.State");
+            string sessionpath = Path.Combine(RtcCore.workingDir, "SESSION", $"DATA_{RtcCore.GetRandomKey()}.drive");
             string drivepath = Path.Combine(RtcCore.workingDir, "DRIVE");
             string autoexecpath = Path.Combine(drivepath, "autoexec.rom");
 
