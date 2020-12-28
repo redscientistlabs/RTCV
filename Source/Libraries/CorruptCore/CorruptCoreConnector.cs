@@ -159,9 +159,8 @@ namespace RTCV.CorruptCore
                             {
                                 LocalNetCoreRouter.Route(Endpoints.UI, Remote.BackupKeyStash, sk, false);
                             }
-
-                            break;
                         }
+                        break;
                     case Remote.DomainGetDomains:
                         e.setReturnValue(LocalNetCoreRouter.Route(Endpoints.Vanguard, Remote.DomainGetDomains, true));
                         break;
@@ -209,8 +208,8 @@ namespace RTCV.CorruptCore
                             }
 
                             SyncObjectSingleton.EmuThreadExecute(a, false);
-                            break;
                         }
+                        break;
 
                     case Remote.LongArrayFilterDomain:
                         {
