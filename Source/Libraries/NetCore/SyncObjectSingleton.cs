@@ -42,16 +42,8 @@ namespace RTCV.NetCore
 
         public static async Task FormExecuteAsync(Action a)
         {
-            if (SyncObject.InvokeRequired)
-            {
                 var t = SyncObject.BeginInvoke(new MethodInvoker(a.Invoke));
                 await Task.Factory.FromAsync(t, Callback).ConfigureAwait(true);
-            }
-            else
-            {
-                var t = a.BeginInvoke(ar => { }, null);
-                await Task.Factory.FromAsync(t, Callback).ConfigureAwait(true);
-            }
         }
 
         private static void Callback(IAsyncResult ar)

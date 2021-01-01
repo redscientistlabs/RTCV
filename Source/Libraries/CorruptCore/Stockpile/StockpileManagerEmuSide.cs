@@ -62,7 +62,7 @@ namespace RTCV.CorruptCore
 
                 if (File.Exists(theoreticalSaveStateFilename))
                 {
-                    if (!LocalNetCoreRouter.QueryRoute<bool>(NetCore.Endpoints.Vanguard, NetCore.Commands.Basic.LoadSavestate, new object[] { theoreticalSaveStateFilename, stateLocation }, true))
+                    if (!LocalNetCoreRouter.QueryRoute<bool>(NetCore.Endpoints.Vanguard, NetCore.Commands.Basic.LoadSavestate, new object[] { theoreticalSaveStateFilename, stateLocation }))
                     {
                         MessageBox.Show($"Error loading savestate : An internal error has occurred.\n Are you sure your savestate matches the game, your syncsettings match, and the savestate is supported by this version of {RtcCore.VanguardImplementationName}?");
                         return false;
@@ -123,7 +123,7 @@ namespace RTCV.CorruptCore
             if (skParam == null)
             {
                 Key = RtcCore.GetRandomKey();
-                statePath = LocalNetCoreRouter.QueryRoute<string>(NetCore.Endpoints.Vanguard, NetCore.Commands.Basic.SaveSavestate, Key, true);
+                statePath = LocalNetCoreRouter.QueryRoute<string>(NetCore.Endpoints.Vanguard, NetCore.Commands.Basic.SaveSavestate, Key);
 
                 if (statePath == null)
                 {

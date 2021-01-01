@@ -181,7 +181,7 @@ namespace RTCV.CorruptCore
                     loadBeforeOperation,
                     true,
                     true
-                    }, true);
+                    });
             bool isCorruptionApplied = bl?.Layer?.Count > 0;
 
             CurrentStashkey.BlastLayer = bl;
@@ -376,7 +376,7 @@ namespace RTCV.CorruptCore
 
         public static bool LoadState(StashKey sk, bool reloadRom = true, bool applyBlastLayer = true)
         {
-            bool success = LocalNetCoreRouter.QueryRoute<bool>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.LoadState, new object[] { sk, reloadRom, applyBlastLayer }, true);
+            bool success = LocalNetCoreRouter.QueryRoute<bool>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.LoadState, new object[] { sk, reloadRom, applyBlastLayer });
             return success;
         }
 
@@ -386,11 +386,11 @@ namespace RTCV.CorruptCore
 
             if (UseSavestates)
             {
-                return LocalNetCoreRouter.QueryRoute<StashKey>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.SaveState, sk, true);
+                return LocalNetCoreRouter.QueryRoute<StashKey>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.SaveState, sk);
             }
             else
             {
-                return LocalNetCoreRouter.QueryRoute<StashKey>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.SaveStateless, sk, true);
+                return LocalNetCoreRouter.QueryRoute<StashKey>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.SaveStateless, sk);
             }
         }
 

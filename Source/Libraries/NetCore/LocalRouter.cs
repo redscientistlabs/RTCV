@@ -2,6 +2,7 @@ namespace RTCV.NetCore
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using System.Windows.Forms;
 
     public static class LocalNetCoreRouter
@@ -36,41 +37,31 @@ namespace RTCV.NetCore
 
         public static bool hasEndpoint(string name) => endpoints.TryGetValue(name, out IRoutable chosen);
 
-        public static object Route(string endpointName, string messageType, object objectValue) => Route(endpointName, messageType, objectValue, false);
-        public static object Route(string endpointName, string messageType, object objectValue, bool synced)
+
+        //Command Calls
+        public static object Route(string endpointName, string messageType, object objectValue, bool synced = false)
         {
             NetCoreEventArgs ncea = new NetCoreEventArgs(messageType, objectValue);
             (ncea.message as NetCoreAdvancedMessage).requestGuid = (synced ? (Guid?)Guid.NewGuid() : null);
             return Route(endpointName, ncea);
         }
-
-        public static T QueryRoute<T>(string endpointName, string messageType, object objectValue, bool synced = true)
-        {
-            NetCoreEventArgs ncea = new NetCoreEventArgs(messageType, objectValue);
-            (ncea.message as NetCoreAdvancedMessage).requestGuid = (synced ? (Guid?)Guid.NewGuid() : null);
-            var returnValue = Route(endpointName, ncea);
-            if (returnValue is NetCoreAdvancedMessage ncam)
-            {
-                return (T)ncam.objectValue;
-            }
-            if (returnValue == null)
-            {
-                return default(T);
-            }
-
-            return (T)returnValue;
-        }
-
-        public static object Route(string endpointName, string messageType) => Route(endpointName, messageType, false);
         public static object Route(string endpointName, string messageType, bool synced = false)
         {
-            var ncea = (synced ? new NetCoreEventArgs() { message = new NetCoreAdvancedMessage(messageType) { requestGuid = Guid.NewGuid() } } : new NetCoreEventArgs(messageType));
+            NetCoreEventArgs ncea = (synced ? new NetCoreEventArgs() { message = new NetCoreAdvancedMessage(messageType) { requestGuid = Guid.NewGuid() } } : new NetCoreEventArgs(messageType));
             return Route(endpointName, ncea);
         }
 
-        public static T QueryRoute<T>(string endpointName, string messageType, bool synced = true)
+
+        //Query Calls
+        public static async Task<T> QueryRouteAsync<T>(string endpointName, string messageType, object objectValue = null) => await Task<T>.Run(() => QueryRoute<T>(endpointName, messageType, objectValue));
+        public static T QueryRoute<T>(string endpointName, string messageType, object objectValue = null)
         {
-            var ncea = (synced ? new NetCoreEventArgs() { message = new NetCoreAdvancedMessage(messageType) { requestGuid = Guid.NewGuid() } } : new NetCoreEventArgs(messageType));
+            var ncea = new NetCoreEventArgs() {
+                message = new NetCoreAdvancedMessage(messageType) {
+                    requestGuid = Guid.NewGuid(),
+                    objectValue = objectValue
+                }
+            };
             var returnValue = Route(endpointName, ncea);
             if (returnValue is NetCoreAdvancedMessage ncam)
             {
@@ -79,6 +70,7 @@ namespace RTCV.NetCore
             return (T)returnValue;
         }
 
+        //Master routing call
         public static object Route(string endpointName, NetCoreEventArgs e)
         {
             if (e == null)

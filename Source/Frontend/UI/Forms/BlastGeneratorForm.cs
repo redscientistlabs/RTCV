@@ -550,7 +550,7 @@ namespace RTCV.UI
 
                 List<BlastGeneratorProto> returnList = new List<BlastGeneratorProto>();
 
-                returnList = LocalNetCoreRouter.QueryRoute<List<BlastGeneratorProto>>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Basic.BlastGeneratorBlast, new object[] { newSk, protoList, loadBeforeCorrupt, applyAfterCorrupt, resumeAfter }, true);
+                returnList = LocalNetCoreRouter.QueryRoute<List<BlastGeneratorProto>>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Basic.BlastGeneratorBlast, new object[] { newSk, protoList, loadBeforeCorrupt, applyAfterCorrupt, resumeAfter });
 
                 if (returnList == null)
                 {

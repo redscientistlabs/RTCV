@@ -1905,7 +1905,7 @@ namespace RTCV.UI
                 }
 
                 //Bake them
-                BlastLayer newBlastLayer = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.BlastToolsGetAppliedBackupLayer, new object[] { bl, currentSK }, true);
+                BlastLayer newBlastLayer = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.BlastToolsGetAppliedBackupLayer, new object[] { bl, currentSK });
 
                 var i = 0;
                 //Insert the new one where the old row was, then remove the old row.
