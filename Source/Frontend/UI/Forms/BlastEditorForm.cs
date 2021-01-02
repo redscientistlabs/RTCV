@@ -1648,7 +1648,7 @@ namespace RTCV.UI
             currentSK.StateLocation = temp.StateLocation;
         }
 
-        public void ReplaceSavestateFromFileToolStrip(string filename = null)
+        public async void ReplaceSavestateFromFileToolStrip(string filename = null)
         {
             if (filename == null)
             {
@@ -1679,7 +1679,7 @@ namespace RTCV.UI
             File.Copy(filename, currentSK.GetSavestateFullPath(), true);
 
             //Attempt to load and if it fails, don't let them update it.
-            if (!StockpileManagerUISide.LoadState(currentSK))
+            if (!(await StockpileManagerUISide.LoadState(currentSK)))
             {
                 currentSK.ParentKey = oldKey;
                 currentSK.SyncSettings = oldSS;
@@ -1929,7 +1929,7 @@ namespace RTCV.UI
             }
         }
 
-        public void LoadCorrupt(object sender, EventArgs e)
+        public async void LoadCorrupt(object sender, EventArgs e)
         {
             if (currentSK.ParentKey == null)
             {
@@ -1938,7 +1938,7 @@ namespace RTCV.UI
             }
 
             var newSk = (StashKey)currentSK.Clone();
-            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = newSk.Run();
+            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = await newSk.Run();
         }
 
         public void LoadOriginal()
@@ -1954,10 +1954,10 @@ namespace RTCV.UI
             newSk.Run();
         }
 
-        public void Corrupt(object sender, EventArgs e)
+        public async void Corrupt(object sender, EventArgs e)
         {
             var newSk = (StashKey)currentSK.Clone();
-            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = StockpileManagerUISide.ApplyStashkey(newSk, false);
+            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = await StockpileManagerUISide.ApplyStashkey(newSk, false);
         }
 
         private static void RefreshNoteIcons(DataGridViewRowCollection rows)

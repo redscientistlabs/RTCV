@@ -5,6 +5,7 @@ namespace RTCV.CorruptCore
     using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Windows.Forms;
     using RTCV.NetCore;
 
@@ -35,7 +36,7 @@ namespace RTCV.CorruptCore
         public static bool StashAfterOperation { get; set; } = true;
         public static readonly List<StashKey> StashHistory = new List<StashKey>();
 
-        private static void PreApplyStashkey(bool _clearUnitsBeforeApply = true)
+        private static async Task PreApplyStashkey(bool _clearUnitsBeforeApply = true)
         {
             if (_clearUnitsBeforeApply)
             {
@@ -43,10 +44,10 @@ namespace RTCV.CorruptCore
             }
 
             bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
-            LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.PreCorruptAction, null, true);
+            await LocalNetCoreRouter.RouteAsync(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.PreCorruptAction, null);
         }
 
-        private static void PostApplyStashkey()
+        private static async Task PostApplyStashkey()
         {
             bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
             bool UseRealtime = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME];
@@ -56,18 +57,18 @@ namespace RTCV.CorruptCore
                 Render.StartRender();
             }
 
-            LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.PostCorruptAction);
+            await LocalNetCoreRouter.RouteAsync(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.PostCorruptAction);
         }
 
-        public static bool ApplyStashkey(StashKey sk, bool loadBeforeOperation = true, bool clearUnitsBeforeApply = true)
+        public static async Task<bool> ApplyStashkey(StashKey sk, bool loadBeforeOperation = true, bool clearUnitsBeforeApply = true)
         {
-            PreApplyStashkey(clearUnitsBeforeApply);
+            await PreApplyStashkey(clearUnitsBeforeApply);
 
             bool isCorruptionApplied = sk?.BlastLayer?.Layer?.Count > 0;
 
             if (loadBeforeOperation)
             {
-                if (!LoadState(sk))
+                if (!(await LoadState(sk)))
                 {
                     return isCorruptionApplied;
                 }
@@ -80,14 +81,14 @@ namespace RTCV.CorruptCore
                 //Param 0 is BlastLayer
                 //Param 1 is storeUncorruptBackup
                 //Param 2 is MergeWithCurrent (for fixing blast toggle with inject)
-                LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Basic.ApplyBlastLayer, new object[] { sk?.BlastLayer, true, mergeWithCurrent }, true);
+                await LocalNetCoreRouter.RouteAsync(NetCore.Endpoints.CorruptCore, NetCore.Commands.Basic.ApplyBlastLayer, new object[] { sk?.BlastLayer, true, mergeWithCurrent });
             }
 
-            PostApplyStashkey();
+            await PostApplyStashkey();
             return isCorruptionApplied;
         }
 
-        public static void Import(BlastLayer importedBlastLayer)
+        public static async void Import(BlastLayer importedBlastLayer)
         {
             string saveStateWord = "Savestate";
 
@@ -102,7 +103,7 @@ namespace RTCV.CorruptCore
             bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
             if (!UseSavestates)
             {
-                psk = SaveState();
+                psk = await SaveState();
             }
 
             if (psk == null && UseSavestates)
@@ -130,7 +131,7 @@ namespace RTCV.CorruptCore
             StashHistory.Add(CurrentStashkey);
         }
 
-        public static bool Corrupt(bool loadBeforeOperation = true)
+        public static async Task<bool> Corrupt(bool loadBeforeOperation = true)
         {
             string saveStateWord = "Savestate";
 
@@ -140,13 +141,13 @@ namespace RTCV.CorruptCore
                 saveStateWord = s;
             }
 
-            PreApplyStashkey();
+            await PreApplyStashkey();
             StashKey psk = CurrentSavestateStashKey;
 
             bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
             if (!UseSavestates)
             {
-                psk = SaveState();
+                psk = await SaveState();
             }
 
             if (psk == null && UseSavestates)
@@ -159,7 +160,7 @@ namespace RTCV.CorruptCore
             string currentCore = (string)AllSpec.VanguardSpec[VSPEC.SYSTEMCORE];
             if (UseSavestates && (currentGame == null || psk.GameName != currentGame || psk.SystemCore != currentCore))
             {
-                LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.LoadROM, psk.RomFilename, true);
+                await LocalNetCoreRouter.RouteAsync(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.LoadROM, psk.RomFilename);
             }
 
             //We make it without the blastlayer so we can send it across and use the cached version without needing a prototype
@@ -174,7 +175,7 @@ namespace RTCV.CorruptCore
             };
 
 
-            BlastLayer bl = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Basic.GenerateBlastLayer,
+            BlastLayer bl = await LocalNetCoreRouter.QueryRouteAsync<BlastLayer>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Basic.GenerateBlastLayer,
                     new object[]
                     {
                     CurrentStashkey,
@@ -191,7 +192,7 @@ namespace RTCV.CorruptCore
                 StashHistory.Add(CurrentStashkey);
             }
 
-            PostApplyStashkey();
+            await PostApplyStashkey();
             return isCorruptionApplied;
         }
 
@@ -200,7 +201,7 @@ namespace RTCV.CorruptCore
             StashHistory.RemoveAt(0);
         }
 
-        public static bool InjectFromStashkey(StashKey sk, bool loadBeforeOperation = true)
+        public static async Task<bool> InjectFromStashkey(StashKey sk, bool loadBeforeOperation = true)
         {
             string saveStateWord = "Savestate";
 
@@ -210,7 +211,7 @@ namespace RTCV.CorruptCore
                 saveStateWord = s;
             }
 
-            PreApplyStashkey();
+            await PreApplyStashkey();
 
             StashKey psk = CurrentSavestateStashKey;
 
@@ -243,14 +244,14 @@ namespace RTCV.CorruptCore
 
             if (loadBeforeOperation)
             {
-                if (!LoadState(CurrentStashkey))
+                if (!(await LoadState(CurrentStashkey)))
                 {
                     return false;
                 }
             }
             else
             {
-                LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Basic.ApplyBlastLayer, new object[] { CurrentStashkey.BlastLayer, true }, true);
+                await LocalNetCoreRouter.RouteAsync(NetCore.Endpoints.CorruptCore, NetCore.Commands.Basic.ApplyBlastLayer, new object[] { CurrentStashkey.BlastLayer, true });
             }
 
             bool isCorruptionApplied = CurrentStashkey?.BlastLayer?.Layer?.Count > 0;
@@ -260,13 +261,13 @@ namespace RTCV.CorruptCore
                 StashHistory.Add(CurrentStashkey);
             }
 
-            PostApplyStashkey();
+            await PostApplyStashkey();
             return isCorruptionApplied;
         }
 
-        public static bool OriginalFromStashkey(StashKey sk)
+        public static async Task <bool> OriginalFromStashkey(StashKey sk)
         {
-            PreApplyStashkey();
+            await PreApplyStashkey();
 
             if (sk == null)
             {
@@ -276,18 +277,18 @@ namespace RTCV.CorruptCore
 
             bool isCorruptionApplied = false;
 
-            if (!LoadState(sk, true, false))
+            if (!(await LoadState(sk, true, false)))
             {
                 return isCorruptionApplied;
             }
 
-            PostApplyStashkey();
+            await PostApplyStashkey();
             return isCorruptionApplied;
         }
 
-        public static bool MergeStashkeys(List<StashKey> sks, bool loadBeforeOperation = true)
+        public static async Task<bool> MergeStashkeys(List<StashKey> sks, bool loadBeforeOperation = true)
         {
-            PreApplyStashkey();
+            await PreApplyStashkey();
 
             if (sks != null && sks.Count > 1)
             {
@@ -350,14 +351,14 @@ namespace RTCV.CorruptCore
 
                 if (loadBeforeOperation)
                 {
-                    if (!LoadState(CurrentStashkey))
+                    if (!(await LoadState(CurrentStashkey)))
                     {
                         return isCorruptionApplied;
                     }
                 }
                 else
                 {
-                    LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Basic.ApplyBlastLayer, new object[] { CurrentStashkey.BlastLayer, true }, true);
+                    await LocalNetCoreRouter.RouteAsync(NetCore.Endpoints.CorruptCore, NetCore.Commands.Basic.ApplyBlastLayer, new object[] { CurrentStashkey.BlastLayer, true });
                 }
 
 
@@ -367,30 +368,30 @@ namespace RTCV.CorruptCore
                 }
 
 
-                PostApplyStashkey();
+                await PostApplyStashkey();
                 return true;
             }
             MessageBox.Show("You need 2 or more items for Merging");
             return false;
         }
 
-        public static bool LoadState(StashKey sk, bool reloadRom = true, bool applyBlastLayer = true)
+        public static async Task<bool> LoadState(StashKey sk, bool reloadRom = true, bool applyBlastLayer = true)
         {
-            bool success = LocalNetCoreRouter.QueryRoute<bool>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.LoadState, new object[] { sk, reloadRom, applyBlastLayer });
+            bool success = await LocalNetCoreRouter.QueryRouteAsync<bool>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.LoadState, new object[] { sk, reloadRom, applyBlastLayer });
             return success;
         }
 
-        public static StashKey SaveState(StashKey sk = null)
+        public static async Task<StashKey> SaveState(StashKey sk = null)
         {
             bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
 
             if (UseSavestates)
             {
-                return LocalNetCoreRouter.QueryRoute<StashKey>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.SaveState, sk);
+                return await LocalNetCoreRouter.QueryRouteAsync<StashKey>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.SaveState, sk);
             }
             else
             {
-                return LocalNetCoreRouter.QueryRoute<StashKey>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.SaveStateless, sk);
+                return await LocalNetCoreRouter.QueryRouteAsync<StashKey>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.SaveStateless, sk);
             }
         }
 

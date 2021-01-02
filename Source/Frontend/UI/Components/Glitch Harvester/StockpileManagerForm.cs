@@ -159,7 +159,7 @@ namespace RTCV.UI
             return (ModifierKeys & Keys.Control) != 0;
         }
 
-        private void HandleStockpileMouseDown(object sender, MouseEventArgs e)
+        private async void HandleStockpileMouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -210,7 +210,10 @@ namespace RTCV.UI
                 {
                     var sk = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
                     StashKey newSk = (StashKey)sk.Clone();
-                    S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = StockpileManagerUISide.ApplyStashkey(newSk, false, false);
+
+                    var t = StockpileManagerUISide.ApplyStashkey(newSk, false, false);
+                    t.RunSynchronously();
+                    S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = t.Result;
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
                 columnsMenu.Items.Add(new ToolStripSeparator());

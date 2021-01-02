@@ -39,12 +39,16 @@ namespace RTCV.NetCore
 
 
         //Command Calls
+        public static async Task RouteAsync(string endpointName, string messageType, object objectValue) => await Task.Run(() => Route(endpointName, messageType, objectValue, true));
+
         public static object Route(string endpointName, string messageType, object objectValue, bool synced = false)
         {
             NetCoreEventArgs ncea = new NetCoreEventArgs(messageType, objectValue);
             (ncea.message as NetCoreAdvancedMessage).requestGuid = (synced ? (Guid?)Guid.NewGuid() : null);
             return Route(endpointName, ncea);
         }
+
+        public static async Task RouteAsync(string endpointName, string messageType) => await Task.Run(() => Route(endpointName, messageType, true));
         public static object Route(string endpointName, string messageType, bool synced = false)
         {
             NetCoreEventArgs ncea = (synced ? new NetCoreEventArgs() { message = new NetCoreAdvancedMessage(messageType) { requestGuid = Guid.NewGuid() } } : new NetCoreEventArgs(messageType));

@@ -145,7 +145,7 @@ namespace RTCV.UI
             S.GET<GlitchHarvesterBlastForm>().BlastLayerToggle(null, null);
         }
 
-        private void OnStockpileMouseDown(object sender, MouseEventArgs e)
+        private async void OnStockpileMouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
@@ -170,7 +170,10 @@ namespace RTCV.UI
                 {
                     var sk = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
                     StashKey newSk = (StashKey)sk.Clone();
-                    S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = StockpileManagerUISide.ApplyStashkey(newSk, false);
+
+                    var t = StockpileManagerUISide.ApplyStashkey(newSk, false);
+                    t.RunSynchronously();
+                    S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = t.Result;
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
                 columnsMenu.Show(this, locate);

@@ -80,7 +80,7 @@ namespace RTCV.UI
             this.DragDrop += OnDragDrop;
         }
 
-        private void OnDragDrop(object sender, DragEventArgs e)
+        private async void OnDragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
             foreach (var f in files)
@@ -89,7 +89,7 @@ namespace RTCV.UI
                 {
                     BlastLayer bl = BlastTools.LoadBlastLayerFromFile(f);
                     var newStashKey = new StashKey(RtcCore.GetRandomKey(), null, bl);
-                    S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = StockpileManagerUISide.ApplyStashkey(newStashKey, false, false);
+                    S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = await StockpileManagerUISide.ApplyStashkey(newStashKey, false, false);
                 }
             }
         }
@@ -99,7 +99,7 @@ namespace RTCV.UI
             e.Effect = DragDropEffects.Link;
         }
 
-        public void OneTimeExecute()
+        public async void OneTimeExecute()
         {
             logger.Trace("Entering OneTimeExecute()");
             //Disable autocorrupt
@@ -107,16 +107,16 @@ namespace RTCV.UI
 
             if (ghMode == GlitchHarvesterMode.CORRUPT)
             {
-                IsCorruptionApplied = StockpileManagerUISide.ApplyStashkey(StockpileManagerUISide.CurrentStashkey, loadBeforeOperation);
+                IsCorruptionApplied = await StockpileManagerUISide.ApplyStashkey(StockpileManagerUISide.CurrentStashkey, loadBeforeOperation);
             }
             else if (ghMode == GlitchHarvesterMode.INJECT)
             {
-                IsCorruptionApplied = StockpileManagerUISide.InjectFromStashkey(StockpileManagerUISide.CurrentStashkey, loadBeforeOperation);
+                IsCorruptionApplied = await StockpileManagerUISide.InjectFromStashkey(StockpileManagerUISide.CurrentStashkey, loadBeforeOperation);
                 S.GET<StashHistoryForm>().RefreshStashHistory();
             }
             else if (ghMode == GlitchHarvesterMode.ORIGINAL)
             {
-                IsCorruptionApplied = StockpileManagerUISide.OriginalFromStashkey(StockpileManagerUISide.CurrentStashkey);
+                IsCorruptionApplied = await StockpileManagerUISide.OriginalFromStashkey(StockpileManagerUISide.CurrentStashkey);
             }
 
             if (Render.RenderAtLoad && loadBeforeOperation)
@@ -181,7 +181,7 @@ namespace RTCV.UI
             }
         }
 
-        public void Corrupt(object sender, EventArgs e)
+        public async void Corrupt(object sender, EventArgs e)
         {
             logger.Trace("btnCorrupt Clicked");
 
@@ -223,7 +223,7 @@ namespace RTCV.UI
                         sks.Add((StashKey)row.Cells[0].Value);
                     }
 
-                    IsCorruptionApplied = StockpileManagerUISide.MergeStashkeys(sks);
+                    IsCorruptionApplied = await StockpileManagerUISide.MergeStashkeys(sks);
 
                     S.GET<StashHistoryForm>().RefreshStashHistorySelectLast();
                     //lbStashHistory.TopIndex = lbStashHistory.Items.Count - 1;
@@ -242,7 +242,7 @@ namespace RTCV.UI
                     }
 
                     S.GET<StashHistoryForm>().DontLoadSelectedStash = true;
-                    IsCorruptionApplied = StockpileManagerUISide.Corrupt(loadBeforeOperation);
+                    IsCorruptionApplied = await StockpileManagerUISide.Corrupt(loadBeforeOperation);
                     S.GET<StashHistoryForm>().RefreshStashHistorySelectLast();
                 }
                 else if (ghMode == GlitchHarvesterMode.INJECT)
@@ -261,7 +261,7 @@ namespace RTCV.UI
 
                     S.GET<StashHistoryForm>().DontLoadSelectedStash = true;
 
-                    IsCorruptionApplied = StockpileManagerUISide.InjectFromStashkey(StockpileManagerUISide.CurrentStashkey, loadBeforeOperation);
+                    IsCorruptionApplied = await StockpileManagerUISide.InjectFromStashkey(StockpileManagerUISide.CurrentStashkey, loadBeforeOperation);
                     S.GET<StashHistoryForm>().RefreshStashHistorySelectLast();
                 }
                 else if (ghMode == GlitchHarvesterMode.ORIGINAL)
@@ -279,7 +279,7 @@ namespace RTCV.UI
                     }
 
                     S.GET<StashHistoryForm>().DontLoadSelectedStash = true;
-                    IsCorruptionApplied = StockpileManagerUISide.OriginalFromStashkey(StockpileManagerUISide.CurrentStashkey);
+                    IsCorruptionApplied = await StockpileManagerUISide.OriginalFromStashkey(StockpileManagerUISide.CurrentStashkey);
                 }
 
                 if (Render.RenderAtLoad && loadBeforeOperation)
@@ -400,7 +400,7 @@ namespace RTCV.UI
             }
         }
 
-        public void RerollSelected(object sender, EventArgs e)
+        public async void RerollSelected(object sender, EventArgs e)
         {
             if (!btnRerollSelected.Visible)
             {
@@ -443,7 +443,7 @@ namespace RTCV.UI
                             .lbStashHistory.Items.Count - 1;
                     }
 
-                    IsCorruptionApplied = StockpileManagerUISide.ApplyStashkey(StockpileManagerUISide.CurrentStashkey);
+                    IsCorruptionApplied = await StockpileManagerUISide.ApplyStashkey(StockpileManagerUISide.CurrentStashkey);
                 }
             }
             finally

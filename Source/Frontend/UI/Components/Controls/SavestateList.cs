@@ -305,7 +305,7 @@ namespace RTCV.UI.Components.Controls
         }
 
         [SuppressMessage("Microsoft.Design", "IDE1006", Justification = "Designer-originated method")]
-        public void HandleSaveLoadClick(object sender, EventArgs e)
+        public async void HandleSaveLoadClick(object sender, EventArgs e)
         {
             var renameSaveStateWord = AllSpec.VanguardSpec[VSPEC.RENAME_SAVESTATE];
             if (renameSaveStateWord != null && renameSaveStateWord is string s)
@@ -340,7 +340,7 @@ namespace RTCV.UI.Components.Controls
                     }
                 }
 
-                StashKey sk = StockpileManagerUISide.SaveState();
+                StashKey sk = await StockpileManagerUISide.SaveState();
 
                 if (sk == null)
                 {
