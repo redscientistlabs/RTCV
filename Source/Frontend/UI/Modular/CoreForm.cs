@@ -313,7 +313,7 @@ This message only appears once.";
             pnAutoKillSwitch.BackColor = Color.Transparent;
         }
 
-        private void OpenGlitchHarvester(object sender, EventArgs e)
+        public void OpenGlitchHarvester(object sender, EventArgs e)
         {
             pnGlitchHarvesterOpen.Visible = true;
 

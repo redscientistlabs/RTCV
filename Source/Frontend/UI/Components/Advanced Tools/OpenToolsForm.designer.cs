@@ -54,7 +54,7 @@ namespace RTCV.UI
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "OpenToolsForm";
             this.Tag = "color:dark3";
-            this.Text = "Extra Tools Form";
+            this.Text = "Extra Tools and Plugins";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             this.ResumeLayout(false);

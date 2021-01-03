@@ -37,6 +37,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Components\Advanced Tools\MyPluginsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Components\Engine Config\CorruptionEngineForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -359,7 +359,7 @@ namespace RTCV.UI
             }
         }
 
-        private async void LoadStockpile(string filename)
+        public async void LoadStockpile(string filename)
         {
             logger.Trace("Entered LoadStockpile {0}", Thread.CurrentThread.ManagedThreadId);
             if (UnsavedEdits && MessageBox.Show("You have unsaved edits in the Glitch Harvester Stockpile. \n\n Are you sure you want to load without saving?",
