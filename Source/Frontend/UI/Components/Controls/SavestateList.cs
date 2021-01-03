@@ -237,7 +237,7 @@ namespace RTCV.UI.Components.Controls
             return SelectedHolder?.sk;
         }
 
-        private void BtnToggleSaveLoad_Click(object sender, EventArgs e)
+        public void BtnToggleSaveLoad_Click(object sender, EventArgs e)
         {
             if (btnSaveLoad.Text == "LOAD")
             {

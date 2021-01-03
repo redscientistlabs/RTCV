@@ -35,13 +35,14 @@ namespace RTCV.UI.Modular
                     Form ceForm = S.GET<CorruptionEngineForm>();
 
                     UICore.mtForm = new SelectBoxForm(new ComponentForm[] {
-                        S.GET<VmdNoToolForm>(),
+                        S.GET<NoToolShortcuts>(),
+                        S.GET<MyListsForm>(),
                         S.GET<MyVMDsForm>(),
+                        S.GET<MyPluginsForm>(),
                         S.GET<VmdPoolForm>(),
                         S.GET<VmdGenForm>(),
                         S.GET<VmdSimpleGenForm>(),
                         S.GET<VmdActForm>(),
-                        S.GET<MyListsForm>(),
                         S.GET<ListGenForm>(),
                         S.GET<VmdLimiterProfilerForm>(),
                         //S.GET<DomainAnalyticsForm>(),
@@ -49,7 +50,7 @@ namespace RTCV.UI.Modular
                         })
                     {
                         popoutAllowed = false,
-                        Text = "Advanced Memory Tools",
+                        Text = "Advanced Tools and Plugins",
                     };
 
                     ecGrid.SetTileForm(gpForm, 0, 0, 5, 5, true);

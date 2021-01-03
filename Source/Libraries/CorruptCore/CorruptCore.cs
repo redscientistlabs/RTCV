@@ -89,6 +89,8 @@ namespace RTCV.CorruptCore
         public static string VmdsDir => Path.Combine(RtcDir, "VMDS");
 
         public static string VaultDir => Path.Combine(EmuDir, "VAULT");
+
+        public static string LauncherDir => Path.Combine(new DirectoryInfo(RtcDir).Parent.Parent.FullName, "Launcher");
         public static string EngineTemplateDir => Path.Combine(RtcDir, "ENGINETEMPLATES");
 
         public static event EventHandler<ProgressBarEventArgs> ProgressBarHandler;

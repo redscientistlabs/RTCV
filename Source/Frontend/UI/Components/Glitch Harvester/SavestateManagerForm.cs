@@ -173,7 +173,7 @@ namespace RTCV.UI
             RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Done", 100));
         }
 
-        private async void loadSavestateList(bool import = false, string fileName = null)
+        internal async void loadSavestateList(bool import = false, string fileName = null)
         {
             if (fileName == null)
             {
