@@ -17,7 +17,7 @@ namespace RTCV.UI.Modular
         public bool popoutAllowed { get; set; } = true;
         public ComponentFormTile ParentComponentFormTitle { get; set; } = null;
 
-        protected ComponentForm() : base()
+        public ComponentForm() : base()
         {
             logger = NLog.LogManager.GetLogger(this.GetType().ToString());
         }
