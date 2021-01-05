@@ -21,20 +21,7 @@ namespace RTCV.UI.Modular
             }
         }
 
-        private static CanvasGrid _engineConfig = null;
-        public static CanvasGrid engineConfig
-        {
-            get
-            {
-                if (_engineConfig == null)
-                {
-                    var ecGrid = new CanvasGrid(15, 12, "Engine Config");
-
-                    Form gpForm = S.GET<GeneralParametersForm>();
-                    Form mdForm = S.GET<MemoryDomainsForm>();
-                    Form ceForm = S.GET<CorruptionEngineForm>();
-
-                    UICore.mtForm = new SelectBoxForm(new ComponentForm[] {
+        public static SelectBoxForm DefaultTools = new SelectBoxForm(new ComponentForm[] {
                         S.GET<NoToolShortcuts>(),
                         S.GET<MyListsForm>(),
                         S.GET<MyVMDsForm>(),
@@ -48,10 +35,25 @@ namespace RTCV.UI.Modular
                         //S.GET<DomainAnalyticsForm>(),
                         S.GET<OpenToolsForm>(),
                         })
-                    {
-                        popoutAllowed = false,
-                        Text = "Advanced Tools and Plugins",
-                    };
+        {
+            popoutAllowed = false,
+            Text = "Advanced Tools and Plugins",
+        };
+
+        private static CanvasGrid _engineConfig = null;
+        public static CanvasGrid engineConfig
+        {
+            get
+            {
+                if (_engineConfig == null)
+                {
+                    var ecGrid = new CanvasGrid(15, 12, "Engine Config");
+
+                    Form gpForm = S.GET<GeneralParametersForm>();
+                    Form mdForm = S.GET<MemoryDomainsForm>();
+                    Form ceForm = S.GET<CorruptionEngineForm>();
+
+                    //UICore.mtForm = DefaultTools;
 
                     ecGrid.SetTileForm(gpForm, 0, 0, 5, 5, true);
                     ecGrid.SetTileForm(ceForm, 5, 0, 10, 5, true);

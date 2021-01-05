@@ -28,7 +28,21 @@ namespace RTCV.UI
 
         private void AnchorSelectedItemToPanel(object sender, EventArgs e)
         {
-            ((cbSelectBox.SelectedItem as dynamic)?.value as ComponentForm)?.AnchorToPanel(pnComponentForm);
+            try
+            {
+                ((cbSelectBox.SelectedItem as dynamic)?.value as ComponentForm)?.AnchorToPanel(pnComponentForm);
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    (cbSelectBox.SelectedItem as ComponentForm)?.AnchorToPanel(pnComponentForm);
+                }
+                catch
+                {
+                    throw ex;
+                }
+            }
         }
 
         private void OnLoad(object sender, EventArgs e)

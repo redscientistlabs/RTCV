@@ -26,7 +26,18 @@ namespace RTCV.UI
         private static System.Timers.Timer inputCheckTimer;
 
         //RTC Main Forms
-        internal static SelectBoxForm mtForm = null;
+        private static SelectBoxForm _mtForm = null;
+        public static SelectBoxForm mtForm //keep public for autoextendability for plugins
+        {
+            get
+            {
+                if (_mtForm == null)
+                    _mtForm = DefaultGrids.DefaultTools;
+
+                return _mtForm;
+            }
+            set { _mtForm = value; }
+        }
 
         internal static BindingCollection HotkeyBindings = new BindingCollection();
 

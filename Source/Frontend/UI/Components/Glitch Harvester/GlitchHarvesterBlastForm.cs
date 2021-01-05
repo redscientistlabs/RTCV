@@ -320,11 +320,12 @@ namespace RTCV.UI
             }
         }
 
-        public void SendRawToStash(object sender, EventArgs e)
+        public void SendRawToStash(object sender, EventArgs e) => SendRawToStash();
+        public StashKey SendRawToStash(bool bypassChecks = false)
         {
-            if (!btnSendRaw.Visible)
+            if (!btnSendRaw.Visible && !bypassChecks)
             {
-                return;
+                return null;
             }
 
             try
@@ -334,13 +335,13 @@ namespace RTCV.UI
                 string romFilename = (string)AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME];
                 if (romFilename == null)
                 {
-                    return;
+                    return null;
                 }
 
                 if (romFilename.Contains("|"))
                 {
                     MessageBox.Show($"The Glitch Harvester attempted to corrupt a game bound to the following file:\n{romFilename}\n\nIt cannot be processed because the rom seems to be inside a Zip Archive\n(Bizhawk returned a filename with the chracter | in it)");
-                    return;
+                    return null;
                 }
 
                 StashKey sk = LocalNetCoreRouter.QueryRoute<StashKey>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.KeyGetRawBlastLayer, true);
@@ -358,6 +359,8 @@ namespace RTCV.UI
             {
                 SetBlastButtonVisibility(true);
             }
+
+            return StockpileManagerUISide.CurrentStashkey;
         }
 
         public void BlastLayerToggle(object sender, EventArgs e)
