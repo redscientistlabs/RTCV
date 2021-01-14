@@ -167,15 +167,19 @@ namespace RTCV.UI
 
         private void HandleMemoryDomainSelectionChange(object sender, EventArgs e)
         {
+            //COMPAREME
+
             updateTimer.Stop();
             updateTimer.Start();
 
+            if (ignoreListboxChanged)
+                return;
+
             var selectedDomains = lbMemoryDomains.SelectedItems.Cast<string>();
-            foreach (var key in domains.Keys.ToArray()) //resetting the state of domains
+            foreach (var key in domains.Keys.ToArray())
                 domains[key] = selectedDomains.Contains(key);
 
             UpdateSelectedMemoryDomains(null, null);
-            //RTC_Restore.SaveRestore();
         }
 
         private void HandleRefreshDomainsClick(object sender, EventArgs e)
