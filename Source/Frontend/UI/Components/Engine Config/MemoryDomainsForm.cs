@@ -170,6 +170,11 @@ namespace RTCV.UI
             updateTimer.Stop();
             updateTimer.Start();
 
+            var selectedDomains = lbMemoryDomains.SelectedItems.Cast<string>();
+            foreach (var key in domains.Keys.ToArray()) //resetting the state of domains
+                domains[key] = selectedDomains.Contains(key);
+
+            UpdateSelectedMemoryDomains(null, null);
             //RTC_Restore.SaveRestore();
         }
 
