@@ -28,14 +28,14 @@ namespace RTCV.UI
             cbSelectedTemplate.SelectedIndex = 0;
 
             cbCustomPrecision.SelectedIndexChanged += HandleCustomPrecisionSelectionChange;
-            nmAlignment.ValueChanged += HandleAlignmentChange;
+            //nmAlignment.ValueChanged += HandleAlignmentChange;
         }
 
-        private void HandleAlignmentChange(object sender, Components.Controls.ValueUpdateEventArgs<decimal> e)
-        {
-            RtcCore.Alignment = Convert.ToInt32(nmAlignment.Value);
-            S.GET<CorruptionEngineForm>().nmAlignment.Value = nmAlignment.Value;
-        }
+        //private void HandleAlignmentChange(object sender, Components.Controls.ValueUpdateEventArgs<decimal> e)
+        //{
+        //    RtcCore.Alignment = Convert.ToInt32(nmAlignment.Value);
+        //    S.GET<CorruptionEngineForm>().nmAlignment.Value = nmAlignment.Value;
+        //}
 
         private void HandleCustomPrecisionSelectionChange(object sender, EventArgs e)
         {

@@ -7,6 +7,7 @@ namespace RTCV.UI
     using RTCV.Common;
     using RTCV.CorruptCore;
     using RTCV.NetCore;
+    using RTCV.UI.Components.Controls;
     using RTCV.UI.Modular;
 
     [SuppressMessage("Microsoft.Designer", "CA2213:Disposable types are not disposed", Justification = "Designer classes have their own Dispose method")]
@@ -79,7 +80,10 @@ namespace RTCV.UI
 
         private void OnFormLoad(object sender, EventArgs e)
         {
-            nmAlignment.registerSlave(S.GET<CustomEngineConfigForm>().nmAlignment);
+
+            var handler = new EventHandler<Components.Controls.ValueUpdateEventArgs<decimal>>(HandleAlignmentChange);
+            nmAlignment.ValueChanged += handler;
+            nmAlignment.registerSlave(S.GET<CustomEngineConfigForm>().nmAlignment, handler);
 
             cbSelectedEngine.SelectedIndex = 0;
             cbCustomPrecision.SelectedIndex = 0;
@@ -93,6 +97,11 @@ namespace RTCV.UI
             {
                 UpdateVectorValueList(VectorEngineControl.cbVectorValueList, null);
             }
+        }
+
+        private void HandleAlignmentChange(object sender, Components.Controls.ValueUpdateEventArgs<decimal> e)
+        {
+            RtcCore.Alignment = Convert.ToInt32(nmAlignment.Value);
         }
 
         private void UpdateEngine(object sender, EventArgs e)
