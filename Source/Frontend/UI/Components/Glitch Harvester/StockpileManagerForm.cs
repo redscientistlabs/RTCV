@@ -685,6 +685,10 @@ namespace RTCV.UI
             bool alreadyLoadedAStockpile = false;
 
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+
+            if (files == null)
+                return;
+
             foreach (var f in files)
             {
                 if (f.Contains(".bl"))
