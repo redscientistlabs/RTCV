@@ -40,24 +40,25 @@ namespace RTCV.CorruptCore
                 return null;
             }
 
-            int precision = 4;
+            int precision;
 
-            if (UnlockPrecision)
+            //Behavior: Will use the selected limiter list's precision by default
+            //And if the precision was unlocked, use what was set in the precision box
+
+            if (Filtering.Hash2LimiterDico.TryGetValue(LimiterListHash, out IListFilter list))
             {
-                precision = RtcCore.CachedPrecision;
-
-                if (Filtering.Hash2LimiterDico.TryGetValue(LimiterListHash, out IListFilter list))
+                if (UnlockPrecision)
                 {
-                    int listPrecision = list.GetPrecision();
-                    if (listPrecision > 8)
-                    {
-                        precision = listPrecision;
-                    }
+                    precision = RtcCore.CachedPrecision;
                 }
                 else
                 {
-                    return null;
+                    precision = list.GetPrecision();
                 }
+            }
+            else
+            {
+                return null;
             }
 
             long safeAddress = address - (address % precision) + alignment; //32-bit trunk
