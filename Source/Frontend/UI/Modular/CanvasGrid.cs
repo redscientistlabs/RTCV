@@ -3,8 +3,10 @@ namespace RTCV.UI
     using System;
     using System.Drawing;
     using System.IO;
+    using System.Linq;
     using System.Windows.Forms;
     using RTCV.Common;
+    using SlimDX;
 
     public class CanvasGrid
     {
@@ -149,7 +151,36 @@ namespace RTCV.UI
                             }
                             else
                             {
-                                tileForm = (Form)S.GET(Type.GetType("RTCV.UI." + formName));
+                                var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+                                Type t = null;
+
+                                foreach (var ass in assemblies)
+                                {
+                                    try
+                                    {
+                                        var types = ass.GetTypes();
+                                        var type = types.FirstOrDefault(iterator => iterator.FullName.Contains(formName));
+                                        if (type != null)
+                                        {
+                                            t = type;
+                                            break;
+                                        }
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        continue;
+                                    }
+                                }
+
+                                if (t != null)
+                                {
+                                    tileForm = (Form)S.GET(t);
+                                }
+                                else
+                                {
+                                    MessageBox.Show($"Could not find the Form type {formName} referenced in the Custom Layout.");
+                                    return;
+                                }
                             }
 
                             cuGrid.SetTileForm(tileForm, formGridPosX, formGridPosY, formGridSizeX, formGridSizeY, true, formGridAnchor);
