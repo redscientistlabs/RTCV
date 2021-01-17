@@ -171,7 +171,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(161, 13);
             this.label19.TabIndex = 145;
-            this.label19.Text = "Corrupts 32-bit values using lists";
+            this.label19.Text = "Corrupts using limiter and value lists";
             // 
             // VectorEngine
             // 
