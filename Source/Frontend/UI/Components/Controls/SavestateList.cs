@@ -167,10 +167,14 @@ namespace RTCV.UI.Components.Controls
                 cms.Items.Add("Delete entry", null, (ob, ev) =>
                 {
                     var holder = (SavestateHolder)((Button)sender).Parent;
-                    var indexToRemove = _controlList.IndexOf(holder) + _dataSource.Position;
-                    if (indexToRemove <= _dataSource.Count)
+                    var holderIndex = _controlList.IndexOf(holder);
+                    if (holderIndex != -1)
                     {
-                        _dataSource.RemoveAt(indexToRemove);
+                        var indexToRemove = holderIndex + _dataSource.Position;
+                        if (indexToRemove <= _dataSource.Count)
+                        {
+                            _dataSource.RemoveAt(indexToRemove);
+                        }
                     }
                 });
 
