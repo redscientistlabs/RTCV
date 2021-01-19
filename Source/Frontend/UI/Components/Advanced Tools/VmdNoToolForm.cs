@@ -74,7 +74,10 @@ namespace RTCV.UI
             var sm = S.GET<SavestateManagerForm>();
             Control ctl = (sm.savestateList.flowPanel.Controls[0] as SavestateHolder).btnSavestate;
             sm.savestateList.BtnSavestate_MouseDown(ctl, e);
-            sm.savestateList.BtnToggleSaveLoad_Click(null, null);
+
+            if (sm.savestateList.btnSaveLoad.Text == "LOAD")
+                sm.savestateList.BtnToggleSaveLoad_Click(null, null);
+
             sm.savestateList.HandleSaveLoadClick(null, null);
 
         }
