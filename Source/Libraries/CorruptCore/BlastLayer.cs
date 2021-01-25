@@ -24,6 +24,12 @@ namespace RTCV.CorruptCore
             Layer = new List<BlastUnit>();
         }
 
+        public BlastLayer(BlastUnit bu)
+        {
+            Layer = new List<BlastUnit>();
+            Layer.Add(bu);
+        }
+
         public BlastLayer(List<BlastUnit> layer)
         {
             Layer = layer;

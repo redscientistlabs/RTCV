@@ -68,18 +68,10 @@ namespace RTCV.UI
             Process.Start(psi);
         }
 
-        private async void btnPrepareGlitchHarvester_MouseDown(object sender, MouseEventArgs e)
+        private void btnPrepareGlitchHarvester_MouseDown(object sender, MouseEventArgs e)
         {
             S.GET<CoreForm>().OpenGlitchHarvester(null, null);
-            var sm = S.GET<SavestateManagerForm>();
-            Control ctl = (sm.savestateList.flowPanel.Controls[0] as SavestateHolder).btnSavestate;
-            sm.savestateList.BtnSavestate_MouseDown(ctl, e);
-
-            if (sm.savestateList.btnSaveLoad.Text == "LOAD")
-                sm.savestateList.BtnToggleSaveLoad_Click(null, null);
-
-            sm.savestateList.HandleSaveLoadClick(null, null);
-
+            S.GET<SavestateManagerForm>().savestateList.NewSavestateNow();
         }
 
         private void lbDragAndDropGH_DragDrop(object sender, DragEventArgs e)

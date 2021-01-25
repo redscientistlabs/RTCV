@@ -168,7 +168,7 @@ namespace RTCV.UI
 
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Manual Inject", null, new EventHandler((ob, ev) =>
                 {
-                    var sk = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
+                    var sk = GetSelectedStashKey();
                     StashKey newSk = (StashKey)sk.Clone();
                     S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = StockpileManagerUISide.ApplyStashkey(newSk, false);
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
@@ -353,7 +353,7 @@ namespace RTCV.UI
                     S.GET<CoreForm>().AutoCorrupt = false;
 
                     S.GET<GlitchHarvesterBlastForm>().ghMode = GlitchHarvesterMode.CORRUPT;
-                    StockpileManagerUISide.CurrentStashkey = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
+                    StockpileManagerUISide.CurrentStashkey = GetSelectedStashKey();
                     StockpileManagerUISide.ApplyStashkey(StockpileManagerUISide.CurrentStashkey);
 
                     S.GET<StashHistoryForm>().lbStashHistory.ClearSelected();
@@ -368,6 +368,8 @@ namespace RTCV.UI
                 //dgvStockpile.Enabled = true;
             }
         }
+
+        private StashKey GetSelectedStashKey() => (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
 
         public void RefreshNoteIcons()
         {

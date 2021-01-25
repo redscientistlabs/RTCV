@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI.Components.Controls
+namespace RTCV.UI.Components.Controls
 {
     partial class SavestateList
     {
@@ -38,9 +38,9 @@
             this.pnBackForwardPage.SuspendLayout();
             this.pnChangeLoadSave.SuspendLayout();
             this.SuspendLayout();
-            //
+            // 
             // flowPanel
-            //
+            // 
             this.flowPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowPanel.Location = new System.Drawing.Point(0, 35);
@@ -48,9 +48,9 @@
             this.flowPanel.Name = "flowPanel";
             this.flowPanel.Size = new System.Drawing.Size(150, 245);
             this.flowPanel.TabIndex = 0;
-            //
+            // 
             // pnBackForwardPage
-            //
+            // 
             this.pnBackForwardPage.Controls.Add(this.btnForward);
             this.pnBackForwardPage.Controls.Add(this.btnBack);
             this.pnBackForwardPage.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -58,9 +58,9 @@
             this.pnBackForwardPage.Name = "pnBackForwardPage";
             this.pnBackForwardPage.Size = new System.Drawing.Size(150, 30);
             this.pnBackForwardPage.TabIndex = 0;
-            //
+            // 
             // btnForward
-            //
+            // 
             this.btnForward.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnForward.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnForward.FlatAppearance.BorderSize = 0;
@@ -76,9 +76,9 @@
             this.btnForward.Text = "▶";
             this.btnForward.UseVisualStyleBackColor = false;
             this.btnForward.Click += new System.EventHandler(this.BtnForward_Click);
-            //
+            // 
             // btnBack
-            //
+            // 
             this.btnBack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnBack.FlatAppearance.BorderSize = 0;
             this.btnBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -93,9 +93,9 @@
             this.btnBack.Text = "◀";
             this.btnBack.UseVisualStyleBackColor = false;
             this.btnBack.Click += new System.EventHandler(this.BtnBack_Click);
-            //
+            // 
             // pnChangeLoadSave
-            //
+            // 
             this.pnChangeLoadSave.Controls.Add(this.btnToggleSaveLoad);
             this.pnChangeLoadSave.Controls.Add(this.btnSaveLoad);
             this.pnChangeLoadSave.Dock = System.Windows.Forms.DockStyle.Top;
@@ -103,9 +103,9 @@
             this.pnChangeLoadSave.Name = "pnChangeLoadSave";
             this.pnChangeLoadSave.Size = new System.Drawing.Size(150, 35);
             this.pnChangeLoadSave.TabIndex = 1;
-            //
+            // 
             // btnToggleSaveLoad
-            //
+            // 
             this.btnToggleSaveLoad.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnToggleSaveLoad.FlatAppearance.BorderSize = 0;
             this.btnToggleSaveLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -120,9 +120,9 @@
             this.btnToggleSaveLoad.Text = "Change ->";
             this.btnToggleSaveLoad.UseVisualStyleBackColor = false;
             this.btnToggleSaveLoad.Click += new System.EventHandler(this.BtnToggleSaveLoad_Click);
-            //
+            // 
             // btnSaveLoad
-            //
+            // 
             this.btnSaveLoad.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnSaveLoad.FlatAppearance.BorderSize = 0;
             this.btnSaveLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -137,9 +137,10 @@
             this.btnSaveLoad.Text = "LOAD";
             this.btnSaveLoad.UseVisualStyleBackColor = false;
             this.btnSaveLoad.Click += new System.EventHandler(this.HandleSaveLoadClick);
-            //
+            this.btnSaveLoad.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnSaveLoad_MouseDown);
+            // 
             // SavestateList
-            //
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.pnBackForwardPage);

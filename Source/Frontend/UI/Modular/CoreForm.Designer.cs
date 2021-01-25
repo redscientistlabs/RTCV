@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     partial class CoreForm
     {
@@ -555,7 +555,7 @@
         private System.Windows.Forms.Label lbGameProtection;
         public System.Windows.Forms.CheckBox cbUseGameProtection;
         private System.Windows.Forms.Button btnTestSubform;
-        internal System.Windows.Forms.Panel pnGlitchHarvesterOpen;
+        public System.Windows.Forms.Panel pnGlitchHarvesterOpen;
         private System.Windows.Forms.Button btnTestLockdown;
         public System.Windows.Forms.Panel pnCrashProtection;
         public System.Windows.Forms.Panel pnAutoKillSwitch;
