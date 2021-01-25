@@ -99,7 +99,7 @@ namespace RTCV.UI
                     return;
                 }
 
-                StockpileManagerUISide.CurrentStashkey = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
+                StockpileManagerUISide.CurrentStashkey = GetSelectedStashKey();
 
                 List<StashKey> keys = dgvStockpile.Rows.Cast<DataGridViewRow>().Select(x => (StashKey)x.Cells[0].Value).ToList();
                 if (!StockpileManagerUISide.CheckAndFixMissingReference(StockpileManagerUISide.CurrentStashkey, false, keys))
@@ -189,7 +189,7 @@ namespace RTCV.UI
                 {
                     if (S.GET<BlastEditorForm>() != null)
                     {
-                        var sk = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
+                        var sk = GetSelectedStashKey();
                         BlastEditorForm.OpenBlastEditor(sk);
                     }
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
@@ -198,7 +198,7 @@ namespace RTCV.UI
                 {
                     if (S.GET<BlastEditorForm>() != null)
                     {
-                        var sk = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
+                        var sk = GetSelectedStashKey();
                         BlastEditorForm.OpenBlastEditor(sk);
                         S.GET<BlastEditorForm>().OpenSanitizeTool(null, null);
                     }
@@ -208,7 +208,7 @@ namespace RTCV.UI
 
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Manual Inject", null, new EventHandler((ob, ev) =>
                 {
-                    var sk = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
+                    var sk = GetSelectedStashKey();
                     StashKey newSk = (StashKey)sk.Clone();
 
                     var t = StockpileManagerUISide.ApplyStashkey(newSk, false, false);
@@ -219,7 +219,7 @@ namespace RTCV.UI
                 columnsMenu.Items.Add(new ToolStripSeparator());
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Generate VMD from Selected Item", null, new EventHandler((ob, ev) =>
                 {
-                    var sk = (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
+                    var sk = GetSelectedStashKey();
                     MemoryDomains.GenerateVmdFromStashkey(sk);
                     S.GET<VmdPoolForm>().RefreshVMDs();
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
@@ -317,7 +317,7 @@ namespace RTCV.UI
 
             if (dgvStockpile.SelectedRows.Count != 0)
             {
-                if (RenameStashKey(dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey))
+                if (RenameStashKey(GetSelectedStashKey()))
                 {
                     StockpileManagerUISide.StockpileChanged();
                     dgvStockpile.Refresh();
@@ -435,6 +435,8 @@ namespace RTCV.UI
                 logger.Trace("Load done");
             }
         }
+
+        internal StashKey GetSelectedStashKey() => (dgvStockpile.SelectedRows[0].Cells[0].Value as StashKey);
 
         private async void ImportStockpile(string filename)
         {

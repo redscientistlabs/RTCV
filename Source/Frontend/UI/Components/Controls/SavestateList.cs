@@ -13,6 +13,7 @@ namespace RTCV.UI.Components.Controls
     using RTCV.CorruptCore;
     using RTCV.NetCore;
     using RTCV.Common;
+    using System.Threading.Tasks;
 
     public partial class SavestateList : UserControl
     {
@@ -128,11 +129,16 @@ namespace RTCV.UI.Components.Controls
             }
         }
 
-        internal void BtnSavestate_MouseDown(object sender, MouseEventArgs e)
+        public void BtnSavestate_MouseDown(object sender, MouseEventArgs e)
         {
-            var locate = new Point(((Control)sender).Location.X + e.Location.X, ((Control)sender).Location.Y + e.Location.Y);
+            Point locate;
 
-            if (e.Button == MouseButtons.Left)
+            if (e != null)
+                locate = new Point(((Control)sender).Location.X + e.Location.X, ((Control)sender).Location.Y + e.Location.Y);
+            else
+                locate = new Point(0,0);
+
+            if (e == null || e.Button == MouseButtons.Left)
             {
                 SelectedHolder?.SetSelected(false);
                 SelectedHolder = (SavestateHolder)((Button)sender).Parent;
@@ -215,7 +221,30 @@ namespace RTCV.UI.Components.Controls
             btnBack.Enabled = _dataSource.Position > 0;
         }
 
-        private void BtnForward_Click(object sender, EventArgs e)
+        public void NewSavestateNow()
+        {
+            //yes this automates the UI. ew.
+
+            //Search for the first empty
+            SavestateHolder firstEmpty = null;
+            do
+            {
+                firstEmpty = flowPanel.Controls.Cast<SavestateHolder>().FirstOrDefault(it => it.sk == null);
+
+                if (firstEmpty == null)
+                    BtnForward_Click(null, null); //switch page if necessary
+            } while (firstEmpty == null);
+
+            Control ctl = firstEmpty.btnSavestate;
+            BtnSavestate_MouseDown(ctl, null);  //select savestate box
+
+            if (btnSaveLoad.Text == "LOAD")
+                BtnToggleSaveLoad_Click(null, null); //switch to SAVE if still in Load
+
+            HandleSaveLoadClick(null, null);    //SAVE
+        }
+
+        public void BtnForward_Click(object sender, EventArgs e)
         {
             if (_dataSource.Position + NumPerPage <= _dataSource.Count)
             {
@@ -345,42 +374,112 @@ namespace RTCV.UI.Components.Controls
                 }
 
                 StashKey sk = await StockpileManagerUISide.SaveState();
-
-                if (sk == null)
-                {
-                    btnSaveLoad.Text = "LOAD";
-                    btnSaveLoad.ForeColor = Color.FromArgb(192, 255, 192);
-                    return;
-                }
-
-                StockpileManagerUISide.CurrentSavestateStashKey = sk;
-
-                //Replace if there'a already a sk
-                if (SelectedHolder?.sk != null)
-                {
-                    var indexToReplace = _controlList.IndexOf(SelectedHolder) + _dataSource.Position;
-                    if (sk != null)
-                    {
-                        var oldpos = _dataSource.Position; //We do this to prevent weird shifts when you insert over the something at the top of the last page
-                        _dataSource.RemoveAt(indexToReplace);
-                        _dataSource.Insert(indexToReplace, new SaveStateKey(sk, ""));
-                        _dataSource.Position = oldpos;
-                    }
-                }
-                //Otherwise add to the last box
-                else
-                {
-                    if (sk != null)
-                    {
-                        _dataSource.Add(new SaveStateKey(sk, ""));
-                        SelectedHolder?.SetSelected(false);
-                        SelectedHolder = _controlList.Where(x => x.sk == sk).First() ?? null;
-                        SelectedHolder?.SetSelected(true);
-                    }
-                }
+                if (sk != null)
+                    RegisterStashKeyToSelected(sk);
 
                 btnSaveLoad.Text = "LOAD";
                 btnSaveLoad.ForeColor = Color.FromArgb(192, 255, 192);
+            }
+        }
+
+        private void RegisterStashKeyToSelected(StashKey sk)
+        {
+            StockpileManagerUISide.CurrentSavestateStashKey = sk;
+
+            //Replace if there'a already a sk
+            if (SelectedHolder?.sk != null)
+            {
+                var indexToReplace = _controlList.IndexOf(SelectedHolder) + _dataSource.Position;
+                if (sk != null)
+                {
+                    var oldpos = _dataSource.Position; //We do this to prevent weird shifts when you insert over the something at the top of the last page
+                    _dataSource.RemoveAt(indexToReplace);
+                    _dataSource.Insert(indexToReplace, new SaveStateKey(sk, ""));
+                    _dataSource.Position = oldpos;
+                }
+            }
+            //Otherwise add to the last box
+            else
+            {
+                if (sk != null)
+                {
+                    _dataSource.Add(new SaveStateKey(sk, ""));
+                    SelectedHolder?.SetSelected(false);
+                    SelectedHolder = _controlList.Where(x => x.sk == sk).First() ?? null;
+                    SelectedHolder?.SetSelected(true);
+                }
+            }
+        }
+
+        private void btnSaveLoad_MouseDown(object sender, MouseEventArgs e)
+        {
+            Point locate;
+
+            if (e != null)
+                locate = new Point(e.Location.X, e.Location.Y);
+            else
+                locate = new Point(0, 0);
+
+
+            if (e.Button == MouseButtons.Right)
+            {
+                var cms = new ContextMenuStrip();
+                cms.Items.Add("New Savestate", null, (ob, ev) =>
+                {
+                    NewSavestateNow();
+                });
+
+                cms.Items.Add("Import from selected Stockpile Item", null, (ob, ev) => NewSavestateFromStockpile());
+
+
+                cms.Show((Control)sender, locate);
+            }
+        }
+
+        private void NewSavestateFromStockpile()
+        {
+            //yes this automates the UI. ew.
+
+            //Search for the first empty
+            SavestateHolder firstEmpty = null;
+            do
+            {
+                firstEmpty = flowPanel.Controls.Cast<SavestateHolder>().FirstOrDefault(it => it.sk == null);
+
+                if (firstEmpty == null)
+                    BtnForward_Click(null, null); //switch page if necessary
+            } while (firstEmpty == null);
+
+            Control ctl = firstEmpty.btnSavestate;
+            BtnSavestate_MouseDown(ctl, null);  //select savestate box
+
+
+            var sm = S.GET<StockpileManagerForm>();
+            var sk = sm.GetSelectedStashKey();
+
+            if (sk != null)
+            {
+                var newSk = (StashKey)sk.Clone();
+
+                newSk.Key = newSk.ParentKey;
+                newSk.ParentKey = null;
+                newSk.BlastLayer = new BlastLayer();
+                //newSk.StateShortFilename = Path.GetFileName(newSk.GetSavestateFullPath());
+                //newSk.StateData = File.ReadAllBytes(newSk.GetSavestateFullPath());
+                //newSk.DeployState();
+                string workingpath = newSk.GetSavestateFullPath();
+                string skspath = Path.Combine(RtcCore.workingDir, "SKS", Path.GetFileName(workingpath));
+
+                if (File.Exists(skspath) && !File.Exists(workingpath))
+                    File.Copy(skspath, workingpath);
+
+                StockpileManagerUISide.CurrentStashkey = sk;
+                StockpileManagerUISide.OriginalFromStashkey(sk);
+
+                //var t = StockpileManagerUISide.LoadState(newSk, true, false); //will cause problems with heavy emus
+                //t.Wait();
+
+                RegisterStashKeyToSelected(newSk);
             }
         }
     }

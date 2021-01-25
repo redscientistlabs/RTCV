@@ -42,13 +42,14 @@ namespace RTCV.UI
             // lbDragAndDropGH
             // 
             this.lbDragAndDropGH.AllowDrop = true;
+            this.lbDragAndDropGH.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lbDragAndDropGH.BackColor = System.Drawing.Color.Transparent;
             this.lbDragAndDropGH.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.lbDragAndDropGH.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.lbDragAndDropGH.ForeColor = System.Drawing.Color.White;
-            this.lbDragAndDropGH.Location = new System.Drawing.Point(302, 115);
+            this.lbDragAndDropGH.Location = new System.Drawing.Point(297, 115);
             this.lbDragAndDropGH.Name = "lbDragAndDropGH";
-            this.lbDragAndDropGH.Size = new System.Drawing.Size(135, 65);
+            this.lbDragAndDropGH.Size = new System.Drawing.Size(150, 90);
             this.lbDragAndDropGH.TabIndex = 38;
             this.lbDragAndDropGH.Tag = "color:light3";
             this.lbDragAndDropGH.Text = "Drag and drop load \nto Glitch Harvester";
@@ -58,14 +59,15 @@ namespace RTCV.UI
             // 
             // btnPrepareGlitchHarvester
             // 
+            this.btnPrepareGlitchHarvester.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnPrepareGlitchHarvester.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnPrepareGlitchHarvester.FlatAppearance.BorderSize = 0;
             this.btnPrepareGlitchHarvester.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPrepareGlitchHarvester.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnPrepareGlitchHarvester.ForeColor = System.Drawing.Color.White;
-            this.btnPrepareGlitchHarvester.Location = new System.Drawing.Point(302, 42);
+            this.btnPrepareGlitchHarvester.Location = new System.Drawing.Point(297, 42);
             this.btnPrepareGlitchHarvester.Name = "btnPrepareGlitchHarvester";
-            this.btnPrepareGlitchHarvester.Size = new System.Drawing.Size(135, 63);
+            this.btnPrepareGlitchHarvester.Size = new System.Drawing.Size(150, 63);
             this.btnPrepareGlitchHarvester.TabIndex = 191;
             this.btnPrepareGlitchHarvester.TabStop = false;
             this.btnPrepareGlitchHarvester.Tag = "color:dark2";
@@ -75,11 +77,12 @@ namespace RTCV.UI
             // 
             // label5
             // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
             this.label5.ForeColor = System.Drawing.Color.White;
-            this.label5.Location = new System.Drawing.Point(310, 16);
+            this.label5.Location = new System.Drawing.Point(315, 16);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(116, 15);
             this.label5.TabIndex = 192;
@@ -91,7 +94,7 @@ namespace RTCV.UI
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(12, 16);
+            this.label2.Location = new System.Drawing.Point(13, 16);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(122, 15);
             this.label2.TabIndex = 193;
@@ -106,7 +109,7 @@ namespace RTCV.UI
             this.btnNavigateToMyLists.ForeColor = System.Drawing.Color.White;
             this.btnNavigateToMyLists.Location = new System.Drawing.Point(4, 43);
             this.btnNavigateToMyLists.Name = "btnNavigateToMyLists";
-            this.btnNavigateToMyLists.Size = new System.Drawing.Size(139, 28);
+            this.btnNavigateToMyLists.Size = new System.Drawing.Size(143, 28);
             this.btnNavigateToMyLists.TabIndex = 194;
             this.btnNavigateToMyLists.TabStop = false;
             this.btnNavigateToMyLists.Tag = "color:dark2";
@@ -123,7 +126,7 @@ namespace RTCV.UI
             this.btnNavigateToMyVMDs.ForeColor = System.Drawing.Color.White;
             this.btnNavigateToMyVMDs.Location = new System.Drawing.Point(4, 77);
             this.btnNavigateToMyVMDs.Name = "btnNavigateToMyVMDs";
-            this.btnNavigateToMyVMDs.Size = new System.Drawing.Size(139, 28);
+            this.btnNavigateToMyVMDs.Size = new System.Drawing.Size(143, 28);
             this.btnNavigateToMyVMDs.TabIndex = 195;
             this.btnNavigateToMyVMDs.TabStop = false;
             this.btnNavigateToMyVMDs.Tag = "color:dark2";
@@ -140,7 +143,7 @@ namespace RTCV.UI
             this.btnNavigateToMyPlugins.ForeColor = System.Drawing.Color.White;
             this.btnNavigateToMyPlugins.Location = new System.Drawing.Point(4, 111);
             this.btnNavigateToMyPlugins.Name = "btnNavigateToMyPlugins";
-            this.btnNavigateToMyPlugins.Size = new System.Drawing.Size(139, 28);
+            this.btnNavigateToMyPlugins.Size = new System.Drawing.Size(143, 28);
             this.btnNavigateToMyPlugins.TabIndex = 196;
             this.btnNavigateToMyPlugins.TabStop = false;
             this.btnNavigateToMyPlugins.Tag = "color:dark2";
@@ -157,7 +160,7 @@ namespace RTCV.UI
             this.btnOpenPackageDownloader.ForeColor = System.Drawing.Color.White;
             this.btnOpenPackageDownloader.Location = new System.Drawing.Point(4, 212);
             this.btnOpenPackageDownloader.Name = "btnOpenPackageDownloader";
-            this.btnOpenPackageDownloader.Size = new System.Drawing.Size(139, 36);
+            this.btnOpenPackageDownloader.Size = new System.Drawing.Size(143, 36);
             this.btnOpenPackageDownloader.TabIndex = 197;
             this.btnOpenPackageDownloader.TabStop = false;
             this.btnOpenPackageDownloader.Tag = "color:dark2";
