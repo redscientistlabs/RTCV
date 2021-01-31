@@ -7,7 +7,7 @@ namespace RTCV.UI
     //From Bizhawk
     public static class NumberExtensions
     {
-        internal static Point GetMouseLocation(this MouseEventArgs e, object sender)
+        public static Point GetMouseLocation(this MouseEventArgs e, object sender)
         {
             if (!(sender is Control ctr))
             {

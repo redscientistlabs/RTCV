@@ -30,6 +30,7 @@ namespace RTCV.UI
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CoreForm));
             this.pnSideBar = new System.Windows.Forms.Panel();
+            this.pnAddon = new System.Windows.Forms.Panel();
             this.pnGlitchHarvesterOpen = new System.Windows.Forms.Panel();
             this.pnCrashProtection = new System.Windows.Forms.Panel();
             this.btnGpJumpNow = new System.Windows.Forms.Button();
@@ -41,15 +42,14 @@ namespace RTCV.UI
             this.cbUseAutoKillSwitch = new System.Windows.Forms.CheckBox();
             this.pbAutoKillSwitchTimeout = new System.Windows.Forms.ProgressBar();
             this.lbAks = new System.Windows.Forms.Label();
-            this.btnLogo = new System.Windows.Forms.Button();
-            this.pnAddon = new System.Windows.Forms.Panel();
             this.btnSettings = new System.Windows.Forms.Button();
+            this.btnLogo = new System.Windows.Forms.Button();
+            this.btnEngineConfig = new System.Windows.Forms.Button();
             this.btnEasyMode = new System.Windows.Forms.Button();
             this.btnStockpilePlayer = new System.Windows.Forms.Button();
             this.btnGlitchHarvester = new System.Windows.Forms.Button();
             this.btnManualBlast = new System.Windows.Forms.Button();
             this.btnAutoCorrupt = new System.Windows.Forms.Button();
-            this.btnEngineConfig = new System.Windows.Forms.Button();
             this.pnSideBar.SuspendLayout();
             this.pnCrashProtection.SuspendLayout();
             this.pnAutoKillSwitch.SuspendLayout();
@@ -78,6 +78,14 @@ namespace RTCV.UI
             this.pnSideBar.TabIndex = 7;
             this.pnSideBar.Tag = "color:dark3";
             // 
+            // pnAddon
+            // 
+            this.pnAddon.Location = new System.Drawing.Point(0, 321);
+            this.pnAddon.Name = "pnAddon";
+            this.pnAddon.Size = new System.Drawing.Size(150, 118);
+            this.pnAddon.TabIndex = 129;
+            this.pnAddon.Tag = "color:dark3";
+            // 
             // pnGlitchHarvesterOpen
             // 
             this.pnGlitchHarvesterOpen.BackColor = System.Drawing.Color.Gray;
@@ -96,12 +104,15 @@ namespace RTCV.UI
             this.pnCrashProtection.Controls.Add(this.btnGpJumpBack);
             this.pnCrashProtection.Controls.Add(this.lbGameProtection);
             this.pnCrashProtection.Controls.Add(this.cbUseGameProtection);
-            this.pnCrashProtection.Location = new System.Drawing.Point(0, 434);
+            this.pnCrashProtection.Location = new System.Drawing.Point(0, 440);
             this.pnCrashProtection.Name = "pnCrashProtection";
             this.pnCrashProtection.Size = new System.Drawing.Size(150, 60);
             this.pnCrashProtection.TabIndex = 128;
             this.pnCrashProtection.Tag = "color:dark3";
             this.pnCrashProtection.Visible = false;
+            this.pnCrashProtection.MouseEnter += new System.EventHandler(this.pnCrashProtection_MouseEnter);
+            this.pnCrashProtection.MouseLeave += new System.EventHandler(this.pnCrashProtection_MouseLeave);
+            this.pnCrashProtection.MouseHover += new System.EventHandler(this.pnCrashProtection_MouseHover);
             // 
             // btnGpJumpNow
             // 
@@ -110,16 +121,21 @@ namespace RTCV.UI
             this.btnGpJumpNow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGpJumpNow.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
             this.btnGpJumpNow.ForeColor = System.Drawing.Color.White;
+            this.btnGpJumpNow.Image = global::RTCV.UI.Properties.Resources.playback_ff_icon_16;
             this.btnGpJumpNow.Location = new System.Drawing.Point(80, 30);
             this.btnGpJumpNow.Name = "btnGpJumpNow";
             this.btnGpJumpNow.Size = new System.Drawing.Size(60, 23);
             this.btnGpJumpNow.TabIndex = 117;
             this.btnGpJumpNow.TabStop = false;
             this.btnGpJumpNow.Tag = "color:dark2";
-            this.btnGpJumpNow.Text = "Now ⏩";
+            this.btnGpJumpNow.Text = "Now ";
+            this.btnGpJumpNow.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.btnGpJumpNow.UseVisualStyleBackColor = false;
             this.btnGpJumpNow.Visible = false;
             this.btnGpJumpNow.Click += new System.EventHandler(this.OnGameProtectionNow);
+            this.btnGpJumpNow.MouseEnter += new System.EventHandler(this.pnCrashProtection_MouseHover);
+            this.btnGpJumpNow.MouseLeave += new System.EventHandler(this.pnCrashProtection_MouseLeave);
+            this.btnGpJumpNow.MouseHover += new System.EventHandler(this.pnCrashProtection_MouseHover);
             // 
             // btnGpJumpBack
             // 
@@ -128,16 +144,21 @@ namespace RTCV.UI
             this.btnGpJumpBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnGpJumpBack.Font = new System.Drawing.Font("Segoe UI Semibold", 8F, System.Drawing.FontStyle.Bold);
             this.btnGpJumpBack.ForeColor = System.Drawing.Color.White;
+            this.btnGpJumpBack.Image = global::RTCV.UI.Properties.Resources.playback_rew_icon_16;
             this.btnGpJumpBack.Location = new System.Drawing.Point(10, 30);
             this.btnGpJumpBack.Name = "btnGpJumpBack";
-            this.btnGpJumpBack.Size = new System.Drawing.Size(60, 23);
+            this.btnGpJumpBack.Size = new System.Drawing.Size(64, 23);
             this.btnGpJumpBack.TabIndex = 116;
             this.btnGpJumpBack.TabStop = false;
             this.btnGpJumpBack.Tag = "color:dark2";
-            this.btnGpJumpBack.Text = "⏪ Back";
+            this.btnGpJumpBack.Text = " Back";
+            this.btnGpJumpBack.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnGpJumpBack.UseVisualStyleBackColor = false;
             this.btnGpJumpBack.Visible = false;
             this.btnGpJumpBack.Click += new System.EventHandler(this.OnGameProtectionBack);
+            this.btnGpJumpBack.MouseEnter += new System.EventHandler(this.pnCrashProtection_MouseHover);
+            this.btnGpJumpBack.MouseLeave += new System.EventHandler(this.pnCrashProtection_MouseLeave);
+            this.btnGpJumpBack.MouseHover += new System.EventHandler(this.pnCrashProtection_MouseHover);
             // 
             // lbGameProtection
             // 
@@ -150,6 +171,9 @@ namespace RTCV.UI
             this.lbGameProtection.TabIndex = 111;
             this.lbGameProtection.Text = "Game Protection";
             this.lbGameProtection.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ToggleGameProtection);
+            this.lbGameProtection.MouseEnter += new System.EventHandler(this.pnCrashProtection_MouseHover);
+            this.lbGameProtection.MouseLeave += new System.EventHandler(this.pnCrashProtection_MouseLeave);
+            this.lbGameProtection.MouseHover += new System.EventHandler(this.pnCrashProtection_MouseHover);
             // 
             // cbUseGameProtection
             // 
@@ -162,6 +186,9 @@ namespace RTCV.UI
             this.cbUseGameProtection.TabIndex = 76;
             this.cbUseGameProtection.UseVisualStyleBackColor = true;
             this.cbUseGameProtection.CheckedChanged += new System.EventHandler(this.OnUseGameProtectionCheckboxChanged);
+            this.cbUseGameProtection.MouseEnter += new System.EventHandler(this.pnCrashProtection_MouseHover);
+            this.cbUseGameProtection.MouseLeave += new System.EventHandler(this.pnCrashProtection_MouseLeave);
+            this.cbUseGameProtection.MouseHover += new System.EventHandler(this.pnCrashProtection_MouseHover);
             // 
             // btnOpenCustomLayout
             // 
@@ -194,9 +221,9 @@ namespace RTCV.UI
             this.pnAutoKillSwitch.Controls.Add(this.cbUseAutoKillSwitch);
             this.pnAutoKillSwitch.Controls.Add(this.pbAutoKillSwitchTimeout);
             this.pnAutoKillSwitch.Controls.Add(this.lbAks);
-            this.pnAutoKillSwitch.Location = new System.Drawing.Point(0, 499);
+            this.pnAutoKillSwitch.Location = new System.Drawing.Point(0, 500);
             this.pnAutoKillSwitch.Name = "pnAutoKillSwitch";
-            this.pnAutoKillSwitch.Size = new System.Drawing.Size(150, 34);
+            this.pnAutoKillSwitch.Size = new System.Drawing.Size(150, 47);
             this.pnAutoKillSwitch.TabIndex = 127;
             this.pnAutoKillSwitch.Tag = "color:dark3";
             this.pnAutoKillSwitch.Visible = false;
@@ -212,7 +239,7 @@ namespace RTCV.UI
             this.cbUseAutoKillSwitch.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cbUseAutoKillSwitch.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbUseAutoKillSwitch.ForeColor = System.Drawing.Color.White;
-            this.cbUseAutoKillSwitch.Location = new System.Drawing.Point(10, 8);
+            this.cbUseAutoKillSwitch.Location = new System.Drawing.Point(10, 14);
             this.cbUseAutoKillSwitch.Name = "cbUseAutoKillSwitch";
             this.cbUseAutoKillSwitch.Size = new System.Drawing.Size(15, 14);
             this.cbUseAutoKillSwitch.TabIndex = 120;
@@ -224,7 +251,7 @@ namespace RTCV.UI
             // 
             // pbAutoKillSwitchTimeout
             // 
-            this.pbAutoKillSwitchTimeout.Location = new System.Drawing.Point(10, 24);
+            this.pbAutoKillSwitchTimeout.Location = new System.Drawing.Point(10, 32);
             this.pbAutoKillSwitchTimeout.MarqueeAnimationSpeed = 1;
             this.pbAutoKillSwitchTimeout.Maximum = 13;
             this.pbAutoKillSwitchTimeout.Name = "pbAutoKillSwitchTimeout";
@@ -243,7 +270,7 @@ namespace RTCV.UI
             this.lbAks.AutoSize = true;
             this.lbAks.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.lbAks.ForeColor = System.Drawing.Color.White;
-            this.lbAks.Location = new System.Drawing.Point(28, 5);
+            this.lbAks.Location = new System.Drawing.Point(28, 11);
             this.lbAks.Name = "lbAks";
             this.lbAks.Size = new System.Drawing.Size(93, 17);
             this.lbAks.TabIndex = 111;
@@ -252,35 +279,6 @@ namespace RTCV.UI
             this.lbAks.MouseEnter += new System.EventHandler(this.OnAutoKillSwitchButtonMouseHover);
             this.lbAks.MouseLeave += new System.EventHandler(this.OnAutoKillSwitchButtonMouseLeave);
             this.lbAks.MouseHover += new System.EventHandler(this.OnAutoKillSwitchButtonMouseHover);
-            // 
-            // btnLogo
-            // 
-            this.btnLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.btnLogo.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnLogo.FlatAppearance.BorderSize = 0;
-            this.btnLogo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLogo.Font = new System.Drawing.Font("Segoe UI Semibold", 13F, System.Drawing.FontStyle.Bold);
-            this.btnLogo.ForeColor = System.Drawing.Color.White;
-            this.btnLogo.Location = new System.Drawing.Point(0, 0);
-            this.btnLogo.Name = "btnLogo";
-            this.btnLogo.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.btnLogo.Size = new System.Drawing.Size(150, 53);
-            this.btnLogo.TabIndex = 125;
-            this.btnLogo.TabStop = false;
-            this.btnLogo.Tag = "color:dark3";
-            this.btnLogo.Text = "RTCV 0.00";
-            this.btnLogo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnLogo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnLogo.UseVisualStyleBackColor = false;
-            this.btnLogo.Click += new System.EventHandler(this.OnLogoClick);
-            // 
-            // pnAddon
-            // 
-            this.pnAddon.Location = new System.Drawing.Point(0, 324);
-            this.pnAddon.Name = "pnAddon";
-            this.pnAddon.Size = new System.Drawing.Size(150, 105);
-            this.pnAddon.TabIndex = 129;
-            this.pnAddon.Tag = "color:dark3";
             // 
             // btnSettings
             // 
@@ -305,6 +303,51 @@ namespace RTCV.UI
             this.btnSettings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSettings.UseVisualStyleBackColor = false;
             this.btnSettings.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OpenSettings);
+            // 
+            // btnLogo
+            // 
+            this.btnLogo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.btnLogo.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnLogo.FlatAppearance.BorderSize = 0;
+            this.btnLogo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLogo.Font = new System.Drawing.Font("Segoe UI Semibold", 13F, System.Drawing.FontStyle.Bold);
+            this.btnLogo.ForeColor = System.Drawing.Color.White;
+            this.btnLogo.Location = new System.Drawing.Point(0, 0);
+            this.btnLogo.Name = "btnLogo";
+            this.btnLogo.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.btnLogo.Size = new System.Drawing.Size(150, 53);
+            this.btnLogo.TabIndex = 125;
+            this.btnLogo.TabStop = false;
+            this.btnLogo.Tag = "color:dark3";
+            this.btnLogo.Text = "RTCV 0.00";
+            this.btnLogo.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnLogo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnLogo.UseVisualStyleBackColor = false;
+            this.btnLogo.Click += new System.EventHandler(this.OnLogoClick);
+            // 
+            // btnEngineConfig
+            // 
+            this.btnEngineConfig.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+            this.btnEngineConfig.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnEngineConfig.FlatAppearance.BorderSize = 0;
+            this.btnEngineConfig.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEngineConfig.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            this.btnEngineConfig.ForeColor = System.Drawing.Color.White;
+            this.btnEngineConfig.Image = ((System.Drawing.Image)(resources.GetObject("btnEngineConfig.Image")));
+            this.btnEngineConfig.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnEngineConfig.Location = new System.Drawing.Point(0, 94);
+            this.btnEngineConfig.Name = "btnEngineConfig";
+            this.btnEngineConfig.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
+            this.btnEngineConfig.Size = new System.Drawing.Size(150, 34);
+            this.btnEngineConfig.TabIndex = 124;
+            this.btnEngineConfig.TabStop = false;
+            this.btnEngineConfig.Tag = "color:dark3";
+            this.btnEngineConfig.Text = " Engine Config";
+            this.btnEngineConfig.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnEngineConfig.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnEngineConfig.UseVisualStyleBackColor = false;
+            this.btnEngineConfig.Visible = false;
+            this.btnEngineConfig.Click += new System.EventHandler(this.OpenEngineConfig);
             // 
             // btnEasyMode
             // 
@@ -428,30 +471,6 @@ namespace RTCV.UI
             this.btnAutoCorrupt.Visible = false;
             this.btnAutoCorrupt.Click += new System.EventHandler(this.StartAutoCorrupt);
             // 
-            // btnEngineConfig
-            // 
-            this.btnEngineConfig.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-            this.btnEngineConfig.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnEngineConfig.FlatAppearance.BorderSize = 0;
-            this.btnEngineConfig.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEngineConfig.Font = new System.Drawing.Font("Segoe UI", 9.75F);
-            this.btnEngineConfig.ForeColor = System.Drawing.Color.White;
-            this.btnEngineConfig.Image = ((System.Drawing.Image)(resources.GetObject("btnEngineConfig.Image")));
-            this.btnEngineConfig.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEngineConfig.Location = new System.Drawing.Point(0, 94);
-            this.btnEngineConfig.Name = "btnEngineConfig";
-            this.btnEngineConfig.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.btnEngineConfig.Size = new System.Drawing.Size(150, 34);
-            this.btnEngineConfig.TabIndex = 124;
-            this.btnEngineConfig.TabStop = false;
-            this.btnEngineConfig.Tag = "color:dark3";
-            this.btnEngineConfig.Text = " Engine Config";
-            this.btnEngineConfig.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnEngineConfig.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnEngineConfig.UseVisualStyleBackColor = false;
-            this.btnEngineConfig.Visible = false;
-            this.btnEngineConfig.Click += new System.EventHandler(this.OpenEngineConfig);
-            // 
             // CoreForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -498,7 +517,7 @@ namespace RTCV.UI
         public System.Windows.Forms.Panel pnAutoKillSwitch;
         public System.Windows.Forms.Panel pnSideBar;
         public System.Windows.Forms.Button btnOpenCustomLayout;
-        private System.Windows.Forms.Panel pnAddon;
         public System.Windows.Forms.Button btnEngineConfig;
+        public System.Windows.Forms.Panel pnAddon;
     }
 }

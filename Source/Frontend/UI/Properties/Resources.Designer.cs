@@ -73,6 +73,26 @@ namespace RTCV.UI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap playback_ff_icon_16 {
+            get {
+                object obj = ResourceManager.GetObject("playback_ff_icon&16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap playback_rew_icon_16 {
+            get {
+                object obj = ResourceManager.GetObject("playback_rew_icon&16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Question_Mark {
             get {
                 object obj = ResourceManager.GetObject("Question Mark", resourceCulture);

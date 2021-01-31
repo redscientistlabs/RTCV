@@ -55,6 +55,7 @@ namespace RTCV.NetCore.Commands
         public const string SanitizeToolYesEffect = nameof(Remote) + "_" + nameof(SanitizeToolYesEffect);
         public const string SanitizeToolNoEffect = nameof(Remote) + "_" + nameof(SanitizeToolNoEffect);
         public const string SanitizeToolReroll = nameof(Remote) + "_" + nameof(SanitizeToolReroll);
+        public const string TriggerHotkey = nameof(Remote) + "_" + nameof(TriggerHotkey);
         public const string BackupKeyRequest = nameof(Remote) + "_" + nameof(BackupKeyRequest);
         public const string BackupKeyStash = nameof(Remote) + "_" + nameof(BackupKeyStash);
         public const string IsNormalAdvance = nameof(Remote) + "_" + nameof(IsNormalAdvance);

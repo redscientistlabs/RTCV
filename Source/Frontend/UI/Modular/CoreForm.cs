@@ -306,13 +306,14 @@ This message only appears once.";
 
         private void OnAutoKillSwitchButtonMouseHover(object sender, EventArgs e)
         {
-            lbAks.ForeColor = Color.FromArgb(32, 32, 32);
-            pnAutoKillSwitch.BackColor = Color.Salmon;
+            //lbAks.ForeColor = Color.FromArgb(32, 32, 32);
+            //pnAutoKillSwitch.BackColor = BackColor.ChangeColorBrightness(-0.10f);
+            pnAutoKillSwitch.BackColor = Color.Red.ChangeColorBrightness(-0.80f);
         }
 
         private void OnAutoKillSwitchButtonMouseLeave(object sender, EventArgs e)
         {
-            lbAks.ForeColor = Color.White;
+            //lbAks.ForeColor = Color.White;
             pnAutoKillSwitch.BackColor = Color.Transparent;
         }
 
@@ -680,6 +681,17 @@ This message only appears once.";
 
                 columnsMenu.Show(this, locate);
             }
+        }
+
+        private void pnCrashProtection_MouseEnter(object sender, EventArgs e) => pnCrashProtection_MouseHover(sender, e);
+        private void pnCrashProtection_MouseHover(object sender, EventArgs e)
+        {
+            pnCrashProtection.BackColor = BackColor.ChangeColorBrightness(-0.10f);
+        }
+
+        private void pnCrashProtection_MouseLeave(object sender, EventArgs e)
+        {
+            pnCrashProtection.BackColor = Color.Transparent;
         }
 
     }

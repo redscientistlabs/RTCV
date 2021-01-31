@@ -144,6 +144,12 @@ namespace RTCV.UI
                     case Remote.SanitizeToolReroll:
                         Reroll();
                         break;
+                    case Remote.TriggerHotkey:
+                        {
+                            string hotkey = (advancedMessage.objectValue as string);
+                            UICore.CheckHotkey(hotkey);
+                        }
+                        break;
                 }
             }
             catch (Exception ex)

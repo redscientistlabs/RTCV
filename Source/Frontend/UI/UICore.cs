@@ -39,7 +39,7 @@ namespace RTCV.UI
             set { _mtForm = value; }
         }
 
-        internal static BindingCollection HotkeyBindings = new BindingCollection();
+        public static BindingCollection HotkeyBindings = new BindingCollection();
 
         public static void Start(Form standaloneForm = null)
         {
@@ -342,7 +342,7 @@ namespace RTCV.UI
             }
         }
 
-        private static bool CheckHotkey(string trigger)
+        internal static bool CheckHotkey(string trigger)
         {
             logger.Info("Hotkey {trigger} pressed", trigger);
             switch (trigger)
