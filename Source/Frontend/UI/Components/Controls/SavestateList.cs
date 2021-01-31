@@ -430,14 +430,14 @@ namespace RTCV.UI.Components.Controls
                     NewSavestateNow();
                 });
 
-                cms.Items.Add("Import from selected Stockpile Item", null, (ob, ev) => NewSavestateFromStockpile());
+                cms.Items.Add("Import from selected Stockpile Item", null, async (ob, ev) => await NewSavestateFromStockpile());
 
 
                 cms.Show((Control)sender, locate);
             }
         }
 
-        private void NewSavestateFromStockpile()
+        private async Task NewSavestateFromStockpile()
         {
             //yes this automates the UI. ew.
 
@@ -468,14 +468,15 @@ namespace RTCV.UI.Components.Controls
                 //newSk.StateShortFilename = Path.GetFileName(newSk.GetSavestateFullPath());
                 //newSk.StateData = File.ReadAllBytes(newSk.GetSavestateFullPath());
                 //newSk.DeployState();
+                string prevWorkingPath = sk.GetSavestateFullPath();
                 string workingpath = newSk.GetSavestateFullPath();
-                string skspath = Path.Combine(RtcCore.workingDir, "SKS", Path.GetFileName(workingpath));
+                string skspath = Path.Combine(RtcCore.workingDir, "SKS", Path.GetFileName(prevWorkingPath));
 
                 if (File.Exists(skspath) && !File.Exists(workingpath))
                     File.Copy(skspath, workingpath);
 
                 StockpileManagerUISide.CurrentStashkey = sk;
-                StockpileManagerUISide.OriginalFromStashkey(sk);
+                await StockpileManagerUISide.OriginalFromStashkey(sk);
 
                 //var t = StockpileManagerUISide.LoadState(newSk, true, false); //will cause problems with heavy emus
                 //t.Wait();
