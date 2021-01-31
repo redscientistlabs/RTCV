@@ -30,11 +30,37 @@ namespace RTCV.UI
         {
             this.components = new System.ComponentModel.Container();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.HotkeyTabControl = new System.Windows.Forms.TabControl();
             this.lbClearBindHint = new System.Windows.Forms.Label();
+            this.HotkeyTabControl = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.HotkeyTabControl.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // lbClearBindHint
+            // 
+            this.lbClearBindHint.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbClearBindHint.AutoSize = true;
+            this.lbClearBindHint.ForeColor = System.Drawing.Color.White;
+            this.lbClearBindHint.ImageAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lbClearBindHint.Location = new System.Drawing.Point(265, 15);
+            this.lbClearBindHint.Name = "lbClearBindHint";
+            this.lbClearBindHint.Size = new System.Drawing.Size(137, 13);
+            this.lbClearBindHint.TabIndex = 1;
+            this.lbClearBindHint.Text = "Press \"Esc\" to clear a bind";
+            this.lbClearBindHint.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // HotkeyTabControl
+            // 
+            this.HotkeyTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.HotkeyTabControl.Controls.Add(this.tabPage1);
+            this.HotkeyTabControl.Location = new System.Drawing.Point(12, 11);
+            this.HotkeyTabControl.Name = "HotkeyTabControl";
+            this.HotkeyTabControl.SelectedIndex = 0;
+            this.HotkeyTabControl.Size = new System.Drawing.Size(388, 329);
+            this.HotkeyTabControl.TabIndex = 0;
+            this.HotkeyTabControl.Tag = "color:normal";
             // 
             // tabPage1
             // 
@@ -47,33 +73,11 @@ namespace RTCV.UI
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // HotkeyTabControl
-            // 
-            this.HotkeyTabControl.Controls.Add(this.tabPage1);
-            this.HotkeyTabControl.Location = new System.Drawing.Point(12, 11);
-            this.HotkeyTabControl.Name = "HotkeyTabControl";
-            this.HotkeyTabControl.SelectedIndex = 0;
-            this.HotkeyTabControl.Size = new System.Drawing.Size(388, 329);
-            this.HotkeyTabControl.TabIndex = 0;
-            this.HotkeyTabControl.Tag = "color:normal";
-            // 
-            // lbClearBindHint
-            // 
-            this.lbClearBindHint.AutoSize = true;
-            this.lbClearBindHint.ForeColor = System.Drawing.Color.White;
-            this.lbClearBindHint.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.lbClearBindHint.Location = new System.Drawing.Point(265, 15);
-            this.lbClearBindHint.Name = "lbClearBindHint";
-            this.lbClearBindHint.Size = new System.Drawing.Size(137, 13);
-            this.lbClearBindHint.TabIndex = 1;
-            this.lbClearBindHint.Text = "Press \"Esc\" to clear a bind";
-            this.lbClearBindHint.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
             // SettingsHotkeyConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.ClientSize = new System.Drawing.Size(412, 352);
             this.Controls.Add(this.lbClearBindHint);
             this.Controls.Add(this.HotkeyTabControl);
@@ -81,7 +85,7 @@ namespace RTCV.UI
             this.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "SettingsHotkeyConfigForm";
-            this.Tag = "color:dark2";
+            this.Tag = "color:dark1";
             this.Text = "Hotkey Config";
             this.undockedSizable = false;
             this.Activated += new System.EventHandler(this.OnFormGotFocus);

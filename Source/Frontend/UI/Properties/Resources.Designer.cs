@@ -63,6 +63,16 @@ namespace RTCV.UI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Layout {
+            get {
+                object obj = ResourceManager.GetObject("Layout", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Question_Mark {
             get {
                 object obj = ResourceManager.GetObject("Question Mark", resourceCulture);

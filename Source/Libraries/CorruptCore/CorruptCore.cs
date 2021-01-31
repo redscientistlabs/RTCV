@@ -281,6 +281,7 @@ namespace RTCV.CorruptCore
                     Path.Combine(RtcDir, "LISTS"),
                     Path.Combine(RtcDir, "RENDEROUTPUT"),
                     Path.Combine(RtcDir, "ENGINETEMPLATES"),
+                    Path.Combine(RtcDir, "LAYOUTS"),
                     Path.Combine(AssetsDir, "PLATESHD")
                 });
 
@@ -604,7 +605,9 @@ namespace RTCV.CorruptCore
                 {
                     if (processes.Contains(item.Name.ToUpper()))
                     {
-                        MessageBox.Show(item.Message, "Incompatible Program Detected!");
+                        if (!Debugger.IsAttached)
+                            MessageBox.Show(item.Message, "Incompatible Program Detected!");
+
                         Warned = true;
                         return;
                     }
