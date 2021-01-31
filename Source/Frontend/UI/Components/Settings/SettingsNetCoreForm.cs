@@ -53,5 +53,15 @@ namespace RTCV.UI
                 GameProtection.Reset(false);
             }
         }
+
+        private void OnGameProtectionDelayChange(object sender, KeyPressEventArgs e)
+        {
+
+        }
+
+        private void OnGameProtectionDelayChange(object sender, KeyEventArgs e)
+        {
+
+        }
     }
 }

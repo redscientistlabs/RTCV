@@ -6,8 +6,9 @@ namespace RTCV.UI
     using RTCV.CorruptCore;
     using RTCV.Common;
     using RTCV.UI.Modular;
+    using System.Collections.Generic;
 
-    #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
+#pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class SettingsForm : ComponentForm, IBlockable
     {
         public ListBoxForm lbForm { get; private set; }
@@ -16,19 +17,31 @@ namespace RTCV.UI
         {
             InitializeComponent();
 
-            lbForm = new ListBoxForm(new ComponentForm[] {
+            var forms = new List<ComponentForm>(new ComponentForm[] {
                 S.GET<SettingsGeneralForm>(),
+                S.GET<MyListsForm>(),
+                S.GET<MyVMDsForm>(),
+                S.GET<MyPluginsForm>(),
                 S.GET<SettingsCorruptForm>(),
                 S.GET<SettingsHotkeyConfigForm>(),
                 S.GET<SettingsNetCoreForm>(),
                 S.GET<SettingsAboutForm>(),
-            })
+            });
+
+            if (Debugger.IsAttached)
+                forms.Add(S.GET<SettingsTestForm>());
+
+            lbForm = new ListBoxForm(forms.ToArray())
             {
                 popoutAllowed = false
             };
 
             lbForm.AnchorToPanel(pnListBoxForm);
+            lbForm.Size = pnListBoxForm.Size;
         }
+
+        public void SwitchToComponentForm(ComponentForm form) => lbForm.SetFocusedForm(form);
+
 
         private void FactoryClean(object sender, EventArgs e)
         {

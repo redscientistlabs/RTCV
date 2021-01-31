@@ -22,41 +22,23 @@ namespace RTCV.UI
 
         private void btnNavigateToMyLists_Click(object sender, System.EventArgs e)
         {
-            //switch to My Lists
-            foreach (var item in UICore.mtForm.cbSelectBox.Items)
-            {
-                if (((dynamic)item).value is MyListsForm)
-                {
-                    UICore.mtForm.cbSelectBox.SelectedItem = item;
-                    break;
-                }
-            }
+            SettingsForm settingsform = S.GET<SettingsForm>();
+            DefaultGrids.settings.LoadToMain();
+            settingsform.SwitchToComponentForm(S.GET<MyListsForm>());
         }
 
         private void btnNavigateToMyVMDs_Click(object sender, System.EventArgs e)
         {
-            //switch to My VMDs
-            foreach (var item in UICore.mtForm.cbSelectBox.Items)
-            {
-                if (((dynamic)item).value is MyVMDsForm)
-                {
-                    UICore.mtForm.cbSelectBox.SelectedItem = item;
-                    break;
-                }
-            }
+            SettingsForm settingsform = S.GET<SettingsForm>();
+            DefaultGrids.settings.LoadToMain();
+            settingsform.SwitchToComponentForm(S.GET<MyVMDsForm>());
         }
 
         private void btnNavigateToMyPlugins_Click(object sender, System.EventArgs e)
         {
-            //switch to My Plugins
-            foreach (var item in UICore.mtForm.cbSelectBox.Items)
-            {
-                if (((dynamic)item).value is MyPluginsForm)
-                {
-                    UICore.mtForm.cbSelectBox.SelectedItem = item;
-                    break;
-                }
-            }
+            SettingsForm settingsform = S.GET<SettingsForm>();
+            DefaultGrids.settings.LoadToMain();
+            settingsform.SwitchToComponentForm(S.GET<MyPluginsForm>());
         }
 
         private void btnOpenPackageDownloader_Click(object sender, System.EventArgs e)

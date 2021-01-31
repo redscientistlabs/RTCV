@@ -215,19 +215,13 @@ namespace RTCV.UI
                     {
                         if (c is Button b)
                         {
-                            if (!b.Text.Contains("Test") && !b.Text.Contains("Custom Layout") && b.ForeColor != Color.OrangeRed)
+                            if (!b.Text.Contains("Test") && b.ForeColor != Color.OrangeRed)
                             {
                                 b.Visible = true;
                             }
                         }
                     }
 
-                    string customLayoutPath = Path.Combine(RtcCore.RtcDir, "CustomLayout.txt");
-                    if (File.Exists(customLayoutPath))
-                    {
-                        S.GET<CoreForm>().SetCustomLayoutName(customLayoutPath);
-                        S.GET<CoreForm>().btnOpenCustomLayout.Visible = true;
-                    }
 
                     DefaultGrids.engineConfig.LoadToMain();
 

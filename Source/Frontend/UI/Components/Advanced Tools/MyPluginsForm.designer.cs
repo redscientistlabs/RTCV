@@ -40,17 +40,18 @@ namespace RTCV.UI
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbKnownPlugins.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.lbKnownPlugins.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lbKnownPlugins.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lbKnownPlugins.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lbKnownPlugins.ForeColor = System.Drawing.Color.White;
             this.lbKnownPlugins.FormattingEnabled = true;
+            this.lbKnownPlugins.IntegralHeight = false;
             this.lbKnownPlugins.Location = new System.Drawing.Point(12, 14);
             this.lbKnownPlugins.Margin = new System.Windows.Forms.Padding(5);
             this.lbKnownPlugins.Name = "lbKnownPlugins";
             this.lbKnownPlugins.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.lbKnownPlugins.Size = new System.Drawing.Size(173, 223);
             this.lbKnownPlugins.TabIndex = 12;
-            this.lbKnownPlugins.Tag = "color:dark1";
+            this.lbKnownPlugins.Tag = "color:dark2";
             this.lbKnownPlugins.SelectedIndexChanged += new System.EventHandler(this.OnKnownListSelectedIndexChanged);
             this.lbKnownPlugins.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
@@ -101,7 +102,7 @@ namespace RTCV.UI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.ClientSize = new System.Drawing.Size(390, 250);
             this.Controls.Add(this.btnRemoveList);
             this.Controls.Add(this.btnRefreshListFiles);
@@ -111,7 +112,7 @@ namespace RTCV.UI
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(390, 250);
             this.Name = "MyPluginsForm";
-            this.Tag = "color:dark3";
+            this.Tag = "color:dark1";
             this.Text = "My Plugins";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandleFormClosing);
             this.Load += new System.EventHandler(this.OnFormLoad);

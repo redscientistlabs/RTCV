@@ -23,12 +23,12 @@ namespace RTCV.UI.Modular
 
         public static SelectBoxForm DefaultTools = new SelectBoxForm(new ComponentForm[] {
                         S.GET<NoToolShortcuts>(),
-                        S.GET<MyListsForm>(),
-                        S.GET<MyVMDsForm>(),
-                        S.GET<MyPluginsForm>(),
+                        //S.GET<MyListsForm>(),
+                        //S.GET<MyVMDsForm>(),
+                        //S.GET<MyPluginsForm>(),
                         S.GET<VmdPoolForm>(),
                         S.GET<VmdGenForm>(),
-                        S.GET<VmdSimpleGenForm>(),
+                                                S.GET<VmdSimpleGenForm>(),
                         S.GET<VmdActForm>(),
                         S.GET<ListGenForm>(),
                         S.GET<VmdLimiterProfilerForm>(),

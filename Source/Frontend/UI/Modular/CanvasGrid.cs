@@ -6,6 +6,7 @@ namespace RTCV.UI
     using System.Linq;
     using System.Windows.Forms;
     using RTCV.Common;
+    using RTCV.CorruptCore;
     using SlimDX;
 
     public class CanvasGrid
@@ -68,10 +69,25 @@ namespace RTCV.UI
             CanvasForm.loadTileFormExtraWindow(this, GridID, silent);
         }
 
-        internal static void LoadCustomLayout()
+        internal static FileInfo[] GetEnabledCustomLayouts()
         {
-            string customLayoutPath = Path.Combine(CorruptCore.RtcCore.RtcDir, "CustomLayout.txt");
-            string[] allLines = File.ReadAllLines(customLayoutPath);
+            string customLayoutsPath = Path.Combine(RtcCore.RtcDir, "LAYOUTS");
+            return Directory.GetFiles(customLayoutsPath).Select(it => new FileInfo(it)).Where(it => !it.Name.StartsWith("_")).ToArray();
+        }
+
+        internal static void LoadCustomLayout(string targetLayout = null)
+        {
+
+            var legitLayouts = GetEnabledCustomLayouts().FirstOrDefault();
+            if (legitLayouts == null)
+                return;
+
+            string[] allLines;
+
+            if (targetLayout != null)
+                allLines = File.ReadAllLines(targetLayout);
+            else
+                allLines = File.ReadAllLines(legitLayouts.FullName);
 
             int gridSizeX = 26;
             int gridSizeY = 19;

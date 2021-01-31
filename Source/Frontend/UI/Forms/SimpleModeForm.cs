@@ -28,6 +28,7 @@ namespace RTCV.UI
             S.GET<CoreForm>().btnEngineConfig.Text = " Simple Mode";
             S.GET<CoreForm>().btnGlitchHarvester.Visible = false;
             S.GET<CoreForm>().btnStockpilePlayer.Visible = false;
+            S.GET<CoreForm>().btnOpenCustomLayout.Visible = false;
             S.GET<CoreForm>().btnAutoCorrupt.Visible = false;
             S.GET<CoreForm>().btnManualBlast.Visible = false;
 
@@ -52,6 +53,7 @@ namespace RTCV.UI
             S.GET<CoreForm>().btnEngineConfig.Text = " Engine Config";
             S.GET<CoreForm>().btnGlitchHarvester.Visible = true;
             S.GET<CoreForm>().btnStockpilePlayer.Visible = true;
+            S.GET<CoreForm>().btnOpenCustomLayout.Visible = true;
             S.GET<CoreForm>().btnAutoCorrupt.Visible = true;
             S.GET<CoreForm>().btnManualBlast.Visible = true;
 
