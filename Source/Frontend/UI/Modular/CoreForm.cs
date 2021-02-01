@@ -610,8 +610,11 @@ This message only appears once.";
             S.GET<GlitchHarvesterBlastForm>().SendRawToStash(null, null);
         }
 
-        private void OnManualBlastMouseDown(object sender, MouseEventArgs e)
+        public void btnManualBlast_MouseDown(object sender, MouseEventArgs e)
         {
+            if (e == null)
+                e = new MouseEventArgs(MouseButtons.Left, 1, 0, 0, 0);
+
             if (e.Button == MouseButtons.Right)
             {
                 ContextMenuStrip columnsMenu = new ContextMenuStrip();

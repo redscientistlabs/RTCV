@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     partial class GlitchHarvesterBlastForm
     {
@@ -114,7 +114,7 @@
             this.btnCorrupt.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnCorrupt.UseVisualStyleBackColor = false;
             this.btnCorrupt.Click += new System.EventHandler(this.Corrupt);
-            this.btnCorrupt.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnCorruptButtonMouseDown);
+            this.btnCorrupt.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnCorrupt_MouseDown);
             //
             // btnBlastToggle
             //

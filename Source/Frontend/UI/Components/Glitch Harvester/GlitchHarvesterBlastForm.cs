@@ -305,7 +305,7 @@ namespace RTCV.UI
             SendRawToStash(null, null);
         }
 
-        private void OnCorruptButtonMouseDown(object sender, MouseEventArgs e)
+        public void btnCorrupt_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {

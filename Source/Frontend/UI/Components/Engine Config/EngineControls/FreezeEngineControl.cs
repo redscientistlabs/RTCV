@@ -10,9 +10,9 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
     using System.Threading.Tasks;
     using System.Windows.Forms;
 
-    internal partial class FreezeEngineControl : EngineConfigControl
+    public partial class FreezeEngineControl : EngineConfigControl
     {
-        internal FreezeEngineControl(CorruptionEngineForm parent) : base(new Point(parent.gbSelectedEngine.Location.X, parent.gbSelectedEngine.Location.Y))
+        public FreezeEngineControl(CorruptionEngineForm parent) : base(new Point(parent.gbSelectedEngine.Location.X, parent.gbSelectedEngine.Location.Y))
         {
             InitializeComponent();
 

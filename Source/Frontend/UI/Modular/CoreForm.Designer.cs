@@ -445,7 +445,7 @@ namespace RTCV.UI
             this.btnManualBlast.UseVisualStyleBackColor = false;
             this.btnManualBlast.Visible = false;
             this.btnManualBlast.Click += new System.EventHandler(this.ManualBlast);
-            this.btnManualBlast.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnManualBlastMouseDown);
+            this.btnManualBlast.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnManualBlast_MouseDown);
             // 
             // btnAutoCorrupt
             // 

@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI.Components.Controls
+namespace RTCV.UI.Components.Controls
 {
     using System;
     using System.Collections.Generic;
@@ -223,7 +223,7 @@
             OnValueChanged(new ValueUpdateEventArgs(Value));
         }
 
-        internal void registerSlave(MultiTrackBar comp)
+        public void registerSlave(MultiTrackBar comp)
         {
             slaveComps.Add(comp);
             comp._parent = this;

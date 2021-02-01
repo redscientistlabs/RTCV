@@ -6,7 +6,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
     using RTCV.CorruptCore;
     using RTCV.NetCore;
 
-    internal partial class PipeEngineControl : EngineConfigControl
+    public partial class PipeEngineControl : EngineConfigControl
     {
         internal PipeEngineControl(CorruptionEngineForm parent) : base(new Point(parent.gbSelectedEngine.Location.X, parent.gbSelectedEngine.Location.Y))
         {

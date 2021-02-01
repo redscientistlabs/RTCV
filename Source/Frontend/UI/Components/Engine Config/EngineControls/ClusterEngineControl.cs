@@ -5,7 +5,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
     using System.Windows.Forms;
     using RTCV.CorruptCore;
 
-    internal partial class ClusterEngineControl : EngineConfigControl
+    public partial class ClusterEngineControl : EngineConfigControl
     {
         internal ClusterEngineControl(Point location) : base(location)
         {

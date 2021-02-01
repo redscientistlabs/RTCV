@@ -4,7 +4,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
     using System.Drawing;
     using RTCV.CorruptCore;
 
-    internal partial class HellgenieEngineControl : EngineConfigControl
+    public partial class HellgenieEngineControl : EngineConfigControl
     {
         private bool updatingMinMax = false;
 
