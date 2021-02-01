@@ -16,15 +16,15 @@ namespace RTCV.UI
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        internal readonly Components.EngineConfig.EngineControls.FreezeEngineControl FreezeEngineControl;
-        internal readonly Components.EngineConfig.EngineControls.NightmareEngineControl NightmareEngineControl;
-        internal readonly Components.EngineConfig.EngineControls.HellgenieEngineControl HellgenieEngineControl;
-        private readonly Components.EngineConfig.EngineControls.DistortionEngineControl distortionEngineControl;
-        private readonly Components.EngineConfig.EngineControls.CustomEngineControl customEngineControl;
-        internal readonly Components.EngineConfig.EngineControls.PipeEngineControl PipeEngineControl;
-        internal readonly Components.EngineConfig.EngineControls.BlastGeneratorEngineControl BlastGeneratorEngineControl;
-        internal readonly Components.EngineConfig.EngineControls.VectorEngineControl VectorEngineControl;
-        internal readonly Components.EngineConfig.EngineControls.ClusterEngineControl ClusterEngineControl;
+        public readonly Components.EngineConfig.EngineControls.FreezeEngineControl FreezeEngineControl;
+        public readonly Components.EngineConfig.EngineControls.NightmareEngineControl NightmareEngineControl;
+        public readonly Components.EngineConfig.EngineControls.HellgenieEngineControl HellgenieEngineControl;
+        public readonly Components.EngineConfig.EngineControls.DistortionEngineControl distortionEngineControl;
+        public readonly Components.EngineConfig.EngineControls.CustomEngineControl customEngineControl;
+        public readonly Components.EngineConfig.EngineControls.PipeEngineControl PipeEngineControl;
+        public readonly Components.EngineConfig.EngineControls.BlastGeneratorEngineControl BlastGeneratorEngineControl;
+        public readonly Components.EngineConfig.EngineControls.VectorEngineControl VectorEngineControl;
+        public readonly Components.EngineConfig.EngineControls.ClusterEngineControl ClusterEngineControl;
 
         public string CurrentVectorLimiterListName
         {

@@ -12,7 +12,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
     using RTCV.CorruptCore;
     using RTCV.UI.Components.EngineConfig;
 
-    internal partial class NightmareEngineControl : EngineConfigControl
+    public partial class NightmareEngineControl : EngineConfigControl
     {
         private bool updatingMinMax = false;
 

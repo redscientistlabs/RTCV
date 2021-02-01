@@ -4,7 +4,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
     using System.Drawing;
     using RTCV.Common;
 
-    internal partial class BlastGeneratorEngineControl : EngineConfigControl
+    public partial class BlastGeneratorEngineControl : EngineConfigControl
     {
         internal BlastGeneratorEngineControl(Point location) : base(location)
         {

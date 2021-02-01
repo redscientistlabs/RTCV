@@ -4,7 +4,7 @@ namespace RTCV.UI.Components.EngineConfig
     using System.Drawing;
     using System.Windows.Forms;
 
-    internal partial class EngineConfigControl : UserControl
+    public partial class EngineConfigControl : UserControl
     {
         internal EngineConfigControl(Point location)
         {
