@@ -421,11 +421,19 @@ namespace RTCV.UI
                     });
                     break;
 
-                case "Make Savestate in New Slot":
+                case "New Savestate":
 
                     SyncObjectSingleton.FormExecute(() =>
                     {
                         S.GET<SavestateManagerForm>().savestateList.NewSavestateNow();
+                    });
+                    break;
+
+                case "Load Prev State":
+
+                    SyncObjectSingleton.FormExecute(() =>
+                    {
+                        S.GET<SavestateManagerForm>().savestateList.LoadPreviousSavestateNow();
                     });
                     break;
 

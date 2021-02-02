@@ -14,6 +14,7 @@ namespace RTCV.UI.Components.Controls
     using RTCV.NetCore;
     using RTCV.Common;
     using System.Threading.Tasks;
+    using SlimDX.DirectWrite;
 
     public partial class SavestateList : UserControl
     {
@@ -434,6 +435,40 @@ namespace RTCV.UI.Components.Controls
 
                 cms.Show((Control)sender, locate);
             }
+        }
+
+        internal void LoadPreviousSavestateNow()
+        {
+            var sk = SelectedHolder?.sk;
+
+            if (sk == null) //quickly evade empty slots
+            {
+                return;
+            }
+
+            var holders = flowPanel.Controls.Cast<SavestateHolder>();
+            SavestateHolder prevHolder = null;
+            foreach (var holder in holders)
+            {
+                if (holder?.sk == sk)
+                {
+                    break;
+                }
+                prevHolder = holder;
+            }
+
+            if (prevHolder == null)
+            {
+                return;
+            }
+
+
+            StockpileManagerUISide.LoadState(prevHolder.sk);
+            StockpileManagerUISide.CurrentStashkey = null;
+            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = false;
+            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearBlastlayerCache, false);
+
+
         }
 
         private async Task NewSavestateFromStockpile()
