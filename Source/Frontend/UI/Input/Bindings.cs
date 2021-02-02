@@ -164,6 +164,7 @@ namespace RTCV.UI.Input
                         Bind("RTC", "Induce KS Crash", toolTip: "Induces a Killswitch Kill+Restart" ),
                         Bind("Glitch Harvester", "Load and Corrupt", toolTip: "Triggers a Glitch Harvest Blast/Send" ),
                         Bind("Glitch Harvester", "Just Corrupt", toolTip: "Triggers a Glitch Harvester Blast without loading a state" ),
+                        Bind("Glitch Harvester", "Make Savestate in New Slot", toolTip: "Creates a glitch harvester in the next available slot" ),
                         Bind("Glitch Harvester", "Reroll", toolTip: "Rerolls the current stashkey" ),
                         Bind("Glitch Harvester", "Load", toolTip: "Loads the current savestate" ),
                         Bind("Glitch Harvester", "Save", toolTip: "Saves to the current savestate slot" ),
