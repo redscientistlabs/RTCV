@@ -321,7 +321,14 @@ This message only appears once.";
         {
             pnGlitchHarvesterOpen.Visible = true;
 
-            DefaultGrids.glitchHarvester.LoadToNewWindow("Glitch Harvester");
+            if (Params.IsParamSet("GH_OPEN_MAIN"))
+            {
+                DefaultGrids.glitchHarvester.LoadToMain();
+            }
+            else
+            {
+                DefaultGrids.glitchHarvester.LoadToNewWindow("Glitch Harvester");
+            }
         }
 
         public void StartAutoCorrupt(object sender, EventArgs e)
@@ -681,6 +688,20 @@ This message only appears once.";
                 {
                     BlastEditorForm.OpenBlastEditor();
                 }));
+
+                var ghmain = (columnsMenu.Items.Add("Open the Glitch Harvester to Main Window", null, new EventHandler((ob, ev) =>
+                {
+                    if (Params.IsParamSet("GH_OPEN_MAIN"))
+                    {
+                        Params.RemoveParam("GH_OPEN_MAIN");
+                    }
+                    else
+                    {
+                        Params.SetParam("GH_OPEN_MAIN");
+                    }
+                })) as ToolStripMenuItem);
+
+                ghmain.Checked = Params.IsParamSet("GH_OPEN_MAIN");
 
                 columnsMenu.Show(this, locate);
             }
