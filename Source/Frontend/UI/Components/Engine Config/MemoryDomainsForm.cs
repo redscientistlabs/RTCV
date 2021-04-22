@@ -167,8 +167,6 @@ namespace RTCV.UI
 
         private void HandleMemoryDomainSelectionChange(object sender, EventArgs e)
         {
-            //COMPAREME
-
             updateTimer.Stop();
             updateTimer.Start();
 

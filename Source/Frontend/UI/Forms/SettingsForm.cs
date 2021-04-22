@@ -3,10 +3,11 @@ namespace RTCV.UI
     using System;
     using System.Diagnostics;
     using System.Windows.Forms;
+    using System.Collections.Generic;
     using RTCV.CorruptCore;
     using RTCV.Common;
     using RTCV.UI.Modular;
-    using System.Collections.Generic;
+
 
 #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class SettingsForm : ComponentForm, IBlockable

@@ -252,7 +252,6 @@ This message only appears once.";
                     openCustomLayoutMenu.Items.Add($"Load {layout.Name.Replace(layout.Extension, "")}", null, new EventHandler((ob, ev) => CanvasGrid.LoadCustomLayout(layout.FullName)));
 
                 openCustomLayoutMenu.Show(this, locate);
-
             }
         }
 
@@ -717,6 +716,5 @@ This message only appears once.";
         {
             pnCrashProtection.BackColor = Color.Transparent;
         }
-
     }
 }

@@ -18,7 +18,6 @@ namespace RTCV.CorruptCore
 
         public static string PackageDrive(string folderPath)
         {
-
             string sessionpath = Path.Combine(RtcCore.workingDir, "SESSION", $"DATA_{RtcCore.GetRandomKey()}.drv");
 
             if (File.Exists(sessionpath))
@@ -31,7 +30,6 @@ namespace RTCV.CorruptCore
             //outputs the path of the created file in the session folder
 
             return sessionpath;
-
         }
 
         public static string PackageCurrentDrive()
@@ -49,7 +47,6 @@ namespace RTCV.CorruptCore
             //outputs the path of the created file in the session folder
 
             return sessionpath;
-
         }
 
         public static void SaveCurrentDriveAs() => SaveCurrentDriveAs(null);
@@ -60,7 +57,6 @@ namespace RTCV.CorruptCore
 
             if (savePath == null)
             {
-
                 SaveFileDialog saveFileDialog1 = new SaveFileDialog
                 {
                     DefaultExt = "drv",
@@ -113,7 +109,5 @@ namespace RTCV.CorruptCore
                 return null;
             }
         }
-
-
     }
 }

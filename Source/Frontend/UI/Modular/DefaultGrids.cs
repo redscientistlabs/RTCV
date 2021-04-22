@@ -28,7 +28,7 @@ namespace RTCV.UI.Modular
                         //S.GET<MyPluginsForm>(),
                         S.GET<VmdPoolForm>(),
                         S.GET<VmdGenForm>(),
-                                                S.GET<VmdSimpleGenForm>(),
+                        S.GET<VmdSimpleGenForm>(),
                         S.GET<VmdActForm>(),
                         S.GET<ListGenForm>(),
                         S.GET<VmdLimiterProfilerForm>(),

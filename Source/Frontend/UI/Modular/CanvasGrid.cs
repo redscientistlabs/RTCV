@@ -77,7 +77,6 @@ namespace RTCV.UI
 
         internal static void LoadCustomLayout(string targetLayout = null)
         {
-
             var legitLayouts = GetEnabledCustomLayouts().FirstOrDefault();
             if (legitLayouts == null)
                 return;
@@ -184,6 +183,7 @@ namespace RTCV.UI
                                     }
                                     catch (Exception ex)
                                     {
+                                        _ = ex;
                                         continue;
                                     }
                                 }

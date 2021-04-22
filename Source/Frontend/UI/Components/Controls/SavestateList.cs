@@ -10,10 +10,10 @@ namespace RTCV.UI.Components.Controls
     using System.IO;
     using System.Linq;
     using System.Windows.Forms;
+    using System.Threading.Tasks;
     using RTCV.CorruptCore;
     using RTCV.NetCore;
     using RTCV.Common;
-    using System.Threading.Tasks;
     using SlimDX.DirectWrite;
 
     public partial class SavestateList : UserControl
@@ -137,7 +137,7 @@ namespace RTCV.UI.Components.Controls
             if (e != null)
                 locate = new Point(((Control)sender).Location.X + e.Location.X, ((Control)sender).Location.Y + e.Location.Y);
             else
-                locate = new Point(0,0);
+                locate = new Point(0, 0);
 
             if (e == null || e.Button == MouseButtons.Left)
             {
@@ -430,7 +430,7 @@ namespace RTCV.UI.Components.Controls
                     NewSavestateNow();
                 });
 
-                cms.Items.Add("Import from selected Stockpile Item", null, async (ob, ev) => await NewSavestateFromStockpile());
+                cms.Items.Add("Import from selected Stockpile Item", null, (ob, ev) => NewSavestateFromStockpile());
 
 
                 cms.Show((Control)sender, locate);
@@ -467,11 +467,9 @@ namespace RTCV.UI.Components.Controls
             StockpileManagerUISide.CurrentStashkey = null;
             S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = false;
             LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearBlastlayerCache, false);
-
-
         }
 
-        private async Task NewSavestateFromStockpile()
+        private void NewSavestateFromStockpile()
         {
             //yes this automates the UI. ew.
 

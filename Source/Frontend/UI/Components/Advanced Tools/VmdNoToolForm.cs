@@ -44,9 +44,11 @@ namespace RTCV.UI
         private void btnOpenPackageDownloader_Click(object sender, System.EventArgs e)
         {
             string exeFile = Path.Combine(RtcCore.LauncherDir, "PackageDownloader.exe");
-            var psi = new ProcessStartInfo();
-            psi.FileName = exeFile;
-            psi.WorkingDirectory = RtcCore.LauncherDir;
+            var psi = new ProcessStartInfo
+            {
+                FileName = exeFile,
+                WorkingDirectory = RtcCore.LauncherDir
+            };
             Process.Start(psi);
         }
 
@@ -58,8 +60,6 @@ namespace RTCV.UI
 
         private void lbDragAndDropGH_DragDrop(object sender, DragEventArgs e)
         {
-
-
             var formats = e.Data.GetFormats();
             e.Effect = DragDropEffects.Move;
 
@@ -86,14 +86,11 @@ namespace RTCV.UI
                         break;
                 }
             }
-
         }
 
         private void lbDragAndDropGH_DragEnter(object sender, DragEventArgs e)
         {
-
                 e.Effect = DragDropEffects.Move;
-
         }
     }
 }

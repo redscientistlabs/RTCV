@@ -80,7 +80,6 @@ namespace RTCV.UI
 
         private void OnFormLoad(object sender, EventArgs e)
         {
-
             var handler = new EventHandler<Components.Controls.ValueUpdateEventArgs<decimal>>(HandleAlignmentChange);
             nmAlignment.ValueChanged += handler;
             nmAlignment.registerSlave(S.GET<CustomEngineConfigForm>().nmAlignment, handler);

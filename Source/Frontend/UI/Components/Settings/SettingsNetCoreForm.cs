@@ -56,12 +56,10 @@ namespace RTCV.UI
 
         private void OnGameProtectionDelayChange(object sender, KeyPressEventArgs e)
         {
-
         }
 
         private void OnGameProtectionDelayChange(object sender, KeyEventArgs e)
         {
-
         }
     }
 }
