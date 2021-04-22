@@ -172,14 +172,11 @@ namespace RTCV.UI
             updateTimer.Stop();
             updateTimer.Start();
 
-            if (ignoreListboxChanged)
-                return;
+            //var selectedDomains = lbMemoryDomains.SelectedItems.Cast<string>();
+            //foreach (var key in domains.Keys.ToArray())
+            //    domains[key] = selectedDomains.Contains(key);
 
-            var selectedDomains = lbMemoryDomains.SelectedItems.Cast<string>();
-            foreach (var key in domains.Keys.ToArray())
-                domains[key] = selectedDomains.Contains(key);
-
-            UpdateSelectedMemoryDomains(null, null);
+            //UpdateSelectedMemoryDomains(null, null);
         }
 
         private void HandleRefreshDomainsClick(object sender, EventArgs e)

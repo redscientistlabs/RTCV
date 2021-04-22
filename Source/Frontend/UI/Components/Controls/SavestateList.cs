@@ -373,9 +373,8 @@ namespace RTCV.UI.Components.Controls
                         SelectedHolder = holder;
                     }
                 }
-//COMPAREME
+
                 StashKey sk = StockpileManagerUISide.SaveState();
-                StashKey sk = await StockpileManagerUISide.SaveState();
                 if (sk != null)
                     RegisterStashKeyToSelected(sk);
 
@@ -511,7 +510,7 @@ namespace RTCV.UI.Components.Controls
                     File.Copy(skspath, workingpath);
 
                 StockpileManagerUISide.CurrentStashkey = sk;
-                await StockpileManagerUISide.OriginalFromStashkey(sk);
+                StockpileManagerUISide.OriginalFromStashkey(sk);
 
                 //var t = StockpileManagerUISide.LoadState(newSk, true, false); //will cause problems with heavy emus
                 //t.Wait();
