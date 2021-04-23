@@ -191,7 +191,7 @@ namespace RTCV.UI
             if (e.Button == MouseButtons.Right)
             {
                 string vectorLimiter = S.GET<CorruptionEngineForm>().CurrentVectorLimiterListName;
-                var AutoLimitedDomains = MemoryDomains.AllMemoryInterfaces.Where(it => it.Value is VirtualMemoryDomain vmd && vmd.Name.Contains("->")).ToList();
+                var AutoLimitedDomains = MemoryDomains.AllMemoryInterfaces.Where(it => it.Value is VirtualMemoryDomain && it.Key.Contains("--")).ToList();
 
                 if (vectorLimiter != null)
                 {
@@ -236,7 +236,7 @@ namespace RTCV.UI
 
                             if (domain != null)
                             {
-                                string limiter = vmd.Name.Substring(vmd.Name.LastIndexOf('>') + 2);
+                                string limiter = vmd.Name.Substring(vmd.Name.LastIndexOf('-') + 2);
                                 S.GET<VmdLimiterProfilerForm>().AutoProfile(MemoryDomains.AllMemoryInterfaces[domain], limiter);
                             }
                         }
