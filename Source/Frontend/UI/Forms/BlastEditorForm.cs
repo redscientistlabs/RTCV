@@ -1894,7 +1894,9 @@ namespace RTCV.UI
                     dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>() :
                     dgvBlastEditor.Rows.Cast<DataGridViewRow>();
 
-                foreach (DataGridViewRow selected in targetRows
+                batchOperation = true;
+
+                foreach (var selected in targetRows
                     .Where((item => ((BlastUnit)item.DataBoundItem).IsLocked == false)))
                 {
                     var bu = (BlastUnit)selected.DataBoundItem;
@@ -1909,13 +1911,15 @@ namespace RTCV.UI
 
                 var i = 0;
                 //Insert the new one where the old row was, then remove the old row.
-                foreach (DataGridViewRow selected in dgvBlastEditor.SelectedRows.Cast<DataGridViewRow>()
+                foreach (var selected in targetRows
                     .Where((item => ((BlastUnit)item.DataBoundItem).IsLocked == false)))
                 {
                     bs.Insert(selected.Index, newBlastLayer.Layer[i]);
                     i++;
                     bs.Remove((BlastUnit)selected.DataBoundItem);
                 }
+
+                batchOperation = false;
             }
             catch (Exception ex)
             {
