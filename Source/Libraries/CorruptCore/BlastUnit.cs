@@ -933,8 +933,7 @@ namespace RTCV.CorruptCore
 
                         byte[] temp = new byte[Precision];
                         //We use this as it properly handles the length for us
-                        temp.AddValueToByteArrayUnchecked(randomValue, false);
-                        Value = temp;
+                        Value = temp.AddValueToByteArrayUnchecked(randomValue, false);
                     }
                 }
             }
