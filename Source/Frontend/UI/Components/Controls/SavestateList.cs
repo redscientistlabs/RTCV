@@ -178,7 +178,7 @@ namespace RTCV.UI.Components.Controls
                     if (holderIndex != -1)
                     {
                         var indexToRemove = holderIndex + _dataSource.Position;
-                        if (indexToRemove <= _dataSource.Count)
+                        if (indexToRemove >= 0 && indexToRemove <= _dataSource.Count)
                         {
                             _dataSource.RemoveAt(indexToRemove);
                         }
