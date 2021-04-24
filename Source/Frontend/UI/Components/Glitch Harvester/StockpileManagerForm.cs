@@ -122,13 +122,17 @@ namespace RTCV.UI
                         sks.Add((StashKey)row.Cells[0].Value);
                     }
 
-                    //dgv is stupid.
-                    //If you shift-select you get things in the order you'd expect (start > end).
-                    //If you ctrl+select, you get things in the reverse order (the most recent selected gets inserted at the start of the list)
-                    if (IsControlDown())
-                    {
-                        sks.Reverse();
-                    }
+                    //Removing this check makes Merge behave properly in all cases:
+                    //Shift+select uses the topmost savestate of the selection
+                    //Ctrl+select uses the savestate from the first item that was selected
+                    //Using the 'Merge' button follows the rules above to determine which savestate to use
+
+                    //if (IsControlDown())
+                    //{
+                    //    sks.Reverse();
+                    //}
+
+                    sks.Reverse();
 
                     StockpileManagerUISide.MergeStashkeys(sks);
 
