@@ -191,7 +191,8 @@ namespace RTCV.UI
             if (e.Button == MouseButtons.Right)
             {
                 string vectorLimiter = S.GET<CorruptionEngineForm>().CurrentVectorLimiterListName;
-                var AutoLimitedDomains = MemoryDomains.AllMemoryInterfaces.Where(it => it.Value is VirtualMemoryDomain vmd && vmd.Name.Contains("--")).ToList();
+                var AutoLimitedDomains = MemoryDomains.AllMemoryInterfaces.Where(it => it.Value is VirtualMemoryDomain && it.Key.Contains("--")).ToList();
+
 
                 if (vectorLimiter != null)
                 {
