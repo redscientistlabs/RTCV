@@ -193,6 +193,7 @@ namespace RTCV.UI
                 string vectorLimiter = S.GET<CorruptionEngineForm>().CurrentVectorLimiterListName;
                 var AutoLimitedDomains = MemoryDomains.AllMemoryInterfaces.Where(it => it.Value is VirtualMemoryDomain && it.Key.Contains("--")).ToList();
 
+
                 if (vectorLimiter != null)
                 {
                     ContextMenuStrip cms = new ContextMenuStrip();
