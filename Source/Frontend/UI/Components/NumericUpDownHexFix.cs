@@ -13,6 +13,7 @@ namespace RTCV.UI.Components
     public class NumericUpDownHexFix : NumericUpDown
     {
         private bool currentValueChanged = false;
+        private bool masterValueUpdated = false;
 
         public NumericUpDownHexFix()
         {
@@ -57,8 +58,18 @@ namespace RTCV.UI.Components
 
         protected override void UpdateEditText()
         {
-            if (UserEdit)
+            bool masterScope = false;
+
+            if (UserEdit || masterValueUpdated)
             {
+
+                if (!masterValueUpdated)
+                {
+                    masterValueUpdated = true;
+                    masterScope = true;
+                }
+
+
                 if (base.Hexadecimal)
                 {
                     HexParseEditText();
@@ -75,6 +86,12 @@ namespace RTCV.UI.Components
                 ChangingText = true;
                 Text = GetNumberText(Value);
                 ChangingText = false;
+            }
+
+            if (masterScope)
+            {
+                UserEdit = false;
+                masterValueUpdated = false;
             }
         }
 
@@ -117,7 +134,8 @@ namespace RTCV.UI.Components
             catch { }
             finally
             {
-                base.UserEdit = false;
+                if (!masterValueUpdated)
+                    base.UserEdit = false;
             }
         }
     }
