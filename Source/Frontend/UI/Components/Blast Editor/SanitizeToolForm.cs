@@ -6,6 +6,8 @@ namespace RTCV.UI
     using RTCV.CorruptCore;
     using RTCV.NetCore;
     using RTCV.Common;
+    using System.Threading.Tasks;
+    using System.Threading;
 
     public partial class SanitizeToolForm : Modular.ColorizedForm
     {
@@ -155,18 +157,33 @@ namespace RTCV.UI
 
         public void LeaveAndKeepChanges(object sender, EventArgs e)
         {
-            ReopenBlastEditor();
             this.Close();
+            ReopenBlastEditor();
+
         }
 
         private static void ReopenBlastEditor()
         {
             var be = S.GET<BlastEditorForm>();
             be.RefreshAllNoteIcons();
-            be.WindowState = FormWindowState.Minimized;
+
+            //be.WindowState = FormWindowState.Minimized;
             be.Show();
-            be.WindowState = FormWindowState.Normal;
-            be.BringToFront();
+            //be.WindowState = FormWindowState.Normal;
+
+
+            //Disgisting hack to ensure blast editor goes back to front. race conditions and stuff
+            Task.Run(() =>
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    SyncObjectSingleton.FormExecute(() =>
+                    {
+                        be.BringToFront();
+                    });
+                    Thread.Sleep(69);
+                }
+            });
         }
 
         public void LeaveAndSubtractChanges(object sender, EventArgs e)
@@ -203,18 +220,19 @@ namespace RTCV.UI
                 }
             }
 
+            this.Close();
             S.GET<BlastEditorForm>().LoadBlastlayer(modified);
             ReopenBlastEditor();
-            this.Close();
+ 
         }
 
         private void LeaveWithoutChanges(object sender, EventArgs e)
         {
+            this.Close();
             S.GET<BlastEditorForm>().LoadBlastlayer(_originalBlastLayer);
-
             ReopenBlastEditor();
 
-            this.Close();
+
         }
 
         private void GoBackToPreviousState(object sender, EventArgs e)
