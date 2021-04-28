@@ -33,21 +33,28 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
                 return;
             }
 
-            ulong value = Convert.ToUInt64(nmMinValueNightmare.Value);
+            ulong minValue = Convert.ToUInt64(nmMinValueNightmare.Value);
+            ulong maxValue = Convert.ToUInt64(nmMaxValueNightmare.Value);
+
+            if (minValue > maxValue)
+            {
+                nmMinValueNightmare.Value = maxValue;
+                return;
+            }
 
             switch (RtcCore.CurrentPrecision)
             {
                 case 1:
-                    NightmareEngine.MinValue8Bit = value;
+                    NightmareEngine.MinValue8Bit = minValue;
                     break;
                 case 2:
-                    NightmareEngine.MinValue16Bit = value;
+                    NightmareEngine.MinValue16Bit = minValue;
                     break;
                 case 4:
-                    NightmareEngine.MinValue32Bit = value;
+                    NightmareEngine.MinValue32Bit = minValue;
                     break;
                 case 8:
-                    NightmareEngine.MinValue64Bit = value;
+                    NightmareEngine.MinValue64Bit = minValue;
                     break;
             }
         }
@@ -60,21 +67,28 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
                 return;
             }
 
-            ulong value = Convert.ToUInt64(nmMaxValueNightmare.Value);
+            ulong minValue = Convert.ToUInt64(nmMinValueNightmare.Value);
+            ulong maxValue = Convert.ToUInt64(nmMaxValueNightmare.Value);
+
+            if (maxValue < minValue)
+            {
+                nmMaxValueNightmare.Value = minValue;
+                return;
+            }
 
             switch (RtcCore.CurrentPrecision)
             {
                 case 1:
-                    NightmareEngine.MaxValue8Bit = value;
+                    NightmareEngine.MaxValue8Bit = maxValue;
                     break;
                 case 2:
-                    NightmareEngine.MaxValue16Bit = value;
+                    NightmareEngine.MaxValue16Bit = maxValue;
                     break;
                 case 4:
-                    NightmareEngine.MaxValue32Bit = value;
+                    NightmareEngine.MaxValue32Bit = maxValue;
                     break;
                 case 8:
-                    NightmareEngine.MaxValue64Bit = value;
+                    NightmareEngine.MaxValue64Bit = maxValue;
                     break;
             }
         }
