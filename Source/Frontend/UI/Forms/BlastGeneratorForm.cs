@@ -32,7 +32,7 @@ namespace RTCV.UI
     //MODE = GENERATIONMODE
 
     #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
-    public partial class BlastGeneratorForm : Form
+    public partial class BlastGeneratorForm : Form, IColorize
     {
         private enum BlastGeneratorColumn
         {
@@ -72,6 +72,8 @@ namespace RTCV.UI
 
             //For some godforsaken reason, xmlSerializer deserialization wont fill this in as a bool so just use a string god help us all
             (dgvBlastGenerator.Columns["dgvEnabled"]).ValueType = typeof(string);
+
+            Colors.SetRTCColor(Colors.GeneralColor, this);
         }
 
         private void OnFormLoad(object sender, EventArgs e)
@@ -1050,6 +1052,11 @@ namespace RTCV.UI
         public StashKey[] GetStashKeys()
         {
             return new[] { _sk };
+        }
+
+        public void Recolor()
+        {
+            Colors.SetRTCColor(Colors.GeneralColor, this);
         }
     }
 
