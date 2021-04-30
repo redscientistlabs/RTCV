@@ -106,6 +106,8 @@ namespace RTCV.UI
 
             //Trigger Save button
             S.GET<SavestateManagerForm>().savestateList.HandleSaveLoadClick(null, null);
+
+            btnCreateGhSavestate.Text = "  Update the Glitch Harvester savestate";
         }
 
         private void GlitchHarvesterLoadAndCorrupt(object sender, EventArgs e)
