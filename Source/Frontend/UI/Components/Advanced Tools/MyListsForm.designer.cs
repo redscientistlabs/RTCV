@@ -36,6 +36,7 @@ namespace RTCV.UI
             this.btnRenameList = new System.Windows.Forms.Button();
             this.btnRemoveList = new System.Windows.Forms.Button();
             this.btnEnableDisableList = new System.Windows.Forms.Button();
+            this.btnOpenFolder = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lbKnownLists
@@ -197,12 +198,35 @@ namespace RTCV.UI
             this.btnEnableDisableList.Click += new System.EventHandler(this.LoadSelectedList);
             this.btnEnableDisableList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
+            // btnOpenFolder
+            // 
+            this.btnOpenFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOpenFolder.BackColor = System.Drawing.Color.Gray;
+            this.btnOpenFolder.FlatAppearance.BorderSize = 0;
+            this.btnOpenFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOpenFolder.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnOpenFolder.ForeColor = System.Drawing.Color.White;
+            this.btnOpenFolder.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenFolder.Image")));
+            this.btnOpenFolder.Location = new System.Drawing.Point(197, 181);
+            this.btnOpenFolder.Name = "btnOpenFolder";
+            this.btnOpenFolder.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
+            this.btnOpenFolder.Size = new System.Drawing.Size(182, 25);
+            this.btnOpenFolder.TabIndex = 178;
+            this.btnOpenFolder.TabStop = false;
+            this.btnOpenFolder.Tag = "color:light1";
+            this.btnOpenFolder.Text = "  Open List folder";
+            this.btnOpenFolder.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnOpenFolder.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnOpenFolder.UseVisualStyleBackColor = false;
+            this.btnOpenFolder.Click += new System.EventHandler(this.btnOpenFolder_Click);
+            // 
             // MyListsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.ClientSize = new System.Drawing.Size(390, 250);
+            this.Controls.Add(this.btnOpenFolder);
             this.Controls.Add(this.btnEnableDisableList);
             this.Controls.Add(this.btnRenameList);
             this.Controls.Add(this.btnRemoveList);
@@ -233,5 +257,6 @@ namespace RTCV.UI
         public System.Windows.Forms.Button btnRenameList;
         public System.Windows.Forms.Button btnRemoveList;
         public System.Windows.Forms.Button btnEnableDisableList;
+        public System.Windows.Forms.Button btnOpenFolder;
     }
 }

@@ -8,6 +8,7 @@ namespace RTCV.UI
     using RTCV.CorruptCore;
     using RTCV.Common;
     using RTCV.UI.Modular;
+    using System.Diagnostics;
 
     public partial class MyListsForm : ComponentForm, IBlockable
     {
@@ -301,6 +302,11 @@ namespace RTCV.UI
             {
                 return;
             }
+        }
+
+        private void btnOpenFolder_Click(object sender, EventArgs e)
+        {
+            Process.Start(RtcCore.ListsDir);
         }
     }
 }
