@@ -552,14 +552,16 @@ This message only appears once.";
 
                     case "N64":     //Nintendo 64
                         SetEngineByName("Vector Engine");
-                        S.GET<GeneralParametersForm>().multiTB_Intensity.Value = 25;
+                        S.GET<GeneralParametersForm>().multiTB_Intensity.Value = 15;
                         S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Value = 1;
+                        S.GET<CorruptionEngineForm>().SetVectorToExtendedExtended();
                         break;
 
                     case "Dolphin":     //GC/Wii
                         SetEngineByName("Vector Engine");
-                        S.GET<GeneralParametersForm>().multiTB_Intensity.Value = 75;
+                        S.GET<GeneralParametersForm>().multiTB_Intensity.Value = 35;
                         S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Value = 1;
+                        S.GET<CorruptionEngineForm>().SetVectorToExtendedExtended();
                         break;
 
                     case "SG":      //Sega SG-1000
