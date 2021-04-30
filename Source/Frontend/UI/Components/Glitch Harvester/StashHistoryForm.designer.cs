@@ -35,10 +35,10 @@
             this.btnStashUP = new System.Windows.Forms.Button();
             this.lbStashHistory = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
-            //
+            // 
             // btnAddStashToStockpile
-            //
-            this.btnAddStashToStockpile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            // 
+            this.btnAddStashToStockpile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddStashToStockpile.BackColor = System.Drawing.Color.Gray;
             this.btnAddStashToStockpile.FlatAppearance.BorderSize = 0;
@@ -57,9 +57,9 @@
             this.btnAddStashToStockpile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAddStashToStockpile.UseVisualStyleBackColor = false;
             this.btnAddStashToStockpile.Click += new System.EventHandler(this.AddStashToStockpileButtonClick);
-            //
+            // 
             // btnClearStashHistory
-            //
+            // 
             this.btnClearStashHistory.BackColor = System.Drawing.Color.Gray;
             this.btnClearStashHistory.FlatAppearance.BorderSize = 0;
             this.btnClearStashHistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -70,18 +70,18 @@
             this.btnClearStashHistory.Location = new System.Drawing.Point(14, 13);
             this.btnClearStashHistory.Name = "btnClearStashHistory";
             this.btnClearStashHistory.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
-            this.btnClearStashHistory.Size = new System.Drawing.Size(105, 32);
+            this.btnClearStashHistory.Size = new System.Drawing.Size(77, 32);
             this.btnClearStashHistory.TabIndex = 111;
             this.btnClearStashHistory.TabStop = false;
             this.btnClearStashHistory.Tag = "color:light1";
-            this.btnClearStashHistory.Text = "  Clear stash";
+            this.btnClearStashHistory.Text = "  Clear";
             this.btnClearStashHistory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnClearStashHistory.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnClearStashHistory.UseVisualStyleBackColor = false;
             this.btnClearStashHistory.Click += new System.EventHandler(this.ClearStashHistory);
-            //
+            // 
             // btnStashDOWN
-            //
+            // 
             this.btnStashDOWN.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnStashDOWN.BackColor = System.Drawing.Color.Gray;
             this.btnStashDOWN.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
@@ -98,9 +98,9 @@
             this.btnStashDOWN.Text = "▼";
             this.btnStashDOWN.UseVisualStyleBackColor = false;
             this.btnStashDOWN.Click += new System.EventHandler(this.MoveSelectedStashDown);
-            //
+            // 
             // btnStashUP
-            //
+            // 
             this.btnStashUP.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnStashUP.BackColor = System.Drawing.Color.Gray;
             this.btnStashUP.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
@@ -117,12 +117,12 @@
             this.btnStashUP.Text = "▲";
             this.btnStashUP.UseVisualStyleBackColor = false;
             this.btnStashUP.Click += new System.EventHandler(this.MoveSelectedStashUp);
-            //
+            // 
             // lbStashHistory
-            //
+            // 
             this.lbStashHistory.AllowDrop = true;
-            this.lbStashHistory.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.lbStashHistory.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbStashHistory.BackColor = System.Drawing.Color.Gray;
             this.lbStashHistory.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -139,9 +139,9 @@
             this.lbStashHistory.Tag = "color:normal";
             this.lbStashHistory.SelectedIndexChanged += new System.EventHandler(this.HandleStashHistorySelectionChange);
             this.lbStashHistory.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleStashHistoryMouseDown);
-            //
+            // 
             // StashHistoryForm
-            //
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -154,7 +154,6 @@
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(203, 200);
             this.Name = "StashHistoryForm";
             this.Tag = "color:dark1";
             this.Text = "Stash History";
