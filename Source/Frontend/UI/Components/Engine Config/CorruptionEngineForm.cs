@@ -3,6 +3,7 @@ namespace RTCV.UI
     using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
+    using System.Linq;
     using System.Windows.Forms;
     using RTCV.Common;
     using RTCV.CorruptCore;
@@ -76,6 +77,45 @@ namespace RTCV.UI
 
             ClusterEngineControl = new Components.EngineConfig.EngineControls.ClusterEngineControl(engineControlLocation);
             this.Controls.Add(ClusterEngineControl);
+
+        }
+
+        public void SetVectorToExtendedExtended()
+        {
+            int interestLimiter = -1;
+            int interestValue = -1;
+
+            var limiterLists = VectorEngineControl.cbVectorLimiterList.Items.Cast<ComboBoxItem<string>>().Select(it => it.Name).ToList();
+            var valueLists = VectorEngineControl.cbVectorLimiterList.Items.Cast<ComboBoxItem<string>>().Select(it => it.Name).ToList();
+
+            for (int i = 0; i < valueLists.Count(); i++) //find first with extended in the name
+            {
+                var list = limiterLists[i];
+                if (list.ToUpper().Contains("EXTENDED"))
+                {
+                    interestLimiter = i;
+                    break;
+                }
+            }
+
+            for (int i = 0; i < valueLists.Count(); i++) //find first with extended in the name
+            {
+                var list = valueLists[i];
+                if (list.ToUpper().Contains("EXTENDED"))
+                {
+                    interestValue = i;
+                    break;
+                }
+            }
+
+            if (interestLimiter == -1)
+                interestLimiter = 0;
+
+            if (interestValue == -1)
+                interestValue = 0;
+
+            VectorEngineControl.cbVectorLimiterList.SelectedIndex = interestLimiter;
+            VectorEngineControl.cbVectorValueList.SelectedIndex = interestValue;
         }
 
         private void OnFormLoad(object sender, EventArgs e)
@@ -95,6 +135,7 @@ namespace RTCV.UI
             if (RtcCore.ValueListBindingSource.Count > 0)
             {
                 UpdateVectorValueList(VectorEngineControl.cbVectorValueList, null);
+                S.GET<CorruptionEngineForm>().SetVectorToExtendedExtended();
             }
         }
 

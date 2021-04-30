@@ -163,8 +163,7 @@ This message only appears once.";
                 Params.SetParam("INCLUDE_REFERENCED_FILES"); //Default param
             }
 
-            RtcCore.DownloadProblematicProcesses();
-
+            //RtcCore.DownloadProblematicProcesses();
             //DefaultGrids.engineConfig.LoadToMain();
         }
 

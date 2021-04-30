@@ -333,41 +333,7 @@ namespace RTCV.UI
 
             if (S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorLimiterList.Items.Count > 0)
             {
-
-                int interestLimiter = -1;
-                int interestValue = -1;
-
-                var limiterLists = S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorLimiterList.Items.Cast<ComboBoxItem<string>>().Select(it => it.Name).ToList();
-                var valueLists = S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorLimiterList.Items.Cast<ComboBoxItem<string>>().Select(it => it.Name).ToList();
-
-                for (int i = 0; i < valueLists.Count(); i++) //find first with extended in the name
-                {
-                    var list = limiterLists[i];
-                    if (list.ToUpper().Contains("EXTENDED"))
-                    {
-                        interestLimiter = i;
-                        break;
-                    }
-                }
-
-                for (int i = 0; i < valueLists.Count(); i++) //find first with extended in the name
-                {
-                    var list = valueLists[i];
-                    if (list.ToUpper().Contains("EXTENDED"))
-                    {
-                        interestValue = i;
-                        break;
-                    }
-                }
-
-                if (interestLimiter == -1)
-                    interestLimiter = 0;
-
-                if (interestValue == -1)
-                    interestValue = 0;
-
-                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorLimiterList.SelectedIndex = interestLimiter;
-                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorValueList.SelectedIndex = interestValue;
+                S.GET<CorruptionEngineForm>().SetVectorToExtendedExtended();
             }
             else
             {
