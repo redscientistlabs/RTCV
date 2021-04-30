@@ -37,7 +37,7 @@ namespace RTCV.CorruptCore
     public static class RtcCore
     {
         //General RTC Values
-        public const string RtcVersion = "5.0.6-b5";
+        public const string RtcVersion = "5.0.6-b6";
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private static int seed = (int)DateTime.Now.Ticks;
@@ -256,6 +256,11 @@ namespace RTCV.CorruptCore
 
         public static EventHandler<GameClosedEventArgs> GameClosed { get; set; }
         public static EventHandler LoadGameDone { get; set; }
+
+        public static void ResetSeed()
+        {
+            seed = (int)DateTime.Now.Ticks;
+        }
 
         public static void Start()
         {

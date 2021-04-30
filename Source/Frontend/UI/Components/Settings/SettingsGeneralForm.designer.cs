@@ -38,21 +38,21 @@ namespace RTCV.UI
             this.btnRefreshInputDevices = new System.Windows.Forms.Button();
             this.btnChangeRTCColor = new System.Windows.Forms.Button();
             this.btnOpenOnlineWiki = new System.Windows.Forms.Button();
+            this.btnWatchTutorialVideo = new System.Windows.Forms.Button();
+            this.btnResetRandomSeed = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.Gray;
             this.panel1.Controls.Add(this.cbUncapIntensity);
             this.panel1.Controls.Add(this.cbDontCleanAtQuit);
             this.panel1.Controls.Add(this.cbAllowCrossCoreCorruption);
             this.panel1.Controls.Add(this.cbDisableEmulatorOSD);
-            this.panel1.Location = new System.Drawing.Point(71, 228);
+            this.panel1.Location = new System.Drawing.Point(19, 228);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(268, 96);
+            this.panel1.Size = new System.Drawing.Size(269, 96);
             this.panel1.TabIndex = 138;
             this.panel1.Tag = "color:normal";
             // 
@@ -116,16 +116,14 @@ namespace RTCV.UI
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
             this.label4.ForeColor = System.Drawing.Color.White;
-            this.label4.Location = new System.Drawing.Point(68, 210);
+            this.label4.Location = new System.Drawing.Point(16, 210);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(253, 15);
+            this.label4.Size = new System.Drawing.Size(326, 15);
             this.label4.TabIndex = 139;
             this.label4.Text = "General RTC Settings";
             // 
             // btnRefreshInputDevices
             // 
-            this.btnRefreshInputDevices.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRefreshInputDevices.BackColor = System.Drawing.Color.Gray;
             this.btnRefreshInputDevices.FlatAppearance.BorderSize = 0;
             this.btnRefreshInputDevices.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -133,9 +131,9 @@ namespace RTCV.UI
             this.btnRefreshInputDevices.ForeColor = System.Drawing.Color.White;
             this.btnRefreshInputDevices.Image = ((System.Drawing.Image)(resources.GetObject("btnRefreshInputDevices.Image")));
             this.btnRefreshInputDevices.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnRefreshInputDevices.Location = new System.Drawing.Point(71, 142);
+            this.btnRefreshInputDevices.Location = new System.Drawing.Point(19, 142);
             this.btnRefreshInputDevices.Name = "btnRefreshInputDevices";
-            this.btnRefreshInputDevices.Size = new System.Drawing.Size(268, 45);
+            this.btnRefreshInputDevices.Size = new System.Drawing.Size(215, 45);
             this.btnRefreshInputDevices.TabIndex = 140;
             this.btnRefreshInputDevices.Tag = "color:light1";
             this.btnRefreshInputDevices.Text = "   Refresh Input Devices";
@@ -145,8 +143,6 @@ namespace RTCV.UI
             // 
             // btnChangeRTCColor
             // 
-            this.btnChangeRTCColor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnChangeRTCColor.BackColor = System.Drawing.Color.Gray;
             this.btnChangeRTCColor.FlatAppearance.BorderSize = 0;
             this.btnChangeRTCColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -154,9 +150,9 @@ namespace RTCV.UI
             this.btnChangeRTCColor.ForeColor = System.Drawing.Color.White;
             this.btnChangeRTCColor.Image = ((System.Drawing.Image)(resources.GetObject("btnChangeRTCColor.Image")));
             this.btnChangeRTCColor.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnChangeRTCColor.Location = new System.Drawing.Point(71, 91);
+            this.btnChangeRTCColor.Location = new System.Drawing.Point(19, 91);
             this.btnChangeRTCColor.Name = "btnChangeRTCColor";
-            this.btnChangeRTCColor.Size = new System.Drawing.Size(268, 45);
+            this.btnChangeRTCColor.Size = new System.Drawing.Size(215, 45);
             this.btnChangeRTCColor.TabIndex = 136;
             this.btnChangeRTCColor.Tag = "color:light1";
             this.btnChangeRTCColor.Text = "   Change color theme";
@@ -166,8 +162,6 @@ namespace RTCV.UI
             // 
             // btnOpenOnlineWiki
             // 
-            this.btnOpenOnlineWiki.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOpenOnlineWiki.BackColor = System.Drawing.Color.Gray;
             this.btnOpenOnlineWiki.FlatAppearance.BorderSize = 0;
             this.btnOpenOnlineWiki.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -175,9 +169,9 @@ namespace RTCV.UI
             this.btnOpenOnlineWiki.ForeColor = System.Drawing.Color.White;
             this.btnOpenOnlineWiki.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenOnlineWiki.Image")));
             this.btnOpenOnlineWiki.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnOpenOnlineWiki.Location = new System.Drawing.Point(71, 40);
+            this.btnOpenOnlineWiki.Location = new System.Drawing.Point(19, 40);
             this.btnOpenOnlineWiki.Name = "btnOpenOnlineWiki";
-            this.btnOpenOnlineWiki.Size = new System.Drawing.Size(268, 45);
+            this.btnOpenOnlineWiki.Size = new System.Drawing.Size(215, 45);
             this.btnOpenOnlineWiki.TabIndex = 135;
             this.btnOpenOnlineWiki.Tag = "color:light1";
             this.btnOpenOnlineWiki.Text = "    Open the online wiki";
@@ -185,12 +179,52 @@ namespace RTCV.UI
             this.btnOpenOnlineWiki.UseVisualStyleBackColor = false;
             this.btnOpenOnlineWiki.Click += new System.EventHandler(this.OpenOnlineWiki);
             // 
+            // btnWatchTutorialVideo
+            // 
+            this.btnWatchTutorialVideo.BackColor = System.Drawing.Color.Gray;
+            this.btnWatchTutorialVideo.FlatAppearance.BorderSize = 0;
+            this.btnWatchTutorialVideo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnWatchTutorialVideo.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnWatchTutorialVideo.ForeColor = System.Drawing.Color.White;
+            this.btnWatchTutorialVideo.Image = ((System.Drawing.Image)(resources.GetObject("btnWatchTutorialVideo.Image")));
+            this.btnWatchTutorialVideo.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnWatchTutorialVideo.Location = new System.Drawing.Point(240, 40);
+            this.btnWatchTutorialVideo.Name = "btnWatchTutorialVideo";
+            this.btnWatchTutorialVideo.Size = new System.Drawing.Size(215, 45);
+            this.btnWatchTutorialVideo.TabIndex = 141;
+            this.btnWatchTutorialVideo.Tag = "color:light1";
+            this.btnWatchTutorialVideo.Text = "    Watch a tutorial video";
+            this.btnWatchTutorialVideo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnWatchTutorialVideo.UseVisualStyleBackColor = false;
+            this.btnWatchTutorialVideo.Click += new System.EventHandler(this.btnWatchTutorialVideo_Click);
+            // 
+            // btnResetRandomSeed
+            // 
+            this.btnResetRandomSeed.BackColor = System.Drawing.Color.Gray;
+            this.btnResetRandomSeed.FlatAppearance.BorderSize = 0;
+            this.btnResetRandomSeed.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnResetRandomSeed.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnResetRandomSeed.ForeColor = System.Drawing.Color.White;
+            this.btnResetRandomSeed.Image = ((System.Drawing.Image)(resources.GetObject("btnResetRandomSeed.Image")));
+            this.btnResetRandomSeed.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnResetRandomSeed.Location = new System.Drawing.Point(240, 91);
+            this.btnResetRandomSeed.Name = "btnResetRandomSeed";
+            this.btnResetRandomSeed.Size = new System.Drawing.Size(215, 45);
+            this.btnResetRandomSeed.TabIndex = 142;
+            this.btnResetRandomSeed.Tag = "color:light1";
+            this.btnResetRandomSeed.Text = "   Reset random seed";
+            this.btnResetRandomSeed.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnResetRandomSeed.UseVisualStyleBackColor = false;
+            this.btnResetRandomSeed.Click += new System.EventHandler(this.btnResetRandomSeed_Click);
+            // 
             // SettingsGeneralForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.ClientSize = new System.Drawing.Size(412, 352);
+            this.ClientSize = new System.Drawing.Size(485, 351);
+            this.Controls.Add(this.btnResetRandomSeed);
+            this.Controls.Add(this.btnWatchTutorialVideo);
             this.Controls.Add(this.btnRefreshInputDevices);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label4);
@@ -219,5 +253,7 @@ namespace RTCV.UI
 		private System.Windows.Forms.Label label4;
 		public System.Windows.Forms.CheckBox cbUncapIntensity;
         public System.Windows.Forms.Button btnRefreshInputDevices;
+        public System.Windows.Forms.Button btnWatchTutorialVideo;
+        public System.Windows.Forms.Button btnResetRandomSeed;
     }
 }

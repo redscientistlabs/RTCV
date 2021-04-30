@@ -130,5 +130,15 @@ namespace RTCV.UI
         {
             Input.Input.Initialize();
         }
+
+        private void btnWatchTutorialVideo_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://rtctutorialvideo.r5x.cc/");
+        }
+
+        private void btnResetRandomSeed_Click(object sender, EventArgs e)
+        {
+            CorruptCore.RtcCore.ResetSeed();
+        }
     }
 }
