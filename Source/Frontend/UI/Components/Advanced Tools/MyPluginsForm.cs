@@ -5,10 +5,11 @@ namespace RTCV.UI
     using System.IO;
     using System.Linq;
     using System.Windows.Forms;
+    using System.Diagnostics;
     using RTCV.CorruptCore;
     using RTCV.Common;
     using RTCV.UI.Modular;
-    using System.Diagnostics;
+
 
     public partial class MyPluginsForm : ComponentForm, IBlockable
     {
@@ -100,13 +101,13 @@ exit
 
             btnRemoveList.Enabled = true;
 
-            bool allDisabled = true;
+            //bool allDisabled = true;
 
             foreach (var item in lbKnownPlugins.SelectedItems)
             {
                 if (!item.ToString().Contains("[DISABLED] "))
                 {
-                    allDisabled = false;
+                    //allDisabled = false;
                     break;
                 }
             }
@@ -140,7 +141,11 @@ exit
 
         private void btnImportList_Click(object sender, EventArgs e)
         {
+        }
 
+        private void btnOpenFolder_Click(object sender, EventArgs e)
+        {
+            Process.Start(RtcCore.PluginDir);
         }
     }
 }
