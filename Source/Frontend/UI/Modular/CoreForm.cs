@@ -583,7 +583,8 @@ This message only appears once.";
                     case "SGB":     //Super Gameboy
                     case "SAT":     //Sega Saturn
                     case "DGB":
-                        MessageBox.Show("WARNING: No Easy-Mode template was made for this system. Please configure it manually and use the current settings.");
+                    default:
+                        MessageBox.Show($"WARNING: No Easy-Mode template was made for this system ({thisSystem}). Please configure it manually and use the current settings.");
                         return;
 
                         //TODO: Add more domains for systems like gamegear, atari, turbo graphx
