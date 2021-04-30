@@ -39,7 +39,8 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             if (minValue > maxValue)
             {
                 nmMinValueNightmare.Value = maxValue;
-                return;
+                minValue = maxValue;
+                //return;
             }
 
             switch (RtcCore.CurrentPrecision)
@@ -73,7 +74,8 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             if (maxValue < minValue)
             {
                 nmMaxValueNightmare.Value = minValue;
-                return;
+                maxValue = minValue;
+                //return;
             }
 
             switch (RtcCore.CurrentPrecision)
