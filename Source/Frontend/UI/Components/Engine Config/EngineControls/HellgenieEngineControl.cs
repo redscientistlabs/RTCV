@@ -16,7 +16,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             btnClearCheats.Click += parent.ClearCheats;
 
             nmMinValueHellgenie.ValueChanged += UpdateMinValue;
-            nmMinValueHellgenie.ValueChanged += UpdateMaxValue;
+            nmMaxValueHellgenie.ValueChanged += UpdateMaxValue;
         }
 
         private void UpdateMinValue(object sender, EventArgs e)
