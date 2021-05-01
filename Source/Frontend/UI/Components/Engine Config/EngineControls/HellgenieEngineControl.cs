@@ -27,21 +27,29 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
                 return;
             }
 
-            ulong value = Convert.ToUInt64(nmMinValueHellgenie.Value);
+            ulong minValue = Convert.ToUInt64(nmMinValueHellgenie.Value);
+            ulong maxValue = Convert.ToUInt64(nmMaxValueHellgenie.Value);
+
+            if (minValue > maxValue)
+            {
+                nmMinValueHellgenie.Value = maxValue;
+                minValue = maxValue;
+                //return;
+            }
 
             switch (RtcCore.CurrentPrecision)
             {
                 case 1:
-                    HellgenieEngine.MinValue8Bit = value;
+                    HellgenieEngine.MinValue8Bit = minValue;
                     break;
                 case 2:
-                    HellgenieEngine.MinValue16Bit = value;
+                    HellgenieEngine.MinValue16Bit = minValue;
                     break;
                 case 4:
-                    HellgenieEngine.MinValue32Bit = value;
+                    HellgenieEngine.MinValue32Bit = minValue;
                     break;
                 case 8:
-                    HellgenieEngine.MinValue64Bit = value;
+                    HellgenieEngine.MinValue64Bit = minValue;
                     break;
             }
         }
@@ -54,21 +62,29 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
                 return;
             }
 
-            ulong value = Convert.ToUInt64(nmMaxValueHellgenie.Value);
+            ulong minValue = Convert.ToUInt64(nmMinValueHellgenie.Value);
+            ulong maxValue = Convert.ToUInt64(nmMaxValueHellgenie.Value);
+
+            if (maxValue < minValue)
+            {
+                nmMaxValueHellgenie.Value = minValue;
+                maxValue = minValue;
+                //return;
+            }
 
             switch (RtcCore.CurrentPrecision)
             {
                 case 1:
-                    HellgenieEngine.MaxValue8Bit = value;
+                    HellgenieEngine.MaxValue8Bit = maxValue;
                     break;
                 case 2:
-                    HellgenieEngine.MaxValue16Bit = value;
+                    HellgenieEngine.MaxValue16Bit = maxValue;
                     break;
                 case 4:
-                    HellgenieEngine.MaxValue32Bit = value;
+                    HellgenieEngine.MaxValue32Bit = maxValue;
                     break;
                 case 8:
-                    HellgenieEngine.MaxValue64Bit = value;
+                    HellgenieEngine.MaxValue64Bit = maxValue;
                     break;
             }
         }
