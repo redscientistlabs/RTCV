@@ -2,10 +2,10 @@ name: Build dependants
 on:
   push:
     branches:
-      - '506'
+      - '506v2'
   pull_request:
     branches:
-      - '506'
+      - '506v2'
 
 jobs:
   Bizhawk:
