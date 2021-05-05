@@ -37,35 +37,6 @@ jobs:
     - name: Build Bizhawk-Vanguard
       run: msbuild '.\Bizhawk-Vanguard\Real-Time Corruptor\BizHawk_RTC\BizHawk.sln'
 
-  CemuStub:
-    runs-on: windows-2019
-    steps:
-    # Checkout relevant code
-    - name: Checkout current build target
-      uses: actions/checkout@v2
-      with:
-        path: 'RTCV'
-    - name: Checkout CemuStub
-      uses: actions/checkout@v2
-      with:
-        repository: 'redscientistlabs/CemuStub-Vanguard'
-        ref: 'master'
-        path: 'CemuStub-Vanguard'
-
-    # Setup Tooling
-    - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.2
-
-    # Restore packages for all targets
-    - name: Restore packages in current build target
-      run: msbuild /t:restore '.\RTCV\RTCV.sln'
-    - name: Restore packages in CemuStub
-      run: msbuild /t:restore '.\CemuStub-Vanguard\'
-
-    # Build CemuStub
-    - name: Build CemuStub-Vanguard
-      run: msbuild '.\CemuStub-Vanguard\'
-
   FileStub:
     runs-on: windows-2019
     steps:
@@ -240,32 +211,3 @@ jobs:
       run: |
         cd citra-vanguard\build
         msbuild citra.sln
-
-  Dosbox:
-    runs-on: windows-2019
-    steps:
-    # Checkout relevant code
-    - name: Checkout current build target
-      uses: actions/checkout@v2
-      with:
-        path: 'RTCV'
-    - name: Checkout DosboxStub
-      uses: actions/checkout@v2
-      with:
-        repository: 'redscientistlabs/DosboxStub-Vanguard'
-        ref: 'master'
-        path: 'DosboxStub-Vanguard'
-
-    # Setup Tooling
-    - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.2
-
-    # Restore packages for all targets
-    - name: Restore packages in current build target
-      run: msbuild /t:restore '.\RTCV\RTCV.sln'
-    - name: Restore packages in DosboxStub
-      run: msbuild /t:restore '.\DosboxStub-Vanguard\DosboxStub-Vanguard.sln'
-
-    # Build DosboxStub
-    - name: Build DosboxStub-Vanguard
-      run: msbuild '.\DosboxStub-Vanguard\DosboxStub-Vanguard.sln'
