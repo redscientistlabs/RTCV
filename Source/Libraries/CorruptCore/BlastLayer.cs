@@ -81,7 +81,7 @@ namespace RTCV.CorruptCore
             }
             else
             {
-                StockpileManagerEmuSide.UnCorruptBL = null;
+                //StockpileManagerEmuSide.UnCorruptBL = null;
             }
 
             bool success;
