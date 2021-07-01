@@ -214,7 +214,12 @@ namespace RTCV.UI
                 {
                     var sk = GetSelectedStashKey();
                     StashKey newSk = (StashKey)sk.Clone();
-                    S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = StockpileManagerUISide.ApplyStashkey(newSk, false, false);
+
+                    bool IsCorrupted = StockpileManagerUISide.ApplyStashkey(newSk, false, false);
+
+                    if (StockpileManagerUISide.CurrentStashkey != null)
+                        S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = IsCorrupted;
+
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
                 columnsMenu.Items.Add(new ToolStripSeparator());
