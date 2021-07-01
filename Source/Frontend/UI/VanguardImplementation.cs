@@ -312,7 +312,17 @@ namespace RTCV.UI
                         smForm.EnteringSimpleMode();
                     }
                 }
+
+
+                //UI LOAD FINISHED
+
+                //Fetch Settings Form reference to make sure it is instancied on unlock
+                //Forces-load submodules of the Settings form on the first boot
+                //required for the infinite units maximum to get bound
+                S.GET<SettingsForm>();
+
             });
+
         }
 
         private static void PushVanguardSpecUpdate(NetCoreAdvancedMessage advancedMessage, ref NetCoreEventArgs e)
