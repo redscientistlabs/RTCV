@@ -28,6 +28,11 @@ namespace RTCV.PluginHost
             AppDomain.CurrentDomain.AssemblyLoad += CurrentDomain_AssemblyLoad;
         }
 
+        public void LoadPluginAssemblies(params string[] pluginDirs)
+        {
+            initialize(pluginDirs);
+        }
+
         private void initialize(string[] pluginDirs)
         {
             var catalog = new AggregateCatalog();

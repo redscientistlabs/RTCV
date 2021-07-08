@@ -17,6 +17,8 @@ namespace RTCV.Vanguard
 
         public VanguardConnector(NetCoreReceiver receiver)
         {
+            RtcCore.PluginHost.LoadPluginAssemblies("../RTCV/RTC/PLUGINS", "./PLUGINS");
+
             _receiver = receiver;
 
             LocalNetCoreRouter.registerEndpoint(this, NetCore.Endpoints.Vanguard);
