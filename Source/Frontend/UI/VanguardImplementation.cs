@@ -100,7 +100,9 @@ namespace RTCV.UI
                     case Remote.DisableKillSwitchSupport:
                         DisableKillSwitchSupport();
                         break;
-
+                    case Remote.DomainVMDAdd:
+                        AddVMD(advancedMessage.objectValue as VmdPrototype);
+                        break;
                     case Remote.BlastEditorStartSanitizeTool:
                         StartSanitizeTool();
                         break;
@@ -184,7 +186,10 @@ namespace RTCV.UI
             //Specs are all set up so UI is clear.
             LocalNetCoreRouter.Route(Endpoints.Vanguard, Remote.AllSpecSent, true);
         }
-
+        private static void AddVMD(VmdPrototype proto)
+        {
+            RTCV.CorruptCore.MemoryDomains.AddVMD(proto);
+        }
         private static void AllSpecSent()
         {
             if (UICore.FirstConnect)
