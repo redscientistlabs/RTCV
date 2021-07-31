@@ -168,11 +168,17 @@ namespace RTCV.CorruptCore.Extensions
                             unchecked { ushortValue -= addushortValue; }
                         }
 
-                        input = BitConverter.GetBytes(ushortValue);
+                        var added = BitConverter.GetBytes(ushortValue);
 
                         if (isInputBigEndian)
                         {
-                            Array.Reverse(input);
+                            Array.Reverse(added);
+                        }
+
+                        //send back changed bytes into array
+                        for (var i = 0; i < input.Length; i++)
+                        {
+                            input[i] = added[i];
                         }
 
                         return input;
@@ -191,11 +197,17 @@ namespace RTCV.CorruptCore.Extensions
                             unchecked { uintValue -= adduintValue; }
                         }
 
-                        input = BitConverter.GetBytes(uintValue);
+                        var added = BitConverter.GetBytes(uintValue);
 
                         if (isInputBigEndian)
                         {
-                            Array.Reverse(input);
+                            Array.Reverse(added);
+                        }
+
+                        //send back changed bytes into array
+                        for (var i = 0; i < input.Length; i++)
+                        {
+                            input[i] = added[i];
                         }
 
                         return input;
@@ -214,11 +226,17 @@ namespace RTCV.CorruptCore.Extensions
                             unchecked { ulongValue -= addulongValue; }
                         }
 
-                        input = BitConverter.GetBytes(ulongValue);
+                        var added = BitConverter.GetBytes(ulongValue);
 
                         if (isInputBigEndian)
                         {
-                            Array.Reverse(input);
+                            Array.Reverse(added);
+                        }
+
+                        //send back changed bytes into array
+                        for (var i = 0; i < input.Length; i++)
+                        {
+                            input[i] = added[i];
                         }
 
                         return input;
