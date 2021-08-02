@@ -504,6 +504,9 @@ namespace RTCV.UI.Components.Controls
                 string workingpath = newSk.GetSavestateFullPath();
                 string skspath = Path.Combine(RtcCore.workingDir, "SKS", Path.GetFileName(prevWorkingPath));
 
+                if (!File.Exists(skspath)) //it it wasn't from a stockpile, revert to session folder
+                    skspath = Path.Combine(RtcCore.workingDir, "SESSION", Path.GetFileName(prevWorkingPath));
+
                 if (File.Exists(skspath) && !File.Exists(workingpath))
                     File.Copy(skspath, workingpath);
 
