@@ -1646,6 +1646,11 @@ namespace RTCV.UI
             currentSK.ParentKey = temp.ParentKey;
             currentSK.SyncSettings = temp.SyncSettings;
             currentSK.StateLocation = temp.StateLocation;
+
+            //also replace these for the original stashkey
+            originalSK.ParentKey = temp.ParentKey;
+            originalSK.SyncSettings = temp.SyncSettings;
+            originalSK.StateLocation = temp.StateLocation;
         }
 
         public void ReplaceSavestateFromFileToolStrip(string filename = null)
