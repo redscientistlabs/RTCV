@@ -29,6 +29,9 @@ namespace RTCV.Common.CustomExtensions
         {
             var range = (ulong)(max - min);
 
+            if (range == 0) //fixes random number generation when there is no range
+                return min;
+
             if (inclusiveUpperBound)
             {
                 if (range == ulong.MaxValue)
