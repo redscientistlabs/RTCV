@@ -40,6 +40,12 @@
     <Compile Update="Components\Advanced Tools\MyPluginsForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Components\Blast Editor\FastSanitizeToolForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Components\Blast Editor\FastSanitizeToolForm.Designer.cs">
+      <DependentUpon>FastSanitizeToolForm.cs</DependentUpon>
+    </Compile>
     <Compile Update="Components\Engine Config\CorruptionEngineForm.cs">
       <SubType>Form</SubType>
     </Compile>
