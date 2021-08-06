@@ -347,6 +347,7 @@ namespace RTCV.UI
             this.btnAddToStockpile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddToStockpile.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnAddToStockpile.ForeColor = System.Drawing.Color.White;
+            this.btnAddToStockpile.Image = global::RTCV.UI.Properties.Resources.paper_airplane_icon_16;
             this.btnAddToStockpile.Location = new System.Drawing.Point(219, 292);
             this.btnAddToStockpile.Name = "btnAddToStockpile";
             this.btnAddToStockpile.Size = new System.Drawing.Size(132, 25);
@@ -396,6 +397,7 @@ namespace RTCV.UI
             this.btnAddToStash.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddToStash.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnAddToStash.ForeColor = System.Drawing.Color.White;
+            this.btnAddToStash.Image = global::RTCV.UI.Properties.Resources.paper_airplane_icon_16;
             this.btnAddToStash.Location = new System.Drawing.Point(219, 261);
             this.btnAddToStash.Name = "btnAddToStash";
             this.btnAddToStash.Size = new System.Drawing.Size(132, 25);
