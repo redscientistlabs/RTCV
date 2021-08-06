@@ -28,8 +28,6 @@ namespace RTCV.UI
                     throw new AbortEverythingException();
                 }
             }
-
-            this.Shown += FastSanitizeToolForm_Shown;
         }
 
         public static void OpenSanitizeTool(StashKey sk = null, bool lockUI = true)
@@ -68,6 +66,7 @@ namespace RTCV.UI
 
             stf._sanitizer = new FastSanitizer(sk, clone);
             stf.UpdateSanitizeProgress();
+            stf.lbSteps.Items.Add(new { Text = $"[{stf._sanitizer.OriginalLayer.Layer.Count} Units]", Value = "" });
 
             if (lockUI)
             {
@@ -77,57 +76,6 @@ namespace RTCV.UI
             {
                 stf.Show();
             }
-        }
-
-        private void FastSanitizeToolForm_Shown(object sender, EventArgs e)
-        {
-            var sel = S.GET<StashHistoryForm>().lbStashHistory.SelectedIndices;
-            if (sel.Count != 1) {
-                SyncObjectSingleton.FormExecute(() =>
-                {
-                    MessageBox.Show("Please select a single stash history item");
-                });
-                this.Close();
-                return;
-            }
-            var sk = (StashKey)((StashKey)S.GET<StashHistoryForm>().lbStashHistory.Items[sel[0]]).Clone();
-            if (sk == null || string.IsNullOrWhiteSpace(sk.GameName) || sk.BlastLayer == null || sk.BlastLayer.Layer.Count < 2)
-            {
-                Console.WriteLine("Fast Sanitize can not work on stash keys without save states");
-                this.Close();
-                return;
-            }
-
-            var bl = sk.BlastLayer;
-
-            if (bl == null)
-            {
-                return;
-            }
-
-            if (!bl.Layer.Any(x => !x.IsLocked))
-            {
-                MessageBox.Show("Sanitize Tool cannot sanitize BlastLayers that don't have any units.");
-                return;
-            }
-
-            if (bl.Layer.Count(x => !x.IsLocked) == 1)
-            {
-                MessageBox.Show("Sanitize Tool cannot sanitize BlastLayers that only have one unit.");
-                return;
-            }
-
-            BlastLayer clone = new BlastLayer(bl.Layer.Where(x => !x.IsLocked).ToList());
-            _originalSize = clone.Layer.Count;
-
-            lbOriginalLayerSize.Text = $"Original Layer size: {clone.Layer.Count}";
-
-            lbSteps.DisplayMember = "Text";
-            lbSteps.ValueMember = "Value";
-
-            _sanitizer = new FastSanitizer(sk, clone);
-            UpdateSanitizeProgress();
-            lbSteps.Items.Add(new { Text = $"[{_sanitizer.OriginalLayer.Layer.Count} Units]", Value = "" });
         }
 
         public async void Reroll(object sender, EventArgs e)
