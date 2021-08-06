@@ -567,7 +567,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                var sanitizeTool = S.GET<SanitizeToolForm>();
+                var sanitizeTool = S.GET<FastSanitizeToolForm>();
                 sanitizeTool.StartSanitizing(null, null);
             });
         }
@@ -576,7 +576,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                var sanitizeTool = S.GET<SanitizeToolForm>();
+                var sanitizeTool = S.GET<FastSanitizeToolForm>();
                 sanitizeTool.lbSteps.Items.Clear(); //this is a hack for leaving in automation
                 sanitizeTool.LeaveAndKeepChanges(null, null);
             });
@@ -586,7 +586,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                var sanitizeTool = S.GET<SanitizeToolForm>();
+                var sanitizeTool = S.GET<FastSanitizeToolForm>();
                 sanitizeTool.lbSteps.Items.Clear(); //this is a hack for leaving in automation
                 sanitizeTool.LeaveAndSubtractChanges(null, null);
             });
@@ -596,7 +596,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                var sanitizeTool = S.GET<SanitizeToolForm>();
+                var sanitizeTool = S.GET<FastSanitizeToolForm>();
                 sanitizeTool.YesEffect(null, null);
             });
         }
@@ -605,7 +605,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                var sanitizeTool = S.GET<SanitizeToolForm>();
+                var sanitizeTool = S.GET<FastSanitizeToolForm>();
                 sanitizeTool.NoEffect(null, null);
             });
         }
@@ -614,7 +614,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                var sanitizeTool = S.GET<SanitizeToolForm>();
+                var sanitizeTool = S.GET<FastSanitizeToolForm>();
                 sanitizeTool.Reroll(null, null);
             });
         }
