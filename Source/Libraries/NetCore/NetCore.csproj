@@ -42,7 +42,7 @@
     <PackageReference Include="NLog">
       <Version>4.7.10</Version>
     </PackageReference>
-    <PackageReference Include="Squid-Box.SevenZipSharp" Version="1.4.0.345" />
+    <PackageReference Include="Squid-Box.SevenZipSharp" Version="1.5.0.366" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
       <Version>4.5.2</Version>
     </PackageReference>
