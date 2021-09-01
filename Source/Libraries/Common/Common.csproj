@@ -23,7 +23,7 @@
       <Version>4.7.11</Version>
     </PackageReference>
     <PackageReference Include="NLog.Windows.Forms">
-      <Version>4.4.0</Version>
+      <Version>4.5.0</Version>
     </PackageReference>
   </ItemGroup>
 </Project>
