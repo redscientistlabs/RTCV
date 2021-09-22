@@ -11,6 +11,7 @@ namespace RTCV.CorruptCore
         public int WordSize { get; set; }
         public virtual string Name { get; set; }
         public bool BigEndian { get; set; }
+        public bool UsingRPC { get; set; }
 
         public abstract byte[] GetDump();
 
