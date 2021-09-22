@@ -651,9 +651,14 @@ namespace RTCV.CorruptCore
                             }
 
                             //Poke the memory
-                            for (int i = 0; i < Precision; i++)
+                            if (mi.UsingRPC)
                             {
-                                mi.PokeByte(Address + i, GetWorkingData().ApplyValue[i]);
+                                mi.PokeBytes(Address, GetWorkingData().ApplyValue);
+                            }
+                            else
+                            {
+                                for (int i = 0; i < Precision; i++)
+                                    mi.PokeByte(Address + i, GetWorkingData().ApplyValue[i]);
                             }
                             break;
                         }
