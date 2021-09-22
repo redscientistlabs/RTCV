@@ -46,7 +46,8 @@ namespace RTCV.CorruptCore
             //endAddress is exclusive
             if (IsRPC)
             {
-                return MD.PeekBytes(startAddress, (int)(endAddress - startAddress));
+                byte[] ret = MD.PeekBytes(startAddress, (int)(endAddress - startAddress));
+                return (raw || BigEndian) ? ret.FlipBytes() : ret;
             }
             List<byte> data = new List<byte>();
             for (long i = startAddress; i < endAddress; i++)
