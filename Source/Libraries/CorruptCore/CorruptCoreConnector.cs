@@ -567,13 +567,31 @@ namespace RTCV.CorruptCore
 
                     var listItemSize = Filtering.GetPrecisionFromHash(limiterListHash);
 
-                    for (long i = 0; i < mi.Size; i += listItemSize)
+                    if (!mi.UsingRPC)
                     {
-                        if (Filtering.LimiterPeekBytes(i, i + listItemSize, limiterListHash, mi))
+                        for (long i = 0; i < mi.Size; i += listItemSize)
                         {
-                            for (var j = 0; j < listItemSize; j++)
+                            if (Filtering.LimiterPeekBytes(i, i + listItemSize, limiterListHash, mi))
                             {
-                                allLegalAdresses.Add(i + j);
+                                for (var j = 0; j < listItemSize; j++)
+                                {
+                                    allLegalAdresses.Add(i + j);
+                                }
+                            }
+                        }
+                    }
+                    else //using rpc; caveat: 32-bit values only
+                    {
+                        var buf = mi.PeekBytes(0, mi.Size, false);
+                        for (long i = 0; i < mi.Size - 4; i++)
+                        {
+                            byte[] val = new byte[] { buf[i], buf[i+1], buf[i+2], buf[i+3] };
+                            if (Filtering.LimiterContainsValue(val, limiterListHash))
+                            {
+                                allLegalAdresses.Add(i);
+                                allLegalAdresses.Add(i+1);
+                                allLegalAdresses.Add(i+2);
+                                allLegalAdresses.Add(i+3);
                             }
                         }
                     }
