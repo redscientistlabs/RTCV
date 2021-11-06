@@ -152,7 +152,7 @@ namespace RTCV.UI.Input
             {
                 if (_defaultValues == null)
                 {
-                    //RTC_Hijack - Remove some of the more annoying default binds that don't line up with bizhawk usage
+
                     _defaultValues = new List<Binding>
                     {
                         Bind("RTC", "Manual Blast", toolTip: "Triggers a manual blast" ),
