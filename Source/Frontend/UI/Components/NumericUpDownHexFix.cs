@@ -111,8 +111,14 @@ namespace RTCV.UI.Components
             return text;
         }
 
+        bool IsIn_HexParseEditText = false;
         private void HexParseEditText()
         {
+            if (IsIn_HexParseEditText)
+                return;
+
+            IsIn_HexParseEditText = true;
+
             try
             {
                 if (!string.IsNullOrEmpty(Text) && !(Text.Length == 1 && Text == "-"))
@@ -136,6 +142,8 @@ namespace RTCV.UI.Components
             {
                 if (!masterValueUpdated)
                     base.UserEdit = false;
+
+                IsIn_HexParseEditText = false;
             }
         }
     }

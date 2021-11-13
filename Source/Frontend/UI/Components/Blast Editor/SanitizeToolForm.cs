@@ -250,7 +250,7 @@ namespace RTCV.UI
 
             if (check == null && lbSteps.Items.Count > 1)
             {
-                DialogResult dr = MessageBox.Show("Would you like to restore the Original BlastLayer?", "Leaving Sanitize Tool", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                DialogResult dr = MessageBox.Show("Would you like to restore the Original BlastLayer in the Blest Editor?", "Leaving Sanitize Tool", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 
                 switch (dr)
                 {
@@ -281,12 +281,15 @@ namespace RTCV.UI
             S.GET<StashHistoryForm>().lbStashHistory.SelectedIndex = S.GET<StashHistoryForm>().lbStashHistory.Items.Count - 1;
             StockpileManagerUISide.CurrentStashkey = StockpileManagerUISide.StashHistory[S.GET<StashHistoryForm>().lbStashHistory.SelectedIndex];
 
-            bool res = S.GET<StashHistoryForm>().AddStashToStockpileFromUI();
 
-            if (res)
-            {
-                this.Close();
-            }
+            S.GET<StashHistoryForm>().AddStashToStockpileFromUI();
+
+            //bool res = S.GET<StashHistoryForm>().AddStashToStockpileFromUI();
+
+            //if (res)
+            //{
+            //    this.Close();
+            //}
         }
         private void AddToStash(object sender, EventArgs e)
         {
