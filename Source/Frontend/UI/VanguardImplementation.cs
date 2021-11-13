@@ -289,7 +289,7 @@ namespace RTCV.UI
 
                     if (StockpileManagerUISide.BackupedState != null)
                     {
-                        S.GET<MemoryDomainsForm>().RefreshDomainsAndKeepSelected(StockpileManagerUISide.BackupedState.SelectedDomains.ToArray());
+                        S.GET<MemoryDomainsForm>().RefreshDomainsAndKeepSelected(StockpileManagerUISide.BackupedState.SelectedDomains.Distinct().ToArray());
                     }
 
                     GameProtection.Start();

@@ -708,7 +708,7 @@ namespace RTCV.CorruptCore
         public static BlastLayer GenerateBlastLayerOnAllThreads()
         {
             //We pull the domains here because if the syncsettings changed, there's a chance the domains changed
-            var domains = (string[])AllSpec.UISpec["SELECTEDDOMAINS"];
+            var domains = (string[])AllSpec.UISpec[UISPEC.SELECTEDDOMAINS];
             var cpus = Environment.ProcessorCount;
 
             //If there is only one thread, only generate a single BlastLayer.
@@ -1029,7 +1029,7 @@ namespace RTCV.CorruptCore
         public static BlastTarget GetBlastTarget()
         {
             //Standalone version of BlastRadius SPREAD
-            var selectedDomains = (string[])AllSpec.UISpec["SELECTEDDOMAINS"];
+            var selectedDomains = (string[])AllSpec.UISpec[UISPEC.SELECTEDDOMAINS];
             var domain = selectedDomains[RND.Next(selectedDomains.Length)];
             var maxAddress = MemoryDomains.GetInterface(domain).Size;
             var randomAddress = RND.NextLong(0, maxAddress - 1);
@@ -1112,7 +1112,7 @@ namespace RTCV.CorruptCore
                     if (autoCorrupt && cpuStepCount >= errorDelay)
                     {
                         cpuStepCount = 0;
-                        BlastLayer bl = RtcCore.GenerateBlastLayer((string[])AllSpec.UISpec["SELECTEDDOMAINS"]);
+                        BlastLayer bl = RtcCore.GenerateBlastLayer((string[])AllSpec.UISpec[UISPEC.SELECTEDDOMAINS]);
                         bl?.Apply(false, false);
                     }
                 }

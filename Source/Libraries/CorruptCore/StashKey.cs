@@ -75,7 +75,7 @@ namespace RTCV.CorruptCore
             GameName = (string)AllSpec.VanguardSpec?[VSPEC.GAMENAME] ?? "ERROR";
             SyncSettings = (string)AllSpec.VanguardSpec?[VSPEC.SYNCSETTINGS] ?? "";
 
-            this.SelectedDomains = ((string[])AllSpec.UISpec["SELECTEDDOMAINS"]).ToList();
+            this.SelectedDomains = ((string[])AllSpec.UISpec[UISPEC.SELECTEDDOMAINS]).ToList();
         }
 
         public object Clone()

@@ -62,7 +62,7 @@ namespace RTCV.UI
 
             PartialSpec p = new PartialSpec("UISpec");
 
-            p["SELECTEDDOMAINS"] = new string[] { };
+            p[UISPEC.SELECTEDDOMAINS] = new string[] { };
 
             AllSpec.UISpec = new FullSpec(p, !RtcCore.Attached);
             AllSpec.UISpec.SpecUpdated += (o, e) =>

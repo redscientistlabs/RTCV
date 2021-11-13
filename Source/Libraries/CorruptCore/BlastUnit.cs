@@ -939,7 +939,7 @@ namespace RTCV.CorruptCore
             }
             else if (Source == BlastUnitSource.STORE)
             {
-                string[] _selectedDomains = (string[])NetCore.AllSpec.UISpec["SELECTEDDOMAINS"];
+                string[] _selectedDomains = (string[])NetCore.AllSpec.UISpec[UISPEC.SELECTEDDOMAINS];
 
                 //Always reroll domain before address
                 if (RtcCore.RerollSourceDomain)
