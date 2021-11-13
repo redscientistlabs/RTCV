@@ -3,15 +3,17 @@ namespace RTCV.UI
     using System;
     using System.Linq;
     using System.Windows.Forms;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     using RTCV.CorruptCore;
     using RTCV.NetCore;
     using RTCV.Common;
-    using System.Threading.Tasks;
-    using System.Threading;
+    using RTCV.UI;
 
     public partial class SanitizeToolForm : Modular.ColorizedForm
     {
-        private BlastLayer _originalBlastLayer = null;
+        private FastSanitizer _sanitizer = null;
+        private int _originalSize = 0;
 
         public SanitizeToolForm()
         {
@@ -28,13 +30,18 @@ namespace RTCV.UI
             }
         }
 
-        public static void OpenSanitizeTool(BlastLayer bl = null, bool lockUI = true)
+        public static void OpenSanitizeTool(StashKey sk = null, bool lockUI = true)
         {
-            S.GET<SanitizeToolForm>().Close();
+            if (!S.ISNULL<SanitizeToolForm>() && S.GET<SanitizeToolForm>().IsDisposed)
+            {
+                S.GET<SanitizeToolForm>()?.Close();
+            }
             var stf = new SanitizeToolForm();
             S.SET(stf);
 
-            if (bl == null)
+            var bl = sk?.BlastLayer;
+
+            if (sk == null || bl == null)
             {
                 return;
             }
@@ -51,18 +58,15 @@ namespace RTCV.UI
                 return;
             }
 
-            BlastLayer clone = (BlastLayer)bl.Clone();
-
-            stf.lbOriginalLayerSize.Text = $"Original Layer size: {clone.Layer.Count(x => !x.IsLocked)}";
-
-
+            BlastLayer clone = new BlastLayer(bl.Layer.Where(x => !x.IsLocked).ToList());
+            stf._originalSize = clone.Layer.Count;
+            stf.lbOriginalLayerSize.Text = $"Original Layer size: {clone.Layer.Count}";
             stf.lbSteps.DisplayMember = "Text";
             stf.lbSteps.ValueMember = "Value";
-            stf.lbSteps.Items.Add(new { Text = $"Original Layer [{clone.Layer.Count(x => !x.IsLocked)} Units]", Value = clone });
 
-            stf._originalBlastLayer = clone;
-
+            stf._sanitizer = new FastSanitizer(sk, clone);
             stf.UpdateSanitizeProgress();
+            stf.lbSteps.Items.Add(new { Text = $"[{stf._sanitizer.OriginalLayer.Layer.Count} Units]", Value = "" });
 
             if (lockUI)
             {
@@ -74,39 +78,32 @@ namespace RTCV.UI
             }
         }
 
-        public void Reroll(object sender, EventArgs e)
+        public async void Reroll(object sender, EventArgs e)
         {
             pnBlastLayerSanitization.Visible = false;
             this.Refresh();
 
-            S.GET<BlastEditorForm>().dgvBlastEditor.ClearSelection();
-            S.GET<BlastEditorForm>().Disable50(null, null);
-            S.GET<BlastEditorForm>().LoadCorrupt(null, null);
-
-            BlastLayer bl = (BlastLayer)S.GET<BlastEditorForm>().currentSK.BlastLayer.Clone();
-
+            _sanitizer.Disable50();
+            await _sanitizer.LoadCorrupt();
             UpdateSanitizeProgress();
-
+            lbSteps.Items.RemoveAt(lbSteps.Items.Count - 1);
+            lbSteps.Items.Add(new { Text = $"[{_sanitizer.NumCurUnits} Units]", Value = "" });
             pnBlastLayerSanitization.Visible = true;
         }
 
-        public void YesEffect(object sender, EventArgs e)
+        public async void YesEffect(object sender, EventArgs e)
         {
             pnBlastLayerSanitization.Visible = false;
             this.Refresh();
 
-            S.GET<BlastEditorForm>().RemoveDisabled(null, null);
-
-            S.GET<BlastEditorForm>().dgvBlastEditor.ClearSelection();
-            S.GET<BlastEditorForm>().Disable50(null, null);
-            S.GET<BlastEditorForm>().LoadCorrupt(null, null);
-
-            BlastLayer bl = (BlastLayer)S.GET<BlastEditorForm>().currentSK.BlastLayer.Clone();
-            lbSteps.Items.Add(new { Text = $"[{bl.Layer.Count(x => !x.IsLocked)} Units]", Value = bl });
+            _sanitizer.Yes();
+            _sanitizer.Disable50();
+            await _sanitizer.LoadCorrupt();
 
             UpdateSanitizeProgress();
+            lbSteps.Items.Add(new { Text = $"[{_sanitizer.NumCurUnits} Units]", Value = "" });
 
-            if (bl.Layer.Count(x => !x.IsLocked) == 1)
+            if (_sanitizer.NumCurUnits == 1)
             {
                 lbSanitizationText.Text = "1 Unit remaining, sanitization complete.";
                 btnYesEffect.Visible = false;
@@ -117,22 +114,20 @@ namespace RTCV.UI
             pnBlastLayerSanitization.Visible = true;
         }
 
-        public void NoEffect(object sender, EventArgs e)
+        public async void NoEffect(object sender, EventArgs e)
         {
             pnBlastLayerSanitization.Visible = false;
             this.Refresh();
 
-            S.GET<BlastEditorForm>().InvertDisabled(null, null);
-            S.GET<BlastEditorForm>().RemoveDisabled(null, null);
+            _sanitizer.No();
 
-            RunSanitizeAlgo();
-
-            BlastLayer bl = (BlastLayer)S.GET<BlastEditorForm>().currentSK.BlastLayer.Clone();
-            lbSteps.Items.Add(new { Text = $"[{bl.Layer.Count(x => !x.IsLocked)} Units]", Value = bl });
+            _sanitizer.Disable50();
+            await _sanitizer.LoadCorrupt();
 
             UpdateSanitizeProgress();
+            lbSteps.Items.Add(new { Text = $"[{_sanitizer.NumCurUnits} Units]", Value = "" });
 
-            if (bl.Layer.Count(x => !x.IsLocked) == 1)
+            if (_sanitizer.NumCurUnits == 1)
             {
                 lbSanitizationText.Text = "1 Unit remaining, sanitization complete.";
                 btnYesEffect.Visible = false;
@@ -143,125 +138,52 @@ namespace RTCV.UI
             pnBlastLayerSanitization.Visible = true;
         }
 
-        private void ReplayCorruption(object sender, EventArgs e)
+        private async void ReplayCorruption(object sender, EventArgs e)
         {
             pnBlastLayerSanitization.Visible = false;
             this.Refresh();
-
-            S.GET<BlastEditorForm>().LoadCorrupt(null, null);
-
-            BlastLayer changes = (BlastLayer)S.GET<BlastEditorForm>().currentSK.BlastLayer.Clone();
-
+            await _sanitizer.Replay();
             pnBlastLayerSanitization.Visible = true;
         }
 
         public void LeaveAndKeepChanges(object sender, EventArgs e)
         {
-            this.Close();
-            ReopenBlastEditor();
+            bool success = BlastEditorForm.OpenBlastEditor(_sanitizer.GetFinalStashKey());
 
-        }
-
-        private static void ReopenBlastEditor()
-        {
-            var be = S.GET<BlastEditorForm>();
-            be.RefreshAllNoteIcons();
-
-            //be.WindowState = FormWindowState.Minimized;
-            be.Show();
-            //be.WindowState = FormWindowState.Normal;
-
-
-            //Disgisting hack to ensure blast editor goes back to front. race conditions and stuff
-            Task.Run(() =>
-            {
-                for (int i = 0; i < 10; i++)
-                {
-                    SyncObjectSingleton.FormExecute(() =>
-                    {
-                        be.BringToFront();
-                    });
-                    Thread.Sleep(69);
-                }
-            });
+            if (success)
+                this.Close();
         }
 
         public void LeaveAndSubtractChanges(object sender, EventArgs e)
         {
-            BlastLayer changes = (BlastLayer)S.GET<BlastEditorForm>().currentSK.BlastLayer.Clone();
-            BlastLayer modified = (BlastLayer)_originalBlastLayer.Clone();
+            var sk = _sanitizer.GetStashKeyMinusChanges();
 
-            foreach (var unit in changes.Layer.Where(it => it.IsEnabled))
-            {
-                var TargetUnit = modified.Layer.FirstOrDefault(it =>
-                it.Address == unit.Address &&
-                it.Domain == unit.Domain &&
-                it.ExecuteFrame == unit.ExecuteFrame &&
-                it.GeneratedUsingValueList == unit.GeneratedUsingValueList &&
-                it.InvertLimiter == unit.InvertLimiter &&
-                it.SourceAddress == unit.SourceAddress &&
-                it.SourceDomain == unit.SourceDomain &&
-                it.StoreLimiterSource == unit.StoreLimiterSource &&
-                it.StoreTime == unit.StoreTime &&
-                it.StoreType == unit.StoreType &&
-                it.TiltValue == unit.TiltValue &&
-                it.ValueString == unit.ValueString &&
-                it.LoopTiming == unit.LoopTiming
-                );
-
-                if (TargetUnit != null && !TargetUnit.IsLocked)
-                {
-                    modified.Layer.Remove(TargetUnit);
-                }
-
-                foreach (var bu in modified.Layer)
-                {
-                    bu.IsEnabled = true;
-                }
-            }
-
-            this.Close();
-            S.GET<BlastEditorForm>().LoadBlastlayer(modified);
-            ReopenBlastEditor();
- 
+            bool success = BlastEditorForm.OpenBlastEditor(sk);
+            if (success)
+                this.Close();
         }
 
         private void LeaveWithoutChanges(object sender, EventArgs e)
         {
-            this.Close();
-            S.GET<BlastEditorForm>().LoadBlastlayer(_originalBlastLayer);
-            ReopenBlastEditor();
+            //Open blast editor with original blast layer/savestate
+            bool success = BlastEditorForm.OpenBlastEditor(_sanitizer.GetOriginalStashKey());
 
-
+            if (success)
+                this.Close();
         }
 
-        private void GoBackToPreviousState(object sender, EventArgs e)
+        private async void GoBackToPreviousState(object sender, EventArgs e)
         {
+            if (_sanitizer.stateStack.Count < 1 || _sanitizer.shownStack.Count < 1) return;
+
             pnBlastLayerSanitization.Visible = false;
             this.Refresh();
 
-            var lastItem = lbSteps.Items[lbSteps.Items.Count - 1];
-
-            if (lbSteps.Items.Count > 1)
-            {
-                lastItem = lbSteps.Items[lbSteps.Items.Count - 2];
-            }
-
-            #pragma warning disable CA1801,IDE0060 //type is used for templating
-            static T Cast<T>(object obj, T type) { return (T)obj; }
-            var modified = Cast(lastItem, new { Text = "", Value = new BlastLayer() });
-
-            BlastLayer bl = (BlastLayer)modified.Value.Clone();
-            S.GET<BlastEditorForm>().LoadBlastlayer(bl);
-
+            _sanitizer.Undo();
             UpdateSanitizeProgress();
+            lbSteps.Items.RemoveAt(lbSteps.Items.Count - 1);
 
-            if (lbSteps.Items.Count > 1)
-            {
-                lbSteps.Items.RemoveAt(lbSteps.Items.Count - 1);
-            }
-
-            S.GET<BlastEditorForm>().LoadCorrupt(null, null);
+            await _sanitizer.LoadCorrupt();
 
             lbSanitizationText.Text = "Is the effect you are looking for still present?";
             btnYesEffect.Visible = true;
@@ -282,9 +204,7 @@ namespace RTCV.UI
 
         public void UpdateSanitizeProgress()
         {
-            int originalSize = _originalBlastLayer.Layer.Count(x => !x.IsLocked);
-
-            int originalRemainder = originalSize;
+            int originalRemainder = _originalSize;
             int originalMaxsteps = 0;
             while (originalRemainder > 1)
             {
@@ -292,8 +212,7 @@ namespace RTCV.UI
                 originalMaxsteps++;
             }
 
-
-            int currentSize = S.GET<BlastEditorForm>().currentSK.BlastLayer.Layer.Count(x => !x.IsLocked);
+            int currentSize = _sanitizer.NumCurUnits;
 
             int currentRemainder = currentSize;
             int currentMaxsteps = 0;
@@ -308,23 +227,15 @@ namespace RTCV.UI
             pbProgress.Value = originalMaxsteps - currentMaxsteps;
         }
 
-        public void StartSanitizing(object sender, EventArgs e)
+        public async void StartSanitizing(object sender, EventArgs e)
         {
             btnStartSanitizing.Visible = false;
 
-            S.GET<BlastEditorForm>().dgvBlastEditor.ClearSelection();
-            S.GET<BlastEditorForm>().Disable50(null, null);
-            S.GET<BlastEditorForm>().LoadCorrupt(null, null);
+            _sanitizer.Disable50();
+            await _sanitizer.LoadCorrupt();
 
             pnBlastLayerSanitization.Visible = true;
             lbWorkingPleaseWait.Visible = true;
-        }
-
-        public static void RunSanitizeAlgo()
-        {
-            S.GET<BlastEditorForm>().dgvBlastEditor.ClearSelection();
-            S.GET<BlastEditorForm>().Disable50(null, null);
-            S.GET<BlastEditorForm>().LoadCorrupt(null, null);
         }
 
         private void OnFormClosing(object sender, FormClosingEventArgs e)
@@ -344,7 +255,8 @@ namespace RTCV.UI
                 switch (dr)
                 {
                     case DialogResult.Yes:
-                        S.GET<BlastEditorForm>().LoadBlastlayer(_originalBlastLayer);
+                        //S.GET<BlastEditorForm>().LoadBlastlayer(_originalBlastLayer);
+                        BlastEditorForm.OpenBlastEditor(_sanitizer.GetOriginalStashKey());
                         break;
                     case DialogResult.No:
                         break;
@@ -358,19 +270,214 @@ namespace RTCV.UI
 
         private void AddToStockpile(object sender, EventArgs e)
         {
-            if (S.GET<BlastEditorForm>().AddStashToStockpile())
+            StashKey newSk = _sanitizer.GetFinalStashKey();
+            StockpileManagerUISide.StashHistory.Add(newSk);
+
+            S.GET<StashHistoryForm>().RefreshStashHistory();
+            S.GET<StockpileManagerForm>().dgvStockpile.ClearSelection();
+            S.GET<StashHistoryForm>().lbStashHistory.ClearSelected();
+
+            S.GET<StashHistoryForm>().DontLoadSelectedStash = true;
+            S.GET<StashHistoryForm>().lbStashHistory.SelectedIndex = S.GET<StashHistoryForm>().lbStashHistory.Items.Count - 1;
+            StockpileManagerUISide.CurrentStashkey = StockpileManagerUISide.StashHistory[S.GET<StashHistoryForm>().lbStashHistory.SelectedIndex];
+
+            bool res = S.GET<StashHistoryForm>().AddStashToStockpileFromUI();
+
+            if (res)
             {
                 this.Close();
             }
         }
         private void AddToStash(object sender, EventArgs e)
         {
-            S.GET<BlastEditorForm>().SendToStash(null, null);
-            this.Close();
+
+            StashKey oldSk = _sanitizer.GetFinalStashKey();
+
+            StashKey newSk = new StashKey(RtcCore.GetRandomKey(), oldSk.ParentKey, null)
+            {
+                RomFilename = oldSk.RomFilename,
+                SystemName = oldSk.SystemName,
+                SystemCore = oldSk.SystemCore,
+                GameName = oldSk.GameName,
+                SyncSettings = oldSk.SyncSettings,
+                StateLocation = oldSk.StateLocation
+            };
+            newSk.BlastLayer = (BlastLayer)oldSk.BlastLayer.Clone();
+            StockpileManagerUISide.StashHistory.Add(newSk);
+
+            //S.GET<StashHistoryForm>().RefreshStashHistory();
+            //S.GET<StockpileManagerForm>().dgvStockpile.ClearSelection();
+            //S.GET<StashHistoryForm>().lbStashHistory.ClearSelected();
+
+            //S.GET<StashHistoryForm>().DontLoadSelectedStash = true;
+            //S.GET<StashHistoryForm>().lbStashHistory.SelectedIndex = S.GET<StashHistoryForm>().lbStashHistory.Items.Count - 1;
+            //StockpileManagerUISide.CurrentStashkey = StockpileManagerUISide.StashHistory[S.GET<StashHistoryForm>().lbStashHistory.SelectedIndex];
+            //S.GET<StashHistoryForm>().AddStashToStockpileFromUI();
+
+            //S.GET<BlastEditorForm>().SendToStash(null, null);
+            //this.Close();
         }
         private void LeaveWithNoChanges(object sender, EventArgs e)
         {
             this.Close();
         }
     }
+
+    internal class FastSanitizer
+    {
+        private StashKey internalSK;
+        public BlastLayer OriginalLayer { get; private set; }
+        public Stack<List<BlastUnit>> stateStack = new Stack<List<BlastUnit>>();
+        public Stack<List<BlastUnit>> shownStack = new Stack<List<BlastUnit>>();
+        public List<BlastUnit> shownHalf;
+        public List<BlastUnit> otherHalf;
+        Random rand = new Random();
+        public int NumCurUnits => stateStack.Peek().Count;
+        public FastSanitizer(StashKey originalStashkey, BlastLayer blClone)
+        {
+            //Create StashKey clone
+            internalSK = new StashKey(RtcCore.GetRandomKey(), originalStashkey.ParentKey, null)
+            {
+                RomFilename = originalStashkey.RomFilename,
+                SystemName = originalStashkey.SystemName,
+                SystemCore = originalStashkey.SystemCore,
+                GameName = originalStashkey.GameName,
+                SyncSettings = originalStashkey.SyncSettings,
+                StateLocation = originalStashkey.StateLocation
+            };
+            internalSK.BlastLayer = blClone;
+            OriginalLayer = blClone;
+            shownHalf = OriginalLayer.Layer;
+            otherHalf = OriginalLayer.Layer;
+            stateStack.Push(OriginalLayer.Layer);
+        }
+
+        internal StashKey GetFinalStashKey()
+        {
+            var allUnits = new List<BlastUnit>();
+            allUnits.AddRange(shownHalf);
+
+            var disabledUnits = new List<BlastUnit>();
+
+            //extra check because of how otherHalf is instanciated. Maybe it should be empty at first?
+            disabledUnits.AddRange(otherHalf.Where(x => !shownHalf.Contains(x)));
+            //disabledUnits.AddRange(otherHalf);
+
+
+            foreach (var unit in disabledUnits)
+                unit.IsEnabled = false;
+
+            allUnits.AddRange(disabledUnits);
+
+            internalSK.BlastLayer = new BlastLayer(allUnits);
+
+            return internalSK;
+        }
+
+        internal void Clean()
+        {
+            stateStack.Clear();
+            shownHalf = null;
+            otherHalf = null;
+            internalSK = null;
+            OriginalLayer = null;
+        }
+
+        internal void Undo()
+        {
+            stateStack.Pop();
+            shownHalf = shownStack.Pop();
+        }
+
+        internal void Yes()
+        {
+            stateStack.Push(shownHalf);
+            internalSK.BlastLayer = new BlastLayer(shownHalf);
+            shownStack.Push(shownHalf);
+        }
+        internal void No()
+        {
+            stateStack.Push(otherHalf);
+            internalSK.BlastLayer = new BlastLayer(otherHalf);
+            shownStack.Push(shownHalf);
+        }
+
+        internal void Disable50()
+        {
+            var lastState = stateStack.Peek();
+            shownHalf = new List<BlastUnit>();
+            otherHalf = new List<BlastUnit>();
+
+            if (lastState.Count == 1)
+            {
+                shownHalf = lastState;
+                otherHalf = lastState;
+                return;
+            }
+
+            int[] allIndices = new int[lastState.Count];
+            for (int i = 0; i < lastState.Count; i++)
+            {
+                allIndices[i] = i;
+            }
+
+            //In-place shuffle, optimized with cached lengths
+            var shuffleCount = allIndices.Length;
+            var shuffleEnd = shuffleCount - 1;
+            for (var i = 0; i < shuffleEnd; ++i)
+            {
+                var r = rand.Next(i, shuffleCount);
+                var tmp = allIndices[i];
+                allIndices[i] = allIndices[r];
+                allIndices[r] = tmp;
+            }
+
+            for (int i = 0; i < allIndices.Length - 1; i += 2)
+            {
+                shownHalf.Add(lastState[allIndices[i]]);
+                otherHalf.Add(lastState[allIndices[i + 1]]);
+            }
+
+            if (lastState.Count % 2 == 1)
+            {
+                shownHalf.Add(lastState[allIndices.Length - 1]);
+            }
+        }
+
+        internal async Task LoadCorrupt()
+        {
+            internalSK.BlastLayer = new BlastLayer(shownHalf);
+            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = internalSK.Run();
+        }
+
+        internal StashKey GetOriginalStashKey()
+        {
+            internalSK.BlastLayer = OriginalLayer;
+            return internalSK;
+        }
+
+        internal StashKey GetStashKeyMinusChanges()
+        {
+            List<BlastUnit> newLayer = new List<BlastUnit>();
+
+            newLayer.AddRange(OriginalLayer.Layer.Where(x => !shownHalf.Contains(x)));
+
+            //subtracted units are disabled rather than deleted
+            var disabledUnits = OriginalLayer.Layer.Where(x => shownHalf.Contains(x));
+            foreach (var unit in disabledUnits)
+                unit.IsEnabled = false;
+
+            newLayer.AddRange(disabledUnits);
+
+
+            internalSK.BlastLayer = new BlastLayer(newLayer);
+            return internalSK;
+        }
+
+        internal async Task Replay()
+        {
+            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = internalSK.Run();
+        }
+    }
+
 }

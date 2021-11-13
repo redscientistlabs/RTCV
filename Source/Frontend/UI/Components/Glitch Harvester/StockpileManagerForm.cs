@@ -203,7 +203,7 @@ namespace RTCV.UI
                     if (S.GET<BlastEditorForm>() != null)
                     {
                         var sk = GetSelectedStashKey();
-                        FastSanitizeToolForm.OpenSanitizeTool(sk);
+                        SanitizeToolForm.OpenSanitizeTool(sk);
                     }
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
