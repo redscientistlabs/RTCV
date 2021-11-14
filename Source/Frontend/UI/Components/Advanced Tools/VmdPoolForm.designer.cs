@@ -41,13 +41,14 @@ namespace RTCV.UI
             this.btnUnloadVmd = new System.Windows.Forms.Button();
             this.btnSaveVmd = new System.Windows.Forms.Button();
             this.btnLoadVmd = new System.Windows.Forms.Button();
+            this.cbShowVmdContents = new System.Windows.Forms.CheckBox();
             this.gbVmdSummary.SuspendLayout();
             this.SuspendLayout();
-            //
+            // 
             // lbLoadedVmdList
-            //
-            this.lbLoadedVmdList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            // 
+            this.lbLoadedVmdList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbLoadedVmdList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.lbLoadedVmdList.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -63,10 +64,10 @@ namespace RTCV.UI
             this.lbLoadedVmdList.Tag = "color:dark1";
             this.lbLoadedVmdList.SelectedIndexChanged += new System.EventHandler(this.HandleLoadedVmdListSelectionChange);
             this.lbLoadedVmdList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            //
+            // 
             // gbVmdSummary
-            //
-            this.gbVmdSummary.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            // 
+            this.gbVmdSummary.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gbVmdSummary.Controls.Add(this.lbRealDomainValue);
             this.gbVmdSummary.Controls.Add(this.lbRealDomainLabel);
@@ -81,9 +82,9 @@ namespace RTCV.UI
             this.gbVmdSummary.TabStop = false;
             this.gbVmdSummary.Text = "Selected VMD Summary";
             this.gbVmdSummary.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            //
+            // 
             // lbRealDomainValue
-            //
+            // 
             this.lbRealDomainValue.AutoSize = true;
             this.lbRealDomainValue.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lbRealDomainValue.ForeColor = System.Drawing.Color.White;
@@ -93,9 +94,9 @@ namespace RTCV.UI
             this.lbRealDomainValue.TabIndex = 95;
             this.lbRealDomainValue.Text = "#####";
             this.lbRealDomainValue.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            //
+            // 
             // lbRealDomainLabel
-            //
+            // 
             this.lbRealDomainLabel.AutoSize = true;
             this.lbRealDomainLabel.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lbRealDomainLabel.ForeColor = System.Drawing.Color.White;
@@ -105,9 +106,9 @@ namespace RTCV.UI
             this.lbRealDomainLabel.TabIndex = 94;
             this.lbRealDomainLabel.Text = "Real Domain:";
             this.lbRealDomainLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            //
+            // 
             // lbVmdSizeValue
-            //
+            // 
             this.lbVmdSizeValue.AutoSize = true;
             this.lbVmdSizeValue.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lbVmdSizeValue.ForeColor = System.Drawing.Color.White;
@@ -117,9 +118,9 @@ namespace RTCV.UI
             this.lbVmdSizeValue.TabIndex = 93;
             this.lbVmdSizeValue.Text = "#####";
             this.lbVmdSizeValue.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            //
+            // 
             // lbVmdSizeLabel
-            //
+            // 
             this.lbVmdSizeLabel.AutoSize = true;
             this.lbVmdSizeLabel.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.lbVmdSizeLabel.ForeColor = System.Drawing.Color.White;
@@ -129,25 +130,25 @@ namespace RTCV.UI
             this.lbVmdSizeLabel.TabIndex = 89;
             this.lbVmdSizeLabel.Text = "VMD Size:";
             this.lbVmdSizeLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            //
+            // 
             // tbVmdPrototype
-            //
-            this.tbVmdPrototype.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            // 
+            this.tbVmdPrototype.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbVmdPrototype.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.tbVmdPrototype.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tbVmdPrototype.ForeColor = System.Drawing.Color.White;
-            this.tbVmdPrototype.Location = new System.Drawing.Point(197, 151);
+            this.tbVmdPrototype.Location = new System.Drawing.Point(197, 164);
             this.tbVmdPrototype.Multiline = true;
             this.tbVmdPrototype.Name = "tbVmdPrototype";
             this.tbVmdPrototype.ReadOnly = true;
             this.tbVmdPrototype.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbVmdPrototype.Size = new System.Drawing.Size(181, 83);
+            this.tbVmdPrototype.Size = new System.Drawing.Size(181, 70);
             this.tbVmdPrototype.TabIndex = 131;
             this.tbVmdPrototype.Tag = "color:dark3";
-            //
+            // 
             // btnSendToMyVMDs
-            //
+            // 
             this.btnSendToMyVMDs.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSendToMyVMDs.BackColor = System.Drawing.Color.Gray;
             this.btnSendToMyVMDs.Enabled = false;
@@ -167,9 +168,9 @@ namespace RTCV.UI
             this.btnSendToMyVMDs.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSendToMyVMDs.UseVisualStyleBackColor = false;
             this.btnSendToMyVMDs.Click += new System.EventHandler(this.SendToMyVMDs);
-            //
+            // 
             // btnRenameVmd
-            //
+            // 
             this.btnRenameVmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRenameVmd.BackColor = System.Drawing.Color.Gray;
             this.btnRenameVmd.Enabled = false;
@@ -191,9 +192,9 @@ namespace RTCV.UI
             this.btnRenameVmd.UseVisualStyleBackColor = false;
             this.btnRenameVmd.Click += new System.EventHandler(this.HandleRenameVMDClick);
             this.btnRenameVmd.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            //
+            // 
             // btnUnloadVmd
-            //
+            // 
             this.btnUnloadVmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnUnloadVmd.BackColor = System.Drawing.Color.Gray;
             this.btnUnloadVmd.Enabled = false;
@@ -216,9 +217,9 @@ namespace RTCV.UI
             this.btnUnloadVmd.UseVisualStyleBackColor = false;
             this.btnUnloadVmd.Click += new System.EventHandler(this.UnloadVMD);
             this.btnUnloadVmd.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            //
+            // 
             // btnSaveVmd
-            //
+            // 
             this.btnSaveVmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSaveVmd.BackColor = System.Drawing.Color.Gray;
             this.btnSaveVmd.Enabled = false;
@@ -240,9 +241,9 @@ namespace RTCV.UI
             this.btnSaveVmd.UseVisualStyleBackColor = false;
             this.btnSaveVmd.Click += new System.EventHandler(this.SaveVMD);
             this.btnSaveVmd.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            //
+            // 
             // btnLoadVmd
-            //
+            // 
             this.btnLoadVmd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLoadVmd.BackColor = System.Drawing.Color.Gray;
             this.btnLoadVmd.FlatAppearance.BorderSize = 0;
@@ -264,14 +265,31 @@ namespace RTCV.UI
             this.btnLoadVmd.UseVisualStyleBackColor = false;
             this.btnLoadVmd.Click += new System.EventHandler(this.HandleLoadVMDClick);
             this.btnLoadVmd.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
-            //
+            // 
+            // cbShowVmdContents
+            // 
+            this.cbShowVmdContents.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbShowVmdContents.AutoSize = true;
+            this.cbShowVmdContents.BackColor = System.Drawing.Color.Transparent;
+            this.cbShowVmdContents.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.cbShowVmdContents.ForeColor = System.Drawing.Color.White;
+            this.cbShowVmdContents.Location = new System.Drawing.Point(197, 142);
+            this.cbShowVmdContents.Name = "cbShowVmdContents";
+            this.cbShowVmdContents.Size = new System.Drawing.Size(133, 17);
+            this.cbShowVmdContents.TabIndex = 184;
+            this.cbShowVmdContents.Text = "Show VMD Contents";
+            this.cbShowVmdContents.UseVisualStyleBackColor = false;
+            this.cbShowVmdContents.CheckedChanged += new System.EventHandler(this.cbShowVmdContents_CheckedChanged);
+            // 
             // VmdPoolForm
-            //
+            // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(390, 250);
+            this.Controls.Add(this.cbShowVmdContents);
             this.Controls.Add(this.btnLoadVmd);
             this.Controls.Add(this.btnSaveVmd);
             this.Controls.Add(this.btnRenameVmd);
@@ -312,5 +330,6 @@ namespace RTCV.UI
         public System.Windows.Forms.Button btnUnloadVmd;
         public System.Windows.Forms.Button btnSaveVmd;
         private System.Windows.Forms.Button btnLoadVmd;
+        public System.Windows.Forms.CheckBox cbShowVmdContents;
     }
 }
