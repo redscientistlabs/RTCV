@@ -412,7 +412,7 @@ namespace RTCV.UI
             }
         }
 
-        private async void SaveSavestateList(object sender, EventArgs e)
+        public async void SaveSavestateList(object sender, EventArgs e)
         {
             string filename;
             SaveFileDialog saveFileDialog1 = new SaveFileDialog
