@@ -75,6 +75,11 @@ namespace RTCV.UI
 
         public static void KillEmulator(bool forceBypass = false)
         {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                UISideHooks.OnKillSwitchFired();
+            });
+
             logger.Trace("Entered KillEmulator {ShouldKillswitchFire} {UICore.FirstConnect} {!forceBypass} {!S.GET<CoreForm>().cbUseAutoKillSwitch.Checked} {!forceBypass}", ShouldKillswitchFire, UICore.FirstConnect, !forceBypass, !S.GET<CoreForm>().cbUseAutoKillSwitch.Checked, !forceBypass);
             if (!ShouldKillswitchFire || (UICore.FirstConnect && !forceBypass) || (!S.GET<CoreForm>().cbUseAutoKillSwitch.Checked && !forceBypass))
             {

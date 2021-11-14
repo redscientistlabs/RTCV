@@ -46,7 +46,7 @@ namespace RTCV.CorruptCore
             LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.PreCorruptAction, null, true);
         }
 
-        private static void PostApplyStashkey()
+        private static void PostApplyStashkey(StashKey sk)
         {
             bool UseSavestates = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_SAVESTATES];
             bool UseRealtime = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME];
@@ -57,6 +57,11 @@ namespace RTCV.CorruptCore
             }
 
             LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.PostCorruptAction);
+
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                UISideHooks.OnStashkeyLoaded(sk);
+            });
         }
 
         public static bool ApplyStashkey(StashKey sk, bool loadBeforeOperation = true, bool clearUnitsBeforeApply = true)
@@ -83,7 +88,7 @@ namespace RTCV.CorruptCore
                 LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Basic.ApplyBlastLayer, new object[] { sk?.BlastLayer, true, mergeWithCurrent }, true);
             }
 
-            PostApplyStashkey();
+            PostApplyStashkey(sk);
             return isCorruptionApplied;
         }
 
@@ -191,7 +196,7 @@ namespace RTCV.CorruptCore
                 StashHistory.Add(CurrentStashkey);
             }
 
-            PostApplyStashkey();
+            PostApplyStashkey(CurrentStashkey);
             return isCorruptionApplied;
         }
 
@@ -260,7 +265,7 @@ namespace RTCV.CorruptCore
                 StashHistory.Add(CurrentStashkey);
             }
 
-            PostApplyStashkey();
+            PostApplyStashkey(sk);
             return isCorruptionApplied;
         }
 
@@ -281,7 +286,7 @@ namespace RTCV.CorruptCore
                 return isCorruptionApplied;
             }
 
-            PostApplyStashkey();
+            PostApplyStashkey(sk);
             return isCorruptionApplied;
         }
 
@@ -367,7 +372,7 @@ namespace RTCV.CorruptCore
                 }
 
 
-                PostApplyStashkey();
+                PostApplyStashkey(CurrentStashkey);
                 return true;
             }
             MessageBox.Show("You need 2 or more items for Merging");

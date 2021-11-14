@@ -140,13 +140,21 @@ namespace RTCV.CorruptCore
         public static long Intensity
         {
             get => (long)AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_INTENSITY];
-            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_INTENSITY, value);
+            set
+            {
+                AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_INTENSITY, value);
+                UISideHooks.OnIntensityChanged(value);
+            }
         }
 
         public static long ErrorDelay
         {
             get => (long)AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_ERRORDELAY];
-            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_ERRORDELAY, value);
+            set
+            {
+                AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_ERRORDELAY, value);
+                UISideHooks.OnErrorDelayChanged(value);
+            }
         }
 
         public static BlastRadius Radius
@@ -158,7 +166,10 @@ namespace RTCV.CorruptCore
         public static bool AutoCorrupt
         {
             get => (bool)(AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_AUTOCORRUPT] ?? false);
-            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_AUTOCORRUPT, value);
+            set { 
+                AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_AUTOCORRUPT, value);
+                UISideHooks.OnAutoCorruptToggled(value);
+            }
         }
 
         public static bool DontCleanSavestatesOnQuit

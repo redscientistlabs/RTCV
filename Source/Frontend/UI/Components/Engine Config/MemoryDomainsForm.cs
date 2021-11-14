@@ -46,7 +46,13 @@ namespace RTCV.UI
                 }
 
                 logger.Trace("UpdateSelectedMemoryDomains Setting SELECTEDDOMAINS domains to {domains}", sb);
-                AllSpec.UISpec.Update(UISPEC.SELECTEDDOMAINS, lbMemoryDomains.SelectedItems.Cast<string>().Distinct().ToArray());
+                string[] output = lbMemoryDomains.SelectedItems.Cast<string>().Distinct().ToArray();
+                AllSpec.UISpec.Update(UISPEC.SELECTEDDOMAINS, output);
+
+                SyncObjectSingleton.FormExecute(() =>
+                {
+                    UISideHooks.OnSelectedDomainsChanged(output);
+                });
             });
         }
 

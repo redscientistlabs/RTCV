@@ -1,6 +1,7 @@
 namespace RTCV.NetCore
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Drawing;
     using System.IO;
@@ -15,7 +16,7 @@ namespace RTCV.NetCore
     public partial class CloudDebug : Form
     {
         private readonly Exception _ex;
-
+        public static List<CloudDebug> CloudWindows = new List<CloudDebug>();
         public CloudDebug(Exception ex, bool canContinue = false)
         {
             InitializeComponent();
@@ -24,6 +25,8 @@ namespace RTCV.NetCore
             {
                 return;
             }
+
+            CloudWindows.Add(this);
 
             lbException.Text = _ex.Message;
             var sb = new StringBuilder();
@@ -301,6 +304,34 @@ namespace RTCV.NetCore
         }
 
         private void btnDebugInfo_Click(object sender, EventArgs e) => S.GET<DebugInfoForm>().ShowDialog();
+
+        private void btnOtherActions_MouseDown(object sender, MouseEventArgs e)
+        {
+
+            Control c = (Control)sender;
+            Point locate = new Point(e.Location.X + btnOtherActions.Location.X, e.Location.Y + btnOtherActions.Location.Y);
+            ContextMenuStrip columnsMenu = new ContextMenuStrip();
+
+            columnsMenu.Items.Add("Close all Cloud Debug windows", null, new EventHandler((ob, ev) =>
+            {
+
+                foreach (var win in CloudWindows)
+                {
+                    win.Close();
+                }
+
+            }));
+
+
+            columnsMenu.Show(this, locate);
+
+
+        }
+
+        private void CloudDebug_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            CloudWindows.Remove(this);
+        }
     }
 
     [Serializable]
