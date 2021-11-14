@@ -342,7 +342,7 @@ namespace RTCV.UI
             }
         }
 
-        internal static bool CheckHotkey(string trigger)
+        public static bool CheckHotkey(string trigger)
         {
             logger.Info("Hotkey {trigger} pressed", trigger);
             switch (trigger)

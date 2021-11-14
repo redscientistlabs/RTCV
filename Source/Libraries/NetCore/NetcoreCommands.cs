@@ -121,6 +121,7 @@ namespace RTCV.NetCore.Commands
     {
         public const string OpenHexEditorAddress = nameof(Emulator) + "_" + nameof(OpenHexEditorAddress);
         public const string GetRealtimeAPI = nameof(Emulator) + "_" + nameof(GetRealtimeAPI);
+        public const string ResetGame = nameof(Emulator) + "_" + nameof(ResetGame);
         public const string GetScreenshot = nameof(Emulator) + "_" + nameof(GetScreenshot);
         public const string InFocus = nameof(Emulator) + "_" + nameof(InFocus);
     }
