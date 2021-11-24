@@ -64,10 +64,10 @@ namespace RTCV.CorruptCore
                 bl = JsonHelper.Deserialize<BlastLayer>(s);
                 return bl;
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("The BlastLayer file could not be loaded");
-                return null;
+                throw new Exception($"The BlastLayer file could not be loaded\n\n{ex.ToString()}");
+                //return null;
             }
         }
 
