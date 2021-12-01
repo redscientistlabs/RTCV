@@ -831,13 +831,17 @@ namespace RTCV.CorruptCore
                 {
                     if (this.GeneratedUsingValueList && !RtcCore.RerollIgnoresOriginalSource)
                     {
-                        Value = Filtering.GetRandomConstant(CustomEngine.ValueListHash, Precision);
+                        var mi = MemoryDomains.GetInterface(SourceDomain);
+                        Value = Filtering.GetRandomConstant(CustomEngine.ValueListHash, Precision, mi.PeekBytes(SourceAddress, SourceAddress + precision, !mi.BigEndian));
+                        //Value = Filtering.GetRandomConstant(CustomEngine.ValueListHash, Precision);
                     }
                     else
                     {
                         if (CustomEngine.ValueSource == CustomValueSource.VALUELIST)
                         {
-                            Value = Filtering.GetRandomConstant(CustomEngine.ValueListHash, Precision);
+                            var mi = MemoryDomains.GetInterface(SourceDomain);
+                            Value = Filtering.GetRandomConstant(CustomEngine.ValueListHash, Precision, mi.PeekBytes(SourceAddress, SourceAddress + precision, !mi.BigEndian));
+                            //Value = Filtering.GetRandomConstant(CustomEngine.ValueListHash, Precision);
                             return;
                         }
 
@@ -902,7 +906,9 @@ namespace RTCV.CorruptCore
                 {
                     if (this.GeneratedUsingValueList && !RtcCore.RerollIgnoresOriginalSource)
                     {
-                        Value = Filtering.GetRandomConstant(VectorEngine.ValueListHash, Precision);
+                        var mi = MemoryDomains.GetInterface(SourceDomain);
+                        Value = Filtering.GetRandomConstant(VectorEngine.ValueListHash, Precision, mi.PeekBytes(SourceAddress, SourceAddress + precision, !mi.BigEndian));
+                        //Value = Filtering.GetRandomConstant(VectorEngine.ValueListHash, Precision);
                     }
                     else
                     {
