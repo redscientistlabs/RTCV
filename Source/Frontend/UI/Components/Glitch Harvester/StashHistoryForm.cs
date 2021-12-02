@@ -336,7 +336,7 @@ namespace RTCV.UI
             GC.WaitForPendingFinalizers();
         }
 
-        private void MoveSelectedStashUp(object sender, EventArgs e)
+        public void MoveSelectedStashUp(object sender, EventArgs e)
         {
             if (lbStashHistory.SelectedIndex == -1)
             {
@@ -356,7 +356,7 @@ namespace RTCV.UI
             }
         }
 
-        private void MoveSelectedStashDown(object sender, EventArgs e)
+        public void MoveSelectedStashDown(object sender, EventArgs e)
         {
             if (lbStashHistory.SelectedIndex == -1)
             {

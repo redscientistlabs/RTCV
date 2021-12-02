@@ -59,7 +59,7 @@ namespace RTCV.UI
             };
         }
 
-        internal void HandleCellClick(object sender, DataGridViewCellEventArgs e)
+        public void HandleCellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e == null || e.RowIndex == -1)
             {

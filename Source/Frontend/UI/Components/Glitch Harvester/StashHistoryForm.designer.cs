@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     partial class StashHistoryForm
     {
@@ -171,8 +171,8 @@
 
         public System.Windows.Forms.Button btnAddStashToStockpile;
         private System.Windows.Forms.Button btnClearStashHistory;
-        private System.Windows.Forms.Button btnStashDOWN;
-        private System.Windows.Forms.Button btnStashUP;
         public System.Windows.Forms.ListBox lbStashHistory;
+        public System.Windows.Forms.Button btnStashDOWN;
+        public System.Windows.Forms.Button btnStashUP;
     }
 }
