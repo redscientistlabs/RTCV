@@ -144,11 +144,11 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             this.btnClearPipes.UseVisualStyleBackColor = false;
             this.btnClearPipes.Click += new System.EventHandler(this.ClearPipes);
             // 
-            // PipeEngine
+            // PipeEngineControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "PipeEngine";
+            this.Name = "PipeEngineControl";
             this.engineGroupBox.ResumeLayout(false);
             this.engineGroupBox.PerformLayout();
             this.ResumeLayout(false);

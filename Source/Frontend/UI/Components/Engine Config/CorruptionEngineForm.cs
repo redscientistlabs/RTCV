@@ -87,6 +87,7 @@ namespace RTCV.UI
             {
                 engine.Control.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
                 this.Controls.Add(engine.Control);
+                cbSelectedEngine.Items.Add(new { Text = engine.ToString(), Value = engine });
             }
             else
             {
@@ -270,14 +271,19 @@ namespace RTCV.UI
 
                     RtcCore.SelectedEngine = CorruptionEngine.PLUGIN;
 
-                    var engine = (cbSelectedEngine.SelectedItem as ICorruptionEngine);
+
+                    T Cast<T>(T type, object x) => (T)x;
+                    var obj = new { Text = "", Value = (ICorruptionEngine)null};
+                    obj = Cast(obj, cbSelectedEngine.SelectedItem);
+
+                    var engine = obj?.Value;
                     var control = engine?.Control;
- 
+
 
                     if (engine != null && control != null)
                     {
                         control.Visible = true;
-                        cbCustomPrecision.Visible = engine.SupportsCustomPrecision;
+                        cbCustomPrecision.Enabled = engine.SupportsCustomPrecision;
 
                         S.GET<CoreForm>().btnAutoCorrupt.Visible = engine.SupportsAutoCorrupt;
                         if (!engine.SupportsAutoCorrupt)
@@ -294,7 +300,7 @@ namespace RTCV.UI
                         if (!engine.SupportsMemoryDomains)
                             S.GET<MemoryDomainsForm>().Hide();
 
-                        LocalNetCoreRouter.Route(Endpoints.Vanguard, Remote.UpdatedSelectedPluginEngine, engine, true);
+                        LocalNetCoreRouter.Route(Endpoints.CorruptCore, Remote.UpdatedSelectedPluginEngine, engine, true);
                     }
                     else
                     {

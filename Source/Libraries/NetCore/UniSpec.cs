@@ -97,13 +97,6 @@ namespace RTCV.NetCore
             }
 
 
-            //Propagation happens first so if something fails during serialization, it doesn't update the original spec.
-            if (_propagationIsEnabled && propagate)
-            {
-                OnSpecUpdated(new SpecUpdateEventArgs(partialSpec, synced));
-            }
-
-
             //For initial
             foreach (var key in partialSpec.specDico.Keys)
             {
@@ -113,17 +106,19 @@ namespace RTCV.NetCore
             //Increment the version
             base.version++;
 
+
+            if (_propagationIsEnabled && propagate)
+            {
+                OnSpecUpdated(new SpecUpdateEventArgs(partialSpec, synced));
+            }
         }
 
         public void Update(string key, object value, bool propagate = true, bool synced = true)
         {
 
             PartialSpec spec = new PartialSpec(name);
-
-            //Propagation happens first so if something fails during serialization, it doesn't update the original spec.
-            Update(spec, propagate, synced);
-
             spec[key] = value;
+            Update(spec, propagate, synced);
         }
 
         public PartialSpec GetPartialSpec()

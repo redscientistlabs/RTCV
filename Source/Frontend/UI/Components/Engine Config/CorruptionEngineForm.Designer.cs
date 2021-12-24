@@ -128,6 +128,7 @@ namespace RTCV.UI
             // cbSelectedEngine
             // 
             this.cbSelectedEngine.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
+            this.cbSelectedEngine.DisplayMember = "Text";
             this.cbSelectedEngine.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSelectedEngine.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cbSelectedEngine.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -148,6 +149,7 @@ namespace RTCV.UI
             this.cbSelectedEngine.Size = new System.Drawing.Size(165, 21);
             this.cbSelectedEngine.TabIndex = 138;
             this.cbSelectedEngine.Tag = "color:normal";
+            this.cbSelectedEngine.ValueMember = "Value";
             this.cbSelectedEngine.SelectedIndexChanged += new System.EventHandler(this.UpdateEngine);
             this.cbSelectedEngine.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
