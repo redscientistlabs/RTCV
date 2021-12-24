@@ -125,6 +125,8 @@ namespace RTCV.CorruptCore
             set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_SELECTEDENGINE, value);
         }
 
+        public static ICorruptionEngine SelectedPluginEngine { get; set; } = null;
+
         public static int CurrentPrecision
         {
             get => (int)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_CURRENTPRECISION];
@@ -815,6 +817,15 @@ namespace RTCV.CorruptCore
                         }
 
                         return bl;
+                    }
+                    else if (SelectedEngine == CorruptionEngine.PLUGIN)
+                    {
+                        //The plugin handles everything
+
+                        if (SelectedPluginEngine != null)
+                        {
+                            return SelectedPluginEngine.GetBlastLayer(Intensity);
+                        }
                     }
 
                     bl = new BlastLayer();

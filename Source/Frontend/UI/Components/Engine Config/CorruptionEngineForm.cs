@@ -80,6 +80,19 @@ namespace RTCV.UI
 
         }
 
+        public void RegisterPluginEngine(ICorruptionEngine engine)
+        {
+            if (engine != null && engine.Control != null)
+            {
+                engine.Control.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
+                this.Controls.Add(engine.Control);
+            }
+            else
+            {
+                throw new Exception("Failed to register plugin engine, engine object was null or inner control object was null");
+            }
+        }
+
         public void SetVectorToExtendedExtended()
         {
             int interestLimiter = -1;
@@ -252,6 +265,39 @@ namespace RTCV.UI
                     break;
 
                 default:
+                    //Must be a plugin engine
+
+                    RtcCore.SelectedEngine = CorruptionEngine.PLUGIN;
+
+                    var engine = (cbSelectedEngine.SelectedItem as ICorruptionEngine);
+                    var control = engine?.Control;
+ 
+
+                    if (engine != null && control != null)
+                    {
+                        control.Visible = true;
+                        cbCustomPrecision.Visible = engine.SupportsCustomPrecision;
+
+                        S.GET<CoreForm>().btnAutoCorrupt.Visible = engine.SupportsAutoCorrupt;
+                        if (!engine.SupportsAutoCorrupt)
+                        {
+                            S.GET<CoreForm>().AutoCorrupt = false;
+                        }
+
+                        if (!engine.SupportsGeneralParameters)
+                        {
+                            S.GET<GeneralParametersForm>().Hide();
+                            S.GET<GlitchHarvesterIntensityForm>().Hide();
+                        }
+
+                        if (!engine.SupportsMemoryDomains)
+                            S.GET<MemoryDomainsForm>().Hide();
+                    }
+                    else
+                    {
+                        throw new Exception("Plugin Engine error, could not fetch Interface or Control objects");
+                    }
+
                     break;
             }
 

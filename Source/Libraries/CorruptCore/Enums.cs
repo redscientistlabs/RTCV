@@ -84,6 +84,7 @@ namespace RTCV.CorruptCore
         CLUSTER,
         BLASTGENERATORENGINE,
         CUSTOM,
+        PLUGIN,
         NONE
     }
 
