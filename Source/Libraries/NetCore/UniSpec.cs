@@ -96,6 +96,14 @@ namespace RTCV.NetCore
                 throw new Exception("Name mismatch between PartialSpec and FullSpec");
             }
 
+
+            //Propagation happens first so if something fails during serialization, it doesn't update the original spec.
+            if (_propagationIsEnabled && propagate)
+            {
+                OnSpecUpdated(new SpecUpdateEventArgs(partialSpec, synced));
+            }
+
+
             //For initial
             foreach (var key in partialSpec.specDico.Keys)
             {
@@ -105,33 +113,17 @@ namespace RTCV.NetCore
             //Increment the version
             base.version++;
 
-            if (_propagationIsEnabled && propagate)
-            {
-                OnSpecUpdated(new SpecUpdateEventArgs(partialSpec, synced));
-            }
         }
 
         public void Update(string key, object value, bool propagate = true, bool synced = true)
         {
-            /*
-            //Make a partial spec and pass it into Update(PartialSpec)
-            if (RTC_NetcoreImplementation.isStandaloneEmu && name == "RTCSpec" && key != RTCSPEC.CORE_AUTOCORRUPT.ToString())
-                throw new Exception("Tried updating the RTCSpec from Emuhawk");
-
-            if (RTC_NetcoreImplementation.isStandaloneUI && name == "EmuSpec")
-                throw new Exception("Tried updating the EmuSpec from StandaloneRTC");
-                */
-            /*
-            if(value is bool)
-            {
-                bool boolValue = (bool)value;
-                if (boolValue == false)
-                    value = null;
-            }*/
 
             PartialSpec spec = new PartialSpec(name);
-            spec[key] = value;
+
+            //Propagation happens first so if something fails during serialization, it doesn't update the original spec.
             Update(spec, propagate, synced);
+
+            spec[key] = value;
         }
 
         public PartialSpec GetPartialSpec()

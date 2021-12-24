@@ -8,5 +8,6 @@ namespace RTCV.NetCore
         public static volatile FullSpec CorruptCoreSpec;
         public static volatile FullSpec VanguardSpec;
         public static volatile FullSpec UISpec;
+        public static volatile FullSpec PluginSpec;
     }
 }

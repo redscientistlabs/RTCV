@@ -174,9 +174,10 @@ namespace RTCV.UI
 
             e.setReturnValue(true);
 
-            //Push the UI and CorruptCore spec (since we're master)
+            //Push the UI, Plugin and CorruptCore spec (since we're master)
             LocalNetCoreRouter.Route(Endpoints.CorruptCore, Remote.PushUISpec, AllSpec.UISpec.GetPartialSpec(), true);
             LocalNetCoreRouter.Route(Endpoints.CorruptCore, Remote.PushCorruptCoreSpec, AllSpec.CorruptCoreSpec.GetPartialSpec(), true);
+            LocalNetCoreRouter.Route(Endpoints.CorruptCore, Remote.PushPluginSpec, AllSpec.PluginSpec.GetPartialSpec(), true);
 
             SyncObjectSingleton.FormExecute(() =>
             {

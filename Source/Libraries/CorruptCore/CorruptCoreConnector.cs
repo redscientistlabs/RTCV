@@ -69,6 +69,17 @@ namespace RTCV.CorruptCore
                         SyncObjectSingleton.FormExecute(() => AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false));
                         break;
 
+
+                    //UI sent a copy of the Plugin spec
+                    case Remote.PushPluginSpec:
+                        PushPluginSpec((PartialSpec)advancedMessage.objectValue, ref e);
+                        break;
+
+                    //UI sent an update of the CorruptCore spec
+                    case Remote.PushPluginSpecUpdate:
+                        SyncObjectSingleton.FormExecute(() => AllSpec.PluginSpec?.Update((PartialSpec)advancedMessage.objectValue, false));
+                        break;
+
                     case Remote.EventDomainsUpdated:
                         var domainsChanged = (bool)advancedMessage.objectValue;
                         MemoryDomains.RefreshDomains(domainsChanged);
@@ -336,6 +347,21 @@ namespace RTCV.CorruptCore
                     LocalNetCoreRouter.Route(Endpoints.Default, Remote.PushCorruptCoreSpecUpdate, partial, true);
                 };
                 MemoryDomains.RefreshDomains();
+            });
+            e.setReturnValue(true);
+        }
+
+        private static void PushPluginSpec(PartialSpec partialSpec, ref NetCoreEventArgs e)
+        {
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                AllSpec.PluginSpec = new FullSpec(partialSpec, !RtcCore.Attached);
+                AllSpec.PluginSpec.SpecUpdated += (ob, eas) =>
+                {
+                    PartialSpec partial = eas.partialSpec;
+                    LocalNetCoreRouter.Route(Endpoints.Default, Remote.PushPluginSpecUpdate, partial, true);
+                };
+
             });
             e.setReturnValue(true);
         }

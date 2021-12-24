@@ -22,6 +22,8 @@ namespace RTCV.NetCore.Commands
         public const string PushVanguardSpecUpdate = nameof(Remote) + "_" + nameof(PushVanguardSpecUpdate);
         public const string PushCorruptCoreSpec = nameof(Remote) + "_" + nameof(PushCorruptCoreSpec);
         public const string PushCorruptCoreSpecUpdate = nameof(Remote) + "_" + nameof(PushCorruptCoreSpecUpdate);
+        public const string PushPluginSpec = nameof(Remote) + "_" + nameof(PushPluginSpec);
+        public const string PushPluginSpecUpdate = nameof(Remote) + "_" + nameof(PushPluginSpecUpdate);
         public const string PushUISpec = nameof(Remote) + "_" + nameof(PushUISpec);
         public const string PushUISpecUpdate = nameof(Remote) + "_" + nameof(PushUISpecUpdate);
         public const string AllSpecSent = nameof(Remote) + "_" + nameof(AllSpecSent);

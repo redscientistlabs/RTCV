@@ -388,8 +388,8 @@ namespace RTCV.CorruptCore
                 rtcSpecTemplate.Insert(StockpileManagerEmuSide.getDefaultPartial());
                 rtcSpecTemplate.Insert(Render.getDefaultPartial());
 
+                //Setup CorruptCore Spec
                 AllSpec.CorruptCoreSpec = new FullSpec(rtcSpecTemplate, !Attached); //You have to feed a partial spec as a template
-
                 AllSpec.CorruptCoreSpec.SpecUpdated += (o, e) =>
                 {
                     PartialSpec partial = e.partialSpec;
@@ -403,12 +403,21 @@ namespace RTCV.CorruptCore
                     }
                 };
 
-                /*
-                if (RTC_StockpileManager.BackupedState != null)
-                    RTC_StockpileManager.BackupedState.Run();
-                else
-                    CorruptCoreSpec.Update(RTCSPEC.CORE_AUTOCORRUPT.ToString(), false);
-                    */
+                //Setup Plugin Global Spec
+                AllSpec.PluginSpec = new FullSpec(new PartialSpec("PluginSpec"), !Attached); //You have to feed a partial spec as a template
+                AllSpec.PluginSpec.SpecUpdated += (o, e) =>
+                {
+                    PartialSpec partial = e.partialSpec;
+                    if (IsStandaloneUI)
+                    {
+                        LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.PushPluginSpecUpdate, partial, true);
+                    }
+                    else
+                    {
+                        LocalNetCoreRouter.Route(NetCore.Endpoints.UI, NetCore.Commands.Remote.PushPluginSpecUpdate, partial, true);
+                    }
+                };
+
             }
             catch (Exception ex)
             {
