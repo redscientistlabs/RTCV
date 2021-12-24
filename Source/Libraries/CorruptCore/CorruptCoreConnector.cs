@@ -107,6 +107,11 @@ namespace RTCV.CorruptCore
                         e.setReturnValue(true);
                         break;
 
+                    case Remote.UpdatedSelectedPluginEngine:
+                        CorruptCore.RtcCore.SelectedPluginEngine = (ICorruptionEngine)advancedMessage.objectValue;
+                        e.setReturnValue(true);
+                        break;
+
                     case Remote.PushRTCSpecUpdate:
                         AllSpec.CorruptCoreSpec?.Update((PartialSpec)advancedMessage.objectValue, false);
                         break;

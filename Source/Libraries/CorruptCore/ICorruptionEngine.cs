@@ -8,6 +8,6 @@ namespace RTCV.CorruptCore
         public bool SupportsMemoryDomains { get; set; }
         public System.Windows.Forms.Form Control { get; set; }
         public BlastLayer GetBlastLayer(long intensity);
-        public void ResyncEmuProcess();
+        public string ToString();
     }
 }

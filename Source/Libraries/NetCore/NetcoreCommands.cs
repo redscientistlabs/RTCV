@@ -32,6 +32,7 @@ namespace RTCV.NetCore.Commands
         public const string EventRestrictFeatures = nameof(Remote) + "_" + nameof(EventRestrictFeatures);
         public const string GetBlastGeneratorLayer = nameof(Remote) + "_" + nameof(GetBlastGeneratorLayer);
         public const string PushRTCSpec = nameof(Remote) + "_" + nameof(PushRTCSpec);
+        public const string UpdatedSelectedPluginEngine = nameof(Remote) + "_" + nameof(UpdatedSelectedPluginEngine);
         public const string PushRTCSpecUpdate = nameof(Remote) + "_" + nameof(PushRTCSpecUpdate);
         public const string PushVMDProtos = nameof(Remote) + "_" + nameof(PushVMDProtos);
         public const string GenerateVMDText = nameof(Remote) + "_" + nameof(GenerateVMDText);

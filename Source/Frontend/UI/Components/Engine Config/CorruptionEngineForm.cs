@@ -8,6 +8,7 @@ namespace RTCV.UI
     using RTCV.Common;
     using RTCV.CorruptCore;
     using RTCV.NetCore;
+    using RTCV.NetCore.Commands;
     using RTCV.UI.Components.Controls;
     using RTCV.UI.Modular;
 
@@ -292,6 +293,8 @@ namespace RTCV.UI
 
                         if (!engine.SupportsMemoryDomains)
                             S.GET<MemoryDomainsForm>().Hide();
+
+                        LocalNetCoreRouter.Route(Endpoints.Vanguard, Remote.UpdatedSelectedPluginEngine, engine, true);
                     }
                     else
                     {
