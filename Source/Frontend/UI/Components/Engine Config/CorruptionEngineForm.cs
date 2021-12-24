@@ -81,6 +81,11 @@ namespace RTCV.UI
 
         }
 
+        public void ResyncAllEngines()
+        {
+            //TODO, Resync all normal engines back to their current values
+        }
+
         public void RegisterPluginEngine(ICorruptionEngine engine)
         {
             if (engine != null && engine.Control != null)
@@ -178,6 +183,8 @@ namespace RTCV.UI
             S.GET<MemoryDomainsForm>().Show();
             S.GET<GlitchHarvesterIntensityForm>().Show();
 
+            ICorruptionEngine previousPluginEngine = null;
+
             switch (cbSelectedEngine.SelectedItem.ToString())
             {
                 case "Nightmare Engine":
@@ -267,10 +274,7 @@ namespace RTCV.UI
                     break;
 
                 default:
-                    //Must be a plugin engine
-
-                    RtcCore.SelectedEngine = CorruptionEngine.PLUGIN;
-
+                    //Must be a plugin engine, right?
 
                     T Cast<T>(T type, object x) => (T)x;
                     var obj = new { Text = "", Value = (ICorruptionEngine)null};
@@ -282,6 +286,12 @@ namespace RTCV.UI
 
                     if (engine != null && control != null)
                     {
+                        if (RtcCore.SelectedPluginEngine != null)
+                            previousPluginEngine = engine;
+
+                        RtcCore.SelectedPluginEngine = engine;
+                        RtcCore.SelectedEngine = CorruptionEngine.PLUGIN;
+
                         control.Visible = true;
                         cbCustomPrecision.Enabled = engine.SupportsCustomPrecision;
 
@@ -301,6 +311,7 @@ namespace RTCV.UI
                             S.GET<MemoryDomainsForm>().Hide();
 
                         LocalNetCoreRouter.Route(Endpoints.CorruptCore, Remote.UpdatedSelectedPluginEngine, engine, true);
+
                     }
                     else
                     {
@@ -327,10 +338,38 @@ namespace RTCV.UI
                 S.GET<MemoryDomainsForm>().lbMemoryDomains.Visible = true;
             }
 
+
             cbSelectedEngine.BringToFront();
             pnCustomPrecision.BringToFront();
 
             LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
+
+
+            //Calls methods for selecting and deselecting if a plugin is stored in the SelectedPluginEngine var
+            if (RtcCore.SelectedPluginEngine != null)
+            {
+                if (previousPluginEngine != null && previousPluginEngine != RtcCore.SelectedPluginEngine)
+                {
+                    //call OnDeselect if we changed from a plugin engine to a different plugin engine
+                    previousPluginEngine.OnDeselect();
+                }
+
+                if (RtcCore.SelectedEngine == CorruptionEngine.PLUGIN)
+                {
+                    //call OnSelect only if we changed from a different plugin
+                    if (previousPluginEngine == null || previousPluginEngine != RtcCore.SelectedPluginEngine)
+                        RtcCore.SelectedPluginEngine.OnSelect(); 
+                }
+                else
+                {
+                    //otherwise, it is a remainder of the previous selected engine and so we call OnDeselect before unloading it
+                    RtcCore.SelectedPluginEngine.OnDeselect();
+                    RtcCore.SelectedPluginEngine = null;
+                }
+
+
+            }
+
         }
 
         public void SetLockBoxes(bool enabled)

@@ -300,17 +300,17 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
 
         #endregion
 
-        private System.Windows.Forms.Panel pnClusterLimiterList;
+        public System.Windows.Forms.Panel pnClusterLimiterList;
         public System.Windows.Forms.CheckBox clusterFilterAll;
         private System.Windows.Forms.Label label29;
         public System.Windows.Forms.ComboBox clusterDirection;
         public System.Windows.Forms.CheckBox clusterSplitUnits;
         private System.Windows.Forms.Label label28;
-        internal System.Windows.Forms.NumericUpDown clusterChunkModifier;
+        public System.Windows.Forms.NumericUpDown clusterChunkModifier;
         private System.Windows.Forms.Label label25;
         public System.Windows.Forms.ComboBox cbClusterMethod;
         private System.Windows.Forms.Label label11;
-        internal System.Windows.Forms.NumericUpDown clusterChunkSize;
+        public System.Windows.Forms.NumericUpDown clusterChunkSize;
         public System.Windows.Forms.ComboBox cbClusterLimiterList;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label22;
