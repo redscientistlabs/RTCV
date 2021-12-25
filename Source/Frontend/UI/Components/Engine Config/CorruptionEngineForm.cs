@@ -21,8 +21,8 @@ namespace RTCV.UI
         public readonly Components.EngineConfig.EngineControls.FreezeEngineControl FreezeEngineControl;
         public readonly Components.EngineConfig.EngineControls.NightmareEngineControl NightmareEngineControl;
         public readonly Components.EngineConfig.EngineControls.HellgenieEngineControl HellgenieEngineControl;
-        public readonly Components.EngineConfig.EngineControls.DistortionEngineControl distortionEngineControl;
-        public readonly Components.EngineConfig.EngineControls.CustomEngineControl customEngineControl;
+        public readonly Components.EngineConfig.EngineControls.DistortionEngineControl DistortionEngineControl;
+        public readonly Components.EngineConfig.EngineControls.CustomEngineControl CustomEngineControl;
         public readonly Components.EngineConfig.EngineControls.PipeEngineControl PipeEngineControl;
         public readonly Components.EngineConfig.EngineControls.BlastGeneratorEngineControl BlastGeneratorEngineControl;
         public readonly Components.EngineConfig.EngineControls.VectorEngineControl VectorEngineControl;
@@ -61,11 +61,11 @@ namespace RTCV.UI
             HellgenieEngineControl = new Components.EngineConfig.EngineControls.HellgenieEngineControl(this);
             this.Controls.Add(HellgenieEngineControl);
 
-            distortionEngineControl = new Components.EngineConfig.EngineControls.DistortionEngineControl(engineControlLocation);
-            this.Controls.Add(distortionEngineControl);
+            DistortionEngineControl = new Components.EngineConfig.EngineControls.DistortionEngineControl(engineControlLocation);
+            this.Controls.Add(DistortionEngineControl);
 
-            customEngineControl = new Components.EngineConfig.EngineControls.CustomEngineControl(engineControlLocation);
-            this.Controls.Add(customEngineControl);
+            CustomEngineControl = new Components.EngineConfig.EngineControls.CustomEngineControl(engineControlLocation);
+            this.Controls.Add(CustomEngineControl);
 
             PipeEngineControl = new Components.EngineConfig.EngineControls.PipeEngineControl(this);
             this.Controls.Add(PipeEngineControl);
@@ -83,7 +83,15 @@ namespace RTCV.UI
 
         public void ResyncAllEngines()
         {
-            //TODO, Resync all normal engines back to their current values
+            //Resyncs all engines to their spec (UI value to Spec)
+            FreezeEngineControl.ResyncEngineUI();
+            NightmareEngineControl.ResyncEngineUI();
+            HellgenieEngineControl.ResyncEngineUI();
+            DistortionEngineControl.ResyncEngineUI();
+            CustomEngineControl.ResyncEngineUI();
+            BlastGeneratorEngineControl.ResyncEngineUI();
+            VectorEngineControl.ResyncEngineUI();
+            ClusterEngineControl.ResyncEngineUI();
         }
 
         public void RegisterPluginEngine(ICorruptionEngine engine)
@@ -168,13 +176,13 @@ namespace RTCV.UI
         {
             NightmareEngineControl.Visible = false;
             HellgenieEngineControl.Visible = false;
-            distortionEngineControl.Visible = false;
+            DistortionEngineControl.Visible = false;
             FreezeEngineControl.Visible = false;
             PipeEngineControl.Visible = false;
             VectorEngineControl.Visible = false;
             ClusterEngineControl.Visible = false;
             BlastGeneratorEngineControl.Visible = false;
-            customEngineControl.Visible = false;
+            CustomEngineControl.Visible = false;
             cbCustomPrecision.Enabled = false;
             nmAlignment.Maximum = RtcCore.CurrentPrecision - 1;
 
@@ -205,7 +213,7 @@ namespace RTCV.UI
 
                 case "Distortion Engine":
                     RtcCore.SelectedEngine = CorruptionEngine.DISTORTION;
-                    distortionEngineControl.Visible = true;
+                    DistortionEngineControl.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
                     S.GET<CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
@@ -256,7 +264,7 @@ namespace RTCV.UI
 
                 case "Custom Engine":
                     RtcCore.SelectedEngine = CorruptionEngine.CUSTOM;
-                    customEngineControl.Visible = true;
+                    CustomEngineControl.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
                     S.GET<CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;

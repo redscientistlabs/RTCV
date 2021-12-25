@@ -21,5 +21,10 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             S.SET(new BlastGeneratorForm());
             S.GET<BlastGeneratorForm>().LoadNoStashKey();
         }
+
+        public void ResyncEngineUI()
+        {
+            //throw new NotImplementedException();
+        }
     }
 }

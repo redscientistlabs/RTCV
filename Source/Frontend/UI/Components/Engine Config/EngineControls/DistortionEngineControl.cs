@@ -1,5 +1,6 @@
 namespace RTCV.UI.Components.EngineConfig.EngineControls
 {
+    using System;
     using System.Drawing;
     using RTCV.NetCore;
 
@@ -13,6 +14,11 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
         private void ResyncDistortionEngine(object sender, System.EventArgs e)
         {
             LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
+        }
+
+        public void ResyncEngineUI()
+        {
+            //throw new NotImplementedException();
         }
     }
 }

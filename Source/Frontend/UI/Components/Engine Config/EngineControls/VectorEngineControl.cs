@@ -1,5 +1,6 @@
 namespace RTCV.UI.Components.EngineConfig.EngineControls
 {
+    using System;
     using System.Drawing;
     using RTCV.CorruptCore;
 
@@ -24,6 +25,11 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             //Do this here as if it's stuck into the designer, it keeps defaulting out
             cbVectorValueList.DataSource = RtcCore.ValueListBindingSource;
             cbVectorLimiterList.DataSource = RtcCore.LimiterListBindingSource;
+        }
+
+        public void ResyncEngineUI()
+        {
+            //throw new NotImplementedException();
         }
     }
 }

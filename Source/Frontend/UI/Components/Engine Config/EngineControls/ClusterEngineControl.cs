@@ -77,5 +77,10 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
         {
             ClusterEngine.FilterAll = clusterFilterAll.Checked;
         }
+
+        public void ResyncEngineUI()
+        {
+            //throw new NotImplementedException();
+        }
     }
 }

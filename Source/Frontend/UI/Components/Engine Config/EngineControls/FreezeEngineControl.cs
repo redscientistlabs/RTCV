@@ -19,5 +19,10 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             btnClearAllFreezes.Click += parent.ClearCheats;
             cbClearFreezesOnRewind.CheckedChanged += parent.OnClearRewindToggle;
         }
+
+        public void ResyncEngineUI()
+        {
+            //throw new NotImplementedException();
+        }
     }
 }
