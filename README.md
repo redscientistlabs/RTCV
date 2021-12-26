@@ -10,7 +10,7 @@
     <!-- Download -->
     <a href="https://redscientist.com/rtc"><img src="https://img.shields.io/badge/download-RTC-red.svg" alt="Download badge" /></a>
     <!-- Discord -->
-    <a href="https://corrupt.wiki/corruptors/rtc/expert#rtc-dev-discord"><img src="https://img.shields.io/discord/279664862836031488.svg" alt="Chat badge" /></a>
+    <a href="https://redscientist.com/discord"><img src="https://img.shields.io/discord/279664862836031488.svg" alt="Chat badge" /></a>
     <!-- Trello -->
     <a href="https://trello.com/b/9QYo50OC/rtcv"><img src="https://img.shields.io/badge/planning-Trello-blue.svg" alt="Trello badge" /></a>
 </p>
