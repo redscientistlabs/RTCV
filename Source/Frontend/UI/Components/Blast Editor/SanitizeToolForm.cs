@@ -307,8 +307,8 @@ namespace RTCV.UI
             };
             newSk.BlastLayer = (BlastLayer)oldSk.BlastLayer.Clone();
             StockpileManagerUISide.StashHistory.Add(newSk);
+            S.GET<StashHistoryForm>().RefreshStashHistory();
 
-            //S.GET<StashHistoryForm>().RefreshStashHistory();
             //S.GET<StockpileManagerForm>().dgvStockpile.ClearSelection();
             //S.GET<StashHistoryForm>().lbStashHistory.ClearSelected();
 
@@ -465,13 +465,14 @@ namespace RTCV.UI
 
             newLayer.AddRange(OriginalLayer.Layer.Where(x => !shownHalf.Contains(x)));
 
-            //subtracted units are disabled rather than deleted
+            /*
+            //subtracted units are disabled rather than deleted (Not good idea as default behavior
             var disabledUnits = OriginalLayer.Layer.Where(x => shownHalf.Contains(x));
             foreach (var unit in disabledUnits)
                 unit.IsEnabled = false;
 
             newLayer.AddRange(disabledUnits);
-
+            */
 
             internalSK.BlastLayer = new BlastLayer(newLayer);
             return internalSK;
