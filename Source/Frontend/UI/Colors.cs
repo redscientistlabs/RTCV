@@ -10,7 +10,7 @@ namespace RTCV.UI
 
     public static class Colors
     {
-        internal static Color GeneralColor = Color.LightSteelBlue;
+        public static Color GeneralColor = Color.LightSteelBlue;
 
         public static Color Light1Color { get; private set; }
         public static Color Light2Color { get; private set; }
