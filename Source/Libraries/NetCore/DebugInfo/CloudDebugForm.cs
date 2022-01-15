@@ -148,7 +148,11 @@ namespace RTCV.NetCore
                 {
                     sb.AppendLine(key + " : " + this._ex.Data[key]);
                 }
-                File.WriteAllText(data, sb.ToString());
+
+                //but ony if contains anything
+                string dataText = sb.ToString();
+                if (!string.IsNullOrWhiteSpace(dataText))
+                    File.WriteAllText(data, dataText);
 
                 //Exporting Specs from RTC's perspective
                 string rtcfile = Path.Combine(tempdebugdir, "RTC_PERSPECTIVE.TXT");
