@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28822.285
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 12.0.31101.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCore", "Source\Libraries\NetCore\NetCore.csproj", "{7E106AEC-5614-4206-9E4D-25759C90E8AE}"
 EndProject
@@ -30,11 +30,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{68C0
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestPlugin", "Source\Plugins\TestPlugin\TestPlugin.csproj", "{B795F19F-133C-4AC5-A124-DAC0DCDBDAC0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScriptHost", "Source\Plugins\ScriptHost\ScriptHost.csproj", "{534A9766-5C29-4B27-84B1-42043A667261}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScriptHost", "Source\Plugins\ScriptHost\ScriptHost.csproj", "{534A9766-5C29-4B27-84B1-42043A667261}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HexEditor", "Source\Plugins\HexEditor\HexEditor.csproj", "{C000A468-A1D6-4278-95C3-3C70573C42EA}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{E6ED2EE0-EC81-41CD-8A29-B2AD6A9158D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstructionEngine", "..\RTCV_Plugin_InstructionEngine\InstructionEngine\InstructionEngine.csproj", "{EA86FB3F-5435-4DF9-9DD2-87991439334F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -86,6 +88,10 @@ Global
 		{E6ED2EE0-EC81-41CD-8A29-B2AD6A9158D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6ED2EE0-EC81-41CD-8A29-B2AD6A9158D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6ED2EE0-EC81-41CD-8A29-B2AD6A9158D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA86FB3F-5435-4DF9-9DD2-87991439334F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA86FB3F-5435-4DF9-9DD2-87991439334F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA86FB3F-5435-4DF9-9DD2-87991439334F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA86FB3F-5435-4DF9-9DD2-87991439334F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -101,6 +107,7 @@ Global
 		{B795F19F-133C-4AC5-A124-DAC0DCDBDAC0} = {68C0A19E-FC93-4AC8-9E17-0D8D2B7F59BF}
 		{534A9766-5C29-4B27-84B1-42043A667261} = {68C0A19E-FC93-4AC8-9E17-0D8D2B7F59BF}
 		{C000A468-A1D6-4278-95C3-3C70573C42EA} = {68C0A19E-FC93-4AC8-9E17-0D8D2B7F59BF}
+		{EA86FB3F-5435-4DF9-9DD2-87991439334F} = {68C0A19E-FC93-4AC8-9E17-0D8D2B7F59BF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EFD75441-C3FA-4DDC-B001-A7EDDC11E8DE}
