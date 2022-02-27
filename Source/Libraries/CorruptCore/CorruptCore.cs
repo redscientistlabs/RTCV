@@ -37,7 +37,7 @@ namespace RTCV.CorruptCore
     public static class RtcCore
     {
         //General RTC Values
-        public const string RtcVersion = "5.0.7-b2";
+        public const string RtcVersion = "5.1.0-b1";
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private static int seed = (int)DateTime.Now.Ticks;
@@ -125,6 +125,8 @@ namespace RTCV.CorruptCore
             set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_SELECTEDENGINE, value);
         }
 
+        public static ICorruptionEngine SelectedPluginEngine { get; set; } = null;
+
         public static int CurrentPrecision
         {
             get => (int)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_CURRENTPRECISION];
@@ -140,13 +142,21 @@ namespace RTCV.CorruptCore
         public static long Intensity
         {
             get => (long)AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_INTENSITY];
-            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_INTENSITY, value);
+            set
+            {
+                AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_INTENSITY, value);
+                UISideHooks.OnIntensityChanged(value);
+            }
         }
 
         public static long ErrorDelay
         {
             get => (long)AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_ERRORDELAY];
-            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_ERRORDELAY, value);
+            set
+            {
+                AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_ERRORDELAY, value);
+                UISideHooks.OnErrorDelayChanged(value);
+            }
         }
 
         public static BlastRadius Radius
@@ -158,7 +168,10 @@ namespace RTCV.CorruptCore
         public static bool AutoCorrupt
         {
             get => (bool)(AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_AUTOCORRUPT] ?? false);
-            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_AUTOCORRUPT, value);
+            set { 
+                AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_AUTOCORRUPT, value);
+                UISideHooks.OnAutoCorruptToggled(value);
+            }
         }
 
         public static bool DontCleanSavestatesOnQuit
@@ -375,8 +388,8 @@ namespace RTCV.CorruptCore
                 rtcSpecTemplate.Insert(StockpileManagerEmuSide.getDefaultPartial());
                 rtcSpecTemplate.Insert(Render.getDefaultPartial());
 
+                //Setup CorruptCore Spec
                 AllSpec.CorruptCoreSpec = new FullSpec(rtcSpecTemplate, !Attached); //You have to feed a partial spec as a template
-
                 AllSpec.CorruptCoreSpec.SpecUpdated += (o, e) =>
                 {
                     PartialSpec partial = e.partialSpec;
@@ -390,12 +403,21 @@ namespace RTCV.CorruptCore
                     }
                 };
 
-                /*
-                if (RTC_StockpileManager.BackupedState != null)
-                    RTC_StockpileManager.BackupedState.Run();
-                else
-                    CorruptCoreSpec.Update(RTCSPEC.CORE_AUTOCORRUPT.ToString(), false);
-                    */
+                //Setup Plugin Global Spec
+                AllSpec.PluginSpec = new FullSpec(new PartialSpec("PluginSpec"), !Attached); //You have to feed a partial spec as a template
+                AllSpec.PluginSpec.SpecUpdated += (o, e) =>
+                {
+                    PartialSpec partial = e.partialSpec;
+                    if (IsStandaloneUI)
+                    {
+                        LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.PushPluginSpecUpdate, partial, true);
+                    }
+                    else
+                    {
+                        LocalNetCoreRouter.Route(NetCore.Endpoints.UI, NetCore.Commands.Remote.PushPluginSpecUpdate, partial, true);
+                    }
+                };
+
             }
             catch (Exception ex)
             {
@@ -708,7 +730,7 @@ namespace RTCV.CorruptCore
         public static BlastLayer GenerateBlastLayerOnAllThreads()
         {
             //We pull the domains here because if the syncsettings changed, there's a chance the domains changed
-            var domains = (string[])AllSpec.UISpec["SELECTEDDOMAINS"];
+            var domains = (string[])AllSpec.UISpec[UISPEC.SELECTEDDOMAINS];
             var cpus = Environment.ProcessorCount;
 
             //If there is only one thread, only generate a single BlastLayer.
@@ -804,6 +826,15 @@ namespace RTCV.CorruptCore
                         }
 
                         return bl;
+                    }
+                    else if (SelectedEngine == CorruptionEngine.PLUGIN)
+                    {
+                        //The plugin handles everything
+
+                        if (SelectedPluginEngine != null)
+                        {
+                            return SelectedPluginEngine.GetBlastLayer(Intensity);
+                        }
                     }
 
                     bl = new BlastLayer();
@@ -1029,7 +1060,7 @@ namespace RTCV.CorruptCore
         public static BlastTarget GetBlastTarget()
         {
             //Standalone version of BlastRadius SPREAD
-            var selectedDomains = (string[])AllSpec.UISpec["SELECTEDDOMAINS"];
+            var selectedDomains = (string[])AllSpec.UISpec[UISPEC.SELECTEDDOMAINS];
             var domain = selectedDomains[RND.Next(selectedDomains.Length)];
             var maxAddress = MemoryDomains.GetInterface(domain).Size;
             var randomAddress = RND.NextLong(0, maxAddress - 1);
@@ -1112,7 +1143,7 @@ namespace RTCV.CorruptCore
                     if (autoCorrupt && cpuStepCount >= errorDelay)
                     {
                         cpuStepCount = 0;
-                        BlastLayer bl = RtcCore.GenerateBlastLayer((string[])AllSpec.UISpec["SELECTEDDOMAINS"]);
+                        BlastLayer bl = RtcCore.GenerateBlastLayer((string[])AllSpec.UISpec[UISPEC.SELECTEDDOMAINS]);
                         bl?.Apply(false, false);
                     }
                 }

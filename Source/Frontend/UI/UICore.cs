@@ -62,7 +62,7 @@ namespace RTCV.UI
 
             PartialSpec p = new PartialSpec("UISpec");
 
-            p["SELECTEDDOMAINS"] = new string[] { };
+            p[UISPEC.SELECTEDDOMAINS] = new string[] { };
 
             AllSpec.UISpec = new FullSpec(p, !RtcCore.Attached);
             AllSpec.UISpec.SpecUpdated += (o, e) =>
@@ -342,7 +342,7 @@ namespace RTCV.UI
             }
         }
 
-        internal static bool CheckHotkey(string trigger)
+        public static bool CheckHotkey(string trigger)
         {
             logger.Info("Hotkey {trigger} pressed", trigger);
             switch (trigger)

@@ -84,6 +84,7 @@ namespace RTCV.CorruptCore
         CLUSTER,
         BLASTGENERATORENGINE,
         CUSTOM,
+        PLUGIN,
         NONE
     }
 
@@ -238,6 +239,7 @@ namespace RTCV.CorruptCore
         public static readonly string SYSTEMPREFIX = nameof(SYSTEMPREFIX);
         public static readonly string SYSTEMCORE = nameof(SYSTEMCORE);
         public static readonly string SYNCSETTINGS = nameof(SYNCSETTINGS);
+        public static readonly string SELECTEDDOMAINS = nameof(SELECTEDDOMAINS);
         public static readonly string OPENROMFILENAME = nameof(OPENROMFILENAME);
         public static readonly string SYNCOBJECT = nameof(SYNCOBJECT);
         public static readonly string MEMORYDOMAINS_INTERFACES = nameof(MEMORYDOMAINS_INTERFACES);
@@ -261,7 +263,9 @@ namespace RTCV.CorruptCore
         public static readonly string LOADSTATE_USES_CALLBACKS = nameof(LOADSTATE_USES_CALLBACKS);
     }
 
-    public enum UISPEC
+    [SuppressMessage("Microsoft.Design", "CA1707", Justification = "UISPEC names may have underscores since changing this would break serialization.")]
+    public static class UISPEC
     {
+        public static readonly string SELECTEDDOMAINS = nameof(SELECTEDDOMAINS);
     }
 }

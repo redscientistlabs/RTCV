@@ -174,9 +174,10 @@ namespace RTCV.UI
 
             e.setReturnValue(true);
 
-            //Push the UI and CorruptCore spec (since we're master)
+            //Push the UI, Plugin and CorruptCore spec (since we're master)
             LocalNetCoreRouter.Route(Endpoints.CorruptCore, Remote.PushUISpec, AllSpec.UISpec.GetPartialSpec(), true);
             LocalNetCoreRouter.Route(Endpoints.CorruptCore, Remote.PushCorruptCoreSpec, AllSpec.CorruptCoreSpec.GetPartialSpec(), true);
+            LocalNetCoreRouter.Route(Endpoints.CorruptCore, Remote.PushPluginSpec, AllSpec.PluginSpec.GetPartialSpec(), true);
 
             SyncObjectSingleton.FormExecute(() =>
             {
@@ -289,7 +290,7 @@ namespace RTCV.UI
 
                     if (StockpileManagerUISide.BackupedState != null)
                     {
-                        S.GET<MemoryDomainsForm>().RefreshDomainsAndKeepSelected(StockpileManagerUISide.BackupedState.SelectedDomains.ToArray());
+                        S.GET<MemoryDomainsForm>().RefreshDomainsAndKeepSelected(StockpileManagerUISide.BackupedState.SelectedDomains.Distinct().ToArray());
                     }
 
                     GameProtection.Start();
@@ -567,7 +568,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                var sanitizeTool = S.GET<FastSanitizeToolForm>();
+                var sanitizeTool = S.GET<SanitizeToolForm>();
                 sanitizeTool.StartSanitizing(null, null);
             });
         }
@@ -576,7 +577,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                var sanitizeTool = S.GET<FastSanitizeToolForm>();
+                var sanitizeTool = S.GET<SanitizeToolForm>();
                 sanitizeTool.lbSteps.Items.Clear(); //this is a hack for leaving in automation
                 sanitizeTool.LeaveAndKeepChanges(null, null);
             });
@@ -586,7 +587,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                var sanitizeTool = S.GET<FastSanitizeToolForm>();
+                var sanitizeTool = S.GET<SanitizeToolForm>();
                 sanitizeTool.lbSteps.Items.Clear(); //this is a hack for leaving in automation
                 sanitizeTool.LeaveAndSubtractChanges(null, null);
             });
@@ -596,7 +597,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                var sanitizeTool = S.GET<FastSanitizeToolForm>();
+                var sanitizeTool = S.GET<SanitizeToolForm>();
                 sanitizeTool.YesEffect(null, null);
             });
         }
@@ -605,7 +606,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                var sanitizeTool = S.GET<FastSanitizeToolForm>();
+                var sanitizeTool = S.GET<SanitizeToolForm>();
                 sanitizeTool.NoEffect(null, null);
             });
         }
@@ -614,7 +615,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                var sanitizeTool = S.GET<FastSanitizeToolForm>();
+                var sanitizeTool = S.GET<SanitizeToolForm>();
                 sanitizeTool.Reroll(null, null);
             });
         }

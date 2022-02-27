@@ -182,7 +182,8 @@ namespace RTCV.CorruptCore
                             {
                                 case CustomValueSource.VALUELIST:
                                     {
-                                        value = Filtering.GetRandomConstant(ValueListHash, precision);
+                                        value = Filtering.GetRandomConstant(ValueListHash, precision, mi.PeekBytes(safeAddress, safeAddress + precision, !mi.BigEndian));
+                                        //value = Filtering.GetRandomConstant(ValueListHash, precision);
                                     }
                                     break;
 

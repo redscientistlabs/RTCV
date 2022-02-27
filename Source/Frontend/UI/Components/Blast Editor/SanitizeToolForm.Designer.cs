@@ -3,34 +3,34 @@ using RTCV.UI;
 
 namespace RTCV.UI
 {
-	partial class SanitizeToolForm
+    partial class SanitizeToolForm
     {
-		/// <summary>
-		/// Required designer variable.
-		/// </summary>
-		private System.ComponentModel.IContainer components = null;
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
 
-		/// <summary>
-		/// Clean up any resources being used.
-		/// </summary>
-		/// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-		protected override void Dispose(bool disposing)
-		{
-			if (disposing && (components != null))
-			{
-				components.Dispose();
-			}
-			base.Dispose(disposing);
-		}
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
 
-		#region Windows Form Designer generated code
+        #region Windows Form Designer generated code
 
-		/// <summary>
-		/// Required method for Designer support - do not modify
-		/// the contents of this method with the code editor.
-		/// </summary>
-		private void InitializeComponent()
-		{
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SanitizeToolForm));
             this.lbOriginalLayerSize = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -59,18 +59,18 @@ namespace RTCV.UI
             this.pnBlastLayerSanitization.SuspendLayout();
             this.panel6.SuspendLayout();
             this.SuspendLayout();
-            //
+            // 
             // lbOriginalLayerSize
-            //
+            // 
             this.lbOriginalLayerSize.ForeColor = System.Drawing.Color.White;
             this.lbOriginalLayerSize.Location = new System.Drawing.Point(10, 4);
             this.lbOriginalLayerSize.Name = "lbOriginalLayerSize";
             this.lbOriginalLayerSize.Size = new System.Drawing.Size(304, 19);
             this.lbOriginalLayerSize.TabIndex = 132;
             this.lbOriginalLayerSize.Text = "Original Layer size:";
-            //
+            // 
             // label3
-            //
+            // 
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.ForeColor = System.Drawing.Color.White;
@@ -79,9 +79,9 @@ namespace RTCV.UI
             this.label3.Size = new System.Drawing.Size(95, 13);
             this.label3.TabIndex = 135;
             this.label3.Text = "Sanitize progress";
-            //
+            // 
             // btnYesEffect
-            //
+            // 
             this.btnYesEffect.BackColor = System.Drawing.Color.Gray;
             this.btnYesEffect.FlatAppearance.BorderSize = 0;
             this.btnYesEffect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -96,18 +96,18 @@ namespace RTCV.UI
             this.btnYesEffect.Text = "Yes";
             this.btnYesEffect.UseVisualStyleBackColor = false;
             this.btnYesEffect.Click += new System.EventHandler(this.YesEffect);
-            //
+            // 
             // lbCurrentLayerSize
-            //
+            // 
             this.lbCurrentLayerSize.ForeColor = System.Drawing.Color.White;
             this.lbCurrentLayerSize.Location = new System.Drawing.Point(11, 22);
             this.lbCurrentLayerSize.Name = "lbCurrentLayerSize";
             this.lbCurrentLayerSize.Size = new System.Drawing.Size(307, 19);
             this.lbCurrentLayerSize.TabIndex = 133;
             this.lbCurrentLayerSize.Text = "Current Layer size:";
-            //
+            // 
             // pnBlastLayerSanitization
-            //
+            // 
             this.pnBlastLayerSanitization.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnBlastLayerSanitization.Controls.Add(this.btnReroll);
             this.pnBlastLayerSanitization.Controls.Add(this.btnReplayLast);
@@ -119,9 +119,9 @@ namespace RTCV.UI
             this.pnBlastLayerSanitization.Size = new System.Drawing.Size(332, 116);
             this.pnBlastLayerSanitization.TabIndex = 185;
             this.pnBlastLayerSanitization.Visible = false;
-            //
+            // 
             // btnReroll
-            //
+            // 
             this.btnReroll.BackColor = System.Drawing.Color.Gray;
             this.btnReroll.FlatAppearance.BorderSize = 0;
             this.btnReroll.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -137,9 +137,9 @@ namespace RTCV.UI
             this.btnReroll.Text = "Try different attempt";
             this.btnReroll.UseVisualStyleBackColor = false;
             this.btnReroll.Click += new System.EventHandler(this.Reroll);
-            //
+            // 
             // btnReplayLast
-            //
+            // 
             this.btnReplayLast.BackColor = System.Drawing.Color.Gray;
             this.btnReplayLast.FlatAppearance.BorderSize = 0;
             this.btnReplayLast.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -154,9 +154,9 @@ namespace RTCV.UI
             this.btnReplayLast.Text = "Reload current attempt (Replay corruption)";
             this.btnReplayLast.UseVisualStyleBackColor = false;
             this.btnReplayLast.Click += new System.EventHandler(this.ReplayCorruption);
-            //
+            // 
             // lbSanitizationText
-            //
+            // 
             this.lbSanitizationText.Font = new System.Drawing.Font("Segoe UI Symbol", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbSanitizationText.Location = new System.Drawing.Point(16, 6);
             this.lbSanitizationText.Name = "lbSanitizationText";
@@ -164,9 +164,9 @@ namespace RTCV.UI
             this.lbSanitizationText.TabIndex = 187;
             this.lbSanitizationText.Text = "Is the effect you are looking for still present?";
             this.lbSanitizationText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            //
+            // 
             // btnNoEffect
-            //
+            // 
             this.btnNoEffect.BackColor = System.Drawing.Color.Gray;
             this.btnNoEffect.FlatAppearance.BorderSize = 0;
             this.btnNoEffect.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -181,19 +181,19 @@ namespace RTCV.UI
             this.btnNoEffect.Text = "No";
             this.btnNoEffect.UseVisualStyleBackColor = false;
             this.btnNoEffect.Click += new System.EventHandler(this.NoEffect);
-            //
+            // 
             // label2
-            //
+            // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(16, 106);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(75, 13);
             this.label2.TabIndex = 186;
             this.label2.Text = "Guided steps";
-            //
+            // 
             // btnBackPrevState
-            //
-            this.btnBackPrevState.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+            // 
+            this.btnBackPrevState.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBackPrevState.BackColor = System.Drawing.Color.Gray;
             this.btnBackPrevState.FlatAppearance.BorderSize = 0;
@@ -209,18 +209,18 @@ namespace RTCV.UI
             this.btnBackPrevState.Text = "Go back to previous state";
             this.btnBackPrevState.UseVisualStyleBackColor = false;
             this.btnBackPrevState.Click += new System.EventHandler(this.GoBackToPreviousState);
-            //
+            // 
             // label6
-            //
+            // 
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(369, 15);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(99, 13);
             this.label6.TabIndex = 193;
             this.label6.Text = "Sanitization Steps";
-            //
+            // 
             // panel6
-            //
+            // 
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel6.Controls.Add(this.pbProgress);
             this.panel6.Controls.Add(this.lbCurrentLayerSize);
@@ -229,16 +229,16 @@ namespace RTCV.UI
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(332, 60);
             this.panel6.TabIndex = 194;
-            //
+            // 
             // pbProgress
-            //
+            // 
             this.pbProgress.Location = new System.Drawing.Point(16, 43);
             this.pbProgress.Name = "pbProgress";
             this.pbProgress.Size = new System.Drawing.Size(302, 7);
             this.pbProgress.TabIndex = 134;
-            //
+            // 
             // btnLeaveWithChanges
-            //
+            // 
             this.btnLeaveWithChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnLeaveWithChanges.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnLeaveWithChanges.FlatAppearance.BorderSize = 0;
@@ -254,9 +254,9 @@ namespace RTCV.UI
             this.btnLeaveWithChanges.Text = "Keep changes";
             this.btnLeaveWithChanges.UseVisualStyleBackColor = false;
             this.btnLeaveWithChanges.Click += new System.EventHandler(this.LeaveAndKeepChanges);
-            //
+            // 
             // btnLeaveSubstractChanges
-            //
+            // 
             this.btnLeaveSubstractChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnLeaveSubstractChanges.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnLeaveSubstractChanges.FlatAppearance.BorderSize = 0;
@@ -272,9 +272,9 @@ namespace RTCV.UI
             this.btnLeaveSubstractChanges.Text = "Subtract result from original";
             this.btnLeaveSubstractChanges.UseVisualStyleBackColor = false;
             this.btnLeaveSubstractChanges.Click += new System.EventHandler(this.LeaveAndSubtractChanges);
-            //
+            // 
             // btnLeaveWithoutChanges
-            //
+            // 
             this.btnLeaveWithoutChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnLeaveWithoutChanges.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnLeaveWithoutChanges.FlatAppearance.BorderSize = 0;
@@ -290,9 +290,9 @@ namespace RTCV.UI
             this.btnLeaveWithoutChanges.Text = "Reload original Blast Layer";
             this.btnLeaveWithoutChanges.UseVisualStyleBackColor = false;
             this.btnLeaveWithoutChanges.Click += new System.EventHandler(this.LeaveWithoutChanges);
-            //
+            // 
             // btnStartSanitizing
-            //
+            // 
             this.btnStartSanitizing.BackColor = System.Drawing.Color.Gray;
             this.btnStartSanitizing.FlatAppearance.BorderSize = 0;
             this.btnStartSanitizing.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -307,11 +307,11 @@ namespace RTCV.UI
             this.btnStartSanitizing.Text = "Start Sanitizing";
             this.btnStartSanitizing.UseVisualStyleBackColor = false;
             this.btnStartSanitizing.Click += new System.EventHandler(this.StartSanitizing);
-            //
+            // 
             // lbSteps
-            //
-            this.lbSteps.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            // 
+            this.lbSteps.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbSteps.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.lbSteps.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -327,9 +327,9 @@ namespace RTCV.UI
             this.lbSteps.Size = new System.Drawing.Size(181, 305);
             this.lbSteps.TabIndex = 191;
             this.lbSteps.Tag = "color:dark2";
-            //
+            // 
             // label1
-            //
+            // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.Font = new System.Drawing.Font("Segoe UI Symbol", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(15, 243);
@@ -338,16 +338,16 @@ namespace RTCV.UI
             this.label1.TabIndex = 198;
             this.label1.Text = "Send results to Blast Editor";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            //
+            // 
             // btnAddToStockpile
-            //
+            // 
             this.btnAddToStockpile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnAddToStockpile.BackColor = System.Drawing.Color.Gray;
             this.btnAddToStockpile.FlatAppearance.BorderSize = 0;
             this.btnAddToStockpile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddToStockpile.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnAddToStockpile.ForeColor = System.Drawing.Color.White;
-            this.btnAddToStockpile.Image = ((System.Drawing.Image)(resources.GetObject("btnAddToStockpile.Image")));
+            this.btnAddToStockpile.Image = global::RTCV.UI.Properties.Resources.paper_airplane_icon_16;
             this.btnAddToStockpile.Location = new System.Drawing.Point(219, 292);
             this.btnAddToStockpile.Name = "btnAddToStockpile";
             this.btnAddToStockpile.Size = new System.Drawing.Size(132, 25);
@@ -359,9 +359,9 @@ namespace RTCV.UI
             this.btnAddToStockpile.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAddToStockpile.UseVisualStyleBackColor = false;
             this.btnAddToStockpile.Click += new System.EventHandler(this.AddToStockpile);
-            //
+            // 
             // btnLeaveNoChanges
-            //
+            // 
             this.btnLeaveNoChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnLeaveNoChanges.BackColor = System.Drawing.Color.Gray;
             this.btnLeaveNoChanges.FlatAppearance.BorderSize = 0;
@@ -377,9 +377,9 @@ namespace RTCV.UI
             this.btnLeaveNoChanges.Text = "Leave with no changes";
             this.btnLeaveNoChanges.UseVisualStyleBackColor = false;
             this.btnLeaveNoChanges.Click += new System.EventHandler(this.LeaveWithNoChanges);
-            //
+            // 
             // lbWorkingPleaseWait
-            //
+            // 
             this.lbWorkingPleaseWait.Font = new System.Drawing.Font("Segoe UI Symbol", 12F);
             this.lbWorkingPleaseWait.Location = new System.Drawing.Point(95, 165);
             this.lbWorkingPleaseWait.Name = "lbWorkingPleaseWait";
@@ -388,16 +388,16 @@ namespace RTCV.UI
             this.lbWorkingPleaseWait.Text = "Working... Please Wait...";
             this.lbWorkingPleaseWait.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lbWorkingPleaseWait.Visible = false;
-            //
+            // 
             // btnAddToStash
-            //
+            // 
             this.btnAddToStash.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnAddToStash.BackColor = System.Drawing.Color.Gray;
             this.btnAddToStash.FlatAppearance.BorderSize = 0;
             this.btnAddToStash.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddToStash.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnAddToStash.ForeColor = System.Drawing.Color.White;
-            this.btnAddToStash.Image = ((System.Drawing.Image)(resources.GetObject("btnAddToStash.Image")));
+            this.btnAddToStash.Image = global::RTCV.UI.Properties.Resources.paper_airplane_icon_16;
             this.btnAddToStash.Location = new System.Drawing.Point(219, 261);
             this.btnAddToStash.Name = "btnAddToStash";
             this.btnAddToStash.Size = new System.Drawing.Size(132, 25);
@@ -409,9 +409,9 @@ namespace RTCV.UI
             this.btnAddToStash.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAddToStash.UseVisualStyleBackColor = false;
             this.btnAddToStash.Click += new System.EventHandler(this.AddToStash);
-            //
-            // SanitizeToolForm
-            //
+            // 
+            // FastSanitizeToolForm
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -439,7 +439,7 @@ namespace RTCV.UI
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(590, 401);
-            this.Name = "SanitizeToolForm";
+            this.Name = "FastSanitizeToolForm";
             this.Tag = "color:dark1";
             this.Text = "Sanitize Tool";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
@@ -448,16 +448,16 @@ namespace RTCV.UI
             this.ResumeLayout(false);
             this.PerformLayout();
 
-		}
+        }
 
-		#endregion
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.Label lbOriginalLayerSize;
+        #endregion
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lbOriginalLayerSize;
         private Label lbCurrentLayerSize;
         private Panel pnBlastLayerSanitization;
         public Label lbSanitizationText;
         private Label label2;
-        public Components.Controls.ListBoxExtended lbSteps;
+        public RTCV.UI.Components.Controls.ListBoxExtended lbSteps;
         private Button btnBackPrevState;
         private Label label6;
         private Panel panel6;

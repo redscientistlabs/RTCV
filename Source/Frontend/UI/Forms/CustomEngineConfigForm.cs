@@ -722,5 +722,15 @@ namespace RTCV.UI
                 this.Focus();
             }
         }
+
+        private void CustomEngineConfigForm_Shown(object sender, EventArgs e)
+        {
+            CustomEngine.InitTemplates();
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            CustomEngine.InitTemplates();
+        }
     }
 }

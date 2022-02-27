@@ -840,13 +840,17 @@ namespace RTCV.CorruptCore
                 {
                     if (this.GeneratedUsingValueList && !RtcCore.RerollIgnoresOriginalSource)
                     {
-                        Value = Filtering.GetRandomConstant(CustomEngine.ValueListHash, Precision);
+                        var mi = MemoryDomains.GetInterface(SourceDomain);
+                        Value = Filtering.GetRandomConstant(CustomEngine.ValueListHash, Precision, mi.PeekBytes(SourceAddress, SourceAddress + precision, !mi.BigEndian));
+                        //Value = Filtering.GetRandomConstant(CustomEngine.ValueListHash, Precision);
                     }
                     else
                     {
                         if (CustomEngine.ValueSource == CustomValueSource.VALUELIST)
                         {
-                            Value = Filtering.GetRandomConstant(CustomEngine.ValueListHash, Precision);
+                            var mi = MemoryDomains.GetInterface(SourceDomain);
+                            Value = Filtering.GetRandomConstant(CustomEngine.ValueListHash, Precision, mi.PeekBytes(SourceAddress, SourceAddress + precision, !mi.BigEndian));
+                            //Value = Filtering.GetRandomConstant(CustomEngine.ValueListHash, Precision);
                             return;
                         }
 
@@ -911,7 +915,9 @@ namespace RTCV.CorruptCore
                 {
                     if (this.GeneratedUsingValueList && !RtcCore.RerollIgnoresOriginalSource)
                     {
-                        Value = Filtering.GetRandomConstant(VectorEngine.ValueListHash, Precision);
+                        var mi = MemoryDomains.GetInterface(SourceDomain);
+                        Value = Filtering.GetRandomConstant(VectorEngine.ValueListHash, Precision, mi.PeekBytes(SourceAddress, SourceAddress + precision, !mi.BigEndian));
+                        //Value = Filtering.GetRandomConstant(VectorEngine.ValueListHash, Precision);
                     }
                     else
                     {
@@ -948,7 +954,7 @@ namespace RTCV.CorruptCore
             }
             else if (Source == BlastUnitSource.STORE)
             {
-                string[] _selectedDomains = (string[])NetCore.AllSpec.UISpec["SELECTEDDOMAINS"];
+                string[] _selectedDomains = (string[])NetCore.AllSpec.UISpec[UISPEC.SELECTEDDOMAINS];
 
                 //Always reroll domain before address
                 if (RtcCore.RerollSourceDomain)

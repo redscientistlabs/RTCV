@@ -15,5 +15,10 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             S.GET<CustomEngineConfigForm>().Show();
             S.GET<CustomEngineConfigForm>().Focus();
         }
+
+        public void ResyncEngineUI()
+        {
+            //throw new NotImplementedException();
+        }
     }
 }

@@ -132,5 +132,10 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
 
             updatingMinMax = false;
         }
+
+        public void ResyncEngineUI()
+        {
+            //throw new NotImplementedException();
+        }
     }
 }

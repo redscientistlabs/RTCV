@@ -38,6 +38,7 @@
             this.btnDebugInfo = new System.Windows.Forms.Button();
             this.lbException = new System.Windows.Forms.Label();
             this.tbStackTrace = new System.Windows.Forms.TextBox();
+            this.btnOtherActions = new System.Windows.Forms.Button();
             this.pnBottom.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,9 +59,9 @@
             this.btnContinue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.btnContinue.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnContinue.ForeColor = System.Drawing.Color.White;
-            this.btnContinue.Location = new System.Drawing.Point(425, 33);
+            this.btnContinue.Location = new System.Drawing.Point(414, 37);
             this.btnContinue.Name = "btnContinue";
-            this.btnContinue.Size = new System.Drawing.Size(82, 23);
+            this.btnContinue.Size = new System.Drawing.Size(93, 24);
             this.btnContinue.TabIndex = 3;
             this.btnContinue.Text = "Continue";
             this.btnContinue.UseVisualStyleBackColor = false;
@@ -84,7 +85,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(152, 8);
+            this.label2.Location = new System.Drawing.Point(159, 8);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(243, 13);
             this.label2.TabIndex = 6;
@@ -94,7 +95,7 @@
             // 
             this.tbKey.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.tbKey.ForeColor = System.Drawing.Color.White;
-            this.tbKey.Location = new System.Drawing.Point(153, 24);
+            this.tbKey.Location = new System.Drawing.Point(160, 24);
             this.tbKey.Multiline = true;
             this.tbKey.Name = "tbKey";
             this.tbKey.ReadOnly = true;
@@ -155,12 +156,27 @@
             this.tbStackTrace.Size = new System.Drawing.Size(495, 189);
             this.tbStackTrace.TabIndex = 9;
             // 
+            // btnOtherActions
+            // 
+            this.btnOtherActions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOtherActions.BackColor = System.Drawing.Color.Maroon;
+            this.btnOtherActions.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOtherActions.ForeColor = System.Drawing.Color.White;
+            this.btnOtherActions.Location = new System.Drawing.Point(490, 9);
+            this.btnOtherActions.Name = "btnOtherActions";
+            this.btnOtherActions.Size = new System.Drawing.Size(17, 24);
+            this.btnOtherActions.TabIndex = 10;
+            this.btnOtherActions.Text = "!";
+            this.btnOtherActions.UseVisualStyleBackColor = false;
+            this.btnOtherActions.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnOtherActions_MouseDown);
+            // 
             // CloudDebug
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(519, 326);
+            this.Controls.Add(this.btnOtherActions);
             this.Controls.Add(this.tbStackTrace);
             this.Controls.Add(this.lbException);
             this.Controls.Add(this.pnBottom);
@@ -169,6 +185,7 @@
             this.MinimumSize = new System.Drawing.Size(535, 365);
             this.Name = "CloudDebug";
             this.Text = "Cloud Debug";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CloudDebug_FormClosed);
             this.Load += new System.EventHandler(this.CloudDebug_Load);
             this.pnBottom.ResumeLayout(false);
             this.pnBottom.PerformLayout();
@@ -187,5 +204,6 @@
 		private System.Windows.Forms.Label lbException;
 		private System.Windows.Forms.TextBox tbStackTrace;
 		private System.Windows.Forms.Button btnDebugInfo;
-	}
+        private System.Windows.Forms.Button btnOtherActions;
+    }
 }

@@ -74,5 +74,10 @@ namespace RTCV.UI
             S.GET<CoreForm>().cbUseAutoKillSwitch.Checked = false;
             AutoKillSwitch.KillEmulator(true);
         }
+
+        private void btnEmergencySavestates_Click(object sender, EventArgs e)
+        {
+            S.GET<SavestateManagerForm>().SaveSavestateList(null, null);
+        }
     }
 }

@@ -76,6 +76,7 @@
             this.gbStoreSettings = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.pnTopBar = new System.Windows.Forms.Panel();
+            this.btnRefresh = new System.Windows.Forms.Button();
             this.btnCustomTemplateSaveAs = new System.Windows.Forms.Button();
             this.btnCustomTemplateLoad = new System.Windows.Forms.Button();
             this.btnCustomTemplateSave = new System.Windows.Forms.Button();
@@ -111,9 +112,9 @@
             this.groupBox1.SuspendLayout();
             this.pnCustomPrecision.SuspendLayout();
             this.SuspendLayout();
-            //
+            // 
             // btnClearActive
-            //
+            // 
             this.btnClearActive.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.btnClearActive.FlatAppearance.BorderSize = 0;
             this.btnClearActive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -128,9 +129,9 @@
             this.btnClearActive.Text = "Clear all active units";
             this.btnClearActive.UseVisualStyleBackColor = false;
             this.btnClearActive.Click += new System.EventHandler(this.ClearActive);
-            //
+            // 
             // gbUnitSource
-            //
+            // 
             this.gbUnitSource.BackColor = System.Drawing.Color.Transparent;
             this.gbUnitSource.Controls.Add(this.rbUnitSourceStore);
             this.gbUnitSource.Controls.Add(this.rbUnitSourceValue);
@@ -143,9 +144,9 @@
             this.gbUnitSource.TabStop = false;
             this.gbUnitSource.Tag = "";
             this.gbUnitSource.Text = "Unit Source";
-            //
+            // 
             // rbUnitSourceStore
-            //
+            // 
             this.rbUnitSourceStore.AutoSize = true;
             this.rbUnitSourceStore.BackColor = System.Drawing.Color.Transparent;
             this.rbUnitSourceStore.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -157,9 +158,9 @@
             this.rbUnitSourceStore.Text = "Store";
             this.rbUnitSourceStore.UseVisualStyleBackColor = false;
             this.rbUnitSourceStore.CheckedChanged += new System.EventHandler(this.HandleUnitSourceChange);
-            //
+            // 
             // rbUnitSourceValue
-            //
+            // 
             this.rbUnitSourceValue.AutoSize = true;
             this.rbUnitSourceValue.Checked = true;
             this.rbUnitSourceValue.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -172,9 +173,9 @@
             this.rbUnitSourceValue.Text = "Value";
             this.rbUnitSourceValue.UseVisualStyleBackColor = true;
             this.rbUnitSourceValue.CheckedChanged += new System.EventHandler(this.HandleUnitSourceChange);
-            //
+            // 
             // gbValueList
-            //
+            // 
             this.gbValueList.BackColor = System.Drawing.Color.Transparent;
             this.gbValueList.Controls.Add(this.cbValueList);
             this.gbValueList.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -185,9 +186,9 @@
             this.gbValueList.TabIndex = 167;
             this.gbValueList.TabStop = false;
             this.gbValueList.Text = "Value List";
-            //
+            // 
             // cbValueList
-            //
+            // 
             this.cbValueList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.cbValueList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbValueList.DropDownWidth = 130;
@@ -203,9 +204,9 @@
             this.cbValueList.TabIndex = 87;
             this.cbValueList.Tag = "color:dark1";
             this.cbValueList.SelectedIndexChanged += new System.EventHandler(this.HandleValueListSelectionChange);
-            //
+            // 
             // gbValueSettings
-            //
+            // 
             this.gbValueSettings.BackColor = System.Drawing.Color.Transparent;
             this.gbValueSettings.Controls.Add(this.gbValueRange);
             this.gbValueSettings.Controls.Add(this.gbValueList);
@@ -218,9 +219,9 @@
             this.gbValueSettings.TabIndex = 169;
             this.gbValueSettings.TabStop = false;
             this.gbValueSettings.Text = "Value Settings";
-            //
+            // 
             // gbValueRange
-            //
+            // 
             this.gbValueRange.BackColor = System.Drawing.Color.Transparent;
             this.gbValueRange.Controls.Add(this.label26);
             this.gbValueRange.Controls.Add(this.label27);
@@ -234,9 +235,9 @@
             this.gbValueRange.TabIndex = 166;
             this.gbValueRange.TabStop = false;
             this.gbValueRange.Text = "Range";
-            //
+            // 
             // label26
-            //
+            // 
             this.label26.AutoSize = true;
             this.label26.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label26.ForeColor = System.Drawing.Color.White;
@@ -245,9 +246,9 @@
             this.label26.Size = new System.Drawing.Size(59, 13);
             this.label26.TabIndex = 169;
             this.label26.Text = "Max Value";
-            //
+            // 
             // label27
-            //
+            // 
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label27.ForeColor = System.Drawing.Color.White;
@@ -256,9 +257,9 @@
             this.label27.Size = new System.Drawing.Size(58, 13);
             this.label27.TabIndex = 166;
             this.label27.Text = "Min Value";
-            //
+            // 
             // nmMaxValue
-            //
+            // 
             this.nmMaxValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.nmMaxValue.Font = new System.Drawing.Font("Consolas", 8F);
             this.nmMaxValue.ForeColor = System.Drawing.Color.White;
@@ -284,9 +285,9 @@
             0,
             0});
             this.nmMaxValue.ValueChanged += new System.EventHandler<RTCV.UI.Components.Controls.ValueUpdateEventArgs<decimal>>(this.HandleMaxValueChange);
-            //
+            // 
             // nmMinValue
-            //
+            // 
             this.nmMinValue.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.nmMinValue.Font = new System.Drawing.Font("Consolas", 8F);
             this.nmMinValue.ForeColor = System.Drawing.Color.White;
@@ -312,9 +313,9 @@
             0,
             0});
             this.nmMinValue.ValueChanged += new System.EventHandler<RTCV.UI.Components.Controls.ValueUpdateEventArgs<decimal>>(this.HandleMinValueChange);
-            //
+            // 
             // gbValueSource
-            //
+            // 
             this.gbValueSource.BackColor = System.Drawing.Color.Transparent;
             this.gbValueSource.Controls.Add(this.rbRandom);
             this.gbValueSource.Controls.Add(this.rbRange);
@@ -327,9 +328,9 @@
             this.gbValueSource.TabIndex = 185;
             this.gbValueSource.TabStop = false;
             this.gbValueSource.Text = "Value Source";
-            //
+            // 
             // rbRandom
-            //
+            // 
             this.rbRandom.AutoSize = true;
             this.rbRandom.BackColor = System.Drawing.Color.Transparent;
             this.rbRandom.Checked = true;
@@ -343,9 +344,9 @@
             this.rbRandom.Text = "Random";
             this.rbRandom.UseVisualStyleBackColor = false;
             this.rbRandom.CheckedChanged += new System.EventHandler(this.HandleValueSourceChange);
-            //
+            // 
             // rbRange
-            //
+            // 
             this.rbRange.AutoSize = true;
             this.rbRange.BackColor = System.Drawing.Color.Transparent;
             this.rbRange.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -357,9 +358,9 @@
             this.rbRange.Text = "Range";
             this.rbRange.UseVisualStyleBackColor = false;
             this.rbRange.CheckedChanged += new System.EventHandler(this.HandleValueSourceChange);
-            //
+            // 
             // rbValueList
-            //
+            // 
             this.rbValueList.AutoSize = true;
             this.rbValueList.BackColor = System.Drawing.Color.Transparent;
             this.rbValueList.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -371,9 +372,9 @@
             this.rbValueList.Text = "Value List";
             this.rbValueList.UseVisualStyleBackColor = false;
             this.rbValueList.CheckedChanged += new System.EventHandler(this.HandleValueSourceChange);
-            //
+            // 
             // gbLimiterList
-            //
+            // 
             this.gbLimiterList.BackColor = System.Drawing.Color.Transparent;
             this.gbLimiterList.Controls.Add(this.groupBox2);
             this.gbLimiterList.Controls.Add(this.gbStoreCompare);
@@ -387,9 +388,9 @@
             this.gbLimiterList.TabIndex = 181;
             this.gbLimiterList.TabStop = false;
             this.gbLimiterList.Text = "Limiter List";
-            //
+            // 
             // groupBox2
-            //
+            // 
             this.groupBox2.Controls.Add(this.rbLimiterExecute);
             this.groupBox2.Controls.Add(this.rbLimiterGenerate);
             this.groupBox2.Controls.Add(this.rbLimiterFirstExecute);
@@ -402,9 +403,9 @@
             this.groupBox2.TabIndex = 188;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Limiter Time";
-            //
+            // 
             // rbLimiterExecute
-            //
+            // 
             this.rbLimiterExecute.AutoSize = true;
             this.rbLimiterExecute.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.rbLimiterExecute.ForeColor = System.Drawing.Color.White;
@@ -415,9 +416,9 @@
             this.rbLimiterExecute.Text = "Execute";
             this.rbLimiterExecute.UseVisualStyleBackColor = true;
             this.rbLimiterExecute.CheckedChanged += new System.EventHandler(this.HandleLimiterTimeSelectionChange);
-            //
+            // 
             // rbLimiterGenerate
-            //
+            // 
             this.rbLimiterGenerate.AutoSize = true;
             this.rbLimiterGenerate.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.rbLimiterGenerate.ForeColor = System.Drawing.Color.White;
@@ -428,9 +429,9 @@
             this.rbLimiterGenerate.Text = "Generate";
             this.rbLimiterGenerate.UseVisualStyleBackColor = true;
             this.rbLimiterGenerate.CheckedChanged += new System.EventHandler(this.HandleLimiterTimeSelectionChange);
-            //
+            // 
             // rbLimiterFirstExecute
-            //
+            // 
             this.rbLimiterFirstExecute.AutoSize = true;
             this.rbLimiterFirstExecute.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.rbLimiterFirstExecute.ForeColor = System.Drawing.Color.White;
@@ -441,9 +442,9 @@
             this.rbLimiterFirstExecute.Text = "First Execute";
             this.rbLimiterFirstExecute.UseVisualStyleBackColor = true;
             this.rbLimiterFirstExecute.CheckedChanged += new System.EventHandler(this.HandleLimiterTimeSelectionChange);
-            //
+            // 
             // rbLimiterNone
-            //
+            // 
             this.rbLimiterNone.AutoSize = true;
             this.rbLimiterNone.Checked = true;
             this.rbLimiterNone.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -456,9 +457,9 @@
             this.rbLimiterNone.Text = "None";
             this.rbLimiterNone.UseVisualStyleBackColor = true;
             this.rbLimiterNone.CheckedChanged += new System.EventHandler(this.HandleLimiterTimeSelectionChange);
-            //
+            // 
             // gbStoreCompare
-            //
+            // 
             this.gbStoreCompare.BackColor = System.Drawing.Color.Transparent;
             this.gbStoreCompare.Controls.Add(this.rbStoreModeBoth);
             this.gbStoreCompare.Controls.Add(this.rbStoreModeSource);
@@ -472,9 +473,9 @@
             this.gbStoreCompare.TabIndex = 184;
             this.gbStoreCompare.TabStop = false;
             this.gbStoreCompare.Text = "Store Compare";
-            //
+            // 
             // rbStoreModeBoth
-            //
+            // 
             this.rbStoreModeBoth.AutoSize = true;
             this.rbStoreModeBoth.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.rbStoreModeBoth.ForeColor = System.Drawing.Color.White;
@@ -485,9 +486,9 @@
             this.rbStoreModeBoth.Text = "Both";
             this.rbStoreModeBoth.UseVisualStyleBackColor = true;
             this.rbStoreModeBoth.CheckedChanged += new System.EventHandler(this.HandleStoreLimiterModeChange);
-            //
+            // 
             // rbStoreModeSource
-            //
+            // 
             this.rbStoreModeSource.AutoSize = true;
             this.rbStoreModeSource.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.rbStoreModeSource.ForeColor = System.Drawing.Color.White;
@@ -498,9 +499,9 @@
             this.rbStoreModeSource.Text = "Source Address";
             this.rbStoreModeSource.UseVisualStyleBackColor = true;
             this.rbStoreModeSource.CheckedChanged += new System.EventHandler(this.HandleStoreLimiterModeChange);
-            //
+            // 
             // rbStoreModeAddress
-            //
+            // 
             this.rbStoreModeAddress.AutoSize = true;
             this.rbStoreModeAddress.Checked = true;
             this.rbStoreModeAddress.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -514,9 +515,9 @@
             this.rbStoreModeAddress.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.rbStoreModeAddress.UseVisualStyleBackColor = true;
             this.rbStoreModeAddress.CheckedChanged += new System.EventHandler(this.HandleStoreLimiterModeChange);
-            //
+            // 
             // cbLimiterInverted
-            //
+            // 
             this.cbLimiterInverted.AutoSize = true;
             this.cbLimiterInverted.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.cbLimiterInverted.ForeColor = System.Drawing.Color.White;
@@ -527,9 +528,9 @@
             this.cbLimiterInverted.Text = "Inverted";
             this.cbLimiterInverted.UseVisualStyleBackColor = true;
             this.cbLimiterInverted.CheckedChanged += new System.EventHandler(this.HandleLimiterInvertedChange);
-            //
+            // 
             // cbLimiterList
-            //
+            // 
             this.cbLimiterList.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.cbLimiterList.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbLimiterList.DropDownWidth = 130;
@@ -545,9 +546,9 @@
             this.cbLimiterList.TabIndex = 87;
             this.cbLimiterList.Tag = "color:dark1";
             this.cbLimiterList.SelectedIndexChanged += new System.EventHandler(this.HandleLimiterListSelectionChange);
-            //
+            // 
             // cbLoopUnit
-            //
+            // 
             this.cbLoopUnit.AutoSize = true;
             this.cbLoopUnit.BackColor = System.Drawing.Color.Transparent;
             this.cbLoopUnit.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -559,9 +560,9 @@
             this.cbLoopUnit.Text = "Loop Generated Units";
             this.cbLoopUnit.UseVisualStyleBackColor = false;
             this.cbLoopUnit.CheckedChanged += new System.EventHandler(this.HandleLoopUnitChange);
-            //
+            // 
             // gbStepSettings
-            //
+            // 
             this.gbStepSettings.Controls.Add(this.label11);
             this.gbStepSettings.Controls.Add(this.nmTilt);
             this.gbStepSettings.Controls.Add(this.cbLoopUnit);
@@ -577,9 +578,9 @@
             this.gbStepSettings.TabIndex = 188;
             this.gbStepSettings.TabStop = false;
             this.gbStepSettings.Text = "Modifiers";
-            //
+            // 
             // label11
-            //
+            // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label11.ForeColor = System.Drawing.Color.White;
@@ -588,9 +589,9 @@
             this.label11.Size = new System.Drawing.Size(23, 13);
             this.label11.TabIndex = 191;
             this.label11.Text = "Tilt";
-            //
+            // 
             // nmTilt
-            //
+            // 
             this.nmTilt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.nmTilt.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.nmTilt.ForeColor = System.Drawing.Color.White;
@@ -616,9 +617,9 @@
             0,
             0});
             this.nmTilt.ValueChanged += new System.EventHandler<RTCV.UI.Components.Controls.ValueUpdateEventArgs<decimal>>(this.HandleTiltChange);
-            //
+            // 
             // label9
-            //
+            // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label9.ForeColor = System.Drawing.Color.White;
@@ -627,9 +628,9 @@
             this.label9.Size = new System.Drawing.Size(47, 13);
             this.label9.TabIndex = 188;
             this.label9.Text = "Lifetime";
-            //
+            // 
             // label10
-            //
+            // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label10.ForeColor = System.Drawing.Color.White;
@@ -638,9 +639,9 @@
             this.label10.Size = new System.Drawing.Size(35, 13);
             this.label10.TabIndex = 189;
             this.label10.Text = "Delay";
-            //
+            // 
             // nmDelay
-            //
+            // 
             this.nmDelay.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.nmDelay.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.nmDelay.ForeColor = System.Drawing.Color.White;
@@ -666,9 +667,9 @@
             0,
             0});
             this.nmDelay.ValueChanged += new System.EventHandler<RTCV.UI.Components.Controls.ValueUpdateEventArgs<decimal>>(this.HandleDelayChange);
-            //
+            // 
             // nmLifetime
-            //
+            // 
             this.nmLifetime.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.nmLifetime.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.nmLifetime.ForeColor = System.Drawing.Color.White;
@@ -694,9 +695,9 @@
             0,
             0});
             this.nmLifetime.ValueChanged += new System.EventHandler<RTCV.UI.Components.Controls.ValueUpdateEventArgs<decimal>>(this.HandleLifetimeChange);
-            //
+            // 
             // gbStoreTime
-            //
+            // 
             this.gbStoreTime.Controls.Add(this.rbStoreImmediate);
             this.gbStoreTime.Controls.Add(this.rbStoreFirstExecute);
             this.gbStoreTime.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -707,9 +708,9 @@
             this.gbStoreTime.TabIndex = 0;
             this.gbStoreTime.TabStop = false;
             this.gbStoreTime.Text = "Start Storing";
-            //
+            // 
             // rbStoreImmediate
-            //
+            // 
             this.rbStoreImmediate.AutoSize = true;
             this.rbStoreImmediate.BackColor = System.Drawing.Color.Transparent;
             this.rbStoreImmediate.Checked = true;
@@ -723,9 +724,9 @@
             this.rbStoreImmediate.Text = "Immediate";
             this.rbStoreImmediate.UseVisualStyleBackColor = false;
             this.rbStoreImmediate.CheckedChanged += new System.EventHandler(this.HandleStoreTimeChange);
-            //
+            // 
             // rbStoreFirstExecute
-            //
+            // 
             this.rbStoreFirstExecute.AutoSize = true;
             this.rbStoreFirstExecute.BackColor = System.Drawing.Color.Transparent;
             this.rbStoreFirstExecute.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -737,9 +738,9 @@
             this.rbStoreFirstExecute.Text = "First Execute";
             this.rbStoreFirstExecute.UseVisualStyleBackColor = false;
             this.rbStoreFirstExecute.CheckedChanged += new System.EventHandler(this.HandleStoreTimeChange);
-            //
+            // 
             // rbStoreSame
-            //
+            // 
             this.rbStoreSame.AutoSize = true;
             this.rbStoreSame.BackColor = System.Drawing.Color.Transparent;
             this.rbStoreSame.Checked = true;
@@ -753,9 +754,9 @@
             this.rbStoreSame.Text = "Same";
             this.rbStoreSame.UseVisualStyleBackColor = false;
             this.rbStoreSame.CheckedChanged += new System.EventHandler(this.HandleStoreAddressChange);
-            //
+            // 
             // rbStoreRandom
-            //
+            // 
             this.rbStoreRandom.AutoSize = true;
             this.rbStoreRandom.BackColor = System.Drawing.Color.Transparent;
             this.rbStoreRandom.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -767,9 +768,9 @@
             this.rbStoreRandom.Text = "Random";
             this.rbStoreRandom.UseVisualStyleBackColor = false;
             this.rbStoreRandom.CheckedChanged += new System.EventHandler(this.HandleStoreAddressChange);
-            //
+            // 
             // gbStoreType
-            //
+            // 
             this.gbStoreType.Controls.Add(this.rbStoreStep);
             this.gbStoreType.Controls.Add(this.rbStoreOnce);
             this.gbStoreType.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -780,9 +781,9 @@
             this.gbStoreType.TabIndex = 183;
             this.gbStoreType.TabStop = false;
             this.gbStoreType.Text = "Store Type";
-            //
+            // 
             // rbStoreStep
-            //
+            // 
             this.rbStoreStep.AutoSize = true;
             this.rbStoreStep.BackColor = System.Drawing.Color.Transparent;
             this.rbStoreStep.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -794,9 +795,9 @@
             this.rbStoreStep.Text = "Continuous";
             this.rbStoreStep.UseVisualStyleBackColor = false;
             this.rbStoreStep.CheckedChanged += new System.EventHandler(this.HandleStoreTypeChange);
-            //
+            // 
             // rbStoreOnce
-            //
+            // 
             this.rbStoreOnce.AutoSize = true;
             this.rbStoreOnce.BackColor = System.Drawing.Color.Transparent;
             this.rbStoreOnce.Checked = true;
@@ -810,9 +811,9 @@
             this.rbStoreOnce.Text = "Once";
             this.rbStoreOnce.UseVisualStyleBackColor = false;
             this.rbStoreOnce.CheckedChanged += new System.EventHandler(this.HandleStoreTypeChange);
-            //
+            // 
             // gbStoreSettings
-            //
+            // 
             this.gbStoreSettings.BackColor = System.Drawing.Color.Transparent;
             this.gbStoreSettings.Controls.Add(this.groupBox3);
             this.gbStoreSettings.Controls.Add(this.gbStoreType);
@@ -826,9 +827,9 @@
             this.gbStoreSettings.TabIndex = 180;
             this.gbStoreSettings.TabStop = false;
             this.gbStoreSettings.Text = "Store Settings";
-            //
+            // 
             // groupBox3
-            //
+            // 
             this.groupBox3.Controls.Add(this.rbStoreSame);
             this.groupBox3.Controls.Add(this.rbStoreRandom);
             this.groupBox3.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -839,10 +840,11 @@
             this.groupBox3.TabIndex = 184;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Store Source";
-            //
+            // 
             // pnTopBar
-            //
+            // 
             this.pnTopBar.BackColor = System.Drawing.Color.Gray;
+            this.pnTopBar.Controls.Add(this.btnRefresh);
             this.pnTopBar.Controls.Add(this.btnCustomTemplateSaveAs);
             this.pnTopBar.Controls.Add(this.btnCustomTemplateLoad);
             this.pnTopBar.Controls.Add(this.btnCustomTemplateSave);
@@ -854,15 +856,32 @@
             this.pnTopBar.Size = new System.Drawing.Size(459, 51);
             this.pnTopBar.TabIndex = 191;
             this.pnTopBar.Tag = "color:normal";
-            //
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.btnRefresh.FlatAppearance.BorderSize = 0;
+            this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRefresh.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnRefresh.ForeColor = System.Drawing.Color.Black;
+            this.btnRefresh.Image = global::RTCV.UI.Properties.Resources.refresh_new;
+            this.btnRefresh.Location = new System.Drawing.Point(229, 17);
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(33, 25);
+            this.btnRefresh.TabIndex = 194;
+            this.btnRefresh.TabStop = false;
+            this.btnRefresh.Tag = "";
+            this.btnRefresh.UseVisualStyleBackColor = false;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            // 
             // btnCustomTemplateSaveAs
-            //
+            // 
             this.btnCustomTemplateSaveAs.BackColor = System.Drawing.Color.Firebrick;
             this.btnCustomTemplateSaveAs.FlatAppearance.BorderSize = 0;
             this.btnCustomTemplateSaveAs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCustomTemplateSaveAs.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnCustomTemplateSaveAs.ForeColor = System.Drawing.Color.Black;
-            this.btnCustomTemplateSaveAs.Location = new System.Drawing.Point(329, 14);
+            this.btnCustomTemplateSaveAs.Location = new System.Drawing.Point(329, 17);
             this.btnCustomTemplateSaveAs.Name = "btnCustomTemplateSaveAs";
             this.btnCustomTemplateSaveAs.Size = new System.Drawing.Size(65, 25);
             this.btnCustomTemplateSaveAs.TabIndex = 193;
@@ -871,15 +890,15 @@
             this.btnCustomTemplateSaveAs.Text = "Save as";
             this.btnCustomTemplateSaveAs.UseVisualStyleBackColor = false;
             this.btnCustomTemplateSaveAs.Click += new System.EventHandler(this.SaveAsCustomTemplate);
-            //
+            // 
             // btnCustomTemplateLoad
-            //
+            // 
             this.btnCustomTemplateLoad.BackColor = System.Drawing.Color.Orange;
             this.btnCustomTemplateLoad.FlatAppearance.BorderSize = 0;
             this.btnCustomTemplateLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCustomTemplateLoad.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnCustomTemplateLoad.ForeColor = System.Drawing.Color.Black;
-            this.btnCustomTemplateLoad.Location = new System.Drawing.Point(268, 14);
+            this.btnCustomTemplateLoad.Location = new System.Drawing.Point(268, 17);
             this.btnCustomTemplateLoad.Name = "btnCustomTemplateLoad";
             this.btnCustomTemplateLoad.Size = new System.Drawing.Size(55, 25);
             this.btnCustomTemplateLoad.TabIndex = 192;
@@ -888,16 +907,16 @@
             this.btnCustomTemplateLoad.Text = "Load";
             this.btnCustomTemplateLoad.UseVisualStyleBackColor = false;
             this.btnCustomTemplateLoad.Click += new System.EventHandler(this.LoadCustomTemplate);
-            //
+            // 
             // btnCustomTemplateSave
-            //
+            // 
             this.btnCustomTemplateSave.BackColor = System.Drawing.Color.LightGray;
             this.btnCustomTemplateSave.Enabled = false;
             this.btnCustomTemplateSave.FlatAppearance.BorderSize = 0;
             this.btnCustomTemplateSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnCustomTemplateSave.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnCustomTemplateSave.ForeColor = System.Drawing.Color.DimGray;
-            this.btnCustomTemplateSave.Location = new System.Drawing.Point(401, 14);
+            this.btnCustomTemplateSave.Location = new System.Drawing.Point(401, 17);
             this.btnCustomTemplateSave.Name = "btnCustomTemplateSave";
             this.btnCustomTemplateSave.Size = new System.Drawing.Size(50, 25);
             this.btnCustomTemplateSave.TabIndex = 191;
@@ -906,9 +925,9 @@
             this.btnCustomTemplateSave.Text = "Save";
             this.btnCustomTemplateSave.UseVisualStyleBackColor = false;
             this.btnCustomTemplateSave.Click += new System.EventHandler(this.SaveCustomTemplate);
-            //
+            // 
             // cbSelectedTemplate
-            //
+            // 
             this.cbSelectedTemplate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.cbSelectedTemplate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbSelectedTemplate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -922,9 +941,9 @@
             this.cbSelectedTemplate.TabIndex = 168;
             this.cbSelectedTemplate.Tag = "color:dark1";
             this.cbSelectedTemplate.SelectedIndexChanged += new System.EventHandler(this.HandleSelectedTemplateChange);
-            //
+            // 
             // label2
-            //
+            // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.label2.ForeColor = System.Drawing.Color.White;
@@ -933,9 +952,9 @@
             this.label2.Size = new System.Drawing.Size(102, 13);
             this.label2.TabIndex = 167;
             this.label2.Text = "Selected Template:";
-            //
+            // 
             // panel1
-            //
+            // 
             this.panel1.BackColor = System.Drawing.Color.Gray;
             this.panel1.Controls.Add(this.gbUnitSource);
             this.panel1.Controls.Add(this.lbFlavorText);
@@ -951,9 +970,9 @@
             this.panel1.Size = new System.Drawing.Size(441, 365);
             this.panel1.TabIndex = 192;
             this.panel1.Tag = "color:normal";
-            //
+            // 
             // lbFlavorText
-            //
+            // 
             this.lbFlavorText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lbFlavorText.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))));
             this.lbFlavorText.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -963,9 +982,9 @@
             this.lbFlavorText.TabIndex = 194;
             this.lbFlavorText.Text = "Flavor text";
             this.lbFlavorText.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // groupBox1
-            //
+            // 
             this.groupBox1.Controls.Add(this.updownMaxInfiniteUnits);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.cbClearRewind);
@@ -977,9 +996,9 @@
             this.groupBox1.TabIndex = 192;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Step Settings";
-            //
+            // 
             // updownMaxInfiniteUnits
-            //
+            // 
             this.updownMaxInfiniteUnits.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.updownMaxInfiniteUnits.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.updownMaxInfiniteUnits.ForeColor = System.Drawing.Color.White;
@@ -1004,18 +1023,18 @@
             0,
             0,
             0});
-            //
+            // 
             // label1
-            //
+            // 
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(5, 42);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(70, 13);
             this.label1.TabIndex = 194;
             this.label1.Text = "Max ∞ Units";
-            //
+            // 
             // cbClearRewind
-            //
+            // 
             this.cbClearRewind.AutoSize = true;
             this.cbClearRewind.BackColor = System.Drawing.Color.Transparent;
             this.cbClearRewind.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -1027,9 +1046,9 @@
             this.cbClearRewind.Text = "Clear Units on Rewind";
             this.cbClearRewind.UseVisualStyleBackColor = false;
             this.cbClearRewind.CheckedChanged += new System.EventHandler(this.HandleClearRewindChange);
-            //
+            // 
             // label3
-            //
+            // 
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Segoe UI Semibold", 18F, System.Drawing.FontStyle.Bold);
             this.label3.ForeColor = System.Drawing.Color.White;
@@ -1040,9 +1059,9 @@
             this.label3.TabIndex = 195;
             this.label3.Text = "RTCV";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            //
+            // 
             // pnCustomPrecision
-            //
+            // 
             this.pnCustomPrecision.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.pnCustomPrecision.Controls.Add(this.cbCustomPrecision);
             this.pnCustomPrecision.Controls.Add(this.label5);
@@ -1053,9 +1072,9 @@
             this.pnCustomPrecision.Size = new System.Drawing.Size(441, 32);
             this.pnCustomPrecision.TabIndex = 193;
             this.pnCustomPrecision.Tag = "color:dark2";
-            //
+            // 
             // cbCustomPrecision
-            //
+            // 
             this.cbCustomPrecision.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.cbCustomPrecision.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCustomPrecision.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -1072,9 +1091,9 @@
             this.cbCustomPrecision.Size = new System.Drawing.Size(121, 21);
             this.cbCustomPrecision.TabIndex = 81;
             this.cbCustomPrecision.Tag = "color:normal";
-            //
+            // 
             // label5
-            //
+            // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F);
             this.label5.ForeColor = System.Drawing.Color.White;
@@ -1083,9 +1102,9 @@
             this.label5.Size = new System.Drawing.Size(95, 13);
             this.label5.TabIndex = 82;
             this.label5.Text = "Engine Precision:";
-            //
+            // 
             // label8
-            //
+            // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F);
             this.label8.ForeColor = System.Drawing.Color.White;
@@ -1094,9 +1113,9 @@
             this.label8.Size = new System.Drawing.Size(63, 13);
             this.label8.TabIndex = 149;
             this.label8.Text = "Alignment:";
-            //
+            // 
             // nmAlignment
-            //
+            // 
             this.nmAlignment.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
             this.nmAlignment.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.nmAlignment.ForeColor = System.Drawing.Color.White;
@@ -1122,9 +1141,9 @@
             0,
             0,
             0});
-            //
+            // 
             // CustomEngineConfigForm
-            //
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -1144,6 +1163,7 @@
             this.Text = "Custom Engine Config";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
             this.Load += new System.EventHandler(this.OnLoad);
+            this.Shown += new System.EventHandler(this.CustomEngineConfigForm_Shown);
             this.gbUnitSource.ResumeLayout(false);
             this.gbUnitSource.PerformLayout();
             this.gbValueList.ResumeLayout(false);
@@ -1243,5 +1263,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label8;
         public Components.Controls.MultiUpDown nmAlignment;
+        private System.Windows.Forms.Button btnRefresh;
     }
 }

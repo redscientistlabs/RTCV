@@ -154,7 +154,7 @@ namespace RTCV.UI
             e.Effect = DragDropEffects.Link;
         }
 
-        public static void OpenBlastEditor(StashKey sk = null, bool silent = false)
+        public static bool OpenBlastEditor(StashKey sk = null, bool silent = false)
         {
             if (S.GET<BlastEditorForm>().Visible)
             {
@@ -175,10 +175,16 @@ namespace RTCV.UI
             if (sk.BlastLayer.Layer.Count > 5000 && (DialogResult.Yes == MessageBox.Show($"You're trying to open a blastlayer of size " + sk.BlastLayer.Layer.Count + ". This could take a while. Are you sure you want to continue?", "Opening a large BlastLayer", MessageBoxButtons.YesNo)))
             {
                 S.GET<BlastEditorForm>().LoadStashkey(sk, silent);
+                return true;
             }
             else if (sk.BlastLayer.Layer.Count <= 5000)
             {
                 S.GET<BlastEditorForm>().LoadStashkey(sk, silent);
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -2118,7 +2124,7 @@ namespace RTCV.UI
             {
                 return;
             }
-            FastSanitizeToolForm.OpenSanitizeTool(currentSK, lockUI);
+            SanitizeToolForm.OpenSanitizeTool(currentSK, lockUI);
         }
 
         public StashKey[] GetStashKeys()

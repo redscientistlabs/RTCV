@@ -22,6 +22,8 @@ namespace RTCV.NetCore.Commands
         public const string PushVanguardSpecUpdate = nameof(Remote) + "_" + nameof(PushVanguardSpecUpdate);
         public const string PushCorruptCoreSpec = nameof(Remote) + "_" + nameof(PushCorruptCoreSpec);
         public const string PushCorruptCoreSpecUpdate = nameof(Remote) + "_" + nameof(PushCorruptCoreSpecUpdate);
+        public const string PushPluginSpec = nameof(Remote) + "_" + nameof(PushPluginSpec);
+        public const string PushPluginSpecUpdate = nameof(Remote) + "_" + nameof(PushPluginSpecUpdate);
         public const string PushUISpec = nameof(Remote) + "_" + nameof(PushUISpec);
         public const string PushUISpecUpdate = nameof(Remote) + "_" + nameof(PushUISpecUpdate);
         public const string AllSpecSent = nameof(Remote) + "_" + nameof(AllSpecSent);
@@ -32,6 +34,7 @@ namespace RTCV.NetCore.Commands
         public const string EventRestrictFeatures = nameof(Remote) + "_" + nameof(EventRestrictFeatures);
         public const string GetBlastGeneratorLayer = nameof(Remote) + "_" + nameof(GetBlastGeneratorLayer);
         public const string PushRTCSpec = nameof(Remote) + "_" + nameof(PushRTCSpec);
+        public const string UpdatedSelectedPluginEngine = nameof(Remote) + "_" + nameof(UpdatedSelectedPluginEngine);
         public const string PushRTCSpecUpdate = nameof(Remote) + "_" + nameof(PushRTCSpecUpdate);
         public const string PushVMDProtos = nameof(Remote) + "_" + nameof(PushVMDProtos);
         public const string GenerateVMDText = nameof(Remote) + "_" + nameof(GenerateVMDText);
@@ -121,6 +124,7 @@ namespace RTCV.NetCore.Commands
     {
         public const string OpenHexEditorAddress = nameof(Emulator) + "_" + nameof(OpenHexEditorAddress);
         public const string GetRealtimeAPI = nameof(Emulator) + "_" + nameof(GetRealtimeAPI);
+        public const string ResetGame = nameof(Emulator) + "_" + nameof(ResetGame);
         public const string GetScreenshot = nameof(Emulator) + "_" + nameof(GetScreenshot);
         public const string InFocus = nameof(Emulator) + "_" + nameof(InFocus);
     }

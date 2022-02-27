@@ -170,7 +170,9 @@ namespace RTCV.UI
                 ((DataGridViewNumericUpDownCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvStartAddress"]).Value = 0M;
                 ((DataGridViewNumericUpDownCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvEndAddress"]).Value = 1M;
                 ((DataGridViewNumericUpDownCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvParam1"]).Value = 0M;
+                ((DataGridViewNumericUpDownCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvParam1"]).Maximum = ulong.MaxValue;
                 ((DataGridViewNumericUpDownCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvParam2"]).Value = 0M;
+                ((DataGridViewNumericUpDownCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvParam2"]).Maximum = ulong.MaxValue;
                 ((DataGridViewNumericUpDownCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvEndAddress"]).Value = 1M;
                 ((DataGridViewNumericUpDownCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvLifetime"]).Value = 1M;
                 ((DataGridViewNumericUpDownCell)dgvBlastGenerator.Rows[lastrow].Cells["dgvExecuteFrame"]).Value = 0M;

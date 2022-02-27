@@ -211,11 +211,17 @@ namespace RTCV.UI
 
             //display proto here
 
-            tbVmdPrototype.Text = DisplayVMD(vmd);
+            if (cbShowVmdContents.Checked)
+                tbVmdPrototype.Text = DisplayVMD(vmd);
+            else
+                tbVmdPrototype.Text = "";
         }
 
         private static string DisplayVMD(VirtualMemoryDomain vmd)
         {
+            if (vmd == null)
+                return "";
+
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
             sb.Append($"===Singles==={Environment.NewLine}");
@@ -434,6 +440,18 @@ namespace RTCV.UI
                     UICore.mtForm.cbSelectBox.SelectedItem = item;
                     break;
                 }
+            }
+        }
+
+        private void cbShowVmdContents_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbShowVmdContents.Checked)
+            {
+                HandleLoadedVmdListSelectionChange(null, null);
+            }
+            else
+            {
+                tbVmdPrototype.Text = "";
             }
         }
     }

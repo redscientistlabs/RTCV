@@ -587,6 +587,9 @@ namespace RTCV.CorruptCore
             RtcCore.OnProgressBarUpdate(sks, new ProgressBarEventArgs($"Done", 100));
 
             results.Result = sks;
+
+            UISideHooks.OnStockpileLoaded(sks);
+
             return results;
         }
 

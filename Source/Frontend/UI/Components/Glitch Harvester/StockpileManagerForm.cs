@@ -59,7 +59,7 @@ namespace RTCV.UI
             };
         }
 
-        internal void HandleCellClick(object sender, DataGridViewCellEventArgs e)
+        public void HandleCellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e == null || e.RowIndex == -1)
             {
@@ -203,7 +203,7 @@ namespace RTCV.UI
                     if (S.GET<BlastEditorForm>() != null)
                     {
                         var sk = GetSelectedStashKey();
-                        FastSanitizeToolForm.OpenSanitizeTool(sk);
+                        SanitizeToolForm.OpenSanitizeTool(sk);
                     }
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 

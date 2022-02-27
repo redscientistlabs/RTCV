@@ -46,7 +46,13 @@ namespace RTCV.UI
                 }
 
                 logger.Trace("UpdateSelectedMemoryDomains Setting SELECTEDDOMAINS domains to {domains}", sb);
-                AllSpec.UISpec.Update("SELECTEDDOMAINS", lbMemoryDomains.SelectedItems.Cast<string>().Distinct().ToArray());
+                string[] output = lbMemoryDomains.SelectedItems.Cast<string>().Distinct().ToArray();
+                AllSpec.UISpec.Update(UISPEC.SELECTEDDOMAINS, output);
+
+                SyncObjectSingleton.FormExecute(() =>
+                {
+                    UISideHooks.OnSelectedDomainsChanged(output);
+                });
             });
         }
 
@@ -128,13 +134,18 @@ namespace RTCV.UI
 
         public void RefreshDomainsAndKeepSelected(string[] overrideDomains = null)
         {
-            var temp = (string[])AllSpec.UISpec["SELECTEDDOMAINS"];
+            var temp = (string[])AllSpec.UISpec[UISPEC.SELECTEDDOMAINS];
+
+            if (temp != null)
+                temp = temp.Distinct().ToArray(); //remove dupes
+
             var oldDomain = lbMemoryDomains.Items;
 
             RefreshDomains(); //refresh and reload domains
 
             if (overrideDomains != null)
             {
+
                 StringBuilder sb = new StringBuilder();
                 foreach (var s in overrideDomains)
                 {
@@ -142,7 +153,7 @@ namespace RTCV.UI
                 }
 
                 logger.Trace("RefreshDomainsAndKeepSelected override SELECTEDDOMAINS domains to {domains}", sb);
-                AllSpec.UISpec.Update("SELECTEDDOMAINS", overrideDomains);
+                AllSpec.UISpec.Update(UISPEC.SELECTEDDOMAINS, overrideDomains);
                 SetMemoryDomainsSelectedDomains(overrideDomains);
             }
             //If we had old domains selected don't do anything
@@ -156,7 +167,7 @@ namespace RTCV.UI
 
                 logger.Trace("RefreshDomainsAndKeepSelected temp Setting SELECTEDDOMAINS domains to {domains}", sb);
 
-                AllSpec.UISpec.Update("SELECTEDDOMAINS", temp);
+                AllSpec.UISpec.Update(UISPEC.SELECTEDDOMAINS, temp);
                 SetMemoryDomainsSelectedDomains(temp);
             }
             else
@@ -180,7 +191,7 @@ namespace RTCV.UI
         private void HandleRefreshDomainsClick(object sender, EventArgs e)
         {
             RefreshDomains();
-            AllSpec.UISpec.Update("SELECTEDDOMAINS", lbMemoryDomains.SelectedItems.Cast<string>().ToArray());
+            AllSpec.UISpec.Update(UISPEC.SELECTEDDOMAINS, lbMemoryDomains.SelectedItems.Cast<string>().Distinct().ToArray());
         }
 
         private void HandleMemoryDomainsMouseDown(object sender, MouseEventArgs e)

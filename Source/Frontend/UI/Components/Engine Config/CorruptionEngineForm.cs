@@ -8,6 +8,7 @@ namespace RTCV.UI
     using RTCV.Common;
     using RTCV.CorruptCore;
     using RTCV.NetCore;
+    using RTCV.NetCore.Commands;
     using RTCV.UI.Components.Controls;
     using RTCV.UI.Modular;
 
@@ -20,8 +21,8 @@ namespace RTCV.UI
         public readonly Components.EngineConfig.EngineControls.FreezeEngineControl FreezeEngineControl;
         public readonly Components.EngineConfig.EngineControls.NightmareEngineControl NightmareEngineControl;
         public readonly Components.EngineConfig.EngineControls.HellgenieEngineControl HellgenieEngineControl;
-        public readonly Components.EngineConfig.EngineControls.DistortionEngineControl distortionEngineControl;
-        public readonly Components.EngineConfig.EngineControls.CustomEngineControl customEngineControl;
+        public readonly Components.EngineConfig.EngineControls.DistortionEngineControl DistortionEngineControl;
+        public readonly Components.EngineConfig.EngineControls.CustomEngineControl CustomEngineControl;
         public readonly Components.EngineConfig.EngineControls.PipeEngineControl PipeEngineControl;
         public readonly Components.EngineConfig.EngineControls.BlastGeneratorEngineControl BlastGeneratorEngineControl;
         public readonly Components.EngineConfig.EngineControls.VectorEngineControl VectorEngineControl;
@@ -60,11 +61,11 @@ namespace RTCV.UI
             HellgenieEngineControl = new Components.EngineConfig.EngineControls.HellgenieEngineControl(this);
             this.Controls.Add(HellgenieEngineControl);
 
-            distortionEngineControl = new Components.EngineConfig.EngineControls.DistortionEngineControl(engineControlLocation);
-            this.Controls.Add(distortionEngineControl);
+            DistortionEngineControl = new Components.EngineConfig.EngineControls.DistortionEngineControl(engineControlLocation);
+            this.Controls.Add(DistortionEngineControl);
 
-            customEngineControl = new Components.EngineConfig.EngineControls.CustomEngineControl(engineControlLocation);
-            this.Controls.Add(customEngineControl);
+            CustomEngineControl = new Components.EngineConfig.EngineControls.CustomEngineControl(engineControlLocation);
+            this.Controls.Add(CustomEngineControl);
 
             PipeEngineControl = new Components.EngineConfig.EngineControls.PipeEngineControl(this);
             this.Controls.Add(PipeEngineControl);
@@ -78,6 +79,33 @@ namespace RTCV.UI
             ClusterEngineControl = new Components.EngineConfig.EngineControls.ClusterEngineControl(engineControlLocation);
             this.Controls.Add(ClusterEngineControl);
 
+        }
+
+        public void ResyncAllEngines()
+        {
+            //Resyncs all engines to their spec (UI value to Spec)
+            FreezeEngineControl.ResyncEngineUI();
+            NightmareEngineControl.ResyncEngineUI();
+            HellgenieEngineControl.ResyncEngineUI();
+            DistortionEngineControl.ResyncEngineUI();
+            CustomEngineControl.ResyncEngineUI();
+            BlastGeneratorEngineControl.ResyncEngineUI();
+            VectorEngineControl.ResyncEngineUI();
+            ClusterEngineControl.ResyncEngineUI();
+        }
+
+        public void RegisterPluginEngine(ICorruptionEngine engine)
+        {
+            if (engine != null && engine.Control != null)
+            {
+                engine.Control.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
+                this.Controls.Add(engine.Control);
+                cbSelectedEngine.Items.Add(new { Text = engine.ToString(), Value = engine });
+            }
+            else
+            {
+                throw new Exception("Failed to register plugin engine, engine object was null or inner control object was null");
+            }
         }
 
         public void SetVectorToExtendedExtended()
@@ -148,13 +176,13 @@ namespace RTCV.UI
         {
             NightmareEngineControl.Visible = false;
             HellgenieEngineControl.Visible = false;
-            distortionEngineControl.Visible = false;
+            DistortionEngineControl.Visible = false;
             FreezeEngineControl.Visible = false;
             PipeEngineControl.Visible = false;
             VectorEngineControl.Visible = false;
             ClusterEngineControl.Visible = false;
             BlastGeneratorEngineControl.Visible = false;
-            customEngineControl.Visible = false;
+            CustomEngineControl.Visible = false;
             cbCustomPrecision.Enabled = false;
             nmAlignment.Maximum = RtcCore.CurrentPrecision - 1;
 
@@ -162,6 +190,8 @@ namespace RTCV.UI
             S.GET<GeneralParametersForm>().Show();
             S.GET<MemoryDomainsForm>().Show();
             S.GET<GlitchHarvesterIntensityForm>().Show();
+
+            ICorruptionEngine previousPluginEngine = null;
 
             switch (cbSelectedEngine.SelectedItem.ToString())
             {
@@ -183,7 +213,7 @@ namespace RTCV.UI
 
                 case "Distortion Engine":
                     RtcCore.SelectedEngine = CorruptionEngine.DISTORTION;
-                    distortionEngineControl.Visible = true;
+                    DistortionEngineControl.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
                     S.GET<CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
@@ -234,7 +264,7 @@ namespace RTCV.UI
 
                 case "Custom Engine":
                     RtcCore.SelectedEngine = CorruptionEngine.CUSTOM;
-                    customEngineControl.Visible = true;
+                    CustomEngineControl.Visible = true;
                     cbCustomPrecision.Enabled = true;
 
                     S.GET<CoreForm>().btnAutoCorrupt.Visible = AllSpec.VanguardSpec?.Get<bool>(VSPEC.SUPPORTS_REALTIME) ?? true;
@@ -252,6 +282,50 @@ namespace RTCV.UI
                     break;
 
                 default:
+                    //Must be a plugin engine, right?
+
+                    T Cast<T>(T type, object x) => (T)x;
+                    var obj = new { Text = "", Value = (ICorruptionEngine)null};
+                    obj = Cast(obj, cbSelectedEngine.SelectedItem);
+
+                    var engine = obj?.Value;
+                    var control = engine?.Control;
+
+
+                    if (engine != null && control != null)
+                    {
+                        if (RtcCore.SelectedPluginEngine != null)
+                            previousPluginEngine = engine;
+
+                        RtcCore.SelectedPluginEngine = engine;
+                        RtcCore.SelectedEngine = CorruptionEngine.PLUGIN;
+
+                        control.Visible = true;
+                        cbCustomPrecision.Enabled = engine.SupportsCustomPrecision;
+
+                        S.GET<CoreForm>().btnAutoCorrupt.Visible = engine.SupportsAutoCorrupt;
+                        if (!engine.SupportsAutoCorrupt)
+                        {
+                            S.GET<CoreForm>().AutoCorrupt = false;
+                        }
+
+                        if (!engine.SupportsGeneralParameters)
+                        {
+                            S.GET<GeneralParametersForm>().Hide();
+                            S.GET<GlitchHarvesterIntensityForm>().Hide();
+                        }
+
+                        if (!engine.SupportsMemoryDomains)
+                            S.GET<MemoryDomainsForm>().Hide();
+
+                        LocalNetCoreRouter.Route(Endpoints.CorruptCore, Remote.UpdatedSelectedPluginEngine, engine, true);
+
+                    }
+                    else
+                    {
+                        throw new Exception("Plugin Engine error, could not fetch Interface or Control objects");
+                    }
+
                     break;
             }
 
@@ -272,10 +346,38 @@ namespace RTCV.UI
                 S.GET<MemoryDomainsForm>().lbMemoryDomains.Visible = true;
             }
 
+
             cbSelectedEngine.BringToFront();
             pnCustomPrecision.BringToFront();
 
             LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearStepBlastUnits, null, true);
+
+
+            //Calls methods for selecting and deselecting if a plugin is stored in the SelectedPluginEngine var
+            if (RtcCore.SelectedPluginEngine != null)
+            {
+                if (previousPluginEngine != null && previousPluginEngine != RtcCore.SelectedPluginEngine)
+                {
+                    //call OnDeselect if we changed from a plugin engine to a different plugin engine
+                    previousPluginEngine.OnDeselect();
+                }
+
+                if (RtcCore.SelectedEngine == CorruptionEngine.PLUGIN)
+                {
+                    //call OnSelect only if we changed from a different plugin
+                    if (previousPluginEngine == null || previousPluginEngine != RtcCore.SelectedPluginEngine)
+                        RtcCore.SelectedPluginEngine.OnSelect(); 
+                }
+                else
+                {
+                    //otherwise, it is a remainder of the previous selected engine and so we call OnDeselect before unloading it
+                    RtcCore.SelectedPluginEngine.OnDeselect();
+                    RtcCore.SelectedPluginEngine = null;
+                }
+
+
+            }
+
         }
 
         public void SetLockBoxes(bool enabled)
