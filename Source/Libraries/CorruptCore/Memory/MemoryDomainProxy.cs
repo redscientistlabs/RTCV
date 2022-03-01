@@ -13,7 +13,7 @@ namespace RTCV.CorruptCore
         public IMemoryDomain MD { get; private set; } = null;
 
         public override long Size { get; set; }
-        public MemoryDomainProxy(IMemoryDomain md, bool rpc = false)
+        public MemoryDomainProxy(IMemoryDomain md, bool rpc = false, bool ro = false)
         {
             MD = md ?? throw new ArgumentNullException(nameof(md));
             Size = MD.Size;
@@ -24,6 +24,7 @@ namespace RTCV.CorruptCore
             Name = MD.ToString();
             BigEndian = MD.BigEndian;
             UsingRPC = rpc;
+            ReadOnly = ro;
         }
 
         public MemoryDomainProxy()
@@ -46,7 +47,7 @@ namespace RTCV.CorruptCore
             if (UsingRPC)
             {
                 byte[] ret = MD.PeekBytes(startAddress, (int)(endAddress - startAddress));
-                return (raw || BigEndian) ? ret.FlipBytes() : ret;
+                return ret;
             }
             List<byte> data = new List<byte>();
             for (long i = startAddress; i < endAddress; i++)

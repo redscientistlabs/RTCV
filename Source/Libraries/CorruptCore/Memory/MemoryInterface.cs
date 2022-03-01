@@ -12,6 +12,8 @@ namespace RTCV.CorruptCore
         public virtual string Name { get; set; }
         public bool BigEndian { get; set; }
         public bool UsingRPC { get; set; }
+        public bool ReadOnly { get; set; }
+        public byte[] WholeArray { get; set; }
 
         public abstract byte[] GetDump();
 

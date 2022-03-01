@@ -227,9 +227,23 @@ namespace RTCV.CorruptCore
             byte[] values = new byte[precision];
 
             //Peek the memory
-            for (long i = 0; i < precision; i++)
+            if (!mi.UsingRPC)
             {
-                values[i] = mi.PeekByte(startAddress + i);
+                for (long i = 0; i < precision; i++)
+                {
+                    values[i] = mi.PeekByte(startAddress + i);
+                }
+            }
+            else
+            {
+                if (mi.ReadOnly && mi.WholeArray != null)
+                {
+                    for (long i = 0; i < precision; i++)
+                    {
+                        values[i] = mi.WholeArray[startAddress + i];
+                    }
+                }
+                else { values = mi.PeekBytes(startAddress, endAddress, false); }
             }
 
             //The compare is done as little endian
@@ -281,7 +295,21 @@ namespace RTCV.CorruptCore
             }
             else
             {
-                values = mi.PeekBytes(startAddress, endAddress, false);
+                if (mi.ReadOnly && mi.WholeArray != null)
+                {
+                    for (long i = 0; i < precision; i++)
+                    {
+                        values[i] = mi.WholeArray[startAddress + i];
+                    }
+                    if (mi.BigEndian)
+                    {
+                        values = values.FlipBytes();
+                    }
+                }
+                else 
+                {
+                    values = mi.PeekBytes(startAddress, endAddress, false);
+                }
             }
 
             //If the limiter contains the value we peeked, return true

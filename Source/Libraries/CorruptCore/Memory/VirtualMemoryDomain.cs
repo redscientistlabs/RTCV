@@ -235,19 +235,12 @@ namespace RTCV.CorruptCore
         {
             //endAddress is exclusive
             List<byte> data = new List<byte>();
-            for (long i = startAddress; i < endAddress; i++)
-            {
-                data.Add(PeekByte(i));
-            }
+            string targetDomain = GetRealDomain(startAddress);
+            long targetAddress = GetRealAddress(startAddress);
+            long targetEndAddress = GetRealAddress(endAddress);
 
-            if (raw || BigEndian)
-            {
-                return data.ToArray();
-            }
-            else
-            {
-                return data.ToArray().FlipBytes();
-            }
+            MemoryDomainProxy mdp = MemoryDomains.GetProxy(targetDomain, targetAddress);
+            return mdp?.PeekBytes(targetAddress, targetEndAddress, raw) ?? new byte[endAddress - startAddress];
         }
 
         public override void PokeBytes(long startAddress, byte[] value, bool raw = true)

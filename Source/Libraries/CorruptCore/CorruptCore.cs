@@ -71,6 +71,8 @@ namespace RTCV.CorruptCore
 
         public static bool EmuDirOverride { get; set; } = false;
 
+        public static bool MemoryReadFlag { get; set; } = false;
+
         public static string EmuDir
         {
             get
