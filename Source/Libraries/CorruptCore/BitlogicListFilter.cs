@@ -477,7 +477,7 @@ namespace RTCV.CorruptCore
         }
 
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)] //Inline hint (does it do anything here? idk)
-        private static ulong CharToUulongHex(char c)
+        private static ulong CharToUlongHex(char c)
         {
             //Ascii format
             int i = (int)c;
@@ -525,7 +525,7 @@ namespace RTCV.CorruptCore
                 else //is a Constant
                 {
                     //line[j] is guaranteed to be Hex characters here
-                    template |= CharToUulongHex(line[j]) << curLeftShift; //Convert char to ulong and shift
+                    template |= CharToUlongHex(line[j]) << curLeftShift; //Convert char to ulong and shift
                     reserved |= digitMask << curLeftShift; //Also add to reserved mask
                 }
                 curLeftShift += 4; //add half byte shift
