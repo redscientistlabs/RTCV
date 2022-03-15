@@ -494,7 +494,7 @@ namespace RTCV.UI
             {
                 nmAlignment.Maximum = 3;
                 cbCustomPrecision.Enabled = false;
-                VectorEngine.UnlockPrecision = true;
+                VectorEngine.UnlockPrecision = false;
             }
         }
     }
