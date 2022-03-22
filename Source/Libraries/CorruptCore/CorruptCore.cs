@@ -735,6 +735,22 @@ namespace RTCV.CorruptCore
             var domains = (string[])AllSpec.UISpec[UISPEC.SELECTEDDOMAINS];
             var cpus = Environment.ProcessorCount;
 
+            MemoryDomainProxy[] mdps = (AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_INTERFACES] as MemoryDomainProxy[]);
+
+            if (mdps[0].UsingRPC)
+            {
+                for (int i = 0; i < mdps.Length; i++)
+                {
+                    for (int j = 0; j < domains.Length; j++)
+                    {
+                        if (mdps[i].Name == domains[j])
+                        {
+                            mdps[i].RPCMD.DumpMemory();
+                        }
+                    }
+                }
+            }
+
             //If there is only one thread, only generate a single BlastLayer.
             if (cpus == 1 || AllSpec.VanguardSpec[VSPEC.SUPPORTS_MULTITHREAD] == null)
             {

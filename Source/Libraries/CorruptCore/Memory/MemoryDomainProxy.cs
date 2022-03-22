@@ -12,6 +12,14 @@ namespace RTCV.CorruptCore
         [Exclude]
         public IMemoryDomain MD { get; private set; } = null;
 
+        public IRPCMemoryDomain RPCMD
+        {
+            get
+            {
+                return UsingRPC ? (IRPCMemoryDomain)MD : null;
+            }
+        }
+
         public override long Size { get; set; }
         public MemoryDomainProxy(IMemoryDomain md, bool rpc = false, bool ro = false)
         {
@@ -44,11 +52,6 @@ namespace RTCV.CorruptCore
         public override byte[] PeekBytes(long startAddress, long endAddress, bool raw = true)
         {
             //endAddress is exclusive
-            if (UsingRPC)
-            {
-                byte[] ret = MD.PeekBytes(startAddress, (int)(endAddress - startAddress));
-                return ret;
-            }
             List<byte> data = new List<byte>();
             for (long i = startAddress; i < endAddress; i++)
             {
@@ -67,7 +70,7 @@ namespace RTCV.CorruptCore
 
         public override void PokeBytes(long startAddress, byte[] value, bool raw = true)
         {
-            if (!raw || !BigEndian)
+            if (!raw || BigEndian)
             {
                 value.FlipBytes();
             }

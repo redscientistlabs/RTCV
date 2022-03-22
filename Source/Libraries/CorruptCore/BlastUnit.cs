@@ -621,13 +621,16 @@ namespace RTCV.CorruptCore
                             }
 
                             //All the data is already handled by GetStoreBackup, so we can just poke
-                            if (mi.UsingRPC)
                             {
-                                mi.PokeBytes(Address, GetWorkingData().ApplyValue);
-                            }else
-                            {
-                                for (int i = 0; i < Precision; i++)
-                                    mi.PokeByte(Address + i, GetWorkingData().ApplyValue[i]);
+                                if (mi.UsingRPC)
+                                {
+                                    mi.PokeBytes(Address, GetWorkingData().ApplyValue);
+                                }
+                                else
+                                {
+                                    for (int i = 0; i < Precision; i++)
+                                        mi.PokeByte(Address + i, GetWorkingData().ApplyValue[i]);
+                                }
                             }
                             break;
                         }
@@ -651,14 +654,16 @@ namespace RTCV.CorruptCore
                             }
 
                             //Poke the memory
-                            if (mi.UsingRPC)
                             {
-                                mi.PokeBytes(Address, GetWorkingData().ApplyValue);
-                            }
-                            else
-                            {
-                                for (int i = 0; i < Precision; i++)
-                                    mi.PokeByte(Address + i, GetWorkingData().ApplyValue[i]);
+                                if (mi.UsingRPC)
+                                {
+                                    mi.PokeBytes(Address, GetWorkingData().ApplyValue);
+                                }
+                                else
+                                {
+                                    for (int i = 0; i < Precision; i++)
+                                        mi.PokeByte(Address + i, GetWorkingData().ApplyValue[i]);
+                                }
                             }
                             break;
                         }
@@ -734,23 +739,9 @@ namespace RTCV.CorruptCore
 
             //Grab the value
             byte[] _value = new byte[Precision];
-            if (!mi.UsingRPC)
+            for (int i = 0; i < Precision; i++)
             {
-                for (int i = 0; i < Precision; i++)
-                {
-                    _value[i] = mi.PeekByte(Address + i);
-                }
-            }
-            else if (mi.WholeArray != null)
-            {
-                for (int i = 0; i < Precision; i++)
-                {
-                    _value[i] = mi.WholeArray[Address + i];
-                }
-            }
-            else
-            {
-                _value = mi.PeekBytes(Address, Address + Precision, false);
+                _value[i] = mi.PeekByte(Address + i);
             }
             //Return a new unit
             //Note the false on bigEndian. That's because when reading from memory we're always reading from left to right and we don't want to flip the bytes twice

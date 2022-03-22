@@ -226,24 +226,9 @@ namespace RTCV.CorruptCore
             long precision = endAddress - startAddress;
             byte[] values = new byte[precision];
 
-            //Peek the memory
-            if (!mi.UsingRPC)
+            for (long i = 0; i < precision; i++)
             {
-                for (long i = 0; i < precision; i++)
-                {
-                    values[i] = mi.PeekByte(startAddress + i);
-                }
-            }
-            else
-            {
-                if (mi.ReadOnly && mi.WholeArray != null)
-                {
-                    for (long i = 0; i < precision; i++)
-                    {
-                        values[i] = mi.WholeArray[startAddress + i];
-                    }
-                }
-                else { values = mi.PeekBytes(startAddress, endAddress, false); }
+                values[i] = mi.PeekByte(startAddress + i);
             }
 
             //The compare is done as little endian
@@ -280,36 +265,15 @@ namespace RTCV.CorruptCore
 
             //Peek the memory
             byte[] values = new byte[precision];
-            if (!mi.UsingRPC)
+            for (long i = 0; i < precision; i++)
             {
-                for (long i = 0; i < precision; i++)
-                {
-                    values[i] = mi.PeekByte(startAddress + i);
-                }
-
-                //The compare is done as little endian
-                if (mi.BigEndian)
-                {
-                    values = values.FlipBytes();
-                }
+                values[i] = mi.PeekByte(startAddress + i);
             }
-            else
+
+            //The compare is done as little endian
+            if (mi.BigEndian)
             {
-                if (mi.ReadOnly && mi.WholeArray != null)
-                {
-                    for (long i = 0; i < precision; i++)
-                    {
-                        values[i] = mi.WholeArray[startAddress + i];
-                    }
-                    if (mi.BigEndian)
-                    {
-                        values = values.FlipBytes();
-                    }
-                }
-                else 
-                {
-                    values = mi.PeekBytes(startAddress, endAddress, false);
-                }
+                values = values.FlipBytes();
             }
 
             //If the limiter contains the value we peeked, return true

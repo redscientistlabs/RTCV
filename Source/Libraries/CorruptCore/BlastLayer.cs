@@ -87,6 +87,7 @@ namespace RTCV.CorruptCore
             bool success;
             bool UseRealtime = (bool)AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME];
 
+            var domains = (string[])AllSpec.UISpec[UISPEC.SELECTEDDOMAINS];
             try
             {
                 foreach (BlastUnit bb in Layer)
@@ -117,6 +118,23 @@ namespace RTCV.CorruptCore
                     if (!UseRealtime)
                     {
                         StepActions.Execute();
+                    }
+                }
+
+
+                MemoryDomainProxy[] mdps = (AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_INTERFACES] as MemoryDomainProxy[]);
+
+                if (mdps[0].UsingRPC)
+                {
+                    for (int i = 0; i < mdps.Length; i++)
+                    {
+                        for (int j = 0; j < domains.Length; j++)
+                        {
+                            if (mdps[i].Name == domains[j])
+                            {
+                                mdps[i].RPCMD.UpdateMemory();
+                            }
+                        }
                     }
                 }
             }

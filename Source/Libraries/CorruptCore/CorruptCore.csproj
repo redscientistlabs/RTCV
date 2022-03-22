@@ -12,6 +12,9 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Memory\IRPCMemoryDomain.cs~RF31096c73.TMP" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\NetCore\NetCore.csproj" />
     <ProjectReference Include="..\PluginHost\PluginHost.csproj" />
