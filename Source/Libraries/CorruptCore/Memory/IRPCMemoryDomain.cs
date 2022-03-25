@@ -10,5 +10,7 @@ namespace RTCV.CorruptCore
     {
         void DumpMemory();
         void UpdateMemory();
+        (MemoryInterface, ulong, long) AllocateMemory(int size);
+        void FreeMemory(ulong addr, int size);
     }
 }
