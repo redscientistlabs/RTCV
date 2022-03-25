@@ -30,14 +30,15 @@ namespace RTCV.UI
 
         public string CurrentVectorLimiterListName
         {
-            get {
+            get
+            {
                 ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)VectorEngineControl.cbVectorLimiterList).SelectedItem;
 
                 if (item == null) //this shouldn't ever happen unless the list files are missing
                 {
                     {
-                    MessageBox.Show("Error: No vector engine limiter list selected. Bad install?");
-                }
+                        MessageBox.Show("Error: No vector engine limiter list selected. Bad install?");
+                    }
                 }
 
                 return item?.Name;
@@ -101,6 +102,7 @@ namespace RTCV.UI
                 engine.Control.Location = new Point(gbSelectedEngine.Location.X, gbSelectedEngine.Location.Y);
                 this.Controls.Add(engine.Control);
                 cbSelectedEngine.Items.Add(new { Text = engine.ToString(), Value = engine });
+                engine.Control.Visible = false;
             }
             else
             {
@@ -285,7 +287,7 @@ namespace RTCV.UI
                     //Must be a plugin engine, right?
 
                     T Cast<T>(T type, object x) => (T)x;
-                    var obj = new { Text = "", Value = (ICorruptionEngine)null};
+                    var obj = new { Text = "", Value = (ICorruptionEngine)null };
                     obj = Cast(obj, cbSelectedEngine.SelectedItem);
 
                     var engine = obj?.Value;
@@ -294,13 +296,14 @@ namespace RTCV.UI
 
                     if (engine != null && control != null)
                     {
-                        if (RtcCore.SelectedPluginEngine != null)
-                            previousPluginEngine = engine;
+                        previousPluginEngine = RtcCore.SelectedPluginEngine;
+                        if (previousPluginEngine != null)
+                            previousPluginEngine.Control.Hide();
 
                         RtcCore.SelectedPluginEngine = engine;
                         RtcCore.SelectedEngine = CorruptionEngine.PLUGIN;
 
-                        control.Visible = true;
+                        control.Show();
                         cbCustomPrecision.Enabled = engine.SupportsCustomPrecision;
 
                         S.GET<CoreForm>().btnAutoCorrupt.Visible = engine.SupportsAutoCorrupt;
@@ -366,7 +369,7 @@ namespace RTCV.UI
                 {
                     //call OnSelect only if we changed from a different plugin
                     if (previousPluginEngine == null || previousPluginEngine != RtcCore.SelectedPluginEngine)
-                        RtcCore.SelectedPluginEngine.OnSelect(); 
+                        RtcCore.SelectedPluginEngine.OnSelect();
                 }
                 else
                 {
@@ -374,8 +377,6 @@ namespace RTCV.UI
                     RtcCore.SelectedPluginEngine.OnDeselect();
                     RtcCore.SelectedPluginEngine = null;
                 }
-
-
             }
 
         }
@@ -494,7 +495,7 @@ namespace RTCV.UI
             {
                 nmAlignment.Maximum = 3;
                 cbCustomPrecision.Enabled = false;
-                VectorEngine.UnlockPrecision = true;
+                VectorEngine.UnlockPrecision = false;
             }
         }
     }
