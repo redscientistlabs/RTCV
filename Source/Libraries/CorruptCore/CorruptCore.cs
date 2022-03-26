@@ -444,6 +444,9 @@ namespace RTCV.CorruptCore
             {
                 side = RTCSide.Both;
             }
+
+            RTCV.PluginHost.Manager.Cleanup();
+
             pluginHost.Start(paths, side);
         }
 
