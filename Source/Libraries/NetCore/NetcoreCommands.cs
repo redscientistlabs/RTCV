@@ -43,6 +43,7 @@ namespace RTCV.NetCore.Commands
         public const string SaveState = nameof(Remote) + "_" + nameof(SaveState);
         public const string SaveStateless = nameof(Remote) + "_" + nameof(SaveStateless);
         public const string ResumeEmulation = nameof(Remote) + "_" + nameof(ResumeEmulation);
+        public const string EditController = nameof(Remote) + "_" + nameof(EditController);
         public const string DisableSavestateSupport = nameof(Remote) + "_" + nameof(DisableSavestateSupport);
         public const string DisableRealtimeSupport = nameof(Remote) + "_" + nameof(DisableRealtimeSupport);
         public const string DisableKillSwitchSupport = nameof(Remote) + "_" + nameof(DisableKillSwitchSupport);

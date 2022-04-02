@@ -73,8 +73,11 @@ namespace RTCV.UI
             get => _oldEmuDir;
         }
 
-        public static void KillEmulator(bool forceBypass = false)
+        public static void KillEmulator(bool forceBypass = false, bool silent = false)
         {
+            if (Debugger.IsAttached)
+                return;
+
             SyncObjectSingleton.FormExecute(() =>
             {
                 UISideHooks.OnKillSwitchFired();
@@ -117,7 +120,8 @@ namespace RTCV.UI
                         killswitchSpamPreventTimer.Tick += KillswitchSpamPreventTimer_Tick;
                         killswitchSpamPreventTimer.Start();
 
-                        PlayCrashSound();
+                        if (!silent)
+                            PlayCrashSound();
 
                         if (CorruptCore.RtcCore.EmuDir == null)
                         {

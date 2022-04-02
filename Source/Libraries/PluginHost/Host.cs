@@ -5,6 +5,7 @@ namespace RTCV.PluginHost
     using System.ComponentModel.Composition;
     using System.ComponentModel.Composition.Hosting;
     using System.IO;
+    using System.Linq;
     using System.Reflection;
     using NLog;
 
@@ -40,6 +41,9 @@ namespace RTCV.PluginHost
             {
                 if (Directory.Exists(dir))
                 {
+                    var dirFiles = Directory.GetFiles(dir).Where(f => f.EndsWith(".disabled"));
+                    Manager.ReportExistingDisabled(dirFiles);
+
                     catalog.Catalogs.Add(new DirectoryCatalog(dir));
                 }
             }
@@ -68,6 +72,7 @@ namespace RTCV.PluginHost
             }
 
             initialize(pluginDirs);
+            //Manager.SetPluginDir(pluginDirs.FirstOrDefault());
 
             foreach (var p in plugins)
             {
@@ -105,6 +110,7 @@ namespace RTCV.PluginHost
             }
             initialized = true;
         }
+
         public void Shutdown()
         {
             foreach (var p in _loadedPlugins)
@@ -133,8 +139,14 @@ namespace RTCV.PluginHost
             }
 
             var assemblyLoaderType = assembly.GetType("Costura.AssemblyLoader", false);
+
+
+            Manager.ReportExisting(assemblyLoaderType?.Assembly?.Location);
+
             var attachMethod = assemblyLoaderType?.GetMethod("Attach", BindingFlags.Static | BindingFlags.Public);
             attachMethod?.Invoke(null, new object[] { });
         }
+
+
     }
 }
