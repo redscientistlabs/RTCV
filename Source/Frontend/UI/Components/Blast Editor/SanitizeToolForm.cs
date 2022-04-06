@@ -32,6 +32,10 @@ namespace RTCV.UI
 
         public static void OpenSanitizeTool(StashKey sk = null, bool lockUI = true)
         {
+            //This is the main entry point of the code
+
+
+            //makes sure it gets a fresh instance of the sanitize tool, can't use two at the same time.
             if (!S.ISNULL<SanitizeToolForm>() && S.GET<SanitizeToolForm>().IsDisposed)
             {
                 S.GET<SanitizeToolForm>()?.Close();
@@ -41,6 +45,7 @@ namespace RTCV.UI
 
             var bl = sk?.BlastLayer;
 
+            //if no blastlayer or stockpile was provided, get out
             if (sk == null || bl == null)
             {
                 return;
@@ -57,6 +62,8 @@ namespace RTCV.UI
                 MessageBox.Show("Sanitize Tool cannot sanitize BlastLayers that only have one unit.");
                 return;
             }
+
+            //backup the blastlayer, prepare the tool and launch.
 
             BlastLayer clone = new BlastLayer(bl.Layer.Where(x => !x.IsLocked).ToList());
             stf._originalSize = clone.Layer.Count;
@@ -330,10 +337,16 @@ namespace RTCV.UI
     {
         private StashKey internalSK;
         public BlastLayer OriginalLayer { get; private set; }
-        public Stack<List<BlastUnit>> stateStack = new Stack<List<BlastUnit>>();
-        public Stack<List<BlastUnit>> shownStack = new Stack<List<BlastUnit>>();
-        public List<BlastUnit> shownHalf;
-        public List<BlastUnit> otherHalf;
+
+
+        public Stack<List<BlastUnit>> stateStack = new Stack<List<BlastUnit>>();    //This is the stack of winning layers
+
+        public Stack<List<BlastUnit>> shownStack = new Stack<List<BlastUnit>>();    //This is the history stack of shown halves
+        public Stack<List<BlastUnit>> otherStack = new Stack<List<BlastUnit>>();    //This is the history stack of other halves
+
+        public List<BlastUnit> shownHalf;                                           //Work list of units for those which are shown (enabled)
+        public List<BlastUnit> otherHalf;                                           //Work list of units for those which aren't shown (disabled)
+
         Random rand = new Random();
         public int NumCurUnits => stateStack.Peek().Count;
         public FastSanitizer(StashKey originalStashkey, BlastLayer blClone)
@@ -388,25 +401,37 @@ namespace RTCV.UI
 
         internal void Undo()
         {
+            //uncommit the previous choice
             stateStack.Pop();
+
             shownHalf = shownStack.Pop();
+            otherHalf = otherStack.Pop();
         }
 
         internal void Yes()
         {
+            //commit the choice of the shown half and prepare for next step
             stateStack.Push(shownHalf);
             internalSK.BlastLayer = new BlastLayer(shownHalf);
+
+            //backup the possible choices
             shownStack.Push(shownHalf);
+            otherStack.Push(otherHalf);
         }
         internal void No()
         {
+            //commit the choice of the other half and prepare for next step
             stateStack.Push(otherHalf);
             internalSK.BlastLayer = new BlastLayer(otherHalf);
+
+            //backup the possible choices
             shownStack.Push(shownHalf);
+            otherStack.Push(otherHalf);
         }
 
         internal void Disable50()
         {
+            //get the latest winning layer
             var lastState = stateStack.Peek();
             shownHalf = new List<BlastUnit>();
             otherHalf = new List<BlastUnit>();
@@ -417,6 +442,18 @@ namespace RTCV.UI
                 otherHalf = lastState;
                 return;
             }
+
+            var randomizedUnits = lastState.OrderBy(it => rand.Next()).ToList();
+
+            int totalCount = randomizedUnits.Count();
+            int shownCount = (totalCount / 2);
+            int hiddenCount = totalCount - shownCount;
+
+            shownHalf.AddRange(randomizedUnits.GetRange(0, shownCount));
+            otherHalf.AddRange(randomizedUnits.GetRange(shownCount, hiddenCount));
+
+
+            /*
 
             int[] allIndices = new int[lastState.Count];
             for (int i = 0; i < lastState.Count; i++)
@@ -445,6 +482,8 @@ namespace RTCV.UI
             {
                 shownHalf.Add(lastState[allIndices.Length - 1]);
             }
+
+            */
         }
 
         internal async Task LoadCorrupt()
