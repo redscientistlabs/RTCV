@@ -220,6 +220,10 @@ namespace RTCV.UI
 
             ICorruptionEngine previousPluginEngine = null;
 
+            previousPluginEngine = RtcCore.SelectedPluginEngine;
+            if (previousPluginEngine != null)
+                previousPluginEngine.Control.Hide();
+
             switch (cbSelectedEngine.SelectedItem.ToString())
             {
                 case "Nightmare Engine":
@@ -321,10 +325,6 @@ namespace RTCV.UI
 
                     if (engine != null && control != null)
                     {
-                        previousPluginEngine = RtcCore.SelectedPluginEngine;
-                        if (previousPluginEngine != null)
-                            previousPluginEngine.Control.Hide();
-
                         RtcCore.SelectedPluginEngine = engine;
                         RtcCore.SelectedEngine = CorruptionEngine.PLUGIN;
 
