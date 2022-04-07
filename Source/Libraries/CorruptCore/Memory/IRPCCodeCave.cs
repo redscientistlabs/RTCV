@@ -6,7 +6,13 @@ namespace RTCV.CorruptCore
     using System.Text;
     using System.Threading.Tasks;
 
-    public interface IRPCMemoryDomain : IMemoryDomain
+
+    public interface IRPCCodeCave : ICodeCave
+    {
+        void DumpMemory();
+        void UpdateMemory();
+    }
+    public interface IRPCCodeCavesDomain : ICodeCavesDomain
     {
         void DumpMemory();
         void UpdateMemory();

@@ -12,14 +12,6 @@ namespace RTCV.CorruptCore
         [Exclude]
         public IMemoryDomain MD { get; private set; } = null;
 
-        public IRPCMemoryDomain RPCMD
-        {
-            get
-            {
-                return UsingRPC ? (IRPCMemoryDomain)MD : null;
-            }
-        }
-
         public override long Size { get; set; }
         public MemoryDomainProxy(IMemoryDomain md, bool rpc = false, bool ro = false)
         {

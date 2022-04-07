@@ -12,7 +12,10 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Memory\ICodeCaveDomain.cs~RF841f7e16.TMP" />
+    <None Remove="Memory\ICodeCaveDomain.cs~RF84330589.TMP" />
     <None Remove="Memory\IRPCMemoryDomain.cs~RF31096c73.TMP" />
+    <None Remove="Memory\IRPCMemoryDomain.cs~RF845b4186.TMP" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />

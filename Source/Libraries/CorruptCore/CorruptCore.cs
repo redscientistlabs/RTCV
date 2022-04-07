@@ -748,7 +748,7 @@ namespace RTCV.CorruptCore
                     {
                         if (mdps[i].Name == domains[j])
                         {
-                            mdps[i].RPCMD.DumpMemory();
+                            (mdps[i].MD as IRPCMemoryDomain).DumpMemory();
                         }
                     }
                 }
