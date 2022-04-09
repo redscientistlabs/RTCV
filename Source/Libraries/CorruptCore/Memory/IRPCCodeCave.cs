@@ -12,9 +12,7 @@ namespace RTCV.CorruptCore
         void DumpMemory();
         void UpdateMemory();
     }
-    public interface IRPCCodeCavesDomain : ICodeCavesDomain
+    public interface IRPCCodeCavesDomain : ICodeCavesDomain, IRPCMemoryDomain
     {
-        void DumpMemory();
-        void UpdateMemory();
     }
 }
