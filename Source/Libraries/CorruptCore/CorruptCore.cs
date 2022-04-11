@@ -1049,14 +1049,7 @@ namespace RTCV.CorruptCore
                 }
                 catch (Exception ex)
                 {
-                    var additionalInfo = "";
-
-                    if (MemoryDomains.GetInterface(domain) == null)
-                    {
-                        additionalInfo = "Unable to get an interface to the selected memory domain! \nTry clicking the Auto-Select Domains button to refresh the domains!\n\n";
-                    }
-
-                    throw new Exception(additionalInfo + ex.Message);
+                    throw;
                 }
             }
             catch (Exception ex)

@@ -267,5 +267,6 @@ namespace RTCV.CorruptCore
     public static class UISPEC
     {
         public static readonly string SELECTEDDOMAINS = nameof(SELECTEDDOMAINS);
+        public static readonly string SELECTEDDOMAINS_FORCAVESEARCH = nameof(SELECTEDDOMAINS_FORCAVESEARCH);
     }
 }
