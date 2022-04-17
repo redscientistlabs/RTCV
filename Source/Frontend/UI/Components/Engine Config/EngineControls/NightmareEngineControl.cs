@@ -15,6 +15,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
     public partial class NightmareEngineControl : EngineConfigControl
     {
         private bool updatingMinMax = false;
+        private bool updatingBlastType = false;
 
         internal NightmareEngineControl(Point location) : base(location)
         {
@@ -100,19 +101,19 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             switch (cbBlastType.SelectedItem.ToString())
             {
                 case "RANDOM":
-                    CorruptCore.NightmareEngine.Algo = NightmareAlgo.RANDOM;
+                    if (!updatingBlastType) CorruptCore.NightmareEngine.Algo = NightmareAlgo.RANDOM;
                     nmMinValueNightmare.Enabled = true;
                     nmMaxValueNightmare.Enabled = true;
                     break;
 
                 case "RANDOMTILT":
-                    CorruptCore.NightmareEngine.Algo = NightmareAlgo.RANDOMTILT;
+                    if (!updatingBlastType) CorruptCore.NightmareEngine.Algo = NightmareAlgo.RANDOMTILT;
                     nmMinValueNightmare.Enabled = true;
                     nmMaxValueNightmare.Enabled = true;
                     break;
 
                 case "TILT":
-                    CorruptCore.NightmareEngine.Algo = NightmareAlgo.TILT;
+                    if (!updatingBlastType) CorruptCore.NightmareEngine.Algo = NightmareAlgo.TILT;
                     nmMinValueNightmare.Enabled = false;
                     nmMaxValueNightmare.Enabled = false;
                     break;
@@ -163,6 +164,10 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
 
         public void ResyncEngineUI()
         {
+            UpdateMinMaxBoxes(RtcCore.CurrentPrecision);
+            updatingBlastType = true;
+            cbBlastType.SelectedIndex = cbBlastType.Items.IndexOf(CorruptCore.NightmareEngine.Algo.ToString());
+            updatingBlastType = false;
             //throw new NotImplementedException();
         }
     }

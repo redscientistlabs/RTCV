@@ -84,6 +84,29 @@ namespace RTCV.UI
 
         public void ResyncAllEngines()
         {
+            //dontUpdate = true;
+            switch (RtcCore.CurrentPrecision)
+            {
+                case 1:
+                    cbCustomPrecision.SelectedIndex = 0;
+                    break;
+                case 2:
+                    cbCustomPrecision.SelectedIndex = 1;
+                    break;
+                case 4:
+                    cbCustomPrecision.SelectedIndex = 2;
+                    break;
+                case 8:
+                    cbCustomPrecision.SelectedIndex = 3;
+                    break;
+                default:
+                    cbCustomPrecision.SelectedIndex = 0;
+                    break;
+            }
+
+            nmAlignment.Value = Math.Max(nmAlignment.Minimum, Math.Min(nmAlignment.Maximum, RtcCore.Alignment));
+
+
             //Resyncs all engines to their spec (UI value to Spec)
             FreezeEngineControl.ResyncEngineUI();
             NightmareEngineControl.ResyncEngineUI();
@@ -93,6 +116,7 @@ namespace RTCV.UI
             BlastGeneratorEngineControl.ResyncEngineUI();
             VectorEngineControl.ResyncEngineUI();
             ClusterEngineControl.ResyncEngineUI();
+            //dontUpdate = false;
         }
 
         public void RegisterPluginEngine(ICorruptionEngine engine)
@@ -171,6 +195,7 @@ namespace RTCV.UI
 
         private void HandleAlignmentChange(object sender, Components.Controls.ValueUpdateEventArgs<decimal> e)
         {
+            if (dontUpdate) return;
             RtcCore.Alignment = Convert.ToInt32(nmAlignment.Value);
         }
 
@@ -194,6 +219,10 @@ namespace RTCV.UI
             S.GET<GlitchHarvesterIntensityForm>().Show();
 
             ICorruptionEngine previousPluginEngine = null;
+
+            previousPluginEngine = RtcCore.SelectedPluginEngine;
+            if (previousPluginEngine != null)
+                previousPluginEngine.Control.Hide();
 
             switch (cbSelectedEngine.SelectedItem.ToString())
             {
@@ -296,10 +325,6 @@ namespace RTCV.UI
 
                     if (engine != null && control != null)
                     {
-                        previousPluginEngine = RtcCore.SelectedPluginEngine;
-                        if (previousPluginEngine != null)
-                            previousPluginEngine.Control.Hide();
-
                         RtcCore.SelectedPluginEngine = engine;
                         RtcCore.SelectedEngine = CorruptionEngine.PLUGIN;
 
@@ -417,6 +442,7 @@ namespace RTCV.UI
 
         internal void UpdateVectorLimiterList(object sender, EventArgs e)
         {
+            if (dontUpdate) return;
             ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
             if (item != null)
             {
@@ -426,6 +452,7 @@ namespace RTCV.UI
 
         internal void UpdateVectorValueList(object sender, EventArgs e)
         {
+            if (dontUpdate) return;
             ComboBoxItem<string> item = (ComboBoxItem<string>)((ComboBox)sender).SelectedItem;
             if (item != null)
             {
@@ -446,6 +473,7 @@ namespace RTCV.UI
 
         private void UpdateCustomPrecision(object sender, EventArgs e)
         {
+            if (dontUpdate) return;
             cbCustomPrecision.Enabled = false;
             S.GET<CustomEngineConfigForm>().cbCustomPrecision.Enabled = false;
             try
@@ -485,6 +513,7 @@ namespace RTCV.UI
 
         internal void UpdateVectorUnlockPrecision(object sender, EventArgs e)
         {
+            if (dontUpdate) return;
             if (VectorEngineControl.cbVectorUnlockPrecision.Checked)
             {
                 nmAlignment.Maximum = new decimal(new int[] { 0, 0, 0, 0 });

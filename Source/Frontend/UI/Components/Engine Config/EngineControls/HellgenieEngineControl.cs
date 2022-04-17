@@ -135,6 +135,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
 
         public void ResyncEngineUI()
         {
+            UpdateMinMaxBoxes(RtcCore.CurrentPrecision);
             //throw new NotImplementedException();
         }
     }
