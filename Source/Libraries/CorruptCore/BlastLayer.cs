@@ -132,7 +132,8 @@ namespace RTCV.CorruptCore
                     StepActions.FilterBuListCollection();
 
                     //If we're not using realtime, we execute right away.
-                    if (!UseRealtime)
+                    bool IsUsingRPC = (mdps != null && mdps.Length > 0 && mdps[0].UsingRPC == true);
+                    if (!UseRealtime || IsUsingRPC)
                     {
                         StepActions.Execute();
                     }
