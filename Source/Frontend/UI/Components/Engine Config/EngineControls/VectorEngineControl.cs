@@ -1,6 +1,8 @@
 namespace RTCV.UI.Components.EngineConfig.EngineControls
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Drawing;
     using RTCV.CorruptCore;
 
@@ -29,6 +31,11 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
 
         public void ResyncEngineUI()
         {
+            if (RtcCore.LimiterListBindingSource.Count > 0)
+                cbVectorLimiterList.SelectedIndex = RtcCore.LimiterListBindingSource.Select(x => x.Value).ToList().IndexOf(VectorEngine.LimiterListHash);
+            if (RtcCore.ValueListBindingSource.Count > 0)
+                cbVectorValueList.SelectedIndex = RtcCore.ValueListBindingSource.Select(x => x.Value).ToList().IndexOf(VectorEngine.ValueListHash);
+            cbVectorUnlockPrecision.Checked = VectorEngine.UnlockPrecision;
             //throw new NotImplementedException();
         }
     }

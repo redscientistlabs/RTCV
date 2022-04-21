@@ -113,11 +113,11 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             this.label7.TabIndex = 148;
             this.label7.Text = "Distortion delay:";
             // 
-            // DistortionEngine
+            // DistortionEngineControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "DistortionEngine";
+            this.Name = "DistortionEngineControl";
             this.engineGroupBox.ResumeLayout(false);
             this.engineGroupBox.PerformLayout();
             this.ResumeLayout(false);

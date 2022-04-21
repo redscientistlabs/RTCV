@@ -2115,7 +2115,7 @@ namespace RTCV.UI
 
         public void OpenSanitizeTool(object sender, EventArgs e)
         {
-            OpenSanitizeTool();
+            OpenSanitizeTool(false);
         }
 
         public void OpenSanitizeTool(bool lockUI = true)
