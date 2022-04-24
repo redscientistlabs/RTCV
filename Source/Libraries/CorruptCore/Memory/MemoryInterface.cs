@@ -7,10 +7,20 @@ namespace RTCV.CorruptCore
     [MemberConfig(TargetMember.All)]
     public abstract class MemoryInterface
     {
+        //Standard Memory domain Values
         public virtual long Size { get; set; }
         public int WordSize { get; set; }
         public virtual string Name { get; set; }
         public bool BigEndian { get; set; }
+
+        //RPC Memory extensions
+        public bool UsingRPC { get; set; }
+        public bool ReadOnly { get; set; }
+        public byte[] WholeArray { get; set; }
+
+
+
+
 
         public abstract byte[] GetDump();
 

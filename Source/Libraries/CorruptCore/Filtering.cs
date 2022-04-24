@@ -262,9 +262,10 @@ namespace RTCV.CorruptCore
 
             //Find the precision
             long precision = endAddress - startAddress;
-            byte[] values = new byte[precision];
+            //byte[] values = new byte[precision];
 
             //Peek the memory
+            byte[] values = new byte[precision];
             for (long i = 0; i < precision; i++)
             {
                 values[i] = mi.PeekByte(startAddress + i);

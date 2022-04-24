@@ -42,6 +42,31 @@ namespace RTCV.CorruptCore
 
         public void Apply(bool storeUncorruptBackup, bool followMaximums = false, bool mergeWithPrevious = false)
         {
+
+
+            //RPC stuff -------
+            //When using RPC, memory must be cached locally. Every time a blast is done
+            //A copy of the domain (usually chunked) is cached locally so that list-based
+            //engines don't continously peek repeatedly over RPC.
+            MemoryDomainProxy[] mdps = (AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_INTERFACES] as MemoryDomainProxy[]);
+            string[] domains_forRpcUse = null;
+            if (mdps[0].UsingRPC)
+            {
+                domains_forRpcUse = (string[])AllSpec.UISpec[UISPEC.SELECTEDDOMAINS];
+                for (int i = 0; i < mdps.Length; i++)
+                {
+                    for (int j = 0; j < domains_forRpcUse.Length; j++)
+                    {
+                        if (mdps[i].Name == domains_forRpcUse[j])
+                        {
+                            (mdps[i].MD as IRPCMemoryDomain).DumpMemory();
+                        }
+                    }
+                }
+            }
+            //-----------
+
+
             if (storeUncorruptBackup && this != StockpileManagerEmuSide.UnCorruptBL)
             {
                 BlastLayer UnCorruptBL_Backup = null;
@@ -89,6 +114,7 @@ namespace RTCV.CorruptCore
 
             try
             {
+
                 foreach (BlastUnit bb in Layer)
                 {
                     if (bb == null) //BlastCheat getBackup() always returns null so they can happen and they are valid
@@ -114,11 +140,31 @@ namespace RTCV.CorruptCore
                     StepActions.FilterBuListCollection();
 
                     //If we're not using realtime, we execute right away.
-                    if (!UseRealtime)
+                    bool IsUsingRPC = (mdps != null && mdps.Length > 0 && mdps[0].UsingRPC == true);
+                    if (!UseRealtime || IsUsingRPC)
                     {
                         StepActions.Execute();
                     }
                 }
+
+
+                //More RPC Stuff ------------
+                //Commits the memory updates via RPC
+                if (mdps[0].UsingRPC)
+                {
+                    for (int i = 0; i < mdps.Length; i++)
+                    {
+                        for (int j = 0; j < domains_forRpcUse.Length; j++)
+                        {
+                            if (mdps[i].Name == domains_forRpcUse[j])
+                            {
+                                (mdps[i].MD as IRPCMemoryDomain).UpdateMemory();
+                            }
+                        }
+                    }
+                }
+                //------------------
+
             }
             catch (Exception ex)
             {

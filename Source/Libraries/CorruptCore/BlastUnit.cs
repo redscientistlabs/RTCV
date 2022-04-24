@@ -621,9 +621,16 @@ namespace RTCV.CorruptCore
                             }
 
                             //All the data is already handled by GetStoreBackup, so we can just poke
-                            for (int i = 0; i < Precision; i++)
                             {
-                                mi.PokeByte(Address + i, GetWorkingData().ApplyValue[i]);
+                                if (mi.UsingRPC)
+                                {
+                                    mi.PokeBytes(Address, GetWorkingData().ApplyValue);
+                                }
+                                else
+                                {
+                                    for (int i = 0; i < Precision; i++)
+                                        mi.PokeByte(Address + i, GetWorkingData().ApplyValue[i]);
+                                }
                             }
                             break;
                         }
@@ -647,9 +654,16 @@ namespace RTCV.CorruptCore
                             }
 
                             //Poke the memory
-                            for (int i = 0; i < Precision; i++)
                             {
-                                mi.PokeByte(Address + i, GetWorkingData().ApplyValue[i]);
+                                if (mi.UsingRPC)
+                                {
+                                    mi.PokeBytes(Address, GetWorkingData().ApplyValue);
+                                }
+                                else
+                                {
+                                    for (int i = 0; i < Precision; i++)
+                                        mi.PokeByte(Address + i, GetWorkingData().ApplyValue[i]);
+                                }
                             }
                             break;
                         }

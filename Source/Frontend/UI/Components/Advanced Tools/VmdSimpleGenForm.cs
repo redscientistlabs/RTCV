@@ -118,7 +118,8 @@ namespace RTCV.UI
             VirtualMemoryDomain VMD = new VirtualMemoryDomain();
             VmdPrototype proto = new VmdPrototype
             {
-                GenDomain = cbSelectedMemoryDomain.SelectedItem.ToString()
+                GenDomain = cbSelectedMemoryDomain.SelectedItem.ToString(),
+                UsingRPC = mi.UsingRPC,
             };
 
             if (string.IsNullOrWhiteSpace(tbVmdName.Text))

@@ -20,6 +20,8 @@ namespace RTCV.CorruptCore
 
         public long Padding { get; set; }
 
+        public bool UsingRPC { get; set; }
+
         public List<long> AddSingles { get; set; } = new List<long>();
         public List<long> RemoveSingles { get; set; } = new List<long>();
 
@@ -39,7 +41,8 @@ namespace RTCV.CorruptCore
                 Proto = this,
                 Name = VmdName,
                 BigEndian = BigEndian,
-                WordSize = WordSize
+                WordSize = WordSize,
+                UsingRPC = UsingRPC,
             };
 
             if (SuppliedBlastLayer != null)

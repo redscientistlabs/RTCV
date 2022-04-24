@@ -68,8 +68,9 @@ namespace RTCV.CorruptCore
 
         private static readonly Host pluginHost = new Host();
         public static Host PluginHost => pluginHost;
-
         public static bool EmuDirOverride { get; set; } = false;
+
+
 
         public static string EmuDir
         {
@@ -736,6 +737,26 @@ namespace RTCV.CorruptCore
             var domains = (string[])AllSpec.UISpec[UISPEC.SELECTEDDOMAINS];
             var cpus = Environment.ProcessorCount;
 
+
+            //RPC stuff
+            //When using RPC, memory must be cached locally. Every time a blast is done
+            //A copy of the domain (usually chunked) is cached locally so that list-based
+            //engines don't continously peek repeatedly over RPC.
+            MemoryDomainProxy[] mdps = (AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_INTERFACES] as MemoryDomainProxy[]);
+            if (mdps != null && mdps.Length > 0 && mdps[0].UsingRPC)
+            {
+                for (int i = 0; i < mdps.Length; i++)
+                {
+                    for (int j = 0; j < domains.Length; j++)
+                    {
+                        if (mdps[i].Name == domains[j])
+                        {
+                            (mdps[i].MD as IRPCMemoryDomain).DumpMemory();
+                        }
+                    }
+                }
+            }
+
             //If there is only one thread, only generate a single BlastLayer.
             if (cpus == 1 || AllSpec.VanguardSpec[VSPEC.SUPPORTS_MULTITHREAD] == null)
             {
@@ -1031,6 +1052,12 @@ namespace RTCV.CorruptCore
                 }
                 catch (Exception ex)
                 {
+                    //TODO fix improve this
+                    //Removed action rethrower because it kept cutting
+                    //The rest of the stack trace in the cloud debug box
+
+                    //however, the Additional info is no longer appended to the error.
+                    /*
                     var additionalInfo = "";
 
                     if (MemoryDomains.GetInterface(domain) == null)
@@ -1039,6 +1066,9 @@ namespace RTCV.CorruptCore
                     }
 
                     throw new Exception(additionalInfo + ex.Message);
+                    */
+
+                    throw;
                 }
             }
             catch (Exception ex)

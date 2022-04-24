@@ -37,6 +37,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Components\Advanced Tools\CodeCaveSettingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Components\Settings\MyPluginsForm.cs">
       <SubType>Form</SubType>
     </Compile>

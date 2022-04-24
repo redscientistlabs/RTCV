@@ -13,17 +13,18 @@ namespace RTCV.CorruptCore
         public IMemoryDomain MD { get; private set; } = null;
 
         public override long Size { get; set; }
-
-        public MemoryDomainProxy(IMemoryDomain md)
+        public MemoryDomainProxy(IMemoryDomain md, bool rpc = false, bool ro = false)
         {
             MD = md ?? throw new ArgumentNullException(nameof(md));
+
             Size = MD.Size;
-
             Name = MD.ToString();
-
             WordSize = MD.WordSize;
             Name = MD.ToString();
             BigEndian = MD.BigEndian;
+
+            UsingRPC = rpc;
+            ReadOnly = ro;
         }
 
         public MemoryDomainProxy()
@@ -61,9 +62,15 @@ namespace RTCV.CorruptCore
 
         public override void PokeBytes(long startAddress, byte[] value, bool raw = true)
         {
-            if (!raw || !BigEndian)
+            if (!raw || BigEndian)
             {
                 value.FlipBytes();
+            }
+
+            if (UsingRPC)
+            {
+                (MD as IRPCMemoryDomain).PokeBytes(startAddress, value);
+                return;
             }
 
             for (long i = 0; i < value.Length; i++)
