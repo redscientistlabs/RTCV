@@ -10,5 +10,6 @@ namespace RTCV.CorruptCore
     {
         void DumpMemory();
         void UpdateMemory();
+        void PokeBytes(long addr, byte[] val);
     }
 }

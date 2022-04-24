@@ -68,7 +68,7 @@ namespace RTCV.CorruptCore
             }
             if (UsingRPC)
             {
-                MD.PokeBytes(startAddress, value);
+                (MD as IRPCMemoryDomain).PokeBytes(startAddress, value);
                 return;
             }
 
