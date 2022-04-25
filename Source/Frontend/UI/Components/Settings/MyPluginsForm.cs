@@ -61,7 +61,6 @@ namespace RTCV.UI
 
         private void OnKnownListSelectedIndexChanged(object sender, EventArgs e)
         {
-
             if (lbKnownPlugins.SelectedIndex == -1)
             {
                 btnRemoveList.Visible = false;
@@ -128,7 +127,7 @@ exit
 ";
 
             File.WriteAllText(batchPath, batchScript);
-            AutoKillSwitch.KillEmulator(true,true);
+            AutoKillSwitch.KillEmulator(true, true);
             Process.Start(batchPath);
         }
 

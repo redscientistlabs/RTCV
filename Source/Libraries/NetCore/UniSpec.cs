@@ -115,7 +115,6 @@ namespace RTCV.NetCore
 
         public void Update(string key, object value, bool propagate = true, bool synced = true)
         {
-
             PartialSpec spec = new PartialSpec(name);
             spec[key] = value;
             Update(spec, propagate, synced);

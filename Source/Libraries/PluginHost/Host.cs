@@ -146,7 +146,5 @@ namespace RTCV.PluginHost
             var attachMethod = assemblyLoaderType?.GetMethod("Attach", BindingFlags.Static | BindingFlags.Public);
             attachMethod?.Invoke(null, new object[] { });
         }
-
-
     }
 }

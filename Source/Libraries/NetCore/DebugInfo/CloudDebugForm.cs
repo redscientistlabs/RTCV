@@ -311,25 +311,19 @@ namespace RTCV.NetCore
 
         private void btnOtherActions_MouseDown(object sender, MouseEventArgs e)
         {
-
             Control c = (Control)sender;
             Point locate = new Point(e.Location.X + btnOtherActions.Location.X, e.Location.Y + btnOtherActions.Location.Y);
             ContextMenuStrip columnsMenu = new ContextMenuStrip();
 
             columnsMenu.Items.Add("Close all Cloud Debug windows", null, new EventHandler((ob, ev) =>
             {
-
                 foreach (var win in CloudWindows)
                 {
                     win.Close();
                 }
-
             }));
 
-
             columnsMenu.Show(this, locate);
-
-
         }
 
         private void CloudDebug_FormClosed(object sender, FormClosedEventArgs e)

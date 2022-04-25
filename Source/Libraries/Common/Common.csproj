@@ -20,10 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NLog">
-      <Version>4.7.14</Version>
+      <Version>4.7.15</Version>
     </PackageReference>
     <PackageReference Include="NLog.Windows.Forms">
       <Version>4.5.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0" />
   </ItemGroup>
 </Project>
