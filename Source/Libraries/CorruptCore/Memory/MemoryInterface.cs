@@ -13,12 +13,11 @@ namespace RTCV.CorruptCore
         public virtual string Name { get; set; }
         public bool BigEndian { get; set; }
 
+
         //RPC Memory extensions
-        public bool UsingRPC { get; set; }
-        public bool ReadOnly { get; set; }
-        public byte[] WholeArray { get; set; }
-
-
+        public virtual bool UsingRPC { get; set; } = false;
+        public virtual bool ReadOnly { get; set; } = false;
+        public virtual byte[] WholeArray { get; set; } = new byte[0];
 
 
 

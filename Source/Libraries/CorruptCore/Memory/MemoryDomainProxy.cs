@@ -13,7 +13,27 @@ namespace RTCV.CorruptCore
         public IMemoryDomain MD { get; private set; } = null;
 
         public override long Size { get; set; }
-        public MemoryDomainProxy(IMemoryDomain md, bool rpc = false, bool ro = false)
+        
+        //non-rpc constructor
+        public MemoryDomainProxy(IMemoryDomain md)
+        {
+            MD = md ?? throw new ArgumentNullException(nameof(md));
+
+            bool rpc = false;
+            bool ro = false;
+
+            Size = MD.Size;
+            Name = MD.ToString();
+            WordSize = MD.WordSize;
+            Name = MD.ToString();
+            BigEndian = MD.BigEndian;
+
+            UsingRPC = rpc;
+            ReadOnly = ro;
+        }
+
+        //rpc constructor
+        public MemoryDomainProxy(IMemoryDomain md, bool rpc, bool ro)
         {
             MD = md ?? throw new ArgumentNullException(nameof(md));
 
