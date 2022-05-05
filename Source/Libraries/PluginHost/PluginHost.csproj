@@ -20,7 +20,7 @@
       <Version>17.1.20</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Validation">
-      <Version>17.0.43</Version>
+      <Version>17.0.46</Version>
     </PackageReference>
     <PackageReference Include="NLog">
       <Version>4.7.15</Version>
