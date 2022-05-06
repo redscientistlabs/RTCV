@@ -1,12 +1,12 @@
 //credit: http://blogs.msdn.com/b/rickbrew/archive/2006/01/09/511003.aspx
-/// <summary>
-/// This class adds on to the functionality provided in System.Windows.Forms.ToolStrip.
-/// </summary>
 namespace RTCV.Common.Controls
 {
     using System;
     using System.Windows.Forms;
 
+    /// <summary>
+    /// This class adds on to the functionality provided in System.Windows.Forms.ToolStrip.
+    /// </summary>
     public class ToolStripEx : ToolStrip
     {
         private bool clickThrough = true;

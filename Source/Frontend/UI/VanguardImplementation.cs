@@ -326,9 +326,7 @@ namespace RTCV.UI
                 //Forces-load submodules of the Settings form on the first boot
                 //required for the infinite units maximum to get bound
                 S.GET<SettingsForm>();
-
             });
-
         }
 
         private static void PushVanguardSpecUpdate(NetCoreAdvancedMessage advancedMessage, ref NetCoreEventArgs e)

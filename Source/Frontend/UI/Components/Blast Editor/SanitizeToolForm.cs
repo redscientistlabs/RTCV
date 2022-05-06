@@ -90,7 +90,7 @@ namespace RTCV.UI
             pnBlastLayerSanitization.Visible = false;
             this.Refresh();
 
-            _sanitizer.Disable50();
+            await _sanitizer.Disable50();
             await _sanitizer.LoadCorrupt();
             UpdateSanitizeProgress();
             lbSteps.Items.RemoveAt(lbSteps.Items.Count - 1);
@@ -104,7 +104,7 @@ namespace RTCV.UI
             this.Refresh();
 
             _sanitizer.Yes();
-            _sanitizer.Disable50();
+            await _sanitizer.Disable50();
             await _sanitizer.LoadCorrupt();
 
             UpdateSanitizeProgress();
@@ -128,7 +128,7 @@ namespace RTCV.UI
 
             _sanitizer.No();
 
-            _sanitizer.Disable50();
+            await _sanitizer.Disable50();
             await _sanitizer.LoadCorrupt();
 
             UpdateSanitizeProgress();
@@ -238,7 +238,7 @@ namespace RTCV.UI
         {
             btnStartSanitizing.Visible = false;
 
-            _sanitizer.Disable50();
+            await _sanitizer.Disable50();
             await _sanitizer.LoadCorrupt();
 
             pnBlastLayerSanitization.Visible = true;
@@ -300,7 +300,6 @@ namespace RTCV.UI
         }
         private void AddToStash(object sender, EventArgs e)
         {
-
             StashKey oldSk = _sanitizer.GetFinalStashKey();
 
             StashKey newSk = new StashKey(RtcCore.GetRandomKey(), oldSk.ParentKey, null)
@@ -429,7 +428,7 @@ namespace RTCV.UI
             otherStack.Push(otherHalf);
         }
 
-        internal void Disable50()
+        internal async Task Disable50()
         {
             //get the latest winning layer
             var lastState = stateStack.Peek();
@@ -484,12 +483,16 @@ namespace RTCV.UI
             }
 
             */
+
+            await Task.Delay(1);
         }
 
         internal async Task LoadCorrupt()
         {
             internalSK.BlastLayer = new BlastLayer(shownHalf);
             S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = internalSK.Run();
+
+            await Task.Delay(1);
         }
 
         internal StashKey GetOriginalStashKey()
@@ -520,7 +523,8 @@ namespace RTCV.UI
         internal async Task Replay()
         {
             S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = internalSK.Run();
+
+            await Task.Delay(1);
         }
     }
-
 }

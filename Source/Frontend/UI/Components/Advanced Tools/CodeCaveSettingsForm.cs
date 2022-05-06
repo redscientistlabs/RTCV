@@ -6,12 +6,12 @@ namespace RTCV.UI
     using System.Drawing;
     using System.IO;
     using System.Linq;
+    using System.Text;
     using System.Windows.Forms;
     using RTCV.CorruptCore;
     using RTCV.NetCore;
     using RTCV.Common;
     using RTCV.UI.Modular;
-    using System.Text;
 
 #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class CodeCaveSettingsForm : ComponentForm, IBlockable
@@ -32,10 +32,10 @@ namespace RTCV.UI
             this.undockedSizable = false;
         }
 
-        private bool FirstInit = false;
+        //private bool FirstInit = false;
 
-        private List<string> MemoryDumps = null;
-        private Timer ActiveTableAutodump = null;
+        //private List<string> MemoryDumps = null;
+        //private Timer ActiveTableAutodump = null;
         private System.Timers.Timer updateTimer;
 
         private void UpdateSelectedMemoryDomains(object sender, EventArgs args)

@@ -361,7 +361,6 @@ namespace RTCV.CorruptCore
                     PartialSpec partial = eas.partialSpec;
                     LocalNetCoreRouter.Route(Endpoints.Default, Remote.PushPluginSpecUpdate, partial, true);
                 };
-
             });
             e.setReturnValue(true);
         }

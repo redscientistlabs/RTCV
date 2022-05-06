@@ -145,7 +145,6 @@ namespace RTCV.UI
 
             if (overrideDomains != null)
             {
-
                 StringBuilder sb = new StringBuilder();
                 foreach (var s in overrideDomains)
                 {

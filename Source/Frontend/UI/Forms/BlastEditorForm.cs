@@ -1,9 +1,9 @@
-/**
+/*
  * The DataGridView is bound to the blastlayer
  * All validation is done within the dgv
  * The boxes at the bottom are unbound and manipulate the selected rows in the dgv, and thus, the validation is handled by the dgv
  * No maxmimum is set in the numericupdowns at the bottom as the dgv validates
- **/
+ */
 
 /*
 Applies in all cases & should be editable

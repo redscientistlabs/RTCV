@@ -173,7 +173,6 @@ namespace RTCV.UI
                     bool IsCorrupted = StockpileManagerUISide.ApplyStashkey(newSk, false, false);
                     if (StockpileManagerUISide.CurrentStashkey != null)
                         S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = IsCorrupted;
-
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
                 columnsMenu.Show(this, locate);

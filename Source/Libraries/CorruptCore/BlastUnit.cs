@@ -277,7 +277,6 @@ namespace RTCV.CorruptCore
         /// <param name="domain">The domain of the blastunit</param>
         /// <param name="address">The address of the blastunit</param>
         /// <param name="bigEndian">If the Blastunit is being applied to a big endian system. Results in the bytes being flipped before apply</param>
-        /// <param name="applyFrame">The frame on which the BlastUnit will start executing</param>
         /// <param name="lifetime">How many frames the BlastUnit will execute for. 0 for infinite</param>
         /// <param name="note"></param>
         /// <param name="isEnabled"></param>

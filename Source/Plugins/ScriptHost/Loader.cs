@@ -39,6 +39,18 @@ namespace RTCV.Plugins.ScriptHost
 
         public void Dispose()
         {
+            // Dispose of unmanaged resources.
+            Dispose(true);
+            // Suppress finalization.
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                //Dispose of IDisposable objects here
+            }
         }
     }
 }

@@ -5,10 +5,10 @@ namespace RTCV.UI
     using System.IO;
     using System.Linq;
     using System.Windows.Forms;
+    using System.Diagnostics;
     using RTCV.CorruptCore;
     using RTCV.Common;
     using RTCV.UI.Modular;
-    using System.Diagnostics;
 
     public partial class MyListsForm : ComponentForm, IBlockable
     {

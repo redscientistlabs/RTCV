@@ -79,7 +79,6 @@ namespace RTCV.UI
 
             ClusterEngineControl = new Components.EngineConfig.EngineControls.ClusterEngineControl(engineControlLocation);
             this.Controls.Add(ClusterEngineControl);
-
         }
 
         public void ResyncAllEngines()
@@ -347,7 +346,6 @@ namespace RTCV.UI
                             S.GET<MemoryDomainsForm>().Hide();
 
                         LocalNetCoreRouter.Route(Endpoints.CorruptCore, Remote.UpdatedSelectedPluginEngine, engine, true);
-
                     }
                     else
                     {
@@ -403,7 +401,6 @@ namespace RTCV.UI
                     RtcCore.SelectedPluginEngine = null;
                 }
             }
-
         }
 
         public void SetLockBoxes(bool enabled)

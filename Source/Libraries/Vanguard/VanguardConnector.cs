@@ -90,7 +90,18 @@ namespace RTCV.Vanguard
 
         public void Dispose()
         {
-            netConn?.Dispose();
+            // Dispose of unmanaged resources.
+            Dispose(true);
+            // Suppress finalization.
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                netConn?.Dispose();
+            }
         }
 
         public static void PushVanguardSpecRef(FullSpec spec) => AllSpec.VanguardSpec = spec;

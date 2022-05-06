@@ -193,7 +193,6 @@ namespace RTCV.CorruptCore
 
         public byte[] GetRandomValue(string hash, int precision, byte[] passthrough)
         {
-
             byte[] outValue = null;
             BitlogicFilterEntry selectedEntry = null;
 

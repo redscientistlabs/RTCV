@@ -6,10 +6,10 @@ namespace RTCV.UI
     using System.Linq;
     using System.Windows.Forms;
     using System.Diagnostics;
+    using System.Dynamic;
     using RTCV.CorruptCore;
     using RTCV.UI.Modular;
     using RTCV.PluginHost;
-    using System.Dynamic;
 
     public partial class MyPluginsForm : ComponentForm, IBlockable
     {
@@ -43,14 +43,12 @@ namespace RTCV.UI
                 //item.text = plugin.ToString();
                 lbKnownPlugins.Items.Add(new { value = plugin, text = plugin.ToString()});
             }
-
             //var cmbDatasource = (from plugin in 
             //                     select new { value = plugin, text = plugin.ToString() }).ToList();
 
             //lbKnownPlugins.DataSource = cmbDatasource;
             lbKnownPlugins.ValueMember = "value";
             lbKnownPlugins.DisplayMember = "text";
-
         }
 
 
@@ -98,7 +96,6 @@ namespace RTCV.UI
 
         private void RefreshVMDFiles(object sender, EventArgs e)
         {
-
             RefreshPlugins();
         }
 

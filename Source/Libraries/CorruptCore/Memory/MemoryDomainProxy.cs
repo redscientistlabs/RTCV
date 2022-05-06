@@ -13,7 +13,6 @@ namespace RTCV.CorruptCore
         public IMemoryDomain MD { get; private set; } = null;
 
         public override long Size { get; set; }
-        
         //non-rpc constructor
         public MemoryDomainProxy(IMemoryDomain md)
         {

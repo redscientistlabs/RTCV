@@ -42,8 +42,8 @@ namespace RTCV.CorruptCore
 
         private static int seed = (int)DateTime.Now.Ticks;
 
-        private static readonly ThreadLocal<Random> rnd = new ThreadLocal<Random>(() => {
-
+        private static readonly ThreadLocal<Random> rnd = new ThreadLocal<Random>(() =>
+        {
             if (seed == int.MaxValue)
             {
                 Interlocked.Exchange(ref seed, int.MinValue);
@@ -53,8 +53,8 @@ namespace RTCV.CorruptCore
             {
                 return new Random(Interlocked.Increment(ref seed));
             }
+        });
 
-            });
         public static Random RND => rnd.Value;
 
 
@@ -169,7 +169,7 @@ namespace RTCV.CorruptCore
         public static bool AutoCorrupt
         {
             get => (bool)(AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_AUTOCORRUPT] ?? false);
-            set { 
+            set {
                 AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_AUTOCORRUPT, value);
                 UISideHooks.OnAutoCorruptToggled(value);
             }
@@ -418,7 +418,6 @@ namespace RTCV.CorruptCore
                         LocalNetCoreRouter.Route(NetCore.Endpoints.UI, NetCore.Commands.Remote.PushPluginSpecUpdate, partial, true);
                     }
                 };
-
             }
             catch (Exception ex)
             {
@@ -1052,6 +1051,7 @@ namespace RTCV.CorruptCore
                 }
                 catch (Exception ex)
                 {
+                    _ = ex;
                     //TODO fix improve this
                     //Removed action rethrower because it kept cutting
                     //The rest of the stack trace in the cloud debug box

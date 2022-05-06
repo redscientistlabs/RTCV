@@ -3,12 +3,12 @@ namespace RTCV.UI
     using System;
     using System.Drawing;
     using System.Windows.Forms;
+    using System.Linq;
     using RTCV.CorruptCore;
     using RTCV.NetCore;
     using RTCV.Common;
     using RTCV.UI.Components.Controls;
     using RTCV.UI.Modular;
-    using System.Linq;
 
     public partial class SimpleModeForm : ComponentForm, IBlockable
     {

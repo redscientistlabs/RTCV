@@ -3,10 +3,10 @@ namespace RTCV.UI
     using System;
     using System.IO;
     using System.Windows.Forms;
+    using System.Diagnostics;
     using RTCV.CorruptCore;
     using RTCV.Common;
     using RTCV.UI.Modular;
-    using System.Diagnostics;
 
     public partial class MyVMDsForm : ComponentForm, IBlockable
     {

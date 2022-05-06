@@ -218,7 +218,6 @@ namespace RTCV.UI
 
                     if (StockpileManagerUISide.CurrentStashkey != null)
                         S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = IsCorrupted;
-
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
                 columnsMenu.Items.Add(new ToolStripSeparator());

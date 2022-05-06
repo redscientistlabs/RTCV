@@ -62,7 +62,6 @@ namespace RTCV.UI.Components
 
             if (UserEdit || masterValueUpdated)
             {
-
                 if (!masterValueUpdated)
                 {
                     masterValueUpdated = true;

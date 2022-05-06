@@ -42,8 +42,6 @@ namespace RTCV.CorruptCore
 
         public void Apply(bool storeUncorruptBackup, bool followMaximums = false, bool mergeWithPrevious = false)
         {
-
-
             //RPC stuff -------
             //When using RPC, memory must be cached locally. Every time a blast is done
             //A copy of the domain (usually chunked) is cached locally so that list-based
@@ -114,7 +112,6 @@ namespace RTCV.CorruptCore
 
             try
             {
-
                 foreach (BlastUnit bb in Layer)
                 {
                     if (bb == null) //BlastCheat getBackup() always returns null so they can happen and they are valid
@@ -164,7 +161,6 @@ namespace RTCV.CorruptCore
                     }
                 }
                 //------------------
-
             }
             catch (Exception ex)
             {

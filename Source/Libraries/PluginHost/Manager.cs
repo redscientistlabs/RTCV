@@ -82,11 +82,9 @@ namespace RTCV.PluginHost
                 {
                     if (!File.Exists(plugin.Filename))
                     {
-
                         var disabledFilename = plugin.GetDisabledFilename();
                         if (File.Exists(disabledFilename))
                             File.Move(disabledFilename, plugin.Filename);
-
                     }
                 }
                 catch { }
@@ -178,7 +176,7 @@ namespace RTCV.PluginHost
         {
             Status = "DISABLED";
 
-            if(save)
+            if (save)
             Manager.Save();
         }
 

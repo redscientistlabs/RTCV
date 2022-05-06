@@ -152,7 +152,6 @@ namespace RTCV.UI.Input
             {
                 if (_defaultValues == null)
                 {
-
                     _defaultValues = new List<Binding>
                     {
                         Bind("RTC", "Manual Blast", toolTip: "Triggers a manual blast" ),
