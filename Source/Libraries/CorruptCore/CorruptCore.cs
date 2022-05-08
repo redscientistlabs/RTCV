@@ -62,7 +62,7 @@ namespace RTCV.CorruptCore
 
         internal static int CachedPrecision;
 
-        private static List<ProblematicProcess> ProblematicProcesses;
+        //private static List<ProblematicProcess> ProblematicProcesses;
 
         private static Timer KillswitchTimer = new Timer();
 

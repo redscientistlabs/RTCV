@@ -11,6 +11,9 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	<DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
 	<NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
+	<GenerateDocumentationFile>False</GenerateDocumentationFile>
+	<DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+    <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Compile Update="Controls\LogConsole.cs">
