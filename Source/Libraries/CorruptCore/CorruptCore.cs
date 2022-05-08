@@ -546,7 +546,7 @@ namespace RTCV.CorruptCore
                 return null;
             }
         }
-
+        /*
         public static void DownloadProblematicProcesses()
         {
             //Windows does the big dumb: part 11
@@ -628,9 +628,10 @@ namespace RTCV.CorruptCore
                 }
             })).Start();
         }
-
+        */
         //Checks if any problematic processes are found
-        private static bool Warned = false;
+        //private static bool Warned = false;
+        /*
         public static void CheckForProblematicProcesses()
         {
             logger.Info("Entering CheckForProblematicProcesses");
@@ -671,7 +672,7 @@ namespace RTCV.CorruptCore
                 logger.Info("Exiting CheckForProblematicProcesses");
             }
         }
-
+        */
         public static BlastUnit[] GetBlastUnits(string domain, long address, int precision, int alignment, CorruptionEngine engine)
         {
             try
