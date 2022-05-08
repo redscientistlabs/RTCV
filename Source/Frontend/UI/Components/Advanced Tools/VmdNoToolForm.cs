@@ -44,6 +44,13 @@ namespace RTCV.UI
         private void btnOpenPackageDownloader_Click(object sender, System.EventArgs e)
         {
             string exeFile = Path.Combine(RtcCore.LauncherDir, "PackageDownloader.exe");
+
+            if(!File.Exists(exeFile))
+            {
+                MessageBox.Show("Error: Package downloader could not be found.");
+                return;
+            }
+
             var psi = new ProcessStartInfo
             {
                 FileName = exeFile,
