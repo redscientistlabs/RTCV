@@ -7,6 +7,7 @@ namespace RTCV.PluginHost
     using System.IO;
     using System.Linq;
     using System.Reflection;
+    using System.Text;
     using NLog;
 
     public class Host : IDisposable
@@ -47,15 +48,35 @@ namespace RTCV.PluginHost
                     catalog.Catalogs.Add(new DirectoryCatalog(dir));
                 }
             }
-            _container = new CompositionContainer(catalog);
 
             try
             {
+                _container = new CompositionContainer(catalog);
                 this._container.ComposeParts(this);
             }
             catch (CompositionException compositionException)
             {
                 logger.Error(compositionException, "Composition failed in plugin initialization");
+            }
+            catch (ReflectionTypeLoadException rtlex)
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach (Exception exSub in rtlex.LoaderExceptions)
+                {
+                    sb.AppendLine(exSub.Message);
+                    FileNotFoundException exFileNotFound = exSub as FileNotFoundException;
+                    if (exFileNotFound != null)
+                    {
+                        if (!string.IsNullOrEmpty(exFileNotFound.FusionLog))
+                        {
+                            sb.AppendLine("Fusion Log:");
+                            sb.AppendLine(exFileNotFound.FusionLog);
+                        }
+                    }
+                    sb.AppendLine();
+                }
+                logger.Error(rtlex, sb.ToString());
+                //Display or log the error based on your application.
             }
         }
 
