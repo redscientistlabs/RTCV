@@ -265,7 +265,7 @@ namespace RTCV.CorruptCore
         /// We don't use a spec for this because VMDs can get huge, and as such, we keep the dictionary synced on both sides manually.
         /// </summary>
         /// <param name="VMD"></param>
-        public static void AddVMD(VirtualMemoryDomain VMD)
+        public static void AddVMD(VirtualMemoryDomain VMD, bool silently = false)
         {
             if (VMD == null)
             {
@@ -275,7 +275,9 @@ namespace RTCV.CorruptCore
             VmdPool[VMD.ToString()] = VMD;
 
             LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.DomainVMDAdd, VMD.Proto, true);
-            LocalNetCoreRouter.Route(NetCore.Endpoints.UI, NetCore.Commands.Remote.EventDomainsUpdated);
+            
+            if(!silently)
+                LocalNetCoreRouter.Route(NetCore.Endpoints.UI, NetCore.Commands.Remote.EventDomainsUpdated);
         }
 
         public static void AddVMDFromRemote(VmdPrototype proto)
@@ -303,14 +305,14 @@ namespace RTCV.CorruptCore
         /// We don't use a spec for this because VMDs can get huge, and as such, we keep the dictionary synced on both sides manually.
         /// </summary>
         /// <param name="VMD"></param>
-        public static void RemoveVMD(VirtualMemoryDomain VMD)
+        public static void RemoveVMD(VirtualMemoryDomain VMD, bool silently = false)
         {
             if (VMD == null)
             {
                 throw new ArgumentNullException(nameof(VMD));
             }
 
-            RemoveVMD(VMD.ToString());
+            RemoveVMD(VMD.ToString(), silently);
         }
 
         /// <summary>
@@ -318,7 +320,7 @@ namespace RTCV.CorruptCore
         /// We don't use a spec for this because VMDs can get huge, and as such, we keep the dictionary synced on both sides manually.
         /// </summary>
         /// <param name="vmdName"></param>
-        public static void RemoveVMD(string vmdName)
+        public static void RemoveVMD(string vmdName, bool silently = false)
         {
             if (VmdPool.ContainsKey(vmdName))
             {
@@ -326,7 +328,9 @@ namespace RTCV.CorruptCore
             }
 
             LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.DomainVMDRemove, vmdName, true);
-            LocalNetCoreRouter.Route(NetCore.Endpoints.UI, NetCore.Commands.Remote.EventDomainsUpdated);
+
+            if(!silently)
+                LocalNetCoreRouter.Route(NetCore.Endpoints.UI, NetCore.Commands.Remote.EventDomainsUpdated);
         }
 
         public static void RemoveVMDFromRemote(string vmdName)

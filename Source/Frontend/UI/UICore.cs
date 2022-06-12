@@ -16,6 +16,7 @@ namespace RTCV.UI
     using RTCV.UI.Input;
     using RTCV.UI.Modular;
     using RTCV.NetCore.Commands;
+    using System.Dynamic;
 
     public static class UICore
     {
@@ -341,6 +342,54 @@ namespace RTCV.UI
             {
                 inputCheckTimer.Start();
             }
+        }
+
+        public static void SetSelectedComboboxItemFromDynamic(ComboBox cb, dynamic item)
+        {
+            //Managing the Advanced tools combobox from outside the main namespace
+            //requires some wrappipng in ExpandoObject to circumvent
+            //the limitations of anonymous types
+
+            foreach (var cbItem in cb.Items)
+            {
+                ComponentForm compare1 = (((dynamic)cbItem).value as ComponentForm);
+                ComponentForm compare2 = (item.value as ComponentForm);
+                if (compare1 == compare2)
+                {
+                    cb.SelectedItem = cbItem;
+                    return;
+                }
+            }
+
+        }
+
+        public static List<dynamic> GetSafeDynamicComboboxItems(ComboBox cb)
+        {
+            //Managing the Advanced tools combobox from outside the main namespace
+            //requires some wrappipng in ExpandoObject to circumvent
+            //the limitations of anonymous types
+
+            var items = cb.Items.Cast<dynamic>().ToList();
+            List<dynamic> newItems = new List<dynamic>();
+            foreach(var item in items)
+            {
+                if(item is ComponentForm cf)
+                {
+                    dynamic newItem = new ExpandoObject();
+                    newItem.text = cf.Text;
+                    newItem.value = cf;
+                    newItems.Add(newItem);
+                }
+                else
+                {
+                    dynamic newItem = new ExpandoObject();
+                    newItem.text = item.text;
+                    newItem.value = item.value;
+                    newItems.Add(newItem);
+                }
+
+            }
+            return newItems;
         }
 
         public static bool CheckHotkey(string trigger)

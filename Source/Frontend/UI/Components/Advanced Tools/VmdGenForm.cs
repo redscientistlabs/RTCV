@@ -20,7 +20,7 @@ namespace RTCV.UI
             InitializeComponent();
         }
 
-        public void SelectAll(object sender, EventArgs e)
+        public void btnLoadDomains_Click(object sender, EventArgs e)
         {
             S.GET<MemoryDomainsForm>().RefreshDomainsAndKeepSelected();
 

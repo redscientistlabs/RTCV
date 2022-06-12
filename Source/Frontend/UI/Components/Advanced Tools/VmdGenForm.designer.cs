@@ -357,7 +357,7 @@
             this.btnLoadDomains.Tag = "color:light1";
             this.btnLoadDomains.Text = "Load Domains";
             this.btnLoadDomains.UseVisualStyleBackColor = false;
-            this.btnLoadDomains.Click += new System.EventHandler(this.SelectAll);
+            this.btnLoadDomains.Click += new System.EventHandler(this.btnLoadDomains_Click);
             this.btnLoadDomains.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             //
             // cbSelectedMemoryDomain

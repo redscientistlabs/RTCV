@@ -358,7 +358,7 @@ namespace RTCV.UI
 
                 var vmdgenerator = S.GET<VmdGenForm>();
 
-                vmdgenerator.SelectAll(null, null);
+                vmdgenerator.btnLoadDomains_Click(null, null);
 
                 var cbitems = vmdgenerator.cbSelectedMemoryDomain.Items;
                 object domainFound = null;
