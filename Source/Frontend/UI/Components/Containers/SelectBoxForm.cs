@@ -30,18 +30,31 @@ namespace RTCV.UI
         {
             try
             {
-                ((cbSelectBox.SelectedItem as dynamic)?.value as ComponentForm)?.AnchorToPanel(pnComponentForm);
+                object selected = cbSelectBox.SelectedItem;
+
+                var asCF = (cbSelectBox.SelectedItem as ComponentForm);
+                if(asCF != null)
+                {
+                    asCF.AnchorToPanel(pnComponentForm);
+                }
+                else
+                {
+                    ((cbSelectBox.SelectedItem as dynamic)?.value as ComponentForm)?.AnchorToPanel(pnComponentForm);
+                }
+
             }
             catch (Exception ex)
             {
-                try
-                {
-                    (cbSelectBox.SelectedItem as ComponentForm)?.AnchorToPanel(pnComponentForm);
-                }
-                catch
-                {
-                    throw ex;
-                }
+                //try
+                //{
+                //    (cbSelectBox.SelectedItem as ComponentForm)?.AnchorToPanel(pnComponentForm);
+                //}
+                //catch
+                //{
+                //    throw ex;
+                //}
+
+                throw ex;
             }
         }
 
