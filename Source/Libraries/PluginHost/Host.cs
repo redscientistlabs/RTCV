@@ -156,7 +156,15 @@ namespace RTCV.PluginHost
             }
             else
             {
-                assembly = Assembly.LoadFile(args.LoadedAssembly.Location);
+                var location = args.LoadedAssembly.Location;
+                if (!string.IsNullOrEmpty(location))
+                    assembly = Assembly.LoadFile(location);
+                else
+                {
+                    //preloaded by fody
+                    assembly = args.LoadedAssembly;
+                    new object();
+                }
             }
 
             var assemblyLoaderType = assembly.GetType("Costura.AssemblyLoader", false);
