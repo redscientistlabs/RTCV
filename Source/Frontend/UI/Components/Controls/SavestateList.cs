@@ -430,8 +430,8 @@ namespace RTCV.UI.Components.Controls
                     NewSavestateNow();
                 });
 
-                cms.Items.Add("Import from selected Stockpile Item", null, (ob, ev) => NewSavestateFromStockpile());
-
+                cms.Items.Add("Import State from selected Stockpile Item", null, (ob, ev) => NewSavestateFromStockpile());
+                cms.Items.Add("Import State from File", null, (ob, ev) => NewSavestateFromFile());
 
                 cms.Show((Control)sender, locate);
             }
@@ -519,5 +519,74 @@ namespace RTCV.UI.Components.Controls
                 RegisterStashKeyToSelected(newSk);
             }
         }
+
+        private void NewSavestateFromFile()
+        {
+
+
+            var openSavestateDialog = new OpenFileDialog
+            {
+                DefaultExt = "state",
+                Title = "Open Savestate File",
+                Filter = "state files|*.state",
+                RestoreDirectory = true
+            };
+            if (openSavestateDialog.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+
+            string filename = openSavestateDialog.FileName;
+
+
+
+            //yes this automates the UI. ew.
+
+            //Search for the first empty
+            SavestateHolder firstEmpty = null;
+            do
+            {
+                firstEmpty = flowPanel.Controls.Cast<SavestateHolder>().FirstOrDefault(it => it.sk == null);
+
+                if (firstEmpty == null)
+                    BtnForward_Click(null, null); //switch page if necessary
+            } while (firstEmpty == null);
+
+            Control ctl = firstEmpty.btnSavestate;
+            BtnSavestate_MouseDown(ctl, null);  //select savestate box
+
+
+            StashKey sk = StockpileManagerUISide.SaveState();
+
+            //Let's hope the game name is correct!
+            File.Copy(filename, sk.GetSavestateFullPath(), true);
+
+            var sm = S.GET<StockpileManagerForm>();
+
+            if (sk != null)
+            {
+                var newSk = (StashKey)sk.Clone();
+
+                newSk.Key = newSk.ParentKey;
+                newSk.ParentKey = null;
+                newSk.BlastLayer = new BlastLayer();
+
+                string prevWorkingPath = sk.GetSavestateFullPath();
+                string workingpath = newSk.GetSavestateFullPath();
+                string skspath = Path.Combine(RtcCore.workingDir, "SKS", Path.GetFileName(prevWorkingPath));
+
+                if (!File.Exists(skspath)) //it it wasn't from a stockpile, revert to session folder
+                    skspath = Path.Combine(RtcCore.workingDir, "SESSION", Path.GetFileName(prevWorkingPath));
+
+                if (File.Exists(skspath) && !File.Exists(workingpath))
+                    File.Copy(skspath, workingpath);
+
+                StockpileManagerUISide.CurrentStashkey = sk;
+                StockpileManagerUISide.OriginalFromStashkey(sk);
+
+                RegisterStashKeyToSelected(newSk);
+            }
+        }
+
     }
 }
