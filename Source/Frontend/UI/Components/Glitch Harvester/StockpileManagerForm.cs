@@ -189,6 +189,15 @@ namespace RTCV.UI
                     as ToolStripMenuItem).Checked = dgvStockpile.Columns["Note"].Visible;
 
                 columnsMenu.Items.Add(new ToolStripSeparator());
+
+                BlastLayer bl = null;
+
+                if (dgvStockpile.SelectedRows.Count == 1)
+                    bl = GetSelectedStashKey().BlastLayer;
+
+                if (bl != null)
+                    columnsMenu.Items.Add($"Layer Size: {bl.Layer?.Count ?? 0}", null).Enabled = false;
+
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Open Selected Item in Blast Editor", null, new EventHandler((ob, ev) =>
                 {
                     if (S.GET<BlastEditorForm>() != null)

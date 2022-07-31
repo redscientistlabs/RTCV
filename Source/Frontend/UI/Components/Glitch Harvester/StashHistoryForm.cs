@@ -183,6 +183,14 @@ namespace RTCV.UI
 
                 ContextMenuStrip columnsMenu = new ContextMenuStrip();
 
+                BlastLayer bl = null;
+
+                if(lbStashHistory.SelectedIndex != -1)
+                    bl = StockpileManagerUISide.StashHistory[lbStashHistory.SelectedIndex].BlastLayer;
+
+                if(bl != null)
+                    columnsMenu.Items.Add($"Layer Size: {bl.Layer?.Count ?? 0}", null).Enabled = false;
+
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Open Selected Item in Blast Editor", null, new EventHandler((ob, ev) =>
                 {
                     if (S.GET<BlastEditorForm>() != null)
