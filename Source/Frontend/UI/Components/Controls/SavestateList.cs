@@ -32,6 +32,10 @@ namespace RTCV.UI.Components.Controls
             }
         }
 
+        public List<SavestateHolder> ControlList
+        {
+            get => _controlList;
+        }
         public StashKey CurrentSaveStateStashKey => SelectedHolder?.sk ?? null;
 
         private int _numPerPage;

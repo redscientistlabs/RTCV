@@ -10,13 +10,16 @@ namespace RTCV.UI.Components.Controls
         private StashKey _sk = null;
         public StashKey sk => _sk;
 
-        private SaveStateKey ssk = null;
+        public SaveStateKey ssk = null;
+
+        public int Index { get; }
 
         public SavestateHolder(int num)
         {
             InitializeComponent();
             btnSavestate.Text = num.ToString();
             tbSavestate.Visible = false;
+            Index = num;
         }
 
         public bool HasState()
