@@ -42,6 +42,8 @@ namespace RTCV.UI
 
         public static BindingCollection HotkeyBindings = new BindingCollection();
 
+        private static Dictionary<string, Action> dynamicHotkeyCallbacks = new Dictionary<string, Action>();
+
         public static void Start(Form standaloneForm = null)
         {
             S.formRegister.FormRegistered += FormRegister_FormRegistered;
@@ -392,6 +394,50 @@ namespace RTCV.UI
             return newItems;
         }
 
+        public static void AddDynamicCallback(string name, Action callback)
+        {
+            if (callback != null)
+            {
+                dynamicHotkeyCallbacks[name] = callback;
+            }
+        }
+
+        public static void RemoveDynamicCallback(string action)
+        {
+            dynamicHotkeyCallbacks.Remove(action);
+        }
+
+        public static void AddDynamicBinding(string name, string defaultBindings, string tooltip, Action callback)
+        {
+            const string DYN_TAB_GROUP = "Misc.";
+            var existingHotkeyConfig = HotkeyBindings.FirstOrDefault(x => x.DisplayName == name);
+            if (existingHotkeyConfig == null)
+            {
+                int ordinal = HotkeyBindings.Where(x => x.TabGroup == DYN_TAB_GROUP).Count();
+                //For now, manage hotkeys in plugins only
+                Bindings.BindButton(name, defaultBindings);
+                HotkeyBindings.Add(new RTCV.UI.Input.Binding { Ordinal = ordinal, DisplayName = name, Bindings = defaultBindings, TabGroup = DYN_TAB_GROUP, DefaultBinding = defaultBindings, ToolTip = tooltip ?? "No description provided" });
+                var settingForm = S.GET<SettingsHotkeyConfigForm>();
+                settingForm.SaveAndReload();
+            }
+
+            if (callback != null)
+            {
+                dynamicHotkeyCallbacks[name] = callback;
+            }
+        }
+
+        private static void InvokeDynamicHotkey(string trigger)
+        {
+            if (dynamicHotkeyCallbacks.TryGetValue(trigger, out Action action))
+            {
+                SyncObjectSingleton.FormExecute(() =>
+                {
+                    action?.Invoke();
+                });
+            }
+        }
+
         public static bool CheckHotkey(string trigger)
         {
             logger.Info("Hotkey {trigger} pressed", trigger);
@@ -691,6 +737,9 @@ namespace RTCV.UI
                             bef.SendToStash(null, null);
                         }
                     });
+                    break;
+                default:
+                    InvokeDynamicHotkey(trigger);
                     break;
             }
 

@@ -57,6 +57,13 @@ namespace RTCV.UI
             NetCore.Params.SetParam("HOTKEYS", binds);
         }
 
+        internal void SaveAndReload()
+        {
+            Save();
+            LoadHotkeys();
+            DoTabs();
+        }
+
         private static void AddMissingHotKeys()
         {
             var def = BindingCollection.DefaultValues;
