@@ -414,7 +414,6 @@ namespace RTCV.UI
             if (existingHotkeyConfig == null)
             {
                 int ordinal = HotkeyBindings.Where(x => x.TabGroup == DYN_TAB_GROUP).Count();
-                //For now, manage hotkeys in plugins only
                 Bindings.BindButton(name, defaultBindings);
                 HotkeyBindings.Add(new RTCV.UI.Input.Binding { Ordinal = ordinal, DisplayName = name, Bindings = defaultBindings, TabGroup = DYN_TAB_GROUP, DefaultBinding = defaultBindings, ToolTip = tooltip ?? "No description provided" });
                 var settingForm = S.GET<SettingsHotkeyConfigForm>();
