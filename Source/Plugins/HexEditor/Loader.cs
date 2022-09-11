@@ -3,7 +3,6 @@ namespace RTCV.Plugins.HexEditor
     using System;
     using System.ComponentModel.Composition;
     using System.Windows.Forms;
-    using NLog;
     using RTCV.Common;
     using RTCV.PluginHost;
     using RTCV.NetCore;
