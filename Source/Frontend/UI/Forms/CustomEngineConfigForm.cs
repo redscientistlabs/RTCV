@@ -731,6 +731,18 @@ namespace RTCV.UI
         private void btnRefresh_Click(object sender, EventArgs e)
         {
             CustomEngine.InitTemplates();
+
+            //refresh combobox like init loading
+
+            cbSelectedTemplate.Items.Clear();
+
+            foreach (var k in CustomEngine.Name2TemplateDico.Keys)
+            {
+                cbSelectedTemplate.Items.Add(k);
+            }
+
+            cbSelectedTemplate.SelectedIndex = 0;
+
         }
     }
 }
