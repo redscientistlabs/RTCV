@@ -430,7 +430,9 @@ namespace RTCV.UI.Components.Controls
                     NewSavestateNow();
                 });
 
-                cms.Items.Add("Import State from selected Stockpile Item", null, (ob, ev) => NewSavestateFromStockpile());
+                if(S.GET<StockpileManagerForm>().dgvStockpile.SelectedRows.Count > 0)
+                    cms.Items.Add("Import State from selected Stockpile Item", null, (ob, ev) => NewSavestateFromStockpile());
+                
                 cms.Items.Add("Import State from File", null, (ob, ev) => NewSavestateFromFile());
 
                 cms.Show((Control)sender, locate);
