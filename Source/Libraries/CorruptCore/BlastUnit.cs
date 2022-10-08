@@ -842,7 +842,7 @@ namespace RTCV.CorruptCore
             {
                 if (RtcCore.RerollFollowsCustomEngine)
                 {
-                    if ((this.GeneratedUsingValueList && !RtcCore.RerollIgnoresOriginalSource) || CustomEngine.ValueSource == CustomValueSource.VALUELIST)
+                    if ((this.GeneratedUsingValueList) && !RtcCore.RerollIgnoresOriginalSource)
                     {
                         var mi = MemoryDomains.GetInterface(SourceDomain);
                         var addr = SourceAddress;
