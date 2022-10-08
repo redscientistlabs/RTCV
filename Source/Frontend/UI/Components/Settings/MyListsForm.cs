@@ -77,7 +77,6 @@ namespace RTCV.UI
                 lbKnownLists.Items.Add(shortfile.Replace("$", "[DISABLED] "));
             }
 
-            btnImportList.Enabled = false;
             btnSaveList.Enabled = false;
             btnRenameList.Enabled = false;
             btnRemoveList.Enabled = false;
@@ -122,7 +121,6 @@ namespace RTCV.UI
 
         private void OnKnownListSelectedIndexChanged(object sender, EventArgs e)
         {
-            btnImportList.Enabled = false;
             btnSaveList.Enabled = false;
             btnRenameList.Enabled = false;
             btnRemoveList.Enabled = false;
