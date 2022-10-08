@@ -845,7 +845,14 @@ namespace RTCV.CorruptCore
                     if (this.GeneratedUsingValueList && !RtcCore.RerollIgnoresOriginalSource)
                     {
                         var mi = MemoryDomains.GetInterface(SourceDomain);
-                        Value = Filtering.GetRandomConstant(CustomEngine.ValueListHash, Precision, mi.PeekBytes(SourceAddress, SourceAddress + precision, !mi.BigEndian));
+                        var addr = SourceAddress;
+                        if (mi == null) //fallback to domain when sourcedomain not specified
+                        {
+                            mi = MemoryDomains.GetInterface(Domain);
+                            addr = Address;
+                        }
+
+                        Value = Filtering.GetRandomConstant(CustomEngine.ValueListHash, Precision, mi.PeekBytes(addr, addr + precision, !mi.BigEndian));
                         //Value = Filtering.GetRandomConstant(CustomEngine.ValueListHash, Precision);
                     }
                     else
@@ -853,7 +860,14 @@ namespace RTCV.CorruptCore
                         if (CustomEngine.ValueSource == CustomValueSource.VALUELIST)
                         {
                             var mi = MemoryDomains.GetInterface(SourceDomain);
-                            Value = Filtering.GetRandomConstant(CustomEngine.ValueListHash, Precision, mi.PeekBytes(SourceAddress, SourceAddress + precision, !mi.BigEndian));
+                            var addr = SourceAddress;
+                            if (mi == null) //fallback to domain when sourcedomain not specified
+                            {
+                                mi = MemoryDomains.GetInterface(Domain);
+                                addr = Address;
+                            }
+
+                            Value = Filtering.GetRandomConstant(CustomEngine.ValueListHash, Precision, mi.PeekBytes(addr, addr + precision, !mi.BigEndian));
                             //Value = Filtering.GetRandomConstant(CustomEngine.ValueListHash, Precision);
                             return;
                         }

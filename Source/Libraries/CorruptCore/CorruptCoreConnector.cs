@@ -192,6 +192,65 @@ namespace RTCV.CorruptCore
 
                         break;
 
+                    case Remote.DomainPeekByte:
+                        {
+                            //ObjectValue -­> Object[] -­> string DomainName, long Address
+                            //returns: byte Value
+
+                            var obj = advancedMessage.objectValue as object[];
+                            string DomainName = (string)obj[0];
+                            long Address = (long)obj[1];
+
+                            var MD = MemoryDomains.GetInterface(DomainName);
+                            e.setReturnValue(MD.PeekByte(Address));
+                            break;
+                        }
+                    case Remote.DomainPokeByte:
+                        {
+                            //ObjectValue -­> Object[] -­> string DomainName, long Address, byte Value
+                            //no return
+
+                            var obj = advancedMessage.objectValue as object[];
+                            string DomainName = (string)obj[0];
+                            long Address = (long)obj[1];
+                            byte Value = (byte)obj[2];
+
+                            var MD = MemoryDomains.GetInterface(DomainName);
+                            MD.PokeByte(Address, Value);
+                            break;
+                        }
+                    case Remote.DomainPeekBytes:
+                        {
+                            //ObjectValue -­> Object[] -­> string DomainName, long StartAddress, long EndAddress, bool raw
+                            //returns: byte[] Value
+
+                            var obj = advancedMessage.objectValue as object[];
+                            string DomainName = (string)obj[0];
+                            long StartAddress = (long)obj[1];
+                            long EndAddress = (long)obj[2];
+                            bool raw = (bool)obj[3];
+
+                            var MD = MemoryDomains.GetInterface(DomainName);
+                            e.setReturnValue(MD.PeekBytes(StartAddress, EndAddress, raw));
+                            break;
+                        }
+                    case Remote.DomainPokeBytes:
+                        {
+                            //ObjectValue -­> Object[] -­> string DomainName, long Address, byte[] Value, bool raw
+                            //no return
+
+                            var obj = advancedMessage.objectValue as object[];
+                            string DomainName = (string)obj[0];
+                            long Address = (long)obj[1];
+                            byte[] Value = (byte[])obj[2];
+                            bool raw = (bool)obj[3];
+
+                            var MD = MemoryDomains.GetInterface(DomainName);
+                            MD.PokeBytes(Address, Value, true);
+                            break;
+                        }
+
+
                     case Remote.DomainVMDAdd:
                         MemoryDomains.AddVMDFromRemote((advancedMessage.objectValue as VmdPrototype));
                         break;

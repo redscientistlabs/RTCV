@@ -4,6 +4,8 @@ namespace RTCV.CorruptCore
     using System.Collections.Generic;
     using Ceras;
     using RTCV.CorruptCore.Extensions;
+    using RTCV.NetCore;
+    using RTCV.NetCore.Commands;
 
     [Serializable]
     [MemberConfig(TargetMember.All)]
@@ -62,6 +64,14 @@ namespace RTCV.CorruptCore
 
         public override byte[] PeekBytes(long startAddress, long endAddress, bool raw = true)
         {
+            if (MD == null) //Should not happen but handled.
+            {
+                //Assume we are in the wrong process, route to Vanguard.
+                //This will slowdown the reading cycle due to crossing NetCore
+                var objectValue = new object[] { Name, startAddress, endAddress, raw };
+                return LocalNetCoreRouter.QueryRoute<byte[]>(Endpoints.CorruptCore, Remote.DomainPeekBytes, objectValue, true);
+            }
+
             //endAddress is exclusive
             List<byte> data = new List<byte>();
             for (long i = startAddress; i < endAddress; i++)
@@ -81,20 +91,31 @@ namespace RTCV.CorruptCore
 
         public override void PokeBytes(long startAddress, byte[] value, bool raw = true)
         {
-            if (!raw || BigEndian)
+            if (MD == null) //Should not happen but handled.
             {
-                value.FlipBytes();
+                //Assume we are in the wrong process, route to Vanguard.
+                //This will slowdown the reading cycle due to crossing NetCore
+                var objectValue = new object[] { Name, startAddress, value, raw };
+                LocalNetCoreRouter.Route(Endpoints.CorruptCore, Remote.DomainPokeBytes, objectValue, true);
             }
-
-            if (UsingRPC)
+            else
             {
-                (MD as IRPCMemoryDomain).PokeBytes(startAddress, value);
-                return;
-            }
 
-            for (long i = 0; i < value.Length; i++)
-            {
-                PokeByte(startAddress + i, value[i]);
+                if (!raw || BigEndian)
+                {
+                    value.FlipBytes();
+                }
+
+                if (UsingRPC)
+                {
+                    (MD as IRPCMemoryDomain).PokeBytes(startAddress, value);
+                    return;
+                }
+
+                for (long i = 0; i < value.Length; i++)
+                {
+                    PokeByte(startAddress + i, value[i]);
+                }
             }
         }
 
@@ -107,6 +128,14 @@ namespace RTCV.CorruptCore
 
             try
             {
+                if (MD == null) //Should not happen but handled.
+                {
+                    //Assume we are in the wrong process, route to Vanguard.
+                    //This will slowdown the reading cycle due to crossing NetCore
+                    var objectValue = new object[] { Name, address };
+                    return LocalNetCoreRouter.QueryRoute<byte>(Endpoints.CorruptCore, Remote.DomainPeekByte, objectValue, true);
+                }
+
                 return MD.PeekByte(address);
             }
             catch (Exception e)
@@ -124,7 +153,18 @@ namespace RTCV.CorruptCore
 
             try
             {
-                MD.PokeByte(address, value);
+                if (MD == null) //Should not happen but handled.
+                {
+                    //Assume we are in the wrong process, route to Vanguard.
+                    //This will slowdown the reading cycle due to crossing NetCore
+                    var objectValue = new object[] { Name, address, value };
+                    LocalNetCoreRouter.Route(Endpoints.CorruptCore, Remote.DomainPokeByte, objectValue, true);
+                }
+                else
+                {
+                    MD.PokeByte(address, value);
+                }
+
             }
             catch (Exception e)
             {
