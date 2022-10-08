@@ -247,7 +247,7 @@ namespace RTCV.UI
 
                             if (domain != null)
                             {
-                                string limiter = vmd.Name.Substring(vmd.Name.LastIndexOf('-') + 2);
+                                string limiter = vmd.Name.Substring(vmd.Name.IndexOf("--") + 3);
                                 S.GET<VmdLimiterProfilerForm>().AutoProfile(MemoryDomains.AllMemoryInterfaces[domain], limiter);
                             }
                         }
