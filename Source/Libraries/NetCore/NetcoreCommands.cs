@@ -65,6 +65,8 @@ namespace RTCV.NetCore.Commands
         public const string IsNormalAdvance = nameof(Remote) + "_" + nameof(IsNormalAdvance);
         public const string DomainPeekByte = nameof(Remote) + "_" + nameof(DomainPeekByte);
         public const string DomainPokeByte = nameof(Remote) + "_" + nameof(DomainPokeByte);
+        public const string DomainPeekBytes = nameof(Remote) + "_" + nameof(DomainPeekBytes);
+        public const string DomainPokeBytes = nameof(Remote) + "_" + nameof(DomainPokeBytes);
         public const string DomainRefreshDomains = nameof(Remote) + "_" + nameof(DomainRefreshDomains);
         public const string DomainGetDomains = nameof(Remote) + "_" + nameof(DomainGetDomains);
         public const string DomainVMDAdd = nameof(Remote) + "_" + nameof(DomainVMDAdd);
@@ -79,10 +81,7 @@ namespace RTCV.NetCore.Commands
         public const string SetApplyCorruptBL = nameof(Remote) + "_" + nameof(SetApplyCorruptBL);
         public const string ClearStepBlastUnits = nameof(Remote) + "_" + nameof(ClearStepBlastUnits);
         public const string RemoveExcessInfiniteStepUnits = nameof(Remote) + "_" + nameof(RemoveExcessInfiniteStepUnits);
-        public const string EventLoadGameDoneNewGame = nameof(Remote) + "_" + nameof(EventLoadGameDoneNewGame);
-        public const string EventLoadgameDoneSameGame = nameof(Remote) + "_" + nameof(EventLoadgameDoneSameGame);
-        public const string EventCloseEmulator = nameof(Remote) + "_" + nameof(EventCloseEmulator);
-        public const string EventShutdown = nameof(Remote) + "_" + nameof(EventShutdown);
+
         public const string OpenHexEditor = nameof(Remote) + "_" + nameof(OpenHexEditor);
         public const string LoadROM = nameof(Remote) + "_" + nameof(LoadROM);
         public const string CloseGame = nameof(Remote) + "_" + nameof(CloseGame);
@@ -91,6 +90,8 @@ namespace RTCV.NetCore.Commands
         public const string BlastToolsGetAppliedBackupLayer = nameof(Remote) + "_" + nameof(BlastToolsGetAppliedBackupLayer);
         public const string KeySetSyncSettings = nameof(Remote) + "_" + nameof(KeySetSyncSettings);
         public const string KeySetSystemCore = nameof(Remote) + "_" + nameof(KeySetSystemCore);
+        
+        //HOTKEYS
         public const string HotkeyManualBlast = nameof(Remote) + "_" + nameof(HotkeyManualBlast);
         public const string HotkeyAutoCorruptToggle = nameof(Remote) + "_" + nameof(HotkeyAutoCorruptToggle);
         public const string HotkeyErrorDelayDecrease = nameof(Remote) + "_" + nameof(HotkeyErrorDelayDecrease);
@@ -117,8 +118,14 @@ namespace RTCV.NetCore.Commands
         public const string HotkeyBeLoadCorrupt = nameof(Remote) + "_" + nameof(HotkeyBeLoadCorrupt);
         public const string HotkeyBeApply = nameof(Remote) + "_" + nameof(HotkeyBeApply);
         public const string HotkeyBeSendStash = nameof(Remote) + "_" + nameof(HotkeyBeSendStash);
+
+        //EVENTS
         public const string EventEmuMainFormClose = nameof(Remote) + "_" + nameof(EventEmuMainFormClose);
         public const string EventEmuStarted = nameof(Remote) + "_" + nameof(EventEmuStarted);
+        public const string EventLoadGameDoneNewGame = nameof(Remote) + "_" + nameof(EventLoadGameDoneNewGame);
+        public const string EventLoadgameDoneSameGame = nameof(Remote) + "_" + nameof(EventLoadgameDoneSameGame);
+        public const string EventCloseEmulator = nameof(Remote) + "_" + nameof(EventCloseEmulator);
+        public const string EventShutdown = nameof(Remote) + "_" + nameof(EventShutdown);
     }
 
     public static class Emulator

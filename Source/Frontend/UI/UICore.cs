@@ -471,6 +471,32 @@ namespace RTCV.UI
                     });
                     break;
 
+                case "Undo and Corrupt":
+
+                    // TAKEN FROM BLASTLAYER TOGGLE
+                    SyncObjectSingleton.FormExecute(() =>
+                    {
+                        var ghbForm = S.GET<GlitchHarvesterBlastForm>();
+                        if(ghbForm.btnBlastToggle.BackColor == Color.FromArgb(224, 128, 128))
+                            ghbForm.BlastLayerToggle(null, null);
+                    });
+                    //--------------------------
+
+
+                    // COPY FROM JUST CORRUPT
+                    AllSpec.CorruptCoreSpec.Update(VSPEC.STEP_RUNBEFORE, true);
+
+                    SyncObjectSingleton.FormExecute(() =>
+                    {
+                        bool isload = S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation;
+                        S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation = false;
+                        S.GET<GlitchHarvesterBlastForm>().Corrupt(null, null);
+                        S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation = isload;
+                    });
+                    //--------------------------------------
+
+                    break;
+
                 case "New Savestate":
 
                     SyncObjectSingleton.FormExecute(() =>
