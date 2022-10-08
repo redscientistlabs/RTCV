@@ -312,6 +312,9 @@ namespace RTCV.UI
         {
             string value = sk.Alias;
 
+            if (value == null)
+                value = "";
+
             if (RTCV.UI.Forms.InputBox.ShowDialog("Renaming Stashkey", "Enter the new Stash name:", ref value) == DialogResult.OK && !string.IsNullOrWhiteSpace(value))
             {
                 sk.Alias = value.Trim();

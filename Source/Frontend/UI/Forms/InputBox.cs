@@ -13,6 +13,7 @@ namespace RTCV.UI.Forms
             form.label.Text = promptText;
             form.AcceptButton = form.okButton;
             form.CancelButton = form.cancelButton;
+            form.inputTextBox.Text = value;
             var result = form.ShowDialog();
             value = form.inputTextBox.Text;
             return result;
