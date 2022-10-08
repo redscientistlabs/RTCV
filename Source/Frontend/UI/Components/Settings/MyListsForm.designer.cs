@@ -99,7 +99,7 @@ namespace RTCV.UI
             this.btnImportList.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnImportList.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnImportList.UseVisualStyleBackColor = false;
-            this.btnImportList.Click += new System.EventHandler(this.ImportVMD);
+            this.btnImportList.Click += new System.EventHandler(this.ImportList);
             this.btnImportList.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleMouseDown);
             // 
             // btnSaveList

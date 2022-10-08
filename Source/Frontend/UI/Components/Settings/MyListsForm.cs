@@ -271,14 +271,14 @@ namespace RTCV.UI
             RefreshLists();
         }
 
-        private void ImportVMD(object sender, EventArgs e)
+        private void ImportList(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog
             {
-                DefaultExt = "vmd",
+                DefaultExt = "txt",
                 Multiselect = true,
-                Title = "Open VMD File",
-                Filter = "VMD files|*.vmd",
+                Title = "Open List File",
+                Filter = "TXT files|*.txt",
                 RestoreDirectory = true
             };
             if (ofd.ShowDialog() == DialogResult.OK)
@@ -292,7 +292,7 @@ namespace RTCV.UI
                     }
                     catch (Exception ex)
                     {
-                        throw new Exception($"The VMD file {filename} could not be loaded." + ex.Message);
+                        throw new Exception($"The TXT file {filename} could not be loaded." + ex.Message);
                     }
                 }
 
