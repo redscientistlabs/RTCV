@@ -430,7 +430,12 @@ namespace RTCV.UI
 
                 if (StockpileManagerUISide.CurrentStashkey != null)
                 {
-                    StockpileManagerUISide.CurrentStashkey.BlastLayer.Reroll();
+                    var currentBl = StockpileManagerUISide.CurrentStashkey.BlastLayer;
+                    //reroll on Emu Side always
+                    var newBl = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.RerollBlastLayer, currentBl, true);
+                    StockpileManagerUISide.CurrentStashkey.BlastLayer = newBl;
+
+                    //StockpileManagerUISide.CurrentStashkey.BlastLayer.Reroll();
 
                     if (StockpileManagerUISide.AddCurrentStashkeyToStash())
                     {

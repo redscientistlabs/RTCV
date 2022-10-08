@@ -842,7 +842,7 @@ namespace RTCV.CorruptCore
             {
                 if (RtcCore.RerollFollowsCustomEngine)
                 {
-                    if (this.GeneratedUsingValueList && !RtcCore.RerollIgnoresOriginalSource)
+                    if ((this.GeneratedUsingValueList && !RtcCore.RerollIgnoresOriginalSource) || CustomEngine.ValueSource == CustomValueSource.VALUELIST)
                     {
                         var mi = MemoryDomains.GetInterface(SourceDomain);
                         var addr = SourceAddress;
@@ -857,20 +857,6 @@ namespace RTCV.CorruptCore
                     }
                     else
                     {
-                        if (CustomEngine.ValueSource == CustomValueSource.VALUELIST)
-                        {
-                            var mi = MemoryDomains.GetInterface(SourceDomain);
-                            var addr = SourceAddress;
-                            if (mi == null) //fallback to domain when sourcedomain not specified
-                            {
-                                mi = MemoryDomains.GetInterface(Domain);
-                                addr = Address;
-                            }
-
-                            Value = Filtering.GetRandomConstant(CustomEngine.ValueListHash, Precision, mi.PeekBytes(addr, addr + precision, !mi.BigEndian));
-                            //Value = Filtering.GetRandomConstant(CustomEngine.ValueListHash, Precision);
-                            return;
-                        }
 
                         //Generate a random value based on our precision.
                         //We use a BigInteger as we support arbitrary length, but we do use built in methods for 8,16,32 bit for performance reasons
@@ -934,7 +920,14 @@ namespace RTCV.CorruptCore
                     if (this.GeneratedUsingValueList && !RtcCore.RerollIgnoresOriginalSource)
                     {
                         var mi = MemoryDomains.GetInterface(SourceDomain);
-                        Value = Filtering.GetRandomConstant(VectorEngine.ValueListHash, Precision, mi.PeekBytes(SourceAddress, SourceAddress + precision, !mi.BigEndian));
+                        var addr = SourceAddress;
+                        if (mi == null) //fallback to domain when sourcedomain not specified
+                        {
+                            mi = MemoryDomains.GetInterface(Domain);
+                            addr = Address;
+                        }
+
+                        Value = Filtering.GetRandomConstant(VectorEngine.ValueListHash, Precision, mi.PeekBytes(addr, addr + precision, !mi.BigEndian));
                         //Value = Filtering.GetRandomConstant(VectorEngine.ValueListHash, Precision);
                     }
                     else

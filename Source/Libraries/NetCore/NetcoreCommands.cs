@@ -81,6 +81,7 @@ namespace RTCV.NetCore.Commands
         public const string SetApplyCorruptBL = nameof(Remote) + "_" + nameof(SetApplyCorruptBL);
         public const string ClearStepBlastUnits = nameof(Remote) + "_" + nameof(ClearStepBlastUnits);
         public const string RemoveExcessInfiniteStepUnits = nameof(Remote) + "_" + nameof(RemoveExcessInfiniteStepUnits);
+        public const string RerollBlastLayer = nameof(Remote) + "_" + nameof(RerollBlastLayer);
 
         public const string OpenHexEditor = nameof(Remote) + "_" + nameof(OpenHexEditor);
         public const string LoadROM = nameof(Remote) + "_" + nameof(LoadROM);

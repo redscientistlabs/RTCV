@@ -250,6 +250,17 @@ namespace RTCV.CorruptCore
                             break;
                         }
 
+                    case Remote.RerollBlastLayer:
+                        {
+                            //ObjectValue -­> Object -­> BlastLayer bl
+                            //returns BlastLayer
+
+                            var bl = (BlastLayer)advancedMessage.objectValue;
+                            bl.Reroll();
+                            e.setReturnValue(bl);
+                            break;
+                        }
+
 
                     case Remote.DomainVMDAdd:
                         MemoryDomains.AddVMDFromRemote((advancedMessage.objectValue as VmdPrototype));

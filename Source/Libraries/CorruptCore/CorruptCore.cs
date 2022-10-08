@@ -290,7 +290,7 @@ namespace RTCV.CorruptCore
         {
             RerollSourceAddress = true;
             RerollSourceDomain = true;
-            RerollFollowsCustomEngine = true;
+            RerollFollowsCustomEngine = false;
             Params.SetParam(RTCSPEC.CORE_EMULATOROSDDISABLED);
         }
 

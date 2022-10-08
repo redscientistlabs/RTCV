@@ -354,11 +354,32 @@ namespace RTCV.UI
         {
             ((ToolStripMenuItem)cms.Items.Add("Re-roll Selected Row(s)", null, new EventHandler((ob, ev) =>
             {
+
+                //generate temporary blastlayer for batch processing
+                List<BlastUnit> layer = new List<BlastUnit>();
                 foreach (DataGridViewRow row in dgvBlastEditor.SelectedRows)
                 {
                     var bu = (BlastUnit)row.DataBoundItem;
-                    bu.Reroll();
+                    layer.Add(bu);
                 }
+                var tempBl = new BlastLayer(layer);
+
+                //Ensure reroll is tone on the Vanguard CorruptCore
+                var rerolledBl = LocalNetCoreRouter.QueryRoute<BlastLayer>(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.RerollBlastLayer, tempBl, true);
+
+                //update BlastUnit with new data
+                for (int i =0;i< rerolledBl.Layer.Count;i++)
+                {
+                    var bu = tempBl.Layer[i];
+                    var newBu = rerolledBl.Layer[i];
+
+                    bu.Domain = newBu.Domain;
+                    bu.Address = newBu.Address;
+                    bu.Value = newBu.Value;
+                    bu.SourceAddress = newBu.SourceAddress;
+                    bu.SourceDomain = newBu.SourceDomain;
+                }
+
                 dgvBlastEditor.Refresh();
                 UpdateBottom();
             }))).Enabled = true;
