@@ -498,6 +498,15 @@ namespace RTCV.CorruptCore
                     partial[RTCSPEC.CORE_REROLLSOURCEDOMAIN] = false;
                 }
 
+                if (Params.IsParamSet("REROLL_IGNOREORIGINALSOURCE"))
+                {
+                    partial[RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE] = (string.Equals(Params.ReadParam("REROLL_IGNOREORIGINALSOURCE"), "TRUE", StringComparison.OrdinalIgnoreCase));
+                }
+                else
+                {
+                    partial[RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE] = false;
+                }
+
                 if (Params.IsParamSet("REROLL_ADDRESS"))
                 {
                     partial[RTCSPEC.CORE_REROLLADDRESS] = (string.Equals(Params.ReadParam("REROLL_ADDRESS"), "TRUE", StringComparison.OrdinalIgnoreCase));
@@ -525,14 +534,6 @@ namespace RTCV.CorruptCore
                     partial[RTCSPEC.CORE_REROLLFOLLOWENGINESETTINGS] = false;
                 }
 
-                if (Params.IsParamSet("REROLL_USESVALUELIST"))
-                {
-                    partial[RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE] = (string.Equals(Params.ReadParam("REROLL_USESVALUELIST"), "TRUE", StringComparison.OrdinalIgnoreCase));
-                }
-                else
-                {
-                    partial[RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE] = false;
-                }
 
                 return partial;
             }
