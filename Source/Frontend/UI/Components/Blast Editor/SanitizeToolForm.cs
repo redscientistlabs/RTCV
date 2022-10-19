@@ -277,7 +277,17 @@ namespace RTCV.UI
 
         private void AddToStockpile(object sender, EventArgs e)
         {
-            StashKey newSk = _sanitizer.GetFinalStashKey();
+            StashKey oldSk = (StashKey)_sanitizer.GetFinalStashKey().Clone();
+            StashKey newSk = new StashKey(RtcCore.GetRandomKey(), oldSk.ParentKey, null)
+            {
+                RomFilename = oldSk.RomFilename,
+                SystemName = oldSk.SystemName,
+                SystemCore = oldSk.SystemCore,
+                GameName = oldSk.GameName,
+                SyncSettings = oldSk.SyncSettings,
+                StateLocation = oldSk.StateLocation
+            };
+            newSk.BlastLayer = (BlastLayer)oldSk.BlastLayer.Clone();
             StockpileManagerUISide.StashHistory.Add(newSk);
 
             S.GET<StashHistoryForm>().RefreshStashHistory();
@@ -300,8 +310,7 @@ namespace RTCV.UI
         }
         private void AddToStash(object sender, EventArgs e)
         {
-            StashKey oldSk = _sanitizer.GetFinalStashKey();
-
+            StashKey oldSk = (StashKey)_sanitizer.GetFinalStashKey().Clone();
             StashKey newSk = new StashKey(RtcCore.GetRandomKey(), oldSk.ParentKey, null)
             {
                 RomFilename = oldSk.RomFilename,
@@ -313,6 +322,7 @@ namespace RTCV.UI
             };
             newSk.BlastLayer = (BlastLayer)oldSk.BlastLayer.Clone();
             StockpileManagerUISide.StashHistory.Add(newSk);
+
             S.GET<StashHistoryForm>().RefreshStashHistory();
 
             //S.GET<StockpileManagerForm>().dgvStockpile.ClearSelection();
