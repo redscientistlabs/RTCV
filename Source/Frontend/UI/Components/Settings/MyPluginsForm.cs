@@ -35,9 +35,14 @@ namespace RTCV.UI
                 Directory.CreateDirectory(RtcCore.PluginDir);
             }
 
+            PluginHost.Manager.Cleanup();
+
             var orderedPlugins = PluginHost.Manager.GetPlugins().OrderBy(it => it.ToString());
             foreach (var plugin in orderedPlugins)
             {
+                if (string.IsNullOrWhiteSpace(plugin.Filename))
+                    continue;
+
                 //dynamic item = new ExpandoObject();
                 //item.value = plugin;
                 //item.text = plugin.ToString();
@@ -94,7 +99,7 @@ namespace RTCV.UI
         }
 
 
-        private void RefreshVMDFiles(object sender, EventArgs e)
+        private void RefreshPlugins_Click(object sender, EventArgs e)
         {
             RefreshPlugins();
         }

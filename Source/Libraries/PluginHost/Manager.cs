@@ -28,23 +28,50 @@ namespace RTCV.PluginHost
             if (!string.IsNullOrWhiteSpace(param))
             {
                 plugins.Clear();
-                var lines = param.Split('\n');
-                plugins.AddRange(lines.Select(it => PluginInfo.FromLine(it)));
+                var lines = param.Split('\n').Distinct().ToList();
+
+                plugins.AddRange(lines.Where(line => !string.IsNullOrWhiteSpace(line)).Select(it => PluginInfo.FromLine(it)));
             }
         }
 
         public static void Cleanup()
         {
+            //as you can probably tell, this whole thing should be rewritten from the ground.
+            //we will live with it for now
+
+            //remove duplicates and broken
+            var allplugins = plugins.ToList();
+            Dictionary<string, PluginInfo> uniques = new Dictionary<string, PluginInfo>();
+            foreach (var plugin in allplugins)
+                uniques[plugin.Filename.ToUpper()] = plugin;
+
+            plugins = uniques.Values.ToList();
+
+            allplugins = plugins.ToList();
+            foreach (var plugin in allplugins)
+            {
+                try
+                {
+                    if (string.IsNullOrWhiteSpace(plugin.Filename))
+                    {
+                        plugins.Remove(plugin);
+                    }
+                }
+                catch { }
+            }
+
             //delete deleted
             var deleted = plugins.Where(it => it.Status == "DELETE").ToList();
             foreach (var plugin in deleted)
             {
+                var disabledFilename = plugin.GetDisabledFilename();
+
+
                 try
                 {
                     if (File.Exists(plugin.Filename))
                         File.Delete(plugin.Filename);
 
-                    var disabledFilename = plugin.GetDisabledFilename();
                     if (File.Exists(disabledFilename))
                         File.Delete(disabledFilename);
                 }
@@ -60,15 +87,21 @@ namespace RTCV.PluginHost
             var disabled = plugins.Where(it => it.Status == "DISABLED").ToList();
             foreach (var plugin in disabled)
             {
+                var disabledFilename = plugin.GetDisabledFilename();
+
                 try
                 {
                     if (File.Exists(plugin.Filename))
                     {
-                        var disabledFilename = plugin.GetDisabledFilename();
                         if (File.Exists(disabledFilename))
                             File.Delete(disabledFilename);
 
                         File.Move(plugin.Filename, disabledFilename);
+                    }
+
+                    if (!File.Exists(disabledFilename))
+                    {
+                        plugins.Remove(plugin);
                     }
                 }
                 catch { }
@@ -78,13 +111,16 @@ namespace RTCV.PluginHost
             var enabled = plugins.Where(it => it.Status == "ENABLED").ToList();
             foreach (var plugin in enabled)
             {
+                var disabledFilename = plugin.GetDisabledFilename();
+
                 try
                 {
                     if (!File.Exists(plugin.Filename))
                     {
-                        var disabledFilename = plugin.GetDisabledFilename();
                         if (File.Exists(disabledFilename))
                             File.Move(disabledFilename, plugin.Filename);
+                        else
+                            plugins.Remove(plugin);
                     }
                 }
                 catch { }
@@ -201,7 +237,9 @@ namespace RTCV.PluginHost
             else if (Status == "DELETE")
                 statusPart = "[DELETED] ";
 
-            return $"{statusPart}{new FileInfo(Filename).Name}";
+            
+
+            return $"{statusPart}{Path.GetFileName(Filename)}";
         }
     }
 }

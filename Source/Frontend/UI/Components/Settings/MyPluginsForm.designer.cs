@@ -73,7 +73,7 @@ namespace RTCV.UI
             this.btnRefreshListFiles.Tag = "color:light1";
             this.btnRefreshListFiles.Text = "Refresh Plugin Files";
             this.btnRefreshListFiles.UseVisualStyleBackColor = false;
-            this.btnRefreshListFiles.Click += new System.EventHandler(this.RefreshVMDFiles);
+            this.btnRefreshListFiles.Click += new System.EventHandler(this.RefreshPlugins_Click);
             // 
             // btnRemoveList
             // 
