@@ -40,19 +40,21 @@ namespace RTCV.UI
             this.btnOpenOnlineWiki = new System.Windows.Forms.Button();
             this.btnWatchTutorialVideo = new System.Windows.Forms.Button();
             this.btnResetRandomSeed = new System.Windows.Forms.Button();
+            this.cbAutoUncorrupt = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.Gray;
+            this.panel1.Controls.Add(this.cbAutoUncorrupt);
             this.panel1.Controls.Add(this.cbUncapIntensity);
             this.panel1.Controls.Add(this.cbDontCleanAtQuit);
             this.panel1.Controls.Add(this.cbAllowCrossCoreCorruption);
             this.panel1.Controls.Add(this.cbDisableEmulatorOSD);
             this.panel1.Location = new System.Drawing.Point(19, 228);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(269, 96);
+            this.panel1.Size = new System.Drawing.Size(323, 119);
             this.panel1.TabIndex = 138;
             this.panel1.Tag = "color:normal";
             // 
@@ -217,12 +219,25 @@ namespace RTCV.UI
             this.btnResetRandomSeed.UseVisualStyleBackColor = false;
             this.btnResetRandomSeed.Click += new System.EventHandler(this.btnResetRandomSeed_Click);
             // 
+            // cbAutoUncorrupt
+            // 
+            this.cbAutoUncorrupt.AutoSize = true;
+            this.cbAutoUncorrupt.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.cbAutoUncorrupt.ForeColor = System.Drawing.Color.White;
+            this.cbAutoUncorrupt.Location = new System.Drawing.Point(11, 90);
+            this.cbAutoUncorrupt.Name = "cbAutoUncorrupt";
+            this.cbAutoUncorrupt.Size = new System.Drawing.Size(221, 17);
+            this.cbAutoUncorrupt.TabIndex = 4;
+            this.cbAutoUncorrupt.Text = "Enable Auto-Uncorrupt (Experimental)";
+            this.cbAutoUncorrupt.UseVisualStyleBackColor = true;
+            this.cbAutoUncorrupt.CheckedChanged += new System.EventHandler(this.cbAutoUncorrupt_CheckedChanged);
+            // 
             // SettingsGeneralForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(96)))), ((int)(((byte)(96)))), ((int)(((byte)(96)))));
-            this.ClientSize = new System.Drawing.Size(485, 351);
+            this.ClientSize = new System.Drawing.Size(485, 387);
             this.Controls.Add(this.btnResetRandomSeed);
             this.Controls.Add(this.btnWatchTutorialVideo);
             this.Controls.Add(this.btnRefreshInputDevices);
@@ -255,5 +270,6 @@ namespace RTCV.UI
         public System.Windows.Forms.Button btnRefreshInputDevices;
         public System.Windows.Forms.Button btnWatchTutorialVideo;
         public System.Windows.Forms.Button btnResetRandomSeed;
+        public System.Windows.Forms.CheckBox cbAutoUncorrupt;
     }
 }

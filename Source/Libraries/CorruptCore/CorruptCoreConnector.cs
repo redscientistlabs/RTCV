@@ -349,7 +349,15 @@ namespace RTCV.CorruptCore
                         {
                             void a()
                             {
-                                StockpileManagerEmuSide.CorruptBL?.Apply(false);
+                                var autoUncorrupt = RtcCore.AutoUncorrupt;
+                                if (autoUncorrupt && RtcCore.prevAutoUncorruptBlastLayer != null)
+                                    RtcCore.prevAutoUncorruptBlastLayer.Apply(false);
+
+                                StockpileManagerEmuSide.CorruptBL?.Apply(autoUncorrupt);
+
+                                if (autoUncorrupt)
+                                    RtcCore.prevAutoUncorruptBlastLayer = StockpileManagerEmuSide.CorruptBL?.GetBackup();
+
                             }
                             SyncObjectSingleton.EmuThreadExecute(a, false);
                         }
@@ -560,7 +568,17 @@ namespace RTCV.CorruptCore
                     {
                         bl.Layer.AddRange(p.bl.Layer);
                     }
-                    bl.Apply(true);
+
+
+                    var autoUncorrupt = RtcCore.AutoUncorrupt;
+                    if (autoUncorrupt && RtcCore.prevAutoUncorruptBlastLayer != null)
+                        RtcCore.prevAutoUncorruptBlastLayer.Apply(false);
+
+                    bl?.Apply(true);
+
+                    if (autoUncorrupt)
+                        RtcCore.prevAutoUncorruptBlastLayer = bl?.GetBackup();
+
                 }
             }
             //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
@@ -611,7 +629,16 @@ namespace RTCV.CorruptCore
 
                     if (applyBlastLayer)
                     {
-                        bl?.Apply(backup);
+
+                        var autoUncorrupt = RtcCore.AutoUncorrupt;
+                        if (autoUncorrupt && RtcCore.prevAutoUncorruptBlastLayer != null)
+                            RtcCore.prevAutoUncorruptBlastLayer.Apply(false);
+
+                        bl?.Apply(backup || autoUncorrupt);
+
+                        if (autoUncorrupt)
+                            RtcCore.prevAutoUncorruptBlastLayer = bl?.GetBackup();
+
                     }
                 }
             }
@@ -641,7 +668,14 @@ namespace RTCV.CorruptCore
             var merge = (temp.Length > 2) && (bool)temp[2];
             void a()
             {
-                bl.Apply(storeUncorruptBackup, true, merge);
+                var autoUncorrupt = RtcCore.AutoUncorrupt;
+                if (autoUncorrupt && RtcCore.prevAutoUncorruptBlastLayer != null)
+                    RtcCore.prevAutoUncorruptBlastLayer.Apply(false);
+
+                bl?.Apply(storeUncorruptBackup || autoUncorrupt, true, merge);
+
+                if (autoUncorrupt)
+                    RtcCore.prevAutoUncorruptBlastLayer = bl?.GetBackup();
             }
 
             SyncObjectSingleton.EmuThreadExecute(a, true);

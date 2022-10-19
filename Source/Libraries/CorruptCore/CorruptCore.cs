@@ -37,7 +37,7 @@ namespace RTCV.CorruptCore
     public static class RtcCore
     {
         //General RTC Values
-        public const string RtcVersion = "5.1.0-RC2";
+        public const string RtcVersion = "5.1.1-b1";
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private static int seed = (int)DateTime.Now.Ticks;
@@ -57,6 +57,7 @@ namespace RTCV.CorruptCore
 
         public static Random RND => rnd.Value;
 
+        public static BlastLayer prevAutoUncorruptBlastLayer = null; //Experimental
 
         public static bool Attached { get; set; }  = false;
 
@@ -173,6 +174,12 @@ namespace RTCV.CorruptCore
                 AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_AUTOCORRUPT, value);
                 UISideHooks.OnAutoCorruptToggled(value);
             }
+        }
+
+        public static bool AutoUncorrupt
+        {
+            get => (bool)(AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_AUTOUNCORRUPT] ?? false);
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_AUTOUNCORRUPT, value);
         }
 
         public static bool DontCleanSavestatesOnQuit
@@ -1116,7 +1123,16 @@ namespace RTCV.CorruptCore
             void _generateAndBlast()
             {
                 bl = GenerateBlastLayerOnAllThreads();
-                bl?.Apply(false, true);
+
+                var autoUncorrupt = RtcCore.AutoUncorrupt;
+
+                if (autoUncorrupt && RtcCore.prevAutoUncorruptBlastLayer != null)
+                    RtcCore.prevAutoUncorruptBlastLayer.Apply(false);
+
+                bl?.Apply(autoUncorrupt, true);
+
+                if (autoUncorrupt)
+                    RtcCore.prevAutoUncorruptBlastLayer = bl?.GetBackup();
             }
             //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
             if ((bool?)AllSpec.VanguardSpec[VSPEC.LOADSTATE_USES_CALLBACKS] ?? false)
@@ -1174,12 +1190,20 @@ namespace RTCV.CorruptCore
                     cpuStepCount++;
 
                     var autoCorrupt = RtcCore.AutoCorrupt;
+                    var autoUncorrupt = RtcCore.AutoUncorrupt;
                     var errorDelay = RtcCore.ErrorDelay;
                     if (autoCorrupt && cpuStepCount >= errorDelay)
                     {
+                        if (autoUncorrupt && RtcCore.prevAutoUncorruptBlastLayer != null)
+                            RtcCore.prevAutoUncorruptBlastLayer.Apply(false);
+
                         cpuStepCount = 0;
                         BlastLayer bl = RtcCore.GenerateBlastLayer((string[])AllSpec.UISpec[UISPEC.SELECTEDDOMAINS]);
-                        bl?.Apply(false, false);
+                        bl?.Apply(autoUncorrupt, false);
+
+                        if (autoUncorrupt)
+                            RtcCore.prevAutoUncorruptBlastLayer = bl?.GetBackup();
+
                     }
                 }
                 catch (Exception ex)

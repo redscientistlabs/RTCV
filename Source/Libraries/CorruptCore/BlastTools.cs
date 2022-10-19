@@ -160,7 +160,15 @@ namespace RTCV.CorruptCore
             //from within emuhawk or else it'll apply the blastlayer AFTER this code completes
             //So we manually apply the blastlayer
             sk.RunOriginal();
-            sk.BlastLayer.Apply(false);
+
+            var autoUncorrupt = RtcCore.AutoUncorrupt;
+            if (autoUncorrupt && RtcCore.prevAutoUncorruptBlastLayer != null)
+                RtcCore.prevAutoUncorruptBlastLayer.Apply(false);
+
+            bl?.Apply(autoUncorrupt);
+
+            if (autoUncorrupt)
+                RtcCore.prevAutoUncorruptBlastLayer = bl?.GetBackup();
 
             //Fake advance a frame here to get it processed and the values set
             StepActions.Execute();

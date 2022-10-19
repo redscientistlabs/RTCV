@@ -158,6 +158,7 @@ namespace RTCV.CorruptCore
         public static readonly string STEP_RUNBEFORE = nameof(STEP_RUNBEFORE);
         public static readonly string CORE_EXTRACTBLASTLAYER = nameof(CORE_EXTRACTBLASTLAYER);
         public static readonly string CORE_AUTOCORRUPT = nameof(CORE_AUTOCORRUPT);
+        public static readonly string CORE_AUTOUNCORRUPT = nameof(CORE_AUTOUNCORRUPT);
         public static readonly string CORE_KILLSWITCHINTERVAL = nameof(CORE_KILLSWITCHINTERVAL);
         public static readonly string CORE_EMULATOROSDDISABLED = nameof(CORE_EMULATOROSDDISABLED);
         public static readonly string CORE_SHOWCONSOLE = nameof(CORE_SHOWCONSOLE);

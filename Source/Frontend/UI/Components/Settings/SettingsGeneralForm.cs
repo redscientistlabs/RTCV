@@ -140,5 +140,10 @@ namespace RTCV.UI
         {
             CorruptCore.RtcCore.ResetSeed();
         }
+
+        private void cbAutoUncorrupt_CheckedChanged(object sender, EventArgs e)
+        {
+            RtcCore.AutoUncorrupt = cbAutoUncorrupt.Checked;
+        }
     }
 }

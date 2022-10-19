@@ -78,7 +78,17 @@ namespace RTCV.CorruptCore
             if (applyBlastLayer && sk?.BlastLayer?.Layer?.Count > 0)
             {
                 CorruptBL = sk.BlastLayer;
-                sk.BlastLayer.Apply(true);
+
+
+                var autoUncorrupt = RtcCore.AutoUncorrupt;
+                if (autoUncorrupt && RtcCore.prevAutoUncorruptBlastLayer != null)
+                    RtcCore.prevAutoUncorruptBlastLayer.Apply(false);
+
+                sk.BlastLayer?.Apply(true);
+
+                if (autoUncorrupt)
+                    RtcCore.prevAutoUncorruptBlastLayer = sk.BlastLayer?.GetBackup();
+
             }
             return true;
         }
