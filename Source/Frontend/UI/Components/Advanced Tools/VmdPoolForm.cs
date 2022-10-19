@@ -255,6 +255,20 @@ namespace RTCV.UI
             return sb.ToString();
         }
 
+        public void GetFocus()
+        {
+            foreach (var item in UICore.mtForm.cbSelectBox.Items)
+            {
+                if (((dynamic)item).value is VmdPoolForm)
+                {
+                    UICore.mtForm.cbSelectBox.SelectedItem = item;
+                    break;
+                }
+            }
+
+
+        }
+
         private void SaveVMD(object sender, EventArgs e)
         {
             if (lbLoadedVmdList.SelectedIndex == -1)
@@ -432,15 +446,9 @@ namespace RTCV.UI
 
             S.GET<MyVMDsForm>().RefreshVMDs();
 
-            //switch to My VMDs
-            foreach (var item in UICore.mtForm.cbSelectBox.Items)
-            {
-                if (((dynamic)item).value is MyVMDsForm)
-                {
-                    UICore.mtForm.cbSelectBox.SelectedItem = item;
-                    break;
-                }
-            }
+            //Selects back the VMD Pool menu
+            S.GET<VmdPoolForm>().GetFocus();
+
         }
 
         private void cbShowVmdContents_CheckedChanged(object sender, EventArgs e)

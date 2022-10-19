@@ -190,15 +190,8 @@ namespace RTCV.UI
                 S.GET<VmdPoolForm>().loadVmd(path, true);
             }
 
-            //switch to VMD Pool
-            foreach (var item in UICore.mtForm.cbSelectBox.Items)
-            {
-                if (((dynamic)item).value is VmdPoolForm)
-                {
-                    UICore.mtForm.cbSelectBox.SelectedItem = item;
-                    break;
-                }
-            }
+            //Selects back the VMD Pool menu
+            S.GET<VmdPoolForm>().GetFocus();
         }
 
         private void RenameVMD(object sender, EventArgs e)
