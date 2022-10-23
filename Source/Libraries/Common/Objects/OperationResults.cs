@@ -8,9 +8,9 @@
 
     public class OperationResult
     {
-        public readonly string Message;
-        public readonly Exception Exception;
-        public readonly NLog.LogLevel Severity;
+        public string Message { get; private set; }
+        public Exception Exception { get; private set; }
+        public NLog.LogLevel Severity { get; private set; }
 
         public OperationResult(string message, NLog.LogLevel severity, Exception e = null)
         {
@@ -21,6 +21,11 @@
 
         public OperationResult(string message, NLog.LogLevel severity, NLog.Logger logger, Exception e = null)
         {
+            if (logger == null)
+            {
+                throw new ArgumentNullException(nameof(logger));
+            }
+
             this.Message = message;
             this.Severity = severity;
             this.Exception = e;
@@ -31,7 +36,7 @@
     public class OperationResults
     {
         private List<OperationResult> messages;
-        public readonly ReadOnlyCollection<OperationResult> Messages;
+        private readonly ReadOnlyCollection<OperationResult> Messages;
 
         public ReadOnlyCollection<OperationResult> Warnings => messages.Where(x => x.Severity == NLog.LogLevel.Warn).ToList().AsReadOnly();
         public ReadOnlyCollection<OperationResult> Errors => messages.Where(x => x.Severity == NLog.LogLevel.Error).ToList().AsReadOnly();
@@ -44,7 +49,14 @@
 
         public void AddResult(OperationResult result) => messages.Add(result);
 
-        public void AddResults(OperationResults results) => messages.AddRange(results.Messages);
+        public void AddResults(OperationResults results) {
+            if (results == null)
+            {
+                throw new ArgumentNullException(nameof(results));
+            }
+
+            messages.AddRange(results.Messages);
+        }
 
         public void AddWarning(string warning) => messages.Add(new OperationResult(warning, NLog.LogLevel.Warn));
 
@@ -97,7 +109,7 @@
 
     public class OperationResults<T> : OperationResults
     {
-        public T Result;
+        public T Result { get; set; }
 
         public OperationResults() : base()
         {

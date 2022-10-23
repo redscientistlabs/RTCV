@@ -12,40 +12,46 @@ namespace RTCV.UI
     using RTCV.CorruptCore;
     using RTCV.NetCore;
     using RTCV.Common;
+    using RTCV.UI.Extensions;
     using RTCV.UI.Input;
     using RTCV.UI.Modular;
-    using static RTCV.NetCore.NetcoreCommands;
-    using static RTCV.UI.UI_Extensions;
+    using RTCV.NetCore.Commands;
+    using System.Dynamic;
 
     public static class UICore
     {
-        //Note Box Settings
-        public static Point NoteBoxPosition;
-        public static Size NoteBoxSize;
-
-        public static bool FirstConnect = true;
-        public static ManualResetEvent Initialized = new ManualResetEvent(false);
+        internal static bool FirstConnect = true;
+        internal static ManualResetEvent Initialized = new ManualResetEvent(false);
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         private static System.Timers.Timer inputCheckTimer;
 
         //RTC Main Forms
-        //public static Color generalColor = Color.FromArgb(60, 45, 70);
-        public static Color GeneralColor = Color.LightSteelBlue;
+        private static SelectBoxForm _mtForm = null;
+        public static SelectBoxForm mtForm //keep public for autoextendability for plugins
+        {
+            get
+            {
+                if (_mtForm == null)
+                    _mtForm = DefaultGrids.DefaultTools;
 
-        public static RTC_SelectBox_Form mtForm = null;
+                return _mtForm;
+            }
+            set { _mtForm = value; }
+        }
+
         public static BindingCollection HotkeyBindings = new BindingCollection();
 
         public static void Start(Form standaloneForm = null)
         {
             S.formRegister.FormRegistered += FormRegister_FormRegistered;
             //registerFormEvents(S.GET<RTC_Core_Form>());
-            registerFormEvents(S.GET<UI_CoreForm>());
-            registerHotkeyBlacklistControls(S.GET<UI_CoreForm>());
+            registerFormEvents(S.GET<CoreForm>());
+            registerHotkeyBlacklistControls(S.GET<CoreForm>());
 
             if (!RtcCore.Attached)
             {
-                S.SET((RTC_Standalone_Form)standaloneForm);
+                S.SET((Forms.StandaloneForm)standaloneForm);
             }
 
             Form dummy = new Form();
@@ -53,28 +59,29 @@ namespace RTCV.UI
 
             SyncObjectSingleton.SyncObject = dummy;
 
-            UI_VanguardImplementation.StartServer();
+            VanguardImplementation.StartServer();
 
             PartialSpec p = new PartialSpec("UISpec");
 
-            p["SELECTEDDOMAINS"] = new string[] { };
+            p[UISPEC.SELECTEDDOMAINS] = new string[] { };
+            p[UISPEC.SELECTEDDOMAINS_FORCAVESEARCH] = new string[] { };
 
-            RTCV.NetCore.AllSpec.UISpec = new FullSpec(p, !CorruptCore.RtcCore.Attached);
-            RTCV.NetCore.AllSpec.UISpec.SpecUpdated += (o, e) =>
+            AllSpec.UISpec = new FullSpec(p, !RtcCore.Attached);
+            AllSpec.UISpec.SpecUpdated += (o, e) =>
             {
                 PartialSpec partial = e.partialSpec;
 
-                LocalNetCoreRouter.Route(CORRUPTCORE, REMOTE_PUSHUISPECUPDATE, partial, e.syncedUpdate);
+                LocalNetCoreRouter.Route(Endpoints.CorruptCore, Remote.PushUISpecUpdate, partial, e.SyncedUpdate);
             };
 
-            CorruptCore.RtcCore.StartUISide();
+            RtcCore.StartUISide();
 
             //Loading RTC Params
 
-            S.GET<RTC_SettingsGeneral_Form>().cbDisableEmulatorOSD.Checked = RTCV.NetCore.Params.IsParamSet(RTCSPEC.CORE_EMULATOROSDDISABLED);
-            S.GET<RTC_SettingsGeneral_Form>().cbAllowCrossCoreCorruption.Checked = RTCV.NetCore.Params.IsParamSet("ALLOW_CROSS_CORE_CORRUPTION");
-            S.GET<RTC_SettingsGeneral_Form>().cbDontCleanAtQuit.Checked = RTCV.NetCore.Params.IsParamSet("DONT_CLEAN_SAVESTATES_AT_QUIT");
-            S.GET<RTC_SettingsGeneral_Form>().cbUncapIntensity.Checked = RTCV.NetCore.Params.IsParamSet("UNCAP_INTENSITY");
+            S.GET<SettingsGeneralForm>().cbDisableEmulatorOSD.Checked = Params.IsParamSet(RTCSPEC.CORE_EMULATOROSDDISABLED);
+            S.GET<SettingsGeneralForm>().cbAllowCrossCoreCorruption.Checked = Params.IsParamSet("ALLOW_CROSS_CORE_CORRUPTION");
+            S.GET<SettingsGeneralForm>().cbDontCleanAtQuit.Checked = Params.IsParamSet("DONT_CLEAN_SAVESTATES_AT_QUIT");
+            S.GET<SettingsGeneralForm>().cbUncapIntensity.Checked = Params.IsParamSet("UNCAP_INTENSITY");
 
             //Initialize input code. Poll every 16ms
             Input.Input.Initialize();
@@ -86,13 +93,13 @@ namespace RTCV.UI
 
             if (FirstConnect)
             {
-                UI_DefaultGrids.connectionStatus.LoadToMain();
+                DefaultGrids.connectionStatus.LoadToMain();
             }
 
-            LoadRTCColor();
-            S.GET<UI_CoreForm>().Show();
+            Colors.LoadRTCColor();
+            S.GET<CoreForm>().Show();
             Initialized.Set();
-            LoadRTCColor();
+            Colors.LoadRTCColor();
         }
 
         private static void FormRegister_FormRegistered(object sender, FormRegisteredEventArgs e)
@@ -106,7 +113,7 @@ namespace RTCV.UI
             }
         }
 
-        public static void registerHotkeyBlacklistControls(Control container)
+        internal static void registerHotkeyBlacklistControls(Control container)
         {
             foreach (Control c in container.Controls)
             {
@@ -130,7 +137,7 @@ namespace RTCV.UI
             }
         }
 
-        public static void registerFormEvents(Form f)
+        internal static void registerFormEvents(Form f)
         {
             f.Deactivate -= NewForm_FocusChanged;
             f.Deactivate += NewForm_FocusChanged;
@@ -162,12 +169,12 @@ namespace RTCV.UI
 
         public static void UpdateFormFocusStatus(bool? forceSet = null)
         {
-            if (RTCV.NetCore.AllSpec.UISpec == null)
+            if (AllSpec.UISpec == null)
             {
                 return;
             }
 
-            bool previousState = (bool?)RTCV.NetCore.AllSpec.UISpec[RTC_INFOCUS] ?? false;
+            bool previousState = (bool?)AllSpec.UISpec[Basic.RTCInFocus] ?? false;
             //bool currentState = forceSet ?? isAnyRTCFormFocused();
             bool currentState = (Form.ActiveForm != null && forceSet == null) || (forceSet ?? false);
 
@@ -175,31 +182,8 @@ namespace RTCV.UI
             {
                 logger.Trace($"Swapping focus state {previousState} => {currentState}");
                 //This is a non-synced spec update to prevent jittering. Shouldn't have any other noticeable impact
-                RTCV.NetCore.AllSpec.UISpec.Update(RTC_INFOCUS, currentState, true, false);
+                AllSpec.UISpec.Update(Basic.RTCInFocus, currentState, true, false);
             }
-        }
-
-        private static bool isAnyRTCFormFocused()
-        {
-            bool ExternalForm = Form.ActiveForm == null;
-
-            if (ExternalForm)
-            {
-                return false;
-            }
-
-            var form = Form.ActiveForm;
-            var t = form.GetType();
-
-            focus = (
-                typeof(IAutoColorize).IsAssignableFrom(t) ||
-                typeof(CloudDebug).IsAssignableFrom(t) ||
-                typeof(DebugInfo_Form).IsAssignableFrom(t)
-            );
-
-            bool isAllowedForm = focus;
-
-            return isAllowedForm;
         }
 
         public static void LockInterface(bool focusCoreForm = true, bool blockMainForm = false)
@@ -216,17 +200,17 @@ namespace RTCV.UI
                 SetHotkeyTimer(false);
 
                 interfaceLocked = true;
-                var cf = S.GET<UI_CoreForm>();
+                var cf = S.GET<CoreForm>();
                 cf.LockSideBar();
 
-                S.GET<RTC_ConnectionStatus_Form>().pnBlockedButtons.Show();
+                S.GET<ConnectionStatusForm>().pnBlockedButtons.Show();
 
                 if (blockMainForm)
                 {
-                    UI_CanvasForm.mainForm.BlockView();
+                    CanvasForm.mainForm.BlockView();
                 }
 
-                UI_CanvasForm.extraForms.ForEach(it => it.BlockView());
+                CanvasForm.extraForms.ForEach(it => it.BlockView());
 
                 var ifs = S.GETINTERFACES<IBlockable>();
 
@@ -253,12 +237,12 @@ namespace RTCV.UI
             lock (lockObject)
             {
                 interfaceLocked = false;
-                S.GET<UI_CoreForm>().UnlockSideBar();
+                S.GET<CoreForm>().UnlockSideBar();
 
-                S.GET<RTC_ConnectionStatus_Form>().pnBlockedButtons.Hide();
+                S.GET<ConnectionStatusForm>().pnBlockedButtons.Hide();
 
-                UI_CanvasForm.mainForm.UnblockView();
-                UI_CanvasForm.extraForms.ForEach(it => it.UnblockView());
+                CanvasForm.mainForm.UnblockView();
+                CanvasForm.extraForms.ForEach(it => it.UnblockView());
                 var ifs = S.GETINTERFACES<IBlockable>();
                 foreach (var i in ifs)
                 {
@@ -276,9 +260,9 @@ namespace RTCV.UI
             Input.Input.Instance.ClearEvents();
         }
 
-        public static void BlockView(this IBlockable ib)
+        internal static void BlockView(this IBlockable ib)
         {
-            if (ib is RTC_ConnectionStatus_Form)
+            if (ib is ConnectionStatusForm)
             {
                 return;
             }
@@ -296,7 +280,7 @@ namespace RTCV.UI
                 ib.blockPanel.BringToFront();
 
                 var bmp = c.getFormScreenShot();
-                bmp.Tint(Color.FromArgb(0xCC, UICore.Dark4Color));
+                bmp.Tint(Color.FromArgb(0xCC, Colors.Dark4Color));
 
                 ib.blockPanel.BackgroundImage = bmp;
             }
@@ -304,9 +288,9 @@ namespace RTCV.UI
             ib.blockPanel.Visible = true;
         }
 
-        public static void UnblockView(this IBlockable ib)
+        internal static void UnblockView(this IBlockable ib)
         {
-            if (ib is RTC_ConnectionStatus_Form)
+            if (ib is ConnectionStatusForm)
             {
                 return;
             }
@@ -317,231 +301,12 @@ namespace RTCV.UI
             }
         }
 
-        //All RTC forms
-        public static Form[] AllColorizedSingletons(Type baseType = null)
-        {
-            if (baseType == null)
-            {
-                baseType = typeof(RTCV.UI.UI_CoreForm);
-            }
-            //This fetches all singletons interface IAutoColorized
-
-            List<Form> all = new List<Form>();
-            foreach (Type t in Assembly.GetAssembly(baseType).GetTypes())
-            {
-                if (typeof(IAutoColorize).IsAssignableFrom(t) && t != typeof(IAutoColorize))
-                {
-                    all.Add((Form)S.GET(Type.GetType(t.ToString())));
-                }
-            }
-
-            return all.ToArray();
-        }
-
-        public static volatile bool isClosing = false;
-        private static bool focus;
-
-        public static void CloseAllRtcForms() //This allows every form to get closed to prevent RTC from hanging
-        {
-            if (isClosing)
-            {
-                return;
-            }
-
-            isClosing = true;
-
-            foreach (Form frm in UICore.AllColorizedSingletons())
-            {
-                if (frm != null)
-                {
-                    frm.Close();
-                }
-            }
-
-            if (S.GET<RTC_Standalone_Form>() != null)
-            {
-                S.GET<RTC_Standalone_Form>().Close();
-            }
-
-            //Clean out the working folders
-            if (!CorruptCore.RtcCore.DontCleanSavestatesOnQuit)
-            {
-                Stockpile.EmptyFolder("WORKING");
-            }
-
-            Environment.Exit(0);
-        }
-
-        public static Color Light1Color;
-        public static Color Light2Color;
-        public static Color NormalColor;
-        public static Color Dark1Color;
-        public static Color Dark2Color;
-        public static Color Dark3Color;
-        public static Color Dark4Color;
+        internal static volatile bool isClosing = false;
         private static bool interfaceLocked;
         private static bool lockPending;
         private static object lockObject = new object();
 
-
-        public static void SetRTCColor(Color color, Control ctr = null)
-        {
-            HashSet<Control> allControls = new HashSet<Control>();
-
-            if (ctr == null)
-            {
-                foreach (Form targetForm in UICore.AllColorizedSingletons())
-                {
-                    if (targetForm != null)
-                    {
-                        foreach (var c in targetForm.Controls.getControlsWithTag())
-                            allControls.Add(c);
-                        allControls.Add(targetForm);
-                    }
-                }
-
-                //Get the extraforms
-                foreach (UI_CanvasForm targetForm in UI_CanvasForm.extraForms)
-                {
-                    foreach (var c in targetForm.Controls.getControlsWithTag())
-                        allControls.Add(c);
-                    allControls.Add(targetForm);
-                }
-
-                //We have to manually add the etform because it's not singleton, not an extraForm, and not owned by any specific form
-                //Todo - Refactor this so we don't need to add it separately
-                if (mtForm != null)
-                {
-                    foreach (var c in mtForm.Controls.getControlsWithTag())
-                        allControls.Add(c);
-                    allControls.Add(mtForm);
-                }
-            }
-            else if (ctr is Form || ctr is UserControl)
-            {
-                foreach (var c in ctr.Controls.getControlsWithTag())
-                    allControls.Add(c);
-                allControls.Add(ctr);
-            }
-            else if (ctr is Form)
-            {
-                allControls.Add(ctr);
-            }
-
-            float generalDarken = -0.50f;
-            float light1 = 0.10f;
-            float light2 = 0.45f;
-            float dark1 = -0.20f;
-            float dark2 = -0.35f;
-            float dark3 = -0.50f;
-            float dark4 = -0.85f;
-
-            color = color.ChangeColorBrightness(generalDarken);
-
-            Light1Color = color.ChangeColorBrightness(light1);
-            Light2Color = color.ChangeColorBrightness(light2);
-            NormalColor = color;
-            Dark1Color = color.ChangeColorBrightness(dark1);
-            Dark2Color = color.ChangeColorBrightness(dark2);
-            Dark3Color = color.ChangeColorBrightness(dark3);
-            Dark4Color = color.ChangeColorBrightness(dark4);
-
-            var tag2ColorDico = new Dictionary<string, Color>
-            {
-                { "color:light2", Light2Color },
-                { "color:light1", Light1Color },
-                { "color:normal", NormalColor },
-                { "color:dark1", Dark1Color },
-                { "color:dark2", Dark2Color },
-                { "color:dark3", Dark3Color },
-                { "color:dark4", Dark4Color }
-            };
-
-            foreach (var c in allControls)
-            {
-                var tag = c.Tag?.ToString().Split(' ');
-
-                if (tag == null || tag.Length == 0)
-                {
-                    continue;
-                }
-
-                //Snag the tag and look for the color.
-                var ctag = tag.FirstOrDefault(x => x.Contains("color:"));
-
-                //We didn't find a valid color
-                if (ctag == null || !tag2ColorDico.TryGetValue(ctag, out Color _color))
-                {
-                    continue;
-                }
-
-                if (c is Label l && l.BackColor != Color.FromArgb(30, 31, 32))
-                {
-                    c.ForeColor = _color;
-                }
-                else
-                {
-                    c.BackColor = _color;
-                }
-
-                if (c is Button btn)
-                {
-                    btn.FlatAppearance.BorderColor = _color;
-                }
-
-                if (c is DataGridView dgv)
-                {
-                    dgv.BackgroundColor = _color;
-                }
-
-                c.Invalidate();
-            }
-        }
-
-        public static void SelectRTCColor()
-        {
-            // Show the color dialog.
-            Color color;
-            ColorDialog cd = new ColorDialog();
-            DialogResult result = cd.ShowDialog();
-            // See if user pressed ok.
-            if (result == DialogResult.OK)
-            {
-                // Set form background to the selected color.
-                color = cd.Color;
-            }
-            else
-            {
-                return;
-            }
-
-            GeneralColor = color;
-            SetRTCColor(color);
-
-            SaveRTCColor(color);
-        }
-
-        public static void LoadRTCColor()
-        {
-            if (RTCV.NetCore.Params.IsParamSet("COLOR"))
-            {
-                string[] bytes = RTCV.NetCore.Params.ReadParam("COLOR").Split(',');
-                UICore.GeneralColor = Color.FromArgb(Convert.ToByte(bytes[0]), Convert.ToByte(bytes[1]), Convert.ToByte(bytes[2]));
-            }
-            else
-            {
-                UICore.GeneralColor = Color.FromArgb(110, 150, 193);
-            }
-
-            UICore.SetRTCColor(UICore.GeneralColor);
-        }
-
-        public static void SaveRTCColor(Color color)
-        {
-            RTCV.NetCore.Params.SetParam("COLOR", color.R.ToString() + "," + color.G.ToString() + "," + color.B.ToString());
-        }
-
-        public static object InputLock = new object();
+        internal static object InputLock = new object();
         //Borrowed from Bizhawk. Thanks guys
         private static void ProcessInputCheck(object o, ElapsedEventArgs e)
         {
@@ -551,7 +316,7 @@ namespace RTCV.UI
                 {
                     while (true)
                     {
-                        Input.Input.Instance.Update();
+                        Input.Input.Update();
                         // loop through all available events
                         var ie = Input.Input.Instance.DequeueEvent();
                         if (ie == null)
@@ -563,10 +328,10 @@ namespace RTCV.UI
                         //Console.WriteLine(ie);
 
                         // look for hotkey bindings for this key
-                        var triggers = Input.Bindings.SearchBindings(ie.LogicalButton.ToString());
+                        var triggers = Bindings.SearchBindings(ie.LogicalButton.ToString());
 
                         bool handled = false;
-                        if (ie.EventType == RTCV.UI.Input.Input.InputEventType.Press)
+                        if (ie.EventType == InputEventType.Press)
                         {
                             triggers.Aggregate(handled, (current, trigger) => current | CheckHotkey(trigger));
                         }
@@ -579,7 +344,55 @@ namespace RTCV.UI
             }
         }
 
-        private static bool CheckHotkey(string trigger)
+        public static void SetSelectedComboboxItemFromDynamic(ComboBox cb, dynamic item)
+        {
+            //Managing the Advanced tools combobox from outside the main namespace
+            //requires some wrappipng in ExpandoObject to circumvent
+            //the limitations of anonymous types
+
+            foreach (var cbItem in cb.Items)
+            {
+                ComponentForm compare1 = (((dynamic)cbItem).value as ComponentForm);
+                ComponentForm compare2 = (item.value as ComponentForm);
+                if (compare1 == compare2)
+                {
+                    cb.SelectedItem = cbItem;
+                    return;
+                }
+            }
+
+        }
+
+        public static List<dynamic> GetSafeDynamicComboboxItems(ComboBox cb)
+        {
+            //Managing the Advanced tools combobox from outside the main namespace
+            //requires some wrappipng in ExpandoObject to circumvent
+            //the limitations of anonymous types
+
+            var items = cb.Items.Cast<dynamic>().ToList();
+            List<dynamic> newItems = new List<dynamic>();
+            foreach(var item in items)
+            {
+                if(item is ComponentForm cf)
+                {
+                    dynamic newItem = new ExpandoObject();
+                    newItem.text = cf.Text;
+                    newItem.value = cf;
+                    newItems.Add(newItem);
+                }
+                else
+                {
+                    dynamic newItem = new ExpandoObject();
+                    newItem.text = item.text;
+                    newItem.value = item.value;
+                    newItems.Add(newItem);
+                }
+
+            }
+            return newItems;
+        }
+
+        public static bool CheckHotkey(string trigger)
         {
             logger.Info("Hotkey {trigger} pressed", trigger);
             switch (trigger)
@@ -587,23 +400,23 @@ namespace RTCV.UI
                 case "Manual Blast":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        S.GET<UI_CoreForm>().btnManualBlast_Click(null, null);
+                        S.GET<CoreForm>().ManualBlast(null, null);
                     });
                     break;
 
                 case "Auto-Corrupt":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        S.GET<UI_CoreForm>().btnAutoCorrupt_Click(null, null);
+                        S.GET<CoreForm>().StartAutoCorrupt(null, null);
                     });
                     break;
 
                 case "Error Delay--":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        if (S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value > 1)
+                        if (S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Value > 1)
                         {
-                            S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value--;
+                            S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Value--;
                         }
                     });
                     break;
@@ -611,9 +424,9 @@ namespace RTCV.UI
                 case "Error Delay++":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        if (S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value < S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Maximum)
+                        if (S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Value < S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Maximum)
                         {
-                            S.GET<RTC_GeneralParameters_Form>().multiTB_ErrorDelay.Value++;
+                            S.GET<GeneralParametersForm>().multiTB_ErrorDelay.Value++;
                         }
                     });
                     break;
@@ -621,9 +434,9 @@ namespace RTCV.UI
                 case "Intensity--":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        if (S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value > 1)
+                        if (S.GET<GeneralParametersForm>().multiTB_Intensity.Value > 1)
                         {
-                            S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value--;
+                            S.GET<GeneralParametersForm>().multiTB_Intensity.Value--;
                         }
                     });
                     break;
@@ -631,9 +444,9 @@ namespace RTCV.UI
                 case "Intensity++":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        if (S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value < S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Maximum)
+                        if (S.GET<GeneralParametersForm>().multiTB_Intensity.Value < S.GET<GeneralParametersForm>().multiTB_Intensity.Maximum)
                         {
-                            S.GET<RTC_GeneralParameters_Form>().multiTB_Intensity.Value++;
+                            S.GET<GeneralParametersForm>().multiTB_Intensity.Value++;
                         }
                     });
                     break;
@@ -641,20 +454,62 @@ namespace RTCV.UI
                 case "Load and Corrupt":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation = true;
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().btnCorrupt_Click(null, null);
+                        S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation = true;
+                        S.GET<GlitchHarvesterBlastForm>().Corrupt(null, null);
                     });
                     break;
 
                 case "Just Corrupt":
-                    RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(VSPEC.STEP_RUNBEFORE, true);
+                    AllSpec.CorruptCoreSpec.Update(VSPEC.STEP_RUNBEFORE, true);
 
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        bool isload = S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation;
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation = false;
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().btnCorrupt_Click(null, null);
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().loadBeforeOperation = isload;
+                        bool isload = S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation;
+                        S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation = false;
+                        S.GET<GlitchHarvesterBlastForm>().Corrupt(null, null);
+                        S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation = isload;
+                    });
+                    break;
+
+                case "Undo and Corrupt":
+
+                    // TAKEN FROM BLASTLAYER TOGGLE
+                    SyncObjectSingleton.FormExecute(() =>
+                    {
+                        var ghbForm = S.GET<GlitchHarvesterBlastForm>();
+                        if(ghbForm.btnBlastToggle.BackColor == Color.FromArgb(224, 128, 128))
+                            ghbForm.BlastLayerToggle(null, null);
+                    });
+                    //--------------------------
+
+
+                    // COPY FROM JUST CORRUPT
+                    AllSpec.CorruptCoreSpec.Update(VSPEC.STEP_RUNBEFORE, true);
+
+                    SyncObjectSingleton.FormExecute(() =>
+                    {
+                        bool isload = S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation;
+                        S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation = false;
+                        S.GET<GlitchHarvesterBlastForm>().Corrupt(null, null);
+                        S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation = isload;
+                    });
+                    //--------------------------------------
+
+                    break;
+
+                case "New Savestate":
+
+                    SyncObjectSingleton.FormExecute(() =>
+                    {
+                        S.GET<SavestateManagerForm>().savestateList.NewSavestateNow();
+                    });
+                    break;
+
+                case "Load Prev State":
+
+                    SyncObjectSingleton.FormExecute(() =>
+                    {
+                        S.GET<SavestateManagerForm>().savestateList.LoadPreviousSavestateNow();
                     });
                     break;
 
@@ -662,12 +517,14 @@ namespace RTCV.UI
 
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var sh = S.GET<RTC_StashHistory_Form>();
-                        var sm = S.GET<RTC_StockpileManager_Form>();
-                        var ghb = S.GET<RTC_GlitchHarvesterBlast_Form>();
+                        var sh = S.GET<StashHistoryForm>();
+                        var sm = S.GET<StockpileManagerForm>();
+                        var ghb = S.GET<GlitchHarvesterBlastForm>();
 
                         if (sh.lbStashHistory.SelectedIndex != -1)
-                            sh.lbStashHistory_SelectedIndexChanged(null, null);
+                        {
+                            sh.HandleStashHistorySelectionChange(null, null);
+                        }
                         else
                         {
                             var rows = sm.dgvStockpile.SelectedRows;
@@ -675,11 +532,11 @@ namespace RTCV.UI
 
                             if (rows.Count > 1)
                             {
-                                ghb.btnCorrupt_Click(null, null);
+                                ghb.Corrupt(null, null);
                             }
                             else
                             {
-                                sm.dgvStockpile_CellClick(sm.dgvStockpile, new DataGridViewCellEventArgs(0, mainRow.Index));
+                                sm.HandleCellClick(sm.dgvStockpile, new DataGridViewCellEventArgs(0, mainRow.Index));
                             }
                         }
                     });
@@ -689,30 +546,30 @@ namespace RTCV.UI
                 case "Reroll":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().btnRerollSelected_Click(null, null);
+                        S.GET<GlitchHarvesterBlastForm>().RerollSelected(null, null);
                     });
                     break;
 
                 case "Load":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad.Text = "LOAD";
-                        S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad_Click(null, null);
+                        S.GET<SavestateManagerForm>().savestateList.btnSaveLoad.Text = "LOAD";
+                        S.GET<SavestateManagerForm>().savestateList.HandleSaveLoadClick(null, null);
                     });
                     break;
 
                 case "Save":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad.Text = "SAVE";
-                        S.GET<RTC_SavestateManager_Form>().savestateList.btnSaveLoad_Click(null, null);
+                        S.GET<SavestateManagerForm>().savestateList.btnSaveLoad.Text = "SAVE";
+                        S.GET<SavestateManagerForm>().savestateList.HandleSaveLoadClick(null, null);
                     });
                     break;
 
                 case "Stash->Stockpile":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        S.GET<RTC_StashHistory_Form>().AddStashToStockpile(false);
+                        S.GET<StashHistoryForm>().AddStashToStockpile(false);
                     });
                     break;
 
@@ -723,47 +580,47 @@ namespace RTCV.UI
                 case "Blast+RawStash":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(VSPEC.STEP_RUNBEFORE, true);
-                        S.GET<UI_CoreForm>().btnManualBlast_Click(null, null);
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw_Click(null, null);
+                        AllSpec.CorruptCoreSpec.Update(VSPEC.STEP_RUNBEFORE, true);
+                        S.GET<CoreForm>().ManualBlast(null, null);
+                        S.GET<GlitchHarvesterBlastForm>().SendRawToStash(null, null);
                     });
                     break;
 
                 case "Send Raw to Stash":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().btnSendRaw_Click(null, null);
+                        S.GET<GlitchHarvesterBlastForm>().SendRawToStash(null, null);
                     });
                     break;
 
                 case "BlastLayer Toggle":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().btnBlastToggle_Click(null, null);
+                        S.GET<GlitchHarvesterBlastForm>().BlastLayerToggle(null, null);
                     });
                     break;
 
                 case "BlastLayer Re-Blast":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        if (StockpileManager_UISide.CurrentStashkey == null || StockpileManager_UISide.CurrentStashkey.BlastLayer.Layer.Count == 0)
+                        if (StockpileManagerUISide.CurrentStashkey == null || StockpileManagerUISide.CurrentStashkey.BlastLayer.Layer.Count == 0)
                         {
-                            S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = false;
+                            S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = false;
                             return;
                         }
-                        S.GET<RTC_GlitchHarvesterBlast_Form>().IsCorruptionApplied = true;
-                        StockpileManager_UISide.ApplyStashkey(StockpileManager_UISide.CurrentStashkey, false);
+                        S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = true;
+                        StockpileManagerUISide.ApplyStashkey(StockpileManagerUISide.CurrentStashkey, false);
                     });
                     break;
 
                 case "Game Protect Back":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var f = S.GET<UI_CoreForm>();
+                        var f = S.GET<CoreForm>();
                         var b = f.btnGpJumpBack;
                         if (b.Visible && b.Enabled)
                         {
-                            f.btnGpJumpBack_Click(null, null);
+                            f.OnGameProtectionBack(null, null);
                         }
                     });
                     break;
@@ -771,21 +628,21 @@ namespace RTCV.UI
                 case "Game Protect Now":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var f = S.GET<UI_CoreForm>();
+                        var f = S.GET<CoreForm>();
                         var b = f.btnGpJumpNow;
                         if (b.Visible && b.Enabled)
                         {
-                            f.btnGpJumpNow_Click(null, null);
+                            f.OnGameProtectionNow(null, null);
                         }
                     });
                     break;
                 case "Disable 50":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<BlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
-                            bef.btnDisable50_Click(null, null);
+                            bef.Disable50(null, null);
                         }
                     });
                     break;
@@ -793,10 +650,10 @@ namespace RTCV.UI
                 case "Remove Disabled":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<BlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
-                            bef.btnRemoveDisabled_Click(null, null);
+                            bef.RemoveDisabled(null, null);
                         }
                     });
                     break;
@@ -804,60 +661,60 @@ namespace RTCV.UI
                 case "Invert Disabled":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<BlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
-                            bef.btnInvertDisabled_Click(null, null);
+                            bef.InvertDisabled(null, null);
                         }
                     });
                     break;
                 case "Shift Up":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<BlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
-                            bef.btnShiftBlastLayerUp_Click(null, null);
+                            bef.ShiftBlastLayerUp(null, null);
                         }
                     });
                     break;
                 case "Shift Down":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<BlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
-                            bef.btnShiftBlastLayerDown_Click(null, null);
+                            bef.ShiftBlastLayerDown(null, null);
                         }
                     });
                     break;
                 case "Load Corrupt":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<BlastEditorForm>();
                         if (bef != null && bef.Focused)
                         {
-                            bef.btnLoadCorrupt_Click(null, null);
+                            bef.LoadCorrupt(null, null);
                         }
                     });
                     break;
                 case "Apply":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<BlastEditorForm>();
                         if (bef != null && bef.Focused)
                         {
-                            bef.btnCorrupt_Click(null, null);
+                            bef.Corrupt(null, null);
                         }
                     });
                     break;
                 case "Send Stash":
                     SyncObjectSingleton.FormExecute(() =>
                     {
-                        var bef = S.GET<RTC_NewBlastEditor_Form>();
+                        var bef = S.GET<BlastEditorForm>();
                         if (bef != null && Form.ActiveForm == bef)
                         {
-                            bef.btnSendToStash_Click(null, null);
+                            bef.SendToStash(null, null);
                         }
                     });
                     break;
@@ -873,21 +730,21 @@ namespace RTCV.UI
         {
             if ((AllSpec.VanguardSpec[VSPEC.SUPPORTS_REALTIME] as bool?) ?? false)
             {
-                S.GET<UI_CoreForm>().btnManualBlast.Visible = true;
-                S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = true;
+                S.GET<CoreForm>().btnManualBlast.Visible = true;
+                S.GET<CoreForm>().btnAutoCorrupt.Visible = true;
             }
             else
             {
                 if (AllSpec.VanguardSpec[VSPEC.REPLACE_MANUALBLAST_WITH_GHCORRUPT] == null)
                 {
-                    S.GET<UI_CoreForm>().btnManualBlast.Visible = false;
+                    S.GET<CoreForm>().btnManualBlast.Visible = false;
                 }
                 else
                 {
-                    S.GET<UI_CoreForm>().btnManualBlast.Visible = true;
+                    S.GET<CoreForm>().btnManualBlast.Visible = true;
                 }
 
-                S.GET<UI_CoreForm>().btnAutoCorrupt.Visible = false;
+                S.GET<CoreForm>().btnAutoCorrupt.Visible = false;
             }
         }
 
@@ -895,29 +752,35 @@ namespace RTCV.UI
         {
             if (setToBindingSource)
             {
-                S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.DisplayMember = "Name";
-                S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.ValueMember = "Value";
-                S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
+                S.GET<CustomEngineConfigForm>().cbLimiterList.DisplayMember = "Name";
+                S.GET<CustomEngineConfigForm>().cbLimiterList.ValueMember = "Value";
+                S.GET<CustomEngineConfigForm>().cbLimiterList.DataSource = RtcCore.LimiterListBindingSource;
 
-                S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DisplayMember = "Name";
-                S.GET<RTC_CustomEngineConfig_Form>().cbValueList.ValueMember = "Value";
-                S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DataSource = CorruptCore.RtcCore.ValueListBindingSource;
+                S.GET<CustomEngineConfigForm>().cbValueList.DisplayMember = "Name";
+                S.GET<CustomEngineConfigForm>().cbValueList.ValueMember = "Value";
+                S.GET<CustomEngineConfigForm>().cbValueList.DataSource = RtcCore.ValueListBindingSource;
 
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.DisplayMember = "Name";
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.ValueMember = "Value";
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.DataSource = CorruptCore.RtcCore.LimiterListBindingSource;
+                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorLimiterList.DisplayMember = "Name";
+                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorLimiterList.ValueMember = "Value";
+                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorLimiterList.DataSource = RtcCore.LimiterListBindingSource;
 
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.DisplayMember = "Name";
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.ValueMember = "Value";
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.DataSource = CorruptCore.RtcCore.ValueListBindingSource;
+                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorValueList.DisplayMember = "Name";
+                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorValueList.ValueMember = "Value";
+                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorValueList.DataSource = RtcCore.ValueListBindingSource;
+
+                S.GET<CorruptionEngineForm>().ClusterEngineControl.cbClusterLimiterList.DisplayMember = "Name";
+                S.GET<CorruptionEngineForm>().ClusterEngineControl.cbClusterLimiterList.ValueMember = "Value";
+                S.GET<CorruptionEngineForm>().ClusterEngineControl.cbClusterLimiterList.DataSource = RtcCore.LimiterListBindingSource;
             }
             else
             {
-                S.GET<RTC_CustomEngineConfig_Form>().cbLimiterList.DataSource = null;
-                S.GET<RTC_CustomEngineConfig_Form>().cbValueList.DataSource = null;
+                S.GET<CustomEngineConfigForm>().cbLimiterList.DataSource = null;
+                S.GET<CustomEngineConfigForm>().cbValueList.DataSource = null;
 
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorLimiterList.DataSource = null;
-                S.GET<RTC_CorruptionEngine_Form>().cbVectorValueList.DataSource = null;
+                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorLimiterList.DataSource = null;
+                S.GET<CorruptionEngineForm>().VectorEngineControl.cbVectorValueList.DataSource = null;
+
+                S.GET<CorruptionEngineForm>().ClusterEngineControl.cbClusterLimiterList.DataSource = null;
             }
         }
 
@@ -932,7 +795,7 @@ namespace RTCV.UI
             //x.Substring(x.LastIndexOf('\\')+1)[0] != '$'
             //checks if first char is $
 
-            string[] paths = System.IO.Directory.GetFiles(dir).Where(x => x.EndsWith(".txt", StringComparison.OrdinalIgnoreCase) && x.Substring(x.LastIndexOf('\\') + 1)[0] != '$').ToArray();
+            string[] paths = Directory.GetFiles(dir).Where(x => x.EndsWith(".txt", StringComparison.OrdinalIgnoreCase) && x.Substring(x.LastIndexOf('\\') + 1)[0] != '$').ToArray();
             paths = paths.OrderBy(x => x).ToArray();
 
             List<string> hashes = Filtering.LoadListsFromPaths(paths);

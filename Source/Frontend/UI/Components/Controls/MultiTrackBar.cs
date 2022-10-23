@@ -1,10 +1,21 @@
-﻿namespace RTCV.UI.Components.Controls
+namespace RTCV.UI.Components.Controls
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Windows.Forms;
 
+    public class ValueUpdateEventArgs : EventArgs
+    {
+        private long _value;
+
+        public ValueUpdateEventArgs(long value)
+        {
+            _value = value;
+        }
+    }
+
+    #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     public partial class MultiTrackBar : UserControl
     {
         public event EventHandler<ValueUpdateEventArgs> ValueChanged;
@@ -66,7 +77,7 @@
             set => cbControlName.Checked = value;
         }
 
-        public bool FirstLoadDone = false;
+        private bool FirstLoadDone = false;
 
         private long _Minimum = 0;
         [Description("Minimum value of the control"), Category("Data")]
@@ -89,13 +100,15 @@
         public long Maximum
         {
             get => _Maximum;
-            set
+            set => SetMaximum(value, true);
+        }
+
+        public void SetMaximum(long value, bool useChangeHandler = true)
+        {
+            _Maximum = value;
+            if (FirstLoadDone && useChangeHandler)
             {
-                _Maximum = value;
-                if (FirstLoadDone)
-                {
-                    tbControlValue_ValueChanged(null, null);
-                }
+                tbControlValue_ValueChanged(null, null);
             }
         }
 
@@ -357,22 +370,12 @@
             PropagateValue(nmValue, tbValue, nmControlValue);
         }
 
-        public class ValueUpdateEventArgs : EventArgs
-        {
-            public long value;
-
-            public ValueUpdateEventArgs(long _value)
-            {
-                value = _value;
-            }
-        }
-
         private void tbControlValue_Scroll(object sender, EventArgs e)
         {
         }
     }
 
-    internal class NoFocusTrackBar : System.Windows.Forms.TrackBar
+    internal class NoFocusTrackBar : TrackBar
     {
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, uint msg, int wParam, int lParam);

@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>StandaloneRTC</name>
+    </assembly>
+    <members>
+        <member name="F:StandaloneRTC.Loader.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:StandaloneRTC.Loader.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:StandaloneRTC.Loader.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:StandaloneRTC.Program.Main(System.String[])">
+            <summary>
+            The main entry point for the application.
+            </summary>
+        </member>
+        <member name="M:StandaloneRTC.Program.StartLoader(System.String[])">
+            <summary>
+            Starts the loader. Separated from Main so the AssemblyResolve code can properly function.
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:StandaloneRTC.Program.CurrentDomainOnUnhandledException(System.Object,System.UnhandledExceptionEventArgs)">
+            <summary>
+            Global exceptions in Non User Interface(other thread) anticipated error
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:StandaloneRTC.Program.ApplicationThreadException(System.Object,System.Threading.ThreadExceptionEventArgs)">
+            <summary>
+            Global exceptions in User Interface anticipated error
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="T:StandaloneRTC.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:StandaloneRTC.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:StandaloneRTC.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+    </members>
+</doc>

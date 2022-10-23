@@ -1,637 +1,136 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BD376BB2-17EC-4FB0-A9FE-6B1BBF4AF3E3}</ProjectGuid>
+    <TargetFramework>net471</TargetFramework>
     <OutputType>Library</OutputType>
     <RootNamespace>RTCV.UI</RootNamespace>
-    <AssemblyName>UI</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
-    <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
     <OutputPath>..\..\..\Build\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\..\..\Build\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <LangVersion>latest</LangVersion>
+    <MSBuildWarningsAsMessages>NU1702</MSBuildWarningsAsMessages>
+    <LangVersion>8.0</LangVersion>
+    <!-- Use Build\ instead of Build\net471\ for output -->
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <!-- Avoid MissingManifestResourceException  errors, see https://github.com/dotnet/ef6/issues/1258#issuecomment-531355034 -->
+    <EmbeddedResourceUseDependentUponConvention>true</EmbeddedResourceUseDependentUponConvention>
+	<DocumentationFile>$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+    <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <!-- https://stackoverflow.com/a/12672514 -->
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="SlimDX, Version=4.0.13.43, Culture=neutral, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Deps\SlimDX.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.IO.Compression" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Transactions" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\Blast Editor\RTC_ColumnSelector_Form.cs">
+    <Compile Update="Components\Advanced Tools\CodeCaveSettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Blast Editor\RTC_ColumnSelector_Form.Designer.cs">
-      <DependentUpon>RTC_ColumnSelector_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Containers\RTC_ListBox_Form.cs">
+    <Compile Update="Components\Settings\MyPluginsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Containers\RTC_ListBox_Form.designer.cs">
-      <DependentUpon>RTC_ListBox_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Containers\RTC_SelectBox_Form.cs">
+    <Compile Update="Components\Blast Editor\SanitizeToolForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Containers\RTC_SelectBox_Form.designer.cs">
-      <DependentUpon>RTC_SelectBox_Form.cs</DependentUpon>
+    <Compile Update="Components\Blast Editor\SanitizeToolForm.Designer.cs">
+      <DependentUpon>SanitizeToolForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\Controls\HexTextBox.cs" />
-    <Compile Include="Components\Controls\InputCompositeWidget.cs">
-      <SubType>UserControl</SubType>
+    <Compile Update="Components\Engine Config\CorruptionEngineForm.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Controls\InputCompositeWidget.Designer.cs">
-      <DependentUpon>InputCompositeWidget.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Controls\InputWidget.cs">
+    <Compile Update="Components\Controls\HexTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Components\Controls\ListBoxExtended.cs">
+    <Compile Update="Components\Controls\InputCompositeWidget.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Components\Controls\InputWidget.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Components\Controls\MultiTrackBar.cs">
+    <Compile Update="Components\Controls\ListBoxExtended.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Components\Controls\MultiTrackBar.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Components\Controls\MultiTrackBar.designer.cs">
-      <DependentUpon>MultiTrackBar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Controls\MultiUpDown.cs">
+    <Compile Update="Components\Controls\MultiUpDown.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Components\Controls\MultiUpDown.Designer.cs">
-      <DependentUpon>MultiUpDown.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Controls\OpenToolButton.cs">
+    <Compile Update="Components\Controls\OpenToolButton.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Components\Controls\OpenToolButton.Designer.cs">
-      <DependentUpon>OpenToolButton.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Controls\SavestateHolder.cs">
+    <Compile Update="Components\Controls\SavestateHolder.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Components\Controls\SavestateHolder.Designer.cs">
-      <DependentUpon>SavestateHolder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Controls\SavestateList.cs">
+    <Compile Update="Components\Controls\SavestateList.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Components\Controls\SavestateList.Designer.cs">
-      <DependentUpon>SavestateList.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Controls\SpecControl.cs">
+    <Compile Update="Components\Controls\SpecControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Components\Engine Config\RTC_CorruptionEngine_Form.cs">
+    <Compile Update="Components\DataGridViewDraggable.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Components\DataGridViewNumericUpDownEditingControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Components\NumericTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Components\NumericUpDownHexFix.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Components\Settings\SettingsTestForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Engine Config\RTC_CorruptionEngine_Form.Designer.cs">
-      <DependentUpon>RTC_CorruptionEngine_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Engine Config\RTC_GeneralParameters_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Engine Config\RTC_GeneralParameters_Form.Designer.cs">
-      <DependentUpon>RTC_GeneralParameters_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Engine Config\RTC_MemoryDomains_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Engine Config\RTC_MemoryDomains_Form.Designer.cs">
-      <DependentUpon>RTC_MemoryDomains_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Glitch Harvester\RTC_GlitchHarvesterBlast_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Glitch Harvester\RTC_GlitchHarvesterBlast_Form.designer.cs">
-      <DependentUpon>RTC_GlitchHarvesterBlast_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Glitch Harvester\RTC_SavestateManager_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Glitch Harvester\RTC_SavestateManager_Form.designer.cs">
-      <DependentUpon>RTC_SavestateManager_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Glitch Harvester\RTC_GlitchHarvesterIntensity_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Glitch Harvester\RTC_GlitchHarvesterIntensity_Form.designer.cs">
-      <DependentUpon>RTC_GlitchHarvesterIntensity_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Glitch Harvester\RTC_StashHistory_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Glitch Harvester\RTC_StashHistory_Form.designer.cs">
-      <DependentUpon>RTC_StashHistory_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Glitch Harvester\RTC_StockpileManager_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Glitch Harvester\RTC_StockpileManager_Form.designer.cs">
-      <DependentUpon>RTC_StockpileManager_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Memory Tools\RTC_DomainAnalytics_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Memory Tools\RTC_DomainAnalytics_Form.designer.cs">
-      <DependentUpon>RTC_DomainAnalytics_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Memory Tools\RTC_MyLists.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Memory Tools\RTC_MyLists.designer.cs">
-      <DependentUpon>RTC_MyLists.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Memory Tools\RTC_OpenTools_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Memory Tools\RTC_OpenTools_Form.designer.cs">
-      <DependentUpon>RTC_OpenTools_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdLimiterProfiler_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdLimiterProfiler_Form.designer.cs">
-      <DependentUpon>RTC_VmdLimiterProfiler_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Memory Tools\RTC_MyVMDs_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Memory Tools\RTC_MyVMDs_Form.designer.cs">
-      <DependentUpon>RTC_MyVMDs_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdSimpleGen_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdSimpleGen_Form.designer.cs">
-      <DependentUpon>RTC_VmdSimpleGen_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Settings\RTC_SettingsCorrupt_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Settings\RTC_SettingsCorrupt_Form.designer.cs">
-      <DependentUpon>RTC_SettingsCorrupt_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Memory Tools\RTC_ListGen_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Memory Tools\RTC_ListGen_Form.designer.cs">
-      <DependentUpon>RTC_ListGen_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdAct_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdAct_Form.designer.cs">
-      <DependentUpon>RTC_VmdAct_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdGen_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdGen_Form.designer.cs">
-      <DependentUpon>RTC_VmdGen_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdNoTool_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdNoTool_Form.designer.cs">
-      <DependentUpon>RTC_VmdNoTool_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdPool_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Memory Tools\RTC_VmdPool_Form.designer.cs">
-      <DependentUpon>RTC_VmdPool_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\RTC_Template_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\RTC_Template_Form.designer.cs">
-      <DependentUpon>RTC_Template_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Settings\RTC_SettingsAbout_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Settings\RTC_SettingsAbout_Form.designer.cs">
-      <DependentUpon>RTC_SettingsAbout_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Settings\RTC_SettingsGeneral_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Settings\RTC_SettingsGeneral_Form.designer.cs">
-      <DependentUpon>RTC_SettingsGeneral_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Settings\RTC_SettingsNetCore_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Settings\RTC_SettingsNetCore_Form.designer.cs">
-      <DependentUpon>RTC_SettingsNetCore_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Settings\RTC_SettingsHotkeyConfig_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Settings\RTC_SettingsHotkeyConfig_Form.designer.cs">
-      <DependentUpon>RTC_SettingsHotkeyConfig_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\RTC_AnalyticsTool_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\RTC_AnalyticsTool_Form.Designer.cs">
-      <DependentUpon>RTC_AnalyticsTool_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\RTC_BlastGenerator_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\RTC_BlastGenerator_Form.Designer.cs">
-      <DependentUpon>RTC_BlastGenerator_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\RTC_ConnectionStatus_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\RTC_ConnectionStatus_Form.designer.cs">
-      <DependentUpon>RTC_ConnectionStatus_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\RTC_CustomEngineConfig_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\RTC_CustomEngineConfig_Form.Designer.cs">
-      <DependentUpon>RTC_CustomEngineConfig_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\RTC_Intro_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\RTC_Intro_Form.Designer.cs">
-      <DependentUpon>RTC_Intro_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Components\Blast Editor\RTC_SanitizeTool_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Components\Blast Editor\RTC_SanitizeTool_Form.Designer.cs">
-      <DependentUpon>RTC_SanitizeTool_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\RTC_NewBlastEditor_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\RTC_NewBlastEditor_Form.Designer.cs">
-      <DependentUpon>RTC_NewBlastEditor_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\RTC_NoteEditor_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\RTC_NoteEditor_Form.designer.cs">
-      <DependentUpon>RTC_NoteEditor_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\RTC_Settings_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\RTC_Settings_Form.Designer.cs">
-      <DependentUpon>RTC_Settings_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\RTC_SimpleMode_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\RTC_SimpleMode_Form.designer.cs">
-      <DependentUpon>RTC_SimpleMode_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\RTC_StockpilePlayer_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\RTC_StockpilePlayer_Form.designer.cs">
-      <DependentUpon>RTC_StockpilePlayer_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AutoKillSwitch.cs" />
-    <Compile Include="Forms\RTC_Test_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\RTC_Test_Form.Designer.cs">
-      <DependentUpon>RTC_Test_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GameProtection.cs" />
-    <Compile Include="Input\Bindings.cs" />
-    <Compile Include="Input\Gamepad.cs" />
-    <Compile Include="Input\Gamepad360.cs" />
-    <Compile Include="Input\Input.cs" />
-    <Compile Include="Input\IPCKeyInput.cs" />
-    <Compile Include="Input\Keyboard.cs" />
-    <Compile Include="Modular\UI_CanvasForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Modular\UI_CanvasForm.Designer.cs">
-      <DependentUpon>UI_CanvasForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Modular\UI_ComponentFormSubForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Modular\UI_ComponentFormSubForm.Designer.cs">
-      <DependentUpon>UI_ComponentFormSubForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Modular\UI_ComponentFormTile.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Modular\UI_ComponentFormTile.Designer.cs">
-      <DependentUpon>UI_ComponentFormTile.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Modular\UI_CoreForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Modular\UI_CoreForm.Designer.cs">
-      <DependentUpon>UI_CoreForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Modular\UI_DefaultGrids.cs" />
-    <Compile Include="Modular\UI_Objects.cs" />
-    <Compile Include="Modular\UI_SaveProgress_Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Modular\UI_SaveProgress_Form.designer.cs">
-      <DependentUpon>UI_SaveProgress_Form.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Modular\UI_ShadowPanel.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Modular\UI_ShadowPanel.Designer.cs">
-      <DependentUpon>UI_ShadowPanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UICore.cs" />
-    <Compile Include="UIConnector.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI_Extensions.cs" />
-    <Compile Include="UI_VanguardImplementation.cs" />
-    <EmbeddedResource Include="Components\Blast Editor\RTC_ColumnSelector_Form.resx">
-      <DependentUpon>RTC_ColumnSelector_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Containers\RTC_ListBox_Form.resx">
-      <DependentUpon>RTC_ListBox_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Containers\RTC_SelectBox_Form.resx">
-      <DependentUpon>RTC_SelectBox_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Controls\InputCompositeWidget.resx">
-      <DependentUpon>InputCompositeWidget.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Controls\MultiTrackBar.resx">
-      <DependentUpon>MultiTrackBar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Controls\MultiUpDown.resx">
-      <DependentUpon>MultiUpDown.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Controls\OpenToolButton.resx">
-      <DependentUpon>OpenToolButton.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Controls\SavestateHolder.resx">
-      <DependentUpon>SavestateHolder.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Controls\SavestateList.resx">
-      <DependentUpon>SavestateList.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Controls\SpecControl.resx">
-      <DependentUpon>SpecControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Engine Config\RTC_CorruptionEngine_Form.resx">
-      <DependentUpon>RTC_CorruptionEngine_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Engine Config\RTC_GeneralParameters_Form.resx">
-      <DependentUpon>RTC_GeneralParameters_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Engine Config\RTC_MemoryDomains_Form.resx">
-      <DependentUpon>RTC_MemoryDomains_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Glitch Harvester\RTC_GlitchHarvesterBlast_Form.resx">
-      <DependentUpon>RTC_GlitchHarvesterBlast_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Glitch Harvester\RTC_SavestateManager_Form.resx">
-      <DependentUpon>RTC_SavestateManager_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Glitch Harvester\RTC_GlitchHarvesterIntensity_Form.resx">
-      <DependentUpon>RTC_GlitchHarvesterIntensity_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Glitch Harvester\RTC_StashHistory_Form.resx">
-      <DependentUpon>RTC_StashHistory_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Glitch Harvester\RTC_StockpileManager_Form.resx">
-      <DependentUpon>RTC_StockpileManager_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\RTC_DomainAnalytics_Form.resx">
-      <DependentUpon>RTC_DomainAnalytics_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\RTC_MyLists.resx">
-      <DependentUpon>RTC_MyLists.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\RTC_OpenTools_Form.resx">
-      <DependentUpon>RTC_OpenTools_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\RTC_VmdLimiterProfiler_Form.resx">
-      <DependentUpon>RTC_VmdLimiterProfiler_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\RTC_MyVMDs_Form.resx">
-      <DependentUpon>RTC_MyVMDs_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\RTC_VmdSimpleGen_Form.resx">
-      <DependentUpon>RTC_VmdSimpleGen_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Settings\RTC_SettingsCorrupt_Form.resx">
-      <DependentUpon>RTC_SettingsCorrupt_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\RTC_ListGen_Form.resx">
-      <DependentUpon>RTC_ListGen_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\RTC_VmdAct_Form.resx">
-      <DependentUpon>RTC_VmdAct_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\RTC_VmdGen_Form.resx">
-      <DependentUpon>RTC_VmdGen_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\RTC_VmdNoTool_Form.resx">
-      <DependentUpon>RTC_VmdNoTool_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Memory Tools\RTC_VmdPool_Form.resx">
-      <DependentUpon>RTC_VmdPool_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\RTC_Template_Form.resx">
-      <DependentUpon>RTC_Template_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Settings\RTC_SettingsAbout_Form.resx">
-      <DependentUpon>RTC_SettingsAbout_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Settings\RTC_SettingsGeneral_Form.resx">
-      <DependentUpon>RTC_SettingsGeneral_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Settings\RTC_SettingsHotkeyConfig_Form.resx">
-      <DependentUpon>RTC_SettingsHotkeyConfig_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Settings\RTC_SettingsNetCore_Form.resx">
-      <DependentUpon>RTC_SettingsNetCore_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RTC_AnalyticsTool_Form.resx">
-      <DependentUpon>RTC_AnalyticsTool_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RTC_BlastGenerator_Form.resx">
-      <DependentUpon>RTC_BlastGenerator_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RTC_ConnectionStatus_Form.resx">
-      <DependentUpon>RTC_ConnectionStatus_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RTC_CustomEngineConfig_Form.resx">
-      <DependentUpon>RTC_CustomEngineConfig_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RTC_Intro_Form.resx">
-      <DependentUpon>RTC_Intro_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Components\Blast Editor\RTC_SanitizeTool_Form.resx">
-      <DependentUpon>RTC_SanitizeTool_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RTC_NewBlastEditor_Form.resx">
-      <DependentUpon>RTC_NewBlastEditor_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RTC_NoteEditor_Form.resx">
-      <DependentUpon>RTC_NoteEditor_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RTC_Settings_Form.resx">
-      <DependentUpon>RTC_Settings_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RTC_SimpleMode_Form.resx">
-      <DependentUpon>RTC_SimpleMode_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RTC_StockpilePlayer_Form.resx">
-      <DependentUpon>RTC_StockpilePlayer_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RTC_Test_Form.resx">
-      <DependentUpon>RTC_Test_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Modular\UI_CanvasForm.resx">
-      <DependentUpon>UI_CanvasForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Modular\UI_ComponentFormSubForm.resx">
-      <DependentUpon>UI_ComponentFormSubForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Modular\UI_ComponentFormTile.resx">
-      <DependentUpon>UI_ComponentFormTile.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Modular\UI_CoreForm.resx">
-      <DependentUpon>UI_CoreForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Modular\UI_SaveProgress_Form.resx">
-      <DependentUpon>UI_SaveProgress_Form.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Modular\UI_ShadowPanel.resx">
-      <DependentUpon>UI_ShadowPanel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Question Mark.png" />
+    <ProjectReference Include="..\..\Libraries\Common\Common.csproj" />
+    <ProjectReference Include="..\..\Libraries\CorruptCore\CorruptCore.csproj" />
+    <ProjectReference Include="..\..\Libraries\NetCore\NetCore.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\refresh new.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Common\Common.csproj">
-      <Project>{A31C17E1-2EAB-434F-A022-20193F2CEAB7}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\CorruptCore\CorruptCore.csproj">
-      <Project>{b5633a86-dc66-4723-88eb-7dfc95458072}</Project>
-      <Name>CorruptCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\NetCore\NetCore.csproj">
-      <Project>{7e106aec-5614-4206-9e4d-25759c90e8ae}</Project>
-      <Name>NetCore</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.3</Version>
+      <Version>13.0.1</Version>
     </PackageReference>
     <PackageReference Include="NLog">
-      <Version>4.6.8</Version>
+      <Version>5.0.1</Version>
     </PackageReference>
     <PackageReference Include="NLog.Windows.Forms">
-      <Version>4.3.0</Version>
+      <Version>4.6.0</Version>
     </PackageReference>
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0" />
+  </ItemGroup>
 </Project>

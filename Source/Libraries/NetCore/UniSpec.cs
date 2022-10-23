@@ -1,9 +1,10 @@
-﻿namespace RTCV.NetCore
+namespace RTCV.NetCore
 {
     using System;
     using System.Collections;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using System.Reflection;
     using System.Runtime.Serialization;
@@ -11,6 +12,7 @@
     using Ceras;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
+    using RTCV.NetCore.NetCoreExtensions;
 
     public class FullSpec : BaseSpec
     {
@@ -18,8 +20,8 @@
         public virtual void OnSpecUpdated(SpecUpdateEventArgs e) => SpecUpdated?.Invoke(this, e);
 
         private PartialSpec template = null;
-        public string name = "UnnamedSpec";
-        public bool propagationIsEnabled;
+        public string name { get; private set; } = "UnnamedSpec";
+        private bool _propagationIsEnabled;
 
         public new object this[string key]  //FullSpec is readonly, must update with partials
         {
@@ -30,12 +32,12 @@
             }
         }
 
-        public FullSpec(PartialSpec partialSpec, bool _propagationEnabled)
+        public FullSpec(PartialSpec partialSpec, bool propagationEnabled)
         {
-            propagationIsEnabled = _propagationEnabled;
+            _propagationIsEnabled = propagationEnabled;
 
             //Creating a FullSpec requires a template
-            template = partialSpec;
+            template = partialSpec ?? throw new ArgumentNullException(nameof(partialSpec));
             base.version = 1;
             name = partialSpec.Name;
             Update(template);
@@ -49,6 +51,11 @@
 
         public void RegisterUpdateAction(Action<object, SpecUpdateEventArgs> registrant)
         {
+            if (registrant == null)
+            {
+                throw new ArgumentNullException(nameof(registrant));
+            }
+
             UnregisterUpdateAction();
             SpecUpdated += registrant.Invoke; //We trick the eventhandler in executing the registrant instead
         }
@@ -77,50 +84,37 @@
             }
         }
 
-        public void Update(PartialSpec _partialSpec, bool propagate = true, bool synced = true)
+        public void Update(PartialSpec partialSpec, bool propagate = true, bool synced = true)
         {
-            if (name != _partialSpec.Name)
+            if (partialSpec == null)
+            {
+                throw new ArgumentNullException(nameof(partialSpec));
+            }
+
+            if (name != partialSpec.Name)
             {
                 throw new Exception("Name mismatch between PartialSpec and FullSpec");
             }
 
+
             //For initial
-            foreach (var key in _partialSpec.specDico.Keys)
+            foreach (var key in partialSpec.specDico.Keys)
             {
-                base[key] = _partialSpec.specDico[key];
+                base[key] = partialSpec.specDico[key];
             }
 
             //Increment the version
             base.version++;
 
-            if (propagationIsEnabled && propagate)
+
+            if (_propagationIsEnabled && propagate)
             {
-                OnSpecUpdated(new SpecUpdateEventArgs()
-                {
-                    partialSpec = _partialSpec,
-                    syncedUpdate = synced
-                });
+                OnSpecUpdated(new SpecUpdateEventArgs(partialSpec, synced));
             }
         }
 
         public void Update(string key, object value, bool propagate = true, bool synced = true)
         {
-            /*
-            //Make a partial spec and pass it into Update(PartialSpec)
-            if (RTC_NetcoreImplementation.isStandaloneEmu && name == "RTCSpec" && key != RTCSPEC.CORE_AUTOCORRUPT.ToString())
-                throw new Exception("Tried updating the RTCSpec from Emuhawk");
-
-            if (RTC_NetcoreImplementation.isStandaloneUI && name == "EmuSpec")
-                throw new Exception("Tried updating the EmuSpec from StandaloneRTC");
-                */
-            /*
-            if(value is bool)
-            {
-                bool boolValue = (bool)value;
-                if (boolValue == false)
-                    value = null;
-            }*/
-
             PartialSpec spec = new PartialSpec(name);
             spec[key] = value;
             Update(spec, propagate, synced);
@@ -174,7 +168,7 @@
             StringBuilder tabBuilder = new StringBuilder();
             for (int i = 0; i < tab; i++)
             {
-                tabBuilder.Append("\t");
+                tabBuilder.Append('\t');
             }
 
             string t = tabBuilder.ToString();
@@ -204,14 +198,15 @@
     }
 
     [Serializable]
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     public class PartialSpec : BaseSpec
     {
+        [SuppressMessage("Microsoft.Design", "CA1051", Justification = "Unknown serialization impact of making this property instead of a field")]
         public string Name;
 
-        public PartialSpec(string _name)
+        public PartialSpec(string name)
         {
-            Name = _name;
+            Name = name;
         }
 
         public PartialSpec()
@@ -230,15 +225,10 @@
                 this[key] = partialSpec.specDico[key];
             }
         }
-
-        protected PartialSpec(SerializationInfo info, StreamingContext context)
-        {
-            Name = info.GetString("Name");
-        }
     }
 
     [Serializable]
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     public abstract class BaseSpec
     {
         internal int version { get; set; }
@@ -289,12 +279,18 @@
         }
 
         public void Reset() => specDico.Clear();
-        public object Clone() => NetCore_Extensions.ObjectCopier.Clone(this);
+        public object Clone() => ObjectCopier.Clone(this);
     }
 
     public class SpecUpdateEventArgs : EventArgs
     {
-        public PartialSpec partialSpec = null;
-        public bool syncedUpdate = true;
+        public PartialSpec partialSpec { get; private set; } = null;
+        public bool SyncedUpdate { get; private set; } = true;
+
+        public SpecUpdateEventArgs(PartialSpec partialSpec, bool syncedUpdate)
+        {
+            this.partialSpec = partialSpec;
+            SyncedUpdate = syncedUpdate;
+        }
     }
 }

@@ -79,7 +79,7 @@
             GeneralUpdateFlag = false;
         }
 
-        public void registerSlave(MultiUpDown comp, EventHandler<ValueUpdateEventArgs<decimal>> valueChangedHandler = null)
+        internal void registerSlave(MultiUpDown comp, EventHandler<ValueUpdateEventArgs<decimal>> valueChangedHandler = null)
         {
             comp.Minimum = this.Minimum;
             comp.Maximum = this.Maximum;

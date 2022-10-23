@@ -1,4 +1,4 @@
-﻿//Most of this code is lifted from Bizhawk
+//Most of this code is lifted from Bizhawk
 //https://github.com/tasvideos/bizhawk
 //Thanks guys
 
@@ -9,6 +9,7 @@ namespace RTCV.UI.Input
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Runtime.InteropServices;
     using RTCV.CorruptCore;
     using SlimDX.XInput;
@@ -47,18 +48,22 @@ namespace RTCV.UI.Input
             public XINPUT_GAMEPAD Gamepad;
         }
 
+        [SuppressMessage("Microsoft.Design", "CA1810", Justification = "Static constructor used to catch Exceptions")]
         static GamePad360()
         {
             try
             {
                 //some users wont even have xinput installed. in order to avoid spurious exceptions and possible instability, check for the library first
                 HasGetInputStateEx = true;
-                LibraryHandle = Win32.LoadLibrary("xinput1_3.dll");
-                if (LibraryHandle == IntPtr.Zero)
-                    LibraryHandle = Win32.LoadLibrary("xinput1_4.dll");
+                LibraryHandle = NativeWin32APIs.LoadLibrary("xinput1_3.dll");
                 if (LibraryHandle == IntPtr.Zero)
                 {
-                    LibraryHandle = Win32.LoadLibrary("xinput9_1_0.dll");
+                    LibraryHandle = NativeWin32APIs.LoadLibrary("xinput1_4.dll");
+                }
+
+                if (LibraryHandle == IntPtr.Zero)
+                {
+                    LibraryHandle = NativeWin32APIs.LoadLibrary("xinput9_1_0.dll");
                     HasGetInputStateEx = false;
                 }
 
@@ -72,7 +77,7 @@ namespace RTCV.UI.Input
 
                     //don't remove this code. it's important to catch errors on systems with broken xinput installs.
                     //(probably, checking for the library was adequate, but lets not get rid of this anyway)
-                    var test = new SlimDX.XInput.Controller(UserIndex.One).IsConnected;
+                    var test = new Controller(UserIndex.One).IsConnected;
                     _isAvailable = true;
                 }
             }
@@ -86,7 +91,9 @@ namespace RTCV.UI.Input
                 _devices.Clear();
 
                 if (!_isAvailable)
+                {
                     return;
+                }
 
                 //now, at this point, slimdx may be using one xinput, and we may be using another
                 //i'm not sure how slimdx picks its dll to bind to.
@@ -98,10 +105,25 @@ namespace RTCV.UI.Input
                 var c3 = new Controller(UserIndex.Three);
                 var c4 = new Controller(UserIndex.Four);
 
-                if (c1.IsConnected) _devices.Add(new GamePad360(0, c1));
-                if (c2.IsConnected) _devices.Add(new GamePad360(1, c2));
-                if (c3.IsConnected) _devices.Add(new GamePad360(2, c3));
-                if (c4.IsConnected) _devices.Add(new GamePad360(3, c4));
+                if (c1.IsConnected)
+                {
+                    _devices.Add(new GamePad360(0, c1));
+                }
+
+                if (c2.IsConnected)
+                {
+                    _devices.Add(new GamePad360(1, c2));
+                }
+
+                if (c3.IsConnected)
+                {
+                    _devices.Add(new GamePad360(2, c3));
+                }
+
+                if (c4.IsConnected)
+                {
+                    _devices.Add(new GamePad360(3, c4));
+                }
             }
         }
 
@@ -133,7 +155,7 @@ namespace RTCV.UI.Input
         uint index0;
         XINPUT_STATE state;
 
-        public int PlayerNumber { get { return (int)index0 + 1; } }
+        public int PlayerNumber => (int)index0 + 1;
 
         GamePad360(uint index0, Controller c)
         {
@@ -146,7 +168,9 @@ namespace RTCV.UI.Input
         public void Update()
         {
             if (controller.IsConnected == false)
+            {
                 return;
+            }
 
             if (XInputGetStateExProc != null)
             {
@@ -175,8 +199,8 @@ namespace RTCV.UI.Input
             const float f = 32768 / 10000.0f;
 
             //since our whole input framework really only understands whole axes, let's make the triggers look like an axis
-            float ltrig = g.bLeftTrigger / 255.0f * 2 - 1;
-            float rtrig = g.bRightTrigger / 255.0f * 2 - 1;
+            float ltrig = (g.bLeftTrigger / 255.0f * 2) - 1;
+            float rtrig = (g.bRightTrigger / 255.0f * 2) - 1;
             ltrig *= 10000;
             rtrig *= 10000;
 

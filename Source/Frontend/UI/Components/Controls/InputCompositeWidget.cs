@@ -29,7 +29,7 @@ namespace RTCV.UI.Components.Controls
         private ToolTip _tooltip;
         private string _bindingTooltipText;
 
-        public void SetupTooltip(ToolTip tip, string bindingText)
+        internal void SetupTooltip(ToolTip tip, string bindingText)
         {
             _tooltip = tip;
             _tooltip.SetToolTip(btnSpecial, "Click here for special tricky bindings");
@@ -82,24 +82,24 @@ namespace RTCV.UI.Components.Controls
 
         private void DropdownMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
-            Input.Input.ModifierKeys mods = new Input.Input.ModifierKeys();
+            Input.ModifierKeys mods = new Input.ModifierKeys();
 
             if ((ModifierKeys & Keys.Shift) != 0)
             {
-                mods |= Input.Input.ModifierKeys.Shift;
+                mods |= Input.ModifierKeys.Shift;
             }
 
             if ((ModifierKeys & Keys.Control) != 0)
             {
-                mods |= Input.Input.ModifierKeys.Control;
+                mods |= Input.ModifierKeys.Control;
             }
 
             if ((ModifierKeys & Keys.Alt) != 0)
             {
-                mods |= Input.Input.ModifierKeys.Alt;
+                mods |= Input.ModifierKeys.Alt;
             }
 
-            var lb = new Input.Input.LogicalButton(e.ClickedItem.Text, mods);
+            var lb = new Input.LogicalButton(e.ClickedItem.Text, mods);
 
             widget.SetBinding(lb.ToString());
         }

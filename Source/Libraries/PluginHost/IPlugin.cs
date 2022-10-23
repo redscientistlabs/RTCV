@@ -18,6 +18,6 @@ namespace RTCV.PluginHost
 
 
         bool Start(RTCSide side);
-        bool Stop();
+        bool StopPlugin();
     }
 }

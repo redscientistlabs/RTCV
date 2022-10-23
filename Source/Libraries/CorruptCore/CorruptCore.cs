@@ -4,6 +4,7 @@ namespace RTCV.CorruptCore
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Diagnostics;
+    using System.Diagnostics.CodeAnalysis;
     using System.IO;
     using System.Linq;
     using System.Net;
@@ -13,44 +14,63 @@ namespace RTCV.CorruptCore
     using System.Threading.Tasks;
     using System.Windows.Forms;
     using Newtonsoft.Json;
+    using RTCV.Common.CustomExtensions;
     using RTCV.NetCore;
     using RTCV.PluginHost;
     using Timer = System.Windows.Forms.Timer;
 
+    public class ProblematicProcess
+    {
+        public string Name { get; set; }
+        public string Message { get; set; }
+    }
+
+    public class GameClosedEventArgs : EventArgs
+    {
+        public bool FullyClosed { get; private set; }
+        public GameClosedEventArgs(bool fullyClosed)
+        {
+            FullyClosed = fullyClosed;
+        }
+    }
+
     public static class RtcCore
     {
         //General RTC Values
-        public const string RtcVersion = "5.0.5-rc";
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        public const string RtcVersion = "5.1.0";
+        private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        private static volatile int seed = DateTime.Now.Millisecond;
-        public static int Seed => ++seed;
+        private static int seed = (int)DateTime.Now.Ticks;
 
-        [ThreadStatic]
-        private static Random _RND = null;
-        public static Random RND
+        private static readonly ThreadLocal<Random> rnd = new ThreadLocal<Random>(() =>
         {
-            get
+            if (seed == int.MaxValue)
             {
-                if (_RND == null)
-                {
-                    _RND = new Random(Seed);
-                }
-
-                return _RND;
+                Interlocked.Exchange(ref seed, int.MinValue);
+                return new Random(seed);
             }
-        }
+            else
+            {
+                return new Random(Interlocked.Increment(ref seed));
+            }
+        });
 
-        public static bool Attached = false;
+        public static Random RND => rnd.Value;
 
-        public static List<ProblematicProcess> ProblematicProcesses;
 
-        public static Timer KillswitchTimer = new Timer();
+        public static bool Attached { get; set; }  = false;
 
-        private static PluginHost.Host pluginHost = new PluginHost.Host();
-        public static PluginHost.Host PluginHost => pluginHost;
+        internal static int CachedPrecision;
 
-        public static bool EmuDirOverride = false;
+        //private static List<ProblematicProcess> ProblematicProcesses;
+
+        private static Timer KillswitchTimer = new Timer();
+
+        private static readonly Host pluginHost = new Host();
+        public static Host PluginHost => pluginHost;
+        public static bool EmuDirOverride { get; set; } = false;
+
+
 
         public static string EmuDir
         {
@@ -69,10 +89,7 @@ namespace RTCV.CorruptCore
         }
 
         public static string EmuAssetsDir => Path.Combine(EmuDir, "ASSETS");
-        public static string pluginDir
-        {
-            get => Path.Combine(RtcDir, "PLUGINS");
-        }
+        public static string PluginDir => Path.Combine(RtcDir, "PLUGINS");
 
         public static string RtcDir
         {
@@ -81,17 +98,21 @@ namespace RTCV.CorruptCore
         }
 
         public static string workingDir => Path.Combine(RtcDir, "WORKING");
-        public static string assetsDir => Path.Combine(RtcDir, "ASSETS");
-        public static string listsDir => Path.Combine(RtcDir, "LISTS");
+        public static string AssetsDir => Path.Combine(RtcDir, "ASSETS");
+        public static string ListsDir => Path.Combine(RtcDir, "LISTS");
 
-        public static string vmdsDir => Path.Combine(RtcDir, "VMDS");
-        public static string engineTemplateDir => Path.Combine(RtcDir, "ENGINETEMPLATES");
+        public static string VmdsDir => Path.Combine(RtcDir, "VMDS");
 
-        public static event ProgressBarEventHandler ProgressBarHandler;
+        public static string VaultDir => Path.Combine(EmuDir, "VAULT");
+
+        public static string LauncherDir => Path.Combine(new DirectoryInfo(RtcDir).Parent.Parent.FullName, "Launcher");
+        public static string EngineTemplateDir => Path.Combine(RtcDir, "ENGINETEMPLATES");
+
+        public static event EventHandler<ProgressBarEventArgs> ProgressBarHandler;
 
         //This is for the UI only but needs to be in here as well
-        public static BindingList<ComboBoxItem<string>> LimiterListBindingSource = new BindingList<ComboBoxItem<string>>();
-        public static BindingList<ComboBoxItem<string>> ValueListBindingSource = new BindingList<ComboBoxItem<string>>();
+        public static readonly BindingList<ComboBoxItem<string>> LimiterListBindingSource = new BindingList<ComboBoxItem<string>>();
+        public static readonly BindingList<ComboBoxItem<string>> ValueListBindingSource = new BindingList<ComboBoxItem<string>>();
 
         public static bool AllowCrossCoreCorruption
         {
@@ -104,6 +125,8 @@ namespace RTCV.CorruptCore
             get => (CorruptionEngine)AllSpec.CorruptCoreSpec[RTCSPEC.CORE_SELECTEDENGINE];
             set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_SELECTEDENGINE, value);
         }
+
+        public static ICorruptionEngine SelectedPluginEngine { get; set; } = null;
 
         public static int CurrentPrecision
         {
@@ -120,13 +143,21 @@ namespace RTCV.CorruptCore
         public static long Intensity
         {
             get => (long)AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_INTENSITY];
-            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_INTENSITY, value);
+            set
+            {
+                AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_INTENSITY, value);
+                UISideHooks.OnIntensityChanged(value);
+            }
         }
 
         public static long ErrorDelay
         {
             get => (long)AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_ERRORDELAY];
-            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_ERRORDELAY, value);
+            set
+            {
+                AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_ERRORDELAY, value);
+                UISideHooks.OnErrorDelayChanged(value);
+            }
         }
 
         public static BlastRadius Radius
@@ -138,7 +169,10 @@ namespace RTCV.CorruptCore
         public static bool AutoCorrupt
         {
             get => (bool)(AllSpec.CorruptCoreSpec?[RTCSPEC.CORE_AUTOCORRUPT] ?? false);
-            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_AUTOCORRUPT, value);
+            set {
+                AllSpec.CorruptCoreSpec.Update(RTCSPEC.CORE_AUTOCORRUPT, value);
+                UISideHooks.OnAutoCorruptToggled(value);
+            }
         }
 
         public static bool DontCleanSavestatesOnQuit
@@ -227,21 +261,20 @@ namespace RTCV.CorruptCore
 
         public static string VanguardImplementationName => (string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard Implementation";
 
-        public static bool IsStandaloneUI;
-        public static bool IsEmulatorSide;
+        private static bool IsStandaloneUI;
+        private static bool IsEmulatorSide;
 
+        #pragma warning disable 649 // CorruptCoreExiting is never assigned to locally, but it is an API that is used by other plugins/emulators
+        private static EventHandler CorruptCoreExiting;
+        #pragma warning restore 649
 
-        public class GameClosedEventArgs : EventArgs
+        public static EventHandler<GameClosedEventArgs> GameClosed { get; set; }
+        public static EventHandler LoadGameDone { get; set; }
+
+        public static void ResetSeed()
         {
-            public bool FullyClosed;
-            public GameClosedEventArgs(bool fullyClosed)
-            {
-                FullyClosed = fullyClosed;
-            }
+            seed = (int)DateTime.Now.Ticks;
         }
-        public static EventHandler CorruptCoreExiting;
-        public static EventHandler<GameClosedEventArgs> GameClosed;
-        public static EventHandler LoadGameDone;
 
         public static void Start()
         {
@@ -255,9 +288,9 @@ namespace RTCV.CorruptCore
 
         private static void OneTimeSettingsInitialize()
         {
-            RtcCore.RerollSourceAddress = true;
-            RtcCore.RerollSourceDomain = true;
-            RtcCore.RerollFollowsCustomEngine = true;
+            RerollSourceAddress = true;
+            RerollSourceDomain = true;
+            RerollFollowsCustomEngine = false;
             Params.SetParam(RTCSPEC.CORE_EMULATOROSDDISABLED);
         }
 
@@ -268,20 +301,21 @@ namespace RTCV.CorruptCore
                 Start();
                 RegisterCorruptcoreSpec();
 
-                CorruptCore_Extensions.DirectoryRequired(paths: new string[] {
-                    RtcCore.workingDir,
-                    Path.Combine(RtcCore.workingDir, "TEMP"),
-                    Path.Combine(RtcCore.workingDir, "SKS"),
-                    Path.Combine(RtcCore.workingDir, "SSK"),
-                    Path.Combine(RtcCore.workingDir, "SESSION"),
-                    Path.Combine(RtcCore.workingDir, "MEMORYDUMPS"),
-                    Path.Combine(RtcCore.workingDir, "MP"),
-                    Path.Combine(RtcCore.assetsDir, "CRASHSOUNDS"),
-                    Path.Combine(RtcCore.RtcDir, "PARAMS"),
-                    Path.Combine(RtcCore.RtcDir, "LISTS"),
-                    Path.Combine(RtcCore.RtcDir, "RENDEROUTPUT"),
-                    Path.Combine(RtcCore.RtcDir, "ENGINETEMPLATES"),
-                    Path.Combine(RtcCore.assetsDir, "PLATESHD")
+                CorruptCoreExtensions.DirectoryRequired(paths: new string[] {
+                    workingDir,
+                    Path.Combine(workingDir, "TEMP"),
+                    Path.Combine(workingDir, "SKS"),
+                    Path.Combine(workingDir, "SSK"),
+                    Path.Combine(workingDir, "SESSION"),
+                    Path.Combine(workingDir, "MEMORYDUMPS"),
+                    Path.Combine(workingDir, "MP"),
+                    Path.Combine(AssetsDir, "CRASHSOUNDS"),
+                    Path.Combine(RtcDir, "PARAMS"),
+                    Path.Combine(RtcDir, "LISTS"),
+                    Path.Combine(RtcDir, "RENDEROUTPUT"),
+                    Path.Combine(RtcDir, "ENGINETEMPLATES"),
+                    Path.Combine(RtcDir, "LAYOUTS"),
+                    Path.Combine(AssetsDir, "PLATESHD")
                 });
 
                 if (!Params.IsParamSet("DISCLAIMER_READ"))
@@ -302,24 +336,28 @@ namespace RTCV.CorruptCore
 
         public static void StartEmuSide()
         {
+            if (AllSpec.VanguardSpec == null)
+            {
+                throw new AbortEverythingException("Fatal Error: VanguardSpec hasn't been initialized. You must start Vanguard before calling StartEmuSide()");
+            }
             if (!Attached)
             {
                 Start();
-                if (KillswitchTimer == null)
+                if (AllSpec.VanguardSpec[VSPEC.SUPPORTS_KILLSWITCH] as bool? == true)
                 {
-                    KillswitchTimer = new Timer();
-                }
+                    KillswitchTimer ??= new Timer();
 
-                KillswitchTimer.Interval = 250;
-                KillswitchTimer.Tick += KillswitchTimer_Tick;
-                KillswitchTimer.Start();
+                    KillswitchTimer.Interval = 250;
+                    KillswitchTimer.Tick += KillswitchTimer_Tick;
+                    KillswitchTimer.Start();
+                }
             }
             IsEmulatorSide = true;
         }
 
         private static void KillswitchTimer_Tick(object sender, EventArgs e)
         {
-            LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.KILLSWITCH_PULSE);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.UI, NetCore.Commands.Basic.KillswitchPulse);
         }
 
         /**
@@ -329,49 +367,57 @@ namespace RTCV.CorruptCore
         {
             try
             {
-                PartialSpec rtcSpecTemplate = new PartialSpec("RTCSpec");
+                var rtcSpecTemplate = new PartialSpec("RTCSpec");
                 rtcSpecTemplate["RTCVERSION"] = RtcVersion;
 
                 rtcSpecTemplate[RTCSPEC.RTCDIR] = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "RTC");
 
                 //Engine Settings
-                rtcSpecTemplate.Insert(RtcCore.getDefaultPartial());
-                rtcSpecTemplate.Insert(RTC_NightmareEngine.getDefaultPartial());
-                rtcSpecTemplate.Insert(RTC_HellgenieEngine.getDefaultPartial());
-                rtcSpecTemplate.Insert(RTC_DistortionEngine.getDefaultPartial());
+                rtcSpecTemplate.Insert(getDefaultPartial());
+                rtcSpecTemplate.Insert(NightmareEngine.getDefaultPartial());
+                rtcSpecTemplate.Insert(HellgenieEngine.getDefaultPartial());
+                rtcSpecTemplate.Insert(DistortionEngine.getDefaultPartial());
 
                 //Custom Engine Config with Nightmare Engine
-                RTC_CustomEngine.getDefaultPartial(rtcSpecTemplate);
+                CustomEngine.getDefaultPartial(rtcSpecTemplate);
 
                 rtcSpecTemplate.Insert(StepActions.getDefaultPartial());
                 rtcSpecTemplate.Insert(Filtering.getDefaultPartial());
-                rtcSpecTemplate.Insert(RTC_VectorEngine.getDefaultPartial());
-                rtcSpecTemplate.Insert(RTC_ClusterEngine.getDefaultPartial());
+                rtcSpecTemplate.Insert(VectorEngine.getDefaultPartial());
+                rtcSpecTemplate.Insert(ClusterEngine.getDefaultPartial());
                 rtcSpecTemplate.Insert(MemoryDomains.getDefaultPartial());
-                rtcSpecTemplate.Insert(StockpileManager_EmuSide.getDefaultPartial());
+                rtcSpecTemplate.Insert(StockpileManagerEmuSide.getDefaultPartial());
                 rtcSpecTemplate.Insert(Render.getDefaultPartial());
 
-                AllSpec.CorruptCoreSpec = new FullSpec(rtcSpecTemplate, !RtcCore.Attached); //You have to feed a partial spec as a template
-
+                //Setup CorruptCore Spec
+                AllSpec.CorruptCoreSpec = new FullSpec(rtcSpecTemplate, !Attached); //You have to feed a partial spec as a template
                 AllSpec.CorruptCoreSpec.SpecUpdated += (o, e) =>
                 {
                     PartialSpec partial = e.partialSpec;
                     if (IsStandaloneUI)
                     {
-                        LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_PUSHCORRUPTCORESPECUPDATE, partial, true);
+                        LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.PushCorruptCoreSpecUpdate, partial, true);
                     }
                     else
                     {
-                        LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_PUSHCORRUPTCORESPECUPDATE, partial, true);
+                        LocalNetCoreRouter.Route(NetCore.Endpoints.UI, NetCore.Commands.Remote.PushCorruptCoreSpecUpdate, partial, true);
                     }
                 };
 
-                /*
-                if (RTC_StockpileManager.BackupedState != null)
-                    RTC_StockpileManager.BackupedState.Run();
-                else
-                    CorruptCoreSpec.Update(RTCSPEC.CORE_AUTOCORRUPT.ToString(), false);
-                    */
+                //Setup Plugin Global Spec
+                AllSpec.PluginSpec = new FullSpec(new PartialSpec("PluginSpec"), !Attached); //You have to feed a partial spec as a template
+                AllSpec.PluginSpec.SpecUpdated += (o, e) =>
+                {
+                    PartialSpec partial = e.partialSpec;
+                    if (IsStandaloneUI)
+                    {
+                        LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.PushPluginSpecUpdate, partial, true);
+                    }
+                    else
+                    {
+                        LocalNetCoreRouter.Route(NetCore.Endpoints.UI, NetCore.Commands.Remote.PushPluginSpecUpdate, partial, true);
+                    }
+                };
             }
             catch (Exception ex)
             {
@@ -384,15 +430,23 @@ namespace RTCV.CorruptCore
         public static void LoadPlugins(string[] paths = null)
         {
             if (paths == null)
-                paths = new[] { pluginDir };
+            {
+                paths = new[] { PluginDir };
+            }
 
             RTCSide side = RTCSide.Server;
             if (IsEmulatorSide)
+            {
                 side = RTCSide.Client;
+            }
+
             if (Attached)
             {
                 side = RTCSide.Both;
             }
+
+            RTCV.PluginHost.Manager.Cleanup();
+
             pluginHost.Start(paths, side);
         }
 
@@ -444,6 +498,15 @@ namespace RTCV.CorruptCore
                     partial[RTCSPEC.CORE_REROLLSOURCEDOMAIN] = false;
                 }
 
+                if (Params.IsParamSet("REROLL_IGNOREORIGINALSOURCE"))
+                {
+                    partial[RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE] = (string.Equals(Params.ReadParam("REROLL_IGNOREORIGINALSOURCE"), "TRUE", StringComparison.OrdinalIgnoreCase));
+                }
+                else
+                {
+                    partial[RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE] = false;
+                }
+
                 if (Params.IsParamSet("REROLL_ADDRESS"))
                 {
                     partial[RTCSPEC.CORE_REROLLADDRESS] = (string.Equals(Params.ReadParam("REROLL_ADDRESS"), "TRUE", StringComparison.OrdinalIgnoreCase));
@@ -471,14 +534,6 @@ namespace RTCV.CorruptCore
                     partial[RTCSPEC.CORE_REROLLFOLLOWENGINESETTINGS] = false;
                 }
 
-                if (Params.IsParamSet("REROLL_USESVALUELIST"))
-                {
-                    partial[RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE] = (string.Equals(Params.ReadParam("REROLL_USESVALUELIST"), "TRUE", StringComparison.OrdinalIgnoreCase));
-                }
-                else
-                {
-                    partial[RTCSPEC.CORE_REROLLIGNOREORIGINALSOURCE] = false;
-                }
 
                 return partial;
             }
@@ -492,7 +547,7 @@ namespace RTCV.CorruptCore
                 return null;
             }
         }
-
+        /*
         public static void DownloadProblematicProcesses()
         {
             //Windows does the big dumb: part 11
@@ -501,31 +556,32 @@ namespace RTCV.CorruptCore
             //Do this on its own thread as downloading the json is slow
             (new Thread(() =>
             {
-                string LocalPath = Path.Combine(Params.ParamsDir, "BADPROCESSES");
+                var localPath = Path.Combine(Params.ParamsDir, "BADPROCESSES");
 
-                string json = "";
+                var json = "";
                 try
                 {
-                    if (File.Exists(LocalPath))
+                    if (File.Exists(localPath))
                     {
-                        DateTime lastModified = File.GetLastWriteTime(LocalPath);
+                        DateTime lastModified = File.GetLastWriteTime(localPath);
                         if (lastModified.Date == DateTime.Today)
                         {
-                            ProblematicProcesses = JsonConvert.DeserializeObject<List<ProblematicProcess>>(File.ReadAllText(LocalPath));
+                            ProblematicProcesses = JsonConvert.DeserializeObject<List<ProblematicProcess>>(File.ReadAllText(localPath));
                             CheckForProblematicProcesses();
                             return;
                         }
                     }
 
-                    using (HttpClient client = new HttpClient())
+                    using (var client = new HttpClient())
                     {
                         client.Timeout = TimeSpan.FromMilliseconds(5000);
+                        var problematicProcessesUri = new Uri("http://redscientist.com/software/rtc/ProblematicProcesses.json");
                         //Using .Result makes it synchronous
-                        json = client.GetStringAsync("http://redscientist.com/software/rtc/ProblematicProcesses.json")
+                        json = client.GetStringAsync(problematicProcessesUri)
                             .Result;
                     }
 
-                    File.WriteAllText(LocalPath, json);
+                    File.WriteAllText(localPath, json);
                 }
                 catch (Exception ex)
                 {
@@ -533,11 +589,11 @@ namespace RTCV.CorruptCore
                     {
                         //Couldn't download the new one so just fall back to the old one if it's there
                         logger.Error(ex, "Failed to download ProblematicProcesses");
-                        if (File.Exists(LocalPath))
+                        if (File.Exists(localPath))
                         {
                             try
                             {
-                                json = File.ReadAllText(LocalPath);
+                                json = File.ReadAllText(localPath);
                             }
                             catch (Exception _ex)
                             {
@@ -564,18 +620,19 @@ namespace RTCV.CorruptCore
                 catch (Exception ex)
                 {
                     logger.Error(ex);
-                    if (File.Exists(LocalPath))
+                    if (File.Exists(localPath))
                     {
-                        File.Delete(LocalPath);
+                        File.Delete(localPath);
                     }
 
                     throw;
                 }
             })).Start();
         }
-
+        */
         //Checks if any problematic processes are found
-        public static bool Warned = false;
+        //private static bool Warned = false;
+        /*
         public static void CheckForProblematicProcesses()
         {
             logger.Info("Entering CheckForProblematicProcesses");
@@ -594,7 +651,9 @@ namespace RTCV.CorruptCore
                 {
                     if (processes.Contains(item.Name.ToUpper()))
                     {
-                        MessageBox.Show(item.Message, "Incompatible Program Detected!");
+                        if (!Debugger.IsAttached)
+                            MessageBox.Show(item.Message, "Incompatible Program Detected!");
+
                         Warned = true;
                         return;
                     }
@@ -614,8 +673,8 @@ namespace RTCV.CorruptCore
                 logger.Info("Exiting CheckForProblematicProcesses");
             }
         }
-
-        public static BlastUnit[] GetBlastUnits(string _domain, long _address, int precision, int alignment, CorruptionEngine engine)
+        */
+        public static BlastUnit[] GetBlastUnits(string domain, long address, int precision, int alignment, CorruptionEngine engine)
         {
             try
             {
@@ -628,35 +687,37 @@ namespace RTCV.CorruptCore
                 switch (engine)
                 {
                     case CorruptionEngine.NIGHTMARE:
-                        bu = RTC_NightmareEngine.GenerateUnit(_domain, _address, precision, alignment);
+                        bu = NightmareEngine.GenerateUnit(domain, address, precision, alignment);
                         break;
                     case CorruptionEngine.HELLGENIE:
-                        bu = RTC_HellgenieEngine.GenerateUnit(_domain, _address, precision, alignment);
+                        bu = HellgenieEngine.GenerateUnit(domain, address, precision, alignment);
                         break;
                     case CorruptionEngine.DISTORTION:
-                        bu = RTC_DistortionEngine.GenerateUnit(_domain, _address, precision, alignment);
+                        bu = DistortionEngine.GenerateUnit(domain, address, precision, alignment);
                         break;
                     case CorruptionEngine.FREEZE:
-                        bu = RTC_FreezeEngine.GenerateUnit(_domain, _address, precision, alignment);
+                        bu = FreezeEngine.GenerateUnit(domain, address, precision, alignment);
                         break;
                     case CorruptionEngine.PIPE:
-                        bu = RTC_PipeEngine.GenerateUnit(_domain, _address, precision, alignment);
+                        bu = PipeEngine.GenerateUnit(domain, address, precision, alignment);
                         break;
                     case CorruptionEngine.VECTOR:
-                        bu = RTC_VectorEngine.GenerateUnit(_domain, _address, alignment);
+                        bu = VectorEngine.GenerateUnit(domain, address, alignment);
                         break;
                     case CorruptionEngine.CLUSTER:
-                        bus = RTC_ClusterEngine.GenerateUnit(_domain, _address, alignment);
+                        bus = ClusterEngine.GenerateUnit(domain, address, alignment);
                         break;
                     case CorruptionEngine.CUSTOM:
-                        bu = RTC_CustomEngine.GenerateUnit(_domain, _address, precision, alignment);
+                        bu = CustomEngine.GenerateUnit(domain, address, precision, alignment);
                         break;
                     case CorruptionEngine.NONE:
                         return null;
                 }
 
                 if (bu != null) //upgrade single blastunits to array
+                {
                     bus = new BlastUnit[] { bu };
+                }
 
                 return bus;
             }
@@ -671,6 +732,95 @@ namespace RTCV.CorruptCore
             }
         }
 
+        public static BlastLayer GenerateBlastLayerOnAllThreads()
+        {
+            //We pull the domains here because if the syncsettings changed, there's a chance the domains changed
+            var domains = (string[])AllSpec.UISpec[UISPEC.SELECTEDDOMAINS];
+            var cpus = Environment.ProcessorCount;
+
+
+            //RPC stuff
+            //When using RPC, memory must be cached locally. Every time a blast is done
+            //A copy of the domain (usually chunked) is cached locally so that list-based
+            //engines don't continously peek repeatedly over RPC.
+            MemoryDomainProxy[] mdps = (AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_INTERFACES] as MemoryDomainProxy[]);
+            if (mdps != null && mdps.Length > 0 && mdps[0].UsingRPC)
+            {
+                for (int i = 0; i < mdps.Length; i++)
+                {
+                    for (int j = 0; j < domains.Length; j++)
+                    {
+                        if (mdps[i].Name == domains[j])
+                        {
+                            (mdps[i].MD as IRPCMemoryDomain).DumpMemory();
+                        }
+                    }
+                }
+            }
+
+            //If there is only one thread, only generate a single BlastLayer.
+            if (cpus == 1 || AllSpec.VanguardSpec[VSPEC.SUPPORTS_MULTITHREAD] == null)
+            {
+                return GenerateBlastLayer(domains);
+            }
+
+            //if emulator supports multithreaded access of the domains, disregard the emulation thread and just span threads...
+            var reminder = Intensity % (cpus - 1);
+            var splitintensity = (Intensity - reminder) / (cpus - 1);
+            var tasks = new Task<BlastLayer>[cpus];
+            for (var i = 0; i < cpus; i++)
+            {
+                var requestedIntensity = splitintensity;
+                if (i == 0 && reminder != 0)
+                {
+                    requestedIntensity = reminder;
+                }
+
+                tasks[i] = Task.Factory.StartNew(() => GenerateBlastLayer(domains, requestedIntensity));
+            }
+
+            Task.WaitAll(tasks);
+
+            BlastLayer bl = tasks[0].Result ?? new BlastLayer();
+
+            for (var i = 1; i < tasks.Length; i++)
+            {
+                if (tasks[i].Result != null)
+                {
+                    bl.Layer.AddRange(tasks[i].Result.Layer);
+                }
+            }
+
+            if (bl.Layer.Count == 0)
+            {
+                bl = null;
+            }
+
+            return bl;
+        }
+
+        private static long GetIntensity(long overrideIntensity)
+        {
+            var intensity = Intensity; //general RTC intensity
+
+            if (overrideIntensity != -1)
+            {
+                intensity = overrideIntensity;
+            }
+
+            // Capping intensity at engine-specific maximums
+            if ((SelectedEngine == CorruptionEngine.HELLGENIE ||
+                SelectedEngine == CorruptionEngine.FREEZE ||
+                SelectedEngine == CorruptionEngine.PIPE ||
+                (SelectedEngine == CorruptionEngine.CUSTOM && CustomEngine.Lifetime == 0)) &&
+                intensity > StepActions.MaxInfiniteBlastUnits)
+            {
+                intensity = StepActions.MaxInfiniteBlastUnits; //Capping for cheat max
+            }
+
+            return intensity;
+        }
+
         //Generates or applies a blast layer using one of the multiple BlastRadius algorithms
 
         public static BlastLayer GenerateBlastLayer(string[] selectedDomains, long overrideIntensity = -1)
@@ -682,18 +832,18 @@ namespace RTCV.CorruptCore
 
             try
             {
-                string Domain = null;
-                long MaxAddress = -1;
-                long RandomAddress = -1;
+                string domain = null;
+                long maxAddress = -1;
+                long randomAddress = -1;
                 BlastUnit[] bus;
                 BlastLayer bl;
 
                 try
                 {
-                    if (RtcCore.SelectedEngine == CorruptionEngine.BLASTGENERATORENGINE)
+                    if (SelectedEngine == CorruptionEngine.BLASTGENERATORENGINE)
                     {
                         //It will query a BlastLayer generated by the Blast Generator
-                        bl = RTC_BlastGeneratorEngine.GetBlastLayer();
+                        bl = BlastGeneratorEngine.GetBlastLayer();
                         if (bl == null)
                         {
                             //We return an empty blastlayer so when it goes to apply it, it doesn't find a null blastlayer and try and apply to the domains which aren't enabled resulting in an exception
@@ -701,6 +851,15 @@ namespace RTCV.CorruptCore
                         }
 
                         return bl;
+                    }
+                    else if (SelectedEngine == CorruptionEngine.PLUGIN)
+                    {
+                        //The plugin handles everything
+
+                        if (SelectedPluginEngine != null)
+                        {
+                            return SelectedPluginEngine.GetBlastLayer(Intensity);
+                        }
                     }
 
                     bl = new BlastLayer();
@@ -710,47 +869,32 @@ namespace RTCV.CorruptCore
                         return null;
                     }
 
-                    long intensity = RtcCore.Intensity; //general RTC intensity
-
-                    if (overrideIntensity != -1)
-                    {
-                        intensity = overrideIntensity;
-                    }
-
-                    // Capping intensity at engine-specific maximums
-                    if ((RtcCore.SelectedEngine == CorruptionEngine.HELLGENIE ||
-                        RtcCore.SelectedEngine == CorruptionEngine.FREEZE ||
-                        RtcCore.SelectedEngine == CorruptionEngine.PIPE ||
-                        RtcCore.SelectedEngine == CorruptionEngine.CUSTOM && RTC_CustomEngine.Lifetime == 0) &&
-                        intensity > StepActions.MaxInfiniteBlastUnits)
-                    {
-                        intensity = StepActions.MaxInfiniteBlastUnits; //Capping for cheat max
-                    }
+                    var intensity = GetIntensity(overrideIntensity);
 
                     //Spec lookups add up really fast if you have a high intensity so we cache stuff we're going to be looking up over and over again
-                    var cachedPrecision = CurrentPrecision;
+                    CachedPrecision = CurrentPrecision;
                     var cachedDomainSizes = new long[selectedDomains.Length];
-                    var cachedEngine = RtcCore.SelectedEngine;
-                    var cachedAlignment = RtcCore.Alignment;
+                    var cachedEngine = SelectedEngine;
+                    var cachedAlignment = Alignment;
 
-                    for (int i = 0; i < selectedDomains.Length; i++)
+                    for (var i = 0; i < selectedDomains.Length; i++)
                     {
                         cachedDomainSizes[i] = MemoryDomains.GetInterface(selectedDomains[i]).Size;
                     }
 
-                    switch (RtcCore.Radius) //Algorithm branching
+                    switch (Radius) //Algorithm branching
                     {
                         case BlastRadius.SPREAD: //Randomly spreads all corruption bytes to all selected domains
                             {
-                                for (int i = 0; i < intensity; i++)
+                                for (var i = 0; i < intensity; i++)
                                 {
-                                    var r = RtcCore.RND.Next(selectedDomains.Length);
-                                    Domain = selectedDomains[r];
+                                    var r = RND.Next(selectedDomains.Length);
+                                    domain = selectedDomains[r];
 
-                                    MaxAddress = cachedDomainSizes[r];
-                                    RandomAddress = RtcCore.RND.NextLong(0, MaxAddress - cachedPrecision);
+                                    maxAddress = cachedDomainSizes[r];
+                                    randomAddress = RND.NextLong(0, maxAddress - CachedPrecision);
 
-                                    bus = GetBlastUnits(Domain, RandomAddress, cachedPrecision, cachedAlignment, cachedEngine);
+                                    bus = GetBlastUnits(domain, randomAddress, CachedPrecision, cachedAlignment, cachedEngine);
                                     if (bus != null)
                                     {
                                         bl.Layer.AddRange(bus);
@@ -762,16 +906,16 @@ namespace RTCV.CorruptCore
 
                         case BlastRadius.CHUNK: //Randomly spreads the corruption bytes in one randomly selected domain
                             {
-                                var r = RtcCore.RND.Next(selectedDomains.Length);
-                                Domain = selectedDomains[r];
+                                var r = RND.Next(selectedDomains.Length);
+                                domain = selectedDomains[r];
 
-                                MaxAddress = cachedDomainSizes[r];
+                                maxAddress = cachedDomainSizes[r];
 
-                                for (int i = 0; i < intensity; i++)
+                                for (var i = 0; i < intensity; i++)
                                 {
-                                    RandomAddress = RtcCore.RND.NextLong(0, MaxAddress - cachedPrecision);
+                                    randomAddress = RND.NextLong(0, maxAddress - CachedPrecision);
 
-                                    bus = GetBlastUnits(Domain, RandomAddress, cachedPrecision, cachedAlignment, cachedEngine);
+                                    bus = GetBlastUnits(domain, randomAddress, CachedPrecision, cachedAlignment, cachedEngine);
                                     if (bus != null)
                                     {
                                         bl.Layer.AddRange(bus);
@@ -782,18 +926,18 @@ namespace RTCV.CorruptCore
                             }
                         case BlastRadius.BURST: // 10 shots of 10% chunk
                             {
-                                for (int j = 0; j < 10; j++)
+                                for (var j = 0; j < 10; j++)
                                 {
-                                    var r = RtcCore.RND.Next(selectedDomains.Length);
-                                    Domain = selectedDomains[r];
+                                    var r = RND.Next(selectedDomains.Length);
+                                    domain = selectedDomains[r];
 
-                                    MaxAddress = cachedDomainSizes[r];
+                                    maxAddress = cachedDomainSizes[r];
 
-                                    for (int i = 0; i < (int)((double)intensity / 10); i++)
+                                    for (var i = 0; i < (int)((double)intensity / 10); i++)
                                     {
-                                        RandomAddress = RtcCore.RND.NextLong(0, MaxAddress - cachedPrecision);
+                                        randomAddress = RND.NextLong(0, maxAddress - CachedPrecision);
 
-                                        bus = GetBlastUnits(Domain, RandomAddress, cachedPrecision, cachedAlignment, cachedEngine);
+                                        bus = GetBlastUnits(domain, randomAddress, CachedPrecision, cachedAlignment, cachedEngine);
                                         if (bus != null)
                                         {
                                             bl.Layer.AddRange(bus);
@@ -809,30 +953,30 @@ namespace RTCV.CorruptCore
                                 //Find the smallest domain and base our normalization around it
                                 //Domains aren't IComparable so I used keys
 
-                                long[] domainSize = new long[selectedDomains.Length];
-                                for (int i = 0; i < selectedDomains.Length; i++)
+                                var domainSize = new long[selectedDomains.Length];
+                                for (var i = 0; i < selectedDomains.Length; i++)
                                 {
-                                    Domain = selectedDomains[i];
-                                    domainSize[i] = MemoryDomains.GetInterface(Domain)
+                                    domain = selectedDomains[i];
+                                    domainSize[i] = MemoryDomains.GetInterface(domain)
                                         .Size;
                                 }
 
                                 //Sort the arrays
                                 Array.Sort(domainSize, selectedDomains);
 
-                                for (int i = 0; i < selectedDomains.Length; i++)
+                                for (var i = 0; i < selectedDomains.Length; i++)
                                 {
-                                    Domain = selectedDomains[i];
+                                    domain = selectedDomains[i];
 
                                     //Get the intensity divider. The size of the largest domain divided by the size of the current domain
-                                    long normalized = ((domainSize[selectedDomains.Length - 1] / (domainSize[i])));
+                                    var normalized = (domainSize[selectedDomains.Length - 1] / (domainSize[i]));
 
-                                    for (int j = 0; j < (intensity / normalized); j++)
+                                    for (var j = 0; j < (intensity / normalized); j++)
                                     {
-                                        MaxAddress = domainSize[i];
-                                        RandomAddress = RtcCore.RND.NextLong(0, MaxAddress - cachedPrecision);
+                                        maxAddress = domainSize[i];
+                                        randomAddress = RND.NextLong(0, maxAddress - CachedPrecision);
 
-                                        bus = GetBlastUnits(Domain, RandomAddress, cachedPrecision, cachedAlignment, cachedEngine);
+                                        bus = GetBlastUnits(domain, randomAddress, CachedPrecision, cachedAlignment, cachedEngine);
                                         if (bus != null)
                                         {
                                             bl.Layer.AddRange(bus);
@@ -845,25 +989,25 @@ namespace RTCV.CorruptCore
 
                         case BlastRadius.PROPORTIONAL: //Blasts proportionally based on the total size of all selected domains
 
-                            long totalSize = cachedDomainSizes.Sum(); //Gets the total size of all selected domains
+                            var totalSize = cachedDomainSizes.Sum(); //Gets the total size of all selected domains
 
-                            long[] normalizedIntensity = new long[selectedDomains.Length]; //matches the index of selectedDomains
-                            for (int i = 0; i < selectedDomains.Length; i++)
+                            var normalizedIntensity = new long[selectedDomains.Length]; //matches the index of selectedDomains
+                            for (var i = 0; i < selectedDomains.Length; i++)
                             {   //calculates the proportionnal normalized Intensity based on total selected domains size
-                                double proportion = cachedDomainSizes[i] / (double)totalSize;
+                                var proportion = cachedDomainSizes[i] / (double)totalSize;
                                 normalizedIntensity[i] = Convert.ToInt64(intensity * proportion);
                             }
 
-                            for (int i = 0; i < selectedDomains.Length; i++)
+                            for (var i = 0; i < selectedDomains.Length; i++)
                             {
-                                Domain = selectedDomains[i];
+                                domain = selectedDomains[i];
 
-                                for (int j = 0; j < normalizedIntensity[i]; j++)
+                                for (var j = 0; j < normalizedIntensity[i]; j++)
                                 {
-                                    MaxAddress = cachedDomainSizes[i];
-                                    RandomAddress = RtcCore.RND.NextLong(0, MaxAddress - cachedPrecision);
+                                    maxAddress = cachedDomainSizes[i];
+                                    randomAddress = RND.NextLong(0, maxAddress - CachedPrecision);
 
-                                    bus = GetBlastUnits(Domain, RandomAddress, cachedPrecision, cachedAlignment, cachedEngine);
+                                    bus = GetBlastUnits(domain, randomAddress, CachedPrecision, cachedAlignment, cachedEngine);
                                     if (bus != null)
                                     {
                                         bl.Layer.AddRange(bus);
@@ -875,16 +1019,16 @@ namespace RTCV.CorruptCore
 
                         case BlastRadius.EVEN: //Evenly distributes the blasts through all selected domains
 
-                            for (int i = 0; i < selectedDomains.Length; i++)
+                            for (var i = 0; i < selectedDomains.Length; i++)
                             {
-                                Domain = selectedDomains[i];
+                                domain = selectedDomains[i];
 
-                                for (int j = 0; j < (intensity / selectedDomains.Length); j++)
+                                for (var j = 0; j < (intensity / selectedDomains.Length); j++)
                                 {
-                                    MaxAddress = cachedDomainSizes[i];
-                                    RandomAddress = RtcCore.RND.NextLong(0, MaxAddress - cachedPrecision);
+                                    maxAddress = cachedDomainSizes[i];
+                                    randomAddress = RND.NextLong(0, maxAddress - CachedPrecision);
 
-                                    bus = GetBlastUnits(Domain, RandomAddress, cachedPrecision, cachedAlignment, cachedEngine);
+                                    bus = GetBlastUnits(domain, randomAddress, CachedPrecision, cachedAlignment, cachedEngine);
                                     if (bus != null)
                                     {
                                         bl.Layer.AddRange(bus);
@@ -909,24 +1053,34 @@ namespace RTCV.CorruptCore
                 }
                 catch (Exception ex)
                 {
-                    string additionalInfo = "";
+                    _ = ex;
+                    //TODO fix improve this
+                    //Removed action rethrower because it kept cutting
+                    //The rest of the stack trace in the cloud debug box
 
-                    if (MemoryDomains.GetInterface(Domain) == null)
+                    //however, the Additional info is no longer appended to the error.
+                    /*
+                    var additionalInfo = "";
+
+                    if (MemoryDomains.GetInterface(domain) == null)
                     {
                         additionalInfo = "Unable to get an interface to the selected memory domain! \nTry clicking the Auto-Select Domains button to refresh the domains!\n\n";
                     }
 
                     throw new Exception(additionalInfo + ex.Message);
+                    */
+
+                    throw;
                 }
             }
             catch (Exception ex)
             {
                 var dr = CloudDebug.ShowErrorDialog(ex, true);
 
-                if (RtcCore.AutoCorrupt)
+                if (AutoCorrupt)
                 {
-                    RtcCore.AutoCorrupt = false;
-                    LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.ERROR_DISABLE_AUTOCORRUPT);
+                    AutoCorrupt = false;
+                    LocalNetCoreRouter.Route(NetCore.Endpoints.UI, NetCore.Commands.Basic.ErrorDisableAutoCorrupt);
                 }
 
                 if (dr == DialogResult.Abort)
@@ -941,26 +1095,19 @@ namespace RTCV.CorruptCore
         public static BlastTarget GetBlastTarget()
         {
             //Standalone version of BlastRadius SPREAD
+            var selectedDomains = (string[])AllSpec.UISpec[UISPEC.SELECTEDDOMAINS];
+            var domain = selectedDomains[RND.Next(selectedDomains.Length)];
+            var maxAddress = MemoryDomains.GetInterface(domain).Size;
+            var randomAddress = RND.NextLong(0, maxAddress - 1);
 
-            string Domain = null;
-            long MaxAddress = -1;
-            long RandomAddress = -1;
-
-            string[] _selectedDomains = (string[])AllSpec.UISpec["SELECTEDDOMAINS"];
-
-            Domain = _selectedDomains[RtcCore.RND.Next(_selectedDomains.Length)];
-
-            MaxAddress = MemoryDomains.GetInterface(Domain).Size;
-            RandomAddress = RtcCore.RND.NextLong(0, MaxAddress - 1);
-
-            return new BlastTarget(Domain, RandomAddress);
+            return new BlastTarget(domain, randomAddress);
         }
 
         public static string GetRandomKey()
         {
             //Generates unique string ids that are human-readable, unlike GUIDs
-            string Key = RtcCore.RND.Next(1, 9999).ToString() + RtcCore.RND.Next(1, 9999).ToString() + RtcCore.RND.Next(1, 9999).ToString() + RtcCore.RND.Next(1, 9999).ToString();
-            return Key;
+            var key = RND.Next(1, 9999).ToString() + RND.Next(1, 9999).ToString() + RND.Next(1, 9999).ToString() + RND.Next(1, 9999).ToString();
+            return key;
         }
 
         public static void GenerateAndBlast()
@@ -968,55 +1115,7 @@ namespace RTCV.CorruptCore
             BlastLayer bl = null;
             void _generateAndBlast()
             {
-                //We pull the domains here because if the syncsettings changed, there's a chance the domains changed
-                string[] domains = (string[])AllSpec.UISpec["SELECTEDDOMAINS"];
-
-                var cpus = Environment.ProcessorCount;
-
-                if (cpus == 1 || AllSpec.VanguardSpec[VSPEC.SUPPORTS_MULTITHREAD] == null)
-                {
-                    bl = RtcCore.GenerateBlastLayer(domains);
-                }
-                else
-                {
-                    //if emulator supports multithreaded access of the domains, disregard the emulation thread and just span threads...
-                    long reminder = RtcCore.Intensity % (cpus - 1);
-                    long splitintensity = (RtcCore.Intensity - reminder) / (cpus - 1);
-
-                    Task<BlastLayer>[] tasks = new Task<BlastLayer>[cpus];
-                    for (int i = 0; i < cpus; i++)
-                    {
-                        long requestedIntensity = splitintensity;
-
-                        if (i == 0 && reminder != 0)
-                        {
-                            requestedIntensity = reminder;
-                        }
-
-                        tasks[i] = Task.Factory.StartNew(() => RtcCore.GenerateBlastLayer(domains, requestedIntensity));
-                    }
-
-                    Task.WaitAll(tasks);
-
-                    bl = tasks[0].Result ?? new BlastLayer();
-
-                    if (tasks.Length > 1)
-                    {
-                        for (int i = 1; i < tasks.Length; i++)
-                        {
-                            if (tasks[i].Result != null)
-                            {
-                                bl.Layer.AddRange(tasks[i].Result.Layer);
-                            }
-                        }
-                    }
-
-                    if (bl.Layer.Count == 0)
-                    {
-                        bl = null;
-                    }
-                }
-
+                bl = GenerateBlastLayerOnAllThreads();
                 bl?.Apply(false, true);
             }
             //If the emulator uses callbacks, we do everything on the main thread and once we're done, we unpause emulation
@@ -1042,27 +1141,26 @@ namespace RTCV.CorruptCore
             ProgressBarHandler?.Invoke(sender, e);
         }
 
-        public static void LOAD_GAME_DONE()
+        public static void InvokeLoadGameDone()
         {
             LoadGameDone?.Invoke(null, null);
         }
 
-        public static void GAME_CLOSED(bool fullyClosed = false)
+        public static void InvokeGameClosed(bool fullyClosed = false)
         {
             GameClosed?.Invoke(null, new GameClosedEventArgs(fullyClosed));
         }
 
-
-        public static void KILL_HEX_EDITOR()
+        public static void InvokeKillHexEditor()
         {
         }
     }
 
     public static class RtcClock
     {
-        static int CPU_STEP_Count = 0;
+        private static int cpuStepCount = 0;
 
-        public static void STEP_CORRUPT(bool executeActions, bool performStep)
+        public static void StepCorrupt(bool executeActions, bool performStep)
         {
             if (executeActions)
             {
@@ -1071,23 +1169,29 @@ namespace RTCV.CorruptCore
 
             if (performStep)
             {
-                CPU_STEP_Count++;
-
-                bool autoCorrupt = RtcCore.AutoCorrupt;
-                long errorDelay = RtcCore.ErrorDelay;
-                if (autoCorrupt && CPU_STEP_Count >= errorDelay)
+                try
                 {
-                    CPU_STEP_Count = 0;
-                    BlastLayer bl = RtcCore.GenerateBlastLayer((string[])AllSpec.UISpec["SELECTEDDOMAINS"]);
-                    if (bl != null)
-                        bl.Apply(false, false);
+                    cpuStepCount++;
+
+                    var autoCorrupt = RtcCore.AutoCorrupt;
+                    var errorDelay = RtcCore.ErrorDelay;
+                    if (autoCorrupt && cpuStepCount >= errorDelay)
+                    {
+                        cpuStepCount = 0;
+                        BlastLayer bl = RtcCore.GenerateBlastLayer((string[])AllSpec.UISpec[UISPEC.SELECTEDDOMAINS]);
+                        bl?.Apply(false, false);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Trace.WriteLine(ex.ToString());
                 }
             }
         }
 
-        public static void RESET_COUNT()
+        public static void ResetCount()
         {
-            CPU_STEP_Count = 0;
+            cpuStepCount = 0;
         }
     }
 }

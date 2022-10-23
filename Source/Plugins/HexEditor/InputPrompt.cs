@@ -4,6 +4,7 @@ namespace RTCV.Plugins.HexEditor
     using System.Drawing;
     using System.Linq;
     using System.Windows.Forms;
+    using RTCV.Common.CustomExtensions;
 
     /// <summary>
     /// A simple form that prompts the user for a single line of input.
@@ -17,10 +18,10 @@ namespace RTCV.Plugins.HexEditor
             StartLocation = new Point(-1, -1);
         }
 
-        public enum InputType { Hex, Unsigned, Signed, Text }
+        private enum InputType { Hex, Unsigned, Signed, Text }
 
         public Point StartLocation { get; set; }
-        public InputType TextInputType { get; set; }
+        private InputType TextInputType { get; set; }
 
         public string Message
         {

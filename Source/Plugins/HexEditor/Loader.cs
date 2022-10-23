@@ -3,7 +3,6 @@ namespace RTCV.Plugins.HexEditor
     using System;
     using System.ComponentModel.Composition;
     using System.Windows.Forms;
-    using NLog;
     using RTCV.Common;
     using RTCV.PluginHost;
     using RTCV.NetCore;
@@ -19,7 +18,7 @@ namespace RTCV.Plugins.HexEditor
 
         public bool Start(RTCSide side)
         {
-            RTCV.Common.Logging.GlobalLogger.Info($"{Name} v{Version} initializing.");
+            Logging.GlobalLogger.Info($"{Name} v{Version} initializing.");
 
 
             if (side == RTCSide.Client)
@@ -28,12 +27,12 @@ namespace RTCV.Plugins.HexEditor
                 LocalNetCoreRouter.registerEndpoint(conn, "HEXEDITOR");
             }
 
-            RTCV.Common.Logging.GlobalLogger.Info($"{Name} v{Version} initialized.");
+            Logging.GlobalLogger.Info($"{Name} v{Version} initialized.");
 
             return true;
         }
 
-        public bool Stop()
+        public bool StopPlugin()
         {
             if (!S.ISNULL<HexEditor>())
             {

@@ -4,29 +4,31 @@ namespace RTCV.Vanguard
     using System.Linq;
     using RTCV.CorruptCore;
     using RTCV.NetCore;
-    using NetworkSide = RTCV.NetCore.NetworkSide;
+    using RTCV.NetCore.Enums;
 
-    public class VanguardConnector : IRoutable
+    public class VanguardConnector : IRoutable, IDisposable
     {
-        public NetCoreReceiver receiver;
+        private NetCoreReceiver _receiver;
 
-        public NetCoreConnector netConn;
-        public CorruptCoreConnector corruptConn;
+        public NetCoreConnector netConn { get; private set; }
+        private CorruptCoreConnector corruptConn;
 
         public NetworkStatus netcoreStatus => netConn.status;
 
-        public VanguardConnector(NetCoreReceiver _receiver)
+        public VanguardConnector(NetCoreReceiver receiver)
         {
-            receiver = _receiver;
+            RtcCore.PluginHost.LoadPluginAssemblies("../RTCV/RTC/PLUGINS", "./PLUGINS");
 
-            LocalNetCoreRouter.registerEndpoint(this, NetcoreCommands.VANGUARD);
+            _receiver = receiver;
+
+            LocalNetCoreRouter.registerEndpoint(this, NetCore.Endpoints.Vanguard);
             corruptConn = new CorruptCoreConnector();
-            LocalNetCoreRouter.registerEndpoint(corruptConn, NetcoreCommands.CORRUPTCORE);
+            LocalNetCoreRouter.registerEndpoint(corruptConn, NetCore.Endpoints.CorruptCore);
 
-            if (receiver.Attached)//attached mode
+            if (_receiver.Attached)//attached mode
             {
-                CorruptCore.RtcCore.Attached = true;
-                RTCV.UI.UICore.Start(null);
+                RtcCore.Attached = true;
+                UI.UICore.Start(null);
                 return;
             }
 
@@ -39,20 +41,25 @@ namespace RTCV.Vanguard
             netConn = new NetCoreConnector(netCoreSpec);
 
             //netConn = LocalNetCoreRouter.registerEndpoint(new NetCoreConnector(netCoreSpec), "WGH");
-            LocalNetCoreRouter.registerEndpoint(netConn, NetcoreCommands.DEFAULT); //Will send mesages to netcore if can't find the destination
+            LocalNetCoreRouter.registerEndpoint(netConn, NetCore.Endpoints.Default); //Will send mesages to netcore if can't find the destination
         }
 
         public static void ImplyClientConnected() => NetCoreSpec_ClientConnected(null, null);
 
         private static void NetCoreSpec_ClientConnected(object sender, EventArgs e)
         {
-            LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_PUSHVANGUARDSPEC, RTCV.NetCore.AllSpec.VanguardSpec.GetPartialSpec(), true);
-            LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_ALLSPECSSENT, true);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.UI, NetCore.Commands.Remote.PushVanguardSpec, AllSpec.VanguardSpec.GetPartialSpec(), true);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.UI, NetCore.Commands.Remote.AllSpecSent, true);
         }
 
         public void OnMessageReceivedProxy(object sender, NetCoreEventArgs e) => OnMessageReceived(sender, e);
         public object OnMessageReceived(object sender, NetCoreEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             //No implementation here, we simply route and return
 
             if (e.message.Type.Contains('|'))
@@ -61,11 +68,11 @@ namespace RTCV.Vanguard
                 string endpoint = msgParts[0];
                 e.message.Type = msgParts[1]; //remove endpoint from type
 
-                return NetCore.LocalNetCoreRouter.Route(endpoint, e);
+                return LocalNetCoreRouter.Route(endpoint, e);
             }
             else
             {   //This is for the Vanguard Implementation
-                receiver.OnMessageReceived(e);
+                _receiver.OnMessageReceived(e);
                 return e.returnMessage;
             }
         }
@@ -78,11 +85,28 @@ namespace RTCV.Vanguard
 
         public void Kill()
         {
+            netConn?.Kill();
         }
 
-        public static void PushVanguardSpecRef(FullSpec spec) => RTCV.NetCore.AllSpec.VanguardSpec = spec;
+        public void Dispose()
+        {
+            // Dispose of unmanaged resources.
+            Dispose(true);
+            // Suppress finalization.
+            GC.SuppressFinalize(this);
+        }
 
-        public static bool IsUIForm() => (bool?)RTCV.NetCore.AllSpec.UISpec?[NetcoreCommands.RTC_INFOCUS] ?? false;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                netConn?.Dispose();
+            }
+        }
+
+        public static void PushVanguardSpecRef(FullSpec spec) => AllSpec.VanguardSpec = spec;
+
+        public static bool IsUIForm() => (bool?)AllSpec.UISpec?[NetCore.Commands.Basic.RTCInFocus] ?? false;
 
         public void KillNetcore() => netConn.Kill();
     }

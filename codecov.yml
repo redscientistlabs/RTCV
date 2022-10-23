@@ -1,0 +1,8 @@
+fixes: # https://docs.codecov.io/docs/fixing-paths
+  - "D:/a/RTCV/RTCV/::"
+coverage:
+  status:
+    project:
+      default:
+        # basic
+        threshold: 1000%

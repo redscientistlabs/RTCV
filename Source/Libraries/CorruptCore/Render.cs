@@ -1,4 +1,4 @@
-﻿namespace RTCV.CorruptCore
+namespace RTCV.CorruptCore
 {
     using System.Windows.Forms;
     using RTCV.NetCore;
@@ -7,25 +7,27 @@
     {
         public static bool RenderAtLoad
         {
-            get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.RENDER_AT_LOAD];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_AT_LOAD, value);
+            get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.RENDER_AT_LOAD];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_AT_LOAD, value);
         }
 
         public static bool IsRendering
         {
-            get => (bool)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.RENDER_ISRENDERING];
+            get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.RENDER_ISRENDERING];
             set
             {
-                RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_ISRENDERING, value);
-                LocalNetCoreRouter.Route(NetcoreCommands.UI, NetcoreCommands.REMOTE_RENDER_DISPLAY);
+                AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_ISRENDERING, value);
+                LocalNetCoreRouter.Route(NetCore.Endpoints.UI, NetCore.Commands.Remote.RenderDisplay);
             }
         }
 
         public static RENDERTYPE RenderType
         {
-            get => (RENDERTYPE)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.RENDER_RENDERTYPE];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_RENDERTYPE, value);
+            get => (RENDERTYPE)AllSpec.CorruptCoreSpec[RTCSPEC.RENDER_RENDERTYPE];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.RENDER_RENDERTYPE, value);
         }
+
+        private static IRenderer Renderer = null;
 
         public static PartialSpec getDefaultPartial()
         {
@@ -38,7 +40,9 @@
 
         public static bool StartRender()
         {
-            if (!((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_RENDERING] ?? false))
+            bool vanguardSupportsRendering = ((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_RENDERING] ?? false);
+
+            if (!vanguardSupportsRendering && Renderer == null)
             {
                 MessageBox.Show("Rendering isn't supported by this Emulator");
                 return false;
@@ -47,18 +51,40 @@
 
             if (IsRendering)
             {
-                StopRender();
+                if (vanguardSupportsRendering)
+                {
+                    StopRender();
+                }
+                else if (Renderer != null)
+                {
+                    Renderer.StopRender();
+                }
             }
 
             IsRendering = true;
-            LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RENDER_START, true);
+
+            if (vanguardSupportsRendering)
+            {
+                LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.RenderStart, true);
+            }
+            else
+            {
+                Renderer.StopRender();
+            }
+
             return true;
         }
 
         public static void StopRender()
         {
+            bool vanguardSupportsRendering = ((bool?)AllSpec.VanguardSpec[VSPEC.SUPPORTS_RENDERING] ?? false);
+
             IsRendering = false;
-            LocalNetCoreRouter.Route(NetcoreCommands.VANGUARD, NetcoreCommands.REMOTE_RENDER_STOP, true);
+
+            if (vanguardSupportsRendering)
+            {
+                LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.RenderStop, true);
+            }
         }
 
         public enum RENDERTYPE

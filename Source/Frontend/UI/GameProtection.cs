@@ -1,4 +1,4 @@
-﻿namespace RTCV.UI
+namespace RTCV.UI
 {
     using System;
     using System.Collections.Generic;
@@ -13,9 +13,9 @@
     public static class GameProtection
     {
         private static Timer t;
-        public static int BackupInterval = 5;
-        public static bool isRunning = false;
-        public static bool WasAutoCorruptRunning = false;
+        internal static int BackupInterval = 5;
+        internal static bool isRunning = false;
+        internal static bool WasAutoCorruptRunning = false;
         private const int maxStates = 20;
 
         private static readonly NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
@@ -91,7 +91,7 @@
             }
             sk?.Run();
             //Don't delete it if it's also our "current" state
-            if (sk != CorruptCore.StockpileManager_UISide.BackupedState)
+            if (sk != StockpileManagerUISide.BackupedState)
             {
                 Task.Run(() => RemoveBackup(sk)); //Don't wait on the hdd operations
             }
@@ -114,7 +114,7 @@
 
         public static void ClearAllBackups()
         {
-            StockpileManager_UISide.BackupedState = null;
+            StockpileManagerUISide.BackupedState = null;
             StashKey[] states = new StashKey[0];
 
             //Grab a copy then clear it out
@@ -136,7 +136,7 @@
 
         private static void Tick(object sender, EventArgs e)
         {
-            LocalNetCoreRouter.Route(NetcoreCommands.CORRUPTCORE, NetcoreCommands.REMOTE_BACKUPKEY_REQUEST);
+            LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.BackupKeyRequest);
         }
     }
 }

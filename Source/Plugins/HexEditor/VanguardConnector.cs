@@ -1,5 +1,6 @@
 namespace RTCV.Plugins.HexEditor
 {
+    using System;
     using RTCV.Common;
     using RTCV.CorruptCore;
     using RTCV.NetCore;
@@ -12,17 +13,22 @@ namespace RTCV.Plugins.HexEditor
         }
         public object OnMessageReceived(object sender, NetCoreEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             //Use setReturnValue to handle returns
             var message = e.message;
             var advancedMessage = message as NetCoreAdvancedMessage;
 
             switch (e.message.Type)
             {
-                case NetcoreCommands.REMOTE_OPENHEXEDITOR:
+                case NetCore.Commands.Remote.OpenHexEditor:
                     {
                         SyncObjectSingleton.FormExecute(() =>
                         {
-                            if (S.GET<HexEditor>().IsDisposed)
+                            if (S.ISNULL<HexEditor>())
                             {
                                 S.SET(new HexEditor());
                             }
@@ -32,15 +38,17 @@ namespace RTCV.Plugins.HexEditor
                     }
                     break;
 
-                case NetcoreCommands.EMU_OPEN_HEXEDITOR_ADDRESS:
+                case NetCore.Commands.Emulator.OpenHexEditorAddress:
                     {
                         var temp = advancedMessage.objectValue as object[];
-                        string domain = (string)temp[0];
-                        long address = (long)temp[1];
+                        var domain = (string)temp[0];
+                        var address = (long)temp[1];
 
                         MemoryInterface mi = MemoryDomains.GetInterface(domain);
                         if (mi == null)
+                        {
                             break;
+                        }
 
                         SyncObjectSingleton.FormExecute(() =>
                         {

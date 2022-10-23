@@ -8,6 +8,12 @@ namespace RTCV.UI.Components.Controls
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
 
+    public class SpecialBindingInfo
+    {
+        public string BindingName { get; set; }
+        public string TooltipText { get; set; }
+    }
+
     public sealed class InputWidget : TextBox
     {
         // TODO: when binding, make sure that the new key combo is not in one of the other bindings
@@ -17,12 +23,6 @@ namespace RTCV.UI.Components.Controls
         private string _wasPressed = "";
 
         public InputCompositeWidget CompositeWidget { get; set; }
-
-        public class SpecialBindingInfo
-        {
-            public string BindingName { get; set; }
-            public string TooltipText { get; set; }
-        }
 
         /// <summary>
         /// These bindings get ignored by the widget and can only be entered by SetBinding() via the context menu from the InputCompositeWidget
@@ -55,6 +55,11 @@ namespace RTCV.UI.Components.Controls
 
             set
             {
+                if (value == null)
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
                 ClearBindings();
                 var newBindings = value.Trim().Split(',');
                 _bindings.AddRange(newBindings);
@@ -129,7 +134,7 @@ namespace RTCV.UI.Components.Controls
         /// </summary>
         private void ReadKeys()
         {
-            Input.Input.Instance.Update();
+            Input.Input.Update();
             var bindingStr = Input.Input.Instance.GetNextBindEvent();
             if (!string.IsNullOrEmpty(_wasPressed) && bindingStr == _wasPressed)
             {
@@ -185,6 +190,11 @@ namespace RTCV.UI.Components.Controls
 
         protected override void OnKeyUp(KeyEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             if (e.KeyCode == Keys.F4 && e.Modifiers == Keys.Alt)
             {
                 base.OnKeyUp(e);
@@ -195,6 +205,11 @@ namespace RTCV.UI.Components.Controls
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             if (e.KeyCode == Keys.F4 && e.Modifiers == Keys.Alt)
             {
                 base.OnKeyDown(e);
@@ -229,6 +244,11 @@ namespace RTCV.UI.Components.Controls
 
         protected override void OnKeyPress(KeyPressEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             e.Handled = true;
         }
 
@@ -251,6 +271,11 @@ namespace RTCV.UI.Components.Controls
 
         protected override void OnMouseWheel(MouseEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             if (e.Delta > 0)
             {
                 Decrement();

@@ -7,8 +7,6 @@ namespace RTCV.Common.Forms
 
     public partial class LogConsoleForm : Form
     {
-        public bool HideOnClose = false;
-
         public override Color ForeColor
         {
             get => base.ForeColor;
@@ -38,6 +36,7 @@ namespace RTCV.Common.Forms
             LogConsole.InitializeFromGlobalLogger();
         }
 
+        #pragma warning disable CA1801,IDE0060 //maxLines is unused but should be left in for external plugins
         /// <summary>
         /// Creates a LogConsoleForm using the global logger
         /// </summary>
@@ -53,11 +52,6 @@ namespace RTCV.Common.Forms
 
         private void LogConsoleForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (HideOnClose)
-            {
-                this.Hide();
-                e.Cancel = true;
-            }
         }
 
         public Logger Logger => LogConsole.Logger;

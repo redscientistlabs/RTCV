@@ -1,4 +1,4 @@
-﻿namespace RTCV.NetCore
+namespace RTCV.NetCore
 {
     using System;
     using System.Collections.Generic;
@@ -12,9 +12,9 @@
 
         public static T registerEndpoint<T>(T endpoint, string name)
         {
-            if (endpoint is IRoutable)
+            if (endpoint is IRoutable routable)
             {
-                endpoints[name] = (IRoutable)endpoint;
+                endpoints[name] = routable;
             }
             else
             {
@@ -81,6 +81,11 @@
 
         public static object Route(string endpointName, NetCoreEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             try
             {
                 var endpoint = getEndpoint(endpointName);
@@ -99,7 +104,7 @@
             {
                 if (CloudDebug.ShowErrorDialog(ex) == DialogResult.Abort)
                 {
-                    throw new RTCV.NetCore.AbortEverythingException();
+                    throw new AbortEverythingException();
                 }
 
                 return null;

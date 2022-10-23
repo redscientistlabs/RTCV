@@ -14,10 +14,15 @@ namespace RTCV.UI.Input
         {
             List<string> list = new List<string>();
             foreach (KeyValuePair<string, List<string>> kvp in _bindings)
+            {
                 foreach (var boundButton in kvp.Value)
                 {
-                    if (boundButton == button) list.Add(kvp.Key);
+                    if (boundButton == button)
+                    {
+                        list.Add(kvp.Key);
+                    }
                 }
+            }
 
             return list;
         }
@@ -147,7 +152,6 @@ namespace RTCV.UI.Input
             {
                 if (_defaultValues == null)
                 {
-                    //RTC_Hijack - Remove some of the more annoying default binds that don't line up with bizhawk usage
                     _defaultValues = new List<Binding>
                     {
                         Bind("RTC", "Manual Blast", toolTip: "Triggers a manual blast" ),
@@ -159,6 +163,9 @@ namespace RTCV.UI.Input
                         Bind("RTC", "Induce KS Crash", toolTip: "Induces a Killswitch Kill+Restart" ),
                         Bind("Glitch Harvester", "Load and Corrupt", toolTip: "Triggers a Glitch Harvest Blast/Send" ),
                         Bind("Glitch Harvester", "Just Corrupt", toolTip: "Triggers a Glitch Harvester Blast without loading a state" ),
+                        Bind("Glitch Harvester", "Undo and Corrupt", toolTip: "Toggles the blastlayer off and triggers a Glitch Harvester Blast without loading a state" ),
+                        Bind("Glitch Harvester", "Load Prev State", toolTip: "Loads the savestate from the previously selected slot without changing slots" ),
+                        Bind("Glitch Harvester", "New Savestate", toolTip: "Creates a glitch harvester in the next available slot" ),
                         Bind("Glitch Harvester", "Reroll", toolTip: "Rerolls the current stashkey" ),
                         Bind("Glitch Harvester", "Load", toolTip: "Loads the current savestate" ),
                         Bind("Glitch Harvester", "Save", toolTip: "Saves to the current savestate slot" ),

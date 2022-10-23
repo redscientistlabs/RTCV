@@ -4,8 +4,9 @@ namespace RTCV.NetCore
     using System.Collections.Concurrent;
     using System.Threading;
     using System.Threading.Tasks;
+    using RTCV.NetCore.NetCoreExtensions;
 
-    public class ReturnWatch
+    public class ReturnWatch : IDisposable
     {
         //This is a component that allows to freeze the thread that asked for a value from a Synced Message
         //This makes inter-process calls able to block and wait for return values to keep code linearity
@@ -15,15 +16,9 @@ namespace RTCV.NetCore
         private volatile ConcurrentDictionary<Guid, object> SyncReturns = new ConcurrentDictionary<Guid, object>();
         private volatile int activeWatches = 0;
         private CancellationTokenSource cts = new CancellationTokenSource();
-        public Guid guid = Guid.NewGuid();
+        private Guid _guid = Guid.NewGuid();
 
-        public bool IsWaitingForReturn
-        {
-            get
-            {
-                return activeWatches > 0;
-            }
-        }
+        public bool IsWaitingForReturn => activeWatches > 0;
 
         internal ReturnWatch(NetCoreSpec _spec)
         {
@@ -32,13 +27,18 @@ namespace RTCV.NetCore
 
         public void Kill()
         {
-            logger.Info("KillReturnWatch called on {guid}", guid);
+            logger.Info("KillReturnWatch called on {guid}", _guid);
             SyncReturns.Clear();
             cts.Cancel();
             cts = new CancellationTokenSource();
         }
 
-        public void AddReturn(NetCoreAdvancedMessage message)
+        public void Dispose()
+        {
+            cts.Dispose();
+        }
+
+        internal void AddReturn(NetCoreAdvancedMessage message)
         {
             if (!message.requestGuid.HasValue)
             {
@@ -76,7 +76,7 @@ namespace RTCV.NetCore
         internal async Task<object> GetValueTask(Guid WatchedGuid, string type, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
-            logger.Trace("GetValue called on {guid}", guid);
+            logger.Trace("GetValue called on {guid}", _guid);
             //Jams the current thread until the value is returned or the KillReturnWatch flag is set to true
 
             logger.Trace("GetValue:Awaiting -> " + type);

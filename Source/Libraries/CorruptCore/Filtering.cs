@@ -8,6 +8,7 @@ namespace RTCV.CorruptCore
     using System.Threading.Tasks;
     using System.Windows.Forms;
     using RTCV.Common;
+    using RTCV.CorruptCore.Extensions;
     using RTCV.NetCore;
 
     public static class Filtering
@@ -16,23 +17,23 @@ namespace RTCV.CorruptCore
 
         public static ConcurrentDictionary<string, IListFilter> Hash2LimiterDico
         {
-            get => (ConcurrentDictionary<string, IListFilter>)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2LIMITERDICO];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.FILTERING_HASH2VALUEDICO, value);
+            get => (ConcurrentDictionary<string, IListFilter>)AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2LIMITERDICO];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.FILTERING_HASH2VALUEDICO, value);
         }
 
         public static ConcurrentDictionary<string, IListFilter> Hash2ValueDico
         {
-            get => (ConcurrentDictionary<string, IListFilter>)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2VALUEDICO];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.FILTERING_HASH2VALUEDICO, value);
+            get => (ConcurrentDictionary<string, IListFilter>)AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2VALUEDICO];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.FILTERING_HASH2VALUEDICO, value);
         }
 
         public static ConcurrentDictionary<string, string> Hash2NameDico
         {
-            get => (ConcurrentDictionary<string, string>)RTCV.NetCore.AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2NAMEDICO];
-            set => RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(RTCSPEC.FILTERING_HASH2NAMEDICO, value);
+            get => (ConcurrentDictionary<string, string>)AllSpec.CorruptCoreSpec[RTCSPEC.FILTERING_HASH2NAMEDICO];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.FILTERING_HASH2NAMEDICO, value);
         }
 
-        public static int StockpileListCount = 0;
+        internal static int StockpileListCount = 0;
 
         public static PartialSpec getDefaultPartial()
         {
@@ -44,7 +45,7 @@ namespace RTCV.CorruptCore
             return partial;
         }
 
-        public static void LoadStockpileLists(Stockpile sks)
+        internal static void LoadStockpileLists(Stockpile sks)
         {
             var lists = LoadListsFromPaths(Directory.GetFiles(Path.Combine(RtcCore.workingDir, "SKS"), "*.limiter"));
 
@@ -105,7 +106,7 @@ namespace RTCV.CorruptCore
             PartialSpec update = new PartialSpec("RTCSpec");
             update[RTCSPEC.FILTERING_HASH2LIMITERDICO] = Hash2LimiterDico;
             update[RTCSPEC.FILTERING_HASH2VALUEDICO] = Hash2ValueDico;
-            RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(update);
+            AllSpec.CorruptCoreSpec.Update(update);
 
             return h.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value).Keys.ToList(); //Return the hashes ordered by their name
         }
@@ -172,6 +173,11 @@ namespace RTCV.CorruptCore
         /// <returns>The hash of the list being registereds</returns>
         public static string RegisterList(IListFilter list, string name, bool syncListsViaNetcore)
         {
+            if (list == null)
+            {
+                throw new ArgumentNullException(nameof(list));
+            }
+
             string hashStr = list.GetHash(); //get it from object
 
             //Assuming the key doesn't already exist (we assume collions won't happen), add it.
@@ -197,14 +203,19 @@ namespace RTCV.CorruptCore
                 update[RTCSPEC.FILTERING_HASH2LIMITERDICO] = Hash2LimiterDico;
                 update[RTCSPEC.FILTERING_HASH2VALUEDICO] = Hash2ValueDico;
                 update[RTCSPEC.FILTERING_HASH2NAMEDICO] = Hash2NameDico;
-                RTCV.NetCore.AllSpec.CorruptCoreSpec.Update(update);
+                AllSpec.CorruptCoreSpec.Update(update);
             }
 
             return hashStr;
         }
 
-        public static bool LimiterPeekBytes(long startAddress, long endAddress, string domain, string hash, MemoryInterface mi)
+        public static bool LimiterPeekBytes(long startAddress, long endAddress, string hash, MemoryInterface mi)
         {
+            if (mi == null)
+            {
+                throw new ArgumentNullException(nameof(mi));
+            }
+
             //If we go outside of the domain, just return false
             if (endAddress > mi.Size)
             {
@@ -236,8 +247,13 @@ namespace RTCV.CorruptCore
             return false;
         }
 
-        public static byte[] LimiterPeekAndGetBytes(long startAddress, long endAddress, string domain, string hash, MemoryInterface mi)
+        public static byte[] LimiterPeekAndGetBytes(long startAddress, long endAddress, string hash, MemoryInterface mi)
         {
+            if (mi == null)
+            {
+                throw new ArgumentNullException(nameof(mi));
+            }
+
             //If we go outside of the domain, just return false
             if (endAddress > mi.Size)
             {
@@ -246,9 +262,10 @@ namespace RTCV.CorruptCore
 
             //Find the precision
             long precision = endAddress - startAddress;
-            byte[] values = new byte[precision];
+            //byte[] values = new byte[precision];
 
             //Peek the memory
+            byte[] values = new byte[precision];
             for (long i = 0; i < precision; i++)
             {
                 values[i] = mi.PeekByte(startAddress + i);
@@ -303,7 +320,7 @@ namespace RTCV.CorruptCore
             return false;
         }
 
-        public static bool NullableByteArrayContains(HashSet<byte?[]> hs, byte[] bytes)
+        internal static bool NullableByteArrayContains(HashSet<byte?[]> hs, byte[] bytes)
         {
             //checks nullable bytes lists against other byte lists, ignoring null collisions from both sides.
 
@@ -314,7 +331,9 @@ namespace RTCV.CorruptCore
                 for (int i = 0; i < item.Length; i++)
                 {
                     if (item[i] == null) //ignoring wildcards (null values)
+                    {
                         continue;
+                    }
 
                     if (item[i].Value != bytes[i])
                     {
@@ -383,7 +402,7 @@ namespace RTCV.CorruptCore
         /// </summary>
         /// <param name="sks"></param>
         /// <returns></returns>
-        public static Dictionary<string, List<string>> GetAllLimiterListsFromStockpile(Stockpile sks)
+        internal static Dictionary<string, List<string>> GetAllLimiterListsFromStockpile(Stockpile sks)
         {
             sks.MissingLimiter = false;
 

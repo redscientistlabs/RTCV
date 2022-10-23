@@ -61,7 +61,7 @@
             OnValueChanged(new ValueUpdateEventArgs<T>(Value));
         }
 
-        public virtual void registerSlave(SpecControl<T> comp)
+        internal virtual void registerSlave(SpecControl<T> comp)
         {
             slaveComps.Add(comp);
             comp._parent = this;
@@ -78,7 +78,7 @@
 
     public class ValueUpdateEventArgs<T> : EventArgs
     {
-        public T _value;
+        private T _value;
 
         public ValueUpdateEventArgs(T value)
         {

@@ -8,6 +8,7 @@ namespace RTCV.CorruptCore
     using System.Text;
     using System.Windows.Forms;
     using Ceras;
+    using RTCV.CorruptCore.Extensions;
 
     public interface IListFilter
     {
@@ -22,7 +23,7 @@ namespace RTCV.CorruptCore
     }
 
     [Serializable]
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     public class ValueByteArrayList : IListFilter
     {
         List<byte[]> byteList { get; set; } = null;
@@ -30,6 +31,11 @@ namespace RTCV.CorruptCore
 
         public string Initialize(string filePath, string[] dataLines, bool flipBytes, bool syncListViaNetcore)
         {
+            if (dataLines == null)
+            {
+                throw new ArgumentNullException(nameof(dataLines));
+            }
+
             byteList = new List<byte[]>();
 
             //For every line in the list, build up our list of bytes
@@ -40,7 +46,7 @@ namespace RTCV.CorruptCore
                 try
                 {
                     //Get the string as a byte array
-                    if ((bytes = CorruptCore_Extensions.StringToByteArray(t)) == null)
+                    if ((bytes = t.ToByteArray()) == null)
                     {
                         throw new Exception($"Error reading list {Path.GetFileName(filePath)}. Valid format is a list of raw hexadecimal values.\nLine{(i + 1)}.\nValue: {t}\n");
                     }
@@ -65,9 +71,9 @@ namespace RTCV.CorruptCore
             var name = Path.GetFileNameWithoutExtension(filePath);
 
             //var hash = Filtering.RegisterList(byteList, name, syncListViaNetcore);
-            byteList = byteList.Distinct(new CorruptCore_Extensions.ByteArrayComparer()).ToList();
+            byteList = byteList.Distinct(new ByteArrayComparer()).ToList();
 
-            hashSet = new HashSet<byte[]>(byteList, new CorruptCore_Extensions.ByteArrayComparer());
+            hashSet = new HashSet<byte[]>(byteList, new ByteArrayComparer());
             string hash = Filtering.RegisterList(this, name, syncListViaNetcore);
 
             return hash;
@@ -155,7 +161,7 @@ namespace RTCV.CorruptCore
     }
 
     [Serializable]
-    [Ceras.MemberConfig(TargetMember.All)]
+    [MemberConfig(TargetMember.All)]
     public class NullableByteArrayList : IListFilter
     {
         List<byte?[]> byteList { get; set; } = null;
@@ -163,6 +169,11 @@ namespace RTCV.CorruptCore
 
         public string Initialize(string filePath, string[] dataLines, bool flipBytes, bool syncListViaNetcore)
         {
+            if (dataLines == null)
+            {
+                throw new ArgumentNullException(nameof(dataLines));
+            }
+
             byteList = new List<byte?[]>();
 
             //For every line in the list, build up our list of bytes
@@ -173,7 +184,7 @@ namespace RTCV.CorruptCore
                 try
                 {
                     //Get the string as a byte array
-                    if ((bytes = CorruptCore_Extensions.StringToNullableByteArray(t)) == null)
+                    if ((bytes = t.ToNullableByteArray()) == null)
                     {
                         throw new Exception($"Error reading list {Path.GetFileName(filePath)}. Valid format is a list of raw hexadecimal values.\nLine{(i + 1)}.\nValue: {t}\n");
                     }
@@ -198,7 +209,7 @@ namespace RTCV.CorruptCore
             var name = Path.GetFileNameWithoutExtension(filePath);
 
             string hash = GetHash();
-            hashSet = new HashSet<byte?[]>(byteList, new CorruptCore_Extensions.NullableByteArrayComparer());
+            hashSet = new HashSet<byte?[]>(byteList, new NullableByteArrayComparer());
 
             Filtering.RegisterList(this, name, syncListViaNetcore);
 
@@ -220,6 +231,11 @@ namespace RTCV.CorruptCore
         }
         public bool ContainsValue(byte[] bytes)
         {
+            if (bytes == null)
+            {
+                throw new ArgumentNullException(nameof(bytes));
+            }
+
             return Filtering.NullableByteArrayContains(hashSet, bytes);
         }
         public byte[] GetRandomValue(string hash, int precision, byte[] passthrough)
@@ -233,9 +249,13 @@ namespace RTCV.CorruptCore
             for (int i = 0; i < value.Length; i++)
             {
                 if (value[i] == null)
+                {
                     outValue[i] = (byte)RtcCore.RND.Next(255); //filling wildcards with random(255)
+                }
                 else
+                {
                     outValue[i] = value[i].Value;
+                }
             }
 
             //Copy the value to a working array

@@ -1,11 +1,11 @@
-﻿namespace RTCV.NetCore
+namespace RTCV.NetCore
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Timers;
 
-    public class MessageHub
+    public class MessageHub : IDisposable
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private NetCoreSpec spec;
@@ -27,7 +27,7 @@
             hubTimer.Start();
         }
 
-        private void CheckMessages(object sender, System.Timers.ElapsedEventArgs e)
+        private void CheckMessages(object sender, ElapsedEventArgs e)
         {
             while (true) //checks all messages
             {
@@ -79,7 +79,6 @@
                     //send command back or return value if from bizhawk to bizhawk
                     if (args._returnMessage != null)
                     {
-                        (args._returnMessage as NetCoreAdvancedMessage).ReturnedFrom = message.Type;
                         (args._returnMessage as NetCoreAdvancedMessage).requestGuid = (message as NetCoreAdvancedMessage).requestGuid;
                         SendMessage(args._returnMessage);
                     }
@@ -112,9 +111,9 @@
         internal object SendMessage(string message) => SendMessage(new NetCoreSimpleMessage(message));
         internal object SendMessage(NetCoreMessage message, bool synced = false)
         {
-            if (message is NetCoreSimpleMessage)
+            if (message is NetCoreSimpleMessage simpleMessage)
             {
-                spec.Connector.udp.SendMessage((NetCoreSimpleMessage)message);
+                spec.Connector.udp.SendMessage(simpleMessage);
             }
             else //message is NetCoreAdvancedMessage
             {
@@ -138,6 +137,12 @@
                 hubTimer.Stop();
             }
         }
+
+        public void Dispose()
+        {
+            Kill();
+            hubTimer?.Dispose();
+        }
     }
 
     public class NetCoreEventArgs : EventArgs
@@ -160,13 +165,13 @@
         public NetCoreMessage returnMessage => _returnMessage;
         internal NetCoreMessage _returnMessage = null;
 
-        public void setReturnValue(object _objectValue)
+        public void setReturnValue(object obj)
         {
-            var message = new NetCoreAdvancedMessage("{RETURNVALUE}") { objectValue = _objectValue };
+            var message = new NetCoreAdvancedMessage("{RETURNVALUE}") { objectValue = obj };
 
             if (returnMessage != null)
             {
-                RTCV.Common.Logging.GlobalLogger.Warn($"NetCoreEventArgs: ReturnValue was already set but was overriden with another value");
+                Common.Logging.GlobalLogger.Warn($"NetCoreEventArgs: ReturnValue was already set but was overriden with another value");
             }
 
             _returnMessage = message;

@@ -4,22 +4,19 @@ namespace RTCV.Common
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Diagnostics;
-    using System.IO;
     using System.Linq;
-    using System.Runtime.InteropServices;
-    using System.Text;
     using System.Threading;
     using System.Windows.Forms;
     using NLog;
 
-    #pragma warning disable CA1040 // Allow this interface to be empty, since it's used to signal auto-coloriation for a class
-    // Implementing this interface causes auto-coloration.
-    public interface IAutoColorize { }
+    public interface IColorize
+    {
+        void Recolor();
+    }
 
     public class FormRegisteredEventArgs : EventArgs
     {
-        public Form Form;
+        public Form Form { get; private set; }
         public FormRegisteredEventArgs(Form form)
         {
             Form = form;
@@ -36,47 +33,25 @@ namespace RTCV.Common
     public static class S
     {
         private static readonly ConcurrentDictionary<Type, object> instances = new ConcurrentDictionary<Type, object>();
-        public static FormRegister formRegister = new FormRegister();
+        public static readonly FormRegister formRegister = new FormRegister();
         private static object lockObject = new object();
+        private static List<IColorize> _colorizables = new List<IColorize>();
 
-        [ThreadStatic]
-        public static volatile Dictionary<int, List<string>> InvokeStackTraces = new Dictionary<int, List<string>>();
-
-        private static readonly object dicoLock = new object();
-
-        public static void InvokeLog(this ISynchronizeInvoke si, Delegate method, object[] args)
+        public static void RegisterColorizable(IColorize colorizable)
         {
-            int pid = Thread.CurrentThread.ManagedThreadId;
+            _colorizables.Add(colorizable);
+        }
 
-            List<string> IST = null;
-            bool listExists;
+        public static void DeregisterColorizable(IColorize colorizable)
+        {
+            _colorizables.Remove(colorizable);
+        }
 
-            lock (dicoLock)
+        public static void RecolorRegisteredColorizables()
+        {
+            foreach (var c in _colorizables)
             {
-                listExists = InvokeStackTraces.TryGetValue(32, out IST);
-            }
-
-            if (listExists)
-            {
-                IST = new List<string>();
-
-                lock (dicoLock)
-                {
-                    InvokeStackTraces.Add(pid, IST);
-                }
-            }
-            IST.Add(Environment.StackTrace);
-
-            var iar = si.BeginInvoke(method, args);
-            si.EndInvoke(iar);
-
-            lock (dicoLock)
-            {
-                InvokeStackTraces.Remove(InvokeStackTraces.Count - 1);
-                if (InvokeStackTraces.Count == 0)
-                {
-                    InvokeStackTraces.Remove(pid);
-                }
+                c.Recolor();
             }
         }
 
@@ -131,7 +106,7 @@ namespace RTCV.Common
                         o = Activator.CreateInstance(typ);
                         instances[typ] = o;
 
-                        if (typ.IsSubclassOf(typeof(System.Windows.Forms.Form)))
+                        if (typ.IsSubclassOf(typeof(Form)))
                         {
                             formRegister.OnFormRegistered(new FormRegisteredEventArgs((Form)instances[typ]));
                         }
@@ -154,6 +129,11 @@ namespace RTCV.Common
 
         public static object GET(Type typ)
         {
+            if (typ == null)
+            {
+                throw new ArgumentNullException(nameof(typ));
+            }
+
             if (!instances.TryGetValue(typ, out object o))
             {
                 lock (lockObject)
@@ -164,7 +144,7 @@ namespace RTCV.Common
                         o = Activator.CreateInstance(typ);
                         instances[typ] = o;
 
-                        if (typ.IsSubclassOf(typeof(System.Windows.Forms.Form)))
+                        if (typ.IsSubclassOf(typeof(Form)))
                         {
                             formRegister.OnFormRegistered(new FormRegisteredEventArgs((Form)instances[typ]));
                         }
@@ -188,179 +168,9 @@ namespace RTCV.Common
                     instances[typ] = newTyp;
                 }
 
-                if (typ.IsSubclassOf(typeof(System.Windows.Forms.Form)))
+                if (typ.IsSubclassOf(typeof(Form)))
                 {
                     formRegister.OnFormRegistered(new FormRegisteredEventArgs((Form)instances[typ]));
-                }
-            }
-        }
-    }
-
-    public static class ConsoleHelper
-    {
-        public static ConsoleCopy con;
-
-        public static void CreateConsole(string path = null)
-        {
-            if (!Debugger.IsAttached) //Don't override debugger's console
-            {
-                ReleaseConsole();
-                AllocConsole();
-            }
-
-            if (!string.IsNullOrEmpty(path))
-            {
-                con = new ConsoleCopy(path);
-            }
-
-            //Disable the X button on the console window
-            EnableMenuItem(GetSystemMenu(GetConsoleWindow(), false), SC_CLOSE, MF_DISABLED);
-        }
-
-        private static bool ConsoleVisible = true;
-
-        public static void ShowConsole()
-        {
-            var handle = GetConsoleWindow();
-            ShowWindow(handle, SW_SHOW);
-            ConsoleVisible = true;
-        }
-
-        public static void HideConsole()
-        {
-            var handle = GetConsoleWindow();
-            ShowWindow(handle, SW_HIDE);
-            ConsoleVisible = false;
-        }
-
-        public static void ToggleConsole()
-        {
-            if (ConsoleVisible)
-            {
-                HideConsole();
-            }
-            else
-            {
-                ShowConsole();
-            }
-        }
-
-        public static void ReleaseConsole()
-        {
-            var handle = GetConsoleWindow();
-            CloseHandle(handle);
-        }
-        // P/Invoke required:
-        internal const int SW_HIDE = 0;
-        internal const int SW_SHOW = 5;
-
-        internal const int SC_CLOSE = 0xF060;           //close button's code in Windows API
-        internal const int MF_ENABLED = 0x00000000;     //enabled button status
-        internal const int MF_GRAYED = 0x1;             //disabled button status (enabled = false)
-        internal const int MF_DISABLED = 0x00000002;    //disabled button status
-
-
-        [DllImport("kernel32.dll")]
-        private static extern IntPtr GetStdHandle(uint nStdHandle);
-
-        [DllImport("kernel32.dll", ExactSpelling = true, SetLastError = true)]
-        public static extern bool CloseHandle(IntPtr handle);
-
-        [DllImport("kernel32.dll")]
-        private static extern void SetStdHandle(uint nStdHandle, IntPtr handle);
-
-        [DllImport("kernel32")]
-        private static extern bool AllocConsole();
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern IntPtr GetConsoleWindow();
-
-        [DllImport("user32.dll")]
-        public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-
-        [DllImport("user32.dll")]
-        public static extern IntPtr GetSystemMenu(IntPtr HWNDValue, bool isRevert);
-
-        [DllImport("user32.dll")]
-        public static extern int EnableMenuItem(IntPtr tMenu, int targetItem, int targetStatus);
-
-        public class ConsoleCopy : IDisposable
-        {
-            private FileStream fileStream;
-            public StreamWriter FileWriter;
-            private TextWriter doubleWriter;
-            private TextWriter oldOut;
-
-            private class DoubleWriter : TextWriter
-            {
-                private TextWriter one;
-                private TextWriter two;
-
-                public DoubleWriter(TextWriter one, TextWriter two)
-                {
-                    this.one = one;
-                    this.two = two;
-                }
-
-                public override Encoding Encoding => one.Encoding;
-
-                public override void Flush()
-                {
-                    one.Flush();
-                    two.Flush();
-                }
-
-                public override void Write(char value)
-                {
-                    one.Write(value);
-                    two.Write(value);
-                }
-            }
-
-            public ConsoleCopy(string path)
-            {
-                oldOut = Console.Out;
-
-                try
-                {
-                    var dir = Path.GetDirectoryName(path);
-                    if (!Directory.Exists(dir))
-                    {
-                        Directory.CreateDirectory(dir);
-                    }
-
-                    File.Create(path).Close();
-                    fileStream = File.Open(path, FileMode.Open, FileAccess.Write, FileShare.Read);
-                    FileWriter = new StreamWriter(fileStream)
-                    {
-                        AutoFlush = true
-                    };
-
-                    doubleWriter = new DoubleWriter(FileWriter, oldOut);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Cannot open file for writing");
-                    Console.WriteLine(e.Message);
-                    return;
-                }
-                Console.SetOut(doubleWriter);
-                Console.SetError(doubleWriter);
-            }
-
-            public void Dispose()
-            {
-                Console.SetOut(oldOut);
-                if (FileWriter != null)
-                {
-                    FileWriter.Flush();
-                    FileWriter.Close();
-                    FileWriter = null;
-                }
-                if (fileStream != null)
-                {
-                    fileStream.Close();
-                    fileStream = null;
                 }
             }
         }

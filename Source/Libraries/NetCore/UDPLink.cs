@@ -5,8 +5,9 @@ namespace RTCV.NetCore
     using System.Net.Sockets;
     using System.Text;
     using System.Threading;
+    using RTCV.NetCore.Enums;
 
-    public class UDPLink
+    public class UDPLink : IDisposable
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private NetCoreSpec spec;
@@ -37,7 +38,7 @@ namespace RTCV.NetCore
         {
             Running = false;
 
-            try { ReaderThread.Abort(); } catch { }
+            try { ReaderThread?.Abort(); } catch { }
             while (ReaderThread != null && ReaderThread.IsAlive)
             {
                 System.Windows.Forms.Application.DoEvents();
@@ -45,7 +46,13 @@ namespace RTCV.NetCore
             } //Lets wait for the thread to die
             ReaderThread = null;
 
-            try { Sender.Close(); } catch { }
+            try { Sender?.Close(); } catch { }
+        }
+
+        public void Dispose()
+        {
+            Sender?.Dispose();
+            spec?.Dispose();
         }
 
         internal void SendMessage(NetCoreSimpleMessage message)
@@ -124,7 +131,7 @@ namespace RTCV.NetCore
                         }
                         else
                         {
-                            throw ex;
+                            throw;
                         }
                     }
                     if (bytes != null)

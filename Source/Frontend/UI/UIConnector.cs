@@ -4,29 +4,30 @@ namespace RTCV.UI
     using System.Linq;
     using RTCV.CorruptCore;
     using RTCV.NetCore;
+    using RTCV.NetCore.Enums;
     using RTCV.Common;
     using RTCV.UI.Modular;
 
-    public class UIConnector : IRoutable
+    public class UIConnector : IRoutable, IDisposable
     {
-        private NetCoreReceiver receiver;
-        public NetCoreConnector netConn;
+        private NetCoreReceiver _receiver;
+        public NetCoreConnector netConn { get; private set; }
 
-        public UIConnector(NetCoreReceiver _receiver)
+        public UIConnector(NetCoreReceiver receiver)
         {
-            receiver = _receiver;
+            _receiver = receiver;
 
-            LocalNetCoreRouter.registerEndpoint(this, NetcoreCommands.UI);
+            LocalNetCoreRouter.registerEndpoint(this, NetCore.Endpoints.UI);
 
-            if (receiver.Attached)
+            if (_receiver.Attached)
             {
                 return;
             }
 
-            var netCoreSpec = new NetCore.NetCoreSpec
+            var netCoreSpec = new NetCoreSpec
             {
-                Side = NetCore.NetworkSide.SERVER,
-                Attached = receiver.Attached,
+                Side = NetworkSide.SERVER,
+                Attached = _receiver.Attached,
                 Loopback = true
             };
             netCoreSpec.MessageReceived += OnMessageReceivedProxy;
@@ -35,8 +36,8 @@ namespace RTCV.UI
             netCoreSpec.ServerDisconnected += NetCoreSpec_ServerConnectionLost;
 
             netConn = new NetCoreConnector(netCoreSpec);
-            LocalNetCoreRouter.registerEndpoint(netConn, NetcoreCommands.VANGUARD);
-            LocalNetCoreRouter.registerEndpoint(netConn, NetcoreCommands.DEFAULT); //Will send mesages to netcore if can't find the destination
+            LocalNetCoreRouter.registerEndpoint(netConn, NetCore.Endpoints.Vanguard);
+            LocalNetCoreRouter.registerEndpoint(netConn, NetCore.Endpoints.Default); //Will send mesages to netcore if can't find the destination
         }
 
         private void NetCoreSpec_ServerConnectionLost(object sender, EventArgs e)
@@ -48,25 +49,25 @@ namespace RTCV.UI
 
             SyncObjectSingleton.FormExecute(() =>
             {
-                if (S.GET<RTC_ConnectionStatus_Form>() != null && !S.GET<RTC_ConnectionStatus_Form>()
+                if (S.GET<ConnectionStatusForm>() != null && !S.GET<ConnectionStatusForm>()
                         .IsDisposed)
                 {
-                    S.GET<RTC_ConnectionStatus_Form>()
+                    S.GET<ConnectionStatusForm>()
                             .lbConnectionStatus.Text =
                         $"{(string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard"} connection timed out";
 
                     UICore.LockInterface();
-                    UI_DefaultGrids.connectionStatus.LoadToMain();
+                    DefaultGrids.connectionStatus.LoadToMain();
                 }
 
-                S.GET<RTC_VmdAct_Form>()
+                S.GET<VmdActForm>()
                     .cbAutoAddDump.Checked = false;
-                GameProtection.WasAutoCorruptRunning = CorruptCore.RtcCore.AutoCorrupt;
-                S.GET<UI_CoreForm>().AutoCorrupt = false;
+                GameProtection.WasAutoCorruptRunning = RtcCore.AutoCorrupt;
+                S.GET<CoreForm>().AutoCorrupt = false;
             });
             GameProtection.Stop(false);
 
-            if (S.GET<UI_CoreForm>()
+            if (S.GET<CoreForm>()
                     .cbUseAutoKillSwitch.Checked && AllSpec.VanguardSpec != null)
             {
                 AutoKillSwitch.KillEmulator();
@@ -77,7 +78,7 @@ namespace RTCV.UI
         {
             SyncObjectSingleton.FormExecute(() =>
             {
-                S.GET<RTC_ConnectionStatus_Form>().lbConnectionStatus.Text =
+                S.GET<ConnectionStatusForm>().lbConnectionStatus.Text =
                     $"Connected to {(string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "Vanguard"}";
             });
         }
@@ -89,6 +90,11 @@ namespace RTCV.UI
 
         public object OnMessageReceived(object sender, NetCoreEventArgs e)
         {
+            if (e == null)
+            {
+                throw new ArgumentNullException(nameof(e));
+            }
+
             //No implementation here, we simply route and return
 
             if (e.message.Type.Contains('|'))
@@ -97,11 +103,11 @@ namespace RTCV.UI
                 string endpoint = msgParts[0];
                 e.message.Type = msgParts[1]; //remove endpoint from type
 
-                return NetCore.LocalNetCoreRouter.Route(endpoint, e);
+                return LocalNetCoreRouter.Route(endpoint, e);
             }
             else
             {   //This is for the Vanguard Implementation
-                receiver.OnMessageReceived(e);
+                _receiver.OnMessageReceived(e);
                 return e.returnMessage;
             }
         }
@@ -127,6 +133,11 @@ namespace RTCV.UI
         public void Restart()
         {
             netConn.Restart();
+        }
+
+        public void Dispose()
+        {
+            netConn?.Dispose();
         }
     }
 }
