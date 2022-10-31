@@ -117,7 +117,7 @@
       <Version>13.0.1</Version>
     </PackageReference>
     <PackageReference Include="NLog">
-      <Version>5.0.1</Version>
+      <Version>5.0.5</Version>
     </PackageReference>
     <PackageReference Include="NLog.Windows.Forms">
       <Version>4.6.0</Version>
