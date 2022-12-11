@@ -55,7 +55,7 @@ namespace RTCV.UI
             }
         }
 
-        public bool AddStashToStockpile(bool askForName = true)
+        public bool AddStashToStockpile(bool askForName = true, string itemName = null)
         {
             if (lbStashHistory.Items.Count == 0 || lbStashHistory.SelectedIndex == -1)
             {
@@ -98,6 +98,18 @@ namespace RTCV.UI
             else
             {
                 Name = StockpileManagerUISide.CurrentStashkey.Alias;
+
+                if (!string.IsNullOrWhiteSpace(itemName))
+                {
+                    if(itemName.Contains("\\"))
+                    {
+                        //assume it's a full path
+                        var fi = new System.IO.FileInfo(itemName);
+                        Name = System.IO.Path.GetFileNameWithoutExtension(fi.Name);
+                    }
+                    else
+                        Name = itemName;
+                }
             }
 
             if (string.IsNullOrWhiteSpace(Name))

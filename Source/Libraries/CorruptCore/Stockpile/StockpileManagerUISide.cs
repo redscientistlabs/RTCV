@@ -92,7 +92,7 @@ namespace RTCV.CorruptCore
             return isCorruptionApplied;
         }
 
-        public static void Import(BlastLayer importedBlastLayer)
+        public static void Import(BlastLayer importedBlastLayer,string name = null)
         {
             string saveStateWord = "Savestate";
 

@@ -717,7 +717,7 @@ namespace RTCV.UI
                     BlastLayer temp = BlastTools.LoadBlastLayerFromFile(f);
                     StockpileManagerUISide.Import(temp);
                     S.GET<StashHistoryForm>().RefreshStashHistorySelectLast();
-                    S.GET<StashHistoryForm>().AddStashToStockpile(true);
+                    S.GET<StashHistoryForm>().AddStashToStockpile(false,f);
                 }
                 else if (f.Contains(".sks"))
                 {
@@ -820,6 +820,11 @@ namespace RTCV.UI
             {
                 Font = new Font("Segoe UI", 12)
             });
+
+            ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Stockpile items: " + dgvStockpile.Rows.Cast<DataGridViewRow>().Count().ToString() , null, new EventHandler((ob, ev) =>
+            {
+
+            }))).Enabled = false;
 
             ((ToolStripMenuItem)ghSettingsMenu.Items.Add("Compress Stockpiles", null, new EventHandler((ob, ev) =>
             {

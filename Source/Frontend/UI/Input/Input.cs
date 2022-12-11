@@ -312,7 +312,10 @@ namespace RTCV.UI.Input
                         }
                     }
 
-                    bool allowInput = ((bool?)AllSpec.UISpec?[NetCore.Commands.Basic.RTCInFocus] ?? true) || ((bool?)AllSpec.VanguardSpec?[NetCore.Commands.Emulator.InFocus] ?? true);
+                    bool paramBackgroundInput = ((bool?)AllSpec.UISpec?[NetCore.Commands.Basic.RTCInFocus] ?? true); // default is true if not set
+                    bool EmulatorIsCurrentlyInFocus = ((bool?)AllSpec.VanguardSpec?[NetCore.Commands.Emulator.InFocus] ?? true); // default is true if not set
+
+                    bool allowInput = paramBackgroundInput || EmulatorIsCurrentlyInFocus;
 
                     bool swallow = !allowInput;
 
