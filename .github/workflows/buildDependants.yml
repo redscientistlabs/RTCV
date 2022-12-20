@@ -9,7 +9,7 @@ on:
 
 jobs:
   Bizhawk:
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
     # Checkout relevant code
     - name: Checkout current build target
@@ -38,7 +38,7 @@ jobs:
       run: msbuild '.\Bizhawk-Vanguard\Real-Time Corruptor\BizHawk_RTC\BizHawk.sln'
 
   FileStub:
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
     # Checkout relevant code
     - name: Checkout current build target
@@ -67,7 +67,7 @@ jobs:
       run: msbuild '.\FileStub-Vanguard\FileStub-Vanguard.sln'
 
   ProcessStub:
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
     # Checkout relevant code
     - name: Checkout current build target
@@ -96,7 +96,7 @@ jobs:
       run: msbuild '.\ProcessStub-Vanguard\ProcessStub-Vanguard.sln'
 
   melonDS:
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
     # Setup tooling
     - name: Setup MSBuild.exe
@@ -132,7 +132,7 @@ jobs:
         msbuild melonDS.sln
 
   dolphin:
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
     - name: Checkout dolphin
       uses: actions/checkout@v2
@@ -155,7 +155,7 @@ jobs:
       run: msbuild '.\dolphin-vanguard\Source\dolphin-emu.sln' /property:Configuration=Release /property:Platform=x64 /p:TreatWarningAsError=false
 
   pcsx2:
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
     - name: Checkout pcsx2
       uses: actions/checkout@v2
@@ -178,7 +178,7 @@ jobs:
       run: msbuild '.\pcsx2-Vanguard\PCSX2_suite.sln' /property:Configuration=Debug /property:Platform=Win32
 
   citra:
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
     # RTCV
     - name: Checkout current build target

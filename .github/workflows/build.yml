@@ -3,7 +3,7 @@ on: [push, pull_request]
 
 jobs:
   buildAndTest:
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
     - uses: actions/checkout@v1
     - name: Setup MSBuild.exe
