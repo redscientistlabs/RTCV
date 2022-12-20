@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - '51X'
+      - '51X-CI-Fix' # FOR TESTING ONLY, REMOVE BEFORE MERGE
   pull_request:
     branches:
       - '51X'
