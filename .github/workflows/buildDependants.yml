@@ -10,7 +10,7 @@ on:
 
 jobs:
   Bizhawk:
-    runs-on: windows-2022
+    runs-on: windows-2019
     steps:
     # Checkout relevant code
     - name: Checkout current build target
@@ -39,7 +39,7 @@ jobs:
       run: msbuild '.\Bizhawk-Vanguard\BizHawk.sln'
 
   FileStub:
-    runs-on: windows-2022
+    runs-on: windows-2019
     steps:
     # Checkout relevant code
     - name: Checkout current build target
@@ -68,7 +68,7 @@ jobs:
       run: msbuild '.\FileStub-Vanguard\FileStub-Vanguard.sln'
 
   ProcessStub:
-    runs-on: windows-2022
+    runs-on: windows-2019
     steps:
     # Checkout relevant code
     - name: Checkout current build target
@@ -97,7 +97,7 @@ jobs:
       run: msbuild '.\ProcessStub-Vanguard\ProcessStub-Vanguard.sln'
 
   melonDS:
-    runs-on: windows-2022
+    runs-on: windows-2019
     steps:
     # Setup tooling
     - name: Setup MSBuild.exe
@@ -133,7 +133,7 @@ jobs:
         msbuild melonDS.sln
 
   dolphin:
-    runs-on: windows-2019 # TODO
+    runs-on: windows-2019
     # if: ${{ false }} # I can't get dolphin builds working!
     steps:
     - name: Checkout dolphin
@@ -157,7 +157,7 @@ jobs:
       run: msbuild '.\dolphin-vanguard\Source\dolphin-emu.sln' /property:Configuration=Release /property:Platform=x64 /p:TreatWarningAsError=false
 
   pcsx2:
-    runs-on: windows-2022
+    runs-on: windows-2019
     # Job isn't working. I suspect that submodules got messed up
     # the last time `pcsx2-Vanguard` merged from upstream, but there
     # could be other issues as well

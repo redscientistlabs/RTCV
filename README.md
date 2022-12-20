@@ -45,13 +45,13 @@ Icon graciously provided by [ShyGuyXXL](https://twitter.com/shyguyxxl)
 
 ## Development
 
-### Recommended: Visual Studio 2022
+### Recommended: Visual Studio 2019
 
-[Visual Studio 2022: Community Edition](https://visualstudio.microsoft.com/vs/community/) is a free IDE for open-source projects, and is recommended for RTCV.
+[Visual Studio 2019: Community Edition](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=community&rel=16&utm_medium=microsoft&utm_content=vs2019ga+button) is a free IDE for open-source projects, and is recommended for RTCV.
 
 ### Without Visual Studio
 
 1. Install [chocolatey](https://chocolatey.org/install)
-1. `cinst -y visualstudio2022buildtools nuget.commandline netfx-4.7.1-devpack`
+1. `cinst -y visualstudio2019buildtools nuget.commandline netfx-4.7.1-devpack`
 1. `nuget restore RTCV.sln`
 1. `msbuild.exe`
