@@ -32,11 +32,11 @@ jobs:
     - name: Restore packages in current build target
       run: msbuild /t:restore '.\RTCV\RTCV.sln'
     - name: Restore packages in Bizhawk
-      run: msbuild /t:restore '.\Bizhawk-Vanguard\Real-Time Corruptor\BizHawk_RTC\BizHawk.sln'
+      run: msbuild /t:restore '.\Bizhawk-Vanguard\BizHawk.sln'
 
     # Build Bizhawk
     - name: Build Bizhawk-Vanguard
-      run: msbuild '.\Bizhawk-Vanguard\Real-Time Corruptor\BizHawk_RTC\BizHawk.sln'
+      run: msbuild '.\Bizhawk-Vanguard\BizHawk.sln'
 
   FileStub:
     runs-on: windows-2022
