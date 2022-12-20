@@ -97,7 +97,7 @@ jobs:
       run: msbuild '.\ProcessStub-Vanguard\ProcessStub-Vanguard.sln'
 
   melonDS:
-    runs-on: windows-2019 # TODO
+    runs-on: windows-2022
     steps:
     # Setup tooling
     - name: Setup MSBuild.exe
@@ -133,8 +133,8 @@ jobs:
         msbuild melonDS.sln
 
   dolphin:
-    runs-on: windows-2022
-    if: ${{ false }} # I can't get dolphin builds working!
+    runs-on: windows-2019 # TODO
+    # if: ${{ false }} # I can't get dolphin builds working!
     steps:
     - name: Checkout dolphin
       uses: actions/checkout@v2
@@ -158,7 +158,10 @@ jobs:
 
   pcsx2:
     runs-on: windows-2022
-    if: ${{ false }} # Not yet working
+    # Job isn't working. I suspect that submodules got messed up
+    # the last time `pcsx2-Vanguard` merged from upstream, but there
+    # could be other issues as well
+    if: ${{ false }}
     steps:
     - name: Checkout pcsx2
       uses: actions/checkout@v2
@@ -181,7 +184,7 @@ jobs:
       run: msbuild '.\pcsx2-Vanguard\PCSX2_suite.sln' /property:Configuration=Debug /property:Platform=Win32
 
   citra:
-    # Currently, our citra fork is not building on Visual Studio 2022
+    # Our citra fork can't yet build on Visual Studio 2022
     # It requires QtCore prebuilt binaries, which are not available in our current fork
     runs-on: windows-2019
     steps:
