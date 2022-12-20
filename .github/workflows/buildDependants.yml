@@ -158,6 +158,7 @@ jobs:
 
   pcsx2:
     runs-on: windows-2022
+    if: ${{ false }} # Not yet working
     steps:
     - name: Checkout pcsx2
       uses: actions/checkout@v2
@@ -180,7 +181,7 @@ jobs:
       run: msbuild '.\pcsx2-Vanguard\PCSX2_suite.sln' /property:Configuration=Debug /property:Platform=Win32
 
   citra:
-    runs-on: windows-2022
+    runs-on: windows-2019 # Maybe this will fix "No bundled Qt binaries for your toolchain."
     steps:
     # RTCV
     - name: Checkout current build target
