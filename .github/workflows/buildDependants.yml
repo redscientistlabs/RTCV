@@ -97,7 +97,7 @@ jobs:
       run: msbuild '.\ProcessStub-Vanguard\ProcessStub-Vanguard.sln'
 
   melonDS:
-    runs-on: windows-2022
+    runs-on: windows-2019 # TODO
     steps:
     # Setup tooling
     - name: Setup MSBuild.exe
@@ -181,7 +181,9 @@ jobs:
       run: msbuild '.\pcsx2-Vanguard\PCSX2_suite.sln' /property:Configuration=Debug /property:Platform=Win32
 
   citra:
-    runs-on: windows-2019 # Maybe this will fix "No bundled Qt binaries for your toolchain."
+    # Currently, our citra fork is not building on Visual Studio 2022
+    # It requires QtCore prebuilt binaries, which are not available in our current fork
+    runs-on: windows-2019
     steps:
     # RTCV
     - name: Checkout current build target
