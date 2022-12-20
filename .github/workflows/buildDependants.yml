@@ -134,6 +134,7 @@ jobs:
 
   dolphin:
     runs-on: windows-2022
+    if: ${{ false }} # I can't get dolphin builds working!
     steps:
     - name: Checkout dolphin
       uses: actions/checkout@v2
