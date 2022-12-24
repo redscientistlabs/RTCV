@@ -5,6 +5,6 @@ updates:
   schedule:
     interval: weekly
   open-pull-requests-limit: 10
-  target-branch: "506v2"
+  target-branch: "51X"
   ignore:
     - dependency-name: "System.Runtime.CompilerServices.Unsafe"
