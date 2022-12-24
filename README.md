@@ -17,13 +17,14 @@
 
 # RTCV - Real-Time Corruptor Vanguard
 
- > Real-Time Corruptor, Vanguard, CorruptCore, NetCore2, RTC Launcher
+> Real-Time Corruptor, Vanguard, CorruptCore, NetCore2, RTC Launcher
 
 Real-Time Corruptor Vanguard is a Dynamic Corruptor for games. It is a set of libraries that can be rigged up to any program that can load the CLR and works by corrupting data in memory to force glitches. RTCV currently comes with implementations for [Bizhawk](https://github.com/ircluzar/Bizhawk-Vanguard), [Dolphin](https://github.com/NarryG/dolphin-vanguard/), [PCSX2](https://github.com/NarryG/pcsx2-Vanguard), [melonDS](https://github.com/narryg/melonds-vanguard), and [Windows Processes](https://github.com/narryg/processstub-vanguard).
 
 Icon graciously provided by [ShyGuyXXL](https://twitter.com/shyguyxxl)
 
 ## Features
+
 - Corrupts in real-time
 - Supports various emulators via a generic API. Currently comes with Bizhawk, Dolphin, PCSX2, melonDS, and Windows real-time implementations.
 - Supports corrupting files on-disk via the FileStub implementation, as well as including specialized support for certain kinds of files (WiiU games via CemuStub).
@@ -43,8 +44,10 @@ Icon graciously provided by [ShyGuyXXL](https://twitter.com/shyguyxxl)
 - The Custom Engine allows you to create your own engine using the various corruption parameters.
 
 ## Development
+
 ### Recommended: Visual Studio 2019
-[Visual Studio 2019: Community Edition](https://visualstudio.microsoft.com/vs/community/) is a free IDE for open-source projects, and is recommended for RTCV.
+
+[Visual Studio 2019: Community Edition](https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=community&rel=16&utm_medium=microsoft&utm_content=vs2019ga+button) is a free IDE for open-source projects, and is recommended for RTCV.
 
 ### Without Visual Studio
 

@@ -2,10 +2,10 @@ name: Build dependants
 on:
   push:
     branches:
-      - '506v2'
+      - '51X'
   pull_request:
     branches:
-      - '506v2'
+      - '51X'
 
 jobs:
   Bizhawk:
@@ -31,11 +31,11 @@ jobs:
     - name: Restore packages in current build target
       run: msbuild /t:restore '.\RTCV\RTCV.sln'
     - name: Restore packages in Bizhawk
-      run: msbuild /t:restore '.\Bizhawk-Vanguard\Real-Time Corruptor\BizHawk_RTC\BizHawk.sln'
+      run: msbuild /t:restore '.\Bizhawk-Vanguard\BizHawk.sln'
 
     # Build Bizhawk
     - name: Build Bizhawk-Vanguard
-      run: msbuild '.\Bizhawk-Vanguard\Real-Time Corruptor\BizHawk_RTC\BizHawk.sln'
+      run: msbuild '.\Bizhawk-Vanguard\BizHawk.sln'
 
   FileStub:
     runs-on: windows-2019
@@ -132,6 +132,10 @@ jobs:
         msbuild melonDS.sln
 
   dolphin:
+    # dolphin has build errors with VS2019 _and_ VS2022
+    # error C2855: command-line option '/std:c++' inconsistent with precompiled header
+    # See https://github.com/scowalt/dolphin-vanguard/actions/runs/3773017863/jobs/6414258994
+    if: ${{ false }}
     runs-on: windows-2019
     steps:
     - name: Checkout dolphin
@@ -156,6 +160,10 @@ jobs:
 
   pcsx2:
     runs-on: windows-2019
+    # pcsx2 builds aren't working. I suspect that submodules got messed up
+    # the last time `pcsx2-Vanguard` merged from upstream, but there
+    # could be additional issues as well.
+    if: ${{ false }}
     steps:
     - name: Checkout pcsx2
       uses: actions/checkout@v2
@@ -178,6 +186,8 @@ jobs:
       run: msbuild '.\pcsx2-Vanguard\PCSX2_suite.sln' /property:Configuration=Debug /property:Platform=Win32
 
   citra:
+    # Our citra fork can't yet build on Visual Studio 2022
+    # It requires QtCore prebuilt binaries, which are not available in our current fork
     runs-on: windows-2019
     steps:
     # RTCV
