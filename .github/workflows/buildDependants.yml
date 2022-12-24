@@ -133,8 +133,8 @@ jobs:
         msbuild melonDS.sln
 
   dolphin:
+    # dolphin has strange errors around flag compatibility when building with VS2022
     runs-on: windows-2019
-    # if: ${{ false }} # I can't get dolphin builds working!
     steps:
     - name: Checkout dolphin
       uses: actions/checkout@v2
@@ -158,9 +158,9 @@ jobs:
 
   pcsx2:
     runs-on: windows-2019
-    # Job isn't working. I suspect that submodules got messed up
+    # pcsx2 builds aren't working. I suspect that submodules got messed up
     # the last time `pcsx2-Vanguard` merged from upstream, but there
-    # could be other issues as well
+    # could be additional issues as well.
     if: ${{ false }}
     steps:
     - name: Checkout pcsx2
