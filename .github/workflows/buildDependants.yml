@@ -133,7 +133,10 @@ jobs:
         msbuild melonDS.sln
 
   dolphin:
-    # dolphin has strange errors around flag compatibility when building with VS2022
+    # dolphin has build errors with VS2019 _and_ VS2022
+    # error C2855: command-line option '/std:c++' inconsistent with precompiled header
+    # See https://github.com/scowalt/dolphin-vanguard/actions/runs/3773017863/jobs/6414258994
+    if: ${{ false }}
     runs-on: windows-2019
     steps:
     - name: Checkout dolphin
