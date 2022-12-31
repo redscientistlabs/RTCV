@@ -21,7 +21,7 @@
       <Version>17.2.41</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Validation">
-      <Version>17.0.53</Version>
+      <Version>17.0.64</Version>
     </PackageReference>
     <PackageReference Include="NLog">
       <Version>5.0.1</Version>
