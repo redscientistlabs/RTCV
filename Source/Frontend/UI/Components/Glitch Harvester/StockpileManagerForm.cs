@@ -12,6 +12,7 @@ namespace RTCV.UI
     using RTCV.CorruptCore;
     using RTCV.Common;
     using RTCV.UI.Modular;
+    using SlimDX.DirectInput;
 
     public partial class StockpileManagerForm : ComponentForm, IBlockable
     {
@@ -170,25 +171,8 @@ namespace RTCV.UI
                 Point locate = new Point((sender as Control).Location.X + e.Location.X, (sender as Control).Location.Y + e.Location.Y);
 
                 ContextMenuStrip columnsMenu = new ContextMenuStrip();
-                (columnsMenu.Items.Add("Show Item Name", null,
-                        (ob, ev) => { dgvStockpile.Columns["Item"].Visible ^= true; }) as ToolStripMenuItem).Checked =
-                    dgvStockpile.Columns["Item"].Visible;
-                (columnsMenu.Items.Add("Show Game Name", null,
-                        (ob, ev) => { dgvStockpile.Columns["GameName"].Visible ^= true; }) as ToolStripMenuItem)
-                    .Checked =
-                    dgvStockpile.Columns["GameName"].Visible;
-                (columnsMenu.Items.Add("Show System Name", null,
-                        (ob, ev) => { dgvStockpile.Columns["SystemName"].Visible ^= true; }) as ToolStripMenuItem)
-                    .Checked =
-                    dgvStockpile.Columns["SystemName"].Visible;
-                (columnsMenu.Items.Add("Show System Core", null,
-                        (ob, ev) => { dgvStockpile.Columns["SystemCore"].Visible ^= true; }) as ToolStripMenuItem)
-                    .Checked =
-                    dgvStockpile.Columns["SystemCore"].Visible;
-                (columnsMenu.Items.Add("Show Note", null, (ob, ev) => { dgvStockpile.Columns["Note"].Visible ^= true; })
-                    as ToolStripMenuItem).Checked = dgvStockpile.Columns["Note"].Visible;
 
-                columnsMenu.Items.Add(new ToolStripSeparator());
+
 
                 BlastLayer bl = null;
 
@@ -198,12 +182,13 @@ namespace RTCV.UI
                 if (bl != null)
                     columnsMenu.Items.Add($"Layer Size: {bl.Layer?.Count ?? 0}", null).Enabled = false;
 
+
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Open Selected Item in Blast Editor", null, new EventHandler((ob, ev) =>
                 {
                     if (S.GET<BlastEditorForm>() != null)
                     {
                         var sk = GetSelectedStashKey();
-                        BlastEditorForm.OpenBlastEditor(sk);
+                        BlastEditorForm.OpenBlastEditor((StashKey)sk.Clone());
                     }
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
@@ -212,7 +197,7 @@ namespace RTCV.UI
                     if (S.GET<BlastEditorForm>() != null)
                     {
                         var sk = GetSelectedStashKey();
-                        SanitizeToolForm.OpenSanitizeTool(sk,false);
+                        SanitizeToolForm.OpenSanitizeTool((StashKey)sk.Clone(),false);
                     }
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
@@ -230,6 +215,22 @@ namespace RTCV.UI
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
                 columnsMenu.Items.Add(new ToolStripSeparator());
+
+                ((ToolStripMenuItem)columnsMenu.Items.Add("Rename selected item", null, new EventHandler((ob, ev) =>
+                {
+                    if (dgvStockpile.SelectedRows.Count != 0)
+                    {
+                        if (RenameStashKey(GetSelectedStashKey()))
+                        {
+                            StockpileManagerUISide.StockpileChanged();
+                            dgvStockpile.Refresh();
+                            UnsavedEdits = true;
+                        }
+
+                        //lbStockpile.RefreshItemsReal();   
+                    }
+                }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
+
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Generate VMD from Selected Item", null, new EventHandler((ob, ev) =>
                 {
                     var sk = GetSelectedStashKey();
@@ -248,6 +249,9 @@ namespace RTCV.UI
                     StockpileManagerUISide.MergeStashkeys(sks);
                     S.GET<StashHistoryForm>().RefreshStashHistory();
                 }))).Enabled = (dgvStockpile.SelectedRows.Count > 1);
+
+
+
 
                 ((ToolStripMenuItem)columnsMenu.Items.Add("Replace associated ROM", null, new EventHandler((ob, ev) =>
                 {
@@ -276,12 +280,18 @@ namespace RTCV.UI
                     }
                 }))).Enabled = (dgvStockpile.SelectedRows.Count >= 1);
 
-                /*
-                if (!RTC_NetcoreImplementation.isStandaloneUI)
+                columnsMenu.Items.Add(new ToolStripSeparator());
+
+                ((ToolStripMenuItem)columnsMenu.Items.Add($"Duplicate selected item{(dgvStockpile.SelectedRows.Count > 1 ? "s" : "")}", null, new EventHandler((ob, ev) =>
                 {
-                    ((ToolStripMenuItem)columnsMenu.Items.Add("[Multiplayer] Send Selected Item as a Blast", null, new EventHandler((ob, ev) => { RTC_NetcoreImplementation.Multiplayer?.SendBlastlayer(); }))).Enabled = RTC_NetcoreImplementation.Multiplayer != null && RTC_NetcoreImplementation.Multiplayer.side != NetworkSide.DISCONNECTED;
-                    ((ToolStripMenuItem)columnsMenu.Items.Add("[Multiplayer] Send Selected Item as a Game State", null, new EventHandler((ob, ev) => { RTC_NetcoreImplementation.Multiplayer?.SendStashkey(); }))).Enabled = RTC_NetcoreImplementation.Multiplayer != null && RTC_NetcoreImplementation.Multiplayer.side != NetworkSide.DISCONNECTED;
-                }*/
+                    DuplicateSelected();
+                }))).Enabled = (dgvStockpile.SelectedRows.Count > 0);
+
+                ((ToolStripMenuItem)columnsMenu.Items.Add($"Remove selected item{(dgvStockpile.SelectedRows.Count > 1 ? "s" : "")}", null, new EventHandler((ob, ev) =>
+                {
+                        RemoveSelected();
+                    
+                }))).Enabled = (dgvStockpile.SelectedRows.Count > 0);
 
                 columnsMenu.Show(this, locate);
             }
@@ -324,6 +334,7 @@ namespace RTCV.UI
             return false;
         }
 
+
         private void RenamedSelected(object sender, EventArgs e)
         {
             if (!btnRenameSelected.Visible)
@@ -358,7 +369,32 @@ namespace RTCV.UI
                 S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
             }
         }
+        public void DuplicateSelected()
+        {
+            List<StashKey> sks = new List<StashKey>();
+            foreach (DataGridViewRow row in dgvStockpile.SelectedRows)
+            {
+                sks.Add((StashKey)((StashKey)row.Cells[0].Value).Clone());
+                sks.Last().Alias = (row.Cells[0].Value as StashKey)?.Alias ?? sks.Last().Alias;
+            }
+            foreach (var sk in sks)
+            {
+                StockpileManagerUISide.StashHistory.Add(sk);
 
+                S.GET<StashHistoryForm>().RefreshStashHistory();
+                S.GET<StockpileManagerForm>().dgvStockpile.ClearSelection();
+                S.GET<StashHistoryForm>().lbStashHistory.ClearSelected();
+
+                S.GET<StashHistoryForm>().DontLoadSelectedStash = true;
+                S.GET<StashHistoryForm>().lbStashHistory.SelectedIndex = S.GET<StashHistoryForm>().lbStashHistory.Items.Count - 1;
+                StockpileManagerUISide.CurrentStashkey = StockpileManagerUISide.StashHistory[S.GET<StashHistoryForm>().lbStashHistory.SelectedIndex];
+
+                S.GET<StashHistoryForm>().AddStashToStockpile(false, sk.Alias);
+
+            }
+            StockpileManagerUISide.StockpileChanged();
+            UnsavedEdits = true;
+        }
         private void ClearStockpile(object sender, EventArgs e) => ClearStockpile();
         public void ClearStockpile(bool force = false)
         {
@@ -849,6 +885,26 @@ namespace RTCV.UI
                     NetCore.Params.SetParam("INCLUDE_REFERENCED_FILES");
                 }
             }))).Checked = NetCore.Params.IsParamSet("INCLUDE_REFERENCED_FILES");
+
+            ghSettingsMenu.Items.Add(new ToolStripSeparator());
+
+            (ghSettingsMenu.Items.Add("Show Item Name", null,
+                    (ob, ev) => { dgvStockpile.Columns["Item"].Visible ^= true; }) as ToolStripMenuItem).Checked =
+                dgvStockpile.Columns["Item"].Visible;
+            (ghSettingsMenu.Items.Add("Show Game Name", null,
+                    (ob, ev) => { dgvStockpile.Columns["GameName"].Visible ^= true; }) as ToolStripMenuItem)
+                .Checked =
+                dgvStockpile.Columns["GameName"].Visible;
+            (ghSettingsMenu.Items.Add("Show System Name", null,
+                    (ob, ev) => { dgvStockpile.Columns["SystemName"].Visible ^= true; }) as ToolStripMenuItem)
+                .Checked =
+                dgvStockpile.Columns["SystemName"].Visible;
+            (ghSettingsMenu.Items.Add("Show System Core", null,
+                    (ob, ev) => { dgvStockpile.Columns["SystemCore"].Visible ^= true; }) as ToolStripMenuItem)
+                .Checked =
+                dgvStockpile.Columns["SystemCore"].Visible;
+            (ghSettingsMenu.Items.Add("Show Note", null, (ob, ev) => { dgvStockpile.Columns["Note"].Visible ^= true; })
+                as ToolStripMenuItem).Checked = dgvStockpile.Columns["Note"].Visible;
 
             ghSettingsMenu.Show(this, locate);
         }

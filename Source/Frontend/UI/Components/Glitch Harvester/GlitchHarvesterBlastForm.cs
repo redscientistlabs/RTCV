@@ -19,8 +19,8 @@ namespace RTCV.UI
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
         public bool MergeMode { get; private set; } = false;
-        public GlitchHarvesterMode ghMode { get; set; } = GlitchHarvesterMode.CORRUPT;
-
+        public GlitchHarvesterMode ghMode { get; set; } = GlitchHarvesterMode.CORRUPT; //Current Glitch Harvester mode
+        public GlitchHarvesterMode ghModeStore { get; set; } = GlitchHarvesterMode.CORRUPT; //Temporary Variable used for borrowing different corruption methods
         public bool LoadOnSelect { get; set; } = true;
         public bool loadBeforeOperation { get; set; } = true;
 
@@ -255,8 +255,10 @@ namespace RTCV.UI
                         }
                         else
                         {
-                            throw new Exception("Inject tried to fetch the LastStashkey backup but this one was also null! Try to re-load your savestate and then re-select your corruption in the stash history or stockpile. That might fix it. If it still doesn't work after that, report to the devs pls");
+                            MessageBox.Show("The Glitch Harvester could not perform the INJECT action\n\nHave you made a corruption yet?");
+     
                         }
+                        
                     }
 
                     S.GET<StashHistoryForm>().DontLoadSelectedStash = true;
@@ -274,7 +276,7 @@ namespace RTCV.UI
                         }
                         else
                         {
-                            throw new Exception("CurrentStashkey in original was somehow null! Report this to the devs and tell them how you caused this.");
+                            MessageBox.Show("The Glitch Harvester could not perform the ORIGINAL action\n\nHave you made a corruption yet?");
                         }
                     }
 
@@ -317,6 +319,35 @@ namespace RTCV.UI
                     BlastRawStash();
                 }));
                 columnsMenu.Show(this, locate);
+                columnsMenu.Items.Add("Corrupt", null, new EventHandler((ob, ev) =>
+                {
+                    ghModeStore = ghMode;
+                    ghMode = GlitchHarvesterMode.CORRUPT;
+                    S.GET<GlitchHarvesterBlastForm>().Corrupt(sender, e);
+                    ghMode = ghModeStore;
+                    RedrawActionUI();
+
+                }));
+                columnsMenu.Show(this, locate);
+                columnsMenu.Items.Add("Inject", null, new EventHandler((ob, ev) =>
+                {
+                    ghModeStore = ghMode;
+                    ghMode = GlitchHarvesterMode.INJECT;
+                    S.GET<GlitchHarvesterBlastForm>().Corrupt(sender, e);
+                    ghMode = ghModeStore;
+                    RedrawActionUI();
+                }));
+                columnsMenu.Show(this, locate);
+                columnsMenu.Items.Add("Original", null, new EventHandler((ob, ev) =>
+                {
+                    ghModeStore = ghMode;
+                    ghMode = GlitchHarvesterMode.ORIGINAL;
+                    S.GET<GlitchHarvesterBlastForm>().Corrupt(sender, e);
+                    ghMode = ghModeStore;
+                    RedrawActionUI();
+                }));
+                columnsMenu.Show(this, locate);
+
             }
         }
 

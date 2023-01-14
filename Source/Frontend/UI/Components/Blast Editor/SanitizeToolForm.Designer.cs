@@ -56,6 +56,7 @@ namespace RTCV.UI
             this.btnLeaveNoChanges = new System.Windows.Forms.Button();
             this.lbWorkingPleaseWait = new System.Windows.Forms.Label();
             this.btnAddToStash = new System.Windows.Forms.Button();
+            this.cbCloseOnSend = new System.Windows.Forms.CheckBox();
             this.pnBlastLayerSanitization.SuspendLayout();
             this.panel6.SuspendLayout();
             this.SuspendLayout();
@@ -76,7 +77,7 @@ namespace RTCV.UI
             this.label3.ForeColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(16, 16);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(95, 13);
+            this.label3.Size = new System.Drawing.Size(95, 15);
             this.label3.TabIndex = 135;
             this.label3.Text = "Sanitize progress";
             // 
@@ -187,7 +188,7 @@ namespace RTCV.UI
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(16, 106);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(75, 13);
+            this.label2.Size = new System.Drawing.Size(75, 15);
             this.label2.TabIndex = 186;
             this.label2.Text = "Guided steps";
             // 
@@ -200,7 +201,7 @@ namespace RTCV.UI
             this.btnBackPrevState.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBackPrevState.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnBackPrevState.ForeColor = System.Drawing.Color.White;
-            this.btnBackPrevState.Location = new System.Drawing.Point(372, 339);
+            this.btnBackPrevState.Location = new System.Drawing.Point(372, 314);
             this.btnBackPrevState.Name = "btnBackPrevState";
             this.btnBackPrevState.Size = new System.Drawing.Size(181, 24);
             this.btnBackPrevState.TabIndex = 192;
@@ -215,7 +216,7 @@ namespace RTCV.UI
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(369, 15);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(99, 13);
+            this.label6.Size = new System.Drawing.Size(99, 15);
             this.label6.TabIndex = 193;
             this.label6.Text = "Sanitization Steps";
             // 
@@ -319,12 +320,13 @@ namespace RTCV.UI
             this.lbSteps.ForeColor = System.Drawing.Color.White;
             this.lbSteps.FormattingEnabled = true;
             this.lbSteps.IntegralHeight = false;
+            this.lbSteps.ItemHeight = 17;
             this.lbSteps.Location = new System.Drawing.Point(372, 33);
             this.lbSteps.Margin = new System.Windows.Forms.Padding(5);
             this.lbSteps.Name = "lbSteps";
             this.lbSteps.ScrollAlwaysVisible = true;
             this.lbSteps.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.lbSteps.Size = new System.Drawing.Size(181, 305);
+            this.lbSteps.Size = new System.Drawing.Size(181, 273);
             this.lbSteps.TabIndex = 191;
             this.lbSteps.Tag = "color:dark2";
             // 
@@ -410,12 +412,25 @@ namespace RTCV.UI
             this.btnAddToStash.UseVisualStyleBackColor = false;
             this.btnAddToStash.Click += new System.EventHandler(this.AddToStash);
             // 
-            // FastSanitizeToolForm
+            // cbCloseOnSend
+            // 
+            this.cbCloseOnSend.AutoSize = true;
+            this.cbCloseOnSend.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            this.cbCloseOnSend.Location = new System.Drawing.Point(372, 344);
+            this.cbCloseOnSend.Name = "cbCloseOnSend";
+            this.cbCloseOnSend.Size = new System.Drawing.Size(163, 21);
+            this.cbCloseOnSend.TabIndex = 204;
+            this.cbCloseOnSend.Text = "Close tool on send out";
+            this.cbCloseOnSend.UseVisualStyleBackColor = true;
+            this.cbCloseOnSend.CheckedChanged += new System.EventHandler(this.cbCloseOnSend_CheckedChanged);
+            // 
+            // SanitizeToolForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(574, 384);
+            this.Controls.Add(this.cbCloseOnSend);
             this.Controls.Add(this.btnAddToStash);
             this.Controls.Add(this.btnLeaveNoChanges);
             this.Controls.Add(this.btnAddToStockpile);
@@ -439,10 +454,11 @@ namespace RTCV.UI
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(590, 401);
-            this.Name = "FastSanitizeToolForm";
+            this.Name = "SanitizeToolForm";
             this.Tag = "color:dark1";
             this.Text = "Sanitize Tool";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
+            this.Load += new System.EventHandler(this.SanitizeToolForm_Load);
             this.pnBlastLayerSanitization.ResumeLayout(false);
             this.panel6.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -475,5 +491,6 @@ namespace RTCV.UI
         public Button btnLeaveWithoutChanges;
         public Button btnStartSanitizing;
         public Button btnReroll;
+        private CheckBox cbCloseOnSend;
     }
 }

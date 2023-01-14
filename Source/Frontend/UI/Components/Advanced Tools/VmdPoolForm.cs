@@ -462,5 +462,9 @@ namespace RTCV.UI
                 tbVmdPrototype.Text = "";
             }
         }
+        private void btnReloadItem_Click(object sender, EventArgs e)
+        {
+            RefreshVMDs();
+        }
     }
 }

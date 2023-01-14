@@ -9,6 +9,7 @@ namespace RTCV.UI
     using RTCV.NetCore;
     using RTCV.Common;
     using RTCV.UI;
+    using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
     public partial class SanitizeToolForm : Modular.ColorizedForm
     {
@@ -307,6 +308,10 @@ namespace RTCV.UI
             //{
             //    this.Close();
             //}
+            if (cbCloseOnSend.Checked)
+            {
+                this.Close();
+            }
         }
         private void AddToStash(object sender, EventArgs e)
         {
@@ -335,10 +340,29 @@ namespace RTCV.UI
 
             //S.GET<BlastEditorForm>().SendToStash(null, null);
             //this.Close();
+            if (cbCloseOnSend.Checked)
+            {
+                this.Close();
+            }
+
         }
         private void LeaveWithNoChanges(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void cbCloseOnSend_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbCloseOnSend.Checked)
+                RTCV.NetCore.Params.SetParam("SANITIZETOOL_AUTOCLOSE");
+            else
+                Params.RemoveParam("SANITIZETOOL_AUTOCLOSE");
+        }
+
+        private void SanitizeToolForm_Load(object sender, EventArgs e)
+        {
+            if (Params.IsParamSet("SANITIZETOOL_AUTOCLOSE"))
+                cbCloseOnSend.Checked = true;
         }
     }
 

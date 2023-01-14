@@ -51,6 +51,12 @@ namespace RTCV.UI
                         dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.Note);
                     }
                 }
+                //Check for missing ref files
+                List<StashKey> keys = dgvStockpile.Rows.Cast<DataGridViewRow>().Select(x => (StashKey)x.Cells["Item"].Value).ToList();
+                foreach (var sk in keys)
+                {
+                    StockpileManagerUISide.CheckAndFixMissingReference(sk, false, keys);
+                }
             }
         }
 

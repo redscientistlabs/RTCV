@@ -275,7 +275,7 @@ namespace RTCV.CorruptCore
 
             if (sk == null)
             {
-                MessageBox.Show("No StashKey could be loaded");
+                MessageBox.Show("The Glitch Harvester could not perform the ORIGINAL action\n\nHave you made a corruption yet?");
                 return false;
             }
 

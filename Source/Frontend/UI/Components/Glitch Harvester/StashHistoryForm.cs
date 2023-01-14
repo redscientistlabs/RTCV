@@ -53,6 +53,7 @@ namespace RTCV.UI
             {
                 return AddStashToStockpile(true);
             }
+            
         }
 
         public bool AddStashToStockpile(bool askForName = true, string itemName = null)
@@ -148,6 +149,9 @@ namespace RTCV.UI
 
             S.GET<StockpileManagerForm>().UnsavedEdits = true;
 
+            //Ensure it is redrawn to prevent weird issues such as the merge button not returning into the corrupt button
+            S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
+
             return true;
         }
 
@@ -208,7 +212,7 @@ namespace RTCV.UI
                     if (S.GET<BlastEditorForm>() != null)
                     {
                         StashKey sk = StockpileManagerUISide.StashHistory[lbStashHistory.SelectedIndex];
-                        BlastEditorForm.OpenBlastEditor(sk);
+                        BlastEditorForm.OpenBlastEditor((StashKey)sk.Clone());
                     }
                 }))).Enabled = lbStashHistory.SelectedIndex != -1;
 
@@ -217,7 +221,7 @@ namespace RTCV.UI
                     if (S.GET<BlastEditorForm>() != null)
                     {
                         StashKey sk = StockpileManagerUISide.StashHistory[lbStashHistory.SelectedIndex];
-                        SanitizeToolForm.OpenSanitizeTool(sk, false);
+                        SanitizeToolForm.OpenSanitizeTool((StashKey)sk.Clone(), false);
                     }
                 }))).Enabled = lbStashHistory.SelectedIndex != -1;
 
@@ -348,12 +352,15 @@ namespace RTCV.UI
 
         private void ClearStashHistory(object sender, EventArgs e)
         {
-            StockpileManagerUISide.StashHistory.Clear();
-            RefreshStashHistory();
+            if (MessageBox.Show("Are you sure you want to clear the stash?", "Clear stash?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                StockpileManagerUISide.StashHistory.Clear();
+                RefreshStashHistory();
 
-            //Force clean up
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
+                //Force clean up
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
         }
 
         public void MoveSelectedStashUp(object sender, EventArgs e)
