@@ -64,7 +64,7 @@
     <ProjectReference Include="..\NetCore\NetCore.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.0" />
+    <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.1" />
   </ItemGroup>
   <PropertyGroup>
     <PostBuildEvent>rd /s /q "cs", "pl", "pt-BR", "tr", "de", "en", "es", "fr", "it", "ja", "ko", "ru", "zh-Hans", "zh-Hant"</PostBuildEvent>

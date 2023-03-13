@@ -31,6 +31,6 @@
     <ProjectReference Include="..\..\Frontend\UI\UI.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.0" />
+    <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.1" />
   </ItemGroup>
 </Project>

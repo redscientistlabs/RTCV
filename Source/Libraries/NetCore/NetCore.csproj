@@ -54,6 +54,6 @@
     <ProjectReference Include="..\ZombieCeras\src\Ceras\Ceras.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.0" />
+    <PackageReference Update="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.1" />
   </ItemGroup>
 </Project>
