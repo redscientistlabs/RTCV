@@ -16,12 +16,15 @@ namespace RTCV.CorruptCore
         //Could be moved to a common location
         const char CHAR_WILD = '?';
         const char CHAR_PASS = '#';
+        const char CHAR_ADD = '+';
+        const char CHAR_SUB = '-';
         const char CHAR_FLAG = '@';
         const char CHAR_EXCLUDE = '!';
+        const char CHAR_NOT = '!';
 
         //Valid chars for lines (not including prefixes)
-        private static HashSet<char> validCharHashSetHex = new HashSet<char>() { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', CHAR_WILD, CHAR_PASS };
-        private static HashSet<char> validCharHashSetBinary = new HashSet<char>() { '0', '1', CHAR_WILD, CHAR_PASS };
+        private static HashSet<char> validCharHashSetHex = new HashSet<char>() { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', CHAR_WILD, CHAR_PASS, CHAR_ADD, CHAR_SUB, CHAR_NOT };
+        private static HashSet<char> validCharHashSetBinary = new HashSet<char>() { '0', '1', CHAR_WILD, CHAR_PASS, CHAR_ADD, CHAR_SUB, CHAR_NOT };
 
         List<BitlogicFilterEntry> entries = new List<BitlogicFilterEntry>();
         List<BitlogicFilterEntry> exclusions = new List<BitlogicFilterEntry>();
@@ -29,7 +32,7 @@ namespace RTCV.CorruptCore
 
         private int precision = 0;
         [Ceras.Exclude]
-        private static readonly BitlogicFilterEntry AllFilter = new BitlogicFilterEntry(0UL, ulong.MaxValue, 0UL, 0UL, 8);
+        private static readonly BitlogicFilterEntry AllFilter = new BitlogicFilterEntry(0UL, ulong.MaxValue, 0UL, 0UL, 0UL, 0UL, 0UL, 8);
 
         public string Initialize(string filePath, string[] dataLines, bool flipBytes, bool syncListViaNetcore)
         {
@@ -508,10 +511,13 @@ namespace RTCV.CorruptCore
 
             const ulong digitMask = 0b1111; //ulong mask for one hex digit
 
-            ulong template = 0L;
-            ulong wildcard = 0L;
-            ulong passthrough = 0L;
-            ulong reserved = 0L;
+            ulong template = 0UL;
+            ulong wildcard = 0UL;
+            ulong passthrough = 0UL;
+            ulong reserved = 0UL;
+            ulong add = 0UL;
+            ulong subtract = 0UL;
+            ulong not = 0UL;
 
             //At this point we know only valid characters are in the line
 
@@ -519,17 +525,36 @@ namespace RTCV.CorruptCore
             int curLeftShift = 0; //Additional variable to maintain my sanity
             for (int j = line.Length - 1; j >= 0; j--)
             {
-                if (line[j] == CHAR_WILD) { wildcard |= digitMask << curLeftShift; } //Wildcard
-                else if (line[j] == CHAR_PASS) { passthrough |= digitMask << curLeftShift; } //Passthrough
-                else //is a Constant
+
+                switch (line[j])
                 {
-                    //line[j] is guaranteed to be Hex characters here
-                    template |= CharToUlongHex(line[j]) << curLeftShift; //Convert char to ulong and shift
-                    reserved |= digitMask << curLeftShift; //Also add to reserved mask
+                    case CHAR_WILD:
+                        wildcard |= digitMask << curLeftShift;
+                        break;
+                    case CHAR_PASS:
+                        passthrough |= digitMask << curLeftShift;
+                        break;
+                    case CHAR_ADD:
+                        passthrough |= digitMask << curLeftShift;
+                        add |= 1UL << curLeftShift;
+                        break;
+                    case CHAR_SUB:
+                        passthrough |= digitMask << curLeftShift;
+                        subtract |= 1UL << curLeftShift;
+                        break;
+                    case CHAR_NOT:
+                        passthrough |= digitMask << curLeftShift;
+                        not |= digitMask << curLeftShift;
+                        break;
+                    default:
+                        //line[j] is guaranteed to be Hex characters here
+                        template |= CharToUlongHex(line[j]) << curLeftShift; //Convert char to ulong and shift
+                        reserved |= digitMask << curLeftShift; //Also add to reserved mask
+                        break;
                 }
                 curLeftShift += 4; //add half byte shift
             }
-            return new BitlogicFilterEntry(template, wildcard, passthrough, reserved, GetPrecision(line, 4));
+            return new BitlogicFilterEntry(template, wildcard, passthrough, reserved, add, subtract, not, GetPrecision(line, 4));
         }
 
         private static BitlogicFilterEntry ParseBin(string line)
@@ -538,6 +563,9 @@ namespace RTCV.CorruptCore
             ulong wildcard = 0UL;
             ulong passthrough = 0UL;
             ulong reserved = 0UL;
+            ulong add = 0UL;
+            ulong subtract = 0UL;
+            ulong not = 0UL;
 
             //At this point we know only valid characters are in the line
 
@@ -545,18 +573,37 @@ namespace RTCV.CorruptCore
             int curLeftShift = 0; //Additional variable to maintain my sanity
             for (int j = line.Length - 1; j >= 0; j--)
             {
-                if (line[j] == CHAR_WILD) { wildcard |= 1UL << curLeftShift; } //Wildcard
-                else if (line[j] == CHAR_PASS) { passthrough |= 1UL << curLeftShift; } //Passthrough
-                else //Constant
+
+                switch (line[j])
                 {
-                    //line[j] is guaranteed to be '1' or '0' here
-                    template |= ((ulong)line[j] - 48UL) << curLeftShift; //Convert char to ulong and shift
-                    reserved |= 1UL << curLeftShift; //Also add to reserved mask
+                    case CHAR_WILD:
+                        wildcard |= 1UL << curLeftShift;
+                        break;
+                    case CHAR_PASS:
+                        passthrough |= 1UL << curLeftShift;
+                        break;
+                    case CHAR_ADD:
+                        passthrough |= 1UL << curLeftShift;
+                        add |= 1UL << curLeftShift;
+                        break;
+                    case CHAR_SUB:
+                        passthrough |= 1UL << curLeftShift;
+                        subtract |= 1UL << curLeftShift;
+                        break;
+                    case CHAR_NOT:
+                        passthrough |= 1UL << curLeftShift;
+                        not |= 1UL << curLeftShift;
+                        break;
+                    default:
+                        //line[j] is guaranteed to be '1' or '0' here
+                        template |= ((ulong)line[j] - 48UL) << curLeftShift; //Convert char to ulong and shift
+                        reserved |= 1UL << curLeftShift; //Also add to reserved mask
+                        break;
                 }
 
                 curLeftShift++;
             }
-            return new BitlogicFilterEntry(template, wildcard, passthrough, reserved, GetPrecision(line, 1));
+            return new BitlogicFilterEntry(template, wildcard, passthrough, reserved, add, subtract, not, GetPrecision(line, 1));
         }
     }
 
@@ -572,6 +619,9 @@ namespace RTCV.CorruptCore
         ulong passthrough;
         ulong reserved;
         ulong unreserved;
+        ulong add;
+        ulong subtract;
+        ulong not;
 
         public int Precision { get; private set; }
         public string OriginalLine { get; set; }
@@ -584,13 +634,16 @@ namespace RTCV.CorruptCore
             return BitConverter.ToUInt64(byteBuffer, 0);
         }
 
-        public BitlogicFilterEntry(ulong template, ulong wildcard, ulong passthrough, ulong reserved, int precision)
+        public BitlogicFilterEntry(ulong template, ulong wildcard, ulong passthrough, ulong reserved, ulong add, ulong subtract, ulong not, int precision)
         {
             this.template = template;
             this.wildcard = wildcard;
             this.passthrough = passthrough;
             this.reserved = reserved;
             this.unreserved = ~reserved; //Opposite of reserved for efficiency
+            this.add = add;
+            this.subtract = subtract;
+            this.not = not;
             this.Precision = precision;
         }
 
@@ -602,20 +655,22 @@ namespace RTCV.CorruptCore
             this.passthrough = 0;
             this.reserved = 0;
             this.unreserved = 0;
+            this.add = 0;
+            this.subtract = 0;
+            this.not = 0;
             Precision = 0;
         }
 
         public bool Matches(ulong data)
         {
-            //template == data and reserved mask
             return template == (data & reserved);
         }
 
         public ulong GetRandom(ulong data)
         {
-            //When passthrough is implemented, uncomment this line and remove the other
+            data = data + add - subtract;
+            data = data & ~not | ~data & not;
             return (NextULong() & wildcard) | (data & passthrough) | template;
-            //return (NextLong() & unreserved) | template;
         }
 
         public ulong GetRandomLegacy()
@@ -633,7 +688,9 @@ namespace RTCV.CorruptCore
             bytes.AddRange(BitConverter.GetBytes(wildcard));
             bytes.AddRange(BitConverter.GetBytes(passthrough));
             bytes.AddRange(BitConverter.GetBytes(reserved));
-            //Don't need unreserved, it's just reserved flipped
+            bytes.AddRange(BitConverter.GetBytes(add));
+            bytes.AddRange(BitConverter.GetBytes(subtract));
+            bytes.AddRange(BitConverter.GetBytes(not));
             return bytes.ToArray();
         }
     }
