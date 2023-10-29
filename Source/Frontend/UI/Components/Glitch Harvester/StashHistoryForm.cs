@@ -341,6 +341,64 @@ namespace RTCV.UI
             }
         }
 
+        public void HandleStashHistoryDoubleClick(object sender, MouseEventArgs e)
+        {
+            try
+            {
+                lbStashHistory.Enabled = false;
+                btnStashUP.Enabled = false;
+                btnStashDOWN.Enabled = false;
+                btnAddStashToStockpile.Enabled = false;
+
+                if (DontLoadSelectedStash || lbStashHistory.SelectedIndex == -1)
+                {
+                    DontLoadSelectedStash = false;
+                    return;
+                }
+
+                S.GET<StockpileManagerForm>().dgvStockpile.ClearSelection();
+                S.GET<StockpilePlayerForm>().dgvStockpile.ClearSelection();
+
+                var blastForm = S.GET<GlitchHarvesterBlastForm>();
+
+                if (S.GET<GlitchHarvesterBlastForm>().MergeMode)
+                {
+                    blastForm.ghMode = GlitchHarvesterMode.CORRUPT;
+                    S.GET<StockpileManagerForm>().btnRenameSelected.Visible = true;
+                    S.GET<StockpileManagerForm>().btnRemoveSelectedStockpile.Text = "  Remove Item";
+
+                    if (blastForm.ghMode == GlitchHarvesterMode.CORRUPT)
+                    {
+                        blastForm.btnCorrupt.Text = "  Corrupt";
+                    }
+                    else if (blastForm.ghMode == GlitchHarvesterMode.INJECT)
+                    {
+                        blastForm.btnCorrupt.Text = "  Inject";
+                    }
+                    else if (blastForm.ghMode == GlitchHarvesterMode.ORIGINAL)
+                    {
+                        blastForm.btnCorrupt.Text = "  Original";
+                    }
+                }
+
+                StockpileManagerUISide.CurrentStashkey = StockpileManagerUISide.StashHistory[lbStashHistory.SelectedIndex];
+
+                blastForm.OneTimeExecute();
+            }
+            finally
+            {
+                lbStashHistory.Enabled = true;
+                btnStashUP.Enabled = true;
+                btnStashDOWN.Enabled = true;
+                btnAddStashToStockpile.Enabled = true;
+                //((Control)sender).Focus();
+                S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
+            }
+        }
+
+
+
+
         private void ClearSelectedSKs(object sender, MouseEventArgs e)
         {
             DontLoadSelectedStash = true;

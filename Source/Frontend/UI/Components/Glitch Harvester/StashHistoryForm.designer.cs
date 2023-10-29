@@ -138,6 +138,7 @@ namespace RTCV.UI
             this.lbStashHistory.TabIndex = 108;
             this.lbStashHistory.Tag = "color:normal";
             this.lbStashHistory.SelectedIndexChanged += new System.EventHandler(this.HandleStashHistorySelectionChange);
+            this.lbStashHistory.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.HandleStashHistoryDoubleClick);
             this.lbStashHistory.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HandleStashHistoryMouseDown);
             // 
             // StashHistoryForm

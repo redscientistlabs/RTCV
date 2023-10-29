@@ -523,7 +523,7 @@ namespace RTCV.UI
 
                         if (sh.lbStashHistory.SelectedIndex != -1)
                         {
-                            sh.HandleStashHistorySelectionChange(null, null);
+                            sh.HandleStashHistoryDoubleClick(null, null);
                         }
                         else
                         {
@@ -536,7 +536,7 @@ namespace RTCV.UI
                             }
                             else
                             {
-                                sm.HandleCellClick(sm.dgvStockpile, new DataGridViewCellEventArgs(0, mainRow.Index));
+                                sm.HandleCellDoubleClick(sm.dgvStockpile, new DataGridViewCellEventArgs(0, mainRow.Index));
                             }
                         }
                     });

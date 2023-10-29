@@ -159,6 +159,104 @@ namespace RTCV.UI
 
             S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
         }
+
+        public void HandleCellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e == null || e.RowIndex == -1)
+            {
+                return;
+            }
+
+            try
+            {
+                S.GET<StashHistoryForm>().btnAddStashToStockpile.Enabled = false;
+                dgvStockpile.Enabled = false;
+                btnStockpileUP.Enabled = false;
+                btnStockpileDOWN.Enabled = false;
+
+                // Stockpile Note handling
+                if (e != null)
+                {
+                    var senderGrid = (DataGridView)sender;
+
+                    if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
+                        e.RowIndex >= 0)
+                    {
+                        StashKey sk = (StashKey)senderGrid.Rows[e.RowIndex].Cells["Item"].Value;
+                        S.SET(new NoteEditorForm(sk, senderGrid.Rows[e.RowIndex].Cells["Note"]));
+                        S.GET<NoteEditorForm>().Show();
+
+                        return;
+                    }
+                }
+
+                S.GET<StashHistoryForm>().lbStashHistory.ClearSelected();
+                S.GET<StockpilePlayerForm>().dgvStockpile.ClearSelection();
+
+                S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
+
+                if (dgvStockpile.SelectedRows.Count == 0)
+                {
+                    return;
+                }
+
+                StockpileManagerUISide.CurrentStashkey = GetSelectedStashKey();
+
+                List<StashKey> keys = dgvStockpile.Rows.Cast<DataGridViewRow>().Select(x => (StashKey)x.Cells[0].Value).ToList();
+                if (!StockpileManagerUISide.CheckAndFixMissingReference(StockpileManagerUISide.CurrentStashkey, false, keys))
+                {
+                    return;
+                }
+
+                // Merge Execution
+                if (dgvStockpile.SelectedRows.Count > 1)
+                {
+                    List<StashKey> sks = new List<StashKey>();
+
+                    foreach (DataGridViewRow row in dgvStockpile.SelectedRows)
+                    {
+                        sks.Add((StashKey)row.Cells[0].Value);
+                    }
+
+                    //Removing this check makes Merge behave properly in all cases:
+                    //Shift+select uses the topmost savestate of the selection
+                    //Ctrl+select uses the savestate from the first item that was selected
+                    //Using the 'Merge' button follows the rules above to determine which savestate to use
+
+                    //if (IsControlDown())
+                    //{
+                    //    sks.Reverse();
+                    //}
+
+                    sks.Reverse();
+
+                    StockpileManagerUISide.MergeStashkeys(sks);
+
+                    if (Render.RenderAtLoad && S.GET<GlitchHarvesterBlastForm>().loadBeforeOperation)
+                    {
+                        Render.StartRender();
+                    }
+
+                    S.GET<StashHistoryForm>().RefreshStashHistory();
+                    return;
+                }
+
+                S.GET<GlitchHarvesterBlastForm>().OneTimeExecute();
+            }
+            finally
+            {
+                logger.Trace("Stockpile Manager load done, unlocking UI");
+                dgvStockpile.Enabled = true;
+                btnStockpileUP.Enabled = true;
+                btnStockpileDOWN.Enabled = true;
+                S.GET<StashHistoryForm>().btnAddStashToStockpile.Enabled = true;
+            }
+
+            S.GET<GlitchHarvesterBlastForm>().RedrawActionUI();
+        }
+
+
+
         private static bool IsControlDown()
         {
             return (ModifierKeys & Keys.Control) != 0;
