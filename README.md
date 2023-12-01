@@ -34,9 +34,21 @@ Icon graciously provided by [ShyGuyXXL](https://twitter.com/shyguyxxl)
 - Blast Generator (Corruption instruction generation tool in the vein of classic rom corruptors)
 - Stockpile Player (Streaming-focused corruption replayer)
 
+## How to download and install
+
+RTC uses a Launcher for managing Core and Emulator versions. This launcher can be downloaded on [Redscientist](https://redscientist.com/RTC).
+Once the Launcher exe is installed, put it in a folder where it can download files (do not put it on a folder synced with OneDrive).
+
+Install a version of the RTC core and emulators. These emulators are specially modded for corruptions and need to be started from the launcher.
+
+If you need help for using the program, you can consult one of those various pages:
+- [Latest general tutorial video](http://rtctutorialvideo.r5x.cc/)
+- [Corruption Classroom on Corrupt.wiki](https://corrupt.wiki/rtcv/beginner-guides/corruption-classroom)
+- [Quickstart Guide on Corrupt.wiki](https://corrupt.wiki/rtcv/beginner-guides/quickstart-guide)
+
 ## Development and support
 
-All support, bug reports, feature requests and testing is done on our [Discord server](https://redscientist.com/RTC) 
+All support, bug reports, feature requests and testing is done on our [Discord server](https://redscientist.com/discord) 
 Due to the very large amount of repositories surrounding the RTC project, it is simpler for us to centralize that information elsewhere.
 
 Current dev status: On halt temporarily. Infrastructure and services are kept maintained.
