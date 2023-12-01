@@ -4,7 +4,7 @@
 
 <p align="center">
     <!-- Github action -->
-    <a href="https://github.com/ircluzar/RTCV/actions?query=workflow%3ABuild+branch%505"><img src="https://github.com/ircluzar/RTCV/workflows/Build/badge.svg?branch=505" alt="Build status badge" /></a>
+    <!-- <a href="https://github.com/ircluzar/RTCV/actions?query=workflow%3ABuild+branch%505"><img src="https://github.com/ircluzar/RTCV/workflows/Build/badge.svg?branch=505" alt="Build status badge" /></a> -->
     <!-- Wiki -->
     <a href="https://corrupt.wiki/"><img src="https://img.shields.io/badge/docs-corrupt.wiki-blue.svg" alt="Docs wiki badge" /></a>
     <!-- Download -->
@@ -12,7 +12,7 @@
     <!-- Discord -->
     <a href="https://redscientist.com/discord"><img src="https://img.shields.io/discord/279664862836031488.svg" alt="Chat badge" /></a>
     <!-- CodeCov -->
-    <a href="https://codecov.io/gh/redscientistlabs/RTCV/branch/506"><img alt="Codecov" src="https://codecov.io/gh/redscientistlabs/RTCV/branch/506/graph/badge.svg"></a>
+    <!-- <a href="https://codecov.io/gh/redscientistlabs/RTCV/branch/506"><img alt="Codecov" src="https://codecov.io/gh/redscientistlabs/RTCV/branch/506/graph/badge.svg"></a> -->
 </p>
 
 # RTCV - Real-Time Corruptor Vanguard
