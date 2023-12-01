@@ -42,7 +42,14 @@ Icon graciously provided by [ShyGuyXXL](https://twitter.com/shyguyxxl)
 - The Vector Engine is a specialty corruption engine designed for 3D systems. The included lists target systems that support IEEE754 Floating Point values
 - The Custom Engine allows you to create your own engine using the various corruption parameters.
 
-## Development
+## Development and support
+
+All support, bug reports, feature requests and testing is done on our [Discord server](https://redscientist.com/RTC) 
+Due to the very large amount of repositories surrounding the RTC project, it is simpler for us to centralize that information elsewhere.
+
+Current dev status: On halt temporarily. Infrastructure and services are kept maintained.
+
+[Dev startup guide on Corrupt.wiki](https://corrupt.wiki/rtcv/other-rtc-guides/rtcv-dev-startup-guide)
 
 !!! The ongoing development of RTCV is on branch 51X
 !!! Master is currently synced with 5.1.0
