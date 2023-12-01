@@ -28,19 +28,11 @@ Icon graciously provided by [ShyGuyXXL](https://twitter.com/shyguyxxl)
 - Supports various emulators via a generic API. Currently comes with Bizhawk, Dolphin, PCSX2, melonDS, and Windows real-time implementations.
 - Supports corrupting files on-disk via the FileStub implementation, as well as including specialized support for certain kinds of files (WiiU games via CemuStub).
 - Many corruption engines with customizable algorithms
-- Easy start option for autocorrupt
+- Comes with a built-in Package Manager for installing plugins and other packages
 - Glitch Harvester (Corruption Savestate Manager)
 - Blast Editor (Corruption instruction editor)
 - Blast Generator (Corruption instruction generation tool in the vein of classic rom corruptors)
-- Stockpile Player (Corruption replayer)
-- As of 3.x, can survive BizHawk crashes using Detached Mode
-- The Nightmare Engine will corrupt random data
-- The Hellgenie Engine will corrupt random data by applying "cheats" in the vein of a game-genie code to emulated memory
-- The Freeze Engine will corrupt by freezing memory to its current value
-- The Distortion Engine will corrupt by taking a backup of memory and re-applying that backup a number of frames later.
-- The Pipe Engine can corrupt by simulating digital short circuits
-- The Vector Engine is a specialty corruption engine designed for 3D systems. The included lists target systems that support IEEE754 Floating Point values
-- The Custom Engine allows you to create your own engine using the various corruption parameters.
+- Stockpile Player (Streaming-focused corruption replayer)
 
 ## Development and support
 
@@ -51,8 +43,8 @@ Current dev status: On halt temporarily. Infrastructure and services are kept ma
 
 [Dev startup guide on Corrupt.wiki](https://corrupt.wiki/rtcv/other-rtc-guides/rtcv-dev-startup-guide)
 
-!!! The ongoing development of RTCV is on branch 51X
-!!! Master is currently synced with 5.1.0
+- The ongoing development of RTCV is on branch 51X
+- Master is currently synced with 5.1.0, not the most recent one.
 
 ### Recommended: Visual Studio 2019 (2022 works well too)
 [Visual Studio 2019: Community Edition](https://visualstudio.microsoft.com/vs/community/) is a free IDE for open-source projects, and is recommended for RTCV.
