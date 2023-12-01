@@ -42,7 +42,7 @@ Once the Launcher exe is installed, put it in a folder where it can download fil
 Install a version of the RTC core and emulators. These emulators are specially modded for corruptions and need to be started from the launcher.
 
 If you need help for using the program, you can consult one of those various pages:
-- [Latest general tutorial video](http://rtctutorialvideo.r5x.cc/)
+- [Tutorial video playlist on YouTube](http://rtctutorialvideo.r5x.cc/)
 - [Corruption Classroom on Corrupt.wiki](https://corrupt.wiki/rtcv/beginner-guides/corruption-classroom)
 - [Quickstart Guide on Corrupt.wiki](https://corrupt.wiki/rtcv/beginner-guides/quickstart-guide)
 
