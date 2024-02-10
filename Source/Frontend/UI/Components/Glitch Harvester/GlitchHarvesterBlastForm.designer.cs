@@ -36,10 +36,11 @@ namespace RTCV.UI
             this.btnBlastToggle = new System.Windows.Forms.Button();
             this.btnSendRaw = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
+            this.btnNewBlastLayerEditor = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            //
+            // 
             // btnRenderOutput
-            //
+            // 
             this.btnRenderOutput.BackColor = System.Drawing.Color.Gray;
             this.btnRenderOutput.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnRenderOutput.FlatAppearance.BorderSize = 0;
@@ -55,9 +56,9 @@ namespace RTCV.UI
             this.btnRenderOutput.Tag = "color:light1";
             this.btnRenderOutput.UseVisualStyleBackColor = false;
             this.btnRenderOutput.MouseDown += new System.Windows.Forms.MouseEventHandler(this.RenderOutput);
-            //
+            // 
             // btnGlitchHarvesterSettings
-            //
+            // 
             this.btnGlitchHarvesterSettings.BackColor = System.Drawing.Color.Gray;
             this.btnGlitchHarvesterSettings.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnGlitchHarvesterSettings.FlatAppearance.BorderSize = 0;
@@ -73,27 +74,27 @@ namespace RTCV.UI
             this.btnGlitchHarvesterSettings.Tag = "color:light1";
             this.btnGlitchHarvesterSettings.UseVisualStyleBackColor = false;
             this.btnGlitchHarvesterSettings.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OpenGlitchHarvesterSettings);
-            //
+            // 
             // btnRerollSelected
-            //
+            // 
             this.btnRerollSelected.BackColor = System.Drawing.Color.Gray;
             this.btnRerollSelected.FlatAppearance.BorderSize = 0;
             this.btnRerollSelected.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRerollSelected.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnRerollSelected.ForeColor = System.Drawing.Color.White;
-            this.btnRerollSelected.Location = new System.Drawing.Point(11, 83);
+            this.btnRerollSelected.Location = new System.Drawing.Point(11, 112);
             this.btnRerollSelected.Name = "btnRerollSelected";
-            this.btnRerollSelected.Size = new System.Drawing.Size(152, 26);
+            this.btnRerollSelected.Size = new System.Drawing.Size(49, 26);
             this.btnRerollSelected.TabIndex = 133;
             this.btnRerollSelected.TabStop = false;
             this.btnRerollSelected.Tag = "color:light1";
-            this.btnRerollSelected.Text = "Reroll Selected";
+            this.btnRerollSelected.Text = "Reroll";
             this.btnRerollSelected.UseVisualStyleBackColor = false;
             this.btnRerollSelected.Click += new System.EventHandler(this.RerollSelected);
             this.btnRerollSelected.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OnRerollButtonMouseDown);
-            //
+            // 
             // btnCorrupt
-            //
+            // 
             this.btnCorrupt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnCorrupt.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnCorrupt.FlatAppearance.BorderSize = 0;
@@ -105,7 +106,7 @@ namespace RTCV.UI
             this.btnCorrupt.Location = new System.Drawing.Point(11, 13);
             this.btnCorrupt.Name = "btnCorrupt";
             this.btnCorrupt.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
-            this.btnCorrupt.Size = new System.Drawing.Size(115, 32);
+            this.btnCorrupt.Size = new System.Drawing.Size(117, 32);
             this.btnCorrupt.TabIndex = 137;
             this.btnCorrupt.TabStop = false;
             this.btnCorrupt.Tag = "color:dark2";
@@ -115,26 +116,26 @@ namespace RTCV.UI
             this.btnCorrupt.UseVisualStyleBackColor = false;
             this.btnCorrupt.Click += new System.EventHandler(this.Corrupt);
             this.btnCorrupt.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnCorrupt_MouseDown);
-            //
+            // 
             // btnBlastToggle
-            //
+            // 
             this.btnBlastToggle.BackColor = System.Drawing.Color.Gray;
             this.btnBlastToggle.FlatAppearance.BorderSize = 0;
             this.btnBlastToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBlastToggle.Font = new System.Drawing.Font("Segoe UI", 8F);
             this.btnBlastToggle.ForeColor = System.Drawing.Color.White;
-            this.btnBlastToggle.Location = new System.Drawing.Point(11, 112);
+            this.btnBlastToggle.Location = new System.Drawing.Point(63, 112);
             this.btnBlastToggle.Name = "btnBlastToggle";
-            this.btnBlastToggle.Size = new System.Drawing.Size(152, 26);
+            this.btnBlastToggle.Size = new System.Drawing.Size(100, 26);
             this.btnBlastToggle.TabIndex = 131;
             this.btnBlastToggle.TabStop = false;
             this.btnBlastToggle.Tag = "color:dark2";
             this.btnBlastToggle.Text = "BlastLayer : OFF";
             this.btnBlastToggle.UseVisualStyleBackColor = false;
             this.btnBlastToggle.Click += new System.EventHandler(this.BlastLayerToggle);
-            //
+            // 
             // btnSendRaw
-            //
+            // 
             this.btnSendRaw.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
             this.btnSendRaw.FlatAppearance.BorderColor = System.Drawing.Color.Black;
             this.btnSendRaw.FlatAppearance.BorderSize = 0;
@@ -146,7 +147,7 @@ namespace RTCV.UI
             this.btnSendRaw.Location = new System.Drawing.Point(11, 48);
             this.btnSendRaw.Name = "btnSendRaw";
             this.btnSendRaw.Padding = new System.Windows.Forms.Padding(6, 0, 0, 0);
-            this.btnSendRaw.Size = new System.Drawing.Size(115, 32);
+            this.btnSendRaw.Size = new System.Drawing.Size(117, 32);
             this.btnSendRaw.TabIndex = 139;
             this.btnSendRaw.TabStop = false;
             this.btnSendRaw.Tag = "color:dark2";
@@ -155,9 +156,9 @@ namespace RTCV.UI
             this.btnSendRaw.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnSendRaw.UseVisualStyleBackColor = false;
             this.btnSendRaw.Click += new System.EventHandler(this.SendRawToStash);
-            //
+            // 
             // label5
-            //
+            // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
@@ -165,13 +166,31 @@ namespace RTCV.UI
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(0, 14);
             this.label5.TabIndex = 138;
-            //
+            // 
+            // btnNewBlastLayerEditor
+            // 
+            this.btnNewBlastLayerEditor.BackColor = System.Drawing.Color.Gray;
+            this.btnNewBlastLayerEditor.FlatAppearance.BorderSize = 0;
+            this.btnNewBlastLayerEditor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnNewBlastLayerEditor.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.btnNewBlastLayerEditor.ForeColor = System.Drawing.Color.White;
+            this.btnNewBlastLayerEditor.Location = new System.Drawing.Point(11, 83);
+            this.btnNewBlastLayerEditor.Name = "btnNewBlastLayerEditor";
+            this.btnNewBlastLayerEditor.Size = new System.Drawing.Size(152, 26);
+            this.btnNewBlastLayerEditor.TabIndex = 142;
+            this.btnNewBlastLayerEditor.TabStop = false;
+            this.btnNewBlastLayerEditor.Tag = "color:dark2";
+            this.btnNewBlastLayerEditor.Text = "Edit New Empty BlastLayer";
+            this.btnNewBlastLayerEditor.UseVisualStyleBackColor = false;
+            this.btnNewBlastLayerEditor.Click += new System.EventHandler(this.btnNewBlastLayerEditor_Click);
+            // 
             // GlitchHarvesterBlastForm
-            //
+            // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(270, 232);
+            this.Controls.Add(this.btnNewBlastLayerEditor);
             this.Controls.Add(this.btnRenderOutput);
             this.Controls.Add(this.btnGlitchHarvesterSettings);
             this.Controls.Add(this.btnRerollSelected);
@@ -201,5 +220,6 @@ namespace RTCV.UI
         private System.Windows.Forms.Label label5;
         public System.Windows.Forms.Button btnGlitchHarvesterSettings;
         public System.Windows.Forms.Button btnRenderOutput;
+        public System.Windows.Forms.Button btnNewBlastLayerEditor;
     }
 }

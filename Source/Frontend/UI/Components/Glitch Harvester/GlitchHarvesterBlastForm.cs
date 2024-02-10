@@ -616,6 +616,11 @@ namespace RTCV.UI
 
             ghSettingsMenu.Show(this, locate);
         }
+
+        private void btnNewBlastLayerEditor_Click(object sender, EventArgs e)
+        {
+            BlastEditorForm.OpenBlastEditor();
+        }
     }
 
     public enum GlitchHarvesterMode
