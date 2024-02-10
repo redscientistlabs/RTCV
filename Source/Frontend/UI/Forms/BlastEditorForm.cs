@@ -65,9 +65,9 @@ namespace RTCV.UI
         private const int textBoxFillWeight = 30;
         private const int numericUpDownFillWeight = 35;
 
-        private static Dictionary<string, MemoryInterface> _domainToMiDico;
+        private Dictionary<string, MemoryInterface> _domainToMiDico;
 
-        private static Dictionary<string, MemoryInterface> DomainToMiDico
+        private Dictionary<string, MemoryInterface> DomainToMiDico
         {
             get => _domainToMiDico ?? (_domainToMiDico = new Dictionary<string, MemoryInterface>());
             set => _domainToMiDico = value;
@@ -161,8 +161,10 @@ namespace RTCV.UI
                 silent = false;
             }
 
-            S.GET<BlastEditorForm>().Close();
-            S.SET(new BlastEditorForm());
+            //S.GET<BlastEditorForm>().Close();
+            var BEF = new BlastEditorForm();
+
+            S.SET(BEF);
 
             if (sk == null)
             {
@@ -174,12 +176,12 @@ namespace RTCV.UI
             //TODO
             if (sk.BlastLayer.Layer.Count > 5000 && (DialogResult.Yes == MessageBox.Show($"You're trying to open a blastlayer of size " + sk.BlastLayer.Layer.Count + ". This could take a while. Are you sure you want to continue?", "Opening a large BlastLayer", MessageBoxButtons.YesNo)))
             {
-                S.GET<BlastEditorForm>().LoadStashkey(sk, silent);
+                BEF.LoadStashkey(sk, silent);
                 return true;
             }
             else if (sk.BlastLayer.Layer.Count <= 5000)
             {
-                S.GET<BlastEditorForm>().LoadStashkey(sk, silent);
+                BEF.LoadStashkey(sk, silent);
                 return true;
             }
             else
@@ -432,7 +434,7 @@ namespace RTCV.UI
             bs = new BindingSource { DataSource = new SortableBindingList<BlastUnit>(currentSK.BlastLayer.Layer) };
             batchOperation = false;
             dgvBlastEditor.DataSource = bs;
-            updateMaximum(dgvBlastEditor.Rows.Cast<DataGridViewRow>().ToList());
+            updateMaximum(this, dgvBlastEditor.Rows.Cast<DataGridViewRow>().ToList());
             dgvBlastEditor.Refresh();
             UpdateBottom();
         }
@@ -465,11 +467,11 @@ namespace RTCV.UI
             //If the Domain or SourceDomain changed update the Maximum Value
             if (changedColumn.Name == BuProperty.Domain.ToString())
             {
-                updateMaximum(dgvBlastEditor.Rows[e.RowIndex].Cells[BuProperty.Address.ToString()] as DataGridViewNumericUpDownCell, dgvBlastEditor.Rows[e.RowIndex].Cells[BuProperty.Domain.ToString()].Value.ToString());
+                updateMaximum(this, dgvBlastEditor.Rows[e.RowIndex].Cells[BuProperty.Address.ToString()] as DataGridViewNumericUpDownCell, dgvBlastEditor.Rows[e.RowIndex].Cells[BuProperty.Domain.ToString()].Value.ToString());
             }
             else if (changedColumn.Name == BuProperty.SourceDomain.ToString())
             {
-                updateMaximum(dgvBlastEditor.Rows[e.RowIndex].Cells[BuProperty.SourceAddress.ToString()] as DataGridViewNumericUpDownCell, dgvBlastEditor.Rows[e.RowIndex].Cells[BuProperty.SourceDomain.ToString()].Value.ToString());
+                updateMaximum(this, dgvBlastEditor.Rows[e.RowIndex].Cells[BuProperty.SourceAddress.ToString()] as DataGridViewNumericUpDownCell, dgvBlastEditor.Rows[e.RowIndex].Cells[BuProperty.SourceDomain.ToString()].Value.ToString());
             }
             UpdateBottom();
         }
@@ -770,7 +772,7 @@ namespace RTCV.UI
             RefreshAllNoteIcons();
         }
 
-        private static void updateMaximum(List<DataGridViewRow> rows)
+        private static void updateMaximum(BlastEditorForm BEF, List<DataGridViewRow> rows)
         {
             foreach (DataGridViewRow row in rows)
             {
@@ -778,23 +780,23 @@ namespace RTCV.UI
                 var domain = bu.Domain;
                 var sourceDomain = bu.SourceDomain;
 
-                if (domain != null && DomainToMiDico.ContainsKey(bu.Domain ?? ""))
+                if (domain != null && BEF.DomainToMiDico.ContainsKey(bu.Domain ?? ""))
                 {
-                    (row.Cells[BuProperty.Address.ToString()] as DataGridViewNumericUpDownCell).Maximum = DomainToMiDico[domain].Size - 1;
+                    (row.Cells[BuProperty.Address.ToString()] as DataGridViewNumericUpDownCell).Maximum = BEF.DomainToMiDico[domain].Size - 1;
                 }
 
-                if (sourceDomain != null && DomainToMiDico.ContainsKey(bu.SourceDomain ?? ""))
+                if (sourceDomain != null && BEF.DomainToMiDico.ContainsKey(bu.SourceDomain ?? ""))
                 {
-                    (row.Cells[BuProperty.SourceAddress.ToString()] as DataGridViewNumericUpDownCell).Maximum = DomainToMiDico[sourceDomain].Size - 1;
+                    (row.Cells[BuProperty.SourceAddress.ToString()] as DataGridViewNumericUpDownCell).Maximum = BEF.DomainToMiDico[sourceDomain].Size - 1;
                 }
             }
         }
 
-        private static void updateMaximum(DataGridViewNumericUpDownCell cell, string domain)
+        private static void updateMaximum(BlastEditorForm BEF, DataGridViewNumericUpDownCell cell, string domain)
         {
-            if (DomainToMiDico.ContainsKey(domain))
+            if (BEF.DomainToMiDico.ContainsKey(domain))
             {
-                cell.Maximum = DomainToMiDico[domain].Size - 1;
+                cell.Maximum = BEF.DomainToMiDico[domain].Size - 1;
             }
             else
             {
@@ -867,7 +869,7 @@ namespace RTCV.UI
             }
 
             //Rather than setting all these values at load, we set it on the fly
-            updateMaximum(col);
+            updateMaximum(this, col);
         }
 
         private void OnBlastEditorCellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -1509,7 +1511,7 @@ namespace RTCV.UI
 
             batchOperation = false;
             dgvBlastEditor.DataSource = bs;
-            updateMaximum(dgvBlastEditor.Rows.Cast<DataGridViewRow>().ToList());
+            updateMaximum(this, dgvBlastEditor.Rows.Cast<DataGridViewRow>().ToList());
             dgvBlastEditor.Refresh();
             UpdateBottom();
         }

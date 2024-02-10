@@ -119,7 +119,7 @@ namespace RTCV.UI
             // 
             // btnBlastToggle
             // 
-            this.btnBlastToggle.BackColor = System.Drawing.Color.Gray;
+            this.btnBlastToggle.BackColor = System.Drawing.Color.DimGray;
             this.btnBlastToggle.FlatAppearance.BorderSize = 0;
             this.btnBlastToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBlastToggle.Font = new System.Drawing.Font("Segoe UI", 8F);
@@ -179,8 +179,8 @@ namespace RTCV.UI
             this.btnNewBlastLayerEditor.Size = new System.Drawing.Size(152, 26);
             this.btnNewBlastLayerEditor.TabIndex = 142;
             this.btnNewBlastLayerEditor.TabStop = false;
-            this.btnNewBlastLayerEditor.Tag = "color:dark2";
-            this.btnNewBlastLayerEditor.Text = "Edit New Empty BlastLayer";
+            this.btnNewBlastLayerEditor.Tag = "color:light1";
+            this.btnNewBlastLayerEditor.Text = "New Empty BlastLayer";
             this.btnNewBlastLayerEditor.UseVisualStyleBackColor = false;
             this.btnNewBlastLayerEditor.Click += new System.EventHandler(this.btnNewBlastLayerEditor_Click);
             // 
