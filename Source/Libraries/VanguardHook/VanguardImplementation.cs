@@ -136,6 +136,12 @@ namespace VanguardHook
         public delegate void Vloadsavestate([MarshalAs(UnmanagedType.BStr)] string filename);
 		public static Vloadsavestate Vanguard_loadsavestate = GetMethod<Vloadsavestate>("Vanguard_loadsavestate");
 
+		public delegate void VLoadROM([MarshalAs(UnmanagedType.BStr)] string filename);
+		public static VLoadROM Vanguard_loadROM = GetMethod<VLoadROM>("Vanguard_loadROM");
+
+		public delegate void VfinishLoading();
+		public static VfinishLoading Vanguard_finishLoading = GetMethod<VfinishLoading>("Vanguard_finishLoading");
+
 		//These two aren't programmed in the emulator right now, I'll have to figure out how to decide which methods are imported
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate Action Vpause();
@@ -227,10 +233,22 @@ namespace VanguardHook
 			string shortgamename = gamename.Trim().Replace(" ", "").Substring(0, 8);
 			return shortgamename;
         }
-		public static void LoadROM(string rompath)
+		public static void LoadROM(string filename)
 		{
-			//vanguard_setDVDPath(dvd);
-		}
+			string currentOpenRom = "";
+			if ((string)AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME] != "")
+				currentOpenRom = (string)AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME];
+
+			// Game is not running
+			if (currentOpenRom != filename)
+			{
+				// Clear out any old settings
+				//Config.ClearCurrentVanguardLayer();
+
+				// Call imported emulator function
+				Vanguard_loadROM(filename);
+			}
+        }
 		public static string GetROM()
         {
 			return "";
@@ -323,15 +341,18 @@ namespace VanguardHook
 						var cmd = advancedMessage.objectValue as object[];
 						var path = cmd[0] as string;
 						var location = (StashKeySavestateLocation)cmd[1];
+						ConsoleEx.WriteLine(path);
 						SyncObjectSingleton.EmuThreadExecute(() => { e.setReturnValue(LoadSavestate(path, location)); }, true);
 						break;
 					}
 
-				case RTCV.NetCore.Commands.Remote.LoadROM:
+
+                case RTCV.NetCore.Commands.Remote.LoadROM:
 					{
-						var fileName = advancedMessage.objectValue as string;
-						//VanguardCore.LOAD_GAME_START(fileName);
-						
+						string fileName = advancedMessage.objectValue as string;
+						// Dolphin DEMANDS the rom is loaded from the main thread
+                        Action<string> a = new Action <string> (LoadROM);
+                        SyncObjectSingleton.FormExecute<string>(a, fileName);
 					}
 					break;
 				case RTCV.NetCore.Commands.Remote.PreCorruptAction:

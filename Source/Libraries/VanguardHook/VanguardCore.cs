@@ -172,20 +172,32 @@ namespace VanguardHook
         }
 		public static void LOAD_GAME_DONE(string gamename)
 		{
-			PartialSpec gameDone = new PartialSpec("VanguardSpec");
-			VanguardImplementation.RefreshDomains();
-			gameDone[VSPEC.SYSTEM] = "Dolphin";
+            if (AllSpec.UISpec == null)
+            {
+                MessageBox.Show(
+				"It appears you haven't connected to StandaloneRTC. Please make sure that the " +
+				"RTC is running and not just Bizhawk.\nIf you have an antivirus, it might be " +
+				"blocking the RTC from launching.\n\nIf you keep getting this message, poke " +
+				"the RTC devs for help (Discord is in the launcher).",
+				"RTC Not Connected");
+                return;
+            }
+            PartialSpec gameDone = new PartialSpec("VanguardSpec");
+            VanguardImplementation.RefreshDomains();
+            gameDone[VSPEC.SYSTEM] = "Dolphin";
 			gameDone[VSPEC.SYSTEMPREFIX] = "Dolphin";
 			gameDone[VSPEC.SYSTEMCORE] = "Wii"; //hardcoded for now until I add system core checks
 			gameDone[VSPEC.SYNCSETTINGS] = "";
 			gameDone[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] = gameDone[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS]; //need to figure out equivalent to `gcnew array<String ^>{}`
 			gameDone[VSPEC.CORE_DISKBASED] = true;
 			gameDone[VSPEC.GAMENAME] = gamename;
-			//Todo: add sync settings
-			AllSpec.VanguardSpec.Update(gameDone);
-			RtcCore.InvokeLoadGameDone();
-		}
-		public static void GAME_CLOSED()
+            //Todo: add sync settings
+            AllSpec.VanguardSpec.Update(gameDone);
+            RtcCore.InvokeLoadGameDone();
+            VanguardImplementation.Vanguard_finishLoading();
+
+        }
+        public static void GAME_CLOSED()
 		{
 			PartialSpec gameClosed = new PartialSpec("VanguardSpec");
 			gameClosed[VSPEC.OPENROMFILENAME] = "";
@@ -220,19 +232,17 @@ namespace VanguardHook
 
 			//         }, null);
 			//         //IntPtr Handle = SyncForm.Handle;
-			SyncObjectSingleton.SyncObject = SyncForm;
 			SyncForm = new AnchorForm();
 			var handle = SyncForm.Handle;
-			SyncObjectSingleton.SyncObject = SyncForm;
+            SyncObjectSingleton.SyncObject = SyncForm;
 
-			//SyncObjectSingleton.EmuInvokeDelegate = new SyncObjectSingleton.ActionDelegate(EmuThreadExecute);
-			SyncObjectSingleton.EmuThreadIsMainThread = true;
-			SyncForm.Show();
+            //SyncObjectSingleton.EmuInvokeDelegate = new SyncObjectSingleton.ActionDelegate(EmuThreadExecute);
+            SyncObjectSingleton.EmuThreadIsMainThread = true;
+			//SyncForm.Show();
 			SyncForm.Activate();
 			ConsoleHelper.CreateConsole();
 			ConsoleHelper.ShowConsole();
             VanguardCore.VSpecConfig.emuDir = emuDir + "\\";
-            ConsoleEx.WriteLine(VSpecConfig.emuDir);
             //Start everything
             VanguardImplementation.StartClient();
 			VanguardCore.RegisterVanguardSpec();
@@ -254,7 +264,6 @@ namespace VanguardHook
 				if (VanguardImplementation.connector.netConn.status == RTCV.NetCore.Enums.NetworkStatus.CONNECTED)
 				{
 					var state = Form.ActiveForm != null;
-					//Console.WriteLine(state);
 					//Shortcuts.STEP_CORRUPT();
 					if (((bool?)RTCV.NetCore.AllSpec.VanguardSpec?[RTCV.NetCore.Commands.Emulator.InFocus] ?? true) != state)
 						RTCV.NetCore.AllSpec.VanguardSpec?.Update(RTCV.NetCore.Commands.Emulator.InFocus, state, true, false);
