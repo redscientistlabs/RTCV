@@ -145,8 +145,12 @@ namespace VanguardHook
 		public static T GetMethod<T>(string MethodName)
 		{
 			IntPtr procAddr = NativeMethods.GetProcAddress(pEXE, MethodName);
-			T Method = Marshal.GetDelegateForFunctionPointer<T>(procAddr);
-            return Method;
+            if (procAddr.ToInt64() != 0)
+            {
+                T Method = Marshal.GetDelegateForFunctionPointer<T>(procAddr);
+				return Method;
+            }
+			return default;
 		}
 
         public static void ReloadState()
