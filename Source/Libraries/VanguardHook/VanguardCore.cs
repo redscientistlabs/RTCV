@@ -76,50 +76,38 @@ namespace VanguardHook
 			get => (MemoryDomainProxy[])AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_INTERFACES];
 			set => AllSpec.VanguardSpec.Update(VSPEC.MEMORYDOMAINS_INTERFACES, value);
 		}
-		
-		public static string logPath = Path.Combine(VSpecConfig.emuDir, "EMU_LOG.txt");
+
+        public static string emuDir = "";
+        public static string emuEXE = "";
+		public static string logPath = Path.Combine(emuDir, "EMU_LOG.txt");
 		public static string RTCVHookOGLVersion = "0.0.1";
 
-        public class VSpecConfig
-        {
-			public static string emuDir = "";
-            public static VSpecConfig config = JsonConvert.DeserializeObject<VSpecConfig>(File.ReadAllText(emuDir + "VanguardSpec.Json"));
-            public string EmuEXE { get; set; }
-            public string NAME {  get; set; }
-			public string OVERRIDE_DEFAULTMAXINTENSITY { get; set; }
-			public bool SUPPORTS_RENDERING { get; set; }
-			public bool SUPPORTS_CONFIG_MANAGEMENT { get; set; }
-			public bool SUPPORTS_CONFIG_HANDOFF { get; set; }
-			public bool SUPPORTS_KILLSWITCH { get; set; }
-			public bool SUPPORTS_REALTIME { get; set; }
-			public bool SUPPORTS_SAVESTATES { get; set; }
-			public bool SUPPORTS_REFERENCES { get; set; }
-			public bool SUPPORTS_MIXED_STOCKPILE { get; set; }
-		}
         public static PartialSpec getDefaultPartial()
         {
 			//read config file and store the values
             PartialSpec partial = new PartialSpec("VanguardSpec");
-            partial[VSPEC.NAME] = VSpecConfig.config.NAME;
+            var config = VanguardConfigReader.configFile.VSpecConfig;
+            partial[VSPEC.NAME] = config.NAME;
             partial[VSPEC.SYSTEM] = String.Empty;
 			partial[VSPEC.GAMENAME] = String.Empty;
 			partial[VSPEC.SYSTEMPREFIX] = String.Empty;
 			partial[VSPEC.OPENROMFILENAME] = String.Empty;
 			partial[VSPEC.SYNCSETTINGS] = String.Empty;
-            partial[VSPEC.OVERRIDE_DEFAULTMAXINTENSITY] = VSpecConfig.config.OVERRIDE_DEFAULTMAXINTENSITY;
+            partial[VSPEC.OVERRIDE_DEFAULTMAXINTENSITY] = config.OVERRIDE_DEFAULTMAXINTENSITY;
             partial[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] = new string[] { };
 			partial[VSPEC.MEMORYDOMAINS_INTERFACES] = new MemoryDomainProxy[] { };
 			partial[VSPEC.CORE_LASTLOADERROM] = -1;
-            partial[VSPEC.SUPPORTS_RENDERING] = VSpecConfig.config.SUPPORTS_RENDERING;
-            partial[VSPEC.SUPPORTS_CONFIG_MANAGEMENT] = VSpecConfig.config.SUPPORTS_CONFIG_MANAGEMENT;
-            partial[VSPEC.SUPPORTS_CONFIG_HANDOFF] = VSpecConfig.config.SUPPORTS_CONFIG_HANDOFF;
-            partial[VSPEC.SUPPORTS_KILLSWITCH] = VSpecConfig.config.SUPPORTS_KILLSWITCH;
-            partial[VSPEC.SUPPORTS_REALTIME] = VSpecConfig.config.SUPPORTS_REALTIME;
-            partial[VSPEC.SUPPORTS_SAVESTATES] = VSpecConfig.config.SUPPORTS_SAVESTATES;
-            partial[VSPEC.SUPPORTS_REFERENCES] = VSpecConfig.config.SUPPORTS_REFERENCES;
-            partial[VSPEC.SUPPORTS_MIXED_STOCKPILE] = VSpecConfig.config.SUPPORTS_MIXED_STOCKPILE;
+            partial[VSPEC.SUPPORTS_RENDERING] = config.SUPPORTS_RENDERING;
+            partial[VSPEC.SUPPORTS_CONFIG_MANAGEMENT] = config.SUPPORTS_CONFIG_MANAGEMENT;
+            partial[VSPEC.SUPPORTS_CONFIG_HANDOFF] = config.SUPPORTS_CONFIG_HANDOFF;
+            partial[VSPEC.SUPPORTS_KILLSWITCH] = config.SUPPORTS_KILLSWITCH;
+            partial[VSPEC.SUPPORTS_REALTIME] = config.SUPPORTS_REALTIME;
+            partial[VSPEC.SUPPORTS_SAVESTATES] = config.SUPPORTS_SAVESTATES;
+            partial[VSPEC.SUPPORTS_REFERENCES] = config.SUPPORTS_REFERENCES;
+            partial[VSPEC.SUPPORTS_MIXED_STOCKPILE] = config.SUPPORTS_MIXED_STOCKPILE;
             partial[VSPEC.CONFIG_PATHS] = new[] { "" };
-			partial[VSPEC.EMUDIR] = VSpecConfig.emuDir;
+			partial[VSPEC.EMUDIR] = emuDir;
+			emuEXE = config.EmuEXE;
 
             return partial;
 			
@@ -183,16 +171,28 @@ namespace VanguardHook
                 return;
             }
             PartialSpec gameDone = new PartialSpec("VanguardSpec");
-            VanguardImplementation.RefreshDomains();
-            gameDone[VSPEC.SYSTEM] = "Dolphin";
-			gameDone[VSPEC.SYSTEMPREFIX] = "Dolphin";
-			gameDone[VSPEC.SYSTEMCORE] = "Wii"; //hardcoded for now until I add system core checks
-			gameDone[VSPEC.SYNCSETTINGS] = "";
+            gameDone[VSPEC.SYSTEM] = VanguardConfigReader.configFile.VSpecConfig.NAME;
+			gameDone[VSPEC.SYSTEMPREFIX] = VanguardConfigReader.configFile.VSpecConfig.NAME;
+
+			//We need this code to be able to choose between Wii and Gamecube for Dolphin
+			if (VanguardConfigReader.configFile.VSpecConfig.PROFILE == "Dolphin")
+			{
+                if (VanguardImplementation.Vanguard_isWii())
+					gameDone[VSPEC.SYSTEMCORE] = "Wii";
+
+				else
+					gameDone[VSPEC.SYSTEMCORE] = "Gamecube";
+			}
+			else
+				gameDone[VSPEC.SYSTEMCORE] = VanguardConfigReader.configFile.VSpecConfig.PROFILE;
+
+            gameDone[VSPEC.SYNCSETTINGS] = "";
 			gameDone[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] = gameDone[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS]; //need to figure out equivalent to `gcnew array<String ^>{}`
 			gameDone[VSPEC.CORE_DISKBASED] = true;
 			gameDone[VSPEC.GAMENAME] = gamename;
             //Todo: add sync settings
             AllSpec.VanguardSpec.Update(gameDone);
+            VanguardImplementation.RefreshDomains();
             RtcCore.InvokeLoadGameDone();
             VanguardImplementation.Vanguard_finishLoading();
 
@@ -242,7 +242,7 @@ namespace VanguardHook
 			SyncForm.Activate();
 			ConsoleHelper.CreateConsole();
 			ConsoleHelper.ShowConsole();
-            VanguardCore.VSpecConfig.emuDir = emuDir + "\\";
+            emuDir = emuDir + "\\";
             //Start everything
             VanguardImplementation.StartClient();
 			VanguardCore.RegisterVanguardSpec();

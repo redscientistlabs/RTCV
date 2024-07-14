@@ -1,8 +1,8 @@
-
 {
-  "VanguardSpec": {
+  "VSpecConfig": {
     "EmuEXE": "Dolphin.exe",
     "NAME": "Dolphin",
+    "PROFILE": "Dolphin",
     "OVERRIDE_DEFAULTMAXINTENSITY": 500000,
     "SUPPORTS_RENDERING": false,
     "SUPPORTS_CONFIG_MANAGEMENT": true,
@@ -12,5 +12,38 @@
     "SUPPORTS_SAVESTATES": true,
     "SUPPORTS_REFERENCES": true,
     "SUPPORTS_MIXED_STOCKPILE": true
-  }
-  }
+  },
+  "MemoryDomainConfig": [
+    {
+      "Name": "SRAM",
+      "Profiles": [
+        "Wii",
+        "Gamecube"
+      ],
+      "BigEndian": true,
+      "Size": "0x017FFFFF",
+      "WordSize": 4,
+      "Offset": "0x80000000"
+    },
+    {
+      "Name": "EXRAM",
+      "Profiles": [
+        "Wii"
+      ],
+      "BigEndian": true,
+      "Size": "0x03FFFFFF",
+      "WordSize": 4,
+      "Offset": "0x90000000"
+    },
+    {
+      "Name": "ARAM",
+      "Profiles": [
+        "Gamecube"
+      ],
+      "BigEndian": true,
+      "Size": "0x03FFFFFF",
+      "WordSize": 4,
+      "Offset": "0x90000000"
+    }
+  ]
+}

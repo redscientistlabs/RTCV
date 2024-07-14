@@ -15,6 +15,7 @@ using RTCV.NetCore.Commands;
 using System.IO;
 using System.IO.Compression;
 using System.Windows;
+using System.Globalization;
 using RTCV.Common.CustomExtensions;
 using RTCV.CorruptCore.Extensions;
 using System.Reflection;
@@ -24,14 +25,30 @@ using System.Runtime.InteropServices.ComTypes;
 
 namespace VanguardHook
 {
-	public class MemoryDomainSRAMDomain : IMemoryDomain
+    public class MemoryDomain : IMemoryDomain
 	{
-		public string Name => "SRAM";
-		public bool BigEndian => true;
-		public long Size => 0x017FFFFF;
-		public int WordSize => 4;
-		public override string ToString() => Name;
-		public MemoryDomainSRAMDomain()
+		private string VName;
+		private bool VBigEndian;
+		private long VSize;
+		private int VWordSize;
+		private long VOffset;
+		public MemoryDomain(MemoryDomainConfig config)
+		{
+			VName = config.Name;
+			VBigEndian = config.BigEndian;
+			VSize = Int32.Parse(config.Size.Substring(2), NumberStyles.HexNumber);
+			VWordSize = config.WordSize;
+			VOffset = Int32.Parse(config.Offset.Substring(2), NumberStyles.HexNumber);
+		}
+
+		// set the interface variables
+		public string Name => VName;
+        public bool BigEndian => VBigEndian;
+        public long Size => VSize;
+        public int WordSize => VWordSize;
+
+        public override string ToString() => VName;
+		public MemoryDomain()
 		{
 
 		}
@@ -41,7 +58,7 @@ namespace VanguardHook
 			{
 				return;
 			}
-			VanguardImplementation.VM_WRITEB(address + 0x80000000, (byte)val);
+			VanguardImplementation.Vanguard_pokebyte(address + VOffset, (byte)val);
 		}
 		public byte PeekByte(long addr)
 		{
@@ -49,45 +66,7 @@ namespace VanguardHook
 			{
 				return 0;
 			}
-			uint buffer = 0;
-			return (byte)VanguardImplementation.VM_READB(addr + 0x80000000, buffer);
-		}
-		public byte[] PeekBytes(long address, int length)
-		{
-
-			var returnArray = new byte[length];
-			for (var i = 0; i < length; i++)
-				returnArray[i] = PeekByte(address + i);
-			return returnArray;
-		}
-	}
-	public class MemoryDomainEXRAMDomain : IMemoryDomain
-	{
-		public string Name => "EXRAM";
-		public bool BigEndian => true;
-		public long Size => 0x03FFFFFF;
-		public int WordSize => 4;
-		public override string ToString() => Name;
-		public MemoryDomainEXRAMDomain()
-		{
-
-		}
-		public void PokeByte(long address, byte val)
-		{
-			if (address > Size)
-			{
-				return;
-			}
-			VanguardImplementation.VM_WRITEB(address + 0x90000000, val);
-		}
-		public byte PeekByte(long addr)
-		{
-			if (addr > Size)
-			{
-				return 0;
-			}
-			uint buffer = 0;
-			return (byte)VanguardImplementation.VM_READB(addr + 0x90000000, buffer);
+			return (byte)VanguardImplementation.Vanguard_peekbyte(addr + VOffset);
 		}
 		public byte[] PeekBytes(long address, int length)
 		{
@@ -114,7 +93,7 @@ namespace VanguardHook
     }
 
 	public class VanguardImplementation
-    {
+	{
 
 		public static bool enableRTC = true;
 
@@ -124,16 +103,16 @@ namespace VanguardHook
 		//
 		//Import all supported functions from the emulator
 		//
-        public delegate byte Vpeekbyte(long addr);
-        public static Vpeekbyte Vanguard_peekbyte = GetMethod<Vpeekbyte>("Vanguard_peekbyte");
+		public delegate byte Vpeekbyte(long addr);
+		public static Vpeekbyte Vanguard_peekbyte = GetMethod<Vpeekbyte>("Vanguard_peekbyte");
 
-        public delegate void Vpokebyte(long addr, byte buf);
-        public static Vpokebyte Vanguard_pokebyte = GetMethod<Vpokebyte>("Vanguard_pokebyte");
+		public delegate void Vpokebyte(long addr, byte buf);
+		public static Vpokebyte Vanguard_pokebyte = GetMethod<Vpokebyte>("Vanguard_pokebyte");
 
-		public delegate void Vsavesavestate([MarshalAs(UnmanagedType.BStr)] string filename, bool wait);
+		public delegate void Vsavesavestate([MarshalAs(UnmanagedType.BStr)] string filename, bool wait = false);
 		public static Vsavesavestate Vanguard_savesavestate = GetMethod<Vsavesavestate>("Vanguard_savesavestate");
 
-        public delegate void Vloadsavestate([MarshalAs(UnmanagedType.BStr)] string filename);
+		public delegate void Vloadsavestate([MarshalAs(UnmanagedType.BStr)] string filename);
 		public static Vloadsavestate Vanguard_loadsavestate = GetMethod<Vloadsavestate>("Vanguard_loadsavestate");
 
 		public delegate void VLoadROM([MarshalAs(UnmanagedType.BStr)] string filename);
@@ -141,6 +120,10 @@ namespace VanguardHook
 
 		public delegate void VfinishLoading();
 		public static VfinishLoading Vanguard_finishLoading = GetMethod<VfinishLoading>("Vanguard_finishLoading");
+
+		public delegate bool VisWii();
+		public static VisWii Vanguard_isWii = GetMethod<VisWii>("Vanguard_isWii");
+
 
 		//These two aren't programmed in the emulator right now, I'll have to figure out how to decide which methods are imported
 		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -155,7 +138,7 @@ namespace VanguardHook
 
 		public static IntPtr LoadEmuPointer()
 		{
-            IntPtr pDll = NativeMethods.LoadLibrary(VSpecConfig.config.EmuEXE);
+            IntPtr pDll = NativeMethods.LoadLibrary(VanguardCore.emuEXE);
 			return pDll;
         }
 
@@ -171,45 +154,26 @@ namespace VanguardHook
 			var path = Path.Combine(RtcCore.workingDir, "SESSION", "Dolphintmp.savestat");
 			SyncObjectSingleton.EmuThreadExecute(() =>
 			{
+				// Call emulator functions
 				Vanguard_savesavestate(path, false);
 				Vanguard_loadsavestate(path);
 			}, true);
 		}
 
-		public static byte VM_READB(long addr, uint buf)
-        {
-			return Vanguard_peekbyte(addr);
-			
-		}
-		public static void VM_WRITEB(long addr, byte buf)
-		{
-			Vanguard_pokebyte(addr, buf);
-		}
-		public static void SaveVMState(string path)
-        {
-            Vanguard_savesavestate(path, false);
-        }
-		public static void LoadVMState(string filename)
-		{
-            Vanguard_loadsavestate(filename);
-		}
-		public static string GetStateName()
-        {
-			return "";
-        }
 		public static string SaveSavestate(string Key, bool threadSave = false)
 		{
             string quickSlotName = Key + ".timejump";
 			string prefix = VanguardCore.GameName;
 			string path = Path.Combine(RtcCore.workingDir, "SESSION", prefix + "." + quickSlotName + ".State");
 
-			//Todo: readd MakeSafeFilename
+			// Todo: readd MakeSafeFilename
 
 			FileInfo file = new FileInfo(path);
 			if (file.Directory != null && file.Directory.Exists == false)
 				file.Directory.Create();
 			
-			VanguardImplementation.SaveVMState(path);
+			// Call emulator function
+			Vanguard_savesavestate(path);
 			return path;
 		}
 
@@ -217,7 +181,9 @@ namespace VanguardHook
 		{
 			StepActions.ClearStepBlastUnits();
 			RtcClock.ResetCount();
-			LoadVMState(path);
+
+			// Call emulator function
+            Vanguard_loadsavestate(path);
 			return true;
 		}
 		
@@ -245,7 +211,7 @@ namespace VanguardHook
 				// Clear out any old settings
 				//Config.ClearCurrentVanguardLayer();
 
-				// Call imported emulator function
+				// Call emulator function
 				Vanguard_loadROM(filename);
 			}
         }
@@ -299,14 +265,29 @@ namespace VanguardHook
 			AllSpec.VanguardSpec.Update(gameDone);
 			LocalNetCoreRouter.Route(RTCV.NetCore.Endpoints.CorruptCore, RTCV.NetCore.Commands.Remote.EventDomainsUpdated, true, true);
 		}
+
+		// finds all domains to be used by the system
 		public static MemoryDomainProxy[] GetInterfaces()
         {
 			Console.WriteLine($"getInterfaces()");
-			List<MemoryDomainProxy> interfaces = new List<MemoryDomainProxy>();
-			MemoryDomainSRAMDomain SRAMdomn = new MemoryDomainSRAMDomain();
-			interfaces.Add(new MemoryDomainProxy(SRAMdomn));
-            MemoryDomainEXRAMDomain EXRAMdomn = new MemoryDomainEXRAMDomain();
-            interfaces.Add(new MemoryDomainProxy(EXRAMdomn));
+
+            if (String.IsNullOrWhiteSpace((string)AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME]))
+				return new List<MemoryDomainProxy>(0).ToArray();
+
+            List<MemoryDomainProxy> interfaces = new List<MemoryDomainProxy>();
+			List<MemoryDomainConfig> memDomainList = VanguardConfigReader.configFile.MemoryDomainConfig;
+            for (var i = 0; i < memDomainList.Count; i++)
+            {
+                for (var j = 0; j < memDomainList[i].Profiles.Count; j++)
+				{
+                    if (memDomainList[i].Profiles[j] == (string)AllSpec.VanguardSpec[VSPEC.SYSTEMCORE])
+					{
+                        MemoryDomain memDomain = new MemoryDomain(memDomainList[i]);
+                        interfaces.Add(new MemoryDomainProxy(memDomain));
+						break;
+                    }
+				}
+            }
             return interfaces.ToArray();
 			
         }
@@ -328,7 +309,7 @@ namespace VanguardHook
 							VanguardCore.FirstConnect = false;
 						}
 						//VanguardCore.LOAD_GAME_DONE();
-						RefreshDomains();
+						//RefreshDomains();
 					}
 					break;
 				case RTCV.NetCore.Commands.Basic.SaveSavestate:
@@ -341,12 +322,9 @@ namespace VanguardHook
 						var cmd = advancedMessage.objectValue as object[];
 						var path = cmd[0] as string;
 						var location = (StashKeySavestateLocation)cmd[1];
-						ConsoleEx.WriteLine(path);
 						SyncObjectSingleton.EmuThreadExecute(() => { e.setReturnValue(LoadSavestate(path, location)); }, true);
 						break;
 					}
-
-
                 case RTCV.NetCore.Commands.Remote.LoadROM:
 					{
 						string fileName = advancedMessage.objectValue as string;
@@ -361,12 +339,9 @@ namespace VanguardHook
 
 				case RTCV.NetCore.Commands.Remote.PostCorruptAction:
                     {
-						//var path = Path.Combine(RtcCore.workingDir, "Dolphintmp.savestat");
 						SyncObjectSingleton.EmuThreadExecute(() =>
 						{
 							Vanguard_resume();
-							//Vanguard_savesavestate(path);
-							//Vanguard_loadsavestate(path);
 						}, true);
 					}
 					break;

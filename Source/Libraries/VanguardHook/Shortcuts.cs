@@ -54,13 +54,11 @@ namespace VanguardHook
         [DllExport("LOADGAMESTART")]
         public static void LOADGAMESTART([MarshalAs(UnmanagedType.BStr)] string rompath)
         {
-            ConsoleEx.WriteLine("game starting");
             VanguardCore.LOAD_GAME_START(rompath);
         }
         [DllExport("LOADGAMEDONE")]
         public static void LOADGAMEDONE([MarshalAs(UnmanagedType.BStr)] string gamename)
         {
-            ConsoleEx.WriteLine("game finished loading");
             VanguardCore.LOAD_GAME_DONE(gamename);
         }
         [DllExport("GAMECLOSED")]

@@ -61,6 +61,7 @@
     <Compile Include="AnchorForm.Designer.cs">
       <DependentUpon>AnchorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConfigReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shortcuts.cs" />
     <Compile Include="VanguardCore.cs" />
