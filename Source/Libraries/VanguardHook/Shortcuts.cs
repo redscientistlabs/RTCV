@@ -16,7 +16,6 @@ using static VanguardHook.VanguardCore;
 
 namespace VanguardHook
 {
-
     class Shortcuts //I'm calling this class "Shortcuts" because it contains "shortcuts" to other functions
     {
 
@@ -41,8 +40,10 @@ namespace VanguardHook
             AppDomain.CurrentDomain.AssemblyLoad += new AssemblyLoadEventHandler(CurrentDomain_AssemblyLoad);
             AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(CurrentDomain_AssemblyResolve);
             Load_Dlls();
+            emuDir = emuDir + "\\Dolphin.exe";
+            EmuDirectory.emuDir = emuDir;
 
-            VanguardCore.Start(emuDir);
+            VanguardCore.Start();
         }
 
         [DllExport("GAMETOLOAD")]

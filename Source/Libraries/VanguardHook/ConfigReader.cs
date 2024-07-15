@@ -38,11 +38,12 @@ namespace VanguardHook
         public string Size { get; set; }
         public int WordSize { get; set; }
         public string Offset { get; set; }
+        public int PeekPokeSel { get; set; }
     }
 
     public class VanguardConfigReader
     {
-        static readonly string config = File.ReadAllText(VanguardCore.emuDir + "VanguardSpec.Json");
+        static readonly string config = File.ReadAllText(EmuDirectory.emuDir + "VanguardSpec.Json");
         public static Root configFile = JsonConvert.DeserializeObject<Root>(config);
     }
     

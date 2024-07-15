@@ -32,6 +32,7 @@ namespace VanguardHook
 		private long VSize;
 		private int VWordSize;
 		private long VOffset;
+		private int VPeekPokeSel;
 		public MemoryDomain(MemoryDomainConfig config)
 		{
 			VName = config.Name;
@@ -39,6 +40,7 @@ namespace VanguardHook
 			VSize = Int32.Parse(config.Size.Substring(2), NumberStyles.HexNumber);
 			VWordSize = config.WordSize;
 			VOffset = Int32.Parse(config.Offset.Substring(2), NumberStyles.HexNumber);
+			VPeekPokeSel = config.PeekPokeSel;
 		}
 
 		// set the interface variables
@@ -58,7 +60,7 @@ namespace VanguardHook
 			{
 				return;
 			}
-			VanguardImplementation.Vanguard_pokebyte(address + VOffset, (byte)val);
+			VanguardImplementation.Vanguard_pokebyte(address + VOffset, (byte)val, VPeekPokeSel);
 		}
 		public byte PeekByte(long addr)
 		{
@@ -66,7 +68,7 @@ namespace VanguardHook
 			{
 				return 0;
 			}
-			return (byte)VanguardImplementation.Vanguard_peekbyte(addr + VOffset);
+			return (byte)VanguardImplementation.Vanguard_peekbyte(addr + VOffset, VPeekPokeSel);
 		}
 		public byte[] PeekBytes(long address, int length)
 		{
@@ -103,10 +105,10 @@ namespace VanguardHook
 		//
 		//Import all supported functions from the emulator
 		//
-		public delegate byte Vpeekbyte(long addr);
+		public delegate byte Vpeekbyte(long addr, int selection = 0);
 		public static Vpeekbyte Vanguard_peekbyte = GetMethod<Vpeekbyte>("Vanguard_peekbyte");
 
-		public delegate void Vpokebyte(long addr, byte buf);
+		public delegate void Vpokebyte(long addr, byte buf, int selection = 0);
 		public static Vpokebyte Vanguard_pokebyte = GetMethod<Vpokebyte>("Vanguard_pokebyte");
 
 		public delegate void Vsavesavestate([MarshalAs(UnmanagedType.BStr)] string filename, bool wait = false);
@@ -120,6 +122,12 @@ namespace VanguardHook
 
 		public delegate void VfinishLoading();
 		public static VfinishLoading Vanguard_finishLoading = GetMethod<VfinishLoading>("Vanguard_finishLoading");
+
+		public delegate void VprepShutdown();
+		public static VprepShutdown Vanguard_prepShutdown = GetMethod<VprepShutdown>("Vanguard_prepShutdown");
+
+		public delegate void VforceStop();
+		public static VforceStop Vanguard_forceStop = GetMethod<VforceStop>("Vanguard_forceStop");
 
 		public delegate bool VisWii();
 		public static VisWii Vanguard_isWii = GetMethod<VisWii>("Vanguard_isWii");
@@ -136,12 +144,17 @@ namespace VanguardHook
         //public static Vresume Vanguard_resume = GetMethod<Vresume>("Vanguard_resume");
         public static Vresume Vanguard_resume;
 
+
+		// loads the emulator exe and returns a pointer for importing exported functions
 		public static IntPtr LoadEmuPointer()
 		{
-            IntPtr pDll = NativeMethods.LoadLibrary(VanguardCore.emuEXE);
+            IntPtr pDll = NativeMethods.LoadLibrary(EmuDirectory.emuEXE);
 			return pDll;
         }
 
+		// tries to find a target method to import from the emulator. If it cannot find
+		// one it returns default, so extra failsafes will be needed to make sure you
+		// don't use a method that only exists for some emulators and not others.
 		public static T GetMethod<T>(string MethodName)
 		{
 			IntPtr procAddr = NativeMethods.GetProcAddress(pEXE, MethodName);
@@ -167,12 +180,12 @@ namespace VanguardHook
 		public static string SaveSavestate(string Key, bool threadSave = false)
 		{
             string quickSlotName = Key + ".timejump";
-			string prefix = VanguardCore.GameName;
-			string path = Path.Combine(RtcCore.workingDir, "SESSION", prefix + "." + quickSlotName + ".State");
+            // remove any invalid file characters before storing it
+            string prefix = RTCV.CorruptCore.Extensions.StringExtensions.MakeSafeFilename(VanguardCore.GameName, '-');
 
-			// Todo: readd MakeSafeFilename
+            string path = Path.Combine(RtcCore.workingDir, "SESSION", prefix + "." + quickSlotName + ".State");
 
-			FileInfo file = new FileInfo(path);
+            FileInfo file = new FileInfo(path);
 			if (file.Directory != null && file.Directory.Exists == false)
 				file.Directory.Create();
 			
@@ -396,7 +409,19 @@ namespace VanguardHook
 					SyncObjectSingleton.FormExecute(() => LocalNetCoreRouter.Route("HEXEDITOR", Remote.OpenHexEditor, true));
 					break;
 				case RTCV.NetCore.Commands.Remote.EventCloseEmulator:
-					Environment.Exit(-1);
+					StopClient();
+					RtcCore.InvokeGameClosed(true);
+
+					// Prep Dolphin so when the game closes it exits
+					var g = new SyncObjectSingleton.GenericDelegate(Vanguard_prepShutdown);
+					SyncObjectSingleton.FormExecute(g);
+
+					// Stop the game
+					g = new SyncObjectSingleton.GenericDelegate(Vanguard_forceStop);
+					SyncObjectSingleton.FormExecute(g);
+
+					// Close the hex editor if it's open
+					RtcCore.InvokeKillHexEditor();
 					break;
 			}
 		}

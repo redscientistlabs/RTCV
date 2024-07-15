@@ -1,5 +1,6 @@
 ﻿
 using RTCV.CorruptCore;
+using RTCV.CorruptCore.Extensions;
 using RTCV.NetCore;
 using RTCV.NetCore.Commands;
 using RTCV.Vanguard;
@@ -22,6 +23,13 @@ using System.Threading.Tasks;
 
 namespace VanguardHook
 {
+    public static class EmuDirectory
+    {
+        public static string emuDir;
+        public static string logPath;
+        public static string emuEXE;
+    }
+
     class VanguardCore
 	{
 		public static string[] args;
@@ -77,9 +85,6 @@ namespace VanguardHook
 			set => AllSpec.VanguardSpec.Update(VSPEC.MEMORYDOMAINS_INTERFACES, value);
 		}
 
-        public static string emuDir = "";
-        public static string emuEXE = "";
-		public static string logPath = Path.Combine(emuDir, "EMU_LOG.txt");
 		public static string RTCVHookOGLVersion = "0.0.1";
 
         public static PartialSpec getDefaultPartial()
@@ -106,8 +111,9 @@ namespace VanguardHook
             partial[VSPEC.SUPPORTS_REFERENCES] = config.SUPPORTS_REFERENCES;
             partial[VSPEC.SUPPORTS_MIXED_STOCKPILE] = config.SUPPORTS_MIXED_STOCKPILE;
             partial[VSPEC.CONFIG_PATHS] = new[] { "" };
-			partial[VSPEC.EMUDIR] = emuDir;
-			emuEXE = config.EmuEXE;
+			partial[VSPEC.EMUDIR] = EmuDirectory.emuDir;
+			EmuDirectory.emuEXE = config.EmuEXE;
+            EmuDirectory.logPath = Path.Combine(EmuDirectory.emuDir, "EMU_LOG.txt");
 
             return partial;
 			
@@ -123,7 +129,11 @@ namespace VanguardHook
 			AllSpec.VanguardSpec = new FullSpec(emuSpecTemplate, !RtcCore.Attached);
 			if (VanguardCore.attached)
 				VanguardConnector.PushVanguardSpecRef(AllSpec.VanguardSpec);
-			LocalNetCoreRouter.Route(Endpoints.CorruptCore, Remote.PushVanguardSpec, emuSpecTemplate, true);
+            // also update the RtcCore directory for the killswitch
+			// have to update it here because CorruptCore checks the AllSpec,
+			// and I'm not changing that code
+            RtcCore.EmuDir = EmuDirectory.emuDir;
+            LocalNetCoreRouter.Route(Endpoints.CorruptCore, Remote.PushVanguardSpec, emuSpecTemplate, true);
 			LocalNetCoreRouter.Route(Endpoints.UI, Remote.PushVanguardSpec, emuSpecTemplate, true);
 
 			AllSpec.VanguardSpec.SpecUpdated += new EventHandler<SpecUpdateEventArgs>(OnVanguardSpecOnSpecUpdated);
@@ -187,9 +197,13 @@ namespace VanguardHook
 				gameDone[VSPEC.SYSTEMCORE] = VanguardConfigReader.configFile.VSpecConfig.PROFILE;
 
             gameDone[VSPEC.SYNCSETTINGS] = "";
-			gameDone[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] = gameDone[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS]; //need to figure out equivalent to `gcnew array<String ^>{}`
-			gameDone[VSPEC.CORE_DISKBASED] = true;
-			gameDone[VSPEC.GAMENAME] = gamename;
+			gameDone[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] = new List<string> { };
+			gameDone[VSPEC.CORE_DISKBASED] = false; // hardcoded for now, this needs to be sent by the emulator
+
+			// remove any invalid file characters before storing it
+			string gamenameFixed = StringExtensions.MakeSafeFilename(gamename, '-');
+
+            gameDone[VSPEC.GAMENAME] = gamenameFixed;
             //Todo: add sync settings
             AllSpec.VanguardSpec.Update(gameDone);
             VanguardImplementation.RefreshDomains();
@@ -222,27 +236,27 @@ namespace VanguardHook
             }
 			return true;
         }
-        public static void Start(string emuDir)
+        public static void Start()
 		{
-			//SyncForm = new AnchorForm();
-			//         //Grab an object on the main thread to use for netcore invokes
-			//         Dispatcher.CurrentDispatcher.Invoke((MethodInvoker)delegate
-			//         {
-			//             SyncForm.Activate();
 
-			//         }, null);
-			//         //IntPtr Handle = SyncForm.Handle;
-			SyncForm = new AnchorForm();
+
+            SyncForm = new AnchorForm();
 			var handle = SyncForm.Handle;
             SyncObjectSingleton.SyncObject = SyncForm;
 
-            //SyncObjectSingleton.EmuInvokeDelegate = new SyncObjectSingleton.ActionDelegate(EmuThreadExecute);
             SyncObjectSingleton.EmuThreadIsMainThread = true;
 			//SyncForm.Show();
 			SyncForm.Activate();
 			ConsoleHelper.CreateConsole();
 			ConsoleHelper.ShowConsole();
-            emuDir = emuDir + "\\";
+
+            if (EmuDirectory.emuDir.Contains(".exe"))
+            {
+                EmuDirectory.emuDir = EmuDirectory.emuDir.Substring(0, EmuDirectory.emuDir.LastIndexOf("\\"));
+                ConsoleEx.WriteLine(EmuDirectory.emuDir);
+            }
+            EmuDirectory.emuDir = EmuDirectory.emuDir + "\\";
+
             //Start everything
             VanguardImplementation.StartClient();
 			VanguardCore.RegisterVanguardSpec();
@@ -280,8 +294,6 @@ namespace VanguardHook
 			if (VanguardCore.attached)
 				VanguardConnector.ImplyClientConnected();
 		}
-
 	}
-
 }
 

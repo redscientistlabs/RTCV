@@ -23,7 +23,8 @@
       "BigEndian": true,
       "Size": "0x017FFFFF",
       "WordSize": 4,
-      "Offset": "0x80000000"
+      "Offset": "0x80000000",
+      "PeekPokeSel": 0
     },
     {
       "Name": "EXRAM",
@@ -33,7 +34,8 @@
       "BigEndian": true,
       "Size": "0x03FFFFFF",
       "WordSize": 4,
-      "Offset": "0x90000000"
+      "Offset": "0x90000000",
+      "PeekPokeSel": 0
     },
     {
       "Name": "ARAM",
@@ -43,7 +45,8 @@
       "BigEndian": true,
       "Size": "0x03FFFFFF",
       "WordSize": 4,
-      "Offset": "0x90000000"
+      "Offset": "0x90000000",
+      "PeekPokeSel": 1
     }
   ]
 }
