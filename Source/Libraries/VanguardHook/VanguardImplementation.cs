@@ -64,11 +64,40 @@ namespace VanguardHook
 		}
 		public byte PeekByte(long addr)
 		{
+			// MEGA HACK AHEAD
+			// this code checks to see how many peekbytes are about to be read, then keeps the emulator
+			// paused until it's done. This is mainly to confirm that pausing the emulator before performing
+			// a manual blast is needed, otherwise lots of issues start to pop up
+			/*
+			if (VanguardImplementation.batch_corrupt == false)
+			{
+				//int precision = Convert.ToInt32(AllSpec.CorruptCoreSpec[RTCSPEC.CORE_CURRENTPRECISION]);
+				int intensity = Convert.ToInt32(AllSpec.CorruptCoreSpec[RTCSPEC.CORE_INTENSITY]);
+
+				VanguardImplementation.number_of_peeks = 4 * intensity;
+				ConsoleEx.WriteLine("pausing for " + VanguardImplementation.number_of_peeks + " peeks");
+				VanguardImplementation.batch_corrupt = true;
+				VanguardImplementation.Vanguard_pause();
+			}
+			else if (VanguardImplementation.peek_index < VanguardImplementation.number_of_peeks)
+				VanguardImplementation.peek_index += 1;				
+			*/
 			if (addr > Size)
 			{
 				return 0;
 			}
-			return (byte)VanguardImplementation.Vanguard_peekbyte(addr + VOffset, VPeekPokeSel);
+
+			// more of the hack
+			/*
+            if (VanguardImplementation.peek_index == VanguardImplementation.number_of_peeks - 1)
+            {
+                ConsoleEx.WriteLine("resuming");
+                VanguardImplementation.peek_index = 0;
+				VanguardImplementation.batch_corrupt = false;
+                VanguardImplementation.Vanguard_resume();
+            }
+			*/
+            return (byte)VanguardImplementation.Vanguard_peekbyte(addr + VOffset, VPeekPokeSel);
 		}
 		public byte[] PeekBytes(long address, int length)
 		{
@@ -96,8 +125,11 @@ namespace VanguardHook
 
 	public class VanguardImplementation
 	{
+        public static bool batch_corrupt = false;
+		public static int number_of_peeks = 0;
+		public static int peek_index = 0;
 
-		public static bool enableRTC = true;
+        public static bool enableRTC = true;
 
 		//load the emulator exe and creates a pointer to it
 		public static IntPtr pEXE = LoadEmuPointer();
@@ -111,7 +143,13 @@ namespace VanguardHook
 		public delegate void Vpokebyte(long addr, byte buf, int selection = 0);
 		public static Vpokebyte Vanguard_pokebyte = GetMethod<Vpokebyte>("Vanguard_pokebyte");
 
-		public delegate void Vsavesavestate([MarshalAs(UnmanagedType.BStr)] string filename, bool wait = false);
+		public delegate void Vpause(bool pauseUntilCorrupt = false);
+		public static Vpause Vanguard_pause = GetMethod<Vpause>("Vanguard_pause");
+
+        public delegate void Vresume();
+        public static Vresume Vanguard_resume = GetMethod<Vresume>("Vanguard_resume");
+
+        public delegate void Vsavesavestate([MarshalAs(UnmanagedType.BStr)] string filename, bool wait = false);
 		public static Vsavesavestate Vanguard_savesavestate = GetMethod<Vsavesavestate>("Vanguard_savesavestate");
 
 		public delegate void Vloadsavestate([MarshalAs(UnmanagedType.BStr)] string filename);
@@ -131,18 +169,6 @@ namespace VanguardHook
 
 		public delegate bool VisWii();
 		public static VisWii Vanguard_isWii = GetMethod<VisWii>("Vanguard_isWii");
-
-
-		//These two aren't programmed in the emulator right now, I'll have to figure out how to decide which methods are imported
-		[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate Action Vpause();
-        //public static Vpause Vanguard_pause = GetMethod<Vpause>("Vanguard_pause");
-        public static Vpause Vanguard_pause;
-
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void Vresume();
-        //public static Vresume Vanguard_resume = GetMethod<Vresume>("Vanguard_resume");
-        public static Vresume Vanguard_resume;
 
 
 		// loads the emulator exe and returns a pointer for importing exported functions
@@ -237,8 +263,6 @@ namespace VanguardHook
 			return "";
         }
 
-        //[UnmanagedFunctionPointer(CallingConvention.StdCall, SetLastError = true)]
-        //delegate
         public static RTCV.Vanguard.VanguardConnector connector = null;
         public static void StartClient()
         {
@@ -251,9 +275,6 @@ namespace VanguardHook
                 spec.Attached = VanguardCore.attached;
                 spec.MessageReceived += OnMessageRecieved;
                 connector = new RTCV.Vanguard.VanguardConnector(spec);
-                //while(true)
-                //            {
-                //            }
             }
             catch (Exception ex)
             {
@@ -278,7 +299,6 @@ namespace VanguardHook
                 return;
 			PartialSpec gameDone = new PartialSpec("VanguardSpec");
 			gameDone[VSPEC.MEMORYDOMAINS_INTERFACES] = GetInterfaces();
-			//gameDone[VSPEC.GAMENAME] = GetGameName();
 			AllSpec.VanguardSpec.Update(gameDone);
 			LocalNetCoreRouter.Route(RTCV.NetCore.Endpoints.CorruptCore, RTCV.NetCore.Commands.Remote.EventDomainsUpdated, true, true);
 		}
@@ -319,19 +339,17 @@ namespace VanguardHook
 			{
 				case RTCV.NetCore.Commands.Remote.AllSpecSent:
 					{
-						if (VanguardCore.FirstConnect)
+						SyncObjectSingleton.FormExecute(() => {; });
+						for (var i = 0; i < AllSpec.VanguardSpec.GetKeys().Count(); i++)
 						{
-							SyncObjectSingleton.FormExecute(() => { ; });
-							
-							VanguardCore.FirstConnect = false;
-						}
-						//VanguardCore.LOAD_GAME_DONE();
-						//RefreshDomains();
+							string key = AllSpec.VanguardSpec.GetKeys()[i];
+                            ConsoleEx.WriteLine(key);
+                        }
 					}
 					break;
 				case RTCV.NetCore.Commands.Basic.SaveSavestate:
 					{
-                        SyncObjectSingleton.EmuThreadExecute(() => { e.setReturnValue(SaveSavestate(advancedMessage.objectValue as string)); }, true);
+						SyncObjectSingleton.EmuThreadExecute(() => { e.setReturnValue(SaveSavestate(advancedMessage.objectValue as string)); }, true);
 						break;
 					}
 				case RTCV.NetCore.Commands.Basic.LoadSavestate:
@@ -339,26 +357,32 @@ namespace VanguardHook
 						var cmd = advancedMessage.objectValue as object[];
 						var path = cmd[0] as string;
 						var location = (StashKeySavestateLocation)cmd[1];
-						SyncObjectSingleton.EmuThreadExecute(() => { e.setReturnValue(LoadSavestate(path, location)); }, true);
+                        SyncObjectSingleton.EmuThreadExecute(() => { e.setReturnValue(LoadSavestate(path, location)); }, true);
 						break;
 					}
-                case RTCV.NetCore.Commands.Remote.LoadROM:
+				case RTCV.NetCore.Commands.Remote.LoadROM:
 					{
 						string fileName = advancedMessage.objectValue as string;
 						// Dolphin DEMANDS the rom is loaded from the main thread
-                        Action<string> a = new Action <string> (LoadROM);
-                        SyncObjectSingleton.FormExecute<string>(a, fileName);
+						Action<string> a = new Action<string>(LoadROM);
+						SyncObjectSingleton.FormExecute<string>(a, fileName);
 					}
 					break;
 				case RTCV.NetCore.Commands.Remote.PreCorruptAction:
-					SyncObjectSingleton.EmuThreadExecute(Vanguard_pause(), true);
+					{ 
+					SyncObjectSingleton.EmuThreadExecute(() =>
+					{
+						Vanguard_pause(true);
+					}, true);
+					}
+
 					break;
 
 				case RTCV.NetCore.Commands.Remote.PostCorruptAction:
                     {
 						SyncObjectSingleton.EmuThreadExecute(() =>
 						{
-							Vanguard_resume();
+                            Vanguard_resume();
 						}, true);
 					}
 					break;

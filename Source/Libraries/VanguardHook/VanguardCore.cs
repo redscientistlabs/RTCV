@@ -142,7 +142,6 @@ namespace VanguardHook
 		{
 			PartialSpec partial = e.partialSpec;
 
-
 			LocalNetCoreRouter.Route(RTCV.NetCore.Endpoints.CorruptCore, RTCV.NetCore.Commands.Remote.PushVanguardSpecUpdate, partial, true);
 			LocalNetCoreRouter.Route(RTCV.NetCore.Endpoints.UI, RTCV.NetCore.Commands.Remote.PushVanguardSpecUpdate, partial, true);
 		}
@@ -250,18 +249,13 @@ namespace VanguardHook
 			ConsoleHelper.CreateConsole();
 			ConsoleHelper.ShowConsole();
 
-            if (EmuDirectory.emuDir.Contains(".exe"))
-            {
-                EmuDirectory.emuDir = EmuDirectory.emuDir.Substring(0, EmuDirectory.emuDir.LastIndexOf("\\"));
-                ConsoleEx.WriteLine(EmuDirectory.emuDir);
-            }
             EmuDirectory.emuDir = EmuDirectory.emuDir + "\\";
-
             //Start everything
             VanguardImplementation.StartClient();
-			VanguardCore.RegisterVanguardSpec();
-			RtcCore.StartEmuSide();
-			Thread.Sleep(500);
+            VanguardCore.RegisterVanguardSpec();
+            Thread.Sleep(500);
+            RtcCore.StartEmuSide();
+			//Thread.Sleep(500);
 			focusTimer = new System.Timers.Timer
 			{
 				AutoReset = true,
@@ -292,7 +286,9 @@ namespace VanguardHook
 
 			//If it's attached, lie to `
 			if (VanguardCore.attached)
+			{
 				VanguardConnector.ImplyClientConnected();
+			}
 		}
 	}
 }
