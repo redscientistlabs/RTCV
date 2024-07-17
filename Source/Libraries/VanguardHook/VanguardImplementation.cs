@@ -86,7 +86,7 @@ namespace VanguardHook
                 VanguardImplementation.number_of_peeks = precision * intensity;
 				ConsoleEx.WriteLine("pausing for " + VanguardImplementation.number_of_peeks + " peeks");
 
-				SyncObjectSingleton.EmuThreadExecute(() => { VanguardImplementation.Vanguard_pause(); }, true);
+                SyncObjectSingleton.FormExecute(() => VanguardImplementation.Vanguard_resume());
             }
 
             //ConsoleEx.WriteLine("peek");
@@ -100,7 +100,7 @@ namespace VanguardHook
 				VanguardImplementation.batch_corrupt = false;
 
                 VanguardImplementation.number_of_peeks = 0;
-                SyncObjectSingleton.EmuThreadExecute(() => { VanguardImplementation.Vanguard_resume(); }, true);
+                SyncObjectSingleton.FormExecute(() => VanguardImplementation.Vanguard_resume());
             }
 
             return (byte)VanguardImplementation.Vanguard_peekbyte(addr + VOffset, VPeekPokeSel);
