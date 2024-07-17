@@ -22,6 +22,7 @@ using System.Reflection;
 using Newtonsoft.Json;
 using static VanguardHook.VanguardCore;
 using System.Runtime.InteropServices.ComTypes;
+using static System.Windows.Forms.AxHost;
 
 namespace VanguardHook
 {
@@ -56,7 +57,7 @@ namespace VanguardHook
 		}
 		public void PokeByte(long address, byte val)
 		{
-			if (address > Size)
+			if (address > VSize)
 			{
 				return;
 			}
@@ -64,44 +65,48 @@ namespace VanguardHook
 		}
 		public byte PeekByte(long addr)
 		{
-			// MEGA HACK AHEAD
-			// this code checks to see how many peekbytes are about to be read, then keeps the emulator
-			// paused until it's done. This is mainly to confirm that pausing the emulator before performing
-			// a manual blast is needed, otherwise lots of issues start to pop up
-			/*
-			if (VanguardImplementation.batch_corrupt == false)
+            if (addr > VSize)
+            {
+                return 0;
+            }
+
+            // MEGA HACK AHEAD
+            // this code checks to see how many peekbytes are about to be read, then keeps the emulator
+            // paused until it's done. This is mainly to confirm that pausing the emulator before performing
+            // a manual blast is needed, otherwise lots of issues start to pop up
+            // it's not perfect since we need to resume the emulator right before the very last peek, but
+            // this should at least avoid 99.9% of issues that arise from it.
+            if (VanguardImplementation.usePeekHack && !VanguardImplementation.batch_corrupt)
 			{
-				//int precision = Convert.ToInt32(AllSpec.CorruptCoreSpec[RTCSPEC.CORE_CURRENTPRECISION]);
+
+				int precision = Convert.ToInt32(AllSpec.CorruptCoreSpec[RTCSPEC.CORE_CURRENTPRECISION]);
 				int intensity = Convert.ToInt32(AllSpec.CorruptCoreSpec[RTCSPEC.CORE_INTENSITY]);
-
-				VanguardImplementation.number_of_peeks = 4 * intensity;
+                VanguardImplementation.peek_index = 0;
+                VanguardImplementation.batch_corrupt = true;
+                VanguardImplementation.number_of_peeks = precision * intensity;
 				ConsoleEx.WriteLine("pausing for " + VanguardImplementation.number_of_peeks + " peeks");
-				VanguardImplementation.batch_corrupt = true;
-				VanguardImplementation.Vanguard_pause();
-			}
-			else if (VanguardImplementation.peek_index < VanguardImplementation.number_of_peeks)
-				VanguardImplementation.peek_index += 1;				
-			*/
-			if (addr > Size)
-			{
-				return 0;
-			}
 
-			// more of the hack
-			/*
-            if (VanguardImplementation.peek_index == VanguardImplementation.number_of_peeks - 1)
+				SyncObjectSingleton.EmuThreadExecute(() => { VanguardImplementation.Vanguard_pause(); }, true);
+            }
+
+            //ConsoleEx.WriteLine("peek");
+            VanguardImplementation.peek_index += 1;
+
+            if (VanguardImplementation.usePeekHack && 
+				VanguardImplementation.batch_corrupt && 
+				(VanguardImplementation.peek_index >= VanguardImplementation.number_of_peeks))
             {
                 ConsoleEx.WriteLine("resuming");
-                VanguardImplementation.peek_index = 0;
 				VanguardImplementation.batch_corrupt = false;
-                VanguardImplementation.Vanguard_resume();
+
+                VanguardImplementation.number_of_peeks = 0;
+                SyncObjectSingleton.EmuThreadExecute(() => { VanguardImplementation.Vanguard_resume(); }, true);
             }
-			*/
+
             return (byte)VanguardImplementation.Vanguard_peekbyte(addr + VOffset, VPeekPokeSel);
 		}
 		public byte[] PeekBytes(long address, int length)
 		{
-
 			var returnArray = new byte[length];
 			for (var i = 0; i < length; i++)
 				returnArray[i] = PeekByte(address + i);
@@ -125,11 +130,13 @@ namespace VanguardHook
 
 	public class VanguardImplementation
 	{
+        public static bool usePeekHack = true;
         public static bool batch_corrupt = false;
 		public static int number_of_peeks = 0;
 		public static int peek_index = 0;
+		
 
-        public static bool enableRTC = true;
+		public static bool enableRTC = true;
 
 		//load the emulator exe and creates a pointer to it
 		public static IntPtr pEXE = LoadEmuPointer();
@@ -340,11 +347,13 @@ namespace VanguardHook
 				case RTCV.NetCore.Commands.Remote.AllSpecSent:
 					{
 						SyncObjectSingleton.FormExecute(() => {; });
+						/*
 						for (var i = 0; i < AllSpec.VanguardSpec.GetKeys().Count(); i++)
 						{
 							string key = AllSpec.VanguardSpec.GetKeys()[i];
-                            ConsoleEx.WriteLine(key);
+							ConsoleEx.WriteLine(key + " = " + AllSpec.VanguardSpec[key].ToString());
                         }
+						*/
 					}
 					break;
 				case RTCV.NetCore.Commands.Basic.SaveSavestate:
@@ -370,21 +379,17 @@ namespace VanguardHook
 					break;
 				case RTCV.NetCore.Commands.Remote.PreCorruptAction:
 					{ 
-					SyncObjectSingleton.EmuThreadExecute(() =>
-					{
-						Vanguard_pause(true);
-					}, true);
+						SyncObjectSingleton.EmuThreadExecute(() => { Vanguard_pause(true); }, true);
+						usePeekHack = false;
 					}
 
 					break;
 
 				case RTCV.NetCore.Commands.Remote.PostCorruptAction:
                     {
-						SyncObjectSingleton.EmuThreadExecute(() =>
-						{
-                            Vanguard_resume();
-						}, true);
-					}
+                        SyncObjectSingleton.EmuThreadExecute(() => { Vanguard_resume(); }, true);
+						usePeekHack = true;
+                    }
 					break;
 				case RTCV.NetCore.Commands.Remote.CloseGame:
 					{
