@@ -45,6 +45,12 @@ namespace VanguardHook
             VanguardCore.Start();
         }
 
+        [DllExport("SHOWCONSOLE")]
+        public static void ShowConsole()
+        {
+            ConsoleHelper.ShowConsole();
+        }
+
         [DllExport("GAMETOLOAD")]
         public static void GAMETOLOAD([MarshalAs(UnmanagedType.BStr)] string rompath)
         {

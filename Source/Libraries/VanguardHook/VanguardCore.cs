@@ -251,7 +251,7 @@ namespace VanguardHook
 			//SyncForm.Show();
 			SyncForm.Activate();
 			ConsoleHelper.CreateConsole();
-			ConsoleHelper.ShowConsole();
+			ConsoleHelper.HideConsole();
 
             EmuDirectory.emuDir = EmuDirectory.emuDir + "\\";
             //Start everything
@@ -260,12 +260,12 @@ namespace VanguardHook
             Thread.Sleep(500);
             RtcCore.StartEmuSide();
 
-            //Thread.Sleep(500);
             focusTimer = new System.Timers.Timer
 			{
 				AutoReset = true,
 				Interval = 250
 			};
+
 			//Update the focus state of the emulator
 			focusTimer.Elapsed += (sender, eventArgs) =>
 			{
