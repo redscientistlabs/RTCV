@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json;
+using System.Runtime.Remoting.Messaging;
+using System.Windows.Forms;
+using RTCV.UI;
 
 namespace VanguardHook
 {
@@ -43,8 +46,24 @@ namespace VanguardHook
 
     public class VanguardConfigReader
     {
-        static readonly string config = File.ReadAllText(EmuDirectory.emuDir + "VanguardSpec.Json");
-        public static Root configFile = JsonConvert.DeserializeObject<Root>(config);
+        public static Root configFile = GetConfigFile();
+        public static Root GetConfigFile()
+        {
+            if (!File.Exists(EmuDirectory.emuDir + "VanguardSpec.Json"))
+            {
+                MessageBox.Show(
+                "Vanguard could not find the target Emulator's config file. Try reinstalling " +
+                "and launching Vanguard.\n\nIf you keep getting this message, poke " +
+                "the RTC devs for help (Discord is in the launcher).",
+                "RTC Not Connected");
+                
+                Environment.Exit(-1);
+                return null;
+            }
+
+            string config = File.ReadAllText(EmuDirectory.emuDir + "VanguardSpec.Json");
+            Root configFile = JsonConvert.DeserializeObject<Root>(config);
+            return configFile;
+        }
     }
-    
 }

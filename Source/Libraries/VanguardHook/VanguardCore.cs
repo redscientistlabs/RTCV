@@ -91,7 +91,9 @@ namespace VanguardHook
         {
 			//read config file and store the values
             PartialSpec partial = new PartialSpec("VanguardSpec");
-            var config = VanguardConfigReader.configFile.VSpecConfig;
+			if (VanguardConfigReader.configFile == null)
+				return default;
+			var config = VanguardConfigReader.configFile.VSpecConfig;
             partial[VSPEC.NAME] = config.NAME;
             partial[VSPEC.SYSTEM] = String.Empty;
 			partial[VSPEC.GAMENAME] = String.Empty;
@@ -171,6 +173,8 @@ namespace VanguardHook
 		{
             if (AllSpec.UISpec == null)
             {
+				StopGame();
+
                 MessageBox.Show(
 				"It appears you haven't connected to StandaloneRTC. Please make sure that the " +
 				"RTC is running and not just Bizhawk.\nIf you have an antivirus, it might be " +
@@ -255,8 +259,9 @@ namespace VanguardHook
             VanguardCore.RegisterVanguardSpec();
             Thread.Sleep(500);
             RtcCore.StartEmuSide();
-			//Thread.Sleep(500);
-			focusTimer = new System.Timers.Timer
+
+            //Thread.Sleep(500);
+            focusTimer = new System.Timers.Timer
 			{
 				AutoReset = true,
 				Interval = 250
@@ -290,6 +295,12 @@ namespace VanguardHook
 				VanguardConnector.ImplyClientConnected();
 			}
 		}
+
+		public static void StopGame()
+		{
+            var g = new SyncObjectSingleton.GenericDelegate(VanguardImplementation.Vanguard_forceStop);
+            SyncObjectSingleton.FormExecute(g);
+        }
 	}
 }
 

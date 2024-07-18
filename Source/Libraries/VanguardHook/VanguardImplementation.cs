@@ -362,6 +362,8 @@ namespace VanguardHook
 							ConsoleEx.WriteLine(key + " = " + AllSpec.VanguardSpec[key].ToString());
                         }
 						*/
+						// Refresh the domains here as well in case the killswitch was triggered
+						RefreshDomains();
 					}
 					break;
 				case RTCV.NetCore.Commands.Basic.SaveSavestate:
@@ -454,8 +456,7 @@ namespace VanguardHook
 					SyncObjectSingleton.FormExecute(g);
 
 					// Stop the game
-					g = new SyncObjectSingleton.GenericDelegate(Vanguard_forceStop);
-					SyncObjectSingleton.FormExecute(g);
+					StopGame();
 
 					// Close the hex editor if it's open
 					RtcCore.InvokeKillHexEditor();
