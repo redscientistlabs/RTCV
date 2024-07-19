@@ -23,6 +23,7 @@ using Newtonsoft.Json;
 using static VanguardHook.VanguardCore;
 using System.Runtime.InteropServices.ComTypes;
 using static System.Windows.Forms.AxHost;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace VanguardHook
 {
@@ -134,6 +135,19 @@ namespace VanguardHook
         [DllImport("kernel32.dll")]
         public static extern bool FreeLibrary(IntPtr hModule);
 
+
+		// These four are used for detecting if the currently selected window is the emulator
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll")]
+        public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr OpenProcess(uint dwDesiredAccess, bool bInheritHandle, uint dwProcessId);
+
+        [DllImport("psapi.dll")]
+        public static extern uint GetModuleFileNameEx(IntPtr hWnd, IntPtr hModule, StringBuilder lpFileName, int nSize);
     }
 
 	public class VanguardImplementation

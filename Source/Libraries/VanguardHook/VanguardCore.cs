@@ -6,6 +6,7 @@ using RTCV.NetCore.Commands;
 using RTCV.Vanguard;
 using RTCV.UI;
 using System;
+using System.Text;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -269,15 +270,24 @@ namespace VanguardHook
 			//Update the focus state of the emulator
 			focusTimer.Elapsed += (sender, eventArgs) =>
 			{
-				if (VanguardCore.attached)
-				{
-					focusTimer.Enabled = false;
-					return;
-				}
 				if (VanguardImplementation.connector.netConn.status == RTCV.NetCore.Enums.NetworkStatus.CONNECTED)
 				{
-					var state = Form.ActiveForm != null;
+					// get the current foreground window
+                    IntPtr hWnd = NativeMethods.GetForegroundWindow();
+					uint processID;
+					// get length of the path the emulator is running from
+					int EmuWinLen = AllSpec.VanguardSpec[VSPEC.EMUDIR].ToString().Length + EmuDirectory.emuEXE.Length + 1;
+                    StringBuilder EmuWinPath = new StringBuilder(EmuWinLen);
+
+					// get the processID of the window, then get the full path name
+					NativeMethods.GetWindowThreadProcessId(hWnd, out processID);
+                    IntPtr hProcess = NativeMethods.OpenProcess(0x0410, false, processID);
+                    NativeMethods.GetModuleFileNameEx(hProcess, IntPtr.Zero, EmuWinPath, EmuWinLen);
+                    string exeName = EmuWinPath.ToString().Substring(EmuWinPath.ToString().LastIndexOf("\\") + 1);
+
+					var state = (exeName == EmuDirectory.emuEXE ? true : false);
 					//Shortcuts.STEP_CORRUPT();
+					ConsoleEx.WriteLine(state.ToString());
 					if (((bool?)RTCV.NetCore.AllSpec.VanguardSpec?[RTCV.NetCore.Commands.Emulator.InFocus] ?? true) != state)
 						RTCV.NetCore.AllSpec.VanguardSpec?.Update(RTCV.NetCore.Commands.Emulator.InFocus, state, true, false);
 				}
