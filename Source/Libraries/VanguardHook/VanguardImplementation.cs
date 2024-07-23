@@ -85,7 +85,7 @@ namespace VanguardHook
                 VanguardImplementation.peek_index = 0;
                 VanguardImplementation.batch_corrupt = true;
                 VanguardImplementation.number_of_peeks = precision * intensity;
-				ConsoleEx.WriteLine("pausing for " + VanguardImplementation.number_of_peeks + " peeks");
+				//ConsoleEx.WriteLine("pausing for " + VanguardImplementation.number_of_peeks + " peeks");
 
 				if (RtcCore.AutoCorrupt)
                     SyncObjectSingleton.FormExecute(VanguardImplementation.Vanguard_pause);
@@ -101,7 +101,7 @@ namespace VanguardHook
 				VanguardImplementation.batch_corrupt && 
 				(VanguardImplementation.peek_index >= VanguardImplementation.number_of_peeks))
             {
-                ConsoleEx.WriteLine("resuming");
+                //ConsoleEx.WriteLine("resuming");
 				VanguardImplementation.batch_corrupt = false;
 
                 VanguardImplementation.number_of_peeks = 0;
@@ -190,7 +190,10 @@ namespace VanguardHook
 		public delegate void VfinishLoading();
 		public static VfinishLoading Vanguard_finishLoading = GetMethod<VfinishLoading>("Vanguard_finishLoading");
 
-		public delegate void VprepShutdown();
+        public delegate void VcloseGame();
+        public static VcloseGame Vanguard_closeGame = GetMethod<VcloseGame>("Vanguard_closeGame");
+
+        public delegate void VprepShutdown();
 		public static VprepShutdown Vanguard_prepShutdown = GetMethod<VprepShutdown>("Vanguard_prepShutdown");
 
 		public delegate void VforceStop();
@@ -276,14 +279,13 @@ namespace VanguardHook
 			string currentOpenRom = "";
 			if ((string)AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME] != "")
 				currentOpenRom = (string)AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME];
-
+			ConsoleEx.WriteLine(currentOpenRom);
+			ConsoleEx.WriteLine(filename);
 			// Game is not running
 			if (currentOpenRom != filename)
 			{
-				// Clear out any old settings
-				//Config.ClearCurrentVanguardLayer();
-
-				// Call emulator function
+                // Make sure we close any previous games in case the new rom is in a different filepath
+                //Vanguard_closeGame();
 				Vanguard_loadROM(filename);
 			}
         }
@@ -396,7 +398,7 @@ namespace VanguardHook
 				case RTCV.NetCore.Commands.Remote.LoadROM:
 					{
 						string fileName = advancedMessage.objectValue as string;
-						// Dolphin DEMANDS the rom is loaded from the main thread
+						// load game on the main thread
 						Action<string> a = new Action<string>(LoadROM);
 						SyncObjectSingleton.FormExecute<string>(a, fileName);
 					}
@@ -417,8 +419,8 @@ namespace VanguardHook
 					break;
 				case RTCV.NetCore.Commands.Remote.CloseGame:
 					{
-						//SyncObjectSingleton.FormExecute(() => { Hooks.CLOSE_GAME(true); });
-					}
+                        SyncObjectSingleton.EmuThreadExecute(() => { Vanguard_closeGame(); }, true);
+                    }
 					break;
 
 				case RTCV.NetCore.Commands.Remote.DomainGetDomains:
@@ -462,19 +464,20 @@ namespace VanguardHook
 					SyncObjectSingleton.FormExecute(() => LocalNetCoreRouter.Route("HEXEDITOR", Remote.OpenHexEditor, true));
 					break;
 				case RTCV.NetCore.Commands.Remote.EventCloseEmulator:
-					StopClient();
-					RtcCore.InvokeGameClosed(true);
+                    // Close the hex editor if it's open
+                    RtcCore.InvokeKillHexEditor();
 
-					// Prep Dolphin so when the game closes it exits
-					var g = new SyncObjectSingleton.GenericDelegate(Vanguard_prepShutdown);
-					SyncObjectSingleton.FormExecute(g);
+                    // Prep emulator so when the game closes it exits
+                    var g = new SyncObjectSingleton.GenericDelegate(Vanguard_prepShutdown);
+                    SyncObjectSingleton.FormExecute(g);
 
-					// Stop the game
-					StopGame();
+                    // Stop the game
+                    StopClient();
+                    RtcCore.InvokeGameClosed(true);
 
-					// Close the hex editor if it's open
-					RtcCore.InvokeKillHexEditor();
-					break;
+                    StopGame();
+                    Environment.Exit(-1);
+                    break;
 			}
 		}
     }

@@ -31,6 +31,7 @@ namespace VanguardHook
         public bool SUPPORTS_SAVESTATES { get; set; }
         public bool SUPPORTS_REFERENCES { get; set; }
         public bool SUPPORTS_MIXED_STOCKPILE { get; set; }
+        public bool CORE_DISKBASED { get; set; }
     }
 
     public class MemoryDomainConfig

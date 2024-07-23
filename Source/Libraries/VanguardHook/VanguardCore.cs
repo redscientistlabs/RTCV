@@ -113,6 +113,7 @@ namespace VanguardHook
             partial[VSPEC.SUPPORTS_SAVESTATES] = config.SUPPORTS_SAVESTATES;
             partial[VSPEC.SUPPORTS_REFERENCES] = config.SUPPORTS_REFERENCES;
             partial[VSPEC.SUPPORTS_MIXED_STOCKPILE] = config.SUPPORTS_MIXED_STOCKPILE;
+			partial[VSPEC.CORE_DISKBASED] = config.CORE_DISKBASED;
             partial[VSPEC.CONFIG_PATHS] = new[] { "" };
 			partial[VSPEC.EMUDIR] = EmuDirectory.emuDir;
 			EmuDirectory.emuEXE = config.EmuEXE;
@@ -175,13 +176,13 @@ namespace VanguardHook
             if (AllSpec.UISpec == null)
             {
 				StopGame();
-
-                MessageBox.Show(
-				"It appears you haven't connected to StandaloneRTC. Please make sure that the " +
-				"RTC is running and not just Bizhawk.\nIf you have an antivirus, it might be " +
+				string template = $"It appears you haven't connected to StandaloneRTC. Please make sure that the " +
+				"RTC is running and not just {0}. If you have an antivirus, it might be " +
 				"blocking the RTC from launching.\n\nIf you keep getting this message, poke " +
-				"the RTC devs for help (Discord is in the launcher).",
-				"RTC Not Connected");
+				"the RTC devs for help (Discord is in the launcher).";
+				string message = string.Format(template, AllSpec.VanguardSpec[VSPEC.NAME]);
+
+                MessageBox.Show(message,"RTC Not Connected");
                 return;
             }
             PartialSpec gameDone = new PartialSpec("VanguardSpec");
@@ -202,7 +203,6 @@ namespace VanguardHook
 
             gameDone[VSPEC.SYNCSETTINGS] = "";
 			gameDone[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] = new List<string> { };
-			gameDone[VSPEC.CORE_DISKBASED] = false; // hardcoded for now, this needs to be sent by the emulator
 
 			// remove any invalid file characters before storing it
 			string gamenameFixed = StringExtensions.MakeSafeFilename(gamename, '-');
@@ -274,36 +274,25 @@ namespace VanguardHook
 				{
 					// get the current foreground window
                     IntPtr hWnd = NativeMethods.GetForegroundWindow();
-					uint processID;
+
 					// get length of the path the emulator is running from
 					int EmuWinLen = AllSpec.VanguardSpec[VSPEC.EMUDIR].ToString().Length + EmuDirectory.emuEXE.Length + 1;
                     StringBuilder EmuWinPath = new StringBuilder(EmuWinLen);
 
-					// get the processID of the window, then get the full path name
-					NativeMethods.GetWindowThreadProcessId(hWnd, out processID);
+                    // get the processID of the window, then get the full path name
+                    uint processID;
+                    NativeMethods.GetWindowThreadProcessId(hWnd, out processID);
                     IntPtr hProcess = NativeMethods.OpenProcess(0x0410, false, processID);
                     NativeMethods.GetModuleFileNameEx(hProcess, IntPtr.Zero, EmuWinPath, EmuWinLen);
                     string exeName = EmuWinPath.ToString().Substring(EmuWinPath.ToString().LastIndexOf("\\") + 1);
 
 					var state = (exeName == EmuDirectory.emuEXE ? true : false);
-					//Shortcuts.STEP_CORRUPT();
-					ConsoleEx.WriteLine(state.ToString());
+
 					if (((bool?)RTCV.NetCore.AllSpec.VanguardSpec?[RTCV.NetCore.Commands.Emulator.InFocus] ?? true) != state)
 						RTCV.NetCore.AllSpec.VanguardSpec?.Update(RTCV.NetCore.Commands.Emulator.InFocus, state, true, false);
 				}
 			};
 			focusTimer.Start();
-
-
-			//Force create bizhawk config file if it doesn't exist
-			//if (!File.Exists(CorruptCore.bizhawkDir + Path.DirectorySeparatorChar + "config.ini"))
-			//Hooks.BIZHAWK_MAINFORM_SAVECONFIG();
-
-			//If it's attached, lie to `
-			if (VanguardCore.attached)
-			{
-				VanguardConnector.ImplyClientConnected();
-			}
 		}
 
 		public static void StopGame()
