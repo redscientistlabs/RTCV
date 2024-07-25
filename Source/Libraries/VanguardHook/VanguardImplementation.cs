@@ -77,6 +77,7 @@ namespace VanguardHook
             // a manual blast is needed, otherwise lots of issues start to pop up
             // it's not perfect since we need to resume the emulator right before the very last peek, but
             // this should at least avoid 99.9% of issues that arise from it.
+            /*
             if (VanguardImplementation.usePeekHack && !VanguardImplementation.batch_corrupt)
 			{
 
@@ -93,6 +94,7 @@ namespace VanguardHook
 					SyncObjectSingleton.EmuThreadExecute(() => { VanguardImplementation.Vanguard_pause(); }, true);
                 
             }
+
 
             //ConsoleEx.WriteLine("peek");
             VanguardImplementation.peek_index += 1;
@@ -111,6 +113,7 @@ namespace VanguardHook
                     SyncObjectSingleton.EmuThreadExecute(() => { VanguardImplementation.Vanguard_resume(); }, true);
                 
             }
+			*/
 
             return (byte)VanguardImplementation.Vanguard_peekbyte(addr + VOffset, VPeekPokeSel);
 		}

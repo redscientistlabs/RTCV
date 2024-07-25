@@ -164,9 +164,9 @@ namespace VanguardHook
 			StepActions.ClearStepBlastUnits();
 			RtcClock.ResetCount();
 
-			if (rompath == "")
+			if (rompath == "EMPTY")
 			{
-				rompath = VanguardCore.GAME_TO_LOAD;
+				rompath = GAME_TO_LOAD;
 				GAME_TO_LOAD = "";
 			}
 			AllSpec.VanguardSpec.Update(VSPEC.OPENROMFILENAME, rompath, true, true);
