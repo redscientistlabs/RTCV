@@ -23,6 +23,7 @@ namespace VanguardHook
         public string NAME { get; set; }
         public string PROFILE { get; set; }
         public int OVERRIDE_DEFAULTMAXINTENSITY { get; set; }
+        public string[] MEMORYDOMAINS_BLACKLISTEDDOMAINS { get; set; }
         public bool SUPPORTS_RENDERING { get; set; }
         public bool SUPPORTS_CONFIG_MANAGEMENT { get; set; }
         public bool SUPPORTS_CONFIG_HANDOFF { get; set; }
@@ -37,7 +38,7 @@ namespace VanguardHook
     public class MemoryDomainConfig
     {
         public string Name { get; set; }
-        public List<string> Profiles { get; set; }
+        public string[] Profiles { get; set; }
         public bool BigEndian { get; set; }
         public string Size { get; set; }
         public int WordSize { get; set; }

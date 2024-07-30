@@ -33,13 +33,11 @@ namespace VanguardHook
 
     class VanguardCore
 	{
-		public static string[] args;
         public static System.Timers.Timer focusTimer;
         public static bool FirstConnect = true;
 		public static Form SyncForm;
         public static VanguardRealTimeEvents RTE_API = new VanguardRealTimeEvents();
         public static bool attached = false;
-		public static Process xemu;
 		public static string System
 		{
 			get => (string)AllSpec.VanguardSpec[VSPEC.SYSTEM];
@@ -102,7 +100,7 @@ namespace VanguardHook
 			partial[VSPEC.OPENROMFILENAME] = String.Empty;
 			partial[VSPEC.SYNCSETTINGS] = String.Empty;
             partial[VSPEC.OVERRIDE_DEFAULTMAXINTENSITY] = config.OVERRIDE_DEFAULTMAXINTENSITY;
-            partial[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] = new string[] { };
+            partial[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] = config.MEMORYDOMAINS_BLACKLISTEDDOMAINS;
 			partial[VSPEC.MEMORYDOMAINS_INTERFACES] = new MemoryDomainProxy[] { };
 			partial[VSPEC.CORE_LASTLOADERROM] = -1;
             partial[VSPEC.SUPPORTS_RENDERING] = config.SUPPORTS_RENDERING;
@@ -202,7 +200,6 @@ namespace VanguardHook
 				gameDone[VSPEC.SYSTEMCORE] = VanguardConfigReader.configFile.VSpecConfig.PROFILE;
 
             gameDone[VSPEC.SYNCSETTINGS] = "";
-			gameDone[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] = new List<string> { };
 
 			// remove any invalid file characters before storing it
 			string gamenameFixed = StringExtensions.MakeSafeFilename(gamename, '-');

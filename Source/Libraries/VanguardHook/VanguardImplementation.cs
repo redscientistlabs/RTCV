@@ -349,7 +349,7 @@ namespace VanguardHook
 			List<MemoryDomainConfig> memDomainList = VanguardConfigReader.configFile.MemoryDomainConfig;
             for (var i = 0; i < memDomainList.Count; i++)
             {
-                for (var j = 0; j < memDomainList[i].Profiles.Count; j++)
+                for (var j = 0; j < memDomainList[i].Profiles.Count(); j++)
 				{
                     if (memDomainList[i].Profiles[j] == (string)AllSpec.VanguardSpec[VSPEC.SYSTEMCORE])
 					{
@@ -464,7 +464,7 @@ namespace VanguardHook
 
 					break;
 				case RTCV.NetCore.Commands.Remote.OpenHexEditor:
-					SyncObjectSingleton.FormExecute(() => LocalNetCoreRouter.Route("HEXEDITOR", Remote.OpenHexEditor, true));
+					//SyncObjectSingleton.FormExecute(() => LocalNetCoreRouter.Route("HEXEDITOR", Remote.OpenHexEditor, true));
 					break;
 				case RTCV.NetCore.Commands.Remote.EventCloseEmulator:
                     // Close the hex editor if it's open
