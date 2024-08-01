@@ -16,8 +16,9 @@ namespace RTCV.Plugins.HexEditor
     using RTCV.CorruptCore;
     using RTCV.CorruptCore.Extensions;
     using NLog;
+    using System.Runtime.InteropServices;
 
-    #pragma warning disable CA2213 //Component designer classes generate their own Dispose method
+#pragma warning disable CA2213 //Component designer classes generate their own Dispose method
     //Based on the Hex Editor from Bizhawk, available under MIT.
     //https://github.com/tasvideos/bizhawk
     public partial class HexEditor : Form
@@ -66,7 +67,7 @@ namespace RTCV.Plugins.HexEditor
         {
             DataSize = 1;
 
-            var font = new Font("Courier New", 8);
+            var font = new Font("Courier New", (float)8.5);
 
             // Measure the font. There seems to be some extra horizontal padding on the first
             // character so we'll see how much the width increases on the second character.
@@ -82,6 +83,7 @@ namespace RTCV.Plugins.HexEditor
             AddressesLabel.BackColor = Color.Transparent;
             //LoadConfigSettings();
             SetHeader();
+            Header.BackColor = Color.Transparent;
             //Closing += (o, e) => SaveConfigSettings();
 
             Header.Font = font;
@@ -179,6 +181,9 @@ namespace RTCV.Plugins.HexEditor
                 {
                     AddressesLabel.Text = GenerateMemoryViewString(true);
                     AddressLabel.Text = GenerateAddressString();
+                    AddressLabel.BringToFront();
+                    AddressesLabel.BringToFront();
+                    Header.Location = new Point(28, 39);
                 }
                 catch (Exception e)
                 {
@@ -624,6 +629,7 @@ namespace RTCV.Plugins.HexEditor
         {
             var addressesString = "0x" + $"{_domain.Size / DataSize:X8}".TrimStart('0');
             MemoryViewerBox.Text = $"{AllSpec.VanguardSpec?[VSPEC.NAME] ?? "UNKNOWN"} {_domain} -  {addressesString} addresses";
+            MemoryViewerBox.SendToBack();
         }
 
         private void ClearNibbles()
@@ -742,7 +748,7 @@ namespace RTCV.Plugins.HexEditor
 
         private void SetUpScrollBar()
         {
-            _rowsVisible = (MemoryViewerBox.Height - (_fontHeight * 2) - (_fontHeight / 2)) / _fontHeight;
+            _rowsVisible = (MemoryViewerBox.Height + 15 - (_fontHeight * 2) - (_fontHeight / 2)) / _fontHeight;
             var totalRows = (int)((_domain.Size + 15) / 16);
 
             if (totalRows < _rowsVisible)
@@ -763,7 +769,7 @@ namespace RTCV.Plugins.HexEditor
 
             // Scroll value determines the first row
             long i = HexScrollBar.Value;
-            var rowoffset = y / _fontHeight;
+            var rowoffset = y / (_fontHeight - 2);
             i += rowoffset;
             var colWidth = (DataSize * 2) + 1;
 
@@ -830,12 +836,13 @@ namespace RTCV.Plugins.HexEditor
 
         private Point GetAddressCoordinates(long address)
         {
-            var extra = (address % DataSize) * _fontWidth * 2;
+            var xExtra = (address % DataSize) * _fontWidth * 2;
+            var yExtra = (address % DataSize);
             var xOffset = AddressesLabel.Location.X + (_fontWidth / 2) - 2;
-            var yOffset = AddressesLabel.Location.Y;
+            var yOffset = AddressesLabel.Location.Y - 2 - ((address / 16) - HexScrollBar.Value) * 2.1;
 
             return new Point(
-                (int)((((address % 16) / DataSize) * (_fontWidth * ((DataSize * 2) + 1))) + xOffset + extra),
+                (int)((((address % 16) / DataSize) * (_fontWidth * ((DataSize * 2) + 1))) + xOffset + xExtra),
                 (int)((((address / 16) - HexScrollBar.Value) * _fontHeight) + yOffset)
                 );
         }
@@ -1896,6 +1903,11 @@ namespace RTCV.Plugins.HexEditor
 
         private void OptionsSubMenu_Click(object sender, EventArgs e)
         {
+        }
+
+        private void AddressLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
