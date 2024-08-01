@@ -1,6 +1,5 @@
 ﻿
 using RTCV.CorruptCore;
-using RTCV.CorruptCore.Extensions;
 using RTCV.NetCore;
 using RTCV.NetCore.Commands;
 using RTCV.Vanguard;
