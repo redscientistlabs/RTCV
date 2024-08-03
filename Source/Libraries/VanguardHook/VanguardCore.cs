@@ -200,8 +200,7 @@ namespace VanguardHook
 
 		public static void StopGame()
 		{
-            var g = new SyncObjectSingleton.GenericDelegate(MethodImports.Vanguard_forceStop);
-            SyncObjectSingleton.FormExecute(g);
+			MethodImports.Vanguard_forceStop();
         }
 	}
 }

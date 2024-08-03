@@ -101,7 +101,6 @@ namespace VanguardHook
 		{
 			StepActions.ClearStepBlastUnits();
 			RtcClock.ResetCount();
-
 			// Call emulator function
             MethodImports.Vanguard_loadsavestate(path);
 			return true;
