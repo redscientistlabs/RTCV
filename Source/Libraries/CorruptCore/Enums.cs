@@ -146,6 +146,7 @@ namespace RTCV.CorruptCore
     {
         public static readonly string RTCDIR = nameof(RTCDIR);
         public static readonly string CORE_SELECTEDENGINE = nameof(CORE_SELECTEDENGINE);
+        public static readonly string CORE_SELECTEDPLUGINENGINE = nameof(CORE_SELECTEDPLUGINENGINE);
         public static readonly string CORE_ALLOWCROSSCORECORRUPTION = nameof(CORE_ALLOWCROSSCORECORRUPTION);
         public static readonly string CORE_CURRENTPRECISION = nameof(CORE_CURRENTPRECISION);
         public static readonly string CORE_CURRENTALIGNMENT = nameof(CORE_CURRENTALIGNMENT);

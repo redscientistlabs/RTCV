@@ -221,7 +221,7 @@ namespace RTCV.UI
 
             previousPluginEngine = RtcCore.SelectedPluginEngine;
             if (previousPluginEngine != null)
-                previousPluginEngine.Control.Hide();
+                previousPluginEngine.Control?.Hide();
 
             switch (cbSelectedEngine.SelectedItem.ToString())
             {
