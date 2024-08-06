@@ -188,18 +188,17 @@ namespace RTCV.UI
 
         public static void LockInterface(bool focusCoreForm = true, bool blockMainForm = false)
         {
-            if (interfaceLocked || lockPending)
-            {
-                return;
-            }
-
-            lockPending = true;
             lock (lockObject)
             {
+                if (interfaceLocked)
+                    return;
+
+                interfaceLocked = true;
+
                 //Kill hotkeys while locked
                 SetHotkeyTimer(false);
 
-                interfaceLocked = true;
+                
                 var cf = S.GET<CoreForm>();
                 cf.LockSideBar();
 
@@ -224,21 +223,16 @@ namespace RTCV.UI
                     cf.Focus();
                 }
             }
-            lockPending = false;
         }
 
         public static void UnlockInterface()
         {
-            if (lockPending)
-            {
-                lockPending = false;
-            }
-
             lock (lockObject)
             {
-                interfaceLocked = false;
-                S.GET<CoreForm>().UnlockSideBar();
+                if (!interfaceLocked)
+                    return;
 
+                S.GET<CoreForm>().UnlockSideBar();
                 S.GET<ConnectionStatusForm>().pnBlockedButtons.Hide();
 
                 CanvasForm.mainForm.UnblockView();
@@ -251,6 +245,8 @@ namespace RTCV.UI
 
                 //Resume hotkeys
                 SetHotkeyTimer(true);
+
+                interfaceLocked = false;
             }
         }
 
@@ -302,8 +298,7 @@ namespace RTCV.UI
         }
 
         internal static volatile bool isClosing = false;
-        private static bool interfaceLocked;
-        private static bool lockPending;
+        public static volatile bool interfaceLocked = false;
         private static object lockObject = new object();
 
         internal static object InputLock = new object();
