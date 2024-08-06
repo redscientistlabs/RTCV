@@ -10,6 +10,8 @@ namespace RTCV.UI
     using RTCV.Common;
     using RTCV.UI.Modular;
     using RTCV.NetCore.Commands;
+    using System.Threading.Tasks;
+    using System.Threading;
 
     public static class VanguardImplementation
     {
@@ -191,7 +193,7 @@ namespace RTCV.UI
         {
             RTCV.CorruptCore.MemoryDomains.AddVMD(proto);
         }
-        private static void AllSpecSent()
+        internal static void AllSpecSent()
         {
             if (UICore.FirstConnect)
             {
@@ -404,6 +406,22 @@ namespace RTCV.UI
                 S.GET<MemoryDomainsForm>().RefreshDomains();
                 S.GET<MemoryDomainsForm>().SetMemoryDomainsAllButSelectedDomains(AllSpec.VanguardSpec[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] as string[] ?? new string[] { });
             });
+
+
+            //Auto-unlocks the interface if the memory domains are updated
+            //And the interface is locked. This also works if the Emu pushes an empty domain list.
+            //Task.Run(() =>
+            //{
+            //    Thread.Sleep(420);
+            //    if (UICore.interfaceLocked)
+            //    {
+            //        SyncObjectSingleton.FormExecute(() =>
+            //        {
+            //            VanguardImplementation.AllSpecSent();
+            //        });
+            //    }
+            //});
+
         }
 
         private static void GetBlastGeneratorLayer(ref NetCoreEventArgs e)

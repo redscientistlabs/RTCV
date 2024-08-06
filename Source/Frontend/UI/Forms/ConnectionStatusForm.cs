@@ -30,6 +30,7 @@ namespace RTCV.UI
             "Preparing more plates, please standby",
             "Unpredictable and profoundly cursed",
             "Violates every design paradigm in the book",
+            "I can't believe it's WinForms",
         };
 
         private void OnFormLoad(object sender, EventArgs e)
@@ -78,6 +79,30 @@ namespace RTCV.UI
         private void btnEmergencySavestates_Click(object sender, EventArgs e)
         {
             S.GET<SavestateManagerForm>().SaveSavestateList(null, null);
+        }
+
+        private void btnUiUnlock_Click(object sender, EventArgs e)
+        {
+            VanguardImplementation.AllSpecSent();
+            //taken from AllSpecSent()
+
+            //S.GET<CoreForm>().Show();
+
+            ////Configure the UI based on the vanguard spec
+            //UICore.ConfigureUIFromVanguardSpec();
+
+            ////Unblock the controls in the GH
+            //S.GET<GlitchHarvesterBlastForm>().SetBlastButtonVisibility(true);
+
+            ////Return to the main form. If the form is null for some reason, default to engineconfig
+            //if (S.GET<CoreForm>().previousGrid == null)
+            //{
+            //    S.GET<CoreForm>().previousGrid = DefaultGrids.engineConfig;
+            //}
+
+            //UICore.UnlockInterface();
+            //S.GET<CoreForm>().previousGrid.LoadToMain();
+
         }
     }
 }

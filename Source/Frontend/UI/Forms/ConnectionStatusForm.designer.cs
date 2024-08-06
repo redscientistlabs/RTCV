@@ -32,13 +32,14 @@ namespace RTCV.UI
             this.label1 = new System.Windows.Forms.Label();
             this.lbFlavorText = new System.Windows.Forms.Label();
             this.pnBlockedButtons = new System.Windows.Forms.Panel();
+            this.btnEmergencySavestates = new System.Windows.Forms.Button();
             this.btnBreakCrashLoop = new System.Windows.Forms.Button();
             this.btnTriggerKillswitch = new System.Windows.Forms.Button();
             this.btnEmergencySaveAs = new System.Windows.Forms.Button();
             this.lbRTCver = new System.Windows.Forms.Label();
             this.lbConnectionStatus = new System.Windows.Forms.Label();
             this.pbMonster = new System.Windows.Forms.PictureBox();
-            this.btnEmergencySavestates = new System.Windows.Forms.Button();
+            this.btnUiUnlock = new System.Windows.Forms.Button();
             this.pnBlockedButtons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbMonster)).BeginInit();
             this.SuspendLayout();
@@ -72,6 +73,7 @@ namespace RTCV.UI
             // pnBlockedButtons
             // 
             this.pnBlockedButtons.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pnBlockedButtons.Controls.Add(this.btnUiUnlock);
             this.pnBlockedButtons.Controls.Add(this.btnEmergencySavestates);
             this.pnBlockedButtons.Controls.Add(this.btnBreakCrashLoop);
             this.pnBlockedButtons.Controls.Add(this.btnTriggerKillswitch);
@@ -81,6 +83,19 @@ namespace RTCV.UI
             this.pnBlockedButtons.Size = new System.Drawing.Size(191, 224);
             this.pnBlockedButtons.TabIndex = 137;
             this.pnBlockedButtons.Visible = false;
+            // 
+            // btnEmergencySavestates
+            // 
+            this.btnEmergencySavestates.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnEmergencySavestates.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEmergencySavestates.Location = new System.Drawing.Point(0, 108);
+            this.btnEmergencySavestates.Name = "btnEmergencySavestates";
+            this.btnEmergencySavestates.Size = new System.Drawing.Size(188, 29);
+            this.btnEmergencySavestates.TabIndex = 138;
+            this.btnEmergencySavestates.Tag = "color:dark1";
+            this.btnEmergencySavestates.Text = "Emergency Save-As Savestates";
+            this.btnEmergencySavestates.UseVisualStyleBackColor = false;
+            this.btnEmergencySavestates.Click += new System.EventHandler(this.btnEmergencySavestates_Click);
             // 
             // btnBreakCrashLoop
             // 
@@ -153,18 +168,18 @@ namespace RTCV.UI
             this.pbMonster.TabIndex = 133;
             this.pbMonster.TabStop = false;
             // 
-            // btnEmergencySavestates
+            // btnUiUnlock
             // 
-            this.btnEmergencySavestates.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.btnEmergencySavestates.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEmergencySavestates.Location = new System.Drawing.Point(0, 108);
-            this.btnEmergencySavestates.Name = "btnEmergencySavestates";
-            this.btnEmergencySavestates.Size = new System.Drawing.Size(188, 29);
-            this.btnEmergencySavestates.TabIndex = 138;
-            this.btnEmergencySavestates.Tag = "color:dark1";
-            this.btnEmergencySavestates.Text = "Emergency Save-As Savestates";
-            this.btnEmergencySavestates.UseVisualStyleBackColor = false;
-            this.btnEmergencySavestates.Click += new System.EventHandler(this.btnEmergencySavestates_Click);
+            this.btnUiUnlock.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
+            this.btnUiUnlock.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUiUnlock.Location = new System.Drawing.Point(0, 143);
+            this.btnUiUnlock.Name = "btnUiUnlock";
+            this.btnUiUnlock.Size = new System.Drawing.Size(188, 29);
+            this.btnUiUnlock.TabIndex = 139;
+            this.btnUiUnlock.Tag = "color:dark1";
+            this.btnUiUnlock.Text = "Force UI Unlock";
+            this.btnUiUnlock.UseVisualStyleBackColor = false;
+            this.btnUiUnlock.Click += new System.EventHandler(this.btnUiUnlock_Click);
             // 
             // ConnectionStatusForm
             // 
@@ -206,5 +221,6 @@ namespace RTCV.UI
         public System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnBreakCrashLoop;
         private System.Windows.Forms.Button btnEmergencySavestates;
+        private System.Windows.Forms.Button btnUiUnlock;
     }
 }
