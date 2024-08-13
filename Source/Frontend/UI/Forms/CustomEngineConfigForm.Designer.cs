@@ -94,6 +94,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.nmAlignment = new RTCV.UI.Components.Controls.MultiUpDown();
+            this.cbUseAlignment = new System.Windows.Forms.CheckBox();
             this.gbUnitSource.SuspendLayout();
             this.gbValueList.SuspendLayout();
             this.gbValueSettings.SuspendLayout();
@@ -1067,6 +1068,7 @@
             this.pnCustomPrecision.Controls.Add(this.label5);
             this.pnCustomPrecision.Controls.Add(this.label8);
             this.pnCustomPrecision.Controls.Add(this.nmAlignment);
+            this.pnCustomPrecision.Controls.Add(this.cbUseAlignment);
             this.pnCustomPrecision.Location = new System.Drawing.Point(10, 427);
             this.pnCustomPrecision.Name = "pnCustomPrecision";
             this.pnCustomPrecision.Size = new System.Drawing.Size(441, 32);
@@ -1141,6 +1143,20 @@
             0,
             0,
             0});
+            // 
+            // cbUseAlignment
+            // 
+            this.cbUseAlignment.AutoSize = true;
+            this.cbUseAlignment.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cbUseAlignment.Checked = true;
+            this.cbUseAlignment.Font = new System.Drawing.Font("Segoe UI", 8F);
+            this.cbUseAlignment.ForeColor = System.Drawing.Color.White;
+            this.cbUseAlignment.Location = new System.Drawing.Point(27, 7);
+            this.cbUseAlignment.Name = "cbUseAlignment";
+            this.cbUseAlignment.Size = new System.Drawing.Size(106, 17);
+            this.cbUseAlignment.TabIndex = 151;
+            this.cbUseAlignment.Text = "Align:";
+            this.cbUseAlignment.UseVisualStyleBackColor = true;
             // 
             // CustomEngineConfigForm
             // 
@@ -1264,5 +1280,6 @@
         private System.Windows.Forms.Label label8;
         public Components.Controls.MultiUpDown nmAlignment;
         private System.Windows.Forms.Button btnRefresh;
+        public System.Windows.Forms.CheckBox cbUseAlignment;
     }
 }

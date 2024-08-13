@@ -150,7 +150,7 @@ namespace RTCV.CorruptCore
             set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CUSTOM_VALUELISTHASH, value);
         }
 
-        public static BlastUnit GenerateUnit(string domain, long address, int precision, int alignment)
+        public static BlastUnit GenerateUnit(string domain, long address, int precision, int alignment, bool useAlignment)
         {
             try
             {
@@ -166,7 +166,9 @@ namespace RTCV.CorruptCore
                 }
 
                 byte[] value = new byte[precision];
-                long safeAddress = address - (address % precision) + alignment;
+                long safeAddress = address;
+                if (useAlignment)
+                    safeAddress = safeAddress - (address % precision) + alignment;
                 if (safeAddress > mi.Size - precision && mi.Size > precision)
                 {
                     safeAddress = mi.Size - (2 * precision) + alignment; //If we're out of range, hit the last aligned address
@@ -247,7 +249,10 @@ namespace RTCV.CorruptCore
                                     {
                                         BlastTarget bt = RtcCore.GetBlastTarget();
                                         MemoryInterface _mi = MemoryDomains.GetInterface(bt.Domain);
-                                        long safeStartAddress = bt.Address - (bt.Address % precision) + alignment;
+                                        
+                                        long safeStartAddress = bt.Address;
+                                        if (useAlignment)
+                                            safeStartAddress = safeStartAddress - (bt.Address % precision) + alignment;
 
                                         if (safeStartAddress > _mi.Size - precision)
                                         {
@@ -413,6 +418,7 @@ namespace RTCV.CorruptCore
 
             pSpec[RTCSPEC.CORE_CURRENTPRECISION] = 1;
             pSpec[RTCSPEC.CORE_CURRENTALIGNMENT] = 0;
+            pSpec[RTCSPEC.CORE_USEALIGNMENT] = true;
 
             pSpec[RTCSPEC.CUSTOM_DELAY] = 0;
             pSpec[RTCSPEC.CUSTOM_LIFETIME] = 1;
@@ -450,6 +456,7 @@ namespace RTCV.CorruptCore
 
             pSpec[RTCSPEC.CORE_CURRENTPRECISION] = 1;
             pSpec[RTCSPEC.CORE_CURRENTALIGNMENT] = 0;
+            pSpec[RTCSPEC.CORE_USEALIGNMENT] = true;
 
             pSpec[RTCSPEC.CUSTOM_DELAY] = 0;
             pSpec[RTCSPEC.CUSTOM_LIFETIME] = 0;
@@ -488,6 +495,7 @@ namespace RTCV.CorruptCore
 
             pSpec[RTCSPEC.CORE_CURRENTPRECISION] = 1;
             pSpec[RTCSPEC.CORE_CURRENTALIGNMENT] = 0;
+            pSpec[RTCSPEC.CORE_USEALIGNMENT] = true;
 
             pSpec[RTCSPEC.CUSTOM_DELAY] = 50;
             pSpec[RTCSPEC.CUSTOM_LIFETIME] = 1;
@@ -562,6 +570,7 @@ namespace RTCV.CorruptCore
 
             pSpec[RTCSPEC.CORE_CURRENTPRECISION] = 1;
             pSpec[RTCSPEC.CORE_CURRENTALIGNMENT] = 0;
+            pSpec[RTCSPEC.CORE_USEALIGNMENT] = true;
 
             pSpec[RTCSPEC.CUSTOM_DELAY] = 0;
             pSpec[RTCSPEC.CUSTOM_LIFETIME] = 0;
@@ -600,6 +609,7 @@ namespace RTCV.CorruptCore
 
             pSpec[RTCSPEC.CORE_CURRENTPRECISION] = 4;
             pSpec[RTCSPEC.CORE_CURRENTALIGNMENT] = 0;
+            pSpec[RTCSPEC.CORE_USEALIGNMENT] = true;
 
             pSpec[RTCSPEC.CUSTOM_DELAY] = 0;
             pSpec[RTCSPEC.CUSTOM_LIFETIME] = 1;
@@ -638,6 +648,7 @@ namespace RTCV.CorruptCore
 
             pSpec[RTCSPEC.CORE_CURRENTPRECISION] = AllSpec.CorruptCoreSpec[RTCSPEC.CORE_CURRENTPRECISION];
             pSpec[RTCSPEC.CORE_CURRENTALIGNMENT] = AllSpec.CorruptCoreSpec[RTCSPEC.CORE_CURRENTALIGNMENT];
+            pSpec[RTCSPEC.CORE_USEALIGNMENT] = AllSpec.CorruptCoreSpec[RTCSPEC.CORE_USEALIGNMENT];
 
             pSpec[RTCSPEC.CUSTOM_DELAY] = AllSpec.CorruptCoreSpec[RTCSPEC.CUSTOM_DELAY];
             pSpec[RTCSPEC.CUSTOM_LIFETIME] = AllSpec.CorruptCoreSpec[RTCSPEC.CUSTOM_LIFETIME];
@@ -832,6 +843,7 @@ namespace RTCV.CorruptCore
             pSpec[RTCSPEC.CUSTOM_PATH] = path;
             pSpec[RTCSPEC.CORE_CURRENTPRECISION] = RtcCore.CurrentPrecision;
             pSpec[RTCSPEC.CORE_CURRENTALIGNMENT] = RtcCore.Alignment;
+            pSpec[RTCSPEC.CORE_USEALIGNMENT] = RtcCore.UseAlignment;
 
             string jsonString = pSpec.GetSerializedDico();
             File.WriteAllText(path, jsonString);

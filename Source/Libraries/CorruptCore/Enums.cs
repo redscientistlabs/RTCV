@@ -150,6 +150,7 @@ namespace RTCV.CorruptCore
         public static readonly string CORE_ALLOWCROSSCORECORRUPTION = nameof(CORE_ALLOWCROSSCORECORRUPTION);
         public static readonly string CORE_CURRENTPRECISION = nameof(CORE_CURRENTPRECISION);
         public static readonly string CORE_CURRENTALIGNMENT = nameof(CORE_CURRENTALIGNMENT);
+        public static readonly string CORE_USEALIGNMENT = nameof(CORE_USEALIGNMENT);
         public static readonly string CORE_INTENSITY = nameof(CORE_INTENSITY);
         public static readonly string CORE_ERRORDELAY = nameof(CORE_ERRORDELAY);
         public static readonly string CORE_RADIUS = nameof(CORE_RADIUS);
@@ -218,6 +219,13 @@ namespace RTCV.CorruptCore
         public static readonly string VECTOR_LIMITERLISTHASH = nameof(VECTOR_LIMITERLISTHASH);
         public static readonly string VECTOR_VALUELISTHASH = nameof(VECTOR_VALUELISTHASH);
         public static readonly string VECTOR_UNLOCKPRECISION = nameof(VECTOR_UNLOCKPRECISION);
+        public static readonly string CLUSTER_LIMITERLISTHASH = nameof(CLUSTER_LIMITERLISTHASH);
+        public static readonly string CLUSTER_SHUFFLETYPE = nameof(CLUSTER_SHUFFLETYPE);
+        public static readonly string CLUSTER_SHUFFLEAMT = nameof(CLUSTER_SHUFFLEAMT);
+        public static readonly string CLUSTER_MODIFIER = nameof(CLUSTER_MODIFIER);
+        public static readonly string CLUSTER_MULTIOUT = nameof(CLUSTER_MULTIOUT);
+        public static readonly string CLUSTER_FILTERALL = nameof(CLUSTER_FILTERALL);
+        public static readonly string CLUSTER_DIR = nameof(CLUSTER_DIR);
         public static readonly string RENDER_AT_LOAD = nameof(RENDER_AT_LOAD);
         public static readonly string RENDER_ISRENDERING = nameof(RENDER_ISRENDERING);
         public static readonly string RENDER_RENDERTYPE = nameof(RENDER_RENDERTYPE);

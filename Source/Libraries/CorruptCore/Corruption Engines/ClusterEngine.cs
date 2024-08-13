@@ -20,62 +20,62 @@ namespace RTCV.CorruptCore
 
         public static string LimiterListHash
         {
-            get => (string)AllSpec.CorruptCoreSpec["CLUSTER_LIMITERLISTHASH"];
-            set => AllSpec.CorruptCoreSpec.Update("CLUSTER_LIMITERLISTHASH", value);
+            get => (string)AllSpec.CorruptCoreSpec[RTCSPEC.CLUSTER_LIMITERLISTHASH];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CLUSTER_LIMITERLISTHASH, value);
         }
 
         public static int ChunkSize
         {
-            get => (int)AllSpec.CorruptCoreSpec["CLUSTER_SHUFFLEAMT"];
-            set => AllSpec.CorruptCoreSpec.Update("CLUSTER_SHUFFLEAMT", value);
+            get => (int)AllSpec.CorruptCoreSpec[RTCSPEC.CLUSTER_SHUFFLEAMT];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CLUSTER_SHUFFLEAMT, value);
         }
 
         public static string ShuffleType
         {
-            get => (string)AllSpec.CorruptCoreSpec["CLUSTER_SHUFFLETYPE"];
-            set => AllSpec.CorruptCoreSpec.Update("CLUSTER_SHUFFLETYPE", value);
+            get => (string)AllSpec.CorruptCoreSpec[RTCSPEC.CLUSTER_SHUFFLETYPE];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CLUSTER_SHUFFLETYPE, value);
         }
 
         public static int Modifier
         {
-            get => (int)AllSpec.CorruptCoreSpec["CLUSTER_MODIFIER"];
-            set => AllSpec.CorruptCoreSpec.Update("CLUSTER_MODIFIER", value);
+            get => (int)AllSpec.CorruptCoreSpec[RTCSPEC.CLUSTER_MODIFIER];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CLUSTER_MODIFIER, value);
         }
 
 
         public static bool OutputMultipleUnits
         {
-            get => (bool)AllSpec.CorruptCoreSpec["CLUSTER_MULTIOUT"];
-            set => AllSpec.CorruptCoreSpec.Update("CLUSTER_MULTIOUT", value);
+            get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CLUSTER_MULTIOUT];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CLUSTER_MULTIOUT, value);
         }
 
         public static bool FilterAll
         {
-            get => (bool)AllSpec.CorruptCoreSpec["CLUSTER_FILTERALL"];
-            set => AllSpec.CorruptCoreSpec.Update("CLUSTER_FILTERALL", value);
+            get => (bool)AllSpec.CorruptCoreSpec[RTCSPEC.CLUSTER_FILTERALL];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CLUSTER_FILTERALL, value);
         }
 
         public static string Direction
         {
-            get => (string)AllSpec.CorruptCoreSpec["CLUSTER_DIR"];
-            set => AllSpec.CorruptCoreSpec.Update("CLUSTER_DIR", value);
+            get => (string)AllSpec.CorruptCoreSpec[RTCSPEC.CLUSTER_DIR];
+            set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CLUSTER_DIR, value);
         }
 
         public static PartialSpec getDefaultPartial()
         {
             var partial = new PartialSpec("RTCSpec");
-            partial["CLUSTER_LIMITERLISTHASH"] = string.Empty;
-            partial["CLUSTER_SHUFFLETYPE"] = rand;
-            partial["CLUSTER_SHUFFLEAMT"] = 3;
-            partial["CLUSTER_MODIFIER"] = 1;
-            partial["CLUSTER_MULTIOUT"] = true;
-            partial["CLUSTER_FILTERALL"] = false;
-            partial["CLUSTER_DIR"] = forwards;
+            partial[RTCSPEC.CLUSTER_LIMITERLISTHASH] = string.Empty;
+            partial[RTCSPEC.CLUSTER_SHUFFLETYPE] = rand;
+            partial[RTCSPEC.CLUSTER_SHUFFLEAMT] = 3;
+            partial[RTCSPEC.CLUSTER_MODIFIER] = 1;
+            partial[RTCSPEC.CLUSTER_MULTIOUT] = true;
+            partial[RTCSPEC.CLUSTER_FILTERALL] = false;
+            partial[RTCSPEC.CLUSTER_DIR] = forwards;
             return partial;
         }
 
 
-        public static BlastUnit[] GenerateUnit(string domain, long address, int alignment)
+        public static BlastUnit[] GenerateUnit(string domain, long address, int alignment, bool useAlignment)
         {
             if (domain == null)
             {
@@ -101,8 +101,10 @@ namespace RTCV.CorruptCore
             int chunkSize = ChunkSize;
 
             int srcUnit = 0;
-            //always align
-            long safeAddress = address - (address % precision) + alignment;
+
+            long safeAddress = address;
+            if (useAlignment)
+                safeAddress = safeAddress - (address % precision) + alignment;
 
 
 
@@ -112,7 +114,7 @@ namespace RTCV.CorruptCore
             }
 
             //if chunk size is still too big then abort, could be optimized for forwards
-            if (safeAddress + (long)(chunkSize * precision) >= mi.Size)
+            if (safeAddress + (chunkSize * precision) >= mi.Size)
             {
                 return null;
             }

@@ -1,3 +1,5 @@
+using System.IO.Compression;
+
 namespace RTCV.UI
 {
     using System;
@@ -25,15 +27,38 @@ namespace RTCV.UI
 
         private bool LoadSavestateOnClick = false;
         public StashKey CurrentSaveStateStashKey => savestateList.CurrentSaveStateStashKey;
+        private Color? _originalSaveButtonColor;
+        private bool _unsavedEdits;
+        public bool UnsavedEdits
+        {
+            get => _unsavedEdits;
+            set
+            {
+                _unsavedEdits = value;
 
+                if (_unsavedEdits)
+                {
+                    btnSaveSavestateList.BackColor = Color.Tomato;
+                }
+                else
+                {
+                    const float dark2 = -0.35f;
+                    const float generalDarken = -0.50f;
+                    Color c = Colors.GeneralColor.ChangeColorBrightness(generalDarken).ChangeColorBrightness(dark2);
+                    btnSaveSavestateList.BackColor = c;
+                    btnSaveSavestateList.FlatAppearance.BorderColor = c;
+                }
+            }
+        }
         public SavestateManagerForm()
         {
             InitializeComponent();
 
             popoutAllowed = true;
-            this.undockedSizable = false;
+            undockedSizable = false;
 
             savestateList.DataSource = savestateBindingSource;
+            btnSaveSavestateList.BackColorChanged += (o, e) => UnsavedEdits = UnsavedEdits; //this is pretty cursed but it works
         }
 
         private void OnLoadSavestateListButtonMouseClick(object sender, MouseEventArgs e)
@@ -53,6 +78,20 @@ namespace RTCV.UI
 
         private void loadSSK(bool import, string fileName)
         {
+            bool cancelLoad = false;
+            SyncObjectSingleton.FormExecute(() =>
+            {
+                if (!import && UnsavedEdits
+                            && DialogResult.No == MessageBox.Show(this,
+                                "You have unsaved edits in the Glitch Harvester Savestate Manager. \n\n Are you sure you want to load without saving?",
+                                "Unsaved edits in Savestate Manager", MessageBoxButtons.YesNo))
+                {
+                    cancelLoad = true;
+                }
+            });
+            if (cancelLoad)
+                return;
+            
             decimal currentProgress = 0;
             decimal percentPerFile = 0;
             SaveStateKeys ssk;
@@ -147,6 +186,7 @@ namespace RTCV.UI
                 RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Emptying TEMP", currentProgress += 5));
                 Stockpile.EmptyFolder(Path.Combine("WORKING", "TEMP"));
             }
+            UnsavedEdits = import;
 
             percentPerFile = 20m / (ssk.StashKeys.Count + 1);
             for (var i = 0; i < ssk.StashKeys.Count; i++)
@@ -379,7 +419,10 @@ namespace RTCV.UI
                 string tempFolderPath = Path.Combine(RtcCore.workingDir, "TEMP");
 
                 RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs("Creating SSK", currentProgress += 20));
-                System.IO.Compression.ZipFile.CreateFromDirectory(tempFolderPath, tempFilename, System.IO.Compression.CompressionLevel.Fastest, false);
+                CompressionLevel compressionLevel = Params.IsParamSet("COMPRESS_SAVESTATES")
+                    ? CompressionLevel.Fastest
+                    : CompressionLevel.NoCompression;
+                ZipFile.CreateFromDirectory(tempFolderPath, tempFilename, compressionLevel, false);
 
                 if (File.Exists(path))
                 {
@@ -400,6 +443,8 @@ namespace RTCV.UI
                     RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Moving {Path.GetFileName(file)} to SSK", currentProgress += percentPerFile));
                     File.Move(file, Path.Combine(RtcCore.workingDir, "SSK", Path.GetFileName(file)));
                 }
+
+                UnsavedEdits = false;
             }
             catch (Exception ex)
             {

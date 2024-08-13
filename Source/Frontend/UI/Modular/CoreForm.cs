@@ -82,10 +82,14 @@ namespace RTCV.UI
 
         private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
-            if (S.GET<StockpileManagerForm>().UnsavedEdits && !UICore.isClosing && MessageBox.Show("You have unsaved edits in the Glitch Harvester Stockpile. \n\n Are you sure you want to close RTC without saving?", "Unsaved edits in Stockpile", MessageBoxButtons.YesNo) == DialogResult.No)
+            if (!UICore.isClosing)
             {
-                e.Cancel = true;
-                return;
+                if ((S.GET<StockpileManagerForm>().UnsavedEdits && DialogResult.No == MessageBox.Show("You have unsaved edits in the Glitch Harvester Stockpile. \n\n Are you sure you want to close RTC without saving?", "Unsaved edits in Stockpile", MessageBoxButtons.YesNo))
+                 || (S.GET<SavestateManagerForm>().UnsavedEdits && DialogResult.No == MessageBox.Show("You have unsaved edits in the Glitch Harvester Savestate Manager. \n\n Are you sure you want to close RTC without saving?", "Unsaved edits in Savestate Manager", MessageBoxButtons.YesNo)))
+                {
+                    e.Cancel = true;
+                    return;
+                }
             }
 
             UICore.isClosing = true;
@@ -160,7 +164,9 @@ This message only appears once.";
                 }
 
                 Params.SetParam("COMPRESS_STOCKPILE"); //Default param
+                Params.SetParam("COMPRESS_SAVESTATES"); //Default param
                 Params.SetParam("INCLUDE_REFERENCED_FILES"); //Default param
+                Params.SetParam("LOAD_STASH_ON_ARROW_CLICK"); //Default param
             }
 
             //RtcCore.DownloadProblematicProcesses();

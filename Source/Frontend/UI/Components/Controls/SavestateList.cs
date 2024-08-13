@@ -181,6 +181,7 @@ namespace RTCV.UI.Components.Controls
                         if (indexToRemove >= 0 && indexToRemove <= _dataSource.Count)
                         {
                             _dataSource.RemoveAt(indexToRemove);
+                            S.GET<SavestateManagerForm>().UnsavedEdits = true;
                         }
                     }
                 });
@@ -211,6 +212,35 @@ namespace RTCV.UI.Components.Controls
                     BlastEditorForm.OpenBlastEditor(newStashkey);
                 });
 
+                cms.Items.Add("Save to this entry", null, (ob, ev) =>
+                {
+                    var holder = (SavestateHolder)((Button)sender).Parent;
+                    StashKey sk = StockpileManagerUISide.SaveState();
+                    RegisterStashKeyTo(holder, sk);
+                });
+
+                cms.Items.Add("Load this entry", null, (ob, ev) =>
+                {
+                    var holder = (SavestateHolder)((Button)sender).Parent;
+                    StashKey psk = holder.sk;
+                    if (psk != null)
+                    {
+                        if (!CheckAndFixingMissingStates(psk))
+                        {
+                            return;
+                        }
+
+                        StockpileManagerUISide.LoadState(psk);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"{_saveStateWord} box is empty");
+                    }
+                    StockpileManagerUISide.CurrentStashkey = null;
+                    S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = false;
+                    LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearBlastlayerCache, false);
+                });
+                
 
                 cms.Show((Control)sender, locate);
             }
@@ -383,14 +413,15 @@ namespace RTCV.UI.Components.Controls
             }
         }
 
-        private void RegisterStashKeyToSelected(StashKey sk)
+        private void RegisterStashKeyToSelected(StashKey sk) => RegisterStashKeyTo(SelectedHolder, sk);
+        private void RegisterStashKeyTo(SavestateHolder holder, StashKey sk)
         {
             StockpileManagerUISide.CurrentSavestateStashKey = sk;
 
-            //Replace if there'a already a sk
-            if (SelectedHolder?.sk != null)
+            //Replace if there's already a sk
+            if (holder?.sk != null)
             {
-                var indexToReplace = _controlList.IndexOf(SelectedHolder) + _dataSource.Position;
+                var indexToReplace = _controlList.IndexOf(holder) + _dataSource.Position;
                 if (sk != null)
                 {
                     var oldpos = _dataSource.Position; //We do this to prevent weird shifts when you insert over the something at the top of the last page
@@ -406,10 +437,11 @@ namespace RTCV.UI.Components.Controls
                 {
                     _dataSource.Add(new SaveStateKey(sk, ""));
                     SelectedHolder?.SetSelected(false);
-                    SelectedHolder = _controlList.Where(x => x.sk == sk).First() ?? null;
+                    SelectedHolder = _controlList.First(x => x.sk == sk);
                     SelectedHolder?.SetSelected(true);
                 }
             }
+            S.GET<SavestateManagerForm>().UnsavedEdits = true;
         }
 
         private void btnSaveLoad_MouseDown(object sender, MouseEventArgs e)
@@ -524,8 +556,6 @@ namespace RTCV.UI.Components.Controls
 
         private void NewSavestateFromFile()
         {
-
-
             var openSavestateDialog = new OpenFileDialog
             {
                 DefaultExt = "state",
@@ -539,9 +569,7 @@ namespace RTCV.UI.Components.Controls
             }
 
             string filename = openSavestateDialog.FileName;
-
-
-
+            
             //yes this automates the UI. ew.
 
             //Search for the first empty
@@ -565,29 +593,26 @@ namespace RTCV.UI.Components.Controls
 
             var sm = S.GET<StockpileManagerForm>();
 
-            if (sk != null)
-            {
-                var newSk = (StashKey)sk.Clone();
+            var newSk = (StashKey)sk.Clone();
 
-                newSk.Key = newSk.ParentKey;
-                newSk.ParentKey = null;
-                newSk.BlastLayer = new BlastLayer();
+            newSk.Key = newSk.ParentKey;
+            newSk.ParentKey = null;
+            newSk.BlastLayer = new BlastLayer();
 
-                string prevWorkingPath = sk.GetSavestateFullPath();
-                string workingpath = newSk.GetSavestateFullPath();
-                string skspath = Path.Combine(RtcCore.workingDir, "SKS", Path.GetFileName(prevWorkingPath));
+            string prevWorkingPath = sk.GetSavestateFullPath();
+            string workingpath = newSk.GetSavestateFullPath();
+            string skspath = Path.Combine(RtcCore.workingDir, "SKS", Path.GetFileName(prevWorkingPath));
 
-                if (!File.Exists(skspath)) //it it wasn't from a stockpile, revert to session folder
-                    skspath = Path.Combine(RtcCore.workingDir, "SESSION", Path.GetFileName(prevWorkingPath));
+            if (!File.Exists(skspath)) //it it wasn't from a stockpile, revert to session folder
+                skspath = Path.Combine(RtcCore.workingDir, "SESSION", Path.GetFileName(prevWorkingPath));
 
-                if (File.Exists(skspath) && !File.Exists(workingpath))
-                    File.Copy(skspath, workingpath);
+            if (File.Exists(skspath) && !File.Exists(workingpath))
+                File.Copy(skspath, workingpath);
 
-                StockpileManagerUISide.CurrentStashkey = sk;
-                StockpileManagerUISide.OriginalFromStashkey(sk);
+            StockpileManagerUISide.CurrentStashkey = sk;
+            StockpileManagerUISide.OriginalFromStashkey(sk);
 
-                RegisterStashKeyToSelected(newSk);
-            }
+            RegisterStashKeyToSelected(newSk);
         }
 
     }

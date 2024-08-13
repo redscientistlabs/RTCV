@@ -49,7 +49,7 @@ namespace RTCV.UI
         {
             if (LoadedSounds?.Length != 0)
             {
-                LoadedSounds[CorruptCore.RtcCore.RND.Next(LoadedSounds.Length)].Play();
+                LoadedSounds?[CorruptCore.RtcCore.RND.Next(LoadedSounds.Length)].Play();
             }
         }
 
