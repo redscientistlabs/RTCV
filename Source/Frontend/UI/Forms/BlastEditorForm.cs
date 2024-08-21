@@ -899,7 +899,11 @@ namespace RTCV.UI
             {
                 //If it's an address or a source address we want decimal
                 case "Address":
-                    _bs.DataSource = currentSK.BlastLayer.Layer.Where(x => x.Address.ToString("X").ToUpper().Substring(0, tbFilter.Text.Length.Clamp(0, x.Address.ToString("X").Length)) == tbFilter.Text.ToUpper()).ToList();
+                    _bs.DataSource = currentSK.BlastLayer.Layer
+                        .Where(x => x.Address.ToString("X")
+                        .ToUpper()
+                        .Substring(0, tbFilter.Text.Length.Clamp(0, x.Address.ToString("X").Length)) == tbFilter.Text.ToUpper())
+                        .ToList();
                     break;
                 case "SourceAddress":
                     _bs.DataSource = currentSK.BlastLayer.Layer.Where(x => x.SourceAddress.ToString("X").ToUpper().Substring(0, tbFilter.Text.Length.Clamp(0, x.SourceAddress.ToString("X").Length)) == tbFilter.Text.ToUpper()).ToList();
