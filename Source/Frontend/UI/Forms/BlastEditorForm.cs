@@ -897,7 +897,7 @@ namespace RTCV.UI
             _bs = new BindingSource();
             switch (((ComboBoxItem<string>)cbFilterColumn.SelectedItem).Value)
             {
-                //If it's an address or a source address we want decimal
+                //If it's an address or a source address we want hexadecimal
                 case "Address":
                     _bs.DataSource = currentSK.BlastLayer.Layer.Where(x => x.Address.ToString("X").IndexOf(tbFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
                     break;
