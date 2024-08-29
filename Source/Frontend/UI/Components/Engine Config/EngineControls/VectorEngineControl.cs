@@ -36,7 +36,6 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             if (RtcCore.ValueListBindingSource.Count > 0)
                 cbVectorValueList.SelectedIndex = RtcCore.ValueListBindingSource.Select(x => x.Value).ToList().IndexOf(VectorEngine.ValueListHash);
             cbVectorUnlockPrecision.Checked = VectorEngine.UnlockPrecision;
-            //throw new NotImplementedException();
         }
     }
 }

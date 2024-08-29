@@ -62,7 +62,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             this.panel2.Controls.Add(this.lbVectorEngineValueText1);
             this.panel2.Controls.Add(this.cbVectorValueList);
             this.panel2.Controls.Add(this.label18);
-            this.panel2.Location = new System.Drawing.Point(5, 93);
+            this.panel2.Location = new System.Drawing.Point(5, 98);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(408, 47);
             this.panel2.TabIndex = 147;
@@ -115,7 +115,7 @@ namespace RTCV.UI.Components.EngineConfig.EngineControls
             this.pnLimiterList.Controls.Add(this.lbVectorEngineLimiterText1);
             this.pnLimiterList.Controls.Add(this.cbVectorLimiterList);
             this.pnLimiterList.Controls.Add(this.label13);
-            this.pnLimiterList.Location = new System.Drawing.Point(5, 39);
+            this.pnLimiterList.Location = new System.Drawing.Point(5, 47);
             this.pnLimiterList.Name = "pnLimiterList";
             this.pnLimiterList.Size = new System.Drawing.Size(408, 47);
             this.pnLimiterList.TabIndex = 146;

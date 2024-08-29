@@ -14,7 +14,8 @@ namespace RTCV.UI
         private new void HandleMouseDown(object s, MouseEventArgs e) => base.HandleMouseDown(s, e);
         private new void HandleFormClosing(object s, FormClosingEventArgs e) => base.HandleFormClosing(s, e);
 
-        public bool DontLoadSelectedStash { get; set; } = false;
+        public bool DontLoadSelectedStash { get; set; }
+        public bool LoadWhenSelectedWithArrows { get; set; } = Params.IsParamSet("LOAD_STASH_ON_ARROW_CLICK");
 
         public StashHistoryForm()
         {
@@ -373,12 +374,16 @@ namespace RTCV.UI
             if (lbStashHistory.SelectedIndex == 0)
             {
                 lbStashHistory.ClearSelected();
+                if (!LoadWhenSelectedWithArrows)
+                    DontLoadSelectedStash = true;
                 lbStashHistory.SelectedIndex = lbStashHistory.Items.Count - 1;
             }
             else
             {
                 int newPos = lbStashHistory.SelectedIndex - 1;
                 lbStashHistory.ClearSelected();
+                if (!LoadWhenSelectedWithArrows)
+                    DontLoadSelectedStash = true;
                 lbStashHistory.SelectedIndex = newPos;
             }
         }
@@ -393,12 +398,16 @@ namespace RTCV.UI
             if (lbStashHistory.SelectedIndex == lbStashHistory.Items.Count - 1)
             {
                 lbStashHistory.ClearSelected();
+                if (!LoadWhenSelectedWithArrows)
+                    DontLoadSelectedStash = true;
                 lbStashHistory.SelectedIndex = 0;
             }
             else
             {
                 int newPos = lbStashHistory.SelectedIndex + 1;
                 lbStashHistory.ClearSelected();
+                if (!LoadWhenSelectedWithArrows)
+                    DontLoadSelectedStash = true;
                 lbStashHistory.SelectedIndex = newPos;
             }
         }

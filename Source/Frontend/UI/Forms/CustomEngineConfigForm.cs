@@ -28,6 +28,7 @@ namespace RTCV.UI
             cbSelectedTemplate.SelectedIndex = 0;
 
             cbCustomPrecision.SelectedIndexChanged += HandleCustomPrecisionSelectionChange;
+            cbUseAlignment.CheckedChanged += HandleUseAlignmentCheckedChanged;
             //nmAlignment.ValueChanged += HandleAlignmentChange;
         }
 
@@ -76,6 +77,16 @@ namespace RTCV.UI
                 cbCustomPrecision.Enabled = true;
                 S.GET<CorruptionEngineForm>().cbCustomPrecision.Enabled = true;
             }
+        }
+
+        private void HandleUseAlignmentCheckedChanged(object sender, EventArgs e)
+        {
+            if (!DontUpdateSpec)
+            {
+                RtcCore.UseAlignment = cbUseAlignment.Checked;
+            }
+
+            S.GET<CorruptionEngineForm>().cbUseAlignment.Checked = cbUseAlignment.Checked;
         }
 
         private void OnLoad(object sender, EventArgs e)

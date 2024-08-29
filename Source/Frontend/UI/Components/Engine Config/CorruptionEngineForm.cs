@@ -104,6 +104,7 @@ namespace RTCV.UI
             }
 
             nmAlignment.Value = Math.Max(nmAlignment.Minimum, Math.Min(nmAlignment.Maximum, RtcCore.Alignment));
+            cbUseAlignment.Checked = RtcCore.UseAlignment;
 
 
             //Resyncs all engines to their spec (UI value to Spec)
@@ -173,7 +174,7 @@ namespace RTCV.UI
 
         private void OnFormLoad(object sender, EventArgs e)
         {
-            var handler = new EventHandler<Components.Controls.ValueUpdateEventArgs<decimal>>(HandleAlignmentChange);
+            var handler = new EventHandler<ValueUpdateEventArgs<decimal>>(HandleAlignmentChange);
             nmAlignment.ValueChanged += handler;
             nmAlignment.registerSlave(S.GET<CustomEngineConfigForm>().nmAlignment, handler);
 
@@ -192,10 +193,16 @@ namespace RTCV.UI
             }
         }
 
-        private void HandleAlignmentChange(object sender, Components.Controls.ValueUpdateEventArgs<decimal> e)
+        private void HandleAlignmentChange(object sender, ValueUpdateEventArgs<decimal> e)
         {
             if (dontUpdate) return;
             RtcCore.Alignment = Convert.ToInt32(nmAlignment.Value);
+        }
+
+        private void HandleUseAlignmentChange(object sender, EventArgs e)
+        {
+            if (dontUpdate) return;
+            RtcCore.UseAlignment = cbUseAlignment.Checked;
         }
 
         private void UpdateEngine(object sender, EventArgs e)

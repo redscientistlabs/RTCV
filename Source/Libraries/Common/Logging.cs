@@ -72,16 +72,8 @@ namespace RTCV.Common
             // var logfile = new NLog.Targets.FileTarget("logfile") { FileName = filename, Layout = layout };
             var logconsole = new NLog.Targets.ColoredConsoleTarget("logconsole") { Layout = CurrentLayout };
 
-            var isDebug = false;
-            Debug.Assert(isDebug = true);
-            if (Environment.GetCommandLineArgs().Contains("-TRACE") || isDebug)
-            {
-                config.AddRule(LogLevel.Trace, LogLevel.Fatal, logconsole);
-            }
-            else
-            {
-                config.AddRule(LogLevel.Debug, LogLevel.Fatal, logconsole);
-            }
+            config.AddRule(LogLevel.Trace, LogLevel.Fatal, logconsole);
+            
             // Rules for mapping loggers to targets
             //config.AddRule(LogLevel.Trace, LogLevel.Fatal, logfile);
 

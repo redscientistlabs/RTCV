@@ -279,12 +279,19 @@ namespace RTCV.UI
             string vmdName = lbLoadedVmdList.SelectedItem.ToString();
             VirtualMemoryDomain vmd = MemoryDomains.VmdPool[vmdName];
 
+            string unfixedName = vmdName.Trim().Replace("[V]", "") + ".vmd";
+            string fixedName = MakeFileNameValid(unfixedName);
+            if (unfixedName != fixedName && DialogResult.No == MessageBox.Show(
+                    $"This VMD's name contains some invalid characters which will be replaced with look-alikes for the file's name. Do you wish to save {fixedName}?",
+                    "Save file?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                return;
+            
             SaveFileDialog saveFileDialog1 = new SaveFileDialog
             {
                 DefaultExt = "vmd",
                 Title = "Save VMD to File",
                 Filter = "VMD file|*.vmd",
-                FileName = vmdName.Trim().Replace("[V]", "") + ".vmd",
+                FileName = fixedName,
                 RestoreDirectory = true
             };
 
@@ -308,7 +315,7 @@ namespace RTCV.UI
                 proto = JsonHelper.Deserialize<VmdPrototype>(fs);
 
                 string filePath = path.Substring(path.LastIndexOf('\\') + 1);
-                proto.VmdName = filePath.Replace(".vmd", "").Replace(".VMD", "");
+                proto.VmdName = ConvertLookalikesBack(filePath.Replace(".vmd", "").Replace(".VMD", ""));
 
                 MemoryDomains.AddVMD(proto);
             }
@@ -392,8 +399,15 @@ namespace RTCV.UI
                     {
                         Directory.CreateDirectory(RtcCore.VmdsDir);
                     }
-
-                    string targetPath = Path.Combine(RtcCore.VmdsDir, value.Trim() + ".vmd");
+                                        
+                    string cleanValue = MakeFileNameValid(value);
+                        
+                    if (value != cleanValue && DialogResult.No == MessageBox.Show(
+                            $"This VMD's name contains some invalid characters which will be replaced with look-alikes for the file's name. Do you wish to save {cleanValue}.vmd?",
+                            "Save file?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                        return;
+                    
+                    string targetPath = Path.Combine(RtcCore.VmdsDir, cleanValue.Trim() + ".vmd");
 
                     if (File.Exists(targetPath))
                     {
@@ -422,6 +436,11 @@ namespace RTCV.UI
 
                     string itemValue = item.ToString().Trim().Replace("[V]", "");
 
+                    string cleanValue = MakeFileNameValid(itemValue);
+                    if (itemValue != cleanValue && DialogResult.No == MessageBox.Show(
+                            $"VMD {itemValue}'s name contains some invalid characters which will be replaced with look-alikes for the file's name. Do you wish to save {cleanValue}.vmd?",
+                            "Save file?", MessageBoxButtons.YesNo, MessageBoxIcon.Warning))
+                        return;
                     //string targetPath = Path.Combine(RtcCore.vmdsDir, value.Trim() + ".vmd");
 
                     string itemTargetPath = Path.Combine(RtcCore.VmdsDir, itemValue.Trim() + ".vmd");
@@ -465,6 +484,47 @@ namespace RTCV.UI
         private void btnReloadItem_Click(object sender, EventArgs e)
         {
             RefreshVMDs();
+        }
+        
+        /// <summary>
+        /// Replaces <see href="https://learn.microsoft.com/en-us/windows/win32/fileio/naming-a-file#naming-conventions">reserved characters</see> with valid look-alikes <br/>
+        /// &lt; = ˂ <br/>
+        /// &gt; = ˃ <br/>
+        /// : = ꞉ <br/>
+        /// " = ʺ <br/>
+        /// / = ∕ <br/>
+        /// \ = ⧵ <br/>
+        /// | = │ <br/>
+        /// ? = ʔ <br/>
+        /// * = ∗ <br/>
+        /// </summary>
+        private static string MakeFileNameValid(string name)
+        {
+            return name.Replace("<", "\u02c2")
+                .Replace(">", "\u02c3")
+                .Replace(":", "\ua789")
+                .Replace("\"", "\u02ba")
+                .Replace("/", "\u2215")
+                .Replace(@"\", "\u29f5")
+                .Replace("|", "\u2502")
+                .Replace("?", "\u0294")
+                .Replace("*", "\u2217");
+        }
+        /// <summary>
+        /// Converts a string made into a valid file name with <see cref="MakeFileNameValid"/> back to the original string.
+        /// If the original name contained any of the look-alike characters, those will be replaced, too.
+        /// </summary>
+        private static string ConvertLookalikesBack(string text)
+        {
+            return text.Replace("\u02c2", "<")
+                .Replace("\u02c3", ">")
+                .Replace("\ua789", ":")
+                .Replace("\u02ba", "\"")
+                .Replace("\u2215", "/")
+                .Replace("\u29f5", @"\")
+                .Replace("\u2502", "|")
+                .Replace("\u0294", "?")
+                .Replace("\u2217", "*");
         }
     }
 }

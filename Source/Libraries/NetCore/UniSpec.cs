@@ -49,31 +49,6 @@ namespace RTCV.NetCore
             }
         }
 
-        public void RegisterUpdateAction(Action<object, SpecUpdateEventArgs> registrant)
-        {
-            if (registrant == null)
-            {
-                throw new ArgumentNullException(nameof(registrant));
-            }
-
-            UnregisterUpdateAction();
-            SpecUpdated += registrant.Invoke; //We trick the eventhandler in executing the registrant instead
-        }
-
-        public void UnregisterUpdateAction()
-        {
-            //finds any delegate referencing SpecUpdated and dereferences it
-
-            FieldInfo eventFieldInfo = typeof(FullSpec).GetField("SpecUpdated", BindingFlags.NonPublic | BindingFlags.Instance);
-            MulticastDelegate eventInstance = (MulticastDelegate)eventFieldInfo.GetValue(this);
-            Delegate[] invocationList = eventInstance?.GetInvocationList() ?? new Delegate[] { };
-            MethodInfo eventRemoveMethodInfo = typeof(FullSpec).GetEvent("SpecUpdated").GetRemoveMethod(true);
-            foreach (Delegate eventHandler in invocationList)
-            {
-                eventRemoveMethodInfo.Invoke(this, new object[] { eventHandler });
-            }
-        }
-
         public new void Reset()
         {
             base.Reset();

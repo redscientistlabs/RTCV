@@ -73,10 +73,10 @@ namespace RTCV.UI
             set => _domainToMiDico = value;
         }
 
-        private string[] _domains = null;
+        private string[] _domains;
         public List<string> VisibleColumns { get; set; }
         private string CurrentBlastLayerFile = "";
-        private bool batchOperation = false;
+        private bool batchOperation;
         private ContextMenuStrip headerStrip;
         private ContextMenuStrip cms;
         private Dictionary<string, Control> property2ControlDico;
@@ -897,19 +897,15 @@ namespace RTCV.UI
             _bs = new BindingSource();
             switch (((ComboBoxItem<string>)cbFilterColumn.SelectedItem).Value)
             {
-                //If it's an address or a source address we want decimal
+                //If it's an address or a source address we want hexadecimal
                 case "Address":
-                    _bs.DataSource = currentSK.BlastLayer.Layer
-                        .Where(x => x.Address.ToString("X")
-                        .ToUpper()
-                        .Substring(0, tbFilter.Text.Length.Clamp(0, x.Address.ToString("X").Length)) == tbFilter.Text.ToUpper())
-                        .ToList();
+                    _bs.DataSource = currentSK.BlastLayer.Layer.Where(x => x.Address.ToString("X").IndexOf(tbFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
                     break;
                 case "SourceAddress":
-                    _bs.DataSource = currentSK.BlastLayer.Layer.Where(x => x.SourceAddress.ToString("X").ToUpper().Substring(0, tbFilter.Text.Length.Clamp(0, x.SourceAddress.ToString("X").Length)) == tbFilter.Text.ToUpper()).ToList();
+                    _bs.DataSource = currentSK.BlastLayer.Layer.Where(x => x.SourceAddress.ToString("X").IndexOf(tbFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
                     break;
                 default: //Otherwise just use reflection and dig it out
-                    _bs.DataSource = currentSK.BlastLayer.Layer.Where(x => x?.GetType()?.GetProperty(value)?.GetValue(x) != null && (x.GetType()?.GetProperty(value)?.GetValue(x).ToString().ToUpper().Substring(0, tbFilter.Text.Length) == tbFilter.Text.ToUpper())).ToList();
+                    _bs.DataSource = currentSK.BlastLayer.Layer.Where(x => x?.GetType().GetProperty(value)?.GetValue(x) != null && x.GetType().GetProperty(value)?.GetValue(x).ToString().IndexOf(tbFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
                     break;
             }
             dgvBlastEditor.DataSource = _bs;
@@ -1423,7 +1419,7 @@ namespace RTCV.UI
                     //Todo replace how this works
                     if (_bs != null && _bs.Contains(bu))
                     {
-                        bs.Remove(bu);
+                        _bs.Remove(bu);
                     }
                 }
             }
