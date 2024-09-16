@@ -24,7 +24,7 @@
       <Version>17.0.65</Version>
     </PackageReference>
     <PackageReference Include="NLog">
-      <Version>5.1.1</Version>
+      <Version>5.3.4</Version>
     </PackageReference>
     <PackageReference Include="System.Buffers">
       <Version>4.5.1</Version>
