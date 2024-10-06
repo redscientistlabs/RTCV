@@ -51,12 +51,13 @@ namespace VanguardHook
         // Read the config file and parse the data into the class
         public static ConfigRoot GetConfigFile()
         {
+            string configErrMessage = "Vanguard could not find the target Emulator's config file at " + EmuDirectory.emuDir + ". Try reinstalling " +
+                                      "and launching Vanguard.\n\nIf you keep getting this message, poke " +
+                                      "the RTC devs for help (Discord is in the launcher).";
+
             if (!File.Exists(EmuDirectory.emuDir + "VanguardConfig.Json"))
             {
-                MessageBox.Show(
-                "Vanguard could not find the target Emulator's config file. Try reinstalling " +
-                "and launching Vanguard.\n\nIf you keep getting this message, poke " +
-                "the RTC devs for help (Discord is in the launcher).",
+                MessageBox.Show(configErrMessage,
                 "RTC Not Connected");
                 
                 Environment.Exit(-1);
@@ -85,7 +86,7 @@ namespace VanguardHook
             if (!File.Exists(EmuDirectory.emuDir + "VanguardBlacklistedDomains.Json"))
             {
                 MessageBox.Show(
-                "Vanguard could not find the target Emulator's blacklisted domains file. Try reinstalling " +
+                "Vanguard could not find the target Emulator's blacklisted domains file at " + EmuDirectory.emuDir + ". Try reinstalling " +
                 "and launching Vanguard.\n\nIf you keep getting this message, poke " +
                 "the RTC devs for help (Discord is in the launcher).",
                 "RTC Not Connected");
