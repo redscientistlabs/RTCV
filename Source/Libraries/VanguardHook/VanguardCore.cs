@@ -28,7 +28,10 @@ namespace VanguardHook
 		public static Form SyncForm;
         public static VanguardRealTimeEvents RTE_API = new VanguardRealTimeEvents();
         public static bool attached = false;
-		public static string System
+		public static bool connected = false;
+		public static PartialSpec emuSpecTemplate = new PartialSpec("VanguardSpec");
+
+        public static string System
 		{
 			get => (string)AllSpec.VanguardSpec[VSPEC.SYSTEM];
 			set => AllSpec.VanguardSpec.Update(VSPEC.SYSTEM, value);
@@ -113,15 +116,6 @@ namespace VanguardHook
 		// Registers the initial spec and pushes it to the CorruptCore and UI
 		public static void RegisterVanguardSpec()
         {
-			PartialSpec emuSpecTemplate = new PartialSpec("VanguardSpec");
-			emuSpecTemplate.Insert(VanguardCore.getDefaultPartial());
-			AllSpec.VanguardSpec = new FullSpec(emuSpecTemplate, !RtcCore.Attached);
-			if (VanguardCore.attached)
-				VanguardConnector.PushVanguardSpecRef(AllSpec.VanguardSpec);
-            // also update the RtcCore directory for the killswitch
-			// have to update it here because CorruptCore checks the AllSpec,
-			// and I'm not changing that code
-            RtcCore.EmuDir = EmuDirectory.emuDir;
             LocalNetCoreRouter.Route(Endpoints.CorruptCore, Remote.PushVanguardSpec, emuSpecTemplate, true);
 			LocalNetCoreRouter.Route(Endpoints.UI, Remote.PushVanguardSpec, emuSpecTemplate, true);
 
@@ -145,8 +139,6 @@ namespace VanguardHook
 
         public static void Start()
 		{
-
-
             SyncForm = new AnchorForm();
 			var handle = SyncForm.Handle;
             SyncObjectSingleton.SyncObject = SyncForm;
@@ -159,8 +151,16 @@ namespace VanguardHook
 
             EmuDirectory.emuDir = EmuDirectory.emuDir + "\\";
             //Start everything
+
+			//Create the FullSpec template for the AllSpec before starting the client connection
+            emuSpecTemplate.Insert(VanguardCore.getDefaultPartial());
+            AllSpec.VanguardSpec = new FullSpec(emuSpecTemplate, !RtcCore.Attached);
+            if (VanguardCore.attached)
+                VanguardConnector.PushVanguardSpecRef(AllSpec.VanguardSpec);
+            RtcCore.EmuDir = EmuDirectory.emuDir;
+
             VanguardImplementation.StartClient();
-            VanguardCore.RegisterVanguardSpec();
+
             Thread.Sleep(500);
             RtcCore.StartEmuSide();
 

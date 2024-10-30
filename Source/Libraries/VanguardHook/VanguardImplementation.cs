@@ -141,14 +141,15 @@ namespace VanguardHook
         public static RTCV.Vanguard.VanguardConnector connector = null;
         public static void StartClient()
         {
+			VanguardCore.connected = false;
 
             try
             {
                 ConsoleEx.WriteLine("Starting Vanguard Client");
-                Thread.Sleep(500);
                 var spec = new NetCoreReceiver();
                 spec.Attached = VanguardCore.attached;
                 spec.MessageReceived += OnMessageRecieved;
+
                 connector = new RTCV.Vanguard.VanguardConnector(spec);
             }
             catch (Exception ex)
@@ -214,7 +215,8 @@ namespace VanguardHook
 			{
 				case RTCV.NetCore.Commands.Remote.AllSpecSent:
 					{
-						SyncObjectSingleton.FormExecute(() => {; });
+						VanguardCore.connected = true;
+                        SyncObjectSingleton.FormExecute(() => {; });
 						RefreshDomains();
 					}
 					break;
