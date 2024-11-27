@@ -148,11 +148,20 @@ namespace VanguardHook
         [DllExport("GAMECLOSED")]
         public static void GAMECLOSED()
         {
+            ConsoleEx.WriteLine("GAMECLOSED");
             PartialSpec gameClosed = new PartialSpec("VanguardSpec");
             gameClosed[VSPEC.OPENROMFILENAME] = "";
             AllSpec.VanguardSpec.Update(gameClosed);
-            VanguardImplementation.RefreshDomains();
             RtcCore.InvokeGameClosed(true);
+
+            // If we're closing the emulator, don't refresh the domains or else it will hang
+            if (VanguardImplementation.waitForEmulatorClose)
+            {
+                ConsoleEx.WriteLine("closing Vanguard");
+                VanguardCore.StopVanguard();
+            }
+            else
+                VanguardImplementation.RefreshDomains();
         }
 
 

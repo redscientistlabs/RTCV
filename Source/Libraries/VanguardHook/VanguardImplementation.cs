@@ -45,6 +45,7 @@ namespace VanguardHook
 			{
 				return;
 			}
+			ConsoleEx.WriteLine("poke byte");
 			MethodImports.Vanguard_pokebyte(address + VOffset, (byte)val, VPeekPokeSel);
 		}
 		public byte PeekByte(long addr)
@@ -67,7 +68,7 @@ namespace VanguardHook
 	public class VanguardImplementation
 	{
 		public static bool enableRTC = true;
-
+		public static bool waitForEmulatorClose = false;
 
         public static void ReloadState()
         {
@@ -275,7 +276,7 @@ namespace VanguardHook
 					}
 					break;
 
-				case RTCV.NetCore.Commands.Remote.KeySetSyncSettings:
+                case RTCV.NetCore.Commands.Remote.KeySetSyncSettings:
 					break;
 
 				case RTCV.NetCore.Commands.Emulator.GetRealtimeAPI:
@@ -292,19 +293,23 @@ namespace VanguardHook
 
 				case RTCV.NetCore.Commands.Remote.EventCloseEmulator:
                     {
-						// Close the hex editor if it's open
-						RtcCore.InvokeKillHexEditor();
+                        // Close the hex editor if it's open
+                        RtcCore.InvokeKillHexEditor();
 
-						// Prep emulator so when the game closes it exits
-						var g = new SyncObjectSingleton.GenericDelegate(MethodImports.Vanguard_prepShutdown);
-						SyncObjectSingleton.FormExecute(g);
+                        // Since some emulators close the game first when receiving a close emulator command, we need
+						// to make sure that RTC doesn't try to refresh domains when the GAMECLOSED signal is sent
+                        if (AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME].ToString() != "")
+						{
+							waitForEmulatorClose = true;
+						}
+                        // Close the emulator
+                        MethodImports.Vanguard_forceStop();
 
-						// Stop the game
-						StopClient();
-						RtcCore.InvokeGameClosed(true);
 
-						StopGame();
-						Environment.Exit(-1);
+                        if (!waitForEmulatorClose)
+						{
+                            VanguardCore.StopVanguard();
+                        }
 					}
                     break;
 			}

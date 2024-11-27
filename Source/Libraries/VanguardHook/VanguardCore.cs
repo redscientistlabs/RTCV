@@ -202,6 +202,16 @@ namespace VanguardHook
 		{
 			MethodImports.Vanguard_forceStop();
         }
-	}
+
+		// Stops the connection to the RTC client and terminates the hook
+        public static void StopVanguard()
+        {
+            VanguardImplementation.StopClient();
+            RtcCore.InvokeGameClosed(true);
+
+
+            Environment.Exit(-1);
+        }
+    }
 }
 
