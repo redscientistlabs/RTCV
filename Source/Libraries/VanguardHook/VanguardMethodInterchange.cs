@@ -95,6 +95,7 @@ namespace VanguardHook
                 GAME_TO_LOAD = "";
             }
             AllSpec.VanguardSpec.Update(VSPEC.OPENROMFILENAME, rompath, true, true);
+            ConsoleEx.WriteLine(AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME].ToString());
         }
         
         // Called when a game succesfully finishes loading on the emulator. Finishes updating the
@@ -118,25 +119,18 @@ namespace VanguardHook
             PartialSpec gameDone = new PartialSpec("VanguardSpec");
             gameDone[VSPEC.SYSTEM] = VanguardConfigReader.configFile.VSpecConfig.NAME;
             gameDone[VSPEC.SYSTEMPREFIX] = VanguardConfigReader.configFile.VSpecConfig.NAME;
-
-            //We need this code to be able to choose between Wii and Gamecube for Dolphin
-            if (VanguardConfigReader.configFile.VSpecConfig.PROFILE == "Dolphin")
-            {
-                if (MethodImports.Vanguard_isWii())
-                    gameDone[VSPEC.SYSTEMCORE] = "Wii";
-
-                else
-                    gameDone[VSPEC.SYSTEMCORE] = "Gamecube";
-            }
-            else
-                gameDone[VSPEC.SYSTEMCORE] = VanguardConfigReader.configFile.VSpecConfig.PROFILE;
-
             gameDone[VSPEC.SYNCSETTINGS] = "";
 
             // remove any invalid file characters before storing it
             string gamenameFixed = StringExtensions.MakeSafeFilename(gamename, '-');
 
             gameDone[VSPEC.GAMENAME] = gamenameFixed;
+
+            if (gamenameFixed != AllSpec.VanguardSpec[VSPEC.GAMENAME].ToString())
+            {
+                gameDone[VSPEC.SYSTEMCORE] = Marshal.PtrToStringAnsi(MethodImports.Vanguard_getSystemCore());
+            }
+
             AllSpec.VanguardSpec.Update(gameDone);
             VanguardImplementation.RefreshDomains();
             RtcCore.InvokeLoadGameDone();
@@ -178,7 +172,7 @@ namespace VanguardHook
         [DllExport("RTCOSDENABLED")]
         public static bool RTCOSDENABLED()
         {
-            if (VanguardImplementation.enableRTC)
+            if (!VanguardImplementation.enableRTC)
             {
                 return true;
             }
@@ -267,9 +261,8 @@ namespace VanguardHook
         public delegate void VforceStop();
         public static VforceStop Vanguard_forceStop = GetMethod<VforceStop>("Vanguard_forceStop");
 
-        // This is a Dolphin exclusive method
-        public delegate bool VisWii();
-        public static VisWii Vanguard_isWii = GetMethod<VisWii>("Vanguard_isWii");
+        public delegate IntPtr VgetSystemCore();
+        public static VgetSystemCore Vanguard_getSystemCore = GetMethod<VgetSystemCore>("Vanguard_getSystemCore");
 
         // loads the emulator exe and returns a pointer for importing exported functions
         public static IntPtr LoadEmuPointer()
