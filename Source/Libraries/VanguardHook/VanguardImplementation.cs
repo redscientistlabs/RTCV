@@ -45,7 +45,6 @@ namespace VanguardHook
 			{
 				return;
 			}
-			ConsoleEx.WriteLine("poke byte");
 			MethodImports.Vanguard_pokebyte(address + VOffset, (byte)val, VPeekPokeSel);
 		}
 		public byte PeekByte(long addr)
@@ -124,13 +123,10 @@ namespace VanguardHook
 			string currentOpenRom = "";
 			if ((string)AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME] != "")
 				currentOpenRom = (string)AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME];
-			ConsoleEx.WriteLine(currentOpenRom);
-			ConsoleEx.WriteLine(filename);
-			// Game is not running
+
+			// Only send the command if we need to load a new rom (since some systems take longer to load every time)
 			if (currentOpenRom != filename)
 			{
-                // Make sure we close any previous games in case the new rom is in a different filepath
-                //Vanguard_closeGame();
 				MethodImports.Vanguard_loadROM(filename);
 			}
         }
@@ -177,9 +173,8 @@ namespace VanguardHook
 			PartialSpec gameDone = new PartialSpec("VanguardSpec");
 			gameDone[VSPEC.MEMORYDOMAINS_INTERFACES] = GetInterfaces();
 			AllSpec.VanguardSpec.Update(gameDone);
-			LocalNetCoreRouter.Route(RTCV.NetCore.Endpoints.CorruptCore, RTCV.NetCore.Commands.Remote.EventDomainsUpdated, true, true);
-		}
-
+            LocalNetCoreRouter.Route(RTCV.NetCore.Endpoints.CorruptCore, RTCV.NetCore.Commands.Remote.EventDomainsUpdated, true, true);
+        }
 		// finds all domains to be used by the system
 		public static MemoryDomainProxy[] GetInterfaces()
         {
@@ -189,7 +184,8 @@ namespace VanguardHook
 				return new List<MemoryDomainProxy>(0).ToArray();
 
             List<MemoryDomainProxy> interfaces = new List<MemoryDomainProxy>();
-			List<MemoryDomainConfig> memDomainList = VanguardConfigReader.configFile.MemoryDomainConfig;
+            List<MemoryDomainConfig> memDomainList = VanguardConfigReader.configFile.MemoryDomainConfig;
+
             for (var i = 0; i < memDomainList.Count; i++)
             {
                 for (var j = 0; j < memDomainList[i].Profiles.Count(); j++)
@@ -198,6 +194,7 @@ namespace VanguardHook
 					{
                         MemoryDomain memDomain = new MemoryDomain(memDomainList[i]);
                         interfaces.Add(new MemoryDomainProxy(memDomain));
+
 						break;
                     }
 				}
