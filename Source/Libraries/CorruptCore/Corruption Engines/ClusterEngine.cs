@@ -17,10 +17,12 @@ namespace RTCV.CorruptCore
        
 
 
+
         public static string[] ShuffleTypes { get; private set; } = new string[] { rand, reverse, rotFW, rotBW, overWrite, shuffleHalf, interleave, skipper };
 
         const string forwards = "Forwards";
         const string backwards = "Backwards";
+
 
 
         public static string[] Directions { get; private set; } = new string[] { forwards, backwards };
