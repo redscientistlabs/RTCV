@@ -1,5 +1,6 @@
 namespace RTCV.CorruptCore
 {
+    using System;
     using System.Collections.Generic;
     using RTCV.NetCore;
 
@@ -10,12 +11,17 @@ namespace RTCV.CorruptCore
         const string rotFW = "Rotate Forwards";
         const string rotBW = "Rotate Backwards";
         const string overWrite = "Overwrite";
+        const string shuffleHalf = "Shuffle Half";
+        const string interleave = "Interleave";
+        const string skipper = "Skipper";
 
-        public static string[] ShuffleTypes { get; private set; } = new string[] { rand, reverse, rotFW, rotBW, overWrite };
 
+        public static string[] ShuffleTypes { get; private set; } = new string[] { rand, reverse, rotFW, rotBW, overWrite, shuffleHalf, interleave, skipper };
 
         const string forwards = "Forwards";
         const string backwards = "Backwards";
+
+
         public static string[] Directions { get; private set; } = new string[] { forwards, backwards };
 
         public static string LimiterListHash
@@ -41,7 +47,6 @@ namespace RTCV.CorruptCore
             get => (int)AllSpec.CorruptCoreSpec[RTCSPEC.CLUSTER_MODIFIER];
             set => AllSpec.CorruptCoreSpec.Update(RTCSPEC.CLUSTER_MODIFIER, value);
         }
-
 
         public static bool OutputMultipleUnits
         {
@@ -74,7 +79,6 @@ namespace RTCV.CorruptCore
             return partial;
         }
 
-
         public static BlastUnit[] GenerateUnit(string domain, long address, int alignment, bool useAlignment)
         {
             if (domain == null)
@@ -106,8 +110,6 @@ namespace RTCV.CorruptCore
             if (useAlignment)
                 safeAddress = safeAddress - (address % precision) + alignment;
 
-
-
             if (safeAddress > mi.Size - precision)
             {
                 safeAddress = mi.Size - (precision * 2) + alignment; //If we're out of range, hit the last aligned address
@@ -127,7 +129,7 @@ namespace RTCV.CorruptCore
             }
 
             //do not swap endianess
-            byte[] GetSegment(long address)
+            byte[] GetSegment(long address)// Get a segment of bytes from the memory interface
             {
                 byte[] values = new byte[precision];
 
@@ -139,7 +141,7 @@ namespace RTCV.CorruptCore
                 return values;
             }
 
-            void ShuffleRandom(List<byte[]> list)
+            void ShuffleRandom(List<byte[]> list)// Shuffle the list randomly
             {
                 int n = list.Count;
                 while (n > 1)
@@ -152,27 +154,84 @@ namespace RTCV.CorruptCore
                 }
             }
 
-            void RotateForward(List<byte[]> list)
+            void RotateForward(List<byte[]> list)// Rotate the list forwards
             {
                 var x = list[list.Count - 1];
                 list.RemoveAt(list.Count - 1);
                 list.Insert(0, x);
             }
 
-            void RotateBackward(List<byte[]> list)
+            void RotateBackward(List<byte[]> list)// Rotate the list backwards
             {
                 var x = list[0];
                 list.RemoveAt(0);
                 list.Add(x);
             }
 
-            void OverWrite(List<byte[]> list)
+            void OverWrite(List<byte[]> list) // Overwrite all bytes in the list with the first byte
             {
                 for (int j = 0; j < list.Count; j++)
                 {
                     list[j] = list[srcUnit];
                 }
             }
+
+            void ShuffleHalf(List<byte[]> list) // Shuffle the list in half
+            {
+                int half = list.Count / 2;
+                List<byte[]> firstHalf = list.GetRange(0, half);
+                List<byte[]> secondHalf = list.GetRange(half, list.Count - half);
+                ShuffleRandom(firstHalf);
+                ShuffleRandom(secondHalf);
+                firstHalf.AddRange(secondHalf);
+                list.Clear();
+                list.AddRange(firstHalf);
+            }
+
+
+            void Interleave(List<byte[]> list) // Interleave all bytes in the list with each other Interleave meaning that the first byte of the first element is followed by the first byte of the second element and so on and so forth
+            {
+                int n = list.Count;
+                List<byte[]> interleaved = new List<byte[]>(n);
+                for (int i = 0; i < n; i++)
+                {
+                    interleaved.Add(new byte[precision]);
+                }
+
+                for (int i = 0; i < precision; i++)
+                {
+                    for (int j = 0; j < n; j++)
+                    {
+                        interleaved[j][i] = list[(i + j) % n][i];
+                    }
+                }
+
+                list.Clear();
+                list.AddRange(interleaved);
+            }
+
+            void Skipper(List<byte[]> list) // Skipper skips every other byte in the list and then fills the skipped bytes with the first byte of the src list and then the second byte of the src list and so on and so forth
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    for (int j = 0; j < precision; j++)
+                    {
+                        if (j % 2 == 0)//this is for incase the list were skipping is bigger than the src list (or the other way around)
+                                       // this shouldnt be that common but its a good to have just so we dont get an index out of range exception
+                        {
+                            list[i][j] = list[srcUnit][j];
+                        }
+                        
+                    }
+                }
+
+            }
+
+
+
+
+
+
 
             //filter
             if (FilterAll)
@@ -189,7 +248,6 @@ namespace RTCV.CorruptCore
             {
                 return null;
             }
-
 
             List<byte[]> byteArr = new List<byte[]>();
 
@@ -218,6 +276,15 @@ namespace RTCV.CorruptCore
                     break;
                 case overWrite:
                     OverWrite(byteArr);
+                    break;
+                case shuffleHalf:
+                    ShuffleHalf(byteArr);
+                    break;
+                case interleave:
+                    Interleave(byteArr);
+                    break;
+                case skipper:
+                    Skipper(byteArr);
                     break;
                 case rand:
                 default:
@@ -250,3 +317,4 @@ namespace RTCV.CorruptCore
         }
     }
 }
+
