@@ -171,7 +171,7 @@ namespace RTCV.CorruptCore
                 list.Add(x);
             }
 
-            void OverWrite(List<byte[]> list) // Overwrite all bytes in the list with the first byte
+            void OverWrite(List<byte[]> list) 
             {
                 for (int j = 0; j < list.Count; j++)
                 {
@@ -192,7 +192,7 @@ namespace RTCV.CorruptCore
             }
 
 
-            void Interleave(List<byte[]> list) // Interleave all bytes in the list with each other Interleave meaning that the first byte of the first element is followed by the first byte of the second element and so on and so forth
+            void Interleave(List<byte[]> list) // interleave the list (arranging the bytes in an alternating pattern) im not sure how to describe it better 
             {
                 int n = list.Count;
                 List<byte[]> interleaved = new List<byte[]>(n);
@@ -213,14 +213,13 @@ namespace RTCV.CorruptCore
                 list.AddRange(interleaved);
             }
 
-            void Skipper(List<byte[]> list) // Skipper skips every other byte in the list and then fills the skipped bytes with the first byte of the src list and then the second byte of the src list and so on and so forth
+            void Skipper(List<byte[]> list) // Skipper skips every other byte in the list and then fills the skipped bytes with the first byte of the list
             {
                 for (int i = 0; i < list.Count; i++)
                 {
                     for (int j = 0; j < precision; j++)
                     {
-                        if (j % 2 == 0)//this is for incase the list were skipping is bigger than the src list (or the other way around)
-                                       // this shouldnt be that common but its a good to have just so we dont get an index out of range exception
+                        if (j % 2 == 0)// just so we dont get an index out of range exception
                         {
                             list[i][j] = list[srcUnit][j];
                         }
