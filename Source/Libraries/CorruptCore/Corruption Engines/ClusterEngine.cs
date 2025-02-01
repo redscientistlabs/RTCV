@@ -14,9 +14,10 @@ namespace RTCV.CorruptCore
         const string shuffleHalf = "Shuffle Half";
         const string interleave = "Interleave";
         const string skipper = "Skipper";
+        const string Allinone = "All in one";
 
 
-        public static string[] ShuffleTypes { get; private set; } = new string[] { rand, reverse, rotFW, rotBW, overWrite, shuffleHalf, interleave, skipper };
+        public static string[] ShuffleTypes { get; private set; } = new string[] { rand, reverse, rotFW, rotBW, overWrite, shuffleHalf, interleave, skipper,Allinone };
 
         const string forwards = "Forwards";
         const string backwards = "Backwards";
@@ -227,6 +228,18 @@ namespace RTCV.CorruptCore
 
             }
 
+            void allInOne(List<byte[]> list) // testing to see what would happen if i combined everysingle method into one just for fun
+            {
+                RotateForward(list);
+                RotateBackward(list);
+                ShuffleRandom(list);
+                OverWrite(list);
+                ShuffleHalf(list);
+                Interleave(list);
+                Skipper(list);
+                
+            }
+
 
 
 
@@ -285,6 +298,9 @@ namespace RTCV.CorruptCore
                     break;
                 case skipper:
                     Skipper(byteArr);
+                    break;
+                case Allinone:
+                    allInOne(byteArr);
                     break;
                 case rand:
                 default:
