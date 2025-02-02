@@ -1077,6 +1077,31 @@ namespace RTCV.CorruptCore
                             }
 
                             break;
+                        case BlastRadius.INCREMENTAL: // in a random order it blasts the next domain in the list 20% more than the previous 
+                            {
+                                var blastOrder = new List<int>();
+                                for (var i = 0; i < selectedDomains.Length; i++)
+                                {
+                                    blastOrder.Add(i);
+                                }
+                                blastOrder = blastOrder.OrderBy(x => RND.Next()).ToList();
+                                for (var i = 0; i < blastOrder.Count; i++)
+                                {
+                                    domain = selectedDomains[blastOrder[i]];
+                                    for (var j = 0; j < intensity; j++)
+                                    {
+                                        maxAddress = cachedDomainSizes[blastOrder[i]];
+                                        randomAddress = RND.NextLong(0, maxAddress - CachedPrecision);
+                                        bus = GetBlastUnits(domain, randomAddress, CachedPrecision, cachedAlignment, useAlignment, cachedEngine);
+                                        if (bus != null)
+                                        {
+                                            bl.Layer.AddRange(bus);
+                                        }
+                                    }
+                                    intensity = (int)(intensity * 1.2);
+                                }
+                                break;
+                            }
 
                         case BlastRadius.NONE: //Shouldn't ever happen but handled anyway
                             return null;

@@ -10,6 +10,7 @@ namespace RTCV.CorruptCore
         NORMALIZED,
         PROPORTIONAL,
         EVEN,
+        INCREMENTAL,
         NONE
     }
 
