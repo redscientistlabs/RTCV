@@ -219,7 +219,7 @@ namespace RTCV.CorruptCore
                 {
                     for (int j = 0; j < precision; j++)
                     {
-                        if (j % 2 == 0)// just so we dont get an index out of range exception
+                        if (j % 2 == 0)
                         {
                             list[i][j] = list[srcUnit][j];
                         }
