@@ -132,7 +132,7 @@ namespace RTCV.CorruptCore
             }
 
             //do not swap endianess
-            byte[] GetSegment(long address)// Get a segment of bytes from the memory interface
+            byte[] GetSegment(long address)
             {
                 byte[] values = new byte[precision];
 
