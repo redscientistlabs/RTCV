@@ -179,7 +179,7 @@ namespace RTCV.CorruptCore
                 }
             }
 
-            void ShuffleHalf(List<byte[]> list) // Shuffle the list in half
+            void ShuffleHalf(List<byte[]> list) // Shuffle the list in half by splitting the list in half and shuffling each half separately and then combining them back together
             {
                 int half = list.Count / 2;
                 List<byte[]> firstHalf = list.GetRange(0, half);
