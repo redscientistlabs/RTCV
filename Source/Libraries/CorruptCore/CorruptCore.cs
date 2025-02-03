@@ -1077,7 +1077,7 @@ namespace RTCV.CorruptCore
                             }
 
                             break;
-                        case BlastRadius.INCREMENTAL: // in a random order it blasts the next domain in the list 20% more than the previous 
+                        case BlastRadius.INCREMENTAL: // in a random order it blasts the next domain in the list 20% more than the previous to make an intresting effect
                             {
                                 var blastOrder = new List<int>();
                                 for (var i = 0; i < selectedDomains.Length; i++)
