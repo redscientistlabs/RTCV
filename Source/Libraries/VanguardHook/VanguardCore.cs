@@ -10,6 +10,7 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Threading;
 using RTCV.Common;
+using System.Runtime.InteropServices;
 
 namespace VanguardHook
 {
@@ -86,29 +87,29 @@ namespace VanguardHook
             // Read config and blacklisted domains files and store their values
             var config = VanguardConfigReader.configFile.VSpecConfig;
 			var blacklistedDomainsConfig = VanguardBlacklistedDomains.domains;
-            partial[VSPEC.NAME] = config.NAME;
-            partial[VSPEC.SYSTEM] = String.Empty;
+			partial[VSPEC.NAME] = config.NAME;
+			partial[VSPEC.SYSTEM] = String.Empty;
 			partial[VSPEC.GAMENAME] = String.Empty;
 			partial[VSPEC.SYSTEMPREFIX] = String.Empty;
 			partial[VSPEC.OPENROMFILENAME] = String.Empty;
 			partial[VSPEC.SYNCSETTINGS] = String.Empty;
-            partial[VSPEC.OVERRIDE_DEFAULTMAXINTENSITY] = config.OVERRIDE_DEFAULTMAXINTENSITY;
-            partial[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] = blacklistedDomainsConfig.MEMORYDOMAINS_BLACKLISTEDDOMAINS;
+			partial[VSPEC.OVERRIDE_DEFAULTMAXINTENSITY] = config.OVERRIDE_DEFAULTMAXINTENSITY;
+			partial[VSPEC.MEMORYDOMAINS_BLACKLISTEDDOMAINS] = blacklistedDomainsConfig.MEMORYDOMAINS_BLACKLISTEDDOMAINS;
 			partial[VSPEC.MEMORYDOMAINS_INTERFACES] = new MemoryDomainProxy[] { };
 			partial[VSPEC.CORE_LASTLOADERROM] = -1;
-            partial[VSPEC.SUPPORTS_RENDERING] = config.SUPPORTS_RENDERING;
-            partial[VSPEC.SUPPORTS_CONFIG_MANAGEMENT] = config.SUPPORTS_CONFIG_MANAGEMENT;
-            partial[VSPEC.SUPPORTS_CONFIG_HANDOFF] = config.SUPPORTS_CONFIG_HANDOFF;
-            partial[VSPEC.SUPPORTS_KILLSWITCH] = config.SUPPORTS_KILLSWITCH;
-            partial[VSPEC.SUPPORTS_REALTIME] = config.SUPPORTS_REALTIME;
-            partial[VSPEC.SUPPORTS_SAVESTATES] = config.SUPPORTS_SAVESTATES;
-            partial[VSPEC.SUPPORTS_REFERENCES] = config.SUPPORTS_REFERENCES;
-            partial[VSPEC.SUPPORTS_MIXED_STOCKPILE] = config.SUPPORTS_MIXED_STOCKPILE;
+			partial[VSPEC.SUPPORTS_RENDERING] = config.SUPPORTS_RENDERING;
+			partial[VSPEC.SUPPORTS_CONFIG_MANAGEMENT] = config.SUPPORTS_CONFIG_MANAGEMENT;
+			partial[VSPEC.SUPPORTS_CONFIG_HANDOFF] = config.SUPPORTS_CONFIG_HANDOFF;
+			partial[VSPEC.SUPPORTS_KILLSWITCH] = config.SUPPORTS_KILLSWITCH;
+			partial[VSPEC.SUPPORTS_REALTIME] = config.SUPPORTS_REALTIME;
+			partial[VSPEC.SUPPORTS_SAVESTATES] = config.SUPPORTS_SAVESTATES;
+			partial[VSPEC.SUPPORTS_REFERENCES] = config.SUPPORTS_REFERENCES;
+			partial[VSPEC.SUPPORTS_MIXED_STOCKPILE] = config.SUPPORTS_MIXED_STOCKPILE;
 			partial[VSPEC.CORE_DISKBASED] = config.CORE_DISKBASED;
-            partial[VSPEC.CONFIG_PATHS] = new[] { "" };
+			partial[VSPEC.CONFIG_PATHS] = new[] { "" };
 			partial[VSPEC.EMUDIR] = EmuDirectory.emuDir;
 			EmuDirectory.emuEXE = config.EmuEXE;
-            EmuDirectory.logPath = Path.Combine(EmuDirectory.emuDir, "EMU_LOG.txt");
+			EmuDirectory.logPath = Path.Combine(EmuDirectory.emuDir, "EMU_LOG.txt");
 
             return partial;
         }
@@ -211,6 +212,46 @@ namespace VanguardHook
 
 
             Environment.Exit(-1);
+        }
+
+		public static void SaveEmuSettings()
+		{
+            var defaultSettingsPath = Path.Combine(RtcCore.workingDir, "SESSION", "VanguardDefaultSettings");
+
+            //Get the settings from the emulator and save them to a file
+            PartialSpec storeDefaultSettings = new PartialSpec("VanguardSpec");
+            IntPtr settingsPtr = MethodImports.Vanguard_saveEmuSettings();
+
+            string default_settings = Marshal.PtrToStringAnsi(settingsPtr);
+            //Make sure to free the pointer after using it
+            Marshal.FreeHGlobal(settingsPtr);
+
+            using (StreamWriter writetext = new StreamWriter(defaultSettingsPath))
+            {
+                writetext.WriteLine(default_settings);
+            }
+
+            AllSpec.VanguardSpec.Update(storeDefaultSettings);
+            ConsoleEx.WriteLine("default settings stored");
+        }
+
+		public static void LoadEmuSettings()
+		{
+            var defaultSettingsPath = Path.Combine(RtcCore.workingDir, "SESSION", "VanguardDefaultSettings");
+            if (File.Exists(defaultSettingsPath))
+            {
+                string default_settings;
+                ConsoleEx.WriteLine("loading default settings");
+
+                using (StreamReader readtext = new StreamReader(defaultSettingsPath))
+                {
+                    default_settings = readtext.ReadToEnd();
+                    MethodImports.Vanguard_loadEmuSettings(default_settings);
+                }
+
+                //Remove the file after we're done with it 
+                File.Delete(defaultSettingsPath);
+            }
         }
     }
 }

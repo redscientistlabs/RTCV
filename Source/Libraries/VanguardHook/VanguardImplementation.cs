@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using RTCV.CorruptCore;
 using RTCV.NetCore;
 using System.IO;
 using System.Globalization;
-using static VanguardHook.VanguardCore;
+using System.Runtime.InteropServices;
 
 namespace VanguardHook
 {
@@ -216,16 +215,32 @@ namespace VanguardHook
 						VanguardCore.connected = true;
                         SyncObjectSingleton.FormExecute(() => {; });
 						RefreshDomains();
-					}
+
+						//Check if we already have default settings and load them if there is to remove any temporary settings
+						VanguardCore.LoadEmuSettings();
+                    }
 					break;
 				case RTCV.NetCore.Commands.Basic.SaveSavestate:
 					{
 						SyncObjectSingleton.EmuThreadExecute(() => { e.setReturnValue(SaveSavestate(advancedMessage.objectValue as string)); }, true);
-					}
+
+                        //Get the settings from the emulator and save them to a file
+                        IntPtr settingsPtr = MethodImports.Vanguard_saveEmuSettings();
+
+                        var data = Marshal.PtrToStringAnsi(settingsPtr);
+						//Make sure to free the pointer after using it
+                        Marshal.FreeHGlobal(settingsPtr);
+
+                        AllSpec.VanguardSpec.Update(VSPEC.SYNCSETTINGS, data);
+                        ConsoleEx.WriteLine("settings stored");
+						
+                    }
 					break;
 
                 case RTCV.NetCore.Commands.Basic.LoadSavestate:
 					{
+						MethodImports.Vanguard_loadEmuSettings(AllSpec.VanguardSpec[VSPEC.SYNCSETTINGS].ToString());
+
 						var cmd = advancedMessage.objectValue as object[];
 						var path = cmd[0] as string;
 						var location = (StashKeySavestateLocation)cmd[1];
@@ -274,6 +289,10 @@ namespace VanguardHook
 					break;
 
                 case RTCV.NetCore.Commands.Remote.KeySetSyncSettings:
+					{
+						String settings = advancedMessage.objectValue as string;
+						AllSpec.VanguardSpec.Set(VSPEC.SYNCSETTINGS, settings);
+                    }
 					break;
 
 				case RTCV.NetCore.Commands.Emulator.GetRealtimeAPI:

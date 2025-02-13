@@ -4,6 +4,7 @@ using RTCV.CorruptCore.Extensions;
 using RTCV.NetCore;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -94,6 +95,19 @@ namespace VanguardHook
                 rompath = GAME_TO_LOAD;
                 GAME_TO_LOAD = "";
             }
+
+            var defaultSettingsPath = Path.Combine(RtcCore.workingDir, "SESSION", "VanguardDefaultSettings");
+            string default_settings;
+
+            //If the default settings file is still here somehow, delete it before creating a new one
+            if (File.Exists(defaultSettingsPath))
+            {
+                File.Delete(defaultSettingsPath);
+            }
+
+            //Safe the emulator settings to a file
+            VanguardCore.SaveEmuSettings();
+
             AllSpec.VanguardSpec.Update(VSPEC.OPENROMFILENAME, rompath, true, true);
             ConsoleEx.WriteLine(AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME].ToString());
         }
@@ -128,7 +142,12 @@ namespace VanguardHook
 
             if (gamenameFixed != AllSpec.VanguardSpec[VSPEC.GAMENAME].ToString())
             {
-                gameDone[VSPEC.SYSTEMCORE] = Marshal.PtrToStringAnsi(MethodImports.Vanguard_getSystemCore());
+                IntPtr systemCorePtr = MethodImports.Vanguard_getSystemCore();
+                var systemCore = Marshal.PtrToStringAnsi(systemCorePtr);
+                //Make sure to free the pointer after using it
+                Marshal.FreeHGlobal(systemCorePtr);
+                gameDone[VSPEC.SYSTEMCORE] = systemCore;
+                ConsoleEx.WriteLine(systemCore);
             }
 
             AllSpec.VanguardSpec.Update(gameDone);
@@ -147,6 +166,9 @@ namespace VanguardHook
             gameClosed[VSPEC.OPENROMFILENAME] = "";
             AllSpec.VanguardSpec.Update(gameClosed);
             RtcCore.InvokeGameClosed(true);
+
+            //Load the default settings after closing a game to remove any temporary changes
+            VanguardCore.LoadEmuSettings();
 
             // If we're closing the emulator, don't refresh the domains or else it will hang
             if (VanguardImplementation.waitForEmulatorClose)
@@ -263,6 +285,12 @@ namespace VanguardHook
 
         public delegate IntPtr VgetSystemCore();
         public static VgetSystemCore Vanguard_getSystemCore = GetMethod<VgetSystemCore>("Vanguard_getSystemCore");
+
+        public delegate IntPtr VsaveEmuSettings();
+        public static VsaveEmuSettings Vanguard_saveEmuSettings = GetMethod<VsaveEmuSettings>("Vanguard_saveEmuSettings");
+
+        public delegate void VloadEmuSettings([MarshalAs(UnmanagedType.BStr)] string settings);
+        public static VloadEmuSettings Vanguard_loadEmuSettings = GetMethod<VloadEmuSettings>("Vanguard_loadEmuSettings");
 
         // loads the emulator exe and returns a pointer for importing exported functions
         public static IntPtr LoadEmuPointer()
