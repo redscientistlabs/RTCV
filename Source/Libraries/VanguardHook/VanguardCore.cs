@@ -216,7 +216,7 @@ namespace VanguardHook
 
 		public static void SaveEmuSettings()
 		{
-            var defaultSettingsPath = Path.Combine(RtcCore.workingDir, "SESSION", "VanguardDefaultSettings");
+            var defaultSettingsPath = Path.Combine(RtcCore.workingDir, "SESSION", (string)AllSpec.VanguardSpec[VSPEC.NAME] + "VanguardDefaultSettings");
 
             //Get the settings from the emulator and save them to a file
             PartialSpec storeDefaultSettings = new PartialSpec("VanguardSpec");
@@ -229,24 +229,23 @@ namespace VanguardHook
             using (StreamWriter writetext = new StreamWriter(defaultSettingsPath))
             {
                 writetext.WriteLine(default_settings);
+                ConsoleEx.WriteLine("default settings stored: \n" + default_settings);
             }
 
             AllSpec.VanguardSpec.Update(storeDefaultSettings);
-            ConsoleEx.WriteLine("default settings stored");
         }
 
 		public static void LoadEmuSettings()
 		{
-            var defaultSettingsPath = Path.Combine(RtcCore.workingDir, "SESSION", "VanguardDefaultSettings");
+            var defaultSettingsPath = Path.Combine(RtcCore.workingDir, "SESSION", (string)AllSpec.VanguardSpec[VSPEC.NAME] + "VanguardDefaultSettings");
             if (File.Exists(defaultSettingsPath))
             {
                 string default_settings;
-                ConsoleEx.WriteLine("loading default settings");
-
                 using (StreamReader readtext = new StreamReader(defaultSettingsPath))
                 {
                     default_settings = readtext.ReadToEnd();
                     MethodImports.Vanguard_loadEmuSettings(default_settings);
+                    ConsoleEx.WriteLine("loading default settings: \n" + default_settings);
                 }
 
                 //Remove the file after we're done with it 

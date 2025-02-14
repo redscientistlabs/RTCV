@@ -232,7 +232,7 @@ namespace VanguardHook
                         Marshal.FreeHGlobal(settingsPtr);
 
                         AllSpec.VanguardSpec.Update(VSPEC.SYNCSETTINGS, data);
-                        ConsoleEx.WriteLine("settings stored");
+                        ConsoleEx.WriteLine("settings stored: \n" + data);
 						
                     }
 					break;
@@ -240,6 +240,8 @@ namespace VanguardHook
                 case RTCV.NetCore.Commands.Basic.LoadSavestate:
 					{
 						MethodImports.Vanguard_loadEmuSettings(AllSpec.VanguardSpec[VSPEC.SYNCSETTINGS].ToString());
+
+						ConsoleEx.WriteLine("Loaded settings: \n" + AllSpec.VanguardSpec[VSPEC.SYNCSETTINGS].ToString());
 
 						var cmd = advancedMessage.objectValue as object[];
 						var path = cmd[0] as string;
