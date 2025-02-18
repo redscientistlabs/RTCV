@@ -238,19 +238,24 @@ namespace VanguardHook
 		public static void LoadEmuSettings()
 		{
             var defaultSettingsPath = Path.Combine(RtcCore.workingDir, "SESSION", (string)AllSpec.VanguardSpec[VSPEC.NAME] + "VanguardDefaultSettings");
-            if (File.Exists(defaultSettingsPath))
-            {
-                string default_settings;
-                using (StreamReader readtext = new StreamReader(defaultSettingsPath))
-                {
-                    default_settings = readtext.ReadToEnd();
-                    MethodImports.Vanguard_loadEmuSettings(default_settings);
-                    ConsoleEx.WriteLine("loading default settings: \n" + default_settings);
-                }
+			ConsoleEx.WriteLine("checking for " + defaultSettingsPath);
+			if (File.Exists(defaultSettingsPath))
+			{
+				string default_settings;
+				using (StreamReader readtext = new StreamReader(defaultSettingsPath))
+				{
+					default_settings = readtext.ReadToEnd();
+					ConsoleEx.WriteLine("loading default settings: \n" + default_settings);
+					MethodImports.Vanguard_loadEmuSettings(default_settings);
 
-                //Remove the file after we're done with it 
-                File.Delete(defaultSettingsPath);
-            }
+				}
+
+				//Remove the file after we're done with it 
+				File.Delete(defaultSettingsPath);
+				ConsoleEx.WriteLine("file deleted");
+			}
+			else
+				ConsoleEx.WriteLine("file not found");
         }
     }
 }

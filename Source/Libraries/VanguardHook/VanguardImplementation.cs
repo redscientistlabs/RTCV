@@ -6,6 +6,7 @@ using RTCV.NetCore;
 using System.IO;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Runtime;
 
 namespace VanguardHook
 {
@@ -239,7 +240,24 @@ namespace VanguardHook
 
                 case RTCV.NetCore.Commands.Basic.LoadSavestate:
 					{
-						MethodImports.Vanguard_loadEmuSettings(AllSpec.VanguardSpec[VSPEC.SYNCSETTINGS].ToString());
+
+                        //We need this to ensure compatability with old 52X savestates. Obviously if there were settings changed they won't carry over, but this
+                        //will at least let it start using the system
+                        if (!AllSpec.VanguardSpec[VSPEC.SYNCSETTINGS].ToString().StartsWith("{\n"))
+                        {
+                            //Get the settings from the emulator and save them to a file
+                            IntPtr settingsPtr = MethodImports.Vanguard_saveEmuSettings();
+
+                            var data = Marshal.PtrToStringAnsi(settingsPtr);
+                            //Make sure to free the pointer after using it
+                            Marshal.FreeHGlobal(settingsPtr);
+
+                            AllSpec.VanguardSpec.Set(VSPEC.SYNCSETTINGS, data);
+
+							ConsoleEx.WriteLine("savestate did not have settings stored, storing now");
+                        }
+
+                        MethodImports.Vanguard_loadEmuSettings(AllSpec.VanguardSpec[VSPEC.SYNCSETTINGS].ToString());
 
 						ConsoleEx.WriteLine("Loaded settings: \n" + AllSpec.VanguardSpec[VSPEC.SYNCSETTINGS].ToString());
 
@@ -247,6 +265,8 @@ namespace VanguardHook
 						var path = cmd[0] as string;
 						var location = (StashKeySavestateLocation)cmd[1];
                         SyncObjectSingleton.EmuThreadExecute(() => { e.setReturnValue(LoadSavestate(path, location)); }, true);
+
+						ConsoleEx.WriteLine("finished loading savestate");
 					}
 					break;
 
@@ -293,7 +313,8 @@ namespace VanguardHook
                 case RTCV.NetCore.Commands.Remote.KeySetSyncSettings:
 					{
 						String settings = advancedMessage.objectValue as string;
-						AllSpec.VanguardSpec.Set(VSPEC.SYNCSETTINGS, settings);
+
+                        AllSpec.VanguardSpec.Set(VSPEC.SYNCSETTINGS, settings);
                     }
 					break;
 
