@@ -1,3 +1,6 @@
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+
+
 namespace StandaloneRTC
 {
     using System;
@@ -5,6 +8,7 @@ namespace StandaloneRTC
     using System.Reflection;
     using System.Threading;
     using System.Windows.Forms;
+    using Windows.Storage;
 
     static class Program
     {
@@ -16,6 +20,15 @@ namespace StandaloneRTC
         [STAThread]
         static void Main(string[] args)
         {
+            if (IsRunningFromOneDrive())
+            {
+                var result = MessageBox.Show("Your RTC installation is located in a OneDrive folder this has been known to cause issues. Please move the application to a different location if you encounter errors.", "StandaloneRTC.exe", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                if (result == DialogResult.Cancel)
+                {
+                    return;
+                }
+            }
+
             using (Mutex mutex = new Mutex(true, "StandaloneRTC", out bool createdNew))
             {
                 if (createdNew)
@@ -31,6 +44,21 @@ namespace StandaloneRTC
                     return;
                 }
             }
+        }
+
+        /// <summary>
+        /// Checks if the application is running from a OneDrive folder.
+        /// </summary>
+        /// <returns>True if running from OneDrive, otherwise false.</returns>
+        private static bool IsRunningFromOneDrive()
+        {
+            string location = Assembly.GetExecutingAssembly().Location;
+            string directory = Path.GetDirectoryName(location);
+
+            StorageFolder folder = StorageFolder.GetFolderFromPathAsync(directory).GetAwaiter().GetResult();
+            StorageProvider provider = folder.Provider;
+
+            return provider.Id == "OneDrive";
         }
 
         /// <summary>
