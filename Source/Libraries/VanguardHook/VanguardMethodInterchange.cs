@@ -97,7 +97,6 @@ namespace VanguardHook
             }
 
             var defaultSettingsPath = Path.Combine(RtcCore.workingDir, "SESSION", "VanguardDefaultSettings");
-            string default_settings;
 
             //If the default settings file is still here somehow, delete it before creating a new one
             if (File.Exists(defaultSettingsPath))
@@ -105,9 +104,10 @@ namespace VanguardHook
                 File.Delete(defaultSettingsPath);
             }
 
-            //Safe the emulator settings to a file
+            //Save the emulator settings to a file
             VanguardCore.SaveEmuSettings();
 
+            rompath = rompath.Replace("/", "\\");
             AllSpec.VanguardSpec.Update(VSPEC.OPENROMFILENAME, rompath, true, true);
             ConsoleEx.WriteLine(AllSpec.VanguardSpec[VSPEC.OPENROMFILENAME].ToString());
         }
