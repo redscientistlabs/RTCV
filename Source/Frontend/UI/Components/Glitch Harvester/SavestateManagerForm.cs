@@ -130,11 +130,13 @@ namespace RTCV.UI
             }
 
             var s = (string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "ERROR";
+            /*
             if (!string.IsNullOrEmpty(ssk.VanguardImplementation) && !ssk.VanguardImplementation.Equals(s, StringComparison.OrdinalIgnoreCase) && ssk.VanguardImplementation != "ERROR")
             {
                 MessageBox.Show($"The ssk you loaded is for a different Vanguard implementation.\nThe ssk reported {ssk.VanguardImplementation} but you're connected to {s}.\nThis is a fatal error. Aborting load.");
                 return;
             }
+            */
 
             if (import)
             {

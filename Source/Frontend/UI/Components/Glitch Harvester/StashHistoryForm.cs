@@ -8,6 +8,7 @@ namespace RTCV.UI
     using RTCV.NetCore;
     using RTCV.Common;
     using RTCV.UI.Modular;
+    using System.IO;
 
     public partial class StashHistoryForm : ComponentForm, IBlockable
     {
@@ -68,6 +69,8 @@ namespace RTCV.UI
             string Name = "";
             string value = "";
 
+
+
             StashKey sk = (StashKey)lbStashHistory.SelectedItem;
             StockpileManagerUISide.CurrentStashkey = sk;
 
@@ -126,12 +129,15 @@ namespace RTCV.UI
             if (Params.IsParamSet("RASTERIZE_VMD_UPON_STOCKPILING"))
                 sk.BlastLayer.RasterizeVMDs();
 
+            // Add the emulator directory name
+            sk.EmuVer = new DirectoryInfo((string)AllSpec.VanguardSpec[VSPEC.EMUDIR]).Name;
+
             DataGridViewRow dataRow = S.GET<StockpileManagerForm>().dgvStockpile.Rows[S.GET<StockpileManagerForm>().dgvStockpile.Rows.Add()];
             dataRow.Cells["Item"].Value = sk;
             dataRow.Cells["GameName"].Value = sk.GameName;
             dataRow.Cells["SystemName"].Value = sk.SystemName;
             dataRow.Cells["SystemCore"].Value = sk.SystemCore;
-
+            
             S.GET<StockpileManagerForm>().RefreshNoteIcons();
 
             StockpileManagerUISide.StashHistory.Remove(sk);

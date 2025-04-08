@@ -195,7 +195,7 @@ namespace RTCV.CorruptCore
 
                     case Remote.DomainPeekByte:
                         {
-                            //ObjectValue -­> Object[] -­> string DomainName, long Address
+                            //ObjectValue -ï¿½> Object[] -ï¿½> string DomainName, long Address
                             //returns: byte Value
 
                             var obj = advancedMessage.objectValue as object[];
@@ -208,7 +208,7 @@ namespace RTCV.CorruptCore
                         }
                     case Remote.DomainPokeByte:
                         {
-                            //ObjectValue -­> Object[] -­> string DomainName, long Address, byte Value
+                            //ObjectValue -ï¿½> Object[] -ï¿½> string DomainName, long Address, byte Value
                             //no return
 
                             var obj = advancedMessage.objectValue as object[];
@@ -222,7 +222,7 @@ namespace RTCV.CorruptCore
                         }
                     case Remote.DomainPeekBytes:
                         {
-                            //ObjectValue -­> Object[] -­> string DomainName, long StartAddress, long EndAddress, bool raw
+                            //ObjectValue -ï¿½> Object[] -ï¿½> string DomainName, long StartAddress, long EndAddress, bool raw
                             //returns: byte[] Value
 
                             var obj = advancedMessage.objectValue as object[];
@@ -237,7 +237,7 @@ namespace RTCV.CorruptCore
                         }
                     case Remote.DomainPokeBytes:
                         {
-                            //ObjectValue -­> Object[] -­> string DomainName, long Address, byte[] Value, bool raw
+                            //ObjectValue -ï¿½> Object[] -ï¿½> string DomainName, long Address, byte[] Value, bool raw
                             //no return
 
                             var obj = advancedMessage.objectValue as object[];
@@ -253,7 +253,7 @@ namespace RTCV.CorruptCore
 
                     case Remote.RerollBlastLayer:
                         {
-                            //ObjectValue -­> Object -­> BlastLayer bl
+                            //ObjectValue -ï¿½> Object -ï¿½> BlastLayer bl
                             //returns BlastLayer
 
                             var bl = (BlastLayer)advancedMessage.objectValue;

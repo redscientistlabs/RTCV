@@ -427,6 +427,8 @@ namespace RTCV.UI
                 logger.Trace("Starting Load Task");
                 var r = await Task.Run(() => Stockpile.Load(filename));
                 logger.Trace("Load Task Done");
+
+                var updated_emu_ver = false;
                 if (r.Failed)
                 {
                     logger.Trace("Load Task Failed");
@@ -440,10 +442,40 @@ namespace RTCV.UI
                     //Update the current stockpile to this one
                     StockpileManagerUISide.SetCurrentStockpile(sks);
 
-                    logger.Trace("Populating DGV");
+
+                    foreach (StashKey t in sks.StashKeys)
+                    {
+                        // Update stashkey emulator version if it's empty
+                        if (t.EmuVer == null)
+                        {
+                            var form = new StockpileEmuVersionForm();
+
+                            // start/show the control
+                            form.ShowDialog();
+
+                            if (form.SelectedVersion != null)
+                            {
+                                foreach (StashKey u in sks.StashKeys)
+                                {
+                                    u.EmuVer = form.SelectedVersion;
+                                }
+                                UnsavedEdits = true;
+                                updated_emu_ver = true;
+                            }
+                            else
+                            {
+                                MessageBox.Show("Emulator system and version selection was cancelled, the stockpile will not be loaded.", "Operation cancelled", MessageBoxButtons.OK);
+                                return;
+                            }
+                        }
+                        break;
+                    }
+
+
+                        logger.Trace("Populating DGV");
                     foreach (StashKey key in sks.StashKeys)
                     {
-                        dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.Note);
+                        dgvStockpile?.Rows.Add(key, key.GameName, key.SystemName, key.SystemCore, key.EmuVer, key.Note);
                     }
 
                     btnSaveStockpile.Enabled = true;
@@ -459,7 +491,7 @@ namespace RTCV.UI
                 dgvStockpile.ClearSelection();
                 StockpileManagerUISide.StockpileChanged();
 
-                UnsavedEdits = false;
+                UnsavedEdits = updated_emu_ver ? true : false;
             }
             finally
             {
@@ -848,6 +880,7 @@ namespace RTCV.UI
             dgvStockpile.DragEnter += HandleDragEnter;
         }
 
+        internal ToolStripButton UpdateEmuVersionButton;
         private void HandleGlitchHarvesterSettingsMouseDown(object sender, MouseEventArgs e)
         {
             Point locate = e.GetMouseLocation(sender);
@@ -895,5 +928,28 @@ namespace RTCV.UI
                 .Build()
                 .Show(this, locate);
         }
+
+        private void UpdateEmuVersionButton_Click(object sender, EventArgs e)
+        {
+            logger.Trace("test");
+            var form = new StockpileEmuVersionForm(false);
+
+            // start/show the control
+            form.ShowDialog();
+
+            if (form.SelectedVersion != null)
+            {
+                List<StashKey> sks = new List<StashKey>();
+                foreach (DataGridViewRow row in dgvStockpile.SelectedRows)
+                {
+                    StashKey sk = ((StashKey)row.Cells[0].Value);
+                    sk.EmuVer = form.SelectedVersion;
+                    row.Cells[EmuVer.Index].Value = form.SelectedVersion;
+                }
+
+                UnsavedEdits = true;
+            }
+        }
+
     }
 }

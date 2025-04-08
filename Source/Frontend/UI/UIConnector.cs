@@ -7,6 +7,7 @@ namespace RTCV.UI
     using RTCV.NetCore.Enums;
     using RTCV.Common;
     using RTCV.UI.Modular;
+    using NLog;
 
     public class UIConnector : IRoutable, IDisposable
     {
@@ -42,7 +43,7 @@ namespace RTCV.UI
 
         private void NetCoreSpec_ServerConnectionLost(object sender, EventArgs e)
         {
-            if (UICore.isClosing || UICore.FirstConnect)
+            if (UICore.isClosing || UICore.FirstConnect || UICore.isSwapping)
             {
                 return;
             }
