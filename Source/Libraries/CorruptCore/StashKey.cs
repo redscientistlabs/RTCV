@@ -34,6 +34,7 @@ namespace RTCV.CorruptCore
         public string SystemName { get; set; }
         public string SystemDeepName { get; set; }
         public string SystemCore { get; set; }
+        public string EmuVer { get; set; }
         public List<string> SelectedDomains { get; set; } = new List<string>();
         public string GameName { get; set; }
         public string SyncSettings { get; set; }

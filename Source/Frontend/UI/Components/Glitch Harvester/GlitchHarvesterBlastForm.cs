@@ -11,6 +11,9 @@ namespace RTCV.UI
     using NetCore;
     using RTCV.Common;
     using Modular;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using RTCV.NetCore.Enums;
 
     public partial class GlitchHarvesterBlastForm : ComponentForm, IBlockable
     {
@@ -120,6 +123,63 @@ namespace RTCV.UI
             //Disable autocorrupt
             S.GET<CoreForm>().AutoCorrupt = false;
 
+            bool killswitchWasEnabled = AutoKillSwitch.Enabled;
+            // If the stockpile entry is from a different emulator, close the current one and wait until the new one has connected
+            if (StockpileManagerUISide.CurrentStashkey.EmuVer != new DirectoryInfo(RtcCore.EmuDir).Name)
+            {
+                logger.Trace("different emulator found, switching");
+
+                AutoKillSwitch.Enabled = false;
+                UICore.isSwapping = true;
+
+                logger.Trace("Blocking UI");
+                UICore.LockInterface(false, true);
+                logger.Trace("UI Blocked");
+
+                S.GET<SaveProgressForm>().Dock = DockStyle.Fill;
+                this.ParentCanvas?.OpenSubForm(S.GET<SaveProgressForm>());
+                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Switching from " + new DirectoryInfo(RtcCore.EmuDir).Name + " to " + StockpileManagerUISide.CurrentStashkey.EmuVer, 0));
+
+                LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.EventCloseEmulator);
+                
+                UICore.FirstConnect = true;
+                CorruptCore.RtcCore.EmuDir = Path.Combine(Path.Combine(new DirectoryInfo(RtcCore.RtcDir).Parent.Parent.FullName, StockpileManagerUISide.CurrentStashkey.EmuVer));
+
+                logger.Trace("Starting the new process");
+                var info = new ProcessStartInfo();
+                var oldEmuDir = CorruptCore.RtcCore.EmuDir;
+                info.WorkingDirectory = oldEmuDir;
+                info.FileName = Path.Combine(oldEmuDir, "RESTARTDETACHEDRTC.bat");
+                if (!File.Exists(info.FileName))
+                {
+                    MessageBox.Show($"Couldn't find {info.FileName}! Killswitch will not work.");
+                    return;
+                }
+
+                Process.Start(info);
+                VanguardImplementation.RestartServer();
+                var previous_status = VanguardImplementation.connector.netConn.status;
+                var reconnected = false;
+                while (!reconnected)
+                {
+                    if (previous_status != VanguardImplementation.connector.netConn.status)
+                    {
+                        if (VanguardImplementation.connector.netConn.status == NetworkStatus.CONNECTED)
+                        {
+                            reconnected = true;
+                        }
+                        else
+                        {
+                            previous_status = VanguardImplementation.connector.netConn.status;
+                        }
+                    }
+                    logger.Trace("sleeping");
+                    Thread.Sleep(100);
+                }
+
+                RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Loading stockpile entry", 50));
+            }
+
             if (ghMode == GlitchHarvesterMode.CORRUPT)
             {
                 IsCorruptionApplied = StockpileManagerUISide.ApplyStashkey(StockpileManagerUISide.CurrentStashkey, loadBeforeOperation);
@@ -142,6 +202,17 @@ namespace RTCV.UI
             {
                 Render.StopRender();
             }
+
+            RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Done", 100));
+
+            this.ParentCanvas?.CloseSubForm();
+            logger.Trace("Unlocking Interface");
+            UICore.UnlockInterface();
+            logger.Trace("Load done");
+
+            AutoKillSwitch.Enabled = killswitchWasEnabled;
+            UICore.isSwapping = false;
+
             logger.Trace("Exiting OneTimeExecute()");
         }
 

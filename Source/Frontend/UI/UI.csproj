@@ -44,6 +44,9 @@
     <Compile Update="Components\Advanced Tools\DomainAnalyticsForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Components\Glitch Harvester\StockpileEmuVersionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Components\Settings\MyPluginsForm.cs">
       <SubType>Form</SubType>
     </Compile>

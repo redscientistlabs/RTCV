@@ -291,7 +291,7 @@ namespace RTCV.UI
 
                 if (!RtcCore.Attached)
                 {
-                    AutoKillSwitch.Enabled = true;
+                    //AutoKillSwitch.Enabled = true;
                 }
 
                 //Restart game protection

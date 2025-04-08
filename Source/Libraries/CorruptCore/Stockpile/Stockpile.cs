@@ -607,10 +607,12 @@ namespace RTCV.CorruptCore
             var results = new OperationResults();
 
             var s = (string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "ERROR";
+            /*
             if (!string.IsNullOrEmpty(sks.VanguardImplementation) && !sks.VanguardImplementation.Equals(s, StringComparison.OrdinalIgnoreCase) && sks.VanguardImplementation != "ERROR")
             {
                 results.AddError($"The stockpile you loaded is for a different Vanguard implementation.\nThe Stockpile reported {sks.VanguardImplementation} but you're connected to {s}.\nThis is a fatal error. Aborting load.");
             }
+            */
             if (sks.RtcVersion != RtcCore.RtcVersion)
             {
                 if (sks.RtcVersion == null)
