@@ -127,7 +127,8 @@ namespace VanguardHook
                 "the RTC devs for help (Discord is in the launcher).";
                 string message = string.Format(template, AllSpec.VanguardSpec[VSPEC.NAME]);
 
-                MessageBox.Show(message, "RTC Not Connected");
+                MessageBox.Show(message, "RTC Not Connected", MessageBoxButtons.OK, MessageBoxIcon.Error,
+                                                              MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
                 return;
             }
             PartialSpec gameDone = new PartialSpec("VanguardSpec");

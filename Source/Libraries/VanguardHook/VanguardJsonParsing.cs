@@ -58,7 +58,8 @@ namespace VanguardHook
             if (!File.Exists(EmuDirectory.emuDir + "VanguardConfig.Json"))
             {
                 MessageBox.Show(configErrMessage,
-                "RTC Not Connected");
+                "RTC Not Connected", MessageBoxButtons.OK, MessageBoxIcon.Error,
+                                     MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
                 
                 Environment.Exit(-1);
                 return null;
@@ -89,7 +90,8 @@ namespace VanguardHook
                 "Vanguard could not find the target Emulator's blacklisted domains file at " + EmuDirectory.emuDir + ". Try reinstalling " +
                 "and launching Vanguard.\n\nIf you keep getting this message, poke " +
                 "the RTC devs for help (Discord is in the launcher).",
-                "RTC Not Connected");
+                "RTC Not Connected", MessageBoxButtons.OK, MessageBoxIcon.Error,
+                                     MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
 
                 Environment.Exit(-1);
                 return null;
