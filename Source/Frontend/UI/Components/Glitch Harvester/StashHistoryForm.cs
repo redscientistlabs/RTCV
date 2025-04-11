@@ -137,6 +137,7 @@ namespace RTCV.UI
             dataRow.Cells["GameName"].Value = sk.GameName;
             dataRow.Cells["SystemName"].Value = sk.SystemName;
             dataRow.Cells["SystemCore"].Value = sk.SystemCore;
+            dataRow.Cells["EmuVer"].Value = sk.EmuVer;
             
             S.GET<StockpileManagerForm>().RefreshNoteIcons();
 
