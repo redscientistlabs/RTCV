@@ -73,7 +73,8 @@ namespace RTCV.UI
                 if (!import && UnsavedEdits
                             && DialogResult.No == MessageBox.Show(this,
                                 "You have unsaved edits in the Glitch Harvester Savestate Manager. \n\n Are you sure you want to load without saving?",
-                                "Unsaved edits in Savestate Manager", MessageBoxButtons.YesNo))
+                                "Unsaved edits in Savestate Manager", MessageBoxButtons.YesNo, MessageBoxIcon.Warning,
+                                MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly))
                 {
                     cancelLoad = true;
                 }

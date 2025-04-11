@@ -81,6 +81,7 @@ namespace RTCV.UI
         private ContextMenuStrip cms;
         private Dictionary<string, Control> property2ControlDico;
         private NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        private List<BlastUnit> Clipboard = null;
 
         private enum BuProperty
         {
@@ -303,9 +304,11 @@ namespace RTCV.UI
         private void OnBlastEditorCellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             // Note handling
-            if (e != null && e.RowIndex != -1 &&
-                e.ColumnIndex == dgvBlastEditor.Columns[BuProperty.Note.ToString()]?.Index &&
-                dgvBlastEditor.Rows[e.RowIndex].DataBoundItem is BlastUnit bu)
+            if (e != null
+                && e.Button == MouseButtons.Left
+                && e.ColumnIndex == dgvBlastEditor.Columns[BuProperty.Note.ToString()]?.Index
+                && e.RowIndex != -1
+                && dgvBlastEditor.Rows[e.RowIndex].DataBoundItem is BlastUnit bu)
             {
                 S.SET(new NoteEditorForm(bu, dgvBlastEditor[e.ColumnIndex, e.RowIndex]));
                 S.GET<NoteEditorForm>().Show();
@@ -394,6 +397,18 @@ namespace RTCV.UI
             ((ToolStripMenuItem)cms.Items.Add("Bake Selected Unit(s) to VALUE", null, new EventHandler((ob, ev) =>
             {
                 BakeBlastUnitsToValue(true);
+            }))).Enabled = dgvBlastEditor.SelectedRows.Count > 0;
+            
+            cms.Items.Add(new ToolStripSeparator());
+            
+            ((ToolStripMenuItem)cms.Items.Add("Insert Clipboard Above", null, new EventHandler((ob, ev) =>
+            {
+                InsertClipboardAt(this.dgvBlastEditor.CurrentRow.Index);
+            }))).Enabled = dgvBlastEditor.SelectedRows.Count > 0;
+            
+            ((ToolStripMenuItem)cms.Items.Add("Insert Clipboard Below", null, new EventHandler((ob, ev) =>
+            {
+                InsertClipboardAt(this.dgvBlastEditor.CurrentRow.Index + 1);
             }))).Enabled = dgvBlastEditor.SelectedRows.Count > 0;
         }
 
@@ -2236,5 +2251,74 @@ namespace RTCV.UI
         private void BakeBlastUnitsToValue(object sender, EventArgs e) => BakeBlastUnitsToValue();
         private void RunRomWithoutBlastLayer(object sender, EventArgs e) => currentSK.RunOriginal();
         private void RasterizeVMDs(object sender, EventArgs e) => RasterizeVMDs();
+
+        private void dgvBlastEditor_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (!e.Control)
+            {
+                return;
+            }
+
+            switch (e.KeyCode)
+            {
+                case Keys.C:
+                    if (dgvBlastEditor.SelectedRows.Count == 0)
+                        return;
+
+                    Clipboard = this.dgvBlastEditor.SelectedRows
+                        .Cast<DataGridViewRow>()
+                        .Select(x => (BlastUnit)x.DataBoundItem)
+                        .ToList();
+                    break;
+                
+                case Keys.X:
+                    if (dgvBlastEditor.SelectedRows.Count == 0)
+                        return;
+
+                    Clipboard = this.dgvBlastEditor.SelectedRows
+                        .Cast<DataGridViewRow>()
+                        .Select(x => (BlastUnit)x.DataBoundItem)
+                        .ToList();
+
+                    RemoveSelected(null, null);
+                    break;
+                
+                case Keys.V:
+                    if (Clipboard is null)
+                        break;
+                    
+                    int position = dgvBlastEditor.Rows.Count - 1;
+                    if (dgvBlastEditor.SelectedRows.Count > 0)
+                    {
+                        position = dgvBlastEditor.CurrentCell.RowIndex + 1;
+                    }
+                    
+                    this.InsertClipboardAt(position);
+
+                    break;
+                
+                case Keys.A:
+                    dgvBlastEditor.ClearSelection();
+                    foreach (DataGridViewRow row in dgvBlastEditor.Rows)
+                    {
+                        row.Selected = true;
+                    }
+                    break;
+            }
+        }
+
+        private void InsertClipboardAt(int position)
+        {
+            foreach (BlastUnit unit in this.Clipboard)
+            {
+                this.bs.Insert(position, unit.Clone());
+            }
+                    
+            this.dgvBlastEditor.ClearSelection();
+            for (int i = 0; i < this.Clipboard.Count; i++)
+            {
+                this.dgvBlastEditor.Rows[position + i].Selected = true;
+            }
+        }
     }
 }

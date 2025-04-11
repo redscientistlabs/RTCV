@@ -237,7 +237,6 @@ namespace RTCV.UI
                         }
                     }
 
-                    coreForm.SetDefaultGrid(DefaultGrids.engineConfig);
                     DefaultGrids.engineConfig.LoadToMain();
 
                     DefaultGrids.glitchHarvester.LoadToNewWindow("Glitch Harvester", true);

@@ -22,20 +22,21 @@ namespace RTCV.UI
 
         private static readonly object InProgressLock = new object();
         public static readonly object SavingLock = new object();
+        public static readonly object UnsavedLock = new object();
 
         private static bool _saveStatesUnsaved;
         public static bool SaveStatesUnsaved
         {
             get
             {
-                lock (SavingLock)
+                lock (UnsavedLock)
                 {
                     return _saveStatesUnsaved;
                 }
             }
             set
             {
-                lock (SavingLock)
+                lock (UnsavedLock)
                 {
                     _saveStatesUnsaved = value;
                 }
@@ -47,14 +48,14 @@ namespace RTCV.UI
         {
             get
             {
-                lock (SavingLock)
+                lock (UnsavedLock)
                 {
                     return _stockpileUnsaved;
                 }
             }
             set
             {
-                lock (SavingLock)
+                lock (UnsavedLock)
                 {
                     _stockpileUnsaved = value;
                 }

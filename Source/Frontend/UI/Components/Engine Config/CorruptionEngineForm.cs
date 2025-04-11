@@ -237,7 +237,12 @@ namespace RTCV.UI
             var gpForm = S.GET<GeneralParametersForm>();
             gpForm.Show();
             S.GET<MemoryDomainsForm>().Show();
-            S.GET<GlitchHarvesterIntensityForm>().Show();
+
+            // Need to only show it when the glitch harvester is opened, otherwise it shows up detached for a split second
+            if (S.GET<CoreForm>().pnGlitchHarvesterOpen.Visible)
+            {
+                S.GET<GlitchHarvesterIntensityForm>().Show();
+            }
 
             gpForm.cbCreateInfiniteUnits.Enabled = true;
 

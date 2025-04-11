@@ -1,3 +1,5 @@
+using System;
+
 namespace RTCV.UI
 {
     using System.Diagnostics;
@@ -57,7 +59,7 @@ namespace RTCV.UI
             Process.Start(psi);
         }
 
-        private void btnPrepareGlitchHarvester_MouseDown(object sender, MouseEventArgs e)
+        private void btnPrepareGlitchHarvester_Click(object sender, EventArgs e)
         {
             S.GET<CoreForm>().OpenGlitchHarvester(null, null);
             S.GET<SavestateManagerForm>().savestateList.NewSavestateNow();

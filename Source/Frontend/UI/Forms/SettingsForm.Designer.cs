@@ -46,7 +46,7 @@
             this.lbSettingsAndTools.Name = "lbSettingsAndTools";
             this.lbSettingsAndTools.Size = new System.Drawing.Size(265, 41);
             this.lbSettingsAndTools.TabIndex = 118;
-            this.lbSettingsAndTools.Text = "Settings and tools";
+            this.lbSettingsAndTools.Text = "Settings and Tools";
             // 
             // btnRtcFactoryClean
             // 

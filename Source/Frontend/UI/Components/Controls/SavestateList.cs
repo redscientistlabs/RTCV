@@ -527,7 +527,7 @@ namespace RTCV.UI.Components.Controls
                 });
 
                 if(S.GET<StockpileManagerForm>().dgvStockpile.SelectedRows.Count > 0)
-                    cms.Items.Add("Import State from selected Stockpile Item", null, (ob, ev) => NewSavestateFromStockpile());
+                    cms.Items.Add("Import State From Selected Stockpile Item", null, (ob, ev) => NewSavestateFromStockpile());
                 
                 cms.Items.Add("Import State from File", null, (ob, ev) => NewSavestateFromFile());
 
@@ -567,7 +567,7 @@ namespace RTCV.UI.Components.Controls
             LocalNetCoreRouter.Route(NetCore.Endpoints.CorruptCore, NetCore.Commands.Remote.ClearBlastlayerCache, false);
         }
 
-        private void NewSavestateFromStockpile()
+        public void NewSavestateFromStockpile()
         {
             //yes this automates the UI. ew.
 

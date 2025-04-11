@@ -188,71 +188,71 @@ namespace RTCV.UI
                     }
                 }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
-                ((ToolStripMenuItem)columnsMenu.Items.Add("Sanitize", null, new EventHandler((ob, ev) =>
+                ((ToolStripMenuItem)columnsMenu.Items.Add("Sanitize", null, (ob, ev) =>
                 {
                     if (S.GET<BlastEditorForm>() != null)
                     {
-                        var sk = GetSelectedStashKey();
+                        var sk = this.GetSelectedStashKey();
                         SanitizeToolForm.OpenSanitizeTool((StashKey)sk.Clone(),false);
                     }
-                }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
+                })).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
                 columnsMenu.Items.Add(new ToolStripSeparator());
 
-                ((ToolStripMenuItem)columnsMenu.Items.Add("Manual Inject", null, new EventHandler((ob, ev) =>
+                ((ToolStripMenuItem)columnsMenu.Items.Add("Manual Inject", null, (ob, ev) =>
                 {
-                    var sk = GetSelectedStashKey();
+                    var sk = this.GetSelectedStashKey();
                     StashKey newSk = (StashKey)sk.Clone();
 
                     bool IsCorrupted = StockpileManagerUISide.ApplyStashkey(newSk, false, false);
 
                     if (StockpileManagerUISide.CurrentStashkey != null)
                         S.GET<GlitchHarvesterBlastForm>().IsCorruptionApplied = IsCorrupted;
-                }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
+                })).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
                 columnsMenu.Items.Add(new ToolStripSeparator());
 
-                ((ToolStripMenuItem)columnsMenu.Items.Add("Rename selected item", null, new EventHandler((ob, ev) =>
+                ((ToolStripMenuItem)columnsMenu.Items.Add("Rename Selected Item", null, (ob, ev) =>
                 {
-                    if (dgvStockpile.SelectedRows.Count != 0)
+                    if (this.dgvStockpile.SelectedRows.Count != 0)
                     {
-                        if (RenameStashKey(GetSelectedStashKey()))
+                        if (RenameStashKey(this.GetSelectedStashKey()))
                         {
                             StockpileManagerUISide.StockpileChanged();
-                            dgvStockpile.Refresh();
-                            UnsavedEdits = true;
+                            this.dgvStockpile.Refresh();
+                            this.UnsavedEdits = true;
                         }
 
                         //lbStockpile.RefreshItemsReal();   
                     }
-                }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
+                })).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
-                ((ToolStripMenuItem)columnsMenu.Items.Add("Generate VMD from Selected Item", null, new EventHandler((ob, ev) =>
+                ((ToolStripMenuItem)columnsMenu.Items.Add("Generate VMD From Selected Item", null, (ob, ev) =>
                 {
-                    var sk = GetSelectedStashKey();
+                    var sk = this.GetSelectedStashKey();
                     MemoryDomains.GenerateVmdFromStashkey(sk);
                     S.GET<VmdPoolForm>().RefreshVMDs();
-                }))).Enabled = (dgvStockpile.SelectedRows.Count == 1);
+                })).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
-                ((ToolStripMenuItem)columnsMenu.Items.Add("Merge Selected Stashkeys", null, new EventHandler((ob, ev) =>
+                ((ToolStripMenuItem)columnsMenu.Items.Add("Merge Selected Stashkeys", null, (ob, ev) =>
                 {
                     List<StashKey> sks = new List<StashKey>();
-                    foreach (DataGridViewRow row in dgvStockpile.SelectedRows)
+                    foreach (DataGridViewRow row in this.dgvStockpile.SelectedRows)
                     {
                         sks.Add((StashKey)row.Cells[0].Value);
                     }
 
                     StockpileManagerUISide.MergeStashkeys(sks);
                     S.GET<StashHistoryForm>().RefreshStashHistory();
-                }))).Enabled = (dgvStockpile.SelectedRows.Count > 1);
+                })).Enabled = (dgvStockpile.SelectedRows.Count > 1);
 
 
 
 
-                ((ToolStripMenuItem)columnsMenu.Items.Add("Replace associated ROM", null, new EventHandler((ob, ev) =>
+                ((ToolStripMenuItem)columnsMenu.Items.Add("Replace Associated ROM", null, (ob, ev) =>
                 {
                     List<StashKey> sks = new List<StashKey>();
-                    foreach (DataGridViewRow row in dgvStockpile.SelectedRows)
+                    foreach (DataGridViewRow row in this.dgvStockpile.SelectedRows)
                     {
                         sks.Add((StashKey)row.Cells[0].Value);
                     }
@@ -274,20 +274,27 @@ namespace RTCV.UI
                             sk.RomShortFilename = Path.GetFileName(sk.RomFilename);
                         }
                     }
-                }))).Enabled = (dgvStockpile.SelectedRows.Count >= 1);
+                })).Enabled = (dgvStockpile.SelectedRows.Count >= 1);
 
                 columnsMenu.Items.Add(new ToolStripSeparator());
 
-                ((ToolStripMenuItem)columnsMenu.Items.Add($"Duplicate selected item{(dgvStockpile.SelectedRows.Count > 1 ? "s" : "")}", null, new EventHandler((ob, ev) =>
+                ((ToolStripMenuItem)columnsMenu.Items.Add($"Duplicate Selected Item{(dgvStockpile.SelectedRows.Count > 1 ? "s" : "")}", null, (ob, ev) =>
                 {
-                    DuplicateSelected();
-                }))).Enabled = (dgvStockpile.SelectedRows.Count > 0);
+                    this.DuplicateSelected();
+                })).Enabled = (dgvStockpile.SelectedRows.Count > 0);
 
-                ((ToolStripMenuItem)columnsMenu.Items.Add($"Remove selected item{(dgvStockpile.SelectedRows.Count > 1 ? "s" : "")}", null, new EventHandler((ob, ev) =>
+                ((ToolStripMenuItem)columnsMenu.Items.Add($"Remove Selected Item{(dgvStockpile.SelectedRows.Count > 1 ? "s" : "")}", null, (ob, ev) =>
                 {
-                        RemoveSelected();
+                    this.RemoveSelected();
                     
-                }))).Enabled = (dgvStockpile.SelectedRows.Count > 0);
+                })).Enabled = (dgvStockpile.SelectedRows.Count > 0);
+
+                columnsMenu.Items.Add(new ToolStripSeparator());
+
+                ((ToolStripMenuItem)columnsMenu.Items.Add("Add Savestate to Manager", null, (ob, ev) =>
+                {
+                    S.GET<SavestateManagerForm>().savestateList.NewSavestateFromStockpile();
+                })).Enabled = (dgvStockpile.SelectedRows.Count == 1);
 
                 columnsMenu.Show(this, locate);
             }

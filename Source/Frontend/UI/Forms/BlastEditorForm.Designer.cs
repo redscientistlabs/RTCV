@@ -183,6 +183,7 @@ namespace RTCV.UI
             this.dgvBlastEditor.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.OnBlastEditorRowsAdded);
             this.dgvBlastEditor.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.OnBlastEditorRowsRemoved);
             this.dgvBlastEditor.SelectionChanged += new System.EventHandler(this.OnBlastEditorSelectionChange);
+            this.dgvBlastEditor.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvBlastEditor_KeyDown);
             this.dgvBlastEditor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnBlastEditorMouseClick);
             // 
             // panelSidebar

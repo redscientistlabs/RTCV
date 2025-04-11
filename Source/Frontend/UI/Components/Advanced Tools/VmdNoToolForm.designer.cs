@@ -149,7 +149,7 @@ namespace RTCV.UI
             this.btnPrepareGlitchHarvester.Tag = "color:dark2";
             this.btnPrepareGlitchHarvester.Text = "Prepare \nGlitch Harvester (Start+Savestate)";
             this.btnPrepareGlitchHarvester.UseVisualStyleBackColor = false;
-            this.btnPrepareGlitchHarvester.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnPrepareGlitchHarvester_MouseDown);
+            this.btnPrepareGlitchHarvester.Click += new System.EventHandler(this.btnPrepareGlitchHarvester_Click);
             // 
             // lbDragAndDropGH
             // 

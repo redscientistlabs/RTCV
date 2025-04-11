@@ -88,8 +88,8 @@ namespace RTCV.UI
         {
             if (!UICore.isClosing)
             {
-                if ((S.GET<StockpileManagerForm>().UnsavedEdits && DialogResult.No == MessageBox.Show("You have unsaved edits in the Glitch Harvester Stockpile. \n\n Are you sure you want to close RTC without saving?", "Unsaved edits in Stockpile", MessageBoxButtons.YesNo))
-                 || (S.GET<SavestateManagerForm>().UnsavedEdits && DialogResult.No == MessageBox.Show("You have unsaved edits in the Glitch Harvester Savestate Manager. \n\n Are you sure you want to close RTC without saving?", "Unsaved edits in Savestate Manager", MessageBoxButtons.YesNo)))
+                if ((S.GET<StockpileManagerForm>().UnsavedEdits && DialogResult.No == MessageBox.Show("You have unsaved edits in the Glitch Harvester Stockpile. \n\n Are you sure you want to close RTC without saving?", "Unsaved edits in Stockpile", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly))
+                 || (S.GET<SavestateManagerForm>().UnsavedEdits && DialogResult.No == MessageBox.Show("You have unsaved edits in the Glitch Harvester Savestate Manager. \n\n Are you sure you want to close RTC without saving?", "Unsaved edits in Savestate Manager", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly)))
                 {
                     e.Cancel = true;
                     return;
@@ -185,7 +185,7 @@ This message only appears once.";
                         "It looks like RTC crashed or was closed improperly last time.\n" +
                         $"If you lost any unsaved work, auto-save backups may be available in {RtcCore.AutoSaveDir}.\n" +
                         "Would you like to go there now?",
-                        "RTC did not shut down cleanly", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        "RTC did not shut down cleanly", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
                     if (showAutoSaves == DialogResult.Yes)
                     {
                         Process.Start(RtcCore.AutoSaveDir);
@@ -196,7 +196,7 @@ This message only appears once.";
                     MessageBox.Show(
                         "It looks like RTC crashed or was closed improperly last time.\n" +
                         $"If you lost any work, you can enable auto-save in the settings in case this happens again.",
-                        "RTC did not shut down cleanly", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        "RTC did not shut down cleanly", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly);
                 }
             }
             else
@@ -335,14 +335,12 @@ This message only appears once.";
         {
             if (Params.IsParamSet("SIMPLE_MODE"))
             {
-                this.SetDefaultGrid(DefaultGrids.simpleMode);
                 DefaultGrids.simpleMode.LoadToMain();
                 SimpleModeForm smForm = S.GET<SimpleModeForm>();
                 smForm.EnteringSimpleMode();
             }
             else
             {
-                this.SetDefaultGrid(DefaultGrids.engineConfig);
                 DefaultGrids.engineConfig.LoadToMain();
             }
         }
@@ -362,8 +360,6 @@ This message only appears once.";
 
         public void OpenGlitchHarvester(object sender, EventArgs e)
         {
-            pnGlitchHarvesterOpen.Visible = true;
-
             if (Params.IsParamSet("GH_OPEN_MAIN"))
             {
                 DefaultGrids.glitchHarvester.LoadToMain();
@@ -372,6 +368,8 @@ This message only appears once.";
             {
                 DefaultGrids.glitchHarvester.LoadToNewWindow("Glitch Harvester");
             }
+            
+            pnGlitchHarvesterOpen.Visible = true;
         }
 
         public void StartAutoCorrupt(object sender, EventArgs e)

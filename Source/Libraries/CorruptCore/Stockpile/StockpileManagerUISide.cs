@@ -466,7 +466,7 @@ namespace RTCV.CorruptCore
 
             if ((force || !File.Exists(psk.RomFilename)) && !psk.RomFilename.EndsWith("IGNORE"))
             {
-                if (DialogResult.OK == MessageBox.Show(message, title, MessageBoxButtons.OKCancel))
+                if (DialogResult.OK == MessageBox.Show(message, title, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly))
                 {
                     OpenFileDialog ofd = new OpenFileDialog
                     {
@@ -482,7 +482,7 @@ namespace RTCV.CorruptCore
                         if (Path.GetFileName(psk.RomFilename) != Path.GetFileName(filename))
                         {
                             if (DialogResult.Cancel == MessageBox.Show($"Selected file {Path.GetFileName(filename)} has a different name than the old file {Path.GetFileName(psk.RomFilename)}.\nIf you know this file is correct, you can ignore this warning.\nContinue?", title,
-                                    MessageBoxButtons.OKCancel))
+                                    MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, MessageBoxOptions.DefaultDesktopOnly))
                             {
                                 return false;
                             }
