@@ -131,7 +131,7 @@ namespace RTCV.UI
 
                 AutoKillSwitch.Enabled = false;
                 UICore.isSwapping = true;
-
+                
                 logger.Trace("Blocking UI");
                 UICore.LockInterface(false, true);
                 logger.Trace("UI Blocked");
@@ -141,23 +141,37 @@ namespace RTCV.UI
                 RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Switching from " + new DirectoryInfo(RtcCore.EmuDir).Name + " to " + StockpileManagerUISide.CurrentStashkey.EmuVer, 0));
 
                 LocalNetCoreRouter.Route(NetCore.Endpoints.Vanguard, NetCore.Commands.Remote.EventCloseEmulator);
-                
-                UICore.FirstConnect = true;
+                VanguardImplementation.Shutdown();
+
+                //UICore.FirstConnect = true;
                 CorruptCore.RtcCore.EmuDir = Path.Combine(Path.Combine(new DirectoryInfo(RtcCore.RtcDir).Parent.Parent.FullName, StockpileManagerUISide.CurrentStashkey.EmuVer));
 
                 logger.Trace("Starting the new process");
-                var info = new ProcessStartInfo();
                 var oldEmuDir = CorruptCore.RtcCore.EmuDir;
-                info.WorkingDirectory = oldEmuDir;
-                info.FileName = Path.Combine(oldEmuDir, "RESTARTDETACHEDRTC.bat");
+                var info = new ProcessStartInfo()
+                {
+                    UseShellExecute = false,
+                    WorkingDirectory = oldEmuDir,
+                    FileName = Path.Combine(oldEmuDir, "RESTARTDETACHEDRTC.bat"),
+                };
+
                 if (!File.Exists(info.FileName))
                 {
                     MessageBox.Show($"Couldn't find {info.FileName}! Killswitch will not work.");
+
+                    this.ParentCanvas?.CloseSubForm();
+                    logger.Trace("Unlocking Interface");
+                    UICore.UnlockInterface();
+                    logger.Trace("Load cancelled");
+
+                    AutoKillSwitch.Enabled = killswitchWasEnabled;
+                    UICore.isSwapping = false;
+
                     return;
                 }
 
                 Process.Start(info);
-                VanguardImplementation.RestartServer();
+                VanguardImplementation.StartServer();
                 var previous_status = VanguardImplementation.connector.netConn.status;
                 var reconnected = false;
                 while (!reconnected)
@@ -174,7 +188,7 @@ namespace RTCV.UI
                         }
                     }
                     logger.Trace("sleeping");
-                    Thread.Sleep(100);
+                    Thread.Sleep(250);
                 }
 
                 RtcCore.OnProgressBarUpdate(this, new ProgressBarEventArgs($"Loading stockpile entry", 50));

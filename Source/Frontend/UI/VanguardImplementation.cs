@@ -241,6 +241,33 @@ namespace RTCV.UI
 
                     DefaultGrids.glitchHarvester.LoadToNewWindow("Glitch Harvester", true);
                 }
+                else if (UICore.isSwapping)
+                {
+                    lastVanguardClient = (string)AllSpec.VanguardSpec?[VSPEC.NAME] ?? "VANGUARD";
+
+                    //Configure the UI based on the vanguard spec
+                    UICore.ConfigureUIFromVanguardSpec();
+
+                    //Pull any lists from the vanguard implementation
+                    if (RtcCore.EmuDir != null)
+                    {
+                        UICore.LoadLists(Path.Combine(RtcCore.EmuDir, "LISTS"));
+                    }
+
+                    UICore.LoadLists(RtcCore.ListsDir);
+
+                    Panel sidebar = coreForm.pnSideBar;
+                    foreach (Control c in sidebar.Controls)
+                    {
+                        if (c is Button b)
+                        {
+                            if (!b.Text.Contains("Test") && b.ForeColor != Color.OrangeRed)
+                            {
+                                b.Visible = true;
+                            }
+                        }
+                    }
+                }
                 else
                 {
                     LocalNetCoreRouter.Route(Endpoints.CorruptCore, Remote.LoadPlugins, true);
